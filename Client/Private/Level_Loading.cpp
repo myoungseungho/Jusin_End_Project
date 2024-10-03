@@ -7,7 +7,7 @@
 #include "GameInstance.h"
 
 CLevel_Loading::CLevel_Loading(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CLevel{ pDevice, pContext } 
+	: CLevel{ pDevice, pContext }
 {
 }
 
@@ -15,7 +15,7 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 {
 	m_iLevelIndex = LEVEL_LOADING;
 	m_eNextLevelID = eNextLevelID;
-	
+
 
 	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	if (nullptr == m_pLoader)
@@ -28,20 +28,17 @@ void CLevel_Loading::Update(_float fTimeDelta)
 {
 	if (true == m_pLoader->isFinished())
 	{
-		if (GetKeyState(VK_SPACE) & 0x8000)
+		CLevel* pNextLevel = { nullptr };
+
+		switch (m_eNextLevelID)
 		{
-			CLevel*	pNextLevel = { nullptr };
-
-			switch (m_eNextLevelID)
-			{
-			case LEVEL_GAMEPLAY:
-				pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
-				break;
-			}
-
-			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
-				return;
+		case LEVEL_GAMEPLAY:
+			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
+			break;
 		}
+
+		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+			return;
 	}
 }
 
@@ -52,9 +49,9 @@ HRESULT CLevel_Loading::Render()
 	return S_OK;
 }
 
-CLevel_Loading * CLevel_Loading::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID)
+CLevel_Loading* CLevel_Loading::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID)
 {
-	CLevel_Loading*		pInstance = new CLevel_Loading(pDevice, pContext);
+	CLevel_Loading* pInstance = new CLevel_Loading(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize(eNextLevelID)))
 	{
