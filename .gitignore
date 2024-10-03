@@ -23,13 +23,7 @@ bld/
 # Ignore .bin and .fbx files in Resources and all subdirectories
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
-
-# Track all other files in the Resources directory and subdirectories
-!Client/Bin/Resources/**
-
-# Explicitly continue to ignore .bin and .fbx files even after re-including everything
-!Client/Bin/Resources/**/*.bin
-!Client/Bin/Resources/**/*.fbx
+Client/Bin/Resources/**/*.blend
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/
