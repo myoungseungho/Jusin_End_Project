@@ -6,10 +6,6 @@
 *.VC.opendb
 *project.lock.json
 
-Image/Single/MainMap.bmp
-Image/Single/MainMap.png
-Sound/
-
 # User-specific files
 *.suo
 *.user
