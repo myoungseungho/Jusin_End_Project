@@ -9,14 +9,11 @@ CRenderInstance::CRenderInstance()
 
 HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
 {
-	
-	return S_OK;
-}
+	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pRenderer)
+		return E_FAIL;
 
-void CRenderInstance::Update_Engine(_float fTimeDelta)
-{
-	/* 엔진에서 관리하는 객체들 중, 반복적인 갱신이 필요한 객체들이 있다면. */
-	/* 여기에서 갱신을 수행해준다. */	
+	return S_OK;
 }
 
 HRESULT CRenderInstance::Render_Engine()
