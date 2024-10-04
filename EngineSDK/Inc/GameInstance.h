@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer.h"
 #include "Component_Manager.h"
 
 BEGIN(Engine)
@@ -42,17 +41,12 @@ public: /* For.Component_Manager */
 	class CComponent* Clone_Component(_uint iLevelIndex, const _wstring& strPrototypeTag, void* pArg = nullptr);
 
 
-public: /* For.Renderer */
-	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
-
-
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
 	class CLevel_Manager*				m_pLevel_Manager = { nullptr };
 	class CTimer_Manager*				m_pTimer_Manager = { nullptr };
 	class CObject_Manager*				m_pObject_Manager = { nullptr };
 	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
-	class CRenderer*					m_pRenderer = { nullptr };
 
 public:
 	void Release_Engine();

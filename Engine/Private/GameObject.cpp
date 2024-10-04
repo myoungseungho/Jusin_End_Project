@@ -1,6 +1,5 @@
 #include "..\Public\GameObject.h"
 #include "GameInstance.h"
-
 #include "Transform.h"
 
 const _wstring		CGameObject::m_strTransformTag = TEXT("Com_Transform");

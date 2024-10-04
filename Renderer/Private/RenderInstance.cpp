@@ -1,4 +1,4 @@
-#include "..\Public\RenderInstance.h"
+#include "RenderInstance.h"
 
 IMPLEMENT_SINGLETON(CRenderInstance)
 

@@ -1,9 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\Private\CRenderer.cpp" />
+    <ClCompile Include="..\Private\RenderInstance.cpp">
+      <Filter>00.RenderInstance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Renderer.cpp">
+      <Filter>01.Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Public\CRenderer.h" />
+    <ClInclude Include="..\Public\RenderInstance.h">
+      <Filter>00.RenderInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Renderer.h">
+      <Filter>01.Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Renderer_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="00.RenderInstance">
+      <UniqueIdentifier>{76cd8321-d797-41a2-b055-243789390757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Renderer">
+      <UniqueIdentifier>{86de73c8-9d91-4e6d-ad47-1c12ad218cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Defines">
+      <UniqueIdentifier>{dbbb9c61-040b-497a-b09d-b311fe3ec6fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

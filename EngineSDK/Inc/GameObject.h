@@ -9,10 +9,11 @@ BEGIN(Engine)
 class ENGINE_DLL CGameObject abstract : public CBase
 {
 public:
-	typedef struct
+	struct GAMEOBJECT_DESC
 	{
 		_uint		iGameObjectData = {};
-	}GAMEOBJECT_DESC;
+	};
+
 protected:
 	CGameObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CGameObject(const CGameObject& Prototype);
