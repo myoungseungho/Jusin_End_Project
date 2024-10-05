@@ -3,8 +3,8 @@
 CGraphic_Device::CGraphic_Device()
 	: m_pDevice{ nullptr }
 	, m_pDeviceContext{ nullptr }
-{	
-	
+{
+
 }
 
 HRESULT CGraphic_Device::Initialize(HWND hWnd, _bool isWindowed, _uint iWinSizeX, _uint iWinSizeY, _Inout_ ID3D11Device** ppDevice, _Inout_ ID3D11DeviceContext** ppContext)
@@ -35,14 +35,14 @@ HRESULT CGraphic_Device::Initialize(HWND hWnd, _bool isWindowed, _uint iWinSizeX
 
 	/* 장치에 바인드해놓을 렌더타겟들과 뎁스스텐실뷰를 세팅한다. */
 	/* 장치는 동시에 최대 8개의 렌더타겟을 들고 있을 수 있다. */
-	ID3D11RenderTargetView*		pRTVs[1] = {
-		m_pBackBufferRTV, 
-	
+	ID3D11RenderTargetView* pRTVs[1] = {
+		m_pBackBufferRTV,
+
 	};
 
 	m_pDeviceContext->OMSetRenderTargets(1, pRTVs,
-		m_pDepthStencilView);		
-	
+		m_pDepthStencilView);
+
 	D3D11_VIEWPORT			ViewPortDesc;
 	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
 	ViewPortDesc.TopLeftX = 0;
@@ -55,7 +55,7 @@ HRESULT CGraphic_Device::Initialize(HWND hWnd, _bool isWindowed, _uint iWinSizeX
 	m_pDeviceContext->RSSetViewports(1, &ViewPortDesc);
 
 	*ppDevice = m_pDevice;
-	*ppContext= m_pDeviceContext;
+	*ppContext = m_pDeviceContext;
 
 	Safe_AddRef(m_pDevice);
 	Safe_AddRef(m_pDeviceContext);
@@ -71,7 +71,7 @@ HRESULT CGraphic_Device::Clear_BackBuffer_View(_float4 vClearColor)
 	/* 백버퍼를 초기화한다.  */
 	m_pDeviceContext->ClearRenderTargetView(m_pBackBufferRTV, (_float*)&vClearColor);
 
- 	return S_OK;
+	return S_OK;
 }
 
 HRESULT CGraphic_Device::Clear_DepthStencil_View()
@@ -88,33 +88,33 @@ HRESULT CGraphic_Device::Present()
 {
 	if (nullptr == m_pSwapChain)
 		return E_FAIL;
-	
+
 	/* 전면 버퍼와 후면 버퍼를 교체하여 후면 버퍼를 전면으로 보여주는 역할을 한다. */
-	/* 후면 버퍼를 직접 화면에 보여줄게. */	
-	return m_pSwapChain->Present(0, 0);	
+	/* 후면 버퍼를 직접 화면에 보여줄게. */
+	return m_pSwapChain->Present(0, 0);
 }
 
 
 HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWinCX, _uint iWinCY)
 {
-	IDXGIDevice*			pDevice = nullptr;
+	IDXGIDevice* pDevice = nullptr;
 	m_pDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&pDevice);
 
-	IDXGIAdapter*			pAdapter = nullptr;
+	IDXGIAdapter* pAdapter = nullptr;
 	pDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&pAdapter);
 
-	IDXGIFactory*			pFactory = nullptr;
+	IDXGIFactory* pFactory = nullptr;
 	pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&pFactory);
 
 	/* 스왑체인을 생성한다. = 텍스쳐를 생성하는 행위 + 스왑하는 형태  */
 	DXGI_SWAP_CHAIN_DESC		SwapChain;
 	ZeroMemory(&SwapChain, sizeof(DXGI_SWAP_CHAIN_DESC));
-			
+
 	/*텍스처(백버퍼)를 생성하는 행위*/
 	SwapChain.BufferDesc.Width = iWinCX;
-	SwapChain.BufferDesc.Height = iWinCY;	
-	
-	
+	SwapChain.BufferDesc.Height = iWinCY;
+
+
 
 	SwapChain.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	SwapChain.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
@@ -126,9 +126,9 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	SwapChain.BufferDesc.RefreshRate.Numerator = 60;
 	SwapChain.BufferDesc.RefreshRate.Denominator = 1;
 	SwapChain.SampleDesc.Quality = 0;
-	SwapChain.SampleDesc.Count = 1;	
+	SwapChain.SampleDesc.Count = 1;
 
-	SwapChain.OutputWindow = hWnd;	
+	SwapChain.OutputWindow = hWnd;
 	SwapChain.Windowed = isWindowed;
 	SwapChain.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
@@ -136,7 +136,7 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	if (FAILED(pFactory->CreateSwapChain(m_pDevice, &SwapChain, &m_pSwapChain)))
 		return E_FAIL;
 
-	
+
 
 	Safe_Release(pFactory);
 	Safe_Release(pAdapter);
@@ -151,18 +151,18 @@ HRESULT CGraphic_Device::Ready_BackBufferRenderTargetView()
 	if (nullptr == m_pDevice)
 		return E_FAIL;
 
-	
+
 
 	/* 내가 앞으로 사용하기위한 용도의 텍스쳐를 생성하기위한 베이스 데이터를 가지고 있는 객체이다. */
 	/* 내가 앞으로 사용하기위한 용도의 텍스쳐 : ID3D11RenderTargetView, ID3D11ShaderResoureView, ID3D11DepthStencilView */
-	ID3D11Texture2D*		pBackBufferTexture = nullptr;
+	ID3D11Texture2D* pBackBufferTexture = nullptr;
 
 	/* 스왑체인이 들고있던 텍스처를 가져와봐. */
 	if (FAILED(m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBufferTexture)))
 		return E_FAIL;
 
 	if (FAILED(m_pDevice->CreateRenderTargetView(pBackBufferTexture, nullptr, &m_pBackBufferRTV)))
-		return E_FAIL;	
+		return E_FAIL;
 
 	Safe_Release(pBackBufferTexture);
 
@@ -174,10 +174,10 @@ HRESULT CGraphic_Device::Ready_DepthStencilRenderTargetView(_uint iWinCX, _uint 
 	if (nullptr == m_pDevice)
 		return E_FAIL;
 
-	ID3D11Texture2D*		pDepthStencilTexture = nullptr;
+	ID3D11Texture2D* pDepthStencilTexture = nullptr;
 
-	
-	
+
+
 	D3D11_TEXTURE2D_DESC	TextureDesc;
 	ZeroMemory(&TextureDesc, sizeof(D3D11_TEXTURE2D_DESC));
 
@@ -201,19 +201,19 @@ HRESULT CGraphic_Device::Ready_DepthStencilRenderTargetView(_uint iWinCX, _uint 
 
 	/* RenderTarget */
 	/* ShaderResource */
-	/* DepthStencil */	
+	/* DepthStencil */
 
 	if (FAILED(m_pDevice->CreateDepthStencilView(pDepthStencilTexture, nullptr, &m_pDepthStencilView)))
-		return E_FAIL;	
+		return E_FAIL;
 
 	Safe_Release(pDepthStencilTexture);
 
 	return S_OK;
 }
 
-CGraphic_Device * CGraphic_Device::Create(HWND hWnd, _bool isWindowed, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device ** ppDevice, ID3D11DeviceContext ** ppDeviceContextOut)
+CGraphic_Device* CGraphic_Device::Create(HWND hWnd, _bool isWindowed, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppDeviceContextOut)
 {
-	CGraphic_Device*		pInstance = new CGraphic_Device();
+	CGraphic_Device* pInstance = new CGraphic_Device();
 
 	if (FAILED(pInstance->Initialize(hWnd, isWindowed, iWinSizeX, iWinSizeY, ppDevice, ppDeviceContextOut)))
 	{
@@ -232,25 +232,25 @@ void CGraphic_Device::Free()
 	Safe_Release(m_pDeviceContext);
 	Safe_Release(m_pDepthTexture);
 
-/*
-#if defined(DEBUG) || defined(_DEBUG)
-	ID3D11Debug* d3dDebug;
-	HRESULT hr = m_pDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&d3dDebug));
-	if (SUCCEEDED(hr))
-	{
-		OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
-		OutputDebugStringW(L"                                                                    D3D11 Live Object ref Count Checker \r ");
-		OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
+	/*
+	#if defined(DEBUG) || defined(_DEBUG)
+		ID3D11Debug* d3dDebug;
+		HRESULT hr = m_pDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&d3dDebug));
+		if (SUCCEEDED(hr))
+		{
+			OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
+			OutputDebugStringW(L"                                                                    D3D11 Live Object ref Count Checker \r ");
+			OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
 
-		hr = d3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+			hr = d3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 
-		OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
-		OutputDebugStringW(L"                                                                    D3D11 Live Object ref Count Checker END \r ");
-		OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
-	}
-	if (d3dDebug != nullptr)            d3dDebug->Release();
-#endif
+			OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
+			OutputDebugStringW(L"                                                                    D3D11 Live Object ref Count Checker END \r ");
+			OutputDebugStringW(L"----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- \r ");
+		}
+		if (d3dDebug != nullptr)            d3dDebug->Release();
+	#endif
 
-	*/
+		*/
 	Safe_Release(m_pDevice);
 }
