@@ -23,6 +23,8 @@ CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 /* 이 함수를 호출한 스레드는 어떤 역활? 리소스를 로드한다. 어떤 레벨용? */
 _uint APIENTRY LoadingMain(void* pArg)
 {
+	CoInitializeEx(nullptr, 0);
+
 	CLoader*		pLoader = static_cast<CLoader*>(pArg);
 
 	if (FAILED(pLoader->Loading()))
