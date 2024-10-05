@@ -78,7 +78,13 @@
     <ClInclude Include="..\public\Effect_Manager.h">
       <Filter>02.GameObjects\02. Effect\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\MoveTex.h">
+    <ClInclude Include="..\Public\Effect_Multi.h">
+      <Filter>02.GameObjects\02. Effect\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Single.h">
+      <Filter>02.GameObjects\02. Effect\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_MoveTex.h">
       <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
     </ClInclude>
   </ItemGroup>
@@ -107,8 +113,14 @@
     <ClCompile Include="..\private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\MoveTex.cpp">
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp">
       <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Multi.cpp">
+      <Filter>02.GameObjects\02. Effect\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Single.cpp">
+      <Filter>02.GameObjects\02. Effect\Single</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
