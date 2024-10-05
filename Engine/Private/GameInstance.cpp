@@ -19,10 +19,6 @@ HRESULT CGameInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNum
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
 
-	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext);
-	if (nullptr == m_pRenderer)
-		return E_FAIL;
-
 	m_pObject_Manager = CObject_Manager::Create(iNumLevels);
 	if (nullptr == m_pObject_Manager)
 		return E_FAIL;
@@ -62,9 +58,6 @@ HRESULT CGameInstance::Render_Engine()
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
-
-	if (FAILED(m_pRenderer->Draw()))
-		return E_FAIL;
 
 	if (FAILED(m_pLevel_Manager->Render()))
 		return E_FAIL;
@@ -159,19 +152,9 @@ CComponent * CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring & 
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
 }
 
-HRESULT CGameInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, CGameObject * pRenderObject)
-{
-	if (nullptr == m_pRenderer)
-		return E_FAIL;
-
-	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject);	
-}
-
 
 void CGameInstance::Release_Engine()
 {
-
-	Safe_Release(m_pRenderer);
 	Safe_Release(m_pComponent_Manager);
 	Safe_Release(m_pObject_Manager);
 	Safe_Release(m_pTimer_Manager);

@@ -21,9 +21,13 @@ build/
 bld/
 
 # Ignore .bin and .fbx files in Resources and all subdirectories
+AssimpSaveAndLoad/Models/**/*.fbx
+
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
+Client/Bin/ModelData/**/*.bin
+
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/
@@ -212,3 +216,4 @@ EngineSDK/lib/DirectXTKd.lib
 AssimpSaveAndLoad/Models/Hyunwoo/Hyunwoo_01_LOD1.fbx
 Engine/Bin/Resources/EternalResource/Post/vignette-frame-1.dds
 Client/Bin/Resources/EternalResource/Post/vignette-frame-1.dds
+Client/Bin/assimp-vc140-mtd.dll

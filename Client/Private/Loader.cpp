@@ -71,109 +71,32 @@ HRESULT CLoader::Loading()
 	return S_OK;
 }
 
-HRESULT CLoader::Loading_For_LogoLevel()
-{
-	/* 로고레벨용 자원을 로드하자. */
-
-	/* 텍스쳐를 로드한다. */
-	lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
-
-	/* For.Prototype_Component_Texture_Logo */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_Logo"),
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Default%d.jpg"), 2))))
-	//	return E_FAIL;
-	
-
-	/* 모델을 로드한다. */
-	lstrcpy(m_szLoadingText, TEXT("모델을 로딩 중 입니다."));
-
-	
-	
-	/* 객체원형을 로드한다. */
-	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
-
-	/* For.Prototype_GameObject_BackGround */
-
-	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
-
-	m_isFinished = true;
-	
-	return S_OK;
-}
 
 HRESULT CLoader::Loading_For_GamePlayLevel()
 {
 	/* 게임플레이레벨용 자원을 로드하자. */
 
-
 	/* 텍스쳐를 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
 
-	/* For.Prototype_Component_Texture_Player */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Player"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Player/Player0.png"), 1))))
-		return E_FAIL;*/
-
-	/* For.Prototype_Component_Texture_Terrain */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Terrain"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Terrain/Tile0.jpg"), 1))))
-		return E_FAIL;*/
-
-
-	/* For.Prototype_Component_Texture_Sky */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Sky"),
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURECUBE, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 4))))
-	//	return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Effect */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Explosion/Explosion%d.png"), 90))))
-		return E_FAIL;*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Terrain_Mask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKL_Base.png"), 1))))
+		return E_FAIL;
 
 	/* 모델을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));	
-	/* For.Prototype_Component_VIBuffer_Terrain */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Terrain"),
-	//	CVIBuffer_Terrain::Create(m_pGraphic_Device, TEXT("../Bin/Resources/Textures/Terrain/Height.bmp")))))
-	//	return E_FAIL;
+	
+	//_matrix			PreTransformMatrix = XMMatrixIdentity();
+	//PreTransformMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
 
-	/* For.Prototype_Component_VIBuffer_Cube */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Cube"),
-		CVIBuffer_Cube::Create(m_pGraphic_Device))))
-		return E_FAIL;*/
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
 
-	/* For.Prototype_GameObject_Player */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Player"),
-	//	CPlayer::Create(m_pGraphic_Device))))
-	//	return E_FAIL;	
 
-	/* For.Prototype_GameObject_Camera */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera"),
-	//	CCamera::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-
-	/* For.Prototype_GameObject_Terrain */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Terrain"),
-		CTerrain::Create(m_pGraphic_Device))))
-		return E_FAIL;*/
-
-	/* For.Prototype_GameObject_Sky */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Sky"),
-		CSky::Create(m_pGraphic_Device))))
-		return E_FAIL;*/
-
-	/* For.Prototype_GameObject_Monster */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
-		CMonster::Create(m_pGraphic_Device))))
-		return E_FAIL;
-*/
-	/* For.Prototype_GameObject_Effect */
-	/*if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect"),
-		CEffect::Create(m_pGraphic_Device))))
-		return E_FAIL;*/
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 
