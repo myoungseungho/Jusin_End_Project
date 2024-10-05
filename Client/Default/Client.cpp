@@ -2,8 +2,8 @@
 //
 
 #include "stdafx.h"
+#include "imgui_impl_win32.h"
 #include "Client.h"
-
 #include "MainApp.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
@@ -15,6 +15,9 @@ HINSTANCE g_hInst;                                // 현재 인스턴스입니다.
 HWND g_hWnd;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -87,7 +90,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		if (fTimeAcc >= 1.f / 60.0f)
 		{ 
 			pMainApp->Update(pGameInstance->Compute_TimeDelta(TEXT("Timer_60")));
-			pMainApp->Render();
+            float deltaTime = pGameInstance->Get_ScaledDeltaTime(TEXT("Timer_60"));
+			pMainApp->Render(deltaTime);
 
 			fTimeAcc = 0.f;
 		}
@@ -172,6 +176,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
+
     switch (message)
     {
     case WM_COMMAND:

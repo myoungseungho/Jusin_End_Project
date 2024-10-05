@@ -1,4 +1,10 @@
 #include "stdafx.h"
+
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+
+
 #include "..\Public\MainApp.h"
 
 #include "GameInstance.h"
@@ -27,7 +33,6 @@ HRESULT CMainApp::Initialize()
 	//IMGUI 생성, 싱글턴
 	Create_IMGUI_Manager();
 
-
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
 
@@ -39,10 +44,13 @@ void CMainApp::Update(_float fTimeDelta)
 	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
-HRESULT CMainApp::Render()
+HRESULT CMainApp::Render(_float fTimeDelta)
 {
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGameInstance->Clear_DepthStencil_View();
+
+	//IMGUI 렌더
+	m_pIMGUI_Manager->Render(fTimeDelta);
 
 	//레벨매니저 렌더는 게임인스턴스
 	m_pGameInstance->Render_Engine();
@@ -65,7 +73,7 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
-	CImgui_Manager::Create(m_pDevice, m_pContext, m_pRenderInstance);
+	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext, m_pRenderInstance);
 
 	return S_OK;
 }
@@ -93,5 +101,6 @@ void CMainApp::Free()
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
+	Safe_Release(m_pIMGUI_Manager);
 }
 

@@ -7,9 +7,9 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
-IMPLEMENT_SINGLETON(CImgui_Manager)
+bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
-bool bShowImGuiWindows = true;
+IMPLEMENT_SINGLETON(CImgui_Manager)
 
 CImgui_Manager::CImgui_Manager()
 {
@@ -24,13 +24,7 @@ CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 	Safe_AddRef(pRenderInstance);
 }
 
-
-HRESULT CImgui_Manager::Initialize_Prototype()
-{
-	return S_OK;
-}
-
-HRESULT CImgui_Manager::Initialize(void* pArg)
+HRESULT CImgui_Manager::Initialize()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -57,7 +51,6 @@ void CImgui_Manager::Update(_float fTimeDelta)
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CImgui_Manager::Render(_float fTimeDelta)
@@ -93,11 +86,11 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 		//이펙트
 		//애니메이션
 		//UI
-		static bool bShowAnimation = true;
-		static bool bShowEffect = true;
-		static bool bShowUI = true;
-		static bool bShowShader = true;
 
+		static _bool bShowAnimation = true;
+		static _bool bShowEffect = true;
+		static _bool bShowUI = true;
+		static _bool bShowShader = true;
 
 		ImGui::Begin("Main Tab", &bShowImGuiWindows); // 메인 창 시작
 		if (ImGui::BeginTabBar("DragonBall_Tool")) { // 탭 바 시작
@@ -107,7 +100,7 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 				if (bShowAnimation) {
 					IMGUI_Show_Animation();
 				}
-				ImGui::EndTabItem(); // "Levels" 탭 아이템 종료
+				ImGui::EndTabItem(); // "Animation" 탭 아이템 종료
 			}
 
 			if (ImGui::BeginTabItem("Effect", &bShowEffect)) { // "ObjectList" 탭 아이템 시작
@@ -115,7 +108,7 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 				if (bShowEffect) {
 					IMGUI_Show_Effect();
 				}
-				ImGui::EndTabItem(); // "ObjectList" 탭 아이템 종료
+				ImGui::EndTabItem(); // "Effect" 탭 아이템 종료
 			}
 
 			if (ImGui::BeginTabItem("UI", &bShowUI)) { // "ObjectList" 탭 아이템 시작
@@ -123,14 +116,14 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 				if (bShowUI) {
 					IMGUI_Show_UI();
 				}
-				ImGui::EndTabItem(); // "ObjectList" 탭 아이템 종료
+				ImGui::EndTabItem(); // "UI" 탭 아이템 종료
 			}
 
-			if (ImGui::BeginTabItem("Shader", &bShowShader)) { // "Settings" 탭 아이템 시작
+			if (ImGui::BeginTabItem("Shader", &bShowShader)) { // "Shader" 탭 아이템 시작
 				if (bShowShader) {
 					IMGUI_Show_Shader();
 				}
-				ImGui::EndTabItem(); // "ObjectList" 탭 아이템 종료
+				ImGui::EndTabItem(); // "Shader" 탭 아이템 종료
 			}
 
 			ImGui::EndTabBar(); // 탭 바 종료
@@ -166,7 +159,7 @@ CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContex
 {
 	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext, pRenderInstance);
 
-	if (FAILED(pInstance->Initialize_Prototype()))
+	if (FAILED(pInstance->Initialize()))
 	{
 		MSG_BOX(TEXT("Failed to Created : CImgui_Manager"));
 		Safe_Release(pInstance);

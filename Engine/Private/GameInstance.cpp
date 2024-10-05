@@ -112,6 +112,11 @@ _float CGameInstance::Compute_TimeDelta(const _wstring & strTimerTag)
 	return m_pTimer_Manager->Compute_TimeDelta(strTimerTag);
 }
 
+_float CGameInstance::Get_ScaledDeltaTime(const _wstring& strTimerTag)
+{
+	return m_pTimer_Manager->Get_ScaledDeltaTime(strTimerTag);
+}
+
 HRESULT CGameInstance::Add_Prototype(const wstring & strPrototypeTag, CGameObject * pPrototype)
 {
 	if (nullptr == m_pObject_Manager)

@@ -30,6 +30,7 @@ public: /* For.Level_Manager */
 public: /* For.Timer_Manager */
 	HRESULT Add_Timer(const _wstring& strTimerTag);
 	_float Compute_TimeDelta(const _wstring& strTimerTag);
+	_float Get_ScaledDeltaTime(const _wstring& strTimerTag);
 
 public: /* For.Object_Manager */
 	HRESULT Add_Prototype(const wstring& strPrototypeTag, class CGameObject* pPrototype);
