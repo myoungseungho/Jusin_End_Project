@@ -33,7 +33,7 @@ private:
 	CRenderInstance*			m_pRenderInstance = { nullptr };
 private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
-	HRESULT Ready_Layer_IMGUI_Manager();
+	HRESULT Create_IMGUI_Manager();
 
 public:
 	static CMainApp* Create();

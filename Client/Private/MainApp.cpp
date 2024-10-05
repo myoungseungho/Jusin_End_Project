@@ -8,7 +8,7 @@
 
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
-	,m_pRenderInstance{ CRenderInstance::Get_Instance() }
+	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pRenderInstance);
@@ -16,12 +16,17 @@ CMainApp::CMainApp()
 
 HRESULT CMainApp::Initialize()
 {
+	//게임인스턴스 엔진 초기화
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
-	m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext);
+	//렌더인스턴스 엔진 초기화
+	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
+		return E_FAIL;
 
-	Ready_Layer_IMGUI_Manager();
+	//IMGUI 생성, 싱글턴
+	Create_IMGUI_Manager();
+
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
@@ -39,7 +44,11 @@ HRESULT CMainApp::Render()
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGameInstance->Clear_DepthStencil_View();
 
+	//레벨매니저 렌더는 게임인스턴스
 	m_pGameInstance->Render_Engine();
+
+	//나머지 렌더는 렌더인스턴스
+	m_pRenderInstance->Render_Engine();
 
 	m_pGameInstance->Present();
 
@@ -54,10 +63,10 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 	return S_OK;
 }
 
-HRESULT CMainApp::Ready_Layer_IMGUI_Manager()
+HRESULT CMainApp::Create_IMGUI_Manager()
 {
-	CImgui_Manager::Create(m_pDevice, m_pContext);
-	
+	CImgui_Manager::Create(m_pDevice, m_pContext, m_pRenderInstance);
+
 	return S_OK;
 }
 

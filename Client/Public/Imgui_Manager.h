@@ -8,6 +8,10 @@ BEGIN(Engine)
 class CGameInstance;
 END
 
+BEGIN(Renderer)
+class CRenderInstance;
+END
+
 
 BEGIN(Client)
 
@@ -18,7 +22,7 @@ class CImgui_Manager : public CBase
 private:
 
 	CImgui_Manager();
-	CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, class CRenderInstance* pRenderInstance);
 	virtual ~CImgui_Manager() = default;
 
 public:
@@ -43,9 +47,10 @@ private:
 
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
+	class CRenderInstance* m_pRenderInstance = { nullptr };
 
 public:
-	static CImgui_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CImgui_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, class CRenderInstance* pRenderInstance);
 	virtual void Free() override;
 };
 

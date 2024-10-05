@@ -5,6 +5,7 @@
 
 #include "Imgui_Manager.h"
 #include "GameInstance.h"
+#include "RenderInstance.h"
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -14,12 +15,13 @@ CImgui_Manager::CImgui_Manager()
 {
 }
 // IMGUI 창 표시 여부를 제어하는 전역 변수
-CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:m_pDevice{ pDevice }, m_pContext{ pContext }
+CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CRenderInstance* pRenderInstance)
+	:m_pDevice{ pDevice }, m_pContext{ pContext }, m_pRenderInstance{ pRenderInstance }
 
 {
 	Safe_AddRef(m_pDevice);
 	Safe_AddRef(m_pContext);
+	Safe_AddRef(pRenderInstance);
 }
 
 
@@ -55,7 +57,7 @@ void CImgui_Manager::Update(_float fTimeDelta)
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)
 {
-	//->Add_RenderObject(CRenderer::RG_IMGUI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CImgui_Manager::Render(_float fTimeDelta)
@@ -160,9 +162,9 @@ HRESULT CImgui_Manager::IMGUI_Show_Shader()
 
 
 
-CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CRenderInstance* pRenderInstance)
 {
-	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext);
+	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext, pRenderInstance);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -182,6 +184,7 @@ void CImgui_Manager::Free()
 
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
+	Safe_Release(m_pRenderInstance);
 
 	__super::Free();
 }
