@@ -17,6 +17,7 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 
 void CEffect_Manager::Update(_float fTimeDelta)
 {
+	int a = 0;
 }
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
