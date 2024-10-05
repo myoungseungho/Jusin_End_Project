@@ -2,6 +2,7 @@
 #include "..\Public\Loader.h"
 
 #include "GameInstance.h"
+#include "IMGUI_Shader_Tab.h"
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
@@ -97,7 +98,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
-
 
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));

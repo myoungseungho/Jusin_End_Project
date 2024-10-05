@@ -16,6 +16,7 @@ private:
 public:
 	HRESULT Add_Timer(const _wstring& strTimerTag);
 	_float Compute_TimeDelta(const _wstring& strTimerTag);
+	_float Get_ScaledDeltaTime(const _wstring& strTimerTag);
 
 private:
 	map<const _wstring, class CTimer*>			m_Timers;

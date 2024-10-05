@@ -33,7 +33,7 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 		_wsplitpath_s(szFullPath, nullptr, 0, nullptr, 0, nullptr, 0, szEXT, MAX_PATH);
 
 		HRESULT			hr = { 0 };
-		 
+
 		if(false == lstrcmp(szEXT, TEXT(".dds")))
 			hr = CreateDDSTextureFromFile(m_pDevice, szFullPath, nullptr, &pSRV);
 
@@ -69,11 +69,6 @@ HRESULT CTexture::Initialize(void * pArg)
 HRESULT CTexture::Bind_ShaderResource(CShader * pShader, const _char * pConstantName, _uint iTextureIndex)
 {
 	return pShader->Bind_ShaderResourceView(pConstantName, m_SRVs[iTextureIndex]);	
-}
-
-HRESULT CTexture::Bind_ShaderResources(CShader* pShader, const _char* pConstantName)
-{
-	return pShader->Bind_ShaderResourceViews(pConstantName, &m_SRVs.front(), m_iNumTextures);
 }
 
 CTexture * CTexture::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext, const _tchar * pTextureFilePath, _uint iNumTextures)

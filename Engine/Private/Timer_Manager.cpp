@@ -29,6 +29,16 @@ _float CTimer_Manager::Compute_TimeDelta(const _wstring & strTimerTag)
 	return pTimer->Compute_TimeDelta();	
 }
 
+_float CTimer_Manager::Get_ScaledDeltaTime(const _wstring& strTimerTag)
+{
+	CTimer* pTimer = Find_Timer(strTimerTag);
+
+	if (nullptr == pTimer)
+		return 0.f;
+
+	return pTimer->Get_ScaledDeltaTime();
+}
+
 CTimer * CTimer_Manager::Find_Timer(const _wstring & strTimerTag)
 {
 	auto	iter = m_Timers.find(strTimerTag);

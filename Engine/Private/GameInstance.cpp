@@ -112,6 +112,11 @@ _float CGameInstance::Compute_TimeDelta(const _wstring & strTimerTag)
 	return m_pTimer_Manager->Compute_TimeDelta(strTimerTag);
 }
 
+_float CGameInstance::Get_ScaledDeltaTime(const _wstring& strTimerTag)
+{
+	return m_pTimer_Manager->Get_ScaledDeltaTime(strTimerTag);
+}
+
 HRESULT CGameInstance::Add_Prototype(const wstring & strPrototypeTag, CGameObject * pPrototype)
 {
 	if (nullptr == m_pObject_Manager)
@@ -134,6 +139,11 @@ CComponent * CGameInstance::Get_Component(_uint iLevelIndex, const _wstring & st
 		return nullptr;
 
 	return	m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
+}
+
+CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
+{
+	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
 }
 
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag, CComponent * pPrototype)
