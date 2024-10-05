@@ -38,7 +38,6 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 
 void CRenderInstance::Release_Engine()
 {
-
 	Safe_Release(m_pRenderer);
 
 	CRenderInstance::Get_Instance()->Destroy_Instance();

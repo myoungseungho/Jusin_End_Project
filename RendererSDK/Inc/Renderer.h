@@ -6,6 +6,10 @@
 /* 1. 화면에 그려야할 객체들을 그리는 순서대로 보관한다. */
 /* 2. 보관하고 있는 객체들의 렌더함수를 호출한다.(렌더콜) */
 
+BEGIN(Engine)
+class CGameObject;
+END
+
 BEGIN(Renderer)
 
 class CRenderer final : public CBase
