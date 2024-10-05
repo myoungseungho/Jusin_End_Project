@@ -16,7 +16,7 @@ CMainApp::CMainApp()
 HRESULT CMainApp::Initialize()
 {
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
-		return E_FAIL;
+		return E_FAIL; 
 
 	m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext);
 
