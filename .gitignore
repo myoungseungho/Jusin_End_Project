@@ -21,9 +21,13 @@ build/
 bld/
 
 # Ignore .bin and .fbx files in Resources and all subdirectories
+AssimpSaveAndLoad/Models/**/*.fbx
+
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
+Client/Bin/ModelData/**/*.bin
+
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/
