@@ -141,6 +141,11 @@ CComponent * CGameInstance::Get_Component(_uint iLevelIndex, const _wstring & st
 	return	m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
 }
 
+CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
+{
+	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
+}
+
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag, CComponent * pPrototype)
 {
 	if (nullptr == m_pComponent_Manager)

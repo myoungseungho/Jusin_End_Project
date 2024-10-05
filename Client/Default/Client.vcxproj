@@ -153,10 +153,15 @@
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
+    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
     <ClInclude Include="..\Public\imgui_impl_dx11.h" />
     <ClInclude Include="..\Public\imgui_impl_win32.h" />
     <ClInclude Include="..\Public\imgui_internal.h" />
     <ClInclude Include="..\Public\Imgui_Manager.h" />
+    <ClInclude Include="..\public\IMGUI_Shader_Tab.h" />
+    <ClInclude Include="..\public\IMGUI_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
     <ClInclude Include="..\Public\imstb_rectpack.h" />
     <ClInclude Include="..\Public\imstb_textedit.h" />
     <ClInclude Include="..\Public\imstb_truetype.h" />
@@ -171,12 +176,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\imgui.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_demo.cpp" />
     <ClCompile Include="..\Private\imgui_draw.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Private\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Private\Imgui_Manager.cpp" />
+    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp" />
+    <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
+    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />

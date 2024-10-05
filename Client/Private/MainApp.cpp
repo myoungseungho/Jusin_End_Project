@@ -73,7 +73,7 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
-	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext, m_pRenderInstance);
+	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext, m_pGameInstance, m_pRenderInstance);
 
 	return S_OK;
 }

@@ -7,6 +7,11 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
+#include "IMGUI_Shader_Tab.h"
+#include "IMGUI_Animation_Tab.h"
+#include "IMGUI_Effect_Tab.h"
+#include "IMGUI_UI_Tab.h"
+
 bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
@@ -15,13 +20,14 @@ CImgui_Manager::CImgui_Manager()
 {
 }
 // IMGUI 창 표시 여부를 제어하는 전역 변수
-CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CRenderInstance* pRenderInstance)
-	:m_pDevice{ pDevice }, m_pContext{ pContext }, m_pRenderInstance{ pRenderInstance }
+CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance, CRenderInstance* pRenderInstance)
+	:m_pDevice{ pDevice }, m_pContext{ pContext }, m_pGameInstance{ pGameInstance }, m_pRenderInstance{ pRenderInstance }
 
 {
 	Safe_AddRef(m_pDevice);
 	Safe_AddRef(m_pContext);
-	Safe_AddRef(pRenderInstance);
+	Safe_AddRef(m_pGameInstance);
+	Safe_AddRef(m_pRenderInstance);
 }
 
 HRESULT CImgui_Manager::Initialize()
@@ -36,6 +42,12 @@ HRESULT CImgui_Manager::Initialize()
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX11_Init(m_pDevice, m_pContext);
 	ImGui_ImplWin32_EnableDpiAwareness();
+
+	//IMGUI 탭 객체 생성
+	m_vecTabs.push_back(CIMGUI_Shader_Tab::Create());
+	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create());
+	m_vecTabs.push_back(CIMGUI_UI_Tab::Create());
+	m_vecTabs.push_back(CIMGUI_Effect_Tab::Create());
 
 	return S_OK;
 }
@@ -95,35 +107,11 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 		ImGui::Begin("Main Tab", &bShowImGuiWindows); // 메인 창 시작
 		if (ImGui::BeginTabBar("DragonBall_Tool")) { // 탭 바 시작
 
-			if (ImGui::BeginTabItem("Animation", &bShowAnimation)) { // "Levels" 탭 아이템 시작
-				//레벨 창
-				if (bShowAnimation) {
-					IMGUI_Show_Animation();
+			for (auto& tab : m_vecTabs) {
+				if (ImGui::BeginTabItem(tab->GetTabName())) {
+					tab->Render(fTimeDelta);
+					ImGui::EndTabItem();
 				}
-				ImGui::EndTabItem(); // "Animation" 탭 아이템 종료
-			}
-
-			if (ImGui::BeginTabItem("Effect", &bShowEffect)) { // "ObjectList" 탭 아이템 시작
-				//원형 오브젝트 창
-				if (bShowEffect) {
-					IMGUI_Show_Effect();
-				}
-				ImGui::EndTabItem(); // "Effect" 탭 아이템 종료
-			}
-
-			if (ImGui::BeginTabItem("UI", &bShowUI)) { // "ObjectList" 탭 아이템 시작
-				//원형 오브젝트 창
-				if (bShowUI) {
-					IMGUI_Show_UI();
-				}
-				ImGui::EndTabItem(); // "UI" 탭 아이템 종료
-			}
-
-			if (ImGui::BeginTabItem("Shader", &bShowShader)) { // "Shader" 탭 아이템 시작
-				if (bShowShader) {
-					IMGUI_Show_Shader();
-				}
-				ImGui::EndTabItem(); // "Shader" 탭 아이템 종료
 			}
 
 			ImGui::EndTabBar(); // 탭 바 종료
@@ -155,9 +143,9 @@ HRESULT CImgui_Manager::IMGUI_Show_Shader()
 
 
 
-CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CRenderInstance* pRenderInstance)
+CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance, CRenderInstance* pRenderInstance)
 {
-	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext, pRenderInstance);
+	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext, pGameInstance, pRenderInstance);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -171,13 +159,19 @@ CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContex
 
 void CImgui_Manager::Free()
 {
+	for (auto& iter : m_vecTabs)
+		Safe_Release(iter);
+
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
+	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pRenderInstance);
+
+
 
 	__super::Free();
 }
