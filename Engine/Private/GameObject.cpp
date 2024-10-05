@@ -65,7 +65,7 @@ void CGameObject::Late_Update(_float fTimeDelta)
 {
 }
 
-HRESULT CGameObject::Render()
+HRESULT CGameObject::Render(_float fTimeDelta)
 {
 	return S_OK;
 }

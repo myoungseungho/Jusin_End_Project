@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component_Manager.h"
+#include "PipeLine.h"
 
 BEGIN(Engine)
 
@@ -42,6 +43,14 @@ public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);
 	class CComponent* Clone_Component(_uint iLevelIndex, const _wstring& strPrototypeTag, void* pArg = nullptr);
 
+public: /* For.PipeLine */
+	_matrix Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_float4x4 Get_Transform_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_matrix Get_Transform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_float4x4 Get_Transform_Inverse_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_vector Get_CamPosition_Vector() const;
+	_float4 Get_CamPosition_Float4() const;
+	void Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
 
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
@@ -49,6 +58,7 @@ private:
 	class CTimer_Manager*				m_pTimer_Manager = { nullptr };
 	class CObject_Manager*				m_pObject_Manager = { nullptr };
 	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
+	class CPipeLine* m_pPipeLine = { nullptr };
 
 public:
 	void Release_Engine();

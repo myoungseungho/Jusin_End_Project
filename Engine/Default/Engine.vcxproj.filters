@@ -76,6 +76,12 @@
     <Filter Include="01.Utility\03.Components\Texture">
       <UniqueIdentifier>{32c9f280-2290-4c88-9bf3-33ffbc2330c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\02.GameObjects\Camera">
+      <UniqueIdentifier>{4a457709-2d84-4c59-aacd-a89396b94771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.PipeLine">
+      <UniqueIdentifier>{7c9f281d-fcf9-4f9c-a681-df50def82380}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -140,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Texture.cpp">
       <Filter>01.Utility\03.Components\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Camera.cpp">
+      <Filter>01.Utility\02.GameObjects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\PipeLine.cpp">
+      <Filter>01.Utility\04.PipeLine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +232,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Texture.h">
       <Filter>01.Utility\03.Components\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Camera.h">
+      <Filter>01.Utility\02.GameObjects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\PipeLine.h">
+      <Filter>01.Utility\04.PipeLine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -34,7 +34,27 @@ public:
 			XMVectorGetX(XMVector3Length(WorldMatrix.r[STATE_UP])),
 			XMVectorGetX(XMVector3Length(WorldMatrix.r[STATE_LOOK])));
 	}
-	
+
+	_matrix Get_WorldMatrix() const {
+		return XMLoadFloat4x4(&m_WorldMatrix);
+	}
+
+	const _float4x4* Get_WorldMatrixPtr() const {
+		return &m_WorldMatrix;
+	}
+
+	_matrix Get_WorldMatrix_Inverse() const {
+		return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix));
+	}
+
+public:
+
+	void Set_Scaled(_float fScaleX, _float fScaleY, _float fScaleZ) {
+		XMStoreFloat4((_float4*)&m_WorldMatrix.m[STATE_RIGHT][0], XMVector3Normalize(Get_State(STATE_RIGHT)) * fScaleX);
+		XMStoreFloat4((_float4*)&m_WorldMatrix.m[STATE_UP][0], XMVector3Normalize(Get_State(STATE_UP)) * fScaleY);
+		XMStoreFloat4((_float4*)&m_WorldMatrix.m[STATE_LOOK][0], XMVector3Normalize(Get_State(STATE_LOOK)) * fScaleZ);
+	}
+
 
 	void Set_State(STATE eState, _fvector vState) {
 		XMStoreFloat4((_float4*)&m_WorldMatrix.m[eState][0], vState);

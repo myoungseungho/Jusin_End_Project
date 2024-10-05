@@ -82,19 +82,15 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	/* 텍스쳐를 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Terrain_Mask"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKL_Base.png"), 1))))
-		return E_FAIL;
-
 	/* 모델을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));	
 	
-	//_matrix			PreTransformMatrix = XMMatrixIdentity();
-	//PreTransformMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+	PreTransformMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
