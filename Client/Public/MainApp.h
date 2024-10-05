@@ -3,6 +3,7 @@
 #include "Client_Defines.h"
 #include "Base.h"
 #include "RenderInstance.h"
+#include "Imgui_Manager.h"
 
 BEGIN(Engine)
 class CGameInstance;
@@ -32,6 +33,7 @@ private:
 	CRenderInstance*			m_pRenderInstance = { nullptr };
 private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
+	HRESULT Ready_Layer_IMGUI_Manager();
 
 public:
 	static CMainApp* Create();
