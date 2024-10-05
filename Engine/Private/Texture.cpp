@@ -33,7 +33,7 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 		_wsplitpath_s(szFullPath, nullptr, 0, nullptr, 0, nullptr, 0, szEXT, MAX_PATH);
 
 		HRESULT			hr = { 0 };
-
+		 
 		if(false == lstrcmp(szEXT, TEXT(".dds")))
 			hr = CreateDDSTextureFromFile(m_pDevice, szFullPath, nullptr, &pSRV);
 
