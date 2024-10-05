@@ -120,29 +120,6 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 	}
 }
 
-HRESULT CImgui_Manager::IMGUI_Show_Animation()
-{
-	return S_OK;
-}
-
-HRESULT CImgui_Manager::IMGUI_Show_Effect()
-{
-	return S_OK;
-}
-
-HRESULT CImgui_Manager::IMGUI_Show_UI()
-{
-	return S_OK;
-}
-
-HRESULT CImgui_Manager::IMGUI_Show_Shader()
-{
-	return S_OK;
-}
-
-
-
-
 CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance, CRenderInstance* pRenderInstance)
 {
 	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext, pGameInstance, pRenderInstance);
@@ -170,8 +147,6 @@ void CImgui_Manager::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pRenderInstance);
-
-
 
 	__super::Free();
 }

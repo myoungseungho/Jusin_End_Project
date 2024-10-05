@@ -35,13 +35,6 @@ public:
 private:
 	void Render_IMGUI(_float fTimeDelta);
 
-	//IMGUI
-private:
-	HRESULT IMGUI_Show_Animation();
-	HRESULT IMGUI_Show_Effect();
-	HRESULT IMGUI_Show_UI();
-	HRESULT IMGUI_Show_Shader();
-
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
 	CRenderInstance* m_pRenderInstance = { nullptr };
