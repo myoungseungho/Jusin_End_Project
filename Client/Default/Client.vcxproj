@@ -151,6 +151,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Client_Defines.h" />
+    <ClInclude Include="..\Public\Effect.h" />
+    <ClInclude Include="..\Public\Effect_Manager.h" />
+    <ClInclude Include="..\Public\Effect_MoveTex.h" />
+    <ClInclude Include="..\Public\Effect_Multi.h" />
+    <ClInclude Include="..\Public\Effect_Single.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
@@ -175,6 +180,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\Private\Effect_Manager.cpp" />
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp" />
+    <ClCompile Include="..\Private\Effect_Multi.cpp" />
+    <ClCompile Include="..\Private\Effect_Single.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_demo.cpp" />

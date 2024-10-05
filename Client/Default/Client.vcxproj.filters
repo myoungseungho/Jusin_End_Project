@@ -42,7 +42,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
     <Filter Include="IMGUI">
       <UniqueIdentifier>{871a9861-3ac5-4274-b312-5a263c75354b}</UniqueIdentifier>
     </Filter>
@@ -93,21 +92,6 @@
     <ClInclude Include="..\Public\Loader.h">
       <Filter>01.Level\99.Loading\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Effect.h">
-      <Filter>02.GameObjects\02. Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Effect_Manager.h">
-      <Filter>02.GameObjects\02. Effect\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Effect_Multi.h">
-      <Filter>02.GameObjects\02. Effect\Multi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Effect_Single.h">
-      <Filter>02.GameObjects\02. Effect\Single</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Effect_MoveTex.h">
-      <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
-	</ClInclude>
     <ClInclude Include="..\Public\Imgui_Manager.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
@@ -150,6 +134,21 @@
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
       <Filter>IMGUI\Tap\IMGUI_UI_Tab</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\02. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Manager.h">
+      <Filter>02.GameObjects\02. Effect\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_MoveTex.h">
+      <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Multi.h">
+      <Filter>02.GameObjects\02. Effect\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Single.h">
+      <Filter>02.GameObjects\02. Effect\Single</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -170,21 +169,6 @@
     <ClCompile Include="..\Private\Loader.cpp">
       <Filter>01.Level\99.Loading\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Effect.cpp">
-      <Filter>02.GameObjects\02. Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\Effect_Manager.cpp">
-      <Filter>02.GameObjects\02. Effect\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Effect_MoveTex.cpp">
-      <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Effect_Multi.cpp">
-      <Filter>02.GameObjects\02. Effect\Multi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Effect_Single.cpp">
-      <Filter>02.GameObjects\02. Effect\Single</Filter>
-	</ClCompile>
     <ClCompile Include="..\Private\Imgui_Manager.cpp">
       <Filter>IMGUI</Filter>
     </ClCompile>
@@ -223,6 +207,21 @@
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
       <Filter>IMGUI\Tap\IMGUI_Animation_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\02. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Manager.cpp">
+      <Filter>02.GameObjects\02. Effect\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp">
+      <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Multi.cpp">
+      <Filter>02.GameObjects\02. Effect\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Single.cpp">
+      <Filter>02.GameObjects\02. Effect\Single</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
