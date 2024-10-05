@@ -216,3 +216,4 @@ EngineSDK/lib/DirectXTKd.lib
 AssimpSaveAndLoad/Models/Hyunwoo/Hyunwoo_01_LOD1.fbx
 Engine/Bin/Resources/EternalResource/Post/vignette-frame-1.dds
 Client/Bin/Resources/EternalResource/Post/vignette-frame-1.dds
+Client/Bin/assimp-vc140-mtd.dll

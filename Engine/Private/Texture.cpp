@@ -48,7 +48,12 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 		}
 
 		if (FAILED(hr))
+		{
+			// HRESULT 값을 출력하여 원인 파악
+			wprintf(L"CreateWICTextureFromFile failed with HRESULT 0x%08X\n", hr);
 			return E_FAIL;
+		}
+			
 
 		m_SRVs.emplace_back(pSRV);		
 	}
@@ -77,9 +82,12 @@ CTexture * CTexture::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pConte
 
 	if (FAILED(pInstance->Initialize_Prototype(pTextureFilePath, iNumTextures)))
 	{
-		MSG_BOX(TEXT("Failed to Created : CTexture"));
+		wstring Message{};
+		Message = TEXT("Failed to Created : CTexture \nFile Path  : ") + wstring(pTextureFilePath);
+		MessageBox(nullptr, Message.c_str(), L"System Message", MB_OK);
 		Safe_Release(pInstance);
 	}
+
 
 	return pInstance;
 }

@@ -33,7 +33,7 @@ namespace Engine
 		XMFLOAT3		vTexcoord;
 	}VTXCUBE;
 
-	typedef struct ENGINE_DLL
+	struct ENGINE_DLL VTXMESH
 	{
 		XMFLOAT3		vPosition;
 		XMFLOAT3		vNormal;
@@ -43,9 +43,9 @@ namespace Engine
 		static const unsigned int					iNumElements = { 4 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 
-	}VTXMESH;
+	};
 
-	typedef struct ENGINE_DLL
+	struct ENGINE_DLL VTXANIMMESH
 	{
 		XMFLOAT3		vPosition;
 		XMFLOAT3		vNormal;
@@ -57,7 +57,7 @@ namespace Engine
 		static const unsigned int					iNumElements = { 6 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 
-	}VTXANIMMESH;
+	};
 
 	struct BoneWeight {
 		_uint vertexID;

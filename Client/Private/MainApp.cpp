@@ -2,12 +2,15 @@
 #include "..\Public\MainApp.h"
 
 #include "GameInstance.h"
+#include "RenderInstance.h"
 #include "Level_Loading.h"
 
 CMainApp::CMainApp()
-	: m_pGameInstance { CGameInstance::Get_Instance() }
+	: m_pGameInstance{ CGameInstance::Get_Instance() },
+	  m_pRenderInstance{ CRenderInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pGameInstance);
+	Safe_AddRef(m_pRenderInstance);
 }
 
 HRESULT CMainApp::Initialize()
@@ -15,8 +18,10 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
+	m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext);
+
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
-		return E_FAIL;	
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -46,9 +51,9 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 	return S_OK;
 }
 
-CMainApp * CMainApp::Create()
+CMainApp* CMainApp::Create()
 {
-	CMainApp*		pInstance = new CMainApp();
+	CMainApp* pInstance = new CMainApp();
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -65,7 +70,9 @@ void CMainApp::Free()
 	Safe_Release(m_pDevice);
 
 	m_pGameInstance->Release_Engine();
+	Safe_Release(m_pGameInstance);
 
-	Safe_Release(m_pGameInstance);	
+	m_pRenderInstance->Release_Engine();
+	Safe_Release(m_pRenderInstance);
 }
 

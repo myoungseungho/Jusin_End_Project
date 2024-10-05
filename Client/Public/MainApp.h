@@ -2,9 +2,14 @@
 
 #include "Client_Defines.h"
 #include "Base.h"
+#include "RenderInstance.h"
 
 BEGIN(Engine)
 class CGameInstance;
+END
+
+BEGIN(Renderer)
+class CRenderInstance;
 END
 
 BEGIN(Client)
@@ -24,7 +29,7 @@ private:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
 	CGameInstance*				m_pGameInstance = { nullptr };
-
+	CRenderInstance*			m_pRenderInstance = { nullptr };
 private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
 

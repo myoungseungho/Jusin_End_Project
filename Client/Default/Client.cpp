@@ -6,6 +6,7 @@
 
 #include "MainApp.h"
 #include "GameInstance.h"
+#include "RenderInstance.h"
 
 #define MAX_LOADSTRING 100
 
@@ -54,6 +55,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CGameInstance*		pGameInstance = CGameInstance::Get_Instance();
 	if (nullptr == pGameInstance)
 		return FALSE;
+
+    CRenderInstance*     pRenderInstance = CRenderInstance::Get_Instance();
+    if (nullptr == pRenderInstance)
+        return FALSE;
 
 	if (FAILED(pGameInstance->Add_Timer(TEXT("Timer_Default"))))
 		return FALSE;
