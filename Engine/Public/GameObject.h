@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Base.h"
+#include "Transform.h"
+
 
 /* 클라이언트 개발자가 제작한 객체들의 부모 클래스가 된다. */
 
@@ -9,7 +10,7 @@ BEGIN(Engine)
 class ENGINE_DLL CGameObject abstract : public CBase
 {
 public:
-	struct GAMEOBJECT_DESC
+	struct GAMEOBJECT_DESC : public CTransform::TRANSFORM_DESC
 	{
 		_uint		iGameObjectData = {};
 	};
