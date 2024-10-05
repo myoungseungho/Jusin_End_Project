@@ -63,6 +63,7 @@ public:
 public:
 	HRESULT Initialize();
 	void SetUp_TransformDesc(const TRANSFORM_DESC* pTransformDesc);
+	HRESULT Bind_ShaderResource(class CShader* pShader, const _char* pConstantName);
 
 public:
 	void Go_Straight(_float fTimeDelta);

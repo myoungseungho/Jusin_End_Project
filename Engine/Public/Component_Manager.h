@@ -7,7 +7,8 @@
 //#include "VIBuffer_Terrain.h"
 #include "Component.h"
 #include "Model.h"
-
+#include "Shader.h"
+#include "Texture.h"
 /* 1. 원형객첼르 레벨별로 보관한다. */
 /* 2. 지정한 원형객체를 복제하여 리턴한다. */
 

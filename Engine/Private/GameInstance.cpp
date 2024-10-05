@@ -5,6 +5,7 @@
 #include "Object_Manager.h"
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
+#include "Input_Device.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -13,10 +14,14 @@ CGameInstance::CGameInstance()
 
 }
 
-HRESULT CGameInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
+HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
 {
 	m_pGraphic_Device = CGraphic_Device::Create(hWnd, isWindowed, iWinSizeX, iWinSizeY, ppDevice, ppContext);
 	if (nullptr == m_pGraphic_Device)
+		return E_FAIL;
+
+	m_pInput_Device = CInput_Device::Create(hInst, hWnd);
+	if (nullptr == m_pInput_Device)
 		return E_FAIL;
 
 	m_pObject_Manager = CObject_Manager::Create(iNumLevels);
@@ -98,6 +103,20 @@ HRESULT CGameInstance::Present()
 }
 
 
+_byte CGameInstance::Get_DIKeyState(_ubyte byKeyID)
+{
+	return m_pInput_Device->Get_DIKeyState(byKeyID);
+}
+
+_byte CGameInstance::Get_DIMouseState(MOUSEKEYSTATE eMouseKeyState)
+{
+	return m_pInput_Device->Get_DIMouseState(eMouseKeyState);
+}
+
+_long CGameInstance::Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState)
+{
+	return m_pInput_Device->Get_DIMouseMove(eMouseMoveState);
+}
 
 
 HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
@@ -213,6 +232,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pTimer_Manager);
 	Safe_Release(m_pLevel_Manager);
 	Safe_Release(m_pGraphic_Device);
+	Safe_Release(m_pInput_Device);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }

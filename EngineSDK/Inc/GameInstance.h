@@ -14,7 +14,7 @@ private:
 
 public:
 	/* 엔진을 초기화한다. */
-	HRESULT Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext);
+	HRESULT Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext);
 	void Update_Engine(_float fTimeDelta);
 	HRESULT Render_Engine();
 	HRESULT Clear_LevelResources(_uint iLevelIndex);
@@ -24,6 +24,10 @@ public: /* For.Graphic_Device */
 	HRESULT Clear_DepthStencil_View();	
 	HRESULT Present();
 
+public: /* For.Input_Device */
+	_byte	Get_DIKeyState(_ubyte byKeyID);
+	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouseKeyState);
+	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState);
 
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
@@ -54,6 +58,7 @@ public: /* For.PipeLine */
 
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
+	class CInput_Device*				m_pInput_Device = { nullptr };
 	class CLevel_Manager*				m_pLevel_Manager = { nullptr };
 	class CTimer_Manager*				m_pTimer_Manager = { nullptr };
 	class CObject_Manager*				m_pObject_Manager = { nullptr };

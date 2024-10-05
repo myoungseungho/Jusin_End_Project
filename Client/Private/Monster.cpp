@@ -1,16 +1,17 @@
 #include "stdafx.h"
 #include "..\Public\Monster.h"
 
+#include "RenderInstance.h"
 #include "GameInstance.h"
 
 CMonster::CMonster(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CGameObject { pDevice, pContext }
+	: CRenderObject { pDevice, pContext }
 {
 
 }
 
 CMonster::CMonster(const CMonster & Prototype)
-	: CGameObject{ Prototype }
+	: CRenderObject{ Prototype }
 {
 
 }
@@ -29,9 +30,6 @@ HRESULT CMonster::Initialize(void * pArg)
 		return E_FAIL;
 
 	m_pModelCom->SetUp_Animation(16, true);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(rand() % 20, 1.f, rand() % 20, 1.f));
-
-	//m_fRandom = max(rand() / (_float)RAND_MAX, 0.1f);
 
 	return S_OK;
 }
@@ -47,15 +45,13 @@ void CMonster::Update(_float fTimeDelta)
 
 void CMonster::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CMonster::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
-
-
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 
@@ -69,7 +65,6 @@ HRESULT CMonster::Render(_float fTimeDelta)
 
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-
 
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
@@ -105,22 +100,6 @@ HRESULT CMonster::Bind_ShaderResources()
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
-		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCamPosition", &m_pGameInstance->Get_CamPosition_Float4(), sizeof(_float4))))
-		return E_FAIL;
-
-	const LIGHT_DESC*	pLightDesc = m_pGameInstance->Get_LightDesc(0);
-	if (nullptr == pLightDesc)
-		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
-		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDiffuse", &pLightDesc->vDiffuse, sizeof(_float4))))
-		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightAmbient", &pLightDesc->vDiffuse, sizeof(_float4))))
-		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightSpecular", &pLightDesc->vSpecular, sizeof(_float4))))
 		return E_FAIL;
 
 	return S_OK;
