@@ -98,7 +98,9 @@ void CMainApp::Free()
 
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
+
 	CEffect_Manager::Get_Instance()->Destroy_Instance();
+
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
 	Safe_Release(m_pIMGUI_Manager);
