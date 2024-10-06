@@ -3,6 +3,10 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 
+BEGIN(Engine)
+class CShader;
+class CModel;
+END
 
 BEGIN(Client)
 
@@ -20,6 +24,17 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
+
+protected:
+	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
+
+	CShader* m_pShaderCom = { nullptr };
+	CModel*	 m_pModelCom = { nullptr };
+
+	_float		m_fDuration = { 0.f };
+	_float		m_fAlpha = { 0.f };
+
+	vector<KEYFRAME>	m_EffectKeyFrames;
 
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

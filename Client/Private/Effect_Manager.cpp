@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "Effect_Manager.h"
 
+IMPLEMENT_SINGLETON(CEffect_Manager)
+
 CEffect_Manager::CEffect_Manager()
 {
 }

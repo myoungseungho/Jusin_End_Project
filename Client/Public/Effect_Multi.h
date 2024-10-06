@@ -21,6 +21,13 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+private:
+	_uint		m_iNumColorTexture = { 0 };
+	_float		m_fChangeColorSpeed = { 0.f };
+	_uint		m_iNumMaskTexture = { 0 };
+	_float		m_fChangeMaskSpeed = { 0.f };
+
+
 public:
 	static CEffect_Multi* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
