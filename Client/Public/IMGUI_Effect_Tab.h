@@ -17,6 +17,9 @@ public:
 
 	virtual const _char* GetTabName() const { return "Effect"; };
 
+private:
+	class CEffect_Manager* m_pEffect_Manager = { nullptr };
+
 public:
 	static CIMGUI_Effect_Tab* Create();
 	virtual void Free() override;

@@ -13,20 +13,28 @@ private:
 	virtual ~CEffect_Manager() = default;
 
 public:
-	HRESULT Initialize(_uint iNumLevels);
+	HRESULT Initialize();
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
+	void Render();
+
+public:
+	class CEffect* Find_EachEffect(const wstring& strEachEffectTag);
+	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
+
+	HRESULT Add_EachEffect(const wstring& strEachEffectTag, class CEffect* pEachEffect);
+	HRESULT Add_Effect_To_Layer(const wstring& strEachEffectTag, const wstring& strEffectLayerTag, void* pArg = nullptr);
 
 private:
-	// 낱개 이펙트
+	// 낱개 이펙트 (프로토타입 같은 역할)
 	map<const wstring, class CEffect*>		m_EachEffects;
 
 	// 조합된 이펙트들을 보관
-	map<const wstring, class CEffect_Layer*>		m_Effects;
+	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
 
 public:
-	static CEffect_Manager* Create(_uint iNumLevels);
+	static CEffect_Manager* Create();
 	virtual void Free() override;
 };
 

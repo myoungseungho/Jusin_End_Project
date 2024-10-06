@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "Effect_Manager.h"
 #include "Effect_Layer.h"
+#include "Effect.h"
 
 IMPLEMENT_SINGLETON(CEffect_Manager)
 
@@ -9,20 +10,30 @@ CEffect_Manager::CEffect_Manager()
 {
 }
 
-HRESULT CEffect_Manager::Initialize(_uint iNumLevels)
+HRESULT CEffect_Manager::Initialize()
 {
 	return S_OK;
 }
 
 void CEffect_Manager::Priority_Update(_float fTimeDelta)
 {
+	for (auto& Pair : m_FinalEffects)
+		Pair.second->Priority_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Update(_float fTimeDelta)
 {
+	for (auto& Pair : m_FinalEffects)
+		Pair.second->Update(fTimeDelta);
 }
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
+{
+	for (auto& Pair : m_FinalEffects)
+		Pair.second->Late_Update(fTimeDelta);
+}
+
+void CEffect_Manager::Render()
 {
 }
 
@@ -78,11 +89,11 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(const wstring& strEachEffectTag, co
 	return S_OK;
 }
 
-CEffect_Manager* CEffect_Manager::Create(_uint iNumLevels)
+CEffect_Manager* CEffect_Manager::Create()
 {
 	CEffect_Manager* pInstance = new CEffect_Manager();
 
-	if (FAILED(pInstance->Initialize(iNumLevels)))
+	if (FAILED(pInstance->Initialize()))
 	{
 		MSG_BOX(TEXT("Failed to Created : CEffect_Manager"));
 		Safe_Release(pInstance);
@@ -104,5 +115,4 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair.second);
 
 	m_FinalEffects.clear();
-
 }

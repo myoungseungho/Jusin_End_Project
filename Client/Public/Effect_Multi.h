@@ -24,6 +24,7 @@ public:
 private:
 	_uint		m_iNumColorTexture = { 0 };
 	_float		m_fChangeColorSpeed = { 0.f };
+
 	_uint		m_iNumMaskTexture = { 0 };
 	_float		m_fChangeMaskSpeed = { 0.f };
 

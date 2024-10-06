@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\Effect.h" />
+    <ClInclude Include="..\public\Effect_Layer.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Effect_MoveTex.h" />
     <ClInclude Include="..\Public\Effect_Multi.h" />
@@ -181,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\private\Effect_Layer.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Effect_MoveTex.cpp" />
     <ClCompile Include="..\Private\Effect_Multi.cpp" />

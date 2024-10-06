@@ -11,6 +11,7 @@
 #include "RenderInstance.h"
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
+#include "Effect_Manager.h"
 
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
@@ -54,7 +55,6 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 
 	//레벨매니저 렌더는 게임인스턴스
 	m_pGameInstance->Render_Engine();
-
 	//나머지 렌더는 렌더인스턴스
 	m_pRenderInstance->Render_Engine();
 
@@ -98,7 +98,7 @@ void CMainApp::Free()
 
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
-
+	CEffect_Manager::Get_Instance()->Destroy_Instance();
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
 	Safe_Release(m_pIMGUI_Manager);

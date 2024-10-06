@@ -40,6 +40,9 @@
     <Filter Include="02.GameObjects\02. Effect\Multi">
       <UniqueIdentifier>{3a83342c-356f-48e0-b678-b6711abe33d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\02. Effect\Manager\Layer">
+      <UniqueIdentifier>{683a4001-94e0-4898-ab99-3d12226ca1df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -149,6 +152,9 @@
     <ClInclude Include="..\Public\Effect_Single.h">
       <Filter>02.GameObjects\02. Effect\Single</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Effect_Layer.h">
+      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -222,6 +228,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Effect_Single.cpp">
       <Filter>02.GameObjects\02. Effect\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Effect_Layer.cpp">
+      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

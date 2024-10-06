@@ -25,6 +25,7 @@ private:
 	_uint		m_iNumWidthColorTexture = { 0 };
 	_uint		m_iNumHeightColorTexture = { 0 };
 	_float		m_fColorTexcoordSpeed = { 0.f };
+
 	_uint		m_iNumWidthMaskTexture = { 0 };
 	_uint		m_iNumHeightMaskTexture = { 0 };
 	_float		m_fMaskTexcoordSpeed = { 0.f };
