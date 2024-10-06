@@ -20,7 +20,7 @@ public:
 	_char* GetName() { return m_szName; };
 	_int GetBoneIndex() { return m_iBoneIndex; };
 
-private:
+public:
 	_char				m_szName[MAX_PATH] = {};
 
 	_uint				m_iBoneIndex = {};

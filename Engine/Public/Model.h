@@ -53,7 +53,7 @@ private: /* For.Materials */
 private: /* For.Bones */
 	vector<class CBone*>		m_Bones;
 
-private: /* For.Animation */
+public: /* For.Animation */
 	_float						m_fCurrentAnimPosition = {};
 	_uint						m_iCurrentAnimationIndex = {};
 	_bool						m_isLoopAnim = { false };
@@ -70,6 +70,10 @@ public:
 	// 바이너리 로드
 	HRESULT InitializeFromBinary(const string& binFilePath, _fmatrix PreTransformMatrix);
 	void LoadBoneFromBinary(std::ifstream& inFile, BoneData& bone);
+
+	HRESULT SaveToBinary(const std::string& binFilePath) const;
+	void SaveBoneToBinary(std::ofstream& outFile, const BoneData& bone) const;
+
 
 public:
 	static CModel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _char* pModelFilePath, _fmatrix PreTransformMatrix);

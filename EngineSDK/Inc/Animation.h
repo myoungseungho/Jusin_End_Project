@@ -36,14 +36,12 @@ public:
 
 	void Add_SoundEvent(_float triggerTime, const std::wstring& soundAlias, _float volume);
 
-private:
+public:
 	_char			m_szName[MAX_PATH] = {};
 	_float			m_fDuration = {};
 	_float			m_fTickPerSecond = {};
 	_float			m_fCurrentPosition = {};
 
-private:
-	class CGameInstance* m_pGameInstance = { nullptr };
 
 	/* 이 애니메이션을 표현하기위해 컨트롤해야하는 뼈의 갯수 */
 	_uint						m_iNumChannels = {};
@@ -52,6 +50,8 @@ private:
 	vector<class CChannel*>		m_Channels;
 	vector<SoundEvent> m_SoundEvents;
 
+private:
+	class CGameInstance* m_pGameInstance = { nullptr };
 public:
 	static CAnimation* Create(AnimationData animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices);
 

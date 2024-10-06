@@ -53,7 +53,7 @@ public:
 
 	//_matrix			BoneMatrix = ChildMatrix * ParentMatrix;
 
-private:
+public:
 	_char				m_szName[MAX_PATH] = {};
 
 	/* 내 뼈만의 상태행렬(자식행렬) => 부모 기준으로 표현된 상태행렬. */

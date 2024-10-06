@@ -11,6 +11,9 @@
 //#include "Windows.h"
 //#include "shellapi.h"
 
+#include "Animation.h"
+#include "Channel.h"
+
 
 CIMGUI_Animation_Tab::CIMGUI_Animation_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CIMGUI_Tab{ pDevice,pContext }
@@ -25,34 +28,184 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 {
    
-    if (ImGui::Button("DragMod"))
-    {
-       // m_bDrag = !m_bDrag;
-       // DragAcceptFiles(g_hWnd, m_bDrag);
-    }
+   //드래그를 통해 바로 로드 하는 기능을 만드려 했으니 Default\Client 까지 가야 해서 취소
+   //if (ImGui::Button("DragMod"))
+   //{
+   //   // m_bDrag = !m_bDrag;
+   //   // DragAcceptFiles(g_hWnd, m_bDrag);
+   //}
 
     ImGui::InputText("Label", buffer, IM_ARRAYSIZE(buffer));
 
     if (ImGui::Button("Label Load"))
     {
-        //strncpy(buffer, inputText.c_str(), sizeof(buffer));
+
+        //../Bin/ModelData\Hit_Select.bin
 
         if (m_pSelectedModelCom != nullptr)
             Safe_Release(m_pSelectedModelCom);
 
         _fmatrix preMatrix = XMMatrixIdentity();
-       // m_pSelectedModelCom = CModel::Create(m_pDevice, m_pContext, buffer, preMatrix);
+       m_pSelectedModelCom = CModel::Create(m_pDevice, m_pContext, buffer, preMatrix);
 
         
     }
     
+    if (m_pSelectedModelCom != nullptr)
+    {
+         m_pSelectedModelCom->m_Animations;
+         Info_Anim();
+
+         if (m_bMotionPlaying)
+         {
+             m_pSelectedModelCom->Play_Animation(fTimeDelta);
+             ImGui::Text("CurrentAnimPosition :%f " ,(m_pSelectedModelCom->m_fCurrentAnimPosition) );
+
+         }
+
+         if (m_bCurrentPositionSlide)
+         {
+             CreateSlider(m_pSelectedModelCom->m_fCurrentAnimPosition, m_pSelectedModelCom->m_fBlendDuration);
+         }
+
+    }
+
+    _bool DebugPoint = false;
 
 }
 
 void CIMGUI_Animation_Tab::Info_Anim()
 {
+    //999로 한 이유는 0으로 하면 터져서 
+    static int currentIndex = 999;
+
+    static bool isLoop = false;
+
+    std::vector<const char*> animNames;
+
+    //태완
+   // for (const auto& anim : m_pSelectedModelCom->m_ModelData.animations) {
+   //     animNames.push_back(anim.szName);
+   // }
+
+    //적용 후
+    for (auto AnimData : m_pSelectedModelCom->m_Animations)
+    {
+        animNames.push_back(AnimData->m_szName);
+    }
+
+
+    ImGui::Text("Selected Animation");
+    ImGui::Combo("##", &currentIndex, animNames.data(), animNames.size());
+
+    if (currentIndex < animNames.size())
+    {
+        // 현재 선택된 애니메이션 데이터를 가져옴
+         
+        //Ver.태완
+        //const auto& selectedAnim = m_pSelectedModelCom->m_ModelData.animations[currentIndex];
+
+
+        const auto& selectedAnim = m_pSelectedModelCom->m_Animations[currentIndex];
+
+        // 애니메이션의 각 멤버를 ImGui::Text로 표시
+        ImGui::Text("AnimIndex: %d", currentIndex);
+        ImGui::Text("Name: %s", selectedAnim->m_szName);
+        ImGui::Text("Duration: %f", selectedAnim->m_fDuration);
+        ImGui::Text("Ticks Per Second: %f", selectedAnim->m_fTickPerSecond);
+        ImGui::Text("Number of Channels: %u", selectedAnim->m_iNumChannels);
+
+        // 각 채널을 하나로 묶어 트리 노드로 표시
+        if (ImGui::TreeNode("Channels"))
+        {
+            // 각 채널의 정보 표시
+            for (size_t i = 0; i < selectedAnim->m_Channels.size(); ++i)
+            {
+                const auto& channel = selectedAnim->m_Channels[i];
+               //const auto channel = selectedAnim->m_Channels[i];
+
+
+                //if (ImGui::TreeNode((void*)(intptr_t)i, "Channel %u: %s", static_cast<unsigned>(i), channel->m_szName))
+                if (ImGui::TreeNode((void*)(intptr_t)i, "Channel %u: %s", static_cast<unsigned>(i), channel->GetName()))
+                {
+                   //ImGui::Text("  Name: %s", channel.m_szName);
+                   //ImGui::Text("  Bone Index: %u", channel.iBoneIndex);
+                   //ImGui::Text("  Number of KeyFrames: %u", channel.iNumKeyFrames);
+
+                    ImGui::Text("  Name: %s", channel->GetName());
+                    ImGui::Text("  Bone Index: %u", channel->m_iBoneIndex);
+                    ImGui::Text("  Number of KeyFrames: %u", channel->m_iNumKeyFrames);
+
+                    // 각 키프레임의 정보 표시
+                    if (ImGui::TreeNode("KeyFrames"))
+                    {
+                        for (size_t j = 0; j < channel->m_KeyFrames.size(); ++j)
+                        {
+                            const auto& keyFrame = channel->m_KeyFrames[j];
+                            if (ImGui::TreeNode((void*)(intptr_t)j, "KeyFrame %u", static_cast<unsigned>(j)))
+                            {
+                                ImGui::Text("    Time: %f", keyFrame.fTime);
+                                ImGui::Text("    Scale: [%f, %f, %f]", keyFrame.vScale.x, keyFrame.vScale.y, keyFrame.vScale.z);
+                                ImGui::Text("    Rotation: [%f, %f, %f, %f]", keyFrame.vRotation.x, keyFrame.vRotation.y, keyFrame.vRotation.z, keyFrame.vRotation.w);
+                                ImGui::Text("    Position: [%f, %f, %f]", keyFrame.vPosition.x, keyFrame.vPosition.y, keyFrame.vPosition.z);
+                                ImGui::TreePop();
+                            }
+                        }
+                        ImGui::TreePop();
+                    }
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::TreePop();
+        }
+
+        ImGui::Checkbox("Loop", &isLoop);
+        if (ImGui::Button("Play"))
+        {
+            m_pSelectedModelCom->SetUp_Animation(currentIndex, isLoop);
+            //m_pSelectedModelCom->Play_Animation(0.1f);
+
+            m_bMotionPlaying = true;
+
+            CreateSlider(50, 100);
+
+            ImGui::Text("Current Value: %.0f", 50);
+            m_bCurrentPositionSlide = true;
+
+        }
+        if (ImGui::Button("Stop"))
+        {
+
+            m_bMotionPlaying = false;
+            m_bCurrentPositionSlide = false;
+        }
+    }
+}
+
+void CIMGUI_Animation_Tab::CreateSlider(_float currentValue, _float maxValue)
+{
+    // Define the slider length
+    const _float sliderLength = 300.0f;
+
+    // Calculate the normalized position of the current value
+    //_float normalizedValue = currentValue / maxValue;
+    // Calculate the slider position based on the normalized value
+    //float sliderPosition = normalizedValue * sliderLength;
+
+    // Create a slider using ImGui
+    //ImGui::SliderFloat("Slider", &currentValue, 0, maxValue, "%.0f", ImGuiSliderFlags_AlwaysClamp);
+
+    // Set the current value to the calculated position
+   // ImGui::SetCursorPos(ImVec2(sliderPosition, ImGui::GetCursorPosY()));
+
+    ImGui::SliderFloat("Slider", &currentValue, 0, maxValue, "%.0f", ImGuiSliderFlags_AlwaysClamp);
+
+    
 
 }
+
+
+
 
 //void CIMGUI_Animation_Tab::LoadModelDataFromBinary(){}
  
@@ -215,4 +368,9 @@ CIMGUI_Animation_Tab* CIMGUI_Animation_Tab::Create(ID3D11Device* pDevice, ID3D11
 void CIMGUI_Animation_Tab::Free()
 {
 	__super::Free();
+
+    if (m_pSelectedModelCom != nullptr)
+    {
+        Safe_Release(m_pSelectedModelCom);
+    }
 }
