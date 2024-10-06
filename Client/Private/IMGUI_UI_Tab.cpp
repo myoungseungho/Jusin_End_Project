@@ -2,7 +2,9 @@
 #include "IMGUI_UI_Tab.h"
 
 
-CIMGUI_UI_Tab::CIMGUI_UI_Tab()
+
+CIMGUI_UI_Tab::CIMGUI_UI_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:CIMGUI_Tab{ pDevice,pContext }
 {
 }
 
@@ -15,9 +17,9 @@ void CIMGUI_UI_Tab::Render(_float fTimeDelta)
 {
 }
 
-CIMGUI_UI_Tab* CIMGUI_UI_Tab::Create()
+CIMGUI_UI_Tab* CIMGUI_UI_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CIMGUI_UI_Tab* pInstance = new CIMGUI_UI_Tab();
+	CIMGUI_UI_Tab* pInstance = new CIMGUI_UI_Tab(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -30,4 +32,5 @@ CIMGUI_UI_Tab* CIMGUI_UI_Tab::Create()
 
 void CIMGUI_UI_Tab::Free()
 {
+	__super::Free();
 }

@@ -9,7 +9,7 @@ class CIMGUI_Tab : public CBase
 {
 
 protected:
-	CIMGUI_Tab();
+	CIMGUI_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CIMGUI_Tab() = default;
 
 public:
@@ -18,7 +18,11 @@ public:
 
 public:
 	virtual const _char* GetTabName() const = 0;
-	virtual void Free() = 0;
+	virtual void Free();
+
+protected:
+	ID3D11Device* m_pDevice = { nullptr };
+	ID3D11DeviceContext* m_pContext = { nullptr };
 };
 
 END
