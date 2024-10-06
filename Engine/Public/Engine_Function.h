@@ -49,7 +49,6 @@ namespace Engine
 
 		return iRefCnt;
 	}
-
 	
 	// 1. 벡터의 길이를 구하는 함수
 	inline _float GetVectorLength(const _vector& v)
@@ -79,4 +78,3 @@ namespace Engine
 		return XMLoadFloat4x4(&floatMat);
 	}
 }
-

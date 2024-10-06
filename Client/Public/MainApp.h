@@ -23,6 +23,8 @@ private:
 public:
 	HRESULT Initialize();
 	void Update(_float fTimeDelta);
+	void Fixed_Update(_float fTimeDelta);
+
 	HRESULT Render(_float fTimeDelta);
 
 private:

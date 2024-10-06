@@ -47,6 +47,10 @@ void CMainApp::Update(_float fTimeDelta)
 	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
+void CMainApp::Fixed_Update(_float fTimeDelta)
+{
+}
+
 HRESULT CMainApp::Render(_float fTimeDelta)
 {
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
