@@ -67,8 +67,6 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 		m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
 	}
 
-
-
 	__super::Priority_Update(fTimeDelta);
 }
 

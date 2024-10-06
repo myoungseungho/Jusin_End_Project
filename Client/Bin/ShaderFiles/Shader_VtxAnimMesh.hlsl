@@ -6,7 +6,7 @@ float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D		g_DiffuseTexture;
 
 /* 모델 전체의 뼈(x), 메시에게 영향을 주는 뼈(o)*/
-float4x4		g_BoneMatrices[512];
+float4x4		g_BoneMatrices[800];
 
 
 struct VS_IN
