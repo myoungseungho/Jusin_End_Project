@@ -2,7 +2,8 @@
 #include "IMGUI_Animation_Tab.h"
 
 
-CIMGUI_Animation_Tab::CIMGUI_Animation_Tab()
+CIMGUI_Animation_Tab::CIMGUI_Animation_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:CIMGUI_Tab{ pDevice,pContext }
 {
 }
 
@@ -13,11 +14,12 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 
 void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 {
+	m_pContext;
 }
 
-CIMGUI_Animation_Tab* CIMGUI_Animation_Tab::Create()
+CIMGUI_Animation_Tab* CIMGUI_Animation_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CIMGUI_Animation_Tab* pInstance = new CIMGUI_Animation_Tab();
+	CIMGUI_Animation_Tab* pInstance = new CIMGUI_Animation_Tab(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -30,4 +32,5 @@ CIMGUI_Animation_Tab* CIMGUI_Animation_Tab::Create()
 
 void CIMGUI_Animation_Tab::Free()
 {
+	__super::Free();
 }
