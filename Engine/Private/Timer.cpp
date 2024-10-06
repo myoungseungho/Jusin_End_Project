@@ -1,7 +1,6 @@
 #include "Timer.h"
 
 CTimer::CTimer()
-	: m_fTimeDelta(0.f)
 {
 	ZeroMemory(&m_OldTime, sizeof(LARGE_INTEGER));
 	ZeroMemory(&m_CurTime, sizeof(LARGE_INTEGER));
@@ -25,19 +24,13 @@ HRESULT CTimer::Initialize()
 
 _float CTimer::Compute_TimeDelta()
 {
-	QueryPerformanceCounter(&m_CurTime);	// 1100
-	
-	if (m_CurTime.QuadPart - m_OriginTime.QuadPart > m_CpuTick.QuadPart)
-	{
-		QueryPerformanceFrequency(&m_CpuTick);
-		m_OriginTime = m_CurTime;
-	}
-	
-	m_fTimeDelta = _float(m_CurTime.QuadPart - m_OldTime.QuadPart) / m_CpuTick.QuadPart;
+	QueryPerformanceCounter(&m_CurTime);
+
+	m_fUnscaledDeltaTime = _float(m_CurTime.QuadPart - m_OldTime.QuadPart) / _float(m_CpuTick.QuadPart);
 
 	m_OldTime = m_CurTime;
 
-	return m_fTimeDelta;
+	return m_fUnscaledDeltaTime;
 }
 
 CTimer * CTimer::Create()

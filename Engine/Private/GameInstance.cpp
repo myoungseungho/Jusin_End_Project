@@ -102,21 +102,35 @@ HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
 	return m_pLevel_Manager->Change_Level(pNewLevel);	
 }
 
-HRESULT CGameInstance::Add_Timer(const _wstring & strTimerTag)
+HRESULT CGameInstance::Add_Timer(const _wstring& strTimerTag)
 {
-	return m_pTimer_Manager->Add_Timer(strTimerTag);	
+	return m_pTimer_Manager->Add_Timer(strTimerTag);
 }
 
-_float CGameInstance::Compute_TimeDelta(const _wstring & strTimerTag)
+_float CGameInstance::Compute_TimeDelta(const _wstring& strTimerTag)
 {
 	return m_pTimer_Manager->Compute_TimeDelta(strTimerTag);
+}
+
+void CGameInstance::StartSlowMotion(_float fTimeScale)
+{
+	m_pTimer_Manager->Set_TimeScale(fTimeScale);
+}
+
+void CGameInstance::StopSlowMotion()
+{
+	m_pTimer_Manager->Set_TimeScale(1.0f); // 시간 스케일을 정상으로 복원
+}
+
+_float CGameInstance::Get_UnscaledDeltaTime(const _wstring& strTimerTag)
+{
+	return m_pTimer_Manager->Get_UnscaledDeltaTime(strTimerTag);
 }
 
 _float CGameInstance::Get_ScaledDeltaTime(const _wstring& strTimerTag)
 {
 	return m_pTimer_Manager->Get_ScaledDeltaTime(strTimerTag);
 }
-
 HRESULT CGameInstance::Add_Prototype(const wstring & strPrototypeTag, CGameObject * pPrototype)
 {
 	if (nullptr == m_pObject_Manager)
