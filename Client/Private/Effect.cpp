@@ -58,7 +58,7 @@ CGameObject* CEffect::Clone(void* pArg)
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CMonster"));
+		MSG_BOX(TEXT("Failed to Cloned : CEffect"));
 		Safe_Release(pInstance);
 	}
 
