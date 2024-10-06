@@ -5,13 +5,13 @@
 #include "GameInstance.h"
 
 CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CRenderObject{ pDevice, pContext }
+	: CGameObject{ pDevice, pContext }
 {
 
 }
 
 CMonster::CMonster(const CMonster& Prototype)
-	: CRenderObject{ Prototype }
+	: CGameObject{ Prototype }
 {
 
 }

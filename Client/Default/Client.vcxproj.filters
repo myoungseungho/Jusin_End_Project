@@ -55,9 +55,6 @@
     <Filter Include="02.GameObjects\Camera\Free">
       <UniqueIdentifier>{d27343f5-a3bb-400e-9f55-c6d55c0435ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\RenderObject">
-      <UniqueIdentifier>{040b95ff-ccdf-4406-8561-27294b12987f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="96.ShaderFiles">
       <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
     </Filter>
@@ -138,9 +135,6 @@
     <ClInclude Include="..\Public\Camera_Free.h">
       <Filter>02.GameObjects\Camera\Free</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\RenderObject.h">
-      <Filter>02.GameObjects\RenderObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -205,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\Camera_Free.cpp">
       <Filter>02.GameObjects\Camera\Free</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\RenderObject.cpp">
-      <Filter>02.GameObjects\RenderObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,10 @@
 
 /* 클라이언트 개발자가 제작한 객체들의 부모 클래스가 된다. */
 
+BEGIN(Renderer)
+class CRenderInstance;
+END
+
 BEGIN(Engine)
 
 class ENGINE_DLL CGameObject abstract : public CBase
@@ -46,7 +50,7 @@ protected:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
 	class CGameInstance*		m_pGameInstance = { nullptr };
-
+	class Renderer::CRenderInstance*		m_pRenderInstance = { nullptr };
 	_uint						m_iGameObjectData = { 0 };
 
 	class CTransform*			m_pTransformCom = { nullptr };
