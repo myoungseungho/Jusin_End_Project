@@ -44,10 +44,10 @@ HRESULT CImgui_Manager::Initialize()
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	//IMGUI ÅÇ °´Ã¼ »ý¼º
-	m_vecTabs.push_back(CIMGUI_Shader_Tab::Create());
-	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create());
-	m_vecTabs.push_back(CIMGUI_UI_Tab::Create());
-	m_vecTabs.push_back(CIMGUI_Effect_Tab::Create());
+	m_vecTabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext));
+	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create(m_pDevice, m_pContext));
+	m_vecTabs.push_back(CIMGUI_UI_Tab::Create(m_pDevice, m_pContext));
+	m_vecTabs.push_back(CIMGUI_Effect_Tab::Create(m_pDevice, m_pContext));
 
 	return S_OK;
 }

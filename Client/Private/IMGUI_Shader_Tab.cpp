@@ -2,7 +2,8 @@
 #include "IMGUI_Shader_Tab.h"
 
 
-CIMGUI_Shader_Tab::CIMGUI_Shader_Tab()
+CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:CIMGUI_Tab{ pDevice,pContext }
 {
 }
 
@@ -15,9 +16,9 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
 }
 
-CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create()
+CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab();
+	CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -30,4 +31,5 @@ CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create()
 
 void CIMGUI_Shader_Tab::Free()
 {
+	__super::Free();
 }

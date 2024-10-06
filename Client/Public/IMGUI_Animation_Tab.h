@@ -62,7 +62,7 @@ class CIMGUI_Animation_Tab : public CIMGUI_Tab
 {
 
 protected:
-	CIMGUI_Animation_Tab();
+	CIMGUI_Animation_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CIMGUI_Animation_Tab() = default;
 
 public:
@@ -90,11 +90,9 @@ private:
     _char buffer[128];
     string inputText;
 
-public:
-	static CIMGUI_Animation_Tab* Create();
-	virtual void Free() override;	
-
-private:
+ public:
+	static CIMGUI_Animation_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	virtual void Free() override;
 };
 
 END

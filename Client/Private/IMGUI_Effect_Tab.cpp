@@ -2,7 +2,9 @@
 #include "IMGUI_Effect_Tab.h"
 
 
-CIMGUI_Effect_Tab::CIMGUI_Effect_Tab()
+
+CIMGUI_Effect_Tab::CIMGUI_Effect_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:CIMGUI_Tab{ pDevice,pContext }
 {
 }
 
@@ -15,9 +17,9 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 {
 }
 
-CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create()
+CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CIMGUI_Effect_Tab* pInstance = new CIMGUI_Effect_Tab();
+	CIMGUI_Effect_Tab* pInstance = new CIMGUI_Effect_Tab(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -30,4 +32,5 @@ CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create()
 
 void CIMGUI_Effect_Tab::Free()
 {
+	__super::Free();
 }
