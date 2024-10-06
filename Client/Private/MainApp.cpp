@@ -30,8 +30,12 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
+	if (FAILED(Ready_Prototype_Component_ForStatic()))
+		return E_FAIL;
+
 	//IMGUI »ý¼º, ½Ì±ÛÅÏ
 	Create_IMGUI_Manager();
+
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
@@ -74,6 +78,16 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
 	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext, m_pGameInstance, m_pRenderInstance);
+
+	return S_OK;
+}
+
+HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
+{
+	/* For.Prototype_Component_Shader_VtxPosTex */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxPosTex.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
 
 	return S_OK;
 }
