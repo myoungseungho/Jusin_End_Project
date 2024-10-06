@@ -73,7 +73,7 @@ namespace Engine
 		return floatMat;
 	}
 
-	//4. Float4x4∏¶ Matrix∏¶
+	//4. Float4x4∏¶ Matrix∏¶ πŸ≤„¡‹
 	inline _matrix Float4x4ToMatrix(const _float4x4& floatMat)
 	{
 		return XMLoadFloat4x4(&floatMat);
