@@ -23,7 +23,7 @@ private:
 	map<const wstring, class CEffect*>		m_EachEffects;
 
 	// 조합된 이펙트들을 보관
-	map<const wstring, vector<class CEffect*>*>		m_Effects;
+	map<const wstring, class CEffect_Layer*>		m_Effects;
 
 public:
 	static CEffect_Manager* Create(_uint iNumLevels);
