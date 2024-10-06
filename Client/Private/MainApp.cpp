@@ -27,7 +27,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 
 	//렌더인스턴스 엔진 초기화
-	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
+	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext, m_pGameInstance)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_Component_ForStatic()))
@@ -35,7 +35,6 @@ HRESULT CMainApp::Initialize()
 
 	//IMGUI 생성, 싱글턴
 	Create_IMGUI_Manager();
-
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;

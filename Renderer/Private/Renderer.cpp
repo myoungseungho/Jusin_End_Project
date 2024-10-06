@@ -3,21 +3,24 @@
 #include "RenderInstance.h"
 #include "VIBuffer_Rect.h"
 #include "Shader.h"
+#include "GameInstance.h"
 
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
-CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* gameInstance)
 	: m_pDevice{ pDevice }
 	, m_pContext{ pContext }
 	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
+	, m_pGameInstance{ CGameInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pDevice);
 	Safe_AddRef(m_pContext);
 	Safe_AddRef(m_pRenderInstance);
+	Safe_AddRef(m_pGameInstance);
 }
 
-HRESULT CRenderer::Initialize(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	D3D11_VIEWPORT			ViewportDesc{};
 	_uint					iNumViewport = { 1 };
@@ -126,15 +129,15 @@ HRESULT CRenderer::Initialize(ID3D11Device * pDevice, ID3D11DeviceContext * pCon
 	return S_OK;
 }
 
-HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject * pRenderObject)
+HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject)
 {
 	if (eRenderGroup >= RG_END)
 		return E_FAIL;
-	
+
 	m_RenderObjects[eRenderGroup].emplace_back(pRenderObject);
 
 	Safe_AddRef(pRenderObject);
-	
+
 	return S_OK;
 }
 
@@ -184,7 +187,7 @@ HRESULT CRenderer::Render_Priority(_float fTimeDelta)
 HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 {
 	/* Target_LightDepth */
-	if (FAILED(m_pGameInstance->Begin_MRT(TEXT("MRT_ShadowObjects"), m_pShadowDSV)))
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ShadowObjects"), m_pShadowDSV)))
 		return E_FAIL;
 
 	D3D11_VIEWPORT			ViewPortDesc;
@@ -202,14 +205,14 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	for (auto& pRenderObject : m_RenderObjects[RG_SHADOWOBJ])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
 
 	m_RenderObjects[RG_SHADOWOBJ].clear();
 
-	if (FAILED(m_pGameInstance->End_MRT()))
+	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
 	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
@@ -234,7 +237,7 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -260,9 +263,9 @@ HRESULT CRenderer::Render_Lights(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &m_pRenderInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW))))
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
-	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &m_pRenderInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ))))
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_NormalTexture", TEXT("Target_Normal"))))
@@ -270,7 +273,7 @@ HRESULT CRenderer::Render_Lights(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Depth"))))
 		return E_FAIL;
 
-	if (FAILED(m_pShader->Bind_RawValue("g_vCamPosition", &m_pRenderInstance->Get_CamPosition_Float4(), sizeof(_float4))))
+	if (FAILED(m_pShader->Bind_RawValue("g_vCamPosition", &m_pGameInstance->Get_CamPosition_Float4(), sizeof(_float4))))
 		return E_FAIL;
 
 	m_pVIBuffer->Bind_Buffers();
@@ -394,9 +397,9 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	return S_OK;
 }
 
-CRenderer * CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* gameInstance)
 {
-	return new CRenderer(pDevice, pContext);
+	return new CRenderer(pDevice, pContext, gameInstance);
 }
 
 void CRenderer::Free()
@@ -413,4 +416,6 @@ void CRenderer::Free()
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
 	Safe_Release(m_pRenderInstance);
+	Safe_Release(m_pGameInstance);
+
 }

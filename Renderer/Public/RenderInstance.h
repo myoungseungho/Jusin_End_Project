@@ -2,6 +2,10 @@
 
 #include "Renderer.h"
 
+BEGIN(Engine)
+class CGameInstance;
+END
+
 BEGIN(Renderer)
 
 class RENDERER_DLL CRenderInstance final : public CBase
@@ -13,7 +17,7 @@ private:
 
 public:
 	/* 엔진을 초기화한다. */
-	HRESULT Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext);
+	HRESULT Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext, class CGameInstance* gameInstance);
 	HRESULT Render_Engine(_float fTimeDelta);
 
 public: /* For.Renderer */
@@ -26,6 +30,12 @@ public: /* For.Target_Manager */
 	HRESULT End_MRT();
 	HRESULT Copy_RenderTarget(const _wstring& strTargetTag, ID3D11Texture2D* pTexture2D);
 	HRESULT Bind_RT_ShaderResource(class CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag);
+
+#ifdef _DEBUG
+public:
+	HRESULT Ready_RT_Debug(const _wstring& strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY);
+	HRESULT Render_RT_Debug(const _wstring& strMRTTag, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
+#endif
 
 private:
 	class CRenderer*					m_pRenderer = { nullptr };
