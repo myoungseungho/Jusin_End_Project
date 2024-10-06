@@ -56,7 +56,6 @@ namespace Engine
 
 		static const unsigned int					iNumElements = { 6 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
-
 	};
 
 	struct BoneWeight {

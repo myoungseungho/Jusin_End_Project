@@ -29,5 +29,13 @@
     <Filter Include="99.Defines">
       <UniqueIdentifier>{dbbb9c61-040b-497a-b09d-b311fe3ec6fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.ShaderFiles">
+      <UniqueIdentifier>{93e36a74-e9f0-43e0-a97f-fea157c3294b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Public\Renderer_Shader_Defines.hlsli">
+      <Filter>98.ShaderFiles</Filter>
+    </None>
   </ItemGroup>
 </Project>

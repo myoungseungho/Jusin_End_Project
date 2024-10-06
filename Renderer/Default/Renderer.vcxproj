@@ -27,6 +27,9 @@
     <ClInclude Include="..\Public\Renderer_Defines.h" />
     <ClInclude Include="..\Public\RenderInstance.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Public\Renderer_Shader_Defines.hlsli" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

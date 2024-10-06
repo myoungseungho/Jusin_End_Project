@@ -58,6 +58,9 @@
     <Filter Include="02.GameObjects\RenderObject">
       <UniqueIdentifier>{040b95ff-ccdf-4406-8561-27294b12987f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="96.ShaderFiles">
+      <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -219,5 +222,10 @@
     <ResourceCompile Include="Client.rc">
       <Filter>98.Default</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
