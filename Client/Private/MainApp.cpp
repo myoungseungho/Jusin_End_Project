@@ -56,7 +56,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Render_Engine();
 
 	//³ª¸ÓÁö ·»´õ´Â ·»´õÀÎ½ºÅÏ½º
-	m_pRenderInstance->Render_Engine();
+	m_pRenderInstance->Render_Engine(fTimeDelta);
 
 	m_pGameInstance->Present();
 

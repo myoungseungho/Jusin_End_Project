@@ -23,7 +23,7 @@ private:
 public:
 	HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
-	HRESULT Draw();
+	HRESULT Draw(_float fTimeDelta);
 
 private:
 	ID3D11Device*			m_pDevice = { nullptr };
@@ -31,10 +31,10 @@ private:
 	list<class CGameObject*>			m_RenderObjects[RG_END];
 
 private:
-	HRESULT Render_Priority();
-	HRESULT Render_NonBlend();
-	HRESULT Render_Blend();
-	HRESULT Render_UI();
+	HRESULT Render_Priority(_float fTimeDelta);
+	HRESULT Render_NonBlend(_float fTimeDelta);
+	HRESULT Render_Blend(_float fTimeDelta);
+	HRESULT Render_UI(_float fTimeDelta);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -16,12 +16,12 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 	return S_OK;
 }
 
-HRESULT CRenderInstance::Render_Engine()
+HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
-	if (FAILED(m_pRenderer->Draw()))
+	if (FAILED(m_pRenderer->Draw(fTimeDelta)))
 		return E_FAIL;
 
 	return S_OK;

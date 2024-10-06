@@ -28,26 +28,26 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject * pRen
 	return S_OK;
 }
 
-HRESULT CRenderer::Draw()
+HRESULT CRenderer::Draw(_float fTimeDelta)
 {
-	if (FAILED(Render_Priority()))
+	if (FAILED(Render_Priority(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_NonBlend()))
+	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_Blend()))
+	if (FAILED(Render_Blend(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_UI()))
+	if (FAILED(Render_UI(fTimeDelta)))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CRenderer::Render_Priority()
+HRESULT CRenderer::Render_Priority(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_PRIORITY])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -57,12 +57,12 @@ HRESULT CRenderer::Render_Priority()
 	return S_OK;
 }
 
-HRESULT CRenderer::Render_NonBlend()
+HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -72,12 +72,12 @@ HRESULT CRenderer::Render_NonBlend()
 	return S_OK;
 }
 
-HRESULT CRenderer::Render_Blend()
+HRESULT CRenderer::Render_Blend(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_BLEND])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -87,12 +87,12 @@ HRESULT CRenderer::Render_Blend()
 	return S_OK;
 }
 
-HRESULT CRenderer::Render_UI()
+HRESULT CRenderer::Render_UI(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_UI])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
