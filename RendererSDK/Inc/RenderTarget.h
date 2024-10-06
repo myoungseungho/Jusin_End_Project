@@ -1,10 +1,16 @@
 #pragma once
 
 #include "Base.h"
+#include "Renderer_Defines.h"
 
 /* ·»´õÅ¸°ÙÇÏ³ª¸¦ ÀÇ¹ÌÇÏ´Â °´Ã¼´Ù. */
 
 BEGIN(Engine)
+class CShader;
+class CVIBuffer_Rect;
+END
+
+BEGIN(Renderer)
 
 class CRenderTarget final : public CBase
 {

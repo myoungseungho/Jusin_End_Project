@@ -11,6 +11,7 @@ class CGameObject;
 class CShader;
 class CVIBuffer_Rect;
 class CGameInstance;
+class CComponent;
 END
 
 BEGIN(Renderer)

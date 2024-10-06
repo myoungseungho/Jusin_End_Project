@@ -3,6 +3,11 @@
 #include "Base.h"
 #include "Renderer_Defines.h"
 
+BEGIN(Engine)
+class CShader;
+class CVIBuffer_Rect;
+END
+
 BEGIN(Renderer)
 
 class CTarget_Manager final : public CBase

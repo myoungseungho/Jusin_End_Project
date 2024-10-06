@@ -13,7 +13,7 @@ HRESULT CLight::Initialize(const LIGHT_DESC & LightDesc)
 	return S_OK;
 }
 
-HRESULT CLight::Render(CShader * pShader, CVIBuffer_Rect * pVIBuffer)
+HRESULT CLight::Render(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 {
 	_uint		iPassIndex = { 0 };
 
