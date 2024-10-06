@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Base.h"
+#include "Renderer_Defines.h"
 
-BEGIN(Engine)
+BEGIN(Renderer)
 
 class CTarget_Manager final : public CBase
 {

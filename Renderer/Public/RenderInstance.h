@@ -37,13 +37,18 @@ public:
 	HRESULT Render_RT_Debug(const _wstring& strMRTTag, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
 #endif
 
+public:/*For.Light_Manager*/
+	const LIGHT_DESC* Get_LightDesc(_uint iLightIndex) const;
+	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
+	HRESULT Render_Lights(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
 private:
-	class CRenderer*					m_pRenderer = { nullptr };
-	class CTarget_Manager*				m_pTarget_Manager = { nullptr };
+	class CRenderer* m_pRenderer = { nullptr };
+	class CTarget_Manager* m_pTarget_Manager = { nullptr };
+	class CLight_Manager* m_pLight_Manager = { nullptr };
 
 public:
 	void Release_Engine();
-	
+
 	virtual void Free() override;
 };
 

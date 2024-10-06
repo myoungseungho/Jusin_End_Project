@@ -4,7 +4,7 @@
 #include "VIBuffer_Rect.h"
 #include "Shader.h"
 #include "GameInstance.h"
-
+#include "Component.h"
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
@@ -331,7 +331,7 @@ HRESULT CRenderer::Render_NonLight(_float fTimeDelta)
 	for (auto& pRenderObject : m_RenderObjects[RG_NONLIGHT])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render();
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -375,7 +375,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	for (auto& pComponent : m_DebugComponent)
 	{
-		pComponent->Render();
+		pComponent->Render(fTimeDelta);
 
 		Safe_Release(pComponent);
 	}

@@ -13,6 +13,12 @@
     <ClCompile Include="..\Private\Target_Manager.cpp">
       <Filter>03.Target_Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Light_Manager.cpp">
+      <Filter>04.Lights\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Light.cpp">
+      <Filter>04.Lights</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\RenderInstance.h">
@@ -29,6 +35,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Target_Manager.h">
       <Filter>03.Target_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Light_Manager.h">
+      <Filter>04.Lights\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Light.h">
+      <Filter>04.Lights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +62,12 @@
     <Filter Include="03.Target_Manager">
       <UniqueIdentifier>{9d25979a-07f0-441d-a738-6208daf8d944}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Lights">
+      <UniqueIdentifier>{5d2d1cc9-2eec-4109-aed2-f584862b2d7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Lights\Manager">
+      <UniqueIdentifier>{b6a761dd-6b06-4297-8ed8-e4dff1b71863}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bin\ShaderFiles\Renderer_Shader_Defines.hlsli">
@@ -57,7 +75,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred.hlsl">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Defines.hlsl">
       <Filter>98.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

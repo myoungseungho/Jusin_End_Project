@@ -1,6 +1,7 @@
 #include "RenderInstance.h"
 #include "Target_Manager.h"
 #include "GameInstance.h"
+#include "Light_Manager.h"
 
 IMPLEMENT_SINGLETON(CRenderInstance)
 
@@ -13,6 +14,14 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 {
 	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext, gameInstance);
 	if (nullptr == m_pRenderer)
+		return E_FAIL;
+
+	m_pLight_Manager = CLight_Manager::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pLight_Manager)
+		return E_FAIL;
+
+	m_pTarget_Manager = CTarget_Manager::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pTarget_Manager)
 		return E_FAIL;
 
 	return S_OK;
@@ -78,9 +87,26 @@ HRESULT CRenderInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pSh
 	return m_pTarget_Manager->Render_Debug(strMRTTag, pShader, pVIBuffer);
 }
 
+const LIGHT_DESC* CRenderInstance::Get_LightDesc(_uint iLightIndex) const
+{
+	return m_pLight_Manager->Get_LightDesc(iLightIndex);
+}
+
+HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
+{
+	return m_pLight_Manager->Add_Light(LightDesc);
+}
+
+HRESULT CRenderInstance::Render_Lights(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
+{
+	return m_pLight_Manager->Render_Lights(pShader, pVIBuffer);
+}
+
 void CRenderInstance::Release_Engine()
 {
 	Safe_Release(m_pRenderer);
+	Safe_Release(m_pLight_Manager);
+	Safe_Release(m_pTarget_Manager);
 
 	CRenderInstance::Get_Instance()->Destroy_Instance();
 }
