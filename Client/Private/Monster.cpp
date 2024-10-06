@@ -4,13 +4,13 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CMonster::CMonster(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CRenderObject { pDevice, pContext }
+CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CRenderObject{ pDevice, pContext }
 {
 
 }
 
-CMonster::CMonster(const CMonster & Prototype)
+CMonster::CMonster(const CMonster& Prototype)
 	: CRenderObject{ Prototype }
 {
 
@@ -21,13 +21,15 @@ HRESULT CMonster::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CMonster::Initialize(void * pArg)
+HRESULT CMonster::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 	m_pModelCom->SetUp_Animation(16, true);
 
@@ -71,7 +73,7 @@ HRESULT CMonster::Render(_float fTimeDelta)
 
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
-	}	
+	}
 
 	return S_OK;
 }
@@ -105,9 +107,9 @@ HRESULT CMonster::Bind_ShaderResources()
 	return S_OK;
 }
 
-CMonster * CMonster::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CMonster* CMonster::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CMonster*		pInstance = new CMonster(pDevice, pContext);
+	CMonster* pInstance = new CMonster(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -118,9 +120,9 @@ CMonster * CMonster::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pConte
 	return pInstance;
 }
 
-CGameObject * CMonster::Clone(void * pArg)
+CGameObject* CMonster::Clone(void* pArg)
 {
-	CMonster*		pInstance = new CMonster(*this);
+	CMonster* pInstance = new CMonster(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
@@ -135,7 +137,7 @@ void CMonster::Free()
 {
 	__super::Free();
 
-	
+
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
 }
