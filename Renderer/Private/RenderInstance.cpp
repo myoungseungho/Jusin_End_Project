@@ -1,4 +1,6 @@
 #include "RenderInstance.h"
+#include "Target_Manager.h"
+
 
 IMPLEMENT_SINGLETON(CRenderInstance)
 
@@ -35,6 +37,36 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject);	
 }
 
+HRESULT CRenderInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+{
+	return m_pTarget_Manager->Add_RenderTarget(strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);
+}
+
+HRESULT CRenderInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag)
+{
+	return m_pTarget_Manager->Add_MRT(strMRTTag, strTargetTag);
+}
+
+HRESULT CRenderInstance::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
+{
+	return m_pTarget_Manager->Begin_MRT(strMRTTag, pDSV);
+}
+
+HRESULT CRenderInstance::End_MRT()
+{
+	return m_pTarget_Manager->End_MRT();
+}
+
+HRESULT CRenderInstance::Copy_RenderTarget(const _wstring& strTargetTag, ID3D11Texture2D* pTexture2D)
+{
+	return m_pTarget_Manager->Copy_RenderTarget(strTargetTag, pTexture2D);
+}
+
+HRESULT CRenderInstance::Bind_RT_ShaderResource(CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag)
+{
+	return m_pTarget_Manager->Bind_ShaderResource(pShader, pConstantName, strTargetTag);
+
+}
 
 void CRenderInstance::Release_Engine()
 {

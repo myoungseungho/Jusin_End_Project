@@ -21,11 +21,14 @@ namespace Engine
 	}MESHMATERIAL;
 
 	/*D3DDECLUSAGE*/
-	typedef struct
+	struct ENGINE_DLL VTXPOSTEX
 	{
 		XMFLOAT3		vPosition;
 		XMFLOAT2		vTexcoord;
-	}VTXPOSTEX;
+
+		static const unsigned int					iNumElements = { 2 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	};
 
 	typedef struct
 	{

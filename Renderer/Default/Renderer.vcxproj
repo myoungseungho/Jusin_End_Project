@@ -21,14 +21,21 @@
   <ItemGroup>
     <ClCompile Include="..\Private\Renderer.cpp" />
     <ClCompile Include="..\Private\RenderInstance.cpp" />
+    <ClCompile Include="..\Private\RenderTarget.cpp" />
+    <ClCompile Include="..\Private\Target_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Renderer.h" />
     <ClInclude Include="..\Public\Renderer_Defines.h" />
     <ClInclude Include="..\Public\RenderInstance.h" />
+    <ClInclude Include="..\Public\RenderTarget.h" />
+    <ClInclude Include="..\Public\Target_Manager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Public\Renderer_Shader_Defines.hlsli" />
+    <None Include="..\Bin\ShaderFiles\Renderer_Shader_Defines.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred.hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

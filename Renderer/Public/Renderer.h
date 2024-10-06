@@ -8,6 +8,8 @@
 
 BEGIN(Engine)
 class CGameObject;
+class CShader;
+class CVIBuffer_Rect;
 END
 
 BEGIN(Renderer)
@@ -30,15 +32,31 @@ private:
 	ID3D11Device*			m_pDevice = { nullptr };
 	ID3D11DeviceContext*	m_pContext = { nullptr };
 	list<class CGameObject*>			m_RenderObjects[RG_END];
+	list<class CComponent*>		m_DebugComponent;
+
+	class CRenderInstance* m_pRenderInstance = { nullptr };
+
+	_float4x4					m_WorldMatrix = {};
+	_float4x4					m_ViewMatrix = {};
+	_float4x4					m_ProjMatrix = {};
+
+	class CShader* m_pShader = { nullptr };
+	class CVIBuffer_Rect* m_pVIBuffer = { nullptr };
 
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
+	HRESULT Render_ShadowObj(_float fTimeDelta);
 	HRESULT Render_NonBlend(_float fTimeDelta);
-	HRESULT Render_Lights();
-	HRESULT Render_Deferred();
-	HRESULT Render_NonLight();
+	HRESULT Render_Lights(_float fTimeDelta);
+	HRESULT Render_Deferred(_float fTimeDelta);
+	HRESULT Render_NonLight(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
+
+#ifdef _DEBUG
+private:
+	HRESULT Render_Debug(_float fTimeDelta);
+#endif
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
