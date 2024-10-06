@@ -12,16 +12,16 @@ CRenderInstance::CRenderInstance()
 
 HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext, CGameInstance* gameInstance)
 {
-	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext, gameInstance);
-	if (nullptr == m_pRenderer)
-		return E_FAIL;
-
 	m_pLight_Manager = CLight_Manager::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pLight_Manager)
 		return E_FAIL;
 
 	m_pTarget_Manager = CTarget_Manager::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pTarget_Manager)
+		return E_FAIL;
+
+	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext, gameInstance);
+	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
 	return S_OK;

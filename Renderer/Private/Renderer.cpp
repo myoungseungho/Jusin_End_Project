@@ -404,7 +404,15 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* gameInstance)
 {
-	return new CRenderer(pDevice, pContext, gameInstance);
+	CRenderer* pInstance = new CRenderer(pDevice, pContext, gameInstance);
+
+	if (FAILED(pInstance->Initialize(pDevice, pContext)))
+	{
+		MSG_BOX(TEXT("Failed to Created : CRenderer"));
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
 }
 
 void CRenderer::Free()
