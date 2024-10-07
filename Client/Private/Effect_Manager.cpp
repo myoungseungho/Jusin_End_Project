@@ -98,14 +98,14 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(const wstring& strEachEffectTag, co
 
 HRESULT CEffect_Manager::Ready_Components()
 {
-	vector<const _wstring*>* pKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));
+	vector<const _wstring*>* pModelKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));
 
-	if (pKeys == nullptr)
+	if (pModelKeys == nullptr)
 		return E_FAIL;
 
-	for (size_t i = 0; i < pKeys->size(); i++)
+	for (size_t i = 0; i < pModelKeys->size(); i++)
 	{
-		const wstring&	pPrototypeTag = *pKeys->at(i);
+		const wstring&	pPrototypeTag = *pModelKeys->at(i);
 
 		CModel* pModelComponent = reinterpret_cast<CModel*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, pPrototypeTag));
 
@@ -120,6 +120,27 @@ HRESULT CEffect_Manager::Ready_Components()
 		m_EffectModel.emplace(prototypeTag, pModelComponent);
 	}
 	
+	vector<const _wstring*>* pTextureKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Texture_Effect"));
+
+	if (pTextureKeys == nullptr)
+		return E_FAIL;
+
+	for (size_t i = 0; i < pTextureKeys->size(); i++)
+	{
+		const wstring& pPrototypeTag = *pTextureKeys->at(i);
+
+		CTexture* pModelComponent = reinterpret_cast<CTexture*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, pPrototypeTag));
+
+		wstring prototypeTag = pPrototypeTag;
+
+		const wstring prefixToRemove = L"Prototype_Component_";
+		size_t pos = prototypeTag.find(prefixToRemove);
+		if (pos != wstring::npos) {
+			prototypeTag.erase(pos, prefixToRemove.length());
+		}
+
+		m_EffectTexture.emplace(prototypeTag, pModelComponent);
+	}
 
 	return S_OK;
 }

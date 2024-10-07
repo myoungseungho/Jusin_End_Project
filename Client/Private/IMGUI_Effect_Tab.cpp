@@ -38,6 +38,16 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         ModelName.push_back(WStringToUTF8(pair.first));
     }
 
+    std::vector<std::string> TextureName;
+    static int CurrentMaskTexture = 0;
+    static int CurrentDiffuseTexture = 0;
+
+    TextureName.clear();
+    for (const auto& pair : m_pEffect_Manager->m_EffectTexture) {
+        // 변환 함수 사용
+        TextureName.push_back(WStringToUTF8(pair.first));
+    }
+
     // 첫 번째 콤보박스: Each 또는 Final 선택
     if (ImGui::BeginCombo("Add What", Effect[CurrentEffect]))
     {
@@ -79,6 +89,36 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
                 bool isSelected = (CurrentModel == i);
                 if (ImGui::Selectable(ModelName[i].c_str(), isSelected)) {
                     CurrentModel = i;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        if (!TextureName.empty() && ImGui::BeginCombo("Mask Texture Name", TextureName[CurrentMaskTexture].c_str()))
+        {
+            for (int i = 0; i < TextureName.size(); i++) {
+                bool isSelected = (CurrentMaskTexture == i);
+                if (ImGui::Selectable(TextureName[i].c_str(), isSelected)) {
+                    CurrentMaskTexture = i;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+
+        if (!TextureName.empty() && ImGui::BeginCombo("Diffuse Texture Name", TextureName[CurrentDiffuseTexture].c_str()))
+        {
+            for (int i = 0; i < TextureName.size(); i++) {
+                bool isSelected = (CurrentDiffuseTexture == i);
+                if (ImGui::Selectable(TextureName[i].c_str(), isSelected)) {
+                    CurrentDiffuseTexture = i;
                 }
                 if (isSelected)
                 {

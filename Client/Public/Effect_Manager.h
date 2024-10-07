@@ -36,7 +36,7 @@ private:
 
 public:
 	map<const wstring, class CModel*>		m_EffectModel;
-
+	map<const wstring, class CTexture*>		m_EffectTexture;
 	// 낱개 이펙트 (프로토타입 같은 역할)
 	map<const wstring, class CEffect*>		m_EachEffects;
 
