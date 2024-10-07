@@ -7,7 +7,7 @@
 #include "Timer_Manager.h"
 #include "Input_Device.h"
 #include "Collider_Manager.h"
-
+#include "ThreadPool.h"
 IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()	
@@ -47,6 +47,10 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 
 	m_pCollider_Manager = CCollider_Manager::Create();
 	if (nullptr == m_pCollider_Manager)
+		return E_FAIL;
+
+	m_pThreadPool = CThreadPool::Create();
+	if (nullptr == m_pThreadPool)
 		return E_FAIL;
 
 	return S_OK;
@@ -239,7 +243,11 @@ void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix 
 	m_pPipeLine->Set_Transform(eState, TransformMatrix);
 }
 
+HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
+{
+	return m_pThreadPool->Initialize(ThreadCount);
 
+}
 
 void CGameInstance::Release_Engine()
 {

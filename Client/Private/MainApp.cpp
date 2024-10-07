@@ -11,7 +11,7 @@
 #include "RenderInstance.h"
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
-
+#include "thread"
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
 	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
@@ -35,6 +35,10 @@ HRESULT CMainApp::Initialize()
 
 	//IMGUI 생성, 싱글턴
 	Create_IMGUI_Manager();
+
+	//스레드풀 초기화
+	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
+		return E_FAIL;
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;

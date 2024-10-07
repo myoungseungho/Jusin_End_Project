@@ -59,6 +59,9 @@ public: /* For.PipeLine */
 	_float4 Get_CamPosition_Float4() const;
 	void Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
 
+public: /* For.ThreadPool */
+	HRESULT Initialize_ThreadPool(size_t ThreadCount);
+
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
 	class CInput_Device*				m_pInput_Device = { nullptr };
@@ -67,7 +70,8 @@ private:
 	class CObject_Manager*				m_pObject_Manager = { nullptr };
 	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
 	class CCollider_Manager*			m_pCollider_Manager = { nullptr };
-	class CPipeLine* m_pPipeLine = { nullptr };
+	class CPipeLine*					m_pPipeLine = { nullptr };
+	class CThreadPool*					m_pThreadPool = { nullptr };
 
 public:
 	void Release_Engine();
