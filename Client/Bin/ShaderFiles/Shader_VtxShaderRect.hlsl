@@ -8,6 +8,8 @@ texture2D		g_Texture;
 texture2D		g_DepthTexture;
 bool isBindTexture;
 
+float g_Time = 0.f;
+float g_Speed = 0.05f;
 
 struct VS_IN
 {
@@ -74,8 +76,12 @@ PS_OUT PS_MAIN(PS_IN In)
 {
 	PS_OUT			Out;	
 
+	
     if (isBindTexture == true)
+    {
+        In.vTexcoord.x += g_Time;
 		Out.vColor = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    }
 	else
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
 

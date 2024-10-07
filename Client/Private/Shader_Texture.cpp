@@ -57,7 +57,7 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 
 void CShader_Texture::Priority_Update(_float fTimeDelta)
 {
-
+	m_fTime += fTimeDelta;
 }
 
 void CShader_Texture::Update(_float fTimeDelta)
@@ -129,6 +129,9 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 	//if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 	//	return E_FAIL;
 	//
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fTime, sizeof(float))))
+		return E_FAIL;
+
 	if (m_isTex == true)
 	{
 		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
