@@ -66,9 +66,20 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
         _fmatrix preMatrix = XMMatrixIdentity();
        m_pSelectedModelCom = CModel::Create(m_pDevice, m_pContext, buffer, preMatrix);
 
-       
-
     }
+    if (ImGui::Button("Object Load"))
+    {
+
+        //../Bin/ModelData\Hit_Select.bin
+
+        if (m_pSelectedModelCom != nullptr)
+            Safe_Release(m_pSelectedModelCom);
+
+        _fmatrix preMatrix = XMMatrixIdentity();
+       // m_pSelectedModelCom = m_p
+        m_pGameInstance->
+    }
+
     
     if (m_pSelectedModelCom != nullptr)
     {
