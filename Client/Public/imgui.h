@@ -1,3 +1,5 @@
+#undef new
+
 // dear imgui, v1.90.9 WIP
 // (headers)
 

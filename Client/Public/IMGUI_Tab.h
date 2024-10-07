@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "Client_Defines.h"
+#include "imgui.h"
 
 BEGIN(Client)
 
