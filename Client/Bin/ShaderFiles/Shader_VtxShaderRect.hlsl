@@ -2,10 +2,13 @@
 #include "Renderer_Shader_Defines.hlsli"
 
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
+texture2D		g_DiffuseTexture;
 texture2D		g_Texture;
 
 texture2D		g_DepthTexture;
 bool isBindTexture;
+
+
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -72,7 +75,7 @@ PS_OUT PS_MAIN(PS_IN In)
 	PS_OUT			Out;	
 
     if (isBindTexture == true)
-		Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+		Out.vColor = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
 	else
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
 
@@ -111,7 +114,7 @@ technique11		DefaultTechnique
 	/* PASS¿« ±‚¡ÿ : ºŒ¿Ã¥ı ±‚π˝¿« ƒ∏Ω∂»≠. */
 	pass Default
 	{
-        SetRasterizerState(RS_Default);
+        SetRasterizerState(RS_Cull_None);
 		SetDepthStencilState(DSS_Default, 0);
 		SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 

@@ -32,6 +32,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 	
 	class CIMGUI_Tab* Access_Shader_Tab() { return m_vecTabs[0]; }
+	
 private:
 	void Render_IMGUI(_float fTimeDelta);
 

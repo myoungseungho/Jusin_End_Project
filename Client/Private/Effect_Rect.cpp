@@ -39,8 +39,7 @@ HRESULT CEffect_Rect::Initialize(void* pArg)
 	CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
 
 	static_cast<CIMGUI_Shader_Tab*>(pImGui_Manager->Access_Shader_Tab())->Set_EffectRect(this);
-
-	m_pTransformCom->Set_Scaled(1, 1, 1.f);
+	
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 	//	XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 
@@ -119,10 +118,10 @@ HRESULT CEffect_Rect::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
-
+	
 	if (m_isTex == true)
 	{
-		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 			return E_FAIL;
 	}
 	else

@@ -28,6 +28,34 @@ HRESULT CTarget_Manager::Add_RenderTarget(const _wstring & strTargetTag, _uint i
 	return S_OK;
 }
 
+HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+{
+	if (nullptr != Find_RenderTarget(strTargetTag))
+		return E_FAIL;
+
+	CRenderTarget* pRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pRenderTarget)
+		return E_FAIL;
+
+	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
+
+	if (nullptr == pMRTList)
+	{
+		list<CRenderTarget*>	MRTList;
+		MRTList.push_back(pRenderTarget);
+
+		m_MRTs.emplace(strMRTTag, MRTList);
+	}
+	else
+		pMRTList->push_back(pRenderTarget);
+
+	Safe_AddRef(pRenderTarget);
+
+	return S_OK;
+}
+
 HRESULT CTarget_Manager::Add_MRT(const _wstring & strMRTTag, const _wstring & strTargetTag)
 {
 	CRenderTarget*	pRenderTarget = Find_RenderTarget(strTargetTag);
@@ -101,6 +129,15 @@ HRESULT CTarget_Manager::Copy_RenderTarget(const _wstring & strTargetTag, ID3D11
 		return E_FAIL;
 
 	return pRenderTarget->Copy_RenderTarget(pTexture2D);	
+}
+
+ID3D11ShaderResourceView* CTarget_Manager::Copy_RenderTarget_SRV(const _wstring& strTargetTag)
+{
+	CRenderTarget* pRenderTarget = Find_RenderTarget(strTargetTag);
+	if (nullptr == pRenderTarget)
+		return nullptr;
+	
+	return pRenderTarget->Copy_ShaderResourceView();
 }
 
 HRESULT CTarget_Manager::Bind_ShaderResource(CShader * pShader, const _char * pConstantName, const _wstring & strTargetTag)

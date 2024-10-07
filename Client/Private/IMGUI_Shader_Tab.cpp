@@ -1,6 +1,13 @@
 #include "stdafx.h"
 
 #include <algorithm> // std::remove
+#include <sstream>
+#include <algorithm>
+#include <cmath>
+#include <locale>
+#include <codecvt>
+#include <string>
+#include <iostream>
 
 #include "IMGUI_Shader_Tab.h"
 #include "GameInstance.h"
@@ -18,14 +25,7 @@ HRESULT CIMGUI_Shader_Tab::Initialize()
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
-    static bool isStart = false;
-    static int unique_node_id = 1;
-    static std::vector<int> node_ids;
-    static std::vector<std::pair<int, int>> links;
 
-    // Store input values for each node
-    static std::map<int, int> node_values; // Store node id and its corresponding value
-    static std::map<int, int> input_accumulated_values; // Store accumulated values for input nodes
 
     if (ImGui::Button("Add Rect") && !isStart)
     {
@@ -34,8 +34,9 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
             return;
 
         isStart = true;
+        DragAcceptFiles(g_hWnd, TRUE);
     }
-
+    
 
     ImGui::Separator();
 
@@ -120,6 +121,36 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
             // Add the output node value to the input node's accumulated value
             input_accumulated_values[input_node] += node_values[output_node];
         }
+    }
+}
+
+void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
+{
+    size_t testModelsPos = szPath.find("Shader");
+
+    if (testModelsPos != string::npos)
+    {
+        string relativePath = szPath.substr(testModelsPos);
+
+        replace(relativePath.begin(), relativePath.end(), '\\', '/');
+
+        string fullPath = string("../Bin/Resources/") + relativePath;
+        wstring_convert<codecvt_utf8_utf16<_tchar>> converter;
+
+        wstring prototypeKey = TEXT("Prototype_Component_Texture_Shader_");
+        wstring prototypeKeyWithCount = prototypeKey + to_wstring(m_iNodeTextureCount);
+
+        CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
+        tDesc.prototypeKey = prototypeKeyWithCount.c_str();
+
+        if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, prototypeKeyWithCount.c_str(),
+            CTexture::Create(m_pDevice, m_pContext, converter.from_bytes(fullPath).c_str(), 1))))
+            return;
+
+        if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Shader_Texture"), TEXT("Layer_Shader_Texture"), &tDesc)))
+	        return;
+        m_NodeTextures.back()->Get_Component
+        m_pRenderInstance->Add_ClientRenderTarget(prototypeKeyWithCount.c_str(), prototypeKeyWithCount.c_str(), )
     }
 }
 

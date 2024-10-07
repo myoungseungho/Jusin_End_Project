@@ -6,6 +6,8 @@
 #include "Camera_Free.h"
 #include "Monster.h"
 #include "Effect_Rect.h"
+#include "Shader_Texture.h"
+
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
@@ -114,7 +116,11 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
-
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shader_Texture"),
+		CShader_Texture::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Rect"),
 		CEffect_Rect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

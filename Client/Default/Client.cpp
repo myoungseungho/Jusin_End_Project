@@ -7,7 +7,8 @@
 #include "MainApp.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
-
+#include "Imgui_Manager.h"
+#include "IMGUI_Shader_Tab.h"
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -203,6 +204,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_DROPFILES:
+    {
+        HDROP hDrop = (HDROP)wParam;
+        wchar_t szFile[MAX_PATH];
+        if (DragQueryFile(hDrop, 0, szFile, MAX_PATH))
+        {
+            char ch[260];
+            char DefChar = ' ';
+            WideCharToMultiByte(CP_ACP, 0, szFile, -1, ch, 260, &DefChar, NULL);
+
+            string filePath(ch);
+
+            CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
+            static_cast<CIMGUI_Shader_Tab*>(pImGui_Manager->Access_Shader_Tab())->Create_NodeTexture(filePath);
+        }
+        DragFinish(hDrop);
+    }
+    break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);

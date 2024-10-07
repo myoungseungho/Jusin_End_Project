@@ -57,6 +57,7 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 
 void CImgui_Manager::Priority_Update(_float fTimeDelta)
 {
+
 }
 
 

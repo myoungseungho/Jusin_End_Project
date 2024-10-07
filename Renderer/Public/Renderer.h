@@ -19,7 +19,7 @@ BEGIN(Renderer)
 class CRenderer final : public CBase
 {
 public:
-	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND, RG_SHADOWOBJ, RG_NONLIGHT, RG_BLEND, RG_UI, RG_END };
+	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND, RG_SHADOWOBJ, RG_NONLIGHT, RG_BLEND, RG_UI, RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -33,6 +33,7 @@ public:
 private:
 	ID3D11Device*			m_pDevice = { nullptr };
 	ID3D11DeviceContext*	m_pContext = { nullptr };
+
 	list<class CGameObject*>			m_RenderObjects[RG_END];
 	list<class CComponent*>		m_DebugComponent;
 
@@ -57,7 +58,7 @@ private:
 	HRESULT Render_NonLight(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
-
+	HRESULT Render_Node(_float fTimeDelta);
 #ifdef _DEBUG
 private:
 	HRESULT Render_Debug(_float fTimeDelta);

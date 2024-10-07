@@ -159,7 +159,9 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_UI(fTimeDelta)))
 		return E_FAIL;
-
+	if (FAILED(Render_Node(fTimeDelta)))
+		return E_FAIL;
+	
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
 		return E_FAIL;
@@ -376,6 +378,21 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_Node(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_NODE])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_NODE].clear();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	for (auto& pComponent : m_DebugComponent)
@@ -392,8 +409,8 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
 	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))

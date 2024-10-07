@@ -77,6 +77,11 @@ HRESULT CRenderInstance::Bind_RT_ShaderResource(CShader* pShader, const _char* p
 
 }
 
+HRESULT CRenderInstance::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+{
+	return m_pTarget_Manager->Add_ClientRenderTarget(strMRTTag, strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);
+}
+
 HRESULT CRenderInstance::Ready_RT_Debug(const _wstring& strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY)
 {
 	return m_pTarget_Manager->Ready_Debug(strTargetTag, fCenterX, fCenterY, fSizeX, fSizeY);
