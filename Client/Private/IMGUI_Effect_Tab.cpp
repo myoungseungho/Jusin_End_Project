@@ -5,7 +5,7 @@
 #include "Effect_Manager.h"
 
 
-CIMGUI_Effect_Tab::CIMGUI_Effect_Tab()
+CIMGUI_Effect_Tab::CIMGUI_Effect_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pEffect_Manager {CEffect_Manager::Get_Instance()}
 {
 	Safe_AddRef(m_pEffect_Manager);
@@ -61,9 +61,9 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
 }
 
-CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create()
+CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CIMGUI_Effect_Tab* pInstance = new CIMGUI_Effect_Tab();
+	CIMGUI_Effect_Tab* pInstance = new CIMGUI_Effect_Tab(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{

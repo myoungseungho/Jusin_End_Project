@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
-	</Filter>
+    </Filter>
     <Filter Include="97.IMGUI">
       <UniqueIdentifier>{871a9861-3ac5-4274-b312-5a263c75354b}</UniqueIdentifier>
     </Filter>
@@ -160,6 +160,9 @@
     <ClInclude Include="..\Public\Effect.h">
       <Filter>02.GameObjects\02. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect_Layer.h">
+      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\Effect_Manager.h">
       <Filter>02.GameObjects\02. Effect\Manager</Filter>
     </ClInclude>
@@ -171,9 +174,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Single.h">
       <Filter>02.GameObjects\02. Effect\Single</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Effect_Layer.h">
-      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +243,9 @@
     <ClCompile Include="..\Private\Effect.cpp">
       <Filter>02.GameObjects\02. Effect</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Effect_Layer.cpp">
+      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\Manager</Filter>
     </ClCompile>
@@ -254,9 +257,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\Effect_Single.cpp">
       <Filter>02.GameObjects\02. Effect\Single</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\Effect_Layer.cpp">
-      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
