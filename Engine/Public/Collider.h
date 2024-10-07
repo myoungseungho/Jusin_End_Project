@@ -1,0 +1,65 @@
+#pragma once
+
+#include "Component.h"
+
+BEGIN(Engine)
+
+class ENGINE_DLL CCollider final : public CComponent
+{
+public:
+	typedef struct
+	{
+		_float3 center;  // Áß½É ÁÂÇ¥
+		_float width, height, depth;
+		class CGameObject* MineGameObject;
+	}COLLIDER_DESC;
+
+public:
+	enum TYPE { TYPE_AABB, TYPE_OBB, TYPE_SPHERE, TYPE_END };
+
+private:
+	CCollider(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CCollider(const CCollider& Prototype);
+	virtual ~CCollider() = default;
+
+public:
+	virtual HRESULT Initialize_Prototype(TYPE eColliderType);
+	virtual HRESULT Initialize(void* pArg);
+	virtual void Update(_fmatrix TransformMatrix);
+	virtual HRESULT Render(_float fTimeDelta);
+
+public:
+	_bool isCollision(CCollider* pTargetCollider);
+	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir);
+	_bool isPointInAABB(const _float3& point);
+
+	class CGameObject* GetMineGameObject() { return m_pMineGameObject; };
+	BoundingBox AABB_GetDesc();
+	void AABB_SetDesc(BoundingBox _box);
+
+
+public:
+	void OnCollisionEnter(CCollider*, _float fTimeDelta);
+	void OnCollisionStay(CCollider*, _float fTimeDelta);
+	void OnCollisionExit(CCollider*);
+
+private:
+	TYPE					m_eColliderType = { TYPE_END };
+	class CBounding*		m_pBounding = { nullptr };
+	_bool					m_isColl = { false };
+	class CGameObject*		m_pMineGameObject = { nullptr };
+
+#ifdef _DEBUG
+private:
+	PrimitiveBatch<VertexPositionColor>*	m_pBatch = { nullptr };
+	BasicEffect*							m_pEffect = { nullptr };
+	ID3D11InputLayout*						m_pInputLayout = { nullptr };
+#endif
+	
+public:
+	static CCollider* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, TYPE eColliderType);
+	virtual CComponent* Clone(void* pArg) override;
+	virtual void Free() override;
+};
+
+END

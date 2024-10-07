@@ -23,6 +23,8 @@ public:
 
 private:
 	_uint m_iRefCnt = { 0 };
+
+public:
 	_bool m_bDied = { false };
 public:
 	/* 소멸자를 대체한다. */

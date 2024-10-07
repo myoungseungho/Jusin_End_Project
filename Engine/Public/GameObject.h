@@ -44,6 +44,11 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 
 public:
+	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta);
+	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta);
+	virtual void OnCollisionExit(class CCollider* other);
+
+public:
 	HRESULT Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, class CComponent** ppOut, void* pArg = nullptr);
 
 protected:	

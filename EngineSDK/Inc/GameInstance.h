@@ -66,6 +66,7 @@ private:
 	class CTimer_Manager*				m_pTimer_Manager = { nullptr };
 	class CObject_Manager*				m_pObject_Manager = { nullptr };
 	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
+	class CCollider_Manager*			m_pCollider_Manager = { nullptr };
 	class CPipeLine* m_pPipeLine = { nullptr };
 
 public:

@@ -6,6 +6,7 @@
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
 #include "Input_Device.h"
+#include "Collider_Manager.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -44,6 +45,9 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 	if (nullptr == m_pPipeLine)
 		return E_FAIL;
 
+	m_pCollider_Manager = CCollider_Manager::Create();
+	if (nullptr == m_pCollider_Manager)
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -52,8 +56,6 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 갱신이 필요한 객체들이 있다면. */
 	/* 여기에서 갱신을 수행해준다. */	
-
-
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
@@ -247,6 +249,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pLevel_Manager);
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pInput_Device);
+	Safe_Release(m_pCollider_Manager);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }
