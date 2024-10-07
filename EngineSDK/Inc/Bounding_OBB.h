@@ -10,11 +10,11 @@ BEGIN(Engine)
 class CBounding_OBB final : public CBounding
 {
 public:
-	typedef struct : public BOUNDING_DESC
+	struct BOUNDING_OBB_DESC : public BOUNDING_DESC
 	{
 		_float3		vExtents;
 		_float3		vRotation;
-	}BOUNDING_OBB_DESC;
+	};
 
 	typedef struct
 	{
@@ -39,8 +39,8 @@ public:
 	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir) override;
 
 private:
-	BoundingOrientedBox*				m_pOriginalDesc = { nullptr };
-	BoundingOrientedBox*				m_pDesc = { nullptr };
+	BoundingOrientedBox* m_pOriginalDesc = { nullptr };
+	BoundingOrientedBox* m_pDesc = { nullptr };
 private:
 	_bool Collision_OBB(CBounding_OBB* pTargetDesc);
 	OBB_DESC Compute_OBB();

@@ -10,10 +10,10 @@ BEGIN(Engine)
 class CBounding_AABB final : public CBounding
 {
 public:
-	typedef struct : public BOUNDING_DESC
+	struct BOUNDING_AABB_DESC : public BOUNDING_DESC
 	{
 		_float3		vExtents;
-	}BOUNDING_AABB_DESC;
+	};
 
 private:
 	CBounding_AABB(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

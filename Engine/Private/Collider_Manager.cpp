@@ -29,6 +29,7 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	map<pair<CCollider*, CCollider*>, bool> currentCollisions;
 
 	// 다른 그룹 간의 충돌 체크
+	// 4중 For문
 	for (size_t i = 0; i < CG_END; i++)
 	{
 		// `m_Colliders[i]` 리스트에서 죽은 객체 제거
@@ -142,7 +143,7 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 		}
 	}
 
-	for (int i = CG_PLAYER; i < CG_END; ++i) {
+	for (int i = CG_1P_BODY; i < CG_END; ++i) {
 
 		auto it = find(m_Colliders[i].begin(), m_Colliders[i].end(), targetCollider);
 		if (it != m_Colliders[i].end()) {

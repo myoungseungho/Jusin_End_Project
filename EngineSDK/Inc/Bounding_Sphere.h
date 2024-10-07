@@ -10,10 +10,10 @@ BEGIN(Engine)
 class CBounding_Sphere final : public CBounding
 {
 public:
-	typedef struct : public BOUNDING_DESC
+	struct BOUNDING_SPHERE_DESC : public BOUNDING_DESC
 	{
 		_float		fRadius;
-	}BOUNDING_SPHERE_DESC;
+	};
 private:
 	CBounding_Sphere(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CBounding_Sphere() = default;

@@ -30,7 +30,7 @@ HRESULT CMonster::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-	
+
 	m_pModelCom->SetUp_Animation(16, true);
 
 	return S_OK;
@@ -44,11 +44,17 @@ void CMonster::Priority_Update(_float fTimeDelta)
 void CMonster::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
+
+	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CMonster::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+
+#ifdef _DEBUG
+	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+#endif
 }
 
 HRESULT CMonster::Render(_float fTimeDelta)
@@ -90,6 +96,18 @@ HRESULT CMonster::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
+
+	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
+
+	BoundingDesc.vExtents = _float3(0.5f, 0.5f, 0.5f);
+	BoundingDesc.vCenter = _float3(0.f, 0.6f, 0.f);
+	BoundingDesc.pMineGameObject = this;
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
+		return E_FAIL;
+
+	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_1P_BODY, m_pColliderCom);
 
 	return S_OK;
 }
@@ -141,4 +159,5 @@ void CMonster::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pColliderCom);
 }

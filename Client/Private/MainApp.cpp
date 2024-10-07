@@ -30,6 +30,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
+	//쉐이더 생성
 	if (FAILED(Ready_Prototype_Component_ForStatic()))
 		return E_FAIL;
 

@@ -9,11 +9,11 @@ BEGIN(Engine)
 class CBounding abstract : public CBase
 {
 public:
-	typedef struct
+	struct BOUNDING_DESC
 	{
 		_float3			vCenter;
 		CGameObject* pMineGameObject;
-	}BOUNDING_DESC;
+	};
 protected:
 	CBounding(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CBounding() = default;

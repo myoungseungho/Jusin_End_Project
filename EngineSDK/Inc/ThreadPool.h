@@ -34,13 +34,14 @@ public:
 
 END
 
+//작업 큐에 새로운 작업을 추가합니다.
 template<typename FunctionType>
 inline void CThreadPool::EnqueueTask(FunctionType task)
 {
 	{
-		std::unique_lock<std::mutex> lock(m_QueueMutex);
+		unique_lock<mutex> lock(m_QueueMutex);
 		if (m_bStop)
-			throw std::runtime_error("ThreadPool is stopped.");
+			throw runtime_error("ThreadPool is stopped.");
 
 		m_Tasks.emplace(task);
 	}

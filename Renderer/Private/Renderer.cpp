@@ -141,6 +141,15 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRend
 	return S_OK;
 }
 
+HRESULT CRenderer::Add_DebugComponent(CComponent* pDebugComponent)
+{
+	m_DebugComponent.emplace_back(pDebugComponent);
+
+	Safe_AddRef(pDebugComponent);
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Draw(_float fTimeDelta)
 {
 	if (FAILED(Render_Priority(fTimeDelta)))

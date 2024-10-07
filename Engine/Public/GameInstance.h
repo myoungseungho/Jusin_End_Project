@@ -62,6 +62,10 @@ public: /* For.PipeLine */
 public: /* For.ThreadPool */
 	HRESULT Initialize_ThreadPool(size_t ThreadCount);
 
+public: /* For.Collider_Manager*/
+	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
+
+
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
 	class CInput_Device*				m_pInput_Device = { nullptr };
