@@ -19,14 +19,34 @@ HRESULT CTimer_Manager::Add_Timer(const _wstring & strTimerTag)
 	return S_OK;
 }
 
-_float CTimer_Manager::Compute_TimeDelta(const _wstring & strTimerTag)
+_float CTimer_Manager::Compute_TimeDelta(const _wstring& strTimerTag)
 {
-	CTimer*		pTimer = Find_Timer(strTimerTag);
+	CTimer* pTimer = Find_Timer(strTimerTag);
 
 	if (nullptr == pTimer)
 		return 0.f;
 
-	return pTimer->Compute_TimeDelta();	
+	// 비스케일 델타 타임 계산
+	_float fUnscaledDeltaTime = pTimer->Compute_TimeDelta();
+
+	// 시간 스케일 적용된 델타 타임 계산
+	_float fScaledDeltaTime = fUnscaledDeltaTime * m_fTimeScale;
+
+	// 타이머에 델타 타임 저장
+	pTimer->Set_UnscaledDeltaTime(fUnscaledDeltaTime);
+	pTimer->Set_ScaledDeltaTime(fScaledDeltaTime);
+
+	return fScaledDeltaTime;
+}
+
+_float CTimer_Manager::Get_UnscaledDeltaTime(const _wstring& strTimerTag)
+{
+	CTimer* pTimer = Find_Timer(strTimerTag);
+
+	if (nullptr == pTimer)
+		return 0.f;
+
+	return pTimer->Get_UnscaledDeltaTime();
 }
 
 _float CTimer_Manager::Get_ScaledDeltaTime(const _wstring& strTimerTag)

@@ -69,7 +69,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	if (FAILED(pGameInstance->Add_Timer(TEXT("Timer_60"))))
 		return FALSE;
 
+    //Update와 Render에 대한 누적시간
 	_float		fTimeAcc = { 0.f };
+    //FixedUpdate에 대한 누적시간
+    _float fixedTimeStep = 1.0f / 50.0f; // FixedUpdate를 위한 고정 시간 간격 (0.02초)
+    _float fixedTimeAcc = 0.0f;          // FixedUpdate 호출을 위한 누적 시간
+    //프레임 체크에 대한 누적시간
+    _float fpsTimeAcc = { 0.f };
 
 	while (true)
 	{
@@ -85,13 +91,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			}
 		}
 
-		fTimeAcc += pGameInstance->Compute_TimeDelta(TEXT("Timer_Default"));
+        pGameInstance->Compute_TimeDelta(TEXT("Timer_Default")); // Compute_TimeDelta 호출 추가
+        _float defaultUnscaledDeltaTime = pGameInstance->Get_UnscaledDeltaTime(TEXT("Timer_Default"));
+        fTimeAcc += defaultUnscaledDeltaTime;
+        fpsTimeAcc += defaultUnscaledDeltaTime;
+        fixedTimeAcc += defaultUnscaledDeltaTime;
+
+        while (fixedTimeAcc >= fixedTimeStep)
+        {
+            pMainApp->Fixed_Update(fixedTimeStep);
+            fixedTimeAcc -= fixedTimeStep;
+        }
 
 		if (fTimeAcc >= 1.f / 60.0f)
 		{ 
-			pMainApp->Update(pGameInstance->Compute_TimeDelta(TEXT("Timer_60")));
+            // 스케일된 델타 타임 계산 (게임 업데이트에 사용)
+            pGameInstance->Compute_TimeDelta(TEXT("Timer_60")); // Compute_TimeDelta 호출 추가
             float deltaTime = pGameInstance->Get_ScaledDeltaTime(TEXT("Timer_60"));
-			pMainApp->Render(deltaTime);
+
+            /* 내 게임의 업데이트를 수행한다. (CMainApp)*/
+            pMainApp->Update(deltaTime);
+
+            /* 내 게임의 렌더를 수행한다.*/
+            pMainApp->Render(deltaTime);
 
 			fTimeAcc = 0.f;
 		}

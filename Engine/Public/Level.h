@@ -2,6 +2,10 @@
 
 #include "Base.h"
 
+BEGIN(Renderer)
+class CRenderInstance;
+END
+
 BEGIN(Engine)
 
 class ENGINE_DLL CLevel abstract : public CBase
@@ -18,10 +22,13 @@ public:
 public:
 	HRESULT Clear_Resources();
 
+	
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
-	class CGameInstance*			m_pGameInstance = { nullptr };
+	class CGameInstance*		m_pGameInstance = { nullptr };
+	class Renderer::CRenderInstance*		m_pRenderInstance = { nullptr };
+
 	_uint							m_iLevelIndex = { 0 };
 
 public:

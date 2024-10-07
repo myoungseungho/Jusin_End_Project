@@ -14,6 +14,10 @@ public:
 	HRESULT Initialize();
 	_float Compute_TimeDelta();
 
+	void Set_UnscaledDeltaTime(_float fDeltaTime) { m_fUnscaledDeltaTime = fDeltaTime; }
+	void Set_ScaledDeltaTime(_float fDeltaTime) { m_fScaledDeltaTime = fDeltaTime; }
+
+	_float Get_UnscaledDeltaTime() const { return m_fUnscaledDeltaTime; }
 	_float Get_ScaledDeltaTime() const { return m_fScaledDeltaTime; }
 
 private:
@@ -22,8 +26,7 @@ private:
 	LARGE_INTEGER			m_OriginTime;
 	LARGE_INTEGER			m_CpuTick;
 
-	_float					m_fTimeDelta;
-
+	_float m_fUnscaledDeltaTime = 0.f;
 	_float m_fScaledDeltaTime = 0.f;
 
 public:

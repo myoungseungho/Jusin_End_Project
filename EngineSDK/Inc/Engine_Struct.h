@@ -20,12 +20,30 @@ namespace Engine
 		class CTexture* pMaterials[AI_TEXTURE_TYPE_MAX];
 	}MESHMATERIAL;
 
+	struct ENGINE_DLL LIGHT_DESC
+	{
+		enum TYPE { TYPE_DIRECTIONAL, TYPE_POINT, TYPE_END };
+
+		TYPE			eType;
+		XMFLOAT4		vDirection;
+		XMFLOAT4		vPosition; /* In.WorldSpace*/
+		float			fRange;
+
+		/* 난반사를 정의하기위한 빛의 색상. */
+		XMFLOAT4		vDiffuse;
+		XMFLOAT4		vAmbient;
+		XMFLOAT4		vSpecular;
+	};
+
 	/*D3DDECLUSAGE*/
-	typedef struct
+	struct ENGINE_DLL VTXPOSTEX
 	{
 		XMFLOAT3		vPosition;
 		XMFLOAT2		vTexcoord;
-	}VTXPOSTEX;
+
+		static const unsigned int					iNumElements = { 2 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	};
 
 	typedef struct
 	{
@@ -56,7 +74,6 @@ namespace Engine
 
 		static const unsigned int					iNumElements = { 6 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
-
 	};
 
 	struct BoneWeight {
