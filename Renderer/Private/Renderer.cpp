@@ -8,7 +8,7 @@
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
-CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* gameInstance)
+CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
 	, m_pContext{ pContext }
 	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
@@ -402,9 +402,9 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	return S_OK;
 }
 
-CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* gameInstance)
+CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CRenderer* pInstance = new CRenderer(pDevice, pContext, gameInstance);
+	CRenderer* pInstance = new CRenderer(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize(pDevice, pContext)))
 	{
@@ -426,9 +426,11 @@ void CRenderer::Free()
 		m_RenderObjects[i].clear();
 	}
 
+	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
 	Safe_Release(m_pRenderInstance);
 	Safe_Release(m_pGameInstance);
-
+	Safe_Release(m_pShader);
+	Safe_Release(m_pVIBuffer);
 }

@@ -232,7 +232,7 @@ void CGraphic_Device::Free()
 	Safe_Release(m_pDeviceContext);
 	Safe_Release(m_pDepthTexture);
 
-	/*
+	
 	#if defined(DEBUG) || defined(_DEBUG)
 		ID3D11Debug* d3dDebug;
 		HRESULT hr = m_pDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&d3dDebug));
@@ -251,6 +251,6 @@ void CGraphic_Device::Free()
 		if (d3dDebug != nullptr)            d3dDebug->Release();
 	#endif
 
-		*/
+		
 	Safe_Release(m_pDevice);
 }

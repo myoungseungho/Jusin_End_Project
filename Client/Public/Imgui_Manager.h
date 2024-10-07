@@ -22,7 +22,7 @@ class CImgui_Manager : public CBase
 private:
 
 	CImgui_Manager();
-	CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance,CRenderInstance* pRenderInstance);
+	CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CImgui_Manager() = default;
 
 public:
@@ -43,7 +43,7 @@ private:
 	vector<class CIMGUI_Tab*> m_vecTabs;
 
 public:
-	static CImgui_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance, CRenderInstance* pRenderInstance);
+	static CImgui_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;
 };
 

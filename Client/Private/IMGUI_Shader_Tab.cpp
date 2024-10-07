@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "IMGUI_Shader_Tab.h"
-
+#include "GameInstance.h"
+#include "RenderInstance.h"
 
 CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CIMGUI_Tab{ pDevice,pContext }
