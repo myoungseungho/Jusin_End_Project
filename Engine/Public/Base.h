@@ -23,7 +23,7 @@ public:
 
 private:
 	_uint m_iRefCnt = { 0 };
-
+	_bool m_bDied = { false };
 public:
 	/* 소멸자를 대체한다. */
 	virtual void Free() {}
