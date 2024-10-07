@@ -20,8 +20,8 @@ CImgui_Manager::CImgui_Manager()
 {
 }
 // IMGUI 창 표시 여부를 제어하는 전역 변수
-CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance, CRenderInstance* pRenderInstance)
-	:m_pDevice{ pDevice }, m_pContext{ pContext }, m_pGameInstance{ pGameInstance }, m_pRenderInstance{ pRenderInstance }
+CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:m_pDevice{ pDevice }, m_pContext{ pContext }, m_pGameInstance{ CGameInstance::Get_Instance() }, m_pRenderInstance{ CRenderInstance::Get_Instance() }
 
 {
 	Safe_AddRef(m_pDevice);
@@ -120,9 +120,9 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 	}
 }
 
-CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CGameInstance* pGameInstance, CRenderInstance* pRenderInstance)
+CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext, pGameInstance, pRenderInstance);
+	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{
