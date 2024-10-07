@@ -89,7 +89,7 @@ bool ModelConverter::SaveModelToBinary(const std::string& filePath, const ModelH
 			outFile.write(texturePath.c_str(), pathLength);
 
 			// Print the texture path
-			//std::cout << "Saving texture path: " << texturePath << std::endl;
+			std::cout << "Saving texture path: " << texturePath << std::endl;
 		}
 	}
 

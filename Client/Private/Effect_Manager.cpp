@@ -3,15 +3,22 @@
 #include "Effect_Manager.h"
 #include "Effect_Layer.h"
 #include "Effect.h"
+#include "GameInstance.h"
 
 IMPLEMENT_SINGLETON(CEffect_Manager)
 
 CEffect_Manager::CEffect_Manager()
+	:m_pGameInstance{CGameInstance::Get_Instance()}
 {
+	Safe_AddRef(m_pGameInstance);
 }
 
 HRESULT CEffect_Manager::Initialize()
 {
+	if (FAILED(Ready_Components()))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -89,6 +96,24 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(const wstring& strEachEffectTag, co
 	return S_OK;
 }
 
+HRESULT CEffect_Manager::Ready_Components()
+{
+	vector<const _wstring*>* pKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));
+
+	if (pKeys == nullptr)
+		return E_FAIL;
+
+	for (size_t i = 0; i < pKeys->size(); i++)
+	{
+		const wstring& prototypeTag = *pKeys->at(i);
+
+		m_EffectModel.emplace(prototypeTag, reinterpret_cast<CModel*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, prototypeTag)));
+	}
+	
+
+	return S_OK;
+}
+
 CEffect_Manager* CEffect_Manager::Create()
 {
 	CEffect_Manager* pInstance = new CEffect_Manager();
@@ -105,6 +130,8 @@ CEffect_Manager* CEffect_Manager::Create()
 void CEffect_Manager::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pGameInstance);
 
 	for (auto& Pair : m_EachEffects)
 		Safe_Release(Pair.second);
