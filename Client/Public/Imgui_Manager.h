@@ -22,11 +22,10 @@ class CImgui_Manager : public CBase
 private:
 
 	CImgui_Manager();
-	CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CImgui_Manager() = default;
 
 public:
-	virtual HRESULT Initialize();
+	virtual HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Priority_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
@@ -44,7 +43,6 @@ private:
 	vector<class CIMGUI_Tab*> m_vecTabs;
 
 public:
-	static CImgui_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;
 };
 

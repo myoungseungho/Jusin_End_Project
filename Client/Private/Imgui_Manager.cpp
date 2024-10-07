@@ -18,22 +18,22 @@ bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
-CImgui_Manager::CImgui_Manager()
-{
-}
 // IMGUI 창 표시 여부를 제어하는 전역 변수
-CImgui_Manager::CImgui_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:m_pDevice{ pDevice }, m_pContext{ pContext }, m_pGameInstance{ CGameInstance::Get_Instance() }, m_pRenderInstance{ CRenderInstance::Get_Instance() }
+CImgui_Manager::CImgui_Manager()
+	: m_pGameInstance{ CGameInstance::Get_Instance() }, m_pRenderInstance{ CRenderInstance::Get_Instance() }
 
 {
-	Safe_AddRef(m_pDevice);
-	Safe_AddRef(m_pContext);
 	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pRenderInstance);
 }
 
-HRESULT CImgui_Manager::Initialize()
+HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
+	m_pDevice = pDevice;
+	m_pContext = pContext;
+	Safe_AddRef(m_pDevice);
+	Safe_AddRef(m_pContext);
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImNodes::CreateContext();
@@ -123,20 +123,6 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 	}
 }
 
-CImgui_Manager* CImgui_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-{
-	CImgui_Manager* pInstance = new CImgui_Manager(pDevice, pContext);
-
-	if (FAILED(pInstance->Initialize()))
-	{
-		MSG_BOX(TEXT("Failed to Created : CImgui_Manager"));
-		Safe_Release(pInstance);
-	}
-
-	return pInstance;
-}
-
-
 void CImgui_Manager::Free()
 {
 	for (auto& iter : m_vecTabs)
@@ -150,6 +136,7 @@ void CImgui_Manager::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pRenderInstance);
+
 
 	__super::Free();
 }

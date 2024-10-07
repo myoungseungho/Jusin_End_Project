@@ -56,6 +56,9 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGameInstance->Clear_DepthStencil_View();
 
+	//IMGUI 렌더
+	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
+
 
 	//레벨매니저 렌더는 게임인스턴스
 	m_pGameInstance->Render_Engine();
@@ -64,7 +67,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
 	//IMGUI 렌더
-	m_pIMGUI_Manager->Render(fTimeDelta);
+	m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
@@ -81,7 +84,8 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
-	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext);
+	m_pImgui_Manager = CImgui_Manager::Get_Instance();
+	m_pImgui_Manager->Initialize(m_pDevice, m_pContext);
 
 	return S_OK;
 }
@@ -114,7 +118,8 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-	Safe_Release(m_pIMGUI_Manager);
+	m_pImgui_Manager->Free();
+
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
