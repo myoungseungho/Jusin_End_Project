@@ -30,6 +30,9 @@ private:
 	CModel*					m_pModelCom = { nullptr };
 
 	_float					m_fRandom = {};
+	_bool					m_bCheck = { false };
+
+	class CUI_Manager* m_pUIManager = { nullptr };
 
 private:
 	HRESULT Ready_Components();

@@ -33,6 +33,7 @@ HRESULT CUI_HpPanel::Initialize(void* pArg)
 
 	__super::Set_UI_Setting(512.f, 128.f, 356.f, 80.f);
 
+
 	return S_OK;
 }
 

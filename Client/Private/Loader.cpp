@@ -16,12 +16,14 @@
 //UI 헤더
 #include "UI_Cursor.h"
 #include "UI_HpPanel.h"
+#include "UI_HpGauge.h"
 #include "UI_Chara_Icon.h"
 #include "UI_AttBuf.h"
 #include "UI_AttBufMark.h"
 #include "UI_SkillGauge.h"
 #include "UI_SkillNumber.h"
 #include "UI_Timer.h"
+#include "UI_AttBufEffect.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -145,6 +147,16 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_gauge_physical_frame01_S3.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_HpGauge*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGauge"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Temp.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_HpGauge*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGaugeFrame"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_gauge_physical_frame01.png")))))
+		return E_FAIL;
+
 	//시간 초
 
 	/* For.Prototype_Component_Texture_UI_Time */
@@ -208,9 +220,14 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_Cursor::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_Cursor */
+	/* For.Prototype_GameObject_UI_HpPanel */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_HpPanel"),
 		CUI_HpPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Cursor */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_HpGauge"),
+		CUI_HpGauge::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_Chara_Icon */
@@ -241,6 +258,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_UI_Timer */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Timer"),
 		CUI_Timer::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_AttBufEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_AttBufEffect"),
+		CUI_AttBufEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

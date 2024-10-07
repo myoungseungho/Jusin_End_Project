@@ -25,6 +25,7 @@ public:
 private:
 	_uint m_iUseCount = { 1 };
 	_float m_fAttBufTimer = { 0.f };
+	_float m_fAttBufDuration = { 0.f };
 
 protected:
 	virtual HRESULT Bind_ShaderResources();

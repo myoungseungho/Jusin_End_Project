@@ -3,17 +3,20 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
+#include "UI_Manager.h"
 
 CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
+	, m_pUIManager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUIManager);
 }
 
 CMonster::CMonster(const CMonster& Prototype)
 	: CGameObject{ Prototype }
+	, m_pUIManager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUIManager);
 }
 
 HRESULT CMonster::Initialize_Prototype()
@@ -44,6 +47,12 @@ void CMonster::Priority_Update(_float fTimeDelta)
 void CMonster::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
+
+	if(m_pGameInstance->Get_DIKeyState(DIK_N))
+	{
+		m_pUIManager->UsingAttckBuff(5.f);
+	}
+
 }
 
 void CMonster::Late_Update(_float fTimeDelta)
@@ -138,7 +147,7 @@ void CMonster::Free()
 {
 	__super::Free();
 
-
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pUIManager);
 }

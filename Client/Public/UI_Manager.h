@@ -20,15 +20,13 @@ private:
 	virtual ~CUI_Manager() = default;
 
 public:
-	void UsingAttckBuff(_bool bAttackBuff) { 
-		m_bUsingAttckBuff = bAttackBuff; 
-		//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY , TEXT(""))
-	}
+	void UsingAttckBuff(_float fAttBufDuration);
 
 public:
 	//UsingAttckBuff
-	_bool m_bUsingAttckBuff = { FALSE };
+	_float m_fDuration = { 0.f };
 
+private:
 	//ScaleAnimation
 	_float m_fAnimFrame = { 0.f };
 	_float m_fAnimStartTimer = { 0.f };

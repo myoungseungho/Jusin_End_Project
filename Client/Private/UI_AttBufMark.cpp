@@ -36,16 +36,18 @@ HRESULT CUI_AttBufMark::Initialize(void* pArg)
 
 void CUI_AttBufMark::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CUI_AttBufMark::Update(_float fTimeDelta)
 {
-
+	__super::Update(fTimeDelta);
 }
 
 void CUI_AttBufMark::Late_Update(_float fTimeDelta)
 {
+	__super::Late_Update(fTimeDelta);
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 

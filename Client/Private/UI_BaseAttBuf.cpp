@@ -33,7 +33,6 @@ HRESULT CUI_BaseAttBuf::Initialize(void* pArg)
 
 void CUI_BaseAttBuf::Priority_Update(_float fTimeDelta)
 {
-
 }
 
 void CUI_BaseAttBuf::Update(_float fTimeDelta)
@@ -41,14 +40,13 @@ void CUI_BaseAttBuf::Update(_float fTimeDelta)
 	if (UsingAttckBuff() == TRUE)
 	{
 		m_fAttBufTimer += fTimeDelta;
+
+		if (m_fAttBufTimer >= m_fAttBufDuration)
+		{
+			//m_pGameInstance->Add_GameObject_ToLayer()
+		}
 	}
 
-	if (m_fAttBufTimer >= 5.f)
-	{
-		m_pUI_Manager->UsingAttckBuff(FALSE);
-		m_fAttBufTimer = 0.f;
-		
-	}
 }
 
 void CUI_BaseAttBuf::Late_Update(_float fTimeDelta)
@@ -63,7 +61,14 @@ HRESULT CUI_BaseAttBuf::Render(_float fTimeDelta)
 
 _bool CUI_BaseAttBuf::UsingAttckBuff()
 {
-	return m_pUI_Manager->m_bUsingAttckBuff;
+	if (m_pUI_Manager->m_fDuration > 0.f)
+	{
+		m_fAttBufDuration = m_pUI_Manager->m_fDuration;
+		return TRUE;
+	}
+	m_fAttBufDuration = 0.f;
+
+	return FALSE;
 }
 
 HRESULT CUI_BaseAttBuf::Bind_ShaderResources()

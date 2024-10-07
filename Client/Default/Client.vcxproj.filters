@@ -97,6 +97,12 @@
     <Filter Include="02.GameObjects\UI\Skill\SkillNumber">
       <UniqueIdentifier>{945dedb7-2310-428c-92b7-d3bf73f9da37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufEffect">
+      <UniqueIdentifier>{24732d6a-3eeb-4d4c-a280-5d97b5c33d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\HpGauge">
+      <UniqueIdentifier>{54435702-1bed-42c6-829a-6d6ca31c43d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -210,6 +216,12 @@
     <ClInclude Include="..\Public\UIObject.h">
       <Filter>02.GameObjects\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufEffect.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_HpGauge.h">
+      <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -310,6 +322,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\UI_Timer.cpp">
       <Filter>02.GameObjects\UI\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufEffect.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_HpGauge.cpp">
+      <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

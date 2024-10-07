@@ -3,6 +3,8 @@
 float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_Texture;
 
+float g_HpRadio;
+
 struct VS_IN
 {
     float3 vPosition : POSITION;
@@ -54,6 +56,25 @@ PS_OUT PS_MAIN(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_HP(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+   
+    if (In.vTexcoord.x >= g_HpRadio)
+        discard;
+    
+    if (Out.vColor.a <= 0.1f)
+        discard;
+    
+    Out.vColor.rgb = float3(1, 0, 0);
+    
+    return Out;
+}
+
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -72,5 +93,20 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN();
     }
+
+//1
+   pass Hp
+  {
+
+      SetRasterizerState(RS_Cull_None);
+      SetDepthStencilState(DSS_Default, 0);
+      SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+      VertexShader = compile vs_5_0 VS_MAIN();
+      GeometryShader = NULL;
+      HullShader = NULL;
+      DomainShader = NULL;
+      PixelShader = compile ps_5_0 PS_HP();
+  }
 
 }

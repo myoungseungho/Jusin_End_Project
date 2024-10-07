@@ -37,6 +37,8 @@ protected:
 	virtual HRESULT Ready_Components();
 
 	virtual void Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _float fPosY, _float fDepth = 0.9f);
+	virtual void Set_UI_Gauge_Setting(_float fRadio , _float fSizeX, _float fSizeY, _float fPosX, _float fPosY, _float fDepth = 0.9f);
+
 	_bool ClickRange();
 
 protected:

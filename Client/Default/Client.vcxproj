@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\public\UI_AttBufEffect.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\imconfig.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\Public\UI_BaseAttBuf.h" />
     <ClInclude Include="..\Public\UI_Chara_Icon.h" />
     <ClInclude Include="..\Public\UI_Cursor.h" />
+    <ClInclude Include="..\public\UI_HpGauge.h" />
     <ClInclude Include="..\Public\UI_HpPanel.h" />
     <ClInclude Include="..\Public\UI_Manager.h" />
     <ClInclude Include="..\Public\UI_Skill.h" />
@@ -195,6 +197,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="..\Private\UI_BaseAttBuf.cpp" />
     <ClCompile Include="..\Private\UI_Chara_Icon.cpp" />
     <ClCompile Include="..\Private\UI_Cursor.cpp" />
+    <ClCompile Include="..\private\UI_HpGauge.cpp" />
     <ClCompile Include="..\Private\UI_HpPanel.cpp" />
     <ClCompile Include="..\Private\UI_Manager.cpp" />
     <ClCompile Include="..\Private\UI_Skill.cpp" />
