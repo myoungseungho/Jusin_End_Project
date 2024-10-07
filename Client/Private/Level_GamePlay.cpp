@@ -25,7 +25,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	//몬스터 생성
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Monster"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -46,8 +46,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 {
 	CCamera_Free::CAMERA_FREE_DESC			CameraDesc{};
 
-	CameraDesc.vEye = _float3(0.f, 10.f, -10.f);
-	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
+	CameraDesc.vEye = _float3(0.f, 0.f, -1.f);
+	CameraDesc.vAt = _float3(0.f, 0.f, 1.f);
 	CameraDesc.fFovy = XMConvertToRadians(60.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1000.f;
@@ -65,9 +65,9 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 {
 	LIGHT_DESC			LightDesc{};
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
-	LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
-	LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
-	LightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
+	LightDesc.vDirection = _float4(0.f, 0.f, -1.f, 0.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.6f, 0.6f, 0.6f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))

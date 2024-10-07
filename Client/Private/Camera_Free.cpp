@@ -31,7 +31,7 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 		return E_FAIL;
 	CTransform::TRANSFORM_DESC tDesc{};
 	tDesc.fSpeedPerSec = 5.f;
-	//tDesc.fRotationPerSec = XMConvertToRadians(30.f);
+	tDesc.fRotationPerSec = XMConvertToRadians(30.f);
 	m_pTransformCom->SetUp_TransformDesc(&tDesc);
 	return S_OK;
 }

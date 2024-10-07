@@ -5,7 +5,7 @@
 #include "IMGUI_Shader_Tab.h"
 #include "Camera_Free.h"
 #include "Monster.h"
-
+#include "Effect_Rect.h"
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
@@ -91,6 +91,21 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
+	/* For.Prototype_Component_VIBuffer_Rect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Rect"),
+		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Fill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Shader/cmn_pattern00.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Shader_VtxPosTex */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxPosTex"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxPosTex.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
 	//손오공
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
@@ -99,6 +114,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Rect"),
+		CEffect_Rect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
 		CMonster::Create(m_pDevice, m_pContext))))
