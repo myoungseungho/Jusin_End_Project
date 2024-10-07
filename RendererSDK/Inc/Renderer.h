@@ -22,7 +22,7 @@ public:
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND, RG_SHADOWOBJ, RG_NONLIGHT, RG_BLEND, RG_UI, RG_END };
 
 private:
-	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, class CGameInstance* gameInstance);
+	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CRenderer() = default;
 
 public:
@@ -64,7 +64,7 @@ private:
 #endif
 
 public:
-	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, class CGameInstance* gameInstance);
+	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;
 };
 
