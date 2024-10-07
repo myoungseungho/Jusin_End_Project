@@ -27,7 +27,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 
 	//렌더인스턴스 엔진 초기화
-	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext, m_pGameInstance)))
+	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_Component_ForStatic()))
@@ -113,11 +113,11 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
+	Safe_Release(m_pIMGUI_Manager);
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
-	Safe_Release(m_pIMGUI_Manager);
 }
 

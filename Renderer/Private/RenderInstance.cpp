@@ -10,7 +10,7 @@ CRenderInstance::CRenderInstance()
 
 }
 
-HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext, CGameInstance* gameInstance)
+HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
 {
 	m_pLight_Manager = CLight_Manager::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pLight_Manager)
@@ -20,7 +20,7 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 	if (nullptr == m_pTarget_Manager)
 		return E_FAIL;
 
-	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext, gameInstance);
+	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
@@ -114,6 +114,4 @@ void CRenderInstance::Release_Engine()
 void CRenderInstance::Free()
 {
 	__super::Free();
-
-
 }
