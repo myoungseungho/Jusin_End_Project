@@ -31,6 +31,9 @@ public: /* For.Input_Device */
 
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
+	_uint Get_CurrentLevel_Index();
+	_uint Get_LoadingLevel_Index();
+	HRESULT Set_Loading_Level_Index(_uint);
 
 public: /* For.Timer_Manager */
 	HRESULT Add_Timer(const _wstring& strTimerTag);
@@ -45,6 +48,10 @@ public: /* For.Object_Manager */
 	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg = nullptr);
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
 	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+
+	HRESULT Get_Prototype_Names(vector<string>* pVector);
+	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);
+	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < _wstring, list<CGameObject*>>>*);
 
 public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);
@@ -65,6 +72,9 @@ public: /* For.ThreadPool */
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
 
+public: /* For.FileManager */
+	HRESULT SaveObjects(const wstring& filename, void* pArg);
+	void* LoadObjects(const wstring& filename);
 
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
@@ -76,6 +86,7 @@ private:
 	class CCollider_Manager*			m_pCollider_Manager = { nullptr };
 	class CPipeLine*					m_pPipeLine = { nullptr };
 	class CThreadPool*					m_pThreadPool = { nullptr };
+	class CFile_Manager*				m_pFile_Manager = { nullptr };
 
 public:
 	void Release_Engine();

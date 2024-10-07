@@ -11,6 +11,8 @@
 #include "IMGUI_Animation_Tab.h"
 #include "IMGUI_Effect_Tab.h"
 #include "IMGUI_UI_Tab.h"
+#include "IMGUI_Object_Tab.h"
+#include "IMGUI_Level_Tab.h"
 
 bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
@@ -44,10 +46,12 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	//IMGUI 탭 객체 생성
+	m_vecTabs.push_back(CIMGUI_Level_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_UI_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Effect_Tab::Create(m_pDevice, m_pContext));
+	m_vecTabs.push_back(CIMGUI_Object_Tab::Create(m_pDevice, m_pContext));
 
 	return S_OK;
 }

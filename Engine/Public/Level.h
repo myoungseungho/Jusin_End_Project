@@ -21,7 +21,8 @@ public:
 
 public:
 	HRESULT Clear_Resources();
-
+	_uint GetLevelIndex() { return m_iLevelIndex; };
+	HRESULT ParseInitialize(const wstring& filePath);
 	
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };

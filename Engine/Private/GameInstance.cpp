@@ -7,6 +7,7 @@
 #include "Timer_Manager.h"
 #include "Input_Device.h"
 #include "Collider_Manager.h"
+#include "File_Manager.h"
 #include "ThreadPool.h"
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -51,6 +52,10 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 
 	m_pThreadPool = CThreadPool::Create();
 	if (nullptr == m_pThreadPool)
+		return E_FAIL;
+
+	m_pFile_Manager = CFile_Manager::Create();
+	if (nullptr == m_pFile_Manager)
 		return E_FAIL;
 
 	return S_OK;
@@ -133,6 +138,30 @@ HRESULT CGameInstance::Change_Level(CLevel* pNewLevel)
 	return m_pLevel_Manager->Change_Level(pNewLevel);
 }
 
+_uint CGameInstance::Get_CurrentLevel_Index()
+{
+	if (nullptr == m_pLevel_Manager)
+		return E_FAIL;
+
+	return m_pLevel_Manager->Get_CurrentLevel_Index();
+}
+
+_uint CGameInstance::Get_LoadingLevel_Index()
+{
+	if (nullptr == m_pLevel_Manager)
+		return E_FAIL;
+
+	return m_pLevel_Manager->Get_LoadingLevel_Index();
+}
+
+HRESULT CGameInstance::Set_Loading_Level_Index(_uint _level)
+{
+	if (nullptr == m_pLevel_Manager)
+		return E_FAIL;
+
+	return m_pLevel_Manager->Set_LoadingLevel_Index(_level);
+}
+
 HRESULT CGameInstance::Add_Timer(const _wstring& strTimerTag)
 {
 	return m_pTimer_Manager->Add_Timer(strTimerTag);
@@ -190,6 +219,31 @@ CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, voi
 {
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
 }
+
+HRESULT CGameInstance::Get_Prototype_Names(vector<string>* pVector)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return	m_pObject_Manager->Get_Prototype_Names(pVector);
+}
+
+HRESULT CGameInstance::Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair<string, list<CGameObject*>>>* pVector)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return	m_pObject_Manager->Add_Object_Layers_Vector(iLevelIndex, pVector);
+}
+
+HRESULT CGameInstance::Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair<_wstring, list<CGameObject*>>>* pVector)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return	m_pObject_Manager->Add_Object_Layers_Vector(iLevelIndex, pVector);
+}
+
 
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, CComponent* pPrototype)
 {
@@ -252,6 +306,22 @@ HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
 HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, CCollider* pRenderObject)
 {
 	return m_pCollider_Manager->Add_ColliderObject(eRenderGroup, pRenderObject);
+}
+
+HRESULT CGameInstance::SaveObjects(const wstring& filename, void* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->SaveObjects(filename, pArg);
+}
+
+void* CGameInstance::LoadObjects(const wstring& filename)
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->LoadObjects(filename);
 }
 
 void CGameInstance::Release_Engine()

@@ -45,11 +45,11 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
 
-	typedef struct
+	struct ENGINE_DLL VTXCUBE
 	{
 		XMFLOAT3		vPosition;
 		XMFLOAT3		vTexcoord;
-	}VTXCUBE;
+	};
 
 	struct ENGINE_DLL VTXMESH
 	{
@@ -76,6 +76,21 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
 
+	//파일 저장 구조체
+	struct FILEDATA
+	{
+		_bool isParsing;
+		wstring prototypeTag;
+		wstring layerName;
+		_uint levelIndex;
+		_float3 position;
+		_float3 rightRotation;
+		_float3 upRotation;
+		_float3 lookRotation;
+		_float3 scale;
+	};
+
+#pragma region 바이너리
 	struct BoneWeight {
 		_uint vertexID;
 		_float weight;
@@ -127,4 +142,7 @@ namespace Engine
 		float ticksPerSecond;
 		vector<ChannelData> channels;
 	};
+#pragma endregion
+
+
 }

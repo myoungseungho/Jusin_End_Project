@@ -109,6 +109,9 @@
     <Filter Include="01.Utility\05.ThreadPool">
       <UniqueIdentifier>{d517bb4c-2bf7-40cd-a83c-1d1e0ee363b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\06.File">
+      <UniqueIdentifier>{4c240acb-06b3-4210-a36d-82d84d5f9c3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -212,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\ThreadPool.cpp">
       <Filter>01.Utility\05.ThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\File_Manager.cpp">
+      <Filter>01.Utility\06.File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\ThreadPool.h">
       <Filter>01.Utility\05.ThreadPool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\File_Manager.h">
+      <Filter>01.Utility\06.File</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
