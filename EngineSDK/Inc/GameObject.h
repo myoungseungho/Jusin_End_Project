@@ -16,7 +16,6 @@ class ENGINE_DLL CGameObject abstract : public CBase
 public:
 	struct GAMEOBJECT_DESC : public CTransform::TRANSFORM_DESC
 	{
-		_uint		iGameObjectData = {};
 	};
 
 protected:
@@ -51,18 +50,25 @@ public:
 public:
 	HRESULT Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, class CComponent** ppOut, void* pArg = nullptr);
 
+	//활성화 비활성화 관련
+	void SetActive(_bool active) { m_bIsActive = active; }
+	_bool IsActive() const { return m_bIsActive; }
+
+	//IMGUI 관련
+	void SetImguiSelect(_bool _bIsImguiClick) { m_bIsImguiClick = _bIsImguiClick; };
+
 protected:	
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
 	class CGameInstance*		m_pGameInstance = { nullptr };
 	class Renderer::CRenderInstance*		m_pRenderInstance = { nullptr };
-	_uint						m_iGameObjectData = { 0 };
 
 	class CTransform*			m_pTransformCom = { nullptr };
 
+	//활성화 비활성화 관련
 	_bool						m_bIsActive = { true };
-	void SetActive(_bool active) { m_bIsActive = active; }
-	_bool IsActive() const { return m_bIsActive; }
+	//IMGUI 관련
+	_bool						m_bIsImguiClick = { false };
 
 protected:
 	map<const _wstring, CComponent*>		m_Components;

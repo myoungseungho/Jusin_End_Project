@@ -39,7 +39,6 @@ HRESULT CGameObject::Initialize(void* pArg)
 	if (nullptr != pArg)
 	{
 		GAMEOBJECT_DESC* pDesc = static_cast<GAMEOBJECT_DESC*>(pArg);
-		m_iGameObjectData = pDesc->iGameObjectData;
 	}
 
 	m_pTransformCom = CTransform::Create(m_pDevice, m_pContext);

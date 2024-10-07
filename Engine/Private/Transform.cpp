@@ -96,6 +96,27 @@ void CTransform::Rotation(_fvector vAxis, _float fRadian)
 	Set_State(STATE_LOOK, vLook);
 }
 
+
+void CTransform::Rotation(_float3 vRotation)
+{
+	// 입력된 회전 값을 쿼터니언으로 변환
+	_vector newRotationQuaternion = XMQuaternionRotationRollPitchYaw(vRotation.x, vRotation.y, vRotation.z);
+
+	// 쿼터니언을 회전 행렬로 변환
+	_matrix rotationMatrix = XMMatrixRotationQuaternion(newRotationQuaternion);
+
+	// 스케일을 유지하기 위해 기존 코드를 사용
+	_float3 vScale = Get_Scaled();
+	_vector vRight = XMVector3Normalize(rotationMatrix.r[0]) * vScale.x;
+	_vector vUp = XMVector3Normalize(rotationMatrix.r[1]) * vScale.y;
+	_vector vLook = XMVector3Normalize(rotationMatrix.r[2]) * vScale.z;
+
+	// 상태 설정
+	Set_State(STATE_RIGHT, vRight);
+	Set_State(STATE_UP, vUp);
+	Set_State(STATE_LOOK, vLook);
+}
+
 void CTransform::LookAt(_fvector vAt)
 {
 	_vector		vPosition = Get_State(STATE_POSITION);

@@ -3,6 +3,8 @@
 
 BEGIN(Engine)
 class CGameObject;
+class CContainerObject;
+class CCollider;
 END
 
 BEGIN(Client)
@@ -25,11 +27,13 @@ private:
 	HRESULT IMGUI_SpawnObjectAtZero(const std::string& type);
 	HRESULT IMGUI_Show_LayerObjects();
 	HRESULT IMGUI_Save_Button_Pressed(_bool*, _bool*);
+	HRESULT IMGUI_Click_Button_Release(unordered_set<CGameObject*>& container, CGameObject* gameObject);
+	HRESULT IMGUI_CopySelectedObject(const wstring& layerName, CGameObject* sourceObject);
 
 	void ShowLayerList(const vector<pair<string, list<class CGameObject*>>>& objectLayersVector, _int& selectedItem);
 	void ShowObjectListAndControls(const vector<pair<string, list<class CGameObject*>>>& objectLayersVector, _int selectedItem);
 	void HandleContainerObject(class CContainerObject* containerObject);
-	void HandleAABBColliderObject(class CGameObject* containerObject);
+	void HandleAABBColliderObject(class CGameObject* colliderObject);
 	void HandleObjectPosition(class CGameObject* _pSelectedGameObject);
 	void HandleColliderTransform(class CCollider* _pCollider);
 	void HandleObjectRotation(class CGameObject* _pSelectedGameObject);

@@ -166,6 +166,7 @@
     <ClInclude Include="..\Public\Collider_Manager.h" />
     <ClInclude Include="..\Public\Component.h" />
     <ClInclude Include="..\Public\Component_Manager.h" />
+    <ClInclude Include="..\Public\ContainerObject.h" />
     <ClInclude Include="..\Public\DebugDraw.h" />
     <ClInclude Include="..\Public\Engine_Defines.h" />
     <ClInclude Include="..\Public\Engine_Function.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\Public\Mesh.h" />
     <ClInclude Include="..\Public\Model.h" />
     <ClInclude Include="..\Public\Object_Manager.h" />
+    <ClInclude Include="..\Public\PartObject.h" />
     <ClInclude Include="..\Public\PipeLine.h" />
     <ClInclude Include="..\Public\Shader.h" />
     <ClInclude Include="..\Public\Texture.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="..\Private\Collider_Manager.cpp" />
     <ClCompile Include="..\Private\Component.cpp" />
     <ClCompile Include="..\Private\Component_Manager.cpp" />
+    <ClCompile Include="..\Private\ContainerObject.cpp" />
     <ClCompile Include="..\Private\DebugDraw.cpp" />
     <ClCompile Include="..\Private\Engine_Struct.cpp" />
     <ClCompile Include="..\Private\File_Manager.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="..\Private\Mesh.cpp" />
     <ClCompile Include="..\Private\Model.cpp" />
     <ClCompile Include="..\Private\Object_Manager.cpp" />
+    <ClCompile Include="..\Private\PartObject.cpp" />
     <ClCompile Include="..\Private\PipeLine.cpp" />
     <ClCompile Include="..\Private\Shader.cpp" />
     <ClCompile Include="..\Private\Texture.cpp" />
