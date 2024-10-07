@@ -178,4 +178,9 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair.second);
 
 	m_EffectModel.clear();
+
+	for (auto& Pair : m_EffectTexture)
+		Safe_Release(Pair.second);
+
+	m_EffectTexture.clear();
 }

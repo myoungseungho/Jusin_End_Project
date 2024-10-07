@@ -6,6 +6,7 @@
 BEGIN(Engine)
 class CShader;
 class CModel;
+class CTexture;
 END
 
 BEGIN(Client)
@@ -30,6 +31,8 @@ protected:
 
 	CShader* m_pShaderCom = { nullptr };
 	CModel*	 m_pModelCom = { nullptr };
+	CTexture* m_pDiffuseTextureCom = { nullptr };
+	CTexture* m_pMaskTextureCom = { nullptr };
 
 	_float		m_fDuration = { 0.f };
 	_float		m_fAlpha = { 0.f };
