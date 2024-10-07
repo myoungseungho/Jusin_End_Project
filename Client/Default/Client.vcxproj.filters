@@ -329,5 +329,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -49,7 +49,7 @@ void CUI_AttBufMark::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_AttBufMark::Render()
+HRESULT CUI_AttBufMark::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;

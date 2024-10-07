@@ -87,9 +87,23 @@ HRESULT CMainApp::Create_IMGUI_Manager()
 
 HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 {
+	//Component_VIBuffer
+
+	/* For.Prototype_Component_VIBuffer_Rect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
+		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//Component_Shader
+
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxAnimMesh.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Shader_UI_VtxRect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_UI_VtxRect"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_UI_VtxRect.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
 	return S_OK;

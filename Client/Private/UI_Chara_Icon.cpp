@@ -52,7 +52,7 @@ void CUI_Chara_Icon::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_Chara_Icon::Render()
+HRESULT CUI_Chara_Icon::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;

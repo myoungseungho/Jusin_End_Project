@@ -46,7 +46,7 @@ void CUI_Skill::Late_Update(_float fTimeDelta)
 
 }
 
-HRESULT CUI_Skill::Render()
+HRESULT CUI_Skill::Render(_float fTimeDelta)
 {
 	return S_OK;
 }

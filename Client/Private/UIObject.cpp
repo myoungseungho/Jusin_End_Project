@@ -2,6 +2,7 @@
 
 #include "UIObject.h"
 
+
 CUIObject::CUIObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CGameObject{ pDevice , pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -42,10 +43,10 @@ void CUIObject::Update(_float fTimeDelta)
 
 void CUIObject::Late_Update(_float fTimeDelta)
 {
-
+	
 }
 
-HRESULT CUIObject::Render()
+HRESULT CUIObject::Render(_float fTimeDelta)
 {
 	return S_OK;
 }

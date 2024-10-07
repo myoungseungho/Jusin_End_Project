@@ -17,7 +17,7 @@ public:
 	virtual void Priority_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
-	virtual HRESULT Render();
+	virtual HRESULT Render(_float fTimeDelta);
 
 public:
 	_bool UsingAttckBuff();

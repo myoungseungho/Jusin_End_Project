@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 
 #include "UI_HpPanel.h"
@@ -50,7 +51,7 @@ void CUI_HpPanel::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_HpPanel::Render()
+HRESULT CUI_HpPanel::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;

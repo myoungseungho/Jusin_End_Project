@@ -49,7 +49,7 @@ void CUI_SkillNumber::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_SkillNumber::Render()
+HRESULT CUI_SkillNumber::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;

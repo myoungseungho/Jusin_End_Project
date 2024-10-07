@@ -56,7 +56,7 @@ void CUI_BaseAttBuf::Late_Update(_float fTimeDelta)
 	
 }
 
-HRESULT CUI_BaseAttBuf::Render()
+HRESULT CUI_BaseAttBuf::Render(_float fTimeDelta)
 {
 	return S_OK;
 }

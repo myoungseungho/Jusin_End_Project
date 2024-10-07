@@ -49,7 +49,7 @@ void CUI_Timer::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_Timer::Render()
+HRESULT CUI_Timer::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;

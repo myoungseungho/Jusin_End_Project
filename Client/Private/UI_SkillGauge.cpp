@@ -51,7 +51,7 @@ void CUI_SkillGauge::Late_Update(_float fTimeDelta)
 	
 }
 
-HRESULT CUI_SkillGauge::Render()
+HRESULT CUI_SkillGauge::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;

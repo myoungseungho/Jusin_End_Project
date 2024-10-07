@@ -24,6 +24,9 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
+	if (FAILED(Ready_UIObjects()))
+		return E_FAIL;
+
 	//몬스터 생성
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
 		return E_FAIL;
@@ -72,6 +75,40 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
+}
+
+HRESULT CLevel_GamePlay::Ready_UIObjects()
+{
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Cursor"), TEXT("Layer_UI_Cursor"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpPanel"), TEXT("Layer_UI_HpPanel"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Chara_Icon"), TEXT("Layer_UI_Chara_Icon"))))
+		return E_FAIL;
+
+	//공격력 버프
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufMark"), TEXT("Layer_UI_AttBufMark"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBuf"), TEXT("Layer_UI_AttBuf"))))
+		return E_FAIL;
+
+	// 스킬
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillGauge"), TEXT("Layer_UI_SkillGauge"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillNumber"), TEXT("Layer_UI_SkillNumber"))))
+		return E_FAIL;
+
+	//타이머
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Timer"), TEXT("Layer_UI_Timer"))))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

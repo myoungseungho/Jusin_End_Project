@@ -60,13 +60,12 @@ void CUI_Cursor::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_Cursor::Render()
+HRESULT CUI_Cursor::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
-
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))
