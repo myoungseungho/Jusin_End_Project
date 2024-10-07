@@ -61,6 +61,9 @@
     <Filter Include="02.GameObjects\Model_Preview">
       <UniqueIdentifier>{d70fdf43-0e6e-4d1b-8c36-4b9a0377cca1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="90.FrameEvent_Manager">
+      <UniqueIdentifier>{757ebb14-9fe5-4780-82c1-11a43531d0ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -141,6 +144,9 @@
     <ClInclude Include="..\Public\Model_Preview.h">
       <Filter>02.GameObjects\Model_Preview</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\FrameEvent_Manager.h">
+      <Filter>90.FrameEvent_Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -208,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp">
       <Filter>02.GameObjects\Model_Preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
+      <Filter>90.FrameEvent_Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

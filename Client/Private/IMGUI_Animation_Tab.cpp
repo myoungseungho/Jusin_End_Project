@@ -18,7 +18,6 @@
 
 
 
-#include "AnimationEvent_Defines.h"
 
 CIMGUI_Animation_Tab::CIMGUI_Animation_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CIMGUI_Tab{ pDevice,pContext }
@@ -26,32 +25,65 @@ CIMGUI_Animation_Tab::CIMGUI_Animation_Tab(ID3D11Device* pDevice, ID3D11DeviceCo
 }
 
 
-static FrameEventMap FrameEvent;// [CHARACTER_INDEX_END] [100] [2] ;
+//static FrameEventMap FrameEvent;// [CHARACTER_INDEX_END] [100] [2] ;
 
 HRESULT CIMGUI_Animation_Tab::Initialize()
 {
 
+    m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
     //static FrameEventMap FrameEvent[CHARACTER_INDEX_END][100][2];
   //  FrameEvent[SELECT_HIT][0][5].emplace("TEST");
-    FrameEvent[SELECT_HIT][0][50].push_back("TEST");
+  //  FrameEvent[SELECT_HIT][0][50].push_back("MotionLock,1,10");
+  //  FrameEvent[SELECT_HIT][1][0].push_back("ZERO");
+
 
     //FrameEvent[PlAYER_GOKU][ATTACK][50].push_back("TEST");
+
+    //애니메이션 재생속도 자체를 0으로 바꾸고  0.1초 뒤에  특정 프레임으로 움직인다던가 하는 함수가 필요할듯
+   
+    /*
+    animation lock and jump(_float fLockTime, _float fNextPosition);   
+    {
+        m_fAccLockTime= 0.f;
+        m_fLockTime = fLockTime;
+        _bool AnimationLock = true;
+        m_fNextPosition = fNextPosition;
+    }
+
+    if(m_fAccLockTime > fLockTime)
+    {
+        AnimationLock = false;
+        m_fCurrentPosition = m_fNextPosition;
+       
+       m_fAccLockTime=0.f;
+       m_fLockTime=0.f;
+       m_fNextPosition=0.f;
+    }
+
+    //만들었다고 치는데 이 복잡한걸 어떻게 string으로 처리함?
+    */
+
+
+   // CFrameEvent_Manager::Get_Instance()->Add_Event(TEXT("MotionLock,1.02f,100"));
+
+
+
+   //첫 실행일때, 루프돌았을때 ZeroFrame을 어떻게 구분하는가
+
+    CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
+
+
 
 	return S_OK;
 }
 
 
 static int g_CurrentAnimationIndex = 999;
+static bool g_isLoop = false;
 
 void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 {
     
-   //드래그를 통해 바로 로드 하는 기능을 만드려 했으니 Default\Client 까지 가야 해서 취소
-   //if (ImGui::Button("DragMod"))
-   //{
-   //   // m_bDrag = !m_bDrag;
-   //   // DragAcceptFiles(g_hWnd, m_bDrag);
-   //}
 
 
 
@@ -72,54 +104,83 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
     if (ImGui::Button("Object Load"))
     {
 
-        //../Bin/ModelData\Hit_Select.bin
 
         if (m_pSelectedModelCom != nullptr)
             Safe_Release(m_pSelectedModelCom);
 
-        //_fmatrix preMatrix = XMMatrixIdentity();
+       
+        m_pSelectedObject = m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), 0);
+        m_pSelectedModelCom = static_cast<CModel*>(m_pSelectedObject->Get_Component(TEXT("Com_Model")));
 
-        //m_pSelectedModelCom =static_cast<CModel*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Monster"), TEXT("Com_Model"), 0));
-        m_pSelectedModelCom = static_cast<CModel*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), TEXT("Com_Model"), 0));
 
     }
 
-    
+
     if (m_pSelectedModelCom != nullptr)
     {
          m_pSelectedModelCom->m_Animations;
          Info_Anim();
+
+
 
          if (m_bMotionPlaying)
          {
 
              _float fPrePosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
 
-             m_pSelectedModelCom->Play_Animation(fTimeDelta);
-             ImGui::Text("CurrentAnimPosition :%f " ,(m_pSelectedModelCom->m_fCurrentAnimPosition) );
+             if (m_pSelectedModelCom->Play_Animation(fTimeDelta))
+             {
+                 //모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
+                 if(m_pSelectedModelCom->m_isLoopAnim)
+                 {
+                     fPrePosition = 0.01;
+                     ProcessEventsFramesZero(m_iTestModelIndex, g_CurrentAnimationIndex);
+                 }
+             }
+
+             
+
 
              _float fCurPosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
              
-
-            //if(fPrePosition != fCurPosition)
-            //{
-            //    for (int i = fPrePosition; i < fCurPosition; i++)
-            //    {
-            //
-            //        Event tevent=  FrameEvent[SELECT_HIT][m_pSelectedModelCom->m_iCurrentAnimationIndex][i];
-            //
-            //    }
-            //
-            //}
-
-             ProcessEventsBetweenFrames(0, m_pSelectedModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+            
+             ProcessEventsBetweenFrames2(0, m_pSelectedModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
          }
 
          if (m_bCurrentPositionSlide)
          {
+             _float fCurrentPosition =(m_pSelectedModelCom->m_fCurrentAnimPosition);
+
+             ImGui::Text("CurrentAnimPosition :%f ", (m_pSelectedModelCom->m_fCurrentAnimPosition));
              float maxValue = m_pSelectedModelCom->m_Animations[g_CurrentAnimationIndex]->m_fDuration;       // 슬라이더 최대값
-             ImGui::SliderFloat("Current Position", &(m_pSelectedModelCom->m_fCurrentAnimPosition), 0, maxValue);
+             if (ImGui::SliderFloat("Current Position", &(m_pSelectedModelCom->m_fCurrentAnimPosition), 0, maxValue))
+             {
+                 
+                 //줄어들면 0으로 줄였다가 재실행?
+                 if (fCurrentPosition > m_pSelectedModelCom->m_fCurrentAnimPosition)
+                 {
+                     _float fSavePosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
+
+                     m_pSelectedModelCom->SetUp_Animation(0, false, 0);
+                     m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, g_isLoop);
+                     //m_pSelectedModelCom->Play_Animation(fSavePosition / 25.f);
+                     m_pSelectedModelCom->Play_Animation(fSavePosition/ m_pSelectedModelCom->Get_pCurrentAnimation()->m_fTickPerSecond);  
+
+
+                 }
+                 //늘어났다면   같은경우 있으니 if 추가해야됨
+                 else if (fCurrentPosition < m_pSelectedModelCom->m_fCurrentAnimPosition)
+                 {
+                     //차이만큼 PlayAnimation
+                     _float fdifference = m_pSelectedModelCom->m_fCurrentAnimPosition - fCurrentPosition;
+                     m_pSelectedModelCom->Play_Animation(fdifference / m_pSelectedModelCom->Get_pCurrentAnimation()->m_fTickPerSecond);
+
+                 }
+
+             }
+
+
          }
 
     }
@@ -135,7 +196,6 @@ void CIMGUI_Animation_Tab::Info_Anim()
     //999로 한 이유는 0으로 하면 터져서 
    // static int g_CurrentAnimationIndex = 999;
 
-    static bool isLoop = false;
 
     std::vector<const char*> animNames;
 
@@ -178,7 +238,7 @@ void CIMGUI_Animation_Tab::Info_Anim()
             for (size_t i = 0; i < selectedAnim->m_Channels.size(); ++i)
             {
                 const auto& channel = selectedAnim->m_Channels[i];
-                ;
+                
                //const auto channel = selectedAnim->m_Channels[i];
 
 
@@ -216,11 +276,20 @@ void CIMGUI_Animation_Tab::Info_Anim()
             ImGui::TreePop();
         }
 
-        ImGui::Checkbox("Loop", &isLoop);
+        ImGui::Checkbox("Loop", &g_isLoop);
         if (ImGui::Button("Play"))
         {
-            m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, isLoop);
 
+           //if (m_pSelectedModelCom->m_fCurrentAnimPosition == m_pSelectedModelCom->m_Animations[g_CurrentAnimationIndex]->m_fDuration)
+           //{
+           //    m_pSelectedModelCom->m_fCurrentAnimPosition = 0.f;
+           //}
+            m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, g_isLoop);
+            
+           // ProcessEventsFramesZero(m_iTestModelIndex, g_CurrentAnimationIndex);
+           
+
+            //ProcessEventsFramesZero((int)SELECT_HIT, g_CurrentAnimationIndex);
             m_bMotionPlaying = true;
             m_bCurrentPositionSlide = true;
 
@@ -236,6 +305,7 @@ void CIMGUI_Animation_Tab::Info_Anim()
 
             m_bMotionPlaying = false;
             m_bCurrentPositionSlide = false;
+            m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, false, 0);
             m_pSelectedModelCom->m_fCurrentAnimPosition = 0.f;
         }
     }
@@ -386,9 +456,117 @@ void CIMGUI_Animation_Tab::LoadFromFile(const std::string& filename)
     inFile.close();
 }
 
+void CIMGUI_Animation_Tab::ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame)
+{
+    //Frame이 멈춰서 중복처리되는경우는?
+   // 프레임이 0인경우를 제외하고 프레임이 멈췄는데 정확하게 이벤트가 있을 수 있나?
+       // 0.001초단위로 보면 불가능한건 아님
+
+   //해결방법
+   // 1. 이 함수를 play animation 주변에 넣어서, 애니메이션이 정지한경우 이 함수 호출 자체를 안함.  << 정석
+   // 2. bool값을 만들어서 1회만 처리
+
+   //일단 보류.
+
+
+
+
+   //frame이 0인경우는 애니메이션 실행 말고, 애니메이션 변경시 0의 이벤트만 찾아서 하는걸로 처리.   (ProcessEventsFramesZero)
+    if (prevFrame == 0)
+    {
+
+        //과거,현재 프레임이 모두 0으로 애니메이션 자체가 정지된 경우 함수 끝
+        if (currentFrame == 0)
+            return;
+
+        //아니면 0프레임 이벤트 제외하고 실행하기 위해  과거프레임 조금 증가
+        else
+            prevFrame += 0.001;
+    }
+
+
+
+
+
+    // 캐릭터 인덱스 탐색
+ 
+     auto characterIt = m_pFrameEvent->find(m_iTestModelIndex);   //테스트중
+    if (characterIt != m_pFrameEvent->end())
+    {
+        auto& animationMap = characterIt->second;
+        auto animationIt = animationMap.find(animationIndex);
+        if (animationIt != animationMap.end())
+        {
+            auto& frameMap = animationIt->second;
+
+
+            //0일때를 따로 만들었으니 제외해야하나?
+            for (auto frameIt = frameMap.lower_bound(prevFrame); frameIt != frameMap.end() && frameIt->first <= currentFrame; ++frameIt)
+            {
+                // 해당 프레임에서의 이벤트 리스트를 출력
+                for (string event : frameIt->second)
+                {
+                    //MSG_BOX(TEXT("프레임 " + frameIt->first + "에서 이벤트 발생: " + event));
+
+                    _bool bdebug1 = false;
+
+                    //m_pSelectedModelCom->m_Animations[m_pSelectedModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 100.f;
+                    //현재 25에서 돌아오지 않는 문제가 있음...?
+
+
+                    CFrameEvent_Manager::Get_Instance()->UseEvent(event, m_pSelectedObject);
+
+                }
+            }
+
+        }
+    }
+
+}
+
+
+
+
+/*
 void CIMGUI_Animation_Tab::ProcessEventsBetweenFrames(int characterIndex, int animationIndex, float prevFrame, float currentFrame)
 {
+
+
+
+    //Frame이 멈춰서 중복처리되는경우는?
+    // 프레임이 0인경우를 제외하고 프레임이 멈췄는데 정확하게 이벤트가 있을 수 있나?
+        // 0.001초단위로 보면 불가능한건 아님
+
+    //해결방법
+    // 1. 이 함수를 play animation 주변에 넣어서, 애니메이션이 정지한경우 이 함수 호출 자체를 안함.  << 정석
+    // 2. bool값을 만들어서 1회만 처리
+    
+    //일단 보류.
+
+
+
+
+
+
+    //frame이 0인경우는 애니메이션 실행 말고, 애니메이션 변경시 0의 이벤트만 찾아서 하는걸로 처리.   (ProcessEventsFramesZero)
+    if (prevFrame == 0)
+    {
+        
+        //과거,현재 프레임이 모두 0으로 애니메이션 자체가 정지된 경우 함수 끝
+        if (currentFrame == 0)
+            return;
+
+        //아니면 0프레임 이벤트 제외하고 실행하기 위해  과거프레임 조금 증가
+        else
+            prevFrame += 0.001;
+    }
+
+
+    
+
+
     // 캐릭터 인덱스 탐색
+
     auto characterIt = FrameEvent.find(SELECT_HIT);   //테스트중
     if (characterIt != FrameEvent.end()) 
     {
@@ -399,18 +577,7 @@ void CIMGUI_Animation_Tab::ProcessEventsBetweenFrames(int characterIndex, int an
             auto& frameMap = animationIt->second;
 
 
-            //list에 void*를 넣은 코드
-            
-            // 이전 프레임과 현재 프레임 사이에 있는 모든 이벤트 처리
-            //for (auto frameIt = frameMap.lower_bound(prevFrame); frameIt != frameMap.end() && frameIt->first <= currentFrame; ++frameIt) {
-            //    // 해당 프레임에서의 이벤트 리스트를 출력
-            //    for (void* event : frameIt->second) {
-            //        std::cout << "프레임 " << frameIt->first << "에서 이벤트 발생: " << event << std::endl;
-            //    }
-            //}
-
-
-            //테스트한답시고 string 넣은 코드
+            //0일때를 따로 만들었으니 제외해야하나?
             for (auto frameIt = frameMap.lower_bound(prevFrame); frameIt != frameMap.end() && frameIt->first <= currentFrame; ++frameIt) 
             {
                 // 해당 프레임에서의 이벤트 리스트를 출력
@@ -420,8 +587,9 @@ void CIMGUI_Animation_Tab::ProcessEventsBetweenFrames(int characterIndex, int an
 
                     _bool bdebug1 = false;
 
-                    m_pSelectedModelCom->m_Animations[m_pSelectedModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 100.f;
+                    //m_pSelectedModelCom->m_Animations[m_pSelectedModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 100.f;
                     //현재 25에서 돌아오지 않는 문제가 있음...?
+
 
 
                 }
@@ -430,6 +598,35 @@ void CIMGUI_Animation_Tab::ProcessEventsBetweenFrames(int characterIndex, int an
         }
     }
 }
+*/
+
+
+void CIMGUI_Animation_Tab::ProcessEventsFramesZero(int characterIndex, int animationIndex)
+{
+    //애니메이션 변경시 0번째 프레임이벤트를 실행하기 위함
+
+    auto characterIt = m_pFrameEvent->find(m_iTestModelIndex);   //테스트중
+    if (characterIt != m_pFrameEvent->end())
+    {
+        auto& animationMap = characterIt->second;
+        auto animationIt = animationMap.find(animationIndex);
+        if (animationIt != animationMap.end())
+        {
+            auto& frameMap = animationIt->second;
+
+            auto frameIt = frameMap[0];
+
+            for (auto event : frameIt)
+            {
+
+                CFrameEvent_Manager::Get_Instance()->UseEvent(event, m_pSelectedObject);
+            }
+            
+        }
+    }
+
+}
+
 
 CIMGUI_Animation_Tab* CIMGUI_Animation_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

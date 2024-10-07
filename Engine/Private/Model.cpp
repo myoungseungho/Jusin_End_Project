@@ -94,10 +94,16 @@ HRESULT CModel::Render(_uint iMeshIndex)
 	return S_OK;
 }
 
-void CModel::Play_Animation(_float fTimeDelta)
+_bool CModel::Play_Animation(_float fTimeDelta)
 {
+
+	_bool bAnimationEnd = false;
+
 	// 현재 애니메이션 업데이트
-	m_Animations[m_iCurrentAnimationIndex]->Update_TransformationMatrix(&m_fCurrentAnimPosition, fTimeDelta, m_Bones, m_isLoopAnim, m_KeyFrameIndices[m_iCurrentAnimationIndex]);
+	if (m_Animations[m_iCurrentAnimationIndex]->Update_TransformationMatrix(&m_fCurrentAnimPosition, fTimeDelta, m_Bones, m_isLoopAnim, m_KeyFrameIndices[m_iCurrentAnimationIndex]))
+	{
+		bAnimationEnd = true;
+	}
 
 	// 블렌딩이 활성화된 경우 블렌딩 처리
 	if (m_isBlending)
@@ -112,7 +118,8 @@ void CModel::Play_Animation(_float fTimeDelta)
 			m_iCurrentAnimationIndex = m_iNextAnimationIndex;
 			m_fCurrentAnimPosition = m_fNextAnimPosition;
 			blendFactor = 1.0f;
-			return;
+			//return bAnimationEnd;
+			return bAnimationEnd;
 		}
 		else
 		{
@@ -155,24 +162,29 @@ void CModel::Play_Animation(_float fTimeDelta)
 	// 모든 뼈의 CombinedTransformationMatrix 업데이트
 	for (auto& pBone : m_Bones)
 		pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
+
+
+	return bAnimationEnd;
 }
 
 
 void CModel::SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration)
 {
+
 	if (iAnimationIndex >= m_iNumAnimations)
 		return;
 
 
+	
 	m_isLoopAnim = isLoop;
 
 	// 애니메이션이 다를 때만 블렌딩을 설정하거나 초기화
 	if (m_iCurrentAnimationIndex != iAnimationIndex)
 	{
-
 		//애니메이션이 바뀌면 0부터 시작
 		m_fPriviousAnimPosition = 0.f;
 		m_fCurrentAnimPosition = 0.f;
+		m_Animations[iAnimationIndex]->m_fTickPerSecond = 25.f;
 
 		if (blendDuration > 0.0f)
 		{

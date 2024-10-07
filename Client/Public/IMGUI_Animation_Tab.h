@@ -4,6 +4,8 @@
 
 //#include "../../AssimpSaveAndLoad/Data.h"
 
+#include "AnimationEvent_Defines.h"
+#include "FrameEvent_Manager.h"
 BEGIN(Client)
 
 struct VertexAnim {
@@ -78,20 +80,30 @@ private:
 	//void LoadBoneFromBinary_Tool(ifstream& inFile, BoneData& bone);
     void SelectedModelLoad(std::ifstream& inFile, BoneData& bone);
     void LoadFromFile(const std::string& filename);
-    void ProcessEventsBetweenFrames(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
+    //void ProcessEventsBetweenFrames(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
+    void ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
+
+    void ProcessEventsFramesZero(int characterIndex, int animationIndex);
 
 public:
      
 private:
 
    // _bool m_bDrag = false;
-    CModel* m_pSelectedModelCom = { nullptr };
+    CModel*         m_pSelectedModelCom = { nullptr };
+    CGameObject*    m_pSelectedObject = { nullptr };
 
     _char buffer[128] = "../Bin/ModelData/Hit_Select.bin";
     _bool m_bMotionPlaying = false;
     _bool m_bCurrentPositionSlide = false;
 
     _float fSliderDebug = 0.f;
+
+    FrameEventMap* m_pFrameEvent = { nullptr };
+
+
+    CHARACTER_INDEX m_iTestModelIndex = { PLAY_HIT };
+
 
  public:
 	static CIMGUI_Animation_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

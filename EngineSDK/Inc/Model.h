@@ -29,10 +29,11 @@ public:
 	virtual HRESULT Render(_uint iMeshIndex);
 
 public:
-	void Play_Animation(_float fTimeDelta);
+	_bool Play_Animation(_float fTimeDelta);
 	void SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration = 0.0f);
 	_float GetDurationByIndex(_uint _animationIndex);
 	_float Get_CurrentAnimationTime() const { return m_fCurrentAnimPosition; }
+	class CAnimation* Get_pCurrentAnimation() { return m_Animations[m_iCurrentAnimationIndex]; };
 
 public:
 	HRESULT Bind_MaterialSRV(class CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex);

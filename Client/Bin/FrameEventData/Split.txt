@@ -1,0 +1,9 @@
+PLAY_HIT,63,7,ObjectMove,1.003,0,0,0
+PLAY_HIT,57,0,TickPerSecondChange,25
+PLAY_HIT,57,20,TickPerSecondChange,125
+PLAY_HIT,57,70,TickPerSecondChange,25
+PLAY_HIT,57,90,TickPerSecondChange,125
+
+
+
+
