@@ -170,6 +170,8 @@
     <ClInclude Include="..\public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
+    <ClInclude Include="..\Public\imnodes.h" />
+    <ClInclude Include="..\Public\imnodes_internal.h" />
     <ClInclude Include="..\Public\imstb_rectpack.h" />
     <ClInclude Include="..\Public\imstb_textedit.h" />
     <ClInclude Include="..\Public\imstb_truetype.h" />
@@ -199,6 +201,7 @@
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
+    <ClCompile Include="..\Private\imnodes.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />

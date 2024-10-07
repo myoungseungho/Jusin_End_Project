@@ -141,6 +141,12 @@
     <ClInclude Include="..\public\Effect_Rect.h">
       <Filter>02.GameObjects\Effect_Rect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\imnodes.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imnodes_internal.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -208,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Effect_Rect.cpp">
       <Filter>02.GameObjects\Effect_Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imnodes.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

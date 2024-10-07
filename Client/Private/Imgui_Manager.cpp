@@ -12,6 +12,8 @@
 #include "IMGUI_Effect_Tab.h"
 #include "IMGUI_UI_Tab.h"
 
+#include "imnodes.h"
+
 bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
@@ -34,6 +36,7 @@ HRESULT CImgui_Manager::Initialize()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImNodes::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;

@@ -3,6 +3,7 @@
 #include "Base.h"
 #include "Client_Defines.h"
 #include "imgui.h"
+#include "imnodes.h"
 
 BEGIN(Engine)
 class CGameInstance;
