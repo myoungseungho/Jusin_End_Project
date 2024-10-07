@@ -34,6 +34,8 @@ protected:
 	_float		m_fDuration = { 0.f };
 	_float		m_fAlpha = { 0.f };
 
+	_float		m_fCurPosition = { 0.f };
+
 	vector<KEYFRAME>	m_EffectKeyFrames;
 
 public:
