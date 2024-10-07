@@ -21,12 +21,16 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
 
+	//Light 준비
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	//몬스터 생성
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
+	// 해당 레벨에 맞는 파일 경로를 설정
+	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
+
+	if (FAILED(ParseInitialize(filePath))) {
 		return E_FAIL;
+	}
 
 	return S_OK;
 }

@@ -22,6 +22,9 @@ void CIMGUI_Object_Tab::Render(_float fTimeDelta)
 {
 	static bool bShowPrototypeObjects = true;
 	static bool bShowLayerObjects = true;
+	static bool bShowSettings = true;
+	static bool bShowSaveSuccessMessage = false;
+	static bool bShowSaveFailMessage = false;
 
 	if (ImGui::BeginTabBar("Object_InnerTabs")) { // 하위 탭 바 시작
 		if (ImGui::BeginTabItem("Prototype_ObjectList", &bShowPrototypeObjects)) { // 하위 Prototype 탭
@@ -36,6 +39,22 @@ void CIMGUI_Object_Tab::Render(_float fTimeDelta)
 				IMGUI_Show_LayerObjects(); // Layer 오브젝트 표시
 			}
 			ImGui::EndTabItem(); // 하위 Layer 탭 종료
+		}
+
+		if (ImGui::BeginTabItem("Save", &bShowSettings)) { 
+			if (ImGui::Button("Save")) { // "Save" 버튼
+				IMGUI_Save_Button_Pressed(&bShowSaveSuccessMessage, &bShowSaveFailMessage);
+			}
+
+			if (bShowSaveSuccessMessage) {
+				ImGui::Text("File saved successfully!");
+			}
+
+			if (bShowSaveFailMessage) {
+				ImGui::Text("Failed to save file!");
+			}
+
+			ImGui::EndTabItem(); 
 		}
 		ImGui::EndTabBar(); // 하위 탭 바 종료
 	}
