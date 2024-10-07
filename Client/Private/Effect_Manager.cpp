@@ -105,9 +105,19 @@ HRESULT CEffect_Manager::Ready_Components()
 
 	for (size_t i = 0; i < pKeys->size(); i++)
 	{
-		const wstring& prototypeTag = *pKeys->at(i);
+		const wstring&	pPrototypeTag = *pKeys->at(i);
 
-		m_EffectModel.emplace(prototypeTag, reinterpret_cast<CModel*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, prototypeTag)));
+		CModel* pModelComponent = reinterpret_cast<CModel*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, pPrototypeTag));
+
+		wstring prototypeTag = pPrototypeTag;
+
+		const wstring prefixToRemove = L"Prototype_Component_";
+		size_t pos = prototypeTag.find(prefixToRemove);
+		if (pos != wstring::npos) {
+			prototypeTag.erase(pos, prefixToRemove.length());
+		}
+
+		m_EffectModel.emplace(prototypeTag, pModelComponent);
 	}
 	
 
