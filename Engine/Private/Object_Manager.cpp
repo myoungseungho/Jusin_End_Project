@@ -124,6 +124,23 @@ HRESULT CObject_Manager::Clear_Resources(_uint iLevelIndex)
 	return S_OK;
 }
 
+CGameObject* CObject_Manager::Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex)
+{
+	if (nullptr == m_pLayers)
+		return nullptr;
+
+	
+	auto it = m_pLayers[iLevelIndex].find(strLayerTag);
+	if (it == m_pLayers[iLevelIndex].end()) {
+		
+		return nullptr;
+	}
+
+
+	return it->second->Get_Object(iindex);
+
+}
+
 CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
 {
 	auto	iter = m_Prototypes.find(strPrototypeTag);

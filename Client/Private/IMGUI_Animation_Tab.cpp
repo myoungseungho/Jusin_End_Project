@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "IMGUI_Animation_Tab.h"
+#include "GameInstance.h"
+#include "RenderInstance.h"
 
 #include "imgui.h"
 
@@ -75,9 +77,11 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
         if (m_pSelectedModelCom != nullptr)
             Safe_Release(m_pSelectedModelCom);
 
-        _fmatrix preMatrix = XMMatrixIdentity();
-       // m_pSelectedModelCom = m_p
-        m_pGameInstance->
+        //_fmatrix preMatrix = XMMatrixIdentity();
+
+        //m_pSelectedModelCom =static_cast<CModel*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Monster"), TEXT("Com_Model"), 0));
+        m_pSelectedModelCom = static_cast<CModel*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), TEXT("Com_Model"), 0));
+
     }
 
     

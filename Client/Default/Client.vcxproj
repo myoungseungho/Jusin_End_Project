@@ -176,6 +176,7 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
+    <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
+    <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

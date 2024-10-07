@@ -30,6 +30,11 @@ public:
 
 	HRESULT Clear_Resources(_uint iLevelIndex);
 
+
+	//
+	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex);
+
+
 private:
 	map<const wstring, class CGameObject*>		m_Prototypes;
 
