@@ -60,13 +60,13 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGameInstance->Clear_DepthStencil_View();
 
-	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
-
 	//레벨매니저 렌더는 게임인스턴스
 	m_pGameInstance->Render_Engine();
 
 	//나머지 렌더는 렌더인스턴스
 	m_pRenderInstance->Render_Engine(fTimeDelta);
+
+	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
