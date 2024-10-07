@@ -113,11 +113,11 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
+	Safe_Release(m_pIMGUI_Manager);
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
-	Safe_Release(m_pIMGUI_Manager);
 }
 

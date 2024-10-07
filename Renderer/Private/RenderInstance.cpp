@@ -114,6 +114,4 @@ void CRenderInstance::Release_Engine()
 void CRenderInstance::Free()
 {
 	__super::Free();
-
-
 }
