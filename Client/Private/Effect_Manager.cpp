@@ -33,7 +33,7 @@ void CEffect_Manager::Late_Update(_float fTimeDelta)
 		Pair.second->Late_Update(fTimeDelta);
 }
 
-void CEffect_Manager::Render()
+void CEffect_Manager::Render(_float fTimeDelta)
 {
 }
 

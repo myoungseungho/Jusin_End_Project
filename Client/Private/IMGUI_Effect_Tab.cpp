@@ -6,7 +6,8 @@
 
 
 CIMGUI_Effect_Tab::CIMGUI_Effect_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: m_pEffect_Manager {CEffect_Manager::Get_Instance()}
+	: CIMGUI_Tab{ pDevice,pContext },
+        m_pEffect_Manager {CEffect_Manager::Get_Instance()}
 {
 	Safe_AddRef(m_pEffect_Manager);
 }

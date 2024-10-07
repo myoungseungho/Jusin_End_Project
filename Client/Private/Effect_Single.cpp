@@ -34,7 +34,7 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 {
 }
 
-HRESULT CEffect_Single::Render()
+HRESULT CEffect_Single::Render(_float fTimeDelta)
 {
 	return S_OK;
 }

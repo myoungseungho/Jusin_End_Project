@@ -34,7 +34,7 @@ void CEffect_MoveTex::Late_Update(_float fTimeDelta)
 {
 }
 
-HRESULT CEffect_MoveTex::Render()
+HRESULT CEffect_MoveTex::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
