@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "IMGUI_UI_Tab.h"
-
+#include "GameInstance.h"
+#include "RenderInstance.h"
 
 
 CIMGUI_UI_Tab::CIMGUI_UI_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -4,6 +4,14 @@
 #include "Client_Defines.h"
 #include "imgui.h"
 
+BEGIN(Engine)
+class CGameInstance;
+END
+
+BEGIN(Renderer)
+class CRenderInstance;
+END
+
 BEGIN(Client)
 
 class CIMGUI_Tab : public CBase
@@ -24,6 +32,8 @@ public:
 protected:
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
+	class Renderer::CRenderInstance* m_pRenderInstance = { nullptr };
+	class CGameInstance* m_pGameInstance = { nullptr };
 };
 
 END
