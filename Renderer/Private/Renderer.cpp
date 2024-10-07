@@ -426,9 +426,11 @@ void CRenderer::Free()
 		m_RenderObjects[i].clear();
 	}
 
+	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
 	Safe_Release(m_pRenderInstance);
 	Safe_Release(m_pGameInstance);
-
+	Safe_Release(m_pShader);
+	Safe_Release(m_pVIBuffer);
 }
