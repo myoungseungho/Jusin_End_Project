@@ -72,25 +72,26 @@ public:
 	virtual const _char* GetTabName() const { return "Animation"; };
 
     void Info_Anim();
-    void CreateSlider(_float currentValue, _float maxValue);
 
 private:
 	//void LoadModelDataFromBinary();
 	//void LoadBoneFromBinary_Tool(ifstream& inFile, BoneData& bone);
     void SelectedModelLoad(std::ifstream& inFile, BoneData& bone);
     void LoadFromFile(const std::string& filename);
-
+    void ProcessEventsBetweenFrames(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
 
 public:
-
+     
 private:
 
    // _bool m_bDrag = false;
     CModel* m_pSelectedModelCom = { nullptr };
 
-    _char buffer[128];
+    _char buffer[128] = "../Bin/ModelData/Hit_Select.bin";
     _bool m_bMotionPlaying = false;
     _bool m_bCurrentPositionSlide = false;
+
+    _float fSliderDebug = 0.f;
 
  public:
 	static CIMGUI_Animation_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

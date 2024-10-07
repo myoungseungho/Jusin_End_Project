@@ -163,11 +163,17 @@ void CModel::SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDu
 	if (iAnimationIndex >= m_iNumAnimations)
 		return;
 
+
 	m_isLoopAnim = isLoop;
 
 	// 애니메이션이 다를 때만 블렌딩을 설정하거나 초기화
 	if (m_iCurrentAnimationIndex != iAnimationIndex)
 	{
+
+		//애니메이션이 바뀌면 0부터 시작
+		m_fPriviousAnimPosition = 0.f;
+		m_fCurrentAnimPosition = 0.f;
+
 		if (blendDuration > 0.0f)
 		{
 			// 다음 애니메이션 설정 및 블렌딩 활성화

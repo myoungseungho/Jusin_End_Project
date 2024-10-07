@@ -66,6 +66,10 @@ public: /* For.Animation */
 	_uint						m_iNextAnimationIndex = {};
 	_float						m_fBlendDuration = {};
 	_float						m_fNextAnimPosition = {};
+
+	_float						m_fPriviousAnimPosition = {};
+private:
+
 public:
 	// 바이너리 로드
 	HRESULT InitializeFromBinary(const string& binFilePath, _fmatrix PreTransformMatrix);
