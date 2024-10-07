@@ -42,6 +42,8 @@ HRESULT CLoader::Initialize(LEVELID eNextLevelID)
 	/* 어떤 레벨에 대한 준비를 해야하는지 */
 	m_eLevelID = eNextLevelID;
 
+	m_pGameInstance->Set_LoadingLevel_Index(m_eLevelID);
+
 	InitializeCriticalSection(&m_Critical_Section);
 
 	/* 정해준 레벨에 자원(텍스쳐, 사운드, 모델 등등)을 준비한다. */

@@ -154,7 +154,7 @@ _uint CGameInstance::Get_LoadingLevel_Index()
 	return m_pLevel_Manager->Get_LoadingLevel_Index();
 }
 
-HRESULT CGameInstance::Set_Loading_Level_Index(_uint _level)
+HRESULT CGameInstance::Set_LoadingLevel_Index(_uint _level)
 {
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;

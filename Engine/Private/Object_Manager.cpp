@@ -33,10 +33,10 @@ HRESULT CObject_Manager::Initialize(_uint iNumLevels)
 
 HRESULT CObject_Manager::Add_Prototype(const _wstring & strPrototypeTag, CGameObject * pPrototype)
 {
-	if (nullptr != Find_Prototype(strPrototypeTag))
-		return E_FAIL;
-
-	m_Prototypes.emplace(strPrototypeTag, pPrototype);
+	if (nullptr == Find_Prototype(strPrototypeTag))
+		m_Prototypes.emplace(strPrototypeTag, pPrototype);
+	else
+		Safe_Release(pPrototype);
 
 	return S_OK;
 }

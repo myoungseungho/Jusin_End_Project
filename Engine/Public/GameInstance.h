@@ -33,7 +33,7 @@ public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
 	_uint Get_CurrentLevel_Index();
 	_uint Get_LoadingLevel_Index();
-	HRESULT Set_Loading_Level_Index(_uint);
+	HRESULT Set_LoadingLevel_Index(_uint);
 
 public: /* For.Timer_Manager */
 	HRESULT Add_Timer(const _wstring& strTimerTag);
