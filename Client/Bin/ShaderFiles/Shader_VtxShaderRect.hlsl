@@ -5,7 +5,7 @@ float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D		g_Texture;
 
 texture2D		g_DepthTexture;
-
+bool isBindTexture;
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -71,7 +71,10 @@ PS_OUT PS_MAIN(PS_IN In)
 {
 	PS_OUT			Out;	
 
-	Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    if (isBindTexture == true)
+		Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+	else
+        Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
 
 	//Out.vColor.gb = Out.vColor.r;
 

@@ -18,6 +18,7 @@ HRESULT CIMGUI_Shader_Tab::Initialize()
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
+    static bool isStart = false;
     static int unique_node_id = 1;
     static std::vector<int> node_ids;
     static std::vector<std::pair<int, int>> links;
@@ -26,10 +27,20 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     static std::map<int, int> node_values; // Store node id and its corresponding value
     static std::map<int, int> input_accumulated_values; // Store accumulated values for input nodes
 
+    if (ImGui::Button("Add Rect") && !isStart)
+    {
+        //몬스터 생성
+        if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Effect_Rect"))))
+            return;
+
+        isStart = true;
+    }
+
+
     ImGui::Separator();
 
     // Node addition button
-    if (ImGui::Button("Add Node"))
+    if (ImGui::Button("Add Node") && isStart)
     {
         node_ids.push_back(unique_node_id++); // Add a new node
         node_values[unique_node_id - 1] = 0;  // Initialize new node value to 0

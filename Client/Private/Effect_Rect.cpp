@@ -4,6 +4,8 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
+#include "Imgui_Manager.h"
+#include "IMGUI_Shader_Tab.h"
 CEffect_Rect::CEffect_Rect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -33,6 +35,10 @@ HRESULT CEffect_Rect::Initialize(void* pArg)
 	m_fSizeY = g_iWinSizeY;
 	m_fX = g_iWinSizeX >> 1;
 	m_fY = g_iWinSizeY >> 1;
+
+	//CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
+
+	//static_cast<CIMGUI_Shader_Tab*>(pImGui_Manager->Access_Shader_Tab())->Set_EffectRect(this);
 
 	//m_pTransformCom->Set_Scaled(1, 1, 1.f);
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -79,7 +85,7 @@ HRESULT CEffect_Rect::Render(_float fTimeDelta)
 HRESULT CEffect_Rect::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxShaderRect"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -114,9 +120,17 @@ HRESULT CEffect_Rect::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
+	if (m_isTex == true)
+	{
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+			return E_FAIL;
+	}
+	else
+	{
+		if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
+			return E_FAIL;
+	}
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
-		return E_FAIL;
 
 	return S_OK;
 }

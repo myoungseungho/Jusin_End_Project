@@ -27,6 +27,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
+	_bool m_isTex = { false };
+private:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };

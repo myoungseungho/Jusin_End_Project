@@ -79,7 +79,7 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
+	
 	return S_OK;
 }
 
