@@ -14,6 +14,7 @@ HRESULT CIMGUI_Shader_Tab::Initialize()
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
+
 }
 
 CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

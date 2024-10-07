@@ -25,17 +25,20 @@ HRESULT CCamera_Free::Initialize_Prototype()
 
 HRESULT CCamera_Free::Initialize(void* pArg)
 {
-	m_fMouseSensor = static_cast<CCamera_Free::CAMERA_FREE_DESC*>(pArg)->fSensor;
-
+	m_fMouseSensor = static_cast<CCamera_Free::CAMERA_FREE_DESC*>(pArg)->fSensor;	
+	m_fMouseSensor = 1.f;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
-
+	CTransform::TRANSFORM_DESC tDesc{};
+	tDesc.fSpeedPerSec = 5.f;
+	//tDesc.fRotationPerSec = XMConvertToRadians(30.f);
+	m_pTransformCom->SetUp_TransformDesc(&tDesc);
 	return S_OK;
 }
 
 void CCamera_Free::Priority_Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Get_DIKeyState(DIK_A) & 0x80)
+	if (GetKeyState('A') & 0x80)
 	{
 		m_pTransformCom->Go_Left(fTimeDelta);
 	}
