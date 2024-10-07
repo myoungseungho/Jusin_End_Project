@@ -3,9 +3,9 @@
 bool ModelConverter::LoadModel(const std::string& filePath, ModelType modelType) {
 	unsigned int iFlag = aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_Fast;
 
-	/*if (modelType == TYPE_NONANIM) {
+	if (modelType == TYPE_NONANIM) {
 		iFlag |= aiProcess_PreTransformVertices;
-	}*/
+	}
 
 	m_ai_Scene = importer.ReadFile(filePath, iFlag);
 
@@ -89,7 +89,7 @@ bool ModelConverter::SaveModelToBinary(const std::string& filePath, const ModelH
 			outFile.write(texturePath.c_str(), pathLength);
 
 			// Print the texture path
-			std::cout << "Saving texture path: " << texturePath << std::endl;
+			//std::cout << "Saving texture path: " << texturePath << std::endl;
 		}
 	}
 
