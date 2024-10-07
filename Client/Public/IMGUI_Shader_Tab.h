@@ -22,6 +22,7 @@ public:
 
 private:
 	vector<CShader_Texture*> m_NodeTextures;
+	vector<ImTextureID> m_NodeTextureSRVs;
 	CEffect_Rect* m_Effect_Rect = { nullptr };
 
 	_int m_iNodeTextureCount = 0;

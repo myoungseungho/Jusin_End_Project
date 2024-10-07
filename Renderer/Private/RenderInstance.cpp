@@ -71,6 +71,11 @@ HRESULT CRenderInstance::Copy_RenderTarget(const _wstring& strTargetTag, ID3D11T
 	return m_pTarget_Manager->Copy_RenderTarget(strTargetTag, pTexture2D);
 }
 
+ID3D11ShaderResourceView* CRenderInstance::Copy_RenderTarget_SRV(const _wstring& strTargetTag)
+{
+	return m_pTarget_Manager->Copy_RenderTarget_SRV(strTargetTag);
+}
+
 HRESULT CRenderInstance::Bind_RT_ShaderResource(CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag)
 {
 	return m_pTarget_Manager->Bind_ShaderResource(pShader, pConstantName, strTargetTag);

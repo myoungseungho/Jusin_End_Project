@@ -71,6 +71,9 @@ void CShader_Texture::Late_Update(_float fTimeDelta)
 
 HRESULT CShader_Texture::Render(_float fTimeDelta)
 {
+	if (FAILED(m_pRenderInstance->Begin_MRT(m_Key)))
+		return E_FAIL;
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -83,6 +86,9 @@ HRESULT CShader_Texture::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -92,9 +98,9 @@ HRESULT CShader_Texture::Ready_Components(void* pArg)
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxShaderRect"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
-
+	m_Key = static_cast<SHADER_TEXTURE_DESC*>(pArg)->prototypeKey;
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, static_cast<SHADER_TEXTURE_DESC*>(pArg)->prototypeKey,
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, m_Key,
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 

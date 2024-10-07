@@ -122,6 +122,7 @@ HRESULT CTarget_Manager::End_MRT()
 
 	return S_OK;
 }
+
 HRESULT CTarget_Manager::Copy_RenderTarget(const _wstring & strTargetTag, ID3D11Texture2D * pTexture2D)
 {
 	CRenderTarget*		pRenderTarget = Find_RenderTarget(strTargetTag);
@@ -148,6 +149,7 @@ HRESULT CTarget_Manager::Bind_ShaderResource(CShader * pShader, const _char * pC
 
 	return pRenderTarget->Bind_ShaderResource(pShader, pConstantName);	
 }
+
 #ifdef _DEBUG
 HRESULT CTarget_Manager::Ready_Debug(const _wstring & strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY)
 {

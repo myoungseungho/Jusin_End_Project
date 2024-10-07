@@ -50,9 +50,10 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
     ImNodes::BeginNodeEditor(); // Start node editor scope
 
-    // Render nodes
-    for (int node_id : node_ids)
+    for (size_t i = 0; i < node_ids.size(); ++i)
     {
+        int node_id = node_ids[i];
+
         ImNodes::BeginNode(node_id);
         ImGui::Text("Node %d", node_id);
 
@@ -71,6 +72,12 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
         // Display the current value of the node (accumulated if input)
         ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
+
+        // Display the texture as an image, assuming m_NodeTextureSRVs[i] has valid ImTextureID for the current node
+        if (i < m_NodeTextureSRVs.size())
+        {
+            ImGui::Image(m_NodeTextureSRVs[i], ImVec2(64, 64)); // Display the texture with a size of 64x64 pixels
+        }
 
         ImNodes::EndNode(); // End node
     }
@@ -149,8 +156,17 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
         if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Shader_Texture"), TEXT("Layer_Shader_Texture"), &tDesc)))
 	        return;
-        m_NodeTextures.back()->Get_Component
-        m_pRenderInstance->Add_ClientRenderTarget(prototypeKeyWithCount.c_str(), prototypeKeyWithCount.c_str(), )
+
+        _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
+        m_pRenderInstance->Add_ClientRenderTarget(prototypeKeyWithCount.c_str(), prototypeKeyWithCount.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f));
+        m_NodeTextureSRVs.push_back((ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKeyWithCount.c_str()));
+
+        node_ids.push_back(unique_node_id++);            
+        node_values[unique_node_id - 1] = 0;             
+        input_accumulated_values[unique_node_id - 1] = 0;
+
+        DragAcceptFiles(g_hWnd, TRUE);
+        m_iNodeTextureCount++;
     }
 }
 

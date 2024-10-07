@@ -33,13 +33,13 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	CTexture* m_pTextureCom = { nullptr };
 private:
 	_bool m_isTex = { false };
 private:
 	CShader* m_pShaderCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-
+	_wstring m_Key;
 private:
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
