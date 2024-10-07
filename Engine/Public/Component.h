@@ -16,6 +16,7 @@ protected:
 public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
+	virtual HRESULT Render(_float fTimeDetla) { return S_OK; }
 
 protected:
 	 ID3D11Device*			m_pDevice = { nullptr };

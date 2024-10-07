@@ -5,6 +5,7 @@
 #include "Object_Manager.h"
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
+#include "Input_Device.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -13,10 +14,14 @@ CGameInstance::CGameInstance()
 
 }
 
-HRESULT CGameInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
+HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
 {
 	m_pGraphic_Device = CGraphic_Device::Create(hWnd, isWindowed, iWinSizeX, iWinSizeY, ppDevice, ppContext);
 	if (nullptr == m_pGraphic_Device)
+		return E_FAIL;
+
+	m_pInput_Device = CInput_Device::Create(hInst, hWnd);
+	if (nullptr == m_pInput_Device)
 		return E_FAIL;
 
 	m_pObject_Manager = CObject_Manager::Create(iNumLevels);
@@ -35,6 +40,10 @@ HRESULT CGameInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNum
 	if (nullptr == m_pTimer_Manager)
 		return E_FAIL;
 
+	m_pPipeLine = CPipeLine::Create();
+	if (nullptr == m_pPipeLine)
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -46,6 +55,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 
 	m_pObject_Manager->Priority_Update(fTimeDelta);
+
+	m_pPipeLine->Update();
 
 	m_pObject_Manager->Update(fTimeDelta);
 
@@ -92,6 +103,20 @@ HRESULT CGameInstance::Present()
 }
 
 
+_byte CGameInstance::Get_DIKeyState(_ubyte byKeyID)
+{
+	return m_pInput_Device->Get_DIKeyState(byKeyID);
+}
+
+_byte CGameInstance::Get_DIMouseState(MOUSEKEYSTATE eMouseKeyState)
+{
+	return m_pInput_Device->Get_DIMouseState(eMouseKeyState);
+}
+
+_long CGameInstance::Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState)
+{
+	return m_pInput_Device->Get_DIMouseMove(eMouseMoveState);
+}
 
 
 HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
@@ -177,6 +202,43 @@ CComponent * CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring & 
 }
 
 
+_matrix CGameInstance::Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_Transform_Matrix(eState);
+}
+
+_float4x4 CGameInstance::Get_Transform_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_Transform_Float4x4(eState);
+}
+
+_matrix CGameInstance::Get_Transform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_Transform_Inverse_Matrix(eState);
+}
+
+_float4x4 CGameInstance::Get_Transform_Inverse_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_Transform_Inverse_Float4x4(eState);
+}
+
+_vector CGameInstance::Get_CamPosition_Vector() const
+{
+	return m_pPipeLine->Get_CamPosition_Vector();
+}
+
+_float4 CGameInstance::Get_CamPosition_Float4() const
+{
+	return m_pPipeLine->Get_CamPosition_Float4();
+}
+
+void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix)
+{
+	m_pPipeLine->Set_Transform(eState, TransformMatrix);
+}
+
+
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);
@@ -184,6 +246,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pTimer_Manager);
 	Safe_Release(m_pLevel_Manager);
 	Safe_Release(m_pGraphic_Device);
+	Safe_Release(m_pInput_Device);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }

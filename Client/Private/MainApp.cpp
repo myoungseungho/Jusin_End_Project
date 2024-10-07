@@ -23,11 +23,14 @@ CMainApp::CMainApp()
 HRESULT CMainApp::Initialize()
 {
 	//게임인스턴스 엔진 초기화
-	if (FAILED(m_pGameInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
+	if (FAILED(m_pGameInstance->Initialize_Engine(g_hInst, g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
 	//렌더인스턴스 엔진 초기화
-	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
+	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext, m_pGameInstance)))
+		return E_FAIL;
+
+	if (FAILED(Ready_Prototype_Component_ForStatic()))
 		return E_FAIL;
 
 	//IMGUI 생성, 싱글턴
@@ -44,6 +47,10 @@ void CMainApp::Update(_float fTimeDelta)
 	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
+void CMainApp::Fixed_Update(_float fTimeDelta)
+{
+}
+
 HRESULT CMainApp::Render(_float fTimeDelta)
 {
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
@@ -56,7 +63,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Render_Engine();
 
 	//나머지 렌더는 렌더인스턴스
-	m_pRenderInstance->Render_Engine();
+	m_pRenderInstance->Render_Engine(fTimeDelta);
 
 	m_pGameInstance->Present();
 
@@ -74,6 +81,16 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
 	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext, m_pGameInstance, m_pRenderInstance);
+
+	return S_OK;
+}
+
+HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
+{
+	/* For.Prototype_Component_Shader_VtxPosTex */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxAnimMesh.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
+		return E_FAIL;
 
 	return S_OK;
 }

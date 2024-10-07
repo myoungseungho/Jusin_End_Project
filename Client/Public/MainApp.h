@@ -23,6 +23,8 @@ private:
 public:
 	HRESULT Initialize();
 	void Update(_float fTimeDelta);
+	void Fixed_Update(_float fTimeDelta);
+
 	HRESULT Render(_float fTimeDelta);
 
 private:
@@ -34,6 +36,7 @@ private:
 private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
 	HRESULT Create_IMGUI_Manager();
+	HRESULT Ready_Prototype_Component_ForStatic();
 
 public:
 	static CMainApp* Create();

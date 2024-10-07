@@ -25,26 +25,38 @@
     <Filter Include="01.Level\00.GamePlay">
       <UniqueIdentifier>{3c568b36-eb82-4660-a444-b3034e67d6da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IMGUI">
+    <Filter Include="97.IMGUI">
       <UniqueIdentifier>{871a9861-3ac5-4274-b312-5a263c75354b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IMGUI\Plugin">
+    <Filter Include="97.IMGUI\Plugin">
       <UniqueIdentifier>{deafa4fd-162b-4826-aeed-8c1d57afb415}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IMGUI\Tap">
+    <Filter Include="97.IMGUI\Tap">
       <UniqueIdentifier>{8ddf4c73-62da-4b46-94da-b23a1e7cfe5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IMGUI\Tap\IMGUI_Animation_Tab">
-      <UniqueIdentifier>{dbf2a29a-d723-4ed7-bbfd-2e7dfec4b380}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IMGUI\Tap\IMGUI_Effect_Tab">
-      <UniqueIdentifier>{28e285c3-67fb-462a-8fcf-6e9ebebde4a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IMGUI\Tap\IMGUI_Shader_Tab">
+    <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab">
       <UniqueIdentifier>{2bf9007a-1d5d-42e0-9c61-dffd73b17475}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IMGUI\Tap\IMGUI_UI_Tab">
+    <Filter Include="97.IMGUI\Tap\IMGUI_UI_Tab">
       <UniqueIdentifier>{1d0db8c7-17eb-4550-b9f2-b5bfc768b40d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Effect_Tab">
+      <UniqueIdentifier>{28e285c3-67fb-462a-8fcf-6e9ebebde4a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Animation_Tab">
+      <UniqueIdentifier>{dbf2a29a-d723-4ed7-bbfd-2e7dfec4b380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Monster">
+      <UniqueIdentifier>{48b3df65-2088-440e-aef4-4a29cfd0b387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera">
+      <UniqueIdentifier>{b362e33a-b9f1-461c-86ab-664700762dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Free">
+      <UniqueIdentifier>{d27343f5-a3bb-400e-9f55-c6d55c0435ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.ShaderFiles">
+      <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,46 +88,52 @@
       <Filter>01.Level\99.Loading\Loader</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Imgui_Manager.h">
-      <Filter>IMGUI</Filter>
+      <Filter>97.IMGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imgui_internal.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imconfig.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imgui.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imgui_impl_dx11.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imgui_impl_win32.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imstb_rectpack.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imstb_textedit.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imstb_truetype.h">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\public\IMGUI_Tab.h">
-      <Filter>IMGUI\Tap</Filter>
+      <Filter>97.IMGUI\Tap</Filter>
     </ClInclude>
     <ClInclude Include="..\public\IMGUI_Shader_Tab.h">
-      <Filter>IMGUI\Tap\IMGUI_Shader_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
-      <Filter>IMGUI\Tap\IMGUI_Animation_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_Animation_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
-      <Filter>IMGUI\Tap\IMGUI_Effect_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_Effect_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
-      <Filter>IMGUI\Tap\IMGUI_UI_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Monster.h">
+      <Filter>02.GameObjects\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Camera_Free.h">
+      <Filter>02.GameObjects\Camera\Free</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,43 +156,49 @@
       <Filter>01.Level\99.Loading\Loader</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Imgui_Manager.cpp">
-      <Filter>IMGUI</Filter>
+      <Filter>97.IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui_demo.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui_draw.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui_impl_dx11.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui_impl_win32.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui_tables.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui_widgets.cpp">
-      <Filter>IMGUI\Plugin</Filter>
+      <Filter>97.IMGUI\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\private\IMGUI_Tab.cpp">
-      <Filter>IMGUI\Tap</Filter>
+      <Filter>97.IMGUI\Tap</Filter>
     </ClCompile>
     <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp">
-      <Filter>IMGUI\Tap\IMGUI_Shader_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
-      <Filter>IMGUI\Tap\IMGUI_UI_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
-      <Filter>IMGUI\Tap\IMGUI_Effect_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_Effect_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
-      <Filter>IMGUI\Tap\IMGUI_Animation_Tab</Filter>
+      <Filter>97.IMGUI\Tap\IMGUI_Animation_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Monster.cpp">
+      <Filter>02.GameObjects\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Camera_Free.cpp">
+      <Filter>02.GameObjects\Camera\Free</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,5 +213,10 @@
     <ResourceCompile Include="Client.rc">
       <Filter>98.Default</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
