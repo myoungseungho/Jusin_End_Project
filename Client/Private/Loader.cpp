@@ -115,6 +115,11 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	return S_OK;
 }
 
+HRESULT CLoader::Loading_For_UI()
+{
+	return S_OK;
+}
+
 CLoader * CLoader::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID)
 {
 	CLoader*		pInstance = new CLoader(pDevice, pContext);

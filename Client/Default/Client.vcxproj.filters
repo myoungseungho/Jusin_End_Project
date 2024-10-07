@@ -58,6 +58,45 @@
     <Filter Include="96.ShaderFiles">
       <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI">
+      <UniqueIdentifier>{4ac33916-2ecf-4e1d-9fe0-e7e4c8e0e68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf">
+      <UniqueIdentifier>{174b8222-a690-44d2-80b9-c280172cf07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon">
+      <UniqueIdentifier>{858d4f96-b8bf-4cfd-b89d-7ca06a7f655c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Cursor">
+      <UniqueIdentifier>{00c7ba57-e4ba-4fcc-9252-dfc34c76b181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp">
+      <UniqueIdentifier>{00941d54-f040-463a-a1bc-c5a592f1d9e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Manager">
+      <UniqueIdentifier>{e0cac42f-aa71-4d38-a146-e515ac068f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Timer">
+      <UniqueIdentifier>{d08679a8-db6e-48b3-a3d9-3647262fb885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBuf">
+      <UniqueIdentifier>{0875a66a-f7c7-4df4-adaf-8ba9cdfa68e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufMark">
+      <UniqueIdentifier>{fd2d44d9-4bda-4209-ba7e-52df7b9e6235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\HpPanel">
+      <UniqueIdentifier>{af6f303a-ff41-4098-a67a-a30b20e2f051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill">
+      <UniqueIdentifier>{8af830a2-bf10-4246-9b4c-da217b0a0e3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\SkillGauge">
+      <UniqueIdentifier>{03be62f9-a537-486e-babf-2f985dd8f4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\SkillNumber">
+      <UniqueIdentifier>{945dedb7-2310-428c-92b7-d3bf73f9da37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -135,6 +174,42 @@
     <ClInclude Include="..\Public\Camera_Free.h">
       <Filter>02.GameObjects\Camera\Free</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\UI_AttBuf.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_AttBufMark.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_BaseAttBuf.h">
+      <Filter>02.GameObjects\UI\AttBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Chara_Icon.h">
+      <Filter>02.GameObjects\UI\Chara_Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Cursor.h">
+      <Filter>02.GameObjects\UI\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_HpPanel.h">
+      <Filter>02.GameObjects\UI\Hp\HpPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Manager.h">
+      <Filter>02.GameObjects\UI\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Skill.h">
+      <Filter>02.GameObjects\UI\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_SkillGauge.h">
+      <Filter>02.GameObjects\UI\Skill\SkillGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_SkillNumber.h">
+      <Filter>02.GameObjects\UI\Skill\SkillNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Timer.h">
+      <Filter>02.GameObjects\UI\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UIObject.h">
+      <Filter>02.GameObjects\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -199,6 +274,42 @@
     </ClCompile>
     <ClCompile Include="..\Private\Camera_Free.cpp">
       <Filter>02.GameObjects\Camera\Free</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UIObject.cpp">
+      <Filter>02.GameObjects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_AttBuf.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_AttBufMark.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_BaseAttBuf.cpp">
+      <Filter>02.GameObjects\UI\AttBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Chara_Icon.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Cursor.cpp">
+      <Filter>02.GameObjects\UI\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_HpPanel.cpp">
+      <Filter>02.GameObjects\UI\Hp\HpPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Manager.cpp">
+      <Filter>02.GameObjects\UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Skill.cpp">
+      <Filter>02.GameObjects\UI\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_SkillGauge.cpp">
+      <Filter>02.GameObjects\UI\Skill\SkillGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_SkillNumber.cpp">
+      <Filter>02.GameObjects\UI\Skill\SkillNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Timer.cpp">
+      <Filter>02.GameObjects\UI\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

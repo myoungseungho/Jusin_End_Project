@@ -177,6 +177,18 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\Public\UIObject.h" />
+    <ClInclude Include="..\Public\UI_AttBuf.h" />
+    <ClInclude Include="..\Public\UI_AttBufMark.h" />
+    <ClInclude Include="..\Public\UI_BaseAttBuf.h" />
+    <ClInclude Include="..\Public\UI_Chara_Icon.h" />
+    <ClInclude Include="..\Public\UI_Cursor.h" />
+    <ClInclude Include="..\Public\UI_HpPanel.h" />
+    <ClInclude Include="..\Public\UI_Manager.h" />
+    <ClInclude Include="..\Public\UI_Skill.h" />
+    <ClInclude Include="..\Public\UI_SkillGauge.h" />
+    <ClInclude Include="..\Public\UI_SkillNumber.h" />
+    <ClInclude Include="..\Public\UI_Timer.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -202,6 +214,18 @@
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
+    <ClCompile Include="..\Private\UIObject.cpp" />
+    <ClCompile Include="..\Private\UI_AttBuf.cpp" />
+    <ClCompile Include="..\Private\UI_AttBufMark.cpp" />
+    <ClCompile Include="..\Private\UI_BaseAttBuf.cpp" />
+    <ClCompile Include="..\Private\UI_Chara_Icon.cpp" />
+    <ClCompile Include="..\Private\UI_Cursor.cpp" />
+    <ClCompile Include="..\Private\UI_HpPanel.cpp" />
+    <ClCompile Include="..\Private\UI_Manager.cpp" />
+    <ClCompile Include="..\Private\UI_Skill.cpp" />
+    <ClCompile Include="..\Private\UI_SkillGauge.cpp" />
+    <ClCompile Include="..\Private\UI_SkillNumber.cpp" />
+    <ClCompile Include="..\Private\UI_Timer.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
