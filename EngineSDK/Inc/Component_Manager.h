@@ -30,7 +30,7 @@ public:
 private:
 	_uint										m_iNumLevels = { 0 };
 	map<const _wstring, class CComponent*>*		m_pPrototypes = { nullptr };
-	vector<const _wstring*> m_pIncludeKeys = { nullptr };
+	vector<const _wstring*> m_pIncludeKeys;
 
 private:
 	class CComponent* Find_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag);

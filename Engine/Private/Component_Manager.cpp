@@ -110,10 +110,8 @@ void CComponent_Manager::Free()
 
 	Safe_Delete_Array(m_pPrototypes);
 
-	for (auto& pIncludeKeys : m_pIncludeKeys)
-		Safe_Delete(pIncludeKeys);
-
 	m_pIncludeKeys.clear();
+
 }
 
 

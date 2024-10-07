@@ -152,4 +152,9 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair.second);
 
 	m_FinalEffects.clear();
+
+	for (auto& Pair : m_EffectModel)
+		Safe_Release(Pair.second);
+
+	m_EffectModel.clear();
 }

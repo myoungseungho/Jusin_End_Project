@@ -107,5 +107,10 @@ CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCon
 
 void CLevel_GamePlay::Free()
 {
+
+	m_pEffect_Manager->Free();
+	Safe_Release(m_pEffect_Manager);
+
 	__super::Free();
+
 }

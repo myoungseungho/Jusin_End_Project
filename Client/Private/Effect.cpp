@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "..\Public\Effect.h"
+#include "GameInstance.h"
 
 CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice , pContext }
@@ -68,4 +69,7 @@ CGameObject* CEffect::Clone(void* pArg)
 void CEffect::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pShaderCom);
+	Safe_Release(m_pModelCom);
 }

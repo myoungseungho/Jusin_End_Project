@@ -5,6 +5,7 @@
 
 BEGIN(Engine)
 class CGameInstance;
+class CModel;
 END
 
 BEGIN(Client)
@@ -33,8 +34,7 @@ public:
 private:
 	HRESULT Ready_Components();
 
-private:
-	// 낱개 이펙트 (프로토타입 같은 역할)
+public:
 	map<const wstring, class CModel*>		m_EffectModel;
 
 	// 낱개 이펙트 (프로토타입 같은 역할)

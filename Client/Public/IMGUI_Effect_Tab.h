@@ -15,6 +15,7 @@ public:
 	HRESULT Initialize() override;
 	void Render(_float fTimeDelta) override;
 
+	string WStringToUTF8(const std::wstring& wstr);
 	virtual const _char* GetTabName() const { return "Effect"; };
 
 private:
