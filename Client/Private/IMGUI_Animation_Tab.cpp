@@ -178,6 +178,7 @@ void CIMGUI_Animation_Tab::Info_Anim()
             for (size_t i = 0; i < selectedAnim->m_Channels.size(); ++i)
             {
                 const auto& channel = selectedAnim->m_Channels[i];
+                ;
                //const auto channel = selectedAnim->m_Channels[i];
 
 

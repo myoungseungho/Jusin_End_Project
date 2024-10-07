@@ -4,6 +4,8 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
+
+
 CModel_Preview::CModel_Preview(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -42,6 +44,15 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 	m_pModelCom->SetUp_Animation(0, false);
 	m_pModelCom->Play_Animation(0.f);
 
+
+	
+
+	CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
+	//pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{0.f, 2.f, -2.f});
+	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
+	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	
 	return S_OK;
 }
 
