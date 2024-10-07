@@ -35,11 +35,13 @@ private:
 	HRESULT Ready_Components();
 
 public:
-	map<const wstring, class CModel*>		m_EffectModel;
+	map<const wstring, class CModel*>			m_EffectModel;
 	map<const wstring, class CTexture*>		m_EffectTexture;
 
-	map<const wstring, class CEffect*>		m_EachEffects;
+	map<const wstring, class CEffect*>					m_EachEffects;
 	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
+
+	map<const wstring, class CEffect*>					m_TestEffect;
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
