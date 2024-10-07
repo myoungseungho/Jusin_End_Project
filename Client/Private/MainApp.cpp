@@ -51,6 +51,7 @@ void CMainApp::Update(_float fTimeDelta)
 	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
+// 1/50 -> 0.02초 고정 Update
 void CMainApp::Fixed_Update(_float fTimeDelta)
 {
 }
@@ -66,7 +67,8 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	//나머지 렌더는 렌더인스턴스
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
-	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
+	//IMGUI 렌더
+	m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
@@ -83,7 +85,8 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
-	CImgui_Manager::Get_Instance()->Initialize(m_pDevice, m_pContext);
+	m_pImgui_Manager = CImgui_Manager::Get_Instance();
+	m_pImgui_Manager->Initialize(m_pDevice, m_pContext);
 
 	return S_OK;
 }
@@ -116,7 +119,7 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-	CImgui_Manager::Get_Instance()->Free();
+	m_pImgui_Manager->Free();
 
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
