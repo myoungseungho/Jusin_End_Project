@@ -37,6 +37,7 @@ HRESULT CMainApp::Initialize()
 	Create_IMGUI_Manager();
 
 	//스레드풀 초기화
+	//하드웨어의 스레드 수를 넘겨준다. (소프트웨어 스레드 수 아님)
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
