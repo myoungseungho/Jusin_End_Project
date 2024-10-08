@@ -106,7 +106,9 @@ _float2 CTexture::Get_TextureSize()
 
 HRESULT CTexture::Set_SRV(ID3D11ShaderResourceView* pSRV, _int iArray)
 {
+	Safe_Release(m_SRVs[iArray]);
 	m_SRVs[iArray] = pSRV;
+	Safe_AddRef(m_SRVs[iArray]);
 	return S_OK;
 }
 

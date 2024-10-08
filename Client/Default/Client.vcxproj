@@ -237,6 +237,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>
