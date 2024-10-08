@@ -34,16 +34,12 @@ public:
 
 
 private:
-	CCollider*				m_pColliderCom = { nullptr };
+	vector<CCollider*>				m_vecColliderCom;
 
 	_float					m_fRandom = {};
 	_float					m_fX = 0.f;
 	_float					m_fY = 0.f;
 	_float2					m_UnitSize = { 3.f,3.f };
-
-private:
-	HRESULT Ready_Components();
-	HRESULT Bind_ShaderResources();
 
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

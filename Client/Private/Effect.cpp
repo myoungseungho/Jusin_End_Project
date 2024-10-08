@@ -27,9 +27,6 @@ HRESULT CEffect::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	if (FAILED(Ready_Components()))
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -40,7 +37,10 @@ void CEffect::Priority_Update(_float fTimeDelta)
 
 void CEffect::Update(_float fTimeDelta)
 {
-	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
+	for (auto& iter : m_vecColliderCom)
+	{
+		iter->Update(m_pTransformCom->Get_WorldMatrix());
+	}
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
@@ -70,9 +70,14 @@ void CEffect::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
+
+	for (auto& iter : m_vecColliderCom)
+	{
 #ifdef _DEBUG
-	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+		m_pRenderInstance->Add_DebugComponent(iter);
 #endif
+	}
+
 }
 
 HRESULT CEffect::Render(_float fTimeDelta)
@@ -112,23 +117,32 @@ void CEffect::Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP
 	_float2 direction = { dx / distance, dy / distance };
 
 	// 2. 필요한 콜라이더의 개수 계산
-	_float unitLength = m_UnitSize.x; // 단위 콜라이더의 가로 크기 (예: 3.f)
+	_float unitLength = m_UnitSize.x; // 단위 콜라이더의 가로 크기 (예:  3.f)
 	int requiredColliders = static_cast<int>(ceil(distance / unitLength));
 
 	// 3. 현재 콜라이더 그룹의 콜라이더 수 확인
-	int currentColliders = static_cast<int>(m_Colliders[eColliderGroup].size());
+	int currentColliders = static_cast<int>(m_vecColliderCom.size());
 
 	// 4. 필요한 경우 콜라이더 추가 생성
 	for (int i = currentColliders; i < requiredColliders; ++i)
 	{
-		// 새로운 콜라이더 생성
-		CCollider* newCollider = new CCollider();
+		// 콜라이더 추가 생성
+		CBounding_AABB::BOUNDING_AABB_DESC BoundingDesc{};
 
-		// 콜라이더 설정 (크기 설정)
-		newCollider->SetSize(m_UnitCollider);
+		BoundingDesc.vExtents = _float3(m_UnitSize.x / 2.0f, m_UnitSize.y / 2.0f, 0.5f); // Extents는 반지름 값이므로 /2.0f
+		BoundingDesc.vCenter = _float3(SourcePos.x, SourcePos.y, 0.f); // 초기 위치를 SourcePos로 설정
+		BoundingDesc.pMineGameObject = this;
 
-		// 콜라이더 그룹에 추가
-		m_Colliders[eColliderGroup].push_back(newCollider);
+		CCollider* pNewCollider = nullptr;
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+			TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&pNewCollider), &BoundingDesc)))
+			return; // 에러 처리
+
+		// 콜라이더 벡터에 추가
+		m_vecColliderCom.push_back(pNewCollider);
+
+		// 콜라이더 매니저에 추가
+		m_pGameInstance->Add_ColliderObject(eColliderGroup, pNewCollider);
 	}
 
 	// 5. 콜라이더 위치 업데이트
@@ -143,38 +157,14 @@ void CEffect::Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP
 		};
 
 		// 콜라이더 가져오기
-		CCollider* collider = m_Colliders[eColliderGroup][i];
+		CCollider* collider = m_vecColliderCom[i];
 
-		// 콜라이더 위치 설정
-		collider->SetCenter(colliderPos);
-
-		// 필요에 따라 다른 속성 설정 (예: 회전 등)
+		// 현재 콜라이더의 원래 위치와 크기를 가져오기
+		BoundingBox boundingBox = collider->AABB_GetDesc();
+		boundingBox.Center = _float3(colliderPos.x, colliderPos.y, 0.f);
+		collider->AABB_SetDesc(boundingBox);
 	}
 
-	// 나머지 콜라이더들은 그대로 두어도 됩니다.
-	// 사용하지 않는 콜라이더들이 있을 수 있지만, 제거하지 않으므로 메모리 관리에 유의해야 합니다.
-}
-
-HRESULT CEffect::Ready_Components()
-{
-	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
-
-	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
-	BoundingDesc.vCenter = _float3(0.f, 0.6f, 0.f);
-	BoundingDesc.pMineGameObject = this;
-
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
-		return E_FAIL;
-
-	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_1P_SKILL, m_pColliderCom);
-
-	return S_OK;
-}
-
-HRESULT CEffect::Bind_ShaderResources()
-{
-	return S_OK;
 }
 
 CEffect* CEffect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -205,7 +195,9 @@ CGameObject* CEffect::Clone(void* pArg)
 
 void CEffect::Free()
 {
+	for (auto& iter : m_vecColliderCom)
+		Safe_Release(iter);
+
 	__super::Free();
 
-	Safe_Release(m_pColliderCom);
 }
