@@ -28,12 +28,21 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	virtual HRESULT Bind_ShaderResources();
 
 private:
+	_char m_iShaderID = { 0 };
+
 	_float m_iCharaCurrHp = { 0.f };
 	_float m_fHpRadio = { 0.f };
 
-	_float m_fTemp = { 0.f };
+//≈∏¿Ã∏”
+	_float m_fMaskUVTimer = { 0.f };
+	_float m_fRedGaugeTimer = { 0.f };
+
+	_bool m_bStun = { FALSE };
+
+	CTexture* m_pMaskTexture = { nullptr };
 
 public:
 	static CUI_HpGauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

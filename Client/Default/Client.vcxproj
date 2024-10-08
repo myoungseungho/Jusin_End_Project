@@ -183,6 +183,7 @@
     <ClInclude Include="..\Public\UI_AttBufMark.h" />
     <ClInclude Include="..\Public\UI_BaseAttBuf.h" />
     <ClInclude Include="..\Public\UI_Chara_Icon.h" />
+    <ClInclude Include="..\public\UI_Chara_Icon_Panel.h" />
     <ClInclude Include="..\Public\UI_Cursor.h" />
     <ClInclude Include="..\public\UI_HpGauge.h" />
     <ClInclude Include="..\Public\UI_HpPanel.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="..\Private\UI_AttBufMark.cpp" />
     <ClCompile Include="..\Private\UI_BaseAttBuf.cpp" />
     <ClCompile Include="..\Private\UI_Chara_Icon.cpp" />
+    <ClCompile Include="..\private\UI_Chara_Icon_Panel.cpp" />
     <ClCompile Include="..\Private\UI_Cursor.cpp" />
     <ClCompile Include="..\private\UI_HpGauge.cpp" />
     <ClCompile Include="..\Private\UI_HpPanel.cpp" />

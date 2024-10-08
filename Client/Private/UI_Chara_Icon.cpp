@@ -29,7 +29,7 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(128.f, 128.f, 60.f, 50.f);
+	__super::Set_UI_Setting(150.f, 150.f, 50.f, 40.f, 0.85f);
 
 	//Player의 선택 ID에 따라서 변경 현재 기본값은 : 0
 	//m_iCharaID = m_pGameInstance->Player->Get_ID();

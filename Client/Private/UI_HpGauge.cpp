@@ -3,7 +3,6 @@
 
 #include "UI_HpGauge.h"
 #include "RenderInstance.h"
-#include "RenderInstance.h"
 
 CUI_HpGauge::CUI_HpGauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
@@ -31,9 +30,10 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting( 512.f, 128.f, 356.f, 80.f, 0.5f);
+	__super::Set_UI_Setting( 512.f, 100.f, 356.f, 80.f, 0.75f);
 
 	m_iCharaCurrHp = 100;
+	m_bStun = FALSE;
 
 	return S_OK;
 }
@@ -41,11 +41,36 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	m_fHpRadio = m_iCharaCurrHp / 100.f;
+	
+	m_fMaskUVTimer += fTimeDelta * 0.25f;
+
+	if(m_bStun)
+		m_fRedGaugeTimer += fTimeDelta;
+
+	if (fTimeDelta >= 1.f)
+		m_fMaskUVTimer = 0.f;
+
+	if (m_fRedGaugeTimer >= 1.f)
+	{
+		m_bStun = FALSE;
+		m_fRedGaugeTimer = 0.f;
+	}
+
 
 }
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Get_DIKeyState(DIK_O))
+	{
+		m_bStun = FALSE;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_P))
+	{
+		m_bStun = TRUE;
+	}
+
 	if (m_pGameInstance->Get_DIKeyState(DIK_A))
 	{
 		m_iCharaCurrHp--;
@@ -56,6 +81,8 @@ void CUI_HpGauge::Update(_float fTimeDelta)
 	{
 		m_iCharaCurrHp++;
 	}
+
+	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
 }
 
 void CUI_HpGauge::Late_Update(_float fTimeDelta)
@@ -65,18 +92,12 @@ void CUI_HpGauge::Late_Update(_float fTimeDelta)
 
 HRESULT CUI_HpGauge::Render(_float fTimeDelta)
 {
-	if (FAILED(__super::Bind_ShaderResources()))
+	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pShaderCom->Begin(m_iShaderID)))
 		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_HpRadio", &m_fHpRadio, sizeof(_float))))
-		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Begin(1)))
-		return E_FAIL;
-
+	
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
 		return E_FAIL;
 
@@ -96,6 +117,42 @@ HRESULT CUI_HpGauge::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
+	/* For.Com_MaskTexture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGaugeAnimMask"),
+		TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pMaskTexture))))
+		return E_FAIL;
+
+}
+
+HRESULT CUI_HpGauge::Bind_ShaderResources()
+{
+	if (FAILED(__super::Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pMaskTexture->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_HpRadio", &m_fHpRadio, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Timer", &m_fMaskUVTimer, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Timer", &m_fRedGaugeTimer, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &m_bStun, sizeof(_bool))))
+		return E_FAIL;
+
+	_vector vColor = { 0.043f , 0.952f , 0.945 , 1.f };
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CUI_HpGauge* CUI_HpGauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -126,5 +183,7 @@ CGameObject* CUI_HpGauge::Clone(void* pArg)
 
 void CUI_HpGauge::Free()
 {
+	Safe_Release(m_pMaskTexture);
+
 	__super::Free();
 }

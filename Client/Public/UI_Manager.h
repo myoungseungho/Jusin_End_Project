@@ -23,14 +23,12 @@ public:
 	void UsingAttckBuff(_float fAttBufDuration);
 
 public:
-	//UsingAttckBuff
-	_float m_fDuration = { 0.f };
-
-private:
-	//ScaleAnimation
-	_float m_fAnimFrame = { 0.f };
-	_float m_fAnimStartTimer = { 0.f };
+	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
 	
+
+public:
+	//UsingAttckBuff
+	_float m_fDuration = { 0.f };	
 
 	CGameInstance* m_pGameInstance = { nullptr };
 

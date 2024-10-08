@@ -17,6 +17,7 @@
 #include "UI_Cursor.h"
 #include "UI_HpPanel.h"
 #include "UI_HpGauge.h"
+#include "UI_Chara_Icon_Panel.h"
 #include "UI_Chara_Icon.h"
 #include "UI_AttBuf.h"
 #include "UI_AttBufMark.h"
@@ -149,12 +150,12 @@ HRESULT CLoader::Loading_For_UI()
 
 	/* For.Prototype_Component_Texture_UI_HpGauge*/
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGauge"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Temp.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/HpGauge.png")))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_UI_HpGauge*/
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGaugeFrame"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_gauge_physical_frame01.png")))))
+	/* For.Prototype_Component_Texture_UI_HpGaugeAnimMask*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGaugeAnimMask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_lifegauge_animmask.png")))))
 		return E_FAIL;
 
 	//시간 초
@@ -178,6 +179,11 @@ HRESULT CLoader::Loading_For_UI()
 		return E_FAIL;
 
 	//캐릭터 아이콘
+
+	/* For.Prototype_Component_Texture_UI_CharIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIconPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame//Top/Cp_CharaIconPanel.png")))))
+		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_CharIcon */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
@@ -228,6 +234,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_Cursor */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_HpGauge"),
 		CUI_HpGauge::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Chara_Icon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Chara_Icon_Panel"),
+		CUI_Chara_Icon_Panel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_Chara_Icon */

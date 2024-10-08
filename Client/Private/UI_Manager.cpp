@@ -20,6 +20,41 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration)
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"));
 }
 
+void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY,  _float fSizeRadio)
+{
+	if (m_pGameInstance->Get_DIKeyState(DIK_O))
+	{
+		fSizeY--;
+		fSizeX = fSizeRadio * fSizeY;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_P))
+	{
+		fSizeY++;
+		fSizeX = fSizeRadio * fSizeY;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	{
+		fPosX--;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	{
+		fPosX++;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_W))
+	{
+		fPosY--;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_S))
+	{
+		fPosY++;
+	}
+}
+
 void CUI_Manager::Free()
 {
 	CUI_Manager::Get_Instance()->Destroy_Instance();

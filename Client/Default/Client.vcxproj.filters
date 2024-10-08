@@ -103,6 +103,12 @@
     <Filter Include="02.GameObjects\UI\Hp\HpGauge">
       <UniqueIdentifier>{54435702-1bed-42c6-829a-6d6ca31c43d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Icon">
+      <UniqueIdentifier>{d57fed1f-be73-42c8-a152-5db2a580cb10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Panel">
+      <UniqueIdentifier>{43f6ccdc-0eeb-4355-a922-46ce8a5a68c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -189,9 +195,6 @@
     <ClInclude Include="..\Public\UI_BaseAttBuf.h">
       <Filter>02.GameObjects\UI\AttBuf</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\UI_Chara_Icon.h">
-      <Filter>02.GameObjects\UI\Chara_Icon</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\UI_Cursor.h">
       <Filter>02.GameObjects\UI\Cursor</Filter>
     </ClInclude>
@@ -221,6 +224,12 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_HpGauge.h">
       <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Chara_Icon.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Chara_Icon_Panel.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Panel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +308,6 @@
     <ClCompile Include="..\Private\UI_BaseAttBuf.cpp">
       <Filter>02.GameObjects\UI\AttBuf</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\UI_Chara_Icon.cpp">
-      <Filter>02.GameObjects\UI\Chara_Icon</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\UI_Cursor.cpp">
       <Filter>02.GameObjects\UI\Cursor</Filter>
     </ClCompile>
@@ -328,6 +334,12 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_HpGauge.cpp">
       <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Chara_Icon.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Chara_Icon_Panel.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Panel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
