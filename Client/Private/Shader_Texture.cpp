@@ -40,11 +40,27 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 	CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
 
 	static_cast<CIMGUI_Shader_Tab*>(pImGui_Manager->Access_Shader_Tab())->Push_ShaderTexture(this);
+	_float2 fSize = m_pTextureCom->Get_TextureSize();
+	_float fDiff;
 
-	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
+	if (fSize.x > g_iWinSizeX)
+	{
+		fDiff = 1280 - fSize.x;
+		fSize.x += fDiff;
+		fSize.y += fDiff;
+	}
 
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-	//	XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
+	if (fSize.y > g_iWinSizeY)
+	{
+		fDiff = 720 - fSize.y;
+		fSize.x += fDiff;
+		fSize.y += fDiff;
+	}
+
+	m_pTransformCom->Set_Scaled(fSize.x, fSize.y, 1.f);
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(fSize.x *0.5f - m_fX, m_fY - fSize.y * 0.5f, 0.f, 1.f));
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 	//	XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 

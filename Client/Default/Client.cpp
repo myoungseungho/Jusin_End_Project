@@ -216,7 +216,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             string filePath(ch);
 
-
             CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
             static_cast<CIMGUI_Shader_Tab*>(pImGui_Manager->Access_Shader_Tab())->Create_NodeTexture(filePath);
         }
