@@ -44,6 +44,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
+
     Render_MainNode();
 
     Render_TextureNode();
@@ -51,24 +52,10 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     Render_MoveTexNode();
 
     // 노드들끼리 연결된 모든 애들을 시각화 하기 위한 함수
-    for (size_t i = 0; i < links.size(); ++i)
-    {
-        ImNodes::Link(i, links[i].first, links[i].second);
-    }
+    for (const auto& link : links)
+        ImNodes::Link(link.first, link.first, link.second);
 
-    ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
     ImNodes::EndNodeEditor(); /* 노드 끝 */
-
-    _int link_id;
-    if (ImNodes::IsLinkDestroyed(&link_id))
-    {
-        int a = 10;
-
-        links.erase(remove_if(links.begin(), links.end(),
-            [link_id](const pair<int, int>& link) {
-                return link.first == link_id || link.second == link_id;
-            }), links.end());
-    }
 
     // start 주는놈 end 받는놈
     _int start_attr = 0, end_attr = 0;
@@ -93,7 +80,14 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         }
     }
 
-  
+    _int link_id;
+    if (ImNodes::IsLinkDestroyed(&link_id))
+    {
+        links.erase(std::remove_if(links.begin(), links.end(),
+            [link_id](const pair<int, int>& link) {
+                return link.first == link_id || link.second == link_id;
+            }), links.end());
+    }
 
 }
 
@@ -187,14 +181,16 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
         ImGui::Text("Alpha");
         ImNodes::EndInputAttribute();
 
+        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 2);
+        ImGui::Text("ShadeFuntion");
+        ImNodes::EndInputAttribute();
+
+        // ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
+
         if (i < m_NodeTextureSRVs.size())
         {
             ImGui::Image(m_NodeTextureSRVs[i], ImVec2(150, 150));
         }
-
-        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 2);
-        ImGui::Text("ShadeFuntion");
-        ImNodes::EndInputAttribute();
 
         ImNodes::EndNode();
     }
