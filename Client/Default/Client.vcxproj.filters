@@ -64,6 +64,9 @@
     <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
       <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Player">
+      <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -147,6 +150,9 @@
     <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
       <Filter>97.IMGUI\Tap\IMGUI_Level_Tab</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -217,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_Level_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Player.cpp">
+      <Filter>02.GameObjects\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

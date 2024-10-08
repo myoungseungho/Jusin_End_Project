@@ -8,6 +8,8 @@ CThreadPool::CThreadPool()
 
 HRESULT CThreadPool::Initialize(size_t ThreadCount)
 {
+    m_ThreadCount = ThreadCount;
+
     try
     {
         for (size_t i = 0; i < ThreadCount; ++i)
@@ -88,6 +90,4 @@ CThreadPool* CThreadPool::Create()
 void CThreadPool::Free()
 {
 	__super::Free();
-
-	
 }

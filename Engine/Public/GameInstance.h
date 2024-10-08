@@ -2,6 +2,7 @@
 
 #include "Component_Manager.h"
 #include "PipeLine.h"
+#include "ThreadPool.h"
 
 BEGIN(Engine)
 
@@ -68,6 +69,17 @@ public: /* For.PipeLine */
 
 public: /* For.ThreadPool */
 	HRESULT Initialize_ThreadPool(size_t ThreadCount);
+	_uint Get_ThreadNumber();
+
+	// 템플릿 EnqueueTask 함수: CThreadPool의 EnqueueTask를 호출
+	template<typename FunctionType>
+	future<typename result_of<FunctionType()>::type> EnqueueTask(FunctionType task)
+	{
+		if (m_pThreadPool)
+			return m_pThreadPool->EnqueueTask(task);
+		else
+			throw runtime_error("ThreadPool is not initialized.");
+	}
 
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
@@ -87,7 +99,7 @@ private:
 	class CPipeLine*					m_pPipeLine = { nullptr };
 	class CThreadPool*					m_pThreadPool = { nullptr };
 	class CFile_Manager*				m_pFile_Manager = { nullptr };
-
+	
 public:
 	void Release_Engine();
 	
@@ -96,4 +108,3 @@ public:
 };
 
 END
-

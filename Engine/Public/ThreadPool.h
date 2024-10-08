@@ -11,9 +11,13 @@ class ENGINE_DLL CThreadPool final : public CBase
 public:
 	HRESULT Initialize(size_t ThreadCount);
 
-	template<typename FunctionType>
-	void EnqueueTask(FunctionType task);
+
 	void Shutdown();
+	_uint Get_ThreadNumber() { return m_ThreadCount; };
+
+	template<typename FunctionType>
+	future<typename result_of<FunctionType()>::type> EnqueueTask(FunctionType task);
+
 private:
 	CThreadPool();
 	virtual ~CThreadPool() = default;
@@ -32,18 +36,26 @@ public:
 	virtual void Free() override;
 };
 
-END
-
-//작업 큐에 새로운 작업을 추가합니다.
+//여러 함수 타입을 모두 처리하기 위해 '템플릿'으로 만든다.
+// 템플릿 함수의 정의는 헤더 파일에 포함되어야 합니다.
 template<typename FunctionType>
-inline void CThreadPool::EnqueueTask(FunctionType task)
+future<typename result_of<FunctionType()>::type> CThreadPool::EnqueueTask(FunctionType task)
 {
+	using return_type = typename result_of<FunctionType()>::type;
+
+	auto packagedTask = make_shared<packaged_task<return_type()>>(task);
+	future<return_type> fut = packagedTask->get_future();
+
 	{
 		unique_lock<mutex> lock(m_QueueMutex);
 		if (m_bStop)
 			throw runtime_error("ThreadPool is stopped.");
 
-		m_Tasks.emplace(task);
+		m_Tasks.emplace([packagedTask]() { (*packagedTask)(); });
 	}
 	m_Condition.notify_one();
+	return fut;
 }
+
+
+END

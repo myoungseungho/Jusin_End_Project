@@ -5,11 +5,11 @@
 #include "IMGUI_Shader_Tab.h"
 #include "Camera_Free.h"
 #include "Monster.h"
+#include "Player.h"
 
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
-//#include "Player.h"
 //#include "Effect.h"
 //#include "Sky.h"
 
@@ -101,6 +101,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Player"),
+		CPlayer::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
 		CMonster::Create(m_pDevice, m_pContext))))

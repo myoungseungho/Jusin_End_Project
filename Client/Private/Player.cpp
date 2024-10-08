@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\Monster.h"
+#include "..\Public\Player.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
-CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CMonster::CMonster(const CMonster& Prototype)
+CPlayer::CPlayer(const CPlayer& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CMonster::Initialize_Prototype()
+HRESULT CPlayer::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CMonster::Initialize(void* pArg)
+HRESULT CPlayer::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -34,19 +34,19 @@ HRESULT CMonster::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CMonster::Priority_Update(_float fTimeDelta)
+void CPlayer::Priority_Update(_float fTimeDelta)
 {
 
 }
 
-void CMonster::Update(_float fTimeDelta)
+void CPlayer::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 }
 
-void CMonster::Late_Update(_float fTimeDelta)
+void CPlayer::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
@@ -55,7 +55,7 @@ void CMonster::Late_Update(_float fTimeDelta)
 #endif
 }
 
-HRESULT CMonster::Render(_float fTimeDelta)
+HRESULT CPlayer::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -83,22 +83,22 @@ HRESULT CMonster::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CMonster::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+void CPlayer::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	int a = 3;
 }
 
-void CMonster::OnCollisionStay(CCollider* other, _float fTimeDelta)
+void CPlayer::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 	int a = 3;
 }
 
-void CMonster::OnCollisionExit(CCollider* other)
+void CPlayer::OnCollisionExit(CCollider* other)
 {
 	int a = 3;
 }
 
-HRESULT CMonster::Ready_Components()
+HRESULT CPlayer::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -120,12 +120,12 @@ HRESULT CMonster::Ready_Components()
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
 		return E_FAIL;
 
-	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_1P_BODY, m_pColliderCom);
+	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_2P_BODY, m_pColliderCom);
 
 	return S_OK;
 }
 
-HRESULT CMonster::Bind_ShaderResources()
+HRESULT CPlayer::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -139,33 +139,33 @@ HRESULT CMonster::Bind_ShaderResources()
 	return S_OK;
 }
 
-CMonster* CMonster::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CPlayer* CPlayer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CMonster* pInstance = new CMonster(pDevice, pContext);
+	CPlayer* pInstance = new CPlayer(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CMonster"));
+		MSG_BOX(TEXT("Failed to Created : CPlayer"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CMonster::Clone(void* pArg)
+CGameObject* CPlayer::Clone(void* pArg)
 {
-	CMonster* pInstance = new CMonster(*this);
+	CPlayer* pInstance = new CPlayer(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CMonster"));
+		MSG_BOX(TEXT("Failed to Cloned : CPlayer"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CMonster::Free()
+void CPlayer::Free()
 {
 	__super::Free();
 

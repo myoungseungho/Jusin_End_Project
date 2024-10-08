@@ -98,16 +98,6 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 
 	if (bShowImGuiWindows) {  // 이 조건을 통해 모든 ImGui 창의 표시 여부를 제어
 
-		//쉐이더
-		//이펙트
-		//애니메이션
-		//UI
-
-		static _bool bShowAnimation = true;
-		static _bool bShowEffect = true;
-		static _bool bShowUI = true;
-		static _bool bShowShader = true;
-
 		ImGui::Begin("Main Tab", &bShowImGuiWindows); // 메인 창 시작
 		if (ImGui::BeginTabBar("DragonBall_Tool")) { // 탭 바 시작
 
@@ -137,7 +127,6 @@ void CImgui_Manager::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pRenderInstance);
-
 
 	__super::Free();
 }

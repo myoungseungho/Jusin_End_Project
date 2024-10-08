@@ -50,6 +50,8 @@ namespace Engine
 		return iRefCnt;
 	}
 
+#pragma region 유틸 함수
+
 	// 1. 벡터의 길이를 구하는 함수
 	inline _float GetVectorLength(const _vector& v)
 	{
@@ -145,4 +147,5 @@ namespace Engine
 
 		return result;
 	}
+#pragma endregion
 }

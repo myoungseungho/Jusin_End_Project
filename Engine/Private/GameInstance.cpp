@@ -74,6 +74,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
 	m_pLevel_Manager->Update(fTimeDelta);
+
+	m_pCollider_Manager->Update(fTimeDelta);
 }
 
 HRESULT CGameInstance::Render_Engine()
@@ -301,6 +303,11 @@ HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
 {
 	return m_pThreadPool->Initialize(ThreadCount);
 
+}
+
+_uint CGameInstance::Get_ThreadNumber()
+{
+	return m_pThreadPool->Get_ThreadNumber();
 }
 
 HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, CCollider* pRenderObject)

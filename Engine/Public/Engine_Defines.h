@@ -38,6 +38,9 @@ using namespace DirectX;
 #include <queue>
 #include <set>
 #include <tuple>
+#include <mutex>
+#include <future>
+
 using namespace std;
 
 #include "Engine_Macro.h"
