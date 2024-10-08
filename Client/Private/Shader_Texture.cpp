@@ -114,6 +114,13 @@ void CShader_Texture::Push_InputTextures(ID3D11ShaderResourceView* pSRV)
 	m_InputTextures.push_back(pSRV);
 }
 
+void CShader_Texture::Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed)
+{
+	m_MoveTex.isOn = true;
+	m_MoveTex.vDirection = pDirection;
+	m_MoveTex.fSpeed = pSpeed;
+}
+
 HRESULT CShader_Texture::Ready_Components(void* pArg)
 {
 	/* Com_Shader */
@@ -145,12 +152,6 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
-	//	return E_FAIL;
-	//
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fTime, sizeof(float))))
 		return E_FAIL;
 
@@ -177,6 +178,21 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 	else
 	{
 		if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
+			return E_FAIL;
+	}
+
+
+
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("isMoveTex", &m_MoveTex.isOn, sizeof(bool))))
+		return E_FAIL;
+
+	if (m_MoveTex.isOn == true)
+	{
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_vDirection", m_MoveTex.vDirection, sizeof(_float2))))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_Speed", m_MoveTex.fSpeed, sizeof(float))))
 			return E_FAIL;
 	}
 

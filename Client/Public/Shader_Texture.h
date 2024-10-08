@@ -18,8 +18,13 @@ public:
 	{
 		_wstring prototypeKey;
 		const _tchar* filePath;
-
 	}SHADER_TEXTURE_DESC;
+	typedef struct
+	{
+		_bool isOn = { false };
+		_float2* vDirection = { nullptr };
+		_float* fSpeed = { nullptr };
+	}Shade_MoveTex;
 private:
 	CShader_Texture(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CShader_Texture(const CShader_Texture& Prototype);
@@ -34,6 +39,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Push_InputTextures(ID3D11ShaderResourceView* pSRV);
+	void Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed);
+	Shade_MoveTex m_MoveTex;
 	CTexture* m_pTextureCom = { nullptr };
 private:
 	_bool m_isAlpha = { false };

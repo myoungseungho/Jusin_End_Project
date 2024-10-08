@@ -9,6 +9,8 @@ texture2D		g_Texture;
 texture2D		g_DepthTexture;
 bool isBindTexture;
 bool isAlpha;
+float2 g_vDirection;
+bool isMoveTex = false;
 float g_Time = 0.f;
 float g_Speed = 0.05f;
 
@@ -77,10 +79,11 @@ PS_OUT PS_MAIN(PS_IN In)
 {
 	PS_OUT			Out;	
 
-	
     if (isBindTexture == true)
     {
-        In.vTexcoord.y += g_Time;
+        if (isMoveTex == true)
+            In.vTexcoord += normalize(g_vDirection) * g_Speed * g_Time;
+
 		Out.vColor = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
 		
         if (isAlpha == true)
@@ -88,10 +91,14 @@ PS_OUT PS_MAIN(PS_IN In)
 			vector vAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
 
 			Out.vColor *= vAlpha.x;
+            //Out.vColor.rgb += vAlpha.rgb;
         }
     }
 	else
+    {
+		
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
+    }
 
 	//Out.vColor.gb = Out.vColor.r;
 

@@ -36,116 +36,59 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
     ImGui::Separator();
 
-    // Node addition button
-    if (ImGui::Button("Add Node") && isStart)
+    if (ImGui::Button("Add MoveTex_Node") && isStart)
     {
-        node_ids.push_back(unique_node_id++); 
-        node_values[unique_node_id - 1] = 0; 
-        input_accumulated_values[unique_node_id - 1] = 0;
+        MoveTex_Node nodeDesc{};
+        nodeDesc.MoveTex_node_id = m_MoveTex_node_id++;
+        m_MoveTex_Node_ids.push_back(nodeDesc);
     }
 
-    /* 노드 생성시 무조건 호출해야함 */
-    ImNodes::BeginNodeEditor();
+    ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
 
-    if (isStart == true)
-    {
-        ImNodes::BeginNode(m_iMain_node_id);
-        ImGui::Text("Main_Node");
+    Render_MainNode();
 
-        // Input attribute
-        ImNodes::BeginInputAttribute(m_iMain_node_id * 2);
-        ImGui::Text("Diffuse");
-        ImNodes::EndInputAttribute();
+    Render_TextureNode();
 
-        ImNodes::BeginInputAttribute(m_iMain_node_id * 2 - 1);
-        ImGui::Text("Alpha");
-        ImNodes::EndInputAttribute();
+    Render_MoveTexNode();
 
-        ImNodes::EndNode();
-
-
-    }
-
-    for (size_t i = 0; i < node_ids.size(); ++i)
-    {
-        int node_id = node_ids[i];
-
-        ImNodes::BeginNode(node_id);
-        ImGui::Text("Node %d", node_id);
-
-        ImGui::InputInt("Value", &node_values[node_id]);
-
-        ImNodes::BeginOutputAttribute(node_id * 2);
-        ImGui::Text("OutColor");
-        ImNodes::EndOutputAttribute();
-
-        ImNodes::BeginInputAttribute(node_id * 2 + 1);
-        ImGui::Text("Alpha");
-        ImNodes::EndInputAttribute();
-
-        ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
-
-        if (i < m_NodeTextureSRVs.size())
-        {
-            ImGui::Image(m_NodeTextureSRVs[i], ImVec2(64, 64));
-        }
-
-        ImNodes::EndNode();
-    }
-
+    // 노드들끼리 연결된 모든 애들을 시각화 하기 위한 함수
     for (const auto& link : links)
-    {
         ImNodes::Link(link.first, link.first, link.second);
-    }
 
-    ImNodes::EndNodeEditor();
+    ImNodes::EndNodeEditor(); /* 노드 끝 */
 
     // start 주는놈 end 받는놈
     _int start_attr = 0, end_attr = 0;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
-        // Main_Node Diffuse에 연결된거임
-        if (end_attr == -2)
+        if (start_attr > 1500)
         {
-            m_iMain_Input_Diffuse_id = start_attr / 2;
+            links.push_back(make_pair(start_attr, end_attr));
+            m_NodeTextures[(end_attr - 2) / 3 - 1]->Push_Shade_MoveTex(&m_MoveTex_Node_ids[start_attr - 1 - 1501].fDirection, &m_MoveTex_Node_ids[start_attr - 1 - 1501].fSpeed);
+        }
+        // Main_Node Diffuse에 연결된거임
+        else if (end_attr == -2)
+        {
+            m_iMain_Input_Diffuse_id = start_attr / 3;
             links.push_back(make_pair(start_attr, end_attr));
             m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
         }
         else
         {
-
             links.push_back(make_pair(start_attr, end_attr));
-            m_NodeTextures[(end_attr-1)/2 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[start_attr / 2 - 1]);
+            m_NodeTextures[(end_attr-1)/3 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[start_attr / 3 - 1]);
         }
-
-
     }
 
     _int link_id;
     if (ImNodes::IsLinkDestroyed(&link_id))
     {
         links.erase(std::remove_if(links.begin(), links.end(),
-            [link_id](const std::pair<int, int>& link) {
+            [link_id](const pair<int, int>& link) {
                 return link.first == link_id || link.second == link_id;
             }), links.end());
     }
 
-    for (auto& iter : input_accumulated_values)
-    {
-        iter.second = 0;
-    }
-
-    for (const auto& link : links)
-    {
-        int output_node = link.first / 2;  
-        int input_node = link.second / 2;  
-
-        if (node_values.find(output_node) != node_values.end() &&
-            input_accumulated_values.find(input_node) != input_accumulated_values.end())
-        {
-            input_accumulated_values[input_node] += node_values[output_node];
-        }
-    }
 }
 
 void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
@@ -178,14 +121,14 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
         if (fTextureSize.x > g_iWinSizeX)
         {
-            _float fDiff = 1280 - fTextureSize.x;
+            _float fDiff = g_iWinSizeX - fTextureSize.x;
             fTextureSize.x += fDiff;
             fTextureSize.y += fDiff;
         }
 
         if (fTextureSize.y > g_iWinSizeY)
         {
-            _float fDiff = 720 - fTextureSize.y;
+            _float fDiff = g_iWinSizeY - fTextureSize.y;
             fTextureSize.x += fDiff;
             fTextureSize.y += fDiff;
         }
@@ -194,12 +137,88 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         
         m_NodeTextureSRVs.push_back((ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKeyWithCount.c_str()));
 
-        node_ids.push_back(unique_node_id++);            
-        node_values[unique_node_id - 1] = 0;             
-        input_accumulated_values[unique_node_id - 1] = 0;
+        node_ids.push_back(unique_node_id++);
 
         DragAcceptFiles(g_hWnd, TRUE);
         m_iNodeTextureCount++;
+    }
+}
+
+void CIMGUI_Shader_Tab::Render_MainNode()
+{
+    if (isStart == true)
+    {
+        ImNodes::BeginNode(m_iMain_node_id);
+        ImGui::Text("Main_Node");
+
+        // Input attribute
+        ImNodes::BeginInputAttribute(m_iMain_node_id * 2);
+        ImGui::Text("Diffuse");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::BeginInputAttribute(m_iMain_node_id * 2 - 1);
+        ImGui::Text("Alpha");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::EndNode();
+    }
+}
+
+void CIMGUI_Shader_Tab::Render_TextureNode()
+{
+    for (size_t i = 0; i < node_ids.size(); ++i)
+    {
+        int node_id = node_ids[i];
+
+        ImNodes::BeginNode(node_id);
+        ImGui::Text("Node %d", node_id);
+
+        ImNodes::BeginOutputAttribute(node_id * m_iAttributeCount);
+        ImGui::Text("OutColor");
+        ImNodes::EndOutputAttribute();
+
+        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 1);
+        ImGui::Text("Alpha");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 2);
+        ImGui::Text("ShadeFuntion");
+        ImNodes::EndInputAttribute();
+
+        // ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
+
+        if (i < m_NodeTextureSRVs.size())
+        {
+            ImGui::Image(m_NodeTextureSRVs[i], ImVec2(150, 150));
+        }
+
+        ImNodes::EndNode();
+    }
+}
+
+void CIMGUI_Shader_Tab::Render_MoveTexNode()
+{
+    for (size_t i = 0; i < m_MoveTex_Node_ids.size(); ++i)
+    {
+        int node_id = m_MoveTex_Node_ids[i].MoveTex_node_id;
+
+        ImNodes::BeginNode(node_id);
+
+        ImGui::Dummy(ImVec2(1, 1));
+
+        ImGui::Text("MoveTex_Node %d", node_id - 1500);
+
+        ImGui::SetNextItemWidth(50);
+        ImGui::InputFloat2("Direction", &m_MoveTex_Node_ids[i].fDirection.x);
+
+        ImGui::SetNextItemWidth(50);
+        ImGui::DragFloat("Speed", &m_MoveTex_Node_ids[i].fSpeed, 0.1f, 0.0f, 30.0f, "%.2f");
+        
+        ImNodes::BeginOutputAttribute(node_id + 1, 2);
+        ImGui::Text("Out");
+        ImNodes::EndOutputAttribute();
+
+        ImNodes::EndNode();
     }
 }
 
