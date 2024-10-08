@@ -4,7 +4,7 @@
 #include "Effect_Layer.h"
 #include "Effect.h"
 #include "GameInstance.h"
-
+#include "Imgui_Manager.h"
 IMPLEMENT_SINGLETON(CEffect_Manager)
 
 CEffect_Manager::CEffect_Manager()
@@ -27,9 +27,9 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Priority_Update(fTimeDelta);
 
-	if(m_TestEffect.size()!=0)
-		for (auto& Pair : m_TestEffect)
-			Pair.second->Priority_Update(fTimeDelta);
+
+	for (auto& Pair : m_TestEffect)
+		Pair->Priority_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Update(_float fTimeDelta)
@@ -37,9 +37,9 @@ void CEffect_Manager::Update(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Update(fTimeDelta);
 
-	if (m_TestEffect.size() != 0)
-		for (auto& Pair : m_TestEffect)
-			Pair.second->Update(fTimeDelta);
+
+	for (auto& Pair : m_TestEffect)
+		Pair->Update(fTimeDelta);
 }
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
@@ -47,9 +47,9 @@ void CEffect_Manager::Late_Update(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Late_Update(fTimeDelta);
 
-	if (m_TestEffect.size() != 0)
-		for (auto& Pair : m_TestEffect)
-			Pair.second->Late_Update(fTimeDelta);
+
+	for (auto& Pair : m_TestEffect)
+		Pair->Late_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Render(_float fTimeDelta)
@@ -57,9 +57,9 @@ void CEffect_Manager::Render(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
 
-	if (m_TestEffect.size() != 0)
-		for (auto& Pair : m_TestEffect)
-			Pair.second->Render(fTimeDelta);
+
+	for (auto& Pair : m_TestEffect)
+		Pair->Render(fTimeDelta);
 }
 
 CEffect* CEffect_Manager::Find_EachEffect(const wstring& strEachEffectTag)
@@ -134,7 +134,9 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		m_TestEffect.emplace(TEXT("Effect_Single"), pTestEffect);
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_Texture"))));
+
+		m_TestEffect.push_back(pTestEffect);
 		break;
 	case EFFECT_MOVETEX:
 		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_MoveTex"), &EffectDesc);
@@ -143,7 +145,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		m_TestEffect.emplace(TEXT("Effect_MoveTex"), pTestEffect);
+		m_TestEffect.push_back(pTestEffect);
 		break;
 	case EFFECT_MULTI:
 		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Multi"), &EffectDesc);
@@ -151,8 +153,8 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 
 		if (pTestEffect == nullptr)
 			return E_FAIL;
-
-		m_TestEffect.emplace(TEXT("Effect_Multi"), pTestEffect);
+		
+		m_TestEffect.push_back(pTestEffect);
 		break;
 	}
 
@@ -248,7 +250,7 @@ void CEffect_Manager::Free()
 	m_EffectTexture.clear();
 
 	for (auto& Pair : m_TestEffect)
-		Safe_Release(Pair.second);
+		Safe_Release(Pair);
 
 	m_TestEffect.clear();
 }

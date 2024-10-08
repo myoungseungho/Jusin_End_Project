@@ -47,7 +47,6 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	//IMGUI ÅÇ °´Ã¼ »ý¼º
-	m_vecTabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_UI_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Effect_Tab::Create(m_pDevice, m_pContext));
@@ -78,10 +77,19 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
 
+	for (auto& iter : m_vecShader_Tabs)
+	{
+		iter->Render(fTimeDelta);
+	}
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	
 	return S_OK;
+}
+
+void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
+{
+	m_vecShader_Tabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture));
 }
 
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)

@@ -14,7 +14,7 @@ public:
 		_float fSpeed = { 0.f };
 	}MoveTex_Node;
 protected:
-	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	virtual ~CIMGUI_Shader_Tab() = default;
 
 public:
@@ -31,6 +31,10 @@ public:
 private:
 	vector<CShader_Texture*> m_NodeTextures;
 	vector<ImTextureID> m_NodeTextureSRVs;
+
+	CTexture* m_TestEffectModel_Texture = { nullptr };
+
+	/* 모델 없이 할때 테스트*/
 	CEffect_Rect* m_Effect_Rect = { nullptr };
 
 	_int m_iNodeTextureCount = 0;
@@ -54,7 +58,7 @@ private:
 	//map<_int, _int> input_accumulated_values; 
 
 public:
-	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture);
 	virtual void Free() override;
 };
 

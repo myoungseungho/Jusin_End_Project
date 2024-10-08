@@ -40,6 +40,7 @@ public:
 
 	void Push_InputTextures(ID3D11ShaderResourceView* pSRV);
 	void Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed);
+
 	Shade_MoveTex m_MoveTex;
 	CTexture* m_pTextureCom = { nullptr };
 private:

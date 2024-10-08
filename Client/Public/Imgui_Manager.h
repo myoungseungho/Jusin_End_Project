@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Client_Defines.h"
 #include "Renderer_Defines.h"
-
+#include "Effect.h"
 BEGIN(Engine)
 class CGameInstance;
 END
@@ -32,7 +32,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 	
 	class CIMGUI_Tab* Access_Shader_Tab() { return m_vecTabs[0]; }
-	
+	void Push_Shader_Tab(CTexture* pTexture);
+
 private:
 	void Render_IMGUI(_float fTimeDelta);
 
@@ -42,7 +43,7 @@ private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
 	vector<class CIMGUI_Tab*> m_vecTabs;
-
+	vector<class CIMGUI_Shader_Tab*> m_vecShader_Tabs;
 public:
 	virtual void Free() override;
 };

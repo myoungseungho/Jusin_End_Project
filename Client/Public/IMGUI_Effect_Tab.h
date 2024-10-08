@@ -18,7 +18,7 @@ public:
 	string WStringToUTF8(const std::wstring& wstr);
 	wstring UTF8ToWString(const string& utf8Str);
 	virtual const _char* GetTabName() const { return "Effect"; };
-
+	void Add_Shader_Tab();
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 

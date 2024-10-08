@@ -13,8 +13,9 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
-CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CIMGUI_Tab{ pDevice,pContext }
+CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
+	:CIMGUI_Tab{ pDevice,pContext },
+    m_TestEffectModel_Texture{ pTexture }
 {
 }
 
@@ -52,8 +53,14 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     Render_MoveTexNode();
 
     // 노드들끼리 연결된 모든 애들을 시각화 하기 위한 함수
-    for (const auto& link : links)
-        ImNodes::Link(link.first, link.first, link.second);
+    for (size_t i = 0; i < links.size(); i++)
+    {
+        ImNodes::Link(i, links[i].first, links[i].second);
+    }
+    /*for (const auto& link : links)
+        ImNodes::Link(link.first, link.first, link.second);*/
+
+    ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
 
     ImNodes::EndNodeEditor(); /* 노드 끝 */
 
@@ -61,6 +68,23 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     _int start_attr = 0, end_attr = 0;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
+        auto it = find_if(links.begin(), links.end(),
+            [start_attr](const pair<_int, _int>& link) {
+                return link.first == start_attr;
+            });
+        //Links 생성 (push_back) 한 친구는 각각 그때의 start_attr와 end_attr로 상호작용을 했었음\
+        // 그래서 다시 삭제할때는 그때 애들 저장해서 원상태로 복구해주는 작업 필요
+        if (it != links.end())
+        {
+            if (start_attr > 1500)
+            {
+
+            }
+
+            links.erase(it);
+        }
+
+
         if (start_attr > 1500)
         {
             links.push_back(make_pair(start_attr, end_attr));
@@ -181,16 +205,14 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
         ImGui::Text("Alpha");
         ImNodes::EndInputAttribute();
 
-        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 2);
-        ImGui::Text("ShadeFuntion");
-        ImNodes::EndInputAttribute();
-
-        // ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
-
         if (i < m_NodeTextureSRVs.size())
         {
             ImGui::Image(m_NodeTextureSRVs[i], ImVec2(150, 150));
         }
+
+        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 2);
+        ImGui::Text("ShadeFunction");
+        ImNodes::EndInputAttribute();
 
         ImNodes::EndNode();
     }
@@ -224,9 +246,9 @@ void CIMGUI_Shader_Tab::Render_MoveTexNode()
 
 
 
-CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
 {
-	CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext);
+    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture);
 
 	if (FAILED(pInstance->Initialize()))
 	{

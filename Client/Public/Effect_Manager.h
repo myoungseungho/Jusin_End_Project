@@ -42,7 +42,7 @@ public:
 	map<const wstring, class CEffect*>					m_EachEffects;
 	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
 
-	map<const wstring, class CEffect*>					m_TestEffect;
+	list<class CEffect*>					m_TestEffect;
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

@@ -3,21 +3,23 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 #include "Effect_Manager.h"
+#include "Imgui_Manager.h"
 #include <string>
 #include <locale>
 #include <codecvt>
+#include <IMGUI_Shader_Tab.h>
 
 
 CIMGUI_Effect_Tab::CIMGUI_Effect_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CIMGUI_Tab{ pDevice,pContext }
-	, m_pEffect_Manager{CEffect_Manager::Get_Instance()}
+    :CIMGUI_Tab{ pDevice,pContext }
+    , m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
 {
-	Safe_AddRef(m_pEffect_Manager);
+    Safe_AddRef(m_pEffect_Manager);
 }
 
 HRESULT CIMGUI_Effect_Tab::Initialize()
 {
-	return S_OK;
+    return S_OK;
 }
 
 void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
@@ -130,7 +132,6 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
             // CurrentEffectType을 EFFECT_TYPE으로 변환하여 전달
             EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
-
             // Add_Test_Effect 호출
             HRESULT hr = m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
 
@@ -141,10 +142,13 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
             else
             {
                 ImGui::Text("Effect added successfully");
+                
             }
         }
     }
+
 }
+
 
 string CIMGUI_Effect_Tab::WStringToUTF8(const std::wstring& wstr)
 {
@@ -169,22 +173,25 @@ wstring CIMGUI_Effect_Tab::UTF8ToWString(const string& utf8Str)
     return wstr;
 }
 
+
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CIMGUI_Effect_Tab* pInstance = new CIMGUI_Effect_Tab(pDevice, pContext);
+    CIMGUI_Effect_Tab* pInstance = new CIMGUI_Effect_Tab(pDevice, pContext);
 
-	if (FAILED(pInstance->Initialize()))
-	{
-		MSG_BOX(TEXT("Failed to Created : CIMGUI_Effect_Tab"));
-		Safe_Release(pInstance);
-	}
+    if (FAILED(pInstance->Initialize()))
+    {
+        MSG_BOX(TEXT("Failed to Created : CIMGUI_Effect_Tab"));
+        Safe_Release(pInstance);
+    }
 
-	return pInstance;
+    return pInstance;
 }
 
 void CIMGUI_Effect_Tab::Free()
 {
-	__super::Free();
+    __super::Free();
 
     Safe_Release(m_pEffect_Manager);
+
+
 }
