@@ -61,17 +61,18 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
-	//if (m_pGameInstance->Get_DIKeyState(DIK_A))
-	//{
-	//	m_iCharaCurrHp--;
-	//	m_bStun = TRUE;
-	//	
-	//}
-	//
-	//if (m_pGameInstance->Get_DIKeyState(DIK_D))
-	//{
-	//	m_bRedAlpha = FALSE;
-	//}
+	if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	{
+		m_iCharaCurrHp--;
+		//m_bStun = TRUE;
+		
+	}
+	
+	if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	{
+		m_iCharaCurrHp++;
+		//m_bRedAlpha = FALSE;
+	}
 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
 }
@@ -126,7 +127,7 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 	if (FAILED(m_pMaskTexture->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_HpRadio", &m_fHpRadio, sizeof(_float))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Radio", &m_fHpRadio, sizeof(_float))))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))

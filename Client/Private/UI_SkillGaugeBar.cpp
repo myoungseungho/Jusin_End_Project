@@ -37,9 +37,6 @@ HRESULT CUI_SkillGaugeBar::Initialize(void* pArg)
 void CUI_SkillGaugeBar::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
-
-	int iTmp = m_iSkillNumber;
-	int a = 10;
 }
 
 void CUI_SkillGaugeBar::Update(_float fTimeDelta)
@@ -56,19 +53,10 @@ void CUI_SkillGaugeBar::Late_Update(_float fTimeDelta)
 
 HRESULT CUI_SkillGaugeBar::Render(_float fTimeDelta)
 {
-	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
-
-	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture" , m_pUI_Manager->m_iSkillCount)))
+	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (m_pUI_Manager->m_iSkillCount != 7)
-	{
-		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture" , m_pUI_Manager->m_iSkillCount + 1)))
-			return E_FAIL;
-	}
-
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(3)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -95,6 +83,26 @@ HRESULT CUI_SkillGaugeBar::Ready_Components()
 		TEXT("Com_NextTexture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[1]))))
 		return E_FAIL;
 
+}
+
+HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()
+{
+	if (FAILED(__super::Bind_ShaderResources()))
+		return E_FAIL;;
+
+	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_pUI_Manager->m_iSkillCount)))
+		return E_FAIL;
+
+	if (m_pUI_Manager->m_iSkillCount != 7)
+	{
+		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", m_pUI_Manager->m_iSkillCount + 1)))
+			return E_FAIL;
+	}
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Radio", &m_fSkillRadio, sizeof(_float))))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CUI_SkillGaugeBar* CUI_SkillGaugeBar::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

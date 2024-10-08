@@ -27,6 +27,7 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	virtual HRESULT Bind_ShaderResources();
 
 private:
 	CTexture* m_pSkillTexture[2] = {nullptr,  nullptr };

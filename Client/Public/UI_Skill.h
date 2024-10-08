@@ -29,6 +29,8 @@ protected:
 
 	_int m_iMaxSkillPoint = { 0 };
 
+	_float m_fSkillRadio = { 0.f };
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

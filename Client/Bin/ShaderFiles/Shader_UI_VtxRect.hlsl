@@ -7,7 +7,7 @@ texture2D g_MaskTexture;
 
 bool g_bState;
 
-float g_HpRadio;
+float g_Radio;
 float g_MaskTimer;
 float g_DestroyTimer;
 
@@ -69,8 +69,8 @@ PS_OUT PS_HP(PS_IN In)
 {
         PS_OUT Out;
         
-    float2 fPointA = float2(0.85f + (g_HpRadio - 1), 0.f);
-    float2 fPointB = float2(1.f + (g_HpRadio - 1), 1.f);
+    float2 fPointA = float2(0.85f + (g_Radio - 1), 0.f);
+    float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
@@ -125,6 +125,30 @@ PS_OUT PS_COLOR(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_SKILL(PS_IN In)
+{
+    PS_OUT Out;
+    
+    float4 vCurrTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    float4 vNextTexture = g_NextTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    Out.vColor = vNextTexture;
+    
+    if (g_Radio <= In.vTexcoord.x)
+    {
+        Out.vColor = vCurrTexture;
+
+    }
+    
+
+    if (Out.vColor.a <= 0.1f)
+        discard;
+    
+    
+
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -175,4 +199,18 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_COLOR();
     }
 
+//3 
+    pass Skill
+    {
+
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SKILL();
+    }
 }
