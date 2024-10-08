@@ -30,8 +30,8 @@ public:
 
 	//이펙트 콜라이더
 public:
-	void Make_Effect_Collider(_float2 SourcePos, _float2 DestPos);
-
+	void Make_Effect_Collider_EnergyAttack(COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
+	HRESULT Clear_ColliderGroup(COLLIDERGROUP eRenderGroup);
 private:
 	list<CCollider*>			m_Colliders[CG_END];
 	//m_CollisionHistory: 이전 프레임에서의 충돌 상태를 저장하는 맵입니다.

@@ -4,19 +4,17 @@
 #include "Client_Defines.h"
 
 BEGIN(Engine)
-class CShader;
-class CModel;
 class CCollider;
 END
 
 BEGIN(Client)
 
-class CMonster final : public CGameObject
+class CEffect final : public CGameObject
 {
 private:
-	CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CMonster(const CMonster& Prototype);
-	virtual ~CMonster() = default;
+	CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CEffect(const CEffect& Prototype);
+	virtual ~CEffect() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -32,8 +30,6 @@ public:
 	virtual void OnCollisionExit(class CCollider* other) override;
 
 private:
-	CShader*				m_pShaderCom = { nullptr };	
-	CModel*					m_pModelCom = { nullptr };
 	CCollider*				m_pColliderCom = { nullptr };
 
 	_float					m_fRandom = {};
@@ -43,7 +39,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CMonster* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

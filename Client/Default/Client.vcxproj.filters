@@ -67,6 +67,9 @@
     <Filter Include="02.GameObjects\Player">
       <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Effect">
+      <UniqueIdentifier>{d8f025ca-2643-45a5-b6e3-c62e9fc77590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -153,6 +156,9 @@
     <ClInclude Include="..\Public\Player.h">
       <Filter>02.GameObjects\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -226,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Player.cpp">
       <Filter>02.GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

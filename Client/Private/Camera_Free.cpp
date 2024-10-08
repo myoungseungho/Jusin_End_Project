@@ -55,6 +55,11 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 		m_pTransformCom->Go_Backward(fTimeDelta);
 	}
 
+	if (GetKeyState('A') & 0x8000)
+	{
+		m_pTransformCom->Go_Left(fTimeDelta);
+	}
+
 	_long		MouseMove = {};
 
 	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
