@@ -61,7 +61,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 
 
 	//레벨매니저 렌더는 게임인스턴스
-	m_pGameInstance->Render_Engine();
+	m_pGameInstance->Render_Engine(fTimeDelta);
 
 	//나머지 렌더는 렌더인스턴스
 	m_pRenderInstance->Render_Engine(fTimeDelta);
@@ -95,6 +95,10 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxAnimMesh.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Single_Eff_VtxMesh"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Single_Eff_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
 		return E_FAIL;
 
 	return S_OK;

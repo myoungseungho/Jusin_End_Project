@@ -25,9 +25,12 @@ public:
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);
 	class CComponent* Clone_Component(_uint iLevelIndex, const _wstring& strPrototypeTag, void* pArg);
 	HRESULT Clear_Resources(_uint iLevelIndex);
+	vector<const wstring*>* Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag);
+
 private:
 	_uint										m_iNumLevels = { 0 };
 	map<const _wstring, class CComponent*>*		m_pPrototypes = { nullptr };
+	vector<const _wstring*> m_pIncludeKeys;
 
 private:
 	class CComponent* Find_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag);

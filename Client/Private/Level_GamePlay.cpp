@@ -4,6 +4,7 @@
 #include "Camera_Free.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+#include "Effect_Manager.h"
 //#include "LandObject.h"
 #include "Monster.h"
 
@@ -16,10 +17,12 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 
-
 	//카메라 생성
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
+
+	if (FAILED(Ready_Effect_Manager()))
+			return E_FAIL;
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -33,11 +36,14 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	m_pEffect_Manager->Update(fTimeDelta);
 }
 
-HRESULT CLevel_GamePlay::Render()
+HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
+
+	m_pEffect_Manager->Render(fTimeDelta);
 
 	return S_OK;
 }
@@ -74,6 +80,20 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 		return E_FAIL;
 }
 
+HRESULT CLevel_GamePlay::Ready_Effect_Manager()
+{
+	m_pEffect_Manager = CEffect_Manager::Get_Instance();
+
+	if(m_pEffect_Manager == nullptr)
+		return E_FAIL;
+
+	Safe_AddRef(m_pEffect_Manager);
+
+	m_pEffect_Manager->Initialize();
+
+	return S_OK;
+}
+
 CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CLevel_GamePlay*		pInstance = new CLevel_GamePlay(pDevice, pContext);
@@ -89,5 +109,10 @@ CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCon
 
 void CLevel_GamePlay::Free()
 {
+
+	m_pEffect_Manager->Free();
+	Safe_Release(m_pEffect_Manager);
+
 	__super::Free();
+
 }
