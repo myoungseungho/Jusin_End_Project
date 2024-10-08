@@ -7,10 +7,10 @@
 #include "Monster.h"
 #include "Effect_Rect.h"
 #include "Shader_Texture.h"
-
 #include "Effect_MoveTex.h"
 #include "Effect_Multi.h"
 #include "Effect_Single.h"
+
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
@@ -111,10 +111,11 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxShaderRect.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
-	////손오공
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	//손오공
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 #pragma region Effect Model
 
 	PreTransformMatrix = XMMatrixIdentity();
@@ -1972,6 +1973,7 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CEffect_Single::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 #pragma endregion
+
 
 
 	/* 객체원형을 로드한다. */
