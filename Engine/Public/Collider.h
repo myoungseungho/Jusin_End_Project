@@ -43,10 +43,12 @@ public:
 	void OnCollisionStay(CCollider*, _float fTimeDelta);
 	void OnCollisionExit(CCollider*);
 
+public:
+	_bool					m_isColl = { false };
+
 private:
 	TYPE					m_eColliderType = { TYPE_END };
 	class CBounding*		m_pBounding = { nullptr };
-	_bool					m_isColl = { false };
 	class CGameObject*		m_pMineGameObject = { nullptr };
 
 #ifdef _DEBUG

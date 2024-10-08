@@ -77,22 +77,22 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 
 		// 스레드풀에 작업 제출
 		futures.emplace_back(m_pGameInstance->EnqueueTask(
-			
+
 			//Task의 람다함수
 			[this, taskPairs, fTimeDelta]() {
-			vector<pair<CCollider*, CCollider*>> localCollisions;
+				vector<pair<CCollider*, CCollider*>> localCollisions;
 
-			for (const auto& pair : taskPairs) {
-				if (IsColliding(pair.first, pair.second)) {
-					localCollisions.emplace_back(pair);
+				for (const auto& pair : taskPairs) {
+					if (IsColliding(pair.first, pair.second)) {
+						localCollisions.emplace_back(pair);
+					}
 				}
-			}
 
-			// 스레드 안전하게 결과를 저장
-			{
-				lock_guard<mutex> lock(m_ResultMutex);
-				m_CollisionResults.insert(m_CollisionResults.end(), localCollisions.begin(), localCollisions.end());
-			}
+				// 스레드 안전하게 결과를 저장
+				{
+					lock_guard<mutex> lock(m_ResultMutex);
+					m_CollisionResults.insert(m_CollisionResults.end(), localCollisions.begin(), localCollisions.end());
+				}
 			}));
 	}
 
@@ -146,6 +146,10 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 _bool CCollider_Manager::IsColliding(CCollider* _pSourCollider, CCollider* _pDestCollider)
 {
+	//SourCollider와 DestCollider가 충돌하면 DestCollider도 충돌하게
+	_bool isCol = _pSourCollider->isCollision(_pDestCollider);
+	_pDestCollider->m_isColl = isCol;
+
 	return _pSourCollider->isCollision(_pDestCollider);
 }
 

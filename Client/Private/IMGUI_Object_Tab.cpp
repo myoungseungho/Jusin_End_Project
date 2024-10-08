@@ -27,18 +27,18 @@ void CIMGUI_Object_Tab::Render(_float fTimeDelta)
 	static bool bShowSaveFailMessage = false;
 
 	if (ImGui::BeginTabBar("Object_InnerTabs")) { // 하위 탭 바 시작
-		if (ImGui::BeginTabItem("Prototype_ObjectList", &bShowPrototypeObjects)) { // 하위 Prototype 탭
-			if (bShowPrototypeObjects) {
-				IMGUI_Show_PrototypeObjects(); // Prototype 오브젝트 표시
-			}
-			ImGui::EndTabItem(); // 하위 Prototype 탭 종료
-		}
-
 		if (ImGui::BeginTabItem("Layer_ObjectList", &bShowLayerObjects)) { // 하위 Layer 탭
 			if (bShowLayerObjects) {
 				IMGUI_Show_LayerObjects(); // Layer 오브젝트 표시
 			}
 			ImGui::EndTabItem(); // 하위 Layer 탭 종료
+		}
+
+		if (ImGui::BeginTabItem("Prototype_ObjectList", &bShowPrototypeObjects)) { // 하위 Prototype 탭
+			if (bShowPrototypeObjects) {
+				IMGUI_Show_PrototypeObjects(); // Prototype 오브젝트 표시
+			}
+			ImGui::EndTabItem(); // 하위 Prototype 탭 종료
 		}
 
 		if (ImGui::BeginTabItem("Save", &bShowSettings)) { 
