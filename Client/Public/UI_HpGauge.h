@@ -41,6 +41,7 @@ private:
 	_float m_fRedGaugeTimer = { 0.f };
 
 	_bool m_bStun = { FALSE };
+	_bool m_bRedAlpha = { TRUE };
 
 	CTexture* m_pMaskTexture = { nullptr };
 

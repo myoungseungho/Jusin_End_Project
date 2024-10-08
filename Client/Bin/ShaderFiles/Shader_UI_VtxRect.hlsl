@@ -7,7 +7,9 @@ texture2D g_MaskTexture;
 bool g_bState;
 
 float g_HpRadio;
-float g_Timer;
+float g_MaskTimer;
+float g_DestroyTimer;
+
 vector g_vColor;
 
 
@@ -71,7 +73,7 @@ PS_OUT PS_HP(PS_IN In)
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-    float2 vMaskOffSet = float2(g_Timer, g_Timer);
+    float2 vMaskOffSet = float2(g_MaskTimer, g_MaskTimer);
     float2 vMaskTexCoord = In.vTexcoord + vMaskOffSet;
     
     float4 vMaskTex = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
@@ -88,12 +90,17 @@ PS_OUT PS_HP(PS_IN In)
     if (fLineY > 0 )
     {
         if (g_bState)
-            Out.vColor.rgb = float3(1, 0, 0);
+        {
+            Out.vColor.rgb = float3(1, 0, 0);     
+            
+        }
         else
-            discard;
+        {
+            Out.vColor.a -= g_DestroyTimer;
 
-        
+        }
          
+        //Out.vColor.a *= (1 - g_DestroyTimer);
     }
     
     if (Out.vColor.a <= 0.1f)
@@ -109,11 +116,11 @@ PS_OUT PS_COLOR(PS_IN In)
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
 
-    Out.vColor.rgb *= g_vColor;
-
     if (Out.vColor.a <= 0.1f)
         discard;
     
+    Out.vColor.rgb = (1 - Out.vColor.rgb) * g_vColor;
+
     return Out;
 }
 
