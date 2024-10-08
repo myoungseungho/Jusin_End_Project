@@ -58,19 +58,23 @@ PS_OUT PS_MAIN(PS_IN In)
 
 PS_OUT PS_HP(PS_IN In)
 {
-    PS_OUT Out;
-
+        PS_OUT Out;
+        
+    float2 fPointA = float2(0.85f + (g_HpRadio - 1), 0.f);
+    float2 fPointB = float2(1.f + (g_HpRadio - 1), 1.f);
+     
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    
-   
-    if (In.vTexcoord.x >= g_HpRadio)
+     
+    float fLineY = (fPointB.y - fPointA.y) / (fPointB.x - fPointA.x) * (In.vTexcoord.x - fPointA.x) + fPointA.y - In.vTexcoord.y;
+     
+    if (fLineY > 0 )
         discard;
     
     if (Out.vColor.a <= 0.1f)
         discard;
-    
+      
     Out.vColor.rgb = float3(1, 0, 0);
-    
+        
     return Out;
 }
 

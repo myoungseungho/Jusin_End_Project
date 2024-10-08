@@ -60,25 +60,6 @@ void CUIObject::Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _floa
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH((_float)g_iWinSizeX, (_float)g_iWinSizeY, 0.f, 1.f));
 }
 
-void CUIObject::Set_UI_Gauge_Setting( _float fRadio , _float fSizeX, _float fSizeY, _float fPosX, _float fPosY, _float fDepth)
-{
-	if (fSizeX <= 0.f)
-		return;
-
-	_float fRadioScale = fRadio * fSizeX;
-
-
-
-	m_pTransformCom->Set_Scaled(fRadioScale, fSizeY, 1.f);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(fPosX + fRadioScale * 0.5f - g_iWinSizeX * 0.5f, -fPosY + g_iWinSizeY * 0.5f, fDepth, 1.f));
-
-	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
-	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH((_float)g_iWinSizeX, (_float)g_iWinSizeY, 0.f, 1.f));
-	
-}
-
-
-
 _bool CUIObject::ClickRange()
 {
 	POINT pt;

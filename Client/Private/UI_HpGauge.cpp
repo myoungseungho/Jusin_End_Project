@@ -31,10 +31,8 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	//512.f, 128.f
-	m_fTemp = 512.f;
-	__super::Set_UI_Gauge_Setting(m_fTemp, 128.f, 500.f, 512.f, -0.f);
-	//356.f
+	__super::Set_UI_Setting( 512.f, 128.f, 356.f, 80.f, 0.5f);
+
 	m_iCharaCurrHp = 100;
 
 	return S_OK;
@@ -42,13 +40,22 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 
 void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
-	//ÀÓÀÇ°ª 100
 	m_fHpRadio = m_iCharaCurrHp / 100.f;
+
 }
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	{
+		m_iCharaCurrHp--;
+		
+	}
 
+	if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	{
+		m_iCharaCurrHp++;
+	}
 }
 
 void CUI_HpGauge::Late_Update(_float fTimeDelta)
@@ -64,8 +71,8 @@ HRESULT CUI_HpGauge::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_HpRadio", &m_fHpRadio, sizeof(_float))))
-	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_HpRadio", &m_fHpRadio, sizeof(_float))))
+		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(1)))
 		return E_FAIL;

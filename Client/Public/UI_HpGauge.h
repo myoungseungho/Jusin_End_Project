@@ -30,7 +30,7 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
-	_uint m_iCharaCurrHp = { 0 };
+	_float m_iCharaCurrHp = { 0.f };
 	_float m_fHpRadio = { 0.f };
 
 	_float m_fTemp = { 0.f };

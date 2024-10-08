@@ -84,8 +84,6 @@ HRESULT CVIBuffer_Rect::Initialize_Prototype()
 
 #pragma endregion
 
-	
-
 	return S_OK;
 }
 

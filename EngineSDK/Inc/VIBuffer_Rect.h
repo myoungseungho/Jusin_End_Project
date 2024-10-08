@@ -13,6 +13,7 @@ private:
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
+	virtual HRESULT LeftUpInitialize_Prototype();
 	virtual HRESULT Initialize(void* pArg) override;
 
 public:
