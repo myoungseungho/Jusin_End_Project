@@ -90,6 +90,8 @@ private:
     string Get_CharacterName();
     string Get_AnimationName();
 
+    void ExportAllAnimationToTXT();
+
 public:
      
 private:

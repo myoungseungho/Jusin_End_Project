@@ -114,14 +114,24 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 
 
     }
+    if (ImGui::Button("Event ReLoad"))
+    {
+        CFrameEvent_Manager::Get_Instance()->ReLoadFrameEvent("../Bin/FrameEventData/Split.txt");
+    }
+   
 
 
     if (m_pSelectedModelCom != nullptr)
     {
-         m_pSelectedModelCom->m_Animations;
+
+         if (ImGui::Button("AnimationName Export"))
+         {
+             ExportAllAnimationToTXT();
+         }
+
          Info_Anim();
 
-
+        
 
          if (m_bMotionPlaying)
          {
@@ -199,7 +209,7 @@ void CIMGUI_Animation_Tab::Info_Anim()
    // static int g_iCurrentAnimationIndex = 999;
 
 
-    std::vector<const char*> animNames;
+    vector<const char*> animNames;
 
     //태완
    // for (const auto& anim : m_pSelectedModelCom->m_ModelData.animations) {
@@ -789,6 +799,54 @@ string CIMGUI_Animation_Tab::Get_AnimationName()
     }
 
     return AnimName;
+
+}
+
+void CIMGUI_Animation_Tab::ExportAllAnimationToTXT()
+{
+
+    std::ofstream outFile("../Bin/FrameEventData/ExportAnimation.txt");
+
+    if (!outFile) {
+        std::cerr << "파일을 열 수 없습니다!" << std::endl;
+        return;
+    }
+
+
+    _int iAnimationIndex = 0;
+
+    //적용 후
+    for (auto AnimData : m_pSelectedModelCom->m_Animations)
+    {
+
+        string strFullName = AnimData->m_szName;
+        string AnimName{};
+       
+        size_t pos = strFullName.find_last_of('|');
+
+        // 마지막 '|'가 존재하면 그 뒤의 부분만 추출
+        if (pos != std::string::npos)
+        {
+            AnimName = strFullName.substr(pos + 1);
+        }
+        else
+        {
+            AnimName = strFullName;
+        }
+
+
+        string FinalText = "[\"" + AnimName +"\"] = ";
+        FinalText += to_string(iAnimationIndex);
+
+        outFile << FinalText << std::endl;  // 파일에 한 줄씩 기록
+
+        iAnimationIndex++;
+    }
+
+    // 파일 닫기
+    outFile.close();
+
+    MSG_BOX(TEXT("추출성공"));
 
 }
 
