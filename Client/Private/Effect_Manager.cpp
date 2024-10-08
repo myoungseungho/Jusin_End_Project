@@ -96,6 +96,27 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(const wstring& strEachEffectTag, co
 	return S_OK;
 }
 
+HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, const wstring& ModelName)
+{
+	switch (eEffectType)
+	{
+	case EFFECT_SINGLE:
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Single"), TEXT("Layer_Effect_Single"))))
+			return E_FAIL;
+		break;
+	case EFFECT_MOVETEX:
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_MoveTex"), TEXT("Layer_Effect_MoveTex"))))
+			return E_FAIL;
+		break;
+	case EFFECT_MULTI:
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Multi"), TEXT("Layer_Effect_Multi"))))
+			return E_FAIL;
+		break;
+	}
+
+	return S_OK;
+}
+
 HRESULT CEffect_Manager::Ready_Components()
 {
 	vector<const _wstring*>* pModelKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));
@@ -183,4 +204,9 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair.second);
 
 	m_EffectTexture.clear();
+
+	for (auto& Pair : m_TestEffect)
+		Safe_Release(Pair.second);
+
+	m_TestEffect.clear();
 }

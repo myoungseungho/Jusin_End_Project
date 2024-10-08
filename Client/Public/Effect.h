@@ -13,6 +13,14 @@ BEGIN(Client)
 
 class CEffect :	public CGameObject
 {
+public:
+	struct EFFECT_DESC
+	{
+		const wstring& ModelName;
+		const wstring& MaskTextureName;
+		const wstring& DiffuseTextureName;
+	};
+
 protected:
 	CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CEffect(const CGameObject& Prototype);

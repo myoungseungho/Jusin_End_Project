@@ -31,6 +31,7 @@ public:
 	HRESULT Add_EachEffect(const wstring& strEachEffectTag, class CEffect* pEachEffect);
 	HRESULT Add_Effect_To_Layer(const wstring& strEachEffectTag, const wstring& strEffectLayerTag, void* pArg = nullptr);
 
+	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, const wstring& ModelName);
 private:
 	HRESULT Ready_Components();
 
