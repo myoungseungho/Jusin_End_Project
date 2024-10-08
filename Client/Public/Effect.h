@@ -16,10 +16,9 @@ class CEffect :	public CGameObject
 public:
 	typedef struct
 	{
-		_wstring defaultWString = L"";
-		_wstring& ModelName = defaultWString;
-		_wstring& MaskTextureName = defaultWString;
-		_wstring& DiffuseTextureName = defaultWString;
+		_wstring ModelName;
+		_wstring MaskTextureName;
+		_wstring DiffuseTextureName;
 	}EFFECT_DESC;
 
 protected:
@@ -34,6 +33,7 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
+
 
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };

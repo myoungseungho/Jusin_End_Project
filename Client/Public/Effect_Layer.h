@@ -18,6 +18,7 @@ public:
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
+	void	Render(_float fTimeDelta);
 
 private:
 	// ≥π∞≥ ¿Ã∆Â∆Æ ¡∂«’

@@ -26,22 +26,40 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Priority_Update(fTimeDelta);
+
+	if(m_TestEffect.size()!=0)
+		for (auto& Pair : m_TestEffect)
+			Pair.second->Priority_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Update(fTimeDelta);
+
+	if (m_TestEffect.size() != 0)
+		for (auto& Pair : m_TestEffect)
+			Pair.second->Update(fTimeDelta);
 }
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Late_Update(fTimeDelta);
+
+	if (m_TestEffect.size() != 0)
+		for (auto& Pair : m_TestEffect)
+			Pair.second->Late_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Render(_float fTimeDelta)
 {
+	for (auto& Pair : m_FinalEffects)
+		Pair.second->Render(fTimeDelta);
+
+	if (m_TestEffect.size() != 0)
+		for (auto& Pair : m_TestEffect)
+			Pair.second->Render(fTimeDelta);
 }
 
 CEffect* CEffect_Manager::Find_EachEffect(const wstring& strEachEffectTag)
