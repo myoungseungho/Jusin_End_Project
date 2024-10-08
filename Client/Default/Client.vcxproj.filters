@@ -109,6 +109,9 @@
     <Filter Include="02.GameObjects\UI\Chara_Icon\Panel">
       <UniqueIdentifier>{43f6ccdc-0eeb-4355-a922-46ce8a5a68c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\SkillGaugeBar">
+      <UniqueIdentifier>{e3d6c943-52a0-45d4-9a67-736c026e5dc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="..\public\UI_Chara_Icon_Panel.h">
       <Filter>02.GameObjects\UI\Chara_Icon\Panel</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_SkillGaugeBar.h">
+      <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -340,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Chara_Icon_Panel.cpp">
       <Filter>02.GameObjects\UI\Chara_Icon\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SkillGaugeBar.cpp">
+      <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

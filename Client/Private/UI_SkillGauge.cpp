@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_SkillGauge::CUI_SkillGauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_BaseAttBuf{ pDevice ,pContext }
+	:CUI_Skill{ pDevice ,pContext }
 {
 }
 
 CUI_SkillGauge::CUI_SkillGauge(const CUI_SkillGauge& Prototype)
-	:CUI_BaseAttBuf{ Prototype }
+	:CUI_Skill{ Prototype }
 {
 }
 
@@ -29,7 +29,7 @@ HRESULT CUI_SkillGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(256.f, 32.f, 250.f, 650.f);
+	__super::Set_UI_Setting(416.f, 52.f, 332.f, 668.f);
 
 	return S_OK;
 }

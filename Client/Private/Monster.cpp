@@ -50,7 +50,7 @@ void CMonster::Update(_float fTimeDelta)
 
 	if(m_pGameInstance->Get_DIKeyState(DIK_N))
 	{
-		m_pUIManager->UsingAttckBuff(5.f);
+		m_pUIManager->UsingSkillPoint(17);
 	}
 
 }

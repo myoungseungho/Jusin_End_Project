@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_SkillNumber::CUI_SkillNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_BaseAttBuf{ pDevice ,pContext }
+	:CUI_Skill{ pDevice ,pContext }
 {
 }
 
 CUI_SkillNumber::CUI_SkillNumber(const CUI_SkillNumber& Prototype)
-	:CUI_BaseAttBuf{ Prototype }
+	:CUI_Skill{ Prototype }
 {
 }
 
@@ -36,12 +36,12 @@ HRESULT CUI_SkillNumber::Initialize(void* pArg)
 
 void CUI_SkillNumber::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CUI_SkillNumber::Update(_float fTimeDelta)
 {
-
+	
 }
 
 void CUI_SkillNumber::Late_Update(_float fTimeDelta)
@@ -54,7 +54,7 @@ HRESULT CUI_SkillNumber::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iSkillCount)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iSkillNumber)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))

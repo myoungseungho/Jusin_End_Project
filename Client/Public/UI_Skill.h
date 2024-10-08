@@ -23,6 +23,12 @@ protected:
 	virtual HRESULT Bind_ShaderResources();
 	virtual HRESULT Ready_Components();
 
+protected:
+	_uint m_iSkillPoint = { 0 };
+	_uint m_iSkillNumber = { 0 };
+
+	_int m_iMaxSkillPoint = { 0 };
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

@@ -2,14 +2,20 @@
 
 #include "UI_Skill.h"
 
+BEGIN(Engine)
+
+class CTexture;
+
+END
+
 BEGIN(Client)
 
-class CUI_SkillNumber final :public CUI_Skill
+class CUI_SkillGaugeBar final :public CUI_Skill
 {
 private:
-	CUI_SkillNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_SkillNumber(const CUI_SkillNumber& Prototype);
-	virtual ~CUI_SkillNumber() = default;
+	CUI_SkillGaugeBar(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_SkillGaugeBar(const CUI_SkillGaugeBar& Prototype);
+	virtual ~CUI_SkillGaugeBar() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -22,8 +28,11 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+private:
+	CTexture* m_pSkillTexture[3] = {nullptr,  nullptr ,nullptr};
+
 public:
-	static CUI_SkillNumber* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_SkillGaugeBar* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

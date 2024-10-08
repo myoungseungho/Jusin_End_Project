@@ -1,10 +1,10 @@
 #pragma once
 
-#include "UI_BaseAttBuf.h"
+#include "UI_Skill.h"
 
 BEGIN(Client)
 
-class CUI_SkillGauge final :public CUI_BaseAttBuf
+class CUI_SkillGauge final :public CUI_Skill
 {
 private:
 	CUI_SkillGauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

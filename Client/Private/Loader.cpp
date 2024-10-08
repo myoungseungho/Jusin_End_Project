@@ -22,6 +22,7 @@
 #include "UI_AttBuf.h"
 #include "UI_AttBufMark.h"
 #include "UI_SkillGauge.h"
+#include "UI_SkillGaugeBar.h"
 #include "UI_SkillNumber.h"
 #include "UI_Timer.h"
 #include "UI_AttBufEffect.h"
@@ -173,10 +174,17 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_tensiontex_base00_S3.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_SKillGaugeBar */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Cp_Tensiontex/cp_tensiontex_0%d.png"),8))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Texture_UI_SPNum */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SPNum"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/SP_Number/SP_Num%d.png"), 8))))
 		return E_FAIL;
+
+
 
 	//캐릭터 아이콘
 
@@ -259,6 +267,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_UI_SkillGauge */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_SkillGauge"),
 		CUI_SkillGauge::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_SkillGaugeBar*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_SkillGaugeBar"),
+		CUI_SkillGaugeBar::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_SkillGauge */

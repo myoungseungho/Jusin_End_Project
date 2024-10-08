@@ -37,6 +37,7 @@ protected:
 	virtual HRESULT Ready_Components();
 
 	virtual void Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _float fPosY, _float fDepth = 0.9f);
+	void DebugTesting(_float fSizeOffset,  _float fDepth = 1.f);
 
 	_bool ClickRange();
 
@@ -46,8 +47,8 @@ protected:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 protected:
-	_float m_fSizeX = { 0.f };
-	_float m_fSizeY = { 0.f };
+	_float m_fSizeX = { 100.f };
+	_float m_fSizeY = { 100.f };
 	_float m_fPosX = { 0.f };
 	_float m_fPosY = { 0.f };
 

@@ -28,12 +28,20 @@ HRESULT CUI_Skill::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_iMaxSkillPoint = 100;
+
 	return S_OK;
 }
 
 void CUI_Skill::Priority_Update(_float fTimeDelta)
 {
+	m_iSkillPoint = m_pUI_Manager->m_iSkillPoint;
 
+	if (m_iSkillNumber < 7 && m_iSkillPoint >= m_iMaxSkillPoint)
+	{
+		m_pUI_Manager->UsingSkillPoint(-m_iMaxSkillPoint);
+		m_iSkillNumber++;
+	}
 }
 
 void CUI_Skill::Update(_float fTimeDelta)
