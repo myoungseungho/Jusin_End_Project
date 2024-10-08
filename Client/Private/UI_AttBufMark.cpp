@@ -29,7 +29,7 @@ HRESULT CUI_AttBufMark::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(40.f, 40.f, 500.f, 120.f,0.f);
+	__super::Set_UI_Setting(40.f, 40.f, 437.f, 146.f,0.f);
 
 	return S_OK;
 }
@@ -42,6 +42,9 @@ void CUI_AttBufMark::Priority_Update(_float fTimeDelta)
 void CUI_AttBufMark::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_T))
+		m_bDead = TRUE;
 }
 
 void CUI_AttBufMark::Late_Update(_float fTimeDelta)

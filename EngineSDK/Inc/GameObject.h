@@ -43,6 +43,11 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 
+	// 객체 삭제 (최진영)
+	_bool Get_Dead() { return m_bDead; }
+	void Set_Dead() { m_bDead = TRUE; }
+	//
+
 public:
 	HRESULT Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, class CComponent** ppOut, void* pArg = nullptr);
 
@@ -56,6 +61,12 @@ protected:
 	class CTransform*			m_pTransformCom = { nullptr };
 
 	_bool						m_bIsActive = { true };
+
+	// 객체 삭제 (최진영)
+
+	_bool m_bDead = { FALSE };
+
+	//
 	void SetActive(_bool active) { m_bIsActive = active; }
 	_bool IsActive() const { return m_bIsActive; }
 

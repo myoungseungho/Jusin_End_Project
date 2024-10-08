@@ -43,8 +43,21 @@ void CLayer::Update(_float fTimeDelta)
 
 void CLayer::Late_Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Late_Update(fTimeDelta);
+	//최진영 객체 삭제
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->Get_Dead())
+		{
+			Safe_Release(*it);
+			it = m_GameObjects.erase(it); 
+			continue; 
+		}
+		else
+		{
+			(*it)->Late_Update(fTimeDelta);
+			++it; 
+		}
+	}
 }
 
 CLayer * CLayer::Create()

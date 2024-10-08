@@ -30,7 +30,7 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting( 512.f, 100.f, 356.f, 80.f, 0.75f);
+	__super::Set_UI_Setting( 464.f, 116.f, 330.f, 87.f, 0.75f);
 
 	m_iCharaCurrHp = 100;
 	m_bStun = FALSE;
@@ -44,35 +44,31 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 	
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	//if(m_bRedAlpha)
-	//	m_fRedGaugeTimer += fTimeDelta;
-	//
-	//if (fTimeDelta >= 1.f)
-	//	m_fMaskUVTimer = 0.f;
-	//
-	//if (m_fRedGaugeTimer >= 1.f)
-	//{
-	//	m_bRedAlpha = TRUE;
-	//	m_fRedGaugeTimer = 0.f;
-	//}
+	if(!m_bStun)
+		m_fRedGaugeTimer += fTimeDelta;
 
+	//1.f은 스턴 시간
+	if (m_fMaskUVTimer >= 1.f)
+		m_fMaskUVTimer = 0.f;
 
 }
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
-//	if (m_pGameInstance->Get_DIKeyState(DIK_A))
-//	{
-//		m_iCharaCurrHp--;
-//		//m_bStun = TRUE;
-//		
-//	}
-//	
-//	if (m_pGameInstance->Get_DIKeyState(DIK_D))
-//	{
-//		m_iCharaCurrHp++;
-//		//m_bRedAlpha = FALSE;
-//	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	{
+		m_iCharaCurrHp--;
+		m_bStun = TRUE;
+		
+	}
+	
+	if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	{
+		m_iCharaCurrHp++;
+		m_bStun = FALSE;
+
+	}
 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
 }

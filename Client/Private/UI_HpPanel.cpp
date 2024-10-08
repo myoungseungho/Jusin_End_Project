@@ -31,7 +31,7 @@ HRESULT CUI_HpPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(512.f, 100.f, 356.f, 80.f,0.8f);
+	__super::Set_UI_Setting(464.f , 116.f, 330.f, 87.f,0.8f);
 
 
 	return S_OK;
