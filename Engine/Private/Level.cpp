@@ -25,7 +25,7 @@ void CLevel::Update(_float fTimeDelta)
 
 }
 
-HRESULT CLevel::Render()
+HRESULT CLevel::Render(_float fTimeDelta)
 {
 	return S_OK;
 }

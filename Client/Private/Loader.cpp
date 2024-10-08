@@ -1,3 +1,5 @@
+#pragma once
+
 #include "stdafx.h"
 #include "..\Public\Loader.h"
 
@@ -1955,6 +1957,14 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Single"),
 		CEffect_Single::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+#pragma endregion
+
+#pragma region Effect Shader
+
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Eff_VtxMesh"),
+	//	CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Eff_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
+	//	return E_FAIL;
+
 #pragma endregion
 
 	/* 객체원형을 로드한다. */

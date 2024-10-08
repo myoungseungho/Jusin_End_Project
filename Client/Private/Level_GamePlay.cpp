@@ -39,9 +39,11 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pEffect_Manager->Update(fTimeDelta);
 }
 
-HRESULT CLevel_GamePlay::Render()
+HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
+
+	m_pEffect_Manager->Render(fTimeDelta);
 
 	return S_OK;
 }

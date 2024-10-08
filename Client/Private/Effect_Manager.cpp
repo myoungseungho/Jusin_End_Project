@@ -96,21 +96,45 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(const wstring& strEachEffectTag, co
 	return S_OK;
 }
 
-HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, const wstring& ModelName)
+HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName)
 {
+	CEffect::EFFECT_DESC EffectDesc{};
+
+	EffectDesc.ModelName = *ModelName;
+	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
+	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
+
+	CGameObject* pEffect = nullptr;
+	CEffect* pTestEffect = nullptr;
+
 	switch (eEffectType)
 	{
 	case EFFECT_SINGLE:
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Single"), TEXT("Layer_Effect_Single"))))
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Single"), &EffectDesc);
+		pTestEffect = static_cast<CEffect*>(pEffect);
+
+		if (pTestEffect == nullptr)
 			return E_FAIL;
+
+		m_TestEffect.emplace(TEXT("Effect_Single"), pTestEffect);
 		break;
 	case EFFECT_MOVETEX:
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_MoveTex"), TEXT("Layer_Effect_MoveTex"))))
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_MoveTex"), &EffectDesc);
+		pTestEffect = static_cast<CEffect*>(pEffect);
+
+		if (pTestEffect == nullptr)
 			return E_FAIL;
+
+		m_TestEffect.emplace(TEXT("Effect_MoveTex"), pTestEffect);
 		break;
 	case EFFECT_MULTI:
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Multi"), TEXT("Layer_Effect_Multi"))))
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Multi"), &EffectDesc);
+		pTestEffect = static_cast<CEffect*>(pEffect);
+
+		if (pTestEffect == nullptr)
 			return E_FAIL;
+
+		m_TestEffect.emplace(TEXT("Effect_Multi"), pTestEffect);
 		break;
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Effect_MoveTex.h"
+#include "GameInstance.h"
 
 CEffect_MoveTex::CEffect_MoveTex(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CEffect{ pDevice ,pContext }
@@ -68,4 +69,9 @@ CGameObject* CEffect_MoveTex::Clone(void* pArg)
 void CEffect_MoveTex::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pShaderCom);
+	Safe_Release(m_pModelCom);
+	Safe_Release(m_pDiffuseTextureCom);
+	Safe_Release(m_pMaskTextureCom);
 }

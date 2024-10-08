@@ -16,6 +16,7 @@ public:
 	void Render(_float fTimeDelta) override;
 
 	string WStringToUTF8(const std::wstring& wstr);
+	wstring UTF8ToWString(const string& utf8Str);
 	virtual const _char* GetTabName() const { return "Effect"; };
 
 private:

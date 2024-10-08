@@ -14,12 +14,13 @@ BEGIN(Client)
 class CEffect :	public CGameObject
 {
 public:
-	struct EFFECT_DESC
+	typedef struct
 	{
-		const wstring& ModelName;
-		const wstring& MaskTextureName;
-		const wstring& DiffuseTextureName;
-	};
+		_wstring defaultWString = L"";
+		_wstring& ModelName = defaultWString;
+		_wstring& MaskTextureName = defaultWString;
+		_wstring& DiffuseTextureName = defaultWString;
+	}EFFECT_DESC;
 
 protected:
 	CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

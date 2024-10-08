@@ -22,11 +22,10 @@ HRESULT CIMGUI_Effect_Tab::Initialize()
 
 void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 {
-
-    const char* Effect[] = {"Each", "Final"};
+    const char* Effect[] = { "Each", "Final" };
     static int CurrentEffect = 0;
 
-    const char* EffectType[] = { "Single", "Multi", "MoveTex" };
+    const char* EffectType[] = { "Single", "MoveTex", "Multi" };
     static int CurrentEffectType = 0;
 
     std::vector<std::string> ModelName;
@@ -34,7 +33,6 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     ModelName.clear();
     for (const auto& pair : m_pEffect_Manager->m_EffectModel) {
-        // 변환 함수 사용
         ModelName.push_back(WStringToUTF8(pair.first));
     }
 
@@ -44,16 +42,13 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     TextureName.clear();
     for (const auto& pair : m_pEffect_Manager->m_EffectTexture) {
-        // 변환 함수 사용
         TextureName.push_back(WStringToUTF8(pair.first));
     }
 
-    // 첫 번째 콤보박스: Each 또는 Final 선택
     if (ImGui::BeginCombo("Add What", Effect[CurrentEffect]))
     {
         for (int i = 0; i < IM_ARRAYSIZE(Effect); i++) {
             bool isSelected = (CurrentEffect == i);
-
             if (ImGui::Selectable(Effect[i], isSelected)) {
                 CurrentEffect = i;
             }
@@ -65,7 +60,6 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         ImGui::EndCombo();
     }
 
-    // 각 선택에 따른 다른 콤보박스 렌더링
     if (CurrentEffect == 0) // Each 선택 시
     {
         if (ImGui::BeginCombo("EffectType", EffectType[CurrentEffectType]))
@@ -127,6 +121,28 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
             }
             ImGui::EndCombo();
         }
+
+        // Add Effect 버튼을 추가하여 Add_Test_Effect 호출
+        if (ImGui::Button("Add Effect"))
+        {
+            // 선택된 Model Name을 wstring으로 변환
+            std::wstring wModelName = UTF8ToWString(ModelName[CurrentModel]);
+
+            // CurrentEffectType을 EFFECT_TYPE으로 변환하여 전달
+            EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
+
+            // Add_Test_Effect 호출
+            HRESULT hr = m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
+
+            if (FAILED(hr))
+            {
+                ImGui::Text("Failed to add effect");
+            }
+            else
+            {
+                ImGui::Text("Effect added successfully");
+            }
+        }
     }
 }
 
@@ -135,6 +151,22 @@ string CIMGUI_Effect_Tab::WStringToUTF8(const std::wstring& wstr)
     if (wstr.empty()) return std::string();
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
     return converter.to_bytes(wstr);
+}
+
+wstring CIMGUI_Effect_Tab::UTF8ToWString(const string& utf8Str)
+{
+    // UTF-8 문자열의 길이를 확인하고, 변환할 wstring의 길이를 계산합니다.
+    int wstrLength = MultiByteToWideChar(CP_UTF8, 0, utf8Str.c_str(), -1, nullptr, 0);
+
+    // 변환할 wstring의 크기를 할당
+    std::wstring wstr(wstrLength, 0);
+
+    // 변환 작업 수행
+    MultiByteToWideChar(CP_UTF8, 0, utf8Str.c_str(), -1, &wstr[0], wstrLength);
+
+    // 널 문자를 제거하고 반환
+    wstr.pop_back(); // null character 제거
+    return wstr;
 }
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
