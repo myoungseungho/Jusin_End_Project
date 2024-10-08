@@ -370,9 +370,18 @@ CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)
         return PLAY_HIT;
 
 
+    if (strText == "OPENING_GOKU")
+        return OPENING_GOKU;
 
-    if (strText == "SELECT_GOKU")
-        return SELECT_GOKU;
+
+    if (strText == "OPENIING_21")
+        return OPENIING_21;
+
+
+    if (strText == "SKILL_GOKU")
+        return SKILL_GOKU;
+
+
 
 
     return CHARACTER_INDEX_END;
