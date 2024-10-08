@@ -108,6 +108,12 @@ HRESULT CShader_Texture::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CShader_Texture::Push_InputTextures(ID3D11ShaderResourceView* pSRV)
+{
+	m_isAlpha = true;
+	m_InputTextures.push_back(pSRV);
+}
+
 HRESULT CShader_Texture::Ready_Components(void* pArg)
 {
 	/* Com_Shader */
@@ -155,6 +161,18 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 
 		if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
 			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("isAlpha", &m_isAlpha, sizeof(bool))))
+			return E_FAIL;
+		
+		_int iCount = 0;
+		for (auto pSRV : m_InputTextures)
+		{
+			m_pShaderCom->Bind_ShaderResourceView("g_AlphaTexture", m_InputTextures[iCount]);
+			iCount++;
+		}
+		
+
 	}
 	else
 	{

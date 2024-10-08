@@ -3,11 +3,12 @@
 
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D		g_DiffuseTexture;
+texture2D		g_AlphaTexture;
 texture2D		g_Texture;
 
 texture2D		g_DepthTexture;
 bool isBindTexture;
-
+bool isAlpha;
 float g_Time = 0.f;
 float g_Speed = 0.05f;
 
@@ -79,8 +80,15 @@ PS_OUT PS_MAIN(PS_IN In)
 	
     if (isBindTexture == true)
     {
-        In.vTexcoord.x += g_Time;
+        In.vTexcoord.y += g_Time;
 		Out.vColor = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+		
+        if (isAlpha == true)
+        {
+			vector vAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+
+			Out.vColor *= vAlpha.x;
+        }
     }
 	else
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);

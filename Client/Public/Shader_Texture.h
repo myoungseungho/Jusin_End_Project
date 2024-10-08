@@ -33,10 +33,11 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	
-
+	void Push_InputTextures(ID3D11ShaderResourceView* pSRV);
 	CTexture* m_pTextureCom = { nullptr };
-	
+private:
+	_bool m_isAlpha = { false };
+	vector<ID3D11ShaderResourceView*> m_InputTextures;
 private:
 	_bool m_isTex = { false };
 private:

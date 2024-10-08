@@ -62,6 +62,8 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         ImNodes::EndInputAttribute();
 
         ImNodes::EndNode();
+
+
     }
 
     for (size_t i = 0; i < node_ids.size(); ++i)
@@ -74,11 +76,11 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         ImGui::InputInt("Value", &node_values[node_id]);
 
         ImNodes::BeginOutputAttribute(node_id * 2);
-        ImGui::Text("Output");
+        ImGui::Text("OutColor");
         ImNodes::EndOutputAttribute();
 
         ImNodes::BeginInputAttribute(node_id * 2 + 1);
-        ImGui::Text("Input");
+        ImGui::Text("Alpha");
         ImNodes::EndInputAttribute();
 
         ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
@@ -98,6 +100,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
     ImNodes::EndNodeEditor();
 
+    // start ÁÖ´Â³ð end ¹Þ´Â³ð
     _int start_attr = 0, end_attr = 0;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
@@ -105,11 +108,17 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         if (end_attr == -2)
         {
             m_iMain_Input_Diffuse_id = start_attr / 2;
+            links.push_back(make_pair(start_attr, end_attr));
             m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
+        }
+        else
+        {
+
+            links.push_back(make_pair(start_attr, end_attr));
+            m_NodeTextures[(end_attr-1)/2 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[start_attr / 2 - 1]);
         }
 
 
-        links.push_back(std::make_pair(start_attr, end_attr));
     }
 
     _int link_id;
