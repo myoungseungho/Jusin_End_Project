@@ -37,6 +37,9 @@ HRESULT CUI_SkillGaugeBar::Initialize(void* pArg)
 void CUI_SkillGaugeBar::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	int iTmp = m_iSkillNumber;
+	int a = 10;
 }
 
 void CUI_SkillGaugeBar::Update(_float fTimeDelta)
@@ -56,18 +59,12 @@ HRESULT CUI_SkillGaugeBar::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (m_iSkillNumber != 1)
-	{
-		if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_PrevTexture", m_iSkillNumber - 1)))
-			return E_FAIL;
-	}
-
-	if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_CurrTexture", m_iSkillNumber)))
+	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture" , m_pUI_Manager->m_iSkillCount)))
 		return E_FAIL;
 
-	if (m_iSkillNumber != 7)
+	if (m_pUI_Manager->m_iSkillCount != 7)
 	{
-		if (FAILED(m_pSkillTexture[2]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", m_iSkillNumber + 1)))
+		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture" , m_pUI_Manager->m_iSkillCount + 1)))
 			return E_FAIL;
 	}
 
@@ -90,18 +87,14 @@ HRESULT CUI_SkillGaugeBar::Ready_Components()
 
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
-		TEXT("Com_PrevTexture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[0]))))
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[0]))))
 		return E_FAIL;
 
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
-		TEXT("Com_CurrTexture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[1]))))
+		TEXT("Com_NextTexture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[1]))))
 		return E_FAIL;
 
-	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
-		TEXT("Com_NextTexture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[2]))))
-		return E_FAIL;
 }
 
 CUI_SkillGaugeBar* CUI_SkillGaugeBar::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -132,5 +125,10 @@ CGameObject* CUI_SkillGaugeBar::Clone(void* pArg)
 
 void CUI_SkillGaugeBar::Free()
 {
+	for (int i = 0; i < 2; i++)
+	{
+		Safe_Release(m_pSkillTexture[i]);
+	}
+
 	__super::Free();
 }

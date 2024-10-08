@@ -37,6 +37,8 @@ HRESULT CUI_SkillNumber::Initialize(void* pArg)
 void CUI_SkillNumber::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	
 }
 
 void CUI_SkillNumber::Update(_float fTimeDelta)
@@ -54,7 +56,7 @@ HRESULT CUI_SkillNumber::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iSkillNumber)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_pUI_Manager->m_iSkillCount)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))

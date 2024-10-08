@@ -29,7 +29,7 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
-	CTexture* m_pSkillTexture[3] = {nullptr,  nullptr ,nullptr};
+	CTexture* m_pSkillTexture[2] = {nullptr,  nullptr };
 
 public:
 	static CUI_SkillGaugeBar* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

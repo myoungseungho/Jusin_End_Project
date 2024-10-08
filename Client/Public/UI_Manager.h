@@ -21,10 +21,10 @@ private:
 
 public:
 	void UsingAttckBuff(_float fAttBufDuration);
-	void UsingSkillPoint(_int iSkillPoint)
-	{
-		m_iSkillPoint += iSkillPoint;
-	};
+	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
+	
+	void SKillCount();
+
 
 public:
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
@@ -35,7 +35,8 @@ public:
 	_float m_fDuration = { 0.f };	
 
 	//Skill
-	_uint m_iSkillPoint = { 0 };
+	_int m_iSkillPoint = { 0 };
+	_int m_iSkillCount = { 0 };
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

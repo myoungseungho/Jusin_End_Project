@@ -35,13 +35,9 @@ HRESULT CUI_Skill::Initialize(void* pArg)
 
 void CUI_Skill::Priority_Update(_float fTimeDelta)
 {
-	m_iSkillPoint = m_pUI_Manager->m_iSkillPoint;
+	__super::Priority_Update(fTimeDelta);
 
-	if (m_iSkillNumber < 7 && m_iSkillPoint >= m_iMaxSkillPoint)
-	{
-		m_pUI_Manager->UsingSkillPoint(-m_iMaxSkillPoint);
-		m_iSkillNumber++;
-	}
+	m_pUI_Manager->SKillCount();
 }
 
 void CUI_Skill::Update(_float fTimeDelta)
