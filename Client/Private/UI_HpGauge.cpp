@@ -44,8 +44,13 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 	
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	if(!m_bStun)
+	if (!m_bStun)
+	{
 		m_fRedGaugeTimer += fTimeDelta;
+
+		if (m_fRedGaugeTimer >= 1.f)
+			m_fRedGaugeTimer = 0.f;
+	}
 
 	//1.f은 스턴 시간
 	if (m_fMaskUVTimer >= 1.f)
@@ -132,7 +137,7 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &m_bRedAlpha, sizeof(_bool))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &m_bStun, sizeof(_bool))))
 		return E_FAIL;
 
 	_vector vColor = { 0.043f , 0.952f , 0.945 , 1.f };
