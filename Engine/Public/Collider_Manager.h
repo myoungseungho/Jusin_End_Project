@@ -28,12 +28,18 @@ public:
 	_bool IsRayColliding(const _float3& rayOrigin, const _float3& rayDir, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject);
 	_bool isPointInAABB(const _float3& point, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject);
 
+	//이펙트 콜라이더
+public:
+	void Make_Effect_Collider_EnergyAttack(COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
+	HRESULT Clear_ColliderGroup(COLLIDERGROUP eRenderGroup);
 private:
 	list<CCollider*>			m_Colliders[CG_END];
 	//m_CollisionHistory: 이전 프레임에서의 충돌 상태를 저장하는 맵입니다.
 	// 키는 두 콜라이더의 포인터를 담은 쌍(pair)이고, 값은 이 쌍이 충돌 중인지 여부를 나타내는 부울 값입니다.
 	map<pair<CCollider*, CCollider*>, _bool> m_CollisionHistory;
 	class CGameInstance* m_pGameInstance = { nullptr };
+
+	_float2 m_UnitCollider = { 3.f,3.f };
 
 	//멀티 스레드
 private:

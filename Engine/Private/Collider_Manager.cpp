@@ -230,6 +230,82 @@ _bool CCollider_Manager::isPointInAABB(const _float3& point, COLLIDERGROUP eColl
 	return false;
 }
 
+//SourcePos는 고정일 것
+//DestPos만 유연할 것
+void CCollider_Manager::Make_Effect_Collider_EnergyAttack(COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
+{
+	// 1. 시작점과 끝점 사이의 거리 및 방향 계산
+	_float dx = DestPos.x - SourcePos.x;
+	_float dy = DestPos.y - SourcePos.y;
+
+	// 두 점 사이의 거리 계산
+	_float distance = sqrtf(dx * dx + dy * dy);
+
+	// 에네르기파가 아직 생성되지 않았을 때 처리
+	if (distance < m_UnitCollider.x)
+		return;
+
+	// 방향 벡터 및 정규화
+	_float2 direction = { dx / distance, dy / distance };
+
+	// 2. 필요한 콜라이더의 개수 계산
+	_float unitLength = m_UnitCollider.x; // 단위 콜라이더의 가로 크기 (예: 3.f)
+	// 소수점 자리를 무조건 올려버리는 ceil 함수, distance가 2고 unitLength가 3이라면 1이 나온다. 그러나 위에서 조건 처리하기 때문에 실질적으로는 3을 넘어야함
+	int requiredColliders = static_cast<int>(ceil(distance / unitLength)); 
+
+	// 3. 현재 콜라이더 그룹의 콜라이더 수 확인
+	int currentColliders = static_cast<int>(m_Colliders[eColliderGroup].size());
+
+	// 4. 필요한 경우 콜라이더 추가 생성
+	for (int i = currentColliders; i < requiredColliders; ++i)
+	{
+		// 새로운 콜라이더 생성
+		CCollider* newCollider = new CCollider();
+
+		// 콜라이더 설정 (크기 설정)
+		newCollider->SetSize(m_UnitCollider);
+
+		// 콜라이더 그룹에 추가
+		m_Colliders[eColliderGroup].push_back(newCollider);
+	}
+
+	// 5. 콜라이더 위치 업데이트
+	// 각 콜라이더의 위치 설정
+	for (int i = 0; i < requiredColliders; ++i)
+	{
+		// 콜라이더의 중점 위치 계산
+		_float currentDistance = unitLength * (i + 0.5f);
+		_float2 colliderPos = {
+			SourcePos.x + direction.x * currentDistance,
+			SourcePos.y + direction.y * currentDistance
+		};
+
+		// 콜라이더 가져오기
+		CCollider* collider = m_Colliders[eColliderGroup][i];
+
+		// 콜라이더 위치 설정
+		collider->SetCenter(colliderPos);
+
+		// 필요에 따라 다른 속성 설정 (예: 회전 등)
+	}
+
+	// 나머지 콜라이더들은 그대로 두어도 됩니다.
+	// 사용하지 않는 콜라이더들이 있을 수 있지만, 제거하지 않으므로 메모리 관리에 유의해야 합니다.
+}
+
+HRESULT CCollider_Manager::Clear_ColliderGroup(COLLIDERGROUP eRenderGroup)
+{
+	if ( eRenderGroup >= CG_END)
+		return E_FAIL;
+
+	for (auto& iter : m_Colliders[eRenderGroup])
+		Safe_Release(iter);
+
+	return S_OK;
+}
+
+
+
 
 CCollider_Manager* CCollider_Manager::Create()
 {
