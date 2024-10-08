@@ -36,14 +36,32 @@ HRESULT CGameObject::Initialize_Prototype()
 
 HRESULT CGameObject::Initialize(void* pArg)
 {
-	if (nullptr != pArg)
-	{
-		GAMEOBJECT_DESC* pDesc = static_cast<GAMEOBJECT_DESC*>(pArg);
-	}
-
 	m_pTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
+
+	if (nullptr != pArg)
+	{
+		FILEDATA* pDesc = static_cast<FILEDATA*>(pArg);
+
+		if (pDesc->isParsing)
+		{
+			if (pDesc != nullptr)
+			{
+				m_bIsPasingObject = pDesc->isParsing;
+				m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSetW(XMLoadFloat3(&pDesc->position), 1));
+				m_pTransformCom->Set_State(CTransform::STATE_RIGHT, XMVectorSetW(XMLoadFloat3(&pDesc->rightRotation), 0));
+				m_pTransformCom->Set_State(CTransform::STATE_UP, XMVectorSetW(XMLoadFloat3(&pDesc->upRotation), 0));
+				m_pTransformCom->Set_State(CTransform::STATE_LOOK, XMVectorSetW(XMLoadFloat3(&pDesc->lookRotation), 0));
+				m_pTransformCom->Set_Scaled(pDesc->scale.x, pDesc->scale.y, pDesc->scale.z);
+				m_pTransformCom->SetUp_TransformDesc(static_cast<CTransform::TRANSFORM_DESC*>(pArg));
+			}
+		}
+		else
+			m_pTransformCom->SetUp_TransformDesc(static_cast<CTransform::TRANSFORM_DESC*>(pArg));
+	}
+
+
 
 	if (nullptr != Get_Component(m_strTransformTag))
 		return E_FAIL;

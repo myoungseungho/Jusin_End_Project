@@ -16,6 +16,15 @@ class ENGINE_DLL CGameObject abstract : public CBase
 public:
 	struct GAMEOBJECT_DESC : public CTransform::TRANSFORM_DESC
 	{
+		_bool isParsing = { false };
+		wstring prototypeTag;
+		wstring layerName;
+		_uint levelIndex;
+		_float3 position;
+		_float3 rightRotation;
+		_float3 upRotation;
+		_float3 lookRotation;
+		_float3 scale;
 	};
 
 protected:
@@ -69,6 +78,8 @@ protected:
 	_bool						m_bIsActive = { true };
 	//IMGUI 관련
 	_bool						m_bIsImguiClick = { false };
+	//파싱 관련
+	_bool						m_bIsPasingObject = { false };
 
 protected:
 	map<const _wstring, CComponent*>		m_Components;

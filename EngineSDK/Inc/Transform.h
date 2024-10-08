@@ -9,7 +9,7 @@ class ENGINE_DLL CTransform final : public CComponent
 public:
 	typedef struct
 	{
-		_float			fSpeedPerSec;
+		_float			fSpeedPerSec = 1.f;
 		_float			fRotationPerSec;
 	} TRANSFORM_DESC;
 
