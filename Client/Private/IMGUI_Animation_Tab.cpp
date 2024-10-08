@@ -69,7 +69,7 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 
 
    //첫 실행일때, 루프돌았을때 ZeroFrame을 어떻게 구분하는가
-
+    CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
     CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
 
 
@@ -78,7 +78,7 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 }
 
 
-static int g_CurrentAnimationIndex = 999;
+static int g_iCurrentAnimationIndex = 999;
 static bool g_isLoop = false;
 
 void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
@@ -128,13 +128,15 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 
              _float fPrePosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
 
-             if (m_pSelectedModelCom->Play_Animation(fTimeDelta))
+             //Play_Animation_Lick
+             //if (m_pSelectedModelCom->Play_Animation(fTimeDelta)
+             if (m_pSelectedModelCom->Play_Animation_Lick(fTimeDelta))
              {
                  //모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
                  if(m_pSelectedModelCom->m_isLoopAnim)
                  {
                      fPrePosition = 0.01;
-                     ProcessEventsFramesZero(m_iTestModelIndex, g_CurrentAnimationIndex);
+                     ProcessEventsFramesZero(m_iTestModelIndex, g_iCurrentAnimationIndex);
                  }
              }
 
@@ -153,7 +155,7 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
              _float fCurrentPosition =(m_pSelectedModelCom->m_fCurrentAnimPosition);
 
              ImGui::Text("CurrentAnimPosition :%f ", (m_pSelectedModelCom->m_fCurrentAnimPosition));
-             float maxValue = m_pSelectedModelCom->m_Animations[g_CurrentAnimationIndex]->m_fDuration;       // 슬라이더 최대값
+             float maxValue = m_pSelectedModelCom->m_Animations[g_iCurrentAnimationIndex]->m_fDuration;       // 슬라이더 최대값
              if (ImGui::SliderFloat("Current Position", &(m_pSelectedModelCom->m_fCurrentAnimPosition), 0, maxValue))
              {
                  
@@ -163,7 +165,7 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
                      _float fSavePosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
 
                      m_pSelectedModelCom->SetUp_Animation(0, false, 0);
-                     m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, g_isLoop);
+                     m_pSelectedModelCom->SetUp_Animation(g_iCurrentAnimationIndex, g_isLoop);
                      //m_pSelectedModelCom->Play_Animation(fSavePosition / 25.f);
                      m_pSelectedModelCom->Play_Animation(fSavePosition/ m_pSelectedModelCom->Get_pCurrentAnimation()->m_fTickPerSecond);  
 
@@ -194,7 +196,7 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 void CIMGUI_Animation_Tab::Info_Anim()
 {
     //999로 한 이유는 0으로 하면 터져서 
-   // static int g_CurrentAnimationIndex = 999;
+   // static int g_iCurrentAnimationIndex = 999;
 
 
     std::vector<const char*> animNames;
@@ -212,20 +214,20 @@ void CIMGUI_Animation_Tab::Info_Anim()
 
 
     ImGui::Text("Selected Animation");
-    ImGui::Combo("##", &g_CurrentAnimationIndex, animNames.data(), animNames.size());
+    ImGui::Combo("##", &g_iCurrentAnimationIndex, animNames.data(), animNames.size());
 
-    if (g_CurrentAnimationIndex < animNames.size())
+    if (g_iCurrentAnimationIndex < animNames.size())
     {
         // 현재 선택된 애니메이션 데이터를 가져옴
          
         //Ver.태완
-        //const auto& selectedAnim = m_pSelectedModelCom->m_ModelData.animations[g_CurrentAnimationIndex];
+        //const auto& selectedAnim = m_pSelectedModelCom->m_ModelData.animations[g_iCurrentAnimationIndex];
 
 
-        const auto& selectedAnim = m_pSelectedModelCom->m_Animations[g_CurrentAnimationIndex];
+        const auto& selectedAnim = m_pSelectedModelCom->m_Animations[g_iCurrentAnimationIndex];
 
         // 애니메이션의 각 멤버를 ImGui::Text로 표시
-        ImGui::Text("AnimIndex: %d", g_CurrentAnimationIndex);
+        ImGui::Text("AnimIndex: %d", g_iCurrentAnimationIndex);
         ImGui::Text("Name: %s", selectedAnim->m_szName);
         ImGui::Text("Duration: %f", selectedAnim->m_fDuration);
         ImGui::Text("Ticks Per Second: %f", selectedAnim->m_fTickPerSecond);
@@ -280,16 +282,16 @@ void CIMGUI_Animation_Tab::Info_Anim()
         if (ImGui::Button("Play"))
         {
 
-           //if (m_pSelectedModelCom->m_fCurrentAnimPosition == m_pSelectedModelCom->m_Animations[g_CurrentAnimationIndex]->m_fDuration)
+           //if (m_pSelectedModelCom->m_fCurrentAnimPosition == m_pSelectedModelCom->m_Animations[g_iCurrentAnimationIndex]->m_fDuration)
            //{
            //    m_pSelectedModelCom->m_fCurrentAnimPosition = 0.f;
            //}
-            m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, g_isLoop);
+            m_pSelectedModelCom->SetUp_Animation(g_iCurrentAnimationIndex, g_isLoop);
             
-           // ProcessEventsFramesZero(m_iTestModelIndex, g_CurrentAnimationIndex);
+           // ProcessEventsFramesZero(m_iTestModelIndex, g_iCurrentAnimationIndex);
            
 
-            //ProcessEventsFramesZero((int)SELECT_HIT, g_CurrentAnimationIndex);
+            //ProcessEventsFramesZero((int)SELECT_HIT, g_iCurrentAnimationIndex);
             m_bMotionPlaying = true;
             m_bCurrentPositionSlide = true;
 
@@ -305,8 +307,37 @@ void CIMGUI_Animation_Tab::Info_Anim()
 
             m_bMotionPlaying = false;
             m_bCurrentPositionSlide = false;
-            m_pSelectedModelCom->SetUp_Animation(g_CurrentAnimationIndex, false, 0);
+            m_pSelectedModelCom->SetUp_Animation(g_iCurrentAnimationIndex, false, 0);
             m_pSelectedModelCom->m_fCurrentAnimPosition = 0.f;
+        }
+
+        if (ImGui::SliderFloat("AnimationUpdateTime", &m_fAnimationUpdateTime, 0, 1.f))
+        {
+            m_pSelectedModelCom->Set_MaxAnimationUpdate_Time(m_fAnimationUpdateTime);
+        }
+        if (ImGui::SliderFloat("TickPerSecond", &m_fTool_TickPerSecond, 0, 100.f))
+        {
+            m_pSelectedModelCom->m_Animations[g_iCurrentAnimationIndex]->m_fTickPerSecond = m_fTool_TickPerSecond;
+        }
+
+        if (ImGui::Button("Save Time&Speed  to this Animation&Position"))
+        {
+            SaveEventTXT(m_EventTXTBuffer, Get_strAnimationEvent());
+
+        }
+
+        ImGui::InputText("Target Position", m_PostionBuffer, IM_ARRAYSIZE(m_PostionBuffer));
+        if (ImGui::Button("Position Move"))
+        {
+
+            _float fTarget_Position = stof(m_PostionBuffer);
+
+
+            m_pSelectedModelCom->SetUp_Animation(0, false, 0);
+            m_pSelectedModelCom->SetUp_Animation(g_iCurrentAnimationIndex, g_isLoop);
+            //m_pSelectedModelCom->Play_Animation(fSavePosition / 25.f);
+            m_pSelectedModelCom->Play_Animation(fTarget_Position / m_pSelectedModelCom->Get_pCurrentAnimation()->m_fTickPerSecond);
+
         }
     }
 }
@@ -626,6 +657,142 @@ void CIMGUI_Animation_Tab::ProcessEventsFramesZero(int characterIndex, int anima
     }
 
 }
+
+
+void CIMGUI_Animation_Tab::SaveEventTXT(const _char* TextFilePath, string strNeweventText)
+{
+    ifstream file(TextFilePath);
+
+    // 파일을 제대로 열었는지 확인
+    if (!file.is_open())
+    {
+
+        MSG_BOX(TEXT("CIMGUI_Animation_Tab:: SaveEventTXT 에서 txt 파일 로드 실패\nPath:"));
+        return;
+    }
+
+
+
+    // 파일 내용 읽기
+    string fileContent((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+    file.close();
+
+    // 새로운 이벤트 텍스트 추가
+    fileContent += "\n" + strNeweventText;
+
+    // 파일을 쓰기 모드로 다시 열기 (덮어쓰기)
+    std::ofstream outFile(TextFilePath);
+
+    if (!outFile.is_open())
+    {
+        MSG_BOX(TEXT("CIMGUI_Animation_Tab:: SaveEventTXT 에서 txt 파일 저장 실패\nPath:"));
+        return;
+    }
+
+    // 수정된 파일 내용을 파일에 다시 저장
+    outFile << fileContent;
+    outFile.close();
+
+    MSG_BOX(TEXT("이벤트가 성공적으로 추가되었습니다."));
+
+
+}
+
+string CIMGUI_Animation_Tab::Get_strAnimationEvent()
+{
+    string strEventTEXT{};
+
+    //소수점 6자리까지 저장함
+   strEventTEXT += Get_CharacterName();            
+   strEventTEXT += "," + g_iCurrentAnimationIndex;
+   strEventTEXT += "," + Get_AnimationName();// to_string(m_pSelectedModelCom->m_iCurrentAnimationIndex);
+   strEventTEXT += "," + to_string(m_pSelectedModelCom->m_fCurrentAnimPosition);
+   strEventTEXT += ",AnimSpeedChange,";
+   strEventTEXT += to_string(m_fAnimationUpdateTime);
+   strEventTEXT += ",";
+   strEventTEXT += to_string(m_fTool_TickPerSecond);
+
+
+
+
+    return strEventTEXT;
+}
+
+string CIMGUI_Animation_Tab::Get_CharacterName()
+{
+
+    string strCharacterTEXT;
+
+    switch (m_iTestModelIndex)
+    {
+    case Client::SELECT_GOKU:
+        strCharacterTEXT += "SELECT_GOKU";
+        break;
+
+    case Client::SELECT_BOU:
+        strCharacterTEXT += "SELECT_BOU";
+        break;
+
+    case Client::SELECT_21:
+        strCharacterTEXT += "SELECT_21";
+        break;
+
+    case Client::SELECT_HIT:
+        strCharacterTEXT += "SELECT_HIT";
+        break;
+
+    case Client::PLAY_GOKU:
+        strCharacterTEXT += "PLAY_GOKU";
+        break;
+
+    case Client::PLAY_BOU:
+        strCharacterTEXT += "PLAY_BOU";
+        break;
+
+    case Client::PLAY_21:
+        strCharacterTEXT += "PLAY_21";
+        break;
+
+    case Client::PLAY_HIT:
+        strCharacterTEXT += "PLAY_HIT";
+        break;
+
+    case Client::CHARACTER_INDEX_END:
+    default:
+        MSG_BOX(TEXT("CIMGUI_Animation_Tab::Get_strAnimationEvent() m_iTestModelIndex 에러"));
+        break;
+    }
+
+    return strCharacterTEXT;
+}
+
+string CIMGUI_Animation_Tab::Get_AnimationName()
+{
+    
+    std::vector<const char*> animNames;
+
+    CAnimation*  AnimData = m_pSelectedModelCom->m_Animations[g_iCurrentAnimationIndex];
+
+    string strFullName = AnimData->m_szName;
+    string AnimName{};
+
+    size_t pos = strFullName.find_last_of('|');
+
+    // 마지막 '|'가 존재하면 그 뒤의 부분만 추출
+    if (pos != std::string::npos) 
+    {
+        AnimName = strFullName.substr(pos + 1);
+    }
+    else 
+    {
+        AnimName = strFullName;
+    }
+
+    return AnimName;
+
+}
+
+
 
 
 CIMGUI_Animation_Tab* CIMGUI_Animation_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

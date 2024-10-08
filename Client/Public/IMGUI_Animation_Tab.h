@@ -78,12 +78,17 @@ public:
 private:
 	//void LoadModelDataFromBinary();
 	//void LoadBoneFromBinary_Tool(ifstream& inFile, BoneData& bone);
-    void SelectedModelLoad(std::ifstream& inFile, BoneData& bone);
-    void LoadFromFile(const std::string& filename);
+    void SelectedModelLoad(ifstream& inFile, BoneData& bone);
+    void LoadFromFile(const string& filename);
     //void ProcessEventsBetweenFrames(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
     void ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
 
     void ProcessEventsFramesZero(int characterIndex, int animationIndex);
+    void SaveEventTXT(const _char* TextFilePath, string strNeweventText);
+
+    string Get_strAnimationEvent();
+    string Get_CharacterName();
+    string Get_AnimationName();
 
 public:
      
@@ -103,7 +108,13 @@ private:
 
 
     CHARACTER_INDEX m_iTestModelIndex = { PLAY_HIT };
+    _float m_fAnimationUpdateTime = {};
+    _float m_fTool_TickPerSecond = { 25.f };
+    _char m_PostionBuffer[30] = "0.0";
 
+
+
+    _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/Split.txt";
 
  public:
 	static CIMGUI_Animation_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

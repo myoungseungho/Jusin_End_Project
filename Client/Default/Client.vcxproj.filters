@@ -64,6 +64,9 @@
     <Filter Include="90.FrameEvent_Manager">
       <UniqueIdentifier>{757ebb14-9fe5-4780-82c1-11a43531d0ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="90.FrameEvent_Manager\AnimationNameMap">
+      <UniqueIdentifier>{31dac042-d971-4fd1-a29c-8d007cb09102}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -147,6 +150,12 @@
     <ClInclude Include="..\Public\FrameEvent_Manager.h">
       <Filter>90.FrameEvent_Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\AnimationNameMap.h">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -217,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
       <Filter>90.FrameEvent_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

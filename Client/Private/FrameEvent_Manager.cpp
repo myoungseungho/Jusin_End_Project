@@ -223,15 +223,36 @@ void CFrameEvent_Manager::LoadFile2(const _char* TextFilePath)
         // 디버깅용 출력
         _bool bDebugTest = true;
 
+
+        //1. 애니메이션을 번호로 받는 코드
         
-        Add_Event(Convert_strtoCharacterIndex(splitText[0]),  //캐릭터 이름 변환  
-            Convert_strtoFloat(splitText[1]),           //애니메이션 이름 변환  (현재는 float)
-            Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
-            splitText[3]);
+      //Add_Event(Convert_strtoCharacterIndex(splitText[0]),  //캐릭터 이름 변환  
+      //    Convert_strtoFloat(splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+      //    Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+      //    splitText[3]);
 
 
+        //2.애니메이션 이름을 번호로 바꾸는 함수 사용.  근데 1줄짜리임
+
+      CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
+      
+      Add_Event(
+          eCharacterIndex,  //캐릭터 이름 변환  
+          Convert_strtoCharacterAnimationIndex(eCharacterIndex,splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+          Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+          splitText[3]
+      );
+
+
+       // CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
+       //
+       // Add_Event(
+       //     eCharacterIndex,  //캐릭터 이름 변환  
+       //     m_AnimationIndex.Get_AnimationIndex(eCharacterIndex, splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+       //     Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+       //     splitText[3]
+       // );
        
-
     }
 
     // 파일 닫기
@@ -239,6 +260,13 @@ void CFrameEvent_Manager::LoadFile2(const _char* TextFilePath)
 
     //return LOAD_SUCCES;
     return;
+
+}
+
+void CFrameEvent_Manager::ReLoadFrameEvent(const _char* TextFilePath)
+{
+    FrameEvent.clear();
+    LoadFile2(TextFilePath);
 
 }
 
@@ -301,6 +329,11 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject
 
 }
 
+void CFrameEvent_Manager::Initalize_NameMap()
+{
+    m_AnimationIndex.Initalize();
+}
+
 CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)
 {
     /*
@@ -353,6 +386,11 @@ _float CFrameEvent_Manager::Convert_strtoFloat(string strText)
     ss >> floatValue;
 
     return floatValue;
+}
+
+_int CFrameEvent_Manager::Convert_strtoCharacterAnimationIndex(CHARACTER_INDEX eCharacterIndex, string strText)
+{
+    return m_AnimationIndex.Get_AnimationIndex(eCharacterIndex, strText);
 }
 
 void CFrameEvent_Manager::Free()

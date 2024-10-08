@@ -30,10 +30,14 @@ public:
 
 public:
 	_bool Play_Animation(_float fTimeDelta);
+	_bool Play_Animation_Lick(_float fTimeDelta);
+
 	void SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration = 0.0f);
 	_float GetDurationByIndex(_uint _animationIndex);
 	_float Get_CurrentAnimationTime() const { return m_fCurrentAnimPosition; }
 	class CAnimation* Get_pCurrentAnimation() { return m_Animations[m_iCurrentAnimationIndex]; };
+
+	void Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime);
 
 public:
 	HRESULT Bind_MaterialSRV(class CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex);
@@ -70,6 +74,8 @@ public: /* For.Animation */
 
 	_float						m_fPriviousAnimPosition = {};
 private:
+	_float						m_fAccAnimationUpdateTime = {};
+	_float						m_fMaxAnimationUpdateTime = { 0.1f };
 
 public:
 	// 바이너리 로드

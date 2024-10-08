@@ -156,6 +156,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
+    <ClInclude Include="..\Public\AnimationNameMap.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\FrameEvent_Manager.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />

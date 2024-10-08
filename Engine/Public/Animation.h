@@ -52,6 +52,7 @@ public:
 
 private:
 	class CGameInstance* m_pGameInstance = { nullptr };
+	
 public:
 	static CAnimation* Create(AnimationData animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices);
 

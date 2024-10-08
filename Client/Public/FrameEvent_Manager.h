@@ -4,6 +4,7 @@
 #include "Client_Defines.h"
 
 #include "AnimationEvent_Defines.h"
+#include "AnimationNameMap.h"
 
 BEGIN(Engine)
 class CShader;
@@ -30,16 +31,22 @@ public:
 	//void LoadFile(CHARACTER_INDEX iCharacterIndex);
 	//void LoadFile(const _char* TextFilePath);
 	void LoadFile2(const _char* TextFilePath);
+	void ReLoadFrameEvent(const _char* TextFilePath);
 
 	void UseEvent(string strEventText, CGameObject* pGameObject);
 
+	void Initalize_NameMap();
 
 private:
 	CHARACTER_INDEX Convert_strtoCharacterIndex(string strText);
 	_float			Convert_strtoFloat(string strText);
+	_int			Convert_strtoCharacterAnimationIndex(CHARACTER_INDEX eCharacterIndex, string strText);
 
 public:
 	FrameEventMap FrameEvent{};
+
+private:
+	CAnimationNameMap m_AnimationIndex;
 
 public:
 
