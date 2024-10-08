@@ -17,7 +17,7 @@ private:
 public:
 	HRESULT Initialize();
 	void Update(_float fTimeDelta);
-	HRESULT Render();
+	HRESULT Render(_float fTimeDelta);
 
 public:
 	HRESULT Change_Level(class CLevel* pNewLevel);

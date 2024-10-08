@@ -25,6 +25,28 @@
     <Filter Include="01.Level\00.GamePlay">
       <UniqueIdentifier>{3c568b36-eb82-4660-a444-b3034e67d6da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\02. Effect">
+      <UniqueIdentifier>{a118aae3-8ba7-416e-a709-e00fa2e17ce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\Manager">
+      <UniqueIdentifier>{c0a93e36-b2ad-4185-8cd3-73a927e1855a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\MoveTex">
+      <UniqueIdentifier>{2510c4b6-8824-429c-b36f-9d69c4fcd82a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\Single">
+      <UniqueIdentifier>{493f650d-556d-4509-be13-08853e2c3d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\Multi">
+      <UniqueIdentifier>{3a83342c-356f-48e0-b678-b6711abe33d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\Manager\Layer">
+      <UniqueIdentifier>{683a4001-94e0-4898-ab99-3d12226ca1df}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="IMGUI">
+    </Filter>
     <Filter Include="97.IMGUI">
       <UniqueIdentifier>{871a9861-3ac5-4274-b312-5a263c75354b}</UniqueIdentifier>
     </Filter>
@@ -153,6 +175,24 @@
     <ClInclude Include="..\Public\Shader_Texture.h">
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\02. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Layer.h">
+      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Manager.h">
+      <Filter>02.GameObjects\02. Effect\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_MoveTex.h">
+      <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Multi.h">
+      <Filter>02.GameObjects\02. Effect\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Single.h">
+      <Filter>02.GameObjects\02. Effect\Single</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -227,6 +267,24 @@
     <ClCompile Include="..\Private\Shader_Texture.cpp">
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\02. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Layer.cpp">
+      <Filter>02.GameObjects\02. Effect\Manager\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Manager.cpp">
+      <Filter>02.GameObjects\02. Effect\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp">
+      <Filter>02.GameObjects\02. Effect\MoveTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Multi.cpp">
+      <Filter>02.GameObjects\02. Effect\Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Single.cpp">
+      <Filter>02.GameObjects\02. Effect\Single</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -246,7 +304,6 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl">
-      <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

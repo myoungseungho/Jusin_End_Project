@@ -65,12 +65,12 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pLevel_Manager->Update(fTimeDelta);
 }
 
-HRESULT CGameInstance::Render_Engine()
+HRESULT CGameInstance::Render_Engine(_float fTimeDelta)
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
-	if (FAILED(m_pLevel_Manager->Render()))
+	if (FAILED(m_pLevel_Manager->Render(fTimeDelta)))
 		return E_FAIL;
 
 	return S_OK;
@@ -201,6 +201,10 @@ CComponent * CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring & 
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
 }
 
+vector<const _wstring*>* CGameInstance::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
+{
+	return m_pComponent_Manager->Find_Prototype_Include_Key(iLevelIndex, strIncludeTag);
+}
 
 _matrix CGameInstance::Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
 {

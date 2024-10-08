@@ -17,7 +17,7 @@ protected:
 public:
 	virtual HRESULT Initialize();
 	virtual void Update(_float fTimeDelta);
-	virtual HRESULT Render();
+	virtual HRESULT Render(_float fTimeDelta);
 
 public:
 	HRESULT Clear_Resources();

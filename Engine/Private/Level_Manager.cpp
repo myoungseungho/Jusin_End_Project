@@ -19,12 +19,12 @@ void CLevel_Manager::Update(_float fTimeDelta)
 	m_pCurrentLevel->Update(fTimeDelta);
 }
 
-HRESULT CLevel_Manager::Render()
+HRESULT CLevel_Manager::Render(_float fTimeDelta)
 {
 	if (nullptr == m_pCurrentLevel)
 		return E_FAIL;
 
-	return m_pCurrentLevel->Render();
+	return m_pCurrentLevel->Render(fTimeDelta);
 }
 
 HRESULT CLevel_Manager::Change_Level(CLevel * pNewLevel)

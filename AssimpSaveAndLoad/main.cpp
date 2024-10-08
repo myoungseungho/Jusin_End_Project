@@ -1,12 +1,23 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/ModelData/"
+#define DATAFILEPATH "../Client/Bin/ModelData/Eff/Model/"
 
 int main() {
 	ModelConverter converter;
 
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/Goku_SS3_Rotate0.fbx", TYPE_ANIM},
+		{"Models/cmn_AuraDash00.fbx", TYPE_NONANIM},
+		{"Models/cmn_AuraDash01.fbx", TYPE_NONANIM},
+		{"Models/cmn_burstCylinder00.fbx", TYPE_NONANIM},
+		{"Models/cmn_burstCylinder01.fbx", TYPE_NONANIM},
+		{"Models/cmn_circle00.fbx", TYPE_NONANIM},
+
+		{"Models/cmn_dbfly.fbx", TYPE_NONANIM},
+		{"Models/cmn_guardspark00.fbx", TYPE_NONANIM},
+		{"Models/cmn_homingshere.fbx", TYPE_NONANIM},
+		{"Models/cmn_ryuhai00.fbx", TYPE_NONANIM},
+		{"Models/cmn_sphere00.fbx", TYPE_NONANIM}, //10
+
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그
