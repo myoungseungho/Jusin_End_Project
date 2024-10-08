@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "GameInstance.h"
+#include <chrono> // 시간 측정을 위해 추가
 CCollider_Manager::CCollider_Manager()
 	:m_pGameInstance{ CGameInstance::Get_Instance() }
 {
@@ -56,6 +57,10 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	// 1P_SKILL vs 2P_SKILL
 	AddCollisionPairs(CG_1P_SKILL, CG_2P_SKILL);
 
+	// 시간 측정 시작
+	auto startTime = std::chrono::high_resolution_clock::now();
+
+
 	// 스레드풀을 사용하여 작업 분할 및 충돌 검사 수행
 	size_t numThreads = m_pGameInstance->Get_ThreadNumber();
 	size_t totalPairs = collisionPairs.size();
@@ -100,6 +105,12 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	for (auto& future : futures) {
 		future.get();
 	}
+
+	// 시간 측정 종료
+	auto endTime = std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> elapsedTime = endTime - startTime;
+	double elapsedSeconds = elapsedTime.count();
 
 	// 충돌 결과 처리
 	ProcessCollisionResults(fTimeDelta);
