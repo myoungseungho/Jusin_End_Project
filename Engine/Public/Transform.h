@@ -7,11 +7,11 @@ BEGIN(Engine)
 class ENGINE_DLL CTransform final : public CComponent
 {
 public:
-	typedef struct
+	struct TRANSFORM_DESC
 	{
 		_float			fSpeedPerSec = 1.f;
 		_float			fRotationPerSec;
-	} TRANSFORM_DESC;
+	};
 
 public:
 	enum STATE { STATE_RIGHT, STATE_UP, STATE_LOOK, STATE_POSITION, STATE_END };
