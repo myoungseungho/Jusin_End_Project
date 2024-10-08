@@ -40,7 +40,7 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 	m_pUI_Manager->SKillCount();
 	m_iSkillPoint = m_pUI_Manager->m_iSkillPoint;
 
-	m_fSkillRadio = m_iSkillPoint / 100.f;
+	m_fSkillRadio = 1 - m_iSkillPoint / 100.f;
 }
 
 void CUI_Skill::Update(_float fTimeDelta)

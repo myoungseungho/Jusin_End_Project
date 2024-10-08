@@ -132,11 +132,11 @@ PS_OUT PS_SKILL(PS_IN In)
     float4 vCurrTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
     float4 vNextTexture = g_NextTexture.Sample(LinearSampler, In.vTexcoord);
     
-    Out.vColor = vNextTexture;
-    
+    Out.vColor = vCurrTexture;
+    //vCurrTexture
     if (g_Radio <= In.vTexcoord.x)
     {
-        Out.vColor = vCurrTexture;
+        Out.vColor = vNextTexture;
 
     }
     
