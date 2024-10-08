@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
+#include "Collider_Manager.h"
 
 BEGIN(Engine)
 class CCollider;
@@ -29,10 +30,16 @@ public:
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionExit(class CCollider* other) override;
 
+	void Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
+
+
 private:
 	CCollider*				m_pColliderCom = { nullptr };
 
 	_float					m_fRandom = {};
+	_float					m_fX = 0.f;
+	_float					m_fY = 0.f;
+	_float2					m_UnitSize = { 3.f,3.f };
 
 private:
 	HRESULT Ready_Components();
