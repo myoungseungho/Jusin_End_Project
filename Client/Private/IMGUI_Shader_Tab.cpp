@@ -25,30 +25,44 @@ HRESULT CIMGUI_Shader_Tab::Initialize()
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
-
-
     if (ImGui::Button("Add Rect") && !isStart)
     {
-        //몬스터 생성
         if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Effect_Rect"))))
             return;
 
         isStart = true;
         DragAcceptFiles(g_hWnd, TRUE);
     }
-    
 
     ImGui::Separator();
 
     // Node addition button
     if (ImGui::Button("Add Node") && isStart)
     {
-        node_ids.push_back(unique_node_id++); // Add a new node
-        node_values[unique_node_id - 1] = 0;  // Initialize new node value to 0
-        input_accumulated_values[unique_node_id - 1] = 0; // Initialize accumulated value for new node
+        node_ids.push_back(unique_node_id++); 
+        node_values[unique_node_id - 1] = 0; 
+        input_accumulated_values[unique_node_id - 1] = 0;
     }
 
-    ImNodes::BeginNodeEditor(); // Start node editor scope
+    /* 노드 생성시 무조건 호출해야함 */
+    ImNodes::BeginNodeEditor();
+
+    if (isStart == true)
+    {
+        ImNodes::BeginNode(m_iMain_node_id);
+        ImGui::Text("Main_Node");
+
+        // Input attribute
+        ImNodes::BeginInputAttribute(m_iMain_node_id * 2);
+        ImGui::Text("Diffuse");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::BeginInputAttribute(m_iMain_node_id * 2 - 1);
+        ImGui::Text("Alpha");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::EndNode();
+    }
 
     for (size_t i = 0; i < node_ids.size(); ++i)
     {
@@ -57,49 +71,48 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         ImNodes::BeginNode(node_id);
         ImGui::Text("Node %d", node_id);
 
-        // Input field for the node value
-        ImGui::InputInt("Value", &node_values[node_id]); // Input field for node value
+        ImGui::InputInt("Value", &node_values[node_id]);
 
-        // Output attribute
         ImNodes::BeginOutputAttribute(node_id * 2);
         ImGui::Text("Output");
         ImNodes::EndOutputAttribute();
 
-        // Input attribute
         ImNodes::BeginInputAttribute(node_id * 2 + 1);
         ImGui::Text("Input");
         ImNodes::EndInputAttribute();
 
-        // Display the current value of the node (accumulated if input)
         ImGui::Text("Current Value: %d", node_values[node_id] + input_accumulated_values[node_id]);
 
-        // Display the texture as an image, assuming m_NodeTextureSRVs[i] has valid ImTextureID for the current node
         if (i < m_NodeTextureSRVs.size())
         {
-            ImGui::Image(m_NodeTextureSRVs[i], ImVec2(64, 64)); // Display the texture with a size of 64x64 pixels
+            ImGui::Image(m_NodeTextureSRVs[i], ImVec2(64, 64));
         }
 
-        ImNodes::EndNode(); // End node
+        ImNodes::EndNode();
     }
 
-    // Render existing links
     for (const auto& link : links)
     {
-        ImNodes::Link(link.first, link.first, link.second); // Link creation
+        ImNodes::Link(link.first, link.first, link.second);
     }
 
-    // End the node editor
-    ImNodes::EndNodeEditor(); // End node editor scope
+    ImNodes::EndNodeEditor();
 
-    // Check for new link creation (after ending the editor)
-    int start_attr = 0, end_attr = 0; // Initialize
+    _int start_attr = 0, end_attr = 0;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr))
     {
+        // Main_Node Diffuse에 연결된거임
+        if (end_attr == -2)
+        {
+            m_iMain_Input_Diffuse_id = start_attr / 2;
+            m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
+        }
+
+
         links.push_back(std::make_pair(start_attr, end_attr));
     }
 
-    // Link deletion logic
-    int link_id;
+    _int link_id;
     if (ImNodes::IsLinkDestroyed(&link_id))
     {
         links.erase(std::remove_if(links.begin(), links.end(),
@@ -108,24 +121,19 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
             }), links.end());
     }
 
-    // Reset accumulated input values for each frame
     for (auto& iter : input_accumulated_values)
     {
         iter.second = 0;
-       // value = 0; // Reset accumulated value for all input nodes
     }
 
-    // Update the node values based on links
     for (const auto& link : links)
     {
-        int output_node = link.first / 2;  // The node providing the output
-        int input_node = link.second / 2;   // The node receiving the input
+        int output_node = link.first / 2;  
+        int input_node = link.second / 2;  
 
-        // Check if both nodes exist
         if (node_values.find(output_node) != node_values.end() &&
             input_accumulated_values.find(input_node) != input_accumulated_values.end())
         {
-            // Add the output node value to the input node's accumulated value
             input_accumulated_values[input_node] += node_values[output_node];
         }
     }

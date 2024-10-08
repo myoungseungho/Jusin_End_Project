@@ -81,6 +81,12 @@ HRESULT CEffect_Rect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CEffect_Rect::Push_Texture_Diffuse(ID3D11ShaderResourceView* pSRV, _int iArray)
+{
+	m_isTex = true;
+	m_pTextureCom->Set_SRV(pSRV, iArray);
+}
+
 HRESULT CEffect_Rect::Ready_Components()
 {
 	/* Com_Shader */

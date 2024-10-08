@@ -28,6 +28,8 @@ private:
 	_int m_iNodeTextureCount = 0;
 	_bool isStart = false;
 	_int unique_node_id = 1;
+	_int m_iMain_node_id = -1;
+	_int m_iMain_Input_Diffuse_id = 0;
 	vector<_int> node_ids;
 	vector<pair<_int, _int>> links;
 

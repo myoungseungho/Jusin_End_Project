@@ -104,6 +104,12 @@ _float2 CTexture::Get_TextureSize()
 	return fTextureSize;
 }
 
+HRESULT CTexture::Set_SRV(ID3D11ShaderResourceView* pSRV, _int iArray)
+{
+	m_SRVs[iArray] = pSRV;
+	return S_OK;
+}
+
 CTexture * CTexture::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext, const _tchar * pTextureFilePath, _uint iNumTextures)
 {
 	CTexture*		pInstance = new CTexture(pDevice, pContext);

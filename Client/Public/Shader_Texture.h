@@ -33,7 +33,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	
+
 	CTexture* m_pTextureCom = { nullptr };
+	
 private:
 	_bool m_isTex = { false };
 private:
