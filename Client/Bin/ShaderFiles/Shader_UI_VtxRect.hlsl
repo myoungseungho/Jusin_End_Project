@@ -144,7 +144,8 @@ PS_OUT PS_SKILL(PS_IN In)
     
     if (g_Radio <= 0.5f && In.vTexcoord.x >= 0.5f)
     {
-        Out.vColor += (1 -vMaskTexture - 0.15f);
+        //Out.vColor += (1 -vMaskTexture - 0.15f);
+        Out.vColor.rgb += Out.vColor.rgb * vMaskTexture.r * 2.f;
 
     }
     
