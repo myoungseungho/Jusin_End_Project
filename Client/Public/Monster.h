@@ -30,6 +30,8 @@ private:
 	CModel*					m_pModelCom = { nullptr };
 
 	_uint					m_iComboCount = { 0 };
+	_float					m_fStunTImer = { 0.f };
+	_bool					m_bStun = { FALSE };
 
 	class CUI_Manager* m_pUIManager = { nullptr };
 

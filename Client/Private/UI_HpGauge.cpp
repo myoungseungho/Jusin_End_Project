@@ -42,19 +42,65 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-
-
 	m_fHpRadio = m_iCharaCurrHp / 100.f;
-	
+
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	if (!m_bStun)
+	//스턴이 끝났어
+	if (!m_bCharaStun)
 	{
-		//m_fRedGaugeTimer += fTimeDelta;
 		m_fRedHpRadio = m_fHpRadio;
+		m_bRedAlpha = TRUE;
+		m_fRedAlphaStartTimer = 0.f;
 	}
 
-	//1.f은 스턴 시간
+	if (!m_bCharaStun)
+	{
+		m_fRedAlphaStartTimer += fTimeDelta;
+	}
+
+	if (!m_bCharaStun &&m_fRedAlphaStartTimer >= 3.f)
+	{
+		m_bStun = TRUE;
+	}
+
+	if (m_bStun == TRUE)
+	{
+		m_fRedGaugeTimer += fTimeDelta;
+	}
+
+	if (m_fRedGaugeTimer >= 1.f)
+	{
+		m_fRedGaugeTimer = 0.f;
+		m_bStun = FALSE;
+		m_bRedAlpha = FALSE;
+	}
+
+	//if (m_bRedAlpha)
+	//{
+	//	m_fRedAlphaStartTimer += fTimeDelta;
+	//}
+	//
+	//if (!m_bCharaStun)
+	//{
+	//	m_fRedHpRadio = m_fHpRadio;
+	//	m_bRedAlpha = TRUE;
+	//	m_fRedAlphaStartTimer = 0.f;
+	//}
+
+	//몇 초 뒤에
+	//if ( m_fRedAlphaStartTimer >= 3.f)
+	//{
+	//	m_fRedGaugeTimer += fTimeDelta;
+	//	m_bRedAlpha = FALSE;
+	//}
+	//
+	//if (m_fRedGaugeTimer >= 1.f)
+	//	m_fRedGaugeTimer = 0.f;
+
+
+	
+
 	if (m_fMaskUVTimer >= 1.f)
 		m_fMaskUVTimer = 0.f;
 
@@ -63,19 +109,15 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
 
-	//if (m_pGameInstance->Get_DIKeyState(DIK_A))
-	//{
-	//	m_iCharaCurrHp--;
-	//	m_bStun = TRUE;
-	//	
-	//}
-	//
-	//if (m_pGameInstance->Get_DIKeyState(DIK_D))
-	//{
-	//	//m_iCharaCurrHp++;
-	//	m_bStun = FALSE;
-	//
-	//}
+	if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	{
+		m_iCharaCurrHp--;
+	}
+	
+	if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	{
+		m_iCharaCurrHp++;
+	}
 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
 }

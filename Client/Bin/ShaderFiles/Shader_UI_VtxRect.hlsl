@@ -92,6 +92,8 @@ PS_OUT PS_HP(PS_IN In)
     if (fRedLineY < 0 && fLineY > 0)
     {
         Out.vColor.rgb = float3(1, 0, 0);
+        
+        Out.vColor.a -= g_DestroyTimer;
 
     }
     else if (fRedLineY > 0)

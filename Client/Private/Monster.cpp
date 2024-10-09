@@ -41,8 +41,19 @@ HRESULT CMonster::Initialize(void* pArg)
 
 void CMonster::Priority_Update(_float fTimeDelta)
 {
+	if (m_bStun)
+	{
+		m_fStunTImer += fTimeDelta;
+	}
+
+	if (m_fStunTImer >= 3.f)
+	{
+		m_bStun = FALSE;
+		m_fStunTImer = 0.f;
+	}
 
 	m_pUIManager->UsingComboCount(m_iComboCount);
+	m_pUIManager->UsingStunCheck(m_bStun);
 }
 
 void CMonster::Update(_float fTimeDelta)
@@ -59,15 +70,11 @@ void CMonster::Update(_float fTimeDelta)
 		m_iComboCount = 0;
 	}
 	
-	if (m_pGameInstance->Get_DIKeyState(DIK_V))
-	{
-		m_pUIManager->UsingStunCheck(TRUE);
-	}
-
 	if (m_pGameInstance->Get_DIKeyState(DIK_B))
 	{
-		m_pUIManager->UsingStunCheck(FALSE);
+		m_bStun = TRUE;
 	}
+	
 }
 
 void CMonster::Late_Update(_float fTimeDelta)

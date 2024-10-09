@@ -27,10 +27,10 @@ public:
 
 	void SKillCount();
 
-
 public:
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
 	
+
 
 public:
 	_bool m_bStun = { FALSE };
@@ -45,7 +45,6 @@ public:
 
 	//Combo
 	_uint m_iComboCount = { 0 };
-
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
