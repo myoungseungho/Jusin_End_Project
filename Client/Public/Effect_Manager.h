@@ -28,8 +28,7 @@ public:
 	class CEffect* Find_EachEffect(const wstring& strEachEffectTag);
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
 
-	HRESULT Add_EachEffect(const wstring& strEachEffectTag, class CEffect* pEachEffect);
-	HRESULT Add_Effect_To_Layer(const wstring& strEachEffectTag, const wstring& strEffectLayerTag, void* pArg = nullptr);
+	HRESULT Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
 
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName);
 private:
@@ -42,7 +41,7 @@ public:
 	map<const wstring, class CEffect*>					m_EachEffects;
 	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
 
-	list<class CEffect*>					m_TestEffect;
+	vector<class CEffect*>					m_TestEffect;
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

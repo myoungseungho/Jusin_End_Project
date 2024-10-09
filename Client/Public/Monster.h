@@ -28,7 +28,7 @@ public:
 private:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
-
+	CTexture* m_pTextureCom = { nullptr };
 	_float					m_fRandom = {};
 
 private:

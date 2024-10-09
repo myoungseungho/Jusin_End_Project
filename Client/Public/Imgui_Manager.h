@@ -31,9 +31,11 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 	
-	class CIMGUI_Tab* Access_Shader_Tab() { return m_vecTabs[0]; }
+	class CIMGUI_Shader_Tab* Access_Shader_Tab() { 
+		return m_vecShader_Tabs[m_iCurShaderTabIndex]; }
 	void Push_Shader_Tab(CTexture* pTexture);
 
+	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
 private:
 	void Render_IMGUI(_float fTimeDelta);
 
@@ -44,6 +46,9 @@ private:
 
 	vector<class CIMGUI_Tab*> m_vecTabs;
 	vector<class CIMGUI_Shader_Tab*> m_vecShader_Tabs;
+
+	_int m_iShaderCount = { 0 };
+	_int m_iCurShaderTabIndex = { -1 };
 public:
 	virtual void Free() override;
 };

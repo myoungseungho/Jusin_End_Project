@@ -28,6 +28,8 @@ public:
 	void Render_MainNode();
 	void Render_TextureNode();
 	void Render_MoveTexNode();
+public:
+	_int m_iNumberId = { -1 };
 private:
 	vector<CShader_Texture*> m_NodeTextures;
 	vector<ImTextureID> m_NodeTextureSRVs;

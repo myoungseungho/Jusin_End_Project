@@ -90,8 +90,8 @@ PS_OUT PS_MAIN(PS_IN In)
         {
 			vector vAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
 
-			Out.vColor *= vAlpha.x;
-            //Out.vColor.rgb += vAlpha.rgb;
+			//Out.vColor *= vAlpha.x;
+            Out.vColor.rgb = vAlpha.rgb;
         }
     }
 	else

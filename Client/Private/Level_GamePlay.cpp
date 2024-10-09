@@ -27,8 +27,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Effect_Rect"))))
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Effect_Rect"))))
 	//	return E_FAIL;
 
 	return S_OK;
@@ -37,13 +36,14 @@ HRESULT CLevel_GamePlay::Initialize()
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
 	m_pEffect_Manager->Update(fTimeDelta);
+	m_pEffect_Manager->Late_Update(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
 
-	m_pEffect_Manager->Render(fTimeDelta);
+	//m_pEffect_Manager->Render(fTimeDelta);
 
 	return S_OK;
 }
