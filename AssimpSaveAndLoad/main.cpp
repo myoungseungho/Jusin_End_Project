@@ -6,9 +6,7 @@ int main() {
 	ModelConverter converter;
 
 	vector<pair<string, ModelType>> modelPaths = {
-<<<<<<< HEAD
 		{"Models/bun201_eff00.fbx", TYPE_NONANIM},
->>>>>>> e7d914db21dc613a4f481302aacb929eb91395d7
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그

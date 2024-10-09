@@ -190,7 +190,7 @@ void CIMGUI_Shader_Tab::Render_MainNode()
     {
         //ImNodes::SetNodeEditorSpacePos(m_iMain_node_id, node_positions[m_iMain_node_id]);
 
-        ImNodes::BeginNode(   m_iMain_node_id);
+        ImNodes::BeginNode(m_iMain_node_id);
         ImGui::Text("Main_Node");
 
         // Input attribute
