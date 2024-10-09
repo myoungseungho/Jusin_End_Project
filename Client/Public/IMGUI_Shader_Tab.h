@@ -20,7 +20,7 @@ protected:
 public:
 	HRESULT Initialize() override;
 	void Render(_float fTimeDelta) override;
-
+	void TabPos_Init();
 	void Set_EffectRect(CEffect_Rect* pEffectRect) { m_Effect_Rect = pEffectRect; }
 	void Create_NodeTexture(string szPath);
 	void Push_ShaderTexture(CShader_Texture* pShaderTexture) { m_NodeTextures.push_back(pShaderTexture); }
@@ -30,6 +30,7 @@ public:
 	void Render_MoveTexNode();
 public:
 	_int m_iNumberId = { -1 };
+	_bool m_TabPick = { false };
 private:
 	vector<CShader_Texture*> m_NodeTextures;
 	vector<ImTextureID> m_NodeTextureSRVs;
@@ -55,6 +56,7 @@ private:
 	_int m_MoveTex_node_id = 1501;	// 
 	vector<MoveTex_Node> m_MoveTex_Node_ids;
 
+	unordered_map<int, ImVec2> node_positions;
 	//// ½ÇÇè¿ë
 	//map<_int, _int> node_values; 
 	//map<_int, _int> input_accumulated_values; 

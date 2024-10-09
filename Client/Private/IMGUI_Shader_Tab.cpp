@@ -119,6 +119,18 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
 }
 
+void CIMGUI_Shader_Tab::TabPos_Init()
+{
+    for (const auto& node : node_positions)
+    {
+        int node_id = node.first;      // 노드 ID
+        ImVec2 node_pos = node.second; // 노드 위치
+
+        // 각 노드의 위치 설정
+        ImNodes::SetNodeEditorSpacePos(node_id, node_pos);
+    }
+}
+
 void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 {
     size_t testModelsPos = szPath.find("Shader");
@@ -176,6 +188,8 @@ void CIMGUI_Shader_Tab::Render_MainNode()
 {
     if (isStart == true)
     {
+        //ImNodes::SetNodeEditorSpacePos(m_iMain_node_id, node_positions[m_iMain_node_id]);
+
         ImNodes::BeginNode(   m_iMain_node_id);
         ImGui::Text("Main_Node");
 
@@ -189,6 +203,17 @@ void CIMGUI_Shader_Tab::Render_MainNode()
         ImNodes::EndInputAttribute();
 
         ImNodes::EndNode();
+
+
+        ImVec2 current_pos = ImNodes::GetNodeEditorSpacePos(m_iMain_node_id);
+
+        if (node_positions[m_iMain_node_id].x != current_pos.x ||
+            node_positions[m_iMain_node_id].y != current_pos.y)
+        {
+            node_positions[m_iMain_node_id] = current_pos;
+        }
+
+        //
     }
 }
 
@@ -219,6 +244,14 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
         ImNodes::EndInputAttribute();
 
         ImNodes::EndNode();
+
+        ImVec2 current_pos = ImNodes::GetNodeEditorSpacePos(node_id);
+
+        if (node_positions[node_id].x != current_pos.x ||
+            node_positions[node_id].y != current_pos.y)
+        {
+            node_positions[node_id] = current_pos;
+        }
     }
 }
 
@@ -245,6 +278,14 @@ void CIMGUI_Shader_Tab::Render_MoveTexNode()
         ImNodes::EndOutputAttribute();
 
         ImNodes::EndNode();
+
+        ImVec2 current_pos = ImNodes::GetNodeEditorSpacePos(node_id);
+
+        if (node_positions[node_id].x != current_pos.x ||
+            node_positions[node_id].y != current_pos.y)
+        {
+            node_positions[node_id] = current_pos;
+        }
     }
 }
 

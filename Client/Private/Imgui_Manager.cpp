@@ -85,10 +85,18 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 		{
 			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str()))
 			{
+				if (tab->m_TabPick == false)
+				{
+					tab->TabPos_Init();
+					tab->m_TabPick = true;
+				}
+
 				m_iCurShaderTabIndex = tab->m_iNumberId;
 				tab->Render(fTimeDelta);
 				ImGui::EndTabItem();
 			}
+			else
+				tab->m_TabPick = false;
 		
 			ImGui::EndTabBar(); // ег ╧ы а╬╥А
 		}
