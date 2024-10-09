@@ -46,6 +46,7 @@ private:
 
 	_bool m_bStun = { FALSE };
 	_bool m_bRedAlpha = { FALSE };
+	_float alphaValue = { 0.f };
 
 	CTexture* m_pMaskTexture = { nullptr };
 

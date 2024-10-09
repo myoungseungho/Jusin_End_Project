@@ -46,63 +46,10 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	//스턴이 끝났어
-	if (!m_bCharaStun)
-	{
-		m_fRedHpRadio = m_fHpRadio;
-		m_bRedAlpha = TRUE;
-		m_fRedAlphaStartTimer = 0.f;
-	}
-
-	if (!m_bCharaStun)
-	{
-		m_fRedAlphaStartTimer += fTimeDelta;
-	}
-
-	if (!m_bCharaStun &&m_fRedAlphaStartTimer >= 3.f)
-	{
-		m_bStun = TRUE;
-	}
-
-	if (m_bStun == TRUE)
-	{
-		m_fRedGaugeTimer += fTimeDelta;
-	}
-
-	if (m_fRedGaugeTimer >= 1.f)
-	{
-		m_fRedGaugeTimer = 0.f;
-		m_bStun = FALSE;
-		m_bRedAlpha = FALSE;
-	}
-
-	//if (m_bRedAlpha)
-	//{
-	//	m_fRedAlphaStartTimer += fTimeDelta;
-	//}
-	//
-	//if (!m_bCharaStun)
-	//{
-	//	m_fRedHpRadio = m_fHpRadio;
-	//	m_bRedAlpha = TRUE;
-	//	m_fRedAlphaStartTimer = 0.f;
-	//}
-
-	//몇 초 뒤에
-	//if ( m_fRedAlphaStartTimer >= 3.f)
-	//{
-	//	m_fRedGaugeTimer += fTimeDelta;
-	//	m_bRedAlpha = FALSE;
-	//}
-	//
-	//if (m_fRedGaugeTimer >= 1.f)
-	//	m_fRedGaugeTimer = 0.f;
+	m_bCharaStun ? m_bStun = TRUE : m_fRedHpRadio = m_fHpRadio;
 
 
-	
 
-	if (m_fMaskUVTimer >= 1.f)
-		m_fMaskUVTimer = 0.f;
 
 }
 
@@ -182,10 +129,11 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
+ 	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &m_bStun, sizeof(_bool))))
+	
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bStun), sizeof(_bool))))
 		return E_FAIL;
 
 	_vector vColor = { 0.043f , 0.952f , 0.945 , 1.f };
