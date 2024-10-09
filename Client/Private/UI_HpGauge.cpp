@@ -47,9 +47,10 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 	if (!m_bStun)
 	{
 		m_fRedGaugeTimer += fTimeDelta;
+		m_fRedHpRadio = m_fHpRadio;
 
-		if (m_fRedGaugeTimer >= 1.f)
-			m_fRedGaugeTimer = 0.f;
+		//if (m_fRedGaugeTimer >= 1.f)
+			//m_fRedGaugeTimer = 0.f;
 	}
 
 	//1.f은 스턴 시간

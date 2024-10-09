@@ -8,6 +8,8 @@ texture2D g_MaskTexture;
 bool g_bState;
 
 float g_Radio;
+float g_RedRadio;
+
 float g_MaskTimer;
 float g_DestroyTimer;
 
@@ -71,6 +73,9 @@ PS_OUT PS_HP(PS_IN In)
         
     float2 fPointA = float2(0.85f + (g_Radio - 1), 0.f);
     float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
+    
+    //float fRedRointA = float2(fPointA., 0.f);
+    //float2 fRedPointB = float2(1.f + (g_Radio - 1), 1.f);
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
@@ -91,12 +96,19 @@ PS_OUT PS_HP(PS_IN In)
         {
             Out.vColor.rgb = float3(1, 0, 0);     
             
+            //discard;
         }
         else
         {
-            Out.vColor.a -= g_DestroyTimer;
-
+            discard;
         }
+        
+        
+        //else
+        //{
+        //    Out.vColor.a -= g_DestroyTimer;
+        //
+        //}
          
         //Out.vColor.a *= (1 - g_DestroyTimer);
     }

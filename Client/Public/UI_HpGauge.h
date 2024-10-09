@@ -36,6 +36,8 @@ private:
 	_float m_iCharaCurrHp = { 0.f };
 	_float m_fHpRadio = { 0.f };
 
+	_float m_fRedHpRadio = { 0.f };
+
 //≈∏¿Ã∏”
 	_float m_fMaskUVTimer = { 0.f };
 	_float m_fRedGaugeTimer = { 0.f };
