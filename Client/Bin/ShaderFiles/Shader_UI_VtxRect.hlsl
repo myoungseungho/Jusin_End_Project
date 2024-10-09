@@ -81,7 +81,7 @@ PS_OUT PS_HP(PS_IN In)
     
     float2 vMaskOffSet = float2(g_MaskTimer, g_MaskTimer);
     float2 vMaskTexCoord = ( In.vTexcoord + vMaskOffSet);
-    
+     
     float4 vMaskTex = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
     
     Out.vColor = vBaseTex + (1 - (vMaskTex - 0.35f)) * vector(1.f, 0.831f, 0.f, 0.f);
