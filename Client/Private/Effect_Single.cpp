@@ -26,7 +26,11 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 	EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
 
-	if (FAILED(Ready_Components(&(pEffectDesc->ModelName), &(pEffectDesc->MaskTextureName),&(pEffectDesc->DiffuseTextureName))))
+	m_ModelName = pEffectDesc->ModelName;
+	m_MaskTextureName = pEffectDesc->MaskTextureName;
+	m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
+
+	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName,&m_DiffuseTextureName)))
 		return E_FAIL;
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));

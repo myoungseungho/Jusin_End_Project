@@ -50,6 +50,12 @@ protected:
 
 	vector<KEYFRAME>	m_EffectKeyFrames;
 
+
+public:
+	_wstring m_ModelName;
+	_wstring m_MaskTextureName;
+	_wstring m_DiffuseTextureName;
+
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

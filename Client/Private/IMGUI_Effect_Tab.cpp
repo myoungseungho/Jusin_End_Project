@@ -177,6 +177,11 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
             if (ImGui::Button("Delete Layer"))
             {
+                const wstring selectedLayerKey = LayerList[selectedLayerIndex];
+
+                m_pEffect_Manager->Delete_Layer(selectedLayerKey);
+
+                selectedLayerIndex = 0;
             }
         }
     }
