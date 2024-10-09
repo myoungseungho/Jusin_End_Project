@@ -27,6 +27,7 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Priority_Update(fTimeDelta);
 
+	int a = 0;
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Priority_Update(fTimeDelta);
