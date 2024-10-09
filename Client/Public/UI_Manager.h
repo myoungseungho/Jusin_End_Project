@@ -20,6 +20,7 @@ private:
 	virtual ~CUI_Manager() = default;
 
 public:
+	void UsingStunCheck(_bool bStun) { m_bStun = bStun; }
 	void UsingAttckBuff(_float fAttBufDuration);
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
 	void UsingComboCount(_uint iComboCnt);
@@ -30,6 +31,9 @@ public:
 public:
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
 	
+
+public:
+	_bool m_bStun = { FALSE };
 
 public:
 	//UsingAttckBuff

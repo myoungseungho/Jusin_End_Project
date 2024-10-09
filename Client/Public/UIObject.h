@@ -47,6 +47,8 @@ protected:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 protected:
+	_bool m_bCharaStun = { FALSE };
+
 	_float m_fSizeX = { 100.f };
 	_float m_fSizeY = { 100.f };
 	_float m_fPosX = { 0.f };

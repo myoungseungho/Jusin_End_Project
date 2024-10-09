@@ -58,7 +58,16 @@ void CMonster::Update(_float fTimeDelta)
 	{
 		m_iComboCount = 0;
 	}
+	
+	if (m_pGameInstance->Get_DIKeyState(DIK_V))
+	{
+		m_pUIManager->UsingStunCheck(TRUE);
+	}
 
+	if (m_pGameInstance->Get_DIKeyState(DIK_B))
+	{
+		m_pUIManager->UsingStunCheck(FALSE);
+	}
 }
 
 void CMonster::Late_Update(_float fTimeDelta)

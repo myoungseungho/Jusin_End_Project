@@ -40,6 +40,10 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 
 void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
+	__super::Priority_Update(fTimeDelta);
+
+
+
 	m_fHpRadio = m_iCharaCurrHp / 100.f;
 	
 	m_fMaskUVTimer += fTimeDelta * 0.25f;

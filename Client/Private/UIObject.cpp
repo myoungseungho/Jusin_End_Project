@@ -35,6 +35,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 
 void CUIObject::Priority_Update(_float fTimeDelta)
 {
+	m_bCharaStun = m_pUI_Manager->m_bStun;
 }
 
 void CUIObject::Update(_float fTimeDelta)
