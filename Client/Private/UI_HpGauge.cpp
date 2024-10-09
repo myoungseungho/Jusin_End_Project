@@ -46,11 +46,8 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 	if (!m_bStun)
 	{
-		m_fRedGaugeTimer += fTimeDelta;
+		//m_fRedGaugeTimer += fTimeDelta;
 		m_fRedHpRadio = m_fHpRadio;
-
-		//if (m_fRedGaugeTimer >= 1.f)
-			//m_fRedGaugeTimer = 0.f;
 	}
 
 	//1.f은 스턴 시간
@@ -71,7 +68,7 @@ void CUI_HpGauge::Update(_float fTimeDelta)
 	
 	if (m_pGameInstance->Get_DIKeyState(DIK_D))
 	{
-		m_iCharaCurrHp++;
+		//m_iCharaCurrHp++;
 		m_bStun = FALSE;
 
 	}
@@ -131,6 +128,10 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_Radio", &m_fHpRadio, sizeof(_float))))
 		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fRedRadio", &m_fRedHpRadio, sizeof(_float))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
 		return E_FAIL;

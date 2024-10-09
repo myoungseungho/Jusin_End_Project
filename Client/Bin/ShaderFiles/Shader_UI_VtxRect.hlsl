@@ -8,7 +8,7 @@ texture2D g_MaskTexture;
 bool g_bState;
 
 float g_Radio;
-float g_RedRadio;
+float g_fRedRadio;
 
 float g_MaskTimer;
 float g_DestroyTimer;
@@ -70,12 +70,12 @@ PS_OUT PS_MAIN(PS_IN In)
 PS_OUT PS_HP(PS_IN In)
 {
         PS_OUT Out;
-        
+    
     float2 fPointA = float2(0.85f + (g_Radio - 1), 0.f);
     float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
     
-    //float fRedRointA = float2(fPointA., 0.f);
-    //float2 fRedPointB = float2(1.f + (g_Radio - 1), 1.f);
+    float2 fRedRointA = float2(0.85f + (g_fRedRadio - 1), 0.f);
+    float2 fRedPointB = float2(1.f + (g_fRedRadio - 1), 1.f);
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
@@ -86,32 +86,28 @@ PS_OUT PS_HP(PS_IN In)
     
     Out.vColor = vBaseTex + (1 - (vMaskTex - 0.35f)) * vector(1.f, 0.831f, 0.f, 0.f);
     
-    //if (g_Timer)
-    
     float fLineY = (fPointB.y - fPointA.y) / (fPointB.x - fPointA.x) * (In.vTexcoord.x - fPointA.x) + fPointA.y - In.vTexcoord.y;
+    float fRedLineY = (fRedPointB.y - fRedRointA.y) / (fRedPointB.x - fRedRointA.x) * (In.vTexcoord.x - fRedRointA.x) + fRedRointA.y - In.vTexcoord.y;
      
-    if (fLineY > 0 )
+    if (fRedLineY < 0 && fLineY > 0)
     {
-        if (g_bState)
-        {
-            Out.vColor.rgb = float3(1, 0, 0);     
-            
-            //discard;
-        }
-        else
-        {
-            discard;
-        }
+        Out.vColor.rgb = float3(1, 0, 0);
+       
+            //if (g_bState)
+            //{
+            //
+            //
+            ////discard;
+            //}
+            //else
+            //{
+            //    discard;
+            //}
         
-        
-        //else
-        //{
-        //    Out.vColor.a -= g_DestroyTimer;
-        //
-        //}
-         
-        //Out.vColor.a *= (1 - g_DestroyTimer);
     }
+    else if (fRedLineY > 0)
+        discard;
+
     
     if (Out.vColor.a <= 0.1f)
         discard;
