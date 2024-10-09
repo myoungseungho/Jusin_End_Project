@@ -44,6 +44,7 @@ void CEffect_Single::Priority_Update(_float fTimeDelta)
 
 void CEffect_Single::Update(_float fTimeDelta)
 {
+
 }
 
 void CEffect_Single::Late_Update(_float fTimeDelta)
@@ -66,7 +67,10 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 			return E_FAIL;*/
 		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 		
-		m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0);
+
+		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
 
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;

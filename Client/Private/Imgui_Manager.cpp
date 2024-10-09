@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <string>
+
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -76,10 +78,29 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
-
-	for (auto& iter : m_vecShader_Tabs)
+	for (auto& tab : m_vecShader_Tabs)
 	{
-		iter->Render(fTimeDelta);
+		ImGui::Begin("Shader Tab"); // 메인 창 시작
+		if (ImGui::BeginTabBar("Shader_Node"))
+		{
+			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str()))
+			{
+				if (tab->m_TabPick == false)
+				{
+					tab->TabPos_Init();
+					tab->m_TabPick = true;
+				}
+
+				m_iCurShaderTabIndex = tab->m_iNumberId;
+				tab->Render(fTimeDelta);
+				ImGui::EndTabItem();
+			}
+			else
+				tab->m_TabPick = false;
+		
+			ImGui::EndTabBar(); // 탭 바 종료
+		}
+		ImGui::End(); // 메인 창 종료
 	}
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -90,6 +111,9 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 {
 	m_vecShader_Tabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture));
+	m_vecShader_Tabs.back()->m_iNumberId = m_iShaderCount;
+
+	m_iShaderCount++;
 }
 
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)

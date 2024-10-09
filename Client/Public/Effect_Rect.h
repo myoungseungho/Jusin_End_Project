@@ -27,9 +27,9 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Push_Texture_Diffuse(ID3D11ShaderResourceView* pSRV, _int iArray = 0);
-
 private:
 	_bool m_isTex = { false };
+
 private:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };

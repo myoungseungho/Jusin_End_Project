@@ -39,7 +39,7 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 	m_isTex = true;
 	CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
 
-	static_cast<CIMGUI_Shader_Tab*>(pImGui_Manager->Access_Shader_Tab())->Push_ShaderTexture(this);
+	pImGui_Manager->Access_Shader_Tab()->Push_ShaderTexture(this);
 	_float2 fSize = m_pTextureCom->Get_TextureSize();
 	_float fDiff;
 

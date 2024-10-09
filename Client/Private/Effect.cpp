@@ -28,14 +28,17 @@ HRESULT CEffect::Initialize(void* pArg)
 
 void CEffect::Priority_Update(_float fTimeDelta)
 {
+
 }
 
 void CEffect::Update(_float fTimeDelta)
 {
+
 }
 
 void CEffect::Late_Update(_float fTimeDelta)
 {
+
 }
 
 HRESULT CEffect::Render(_float fTimeDelta)

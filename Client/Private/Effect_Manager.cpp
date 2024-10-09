@@ -56,7 +56,6 @@ void CEffect_Manager::Render(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
 
-
 	for (auto& Pair : m_TestEffect)
 		Pair->Render(fTimeDelta);
 }
@@ -71,7 +70,7 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
-HRESULT CEffect_Manager::Add_Effect_To_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
+HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
@@ -99,7 +98,6 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_uint iCurTestEffectIndex, const ws
 
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
 	}
-
 
 	return S_OK;
 }
