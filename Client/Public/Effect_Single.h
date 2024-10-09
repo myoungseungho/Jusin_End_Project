@@ -22,8 +22,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
-	HRESULT Bind_ShaderResources();
+	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
+	virtual HRESULT Bind_ShaderResources() override;
 
 public:
 	static CEffect_Single* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

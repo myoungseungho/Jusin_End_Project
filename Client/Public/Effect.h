@@ -50,11 +50,14 @@ protected:
 
 	vector<KEYFRAME>	m_EffectKeyFrames;
 
-
 public:
 	_wstring m_ModelName;
 	_wstring m_MaskTextureName;
 	_wstring m_DiffuseTextureName;
+
+protected:
+	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
+	virtual HRESULT Bind_ShaderResources();
 
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -30,6 +30,9 @@ private:
 	_uint		m_iNumHeightMaskTexture = { 0 };
 	_float		m_fMaskTexcoordSpeed = { 0.f };
 
+private:
+	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
+	virtual HRESULT Bind_ShaderResources() override;
 
 public:
 	static CEffect_MoveTex* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
