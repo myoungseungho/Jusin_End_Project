@@ -127,7 +127,9 @@ PS_OUT PS_SKILL(PS_IN In)
     float4 vNextTexture = g_NextTexture.Sample(LinearSampler, In.vTexcoord);
     
     float2 vMaskOffSet = float2(g_MaskTimer, 0.f);
-    float2 vMaskTexCoord = (In.vTexcoord + vMaskOffSet) * 2.f;
+
+    float2 vMaskTexCoord = (In.vTexcoord + vMaskOffSet);
+    vMaskTexCoord.x *= 2.f;
 
     float4 vMaskTexture = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
     //vMaskTexture.a = 0.78f;
@@ -150,8 +152,6 @@ PS_OUT PS_SKILL(PS_IN In)
     if (Out.vColor.a <= 0.1f)
         discard;
     
-    
-
     return Out;
 }
 
