@@ -42,25 +42,21 @@ HRESULT CMonster::Initialize(void* pArg)
 void CMonster::Priority_Update(_float fTimeDelta)
 {
 
+	m_pUIManager->UsingComboCount(m_iComboCount);
 }
 
 void CMonster::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
 
-	//if(m_pGameInstance->Get_DIKeyState(DIK_N))
-	//{
-	//	m_pUIManager->UsingSkillPoint(1);
-	//}
-	//
-	//if (m_pGameInstance->Get_DIKeyState(DIK_M))
-	//{
-	//	m_pUIManager->UsingSkillPoint(-1);
-	//}
-
 	if (m_pGameInstance->Get_DIKeyState(DIK_M))
 	{
-		m_pUIManager->UsingAttckBuff(5.f);
+		m_iComboCount++;
+	}
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_N))
+	{
+		m_iComboCount = 0;
 	}
 
 }

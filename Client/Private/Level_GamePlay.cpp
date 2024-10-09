@@ -6,6 +6,7 @@
 #include "RenderInstance.h"
 //#include "LandObject.h"
 #include "Monster.h"
+#include "UI_ComboNumber.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext } 
@@ -122,6 +123,18 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	//Å¸ÀÌ¸Ó
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Timer"), TEXT("Layer_UI_Timer"))))
 		return E_FAIL;
+
+	//ÄÞº¸
+
+	CUI_ComboNumber::UI_COMBO_DESC ComboDesc = {};
+	for (int i = 0; i < 3; ++i)
+	{
+		ComboDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboNumber"), TEXT("Layer_UI_Combo_Number"),&ComboDesc);
+	}
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboFont"), TEXT("Layer_UI_Combo_Font"));
+
 
 	return S_OK;
 }

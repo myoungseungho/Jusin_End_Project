@@ -118,6 +118,15 @@
     <Filter Include="02.GameObjects\UI\AttBuf\AttBufNone">
       <UniqueIdentifier>{2de4858f-aa72-437a-8df8-60e8c62cbe55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Combo">
+      <UniqueIdentifier>{397c5dea-0624-4bfb-b277-46c53e816284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Combo\Number">
+      <UniqueIdentifier>{da8df0b2-4ba5-4217-81ae-2a280e0857ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Combo\Font">
+      <UniqueIdentifier>{791b1df1-c73e-4cd4-a15f-e9c06bef33d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -249,6 +258,15 @@
     <ClInclude Include="..\public\UI_AttBufNone.h">
       <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_ComboNumber.h">
+      <Filter>02.GameObjects\UI\Combo\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Combo.h">
+      <Filter>02.GameObjects\UI\Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ComboFont.h">
+      <Filter>02.GameObjects\UI\Combo\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -367,6 +385,15 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_AttBufNone.cpp">
       <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ComboNumber.cpp">
+      <Filter>02.GameObjects\UI\Combo\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Combo.cpp">
+      <Filter>02.GameObjects\UI\Combo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ComboFont.cpp">
+      <Filter>02.GameObjects\UI\Combo\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

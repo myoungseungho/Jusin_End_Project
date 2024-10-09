@@ -28,6 +28,9 @@
 #include "UI_SkillGaugeBar.h"
 #include "UI_SkillNumber.h"
 #include "UI_Timer.h"
+#include "UI_ComboNumber.h"
+#include "UI_ComboFont.h"
+//
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -143,6 +146,21 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_dg_ball_Eff00.png")))))
 		return E_FAIL;
 
+	//Combo
+	/* For.Prototype_Component_Texture_UI_ComboNumber */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Left/Number/cp_combo_count_red_%d.png"),10))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_ComboFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Left/cp_combo_hit_red.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_ComboEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Left/cp_combo_eff.png")))))
+		return E_FAIL;
 
 	//HP
 
@@ -304,7 +322,17 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_Timer::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	
+	//ÄÞº¸
+
+	/* For.Prototype_GameObject_UI_ComboNumber */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ComboNumber"),
+		CUI_ComboNumber::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_ComboFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ComboFont"),
+		CUI_ComboFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	return S_OK;
 }

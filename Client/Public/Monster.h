@@ -29,8 +29,7 @@ private:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
 
-	_float					m_fRandom = {};
-	_bool					m_bCheck = { false };
+	_uint					m_iComboCount = { 0 };
 
 	class CUI_Manager* m_pUIManager = { nullptr };
 

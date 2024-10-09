@@ -22,7 +22,8 @@ private:
 public:
 	void UsingAttckBuff(_float fAttBufDuration);
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
-	
+	void UsingComboCount(_uint iComboCnt);
+
 	void SKillCount();
 
 
@@ -37,6 +38,10 @@ public:
 	//Skill
 	_int m_iSkillPoint = { 0 };
 	_int m_iSkillCount = { 0 };
+
+	//Combo
+	_uint m_iComboCount = { 0 };
+
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
