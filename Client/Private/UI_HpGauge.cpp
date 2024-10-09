@@ -59,19 +59,19 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_A))
-	{
-		m_iCharaCurrHp--;
-		m_bStun = TRUE;
-		
-	}
-	
-	if (m_pGameInstance->Get_DIKeyState(DIK_D))
-	{
-		//m_iCharaCurrHp++;
-		m_bStun = FALSE;
-
-	}
+	//if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	//{
+	//	m_iCharaCurrHp--;
+	//	m_bStun = TRUE;
+	//	
+	//}
+	//
+	//if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	//{
+	//	//m_iCharaCurrHp++;
+	//	m_bStun = FALSE;
+	//
+	//}
 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
 }

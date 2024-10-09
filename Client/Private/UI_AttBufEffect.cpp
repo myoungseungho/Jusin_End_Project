@@ -29,7 +29,7 @@ HRESULT CUI_AttBufEffect::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(65.f, 65.f, 500.f, 120.f, 0.1f);
+	__super::Set_UI_Setting(65.f, 65.f, 437.f, 146.f, 0.1f);
 
 	return S_OK;
 }

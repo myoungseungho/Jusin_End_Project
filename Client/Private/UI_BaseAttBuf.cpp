@@ -33,6 +33,7 @@ HRESULT CUI_BaseAttBuf::Initialize(void* pArg)
 
 void CUI_BaseAttBuf::Priority_Update(_float fTimeDelta)
 {
+	
 }
 
 void CUI_BaseAttBuf::Update(_float fTimeDelta)
@@ -43,7 +44,7 @@ void CUI_BaseAttBuf::Update(_float fTimeDelta)
 
 		if (m_fAttBufTimer >= m_fAttBufDuration)
 		{
-			//m_pGameInstance->Add_GameObject_ToLayer()
+			m_bDead = true;
 		}
 	}
 

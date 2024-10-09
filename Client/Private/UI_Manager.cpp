@@ -18,6 +18,7 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration)
 {
 	m_fDuration = fAttBufDuration;
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"));
 }
 
 void CUI_Manager::SKillCount()

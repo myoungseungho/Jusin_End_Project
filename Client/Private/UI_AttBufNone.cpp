@@ -1,19 +1,19 @@
 #include "stdafx.h"
 
-#include "UI_AttBufMark.h"
+#include "UI_AttBufNone.h"
 #include "RenderInstance.h"
 
-CUI_AttBufMark::CUI_AttBufMark(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_AttBufNone::CUI_AttBufNone(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUI_BaseAttBuf{ pDevice ,pContext }
 {
 }
 
-CUI_AttBufMark::CUI_AttBufMark(const CUI_AttBufMark& Prototype)
+CUI_AttBufNone::CUI_AttBufNone(const CUI_AttBufNone& Prototype)
 	:CUI_BaseAttBuf{ Prototype }
 {
 }
 
-HRESULT CUI_AttBufMark::Initialize_Prototype()
+HRESULT CUI_AttBufNone::Initialize_Prototype()
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
@@ -21,7 +21,7 @@ HRESULT CUI_AttBufMark::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CUI_AttBufMark::Initialize(void* pArg)
+HRESULT CUI_AttBufNone::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -29,30 +29,30 @@ HRESULT CUI_AttBufMark::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(40.f, 40.f, 437.f, 146.f,0.f);
+	__super::Set_UI_Setting(40.f, 40.f, 437.f, 146.f, 1.f);
 
 	return S_OK;
 }
 
-void CUI_AttBufMark::Priority_Update(_float fTimeDelta)
+void CUI_AttBufNone::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 }
 
-void CUI_AttBufMark::Update(_float fTimeDelta)
+void CUI_AttBufNone::Update(_float fTimeDelta)
 {
-	__super::Update(fTimeDelta);
+	//__super::Update(fTimeDelta);
 
 }
 
-void CUI_AttBufMark::Late_Update(_float fTimeDelta)
+void CUI_AttBufNone::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_AttBufMark::Render(_float fTimeDelta)
+HRESULT CUI_AttBufNone::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
@@ -72,44 +72,44 @@ HRESULT CUI_AttBufMark::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CUI_AttBufMark::Ready_Components()
+HRESULT CUI_AttBufNone::Ready_Components()
 {
 	if (FAILED(__super::Ready_Components()))
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufMark"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufNone"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 }
 
-CUI_AttBufMark* CUI_AttBufMark::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_AttBufNone* CUI_AttBufNone::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CUI_AttBufMark* pInstatnce = new CUI_AttBufMark(pDevice, pContext);
+	CUI_AttBufNone* pInstatnce = new CUI_AttBufNone(pDevice, pContext);
 
 	if (FAILED(pInstatnce->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CUI_AttBufMark"));
+		MSG_BOX(TEXT("Failed to Created : CUI_AttBufNone"));
 		Safe_Release(pInstatnce);
 	}
 
 	return pInstatnce;
 }
 
-CGameObject* CUI_AttBufMark::Clone(void* pArg)
+CGameObject* CUI_AttBufNone::Clone(void* pArg)
 {
-	CUI_AttBufMark* pInstatnce = new CUI_AttBufMark(*this);
+	CUI_AttBufNone* pInstatnce = new CUI_AttBufNone(*this);
 
 	if (FAILED(pInstatnce->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloend : CUI_AttBufMark"));
+		MSG_BOX(TEXT("Failed to Cloend : CUI_AttBufNone"));
 		Safe_Release(pInstatnce);
 	}
 
 	return pInstatnce;
 }
 
-void CUI_AttBufMark::Free()
+void CUI_AttBufNone::Free()
 {
 	__super::Free();
 }

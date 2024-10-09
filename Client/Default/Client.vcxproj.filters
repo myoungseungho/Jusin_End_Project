@@ -112,6 +112,12 @@
     <Filter Include="02.GameObjects\UI\Skill\SkillGaugeBar">
       <UniqueIdentifier>{e3d6c943-52a0-45d4-9a67-736c026e5dc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufThunderEffect">
+      <UniqueIdentifier>{55e9df8b-78fe-488f-83b6-e89a736b0904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufNone">
+      <UniqueIdentifier>{2de4858f-aa72-437a-8df8-60e8c62cbe55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -237,6 +243,12 @@
     <ClInclude Include="..\public\UI_SkillGaugeBar.h">
       <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufThunderEffect.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufThunderEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufNone.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -349,6 +361,12 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_SkillGaugeBar.cpp">
       <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufThunderEffect.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufThunderEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufNone.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

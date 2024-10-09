@@ -181,6 +181,8 @@
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
     <ClInclude Include="..\Public\UI_AttBufMark.h" />
+    <ClInclude Include="..\public\UI_AttBufNone.h" />
+    <ClInclude Include="..\public\UI_AttBufThunderEffect.h" />
     <ClInclude Include="..\Public\UI_BaseAttBuf.h" />
     <ClInclude Include="..\Public\UI_Chara_Icon.h" />
     <ClInclude Include="..\public\UI_Chara_Icon_Panel.h" />
@@ -222,6 +224,8 @@
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />
     <ClCompile Include="..\Private\UI_AttBufMark.cpp" />
+    <ClCompile Include="..\private\UI_AttBufNone.cpp" />
+    <ClCompile Include="..\private\UI_AttBufThunderEffect.cpp" />
     <ClCompile Include="..\Private\UI_BaseAttBuf.cpp" />
     <ClCompile Include="..\Private\UI_Chara_Icon.cpp" />
     <ClCompile Include="..\private\UI_Chara_Icon_Panel.cpp" />
