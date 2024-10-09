@@ -97,7 +97,9 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         {
             m_iMain_Input_Diffuse_id = start_attr / 3;
             links.push_back(make_pair(start_attr, end_attr));
-            m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
+
+            m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1]);
+            //m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
         }
         else
         {

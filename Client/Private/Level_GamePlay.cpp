@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 #include "Effect_Manager.h"
+#include "Imgui_Manager.h"
 //#include "LandObject.h"
 #include "Monster.h"
 
@@ -31,19 +32,24 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Effect_Rect"))))
 	//	return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
 	m_pEffect_Manager->Update(fTimeDelta);
+	m_pEffect_Manager->Late_Update(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
 
-	m_pEffect_Manager->Render(fTimeDelta);
+	//m_pEffect_Manager->Render(fTimeDelta);
+	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
 
 	return S_OK;
 }

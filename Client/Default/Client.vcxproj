@@ -209,7 +209,7 @@
     <ClCompile Include="..\Private\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Private\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Private\Imgui_Manager.cpp" />
-    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />

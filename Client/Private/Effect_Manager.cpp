@@ -27,8 +27,6 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Priority_Update(fTimeDelta);
 
-	int a = 0;
-
 	for (auto& Pair : m_TestEffect)
 		Pair->Priority_Update(fTimeDelta);
 }
@@ -63,16 +61,6 @@ void CEffect_Manager::Render(_float fTimeDelta)
 		Pair->Render(fTimeDelta);
 }
 
-CEffect* CEffect_Manager::Find_EachEffect(const wstring& strEachEffectTag)
-{
-	auto	iter = m_EachEffects.find(strEachEffectTag);
-
-	if (iter == m_EachEffects.end())
-		return nullptr;
-
-	return iter->second;
-}
-
 CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerTag)
 {
 	auto	iter = m_FinalEffects.find(strEffectLayerTag);
@@ -83,34 +71,20 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
-HRESULT CEffect_Manager::Add_EachEffect(const wstring& strEachEffectTag, CEffect* pEachEffect)
+HRESULT CEffect_Manager::Add_Effect_To_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
 {
-	if (nullptr != Find_EachEffect(strEachEffectTag))
-		return E_FAIL;
-
-	m_EachEffects.emplace(strEachEffectTag, pEachEffect);
-
-	return S_OK;
-}
-
-HRESULT CEffect_Manager::Add_Effect_To_Layer(const wstring& strEachEffectTag, const wstring& strEffectLayerTag, void* pArg)
-{
-	CEffect* pEachEffect = Find_EachEffect(strEachEffectTag);
-	if (nullptr == pEachEffect)
-		return E_FAIL;
-
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
 	if (nullptr == pLayer)
 	{
 		CEffect_Layer* pLayer = CEffect_Layer::Create();
 
-		pLayer->Add_Effect(pEachEffect);
+		pLayer->Add_Effect(m_TestEffect[iCurTestEffectIndex]);
 
 		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
 	}
 	else
-		pLayer->Add_Effect(pEachEffect);
+		pLayer->Add_Effect(m_TestEffect[iCurTestEffectIndex]);
 
 	return S_OK;
 }
@@ -135,7 +109,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_Texture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
@@ -146,7 +120,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_Texture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
@@ -157,7 +131,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_Texture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
@@ -233,11 +207,6 @@ void CEffect_Manager::Free()
 	__super::Free();
 
 	Safe_Release(m_pGameInstance);
-
-	for (auto& Pair : m_EachEffects)
-		Safe_Release(Pair.second);
-
-	m_EachEffects.clear();
 
 	for (auto& Pair : m_FinalEffects)
 		Safe_Release(Pair.second);

@@ -31,7 +31,7 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 	
-	class CIMGUI_Tab* Access_Shader_Tab() { return m_vecTabs[0]; }
+	class CIMGUI_Shader_Tab* Access_Shader_Tab() { return m_vecShader_Tabs[0]; }
 	void Push_Shader_Tab(CTexture* pTexture);
 
 private:

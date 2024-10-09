@@ -234,7 +234,7 @@ HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTran
 		return E_FAIL;
 	}
 
-	XMStoreFloat4x4(&m_PreTransformMatrix, PreTransformMatrix);
+ 	XMStoreFloat4x4(&m_PreTransformMatrix, PreTransformMatrix);
 
 	// 헤더 읽기
 	ModelHeader header;

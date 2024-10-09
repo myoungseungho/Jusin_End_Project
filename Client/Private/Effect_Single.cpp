@@ -44,32 +44,32 @@ void CEffect_Single::Update(_float fTimeDelta)
 
 void CEffect_Single::Late_Update(_float fTimeDelta)
 {
-	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 }
 
 HRESULT CEffect_Single::Render(_float fTimeDelta)
 {
-	//if (FAILED(Bind_ShaderResources()))
-	//	return E_FAIL;
+	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
 
-	//_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 
-	//for (size_t i = 0; i < iNumMeshes; i++)
-	//{
-	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	//	if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-	//		return E_FAIL;
-	//	// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+	for (size_t i = 0; i < iNumMeshes; i++)
+	{
+		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
+		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
+	/*	if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+			return E_FAIL;*/
+		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+		
+		m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0);
 
+		if (FAILED(m_pShaderCom->Begin(0)))
+			return E_FAIL;
 
-
-	//	if (FAILED(m_pShaderCom->Begin(0)))
-	//		return E_FAIL;
-
-	//	if (FAILED(m_pModelCom->Render(i)))
-	//		return E_FAIL;
-	//}
+		if (FAILED(m_pModelCom->Render(i)))
+			return E_FAIL;
+	}
 
 	return S_OK;
 }

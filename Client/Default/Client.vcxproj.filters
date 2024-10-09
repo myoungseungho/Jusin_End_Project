@@ -240,9 +240,6 @@
     <ClCompile Include="..\private\IMGUI_Tab.cpp">
       <Filter>97.IMGUI\Tap</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp">
-      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
     </ClCompile>
@@ -284,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Effect_Single.cpp">
       <Filter>02.GameObjects\02. Effect\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
