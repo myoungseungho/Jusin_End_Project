@@ -30,7 +30,11 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
+	_float m_fMaskUVTimer = { 0.f };
+
 	CTexture* m_pSkillTexture[2] = {nullptr,  nullptr };
+	CTexture* m_pSkillFlowEffect = { nullptr };
+
 
 public:
 	static CUI_SkillGaugeBar* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

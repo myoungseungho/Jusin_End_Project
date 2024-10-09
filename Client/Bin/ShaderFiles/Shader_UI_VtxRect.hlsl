@@ -92,18 +92,7 @@ PS_OUT PS_HP(PS_IN In)
     if (fRedLineY < 0 && fLineY > 0)
     {
         Out.vColor.rgb = float3(1, 0, 0);
-       
-            //if (g_bState)
-            //{
-            //
-            //
-            ////discard;
-            //}
-            //else
-            //{
-            //    discard;
-            //}
-        
+
     }
     else if (fRedLineY > 0)
         discard;
@@ -137,11 +126,23 @@ PS_OUT PS_SKILL(PS_IN In)
     float4 vCurrTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
     float4 vNextTexture = g_NextTexture.Sample(LinearSampler, In.vTexcoord);
     
+    float2 vMaskOffSet = float2(g_MaskTimer, 0.f);
+    float2 vMaskTexCoord = (In.vTexcoord + vMaskOffSet) * 2.f;
+
+    float4 vMaskTexture = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
+    //vMaskTexture.a = 0.78f;
+    
     Out.vColor = vCurrTexture;
-    //vCurrTexture
+    
     if (g_Radio <= In.vTexcoord.x)
     {
         Out.vColor = vNextTexture;
+        //Out.vColor = vNextTexture + (1 - vMaskTexture - 0.35f);
+    }
+    
+    if (g_Radio <= 0.5f && In.vTexcoord.x >= 0.5f)
+    {
+        Out.vColor += (1 -vMaskTexture - 0.15f);
 
     }
     

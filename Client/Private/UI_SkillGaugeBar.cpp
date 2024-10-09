@@ -37,6 +37,11 @@ HRESULT CUI_SkillGaugeBar::Initialize(void* pArg)
 void CUI_SkillGaugeBar::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_fMaskUVTimer += fTimeDelta *0.5f;
+
+	if (m_fMaskUVTimer >= 1.f)
+		m_fMaskUVTimer = 0.f;
 }
 
 void CUI_SkillGaugeBar::Update(_float fTimeDelta)
@@ -78,11 +83,15 @@ HRESULT CUI_SkillGaugeBar::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[0]))))
 		return E_FAIL;
 
-	/* For.Com_Texture */
+	/* For.Com_NextTexture */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
 		TEXT("Com_NextTexture"), reinterpret_cast<CComponent**>(&m_pSkillTexture[1]))))
 		return E_FAIL;
 
+	/* For.Com_FlowMaskTexture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillFlowEffect"),
+		TEXT("Com_FlowMaskTexture"), reinterpret_cast<CComponent**>(&m_pSkillFlowEffect))))
+		return E_FAIL;
 }
 
 HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()
@@ -99,7 +108,13 @@ HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()
 			return E_FAIL;
 	}
 
+	if (FAILED(m_pSkillFlowEffect->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
+		return E_FAIL;
+
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_Radio", &m_fSkillRadio, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
 		return E_FAIL;
 
 	return S_OK;
@@ -137,6 +152,8 @@ void CUI_SkillGaugeBar::Free()
 	{
 		Safe_Release(m_pSkillTexture[i]);
 	}
+
+	Safe_Release(m_pSkillFlowEffect);
 
 	__super::Free();
 }
