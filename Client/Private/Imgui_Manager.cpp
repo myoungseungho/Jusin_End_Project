@@ -139,6 +139,9 @@ void CImgui_Manager::Free()
 	for (auto& iter : m_vecTabs)
 		Safe_Release(iter);
 
+	for (auto& iter : m_vecShader_Tabs)
+		Safe_Release(iter);
+
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();

@@ -89,6 +89,19 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_uint iCurTestEffectIndex, const ws
 	return S_OK;
 }
 
+vector<wstring> CEffect_Manager::Get_Layer_List()
+{
+	vector<wstring> LayerList;
+
+	// m_FinalEffects의 키 값만 벡터에 추가
+	for (const auto& pair : m_FinalEffects)
+	{
+		LayerList.push_back(pair.first);
+	}
+
+	return LayerList;
+}
+
 HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName)
 {
 	CEffect::EFFECT_DESC EffectDesc{};
@@ -136,6 +149,23 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		m_TestEffect.push_back(pTestEffect);
 		break;
 	}
+
+	return S_OK;
+}
+
+HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectIndex)
+{
+	if (iCurTestEffectIndex >= m_TestEffect.size()) 
+		return E_FAIL;
+	
+
+	if (m_TestEffect[iCurTestEffectIndex]) 
+	{
+		Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+		m_TestEffect[iCurTestEffectIndex] = nullptr;
+	}
+
+	m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
 
 	return S_OK;
 }

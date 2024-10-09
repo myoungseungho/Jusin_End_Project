@@ -27,8 +27,9 @@ public:
 public:
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
 	HRESULT Add_Effect_To_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
-
+	vector<wstring> Get_Layer_List();
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName);
+	HRESULT Delete_Test_Effect(_uint iCurTestEffectIndex);
 private:
 	HRESULT Ready_Components();
 

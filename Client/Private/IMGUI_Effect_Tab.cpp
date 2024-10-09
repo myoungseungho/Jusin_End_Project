@@ -115,7 +115,7 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         }
 
         // Add Effect 버튼을 추가하여 Add_Test_Effect 호출
-        if (ImGui::Button("Add Effect"))
+        if (ImGui::Button("Add Test Effect"))
         {
             // 선택된 Model Name을 wstring으로 변환
             std::wstring wModelName = UTF8ToWString(ModelName[CurrentModel]);
@@ -123,16 +123,60 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
             // CurrentEffectType을 EFFECT_TYPE으로 변환하여 전달
             EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
             // Add_Test_Effect 호출
-            HRESULT hr = m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
+            m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
+        }
 
-            if (FAILED(hr))
+        if (ImGui::Button("Delete Test Effect"))
+        {
+            // 테스트 이펙트 벡터에서 선택한 객체의 인덱스 찾아 전달
+            m_pEffect_Manager->Delete_Test_Effect(0);
+
+        }
+
+        ImGui::InputText("Effect Layer", &EffectLayerKey[0], 128);
+
+        if (ImGui::Button("Save To Layer"))
+        {
+            wstring strEffectLayerTag = UTF8ToWString(EffectLayerKey);
+
+            m_pEffect_Manager->Add_Effect_To_Layer(0, strEffectLayerTag);
+
+            EffectLayerKey.clear();
+        }
+
+        auto LayerList = m_pEffect_Manager->Get_Layer_List();
+
+        if (!LayerList.empty())
+        {
+            vector<string> layerListUTF8;
+            for (const auto& layer : LayerList)
             {
-                ImGui::Text("Failed to add effect");
+                layerListUTF8.push_back(WStringToUTF8(layer)); // wstring을 UTF-8로 변환하는 함수가 필요
             }
-            else
+
+            // 현재 선택된 레이어 인덱스를 유지할 변수
+            static int selectedLayerIndex = 0;
+            const char* currentLayer = layerListUTF8[selectedLayerIndex].c_str();
+
+            if (ImGui::BeginCombo("Select Layer", currentLayer))
             {
-                ImGui::Text("Effect added successfully");
-                
+                for (int i = 0; i < layerListUTF8.size(); i++)
+                {
+                    bool isSelected = (selectedLayerIndex == i);
+                    if (ImGui::Selectable(layerListUTF8[i].c_str(), isSelected))
+                    {
+                        selectedLayerIndex = i;
+                    }
+                    if (isSelected)
+                    {
+                        ImGui::SetItemDefaultFocus();
+                    }
+                }
+                ImGui::EndCombo();
+            }
+
+            if (ImGui::Button("Delete Layer"))
+            {
             }
         }
     }
@@ -153,6 +197,11 @@ void CIMGUI_Effect_Tab::Push_Initialize()
 
         m_isInitialize = true;
     }
+}
+
+void CIMGUI_Effect_Tab::Save_To_Effect_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
+{
+    m_pEffect_Manager->Add_Effect_To_Layer(iCurTestEffectIndex, strEffectLayerTag);
 }
 
 
