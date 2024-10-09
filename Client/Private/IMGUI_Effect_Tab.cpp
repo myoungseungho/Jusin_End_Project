@@ -26,6 +26,8 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 {
     Push_Initialize();
 
+    _uint i = m_pEffect_Manager->m_TestEffect.size();
+
     const char* Effect[] = { "Each", "Final" };
     static int CurrentEffect = 0;
 
@@ -129,7 +131,9 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         if (ImGui::Button("Delete Test Effect"))
         {
             // 테스트 이펙트 벡터에서 선택한 객체의 인덱스 찾아 전달
-            m_pEffect_Manager->Delete_Test_Effect(0);
+            _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
+
+            m_pEffect_Manager->Delete_Test_Effect(EffectIndex);
 
         }
 
@@ -139,7 +143,9 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         {
             wstring strEffectLayerTag = UTF8ToWString(EffectLayerKey);
 
-            m_pEffect_Manager->Add_Effect_To_Layer(0, strEffectLayerTag);
+            _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
+
+            m_pEffect_Manager->Add_Effect_To_Layer(EffectIndex, strEffectLayerTag);
 
             EffectLayerKey.clear();
         }
