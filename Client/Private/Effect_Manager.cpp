@@ -145,6 +145,8 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_Texture"))));
+
 		m_TestEffect.push_back(pTestEffect);
 		break;
 	case EFFECT_MULTI:
@@ -153,7 +155,9 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 
 		if (pTestEffect == nullptr)
 			return E_FAIL;
-		
+
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_Texture"))));
+
 		m_TestEffect.push_back(pTestEffect);
 		break;
 	}

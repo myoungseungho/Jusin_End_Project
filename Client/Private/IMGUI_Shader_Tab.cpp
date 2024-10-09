@@ -21,19 +21,21 @@ CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 
 HRESULT CIMGUI_Shader_Tab::Initialize()
 {
+    DragAcceptFiles(g_hWnd, TRUE);
+    isStart = true;
 	return S_OK;
 }
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
-    if (ImGui::Button("Add Rect") && !isStart)
-    {
-        if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Effect_Rect"))))
-            return;
+    //if (ImGui::Button("Add Rect") && !isStart)
+    //{
+    //    if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect_Rect"), TEXT("Layer_Effect_Rect"))))
+    //        return;
 
-        isStart = true;
-        DragAcceptFiles(g_hWnd, TRUE);
-    }
+    //    isStart = true;
+    //    DragAcceptFiles(g_hWnd, TRUE);
+    //}
 
     ImGui::Separator();
 

@@ -24,28 +24,18 @@ HRESULT CIMGUI_Effect_Tab::Initialize()
 
 void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 {
+    Push_Initialize();
+
     const char* Effect[] = { "Each", "Final" };
     static int CurrentEffect = 0;
 
     const char* EffectType[] = { "Single", "MoveTex", "Multi" };
     static int CurrentEffectType = 0;
 
-    std::vector<std::string> ModelName;
     static int CurrentModel = 0;
 
-    ModelName.clear();
-    for (const auto& pair : m_pEffect_Manager->m_EffectModel) {
-        ModelName.push_back(WStringToUTF8(pair.first));
-    }
-
-    std::vector<std::string> TextureName;
     static int CurrentMaskTexture = 0;
     static int CurrentDiffuseTexture = 0;
-
-    TextureName.clear();
-    for (const auto& pair : m_pEffect_Manager->m_EffectTexture) {
-        TextureName.push_back(WStringToUTF8(pair.first));
-    }
 
     if (ImGui::BeginCombo("Add What", Effect[CurrentEffect]))
     {
@@ -147,6 +137,22 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         }
     }
 
+}
+
+void CIMGUI_Effect_Tab::Push_Initialize()
+{
+    if (m_isInitialize == false)
+    {
+        for (const auto& pair : m_pEffect_Manager->m_EffectModel) {
+            ModelName.push_back(WStringToUTF8(pair.first));
+        }
+
+        for (const auto& pair : m_pEffect_Manager->m_EffectTexture) {
+            TextureName.push_back(WStringToUTF8(pair.first));
+        }
+
+        m_isInitialize = true;
+    }
 }
 
 

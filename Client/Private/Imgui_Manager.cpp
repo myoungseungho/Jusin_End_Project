@@ -119,8 +119,10 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 		ImGui::Begin("Main Tab", &bShowImGuiWindows); // 메인 창 시작
 		if (ImGui::BeginTabBar("DragonBall_Tool")) { // 탭 바 시작
 
-			for (auto& tab : m_vecTabs) {
-				if (ImGui::BeginTabItem(tab->GetTabName())) {
+			for (auto& tab : m_vecTabs) 
+			{
+				if (ImGui::BeginTabItem(tab->GetTabName())) 
+				{
 					tab->Render(fTimeDelta);
 					ImGui::EndTabItem();
 				}
