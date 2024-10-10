@@ -33,7 +33,6 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	__super::Set_UI_Setting( 464.f, 116.f, 330.f, 87.f, 0.75f);
 
 	m_iCharaCurrHp = 100;
-	m_bStun = FALSE;
 
 	return S_OK;
 }
@@ -46,10 +45,43 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	m_bCharaStun ? m_bStun = TRUE : m_fRedHpRadio = m_fHpRadio;
+	//플레이어가 스턴 상태가 아닐 때 현재의 체력 게이지를 저장
+	if (!m_bCharaStun)
+	{
+		//스턴이 회복되면 바로 
+		m_fRedHpRadio = m_fHpRadio;
+		m_fRedGaugeTimer = 0.f;
+	}
+	else
+	{
+		m_bHit = TRUE;
+		m_bRedAlpha = TRUE;
+	}
+	if (!m_bCharaStun && !m_bHit)
+		m_bRedAlpha = FALSE;
+
+	if (m_bRedAlpha)
+		m_fRedAlphaStartTimer += fTimeDelta;
+	//3초가 지났을 때
+
+	//
+	if (m_fRedAlphaStartTimer >= 2.f)
+	{
+		m_fRedGaugeTimer += fTimeDelta;
+		//m_bHit = FALSE;
+		//m_fRedAlphaStartTimer = 0.f;
+	}
+
+	if (m_fRedGaugeTimer >= 1.f)
+	{
+		m_bHit = FALSE;
+		m_fRedAlphaStartTimer = 0.f;
+	}
+
+	
 
 
-
+	//m_bCharaStun ? m_bStun = TRUE : m_fRedHpRadio = m_fHpRadio;
 
 }
 
@@ -133,7 +165,7 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 		return E_FAIL;
 
 	
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bStun), sizeof(_bool))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bRedAlpha), sizeof(_bool))))
 		return E_FAIL;
 
 	_vector vColor = { 0.043f , 0.952f , 0.945 , 1.f };

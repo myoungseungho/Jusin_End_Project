@@ -15,6 +15,8 @@ float g_DestroyTimer;
 
 vector g_vColor;
 
+vector g_vCamPosition;
+
 
 struct VS_IN
 {
@@ -40,6 +42,7 @@ VS_OUT VS_MAIN(VS_IN In)
     Out.vPosition = vPosition;
     Out.vTexcoord = In.vTexcoord;
 
+    
     return Out;
 }
 
@@ -121,8 +124,43 @@ PS_OUT PS_COLOR(PS_IN In)
     return Out;
 }
 
+//float CalculateDepthDiff
+//    (
+//    float2 vTexcoord, float fViewZ)
+//{
+//    float2 fOffsetRight = float2(1.0f / 1280.f, 0.0f);
+//    float2 fOffsetDown = float2(0.0f, 1.0f / 720.f);
+//    float2 fOffsetLeft = float2(-1.0f / 1280.f, 0.0f);
+//    float2 fOffsetUp = float2(0.0f, -1.0f / 720.f);
+//
+//    float fDepthRight = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).x * 1000.f;
+//    float fDepthDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).x * 1000.f;
+//    float fDepthLeft = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).x * 1000.f;
+//    float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
+//
+//    float fDepthDiff = abs(fViewZ - fDepthRight) + abs(fViewZ - fDepthDown)
+//                       + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp);
+//
+//    return fDepthDiff;
+//}
+// 외곽선 검출 함수
+//float CalculateEdge
+//    (
+//    float2 vTexcoord, float fViewZ, float4 vNormal, float fEdgeThreshold, float fEdgeNormalThreshold, float fEdgeDepthThreshold)
+//{
+//
+//    float fDepthDiff = CalculateDepthDiff(vTexcoord, fViewZ);
+//   
+//    float fEdge = step(fEdgeDepthThreshold, fDepthDiff) ;
+//
+//    return fEdge;
+//}
+
+
 PS_OUT PS_SKILL(PS_IN In)
 {
+    
+    //------------------------------------------------------------------------------------
     PS_OUT Out;
     
     float4 vCurrTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
@@ -155,7 +193,26 @@ PS_OUT PS_SKILL(PS_IN In)
     if (Out.vColor.a <= 0.1f)
         discard;
     
-    return Out;
+    //if (In.vTexcoord.y == 0 || In.vTexcoord.y == 1)
+    //{
+    //    Out.vColor = float4(0.f, 0.f, 0.f, 1.0f);
+    //
+    //}
+    //else if (In.vTexcoord.x == 0 || In.vTexcoord.x == 1)
+    //{
+    //    Out.vColor = float4(0.f, 0.f, 0.f, 1.0f);
+    //}
+    
+    
+    //float fEdgeNormalThreshold = 0.2f;
+    //float fEdgeDepthThreshold = 0.5f;
+   
+    //float fEdge = CalculateEdge(In.vTexcoord,1 , 1, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
+
+    //vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
+    //Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
+
+        return Out;
 }
 
 technique11 DefaultTechnique

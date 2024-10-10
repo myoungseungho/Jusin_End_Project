@@ -33,6 +33,8 @@ private:
 	_float					m_fStunTImer = { 0.f };
 	_bool					m_bStun = { FALSE };
 
+	_uint					m_iTmpe = { 0 };
+
 	class CUI_Manager* m_pUIManager = { nullptr };
 
 private:

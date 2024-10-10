@@ -74,7 +74,13 @@ void CMonster::Update(_float fTimeDelta)
 	{
 		m_bStun = TRUE;
 	}
-	
+
+
+	if (m_pGameInstance->Get_DIKeyState(DIK_Y))
+	{
+		m_pUIManager->UsingSkillPoint(3);
+	}
+
 }
 
 void CMonster::Late_Update(_float fTimeDelta)

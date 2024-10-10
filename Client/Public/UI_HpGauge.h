@@ -44,9 +44,9 @@ private:
 	_float m_fRedAlphaStartTimer = { 0.f };
 	_float m_fTImer = { 0.f };
 
-	_bool m_bStun = { FALSE };
+	_bool m_bHit = { FALSE };
 	_bool m_bRedAlpha = { FALSE };
-	_float alphaValue = { 0.f };
+	_bool  m_bTemp= { 0.f };
 
 	CTexture* m_pMaskTexture = { nullptr };
 

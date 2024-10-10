@@ -55,7 +55,11 @@ void CUI_HpPanel::Late_Update(_float fTimeDelta)
 HRESULT CUI_HpPanel::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
+		return E_FAIL;
+
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCamPosition", &m_pGameInstance->Get_CamPosition_Float4(), sizeof(_float4))))
+		return E_FAIL;
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
