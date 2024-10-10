@@ -23,7 +23,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Effect_Manager()))
-			return E_FAIL;
+		return E_FAIL;
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
