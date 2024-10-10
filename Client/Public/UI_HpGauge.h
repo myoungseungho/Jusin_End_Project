@@ -46,7 +46,10 @@ private:
 
 	_bool m_bHit = { FALSE };
 	_bool m_bRedAlpha = { FALSE };
-	_bool  m_bTemp= { 0.f };
+	_bool  m_bRecovery = { 0.f };
+
+	_bool m_bInitHit = { false };
+
 
 	CTexture* m_pMaskTexture = { nullptr };
 

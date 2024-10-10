@@ -56,7 +56,7 @@ void CMonster::Priority_Update(_float fTimeDelta)
 	if (m_pGameInstance->Get_DIKeyState(DIK_B))
 	{
 		m_iHp--;
-		m_fStunTImer = 2.f;
+		m_fStunTImer = 1.f;
 		m_bStun = TRUE;
 	}
 
