@@ -73,7 +73,10 @@ void CImgui_Manager::Update(_float fTimeDelta)
 			for (auto& tab : m_vecShader_Tabs)
 			{
 				if (iCount == iMeshIndex)
+				{
 					tab->m_TabPick = true;
+					tab->TabPos_Init();
+				}
 				else
 					tab->m_TabPick = false;
 
@@ -188,7 +191,7 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 		ImGui::Begin("Shader Tab");
 		if (ImGui::BeginTabBar("Shader_Node"))
 		{
-			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str()))
+			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick))
 			{
 				if (tab->m_TabPick == false)
 				{

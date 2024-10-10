@@ -120,6 +120,7 @@ _int CPicking::Picked_Effect_Index()
 	
 	return (_int)pPickDepth[iIndex].z;
 }
+
 //
 //_float4 CPicking::Picked_Position(const _float4 & _vWorldPos, _bool * pPicked)
 //{
