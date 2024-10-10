@@ -31,7 +31,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, -1.f, 1.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PickDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
@@ -302,6 +302,8 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
+	if (FAILED(m_pShader->Bind_RawValue("isOutLine", &m_isOutLine,sizeof(bool))))
+		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_Diffuse"))))
 		return E_FAIL;
@@ -313,6 +315,8 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Depth"))))
 		return E_FAIL;
+
+
 
 	_float4x4			LightViewMatrix, LightProjMatrix;
 
@@ -409,8 +413,8 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
+	/*if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;*/
 	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))

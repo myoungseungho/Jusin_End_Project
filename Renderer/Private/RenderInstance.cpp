@@ -51,6 +51,11 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject);
 }
 
+void CRenderInstance::Show_OutLine()
+{
+	m_pRenderer->Show_OutLine();
+}
+
 HRESULT CRenderInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
 {
 	return m_pTarget_Manager->Add_RenderTarget(strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);

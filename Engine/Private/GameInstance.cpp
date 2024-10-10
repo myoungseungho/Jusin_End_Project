@@ -118,6 +118,21 @@ _long CGameInstance::Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState)
 	return m_pInput_Device->Get_DIMouseMove(eMouseMoveState);
 }
 
+_bool CGameInstance::MouseDown(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MouseDown(eMouse);
+}
+
+_bool CGameInstance::MousePress(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MousePress(eMouse);
+}
+
+_bool CGameInstance::MouseUp(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MouseUp(eMouse);
+}
+
 
 HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
 {

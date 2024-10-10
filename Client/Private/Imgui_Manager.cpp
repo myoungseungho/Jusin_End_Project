@@ -63,7 +63,7 @@ void CImgui_Manager::Priority_Update(_float fTimeDelta)
 
 void CImgui_Manager::Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Get_DIMouseState(DIMK_LBUTTON))
+	if (m_pGameInstance->MouseDown(DIMK_LBUTTON))
 	{
 		_int iMeshIndex = Pick_Effect_Mesh();
 
@@ -189,25 +189,26 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 	for (auto& tab : m_vecShader_Tabs)
 	{
 		ImGui::Begin("Shader Tab");
-		if (ImGui::BeginTabBar("Shader_Node"))
+	
+		if (/*ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick) || */tab->m_TabPick == true)
 		{
-			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick))
+			ImGui::Text("Mesh Index : %d", tab->m_iNumberId);
+			ImGui::SameLine();
+			if (ImGui::Button("Out_Line"))
+				m_pRenderInstance->Show_OutLine();
+			if (tab->m_TabPick == false)
 			{
-				if (tab->m_TabPick == false)
-				{
-					tab->TabPos_Init();
-					tab->m_TabPick = true;
-				}
-
-				m_iCurShaderTabIndex = tab->m_iNumberId;
-				tab->Render(fTimeDelta);
-				ImGui::EndTabItem();
+				tab->TabPos_Init();
+				tab->m_TabPick = true;
 			}
-			else
-				tab->m_TabPick = false;
 
-			ImGui::EndTabBar(); // ег ╧ы а╬╥А
+			m_iCurShaderTabIndex = tab->m_iNumberId;
+			tab->Render(fTimeDelta);
+			//ImGui::EndTabItem();
 		}
+		else
+			tab->m_TabPick = false;
+
 
 		ShaderImGuiPos = ImGui::GetWindowPos();
 		ShaderImGuiSize = ImGui::GetWindowSize();
