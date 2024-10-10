@@ -31,8 +31,8 @@ public:
 	HRESULT Draw(_float fTimeDelta);
 	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
 private:
-	ID3D11Device* m_pDevice = { nullptr };
-	ID3D11DeviceContext* m_pContext = { nullptr };
+	ID3D11Device*			m_pDevice = { nullptr };
+	ID3D11DeviceContext*	m_pContext = { nullptr };
 
 	list<class CGameObject*>			m_RenderObjects[RG_END];
 	list<class CComponent*>		m_DebugComponent;
