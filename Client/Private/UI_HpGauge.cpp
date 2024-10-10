@@ -41,65 +41,37 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	
 	m_fHpRadio = m_pUI_Manager->m_iHp / 100.f;
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	//플레이어가 스턴 상태가 아닐 때 현재의 체력 게이지를 저장
-
-
-
 	if (m_bRedAlpha == FALSE )
-	{
 		m_fRedHpRadio = m_fHpRadio;
 
-	}
-
 	if (m_bCharaStun == TRUE)
 	{
-
-		if (m_bInitHit == FALSE)
+		if (m_bHit == FALSE)
 		{
 			m_fRedHpRadio = m_fHpRadio;
-			m_bInitHit = TRUE;
+			m_bHit = TRUE;
 		}
-
 	}
 	else
-		m_bInitHit = FALSE;
+		m_bHit = FALSE;
 
-	if (m_bCharaStun == TRUE)
-	{
-		m_bRedAlpha = TRUE;
-		m_fRedAlphaStartTimer = 0.f;
-	}
+	//캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
+	m_bCharaStun ? m_bRedAlpha = TRUE , m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
 
-	if(m_bCharaStun == FALSE)
-		m_fRedAlphaStartTimer += fTimeDelta * 2.f;
 
-	if (m_bRedAlpha == TRUE && m_fRedAlphaStartTimer >= 1.f)
+	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
 	{
 		m_bRedAlpha = FALSE;
 	
 	}
-
-
 }
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_A))
-	{
-		m_iCharaCurrHp--;
-	}
-	
-	if (m_pGameInstance->Get_DIKeyState(DIK_D))
-	{
-		m_iCharaCurrHp++;
-	}
-
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
 }
 
@@ -163,7 +135,7 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
 		return E_FAIL;
 
- 	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedAlphaStartTimer, sizeof(_float))))
+ 	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
 		return E_FAIL;
 
 	
