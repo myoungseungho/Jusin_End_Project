@@ -31,6 +31,7 @@ private:
 
 	_uint					m_iComboCount = { 0 };
 	_float					m_fStunTImer = { 0.f };
+	_uint					m_iHp = { 0 };
 	_bool					m_bStun = { FALSE };
 
 	_uint					m_iTmpe = { 0 };

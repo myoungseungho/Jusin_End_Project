@@ -41,47 +41,18 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_fHpRadio = m_iCharaCurrHp / 100.f;
+	
+	m_fHpRadio = m_pUI_Manager->m_iHp / 100.f;
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
 	//플레이어가 스턴 상태가 아닐 때 현재의 체력 게이지를 저장
 	if (!m_bCharaStun)
 	{
-		//스턴이 회복되면 바로 
 		m_fRedHpRadio = m_fHpRadio;
 		m_fRedGaugeTimer = 0.f;
 	}
-	else
-	{
-		m_bHit = TRUE;
-		m_bRedAlpha = TRUE;
-	}
-	if (!m_bCharaStun && !m_bHit)
-		m_bRedAlpha = FALSE;
 
-	if (m_bRedAlpha)
-		m_fRedAlphaStartTimer += fTimeDelta;
-	//3초가 지났을 때
-
-	//
-	if (m_fRedAlphaStartTimer >= 2.f)
-	{
-		m_fRedGaugeTimer += fTimeDelta;
-		//m_bHit = FALSE;
-		//m_fRedAlphaStartTimer = 0.f;
-	}
-
-	if (m_fRedGaugeTimer >= 1.f)
-	{
-		m_bHit = FALSE;
-		m_fRedAlphaStartTimer = 0.f;
-	}
-
-	
-
-
-	//m_bCharaStun ? m_bStun = TRUE : m_fRedHpRadio = m_fHpRadio;
 
 }
 

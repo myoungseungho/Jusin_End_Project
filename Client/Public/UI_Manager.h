@@ -34,7 +34,7 @@ public:
 
 public:
 	_bool m_bStun = { FALSE };
-
+	_uint m_iHp = { 0 };
 public:
 	//UsingAttckBuff
 	_float m_fDuration = { 0.f };	

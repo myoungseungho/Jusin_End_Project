@@ -35,51 +35,41 @@ HRESULT CMonster::Initialize(void* pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	
 	m_pModelCom->SetUp_Animation(16, true);
+	m_iHp = 100;
 
 	return S_OK;
 }
 
 void CMonster::Priority_Update(_float fTimeDelta)
 {
-	if (m_bStun)
+	if (m_bStun == TRUE)
 	{
-		m_fStunTImer += fTimeDelta;
+		m_fStunTImer -= fTimeDelta;
+
+		if (m_fStunTImer <= 0.f)
+		{
+			m_fStunTImer = 0.f;
+			m_bStun = FALSE;
+		}
 	}
 
-	if (m_fStunTImer >= 3.f)
+	if (m_pGameInstance->Get_DIKeyState(DIK_B))
 	{
-		m_bStun = FALSE;
-		m_fStunTImer = 0.f;
+		m_iHp--;
+		m_fStunTImer = 2.f;
+		m_bStun = TRUE;
 	}
 
 	m_pUIManager->UsingComboCount(m_iComboCount);
 	m_pUIManager->UsingStunCheck(m_bStun);
+	m_pUIManager->m_iHp = m_iHp;
 }
+
 
 void CMonster::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_M))
-	{
-		m_iComboCount++;
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_N))
-	{
-		m_iComboCount = 0;
-	}
-	
-	if (m_pGameInstance->Get_DIKeyState(DIK_B))
-	{
-		m_bStun = TRUE;
-	}
-
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_Y))
-	{
-		m_pUIManager->UsingSkillPoint(3);
-	}
 
 }
 
