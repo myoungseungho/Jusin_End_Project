@@ -54,8 +54,9 @@ void CEffect::Update(_float fTimeDelta)
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 		m_fX += 0.1;
 
+	//
 	_float2 DefaultFloat2 = _float2(-5.f, 5.f);
-	Make_Ray(CCollider_Manager::CG_1P_SKILL, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
+	Make_Collider(CCollider_Manager::CG_1P_SKILL, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
 }
 
 void CEffect::Late_Update(_float fTimeDelta)
@@ -85,9 +86,9 @@ void CEffect::OnCollisionExit(CCollider* other)
 	int a = 3;
 }
 
-void CEffect::Make_Ray(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
+void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
 {
-	// 1. 시작점과 끝점 사이의 거리 및 방향 계산
+	// 1. 이펙트의 시작점과 끝점 사이의 거리 및 방향 계산
 	_float dx = DestPos.x - SourcePos.x;
 	_float dy = DestPos.y - SourcePos.y;
 

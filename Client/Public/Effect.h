@@ -30,7 +30,7 @@ public:
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionExit(class CCollider* other) override;
 
-	void Make_Ray(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
+	void Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
 
 	HRESULT Ready_Components();
 
