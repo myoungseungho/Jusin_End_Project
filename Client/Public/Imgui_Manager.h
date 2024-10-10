@@ -35,6 +35,7 @@ public:
 
 	class CIMGUI_Shader_Tab* Access_Shader_Tab() { return m_vecShader_Tabs[m_iCurShaderTabIndex]; }
 	void Push_Shader_Tab(CTexture* pTexture);
+	void Delete_Shader_Tab(_int iIndex);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
 	_int Pick_Effect_Mesh();

@@ -116,6 +116,11 @@ void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 	m_iShaderCount++;
 }
 
+void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
+{
+
+}
+
 _int CImgui_Manager::Pick_Effect_Mesh()
 {
 	_int isPick = { -1 };

@@ -137,6 +137,7 @@ void CRenderInstance::Release_Engine()
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pLight_Manager);
 	Safe_Release(m_pTarget_Manager);
+	Safe_Release(m_pPicking);
 
 	CRenderInstance::Get_Instance()->Destroy_Instance();
 }

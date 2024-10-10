@@ -17,6 +17,7 @@ CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 	:CIMGUI_Tab{ pDevice,pContext },
     m_TestEffectModel_Texture{ pTexture }
 {
+    
 }
 
 HRESULT CIMGUI_Shader_Tab::Initialize()
@@ -307,4 +308,6 @@ CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 void CIMGUI_Shader_Tab::Free()
 {
 	__super::Free();
+
+    Safe_Release(m_TestEffectModel_Texture);
 }
