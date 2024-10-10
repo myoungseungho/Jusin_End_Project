@@ -389,16 +389,6 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
-	if (!m_bShow_RenderTarget)
-	{
-		for (auto& pComponent : m_DebugComponent)
-			Safe_Release(pComponent);
-
-		m_DebugComponent.clear();
-
-		return S_OK;
-	}
-
 	for (auto& pComponent : m_DebugComponent)
 	{
 		pComponent->Render(fTimeDelta);
@@ -407,10 +397,14 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 	m_DebugComponent.clear();
 
+	if (!m_bShow_RenderTarget)
+		return S_OK;
+
 	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
+
 
 	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
 		return E_FAIL;
