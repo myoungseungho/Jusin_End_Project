@@ -143,8 +143,9 @@ CGameObject* CEffect::Clone(void* pArg)
 
 void CEffect::Free()
 {
-	Safe_Release(m_ColliderCom);
-
 	__super::Free();
+
+	Safe_Release(m_pColliderCom);
+
 
 }
