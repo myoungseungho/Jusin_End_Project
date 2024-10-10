@@ -60,6 +60,24 @@ public:
 		XMStoreFloat4((_float4*)&m_WorldMatrix.m[eState][0], vState);
 	}
 
+	void Move_Position(_float x, _float y, _float z)
+	{
+		_vector currentPosition = Get_State(CTransform::STATE_POSITION);
+		_vector newPosition = currentPosition + XMVectorSet(x, y, z, 0);
+		_vector FinalPosition = XMVectorSetW(newPosition, 1.f);
+
+		Set_State(CTransform::STATE_POSITION, FinalPosition);
+	}
+
+	void Move_Position(_float3 position)
+	{
+		_vector currentPosition = Get_State(CTransform::STATE_POSITION);
+		_vector newPosition = currentPosition + XMVectorSet(position.x, position.y, position.z, 0);
+		_vector FinalPosition = XMVectorSetW(newPosition, 1.f);
+
+		Set_State(CTransform::STATE_POSITION, FinalPosition);
+	}
+
 public:
 	HRESULT Initialize();
 	void SetUp_TransformDesc(const TRANSFORM_DESC* pTransformDesc);

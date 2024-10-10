@@ -16,7 +16,8 @@
 
 #include "imnodes.h"
 
-bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -125,15 +126,17 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Render_Target")) {
+			if (ImGui::MenuItem("Render_Target", NULL, &bShowImGuiRenderTarget)) {
+				 m_pRenderInstance->SetActive_RenderTarget(bShowImGuiRenderTarget);
+			}
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
 
 	if (bShowImGuiWindows) {  // 이 조건을 통해 모든 ImGui 창의 표시 여부를 제어
-
-		//쉐이더
-		//이펙트
-		//애니메이션
-		//UI
 
 		static _bool bShowAnimation = true;
 		static _bool bShowEffect = true;
