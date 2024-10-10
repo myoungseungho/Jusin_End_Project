@@ -389,12 +389,18 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	if (!m_bShow_RenderTarget)
+	{
+		for (auto& pComponent : m_DebugComponent)
+			Safe_Release(pComponent);
+
+		m_DebugComponent.clear();
+
 		return S_OK;
+	}
 
 	for (auto& pComponent : m_DebugComponent)
 	{
 		pComponent->Render(fTimeDelta);
-
 		Safe_Release(pComponent);
 	}
 

@@ -53,6 +53,7 @@ HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)
 
 	return m_pRenderer->Add_DebugComponent(pDebugComponent);
 }
+
 void CRenderInstance::SetActive_RenderTarget(_bool isOn)
 {
 	m_pRenderer->SetActive_RenderTarget(isOn);

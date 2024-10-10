@@ -23,6 +23,7 @@ public:
 public: /* For.Renderer */
 	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
+	void SetActive_RenderTarget(_bool isOn);
 
 public: /* For.Target_Manager */
 	HRESULT Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
