@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\private\MainApp.cpp">
+      <Filter>00.MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_GamePlay.cpp">
+      <Filter>01.Level\01.Level\00.GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_Loading.cpp">
+      <Filter>01.Level\01.Level\99.Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Loader.cpp">
+      <Filter>01.Level\01.Level\99.Loading\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Monster.cpp">
+      <Filter>02.GameObjects\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Player.cpp">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Camera_Free.cpp">
+      <Filter>02.GameObjects\Camera\Free</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_demo.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_draw.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_impl_dx11.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_impl_win32.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_tables.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_widgets.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Imgui_Manager.cpp">
+      <Filter>97.IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\IMGUI_Tab.cpp">
+      <Filter>97.IMGUI\Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\public\MainApp.h">
+      <Filter>00.MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\01.Level\00.GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Loading.h">
+      <Filter>01.Level\01.Level\99.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Level\01.Level\99.Loading\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Monster.h">
+      <Filter>02.GameObjects\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Camera_Free.h">
+      <Filter>02.GameObjects\Camera\Free</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui_impl_dx11.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui_impl_win32.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui_internal.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imstb_rectpack.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imstb_textedit.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imstb_truetype.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Imgui_Manager.h">
+      <Filter>97.IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\IMGUI_Tab.h">
+      <Filter>97.IMGUI\Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\IMGUI_Shader_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Client_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imconfig.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Client.ico">
+      <Filter>98.Default</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>98.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="00.MainApp">
+      <UniqueIdentifier>{76160e59-9ef4-4b5c-a76e-00a14a542ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level">
+      <UniqueIdentifier>{c042c08e-2fa6-4d94-bc2f-a6629cc5a28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\01.Level">
+      <UniqueIdentifier>{40dfe46b-5709-4fc0-8fa9-64febd8f977b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\01.Level\00.GamePlay">
+      <UniqueIdentifier>{61b35489-861d-4789-8a2a-12263fbeaa43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\01.Level\99.Loading">
+      <UniqueIdentifier>{e6e6787d-dfa5-4dbd-90f7-0688be79597e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\01.Level\99.Loading\Loader">
+      <UniqueIdentifier>{ba5f7ba4-d59a-40c1-9971-e621f1b053e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects">
+      <UniqueIdentifier>{1773b28c-80ac-4e23-9939-e824c0b1a002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.ShaderFiles">
+      <UniqueIdentifier>{7a8bcc63-8bc9-4d90-b181-d7adb05d81e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI">
+      <UniqueIdentifier>{b38c72c9-7aef-447e-89b4-5c0afc52438a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Default">
+      <UniqueIdentifier>{aff20ac8-3219-4e1f-b408-b83f4d3ce95a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Defines">
+      <UniqueIdentifier>{dddeffb2-5a66-49b1-a4a0-84df84cf988c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera">
+      <UniqueIdentifier>{508482e7-501d-454b-a956-8d221fac5489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect">
+      <UniqueIdentifier>{95869e69-e286-4a37-a7e7-78e2e7d136ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Monster">
+      <UniqueIdentifier>{ed1abb2b-7437-4937-bb61-28428273bfe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player">
+      <UniqueIdentifier>{5a24aa57-645e-4848-8965-d49cd2e37264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Free">
+      <UniqueIdentifier>{d3383e26-b7b4-4839-9771-88d9f7315c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Plugin">
+      <UniqueIdentifier>{3effce0e-87eb-4f3d-a5dd-8e2fe8db398b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab">
+      <UniqueIdentifier>{f4b4a581-1401-407e-a8eb-2577c1ad0dc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Animation_Tab">
+      <UniqueIdentifier>{09709b8a-5476-4f20-abe6-eb9d725f69b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Effect_Tab">
+      <UniqueIdentifier>{509e8cc1-38b2-4f38-80b2-7c3eb891a2c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Level_Tab">
+      <UniqueIdentifier>{51ea1b31-5da6-4b7d-a578-c358db999c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Object_Tab">
+      <UniqueIdentifier>{48c1eba8-3db7-4baf-8936-0a87b47e1f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab">
+      <UniqueIdentifier>{62ec55bc-6c65-42d7-9cd0-ee15a2ba815f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_UI_Tab">
+      <UniqueIdentifier>{267459ec-bf8f-4b50-82d5-5a6b37be652d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>98.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
