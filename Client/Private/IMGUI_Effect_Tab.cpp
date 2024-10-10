@@ -9,7 +9,7 @@
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
 
-const char* Effect[] = { "Each", "Final", "Effect KeyFrame"};
+const char* Effect[] = { "Each", "Final", "Each Effect KeyFrame", "Layer KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
 
 static int CurrentEffect = 0;
@@ -61,6 +61,11 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
     if (CurrentEffect == 2)
     {
         Render_For_Effect_KeyFrame();
+    }
+
+    if (CurrentEffect == 3)
+    {
+        Render_For_Layer_KeyFrame();
     }
 }
 
@@ -338,6 +343,11 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     }
 
     ImGui::Separator();
+
+}
+
+void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
+{
 
 }
 
