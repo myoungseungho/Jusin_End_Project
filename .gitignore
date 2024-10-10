@@ -29,9 +29,6 @@ AssimpSaveAndLoad/
 *.ini
 *.exp
 *.lib
-*.vcxproj.filters
-EngineSDK/
-RendererSDK/
 
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
