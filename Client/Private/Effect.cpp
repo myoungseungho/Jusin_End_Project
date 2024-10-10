@@ -38,29 +38,19 @@ void CEffect::Priority_Update(_float fTimeDelta)
 void CEffect::Update(_float fTimeDelta)
 {
 	for (auto& iter : m_vecColliderCom)
-	{
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
-	}
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
-	{
 		m_fY -= 0.1;
-	}
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-	{
 		m_fY += 0.1;
-	}
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-	{
 		m_fX -= 0.1;
-	}
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
-	{
 		m_fX += 0.1;
-	}
 
 	_float2 DefaultFloat2 = _float2(-5.f, 5.f);
 	Make_Effect_Collider_EnergyAttack(CCollider_Manager::CG_1P_SKILL, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
@@ -70,13 +60,10 @@ void CEffect::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
-
 	for (auto& iter : m_vecColliderCom)
-	{
 #ifdef _DEBUG
 		m_pRenderInstance->Add_DebugComponent(iter);
 #endif
-	}
 
 }
 
@@ -134,8 +121,12 @@ void CEffect::Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP
 		BoundingDesc.pMineGameObject = this;
 
 		CCollider* pNewCollider = nullptr;
+
+		// 고유한 컴포넌트 이름 생성 (예: Com_Collider_0, Com_Collider_1, ...)
+		_wstring colliderName = L"Com_Collider_" + to_wstring(i);
+
 		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-			TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&pNewCollider), &BoundingDesc)))
+			colliderName.c_str(), reinterpret_cast<CComponent**>(&pNewCollider), &BoundingDesc)))
 			return; // 에러 처리
 
 		// 콜라이더 벡터에 추가
@@ -164,7 +155,6 @@ void CEffect::Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP
 		boundingBox.Center = _float3(colliderPos.x, colliderPos.y, 0.f);
 		collider->AABB_SetDesc(boundingBox);
 	}
-
 }
 
 CEffect* CEffect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
