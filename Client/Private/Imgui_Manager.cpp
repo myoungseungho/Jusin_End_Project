@@ -85,6 +85,10 @@ void CImgui_Manager::Update(_float fTimeDelta)
 		}
 	}
 
+	if (m_pGameInstance->MouseDown(DIMK_RBUTTON))
+	{
+		Delete_Shader_Tab(0);
+	}
 }
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)
@@ -118,7 +122,11 @@ void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
 {
-
+	if (iIndex >= 0 && iIndex < m_vecShader_Tabs.size())
+	{
+		Safe_Release(m_vecShader_Tabs[iIndex]);
+		m_vecShader_Tabs.erase(m_vecShader_Tabs.begin() + iIndex);
+	}
 }
 
 _int CImgui_Manager::Pick_Effect_Mesh()
