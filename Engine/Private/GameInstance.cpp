@@ -69,13 +69,13 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pPipeLine->Update();
 
+	m_pCollider_Manager->Update(fTimeDelta);
+
 	m_pObject_Manager->Update(fTimeDelta);
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
 	m_pLevel_Manager->Update(fTimeDelta);
-
-	m_pCollider_Manager->Update(fTimeDelta);
 }
 
 HRESULT CGameInstance::Render_Engine()

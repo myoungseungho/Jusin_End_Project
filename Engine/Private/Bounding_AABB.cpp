@@ -32,11 +32,7 @@ void CBounding_AABB::Update(_fmatrix TransformMatrix)
 
 	XMMatrixDecompose(&vScale, &vRotation, &vTranslation, TransformMatrix);
 
-	_matrix		Transform = /*TransformMatrix*/XMMatrixAffineTransformation(vScale, XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 0.f), vTranslation);
-
-	//Transform.r[0] = XMVectorSet(1.f, 0.f, 0.f, 0.f) * XMVector3Length(Transform.r[0]);
-	//Transform.r[1] = XMVectorSet(0.f, 1.f, 0.f, 0.f) * XMVector3Length(Transform.r[1]);
-	//Transform.r[2] = XMVectorSet(0.f, 0.f, 1.f, 0.f) * XMVector3Length(Transform.r[2]);
+	_matrix		Transform = XMMatrixAffineTransformation(vScale, XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 0.f), vTranslation);
 
 	m_pOriginalDesc->Transform(*m_pDesc, Transform);
 }

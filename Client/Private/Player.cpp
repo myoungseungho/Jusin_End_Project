@@ -113,7 +113,7 @@ HRESULT CPlayer::Ready_Components()
 	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
 
 	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
-	BoundingDesc.vCenter = _float3(0.f, 0.6f, 0.f);
+	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
 	BoundingDesc.pMineGameObject = this;
 
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),

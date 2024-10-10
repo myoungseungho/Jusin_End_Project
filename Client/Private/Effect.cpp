@@ -131,9 +131,6 @@ void CEffect::Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP
 
 		// 콜라이더 벡터에 추가
 		m_vecColliderCom.push_back(pNewCollider);
-
-		// 콜라이더 매니저에 추가
-		m_pGameInstance->Add_ColliderObject(eColliderGroup, pNewCollider);
 	}
 
 	// 5. 콜라이더 위치 업데이트
@@ -154,6 +151,9 @@ void CEffect::Make_Effect_Collider_EnergyAttack(CCollider_Manager::COLLIDERGROUP
 		BoundingBox boundingBox = collider->AABB_GetDesc();
 		boundingBox.Center = _float3(colliderPos.x, colliderPos.y, 0.f);
 		collider->AABB_SetDesc(boundingBox);
+
+		// 콜라이더 매니저에 추가
+		m_pGameInstance->Add_ColliderObject(eColliderGroup, collider);
 	}
 }
 
