@@ -89,17 +89,18 @@ HRESULT CRenderInstance::Bind_RT_ShaderResource(CShader* pShader, const _char* p
 	return m_pTarget_Manager->Bind_ShaderResource(pShader, pConstantName, strTargetTag);
 
 }
-
+#ifdef _DEBUG
 HRESULT CRenderInstance::Ready_RT_Debug(const _wstring& strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY)
 {
 	return m_pTarget_Manager->Ready_Debug(strTargetTag, fCenterX, fCenterY, fSizeX, fSizeY);
 }
-
+#endif
+#ifdef _DEBUG
 HRESULT CRenderInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 {
 	return m_pTarget_Manager->Render_Debug(strMRTTag, pShader, pVIBuffer);
 }
-
+#endif
 const LIGHT_DESC* CRenderInstance::Get_LightDesc(_uint iLightIndex) const
 {
 	return m_pLight_Manager->Get_LightDesc(iLightIndex);

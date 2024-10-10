@@ -386,7 +386,7 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 	return S_OK;
 }
 
-
+#ifdef _DEBUG
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	for (auto& pComponent : m_DebugComponent)
@@ -415,7 +415,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 	return S_OK;
 }
-
+#endif
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CRenderer* pInstance = new CRenderer(pDevice, pContext);
