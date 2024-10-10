@@ -31,6 +31,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 	m_ModelName = pEffectDesc->ModelName;
 	m_MaskTextureName = pEffectDesc->MaskTextureName;
 	m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
+	m_iUnique_Index = pEffectDesc->iUnique_Index;
 
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName,&m_DiffuseTextureName)))
 		return E_FAIL;
@@ -42,6 +43,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 void CEffect_Single::Priority_Update(_float fTimeDelta)
 {
+
 }
 
 void CEffect_Single::Update(_float fTimeDelta)
@@ -51,7 +53,7 @@ void CEffect_Single::Update(_float fTimeDelta)
 
 void CEffect_Single::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CEffect_Single::Render(_float fTimeDelta)
@@ -126,7 +128,9 @@ HRESULT CEffect_Single::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
-
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_iUnique_Index", &m_iUnique_Index,sizeof(int))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 

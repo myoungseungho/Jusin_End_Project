@@ -23,7 +23,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Effect_Manager()))
-			return E_FAIL;
+		return E_FAIL;
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -36,6 +36,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	CImgui_Manager::Get_Instance()->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
 }
@@ -76,9 +77,9 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 	LIGHT_DESC			LightDesc{};
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	LightDesc.vDirection = _float4(0.f, 0.f, -1.f, 0.f);
-	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
-	LightDesc.vAmbient = _float4(0.6f, 0.6f, 0.6f, 1.f);
-	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 0.0f);
+	LightDesc.vAmbient = _float4(0.6f, 0.6f, 0.6f, 0.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 0.f);
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;

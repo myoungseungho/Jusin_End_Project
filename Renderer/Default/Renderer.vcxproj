@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Private\Light.cpp" />
     <ClCompile Include="..\Private\Light_Manager.cpp" />
+    <ClCompile Include="..\Private\Picking.cpp" />
     <ClCompile Include="..\Private\Renderer.cpp" />
     <ClCompile Include="..\Private\RenderInstance.cpp" />
     <ClCompile Include="..\Private\RenderTarget.cpp" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Light.h" />
     <ClInclude Include="..\Public\Light_Manager.h" />
+    <ClInclude Include="..\Public\Picking.h" />
     <ClInclude Include="..\Public\Renderer.h" />
     <ClInclude Include="..\Public\Renderer_Defines.h" />
     <ClInclude Include="..\Public\RenderInstance.h" />

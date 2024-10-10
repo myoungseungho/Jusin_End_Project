@@ -138,6 +138,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 	EffectDesc.ModelName = *ModelName;
 	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
 	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
+	EffectDesc.iUnique_Index = m_TestEffect_Count++;
 
 	CGameObject* pEffect = nullptr;
 	CEffect* pTestEffect = nullptr;

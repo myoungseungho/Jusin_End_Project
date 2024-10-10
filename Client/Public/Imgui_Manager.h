@@ -3,6 +3,8 @@
 #include "Base.h"
 #include "Client_Defines.h"
 #include "Renderer_Defines.h"
+
+#include "imgui.h"
 #include "Effect.h"
 BEGIN(Engine)
 class CGameInstance;
@@ -35,8 +37,10 @@ public:
 	void Push_Shader_Tab(CTexture* pTexture);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
+	_int Pick_Effect_Mesh();
 private:
 	void Render_IMGUI(_float fTimeDelta);
+	void Render_ShaderTabs(_float fTimeDelta);
 
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
@@ -45,6 +49,12 @@ private:
 
 	vector<class CIMGUI_Tab*> m_vecTabs;
 	vector<class CIMGUI_Shader_Tab*> m_vecShader_Tabs;
+
+	ImVec2 MainImGuiPos = {0.f,0.f};
+	ImVec2 MainImGuiSize = { 0.f,0.f };
+
+	ImVec2 ShaderImGuiPos = { 0.f,0.f };
+	ImVec2 ShaderImGuiSize = { 0.f,0.f };
 
 	_int m_iShaderCount = { 0 };
 	_int m_iCurShaderTabIndex = { -1 };

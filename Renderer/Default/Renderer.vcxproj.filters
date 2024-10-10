@@ -19,6 +19,9 @@
     <ClCompile Include="..\Private\Light.cpp">
       <Filter>04.Lights</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Picking.cpp">
+      <Filter>05.Picking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\RenderInstance.h">
@@ -41,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Light.h">
       <Filter>04.Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Picking.h">
+      <Filter>05.Picking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +73,9 @@
     </Filter>
     <Filter Include="04.Lights\Manager">
       <UniqueIdentifier>{b6a761dd-6b06-4297-8ed8-e4dff1b71863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Picking">
+      <UniqueIdentifier>{28c06fb2-2241-4b9e-9b53-ec1359844db6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

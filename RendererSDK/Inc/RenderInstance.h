@@ -23,6 +23,8 @@ public:
 public: /* For.Renderer */
 	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
 	void SetActive_RenderTarget(_bool isOn);
+	void Show_OutLine();
+
 
 public: /* For.Target_Manager */
 	HRESULT Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
@@ -43,11 +45,16 @@ public:/*For.Light_Manager*/
 	const LIGHT_DESC* Get_LightDesc(_uint iLightIndex) const;
 	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
 	HRESULT Render_Lights(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
-private:
-	class CRenderer* m_pRenderer = { nullptr };
-	class CTarget_Manager* m_pTarget_Manager = { nullptr };
-	class CLight_Manager* m_pLight_Manager = { nullptr };
 
+public:/*For.Picking*/
+	_float4 Picked_Position(_bool* pPicked);
+	_int Picked_Effect_Index();
+
+private:
+	class CRenderer*		m_pRenderer = { nullptr };
+	class CTarget_Manager*	m_pTarget_Manager = { nullptr };
+	class CLight_Manager*	m_pLight_Manager = { nullptr };
+	class CPicking*			m_pPicking = { nullptr };
 public:
 	void Release_Engine();
 

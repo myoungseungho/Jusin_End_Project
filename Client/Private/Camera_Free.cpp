@@ -33,6 +33,7 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 	tDesc.fSpeedPerSec = 5.f;
 	//tDesc.fRotationPerSec = XMConvertToRadians(30.f);
 	m_pTransformCom->SetUp_TransformDesc(&tDesc);
+
 	return S_OK;
 }
 

@@ -2,6 +2,7 @@
 #include "Target_Manager.h"
 #include "GameInstance.h"
 #include "Light_Manager.h"
+#include "Picking.h"
 
 IMPLEMENT_SINGLETON(CRenderInstance)
 
@@ -22,6 +23,10 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 
 	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pRenderer)
+		return E_FAIL;
+
+	m_pPicking = CPicking::Create(*ppDevice, *ppContext, hWnd);
+	if (nullptr == m_pPicking)
 		return E_FAIL;
 
 	return S_OK;
@@ -49,6 +54,11 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 void CRenderInstance::SetActive_RenderTarget(_bool isOn)
 {
 	m_pRenderer->SetActive_RenderTarget(isOn);
+}
+
+void CRenderInstance::Show_OutLine()
+{
+	m_pRenderer->Show_OutLine();
 }
 
 HRESULT CRenderInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
@@ -115,6 +125,16 @@ HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
 HRESULT CRenderInstance::Render_Lights(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 {
 	return m_pLight_Manager->Render_Lights(pShader, pVIBuffer);
+}
+
+_float4 CRenderInstance::Picked_Position(_bool* pPicked)
+{
+	return m_pPicking->Picked_Position(pPicked);
+}
+
+_int CRenderInstance::Picked_Effect_Index()
+{
+	return m_pPicking->Picked_Effect_Index();
 }
 
 void CRenderInstance::Release_Engine()

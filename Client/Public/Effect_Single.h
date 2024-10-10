@@ -25,6 +25,8 @@ private:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
 	virtual HRESULT Bind_ShaderResources() override;
 
+private:
+	_int m_iUnique_Index = { -1 };
 public:
 	static CEffect_Single* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
