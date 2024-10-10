@@ -86,17 +86,17 @@ void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-
+	
 	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
 	{
 		
-		m_fAlphaTimer -= fTimeDelta * 2.f;
+		m_fAlphaTimer += fTimeDelta * 5.f;
 
-		if (m_fAlphaTimer <= 1.f)
-			m_fAlphaTimer = 0.f;
+		if (m_fAlphaTimer >= 1.f)
+			m_fAlphaTimer = 1.f;
 	}
 	else
-		m_fAlphaTimer = 1.f;
+		m_fAlphaTimer = 0.f;
 
 }
 
@@ -167,6 +167,9 @@ HRESULT CUI_ComboNumber::Bind_ShaderResources()
 		vColor = { 0.f, 0.f, 0.f, 1.f };
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fAlphaTimer, sizeof(_float))))
 		return E_FAIL;
 
 	return S_OK;
