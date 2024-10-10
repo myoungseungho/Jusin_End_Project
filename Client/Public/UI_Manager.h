@@ -15,6 +15,9 @@ class CUI_Manager final : public CBase
 {
 	DECLARE_SINGLETON(CUI_Manager)
 
+public:
+	enum PLAYER_SLOT {LPLAYER1  ,LPLAYER2 , RPLAYER1, RPLAYER2 , SLOT_END};
+
 private:
 	CUI_Manager();
 	virtual ~CUI_Manager() = default;
@@ -35,7 +38,7 @@ public:
 public:
 	_bool m_bStun = { FALSE };
 	_bool m_bHit = { FALSE };
-	_uint m_iHp = { 0 };
+	_uint m_iHp = {0};
 	
 public:
 	//UsingAttckBuff

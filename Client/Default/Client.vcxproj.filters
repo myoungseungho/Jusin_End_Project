@@ -46,9 +46,6 @@
     <Filter Include="97.IMGUI\Tap\IMGUI_Animation_Tab">
       <UniqueIdentifier>{dbf2a29a-d723-4ed7-bbfd-2e7dfec4b380}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Monster">
-      <UniqueIdentifier>{48b3df65-2088-440e-aef4-4a29cfd0b387}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Camera">
       <UniqueIdentifier>{b362e33a-b9f1-461c-86ab-664700762dd2}</UniqueIdentifier>
     </Filter>
@@ -130,6 +127,15 @@
     <Filter Include="02.GameObjects\UI\Combo\Effect">
       <UniqueIdentifier>{e4331be0-f3aa-44c9-a0aa-7c30f79e76b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Pawn">
+      <UniqueIdentifier>{48b3df65-2088-440e-aef4-4a29cfd0b387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Pawn\Monster">
+      <UniqueIdentifier>{f32a15d7-0036-43da-a07e-0572965e7d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Pawn\Player">
+      <UniqueIdentifier>{e15191a1-d182-4cc0-9424-3f21c06e6fef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -201,9 +207,6 @@
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
       <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Monster.h">
-      <Filter>02.GameObjects\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Camera_Free.h">
       <Filter>02.GameObjects\Camera\Free</Filter>
     </ClInclude>
@@ -273,6 +276,15 @@
     <ClInclude Include="..\public\UI_ComboEffect.h">
       <Filter>02.GameObjects\UI\Combo\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Monster.h">
+      <Filter>02.GameObjects\Pawn\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Player.h">
+      <Filter>02.GameObjects\Pawn\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Pawn.h">
+      <Filter>02.GameObjects\Pawn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -331,9 +343,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_Animation_Tab</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Monster.cpp">
-      <Filter>02.GameObjects\Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Camera_Free.cpp">
       <Filter>02.GameObjects\Camera\Free</Filter>
@@ -403,6 +412,15 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_ComboEffect.cpp">
       <Filter>02.GameObjects\UI\Combo\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Monster.cpp">
+      <Filter>02.GameObjects\Pawn\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Player.cpp">
+      <Filter>02.GameObjects\Pawn\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Pawn.cpp">
+      <Filter>02.GameObjects\Pawn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
