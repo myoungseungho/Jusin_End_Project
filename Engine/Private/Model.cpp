@@ -174,7 +174,27 @@ _bool CModel::Play_Animation_Lick(_float fTimeDelta)
 
 	m_fAccAnimationUpdateTime += fTimeDelta;
 
-	if (m_fAccAnimationUpdateTime >m_fMaxAnimationUpdateTime )
+	//if (m_fAccAnimationUpdateTime >m_fMaxAnimationUpdateTime )
+	//{
+	//	//_float fMoveFrame = m_fMaxAnimationTime / m_Animations[m_iCurrentAnimationIndex]->m_fTickPerSecond;
+	//
+	//	// 현재 애니메이션 업데이트
+	//	//if (m_Animations[m_iCurrentAnimationIndex]->Update_TransformationMatrix(&m_fCurrentAnimPosition, fMoveFrame, m_Bones, m_isLoopAnim, m_KeyFrameIndices[m_iCurrentAnimationIndex]))
+	//	if (m_Animations[m_iCurrentAnimationIndex]->Update_TransformationMatrix(&m_fCurrentAnimPosition, m_fMaxAnimationUpdateTime, m_Bones, m_isLoopAnim, m_KeyFrameIndices[m_iCurrentAnimationIndex]))
+	//	{
+	//		bAnimationEnd = true;
+	//	}
+	//
+	//
+	//	// 모든 뼈의 CombinedTransformationMatrix 업데이트
+	//	for (auto& pBone : m_Bones)
+	//		pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
+	//
+	//
+	//	m_fAccAnimationUpdateTime -= m_fMaxAnimationUpdateTime;
+	//}
+
+	while (m_fAccAnimationUpdateTime > m_fMaxAnimationUpdateTime)
 	{
 		//_float fMoveFrame = m_fMaxAnimationTime / m_Animations[m_iCurrentAnimationIndex]->m_fTickPerSecond;
 
@@ -193,8 +213,6 @@ _bool CModel::Play_Animation_Lick(_float fTimeDelta)
 
 		m_fAccAnimationUpdateTime -= m_fMaxAnimationUpdateTime;
 	}
-
-	
 
 	return bAnimationEnd;
 }

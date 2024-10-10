@@ -234,6 +234,10 @@ void CFrameEvent_Manager::LoadFile2(const _char* TextFilePath)
 
         //2.애니메이션 이름을 번호로 바꾸는 함수 사용.  근데 1줄짜리임
 
+        if (splitText[0] == "//")
+        {
+            continue;
+        }
       CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
       
       Add_Event(
@@ -265,9 +269,14 @@ void CFrameEvent_Manager::LoadFile2(const _char* TextFilePath)
 
 void CFrameEvent_Manager::ReLoadFrameEvent(const _char* TextFilePath)
 {
-    FrameEvent.clear();
+    ClearFrameEvent();
     LoadFile2(TextFilePath);
 
+}
+
+void CFrameEvent_Manager::ClearFrameEvent()
+{
+    FrameEvent.clear();
 }
 
 void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject)
@@ -301,7 +310,6 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject
 
     _bool bDebugPoint = false;
 
-
     if (splitText[0] == "ObjectMove")
     {
 
@@ -318,7 +326,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject
         _bool bDebug = false;
     }
 
-    if (splitText[0] == "TickPerSecondChange")
+    else if (splitText[0] == "TickPerSecondChange")
     {
 
         CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
@@ -326,6 +334,14 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject
 
     }
 
+   else if (splitText[0] == "AnimSpeedChange")
+   {
+   
+       CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
+       pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
+       pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
+   
+   }
 
 }
 

@@ -84,43 +84,108 @@ struct PS_OUT_LIGHT
 
 PS_OUT_LIGHT PS_MAIN_DIRECTIONAL(PS_IN In)
 {
-	PS_OUT_LIGHT		Out = (PS_OUT_LIGHT)0;
+	//PS_OUT_LIGHT		Out = (PS_OUT_LIGHT)0;
+	//
+	//vector			vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
+	//vector			vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+	//float			fViewZ = vDepthDesc.x * 1000.f;
+	//
+	///* 0 ~ 1 -> -1 ~ 1 */
+	//float4			vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);	
+	//
+	//float4			vAmbient = g_vLightAmbient * g_vMtrlAmbient;
+	//
+	//Out.vShade = g_vLightDiffuse * max(dot(normalize(g_vLightDir) * -1.f, vNormal), 0.f) + vAmbient;
+	//
+	//float4			vWorldPos;
+	//
+	///* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬 / View.z */
+	///* 투영공간상의 위치를 먼저 구한다. */
+	//vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
+	//vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
+	//vWorldPos.z = vDepthDesc.y;
+	//vWorldPos.w = 1.f;
+	//
+	///* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
+	//vWorldPos = vWorldPos * fViewZ;
+	//
+	///* 로컬위치 * 월드행렬 * 뷰행렬 */
+	//vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
+	//
+	///* 로컬위치 * 월드행렬 */
+	//vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
+	//
+	//float4			vReflect = reflect(normalize(g_vLightDir), vNormal);
+	//float4			vLook = vWorldPos - g_vCamPosition;
+	//
+	//Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
+	//
+	//return Out;
 
-	vector			vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
-	vector			vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
-	float			fViewZ = vDepthDesc.x * 1000.f;
+	
+    PS_OUT_LIGHT Out = (PS_OUT_LIGHT) 0;
 
-	/* 0 ~ 1 -> -1 ~ 1 */
-	float4			vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);	
+    vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+    float fViewZ = vDepthDesc.x * 1000.f;
 
-	float4			vAmbient = g_vLightAmbient * g_vMtrlAmbient;
+   /* 0 ~ 1 -> -1 ~ 1 */
+    float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
 
-	Out.vShade = g_vLightDiffuse * max(dot(normalize(g_vLightDir) * -1.f, vNormal), 0.f) + vAmbient;
+    // 앰비언트 조명
+    float4 vAmbient = g_vLightAmbient * g_vMtrlAmbient;
 
-	float4			vWorldPos;
+    float shadeIntensity = max(dot(normalize(g_vLightDir) * -1.f, vNormal), 0.f);
+    shadeIntensity = saturate(shadeIntensity);
 
-	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬 / View.z */
-	/* 투영공간상의 위치를 먼저 구한다. */
-	vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
-	vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
-	vWorldPos.z = vDepthDesc.y;
-	vWorldPos.w = 1.f;
+    float shadeStep = 2.0f;
+    shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
 
-	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
-	vWorldPos = vWorldPos * fViewZ;
+    Out.vShade = (g_vLightDiffuse * shadeIntensity) + vAmbient;
+    float4 vWorldPos;
 
-	/* 로컬위치 * 월드행렬 * 뷰행렬 */
-	vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
+   /* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬 / View.z */
+   /* 투영공간상의 위치를 먼저 구한다. */
+    vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
+    vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
+    vWorldPos.z = vDepthDesc.y;
+    vWorldPos.w = 1.f;
 
-	/* 로컬위치 * 월드행렬 */
-	vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
+   /* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
+    vWorldPos = vWorldPos * fViewZ;
 
-	float4			vReflect = reflect(normalize(g_vLightDir), vNormal);
-	float4			vLook = vWorldPos - g_vCamPosition;
+   /* 로컬위치 * 월드행렬 * 뷰행렬 */
+    vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
 
-	Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
+   /* 로컬위치 * 월드행렬 */
+    vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
 
-	return Out;
+    float4 vReflect = reflect(normalize(g_vLightDir), vNormal);
+    float4 vLook = vWorldPos - g_vCamPosition;
+   // 따로 죽이기위해 분리
+    float specularIntensity = max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f);
+   
+   //죽이기
+    float specularStep = 2.0f;
+    specularIntensity = floor(specularIntensity * specularStep) / specularStep;
+
+   // 최소값
+    specularIntensity = max(specularIntensity, 0.1f);
+   
+    float specularThreshold = 0.8f; // 0.9 이상의 값만 스펙큘러 적용
+   
+    if (specularIntensity >= specularThreshold)
+    {
+        // 스펙큘러 색상 적용
+        Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(specularIntensity, 1.5f);
+
+    }
+    else
+    {
+        // 스펙큘러 미적용 (혹은 매우 약하게 적용)
+        Out.vSpecular = float4(0.f, 0.f, 0.f, 1.0f); // 스펙큘러를 제거
+    }
+    return Out;
 
 }
 
@@ -170,61 +235,144 @@ PS_OUT_LIGHT PS_MAIN_POINT(PS_IN In)
 
 }
 
+//PS_OUT PS_MAIN_DEFERRED(PS_IN In)
+//{
+//	PS_OUT			Out = (PS_OUT)0;
+//
+//	vector			vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+//	if (0.0f == vDiffuse.a)
+//		discard;
+//
+//	vector			vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
+//	vector			vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
+//
+//	Out.vColor = vDiffuse * vShade + vSpecular;
+//
+//
+//	vector			vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+//	float			fViewZ = vDepthDesc.x * 1000.f;
+//
+//
+//	float4			vWorldPos;
+//
+//	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬 / View.z */
+//	/* 투영공간상의 위치를 먼저 구한다. */
+//	vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
+//	vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
+//	vWorldPos.z = vDepthDesc.y;
+//	vWorldPos.w = 1.f;
+//
+//	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
+//	vWorldPos = vWorldPos * fViewZ;
+//
+//	/* 로컬위치 * 월드행렬 * 뷰행렬 */
+//	vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
+//
+//	/* 로컬위치 * 월드행렬 */
+//	vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
+//
+//	vWorldPos = mul(vWorldPos, g_LightViewMatrix);
+//	vWorldPos = mul(vWorldPos, g_LightProjMatrix);
+//
+//
+//	/* 투영공간상의 좌표로 변환하낟. */
+//	float2			vTexcoord = vWorldPos.xy / vWorldPos.w;
+//
+//	vTexcoord.x = saturate(vTexcoord.x * 0.5f + 0.5f);
+//	vTexcoord.y = saturate(vTexcoord.y * -0.5f + 0.5f);
+//
+//	vector			vOldLightDepth = g_LightDepthTexture.Sample(LinearSampler, vTexcoord);
+//	
+//	float	fDepth = vWorldPos.w;
+//
+//	if (vOldLightDepth.x * 1000.f < fDepth - 0.3f)
+//		Out.vColor = Out.vColor * 0.5f;
+//
+//	return Out;
+//}
+
+
+float CalculateNormalDiff(float2 vTexcoord, float4 vNormal)
+{
+    float2 fOffsetRight = float2(1.0f / 1280.f, 0.0f);
+    float2 fOffsetDown = float2(0.0f, 1.0f / 720.f);
+    float2 fOffsetLeft = float2(-1.0f / 1280.f, 0.0f);
+    float2 fOffsetUp = float2(0.0f, -1.0f / 720.f);
+
+    float3 vNormalRight = g_NormalTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).xyz * 2.f - 1.f;
+    float3 vNormalDown = g_NormalTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).xyz * 2.f - 1.f;
+    float3 vNormalLeft = g_NormalTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).xyz * 2.f - 1.f;
+    float3 vNormalUp = g_NormalTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).xyz * 2.f - 1.f;
+
+    float fNormalDiff = length(vNormal.xyz - vNormalRight) + length(vNormal.xyz - vNormalDown)
+                        + length(vNormal.xyz - vNormalLeft) + length(vNormal.xyz - vNormalUp);
+
+    return fNormalDiff;
+}
+
+float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
+{
+    float2 fOffsetRight = float2(1.0f / 1280.f, 0.0f);
+    float2 fOffsetDown = float2(0.0f, 1.0f / 720.f);
+    float2 fOffsetLeft = float2(-1.0f / 1280.f, 0.0f);
+    float2 fOffsetUp = float2(0.0f, -1.0f / 720.f);
+
+    float fDepthRight = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).x * 1000.f;
+    float fDepthDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).x * 1000.f;
+    float fDepthLeft = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).x * 1000.f;
+    float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
+
+    float fDepthDiff = abs(fViewZ - fDepthRight) + abs(fViewZ - fDepthDown)
+                       + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp);
+
+    return fDepthDiff;
+}
+
+// 외곽선 검출 함수
+float CalculateEdge(float2 vTexcoord, float fViewZ, float4 vNormal, float fEdgeThreshold, float fEdgeNormalThreshold, float fEdgeDepthThreshold)
+{
+    float fNormalDiff = CalculateNormalDiff(vTexcoord, vNormal);
+   
+    float fDepthDiff = CalculateDepthDiff(vTexcoord, fViewZ);
+   
+    float fEdge = step(fEdgeDepthThreshold, fDepthDiff) * step(fEdgeNormalThreshold, fNormalDiff);
+
+    return fEdge;
+}
+
 PS_OUT PS_MAIN_DEFERRED(PS_IN In)
 {
-	PS_OUT			Out = (PS_OUT)0;
+    PS_OUT Out = (PS_OUT) 0;
 
-	vector			vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-	if (0.0f == vDiffuse.a)
-		discard;
+    vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    if (0.0f == vDiffuse.a)
+        discard;
 
-	vector			vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
-	vector			vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
 
-	Out.vColor = vDiffuse * vShade + vSpecular;
+    Out.vColor = vDiffuse * vShade + vSpecular;
 
+    vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+   
+    float fViewZ = vDepthDesc.x * 1000.f;
+    float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
+   
+    float fEdgeNormalThreshold = 0.2f;
+    float fEdgeDepthThreshold = 0.05f;
+   
+   // float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
+   //
+   // vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
+   // Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
 
-	vector			vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
-	float			fViewZ = vDepthDesc.x * 1000.f;
-
-
-	float4			vWorldPos;
-
-	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬 / View.z */
-	/* 투영공간상의 위치를 먼저 구한다. */
-	vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
-	vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
-	vWorldPos.z = vDepthDesc.y;
-	vWorldPos.w = 1.f;
-
-	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
-	vWorldPos = vWorldPos * fViewZ;
-
-	/* 로컬위치 * 월드행렬 * 뷰행렬 */
-	vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
-
-	/* 로컬위치 * 월드행렬 */
-	vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
-
-	vWorldPos = mul(vWorldPos, g_LightViewMatrix);
-	vWorldPos = mul(vWorldPos, g_LightProjMatrix);
-
-
-	/* 투영공간상의 좌표로 변환하낟. */
-	float2			vTexcoord = vWorldPos.xy / vWorldPos.w;
-
-	vTexcoord.x = saturate(vTexcoord.x * 0.5f + 0.5f);
-	vTexcoord.y = saturate(vTexcoord.y * -0.5f + 0.5f);
-
-	vector			vOldLightDepth = g_LightDepthTexture.Sample(LinearSampler, vTexcoord);
-	
-	float	fDepth = vWorldPos.w;
-
-	if (vOldLightDepth.x * 1000.f < fDepth - 0.3f)
-		Out.vColor = Out.vColor * 0.5f;
-
-	return Out;
+    return Out;
 }
+
+
+
+
 
 
 technique11		DefaultTechnique
@@ -282,11 +430,6 @@ technique11		DefaultTechnique
 		PixelShader = compile ps_5_0 PS_MAIN_DEFERRED();
 	}
 }
-
-
-
-
-
 
 
 

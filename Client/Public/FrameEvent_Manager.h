@@ -32,6 +32,7 @@ public:
 	//void LoadFile(const _char* TextFilePath);
 	void LoadFile2(const _char* TextFilePath);
 	void ReLoadFrameEvent(const _char* TextFilePath);
+	void ClearFrameEvent();
 
 	void UseEvent(string strEventText, CGameObject* pGameObject);
 

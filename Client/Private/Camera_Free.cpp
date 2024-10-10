@@ -30,12 +30,20 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+
+
+	CTransform::TRANSFORM_DESC pDesc{};
+	pDesc.fSpeedPerSec = 5.f;
+	pDesc.fRotationPerSec = 5.f;
+
+
+	m_pTransformCom->SetUp_TransformDesc(&pDesc);
 	return S_OK;
 }
 
 void CCamera_Free::Priority_Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Get_DIKeyState(DIK_A) & 0x80)
+	if (GetKeyState('A') & 0x8000)
 	{
 		m_pTransformCom->Go_Left(fTimeDelta);
 	}
@@ -55,18 +63,36 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 		m_pTransformCom->Go_Backward(fTimeDelta);
 	}
 
+	if(GetKeyState('Q') & 0x8000)
+	{
+		_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		vPos += {0.f, fTimeDelta*2.f, 0.f, 0.f};
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+
+
+	}
+	if (GetKeyState('E') & 0x8000)
+	{
+		_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		vPos -= {0.f, fTimeDelta * 2.f, 0.f, 0.f};
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+
+	}
 	_long		MouseMove = {};
 
-	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
+	if(GetKeyState(MK_RBUTTON) & 0x8000)
 	{
-		m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
-	}
 
-	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
-	{
-		m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
-	}
+		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
+		{
+			m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
+		}
 
+		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
+		{
+			m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
+		}
+	}
 	__super::Priority_Update(fTimeDelta);
 }
 

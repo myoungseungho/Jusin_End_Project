@@ -54,6 +54,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	/* 여기에서 갱신을 수행해준다. */	
 
 
+	m_pInput_Device->Update();
+
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
@@ -63,6 +65,9 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
 	m_pLevel_Manager->Update(fTimeDelta);
+
+
+
 }
 
 HRESULT CGameInstance::Render_Engine()

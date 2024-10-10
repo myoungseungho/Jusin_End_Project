@@ -101,6 +101,8 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
        m_pSelectedModelCom = CModel::Create(m_pDevice, m_pContext, buffer, preMatrix);
 
     }
+
+    ImGui::SameLine();
     if (ImGui::Button("Object Load"))
     {
 
@@ -114,13 +116,21 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 
 
     }
+
+    //ImGui::NewLine();
     if (ImGui::Button("Event ReLoad"))
     {
         CFrameEvent_Manager::Get_Instance()->ReLoadFrameEvent("../Bin/FrameEventData/Split.txt");
     }
-   
+
+    ImGui::SameLine();
+    if (ImGui::Button("Event Delete"))
+    {
+        CFrameEvent_Manager::Get_Instance()->ClearFrameEvent();
+    }
 
 
+    ImGui::NewLine();
     if (m_pSelectedModelCom != nullptr)
     {
 
@@ -138,20 +148,33 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 
              _float fPrePosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
 
-             //Play_Animation_Lick
-             //if (m_pSelectedModelCom->Play_Animation(fTimeDelta)
+             _int iOneFrameTeest = 0;
+
+             if (fPrePosition == 0)
+             {
+                 ProcessEventsFramesZero(m_iTestModelIndex, g_iCurrentAnimationIndex);
+                 fPrePosition += 0.001;
+
+                 iOneFrameTeest++;
+             }
+
              if (m_pSelectedModelCom->Play_Animation_Lick(fTimeDelta))
              {
                  //모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
                  if(m_pSelectedModelCom->m_isLoopAnim)
                  {
-                     fPrePosition = 0.01;
+                     fPrePosition = 0.001;
                      ProcessEventsFramesZero(m_iTestModelIndex, g_iCurrentAnimationIndex);
+                     iOneFrameTeest++;
                  }
              }
 
+             iOneFrameTeest;
              
-
+             if (iOneFrameTeest > 1)
+             {
+                 _bool bDebug = false;
+             }
 
              _float fCurPosition = m_pSelectedModelCom->m_fCurrentAnimPosition;
              
@@ -199,8 +222,18 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 
     _bool DebugPoint = false;
 
+    
+    SHORT currKeyState = GetAsyncKeyState(VK_SPACE);  // 예시로 스페이스바를 사용
 
+    // 키가 눌리는 순간만 감지
+    if ((currKeyState & 0x8000) && !(prevKeyState & 0x8000))
+    {
+        // 키가 눌리는 순간
+        m_bMotionPlaying = !m_bMotionPlaying;
+    }
 
+    // 현재 상태를 이전 상태로 업데이트
+    prevKeyState = currKeyState;
 }
 
 void CIMGUI_Animation_Tab::Info_Anim()
@@ -306,12 +339,20 @@ void CIMGUI_Animation_Tab::Info_Anim()
             m_bCurrentPositionSlide = true;
 
         }
+
+        ImGui::SameLine();
         if (ImGui::Button("Pause"))
         {
             m_bMotionPlaying = false;
 
         }
+        
+        if (ImGui::Button("Toggle"))
+        {
+            m_bMotionPlaying = !m_bMotionPlaying;
 
+        }
+        ImGui::SameLine();
         if (ImGui::Button("Stop"))
         {
 
@@ -325,7 +366,7 @@ void CIMGUI_Animation_Tab::Info_Anim()
         {
             m_pSelectedModelCom->Set_MaxAnimationUpdate_Time(m_fAnimationUpdateTime);
         }
-        if (ImGui::SliderFloat("TickPerSecond", &m_fTool_TickPerSecond, 0, 100.f))
+        if (ImGui::SliderFloat("TickPerSecond", &m_fTool_TickPerSecond, 0, 120.f))
         {
             m_pSelectedModelCom->m_Animations[g_iCurrentAnimationIndex]->m_fTickPerSecond = m_fTool_TickPerSecond;
         }
