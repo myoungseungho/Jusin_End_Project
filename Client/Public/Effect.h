@@ -48,7 +48,7 @@ protected:
 
 	_float		m_fCurPosition = { 0.f };
 
-	vector<KEYFRAME>	m_EffectKeyFrames;
+	vector<EFFECT_KEYFRAME>	m_EffectKeyFrames;
 
 public:
 	_wstring m_ModelName;
