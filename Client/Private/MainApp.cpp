@@ -56,14 +56,14 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGameInstance->Clear_DepthStencil_View();
 
-	//IMGUI ·»´õ
-	m_pIMGUI_Manager->Render(fTimeDelta);
-
 	//·¹º§¸Å´ÏÀú ·»´õ´Â °ÔÀÓÀÎ½ºÅÏ½º
 	m_pGameInstance->Render_Engine();
 
 	//³ª¸ÓÁö ·»´õ´Â ·»´õÀÎ½ºÅÏ½º
 	m_pRenderInstance->Render_Engine(fTimeDelta);
+
+	//IMGUI ·»´õ
+	m_pIMGUI_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
