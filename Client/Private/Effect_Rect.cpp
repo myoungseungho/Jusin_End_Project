@@ -57,6 +57,7 @@ void CEffect_Rect::Priority_Update(_float fTimeDelta)
 
 void CEffect_Rect::Update(_float fTimeDelta)
 {
+
 }
 
 void CEffect_Rect::Late_Update(_float fTimeDelta)

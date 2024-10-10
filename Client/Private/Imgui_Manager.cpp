@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include <string>
 
-#include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
@@ -64,10 +63,30 @@ void CImgui_Manager::Priority_Update(_float fTimeDelta)
 
 void CImgui_Manager::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Get_DIMouseState(DIMK_LBUTTON))
+	{
+		_int iMeshIndex = Pick_Effect_Mesh();
+
+		if (iMeshIndex != -1)
+		{
+			_int iCount = 0;
+			for (auto& tab : m_vecShader_Tabs)
+			{
+				if (iCount == iMeshIndex)
+					tab->m_TabPick = true;
+				else
+					tab->m_TabPick = false;
+
+				iCount++;
+			}
+		}
+	}
+
 }
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)
 {
+
 }
 
 HRESULT CImgui_Manager::Render(_float fTimeDelta)
@@ -78,30 +97,8 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
-	for (auto& tab : m_vecShader_Tabs)
-	{
-		ImGui::Begin("Shader Tab"); // 메인 창 시작
-		if (ImGui::BeginTabBar("Shader_Node"))
-		{
-			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str()))
-			{
-				if (tab->m_TabPick == false)
-				{
-					tab->TabPos_Init();
-					tab->m_TabPick = true;
-				}
-
-				m_iCurShaderTabIndex = tab->m_iNumberId;
-				tab->Render(fTimeDelta);
-				ImGui::EndTabItem();
-			}
-			else
-				tab->m_TabPick = false;
-		
-			ImGui::EndTabBar(); // 탭 바 종료
-		}
-		ImGui::End(); // 메인 창 종료
-	}
+	Render_ShaderTabs(fTimeDelta);
+	
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	
@@ -114,6 +111,30 @@ void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 	m_vecShader_Tabs.back()->m_iNumberId = m_iShaderCount;
 
 	m_iShaderCount++;
+}
+
+_int CImgui_Manager::Pick_Effect_Mesh()
+{
+	_int isPick = { -1 };
+
+	POINT ptMouse{};
+
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
+
+	_bool isOverMainImGui = (ptMouse.x >= MainImGuiPos.x && ptMouse.x <= MainImGuiPos.x + MainImGuiSize.x &&
+		ptMouse.y >= MainImGuiPos.y && ptMouse.y <= MainImGuiPos.y + MainImGuiSize.y);
+
+	_bool isOverShaderImGui = (ptMouse.x >= ShaderImGuiPos.x && ptMouse.x <= ShaderImGuiPos.x + ShaderImGuiSize.x &&
+		ptMouse.y >= ShaderImGuiPos.y && ptMouse.y <= ShaderImGuiPos.y + ShaderImGuiSize.y);
+
+	if (!isOverMainImGui && !isOverShaderImGui)
+	{
+		isPick = m_pRenderInstance->Picked_Effect_Index();
+	}
+
+
+	return isPick;
 }
 
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
@@ -154,8 +175,42 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 
 			ImGui::EndTabBar(); // 탭 바 종료
 		}
+		MainImGuiPos = ImGui::GetWindowPos();
+		MainImGuiSize = ImGui::GetWindowSize();
+		ImGui::End();  // 창을 닫음
+	}
+}
+
+void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
+{
+	for (auto& tab : m_vecShader_Tabs)
+	{
+		ImGui::Begin("Shader Tab");
+		if (ImGui::BeginTabBar("Shader_Node"))
+		{
+			if (ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str()))
+			{
+				if (tab->m_TabPick == false)
+				{
+					tab->TabPos_Init();
+					tab->m_TabPick = true;
+				}
+
+				m_iCurShaderTabIndex = tab->m_iNumberId;
+				tab->Render(fTimeDelta);
+				ImGui::EndTabItem();
+			}
+			else
+				tab->m_TabPick = false;
+
+			ImGui::EndTabBar(); // 탭 바 종료
+		}
+
+		ShaderImGuiPos = ImGui::GetWindowPos();
+		ShaderImGuiSize = ImGui::GetWindowSize();
 		ImGui::End(); // 메인 창 종료
 	}
+
 }
 
 void CImgui_Manager::Free()

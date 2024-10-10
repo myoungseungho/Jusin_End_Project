@@ -41,6 +41,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 void CEffect_Single::Priority_Update(_float fTimeDelta)
 {
+
 }
 
 void CEffect_Single::Update(_float fTimeDelta)
