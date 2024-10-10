@@ -52,7 +52,7 @@ void CUI_ComboEffect::Late_Update(_float fTimeDelta)
 	__super::Late_Update(fTimeDelta);
 
 	if(m_bCharaStun == FALSE && m_iComboCount >= 2)
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_ComboEffect::Render(_float fTimeDelta)

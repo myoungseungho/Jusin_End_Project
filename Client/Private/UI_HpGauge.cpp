@@ -52,12 +52,13 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 	{
 		if (m_bHit == FALSE)
 		{
-			m_fRedHpRadio = m_fHpRadio;
 			m_bHit = TRUE;
+			m_fRedHpRadio = m_fHpRadio;
 		}
 	}
 	else
 		m_bHit = FALSE;
+
 
 	//캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
 	m_bCharaStun ? m_bRedAlpha = TRUE , m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;

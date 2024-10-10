@@ -220,6 +220,8 @@ PS_OUT PS_COMBO(PS_IN In)
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    Out.vColor.rbg += g_vColor * (1.f - g_MaskTimer);
 
     if (Out.vColor.a <= 0.1f)
         discard;
@@ -305,6 +307,6 @@ technique11 DefaultTechnique
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
-        PixelShader = compile ps_5_0 PS_SKILL();
+        PixelShader = compile ps_5_0 PS_COMBO();
     }
 }

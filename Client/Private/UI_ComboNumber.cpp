@@ -31,19 +31,28 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 
 	UI_COMBO_DESC* pComboDesc = static_cast<UI_COMBO_DESC*>(pArg);
 	m_iNumUI = pComboDesc->iNumUI;
-	
+
+	m_fSizeX = 0.f;
+	m_fSizeY = 0.f;
+	m_fPosX = 0.f;
+	m_fPosY = 0.f;
+	m_fDepth = 0.f;
+
 	switch (m_iNumUI)
 	{
 	case FIRST:
-		__super::Set_UI_Setting(81.f, 108.f, 96.f, 238.f, 0.5f);
+		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 96.f, m_fPosY = 238.f , m_fDepth = 0.5f;
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 		break;
 
 	case SECOND:
-		__super::Set_UI_Setting(81.f, 108.f, 150.f, 238.f,0.6f);
+		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 150.f, m_fPosY = 238.f, m_fDepth = 0.6f;
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 		break;
 
 	case THIRD:
-		__super::Set_UI_Setting(81.f, 108.f, 204.f, 238.f, 0.7f);
+		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 204.f, m_fPosY = 238.f, m_fDepth = 0.7f;
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 		break;
 	}
 
@@ -55,10 +64,12 @@ void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-
-	
-
-	
+	if(m_pUI_Manager->m_bHit)
+	{
+		__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX , m_fPosY , m_fDepth);
+	}
+	else 
+		__super::Set_UI_Setting(m_fSizeX , m_fSizeY , m_fPosX , m_fPosY , m_fDepth);
 
 	switch (m_iNumUI)
 	{
@@ -75,6 +86,17 @@ void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
+
+	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
+	{
+		
+		m_fAlphaTimer -= fTimeDelta * 2.f;
+
+		if (m_fAlphaTimer <= 1.f)
+			m_fAlphaTimer = 0.f;
+	}
+	else
+		m_fAlphaTimer = 1.f;
 
 }
 
@@ -101,10 +123,7 @@ void CUI_ComboNumber::Late_Update(_float fTimeDelta)
 
 HRESULT CUI_ComboNumber::Render(_float fTimeDelta)
 {
-	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
-
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
+	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(4)))
@@ -128,6 +147,29 @@ HRESULT CUI_ComboNumber::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+}
+
+HRESULT CUI_ComboNumber::Bind_ShaderResources()
+{
+	if (FAILED(__super::Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
+		return E_FAIL;
+
+	_vector vColor = { 0.f, 0.f, 0.f, 1.f };
+
+	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
+	{
+		 vColor = { 1.f, 1.f, 1.f, 1.f };
+	}
+	else
+		vColor = { 0.f, 0.f, 0.f, 1.f };
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CUI_ComboNumber* CUI_ComboNumber::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

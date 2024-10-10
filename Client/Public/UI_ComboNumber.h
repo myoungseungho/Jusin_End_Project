@@ -30,9 +30,11 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	virtual HRESULT Bind_ShaderResources();
 
 private:
-
+	_float m_fDepth = { 0.f };
+	_float m_fAlphaTimer = { 0.f };
 	_uint m_iNumUI = { 0 };
 	_uint m_iTextureIndex = { 0 };
 

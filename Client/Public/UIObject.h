@@ -40,6 +40,7 @@ protected:
 	void DebugTesting(_float fSizeOffset,  _float fDepth = 1.f);
 
 	_bool ClickRange();
+	_bool HitCheck();
 
 protected:
 	CShader* m_pShaderCom = { nullptr };
@@ -48,6 +49,7 @@ protected:
 
 protected:
 	_bool m_bCharaStun = { FALSE };
+	_bool m_bHit = { FALSE };
 
 	_float m_fSizeX = { 100.f };
 	_float m_fSizeY = { 100.f };

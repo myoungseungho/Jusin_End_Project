@@ -84,6 +84,21 @@ _bool CUIObject::ClickRange()
 	return false;
 }
 
+_bool CUIObject::HitCheck()
+{
+	if (m_bCharaStun == TRUE)
+	{
+		if (m_bHit == FALSE)
+		{
+			m_bHit = TRUE;
+			return m_bHit;
+		}
+	}
+	else
+		m_bHit = FALSE;
+
+}
+
 HRESULT CUIObject::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
