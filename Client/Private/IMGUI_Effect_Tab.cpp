@@ -157,9 +157,9 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
         if (ImGui::Button("Delete Effect"))
         {
             // 테스트 이펙트 벡터에서 선택한 객체의 인덱스 찾아 전달
-            _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
+            _uint EffectID = CImgui_Manager::Get_Instance()->Pick_Effect_Mesh();
 
-            m_pEffect_Manager->Delete_Test_Effect(EffectIndex);
+            m_pEffect_Manager->Delete_Test_Effect(EffectID);
 
         }
     }

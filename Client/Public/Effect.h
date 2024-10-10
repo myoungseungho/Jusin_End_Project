@@ -52,6 +52,9 @@ protected:
 	vector<EFFECT_KEYFRAME>	m_EffectKeyFrames;
 
 public:
+	_int m_iUnique_Index = { -1 };
+
+public:
 	_wstring m_ModelName;
 	_wstring m_MaskTextureName;
 	_wstring m_DiffuseTextureName;

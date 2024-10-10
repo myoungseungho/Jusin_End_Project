@@ -33,7 +33,7 @@ public:
 	HRESULT Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
 
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName);
-	HRESULT Delete_Test_Effect(_uint iCurTestEffectIndex);
+	HRESULT Delete_Test_Effect(_uint iCurTestEffectID);
 private:
 	HRESULT Ready_Components();
 
