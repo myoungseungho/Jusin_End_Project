@@ -138,7 +138,29 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
          {
              ExportAllAnimationToTXT();
          }
+         ImGui::SameLine();
+         if (ImGui::Button("Select Position Reset"))
+         {
+             CTransform* pTrasnform = static_cast<CTransform*>(m_pSelectedObject->Get_Component(TEXT("Com_Transform")));
+             pTrasnform->Set_State(CTransform::STATE_POSITION, { 0,0,0,1 });
 
+         }
+         ImGui::SameLine();
+         if (ImGui::Button("Camera  Pos Reset"))
+         {
+
+             // Layer_Camera
+             CGameObject* pObject = m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Camera"));
+             CTransform* pTrasnform = static_cast<CTransform*>(pObject->Get_Component(TEXT("Com_Transform")));
+
+             //_vector Debug = pTrasnform->Get_State(CTransform::STATE_POSITION);
+             //_vector Debug2 = pTrasnform->Get_State(CTransform::STATE_LOOK);
+
+
+             pTrasnform->Set_State(CTransform::STATE_POSITION, { 0,1,-5,1 });
+             pTrasnform->LookAt({0, 0, 0, 1});
+
+         }
          Info_Anim();
 
         

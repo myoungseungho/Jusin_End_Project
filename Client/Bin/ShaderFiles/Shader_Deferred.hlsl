@@ -362,10 +362,10 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     float fEdgeNormalThreshold = 0.2f;
     float fEdgeDepthThreshold = 0.05f;
    
-   // float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
-   //
-   // vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
-   // Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
+    float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
+   
+    vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
+    Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
 
     return Out;
 }
