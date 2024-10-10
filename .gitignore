@@ -30,7 +30,6 @@ AssimpSaveAndLoad/
 *.ini
 *.exp
 *.lib
-*.vcxproj.filters
 EngineSDK/
 RendererSDK/
 
