@@ -25,7 +25,6 @@ AssimpSaveAndLoad/
 
 *.cso
 *.exe
-*.dll
 *.pdb
 *.ini
 *.exp
@@ -34,6 +33,9 @@ Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
 Client/Bin/ModelData/**/*.bin
+
+EngineSDK/lib/Engine.lib
+RendererSDK/lib/Renderer.lib
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/
@@ -215,3 +217,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 EngineSDK/lib/DirectXTK.lib
 EngineSDK/lib/DirectXTKd.lib
+Client/Bin/assimp-vc140-mtd.dll
