@@ -17,6 +17,16 @@ namespace Engine
 
 	typedef struct
 	{
+		XMFLOAT3		vScale;
+		XMFLOAT4		vRotation;
+		XMFLOAT3		vPosition;
+
+		float			fCurTime;
+		float			fDuration;
+	}EFFECT_KEYFRAME;
+
+	typedef struct
+	{
 		class CTexture* pMaterials[AI_TEXTURE_TYPE_MAX];
 	}MESHMATERIAL;
 

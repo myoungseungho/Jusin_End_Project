@@ -46,6 +46,21 @@ HRESULT CEffect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CEffect::Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame)
+{
+	m_EffectKeyFrames.push_back(NewKeyFrame);
+}
+
+HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
+{
+	return S_OK;
+}
+
+HRESULT CEffect::Bind_ShaderResources()
+{
+	return S_OK;
+}
+
 CEffect* CEffect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CEffect* pInstance = new CEffect(pDevice, pContext);
@@ -76,3 +91,5 @@ void CEffect::Free()
 {
 	__super::Free();
 }
+
+

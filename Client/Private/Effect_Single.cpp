@@ -26,6 +26,8 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
+	m_eEffect_Type = EFFECT_SINGLE;
+
 	EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
 
 	m_ModelName = pEffectDesc->ModelName;

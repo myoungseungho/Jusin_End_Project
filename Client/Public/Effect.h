@@ -36,6 +36,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+public:
+	void Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame);
 
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
@@ -45,18 +47,23 @@ protected:
 	CTexture* m_pDiffuseTextureCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };
 
-	_float		m_fDuration = { 0.f };
 	_float		m_fAlpha = { 0.f };
 
 	_float		m_fCurPosition = { 0.f };
 
-	vector<KEYFRAME>	m_EffectKeyFrames;
+	vector<EFFECT_KEYFRAME>	m_EffectKeyFrames;
 
+public:
+	_int m_iUnique_Index = { -1 };
 
 public:
 	_wstring m_ModelName;
 	_wstring m_MaskTextureName;
 	_wstring m_DiffuseTextureName;
+
+protected:
+	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
+	virtual HRESULT Bind_ShaderResources();
 
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

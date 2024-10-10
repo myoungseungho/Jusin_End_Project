@@ -51,6 +51,11 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject);
 }
 
+void CRenderInstance::SetActive_RenderTarget(_bool isOn)
+{
+	m_pRenderer->SetActive_RenderTarget(isOn);
+}
+
 void CRenderInstance::Show_OutLine()
 {
 	m_pRenderer->Show_OutLine();

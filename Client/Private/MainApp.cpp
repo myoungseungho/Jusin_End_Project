@@ -62,7 +62,6 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	//레벨매니저 렌더는 게임인스턴스
 	m_pGameInstance->Render_Engine(fTimeDelta);
 
-
 	m_pGameInstance->Present();
 
 	return S_OK;

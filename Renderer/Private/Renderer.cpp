@@ -109,8 +109,9 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	Safe_Release(pDepthStencilTexture);
 
+	_float offsetY = 18.f;
 #ifdef _DEBUG
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Diffuse"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
 		return E_FAIL;
@@ -399,10 +400,19 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
+	if (!m_bShow_RenderTarget)
+	{
+		for (auto& pComponent : m_DebugComponent)
+			Safe_Release(pComponent);
+
+		m_DebugComponent.clear();
+
+		return S_OK;
+	}
+
 	for (auto& pComponent : m_DebugComponent)
 	{
 		pComponent->Render(fTimeDelta);
-
 		Safe_Release(pComponent);
 	}
 
@@ -412,13 +422,13 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
 
-	/*if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;*/
-	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
-	//	return E_FAIL;
-	//if (FAILED(m_pGameInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
-	//	return E_FAIL;
 
 	return S_OK;
 }

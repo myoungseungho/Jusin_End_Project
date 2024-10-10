@@ -183,21 +183,35 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 	return S_OK;
 }
 
-HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectIndex)
+HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectID)
 {
-	if (iCurTestEffectIndex >= m_TestEffect.size()) 
-		return E_FAIL;
-	
-
-	if (m_TestEffect[iCurTestEffectIndex]) 
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
 	{
-		Safe_Release(m_TestEffect[iCurTestEffectIndex]);
-		m_TestEffect[iCurTestEffectIndex] = nullptr;
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == iCurTestEffectID)
+		{
+			Safe_Release(pEffect);
+			m_TestEffect.erase(it);
+			return S_OK; 
+		}
 	}
 
-	m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+	return E_FAIL;
+}
 
-	return S_OK;
+void CEffect_Manager::Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			pEffect->Add_KeyFrame(NewKeyFrame);
+			return;
+		}
+	}
 }
 
 HRESULT CEffect_Manager::Ready_Components()

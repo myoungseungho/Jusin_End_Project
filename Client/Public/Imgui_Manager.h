@@ -38,7 +38,10 @@ public:
 	void Delete_Shader_Tab(_int iIndex);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
+	_int Get_CurShaderTab_Id() { return m_iCurShaderTabId; }
 	_int Pick_Effect_Mesh();
+	void Delete_Shader_Tab(_int iIndex);
+
 private:
 	void Render_IMGUI(_float fTimeDelta);
 	void Render_ShaderTabs(_float fTimeDelta);
@@ -59,6 +62,7 @@ private:
 
 	_int m_iShaderCount = { 0 };
 	_int m_iCurShaderTabIndex = { -1 };
+	_int m_iCurShaderTabId = { -1 };
 public:
 	virtual void Free() override;
 };

@@ -28,6 +28,9 @@ private:
 	_uint		m_iNumMaskTexture = { 0 };
 	_float		m_fChangeMaskSpeed = { 0.f };
 
+private:
+	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
+	virtual HRESULT Bind_ShaderResources() override;
 
 public:
 	static CEffect_Multi* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

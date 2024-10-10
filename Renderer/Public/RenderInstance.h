@@ -22,6 +22,7 @@ public:
 
 public: /* For.Renderer */
 	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
+	void SetActive_RenderTarget(_bool isOn);
 	void Show_OutLine();
 
 public: /* For.Target_Manager */

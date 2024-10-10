@@ -15,7 +15,8 @@
 
 #include "imnodes.h"
 
-bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -153,6 +154,15 @@ _int CImgui_Manager::Pick_Effect_Mesh()
 	return isPick;
 }
 
+void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
+{
+	if (iIndex >= 0 && iIndex < m_vecShader_Tabs.size())
+	{
+		Safe_Release(m_vecShader_Tabs[iIndex]);
+		m_vecShader_Tabs.erase(m_vecShader_Tabs.begin() + iIndex);
+	}
+}
+
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 {
 	// 토글 버튼
@@ -162,15 +172,17 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Render_Target")) {
+			if (ImGui::MenuItem("Render_Target", NULL, &bShowImGuiRenderTarget)) {
+				 m_pRenderInstance->SetActive_RenderTarget(bShowImGuiRenderTarget);
+			}
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
 
 	if (bShowImGuiWindows) {  // 이 조건을 통해 모든 ImGui 창의 표시 여부를 제어
-
-		//쉐이더
-		//이펙트
-		//애니메이션
-		//UI
 
 		static _bool bShowAnimation = true;
 		static _bool bShowEffect = true;
@@ -206,6 +218,7 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 		if (/*ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick) || */tab->m_TabPick == true)
 		{
 			ImGui::Text("Mesh Index : %d", tab->m_iNumberId);
+			m_iCurShaderTabId = tab->m_iNumberId;
 			ImGui::SameLine();
 			if (ImGui::Button("Out_Line"))
 				m_pRenderInstance->Show_OutLine();

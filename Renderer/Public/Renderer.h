@@ -29,10 +29,14 @@ public:
 	HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
 	HRESULT Draw(_float fTimeDelta);
+	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
+
 public:
 	void Show_OutLine() { m_isOutLine = !m_isOutLine; }
+
 private:
 	_bool m_isOutLine = { false };
+
 private:
 	ID3D11Device*			m_pDevice = { nullptr };
 	ID3D11DeviceContext*	m_pContext = { nullptr };
@@ -52,6 +56,8 @@ private:
 	_float4x4					m_ViewMatrix = {};
 	_float4x4					m_ProjMatrix = {};
 
+	_bool m_bShow_RenderTarget = { false };
+
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -62,6 +68,7 @@ private:
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
+
 #ifdef _DEBUG
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
