@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "Client_Defines.h"
+#include "Pawn.h"
 
 BEGIN(Engine)
 
@@ -51,7 +52,7 @@ public:
 	//Combo
 	_uint m_iComboCount = { 0 };
 
-
+	CPawn* m_tPawnDesc[SLOT_END] = {};
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

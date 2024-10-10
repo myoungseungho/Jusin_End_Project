@@ -29,14 +29,16 @@ HRESULT CPawn::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	m_iHp = 100;
-
 	return S_OK;
 }
 
 void CPawn::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_tPawnDesc.iHp = m_iHp;
+	m_tPawnDesc.iComboCount = m_iComboCount;
+	m_tPawnDesc.bStun = m_bStun;
 }
 
 

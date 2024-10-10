@@ -34,15 +34,24 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+public:
+	PAWN_DESC Get_PawnDesc() { return m_tPawnDesc; }
+
+protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
 
+protected:
+
+	//UI에 보내야하는 정보
 	_uint					m_iComboCount = { 0 };
-	_float					m_fStunTImer = { 0.f };
 	_uint					m_iHp = { 0 };
 	_bool					m_bStun = { FALSE };
 
-	PAWN_DESC				 PawnDesc = {};
+	PAWN_DESC				 m_tPawnDesc = {};
+
+protected:
+	_float					m_fStunTImer = { 0.f };
 
 	class CUI_Manager* m_pUIManager = { nullptr };
 

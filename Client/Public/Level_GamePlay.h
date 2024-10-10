@@ -23,6 +23,10 @@ private:
 	HRESULT Ready_Lights();
 
 	HRESULT Ready_UIObjects();
+
+private:
+	class CUI_Manager* m_pUIManager = { nullptr };
+
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

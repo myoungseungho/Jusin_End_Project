@@ -8,9 +8,13 @@
 #include "Monster.h"
 #include "UI_ComboNumber.h"
 
+#include "Pawn.h"
+
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext } 
+	, m_pUIManager{ CUI_Manager::Get_Instance() }
 {
+	Safe_AddRef(m_pUIManager);
 }
 
 HRESULT CLevel_GamePlay::Initialize()
@@ -35,6 +39,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	//몬스터 생성
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"), TEXT("Layer_Player"))))
 		return E_FAIL;
+
+	 m_pUIManager->m_tPawnDesc[CUI_Manager::LPLAYER1]  = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
+	 m_pUIManager->m_tPawnDesc[CUI_Manager::RPLAYER1] = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
+
+
 
 	return S_OK;
 }
@@ -164,5 +173,7 @@ CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCon
 
 void CLevel_GamePlay::Free()
 {
+	Safe_Release(m_pUIManager);
+
 	__super::Free();
 }
