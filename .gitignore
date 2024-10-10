@@ -21,7 +21,7 @@ build/
 bld/
 
 # Ignore .bin and .fbx files in Resources and all subdirectories
-AssimpSaveAndLoad/
+AssimpSaveAndLoad/Models/
 
 *.cso
 *.exe
@@ -218,3 +218,5 @@ ModelManifest.xml
 EngineSDK/lib/DirectXTK.lib
 EngineSDK/lib/DirectXTKd.lib
 Client/Bin/assimp-vc140-mtd.dll
+AssimpSaveAndLoad/assimp-vc140-mtd.dll
+AssimpSaveAndLoad/Bin/assimp-vc140-mtd.dll
