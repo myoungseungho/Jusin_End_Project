@@ -73,13 +73,13 @@ void CImgui_Manager::Update(_float fTimeDelta)
 			_int iCount = 0;
 			for (auto& tab : m_vecShader_Tabs)
 			{
-				if (iCount == iMeshIndex)
+				if (tab.second->m_iNumberId == iMeshIndex)
 				{
-					tab->m_TabPick = true;
-					tab->TabPos_Init();
+					tab.second->m_TabPick = true;
+					tab.second->TabPos_Init();
 				}
 				else
-					tab->m_TabPick = false;
+					tab.second->m_TabPick = false;
 
 				iCount++;
 			}
@@ -115,19 +115,18 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 
 void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 {
-	m_vecShader_Tabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture));
-	m_vecShader_Tabs.back()->m_iNumberId = m_iShaderCount;
+	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture));
+	m_vecShader_Tabs[to_string(m_iShaderCount)]->m_iNumberId = m_iShaderCount;
 
 	m_iShaderCount++;
 }
 
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
 {
-	if (iIndex >= 0 && iIndex < m_vecShader_Tabs.size())
-	{
-		Safe_Release(m_vecShader_Tabs[iIndex]);
-		m_vecShader_Tabs.erase(m_vecShader_Tabs.begin() + iIndex);
-	}
+
+	Safe_Release(m_vecShader_Tabs[to_string(iIndex)]);
+	m_vecShader_Tabs.erase(to_string(iIndex));
+
 }
 
 _int CImgui_Manager::Pick_Effect_Mesh()
@@ -152,15 +151,6 @@ _int CImgui_Manager::Pick_Effect_Mesh()
 
 
 	return isPick;
-}
-
-void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
-{
-	if (iIndex >= 0 && iIndex < m_vecShader_Tabs.size())
-	{
-		Safe_Release(m_vecShader_Tabs[iIndex]);
-		m_vecShader_Tabs.erase(m_vecShader_Tabs.begin() + iIndex);
-	}
 }
 
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
@@ -215,25 +205,26 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 	{
 		ImGui::Begin("Shader Tab");
 	
-		if (/*ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick) || */tab->m_TabPick == true)
+		if (/*ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick) || */tab.second->m_TabPick == true)
 		{
-			ImGui::Text("Mesh Index : %d", tab->m_iNumberId);
-			m_iCurShaderTabId = tab->m_iNumberId;
+			ImGui::Text("Mesh Index : %d", tab.second->m_iNumberId);
+			m_iCurShaderTabId = tab.second->m_iNumberId;
+
 			ImGui::SameLine();
 			if (ImGui::Button("Out_Line"))
 				m_pRenderInstance->Show_OutLine();
-			if (tab->m_TabPick == false)
+			if (tab.second->m_TabPick == false)
 			{
-				tab->TabPos_Init();
-				tab->m_TabPick = true;
+				tab.second->TabPos_Init();
+				tab.second->m_TabPick = true;
 			}
 
-			m_iCurShaderTabIndex = tab->m_iNumberId;
-			tab->Render(fTimeDelta);
+			m_iCurShaderTabIndex = tab.second->m_iNumberId;
+			tab.second->Render(fTimeDelta);
 			//ImGui::EndTabItem();
 		}
 		else
-			tab->m_TabPick = false;
+			tab.second->m_TabPick = false;
 
 
 		ShaderImGuiPos = ImGui::GetWindowPos();
@@ -249,7 +240,7 @@ void CImgui_Manager::Free()
 		Safe_Release(iter);
 
 	for (auto& iter : m_vecShader_Tabs)
-		Safe_Release(iter);
+		Safe_Release(iter.second);
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();

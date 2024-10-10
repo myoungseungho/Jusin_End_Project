@@ -139,7 +139,7 @@ void CIMGUI_Shader_Tab::TabPos_Init()
 
 void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 {
-    size_t testModelsPos = szPath.find("Shader");
+    size_t testModelsPos = szPath.find("ModelData");
 
     if (testModelsPos != string::npos)
     {
@@ -147,7 +147,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
         replace(relativePath.begin(), relativePath.end(), '\\', '/');
 
-        string fullPath = string("../Bin/Resources/") + relativePath;
+        string fullPath = string("../Bin/") + relativePath;
         wstring_convert<codecvt_utf8_utf16<_tchar>> converter;
 
         wstring prototypeKey = TEXT("Prototype_Component_Texture_Shader_");

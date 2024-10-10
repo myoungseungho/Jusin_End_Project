@@ -33,14 +33,14 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 
-	class CIMGUI_Shader_Tab* Access_Shader_Tab() { return m_vecShader_Tabs[m_iCurShaderTabIndex]; }
+	class CIMGUI_Shader_Tab* Access_Shader_Tab() { return m_vecShader_Tabs[to_string(m_iCurShaderTabIndex)]; }
 	void Push_Shader_Tab(CTexture* pTexture);
 	void Delete_Shader_Tab(_int iIndex);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
 	_int Get_CurShaderTab_Id() { return m_iCurShaderTabId; }
 	_int Pick_Effect_Mesh();
-	void Delete_Shader_Tab(_int iIndex);
+
 
 private:
 	void Render_IMGUI(_float fTimeDelta);
@@ -52,7 +52,7 @@ private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
 	vector<class CIMGUI_Tab*> m_vecTabs;
-	vector<class CIMGUI_Shader_Tab*> m_vecShader_Tabs;
+	map<string, class CIMGUI_Shader_Tab*> m_vecShader_Tabs;
 
 	ImVec2 MainImGuiPos = {0.f,0.f};
 	ImVec2 MainImGuiSize = { 0.f,0.f };
