@@ -180,6 +180,11 @@ CComponent * CGameInstance::Get_Component(_uint iLevelIndex, const _wstring & st
 	return	m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
 }
 
+list<class CGameObject*> CGameInstance::Get_Layer(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	return m_pObject_Manager->Get_Layer(iLevelIndex, strLayerTag);
+}
+
 CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
 {
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);

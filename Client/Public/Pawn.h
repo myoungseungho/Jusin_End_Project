@@ -12,6 +12,15 @@ BEGIN(Client)
 
 class CPawn abstract : public CGameObject
 {
+public:
+	typedef struct
+	{
+		_bool		bStun = { FALSE };
+		_uint		iComboCount = { 0 };
+		_uint		iHp = { 0 };
+		_float		fStunTimer = { 0.f };
+	}PAWN_DESC;
+
 protected:
 	CPawn(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CPawn(const CPawn& Prototype);
@@ -33,7 +42,7 @@ public:
 	_uint					m_iHp = { 0 };
 	_bool					m_bStun = { FALSE };
 
-	_uint					m_iTmpe = { 0 };
+	PAWN_DESC				 PawnDesc = {};
 
 	class CUI_Manager* m_pUIManager = { nullptr };
 
