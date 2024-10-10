@@ -386,6 +386,7 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 	return S_OK;
 }
 
+
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	if (!m_bShow_RenderTarget)
