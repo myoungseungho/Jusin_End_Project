@@ -19,6 +19,8 @@ public:
 		_wstring ModelName;
 		_wstring MaskTextureName;
 		_wstring DiffuseTextureName;
+
+		_int iUnique_Index = -1;
 	}EFFECT_DESC;
 
 protected:

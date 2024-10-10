@@ -268,7 +268,8 @@ void ModelConverter::SaveBoneToBinary(std::ofstream& outFile, const BoneData& bo
 	outFile.write(reinterpret_cast<const char*>(&bone.transformationMatrix), sizeof(bone.transformationMatrix));
 	uint32_t numChildren = bone.children.size();
 	outFile.write(reinterpret_cast<const char*>(&numChildren), sizeof(numChildren));
-	for (const auto& child : bone.children) {
+	for (const auto& child : bone.children) 
+	{
 		SaveBoneToBinary(outFile, child);
 	}
 }

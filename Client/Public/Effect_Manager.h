@@ -44,7 +44,7 @@ public:
 	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
 
 	vector<class CEffect*>					m_TestEffect;
-
+	_int									m_TestEffect_Count = { 0 };
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
