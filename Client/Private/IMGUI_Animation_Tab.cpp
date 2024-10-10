@@ -384,7 +384,7 @@ void CIMGUI_Animation_Tab::Info_Anim()
             m_pSelectedModelCom->m_fCurrentAnimPosition = 0.f;
         }
 
-        if (ImGui::SliderFloat("AnimationUpdateTime", &m_fAnimationUpdateTime, 0, 1.f))
+        if (ImGui::SliderFloat("AnimationUpdateTime", &m_fAnimationUpdateTime, 0.005, 1.f))
         {
             m_pSelectedModelCom->Set_MaxAnimationUpdate_Time(m_fAnimationUpdateTime);
         }

@@ -111,8 +111,8 @@ private:
     FrameEventMap* m_pFrameEvent = { nullptr };
 
 
-    CHARACTER_INDEX m_iTestModelIndex = { PLAY_GOKU };
-    _float m_fAnimationUpdateTime = {};
+    CHARACTER_INDEX m_iTestModelIndex = { OPENING_GOKU };
+    _float m_fAnimationUpdateTime = {0.005f};
     _float m_fTool_TickPerSecond = { 25.f };
     _char m_PostionBuffer[30] = "0.0";
 
