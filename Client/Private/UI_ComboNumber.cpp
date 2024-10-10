@@ -35,15 +35,15 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 	switch (m_iNumUI)
 	{
 	case FIRST:
-		__super::Set_UI_Setting(81.f, 108.f, 96.f, 238.f, 0.8f);
+		__super::Set_UI_Setting(81.f, 108.f, 96.f, 238.f, 0.5f);
 		break;
 
 	case SECOND:
-		__super::Set_UI_Setting(81.f, 108.f, 150.f, 238.f,0.9f);
+		__super::Set_UI_Setting(81.f, 108.f, 150.f, 238.f,0.6f);
 		break;
 
 	case THIRD:
-		__super::Set_UI_Setting(81.f, 108.f, 204.f, 238.f);
+		__super::Set_UI_Setting(81.f, 108.f, 204.f, 238.f, 0.7f);
 		break;
 	}
 
@@ -55,8 +55,10 @@ void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_iComboCount = m_pUI_Manager->m_iComboCount;
-	//m_bComboEnd = m_pUI_Manager->m_bComboEnd;
+
+	
+
+	
 
 	switch (m_iNumUI)
 	{
@@ -73,20 +75,12 @@ void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	//if (m_bComboEnd == TRUE)
-	//{
-	//	m_fAlphaTimer += fTimeDelta;
-	//}
-	//
-	//if (m_fAlphaTimer >= 1.f)
-	//	m_bComboEnd = FALSE;
 
 }
 
 void CUI_ComboNumber::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-
 
 }
 
@@ -113,7 +107,7 @@ HRESULT CUI_ComboNumber::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(4)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

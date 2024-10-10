@@ -30,6 +30,8 @@
 #include "UI_Timer.h"
 #include "UI_ComboNumber.h"
 #include "UI_ComboFont.h"
+#include "UI_ComboEffect.h"
+
 //
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -332,6 +334,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_UI_ComboFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ComboFont"),
 		CUI_ComboFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_ComboEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ComboEffect"),
+		CUI_ComboEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

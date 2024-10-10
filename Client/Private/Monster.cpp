@@ -42,23 +42,28 @@ HRESULT CMonster::Initialize(void* pArg)
 
 void CMonster::Priority_Update(_float fTimeDelta)
 {
+	//플레이어 체력 바
+
 	if (m_bStun == TRUE)
 	{
 		m_fStunTImer -= fTimeDelta;
-
+	
 		if (m_fStunTImer <= 0.f)
 		{
 			m_fStunTImer = 0.f;
 			m_bStun = FALSE;
+			m_iComboCount = 0;
 		}
 	}
-
+	
 	if (m_pGameInstance->Get_DIKeyState(DIK_B))
 	{
+		m_iComboCount++;
 		m_iHp--;
 		m_fStunTImer = 1.f;
 		m_bStun = TRUE;
 	}
+
 
 	m_pUIManager->UsingComboCount(m_iComboCount);
 	m_pUIManager->UsingStunCheck(m_bStun);

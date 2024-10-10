@@ -215,6 +215,19 @@ PS_OUT PS_SKILL(PS_IN In)
         return Out;
 }
 
+PS_OUT PS_COMBO(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+    if (Out.vColor.a <= 0.1f)
+        discard;
+  
+
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -267,6 +280,21 @@ technique11 DefaultTechnique
 
 //3 
     pass Skill
+    {
+
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SKILL();
+    }
+
+//4
+    pass Combo
     {
 
         SetRasterizerState(RS_Cull_None);

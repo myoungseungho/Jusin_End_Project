@@ -33,17 +33,35 @@ HRESULT CUI_Combo::Initialize(void* pArg)
 
 void CUI_Combo::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CUI_Combo::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
 
+	if (m_bCharaStun == TRUE)
+	{
+		m_iComboCount = m_pUI_Manager->m_iComboCount;
+		m_bComboEnd = TRUE;
+	}
+
+	if (m_bComboEnd == TRUE)
+	{
+		m_fAlphaTimer += fTimeDelta;
+		if (m_fAlphaTimer >= 1.f)
+		{
+			m_fAlphaTimer = 0.f;
+			m_bComboEnd = FALSE;
+		}
+	}
+	else
+		m_iComboCount = 0.f;
 }
 
 void CUI_Combo::Late_Update(_float fTimeDelta)
 {
-
+	__super::Late_Update(fTimeDelta);
 }
 
 HRESULT CUI_Combo::Render(_float fTimeDelta)

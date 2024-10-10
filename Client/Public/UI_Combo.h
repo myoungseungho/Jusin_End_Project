@@ -24,6 +24,9 @@ protected:
 	virtual HRESULT Ready_Components();
 
 protected:
+	_bool m_bComboEnd = { FALSE };
+	_uint m_iComboCount = { 0 };
+	_float m_fAlphaTimer = { 0.f };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

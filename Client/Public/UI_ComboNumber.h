@@ -32,13 +32,10 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
-	_bool m_bComboEnd = { FALSE };
 
 	_uint m_iNumUI = { 0 };
-	_uint m_iComboCount = { 0 };
 	_uint m_iTextureIndex = { 0 };
 
-	_float m_fAlphaTimer = { 0.f };
 
 public:
 	static CUI_ComboNumber* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
