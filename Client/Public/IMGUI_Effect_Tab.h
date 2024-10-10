@@ -24,7 +24,7 @@ public:
 
 	void Render_For_Each_Effect();
 	void Render_For_Effect_Layer();
-
+	void Render_For_Effect_KeyFrame();
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 	vector<string> ModelName;

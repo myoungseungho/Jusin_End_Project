@@ -200,6 +200,20 @@ HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectID)
 	return E_FAIL;
 }
 
+void CEffect_Manager::Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			pEffect->Add_KeyFrame(NewKeyFrame);
+			return;
+		}
+	}
+}
+
 HRESULT CEffect_Manager::Ready_Components()
 {
 	vector<const _wstring*>* pModelKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));

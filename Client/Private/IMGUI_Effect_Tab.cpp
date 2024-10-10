@@ -9,7 +9,7 @@
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
 
-const char* Effect[] = { "Each", "Final" };
+const char* Effect[] = { "Each", "Final", "Effect KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
 
 static int CurrentEffect = 0;
@@ -56,6 +56,11 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
     if (CurrentEffect == 1)
     {
         Render_For_Effect_Layer();
+    }
+
+    if (CurrentEffect == 2)
+    {
+        Render_For_Effect_KeyFrame();
     }
 }
 
@@ -157,9 +162,10 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
         if (ImGui::Button("Delete Effect"))
         {
             // 테스트 이펙트 벡터에서 선택한 객체의 인덱스 찾아 전달
-            _uint EffectID = CImgui_Manager::Get_Instance()->Pick_Effect_Mesh();
+            _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
+            CImgui_Manager::Get_Instance()->Delete_Shader_Tab(EffectIndex);
 
-            m_pEffect_Manager->Delete_Test_Effect(EffectID);
+            m_pEffect_Manager->Delete_Test_Effect(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id());
 
         }
     }
@@ -222,6 +228,118 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
     }
 }
 
+void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
+{
+    static EFFECT_KEYFRAME newKeyFrame;
+
+    ImGui::Text("Effect Keyframe Settings");
+
+    // Scale 섹션
+    ImGui::Text("Scale");
+
+    // X 축
+    ImGui::Text("X"); ImGui::SameLine();
+    ImGui::SliderFloat("##Scale X Slider", &newKeyFrame.vScale.x, 0.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Scale X Dec")) newKeyFrame.vScale.x -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Scale X Inc")) newKeyFrame.vScale.x += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Scale X", &newKeyFrame.vScale.x, 0.1f);
+
+    // Y 축
+    ImGui::Text("Y"); ImGui::SameLine();
+    ImGui::SliderFloat("##Scale Y Slider", &newKeyFrame.vScale.y, 0.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Scale Y Dec")) newKeyFrame.vScale.y -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Scale Y Inc")) newKeyFrame.vScale.y += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Scale Y", &newKeyFrame.vScale.y, 0.1f);
+
+    // Z 축
+    ImGui::Text("Z"); ImGui::SameLine();
+    ImGui::SliderFloat("##Scale Z Slider", &newKeyFrame.vScale.z, 0.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Scale Z Dec")) newKeyFrame.vScale.z -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Scale Z Inc")) newKeyFrame.vScale.z += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Scale Z", &newKeyFrame.vScale.z, 0.1f);
+
+    ImGui::Separator();
+
+    // Rotation 섹션
+    ImGui::Text("Rotation");
+
+    // X 축
+    ImGui::Text("X"); ImGui::SameLine();
+    ImGui::SliderFloat("##Rotation X Slider", &newKeyFrame.vRotation.x, 0.0f, 360.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Rotation X Dec")) newKeyFrame.vRotation.x -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Rotation X Inc")) newKeyFrame.vRotation.x += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Rotation X", &newKeyFrame.vRotation.x, 0.1f);
+
+    // Y 축
+    ImGui::Text("Y"); ImGui::SameLine();
+    ImGui::SliderFloat("##Rotation Y Slider", &newKeyFrame.vRotation.y, 0.0f, 360.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Rotation Y Dec")) newKeyFrame.vRotation.y -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Rotation Y Inc")) newKeyFrame.vRotation.y += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Rotation Y", &newKeyFrame.vRotation.y, 0.1f);
+
+    // Z 축
+    ImGui::Text("Z"); ImGui::SameLine();
+    ImGui::SliderFloat("##Rotation Z Slider", &newKeyFrame.vRotation.z, 0.0f, 360.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Rotation Z Dec")) newKeyFrame.vRotation.z -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Rotation Z Inc")) newKeyFrame.vRotation.z += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Rotation Z", &newKeyFrame.vRotation.z, 0.1f);
+
+    ImGui::Separator();
+
+    // Position 섹션
+    ImGui::Text("Position");
+
+    // X 축
+    ImGui::Text("X"); ImGui::SameLine();
+    ImGui::SliderFloat("##Position X Slider", &newKeyFrame.vPosition.x, -100.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Position X Dec")) newKeyFrame.vPosition.x -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Position X Inc")) newKeyFrame.vPosition.x += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Position X", &newKeyFrame.vPosition.x, 0.1f);
+
+    // Y 축
+    ImGui::Text("Y"); ImGui::SameLine();
+    ImGui::SliderFloat("##Position Y Slider", &newKeyFrame.vPosition.y, -100.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Position Y Dec")) newKeyFrame.vPosition.y -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Position Y Inc")) newKeyFrame.vPosition.y += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Position Y", &newKeyFrame.vPosition.y, 0.1f);
+
+    // Z 축
+    ImGui::Text("Z"); ImGui::SameLine();
+    ImGui::SliderFloat("##Position Z Slider", &newKeyFrame.vPosition.z, -100.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##Position Z Dec")) newKeyFrame.vPosition.z -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##Position Z Inc")) newKeyFrame.vPosition.z += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("##Position Z", &newKeyFrame.vPosition.z, 0.1f);
+
+    ImGui::Separator();
+
+    // fCurTime: 슬라이더, 입력창, 증감 버튼
+    ImGui::Text("Current Time");
+    ImGui::SliderFloat("##CurTime Slider", &newKeyFrame.fCurTime, 0.0f, 100.0f); ImGui::SameLine();
+    if (ImGui::Button("-##CurTime")) newKeyFrame.fCurTime -= 0.1f; ImGui::SameLine();
+    if (ImGui::Button("+##CurTime")) newKeyFrame.fCurTime += 0.1f; ImGui::SameLine();
+    ImGui::InputFloat("CurTime", &newKeyFrame.fCurTime); 
+
+    ImGui::Separator();
+
+    // fDuration: 입력창과 0.5씩 증감 버튼
+    ImGui::Text("Duration");
+    if (ImGui::Button("-##Duration")) newKeyFrame.fDuration -= 0.5f; ImGui::SameLine();
+    if (ImGui::Button("+##Duration")) newKeyFrame.fDuration += 0.5f; ImGui::SameLine();
+    ImGui::InputFloat("Duration", &newKeyFrame.fDuration); 
+
+
+    ImGui::Separator();
+
+    // Add Keyframe 버튼
+    if (ImGui::Button("Add Keyframe"))
+    {
+        m_pEffect_Manager->Add_KeyFrame(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id(), newKeyFrame);
+        ImGui::Text("Keyframe added!");
+    }
+
+    ImGui::Separator();
+
+}
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

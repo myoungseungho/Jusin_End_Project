@@ -36,6 +36,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+public:
+	void Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame);
 
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };

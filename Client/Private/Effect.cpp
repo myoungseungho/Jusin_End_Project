@@ -46,12 +46,15 @@ HRESULT CEffect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CEffect::Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame)
+{
+	m_EffectKeyFrames.push_back(NewKeyFrame);
+}
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
 {
 	return S_OK;
 }
-
 
 HRESULT CEffect::Bind_ShaderResources()
 {
