@@ -95,7 +95,7 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL(PS_IN In)
 
 	float4			vAmbient = g_vLightAmbient * g_vMtrlAmbient;
 
-	Out.vShade = g_vLightDiffuse * max(dot(normalize(g_vLightDir) * -1.f, vNormal), 0.f) + vAmbient;
+	//Out.vShade = g_vLightDiffuse * max(dot(normalize(g_vLightDir) * -1.f, vNormal), 0.f) + vAmbient;
 
 	float4			vWorldPos;
 
@@ -118,7 +118,7 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL(PS_IN In)
 	float4			vReflect = reflect(normalize(g_vLightDir), vNormal);
 	float4			vLook = vWorldPos - g_vCamPosition;
 
-	Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
+	//Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
 
 	return Out;
 
@@ -243,7 +243,7 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     vector vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
     vector vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
 
-    Out.vColor = vDiffuse * vShade + vSpecular;
+    Out.vColor = vDiffuse; //* vShade + vSpecular;
 
     vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
     vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);

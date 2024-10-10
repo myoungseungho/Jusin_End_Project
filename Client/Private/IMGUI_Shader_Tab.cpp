@@ -102,10 +102,15 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
             m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1]);
             //m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
         }
-        else
+        else if(end_attr % 4 == 2)
         {
             links.push_back(make_pair(start_attr, end_attr));
-            m_NodeTextures[(end_attr -1)/3 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[(start_attr) / 3 - 1]);
+            m_NodeTextures[(end_attr - 2) / 4 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[(start_attr) / 4 - 1], END_ALPHA);
+        }
+        else if (end_attr % 4 == 1)
+        {
+            links.push_back(make_pair(start_attr, end_attr));
+            m_NodeTextures[(end_attr - 1) / 4 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[(start_attr) / 4 - 1], END_DIFFUSE);
         }
     }
 
@@ -231,7 +236,11 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
         ImGui::Text("OutColor");
         ImNodes::EndOutputAttribute();
 
-        ImNodes::BeginInputAttribute(  node_id * m_iAttributeCount + 1);
+        ImNodes::BeginInputAttribute(node_id * m_iAttributeCount + 1);
+        ImGui::Text("Diffuse");
+        ImNodes::EndInputAttribute();
+
+        ImNodes::BeginInputAttribute(  node_id * m_iAttributeCount + 2);
         ImGui::Text("Alpha");
         ImNodes::EndInputAttribute();
 
@@ -240,7 +249,7 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
             ImGui::Image(m_NodeTextureSRVs[i], ImVec2(150, 150));
         }
 
-        ImNodes::BeginInputAttribute(  node_id * m_iAttributeCount + 2);
+        ImNodes::BeginInputAttribute(  node_id * m_iAttributeCount + 3);
         ImGui::Text("ShadeFunction");
         ImNodes::EndInputAttribute();
 

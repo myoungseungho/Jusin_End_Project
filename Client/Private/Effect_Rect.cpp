@@ -128,7 +128,7 @@ HRESULT CEffect_Rect::Bind_ShaderResources()
 	
 	if (m_isTex == true)
 	{
-		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 			return E_FAIL;
 	}
 	else

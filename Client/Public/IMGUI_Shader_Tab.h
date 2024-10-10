@@ -7,6 +7,8 @@ BEGIN(Client)
 class CIMGUI_Shader_Tab : public CIMGUI_Tab
 {
 public:
+	enum ENDNODE_TYPE { END_DIFFUSE, END_ALPHA };
+public:
 	typedef struct
 	{
 		_int MoveTex_node_id = { 1500 };
@@ -48,7 +50,7 @@ private:
 	const _int m_iMain_node_id = -1;	// 메인 노드 id
 	_int m_iMain_Input_Diffuse_id = 0;  // 디퓨즈에 연결된 id
 
-	_int m_iAttributeCount = 3; // 노드 Attribute 개수 이게 늘어나면 노드 최대 개수가 줄어듦
+	_int m_iAttributeCount = 4; // 노드 Attribute 개수 이게 늘어나면 노드 최대 개수가 줄어듦
 
 	_int unique_node_id = 1;	// 노드 최대 개수 500개
 	vector<_int> node_ids;		// 이건 텍스쳐 노드로 쓰자

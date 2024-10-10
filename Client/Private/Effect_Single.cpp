@@ -21,7 +21,9 @@ HRESULT CEffect_Single::Initialize_Prototype()
 
 HRESULT CEffect_Single::Initialize(void* pArg)
 {
-	if (FAILED(__super::Initialize(pArg)))
+	CTransform::TRANSFORM_DESC tDesc{};
+	tDesc.fRotationPerSec = XMConvertToRadians(90.f);
+	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
 	EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
@@ -34,6 +36,20 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName,&m_DiffuseTextureName)))
 		return E_FAIL;
 
+	if (m_iUnique_Index == 0)
+	{
+		m_pTransformCom->Set_Scaled(0.4f, 1.0f, 1.0f);
+		m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(30.f));
+	}
+	else if (m_iUnique_Index == 1)
+	{
+		m_pTransformCom->Set_Scaled(0.4f, 1.0f, 1.0f);
+		m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(10.f));
+	}
+	else
+	{
+		m_pTransformCom->Set_Scaled(0.7f, 1.0f, 1.0f);
+	}
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 	return S_OK;
@@ -41,12 +57,12 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 void CEffect_Single::Priority_Update(_float fTimeDelta)
 {
-
+	m_pTransformCom->Turn(XMVectorSet(1.f, 0.f, 0.f, 0.f), fTimeDelta);
 }
 
 void CEffect_Single::Update(_float fTimeDelta)
 {
-
+	
 }
 
 void CEffect_Single::Late_Update(_float fTimeDelta)

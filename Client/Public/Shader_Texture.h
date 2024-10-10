@@ -38,14 +38,16 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Push_InputTextures(ID3D11ShaderResourceView* pSRV);
+	void Push_InputTextures(ID3D11ShaderResourceView* pSRV, _int LineIndex);
 	void Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed);
 
 	Shade_MoveTex m_MoveTex;
 	CTexture* m_pTextureCom = { nullptr };
 private:
+	_bool m_isDiffuse = { false };
 	_bool m_isAlpha = { false };
-	vector<ID3D11ShaderResourceView*> m_InputTextures;
+	map<string, ID3D11ShaderResourceView*> m_InputTextures;
+	//vector<ID3D11ShaderResourceView*> m_InputTextures;
 private:
 	_bool m_isTex = { false };
 private:

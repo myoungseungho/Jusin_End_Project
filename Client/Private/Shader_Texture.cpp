@@ -108,10 +108,20 @@ HRESULT CShader_Texture::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CShader_Texture::Push_InputTextures(ID3D11ShaderResourceView* pSRV)
+void CShader_Texture::Push_InputTextures(ID3D11ShaderResourceView* pSRV, _int LineIndex)
 {
-	m_isAlpha = true;
-	m_InputTextures.push_back(pSRV);
+	if (LineIndex == CIMGUI_Shader_Tab::END_DIFFUSE)
+	{
+		m_isDiffuse = true;
+		m_InputTextures["Diffuse"] = pSRV;
+	}
+	else if (LineIndex == CIMGUI_Shader_Tab::END_ALPHA)
+	{
+		m_isAlpha = true;
+		m_InputTextures["Alpha"] = pSRV;
+	}
+
+	
 }
 
 void CShader_Texture::Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed)
@@ -157,7 +167,7 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 
 	if (m_isTex == true)
 	{
-		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 			return E_FAIL;
 
 		if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
@@ -165,15 +175,14 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 
 		if (FAILED(m_pShaderCom->Bind_RawValue("isAlpha", &m_isAlpha, sizeof(bool))))
 			return E_FAIL;
-		
-		_int iCount = 0;
-		for (auto pSRV : m_InputTextures)
-		{
-			m_pShaderCom->Bind_ShaderResourceView("g_AlphaTexture", m_InputTextures[iCount]);
-			iCount++;
-		}
-		
+		if(m_isAlpha == true)
+			m_pShaderCom->Bind_ShaderResourceView("g_AlphaTexture", m_InputTextures["Alpha"]);
 
+		if (FAILED(m_pShaderCom->Bind_RawValue("isDiffuse", &m_isDiffuse, sizeof(bool))))
+			return E_FAIL;
+		if (m_isDiffuse == true)
+			m_pShaderCom->Bind_ShaderResourceView("g_DiffuseTexture", m_InputTextures["Diffuse"]);
+		
 	}
 	else
 	{
