@@ -53,6 +53,10 @@ HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)
 
 	return m_pRenderer->Add_DebugComponent(pDebugComponent);
 }
+void CRenderInstance::SetActive_RenderTarget(_bool isOn)
+{
+	m_pRenderer->SetActive_RenderTarget(isOn);
+}
 
 HRESULT CRenderInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
 {
