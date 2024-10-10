@@ -22,6 +22,9 @@ public:
 	wstring UTF8ToWString(const string& utf8Str);
 	virtual const _char* GetTabName() const { return "Effect"; };
 
+	void Render_For_Each_Effect();
+	void Render_For_Effect_Layer();
+
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 	vector<string> ModelName;

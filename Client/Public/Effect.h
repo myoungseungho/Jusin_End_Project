@@ -43,7 +43,6 @@ protected:
 	CTexture* m_pDiffuseTextureCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };
 
-	_float		m_fDuration = { 0.f };
 	_float		m_fAlpha = { 0.f };
 
 	_float		m_fCurPosition = { 0.f };
