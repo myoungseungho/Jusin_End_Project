@@ -35,6 +35,14 @@ Renderer/Bin/*.exp
 Renderer/Bin/*.dll
 Renderer/Bin/*.lib
 
+Client/Default/Client.vcxproj
+Client/Default/Client.vcxproj.fillters
+
+Engine/Default/Engine.vcxproj
+Engine/Default/Engine.vcxproj.fillters
+
+Renderer/Default/Renderer.vcxproj
+Renderer/Default/Renderer.vcxproj.fillters
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/
