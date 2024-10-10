@@ -17,7 +17,7 @@ private:
 
 public:
 	/* 엔진을 초기화한다. */
-	HRESULT Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext, class CGameInstance* gameInstance);
+	HRESULT Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext);
 	HRESULT Render_Engine(_float fTimeDelta);
 
 public: /* For.Renderer */
