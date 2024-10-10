@@ -29,7 +29,6 @@ AssimpSaveAndLoad/
 *.pdb
 *.ini
 *.exp
-*.lib
 
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
@@ -214,3 +213,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+EngineSDK/lib/DirectXTK.lib
+EngineSDK/lib/DirectXTKd.lib
