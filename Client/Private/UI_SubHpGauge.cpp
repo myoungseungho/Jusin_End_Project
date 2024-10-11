@@ -42,34 +42,10 @@ void CUI_SubHpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	//m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 100.f;
-
-	//m_fMaskUVTimer += fTimeDelta * 0.25f;
-
-	//if (m_bRedAlpha == FALSE)
-	//	m_fRedHpRadio = m_fHpRadio;
-
-	//if (m_bCharaStun == TRUE)
-	//{
-	//	if (m_bHit == FALSE)
-	//	{
-	//		m_bHit = TRUE;
-	//		m_fRedHpRadio = m_fHpRadio;
-	//	}
-	//}
-	//else
-	//	m_bHit = FALSE;
-
-
-	////캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
-	//m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
-
-
-	//if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
-	//{
-	//	m_bRedAlpha = FALSE;
-
-	//}
+	if(m_pSubPawn != nullptr)
+	{ 
+		m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 100.f;
+	}
 }
 
 void CUI_SubHpGauge::Update(_float fTimeDelta)
@@ -87,7 +63,7 @@ HRESULT CUI_SubHpGauge::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(m_iShaderID)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -125,21 +101,6 @@ HRESULT CUI_SubHpGauge::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
 		return E_FAIL; 
-
-	/*if (FAILED(m_pShaderCom->Bind_RawValue("g_fRedRadio", &m_fRedHpRadio, sizeof(_float))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
-		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bRedAlpha), sizeof(_bool))))
-		return E_FAIL;
-		*/
 
 	return S_OK;
 }

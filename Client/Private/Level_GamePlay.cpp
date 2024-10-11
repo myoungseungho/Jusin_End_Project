@@ -32,23 +32,33 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CPawn::SLOT_DESC SlotDesc = {};
 
-	SlotDesc.ePlayerSlot = CPawn::LPLAYER1;
 
 	//플레이어 생성
+	SlotDesc.ePlayerSlot = CPawn::LPLAYER1;
+
 	if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"), TEXT("Layer_Player"),&SlotDesc)))
 		return E_FAIL;
 
-	SlotDesc.ePlayerSlot = CPawn::RPLAYER1;
 
 	//몬스터 생성
+	SlotDesc.ePlayerSlot = CPawn::RPLAYER1;
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"),&SlotDesc)))
+		return E_FAIL;
+
+	//서브 플레이어 생성
+	SlotDesc.ePlayerSlot = CPawn::LPLAYER2;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SubPlayer"), TEXT("Layer_SubPlayer"), &SlotDesc)))
 		return E_FAIL;
 
 
 	CPawn* pPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
 	CPawn* pMonster = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
+	CPawn* pSubPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_SubPlayer")).back());
 
 	 m_pUI_Manager->UsingSelectCharacher(pPlayer, CPawn::LPLAYER1);
+	 m_pUI_Manager->UsingSelectCharacher(pSubPlayer, CPawn::LPLAYER2);
 	 m_pUI_Manager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
 
 	if (FAILED(Ready_UIObjects()))
@@ -119,9 +129,13 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 			return E_FAIL;
 	}
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpGauge"), TEXT("Layer_UI_HpGauge"))))
-		return E_FAIL;
+	for (int i = 0; i < 2; ++i)
+	{
+		tHpDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
+			return E_FAIL;
+	}
 	//캐릭터 아이콘
 
 	CUIObject::UI_DESC Icon_Desc = {};

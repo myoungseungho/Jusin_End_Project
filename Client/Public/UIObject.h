@@ -52,6 +52,10 @@ protected:
 	_bool ClickRange();
 	_bool HitCheck();
 
+private:
+	void InitPlayer();
+
+
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -62,6 +66,8 @@ protected:
 	_bool m_bHit = { FALSE };
 
 	UI_LRPOS m_eLRPos = { POS_END };
+	UI_DESC* pDesc = {};
+
 
 	_float m_fSizeX = { 100.f };
 	_float m_fSizeY = { 100.f };

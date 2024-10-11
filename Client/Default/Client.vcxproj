@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="..\public\Pawn.h" />
     <ClInclude Include="..\public\Player.h" />
+    <ClInclude Include="..\public\SubPlayer.h" />
     <ClInclude Include="..\public\UI_SubHpGauge.h" />
     <ClInclude Include="..\public\UI_AttBufEffect.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
@@ -210,6 +211,7 @@
   <ItemGroup>
     <ClCompile Include="..\private\Pawn.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
+    <ClCompile Include="..\private\SubPlayer.cpp" />
     <ClCompile Include="..\private\UI_SubHpGauge.cpp" />
     <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />

@@ -1,29 +1,29 @@
 #include "stdafx.h"
-#include "..\Public\Player.h"
+#include "..\Public\SubPlayer.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "UI_Manager.h"
 
-CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CSubPlayer::CSubPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CPawn{ pDevice, pContext }
 
 {
 	Safe_AddRef(m_pUI_Manager);
 }
 
-CPlayer::CPlayer(const CPlayer& Prototype)
+CSubPlayer::CSubPlayer(const CSubPlayer& Prototype)
 	: CPawn{ Prototype }
 {
 	Safe_AddRef(m_pUI_Manager);
 }
 
-HRESULT CPlayer::Initialize_Prototype()
+HRESULT CSubPlayer::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CPlayer::Initialize(void* pArg)
+HRESULT CSubPlayer::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -39,35 +39,30 @@ HRESULT CPlayer::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CPlayer::Priority_Update(_float fTimeDelta)
+void CSubPlayer::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 }
 
 
-void CPlayer::Update(_float fTimeDelta)
+void CSubPlayer::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_Hit(DIK_G, 0.25f,fTimeDelta);
-	Action_AttBuf(DIK_V, m_ePlayerSlot,fTimeDelta);
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_U))
-	{
-		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
-	}
+	//Action_Hit(DIK_G, 0.25f, fTimeDelta);
+	//Action_AttBuf(DIK_V, m_ePlayerSlot, fTimeDelta);
 
 	m_pModelCom->Play_Animation(fTimeDelta);
 }
 
-void CPlayer::Late_Update(_float fTimeDelta)
+void CSubPlayer::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
-HRESULT CPlayer::Render(_float fTimeDelta)
+HRESULT CSubPlayer::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -91,7 +86,7 @@ HRESULT CPlayer::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CPlayer::Ready_Components()
+HRESULT CSubPlayer::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -106,7 +101,7 @@ HRESULT CPlayer::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CPlayer::Bind_ShaderResources()
+HRESULT CSubPlayer::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -120,33 +115,33 @@ HRESULT CPlayer::Bind_ShaderResources()
 	return S_OK;
 }
 
-CPlayer* CPlayer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CSubPlayer* CSubPlayer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CPlayer* pInstance = new CPlayer(pDevice, pContext);
+	CSubPlayer* pInstance = new CSubPlayer(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CPlayer"));
+		MSG_BOX(TEXT("Failed to Created : CSubPlayer"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CPlayer::Clone(void* pArg)
+CGameObject* CSubPlayer::Clone(void* pArg)
 {
-	CPlayer* pInstance = new CPlayer(*this);
+	CSubPlayer* pInstance = new CSubPlayer(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CPlayer"));
+		MSG_BOX(TEXT("Failed to Cloned : CSubPlayer"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CPlayer::Free()
+void CSubPlayer::Free()
 {
 	__super::Free();
 

@@ -36,6 +36,24 @@ void CUI_Manager::UsingComboCount(_uint iComboCnt)
 	m_iComboCount = iComboCnt;
 }
 
+void CUI_Manager::UsingChangeCharacher(CPawn::PLAYER_SLOT eCurrSlotID)
+{
+	if (eCurrSlotID == CPawn::LPLAYER1 || eCurrSlotID == CPawn::LPLAYER2)
+	{
+		CPawn* pSwapPanw = m_pPawnArray[CPawn::LPLAYER1];
+		m_pPawnArray[CPawn::LPLAYER1] = m_pPawnArray[CPawn::LPLAYER2];
+		m_pPawnArray[CPawn::LPLAYER2] = pSwapPanw;
+		int a = 10;
+	}
+	else if (eCurrSlotID == CPawn::RPLAYER1 || eCurrSlotID == CPawn::RPLAYER2)
+	{
+		CPawn* pSwapPanw = m_pPawnArray[CPawn::RPLAYER1];
+		m_pPawnArray[CPawn::RPLAYER1] = m_pPawnArray[CPawn::RPLAYER2];
+		m_pPawnArray[CPawn::RPLAYER2] = pSwapPanw;
+	}
+
+}
+
 void CUI_Manager::SKillCount()
 {
 	if (m_iSkillPoint >= 100)

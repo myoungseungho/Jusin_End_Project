@@ -26,6 +26,7 @@ public:
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
 	void UsingComboCount(_uint iComboCnt);
 	void UsingSelectCharacher(CPawn* pPawn, CPawn::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
+	void UsingChangeCharacher(CPawn::PLAYER_SLOT eCurrSlotID);
 
 	void SKillCount();
 
