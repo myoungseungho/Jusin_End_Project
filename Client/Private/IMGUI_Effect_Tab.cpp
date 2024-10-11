@@ -155,13 +155,21 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
             ImGui::EndCombo();
         }
 
+
+
+        static char EffectNameBuffer[128] = "";
+
+        ImGui::InputText("Effect Name", EffectNameBuffer, IM_ARRAYSIZE(EffectNameBuffer));
+
         if (ImGui::Button("Add Effect"))
         {
+            std::wstring wEffectName = UTF8ToWString(EffectNameBuffer);
+
             std::wstring wModelName = UTF8ToWString(ModelName[CurrentModel]);
 
             EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
 
-            m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
+            m_pEffect_Manager->Add_Test_Effect(effectType, &wEffectName, &wModelName);
         }
 
         ImGui::SameLine();

@@ -80,6 +80,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 		CEffect::EFFECT_DESC EffectDesc {};
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
+		EffectDesc.EffectName = m_TestEffect[iCurTestEffectIndex]->m_EffectName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
 		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
@@ -96,6 +97,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 	{
 		CEffect::EFFECT_DESC EffectDesc{};
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
+		EffectDesc.EffectName = m_TestEffect[iCurTestEffectIndex]->m_EffectName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
 		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
@@ -165,11 +167,12 @@ vector<wstring> CEffect_Manager::Get_Layer_List()
 	return LayerList;
 }
 
-HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName)
+HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* EffectName, wstring* ModelName)
 {
 	CEffect::EFFECT_DESC EffectDesc{};
 
 	EffectDesc.ModelName = *ModelName;
+	EffectDesc.EffectName = *EffectName;
 	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
 	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
 	EffectDesc.iUnique_Index = m_TestEffect_Count++;
