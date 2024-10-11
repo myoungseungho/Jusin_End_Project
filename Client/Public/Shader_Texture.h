@@ -18,6 +18,7 @@ public:
 	{
 		_wstring prototypeKey;
 		const _tchar* filePath;
+		_int iID;
 	}SHADER_TEXTURE_DESC;
 	typedef struct
 	{
@@ -40,7 +41,9 @@ public:
 
 	void Push_InputTextures(ID3D11ShaderResourceView* pSRV, _int LineIndex);
 	void Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed);
-
+	void Remove_InputTextures(_int LineIndex);
+	void Remove_InputFunction(_int iFunctionType);
+	_int m_iID = { 0 };
 	Shade_MoveTex m_MoveTex;
 	CTexture* m_pTextureCom = { nullptr };
 private:

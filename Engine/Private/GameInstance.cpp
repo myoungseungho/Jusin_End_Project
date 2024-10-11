@@ -87,6 +87,11 @@ HRESULT CGameInstance::Clear_LevelResources(_uint iLevelIndex)
 	return S_OK;
 }
 
+CGameObject* CGameInstance::Find_Prototype(const wstring& strPrototypeTag)
+{
+	return m_pObject_Manager->Find_Prototype(strPrototypeTag);
+}
+
 HRESULT CGameInstance::Clear_BackBuffer_View(_float4 vClearColor)
 {
 	return m_pGraphic_Device->Clear_BackBuffer_View(vClearColor);	

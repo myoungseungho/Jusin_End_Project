@@ -62,8 +62,6 @@ protected:
 protected:
 	map<const _wstring, CComponent*>		m_Components;
 
-
-
 public:
 	virtual CGameObject* Clone(void* pArg = nullptr) = 0;
 	virtual void Free() override;

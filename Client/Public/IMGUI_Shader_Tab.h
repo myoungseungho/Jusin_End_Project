@@ -8,6 +8,8 @@ class CIMGUI_Shader_Tab : public CIMGUI_Tab
 {
 public:
 	enum ENDNODE_TYPE { END_DIFFUSE, END_ALPHA };
+	enum NODE_TYPE { NODE_BASIC, NODE_FUNCTION, NODE_LINK, NODE_END};
+	enum FUNCTION_TYPE { FUNCTION_TEXMOVE };
 public:
 	typedef struct
 	{
@@ -15,6 +17,12 @@ public:
 		_float2 fDirection = { 0.f,0.f };
 		_float fSpeed = { 0.f };
 	}MoveTex_Node;
+
+	typedef struct
+	{
+		_int iID;
+		ImTextureID Texture;
+	}SRV_Texture;
 protected:
 	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	virtual ~CIMGUI_Shader_Tab() = default;
@@ -30,12 +38,17 @@ public:
 	void Render_MainNode();
 	void Render_TextureNode();
 	void Render_MoveTexNode();
+	void Render_Link();
+	void Check_Create_Link();
+	void Check_Delete_Link();
 public:
 	_int m_iNumberId = { -1 };
 	_bool m_TabPick = { false };
 private:
+	/* 꼇다 뺏다 할때 필요한 흰색텍스쳐컴*/
+	CTexture* m_pDefaultTexture = { nullptr };
 	vector<CShader_Texture*> m_NodeTextures;
-	vector<ImTextureID> m_NodeTextureSRVs;
+	vector<SRV_Texture> m_NodeTextureSRVs;
 
 	CTexture* m_TestEffectModel_Texture = { nullptr };
 
@@ -56,7 +69,7 @@ private:
 	vector<_int> node_ids;		// 이건 텍스쳐 노드로 쓰자
 
 	_int m_MoveTex_node_id = 1501;	// 
-	vector<MoveTex_Node> m_MoveTex_Node_ids;
+	list<MoveTex_Node> m_MoveTex_Node_ids;
 
 	unordered_map<int, ImVec2> node_positions;
 	//// 실험용

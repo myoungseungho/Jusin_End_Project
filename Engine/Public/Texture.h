@@ -20,6 +20,7 @@ public:
 	HRESULT Bind_ShaderResource(class CShader* pShader, const _char* pConstantName, _uint iTextureIndex);
 	_float2 Get_TextureSize();
 	HRESULT Set_SRV(ID3D11ShaderResourceView* pSRV, _int iArray = 0);
+	ID3D11ShaderResourceView* Get_SRV(_int iIndex) { return m_SRVs[iIndex]; }
 private:
 	_uint									m_iNumTextures = { 0 };
 	vector<ID3D11ShaderResourceView*>		m_SRVs;
