@@ -92,19 +92,19 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	case CEffect::PLAYERID::PLAYER_1P:
 		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_SKILL)
 		{
-			int a = 3;
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
 		{
-			int a = 3;
-			
 			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_SKILL);
 
+			//기존 콜라이더 삭제
 			for (auto& iter : m_vecColliderCom)
 				Safe_Release(iter);
 
+			//콜라이더 컴포넌트 전부 삭제
 			Clear_Collider_Component();
 
+			//벡터 초기화
 			m_vecColliderCom.clear();
 
 			m_fX = 0.f;
@@ -116,11 +116,9 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	case CEffect::PLAYERID::PLAYER_2P:
 		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_SKILL)
 		{
-			int a = 3;
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
 		{
-			int a = 3;
 		}
 		break;
 	}
