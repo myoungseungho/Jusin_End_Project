@@ -33,6 +33,8 @@ public:
 
 		_int		iSKillPoint = { 0 };
 		_int		iSKillCount = { 0 };
+
+		PLAYER_SLOT ePlayer_Slot = {};
 	}PAWN_DESC;
 
 protected:

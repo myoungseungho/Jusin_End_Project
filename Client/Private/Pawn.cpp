@@ -48,6 +48,8 @@ void CPawn::Priority_Update(_float fTimeDelta)
 
 	m_tPawnDesc.iSKillCount = m_iSKillCount;
 	m_tPawnDesc.iSKillPoint = m_iSKillPoint;
+
+	m_tPawnDesc.ePlayer_Slot = m_ePlayerSlot;
 }
 
 
