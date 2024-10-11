@@ -53,7 +53,7 @@ void CEffect::Update(_float fTimeDelta)
 		m_fX += 0.1;
 
 	//
-	_float2 DefaultFloat2 = _float2(-5.f, 5.f);
+	_float2 DefaultFloat2 = _float2(0.f, 0.f);
 	Make_Collider(CCollider_Manager::CG_1P_SKILL, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
 }
 

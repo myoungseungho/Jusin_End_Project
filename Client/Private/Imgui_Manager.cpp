@@ -14,7 +14,7 @@
 #include "IMGUI_Object_Tab.h"
 #include "IMGUI_Level_Tab.h"
 
-_bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiWindows = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)

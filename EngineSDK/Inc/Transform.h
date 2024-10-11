@@ -60,6 +60,11 @@ public:
 		XMStoreFloat4((_float4*)&m_WorldMatrix.m[eState][0], vState);
 	}
 
+	void Set_State_Position(_float3 vState) {
+		XMStoreFloat4((_float4*)&m_WorldMatrix.m[CTransform::STATE_POSITION][0], XMVectorSet(vState.x, vState.y, vState.z, 1.f));
+	}
+
+
 	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix) {
 		_float3 eulerAngles;
 
