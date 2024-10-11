@@ -148,7 +148,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_NonBlend(fTimeDelta)))
+
+	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
@@ -231,13 +234,32 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
+HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 {
+	if (m_isLayerView == true)
+	{
+		/* Diffuse + Normal */
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+			return E_FAIL;
+
+		for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_TEST])
+		{
+			Safe_Release(pRenderObject);
+		}
+
+		m_RenderObjects[RG_NONBLEND_TEST].clear();
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		return S_OK;
+	}
+
 	/* Diffuse + Normal */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
 		return E_FAIL;
 
-	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
+	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_TEST])
 	{
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
@@ -245,7 +267,48 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 		Safe_Release(pRenderObject);
 	}
 
-	m_RenderObjects[RG_NONBLEND].clear();
+	m_RenderObjects[RG_NONBLEND_TEST].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_NonBlend_Layer(_float fTimeDelta)
+{
+	if (m_isLayerView == false)
+	{
+		/* Diffuse + Normal */
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+			return E_FAIL;
+
+		for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_LAYER])
+		{
+			Safe_Release(pRenderObject);
+		}
+
+		m_RenderObjects[RG_NONBLEND_LAYER].clear();
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		return S_OK;
+	}
+
+	/* Diffuse + Normal */
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_LAYER])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_NONBLEND_LAYER].clear();
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;

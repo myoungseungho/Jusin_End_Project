@@ -45,7 +45,7 @@ HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
 
-	m_pEffect_Manager->Render(fTimeDelta);
+	//m_pEffect_Manager->Render(fTimeDelta);
 
 	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
 

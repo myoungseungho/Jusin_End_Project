@@ -57,7 +57,7 @@ void CEffect_Single::Update(_float fTimeDelta)
 
 void CEffect_Single::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND_TEST, this);
 }
 
 HRESULT CEffect_Single::Render(_float fTimeDelta)

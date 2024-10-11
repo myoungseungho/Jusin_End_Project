@@ -652,6 +652,10 @@ CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 void CIMGUI_Shader_Tab::Free()
 {
 	__super::Free();
-
+    for (auto& iter : m_NodeTextures)
+    {
+        Safe_Release(iter);
+    }
+    
     Safe_Release(m_TestEffectModel_Texture);
 }
