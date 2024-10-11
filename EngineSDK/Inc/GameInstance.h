@@ -49,6 +49,7 @@ public: /* For.Object_Manager */
 	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg = nullptr);
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
 	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+	void Destory_Reserve(class CGameObject* gameObject);
 
 	HRESULT Get_Prototype_Names(vector<string>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);

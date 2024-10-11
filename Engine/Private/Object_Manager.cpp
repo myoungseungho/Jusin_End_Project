@@ -9,17 +9,17 @@ CObject_Manager::CObject_Manager()
 {
 }
 
-CComponent * CObject_Manager::Get_Component(_uint iLevelIndex, const _wstring & strLayerTag, const _wstring & strComponentTag, _uint iIndex)
+CComponent* CObject_Manager::Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex)
 {
-	if (nullptr == m_pLayers || 
+	if (nullptr == m_pLayers ||
 		iLevelIndex >= m_iNumLevels)
 		return nullptr;
 
-	CLayer*		pLayer = Find_Layer(iLevelIndex, strLayerTag);
+	CLayer* pLayer = Find_Layer(iLevelIndex, strLayerTag);
 	if (nullptr == pLayer)
 		return nullptr;
 
-	return pLayer->Get_Component(strComponentTag, iIndex);	
+	return pLayer->Get_Component(strComponentTag, iIndex);
 }
 
 HRESULT CObject_Manager::Initialize(_uint iNumLevels)
@@ -31,7 +31,7 @@ HRESULT CObject_Manager::Initialize(_uint iNumLevels)
 	return S_OK;
 }
 
-HRESULT CObject_Manager::Add_Prototype(const _wstring & strPrototypeTag, CGameObject * pPrototype)
+HRESULT CObject_Manager::Add_Prototype(const _wstring& strPrototypeTag, CGameObject* pPrototype)
 {
 	if (nullptr == Find_Prototype(strPrototypeTag))
 		m_Prototypes.emplace(strPrototypeTag, pPrototype);
@@ -41,24 +41,24 @@ HRESULT CObject_Manager::Add_Prototype(const _wstring & strPrototypeTag, CGameOb
 	return S_OK;
 }
 
-HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iLevelIndex, const _wstring & strPrototypeTag, const _wstring & strLayerTag, void* pArg)
+HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iLevelIndex, const _wstring& strPrototypeTag, const _wstring& strLayerTag, void* pArg)
 {
 	/* 복제할 원형객체를 찾자. */
-	CGameObject*		pPrototype = Find_Prototype(strPrototypeTag);
+	CGameObject* pPrototype = Find_Prototype(strPrototypeTag);
 	if (nullptr == pPrototype)
 		return E_FAIL;
 
 	/* 찾아낸 원형객체를 복제하여 사본객체를 생성해오자. */
-	CGameObject*		pGameObject = pPrototype->Clone(pArg);
+	CGameObject* pGameObject = pPrototype->Clone(pArg);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	/* 복제한 사본객체를 레이어에 추가한다.. */
-	CLayer*		pLayer = Find_Layer(iLevelIndex, strLayerTag);
+	CLayer* pLayer = Find_Layer(iLevelIndex, strLayerTag);
 
 	if (nullptr == pLayer)
 	{
-		CLayer*		pLayer = CLayer::Create();
+		CLayer* pLayer = CLayer::Create();
 
 		pLayer->Add_GameObject(pGameObject);
 
@@ -143,6 +143,12 @@ HRESULT CObject_Manager::Add_Object_Layers_Vector(_uint _level, vector<pair<_wst
 	return S_OK;
 }
 
+void CObject_Manager::Destory_Update()
+{
+	for (auto& iter : m_DestoryObjects)
+		Safe_Release(iter);
+}
+
 void CObject_Manager::Priority_Update(_float fTimeDelta)
 {
 	for (size_t i = 0; i < m_iNumLevels; i++)
@@ -170,12 +176,18 @@ void CObject_Manager::Late_Update(_float fTimeDelta)
 	}
 }
 
+
+void CObject_Manager::Destory_Reserve(CGameObject* gameObject)
+{
+	m_DestoryObjects.push_back(gameObject);
+}
+
 HRESULT CObject_Manager::Clear_Resources(_uint iLevelIndex)
 {
 	if (iLevelIndex >= m_iNumLevels)
 		return E_FAIL;
 
-	for (auto& Pair : m_pLayers[iLevelIndex])	
+	for (auto& Pair : m_pLayers[iLevelIndex])
 		Safe_Release(Pair.second);
 
 	m_pLayers[iLevelIndex].clear();
@@ -183,29 +195,29 @@ HRESULT CObject_Manager::Clear_Resources(_uint iLevelIndex)
 	return S_OK;
 }
 
-CGameObject * CObject_Manager::Find_Prototype(const _wstring & strPrototypeTag)
+CGameObject* CObject_Manager::Find_Prototype(const _wstring& strPrototypeTag)
 {
 	auto	iter = m_Prototypes.find(strPrototypeTag);
 
 	if (iter == m_Prototypes.end())
 		return nullptr;
 
-	return iter->second;	
+	return iter->second;
 }
 
-CLayer * CObject_Manager::Find_Layer(_uint iLevelIndex, const _wstring & strLayerTag)
+CLayer* CObject_Manager::Find_Layer(_uint iLevelIndex, const _wstring& strLayerTag)
 {
 	auto	iter = m_pLayers[iLevelIndex].find(strLayerTag);
 
 	if (iter == m_pLayers[iLevelIndex].end())
 		return nullptr;
 
-	return iter->second;	
+	return iter->second;
 }
 
-CObject_Manager * CObject_Manager::Create(_uint iNumLevels)
+CObject_Manager* CObject_Manager::Create(_uint iNumLevels)
 {
-	CObject_Manager*		pInstance = new CObject_Manager();
+	CObject_Manager* pInstance = new CObject_Manager();
 
 	if (FAILED(pInstance->Initialize(iNumLevels)))
 	{
@@ -222,10 +234,10 @@ void CObject_Manager::Free()
 
 	for (size_t i = 0; i < m_iNumLevels; i++)
 	{
-		for (auto& Pair : m_pLayers[i])		
+		for (auto& Pair : m_pLayers[i])
 			Safe_Release(Pair.second);
 
-		m_pLayers[i].clear();		
+		m_pLayers[i].clear();
 	}
 
 	Safe_Delete_Array(m_pLayers);

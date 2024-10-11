@@ -63,9 +63,10 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 
 void CGameInstance::Update_Engine(_float fTimeDelta)
 {
-	/* 엔진에서 관리하는 객체들 중, 반복적인 갱신이 필요한 객체들이 있다면. */
-	/* 여기에서 갱신을 수행해준다. */
 	m_pInput_Device->Update();
+
+	//전 프레임에서 삭제 예약한 오브젝트 삭제
+	m_pObject_Manager->Destory_Update();
 
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
@@ -222,6 +223,11 @@ CComponent* CGameInstance::Get_Component(_uint iLevelIndex, const _wstring& strL
 CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
 {
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
+}
+
+void CGameInstance::Destory_Reserve(CGameObject* gameObject)
+{
+	m_pObject_Manager->Destory_Reserve(gameObject);
 }
 
 HRESULT CGameInstance::Get_Prototype_Names(vector<string>* pVector)

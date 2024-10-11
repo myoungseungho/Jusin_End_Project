@@ -65,6 +65,7 @@ public:
 
 	//IMGUI ฐüทร
 	void SetImguiSelect(_bool _bIsImguiClick) { m_bIsImguiClick = _bIsImguiClick; };
+	void Destory();
 
 protected:	
 	ID3D11Device*				m_pDevice = { nullptr };

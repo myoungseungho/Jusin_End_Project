@@ -42,20 +42,44 @@ HRESULT CLayer::Add_List(list<CGameObject*>* pList)
 
 void CLayer::Priority_Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Priority_Update(fTimeDelta);
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDied)  // 객체가 사망 상태라면
+			it = m_GameObjects.erase(it);  // 목록에서 삭제 후 iterator 업데이트
+		else
+		{
+			(*it)->Priority_Update(fTimeDelta);  // 업데이트 호출
+			++it;  // 다음 객체로 이동
+		}
+	}
 }
 
 void CLayer::Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Update(fTimeDelta);
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDied)
+			it = m_GameObjects.erase(it);
+		else
+		{
+			(*it)->Update(fTimeDelta);
+			++it;
+		}
+	}
 }
 
 void CLayer::Late_Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Late_Update(fTimeDelta);
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDied)
+			it = m_GameObjects.erase(it);
+		else
+		{
+			(*it)->Late_Update(fTimeDelta);
+			++it;
+		}
+	}
 }
 
 CLayer * CLayer::Create()

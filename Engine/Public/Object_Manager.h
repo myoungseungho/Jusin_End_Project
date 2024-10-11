@@ -29,19 +29,12 @@ public:
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < string, list<CGameObject*>>>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < _wstring, list<CGameObject*>>>* pVector);
 
-
-
-
-
-
-
-
-
-
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
+	void Destory_Update();
 
+	void Destory_Reserve(class CGameObject* gameObject);
 	HRESULT Clear_Resources(_uint iLevelIndex);
 
 private:
@@ -50,6 +43,7 @@ private:
 private:
 	_uint										m_iNumLevels = { 0 };
 	map<const wstring, class CLayer*>*			m_pLayers = { nullptr };
+	list<class CGameObject*>					m_DestoryObjects;
 
 private:
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);

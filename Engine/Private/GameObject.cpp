@@ -143,6 +143,16 @@ HRESULT CGameObject::Add_Component(_uint iPrototypeLevelIndex, const _wstring& s
 	return S_OK;
 }
 
+CGameObject* CGameObject::Clone(void* pArg)
+{
+	return nullptr;
+}
+
+void CGameObject::Destory()
+{
+	m_pGameInstance->Destory_Reserve(this);
+}
+
 void CGameObject::Free()
 {
 	__super::Free();
