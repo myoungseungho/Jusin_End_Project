@@ -63,7 +63,7 @@ void CEffect::Set_Effect_Position(_float3 ChangePosition)
 
 void CEffect::Set_Effect_Rotation(_float3 ChangeRotation)
 {
-
+	m_pTransformCom->Rotate(ChangeRotation.x, ChangeRotation.y, ChangeRotation.z);
 }
 
 _float3 CEffect::Get_Effect_Scaled()
@@ -84,7 +84,7 @@ _float3 CEffect::Get_Effect_Position()
 
 _float3 CEffect::Get_Effect_Rotation()
 {
-	return _float3();
+	return m_pTransformCom->Get_Rotation();
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

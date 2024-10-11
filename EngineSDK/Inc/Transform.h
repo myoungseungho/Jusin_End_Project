@@ -47,6 +47,8 @@ public:
 		return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix));
 	}
 
+	_float3 CTransform::Get_Rotation() const;
+
 public:
 
 	void Set_Scaled(_float fScaleX, _float fScaleY, _float fScaleZ) {
@@ -91,7 +93,7 @@ public:
 	void Turn(_fvector vAxis, _float fTimeDelta);
 	void Rotation(_fvector vAxis, _float fRadian);
 	void LookAt(_fvector vAt);
-
+	void Rotate(_float AxisX, _float AxisY, _float AxisZ);
 
 private:
 	_float4x4				m_WorldMatrix = {};

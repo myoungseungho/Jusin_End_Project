@@ -21,9 +21,6 @@ namespace Engine
 		XMFLOAT4		vRotation;
 		XMFLOAT3		vPosition;
 
-		_float				fNextKeyFrameSpeed;
-
-
 		float			fCurTime;
 		float			fDuration;
 	}EFFECT_KEYFRAME;
