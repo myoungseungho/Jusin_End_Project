@@ -30,32 +30,33 @@ HRESULT CUIObject::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
-
-	if (pUIDesc->eLRPos == RIGHT)
-		m_fPosX = g_iWinSizeX - m_fPosX;
-
-	switch (pUIDesc->eLRPos)
+	if (pArg != nullptr)
 	{
-	case LEFT:
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CPawn::LPLAYER1];
-		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CPawn::LPLAYER2];
-		break;
+		UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
 
-	case RIGHT:
-		m_fPosX = g_iWinSizeX - m_fPosX;
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CPawn::RPLAYER1];
-		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CPawn::RPLAYER2];
-		break;
+		switch (pUIDesc->eLRPos)
+		{
+		case LEFT:
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CPawn::LPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CPawn::LPLAYER2];
+			break;
+
+		case RIGHT:
+			m_fPosX = g_iWinSizeX - m_fPosX;
+			m_fSizeX *= -1;
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CPawn::RPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CPawn::RPLAYER2];
+			break;
+		}
 	}
-
 
 	return S_OK;
 }
 
 void CUIObject::Priority_Update(_float fTimeDelta)
 {
-	m_bCharaStun = m_pUI_Manager->m_bStun;
+	if(m_pMainPawn != nullptr)
+		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 }
 
 void CUIObject::Update(_float fTimeDelta)

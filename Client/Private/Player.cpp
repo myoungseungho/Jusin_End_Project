@@ -57,7 +57,7 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 		}
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_B))
+	if (m_pGameInstance->Get_DIKeyState(DIK_G))
 	{
 		m_iComboCount++;
 		m_iHp--;
@@ -76,15 +76,9 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 		m_pUI_Manager->UsingAttckBuff(5.f);
 
 
-	/*CPawn* Desc =  m_pUIManager->m_tPawnDesc[CUI_Manager::LPLAYER1];
-	_uint iHp = Desc->Get_PawnDesc().iHp;*/
-
-		if (m_iHp <= 0)
-			m_iHp = 0;
-
 	m_pUI_Manager->UsingComboCount(m_iComboCount);
-	m_pUI_Manager->UsingStunCheck(m_bStun);
-	m_pUI_Manager->m_iHp = m_iHp;
+	//m_pUI_Manager->UsingStunCheck(m_bStun);
+
 }
 
 

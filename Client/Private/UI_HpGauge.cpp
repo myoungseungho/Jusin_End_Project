@@ -24,6 +24,9 @@ HRESULT CUI_HpGauge::Initialize_Prototype()
 
 HRESULT CUI_HpGauge::Initialize(void* pArg)
 {
+	m_fPosX = 330.f;
+	m_fSizeX = 464.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -32,12 +35,8 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 
 	UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
 
-	m_eLRPos = pUIDesc->eLRPos;
-
-	//switch (m_eLRPos)
-	//{
-	//	__super::Set_UI_Setting(464.f, 116.f, 330.f, 87.f, 0.75f);
-	//}
+	__super::Set_UI_Setting(m_fSizeX, 116.f, m_fPosX, 87.f, 0.75f);
+	
 
 	m_iCharaCurrHp = 100;
 
@@ -48,7 +47,7 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_fHpRadio = m_pUI_Manager->m_iHp / 100.f;
+	m_fHpRadio = m_pMainPawn->Get_PawnDesc().iHp / 100.f;
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 

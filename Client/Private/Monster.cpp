@@ -40,46 +40,49 @@ HRESULT CMonster::Initialize(void* pArg)
 
 void CMonster::Priority_Update(_float fTimeDelta)
 {
+	__super::Priority_Update(fTimeDelta);
 	//플레이어 체력 바
 
-	//if (m_bStun == TRUE)
-	//{
-	//	m_fStunTImer -= fTimeDelta;
-	//
-	//	if (m_fStunTImer <= 0.f)
-	//	{
-	//		m_fStunTImer = 0.f;
-	//		m_bStun = FALSE;
-	//		m_iComboCount = 0;
-	//	}
-	//}
-	//
-	//if (m_pGameInstance->Get_DIKeyState(DIK_B))
-	//{
-	//	m_iComboCount++;
-	//	m_iHp--;
-	//	m_fStunTImer = 1.f;
-	//	m_bStun = TRUE;
-	//	m_pUIManager->m_bHit = TRUE;
-	//}
-	//else
-	//	m_pUIManager->m_bHit = FALSE;
-	//
-	//m_pUIManager->UsingComboCount(m_iComboCount);
-	//m_pUIManager->UsingStunCheck(m_bStun);
+	if (m_bStun == TRUE)
+	{
+		m_fStunTImer -= fTimeDelta;
+	
+		if (m_fStunTImer <= 0.f)
+		{
+			m_fStunTImer = 0.f;
+			m_bStun = FALSE;
+			m_iComboCount = 0;
+		}
+	}
+	
+	if (m_pGameInstance->Get_DIKeyState(DIK_H))
+	{
+		m_iComboCount++;
+		m_iHp--;
+		m_fStunTImer = 1.f;
+		m_bStun = TRUE;
+		m_pUI_Manager->m_bHit = TRUE;
+	}
+	else
+		m_pUI_Manager->m_bHit = FALSE;
+	
+	m_pUI_Manager->UsingComboCount(m_iComboCount);
+	//m_pUI_Manager->UsingStunCheck(m_bStun);
 	//m_pUIManager->m_iHp = m_iHp;
 }
 
 
 void CMonster::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	m_pModelCom->Play_Animation(fTimeDelta);
-
-
 }
 
 void CMonster::Late_Update(_float fTimeDelta)
 {
+	__super::Late_Update(fTimeDelta);
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 

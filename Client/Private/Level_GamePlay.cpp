@@ -30,9 +30,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	if (FAILED(Ready_UIObjects()))
-		return E_FAIL;
-
 	//몬스터 생성
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
 		return E_FAIL;
@@ -46,6 +43,10 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	 m_pUI_Manager->UsingSelectCharacher(pPlayer, CPawn::LPLAYER1);
 	 m_pUI_Manager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
+
+	if (FAILED(Ready_UIObjects()))
+		return E_FAIL;
+
 
 	return S_OK;
 }
