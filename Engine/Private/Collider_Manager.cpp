@@ -127,6 +127,7 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 }
 
 
+//충돌 결과 처리
 void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 {
 	map<pair<CCollider*, CCollider*>, bool> currentCollisions;
@@ -135,6 +136,10 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	for (const auto& pair : m_CollisionResults) {
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
+
+		//충돌 처리 완료
+		colliderA->m_isColl = true;
+		colliderB->m_isColl = true;
 
 		// 조건을 bool 변수로 저장
 		_bool is1PBodyVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_SKILL);
@@ -145,19 +150,19 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		// 충돌 그룹에 따른 처리
 		if (is1PBodyVs2PSkill)
 		{
-			Process_1PBody_2PSkill(colliderA, colliderB, fTimeDelta, currentCollisions);
+			Process_1PBody_2PSkill(pair, fTimeDelta, currentCollisions);
 		}
 		else if (is1PBodyVs2PBody)
 		{
-			Process_1PBody_2PBody(colliderA, colliderB, fTimeDelta, currentCollisions);
+			Process_1PBody_2PBody(pair, fTimeDelta, currentCollisions);
 		}
 		else if (is1PSkillVs2PSkill)
 		{
-			Process_1PSkill_2PSkill(colliderA, colliderB, fTimeDelta, currentCollisions);
+			Process_1PSkill_2PSkill(pair, fTimeDelta, currentCollisions);
 		}
 		else if (is1PSkillVs2PBody)
 		{
-			Process_1PSkill_2PBody(colliderA, colliderB, fTimeDelta, currentCollisions);
+			Process_1PSkill_2PBody(pair, fTimeDelta, currentCollisions);
 		}
 	}
 
@@ -176,40 +181,37 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 // 각 충돌 처리 함수
 
-void CCollider_Manager::Process_1PBody_2PSkill(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PBody_2PSkill(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 	// 1P 바디와 2P 스킬 충돌 처리
 	// 구체적인 로직 추가 가능
 }
 
-void CCollider_Manager::Process_1PBody_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PBody_2PBody(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 	// 1P 바디와 2P 바디 충돌 처리
 	// 구체적인 로직 추가 가능
 }
 
-void CCollider_Manager::Process_1PSkill_2PSkill(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PSkill_2PSkill(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 	// 1P 스킬과 2P 스킬 충돌 처리
-	// 구체적인 로직 추가 가능
 
-		// 새로운 충돌인지 확인
-	if (m_CollisionHistory.find(make_pair(colliderA, colliderB)) == m_CollisionHistory.end() || !m_CollisionHistory[make_pair(colliderA, colliderB)]) {
-		// 새로운 충돌 시작
-		colliderA->OnCollisionEnter(colliderB, fTimeDelta);
-		colliderB->OnCollisionEnter(colliderA, fTimeDelta);
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
 	}
 	else {
 		// 충돌 지속
-		colliderA->OnCollisionStay(colliderB, fTimeDelta);
-		colliderB->OnCollisionStay(colliderA, fTimeDelta);
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
 	}
 
 	// 현재 충돌 상태 업데이트
-	currentCollisions[make_pair(colliderA, colliderB)] = true;
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
 }
 
-void CCollider_Manager::Process_1PSkill_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PSkill_2PBody(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 
 }
@@ -218,11 +220,7 @@ void CCollider_Manager::Process_1PSkill_2PBody(CCollider* colliderA, CCollider* 
 _bool CCollider_Manager::IsColliding(CCollider* _pSourCollider, CCollider* _pDestCollider)
 {
 	_bool isCol = _pSourCollider->isCollision(_pDestCollider);
-	if (isCol)
-	{
-		_pSourCollider->m_isColl = true;
-		_pDestCollider->m_isColl = true;
-	}
+
 	return isCol;
 }
 
