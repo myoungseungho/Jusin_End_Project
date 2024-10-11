@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Public\Camera_Free.h"
-
+#include "Imgui_Manager.h"
 #include "GameInstance.h"
 
 CCamera_Free::CCamera_Free(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -58,6 +58,24 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 	if (GetKeyState('S') & 0x8000)
 	{
 		m_pTransformCom->Go_Backward(fTimeDelta);
+	}
+
+	POINT ptMouse{};
+
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
+
+	CImgui_Manager::IMGUI_SCREEN tDesc = CImgui_Manager::Get_Instance()->Get_Screen_Desc();
+
+	_bool isOverShaderImGui = (ptMouse.x >= tDesc.ShaderImGuiPos.x 	&& 
+		ptMouse.x <= tDesc.ShaderImGuiPos.x + tDesc.ShaderImGuiSize.x &&
+		ptMouse.y >= tDesc.ShaderImGuiPos.y && 
+		ptMouse.y <= tDesc.ShaderImGuiPos.y + tDesc.ShaderImGuiSize.y);
+
+	if (isOverShaderImGui == true)
+	{
+		__super::Priority_Update(fTimeDelta);
+		return;
 	}
 
 	_long		MouseMove = {};

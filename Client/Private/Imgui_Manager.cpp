@@ -134,11 +134,11 @@ _int CImgui_Manager::Pick_Effect_Mesh()
 	GetCursorPos(&ptMouse);
 	ScreenToClient(g_hWnd, &ptMouse);
 
-	_bool isOverMainImGui = (ptMouse.x >= MainImGuiPos.x && ptMouse.x <= MainImGuiPos.x + MainImGuiSize.x &&
-		ptMouse.y >= MainImGuiPos.y && ptMouse.y <= MainImGuiPos.y + MainImGuiSize.y);
+	_bool isOverMainImGui = (ptMouse.x >= m_ImGuiScreen.MainImGuiPos.x && ptMouse.x <= m_ImGuiScreen.MainImGuiPos.x + m_ImGuiScreen.MainImGuiSize.x &&
+		ptMouse.y >= m_ImGuiScreen.MainImGuiPos.y && ptMouse.y <= m_ImGuiScreen.MainImGuiPos.y + m_ImGuiScreen.MainImGuiSize.y);
 
-	_bool isOverShaderImGui = (ptMouse.x >= ShaderImGuiPos.x && ptMouse.x <= ShaderImGuiPos.x + ShaderImGuiSize.x &&
-		ptMouse.y >= ShaderImGuiPos.y && ptMouse.y <= ShaderImGuiPos.y + ShaderImGuiSize.y);
+	_bool isOverShaderImGui = (ptMouse.x >= m_ImGuiScreen.ShaderImGuiPos.x && ptMouse.x <= m_ImGuiScreen.ShaderImGuiPos.x + m_ImGuiScreen.ShaderImGuiSize.x &&
+		ptMouse.y >= m_ImGuiScreen.ShaderImGuiPos.y && ptMouse.y <= m_ImGuiScreen.ShaderImGuiPos.y + m_ImGuiScreen.ShaderImGuiSize.y);
 
 	if (!isOverMainImGui && !isOverShaderImGui)
 	{
@@ -194,8 +194,8 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 
 			ImGui::EndTabBar(); // 탭 바 종료
 		}
-		MainImGuiPos = ImGui::GetWindowPos();
-		MainImGuiSize = ImGui::GetWindowSize();
+		m_ImGuiScreen.MainImGuiPos = ImGui::GetWindowPos();
+		m_ImGuiScreen.MainImGuiSize = ImGui::GetWindowSize();
 		ImGui::End();  // 창을 닫음
 	}
 }
@@ -228,8 +228,8 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 			tab.second->m_TabPick = false;
 
 
-		ShaderImGuiPos = ImGui::GetWindowPos();
-		ShaderImGuiSize = ImGui::GetWindowSize();
+		m_ImGuiScreen.ShaderImGuiPos = ImGui::GetWindowPos();
+		m_ImGuiScreen.ShaderImGuiSize = ImGui::GetWindowSize();
 		ImGui::End(); // 메인 창 종료
 	}
 
