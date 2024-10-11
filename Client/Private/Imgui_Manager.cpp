@@ -86,10 +86,6 @@ void CImgui_Manager::Update(_float fTimeDelta)
 		}
 	}
 
-	if (m_pGameInstance->MouseDown(DIMK_RBUTTON))
-	{
-		Delete_Shader_Tab(0);
-	}
 }
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)

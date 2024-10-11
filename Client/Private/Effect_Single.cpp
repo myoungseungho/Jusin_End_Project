@@ -92,6 +92,7 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 			return E_FAIL;
 
 
+
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
 

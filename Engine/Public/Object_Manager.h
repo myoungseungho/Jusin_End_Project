@@ -37,7 +37,7 @@ private:
 	_uint										m_iNumLevels = { 0 };
 	map<const wstring, class CLayer*>*			m_pLayers = { nullptr };
 
-private:
+public:
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
 	class CLayer* Find_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 

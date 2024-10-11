@@ -120,9 +120,31 @@ void CShader_Texture::Push_InputTextures(ID3D11ShaderResourceView* pSRV, _int Li
 		m_isAlpha = true;
 		m_InputTextures["Alpha"] = pSRV;
 	}
-
-	
 }
+void CShader_Texture::Remove_InputTextures(_int LineIndex)
+{
+	if (LineIndex == CIMGUI_Shader_Tab::END_DIFFUSE)
+	{
+		m_isDiffuse = false; 
+		m_InputTextures.erase("Diffuse");
+	}
+	else if (LineIndex == CIMGUI_Shader_Tab::END_ALPHA)
+	{
+		m_isAlpha = false;
+		m_InputTextures.erase("Alpha");
+	}
+}
+
+void CShader_Texture::Remove_InputFunction(_int iFunctionType)
+{
+	if (iFunctionType == CIMGUI_Shader_Tab::FUNCTION_TEXMOVE)
+	{
+		m_MoveTex.isOn = false;
+		m_MoveTex.fSpeed = nullptr;
+		m_MoveTex.vDirection = nullptr;
+	}
+}
+
 
 void CShader_Texture::Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed)
 {

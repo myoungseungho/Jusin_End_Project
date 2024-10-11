@@ -59,6 +59,7 @@ protected:
 	void SetActive(_bool active) { m_bIsActive = active; }
 	_bool IsActive() const { return m_bIsActive; }
 
+
 protected:
 	map<const _wstring, CComponent*>		m_Components;
 
