@@ -93,11 +93,7 @@ void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _fl
 
 	// 두 점 사이의 거리 계산
 	_float distance = sqrtf(dx * dx + dy * dy);
-
-	// 에네르기파가 아직 생성되지 않았을 때 처리
-	if (distance < m_UnitSize.x)
-		return;
-
+	
 	// 방향 벡터 및 정규화
 	_float2 direction = { dx / distance, dy / distance };
 

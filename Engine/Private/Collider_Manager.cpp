@@ -33,6 +33,14 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	// 이전 프레임의 충돌 결과 초기화
 	m_CollisionResults.clear();
 
+	// 모든 콜라이더의 m_isColl 플래그를 false로 초기화
+	for (auto& group : m_Colliders)
+	{
+		for (auto& collider : group)
+			collider->m_isColl = false;
+	}
+
+
 	// 충돌 쌍 생성
 	vector<pair<CCollider*, CCollider*>> collisionPairs;
 
@@ -157,11 +165,13 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 _bool CCollider_Manager::IsColliding(CCollider* _pSourCollider, CCollider* _pDestCollider)
 {
-	//SourCollider와 DestCollider가 충돌하면 DestCollider도 충돌하게
 	_bool isCol = _pSourCollider->isCollision(_pDestCollider);
-	_pDestCollider->m_isColl = isCol;
-
-	return _pSourCollider->isCollision(_pDestCollider);
+	if (isCol)
+	{
+		_pSourCollider->m_isColl = true;
+		_pDestCollider->m_isColl = true;
+	}
+	return isCol;
 }
 
 HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
@@ -233,7 +243,7 @@ _bool CCollider_Manager::isPointInAABB(const _float3& point, COLLIDERGROUP eColl
 
 HRESULT CCollider_Manager::Clear_ColliderGroup(COLLIDERGROUP eRenderGroup)
 {
-	if ( eRenderGroup >= CG_END)
+	if (eRenderGroup >= CG_END)
 		return E_FAIL;
 
 	for (auto& iter : m_Colliders[eRenderGroup])

@@ -20,6 +20,7 @@ CCollider::CCollider(const CCollider& Prototype)
 	, m_pBatch{ Prototype.m_pBatch }
 	, m_pEffect{ Prototype.m_pEffect }
 	, m_pInputLayout{ Prototype.m_pInputLayout }
+	, m_isColl{ Prototype.m_isColl }
 #endif
 {
 #ifdef _DEBUG
@@ -106,11 +107,13 @@ HRESULT CCollider::Render(_float fTimeDelta)
 
 _bool CCollider::isCollision(CCollider* pTargetCollider)
 {
-	m_isColl = false;
+	_bool isCol = m_pBounding->isCollision(pTargetCollider->m_eColliderType, pTargetCollider->m_pBounding);
 
-	m_isColl = m_pBounding->isCollision(pTargetCollider->m_eColliderType, pTargetCollider->m_pBounding);
-
-	return m_isColl;
+	if (isCol)
+	{
+		m_isColl = true;
+	}
+	return isCol;
 }
 
 _bool CCollider::isRayCollision(const _float3& rayOrigin, const _float3& rayDir)

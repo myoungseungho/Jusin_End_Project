@@ -8,3 +8,12 @@ LookRotation: 0 0 1
 Scale: 1 1 1
 IsParsing: 1
 
+LayerName: Layer_Monster
+PrototypeTag: Prototype_GameObject_Monster
+LevelIndex: 2
+Position: -5 0 0
+RightRotation: 1 0 0
+UpRotation: 0 1 0
+LookRotation: 0 0 1
+Scale: 1 1 1
+IsParsing: 1

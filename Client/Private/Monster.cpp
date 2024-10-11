@@ -120,7 +120,7 @@ HRESULT CMonster::Ready_Components()
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
 		return E_FAIL;
 
-	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_1P_BODY, m_pColliderCom);
+	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_2P_BODY, m_pColliderCom);
 
 	return S_OK;
 }
