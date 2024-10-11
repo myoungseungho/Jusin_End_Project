@@ -23,13 +23,16 @@ HRESULT CUI_SkillGaugeBar::Initialize_Prototype()
 
 HRESULT CUI_SkillGaugeBar::Initialize(void* pArg)
 {
+	m_fSizeX = 416.f;
+	m_fPosX = 333.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(416.f, 26.f, 333.f, 669.f , 0.5f);
+	__super::Set_UI_Setting(m_fSizeX, 26.f, m_fPosX, 669.f , 0.5f);
 
 	return S_OK;
 }
@@ -99,12 +102,12 @@ HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_pUI_Manager->m_iSkillCount)))
+	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_pMainPawn->Get_PawnDesc().iSKillCount)))
 		return E_FAIL;
 
-	if (m_pUI_Manager->m_iSkillCount != 7)
+	if (m_pMainPawn->Get_PawnDesc().iSKillCount != 7)
 	{
-		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", m_pUI_Manager->m_iSkillCount + 1)))
+		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", m_pMainPawn->Get_PawnDesc().iSKillCount + 1)))
 			return E_FAIL;
 	}
 

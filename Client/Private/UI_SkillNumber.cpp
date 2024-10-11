@@ -23,13 +23,15 @@ HRESULT CUI_SkillNumber::Initialize_Prototype()
 
 HRESULT CUI_SkillNumber::Initialize(void* pArg)
 {
+	m_fPosX = 85.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(117.f, 117.f, 85.f, 635.f);
+	__super::Set_UI_Setting(117.f, 117.f, m_fPosX, 635.f);
 
 	return S_OK;
 }
@@ -56,7 +58,7 @@ HRESULT CUI_SkillNumber::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_pUI_Manager->m_iSkillCount)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_pMainPawn->Get_PawnDesc().iSKillCount)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))

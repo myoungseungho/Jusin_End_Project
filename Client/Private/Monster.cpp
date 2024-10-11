@@ -61,10 +61,22 @@ void CMonster::Priority_Update(_float fTimeDelta)
 		m_iHp--;
 		m_fStunTImer = 1.f;
 		m_bStun = TRUE;
-		m_pUI_Manager->m_bHit = TRUE;
+		m_bHit = TRUE;
+		m_iSKillPoint += 3;
 	}
 	else
-		m_pUI_Manager->m_bHit = FALSE;
+		m_bHit = FALSE;
+
+	if (m_iSKillPoint > 100)
+	{
+		m_iSKillPoint -= 100;
+		m_iSKillCount++;
+	}
+	else if (m_iSKillPoint < 0)
+	{
+		m_iSKillPoint += 100;
+		m_iSKillCount--;
+	}
 	
 	//m_pUI_Manager->UsingComboCount(m_iComboCount);
 	//m_pUI_Manager->UsingStunCheck(m_bStun);

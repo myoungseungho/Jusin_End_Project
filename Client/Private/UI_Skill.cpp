@@ -37,10 +37,13 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_pUI_Manager->SKillCount();
-	m_iSkillPoint = m_pUI_Manager->m_iSkillPoint;
+	m_iSkillPoint = m_pMainPawn->Get_PawnDesc().iSKillPoint;
+	_uint iSkillCount = m_pMainPawn->Get_PawnDesc().iSKillCount;
 
 	m_fSkillRadio = 1 - m_iSkillPoint / 100.f;
+
+	if (iSkillCount >= 7)
+		m_fSkillRadio = 1.f;
 }
 
 void CUI_Skill::Update(_float fTimeDelta)

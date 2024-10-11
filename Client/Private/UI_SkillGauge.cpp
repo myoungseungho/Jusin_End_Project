@@ -23,13 +23,17 @@ HRESULT CUI_SkillGauge::Initialize_Prototype()
 
 HRESULT CUI_SkillGauge::Initialize(void* pArg)
 {
+
+	m_fSizeX = 416.f;
+	m_fPosX = 332.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(416.f, 52.f, 332.f, 668.f);
+	__super::Set_UI_Setting(m_fSizeX, 52.f, m_fPosX, 668.f);
 
 	return S_OK;
 }

@@ -62,22 +62,36 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 		m_iComboCount++;
 		m_iHp--;
 
-
 		m_fStunTImer = 1.f;
 		m_bStun = TRUE;
-		m_pUI_Manager->m_bHit = TRUE;
+		m_bHit = TRUE;
 
-		m_pUI_Manager->UsingSkillPoint(2);
+		m_iSKillPoint += 3;
 	}
 	else
-		m_pUI_Manager->m_bHit = FALSE;
+		m_bHit = FALSE;
+
 
 	if (m_pGameInstance->Get_DIKeyState(DIK_V))
 		m_pUI_Manager->UsingAttckBuff(5.f);
 
 
-	//m_pUI_Manager->UsingComboCount(m_iComboCount);
-	//m_pUI_Manager->UsingStunCheck(m_bStun);
+	if (m_iSKillPoint > 100)
+	{
+		m_iSKillPoint -= 100;
+		m_iSKillCount++;
+
+		if (m_iSKillCount >= 7)
+			m_iSKillCount = 7;
+	}
+	else if (m_iSKillPoint < 0)
+	{
+		m_iSKillPoint += 100;
+		m_iSKillCount--;
+
+		if (m_iSKillCount <= 0)
+			m_iSKillCount = 0;
+	}
 
 }
 

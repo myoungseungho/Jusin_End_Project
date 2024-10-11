@@ -33,12 +33,7 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
-
 	__super::Set_UI_Setting(m_fSizeX, 116.f, m_fPosX, 87.f, 0.75f);
-	
-
-	m_iCharaCurrHp = 100;
 
 	return S_OK;
 }

@@ -36,9 +36,14 @@ void CPawn::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
+	m_tPawnDesc.bStun = m_bStun;
+	m_tPawnDesc.bHit = m_bHit;
+
 	m_tPawnDesc.iHp = m_iHp;
 	m_tPawnDesc.iComboCount = m_iComboCount;
-	m_tPawnDesc.bStun = m_bStun;
+
+	m_tPawnDesc.iSKillCount = m_iSKillCount;
+	m_tPawnDesc.iSKillPoint = m_iSKillPoint;
 }
 
 

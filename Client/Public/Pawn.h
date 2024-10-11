@@ -19,8 +19,13 @@ public:
 	typedef struct
 	{
 		_bool		bStun = { FALSE };
+		_bool		bHit = { 0 };
+
+		_int		iHp = { 0 };
 		_uint		iComboCount = { 0 };
-		_uint		iHp = { 0 };
+
+		_int		iSKillPoint = { 0 };
+		_int		iSKillCount = { 0 };
 	}PAWN_DESC;
 
 protected:
@@ -48,7 +53,11 @@ protected:
 	//UI에 보내야하는 정보
 	_uint					m_iComboCount = { 0 };
 	_int					m_iHp = { 0 };
+	_int					m_iSKillPoint = { 0 };
+	_int					m_iSKillCount = { 0 };
+
 	_bool					m_bStun = { FALSE };
+	_bool					m_bHit = { FALSE };
 
 	PAWN_DESC				 m_tPawnDesc = {};
 
