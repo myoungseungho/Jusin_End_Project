@@ -9,6 +9,9 @@ class CModel;
 class CTexture;
 END
 
+BEGIN(Renderer)
+class CRenderer;
+END
 BEGIN(Client)
 
 class CEffect :	public CGameObject
@@ -30,6 +33,8 @@ public:
 		_int iRenderIndex;
 
 		_int iUnique_Index = -1;
+
+		//CRenderer::RENDERGROUP eRenderType = CRenderer::RG_NONBLEND_TEST;
 	}EFFECT_DESC;
 
 protected:
@@ -73,7 +78,7 @@ protected:
 
 public:
 	_int m_iUnique_Index = { -1 };
-
+	//class CRenderer::RENDERGROUP m_eRenderType = CRenderer::RG_NONBLEND_TEST;
 public:
 	_wstring m_EffectName;
 	_wstring m_ModelName;

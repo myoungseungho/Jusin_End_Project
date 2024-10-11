@@ -17,7 +17,7 @@
 
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
-
+_bool bShowImGuiLayerView = false;
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
 // IMGUI 창 표시 여부를 제어하는 전역 변수
@@ -165,6 +165,11 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::Checkbox("Layer_View",&bShowImGuiLayerView)) {
+			m_pRenderInstance->Show_Layer_View();
+		}
+		
 		ImGui::EndMainMenuBar();
 	}
 

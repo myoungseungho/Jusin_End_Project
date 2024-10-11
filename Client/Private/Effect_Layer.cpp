@@ -35,8 +35,6 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 
 void CEffect_Layer::Render(_float fTimeDelta)
 {
-	for (auto& pEffect: m_MixtureEffects)
-		pEffect->Render(fTimeDelta);
 }
 
 CEffect_Layer* CEffect_Layer::Create()
