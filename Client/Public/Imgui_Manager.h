@@ -21,6 +21,15 @@ class CImgui_Manager : public CBase
 {
 	DECLARE_SINGLETON(CImgui_Manager)
 
+public:
+	typedef struct
+	{
+		ImVec2 MainImGuiPos = { 0.f,0.f };
+		ImVec2 MainImGuiSize = { 0.f,0.f };
+
+		ImVec2 ShaderImGuiPos = { 0.f,0.f };
+		ImVec2 ShaderImGuiSize = { 0.f,0.f };
+	}IMGUI_SCREEN;
 private:
 
 	CImgui_Manager();
@@ -41,7 +50,10 @@ public:
 	_int Get_CurShaderTab_Id() { return m_iCurShaderTabId; }
 	_int Pick_Effect_Mesh();
 
-
+	IMGUI_SCREEN Get_Screen_Desc() {
+		return m_ImGuiScreen;
+	}
+	
 private:
 	void Render_IMGUI(_float fTimeDelta);
 	void Render_ShaderTabs(_float fTimeDelta);
@@ -54,11 +66,7 @@ private:
 	vector<class CIMGUI_Tab*> m_vecTabs;
 	map<string, class CIMGUI_Shader_Tab*> m_vecShader_Tabs;
 
-	ImVec2 MainImGuiPos = {0.f,0.f};
-	ImVec2 MainImGuiSize = { 0.f,0.f };
-
-	ImVec2 ShaderImGuiPos = { 0.f,0.f };
-	ImVec2 ShaderImGuiSize = { 0.f,0.f };
+	IMGUI_SCREEN m_ImGuiScreen;
 
 	_int m_iShaderCount = { 0 };
 	_int m_iCurShaderTabIndex = { -1 };
