@@ -102,6 +102,13 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			for (auto& iter : m_vecColliderCom)
 				Safe_Release(iter);
+
+			Clear_Collider_Component();
+
+			m_vecColliderCom.clear();
+
+			m_fX = 0.f;
+			m_fY = 0.f;
 		}
 		break;
 

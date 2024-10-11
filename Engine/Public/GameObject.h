@@ -58,7 +58,7 @@ public:
 
 public:
 	HRESULT Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, class CComponent** ppOut, void* pArg = nullptr);
-
+	void Clear_Collider_Component();
 	//활성화 비활성화 관련
 	void SetActive(_bool active) { m_bIsActive = active; }
 	_bool IsActive() const { return m_bIsActive; }

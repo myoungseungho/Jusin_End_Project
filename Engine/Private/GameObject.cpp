@@ -102,6 +102,27 @@ void CGameObject::OnCollisionExit(CCollider* other)
 {
 }
 
+void CGameObject::Clear_Collider_Component()
+{
+	for (auto it = m_Components.begin(); it != m_Components.end(); )
+	{
+		// Com_Collider_로 시작하는지 확인
+		if (it->first.find(L"Com_Collider_") == 0)
+		{
+			// 컴포넌트를 Safe_Release
+			Safe_Release(it->second);
+
+			// 맵에서 항목 제거
+			it = m_Components.erase(it);
+		}
+		else
+		{
+			++it;  // 다음 항목으로 이동
+		}
+	}
+}
+
+
 HRESULT CGameObject::Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, CComponent** ppOut, void* pArg)
 {
 	/* 이미 strComponentTag키를 가진 컴포넌트가 있었다. */
