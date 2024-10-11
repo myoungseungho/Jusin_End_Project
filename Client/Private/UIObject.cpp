@@ -63,6 +63,7 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 	if(m_pMainPawn != nullptr)
 		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 
+
 	//if (pDesc != nullptr)
 	//	InitPlayer();
 }
