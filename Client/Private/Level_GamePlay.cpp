@@ -121,14 +121,21 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 	//공격력 버프
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufMark"), TEXT("Layer_UI_AttBufMark"))))
-		return E_FAIL;
+	CUIObject::UI_DESC AttBufoDesc = {};
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBuf"), TEXT("Layer_UI_AttBuf"))))
-		return E_FAIL;
+	for (int i = 0; i < 2; ++i)
+	{
+		AttBufoDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufNone"), TEXT("Layer_UI_AttBuf"))))
-		return E_FAIL;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufMark"), TEXT("Layer_UI_AttBufMark"),&AttBufoDesc)))
+			return E_FAIL;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBuf"), TEXT("Layer_UI_AttBuf"),&AttBufoDesc)))
+			return E_FAIL;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufNone"), TEXT("Layer_UI_AttBuf"),&AttBufoDesc)))
+			return E_FAIL;
+	}
 
 	// 스킬
 	CUIObject::UI_DESC SkilloDesc = {};

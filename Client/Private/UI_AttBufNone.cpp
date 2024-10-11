@@ -23,13 +23,15 @@ HRESULT CUI_AttBufNone::Initialize_Prototype()
 
 HRESULT CUI_AttBufNone::Initialize(void* pArg)
 {
+	m_fPosX = 437.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(40.f, 40.f, 437.f, 146.f, 1.f);
+	__super::Set_UI_Setting(40.f, 40.f, m_fPosX, 146.f, 1.f);
 
 	return S_OK;
 }

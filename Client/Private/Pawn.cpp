@@ -38,6 +38,7 @@ void CPawn::Priority_Update(_float fTimeDelta)
 
 	m_tPawnDesc.bStun = m_bStun;
 	m_tPawnDesc.bHit = m_bHit;
+	m_tPawnDesc.bAttBuf = m_bAttBuf;
 
 	m_tPawnDesc.iHp = m_iHp;
 	m_tPawnDesc.iComboCount = m_iComboCount;
@@ -59,31 +60,74 @@ void CPawn::Late_Update(_float fTimeDelta)
 
 HRESULT CPawn::Render(_float fTimeDelta)
 {
-	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
-	for (size_t i = 0; i < iNumMeshes; i++)
-	{
-		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-			return E_FAIL;
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-
-		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
-		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-
-		if (FAILED(m_pShaderCom->Begin(0)))
-			return E_FAIL;
-
-		if (FAILED(m_pModelCom->Render(i)))
-			return E_FAIL;
-	}
-
 	return S_OK;
 }
 
+void CPawn::Action_AttBuf(_ubyte byKeyID,  _float fTimeDelta)
+{
+	if (m_pGameInstance->Get_DIKeyState(byKeyID))
+		m_bAttBuf = TRUE;
 
+	if (m_bAttBuf == TRUE)
+	{
+		m_fAttBufTimer += fTimeDelta;
 
+		if (m_fAttBufTimer >= 5.f)
+		{
+			m_bAttBuf = FALSE;
+			m_fAttBufTimer = 0.f;
+		}
+	}
+}
+
+void CPawn::Action_Hit(_ubyte byKeyID, _float fTimeDelta)
+{
+	if (m_pGameInstance->Get_DIKeyState(byKeyID))
+	{
+		m_iComboCount++;
+		m_iHp--;
+
+		m_fStunTImer = 1.f;
+		m_bStun = TRUE;
+		m_bHit = TRUE;
+
+		m_iSKillPoint += 3;
+	}
+	else
+		m_bHit = FALSE;
+
+	SkillGaugeLimit();
+	StunRecover(fTimeDelta);
+}
+
+void CPawn::SkillGaugeLimit()
+{
+	if (m_iSKillPoint > 100)
+	{
+		m_iSKillPoint -= 100;
+		m_iSKillCount++;
+	}
+	else if (m_iSKillPoint < 0)
+	{
+		m_iSKillPoint += 100;
+		m_iSKillCount--;
+	}
+}
+
+void CPawn::StunRecover(_float fTimeDelta)
+{
+	if (m_bStun == TRUE)
+	{
+		m_fStunTImer -= fTimeDelta;
+
+		if (m_fStunTImer <= 0.f)
+		{
+			m_fStunTImer = 0.f;
+			m_bStun = FALSE;
+			m_iComboCount = 0;
+		}
+	}
+}
 
 void CPawn::Free()
 {

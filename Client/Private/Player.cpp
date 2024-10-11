@@ -41,58 +41,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 void CPlayer::Priority_Update(_float fTimeDelta)
 {
-	//플레이어 체력 바
-
 	__super::Priority_Update(fTimeDelta);
-
-	if (m_bStun == TRUE)
-	{
-		m_fStunTImer -= fTimeDelta;
-
-		if (m_fStunTImer <= 0.f)
-		{
-			m_fStunTImer = 0.f;
-			m_bStun = FALSE;
-			m_iComboCount = 0;
-		}
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_G))
-	{
-		m_iComboCount++;
-		m_iHp--;
-
-		m_fStunTImer = 1.f;
-		m_bStun = TRUE;
-		m_bHit = TRUE;
-
-		m_iSKillPoint += 3;
-	}
-	else
-		m_bHit = FALSE;
-
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_V))
-		m_pUI_Manager->UsingAttckBuff(5.f);
-
-
-	if (m_iSKillPoint > 100)
-	{
-		m_iSKillPoint -= 100;
-		m_iSKillCount++;
-
-		if (m_iSKillCount >= 7)
-			m_iSKillCount = 7;
-	}
-	else if (m_iSKillPoint < 0)
-	{
-		m_iSKillPoint += 100;
-		m_iSKillCount--;
-
-		if (m_iSKillCount <= 0)
-			m_iSKillCount = 0;
-	}
-
 }
 
 
@@ -100,9 +49,10 @@ void CPlayer::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	Action_Hit(DIK_G, fTimeDelta);
+	Action_AttBuf(DIK_V, fTimeDelta);
+
 	m_pModelCom->Play_Animation(fTimeDelta);
-
-
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)
@@ -121,13 +71,9 @@ HRESULT CPlayer::Render(_float fTimeDelta)
 
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
-		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
 		if (FAILED(m_pShaderCom->Begin(0)))

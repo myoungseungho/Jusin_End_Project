@@ -38,7 +38,7 @@ void CUI_BaseAttBuf::Priority_Update(_float fTimeDelta)
 
 void CUI_BaseAttBuf::Update(_float fTimeDelta)
 {
-	if (UsingAttckBuff() == TRUE)
+	if (m_pMainPawn->Get_PawnDesc().bAttBuf == TRUE)
 	{
 		m_fAttBufTimer += fTimeDelta;
 

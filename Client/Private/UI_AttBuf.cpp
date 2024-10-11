@@ -23,13 +23,15 @@ HRESULT CUI_AttBuf::Initialize_Prototype()
 
 HRESULT CUI_AttBuf::Initialize(void* pArg)
 {
+	m_fPosX = 437.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(40.f, 40.f, 437.f, 146.f, 0.1f);
+	__super::Set_UI_Setting(40.f, 40.f, m_fPosX, 146.f, 0.1f);
 
 	return S_OK;
 }

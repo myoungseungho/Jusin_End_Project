@@ -19,7 +19,8 @@ public:
 	typedef struct
 	{
 		_bool		bStun = { FALSE };
-		_bool		bHit = { 0 };
+		_bool		bHit = { FALSE };
+		_bool		bAttBuf = { FALSE };
 
 		_int		iHp = { 0 };
 		_uint		iComboCount = { 0 };
@@ -45,6 +46,14 @@ public:
 	PAWN_DESC Get_PawnDesc() { return m_tPawnDesc; }
 
 protected:
+	void Action_AttBuf(_ubyte byKeyID, _float fTimeDelta);
+	void Action_Hit(_ubyte byKeyID, _float fTimeDelta);
+
+protected:
+	void SkillGaugeLimit();
+	void StunRecover(_float fTimeDelta);
+
+protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
 
@@ -58,11 +67,13 @@ protected:
 
 	_bool					m_bStun = { FALSE };
 	_bool					m_bHit = { FALSE };
+	_bool					m_bAttBuf = { FALSE };
 
 	PAWN_DESC				 m_tPawnDesc = {};
 
 protected:
 	_float					m_fStunTImer = { 0.f };
+	_float					m_fAttBufTimer = { 0.f };
 
 	class CUI_Manager* m_pUI_Manager = { nullptr };
 
