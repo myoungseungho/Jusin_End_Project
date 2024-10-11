@@ -23,13 +23,16 @@ HRESULT CUI_Chara_Icon::Initialize_Prototype()
 
 HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 {
+	m_fPosX = 50.f;
+	m_fSizeX = 150.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(150.f, 150.f, 50.f, 40.f, 0.85f);
+	__super::Set_UI_Setting(m_fSizeX, 150.f, m_fPosX, 40.f, 0.85f);
 
 	//Player의 선택 ID에 따라서 변경 현재 기본값은 : 0
 	//m_iCharaID = m_pGameInstance->Player->Get_ID();

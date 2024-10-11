@@ -38,11 +38,12 @@ void CUI_BaseAttBuf::Priority_Update(_float fTimeDelta)
 
 void CUI_BaseAttBuf::Update(_float fTimeDelta)
 {
-	if (m_pMainPawn->Get_PawnDesc().bAttBuf == TRUE)
+	if (m_pMainPawn->Get_PawnDesc().bAttBuf == TRUE || m_fAttBufTimer > 0.f)
 	{
+
 		m_fAttBufTimer += fTimeDelta;
 
-		if (m_fAttBufTimer >= m_fAttBufDuration)
+		if (m_fAttBufTimer >= m_pUI_Manager->m_fDuration)
 		{
 			m_bDead = true;
 		}

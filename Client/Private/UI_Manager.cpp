@@ -3,6 +3,8 @@
 #include "Layer.h"
 #include "UI_Manager.h"
 
+#include "UIObject.h"
+
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
@@ -14,11 +16,19 @@ CUI_Manager::CUI_Manager()
 	Safe_AddRef(m_pGameInstance);
 }
 
-void CUI_Manager::UsingAttckBuff(_float fAttBufDuration)
+void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CPawn::PLAYER_SLOT eSlotID)
 {
 	m_fDuration = fAttBufDuration;
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"));
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"));
+
+	CUIObject::UI_DESC tAttBufDesc = {};
+
+	if (eSlotID == CPawn::LPLAYER1 || eSlotID == CPawn::LPLAYER2)
+		tAttBufDesc.eLRPos = CUIObject::LEFT;
+	else if(eSlotID == CPawn::RPLAYER1 || eSlotID == CPawn::RPLAYER2)
+		tAttBufDesc.eLRPos = CUIObject::RIGHT;
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"),&tAttBufDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"),&tAttBufDesc);
 }
 
 void CUI_Manager::UsingComboCount(_uint iComboCnt)

@@ -30,13 +30,20 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	//몬스터 생성
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
+	CPawn::SLOT_DESC SlotDesc = {};
+
+	SlotDesc.ePlayerSlot = CPawn::LPLAYER1;
+
+	//플레이어 생성
+	if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"), TEXT("Layer_Player"),&SlotDesc)))
 		return E_FAIL;
 
+	SlotDesc.ePlayerSlot = CPawn::RPLAYER1;
+
 	//몬스터 생성
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"), TEXT("Layer_Player"))))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"),&SlotDesc)))
 		return E_FAIL;
+
 
 	CPawn* pPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
 	CPawn* pMonster = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
@@ -113,12 +120,19 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	}
 
 	//캐릭터 아이콘
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Chara_Icon_Panel"), TEXT("Layer_UI_Chara_Icon"))))
-		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Chara_Icon"), TEXT("Layer_UI_Chara_Icon"))))
-		return E_FAIL;
+	CUIObject::UI_DESC Icon_Desc = {};
 
+	for (int i = 0; i < 2; ++i)
+	{
+		Icon_Desc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Chara_Icon_Panel"), TEXT("Layer_UI_Chara_Icon"),&Icon_Desc)))
+			return E_FAIL;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Chara_Icon"), TEXT("Layer_UI_Chara_Icon"), &Icon_Desc)))
+			return E_FAIL;
+	}
 	//공격력 버프
 
 	CUIObject::UI_DESC AttBufoDesc = {};

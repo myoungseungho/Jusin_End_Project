@@ -29,6 +29,9 @@ HRESULT CPawn::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	SLOT_DESC* pSlotDesc = static_cast<SLOT_DESC*>(pArg);
+	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
+
 	return S_OK;
 }
 
@@ -63,11 +66,14 @@ HRESULT CPawn::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CPawn::Action_AttBuf(_ubyte byKeyID,  _float fTimeDelta)
+void CPawn::Action_AttBuf(_ubyte byKeyID,  PLAYER_SLOT eSlot,  _float fTimeDelta )
 {
-	if (m_pGameInstance->Get_DIKeyState(byKeyID))
+	if (m_iNumAttBuf <= 1 && m_pGameInstance->Get_DIKeyState(byKeyID))
+	{
 		m_bAttBuf = TRUE;
-
+		m_pUI_Manager->UsingAttckBuff(5.f, eSlot);
+		m_iNumAttBuf--;
+	}
 	if (m_bAttBuf == TRUE)
 	{
 		m_fAttBufTimer += fTimeDelta;

@@ -18,6 +18,12 @@ public:
 public:
 	typedef struct
 	{
+		PLAYER_SLOT ePlayerSlot = {};
+	}SLOT_DESC;
+
+public:
+	typedef struct
+	{
 		_bool		bStun = { FALSE };
 		_bool		bHit = { FALSE };
 		_bool		bAttBuf = { FALSE };
@@ -46,7 +52,7 @@ public:
 	PAWN_DESC Get_PawnDesc() { return m_tPawnDesc; }
 
 protected:
-	void Action_AttBuf(_ubyte byKeyID, _float fTimeDelta);
+	void Action_AttBuf(_ubyte byKeyID, PLAYER_SLOT eSlot,_float fTimeDelta);
 	void Action_Hit(_ubyte byKeyID, _float fStunDuration, _float fTimeDelta);
 
 protected:
@@ -69,14 +75,18 @@ protected:
 	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
 
+	_uint					m_iNumAttBuf = { 1 };
+
 	//UI에 보내야할 정보
 	PAWN_DESC				 m_tPawnDesc = {};
 
 protected:
+	PLAYER_SLOT				m_ePlayerSlot = {};
+
 	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };
 
-	class CUI_Manager* m_pUI_Manager = { nullptr };
+	class CUI_Manager*		m_pUI_Manager = { nullptr };
 
 
 public:

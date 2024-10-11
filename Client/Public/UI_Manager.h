@@ -22,7 +22,7 @@ private:
 
 public:
 	void UsingStunCheck(_bool bStun) { m_bStun = bStun; }
-	void UsingAttckBuff(_float fAttBufDuration);
+	void UsingAttckBuff(_float fAttBufDuration, CPawn::PLAYER_SLOT eSlotID);
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
 	void UsingComboCount(_uint iComboCnt);
 	void UsingSelectCharacher(CPawn* pPawn, CPawn::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }

@@ -23,13 +23,16 @@ HRESULT CUI_Chara_Icon_Panel::Initialize_Prototype()
 
 HRESULT CUI_Chara_Icon_Panel::Initialize(void* pArg)
 {
+	m_fPosX = 73.f;
+	m_fSizeX = 84.f * 2.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(84.f * 2.f, 84.f, 73.f, 88.f);
+	__super::Set_UI_Setting(m_fSizeX, 84.f, m_fPosX, 88.f);
 
 	return S_OK;
 }
