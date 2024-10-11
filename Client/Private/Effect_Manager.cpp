@@ -89,14 +89,38 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 	}
 	else
 	{
-		CEffect_Layer* pLayer = CEffect_Layer::Create();
-
 		CEffect::EFFECT_DESC EffectDesc{};
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
 
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
+	}
+
+	return S_OK;
+}
+
+HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTag, void* pArg)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
+
+	if (nullptr == pLayer)
+	{
+		pLayer = CEffect_Layer::Create();
+		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
+	}
+
+	for (auto* pEffect : m_TestEffect)
+	{
+		if (pEffect != nullptr)
+		{
+			CEffect::EFFECT_DESC EffectDesc{};
+			EffectDesc.ModelName = pEffect->m_ModelName;
+			EffectDesc.MaskTextureName = pEffect->m_MaskTextureName;
+			EffectDesc.DiffuseTextureName = pEffect->m_DiffuseTextureName;
+
+			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
+		}
 	}
 
 	return S_OK;
@@ -198,6 +222,21 @@ HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectID)
 	}
 
 	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Delete_All_Test_Effect()
+{
+	for (auto& pEffect : m_TestEffect)
+	{
+		if (pEffect)
+		{
+			Safe_Release(pEffect);
+		}
+	}
+
+	m_TestEffect.clear();
+
+	return S_OK;
 }
 
 HRESULT CEffect_Manager::Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled)

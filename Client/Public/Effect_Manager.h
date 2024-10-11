@@ -31,9 +31,10 @@ public:
 	HRESULT Delete_Layer(const wstring& strEffectLayerTag);
 	vector<wstring> Get_Layer_List();
 	HRESULT Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
-
+	HRESULT Add_All_Effect_To_Layer(const wstring& strEffectLayerTag, void* pArg = nullptr);
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName);
 	HRESULT Delete_Test_Effect(_uint iCurTestEffectID);
+	HRESULT Delete_All_Test_Effect();
 	HRESULT Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled);
 	HRESULT Set_Effect_Position(_int EffectId, _float3 ChangePosition);
 	HRESULT Set_Effect_Rotation(_int EffectId, _float3 ChangeRotation);

@@ -169,13 +169,22 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
 
         ImGui::SameLine();
 
-        if (ImGui::Button("Delete Effect"))
+        if (ImGui::Button("Delete Selete Effect"))
         {
             // 테스트 이펙트 벡터에서 선택한 객체의 인덱스 찾아 전달
             _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
             CImgui_Manager::Get_Instance()->Delete_Shader_Tab(EffectIndex);
 
             m_pEffect_Manager->Delete_Test_Effect(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id());
+
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("Delete All Effect"))
+        {
+
+            m_pEffect_Manager->Delete_All_Test_Effect();
 
         }
 
@@ -334,13 +343,22 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
 {
     ImGui::InputText("Effect Layer", &EffectLayerKey[0], 128);
 
-    if (ImGui::Button("Save To Layer"))
+    if (ImGui::Button("Select Effect Save To Layer"))
     {
         wstring strEffectLayerTag = UTF8ToWString(EffectLayerKey);
 
         _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
 
         m_pEffect_Manager->Add_Effect_To_Layer(EffectIndex, strEffectLayerTag);
+
+        EffectLayerKey.clear();
+    }
+
+    if (ImGui::Button("All Effect Save To Layer"))
+    {
+        wstring strEffectLayerTag = UTF8ToWString(EffectLayerKey);
+
+        m_pEffect_Manager->Add_All_Effect_To_Layer(strEffectLayerTag);
 
         EffectLayerKey.clear();
     }
