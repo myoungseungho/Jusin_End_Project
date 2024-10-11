@@ -59,7 +59,7 @@ protected:
 
 protected:
 
-	//UI에 보내야하는 정보
+	//캐릭터 정보
 	_uint					m_iComboCount = { 0 };
 	_int					m_iHp = { 0 };
 	_int					m_iSKillPoint = { 0 };
@@ -69,6 +69,7 @@ protected:
 	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
 
+	//UI에 보내야할 정보
 	PAWN_DESC				 m_tPawnDesc = {};
 
 protected:

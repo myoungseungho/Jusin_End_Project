@@ -28,10 +28,19 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
+	void InitPosition();
+	void ScaleAnimation();
+	void EndAlphaEffect(_float fTimeDelta);
+
+	_bool RenderEnable(_uint iLimit);
+	_uint Return_TextureIndex();
+
+private:
 	_float m_fDepth = { 0.f };
 	_float m_fAlphaTimer = { 0.f };
 	_uint m_iNumUI = { 0 };
-	_uint m_iTextureIndex = { 0 };
+	
+	_uint m_iLimitComboCount = { 0 };
 
 
 public:

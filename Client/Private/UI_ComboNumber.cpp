@@ -33,35 +33,7 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 	m_iNumUI = pComboDesc->iNumUI;
 	m_eLRPos = pComboDesc->eLRPos;
 
-	m_fSizeX = 0.f;
-	m_fSizeY = 0.f;
-	m_fPosX = 0.f;
-	m_fPosY = 0.f;
-	m_fDepth = 0.f;
-
-	switch (m_iNumUI)
-	{
-	case FIRST:
-		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 96.f, m_fPosY = 238.f , m_fDepth = 0.5f;
-		break;
-
-	case SECOND:
-		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 150.f, m_fPosY = 238.f, m_fDepth = 0.6f;
-		break;
-
-	case THIRD:
-		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 204.f, m_fPosY = 238.f, m_fDepth = 0.7f;
-		break;
-	}
-
-	if (m_eLRPos == RIGHT)
-	{
-		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
-	}
-
-
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
-
+	InitPosition();
 
 	return S_OK;
 }
@@ -69,40 +41,8 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
-
-	if(m_pMainPawn->Get_PawnDesc().bHit)
-	{
-		__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX , m_fPosY , m_fDepth);
-	}
-	else 
-		__super::Set_UI_Setting(m_fSizeX , m_fSizeY , m_fPosX , m_fPosY , m_fDepth);
-
-	switch (m_iNumUI)
-	{
-	case FIRST:
-		m_iTextureIndex = m_iComboCount / 100;
-		break;
-
-	case SECOND:
-		m_iTextureIndex = (m_iComboCount / 10) % 10;
-		break;
-
-	case THIRD:
-		m_iTextureIndex = m_iComboCount % 10;
-		break;
-	}
-
 	
-	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
-	{
-		
-		m_fAlphaTimer += fTimeDelta * 5.f;
 
-		if (m_fAlphaTimer >= 1.f)
-			m_fAlphaTimer = 1.f;
-	}
-	else
-		m_fAlphaTimer = 0.f;
 
 }
 
@@ -110,21 +50,20 @@ void CUI_ComboNumber::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	//숫자가 나타날 때 스케일 애니메이션
+	ScaleAnimation();
+
+	//히트가 끝날 때 이펙트
+	EndAlphaEffect(fTimeDelta);
 }
 
 void CUI_ComboNumber::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
-
-	if(m_iNumUI == FIRST && m_iComboCount >= 100)
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 	
-	if(m_iNumUI == SECOND && m_iComboCount >=10 )
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 
-	if (m_iNumUI == THIRD && m_iComboCount >= 2)
+	if(RenderEnable(m_iLimitComboCount))
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-
 }
 
 HRESULT CUI_ComboNumber::Render(_float fTimeDelta)
@@ -160,7 +99,7 @@ HRESULT CUI_ComboNumber::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", Return_TextureIndex())))
 		return E_FAIL;
 
 	_vector vColor = { 0.f, 0.f, 0.f, 1.f };
@@ -179,6 +118,86 @@ HRESULT CUI_ComboNumber::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CUI_ComboNumber::InitPosition()
+{
+	switch (m_iNumUI)
+	{
+	case FIRST:
+		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 96.f, m_fPosY = 238.f, m_fDepth = 0.5f;
+		m_iLimitComboCount = 100;
+		break;
+
+	case SECOND:
+		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 150.f, m_fPosY = 238.f, m_fDepth = 0.6f;
+		m_iLimitComboCount = 10;
+		break;
+
+	case THIRD:
+		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 204.f, m_fPosY = 238.f, m_fDepth = 0.7f;
+		m_iLimitComboCount = 2;
+		break;
+	}
+
+	if (m_eLRPos == RIGHT)
+	{
+		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
+	}
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
+}
+
+_uint CUI_ComboNumber::Return_TextureIndex()
+{
+	switch (m_iNumUI)
+	{
+	case FIRST:
+		return (m_iComboCount / 100);
+		break;
+
+	case SECOND:
+		return ((m_iComboCount / 10) % 10);
+		break;
+
+	case THIRD:
+		return  (m_iComboCount % 10);
+		break;
+	}
+
+		return 0;
+}
+
+void CUI_ComboNumber::ScaleAnimation()
+{
+	if (m_pMainPawn->Get_PawnDesc().bHit)
+	{
+		__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, m_fDepth);
+	}
+	else
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
+}
+
+void CUI_ComboNumber::EndAlphaEffect(_float fTimeDelta)
+{
+	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
+	{
+
+		m_fAlphaTimer += fTimeDelta * 5.f;
+
+		if (m_fAlphaTimer >= 1.f)
+			m_fAlphaTimer = 1.f;
+	}
+	else
+		m_fAlphaTimer = 0.f;
+}
+
+_bool CUI_ComboNumber::RenderEnable(_uint iLimit)
+{
+	if (m_iComboCount >= iLimit)
+		return TRUE;
+
+	return FALSE;
 }
 
 CUI_ComboNumber* CUI_ComboNumber::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
