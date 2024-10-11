@@ -192,11 +192,8 @@ void CCollider_Manager::Process_1PSkill_2PSkill(CCollider* colliderA, CCollider*
 {
 	// 1P 스킬과 2P 스킬 충돌 처리
 	// 구체적인 로직 추가 가능
-}
 
-void CCollider_Manager::Process_1PSkill_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
-{
-	// 새로운 충돌인지 확인
+		// 새로운 충돌인지 확인
 	if (m_CollisionHistory.find(make_pair(colliderA, colliderB)) == m_CollisionHistory.end() || !m_CollisionHistory[make_pair(colliderA, colliderB)]) {
 		// 새로운 충돌 시작
 		colliderA->OnCollisionEnter(colliderB, fTimeDelta);
@@ -210,6 +207,11 @@ void CCollider_Manager::Process_1PSkill_2PBody(CCollider* colliderA, CCollider* 
 
 	// 현재 충돌 상태 업데이트
 	currentCollisions[make_pair(colliderA, colliderB)] = true;
+}
+
+void CCollider_Manager::Process_1PSkill_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+
 }
 
 

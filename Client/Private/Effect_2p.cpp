@@ -85,56 +85,56 @@ HRESULT CEffect_2p::Render(_float fTimeDelta)
 
 void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-	switch (m_playerID)
-	{
-		//이펙트가 1P_Skill이라면
-	case CEffect_2p::PLAYERID::PLAYER_1P:
-		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_SKILL)
-		{
-		}
-		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
-		{
-			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_SKILL);
+	//switch (m_playerID)
+	//{
+	//	//이펙트가 1P_Skill이라면
+	//case CEffect_2p::PLAYERID::PLAYER_1P:
+	//	if (other->m_ColliderGroup == CCollider_Manager::CG_2P_SKILL)
+	//	{
+	//	}
+	//	else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
+	//	{
+	//		m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_SKILL);
 
-			//기존 콜라이더 삭제
-			for (auto& iter : m_vecColliderCom)
-				Safe_Release(iter);
+	//		//기존 콜라이더 삭제
+	//		for (auto& iter : m_vecColliderCom)
+	//			Safe_Release(iter);
 
-			//콜라이더 컴포넌트 전부 삭제
-			Clear_Collider_Component();
+	//		//콜라이더 컴포넌트 전부 삭제
+	//		Clear_Collider_Component();
 
-			//벡터 초기화
-			m_vecColliderCom.clear();
+	//		//벡터 초기화
+	//		m_vecColliderCom.clear();
 
-			m_fX = 0.f;
-			m_fY = 0.f;
-		}
-		break;
+	//		m_fX = 0.f;
+	//		m_fY = 0.f;
+	//	}
+	//	break;
 
-		//이펙트가 2P_Skill이라면
-	case CEffect_2p::PLAYERID::PLAYER_2P:
-		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_SKILL)
-		{
-			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_2P_SKILL);
+	//	//이펙트가 2P_Skill이라면
+	//case CEffect_2p::PLAYERID::PLAYER_2P:
+	//	if (other->m_ColliderGroup == CCollider_Manager::CG_1P_SKILL)
+	//	{
+	//		m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_2P_SKILL);
 
-			//기존 콜라이더 삭제
-			for (auto& iter : m_vecColliderCom)
-				Safe_Release(iter);
+	//		//기존 콜라이더 삭제
+	//		for (auto& iter : m_vecColliderCom)
+	//			Safe_Release(iter);
 
-			//콜라이더 컴포넌트 전부 삭제
-			Clear_Collider_Component();
+	//		//콜라이더 컴포넌트 전부 삭제
+	//		Clear_Collider_Component();
 
-			//벡터 초기화
-			m_vecColliderCom.clear();
+	//		//벡터 초기화
+	//		m_vecColliderCom.clear();
 
-			m_fX = 0.f;
-			m_fY = 0.f;
-		}
-		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
-		{
-		}
-		break;
-	}
+	//		m_fX = 0.f;
+	//		m_fY = 0.f;
+	//	}
+	//	else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
+	//	{
+	//	}
+	//	break;
+	//}
 }
 
 void CEffect_2p::OnCollisionStay(CCollider* other, _float fTimeDelta)
