@@ -16,6 +16,8 @@ class CEffect :	public CGameObject
 public:
 	typedef struct
 	{
+		_wstring EffectName;
+
 		_wstring ModelName;
 		_wstring MaskTextureName;
 		_wstring DiffuseTextureName;
@@ -64,6 +66,7 @@ public:
 	_int m_iUnique_Index = { -1 };
 
 public:
+	_wstring m_EffectName;
 	_wstring m_ModelName;
 	_wstring m_MaskTextureName;
 	_wstring m_DiffuseTextureName;

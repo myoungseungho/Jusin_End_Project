@@ -18,8 +18,10 @@ namespace Engine
 	typedef struct
 	{
 		XMFLOAT3		vScale;
-		XMFLOAT4		vRotation;
+		XMFLOAT3		vRotation;
 		XMFLOAT3		vPosition;
+
+		bool			bIsPlaying;
 
 		float			fCurTime;
 		float			fDuration;

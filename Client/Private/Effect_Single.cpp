@@ -30,9 +30,11 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 	EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
 
+	m_EffectName = pEffectDesc->EffectName;
 	m_ModelName = pEffectDesc->ModelName;
 	m_MaskTextureName = pEffectDesc->MaskTextureName;
 	m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
+
 	m_iUnique_Index = pEffectDesc->iUnique_Index;
 
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName,&m_DiffuseTextureName)))
@@ -43,7 +45,6 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 void CEffect_Single::Priority_Update(_float fTimeDelta)
 {
-	m_pTransformCom->Turn(XMVectorSet(1.f, 0.f, 0.f, 0.f), fTimeDelta);
 }
 
 void CEffect_Single::Update(_float fTimeDelta)

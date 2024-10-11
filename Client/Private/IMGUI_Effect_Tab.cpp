@@ -9,7 +9,7 @@
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
 
-const char* Effect[] = { "Each", "Final", "Each Effect KeyFrame", "Layer KeyFrame"};
+const char* Effect[] = { "Each", "Layer", "Each Effect KeyFrame", "Layer KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
 
 static int CurrentEffect = 0;
@@ -123,7 +123,7 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
     static int CurrentMaskTexture = 0;
     static int CurrentDiffuseTexture = 0;
 
-    if (CurrentEffect == 0) // Each 선택 시
+    if (CurrentEffect == 0)
     {
         if (ImGui::BeginCombo("EffectType", EffectType[CurrentEffectType]))
         {
@@ -155,15 +155,12 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
             ImGui::EndCombo();
         }
 
-        // Add Effect 버튼을 추가하여 Add_Test_Effect 호출
         if (ImGui::Button("Add Effect"))
         {
-            // 선택된 Model Name을 wstring으로 변환
             std::wstring wModelName = UTF8ToWString(ModelName[CurrentModel]);
 
-            // CurrentEffectType을 EFFECT_TYPE으로 변환하여 전달
             EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
-            // Add_Test_Effect 호출
+
             m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
         }
 
@@ -197,7 +194,6 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
         _float3 CurScaled = m_pEffect_Manager->Get_Effect_Scaled(EffectId);
         _float3 CurRotation = m_pEffect_Manager->Get_Effect_Rotation(EffectId);
 
-        // Position 섹션
         ImGui::Text("Position");
 
         // X 축
@@ -232,7 +228,6 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
 
         ImGui::Separator();
 
-        // Scale 섹션
         ImGui::Text("Scale");
 
         // X 축
@@ -341,9 +336,9 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
 
 void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
 {
-    ImGui::InputText("Effect Layer", &EffectLayerKey[0], 128);
+    ImGui::InputText("New Layer", &EffectLayerKey[0], 128);
 
-    if (ImGui::Button("Select Effect Save To Layer"))
+    if (ImGui::Button("Select Effect Save To New Layer"))
     {
         wstring strEffectLayerTag = UTF8ToWString(EffectLayerKey);
 
@@ -354,7 +349,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
         EffectLayerKey.clear();
     }
 
-    if (ImGui::Button("All Effect Save To Layer"))
+    if (ImGui::Button("All Effect Save To New Layer"))
     {
         wstring strEffectLayerTag = UTF8ToWString(EffectLayerKey);
 
@@ -362,6 +357,8 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
 
         EffectLayerKey.clear();
     }
+
+    ImGui::Separator();
 
     auto LayerList = m_pEffect_Manager->Get_Layer_List();
 
@@ -392,6 +389,22 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
                 }
             }
             ImGui::EndCombo();
+        }
+
+        if (ImGui::Button("Add Selected Effect To Select Layer"))
+        {
+            _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
+            const wstring selectedLayerKey = LayerList[selectedLayerIndex];
+
+            m_pEffect_Manager->Add_Effect_To_Layer(EffectIndex, selectedLayerKey);
+        }
+
+        // 선택된 레이어에 전체 객체 추가 버튼
+        if (ImGui::Button("Add All Effects To Select Layer"))
+        {
+            const wstring selectedLayerKey = LayerList[selectedLayerIndex];
+
+            m_pEffect_Manager->Add_All_Effect_To_Layer(selectedLayerKey);
         }
 
         if (ImGui::Button("Delete Layer"))
@@ -521,7 +534,37 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
 void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
 {
+    auto LayerList = m_pEffect_Manager->Get_Layer_List();
 
+    if (!LayerList.empty())
+    {
+        vector<string> layerListUTF8;
+        for (const auto& layer : LayerList)
+        {
+            layerListUTF8.push_back(WStringToUTF8(layer)); // wstring을 UTF-8로 변환하는 함수가 필요
+        }
+
+        // 현재 선택된 레이어 인덱스를 유지할 변수
+        static int selectedLayerIndex = 0;
+        const char* currentLayer = layerListUTF8[selectedLayerIndex].c_str();
+
+        if (ImGui::BeginCombo("Select Layer", currentLayer))
+        {
+            for (int i = 0; i < layerListUTF8.size(); i++)
+            {
+                bool isSelected = (selectedLayerIndex == i);
+                if (ImGui::Selectable(layerListUTF8[i].c_str(), isSelected))
+                {
+                    selectedLayerIndex = i;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+    }
 }
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
