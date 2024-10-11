@@ -42,7 +42,7 @@ void CUI_Combo::Update(_float fTimeDelta)
 
 	if (m_bCharaStun == TRUE)
 	{
-		m_iComboCount = m_pUI_Manager->m_iComboCount;
+		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
 		m_bComboEnd = TRUE;
 	}
 

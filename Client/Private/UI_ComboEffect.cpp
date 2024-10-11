@@ -29,7 +29,17 @@ HRESULT CUI_ComboEffect::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(384.f, 96.f, 181.f, 286.f);
+	UI_DESC* pComboDesc = static_cast<UI_DESC*>(pArg);
+	m_eLRPos = pComboDesc->eLRPos;
+
+	m_fPosX = 181.f;
+
+	if (m_eLRPos == RIGHT)
+	{
+		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
+	}
+
+	__super::Set_UI_Setting(384.f, 96.f, m_fPosX, 286.f);
 
 	return S_OK;
 }
@@ -51,6 +61,7 @@ void CUI_ComboEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
+	
 	if(m_bCharaStun == FALSE && m_iComboCount >= 2)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }

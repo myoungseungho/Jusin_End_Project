@@ -23,13 +23,24 @@ HRESULT CUI_ComboFont::Initialize_Prototype()
 
 HRESULT CUI_ComboFont::Initialize(void* pArg)
 {
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(162.f, 162.f, 253.f, 268.f, 0.f);
+	UI_DESC* pComboDesc = static_cast<UI_DESC*>(pArg);
+	m_eLRPos = pComboDesc->eLRPos;
+
+	m_fPosX = 253.f;
+
+	if (m_eLRPos == RIGHT)
+	{
+		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
+	}
+
+	__super::Set_UI_Setting(162.f, 162.f, m_fPosX, 268.f, 0.f);
 
 	return S_OK;
 }

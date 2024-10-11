@@ -66,7 +66,7 @@ void CMonster::Priority_Update(_float fTimeDelta)
 	else
 		m_pUI_Manager->m_bHit = FALSE;
 	
-	m_pUI_Manager->UsingComboCount(m_iComboCount);
+	//m_pUI_Manager->UsingComboCount(m_iComboCount);
 	//m_pUI_Manager->UsingStunCheck(m_bStun);
 	//m_pUIManager->m_iHp = m_iHp;
 }

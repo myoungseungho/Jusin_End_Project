@@ -31,6 +31,7 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 
 	UI_DESC* pComboDesc = static_cast<UI_DESC*>(pArg);
 	m_iNumUI = pComboDesc->iNumUI;
+	m_eLRPos = pComboDesc->eLRPos;
 
 	m_fSizeX = 0.f;
 	m_fSizeY = 0.f;
@@ -42,19 +43,24 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 	{
 	case FIRST:
 		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 96.f, m_fPosY = 238.f , m_fDepth = 0.5f;
-		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 		break;
 
 	case SECOND:
 		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 150.f, m_fPosY = 238.f, m_fDepth = 0.6f;
-		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 		break;
 
 	case THIRD:
 		m_fSizeX = 81.f, m_fSizeY = 108.f, m_fPosX = 204.f, m_fPosY = 238.f, m_fDepth = 0.7f;
-		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 		break;
 	}
+
+	if (m_eLRPos == RIGHT)
+	{
+		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
+	}
+
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
 
 
 	return S_OK;

@@ -76,7 +76,7 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 		m_pUI_Manager->UsingAttckBuff(5.f);
 
 
-	m_pUI_Manager->UsingComboCount(m_iComboCount);
+	//m_pUI_Manager->UsingComboCount(m_iComboCount);
 	//m_pUI_Manager->UsingStunCheck(m_bStun);
 
 }
