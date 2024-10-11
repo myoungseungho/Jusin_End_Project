@@ -30,10 +30,19 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 	EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
 
+	_float3 vPos = pEffectDesc->vPosition;
+	_float3 vScale = pEffectDesc->vScaled;
+	_float3 vRot = pEffectDesc->vRotation;
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(vPos.x, vPos.y, vPos.z, 1.f));
+	m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
+	m_pTransformCom->Rotate(vRot);
+
 	m_EffectName = pEffectDesc->EffectName;
 	m_ModelName = pEffectDesc->ModelName;
 	m_MaskTextureName = pEffectDesc->MaskTextureName;
 	m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
+	m_iRenderIndex = pEffectDesc->iRenderIndex;
 
 	m_iUnique_Index = pEffectDesc->iUnique_Index;
 
@@ -57,7 +66,8 @@ void CEffect_Single::Update(_float fTimeDelta)
 
 void CEffect_Single::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND_TEST, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 }
 
 HRESULT CEffect_Single::Render(_float fTimeDelta)

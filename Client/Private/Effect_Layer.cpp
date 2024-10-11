@@ -23,6 +23,8 @@ void CEffect_Layer::Priority_Update(_float fTimeDelta)
 
 void CEffect_Layer::Update(_float fTimeDelta)
 {
+	for (auto& pEffect : m_MixtureEffects)
+		pEffect->Update(fTimeDelta);
 }
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)

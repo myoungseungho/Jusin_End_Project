@@ -10,7 +10,7 @@ IMPLEMENT_SINGLETON(CEffect_Manager)
 CEffect_Manager::CEffect_Manager()
 	:m_pGameInstance{CGameInstance::Get_Instance()}
 {
-	Safe_AddRef(m_pGameInstance);
+	Safe_AddRef(m_pGameInstance); 
 }
 
 HRESULT CEffect_Manager::Initialize()
@@ -82,7 +82,12 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
+		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
+		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
+		EffectDesc.vRotation= m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
+		EffectDesc.iUnique_Index = m_TestEffect[iCurTestEffectIndex]->m_iUnique_Index;
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
 
 		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
@@ -93,7 +98,12 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
-
+		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
+		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
+		EffectDesc.vRotation = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
+		EffectDesc.iUnique_Index = m_TestEffect[iCurTestEffectIndex]->m_iUnique_Index;
+		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
 	}
 
@@ -163,6 +173,10 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
 	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
 	EffectDesc.iUnique_Index = m_TestEffect_Count++;
+	EffectDesc.vPosition = { 0.f, 0.f, 0.f };
+	EffectDesc.vScaled = { 1.f, 1.f, 1.f };
+	EffectDesc.vRotation = { 0.f, 0.f, 0.f };
+	EffectDesc.iRenderIndex = 1;
 
 	CGameObject* pEffect = nullptr;
 	CEffect* pTestEffect = nullptr;

@@ -239,8 +239,8 @@ HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 	if (m_isLayerView == true)
 	{
 		/* Diffuse + Normal */
-		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+		//	return E_FAIL;
 
 		for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_TEST])
 		{
