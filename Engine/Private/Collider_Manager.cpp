@@ -60,11 +60,29 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	// 1P_BODY vs 2P_SKILL
 	AddCollisionPairs(CG_1P_BODY, CG_2P_Energy_SKILL);
 
-	// 2P_BODY vs 1P_SKILL
+	// 1P_SKILL vs 2P_BODY
 	AddCollisionPairs(CG_1P_Energy_SKILL, CG_2P_BODY);
 
 	// 1P_SKILL vs 2P_SKILL
 	AddCollisionPairs(CG_1P_Energy_SKILL, CG_2P_Energy_SKILL);
+
+	// 1P_RANGED_Attack vs 2P_Body
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_BODY);
+
+	// 1P_Body vs 2P_RANGED_Attack
+	AddCollisionPairs(CG_1P_BODY, CG_2P_Ranged_Attack);
+
+	// 1P_Body vs 2P_Melee_Attack
+	AddCollisionPairs(CG_1P_BODY, CG_2P_Melee_Attack);
+
+	// 1P_RANGED_Attack vs 2P_Energy_SKILL
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_Energy_SKILL);
+
+	// 1P_RANGED_Attack vs 2P_Ranged_Attack
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_Ranged_Attack);
+
+	// 1P_Melee_Attack vs 2P_BODY
+	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_BODY);
 
 	// 시간 측정 시작
 	auto startTime = std::chrono::high_resolution_clock::now();
@@ -153,6 +171,10 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		_bool is1PBodyVs2PBody = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_BODY);
 		_bool is1PSkillVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_Energy_SKILL && colliderB->m_ColliderGroup == CG_2P_Energy_SKILL);
 		_bool is1PSkillVs2PBody = (colliderA->m_ColliderGroup == CG_1P_Energy_SKILL && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is1PRangedVs2PBody = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is1PRangedVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Energy_SKILL);
+		_bool is1PRangedVs2PRanged = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is1PMeleeVs2PBody = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
 
 		// 충돌 그룹에 따른 처리
 		if (is1PBodyVs2PSkill)
@@ -160,23 +182,39 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			//1P_Body VS 2P_Skill
 			body_VS_Skill_Collisions.push_back(pair);
 		}
-		
+
 		if (is1PBodyVs2PBody)
 		{
 			//1P_Body VS 2P_Body
 			Process_1PBody_2PBody(pair, fTimeDelta, currentCollisions);
 		}
-		
+
 		if (is1PSkillVs2PSkill)
 		{
 			//1P_Skill VS 2P_Skill
 			skill_VS_Skill_Collisions.push_back(pair);
 		}
-		
+
 		if (is1PSkillVs2PBody)
 		{
 			//1P_Skill VS 2P_Body
 			skill_VS_Body_Collisions.push_back(pair);
+		}
+
+		if (is1PRangedVs2PBody)
+		{
+		}
+
+		if (is1PRangedVs2PSkill)
+		{
+		}
+
+		if (is1PRangedVs2PRanged)
+		{
+		}
+
+		if (is1PMeleeVs2PBody)
+		{
 		}
 	}
 
@@ -200,7 +238,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	{
 		Process_1PSkill_2PBody_Group(skill_VS_Body_Collisions, fTimeDelta, currentCollisions);
 	}
-	
+
 }
 
 
@@ -230,7 +268,7 @@ void CCollider_Manager::Process_1PBody_2PBody(pair<CCollider*, CCollider*> pairC
 
 void CCollider_Manager::Process_1PSkill_2PSkill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
-   // 첫 번째 충돌 쌍만 사용하여 처리
+	// 첫 번째 충돌 쌍만 사용하여 처리
 	if (!collisions.empty())
 	{
 		const auto& pairCollider = collisions.front();
@@ -256,7 +294,7 @@ void CCollider_Manager::Process_1PSkill_2PSkill_Group(const vector<pair<CCollide
 
 void CCollider_Manager::Process_1PBody_2PSkill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
-   // 첫 번째 충돌 쌍만 사용하여 처리
+	// 첫 번째 충돌 쌍만 사용하여 처리
 	if (!collisions.empty())
 	{
 		const auto& pairCollider = collisions.front();
@@ -348,7 +386,7 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 
 HRESULT CCollider_Manager::Destory_ColliderGroup()
 {
-	for (auto& iter  :m_Destory_Reserve_Collider_Group)
+	for (auto& iter : m_Destory_Reserve_Collider_Group)
 	{
 		for (auto& iter : m_Colliders[iter])
 			Safe_Release(iter);
