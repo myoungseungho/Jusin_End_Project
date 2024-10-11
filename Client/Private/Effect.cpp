@@ -42,7 +42,7 @@ void CEffect::Update(_float fTimeDelta)
 	for (auto& iter : m_vecColliderCom)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
 
-	_float speed = 0.1f;
+	_float speed = 1.f;
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 		m_fY += speed;
 

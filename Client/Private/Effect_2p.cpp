@@ -42,7 +42,7 @@ void CEffect_2p::Update(_float fTimeDelta)
 	for (auto& iter : m_vecColliderCom)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
 
-	_float speed = 0.1f;
+	_float speed = 1.f;
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 		m_fY += speed;
 
@@ -59,10 +59,10 @@ void CEffect_2p::Update(_float fTimeDelta)
 	switch (m_playerID)
 	{
 	case CEffect_2p::PLAYERID::PLAYER_1P:
-		group = CCollider_Manager::CG_1P_SKILL;
+		group = CCollider_Manager::CG_1P_Energy_SKILL;
 		break;
 	case CEffect_2p::PLAYERID::PLAYER_2P:
-		group = CCollider_Manager::CG_2P_SKILL;
+		group = CCollider_Manager::CG_2P_Energy_SKILL;
 		break;
 	}
 
@@ -89,12 +89,12 @@ void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	{
 		//이펙트가 1P_Skill이라면
 	case CEffect_2p::PLAYERID::PLAYER_1P:
-		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_SKILL)
+		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_Energy_SKILL)
 		{
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
 		{
-			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_SKILL);
+			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_Energy_SKILL);
 
 			//기존 콜라이더 삭제
 			for (auto& iter : m_vecColliderCom)
@@ -113,7 +113,7 @@ void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		//이펙트가 2P_Skill이라면
 	case CEffect_2p::PLAYERID::PLAYER_2P:
-		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_SKILL)
+		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_Energy_SKILL)
 		{
 			//기존 콜라이더 삭제
 			for (auto& iter : m_vecColliderCom)

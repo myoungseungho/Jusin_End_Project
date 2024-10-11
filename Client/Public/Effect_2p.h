@@ -44,7 +44,7 @@ private:
 	_float					m_fRandom = {};
 	_float					m_fX = 0.f;
 	_float					m_fY = 0.f;
-	_float2					m_UnitSize = { 3.f,3.f };
+	_float2					m_UnitSize = { 1.f,1.f };
 	PLAYERID				m_playerID = {};
 
 public:
