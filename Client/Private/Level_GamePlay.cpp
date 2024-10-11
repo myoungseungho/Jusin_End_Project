@@ -9,6 +9,7 @@
 #include "UI_ComboNumber.h"
 
 #include "Pawn.h"
+#include "UIObject.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext } 
@@ -40,10 +41,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"), TEXT("Layer_Player"))))
 		return E_FAIL;
 
-	 m_pUIManager->m_tPawnDesc[CUI_Manager::LPLAYER1]  = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
-	 m_pUIManager->m_tPawnDesc[CUI_Manager::RPLAYER1] = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
+	CPawn* pPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
+	CPawn* pMonster = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
 
-
+	 m_pUIManager->UsingSelectCharacher(pPlayer, CPawn::LPLAYER1);
+	 m_pUIManager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
 
 	return S_OK;
 }
@@ -97,14 +99,15 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	//	return E_FAIL;
 
 	//HP
+	CUIObject::UI_DESC tHpDesc = {};
 
 	for (int i = 0; i < 2; ++i)
 	{
-
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpPanel"), TEXT("Layer_UI_HpGauge"))))
+		tHpDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpPanel"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpGauge"), TEXT("Layer_UI_HpGauge"))))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
 	}
 
@@ -143,7 +146,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 	//ÄÞº¸
 
-	CUI_ComboNumber::UI_COMBO_DESC ComboDesc = {};
+	CUI_ComboNumber::UI_DESC ComboDesc = {};
 	for (int i = 0; i < 3; ++i)
 	{
 		ComboDesc.iNumUI = i;

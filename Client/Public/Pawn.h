@@ -13,12 +13,14 @@ BEGIN(Client)
 class CPawn abstract : public CGameObject
 {
 public:
+	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
+
+public:
 	typedef struct
 	{
 		_bool		bStun = { FALSE };
 		_uint		iComboCount = { 0 };
 		_uint		iHp = { 0 };
-		_float		fStunTimer = { 0.f };
 	}PAWN_DESC;
 
 protected:
@@ -45,7 +47,7 @@ protected:
 
 	//UI에 보내야하는 정보
 	_uint					m_iComboCount = { 0 };
-	_uint					m_iHp = { 0 };
+	_int					m_iHp = { 0 };
 	_bool					m_bStun = { FALSE };
 
 	PAWN_DESC				 m_tPawnDesc = {};

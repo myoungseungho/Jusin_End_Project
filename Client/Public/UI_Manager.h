@@ -16,9 +16,6 @@ class CUI_Manager final : public CBase
 {
 	DECLARE_SINGLETON(CUI_Manager)
 
-public:
-	enum PLAYER_SLOT {LPLAYER1  ,LPLAYER2 , RPLAYER1, RPLAYER2 , SLOT_END};
-
 private:
 	CUI_Manager();
 	virtual ~CUI_Manager() = default;
@@ -28,6 +25,7 @@ public:
 	void UsingAttckBuff(_float fAttBufDuration);
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
 	void UsingComboCount(_uint iComboCnt);
+	void UsingSelectCharacher(CPawn* pPawn, CPawn::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
 
 	void SKillCount();
 
@@ -52,7 +50,7 @@ public:
 	//Combo
 	_uint m_iComboCount = { 0 };
 
-	CPawn* m_tPawnDesc[SLOT_END] = {};
+	CPawn* m_pPawnArray[CPawn::SLOT_END] = {};
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

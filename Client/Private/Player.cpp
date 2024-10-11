@@ -43,6 +43,8 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 {
 	//플레이어 체력 바
 
+	__super::Priority_Update(fTimeDelta);
+
 	if (m_bStun == TRUE)
 	{
 		m_fStunTImer -= fTimeDelta;
@@ -59,25 +61,37 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 	{
 		m_iComboCount++;
 		m_iHp--;
+
+
 		m_fStunTImer = 1.f;
 		m_bStun = TRUE;
 		m_pUIManager->m_bHit = TRUE;
+
+		m_pUIManager->UsingSkillPoint(2);
 	}
 	else
 		m_pUIManager->m_bHit = FALSE;
 
+	if (m_pGameInstance->Get_DIKeyState(DIK_V))
+		m_pUIManager->UsingAttckBuff(5.f);
 
-	CPawn* Desc =  m_pUIManager->m_tPawnDesc[CUI_Manager::LPLAYER1];
-	
 
-	//m_pUIManager->UsingComboCount(m_iComboCount);
-	//m_pUIManager->UsingStunCheck(m_bStun);
-	//m_pUIManager->m_iHp = m_iHp;
+	/*CPawn* Desc =  m_pUIManager->m_tPawnDesc[CUI_Manager::LPLAYER1];
+	_uint iHp = Desc->Get_PawnDesc().iHp;*/
+
+		if (m_iHp <= 0)
+			m_iHp = 0;
+
+	m_pUIManager->UsingComboCount(m_iComboCount);
+	m_pUIManager->UsingStunCheck(m_bStun);
+	m_pUIManager->m_iHp = m_iHp;
 }
 
 
 void CPlayer::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 
@@ -85,6 +99,8 @@ void CPlayer::Update(_float fTimeDelta)
 
 void CPlayer::Late_Update(_float fTimeDelta)
 {
+	__super::Late_Update(fTimeDelta);
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 

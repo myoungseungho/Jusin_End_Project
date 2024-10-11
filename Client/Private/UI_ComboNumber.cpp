@@ -29,7 +29,7 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	UI_COMBO_DESC* pComboDesc = static_cast<UI_COMBO_DESC*>(pArg);
+	UI_DESC* pComboDesc = static_cast<UI_DESC*>(pArg);
 	m_iNumUI = pComboDesc->iNumUI;
 
 	m_fSizeX = 0.f;

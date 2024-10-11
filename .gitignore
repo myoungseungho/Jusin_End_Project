@@ -21,11 +21,10 @@ build/
 bld/
 
 # Ignore .bin and .fbx files in Resources and all subdirectories
-AssimpSaveAndLoad/
+AssimpSaveAndLoad/Models/
 
 *.cso
 *.exe
-*.dll
 *.pdb
 *.ini
 *.exp
@@ -34,6 +33,9 @@ Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
 Client/Bin/ModelData/**/*.bin
+
+EngineSDK/lib/Engine.lib
+RendererSDK/lib/Renderer.lib
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/
@@ -213,3 +215,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+EngineSDK/lib/DirectXTK.lib
+EngineSDK/lib/DirectXTKd.lib
+Client/Bin/assimp-vc140-mtd.dll
+AssimpSaveAndLoad/assimp-vc140-mtd.dll
+AssimpSaveAndLoad/Bin/assimp-vc140-mtd.dll

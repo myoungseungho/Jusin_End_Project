@@ -9,11 +9,6 @@ class CUI_ComboNumber final :public CUI_Combo
 public:
 	enum NUMBER {FIRST , SECOND ,THIRD ,NUMBER_END};
 
-public:
-	typedef struct
-	{
-		_uint iNumUI;
-	}UI_COMBO_DESC;
 
 private:
 	CUI_ComboNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

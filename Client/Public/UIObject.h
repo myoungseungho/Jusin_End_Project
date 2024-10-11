@@ -18,6 +18,16 @@ BEGIN(Client)
 
 class CUIObject abstract : public CGameObject
 {
+public:
+	enum UI_LRPOS  { LEFT , RIGHT  , POS_END };
+
+public:
+	typedef struct :public CGameObject::GAMEOBJECT_DESC
+	{
+		UI_LRPOS eLRPos = {};
+		_uint iNumUI = {};
+	}UI_DESC;
+
 protected:
 	CUIObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CUIObject(const CUIObject& Prototype);
@@ -50,6 +60,8 @@ protected:
 protected:
 	_bool m_bCharaStun = { FALSE };
 	_bool m_bHit = { FALSE };
+
+	UI_LRPOS m_eLRPos = { POS_END };
 
 	_float m_fSizeX = { 100.f };
 	_float m_fSizeY = { 100.f };

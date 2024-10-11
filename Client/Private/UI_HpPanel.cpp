@@ -31,6 +31,8 @@ HRESULT CUI_HpPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
+
 	__super::Set_UI_Setting(464.f , 116.f, 330.f, 87.f,0.8f);
 
 

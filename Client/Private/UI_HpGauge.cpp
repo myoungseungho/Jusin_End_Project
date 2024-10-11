@@ -30,7 +30,14 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting( 464.f, 116.f, 330.f, 87.f, 0.75f);
+	UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
+
+	m_eLRPos = pUIDesc->eLRPos;
+
+	//switch (m_eLRPos)
+	//{
+	//	__super::Set_UI_Setting(464.f, 116.f, 330.f, 87.f, 0.75f);
+	//}
 
 	m_iCharaCurrHp = 100;
 
