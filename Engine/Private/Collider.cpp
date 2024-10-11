@@ -45,6 +45,7 @@ HRESULT CCollider::Initialize_Prototype(TYPE eColliderType)
 
 	if (FAILED(m_pDevice->CreateInputLayout(VertexPositionColor::InputElements, VertexPositionColor::InputElementCount, pShaderByteCode, iShaderByteCodeLength, &m_pInputLayout)))
 		return E_FAIL;
+
 #endif
 	return S_OK;
 }
@@ -122,9 +123,6 @@ void CCollider::AABB_SetDesc(BoundingBox _box)
 {
 	static_cast<CBounding_AABB*>(m_pBounding)->Set_Desc(_box);
 }
-
-//Z축 비교를 하지 마는 방식으로
-
 
 void CCollider::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {

@@ -2,7 +2,6 @@
 
 Engine::CInput_Device::CInput_Device(void)
 {
-
 }
 
 

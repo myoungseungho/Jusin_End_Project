@@ -139,12 +139,10 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 void CEffect::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-	int a = 3;
 }
 
 void CEffect::OnCollisionExit(CCollider* other)
 {
-	int a = 3;
 }
 
 void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
