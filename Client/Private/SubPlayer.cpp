@@ -49,7 +49,7 @@ void CSubPlayer::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	//Action_Hit(DIK_G, 0.25f, fTimeDelta);
+	Action_Hit(DIK_I, 0.25f, fTimeDelta);
 	//Action_AttBuf(DIK_V, m_ePlayerSlot, fTimeDelta);
 
 	m_pModelCom->Play_Animation(fTimeDelta);

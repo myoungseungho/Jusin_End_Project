@@ -49,10 +49,10 @@ void CPlayer::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_Hit(DIK_G, 0.25f,fTimeDelta);
+	Action_Hit(DIK_U, 0.25f,fTimeDelta);
 	Action_AttBuf(DIK_V, m_ePlayerSlot,fTimeDelta);
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_U))
+	if (m_pGameInstance->Key_Down(DIK_L))
 	{
 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 	}

@@ -48,7 +48,7 @@ void CMonster::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_Hit(DIK_H, 0.25f,fTimeDelta);
+	Action_Hit(DIK_O, 0.25f,fTimeDelta);
 	Action_AttBuf(DIK_B, m_ePlayerSlot,fTimeDelta);
 
 	m_pModelCom->Play_Animation(fTimeDelta);
