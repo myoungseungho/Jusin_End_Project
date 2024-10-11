@@ -47,7 +47,7 @@ public:
 
 protected:
 	void Action_AttBuf(_ubyte byKeyID, _float fTimeDelta);
-	void Action_Hit(_ubyte byKeyID, _float fTimeDelta);
+	void Action_Hit(_ubyte byKeyID, _float fStunDuration, _float fTimeDelta);
 
 protected:
 	void SkillGaugeLimit();

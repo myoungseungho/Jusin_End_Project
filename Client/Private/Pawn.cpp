@@ -80,14 +80,14 @@ void CPawn::Action_AttBuf(_ubyte byKeyID,  _float fTimeDelta)
 	}
 }
 
-void CPawn::Action_Hit(_ubyte byKeyID, _float fTimeDelta)
+void CPawn::Action_Hit(_ubyte byKeyID,_float fStunDuration, _float fTimeDelta)
 {
 	if (m_pGameInstance->Get_DIKeyState(byKeyID))
 	{
 		m_iComboCount++;
 		m_iHp--;
 
-		m_fStunTImer = 1.f;
+		m_fStunTImer = fStunDuration;
 		m_bStun = TRUE;
 		m_bHit = TRUE;
 
