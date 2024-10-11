@@ -31,7 +31,8 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 		return E_FAIL;
 	CTransform::TRANSFORM_DESC tDesc{};
 	tDesc.fSpeedPerSec = 5.f;
-	//tDesc.fRotationPerSec = XMConvertToRadians(30.f);
+	tDesc.fRotationPerSec = 0.1f;
+	//tDesc.tDesc.fSpeedPerSec = 5.f;RotationPerSec = XMConvertToRadians(30.f);
 	m_pTransformCom->SetUp_TransformDesc(&tDesc);
 
 	return S_OK;
@@ -61,12 +62,12 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 
 	_long		MouseMove = {};
 
-	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
+	if ((m_pGameInstance->Get_DIMouseState(DIMK_WHEEL) & 0x80) && (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X)))
 	{
 		m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
 	}
 
-	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
+	if ((m_pGameInstance->Get_DIMouseState(DIMK_WHEEL) & 0x80) && (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y)))
 	{
 		m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
 	}

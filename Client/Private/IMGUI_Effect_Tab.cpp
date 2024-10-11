@@ -228,72 +228,105 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
 
         // X 축
         ImGui::Text("X"); ImGui::SameLine();
-        if (ImGui::SliderFloat("##Scale X Slider", &CurScaled.x, 0.0f, 100.0f))
+        if (ImGui::SliderFloat("##Scale X Slider", &CurScaled.x, 0.01f, 100.0f)) // 최소값 0.01
             m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled);
         ImGui::SameLine();
-        if (ImGui::Button("-##Scale X Dec")) { CurScaled.x -= 0.1f; m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
+        if (ImGui::Button("-##Scale X Dec")) { CurScaled.x = max(0.01f, CurScaled.x - 0.1f); m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
         if (ImGui::Button("+##Scale X Inc")) { CurScaled.x += 0.1f; m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
-        if (ImGui::InputFloat("##Scale X", &CurScaled.x, 0.1f))
+        if (ImGui::InputFloat("##Scale X", &CurScaled.x, 0.1f)) {
+            CurScaled.x = max(0.01f, CurScaled.x);
             m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled);
+        }
 
         // Y 축
         ImGui::Text("Y"); ImGui::SameLine();
-        if (ImGui::SliderFloat("##Scale Y Slider", &CurScaled.y, 0.0f, 100.0f))
+        if (ImGui::SliderFloat("##Scale Y Slider", &CurScaled.y, 0.01f, 100.0f)) // 최소값 0.01
             m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled);
         ImGui::SameLine();
-        if (ImGui::Button("-##Scale Y Dec")) { CurScaled.y -= 0.1f; m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
+        if (ImGui::Button("-##Scale Y Dec")) { CurScaled.y = max(0.01f, CurScaled.y - 0.1f); m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
         if (ImGui::Button("+##Scale Y Inc")) { CurScaled.y += 0.1f; m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
-        if (ImGui::InputFloat("##Scale Y", &CurScaled.y, 0.1f))
+        if (ImGui::InputFloat("##Scale Y", &CurScaled.y, 0.1f)) {
+            CurScaled.y = max(0.01f, CurScaled.y);
             m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled);
+        }
 
         // Z 축
         ImGui::Text("Z"); ImGui::SameLine();
-        if (ImGui::SliderFloat("##Scale Z Slider", &CurScaled.z, 0.0f, 100.0f))
+        if (ImGui::SliderFloat("##Scale Z Slider", &CurScaled.z, 0.01f, 100.0f)) // 최소값 0.01
             m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled);
         ImGui::SameLine();
-        if (ImGui::Button("-##Scale Z Dec")) { CurScaled.z -= 0.1f; m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
+        if (ImGui::Button("-##Scale Z Dec")) { CurScaled.z = max(0.01f, CurScaled.z - 0.1f); m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
         if (ImGui::Button("+##Scale Z Inc")) { CurScaled.z += 0.1f; m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled); } ImGui::SameLine();
-        if (ImGui::InputFloat("##Scale Z", &CurScaled.z, 0.1f))
+        if (ImGui::InputFloat("##Scale Z", &CurScaled.z, 0.1f)) {
+            CurScaled.z = max(0.01f, CurScaled.z);
             m_pEffect_Manager->Set_Effect_Scaled(EffectId, CurScaled);
+        }
 
         ImGui::Separator();
 
-        // Rotation 섹션
         ImGui::Text("Rotation");
 
         // X 축
         ImGui::Text("X"); ImGui::SameLine();
-        if (ImGui::SliderFloat("##Rotation X Slider", &CurRotation.x, 0.0f, 360.0f))
+        if (ImGui::SliderFloat("##Rotation X Slider", &CurRotation.x, 0.0f, 360.0f)) {
+            CurRotation.x = std::fmod(CurRotation.x, 360.0f);
             m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        }
         ImGui::SameLine();
-        if (ImGui::Button("-##Rotation X Dec")) { CurRotation.x -= 1.0f; m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation); } ImGui::SameLine();
-        if (ImGui::Button("+##Rotation X Inc")) { CurRotation.x += 1.0f; m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation); } ImGui::SameLine();
-        if (ImGui::InputFloat("##Rotation X", &CurRotation.x, 1.0f))
+        if (ImGui::Button("-##Rotation X Dec")) {
+            CurRotation.x = std::fmod(CurRotation.x - 1.0f + 360.0f, 360.0f);
             m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        } ImGui::SameLine();
+        if (ImGui::Button("+##Rotation X Inc")) {
+            CurRotation.x = std::fmod(CurRotation.x + 1.0f, 360.0f);
+            m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        } ImGui::SameLine();
+        if (ImGui::InputFloat("##Rotation X", &CurRotation.x, 1.0f)) {
+            CurRotation.x = std::fmod(CurRotation.x, 360.0f);
+            m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        }
 
         // Y 축
         ImGui::Text("Y"); ImGui::SameLine();
-        if (ImGui::SliderFloat("##Rotation Y Slider", &CurRotation.y, 0.0f, 360.0f))
+        if (ImGui::SliderFloat("##Rotation Y Slider", &CurRotation.y, 0.0f, 360.0f)) {
+            CurRotation.y = std::fmod(CurRotation.y, 360.0f);
             m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        }
         ImGui::SameLine();
-        if (ImGui::Button("-##Rotation Y Dec")) { CurRotation.y -= 1.0f; m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation); } ImGui::SameLine();
-        if (ImGui::Button("+##Rotation Y Inc")) { CurRotation.y += 1.0f; m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation); } ImGui::SameLine();
-        if (ImGui::InputFloat("##Rotation Y", &CurRotation.y, 1.0f))
+        if (ImGui::Button("-##Rotation Y Dec")) {
+            CurRotation.y = std::fmod(CurRotation.y - 1.0f + 360.0f, 360.0f);
             m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        } ImGui::SameLine();
+        if (ImGui::Button("+##Rotation Y Inc")) {
+            CurRotation.y = std::fmod(CurRotation.y + 1.0f, 360.0f);
+            m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        } ImGui::SameLine();
+        if (ImGui::InputFloat("##Rotation Y", &CurRotation.y, 1.0f)) {
+            CurRotation.y = std::fmod(CurRotation.y, 360.0f);
+            m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        }
 
         // Z 축
         ImGui::Text("Z"); ImGui::SameLine();
-        if (ImGui::SliderFloat("##Rotation Z Slider", &CurRotation.z, 0.0f, 360.0f))
+        if (ImGui::SliderFloat("##Rotation Z Slider", &CurRotation.z, 0.0f, 360.0f)) {
+            CurRotation.z = std::fmod(CurRotation.z, 360.0f);
             m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        }
         ImGui::SameLine();
-        if (ImGui::Button("-##Rotation Z Dec")) { CurRotation.z -= 1.0f; m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation); } ImGui::SameLine();
-        if (ImGui::Button("+##Rotation Z Inc")) { CurRotation.z += 1.0f; m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation); } ImGui::SameLine();
-        if (ImGui::InputFloat("##Rotation Z", &CurRotation.z, 1.0f))
+        if (ImGui::Button("-##Rotation Z Dec")) {
+            CurRotation.z = std::fmod(CurRotation.z - 1.0f + 360.0f, 360.0f);
             m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        } ImGui::SameLine();
+        if (ImGui::Button("+##Rotation Z Inc")) {
+            CurRotation.z = std::fmod(CurRotation.z + 1.0f, 360.0f);
+            m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        } ImGui::SameLine();
+        if (ImGui::InputFloat("##Rotation Z", &CurRotation.z, 1.0f)) {
+            CurRotation.z = std::fmod(CurRotation.z, 360.0f);
+            m_pEffect_Manager->Set_Effect_Rotation(EffectId, CurRotation);
+        }
 
         ImGui::Separator();
-
-
     }
 }
 

@@ -47,7 +47,10 @@ public:
 		return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix));
 	}
 
-	_float3 CTransform::Get_Rotation() const;
+	_float3 CTransform::Get_Rotation() const
+	{
+		return m_fCurrentRotation;
+	}
 
 public:
 
@@ -93,12 +96,14 @@ public:
 	void Turn(_fvector vAxis, _float fTimeDelta);
 	void Rotation(_fvector vAxis, _float fRadian);
 	void LookAt(_fvector vAt);
-	void Rotate(_float AxisX, _float AxisY, _float AxisZ);
+	void Rotate(_float3 ChangeRotation);
 
 private:
 	_float4x4				m_WorldMatrix = {};
 	_float					m_fSpeedPerSec = {};
 	_float					m_fRotationPerSec = {};
+
+	_float3 m_fCurrentRotation = { 0.0f, 0.0f, 0.0f }; // 초기 회전 값 0, 0, 0
 
 public:
 	static CTransform* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
