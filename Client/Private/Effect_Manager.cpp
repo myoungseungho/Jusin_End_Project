@@ -86,6 +86,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
 		EffectDesc.vRotation= m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
 
 		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
@@ -100,6 +101,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
 		EffectDesc.vRotation = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
 	}
 
@@ -172,6 +174,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Model
 	EffectDesc.vPosition = { 0.f, 0.f, 0.f };
 	EffectDesc.vScaled = { 1.f, 1.f, 1.f };
 	EffectDesc.vRotation = { 0.f, 0.f, 0.f };
+	EffectDesc.iRenderIndex = 1;
 
 	CGameObject* pEffect = nullptr;
 	CEffect* pTestEffect = nullptr;

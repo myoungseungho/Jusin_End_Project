@@ -27,6 +27,7 @@ public:
 		_wstring DiffuseTextureName;
 
 		void* SRV_Ptr = { nullptr };
+		_int iRenderIndex;
 
 		_int iUnique_Index = -1;
 	}EFFECT_DESC;
@@ -67,6 +68,8 @@ protected:
 	_float		m_fCurPosition = { 0.f };
 
 	vector<EFFECT_KEYFRAME>	m_EffectKeyFrames;
+
+	_int m_iRenderIndex = { 0 };
 
 public:
 	_int m_iUnique_Index = { -1 };
