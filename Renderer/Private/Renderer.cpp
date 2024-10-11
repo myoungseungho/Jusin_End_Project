@@ -123,7 +123,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 1280.0f - 150.0f, 150.f, 300.f, 300.f)))
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 1920.0f - 150.0f, 150.f, 300.f, 300.f)))
 		return E_FAIL;
 #endif
 
@@ -224,8 +224,8 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
 	ViewPortDesc.TopLeftX = 0;
 	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = (_float)1280.0f;
-	ViewPortDesc.Height = (_float)720.0f;
+	ViewPortDesc.Width = 1920.f;
+	ViewPortDesc.Height = 1080.0f;
 	ViewPortDesc.MinDepth = 0.f;
 	ViewPortDesc.MaxDepth = 1.f;
 
@@ -385,7 +385,7 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 	_float4x4			LightViewMatrix, LightProjMatrix;
 
 	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
-	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)1280.0f / 720.0f, 0.1f, 1000.f));
+	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)1920.f / 1080.f, 0.1f, 1000.f));
 
 	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
 		return E_FAIL;

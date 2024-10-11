@@ -45,14 +45,14 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 
 	if (fSize.x > g_iWinSizeX)
 	{
-		fDiff = 1280 - fSize.x;
+		fDiff = 1920 - fSize.x;
 		fSize.x += fDiff;
 		fSize.y += fDiff;
 	}
 
 	if (fSize.y > g_iWinSizeY)
 	{
-		fDiff = 720 - fSize.y;
+		fDiff = 1080 - fSize.y;
 		fSize.x += fDiff;
 		fSize.y += fDiff;
 	}

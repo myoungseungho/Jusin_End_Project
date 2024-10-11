@@ -173,10 +173,10 @@ PS_OUT_LIGHT PS_MAIN_POINT(PS_IN In)
 bool isOutLine = false;
 float CalculateNormalDiff(float2 vTexcoord, float4 vNormal)
 {
-    float2 fOffsetRight = float2(1.0f / 1280.f, 0.0f);
-    float2 fOffsetDown = float2(0.0f, 1.0f / 720.f);
-    float2 fOffsetLeft = float2(-1.0f / 1280.f, 0.0f);
-    float2 fOffsetUp = float2(0.0f, -1.0f / 720.f);
+    float2 fOffsetRight = float2(1.0f / 1920.f, 0.0f);
+    float2 fOffsetDown = float2(0.0f, 1.0f / 1080.f);
+    float2 fOffsetLeft = float2(-1.0f / 1920.f, 0.0f);
+    float2 fOffsetUp = float2(0.0f, -1.0f / 1080.f);
 
     float3 vNormalRight = g_NormalTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).xyz * 2.f - 1.f;
     float3 vNormalDown = g_NormalTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).xyz * 2.f - 1.f;
@@ -191,15 +191,15 @@ float CalculateNormalDiff(float2 vTexcoord, float4 vNormal)
 
 float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
 {
-    float2 fOffsetRight = float2(1.0f / 1280.f, 0.0f);
-    float2 fOffsetDown = float2(0.0f, 1.0f / 720.f);
-    float2 fOffsetLeft = float2(-1.0f / 1280.f, 0.0f);
-    float2 fOffsetUp = float2(0.0f, -1.0f / 720.f);
+    float2 fOffsetRight = float2(1.0f / 1920.f, 0.0f);
+    float2 fOffsetDown = float2(0.0f, 1.0f / 1080.f);
+    float2 fOffsetLeft = float2(-1.0f / 1920.f, 0.0f);
+    float2 fOffsetUp = float2(0.0f, -1.0f / 1080.f);
 
-    float2 fOffsetRightUp = float2(1.0f / 1280.f, -1.0f / 720.f);
-    float2 fOffsetRightDown = float2(1.0f / 1280.f, 1.0f / 720.f);
-    float2 fOffsetLeftUp = float2(-1.0f / 1280.f, -1.0f / 720.f);
-    float2 fOffsetLeftDown = float2(-1.0f / 1280.f, 1.0f / 720.f);
+    float2 fOffsetRightUp = float2(1.0f / 1920.f, -1.0f / 1080.f);
+    float2 fOffsetRightDown = float2(1.0f / 1920.f, 1.0f / 1080.f);
+    float2 fOffsetLeftUp = float2(-1.0f / 1920.f, -1.0f / 1080.f);
+    float2 fOffsetLeftDown = float2(-1.0f / 1920.f, 1.0f / 1080.f);
 
     float fDepthRight = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).x * 1000.f;
     float fDepthDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).x * 1000.f;

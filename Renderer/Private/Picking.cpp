@@ -115,7 +115,7 @@ _int CPicking::Picked_Effect_Index()
 	_uint		iIndex = (float)ptMouse.y * m_iWidth + (float)ptMouse.x;
 
 	m_pContext->Unmap(m_pTexture2D, 0);
-	if (iIndex > 1280 * 720)
+	if (iIndex > 1920 * 1080)
 		return -1;
 	
 	return (_int)pPickDepth[iIndex].z;
