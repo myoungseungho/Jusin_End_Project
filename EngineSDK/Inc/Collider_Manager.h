@@ -12,7 +12,17 @@ class CCollider;
 class CCollider_Manager final : public CBase
 {
 public:
-	enum COLLIDERGROUP { CG_1P_BODY, CG_1P_Energy_SKILL, CG_2P_BODY, CG_2P_Energy_SKILL, CG_END };
+	enum COLLIDERGROUP {
+		CG_1P_BODY,
+		CG_1P_Energy_SKILL,
+		CG_1P_Ranged_Attack,   // 1P 원거리 공격
+		CG_1P_Melee_Attack,    // 1P 근접 공격
+		CG_2P_BODY,
+		CG_2P_Energy_SKILL,
+		CG_2P_Ranged_Attack,   // 2P 원거리 공격
+		CG_2P_Melee_Attack,    // 2P 근접 공격
+		CG_END
+	};
 
 private:
 	CCollider_Manager();
