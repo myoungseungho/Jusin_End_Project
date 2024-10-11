@@ -12,7 +12,7 @@ class CCollider;
 class CCollider_Manager final : public CBase
 {
 public:
-	enum COLLIDERGROUP { CG_1P_BODY, CG_1P_SKILL, CG_2P_BODY, CG_2P_SKILL, CG_END };
+	enum COLLIDERGROUP { CG_1P_BODY, CG_1P_Energy_SKILL, CG_2P_BODY, CG_2P_Energy_SKILL, CG_END };
 
 private:
 	CCollider_Manager();
@@ -31,7 +31,7 @@ public:
 private:
 	void Process_1PBody_2PSkill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1PBody_2PBody(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
-	void Process_1PSkill_2PSkill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PSkill_2PSkill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1PSkill_2PBody(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 
 

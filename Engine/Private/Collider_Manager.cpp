@@ -57,13 +57,13 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	AddCollisionPairs(CG_1P_BODY, CG_2P_BODY);
 
 	// 1P_BODY vs 2P_SKILL
-	AddCollisionPairs(CG_1P_BODY, CG_2P_SKILL);
+	AddCollisionPairs(CG_1P_BODY, CG_2P_Energy_SKILL);
 
 	// 2P_BODY vs 1P_SKILL
-	AddCollisionPairs(CG_2P_BODY, CG_1P_SKILL);
+	AddCollisionPairs(CG_2P_BODY, CG_1P_Energy_SKILL);
 
 	// 1P_SKILL vs 2P_SKILL
-	AddCollisionPairs(CG_1P_SKILL, CG_2P_SKILL);
+	AddCollisionPairs(CG_1P_Energy_SKILL, CG_2P_Energy_SKILL);
 
 	// 시간 측정 시작
 	auto startTime = std::chrono::high_resolution_clock::now();
@@ -130,7 +130,11 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 //충돌 결과 처리
 void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 {
-	map<pair<CCollider*, CCollider*>, bool> currentCollisions;
+	map<pair<CCollider*, CCollider*>, _bool> currentCollisions;
+
+	// 그룹별로 충돌 쌍을 저장하는 컨테이너
+	// 한번만 처리하기 때문에
+	vector<pair<CCollider*, CCollider*>> skillVsSkillCollisions;
 
 	// 각 스레드에서 취합한 충돌 결과가 있다면 m_CollisionResults에 저장
 	for (const auto& pair : m_CollisionResults) {
@@ -142,10 +146,10 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		colliderB->m_isColl = true;
 
 		// 조건을 bool 변수로 저장
-		_bool is1PBodyVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_SKILL);
+		_bool is1PBodyVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Energy_SKILL);
 		_bool is1PBodyVs2PBody = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_BODY);
-		_bool is1PSkillVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_SKILL && colliderB->m_ColliderGroup == CG_2P_SKILL);
-		_bool is1PSkillVs2PBody = (colliderA->m_ColliderGroup == CG_1P_SKILL && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is1PSkillVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_Energy_SKILL && colliderB->m_ColliderGroup == CG_2P_Energy_SKILL);
+		_bool is1PSkillVs2PBody = (colliderA->m_ColliderGroup == CG_1P_Energy_SKILL && colliderB->m_ColliderGroup == CG_2P_BODY);
 
 		// 충돌 그룹에 따른 처리
 		if (is1PBodyVs2PSkill)
@@ -154,11 +158,11 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		}
 		else if (is1PBodyVs2PBody)
 		{
-			Process_1PBody_2PBody(pair, fTimeDelta, currentCollisions);
+			Process_1PBody_2PSkill(pair, fTimeDelta, currentCollisions);
 		}
 		else if (is1PSkillVs2PSkill)
 		{
-			Process_1PSkill_2PSkill(pair, fTimeDelta, currentCollisions);
+			skillVsSkillCollisions.push_back(pair);
 		}
 		else if (is1PSkillVs2PBody)
 		{
@@ -176,42 +180,59 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 	// 충돌 히스토리 업데이트
 	m_CollisionHistory = currentCollisions;
+
+	// 각 그룹별로 한 번만 처리
+	if (!skillVsSkillCollisions.empty())
+	{
+		Process_1PSkill_2PSkill_Group(skillVsSkillCollisions, fTimeDelta, currentCollisions);
+	}
 }
 
 
 // 각 충돌 처리 함수
 
-void CCollider_Manager::Process_1PBody_2PSkill(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PBody_2PSkill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 	// 1P 바디와 2P 스킬 충돌 처리
 	// 구체적인 로직 추가 가능
 }
 
-void CCollider_Manager::Process_1PBody_2PBody(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PBody_2PBody(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 	// 1P 바디와 2P 바디 충돌 처리
 	// 구체적인 로직 추가 가능
 }
 
-void CCollider_Manager::Process_1PSkill_2PSkill(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+void CCollider_Manager::Process_1PSkill_2PSkill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
-	// 1P 스킬과 2P 스킬 충돌 처리
+	// 이 함수는 CG_1P_SKILL과 CG_2P_SKILL의 모든 충돌 쌍을 한 번에 처리합니다.
 
-	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
-		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
-		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
-	}
-	else {
-		// 충돌 지속
-		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
-		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+   // 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
 	}
 
-	// 현재 충돌 상태 업데이트
-	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
+	Clear_ColliderGroup(CG_1P_Energy_SKILL);
+	Clear_ColliderGroup(CG_2P_Energy_SKILL);
 }
 
-void CCollider_Manager::Process_1PSkill_2PBody(pair<CCollider*, CCollider*>& pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+
+void CCollider_Manager::Process_1PSkill_2PBody(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
 {
 
 }
@@ -265,6 +286,8 @@ HRESULT CCollider_Manager::Clear_ColliderGroup(COLLIDERGROUP eRenderGroup)
 
 	for (auto& iter : m_Colliders[eRenderGroup])
 		Safe_Release(iter);
+
+	m_Colliders[eRenderGroup].clear();
 
 	return S_OK;
 }

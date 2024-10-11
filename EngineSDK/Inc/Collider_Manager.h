@@ -12,7 +12,7 @@ class CCollider;
 class CCollider_Manager final : public CBase
 {
 public:
-	enum COLLIDERGROUP { CG_1P_BODY, CG_1P_SKILL, CG_2P_BODY, CG_2P_SKILL, CG_END };
+	enum COLLIDERGROUP { CG_1P_BODY, CG_1P_Energy_SKILL, CG_2P_BODY, CG_2P_Energy_SKILL, CG_END };
 
 private:
 	CCollider_Manager();
@@ -27,10 +27,13 @@ public:
 
 	_bool IsColliding(CCollider* a, CCollider* b);
 	HRESULT Release_Collider(const CCollider*);
-
-public:
-	//콜라이더 그룹에 있는 콜라이더 다 삭제
 	HRESULT Clear_ColliderGroup(COLLIDERGROUP eRenderGroup);
+private:
+	void Process_1PBody_2PSkill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PBody_2PBody(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PSkill_2PSkill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PSkill_2PBody(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+
 
 private:
 	list<CCollider*>			m_Colliders[CG_END];
