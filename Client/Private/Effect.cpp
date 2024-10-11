@@ -51,6 +51,42 @@ void CEffect::Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame)
 	m_EffectKeyFrames.push_back(NewKeyFrame);
 }
 
+void CEffect::Set_Effect_Scaled(_float3 ChangeScaled)
+{
+	m_pTransformCom->Set_Scaled(ChangeScaled.x, ChangeScaled.y, ChangeScaled.z);
+}
+
+void CEffect::Set_Effect_Position(_float3 ChangePosition)
+{
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+}
+
+void CEffect::Set_Effect_Rotation(_float3 ChangeRotation)
+{
+
+}
+
+_float3 CEffect::Get_Effect_Scaled()
+{
+	return m_pTransformCom->Get_Scaled();
+}
+
+_float3 CEffect::Get_Effect_Position()
+{
+	_float3 Position;
+
+	Position.x = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	Position.y = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	Position.z = XMVectorGetZ(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	return Position;
+}
+
+_float3 CEffect::Get_Effect_Rotation()
+{
+	return _float3();
+}
+
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
 {
 	return S_OK;

@@ -34,6 +34,12 @@ public:
 
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName);
 	HRESULT Delete_Test_Effect(_uint iCurTestEffectID);
+	HRESULT Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled);
+	HRESULT Set_Effect_Position(_int EffectId, _float3 ChangePosition);
+	HRESULT Set_Effect_Rotation(_int EffectId, _float3 ChangeRotation);
+	_float3 Get_Effect_Scaled(_int EffectId);
+	_float3 Get_Effect_Position(_int EffectId);
+	_float3 Get_Effect_Rotation(_int EffectId);
 	void Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame);
 
 private:

@@ -200,6 +200,105 @@ HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectID)
 	return E_FAIL;
 }
 
+HRESULT CEffect_Manager::Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			pEffect->Set_Effect_Scaled(ChangeScaled);
+
+			return S_OK;
+		}
+	}
+
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Effect_Position(_int EffectId, _float3 ChangePosition)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			pEffect->Set_Effect_Position(ChangePosition);
+
+			return S_OK;
+		}
+	}
+
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Effect_Rotation(_int EffectId, _float3 ChangeRotation)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			pEffect->Set_Effect_Rotation(ChangeRotation);
+
+			return S_OK;
+		}
+	}
+
+	return E_FAIL;
+}
+
+_float3 CEffect_Manager::Get_Effect_Scaled(_int EffectId)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			return pEffect->Get_Effect_Scaled();
+			
+		}
+	}
+
+	return _float3(0.f, 0.f, 0.f);
+}
+
+_float3 CEffect_Manager::Get_Effect_Position(_int EffectId)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			return pEffect->Get_Effect_Position();
+
+		}
+	}
+
+	return _float3(0.f, 0.f, 0.f);
+}
+
+_float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
+{
+	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	{
+		CEffect* pEffect = *it;
+
+		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		{
+			return pEffect->Get_Effect_Rotation();
+
+		}
+	}
+
+	return _float3(0.f, 0.f, 0.f);
+}
+
 void CEffect_Manager::Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame)
 {
 	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
