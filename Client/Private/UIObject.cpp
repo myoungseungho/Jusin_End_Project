@@ -38,12 +38,14 @@ HRESULT CUIObject::Initialize(void* pArg)
 	switch (pUIDesc->eLRPos)
 	{
 	case LEFT:
-		//m_pMainPawn = m_pUIManager
+		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CPawn::LPLAYER1];
+		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CPawn::LPLAYER2];
 		break;
 
 	case RIGHT:
 		m_fPosX = g_iWinSizeX - m_fPosX;
-
+		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CPawn::RPLAYER1];
+		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CPawn::RPLAYER2];
 		break;
 	}
 
