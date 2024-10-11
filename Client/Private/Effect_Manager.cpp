@@ -10,7 +10,7 @@ IMPLEMENT_SINGLETON(CEffect_Manager)
 CEffect_Manager::CEffect_Manager()
 	:m_pGameInstance{CGameInstance::Get_Instance()}
 {
-	Safe_AddRef(m_pGameInstance);
+	Safe_AddRef(m_pGameInstance); 
 }
 
 HRESULT CEffect_Manager::Initialize()
@@ -85,6 +85,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
 		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
 		EffectDesc.vRotation= m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
+		EffectDesc.iUnique_Index = m_TestEffect[iCurTestEffectIndex]->m_iUnique_Index;
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
@@ -100,6 +101,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
 		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
 		EffectDesc.vRotation = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
+		EffectDesc.iUnique_Index = m_TestEffect[iCurTestEffectIndex]->m_iUnique_Index;
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));

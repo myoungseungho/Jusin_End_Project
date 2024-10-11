@@ -4,8 +4,8 @@
 
 namespace Client
 {
-	const unsigned int	g_iWinSizeX = { 1280 };
-	const unsigned int	g_iWinSizeY = { 720 };	
+	const unsigned int	g_iWinSizeX = { 1920 };
+	const unsigned int	g_iWinSizeY = { 1080 };	
 
 	enum LEVELID { LEVEL_STATIC, LEVEL_LOADING, LEVEL_GAMEPLAY, LEVEL_END };
 

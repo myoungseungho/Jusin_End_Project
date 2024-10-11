@@ -224,8 +224,8 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
 	ViewPortDesc.TopLeftX = 0;
 	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = (_float)1280.0f;
-	ViewPortDesc.Height = (_float)720.0f;
+	ViewPortDesc.Width = 1920.f;
+	ViewPortDesc.Height = 1080.f;
 	ViewPortDesc.MinDepth = 0.f;
 	ViewPortDesc.MaxDepth = 1.f;
 
@@ -239,8 +239,8 @@ HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 	if (m_isLayerView == true)
 	{
 		/* Diffuse + Normal */
-		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+		//	return E_FAIL;
 
 		for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_TEST])
 		{
