@@ -30,6 +30,24 @@ HRESULT CUIObject::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
+
+	if (pUIDesc->eLRPos == RIGHT)
+		m_fPosX = g_iWinSizeX - m_fPosX;
+
+	switch (pUIDesc->eLRPos)
+	{
+	case LEFT:
+		//m_pMainPawn = m_pUIManager
+		break;
+
+	case RIGHT:
+		m_fPosX = g_iWinSizeX - m_fPosX;
+
+		break;
+	}
+
+
 	return S_OK;
 }
 

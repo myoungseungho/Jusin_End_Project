@@ -55,7 +55,7 @@ protected:
 protected:
 	_float					m_fStunTImer = { 0.f };
 
-	class CUI_Manager* m_pUIManager = { nullptr };
+	class CUI_Manager* m_pUI_Manager = { nullptr };
 
 
 public:

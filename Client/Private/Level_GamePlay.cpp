@@ -13,9 +13,9 @@
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext } 
-	, m_pUIManager{ CUI_Manager::Get_Instance() }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-	Safe_AddRef(m_pUIManager);
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CLevel_GamePlay::Initialize()
@@ -44,8 +44,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	CPawn* pPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
 	CPawn* pMonster = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
 
-	 m_pUIManager->UsingSelectCharacher(pPlayer, CPawn::LPLAYER1);
-	 m_pUIManager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
+	 m_pUI_Manager->UsingSelectCharacher(pPlayer, CPawn::LPLAYER1);
+	 m_pUI_Manager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
 
 	return S_OK;
 }
@@ -176,7 +176,7 @@ CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCon
 
 void CLevel_GamePlay::Free()
 {
-	Safe_Release(m_pUIManager);
+	Safe_Release(m_pUI_Manager);
 
 	__super::Free();
 }

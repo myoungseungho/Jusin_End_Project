@@ -25,6 +25,8 @@ HRESULT CUI_HpPanel::Initialize_Prototype()
 
 HRESULT CUI_HpPanel::Initialize(void* pArg)
 {
+	m_fPosX = 330.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 

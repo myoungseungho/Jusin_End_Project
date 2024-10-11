@@ -9,13 +9,13 @@ CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CPawn{ pDevice, pContext }
 
 {
-	Safe_AddRef(m_pUIManager);
+	Safe_AddRef(m_pUI_Manager);
 }
 
 CPlayer::CPlayer(const CPlayer& Prototype)
 	: CPawn{ Prototype }
 {
-	Safe_AddRef(m_pUIManager);
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CPlayer::Initialize_Prototype()
@@ -65,15 +65,15 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 
 		m_fStunTImer = 1.f;
 		m_bStun = TRUE;
-		m_pUIManager->m_bHit = TRUE;
+		m_pUI_Manager->m_bHit = TRUE;
 
-		m_pUIManager->UsingSkillPoint(2);
+		m_pUI_Manager->UsingSkillPoint(2);
 	}
 	else
-		m_pUIManager->m_bHit = FALSE;
+		m_pUI_Manager->m_bHit = FALSE;
 
 	if (m_pGameInstance->Get_DIKeyState(DIK_V))
-		m_pUIManager->UsingAttckBuff(5.f);
+		m_pUI_Manager->UsingAttckBuff(5.f);
 
 
 	/*CPawn* Desc =  m_pUIManager->m_tPawnDesc[CUI_Manager::LPLAYER1];
@@ -82,9 +82,9 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 		if (m_iHp <= 0)
 			m_iHp = 0;
 
-	m_pUIManager->UsingComboCount(m_iComboCount);
-	m_pUIManager->UsingStunCheck(m_bStun);
-	m_pUIManager->m_iHp = m_iHp;
+	m_pUI_Manager->UsingComboCount(m_iComboCount);
+	m_pUI_Manager->UsingStunCheck(m_bStun);
+	m_pUI_Manager->m_iHp = m_iHp;
 }
 
 

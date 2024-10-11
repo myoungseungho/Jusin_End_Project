@@ -25,7 +25,7 @@ private:
 	HRESULT Ready_UIObjects();
 
 private:
-	class CUI_Manager* m_pUIManager = { nullptr };
+	class CUI_Manager* m_pUI_Manager = { nullptr };
 
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -7,16 +7,16 @@
 
 CPawn::CPawn(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
-	, m_pUIManager{ CUI_Manager::Get_Instance() }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-	Safe_AddRef(m_pUIManager);
+	Safe_AddRef(m_pUI_Manager);
 }
 
 CPawn::CPawn(const CPawn& Prototype)
 	: CGameObject{ Prototype }
-	, m_pUIManager{ CUI_Manager::Get_Instance() }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-	Safe_AddRef(m_pUIManager);
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CPawn::Initialize_Prototype()
@@ -86,5 +86,5 @@ void CPawn::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
-	Safe_Release(m_pUIManager);
+	Safe_Release(m_pUI_Manager);
 }
