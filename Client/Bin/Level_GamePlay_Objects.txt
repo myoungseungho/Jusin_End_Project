@@ -1,19 +1,20 @@
-LayerName: Layer_Effect
-PrototypeTag: Prototype_GameObject_Effect
+LayerName: Layer_Player
+PrototypeTag: Prototype_GameObject_Player
 LevelIndex: 2
-Position: -30 5 0
+Position: -5 0 0
 RightRotation: 1 0 0
 UpRotation: 0 1 0
 LookRotation: 0 0 1
 Scale: 1 1 1
 IsParsing: 1
 
-LayerName: Layer_Effect_2p
-PrototypeTag: Prototype_GameObject_Effect_2p
+
+LayerName: Layer_Monster
+PrototypeTag: Prototype_GameObject_Monster
 LevelIndex: 2
-Position: 30 5 0
+Position: 5 0 0
 RightRotation: 1 0 0
-UpRotation: 0 1 0
+UpRotation: 0 1 0오전 11:00 2024-10-11
 LookRotation: 0 0 1
 Scale: 1 1 1
 IsParsing: 1
