@@ -16,12 +16,18 @@ class CEffect :	public CGameObject
 public:
 	typedef struct
 	{
+		_float3 vPosition;
+		_float3 vScaled;
+		_float3 vRotation;
+
 		_wstring EffectName;
 
 		_wstring ModelName;
 		_wstring MaskTextureName;
 		_wstring DiffuseTextureName;
+
 		void* SRV_Ptr = { nullptr };
+
 		_int iUnique_Index = -1;
 	}EFFECT_DESC;
 

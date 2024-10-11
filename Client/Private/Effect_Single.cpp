@@ -30,6 +30,14 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 	EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
 
+	_float3 vPos = pEffectDesc->vPosition;
+	_float3 vScale = pEffectDesc->vScaled;
+	_float3 vRot = pEffectDesc->vRotation;
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(vPos.x, vPos.y, vPos.z, 1.f));
+	m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
+	m_pTransformCom->Rotate(vRot);
+
 	m_EffectName = pEffectDesc->EffectName;
 	m_ModelName = pEffectDesc->ModelName;
 	m_MaskTextureName = pEffectDesc->MaskTextureName;
