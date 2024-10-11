@@ -35,41 +35,60 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 
 void CCamera_Free::Priority_Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Get_DIKeyState(DIK_A) & 0x80)
-	{
-		m_pTransformCom->Go_Left(fTimeDelta);
-	}
+	//기본 이동 속도
+	_float fMoveSpeed = 1.0f;
 
-	if (GetKeyState('D') & 0x8000)
+	// 오른쪽 버튼이 눌렸는지 확인
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		m_pTransformCom->Go_Right(fTimeDelta);
-	}
+		// Shift 키가 눌렸는지 확인하고, 눌렸다면 이동 속도를 증가
+		if (m_pGameInstance->Get_DIKeyState(DIK_LSHIFT) & 0x80)
+		{
+			fMoveSpeed = 3.0f; // 원하는 속도로 변경
+		}
 
-	if (GetKeyState('W') & 0x8000)
-	{
-		m_pTransformCom->Go_Straight(fTimeDelta);
-	}
+		if (m_pGameInstance->Get_DIKeyState(DIK_A) & 0x80)
+		{
+			m_pTransformCom->Go_Left(fTimeDelta * fMoveSpeed);
+		}
 
-	if (GetKeyState('S') & 0x8000)
-	{
-		m_pTransformCom->Go_Backward(fTimeDelta);
-	}
+		if (m_pGameInstance->Get_DIKeyState(DIK_D) & 0x80)
+		{
+			m_pTransformCom->Go_Right(fTimeDelta * fMoveSpeed);
+		}
 
-	if (GetKeyState('A') & 0x8000)
-	{
-		m_pTransformCom->Go_Left(fTimeDelta);
-	}
+		if (m_pGameInstance->Get_DIKeyState(DIK_W) & 0x80)
+		{
+			m_pTransformCom->Go_Straight(fTimeDelta * fMoveSpeed);
+		}
 
-	_long		MouseMove = {};
+		if (m_pGameInstance->Get_DIKeyState(DIK_S) & 0x80)
+		{
+			m_pTransformCom->Go_Backward(fTimeDelta * fMoveSpeed);
+		}
 
-	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
-	{
-		m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
-	}
+		if (m_pGameInstance->Get_DIKeyState(DIK_Q) & 0x80)
+		{
+			m_pTransformCom->Go_Down(fTimeDelta * fMoveSpeed);
+		}
 
-	if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
-	{
-		m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
+		if (m_pGameInstance->Get_DIKeyState(DIK_E) & 0x80)
+		{
+			m_pTransformCom->Go_Up(fTimeDelta * fMoveSpeed);
+		}
+
+		_long MouseMove = {};
+
+		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
+		{
+			m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
+		}
+
+		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
+		{
+			m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
+		}
+
 	}
 
 	__super::Priority_Update(fTimeDelta);

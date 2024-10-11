@@ -65,6 +65,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 갱신이 필요한 객체들이 있다면. */
 	/* 여기에서 갱신을 수행해준다. */
+	m_pInput_Device->Update();
+
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();

@@ -5,6 +5,8 @@ Engine::CInput_Device::CInput_Device(void)
 
 }
 
+
+
 HRESULT Engine::CInput_Device::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
 
@@ -51,12 +53,69 @@ void Engine::CInput_Device::Update(void)
 {
 	/* 키보드와 마우스의 상태를 얻어와서 저장해준다. */
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
+
+	// 이전 프레임의 마우스 상태를 저장합니다.
+	for (int i = 0; i < 3; ++i) {
+		m_bPrevMouseState[i] = m_bMouseState[i];
+	}
+
 	m_pMouse->GetDeviceState(sizeof(m_tMouseState), &m_tMouseState);
+
+	// 현재 프레임의 마우스 상태를 저장합니다.
+	for (int i = 0; i < 3; ++i) {
+		m_bMouseState[i] = (m_tMouseState.rgbButtons[i] & 0x80) != 0;
+	}
 }
 
-CInput_Device * CInput_Device::Create(HINSTANCE hInst, HWND hWnd)
+_bool CInput_Device::Key_Pressing(_uint _iKey) {
+	return (m_byKeyState[_iKey] & 0x80) != 0;
+}
+
+_bool CInput_Device::Key_Down(_uint _iKey) {
+	if ((!m_bKeyState[_iKey]) && (m_byKeyState[_iKey] & 0x80)) {
+		m_bKeyState[_iKey] = true;
+		return true;
+	}
+
+	for (int i = 0; i < 256; ++i) {
+		if (m_bKeyState[i] && !(m_byKeyState[i] & 0x80)) {
+			m_bKeyState[i] = false;
+		}
+	}
+
+	return false;
+}
+
+_bool CInput_Device::Key_Up(_uint _iKey) {
+	if ((m_bKeyState[_iKey]) && !(m_byKeyState[_iKey] & 0x80)) {
+		m_bKeyState[_iKey] = false;
+		return true;
+	}
+
+	for (int i = 0; i < 256; ++i) {
+		if (!m_bKeyState[i] && (m_byKeyState[i] & 0x80)) {
+			m_bKeyState[i] = true;
+		}
+	}
+
+	return false;
+}
+
+_bool CInput_Device::Mouse_Pressing(_uint _iButton) {
+	return m_bMouseState[_iButton];
+}
+
+_bool CInput_Device::Mouse_Down(_uint _iButton) {
+	return m_bMouseState[_iButton] && !m_bPrevMouseState[_iButton];
+}
+
+_bool CInput_Device::Mouse_Up(_uint _iButton) {
+	return !m_bMouseState[_iButton] && m_bPrevMouseState[_iButton];
+}
+
+CInput_Device* CInput_Device::Create(HINSTANCE hInst, HWND hWnd)
 {
-	CInput_Device*		pInstance = new CInput_Device();
+	CInput_Device* pInstance = new CInput_Device();
 
 	if (FAILED(pInstance->Ready_InputDev(hInst, hWnd)))
 	{
