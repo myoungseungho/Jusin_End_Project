@@ -40,6 +40,9 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName,&m_DiffuseTextureName)))
 		return E_FAIL;
 
+	if (pEffectDesc->SRV_Ptr != nullptr)
+		m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
+	
 	return S_OK;
 }
 

@@ -21,7 +21,7 @@ public:
 		_wstring ModelName;
 		_wstring MaskTextureName;
 		_wstring DiffuseTextureName;
-
+		void* SRV_Ptr = { nullptr };
 		_int iUnique_Index = -1;
 	}EFFECT_DESC;
 

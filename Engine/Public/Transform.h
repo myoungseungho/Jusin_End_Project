@@ -47,7 +47,7 @@ public:
 		return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix));
 	}
 
-	_float3 CTransform::Get_Rotation() const
+	_float3 Get_Rotation() const
 	{
 		return m_fCurrentRotation;
 	}
