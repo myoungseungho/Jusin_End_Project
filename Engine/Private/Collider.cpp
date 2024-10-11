@@ -109,10 +109,6 @@ _bool CCollider::isCollision(CCollider* pTargetCollider)
 {
 	_bool isCol = m_pBounding->isCollision(pTargetCollider->m_eColliderType, pTargetCollider->m_pBounding);
 
-	if (isCol)
-	{
-		m_isColl = true;
-	}
 	return isCol;
 }
 
