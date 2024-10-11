@@ -136,6 +136,9 @@
     <Filter Include="02.GameObjects\Pawn\Player">
       <UniqueIdentifier>{e15191a1-d182-4cc0-9424-3f21c06e6fef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\SubHpGauge">
+      <UniqueIdentifier>{a407ce47-96a1-41a6-bcd4-9cb7cf1e47ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -285,6 +288,9 @@
     <ClInclude Include="..\public\Pawn.h">
       <Filter>02.GameObjects\Pawn</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_SubHpGauge.h">
+      <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -421,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Pawn.cpp">
       <Filter>02.GameObjects\Pawn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SubHpGauge.cpp">
+      <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

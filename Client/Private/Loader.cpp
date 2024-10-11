@@ -18,6 +18,7 @@
 #include "UI_Cursor.h"
 #include "UI_HpPanel.h"
 #include "UI_HpGauge.h"
+#include "UI_SubHpGauge.h"
 #include "UI_Chara_Icon_Panel.h"
 #include "UI_Chara_Icon.h"
 #include "UI_AttBuf.h"
@@ -186,6 +187,12 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_lifegauge_animmask.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_SubHp*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubHp"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_gauge_physical_frame01.png")))))
+		return E_FAIL;
+
+
 	//½Ã°£ ÃÊ
 
 	/* For.Prototype_Component_Texture_UI_Time */
@@ -269,9 +276,14 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_HpPanel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_Cursor */
+	/* For.Prototype_GameObject_UI_HpGauge */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_HpGauge"),
 		CUI_HpGauge::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_SubHpGauge */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_SubHpGauge"),
+		CUI_SubHpGauge::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_Chara_Icon */
