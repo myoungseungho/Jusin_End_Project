@@ -133,6 +133,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	map<pair<CCollider*, CCollider*>, bool> currentCollisions;
 
 	for (const auto& pair : m_CollisionResults) {
+
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
 

@@ -1,43 +1,43 @@
 ﻿#include "stdafx.h"
-#include "..\Public\Effect.h"
+#include "..\Public\Effect_2p.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
 #include "Collider_Manager.h"
-CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CEffect_2p::CEffect_2p(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CEffect::CEffect(const CEffect& Prototype)
+CEffect_2p::CEffect_2p(const CEffect_2p& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CEffect::Initialize_Prototype()
+HRESULT CEffect_2p::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CEffect::Initialize(void* pArg)
+HRESULT CEffect_2p::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	m_playerID = CEffect::PLAYERID::PLAYER_1P;
+	m_playerID = CEffect_2p::PLAYERID::PLAYER_2P;
 
 	return S_OK;
 }
 
-void CEffect::Priority_Update(_float fTimeDelta)
+void CEffect_2p::Priority_Update(_float fTimeDelta)
 {
 
 }
 
-void CEffect::Update(_float fTimeDelta)
+void CEffect_2p::Update(_float fTimeDelta)
 {
 	for (auto& iter : m_vecColliderCom)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
@@ -49,19 +49,19 @@ void CEffect::Update(_float fTimeDelta)
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		m_fY -= speed;
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-		m_fX -= speed;
+	m_fX -= speed;
 
-	m_fX += speed;
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+		m_fX += speed;
 
 	CCollider_Manager::COLLIDERGROUP group;
 
 	switch (m_playerID)
 	{
-	case CEffect::PLAYERID::PLAYER_1P:
+	case CEffect_2p::PLAYERID::PLAYER_1P:
 		group = CCollider_Manager::CG_1P_SKILL;
 		break;
-	case CEffect::PLAYERID::PLAYER_2P:
+	case CEffect_2p::PLAYERID::PLAYER_2P:
 		group = CCollider_Manager::CG_2P_SKILL;
 		break;
 	}
@@ -70,7 +70,7 @@ void CEffect::Update(_float fTimeDelta)
 	Make_Collider(group, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
 }
 
-void CEffect::Late_Update(_float fTimeDelta)
+void CEffect_2p::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
@@ -78,33 +78,19 @@ void CEffect::Late_Update(_float fTimeDelta)
 		m_pRenderInstance->Add_DebugComponent(iter);
 }
 
-HRESULT CEffect::Render(_float fTimeDelta)
+HRESULT CEffect_2p::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
 
-void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	switch (m_playerID)
 	{
 		//이펙트가 1P_Skill이라면
-	case CEffect::PLAYERID::PLAYER_1P:
+	case CEffect_2p::PLAYERID::PLAYER_1P:
 		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_SKILL)
 		{
-			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_SKILL);
-
-			//기존 콜라이더 삭제
-			for (auto& iter : m_vecColliderCom)
-				Safe_Release(iter);
-
-			//콜라이더 컴포넌트 전부 삭제
-			Clear_Collider_Component();
-
-			//벡터 초기화
-			m_vecColliderCom.clear();
-
-			m_fX = 0.f;
-			m_fY = 0.f;
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
 		{
@@ -126,9 +112,23 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		break;
 
 		//이펙트가 2P_Skill이라면
-	case CEffect::PLAYERID::PLAYER_2P:
+	case CEffect_2p::PLAYERID::PLAYER_2P:
 		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_SKILL)
 		{
+			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_2P_SKILL);
+
+			//기존 콜라이더 삭제
+			for (auto& iter : m_vecColliderCom)
+				Safe_Release(iter);
+
+			//콜라이더 컴포넌트 전부 삭제
+			Clear_Collider_Component();
+
+			//벡터 초기화
+			m_vecColliderCom.clear();
+
+			m_fX = 0.f;
+			m_fY = 0.f;
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
 		{
@@ -137,17 +137,17 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	}
 }
 
-void CEffect::OnCollisionStay(CCollider* other, _float fTimeDelta)
+void CEffect_2p::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 	int a = 3;
 }
 
-void CEffect::OnCollisionExit(CCollider* other)
+void CEffect_2p::OnCollisionExit(CCollider* other)
 {
 	int a = 3;
 }
 
-void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
+void CEffect_2p::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
 {
 	// 1. 시작점과 끝점 사이의 거리 및 방향 계산
 	_float dx = DestPos.x - SourcePos.x;
@@ -201,33 +201,33 @@ void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _fl
 }
 
 
-CEffect* CEffect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CEffect_2p* CEffect_2p::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CEffect* pInstance = new CEffect(pDevice, pContext);
+	CEffect_2p* pInstance = new CEffect_2p(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CEffect"));
+		MSG_BOX(TEXT("Failed to Created : CEffect_2p"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CEffect::Clone(void* pArg)
+CGameObject* CEffect_2p::Clone(void* pArg)
 {
-	CEffect* pInstance = new CEffect(*this);
+	CEffect_2p* pInstance = new CEffect_2p(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CEffect"));
+		MSG_BOX(TEXT("Failed to Cloned : CEffect_2p"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CEffect::Free()
+void CEffect_2p::Free()
 {
 	__super::Free();
 

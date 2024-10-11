@@ -7,6 +7,7 @@
 #include "Monster.h"
 #include "Player.h"
 #include "Effect.h"
+#include "Effect_2p.h"
 
 //#include "Monster.h"
 //#include "Terrain.h"
@@ -133,6 +134,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_2p"),
+		CEffect_2p::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 

@@ -76,6 +76,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>98.Default</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Effect_2p.cpp">
+      <Filter>02.GameObjects\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\public\MainApp.h">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\imconfig.h">
       <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_2p.h">
+      <Filter>02.GameObjects\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
