@@ -27,10 +27,13 @@ public:
 
 	_bool IsColliding(CCollider* a, CCollider* b);
 	HRESULT Release_Collider(const CCollider*);
-
-public:
-	//콜라이더 그룹에 있는 콜라이더 다 삭제
 	HRESULT Clear_ColliderGroup(COLLIDERGROUP eRenderGroup);
+private:
+	void Process_1PBody_2PSkill(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PBody_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PSkill_2PSkill(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1PSkill_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+
 
 private:
 	list<CCollider*>			m_Colliders[CG_END];

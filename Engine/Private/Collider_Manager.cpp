@@ -129,30 +129,39 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 
 void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 {
-	// 현재 프레임의 충돌 상태 저장
 	map<pair<CCollider*, CCollider*>, bool> currentCollisions;
 
+	// 각 스레드에서 취합한 충돌 결과가 있다면 m_CollisionResults에 저장
 	for (const auto& pair : m_CollisionResults) {
-
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
 
-		auto key = make_pair(colliderA, colliderB);
-		currentCollisions[key] = true;
+		// 조건을 bool 변수로 저장
+		_bool is1PBodyVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_SKILL);
+		_bool is1PBodyVs2PBody = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is1PSkillVs2PSkill = (colliderA->m_ColliderGroup == CG_1P_SKILL && colliderB->m_ColliderGroup == CG_2P_SKILL);
+		_bool is1PSkillVs2PBody = (colliderA->m_ColliderGroup == CG_1P_SKILL && colliderB->m_ColliderGroup == CG_2P_BODY);
 
-		if (m_CollisionHistory.find(key) == m_CollisionHistory.end() || !m_CollisionHistory[key]) {
-			// 새로운 충돌 시작
-			colliderA->OnCollisionEnter(colliderB, fTimeDelta);
-			colliderB->OnCollisionEnter(colliderA, fTimeDelta);
+		// 충돌 그룹에 따른 처리
+		if (is1PBodyVs2PSkill)
+		{
+			Process_1PBody_2PSkill(colliderA, colliderB, fTimeDelta, currentCollisions);
 		}
-		else {
-			// 충돌 지속
-			colliderA->OnCollisionStay(colliderB, fTimeDelta);
-			colliderB->OnCollisionStay(colliderA, fTimeDelta);
+		else if (is1PBodyVs2PBody)
+		{
+			Process_1PBody_2PBody(colliderA, colliderB, fTimeDelta, currentCollisions);
+		}
+		else if (is1PSkillVs2PSkill)
+		{
+			Process_1PSkill_2PSkill(colliderA, colliderB, fTimeDelta, currentCollisions);
+		}
+		else if (is1PSkillVs2PBody)
+		{
+			Process_1PSkill_2PBody(colliderA, colliderB, fTimeDelta, currentCollisions);
 		}
 	}
 
-	// 이전 프레임에서는 충돌했지만 현재 프레임에서는 충돌하지 않는 경우 처리
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
 		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
 			pair.first.first->OnCollisionExit(pair.first.second);
@@ -163,6 +172,46 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	// 충돌 히스토리 업데이트
 	m_CollisionHistory = currentCollisions;
 }
+
+
+// 각 충돌 처리 함수
+
+void CCollider_Manager::Process_1PBody_2PSkill(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 1P 바디와 2P 스킬 충돌 처리
+	// 구체적인 로직 추가 가능
+}
+
+void CCollider_Manager::Process_1PBody_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 1P 바디와 2P 바디 충돌 처리
+	// 구체적인 로직 추가 가능
+}
+
+void CCollider_Manager::Process_1PSkill_2PSkill(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 1P 스킬과 2P 스킬 충돌 처리
+	// 구체적인 로직 추가 가능
+}
+
+void CCollider_Manager::Process_1PSkill_2PBody(CCollider* colliderA, CCollider* colliderB, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 새로운 충돌인지 확인
+	if (m_CollisionHistory.find(make_pair(colliderA, colliderB)) == m_CollisionHistory.end() || !m_CollisionHistory[make_pair(colliderA, colliderB)]) {
+		// 새로운 충돌 시작
+		colliderA->OnCollisionEnter(colliderB, fTimeDelta);
+		colliderB->OnCollisionEnter(colliderA, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		colliderA->OnCollisionStay(colliderB, fTimeDelta);
+		colliderB->OnCollisionStay(colliderA, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(colliderA, colliderB)] = true;
+}
+
 
 _bool CCollider_Manager::IsColliding(CCollider* _pSourCollider, CCollider* _pDestCollider)
 {
