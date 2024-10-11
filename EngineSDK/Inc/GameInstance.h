@@ -29,6 +29,9 @@ public: /* For.Input_Device */
 	_byte	Get_DIKeyState(_ubyte byKeyID);
 	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouseKeyState);
 	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState);
+	_bool Key_Pressing(_uint _iKey);
+	_bool Key_Down(_uint _iKey);
+	_bool Key_Up(_uint _iKey);
 
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);

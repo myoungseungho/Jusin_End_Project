@@ -44,6 +44,19 @@ void CMonster::Update(_float fTimeDelta)
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
+
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		int a = 3;
+	}
+	if (m_pGameInstance->Key_Pressing(DIK_F8))
+	{
+		int a = 3;
+	}
+	if (m_pGameInstance->Key_Up(DIK_F8))
+	{
+		int a = 3;
+	}
 }
 
 void CMonster::Late_Update(_float fTimeDelta)

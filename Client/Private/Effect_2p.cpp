@@ -42,7 +42,7 @@ void CEffect_2p::Update(_float fTimeDelta)
 	for (auto& iter : m_vecColliderCom)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
 
-	_float speed = 1.f;
+	_float speed = 0.1f;
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 		m_fY += speed;
 
@@ -94,8 +94,6 @@ void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
 		{
-			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_Energy_SKILL);
-
 			//기존 콜라이더 삭제
 			for (auto& iter : m_vecColliderCom)
 				Safe_Release(iter);
@@ -130,6 +128,18 @@ void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
 		{
+			//기존 콜라이더 삭제
+			for (auto& iter : m_vecColliderCom)
+				Safe_Release(iter);
+
+			//콜라이더 컴포넌트 전부 삭제
+			Clear_Collider_Component();
+
+			//벡터 초기화
+			m_vecColliderCom.clear();
+
+			m_fX = 0.f;
+			m_fY = 0.f;
 		}
 		break;
 	}

@@ -33,7 +33,8 @@ private:
 	LPDIRECTINPUTDEVICE8	m_pKeyBoard = { nullptr };
 	LPDIRECTINPUTDEVICE8	m_pMouse = { nullptr };
 
-	_byte m_byKeyState[256] = {}; // 키보드에 있는 모든 키값을 저장하기 위한 변수
+	_byte m_byKeyState[256] = {}; // 키보드에 있는 모든 키값을 저장하기 위한 
+	BYTE m_byPrevKeyState[256];   // Previous key state변수
 	DIMOUSESTATE m_tMouseState = {};
 	_bool m_bKeyState[256] = { false }; // 이전 키 상태를 저장하기 위한 변수
 	_bool m_bMouseState[8] = { false }; // 이전 마우스 상태를 저장하기 위한 변수

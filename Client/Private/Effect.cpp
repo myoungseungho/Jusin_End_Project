@@ -104,10 +104,9 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_fX = 0.f;
 			m_fY = 0.f;
 		}
+
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
 		{
-			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_Energy_SKILL);
-
 			//기존 콜라이더 삭제
 			for (auto& iter : m_vecColliderCom)
 				Safe_Release(iter);
@@ -120,6 +119,7 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			m_fX = 0.f;
 			m_fY = 0.f;
+
 		}
 		break;
 
@@ -127,9 +127,11 @@ void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	case CEffect::PLAYERID::PLAYER_2P:
 		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_Energy_SKILL)
 		{
+
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
 		{
+
 		}
 		break;
 	}

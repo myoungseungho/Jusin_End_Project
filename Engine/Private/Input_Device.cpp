@@ -51,14 +51,18 @@ HRESULT Engine::CInput_Device::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 
 void Engine::CInput_Device::Update(void)
 {
-	/* 키보드와 마우스의 상태를 얻어와서 저장해준다. */
+	// 이전 키 상태를 저장합니다.
+	memcpy(m_byPrevKeyState, m_byKeyState, sizeof(m_byKeyState));
+
+	// 현재 키 상태를 가져옵니다.
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
 
-	// 이전 프레임의 마우스 상태를 저장합니다.
+	// 이전 마우스 상태를 저장합니다.
 	for (int i = 0; i < 3; ++i) {
 		m_bPrevMouseState[i] = m_bMouseState[i];
 	}
 
+	// 현재 마우스 상태를 가져옵니다.
 	m_pMouse->GetDeviceState(sizeof(m_tMouseState), &m_tMouseState);
 
 	// 현재 프레임의 마우스 상태를 저장합니다.
@@ -72,33 +76,11 @@ _bool CInput_Device::Key_Pressing(_uint _iKey) {
 }
 
 _bool CInput_Device::Key_Down(_uint _iKey) {
-	if ((!m_bKeyState[_iKey]) && (m_byKeyState[_iKey] & 0x80)) {
-		m_bKeyState[_iKey] = true;
-		return true;
-	}
-
-	for (int i = 0; i < 256; ++i) {
-		if (m_bKeyState[i] && !(m_byKeyState[i] & 0x80)) {
-			m_bKeyState[i] = false;
-		}
-	}
-
-	return false;
+	return (!(m_byPrevKeyState[_iKey] & 0x80) && (m_byKeyState[_iKey] & 0x80));
 }
 
 _bool CInput_Device::Key_Up(_uint _iKey) {
-	if ((m_bKeyState[_iKey]) && !(m_byKeyState[_iKey] & 0x80)) {
-		m_bKeyState[_iKey] = false;
-		return true;
-	}
-
-	for (int i = 0; i < 256; ++i) {
-		if (!m_bKeyState[i] && (m_byKeyState[i] & 0x80)) {
-			m_bKeyState[i] = true;
-		}
-	}
-
-	return false;
+	return ((m_byPrevKeyState[_iKey] & 0x80) && !(m_byKeyState[_iKey] & 0x80));
 }
 
 _bool CInput_Device::Mouse_Pressing(_uint _iButton) {
