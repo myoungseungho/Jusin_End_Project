@@ -12,6 +12,7 @@ CCollider_Manager::CCollider_Manager()
 
 void CCollider_Manager::Update(_float fTimeDelta)
 {
+	Destory_ColliderGroup();
 	Check_Collision(fTimeDelta);
 }
 
@@ -249,8 +250,8 @@ void CCollider_Manager::Process_1PSkill_2PSkill_Group(const vector<pair<CCollide
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Clear_ColliderGroup(CG_1P_Energy_SKILL);
-	Clear_ColliderGroup(CG_2P_Energy_SKILL);
+	Destory_Reserve(CG_1P_Energy_SKILL);
+	Destory_Reserve(CG_2P_Energy_SKILL);
 }
 
 void CCollider_Manager::Process_1PBody_2PSkill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -275,7 +276,7 @@ void CCollider_Manager::Process_1PBody_2PSkill_Group(const vector<pair<CCollider
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Clear_ColliderGroup(CG_2P_Energy_SKILL);
+	Destory_Reserve(CG_2P_Energy_SKILL);
 }
 
 void CCollider_Manager::Process_1PSkill_2PBody_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -300,7 +301,7 @@ void CCollider_Manager::Process_1PSkill_2PBody_Group(const vector<pair<CCollider
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Clear_ColliderGroup(CG_1P_Energy_SKILL);
+	Destory_Reserve(CG_1P_Energy_SKILL);
 }
 
 
@@ -345,17 +346,28 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 	return E_FAIL; // 해당 collider를 찾지 못함
 }
 
-HRESULT CCollider_Manager::Clear_ColliderGroup(COLLIDERGROUP eRenderGroup)
+HRESULT CCollider_Manager::Destory_ColliderGroup()
 {
-	if (eRenderGroup >= CG_END)
-		return E_FAIL;
+	for (auto& iter  :m_Destory_Reserve_Collider_Group)
+	{
+		for (auto& iter : m_Colliders[iter])
+			Safe_Release(iter);
 
-	for (auto& iter : m_Colliders[eRenderGroup])
-		Safe_Release(iter);
+		m_Colliders[iter].clear();
+	}
 
-	m_Colliders[eRenderGroup].clear();
-
+	m_Destory_Reserve_Collider_Group.clear();
 	return S_OK;
+}
+
+void CCollider_Manager::Destory_Reserve(COLLIDERGROUP eRenderGroup)
+{
+	// 리스트에 이미 존재하는지 확인
+	if (find(m_Destory_Reserve_Collider_Group.begin(), m_Destory_Reserve_Collider_Group.end(), eRenderGroup) == m_Destory_Reserve_Collider_Group.end())
+	{
+		// 존재하지 않으면 추가
+		m_Destory_Reserve_Collider_Group.push_back(eRenderGroup);
+	}
 }
 
 

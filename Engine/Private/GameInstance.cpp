@@ -338,10 +338,6 @@ HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRend
 	return m_pCollider_Manager->Add_ColliderObject(eRenderGroup, pRenderObject);
 }
 
-HRESULT CGameInstance::Clear_ColliderGroup(CCollider_Manager::COLLIDERGROUP eRenderGroup)
-{
-	return m_pCollider_Manager->Clear_ColliderGroup(eRenderGroup);
-}
 
 HRESULT CGameInstance::SaveObjects(const wstring& filename, void* pArg)
 {

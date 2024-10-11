@@ -87,7 +87,6 @@ public: /* For.ThreadPool */
 
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
-	HRESULT Clear_ColliderGroup(CCollider_Manager::COLLIDERGROUP eRenderGroup);
 
 public: /* For.FileManager */
 	HRESULT SaveObjects(const wstring& filename, void* pArg);
