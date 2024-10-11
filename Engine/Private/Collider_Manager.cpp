@@ -208,39 +208,6 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 	return E_FAIL; // 해당 collider를 찾지 못함
 }
 
-_bool CCollider_Manager::IsRayColliding(const _float3& rayOrigin, const _float3& rayDir, COLLIDERGROUP eColliderGroup, CGameObject** pHitObject)
-{
-	if (eColliderGroup >= CG_END)
-		return false;
-
-	for (auto& collider : m_Colliders[eColliderGroup])
-	{
-		if (collider->isRayCollision(rayOrigin, rayDir))
-		{
-			*pHitObject = collider->GetMineGameObject(); // Assuming the collider has a method to get its owner (the game object)
-			return true;
-		}
-	}
-	return false;
-}
-
-_bool CCollider_Manager::isPointInAABB(const _float3& point, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject)
-{
-	if (eColliderGroup >= CG_END)
-		return false;
-
-	for (auto& collider : m_Colliders[eColliderGroup])
-	{
-		if (collider->isPointInAABB(point))
-		{
-			*pHitObject = collider->GetMineGameObject(); // Assuming the collider has a method to get its owner (the game object)
-			return true;
-		}
-	}
-	return false;
-}
-
-
 HRESULT CCollider_Manager::Clear_ColliderGroup(COLLIDERGROUP eRenderGroup)
 {
 	if (eRenderGroup >= CG_END)

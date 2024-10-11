@@ -27,6 +27,8 @@ HRESULT CEffect::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_playerID = CEffect::PLAYERID::PLAYER_1P;
+
 	return S_OK;
 }
 
@@ -53,8 +55,20 @@ void CEffect::Update(_float fTimeDelta)
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 		m_fX += speed;
 
+	CCollider_Manager::COLLIDERGROUP group;
+
+	switch (m_playerID)
+	{
+	case CEffect::PLAYERID::PLAYER_1P:
+		group = CCollider_Manager::CG_1P_SKILL;
+		break;
+	case CEffect::PLAYERID::PLAYER_2P:
+		group = CCollider_Manager::CG_2P_SKILL;
+		break;
+	}
+
 	_float2 DefaultFloat2 = _float2(0.f, 0.f);
-	Make_Collider(CCollider_Manager::CG_1P_SKILL, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
+	Make_Collider(group, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
 }
 
 void CEffect::Late_Update(_float fTimeDelta)
@@ -72,7 +86,37 @@ HRESULT CEffect::Render(_float fTimeDelta)
 
 void CEffect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-	int a = 3;
+	switch (m_playerID)
+	{
+		//이펙트가 1P_Skill이라면
+	case CEffect::PLAYERID::PLAYER_1P:
+		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_SKILL)
+		{
+			int a = 3;
+		}
+		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
+		{
+			int a = 3;
+			
+			m_pGameInstance->Clear_ColliderGroup(CCollider_Manager::CG_1P_SKILL);
+
+			for (auto& iter : m_vecColliderCom)
+				Safe_Release(iter);
+		}
+		break;
+
+		//이펙트가 2P_Skill이라면
+	case CEffect::PLAYERID::PLAYER_2P:
+		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_SKILL)
+		{
+			int a = 3;
+		}
+		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
+		{
+			int a = 3;
+		}
+		break;
+	}
 }
 
 void CEffect::OnCollisionStay(CCollider* other, _float fTimeDelta)
@@ -93,7 +137,7 @@ void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _fl
 
 	// 두 점 사이의 거리 계산
 	_float distance = sqrtf(dx * dx + dy * dy);
-	
+
 	// 방향 벡터 및 정규화
 	_float2 direction = { dx / distance, dy / distance };
 
@@ -119,6 +163,7 @@ void CEffect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _fl
 		BoundingDesc.vExtents = _float3(m_UnitSize.x / 2.0f, m_UnitSize.y / 2.0f, 0.5f);
 		BoundingDesc.vCenter = _float3(colliderPos.x, colliderPos.y, 0.f); // 생성 시 위치 설정
 		BoundingDesc.pMineGameObject = this;
+		BoundingDesc.colliderGroup = eColliderGroup;
 
 		CCollider* pNewCollider = nullptr;
 		_wstring colliderName = L"Com_Collider_" + to_wstring(i);
@@ -170,6 +215,4 @@ void CEffect::Free()
 
 	for (auto& iter : m_vecColliderCom)
 		Safe_Release(iter);
-
-
 }

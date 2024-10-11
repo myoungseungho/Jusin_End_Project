@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Base.h"
-#include "Collider.h"
 
 /* 1. 화면에 그려야할 객체들을 그리는 순서대로 보관한다. */
 /* 2. 보관하고 있는 객체들의 렌더함수를 호출한다.(렌더콜) */
 
 BEGIN(Engine)
+
+class CCollider;
+
 class CCollider_Manager final : public CBase
 {
 public:
@@ -25,8 +27,6 @@ public:
 
 	_bool IsColliding(CCollider* a, CCollider* b);
 	HRESULT Release_Collider(const CCollider*);
-	_bool IsRayColliding(const _float3& rayOrigin, const _float3& rayDir, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject);
-	_bool isPointInAABB(const _float3& point, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject);
 
 public:
 	//콜라이더 그룹에 있는 콜라이더 다 삭제

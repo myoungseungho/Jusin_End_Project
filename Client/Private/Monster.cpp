@@ -115,12 +115,12 @@ HRESULT CMonster::Ready_Components()
 	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
 	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
 	BoundingDesc.pMineGameObject = this;
-
+	BoundingDesc.colliderGroup = CCollider_Manager::CG_2P_BODY;
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
 		return E_FAIL;
 
-	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_2P_BODY, m_pColliderCom);
+	m_pGameInstance->Add_ColliderObject(BoundingDesc.colliderGroup, m_pColliderCom);
 
 	return S_OK;
 }

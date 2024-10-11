@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "Collider_Manager.h"
 
 BEGIN(Engine)
 
@@ -30,8 +31,6 @@ public:
 
 public:
 	_bool isCollision(CCollider* pTargetCollider);
-	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir);
-	_bool isPointInAABB(const _float3& point);
 
 	class CGameObject* GetMineGameObject() { return m_pMineGameObject; };
 	BoundingBox AABB_GetDesc();
@@ -45,6 +44,7 @@ public:
 
 public:
 	_bool					m_isColl = { false };
+	CCollider_Manager::COLLIDERGROUP m_ColliderGroup;
 
 private:
 	TYPE					m_eColliderType = { TYPE_END };

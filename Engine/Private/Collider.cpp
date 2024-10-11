@@ -53,6 +53,7 @@ HRESULT CCollider::Initialize(void* pArg)
 {
 	CBounding::BOUNDING_DESC* pDesc = static_cast<CBounding::BOUNDING_DESC*>(pArg);
 	m_pMineGameObject = pDesc->pMineGameObject;
+	m_ColliderGroup = pDesc->colliderGroup;
 
 	if (m_pMineGameObject == nullptr)
 		return E_FAIL;
@@ -62,7 +63,6 @@ HRESULT CCollider::Initialize(void* pArg)
 	{
 	case TYPE_SPHERE:
 		m_pBounding = CBounding_Sphere::Create(m_pDevice, m_pContext, pDesc);
-
 		break;
 	case TYPE_AABB:
 		m_pBounding = CBounding_AABB::Create(m_pDevice, m_pContext, pDesc);
@@ -112,23 +112,6 @@ _bool CCollider::isCollision(CCollider* pTargetCollider)
 	return isCol;
 }
 
-_bool CCollider::isRayCollision(const _float3& rayOrigin, const _float3& rayDir)
-{
-	m_isColl = false;
-
-	m_isColl = m_pBounding->isRayCollision(rayOrigin, rayDir);
-
-	return m_isColl;
-}
-
-_bool CCollider::isPointInAABB(const _float3& point)
-{
-	m_isColl = false;
-
-	m_isColl = m_pBounding->isPointInAABB(point);
-
-	return m_isColl;
-}
 
 BoundingBox CCollider::AABB_GetDesc()
 {

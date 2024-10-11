@@ -13,6 +13,7 @@ public:
 	{
 		_float3			vCenter;
 		CGameObject* pMineGameObject;
+		CCollider_Manager::COLLIDERGROUP colliderGroup;
 	};
 protected:
 	CBounding(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
