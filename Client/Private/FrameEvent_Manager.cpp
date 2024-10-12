@@ -12,7 +12,13 @@
 #include <sstream>
 
 #include "Animation.h"
+#include "Character.h"
+
+#include "Model_Preview.h"
+
 IMPLEMENT_SINGLETON(CFrameEvent_Manager)
+
+
 
 CFrameEvent_Manager::CFrameEvent_Manager()
 {
@@ -279,7 +285,8 @@ void CFrameEvent_Manager::ClearFrameEvent()
     FrameEvent.clear();
 }
 
-void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject)
+
+void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameobject)
 {
     string splitText[10];
     int index = 0;
@@ -313,12 +320,16 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject
     if (splitText[0] == "ObjectMove")
     {
 
+
         CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
+
+        CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+
 
         if (nullptr == pTransform)
             return;
         _vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
-        vPos += _vector{ fValue[0],fValue[1],fValue[2],fValue[3] };
+        vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3]};
         pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
         //static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
@@ -343,6 +354,112 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CGameObject* pGameobject
    
    }
 
+   else if (splitText[0] == "PositionChange")
+    {
+        CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
+        _float fCurPosition = pModel->Get_CurrentAnimationPosition();
+        _float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+
+
+        pModel->Play_Animation(fDelay);
+
+    }
+
+   else if (splitText[0] == "FlipPlayerDirection")
+    {
+        CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+        pModelPreview->FlipDirection(fValue[0]);
+    }
+
+}
+
+
+void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
+{
+    string splitText[10];
+    int index = 0;
+
+    // stringstream을 사용하여 string을 처리
+    stringstream ss(strEventText);
+    string temp;
+
+    // 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
+    while (std::getline(ss, temp, ',') && index < 10) {
+        splitText[index] = temp;
+        index++;
+    }
+
+
+    _float fValue[9]{};
+
+    //split[1] 은 fValue[0] , split[2]는 fValue[1]...
+    for (int i = 1; i < 9; i++)
+    {
+        if (splitText[i] == "")
+            break;
+
+        fValue[i - 1] = Convert_strtoFloat(splitText[i]);
+
+    }
+
+
+    _bool bDebugPoint = false;
+
+    if (splitText[0] == "ObjectMove")
+    {
+
+        CTransform* pTransform = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+
+        if (nullptr == pTransform)
+            return;
+        _vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+        vPos += _vector{ fValue[0] * pCharacter->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
+        pTransform->Set_State(CTransform::STATE_POSITION, vPos);
+
+        //static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
+
+        _bool bDebug = false;
+
+        //최적화하려면 여기서 float값을 return하고 싹다 합친 뒤 한번에 처리하기?
+    }
+
+    else if (splitText[0] == "TickPerSecondChange")
+    {
+
+        CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
+        pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[0];
+
+    }
+
+    else if (splitText[0] == "AnimSpeedChange")
+    {
+
+        CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
+        pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
+        pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
+
+    }
+
+    else if (splitText[0] == "PositionChange")
+    {
+        CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
+        _float fCurPosition = pModel->Get_CurrentAnimationPosition();
+        _float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+
+
+        pModel->Play_Animation(fDelay);
+
+    }
+
+    else if (splitText[0] == "NextAnimationCheck")
+    {
+        pCharacter->NextMoveCheck();
+    }
+    else if (splitText[0] == "AttackEvent")
+    {
+        pCharacter->NextMoveCheck();
+    }
+    
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()

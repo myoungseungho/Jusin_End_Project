@@ -67,6 +67,15 @@
     <Filter Include="90.FrameEvent_Manager\AnimationNameMap">
       <UniqueIdentifier>{31dac042-d971-4fd1-a29c-8d007cb09102}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Character">
+      <UniqueIdentifier>{4ada2d1e-ed2b-47d8-b773-de6c0fbc53b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Goku">
+      <UniqueIdentifier>{acf9319f-0636-44f1-ba84-3fd2ffbeeae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Input">
+      <UniqueIdentifier>{1c48c94a-af26-4384-b0da-bd1183368b46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -156,6 +165,15 @@
     <ClInclude Include="..\Public\AnimationEvent_Defines.h">
       <Filter>99.Defines</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Input.h">
+      <Filter>02.GameObjects\Character\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -229,6 +247,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\AnimationNameMap.cpp">
       <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Character.cpp">
+      <Filter>02.GameObjects\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_Goku.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -34,8 +34,9 @@ public:
 
 	void SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration = 0.0f);
 	_float GetDurationByIndex(_uint _animationIndex);
-	_float Get_CurrentAnimationTime() const { return m_fCurrentAnimPosition; }
+	_float Get_CurrentAnimationPosition() const { return m_fCurrentAnimPosition; }
 	class CAnimation* Get_pCurrentAnimation() { return m_Animations[m_iCurrentAnimationIndex]; };
+	_float Get_CurrentAnimationTickPerSecond();
 
 	void Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime);
 

@@ -6,12 +6,14 @@
 #include "AnimationEvent_Defines.h"
 #include "AnimationNameMap.h"
 
+
 BEGIN(Engine)
 class CShader;
 class CModel;
 END
 
 BEGIN(Client)
+
 
 class CFrameEvent_Manager final : public CBase
 {
@@ -34,7 +36,8 @@ public:
 	void ReLoadFrameEvent(const _char* TextFilePath);
 	void ClearFrameEvent();
 
-	void UseEvent(string strEventText, CGameObject* pGameObject);
+	void UseEvent_Test(string strEventText, CGameObject* pGameObject);
+	void UseEvent(string strEventText, class CCharacter* pCharacter);
 
 	void Initalize_NameMap();
 

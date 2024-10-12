@@ -275,6 +275,11 @@ _float CModel::GetDurationByIndex(_uint _animationIndex)
 }
 
 
+_float CModel::Get_CurrentAnimationTickPerSecond()
+{
+	 return m_Animations[m_iCurrentAnimationIndex]->m_fTickPerSecond; 
+}
+
 void CModel::Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime)
 {
 	m_fMaxAnimationUpdateTime = fMaxUpdateTime;

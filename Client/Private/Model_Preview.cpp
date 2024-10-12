@@ -100,6 +100,30 @@ HRESULT CModel_Preview::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CModel_Preview::FlipDirection(_int iDirection)
+{
+	if (iDirection == 0)
+	{
+		m_iLookDirection = -m_iLookDirection;
+	}
+	else
+	{
+		m_iLookDirection = iDirection;
+	}
+
+	//if (m_iLookDirection == -1)
+	//{
+	//	m_pTransformCom->Set_Scaled(-1, 1, 1);
+	//}
+	//else
+	//{
+	//	m_pTransformCom->Set_Scaled(1, 1, 1);
+	//}
+
+	m_pTransformCom->Set_Scaled(-1, 1, 1);
+
+}
+
 HRESULT CModel_Preview::Ready_Components()
 {
 	/* Com_Shader */

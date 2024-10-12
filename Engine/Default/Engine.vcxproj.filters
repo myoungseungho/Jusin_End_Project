@@ -88,6 +88,9 @@
     <Filter Include="01.Utility\03.Components\VIBuffer\Rect">
       <UniqueIdentifier>{6314312b-1ad1-45c6-b281-678b3f66e2f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\90.DIK_KeyManager">
+      <UniqueIdentifier>{387532bd-77c9-4e3c-834e-63b893474db6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -167,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Rect.cpp">
       <Filter>01.Utility\03.Components\VIBuffer\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Key_Manager.cpp">
+      <Filter>01.Utility\90.DIK_KeyManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Rect.h">
       <Filter>01.Utility\03.Components\VIBuffer\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Key_Manager.h">
+      <Filter>01.Utility\90.DIK_KeyManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,6 +3,17 @@ PLAY_HIT,HTN021_body,20.000000,AnimSpeedChange,0.000000,25.000000
 PLAY_HIT,HTN620cs_body,40.000000,AnimSpeedChange,0.000000,25.000000
 
 
+
+//,오공 오프닝
+//,변신타이밍 260시작 290에서 내려감
+//,어깨 빠지는거 90
+//,340 발바뀜
+OPENING_GOKU,GKS600cs,0,AnimSpeedChange,0.019,60.1
+OPENING_GOKU,GKS600cs,88,PositionChange,92
+OPENING_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
+OPENING_GOKU,GKS600cs,275,ModelChange,4
+
+
 //,약공1,2
 PLAY_GOKU,GKS200_body,0.000000,AnimSpeedChange,0.05,60
 PLAY_GOKU,GKS200_body,10,AttackEvent,200
@@ -187,8 +198,13 @@ PLAY_GOKU,GKS436cs,93,AnimSpeedChange,0.022000,5
 PLAY_GOKU,GKS436cs,96,AnimSpeedChange,0.012000,2
 
 
-//, 600 오프닝. 초반은 노말오공전용인지 85position쯤에 확 내려가서 에러가있음. 노말로 변신타이밍 찾을것
 
+//,275로시작
+
+PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,60.1
+PLAY_GOKU,GKS600cs,0,PositionChange,275
+PLAY_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
+PLAY_GOKU,GKS600cs,280,AnimSpeedChange,0.019,60.1
 
 
 //,오프닝 사이드 스탠딩 (공용)
@@ -390,7 +406,7 @@ PLAY_GOKU,GKS100_body,0.000000,AnimSpeedChange,0.032000,70.303001
 
 
 //,공중낙법
-
+PLAY_GOKU,GKS101_body,0.000000,AnimSpeedChange,0.018000,120
 
 //,스파킹 (공용모션)
 PLAY_GOKU,GKS303_body,0,AnimSpeedChange,0.017,70

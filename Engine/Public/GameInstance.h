@@ -60,6 +60,14 @@ public: /* For.PipeLine */
 	_float4 Get_CamPosition_Float4() const;
 	void Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
 
+
+
+
+public: 
+	_bool Key_Down(_int _iKey);
+	_bool Key_Pressing(_uint _iKey);
+	_bool Key_Up(_uint _iKey);
+
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
 	class CInput_Device*				m_pInput_Device = { nullptr };
@@ -68,6 +76,9 @@ private:
 	class CObject_Manager*				m_pObject_Manager = { nullptr };
 	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
 	class CPipeLine* m_pPipeLine = { nullptr };
+
+	//class CKey_Manager* m_pKey_Manager = { nullptr };
+
 
 public:
 	void Release_Engine();

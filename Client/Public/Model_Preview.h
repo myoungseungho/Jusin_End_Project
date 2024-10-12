@@ -30,12 +30,19 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	void FlipDirection(_int iDirection = 0);
+
+	_int Get_iDirection() { return m_iLookDirection; };
+
 private:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
 
 	_float					m_fRandom = {};
 	_wstring					m_strModelName{};
+
+
+	_int					m_iLookDirection = { 1 };
 
 private:
 	HRESULT Ready_Components();

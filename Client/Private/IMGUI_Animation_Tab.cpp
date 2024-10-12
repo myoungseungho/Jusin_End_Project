@@ -31,6 +31,11 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 {
 
     m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
+
+
+
+    //m_iTestModelIndex = PLAY_GOKU;
+
     //static FrameEventMap FrameEvent[CHARACTER_INDEX_END][100][2];
   //  FrameEvent[SELECT_HIT][0][5].emplace("TEST");
   //  FrameEvent[SELECT_HIT][0][50].push_back("MotionLock,1,10");
@@ -618,7 +623,7 @@ void CIMGUI_Animation_Tab::ProcessEventsBetweenFrames2(int characterIndex, int a
                     //현재 25에서 돌아오지 않는 문제가 있음...?
 
 
-                    CFrameEvent_Manager::Get_Instance()->UseEvent(event, m_pSelectedObject);
+                    CFrameEvent_Manager::Get_Instance()->UseEvent_Test(event, m_pSelectedObject);
 
                 }
             }
@@ -723,7 +728,7 @@ void CIMGUI_Animation_Tab::ProcessEventsFramesZero(int characterIndex, int anima
             for (auto event : frameIt)
             {
 
-                CFrameEvent_Manager::Get_Instance()->UseEvent(event, m_pSelectedObject);
+                CFrameEvent_Manager::Get_Instance()->UseEvent_Test(event, m_pSelectedObject);
             }
             
         }
@@ -776,7 +781,7 @@ string CIMGUI_Animation_Tab::Get_strAnimationEvent()
     string strEventTEXT{};
 
     //소수점 6자리까지 저장함
-   strEventTEXT += Get_CharacterName();            
+   strEventTEXT += Get_CharacterName();
    strEventTEXT += "," + g_iCurrentAnimationIndex;
    strEventTEXT += "," + Get_AnimationName();// to_string(m_pSelectedModelCom->m_iCurrentAnimationIndex);
    strEventTEXT += "," + to_string(m_pSelectedModelCom->m_fCurrentAnimPosition);
