@@ -19,19 +19,9 @@ LookRotation: 0 0 1
 Scale: 1 1 1
 IsParsing: 1
 
-LayerName: Layer_Range_Effect_2p
-PrototypeTag: Prototype_GameObject_Range_Effect_2p
-LevelIndex: 2
-Position: 30 5 0
-RightRotation: 1 0 0
-UpRotation: 0 1 0
-LookRotation: 0 0 1
-Scale: 1 1 1
-IsParsing: 1
 
-
-LayerName: Layer_Energy_Effect
-PrototypeTag: Prototype_GameObject_Energy_Effect
+LayerName: Layer_Melee_Effect
+PrototypeTag: Prototype_GameObject_Melee_Effect
 LevelIndex: 2
 Position: -30 5 0
 RightRotation: 1 0 0
@@ -40,3 +30,12 @@ LookRotation: 0 0 1
 Scale: 1 1 1
 IsParsing: 1
 
+LayerName: Layer_Melee_Effect_2p
+PrototypeTag: Prototype_GameObject_Melee_Effect_2p
+LevelIndex: 2
+Position: 30 5 0
+RightRotation: 1 0 0
+UpRotation: 0 1 0
+LookRotation: 0 0 1
+Scale: 1 1 1
+IsParsing: 1

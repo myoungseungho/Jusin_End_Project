@@ -3,7 +3,6 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "Imgui_Manager.h"
 #include "Collider_Manager.h"
 CEnergy_Effect_2p::CEnergy_Effect_2p(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }

@@ -74,22 +74,22 @@
       <Filter>98.Default</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Energy_Effect.cpp">
-      <Filter>02.GameObjects\Effect\Energy_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Energy_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Energy_Effect_2p.cpp">
-      <Filter>02.GameObjects\Effect\Energy_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Energy_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Range_Effect_2p.cpp">
-      <Filter>02.GameObjects\Effect\Range_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Range_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Range_Effect.cpp">
-      <Filter>02.GameObjects\Effect\Range_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Range_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Melee_Effect.cpp">
-      <Filter>02.GameObjects\Effect\Melee_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Melee_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Melee_Effect_2p.cpp">
-      <Filter>02.GameObjects\Effect\Melee_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Melee_Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,22 +178,22 @@
       <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Energy_Effect.h">
-      <Filter>02.GameObjects\Effect\Energy_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Energy_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Energy_Effect_2p.h">
-      <Filter>02.GameObjects\Effect\Energy_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Energy_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Range_Effect.h">
-      <Filter>02.GameObjects\Effect\Range_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Range_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Range_Effect_2p.h">
-      <Filter>02.GameObjects\Effect\Range_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Range_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Melee_Effect.h">
-      <Filter>02.GameObjects\Effect\Melee_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Melee_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Melee_Effect_2p.h">
-      <Filter>02.GameObjects\Effect\Melee_Effect</Filter>
+      <Filter>02.GameObjects\Effect_Test_MSH\Melee_Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +241,6 @@
     <Filter Include="02.GameObjects\Camera">
       <UniqueIdentifier>{508482e7-501d-454b-a956-8d221fac5489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Effect">
-      <UniqueIdentifier>{95869e69-e286-4a37-a7e7-78e2e7d136ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Monster">
       <UniqueIdentifier>{ed1abb2b-7437-4937-bb61-28428273bfe5}</UniqueIdentifier>
     </Filter>
@@ -277,13 +274,16 @@
     <Filter Include="97.IMGUI\Tab\IMGUI_UI_Tab">
       <UniqueIdentifier>{267459ec-bf8f-4b50-82d5-5a6b37be652d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Effect\Energy_Effect">
+    <Filter Include="02.GameObjects\Effect_Test_MSH">
+      <UniqueIdentifier>{95869e69-e286-4a37-a7e7-78e2e7d136ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect_Test_MSH\Energy_Effect">
       <UniqueIdentifier>{1d6fbf14-c79d-42c8-bd4a-9e27cdf7c398}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Effect\Range_Effect">
+    <Filter Include="02.GameObjects\Effect_Test_MSH\Range_Effect">
       <UniqueIdentifier>{6a3b1fa3-59e4-46db-ae6e-98c9d63f6197}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Effect\Melee_Effect">
+    <Filter Include="02.GameObjects\Effect_Test_MSH\Melee_Effect">
       <UniqueIdentifier>{239a392c-632f-40c0-b918-1a422c3035d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

@@ -44,6 +44,33 @@ void CPlayer::Update(_float fTimeDelta)
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
+
+	static _bool m_isJump = false;
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		m_isJump = !m_isJump;
+
+		if (m_isJump)
+		{
+			// 현재 콜라이더의 원래 위치와 크기를 가져오기
+			BoundingBox boundingBox = m_pColliderCom->AABB_GetDesc();
+
+			// 현재 위치와 스케일 값을 업데이트된 값으로 설정
+			boundingBox.Center = _float3(0.f,0.6f,0.f);
+			boundingBox.Extents = _float3(1.5f, 0.5f, 1.5f);
+			m_pColliderCom->AABB_SetDesc(boundingBox);
+		}
+		else
+		{
+			// 현재 콜라이더의 원래 위치와 크기를 가져오기
+			BoundingBox boundingBox = m_pColliderCom->AABB_GetDesc();
+
+			// 현재 위치와 스케일 값을 업데이트된 값으로 설정
+			boundingBox.Center = _float3(0.f, 0.f, 0.f);
+			boundingBox.Extents = _float3(1.5f, 1.5f, 1.5f);
+			m_pColliderCom->AABB_SetDesc(boundingBox);
+		}
+	}
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)

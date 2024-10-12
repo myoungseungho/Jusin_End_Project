@@ -3,7 +3,6 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "Imgui_Manager.h"
 #include "Collider_Manager.h"
 CRange_Effect::CRange_Effect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }

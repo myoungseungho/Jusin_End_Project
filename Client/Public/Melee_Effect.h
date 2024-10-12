@@ -36,15 +36,15 @@ public:
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionExit(class CCollider* other) override;
 
-	void Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
+private:
+	HRESULT Ready_Components();
 
 private:
-	vector<CCollider*> m_vecColliderCom;
+	CCollider* m_pColliderCom = { nullptr };
 
-	_float					m_fRandom = {};
+
 	_float					m_fX = 0.f;
 	_float					m_fY = 0.f;
-	_float2					m_UnitSize = { 1.f,1.f };
 	PLAYERID				m_playerID = {};
 
 public:
