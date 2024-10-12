@@ -149,6 +149,21 @@ _bool CGameInstance::Key_Up(_uint _iKey)
 	return m_pInput_Device->Key_Up(_iKey);
 }
 
+_bool CGameInstance::Mouse_Pressing(_uint _iButton)
+{
+	return m_pInput_Device->Mouse_Pressing(_iButton);
+}
+
+_bool CGameInstance::Mouse_Down(_uint _iButton)
+{
+	return m_pInput_Device->Mouse_Down(_iButton);
+}
+
+_bool CGameInstance::Mouse_Up(_uint _iButton)
+{
+	return m_pInput_Device->Mouse_Up(_iButton);
+}
+
 
 HRESULT CGameInstance::Change_Level(CLevel* pNewLevel)
 {

@@ -28,18 +28,20 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
-	
-protected:
+
+	void Update_Camera(CCamera* camera);
+
+public:
 	_float3					m_vEye{}, m_vAt{};
 	_float					m_fFovy{}, m_fNear{}, m_fFar{};
 
 	_float					m_fViewportWidth{}, m_fViewportHeight{};
 	_float					m_fMouseSensor = {};
-
+	_float					m_fMoveSpeed = {};
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;
-};	
+};
 
 END

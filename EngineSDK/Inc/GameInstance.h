@@ -32,6 +32,9 @@ public: /* For.Input_Device */
 	_bool Key_Pressing(_uint _iKey);
 	_bool Key_Down(_uint _iKey);
 	_bool Key_Up(_uint _iKey);
+	_bool Mouse_Pressing(_uint _iButton);
+	_bool Mouse_Down(_uint _iButton);
+	_bool Mouse_Up(_uint _iButton);
 
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);

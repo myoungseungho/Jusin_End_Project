@@ -55,51 +55,51 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	__super::Priority_Update(fTimeDelta);
+	Update_Camera(m_current_Virtual_Camara);
 }
 
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
-	_float fMoveSpeed = 1.0f;
+	_float fMoveSpeed = m_current_Virtual_Camara->m_fMoveSpeed;
 
 	CTransform* virtual_Transform = static_cast<CTransform*>(m_current_Virtual_Camara->Get_Component(TEXT("Com_Transform")));
 
 	// 오른쪽 버튼이 눌렸는지 확인
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	if (m_pGameInstance->Mouse_Pressing(1))
 	{
 		// Shift 키가 눌렸는지 확인하고, 눌렸다면 이동 속도를 증가
-		if (m_pGameInstance->Get_DIKeyState(DIK_LSHIFT) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_LSHIFT))
 		{
-			fMoveSpeed = 3.0f; // 원하는 속도로 변경
+			fMoveSpeed *= 3.f;
 		}
 
-		if (m_pGameInstance->Get_DIKeyState(DIK_A) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_A))
 		{
 			virtual_Transform->Go_Left(fTimeDelta * fMoveSpeed);
 		}
 
-		if (m_pGameInstance->Get_DIKeyState(DIK_D) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_D))
 		{
 			virtual_Transform->Go_Right(fTimeDelta * fMoveSpeed);
 		}
 
-		if (m_pGameInstance->Get_DIKeyState(DIK_W) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_W))
 		{
 			virtual_Transform->Go_Straight(fTimeDelta * fMoveSpeed);
 		}
 
-		if (m_pGameInstance->Get_DIKeyState(DIK_S) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_S))
 		{
 			virtual_Transform->Go_Backward(fTimeDelta * fMoveSpeed);
 		}
 
-		if (m_pGameInstance->Get_DIKeyState(DIK_Q) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_Q))
 		{
 			virtual_Transform->Go_Down(fTimeDelta * fMoveSpeed);
 		}
 
-		if (m_pGameInstance->Get_DIKeyState(DIK_E) & 0x80)
+		if (m_pGameInstance->Key_Pressing(DIK_E))
 		{
 			virtual_Transform->Go_Up(fTimeDelta * fMoveSpeed);
 		}
@@ -108,12 +108,12 @@ void CMain_Camera::Free_Camera(_float fTimeDelta)
 
 		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
 		{
-			virtual_Transform->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
+			virtual_Transform->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_current_Virtual_Camara->m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 
 		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
 		{
-			virtual_Transform->Turn(virtual_Transform->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
+			virtual_Transform->Turn(virtual_Transform->Get_State(CTransform::STATE_RIGHT), m_current_Virtual_Camara->m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 	}
 }

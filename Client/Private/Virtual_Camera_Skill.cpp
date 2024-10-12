@@ -28,21 +28,21 @@ HRESULT CVirtual_Camera_Skill::Initialize(void* pArg)
 	CAMERA_DESC Desc{};
 
 	//초기 위치
-	m_vEye = _float3(0.f, 10.f, -10.f);
+	Desc.vEye = _float3(0.f, 10.f, -10.f);
 	//초기 각도
-	m_vAt = _float3(0.f, 0.f, 0.f);
+	Desc.vAt = _float3(0.f, 0.f, 0.f);
 	//시야각
-	m_fFovy = XMConvertToRadians(60.0f);
+	Desc.fFovy = XMConvertToRadians(60.0f);
 	//Near
-	m_fNear = 0.1f;
+	Desc.fNear = 0.1f;
 	//Far
-	m_fFar = 1000.f;
-	//카메라 이동속도
-	Desc.fSpeedPerSec = 10.f;
-	//카메라 회전속도
-	Desc.fRotationPerSec = XMConvertToRadians(90.0f);
+	Desc.fFar = 1000.f;
 	//카메라 마우스 민감도
 	Desc.fSensor = 0.1f;
+	//카메라 이동속도
+	Desc.fSpeedPerSec = 1.f;
+	//카메라 회전속도
+	Desc.fRotationPerSec = XMConvertToRadians(90.0f);
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
