@@ -46,21 +46,32 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
     ImGui::Separator();
 
-    if (ImGui::Button("Add MoveTex_Node") && isStart)
+    if (ImGui::Button("Add MoveTex") && isStart)
     {
         MoveTex_Node nodeDesc{};
         nodeDesc.MoveTex_node_id = m_MoveTex_node_id++;
         m_MoveTex_Node_ids.push_back(nodeDesc);
     }
+    ImGui::SameLine();
+    if (ImGui::Button("Add Sprite") && isStart)
+    {
+        Sprite_Node nodeDesc{};
+        nodeDesc.Sprite_node_id = m_Sprite_node_id++;
+        m_Sprite_Node_ids.push_back(nodeDesc);
+    }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
 
     ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+    
+
     Render_MainNode();
 
     Render_TextureNode();
 
     Render_MoveTexNode();
+
+    Render_SpriteNode();
 
     Render_Link();
 
@@ -71,14 +82,14 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     Check_Create_Link(); // 생성할때는 노드에디터가 끝날때 체크
     Check_Delete_Link(); // 삭제하려할땐 전에
 
-    _int link_id;
-    if (ImNodes::IsLinkDestroyed(&link_id))
-    {
-        links.erase(std::remove_if(links.begin(), links.end(),
-            [link_id](const pair<int, int>& link) {
-                return link.first == link_id || link.second == link_id;
-            }), links.end());
-    }
+    //_int link_id;
+    //if (ImNodes::IsLinkDestroyed(&link_id))
+    //{
+    //    links.erase(std::remove_if(links.begin(), links.end(),
+    //        [link_id](const pair<int, int>& link) {
+    //            return link.first == link_id || link.second == link_id;
+    //        }), links.end());
+    //}
     for (auto& iter : m_NodeTextures)
     {
         iter->Late_Update(fTimeDelta);
@@ -237,18 +248,59 @@ void CIMGUI_Shader_Tab::Render_MoveTexNode()
     {
         int node_id = iter.MoveTex_node_id;
         
-        ImNodes::BeginNode(  node_id);
+        ImNodes::BeginNode(node_id);
 
         ImGui::Dummy(ImVec2(1, 1));
 
         ImGui::Text("MoveTex_Node %d", node_id - 1500);
 
-        ImGui::SetNextItemWidth(50);
-        ImGui::InputFloat2("Direction", &iter.fDirection.x);
+        ImGui::SetNextItemWidth(60);
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+        ImGui::InputFloat2("Direction", &iter.fDirection.x, "%.1f");
 
         ImGui::SetNextItemWidth(50);
         ImGui::DragFloat("Speed", &iter.fSpeed, 0.1f, 0.0f, 30.0f, "%.2f");
+
+        ImGui::PopStyleColor();
+        ImNodes::BeginOutputAttribute(node_id + 1, 2);
+        ImGui::Text("Out");
+        ImNodes::EndOutputAttribute();
+
+        ImNodes::EndNode();
+
+        ImVec2 current_pos = ImNodes::GetNodeEditorSpacePos(node_id);
+
+        if (node_positions[node_id].x != current_pos.x ||
+            node_positions[node_id].y != current_pos.y)
+        {
+            node_positions[node_id] = current_pos;
+        }
+    }
+}
+
+void CIMGUI_Shader_Tab::Render_SpriteNode()
+{
+    for (auto& iter : m_Sprite_Node_ids)
+    {
+        int node_id = iter.Sprite_node_id;
+
+        ImNodes::BeginNode(node_id);
+
+        ImGui::Dummy(ImVec2(1, 1));
+
+        ImGui::Text("Sprite_Node %d", node_id - 3000);
+
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
         
+        ImGui::SetNextItemWidth(50);
+        _int a[2] = { iter.fSpriteSizeNumber.x ,iter.fSpriteSizeNumber.y };
+        ImGui::InputInt2("Width & Height", a, ImGuiInputTextFlags_DisplayEmptyRefVal);
+
+        iter.fSpriteSizeNumber = { (_float)a[0],(_float)a[1] };
+        ImGui::SetNextItemWidth(50);
+        ImGui::DragFloat("Speed", &iter.fSpeed, 0.1f, 0.0f, 30.0f, "%.2f");
+
+        ImGui::PopStyleColor();
         ImNodes::BeginOutputAttribute(node_id + 1, 2);
         ImGui::Text("Out");
         ImNodes::EndOutputAttribute();
@@ -431,7 +483,10 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     });
                 if (it != m_NodeTextures.end())
                 {
-                    (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
+                    if (iID > 1500)
+                        (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
+                    else if (iID > 3000)
+                        (*it)->Remove_InputFunction(FUNCTION_SPRITE);
                 }
             }
             // 혹시 메인노드?
@@ -507,7 +562,20 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     });
                 if (it != m_NodeTextures.end())
                 {
-                    (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
+                    if (target_node_id > 1500 && target_node_id < 3000)
+                    {
+                        (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
+                        m_MoveTex_Node_ids.remove_if([&](const MoveTex_Node& node) {
+                            return node.MoveTex_node_id == iID;
+                            });
+                    }
+                    else if (target_node_id > 3000)
+                    {
+                        (*it)->Remove_InputFunction(FUNCTION_SPRITE);
+                        m_Sprite_Node_ids.remove_if([&](const Sprite_Node& node) {
+                            return node.Sprite_node_id == iID;
+                            });
+                    }
                 }
 
             }
@@ -530,9 +598,7 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
             //    }
             //}
 
-            m_MoveTex_Node_ids.remove_if([&](const MoveTex_Node& node) {
-                return node.MoveTex_node_id == iID;
-                });
+            
 
             iID = -999;
             eNodeType = NODE_END;
@@ -555,26 +621,59 @@ void CIMGUI_Shader_Tab::Check_Create_Link()
 
         if (it != links.end())
         {
+
             links.erase(it);
         }
 
 
+        // 함수 노드들
         if (start_attr > 1500)
         {
-            auto it = m_MoveTex_Node_ids.begin();
-            advance(it, (start_attr - 1 - 1501));
-
-            links.push_back(make_pair(start_attr, end_attr));
-            auto Texture_nodeit = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
-                [&](CShader_Texture* texture) {
-                    return texture->m_iID == end_attr / m_iAttributeCount;
-                });
-
-            if (Texture_nodeit != m_NodeTextures.end())
+            if (start_attr < 3000)
             {
-                (*Texture_nodeit)->Push_Shade_MoveTex(&it->fDirection, &it->fSpeed);
+                auto it = m_MoveTex_Node_ids.begin();
+                advance(it, (start_attr - 1 - 1501));
+
+                links.push_back(make_pair(start_attr, end_attr));
+                auto Texture_nodeit = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+                    [&](CShader_Texture* texture) {
+                        return texture->m_iID == end_attr / m_iAttributeCount;
+                    });
+
+                if (Texture_nodeit != m_NodeTextures.end())
+                {
+                    (*Texture_nodeit)->Push_Shade_MoveTex(&it->fDirection, &it->fSpeed);
+                    (*Texture_nodeit)->Remove_InputFunction(FUNCTION_SPRITE);
+                }
             }
-            
+            else if (start_attr > 3000/* 노드 종류 추가되면 조건 더 달아야됨*/)
+            {
+                auto it = m_Sprite_Node_ids.begin();
+                advance(it, (start_attr - 1 - 3001));
+
+                links.push_back(make_pair(start_attr, end_attr));
+                auto Texture_nodeit = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+                    [&](CShader_Texture* texture) {
+                        return texture->m_iID == end_attr / m_iAttributeCount;
+                    });
+
+                if (Texture_nodeit != m_NodeTextures.end())
+                {
+                    (*Texture_nodeit)->Push_Shade_Sprite(&it->fSpriteSizeNumber, &it->fSpeed);
+                    (*Texture_nodeit)->Remove_InputFunction(FUNCTION_TEXMOVE);
+                }
+
+                // m_NodeTextureSRVs는 SRV는 내비두고 삭제
+                auto iter = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
+                    [&](const SRV_Texture& srv) {
+                        return srv.iID == (start_attr - 1 - 3001);
+                    });
+                if (iter != m_NodeTextureSRVs.end())
+                {
+                    m_NodeTextureSRVs.erase(iter);
+                }
+
+            }
         }
         // Main_Node Diffuse에 연결된거임
         else if (end_attr == -2)

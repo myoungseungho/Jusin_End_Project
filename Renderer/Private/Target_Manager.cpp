@@ -39,6 +39,7 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 
 	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
 
+
 	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
 
 	if (nullptr == pMRTList)
@@ -53,6 +54,25 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 
 	Safe_AddRef(pRenderTarget);
 
+	return S_OK;
+}
+
+HRESULT CTarget_Manager::Add_ClientRenderTargetToMRT(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+{
+	if (nullptr != Find_RenderTarget(strTargetTag + L"2"))
+		return S_OK;
+
+	CRenderTarget* pRenderTarget2 = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pRenderTarget2)
+		return E_FAIL;
+
+	m_RenderTargets.emplace(strTargetTag + L"2", pRenderTarget2);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
+
+	pMRTList->push_back(pRenderTarget2);
+
+	Safe_AddRef(pRenderTarget2);
 	return S_OK;
 }
 

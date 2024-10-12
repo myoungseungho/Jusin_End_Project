@@ -54,7 +54,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 	if (pEffectDesc->SRV_Ptr != nullptr)
 		m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
-	
+
 	return S_OK;
 }
 
@@ -142,10 +142,10 @@ HRESULT CEffect_Single::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
-
+	
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
-
+	
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iUnique_Index", &m_iUnique_Index,sizeof(int))))
 		return E_FAIL;
 	

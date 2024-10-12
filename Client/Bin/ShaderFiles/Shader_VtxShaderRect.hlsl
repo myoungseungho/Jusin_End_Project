@@ -15,6 +15,10 @@ bool isMoveTex = false;
 float g_Time = 0.f;
 float g_Speed = 0.05f;
 
+bool g_isSprite;
+float2 g_fSpriteSize;
+float2 g_fSpriteCurPos;
+
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -82,24 +86,38 @@ PS_OUT PS_MAIN(PS_IN In)
 
     if (isBindTexture == true)
     {
-		
         if (isMoveTex == true)
+        {
             In.vTexcoord += normalize(g_vDirection) * g_Speed * g_Time;
+        }
+        else if (g_isSprite == true)
+        {
 
+            float2 texFramePos = g_fSpriteCurPos * g_fSpriteSize;
+
+
+            In.vTexcoord = In.vTexcoord * g_fSpriteSize + texFramePos;
+
+
+           // Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+        }
         Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+       
 	
         if (isDiffuse == true)
         {
             vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
             Out.vColor.rgb = vDiffuse.rgb;
             Out.vColor.a = step(0.01, Out.vColor.a);
-
         }
         
-        if (isAlpha == true) {
+        if (isAlpha == true) 
+		{
 			vector vAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-			Out.vColor.a -= vAlpha.x;
+			Out.vColor.a -= vAlpha.a;
         }
+		
     }
 	else
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
