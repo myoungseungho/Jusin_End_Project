@@ -74,14 +74,11 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 void CShader_Texture::Priority_Update(_float fTimeDelta)
 {
 	m_fTime += fTimeDelta;
-
+	m_Sprite.fAccTime += fTimeDelta;
 	if (m_Sprite.isOn == true)
 	{
-		m_Sprite.fAccTime += fTimeDelta * (*m_Sprite.fSpeed);
-		_float2 textureSize = m_pTextureCom->Get_TextureSize();
-		m_Sprite.fSpriteSize = _float2(textureSize.x / m_Sprite.fSpriteSizeNumber->x, textureSize.y / m_Sprite.fSpriteSizeNumber->y);
-
-		if (m_Sprite.fAccTime > m_Sprite.fSpriteSize.x)
+	
+		if (m_Sprite.fAccTime > (1.0f / (*m_Sprite.fSpeed))) 
 		{
 			m_Sprite.fAccTime = 0.f;
 			m_Sprite.fSpriteCurPos.x++;
@@ -91,14 +88,13 @@ void CShader_Texture::Priority_Update(_float fTimeDelta)
 				m_Sprite.fSpriteCurPos.x = 0.f;
 				m_Sprite.fSpriteCurPos.y++;
 			}
-
-			if (m_Sprite.fSpriteCurPos.y == m_Sprite.fSpriteSizeNumber->y)
-			{
-				m_Sprite.fSpriteCurPos.y = m_Sprite.fSpriteSizeNumber->y - 1;
-				m_Sprite.fSpriteCurPos.x = m_Sprite.fSpriteSizeNumber->x - 1;
-			}
 		}
-		
+
+		if (m_Sprite.fSpriteCurPos.y == m_Sprite.fSpriteSizeNumber->y)
+		{
+			m_Sprite.fSpriteCurPos.y = 0.f;
+			m_Sprite.fSpriteCurPos.x = 0.f;
+		}
 	}
 
 }
@@ -198,10 +194,41 @@ void CShader_Texture::Push_Shade_Sprite(_float2* fSpriteSizeNumber, _float* pSpe
 	m_Sprite.fSpeed = pSpeed;
 
 	_float2 textureSize = m_pTextureCom->Get_TextureSize();
+	m_Sprite.fSpriteSize = _float2(1.0f / m_Sprite.fSpriteSizeNumber->x, 1.0f / m_Sprite.fSpriteSizeNumber->y);
 
-	m_Sprite.fSpriteSize = _float2(textureSize.x / m_Sprite.fSpriteSizeNumber->x, textureSize.y / m_Sprite.fSpriteSizeNumber->y);
 	m_Sprite.fSpriteCurPos = _float2(0.f, 0.f);
 	m_Sprite.fAccTime = { 0.f };
+
+	/*if (m_pRenderInstance->Add_ClientRenderTargetToMRT(m_Key, m_Key, fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f)))
+	{
+		int a = 10;
+	}
+	else
+	{
+		int a = 10;
+	}
+
+	_float2 fSize = m_pTextureCom->Get_TextureSize();
+	_float fDiff;
+
+	if (fSize.x > g_iWinSizeX)
+	{
+		fDiff = 1920 - fSize.x;
+		fSize.x += fDiff;
+		fSize.y += fDiff;
+	}
+
+	if (fSize.y > g_iWinSizeY)
+	{
+		fDiff = 1080 - fSize.y;
+		fSize.x += fDiff;
+		fSize.y += fDiff;
+	}
+
+	m_pTransformCom->Set_Scaled(fSize.x, fSize.y, 1.f);
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(fSize.x * 0.5f - m_fX, m_fY - fSize.y * 0.5f, 0.f, 1.f));*/
 }
 
 HRESULT CShader_Texture::Ready_Components(void* pArg)

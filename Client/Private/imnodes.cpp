@@ -2070,28 +2070,29 @@ void StyleColorsDark(ImNodesStyle* dest)
     {
         dest = &GImNodes->Style;
     }
-
+    //dest->NodePadding
+ 
     dest->Colors[ImNodesCol_NodeBackground] = IM_COL32(50, 50, 50, 255);
     dest->Colors[ImNodesCol_NodeBackgroundHovered] = IM_COL32(75, 75, 75, 255);
     dest->Colors[ImNodesCol_NodeBackgroundSelected] = IM_COL32(75, 75, 75, 255);
-    dest->Colors[ImNodesCol_NodeOutline] = IM_COL32(100, 100, 100, 255);
+    dest->Colors[ImNodesCol_NodeOutline] = IM_COL32(150, 150, 150, 255);
     // title bar colors match ImGui's titlebg colors
     dest->Colors[ImNodesCol_TitleBar] = IM_COL32(41, 74, 122, 255);
     dest->Colors[ImNodesCol_TitleBarHovered] = IM_COL32(66, 150, 250, 255);
     dest->Colors[ImNodesCol_TitleBarSelected] = IM_COL32(66, 150, 250, 255);
     // link colors match ImGui's slider grab colors
-    dest->Colors[ImNodesCol_Link] = IM_COL32(61, 133, 224, 200);
-    dest->Colors[ImNodesCol_LinkHovered] = IM_COL32(66, 150, 250, 255);
-    dest->Colors[ImNodesCol_LinkSelected] = IM_COL32(66, 150, 250, 255);
+    dest->Colors[ImNodesCol_Link] = IM_COL32(102, 102, 230, 210);
+    dest->Colors[ImNodesCol_LinkHovered] = IM_COL32(115, 115, 199, 255);
+    dest->Colors[ImNodesCol_LinkSelected] = IM_COL32(135, 135, 219, 255);
     // pin colors match ImGui's button colors
-    dest->Colors[ImNodesCol_Pin] = IM_COL32(53, 150, 250, 180);
-    dest->Colors[ImNodesCol_PinHovered] = IM_COL32(53, 150, 250, 255);
+    dest->Colors[ImNodesCol_Pin] = IM_COL32(102, 102, 230, 210);
+    dest->Colors[ImNodesCol_PinHovered] = IM_COL32(115, 115, 199, 255);
 
-    dest->Colors[ImNodesCol_BoxSelector] = IM_COL32(61, 133, 224, 30);
-    dest->Colors[ImNodesCol_BoxSelectorOutline] = IM_COL32(61, 133, 224, 150);
+    dest->Colors[ImNodesCol_BoxSelector] = IM_COL32(255, 254, 89, 100);
+    dest->Colors[ImNodesCol_BoxSelectorOutline] = IM_COL32(255, 222, 79, 220);
 
-    dest->Colors[ImNodesCol_GridBackground] = IM_COL32(40, 40, 50, 200);
-    dest->Colors[ImNodesCol_GridLine] = IM_COL32(200, 200, 200, 40);
+    dest->Colors[ImNodesCol_GridBackground] = IM_COL32(150, 150, 165, 200);
+    dest->Colors[ImNodesCol_GridLine] = IM_COL32(255, 255, 255, 80);
     dest->Colors[ImNodesCol_GridLinePrimary] = IM_COL32(240, 240, 240, 60);
 
     // minimap colors

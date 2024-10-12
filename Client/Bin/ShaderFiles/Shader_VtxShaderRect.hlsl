@@ -87,8 +87,23 @@ PS_OUT PS_MAIN(PS_IN In)
     if (isBindTexture == true)
     {
         if (isMoveTex == true)
+        {
             In.vTexcoord += normalize(g_vDirection) * g_Speed * g_Time;
+        }
+        else if (g_isSprite == true)
+        {
+
+            float2 texFramePos = g_fSpriteCurPos * g_fSpriteSize;
+
+
+            In.vTexcoord = In.vTexcoord * g_fSpriteSize + texFramePos;
+
+
+           // Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+        }
         Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+       
 	
         if (isDiffuse == true)
         {
@@ -102,9 +117,6 @@ PS_OUT PS_MAIN(PS_IN In)
 			vector vAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
 			Out.vColor.a -= vAlpha.a;
         }
-		
-		
-		
 		
     }
 	else

@@ -61,7 +61,8 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
-
+    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+    
     Render_MainNode();
 
     Render_TextureNode();
@@ -73,7 +74,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     Render_Link();
 
     ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
-
+    ImGui::PopStyleColor();
     ImNodes::EndNodeEditor(); /* 노드 끝 */
 
     Check_Create_Link(); // 생성할때는 노드에디터가 끝날때 체크
@@ -252,11 +253,14 @@ void CIMGUI_Shader_Tab::Render_MoveTexNode()
         ImGui::Text("MoveTex_Node %d", node_id - 1500);
 
         ImGui::SetNextItemWidth(50);
-        ImGui::InputFloat2("Direction", &iter.fDirection.x);
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+        
+        ImGui::InputFloat2("Direction", &iter.fDirection.x, "%.1f");
 
         ImGui::SetNextItemWidth(50);
         ImGui::DragFloat("Speed", &iter.fSpeed, 0.1f, 0.0f, 30.0f, "%.2f");
-        
+
+        ImGui::PopStyleColor();
         ImNodes::BeginOutputAttribute(node_id + 1, 2);
         ImGui::Text("Out");
         ImNodes::EndOutputAttribute();
@@ -285,12 +289,17 @@ void CIMGUI_Shader_Tab::Render_SpriteNode()
 
         ImGui::Text("Sprite_Node %d", node_id - 3000);
 
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+        
         ImGui::SetNextItemWidth(50);
-        ImGui::InputFloat2("Width & Height", &iter.fSpriteSizeNumber.x);
+        _int a[2] = { iter.fSpriteSizeNumber.x ,iter.fSpriteSizeNumber.y };
+        ImGui::InputInt2("Width & Height", a, ImGuiInputTextFlags_DisplayEmptyRefVal);
 
+        iter.fSpriteSizeNumber = { (_float)a[0],(_float)a[1] };
         ImGui::SetNextItemWidth(50);
         ImGui::DragFloat("Speed", &iter.fSpeed, 0.1f, 0.0f, 30.0f, "%.2f");
 
+        ImGui::PopStyleColor();
         ImNodes::BeginOutputAttribute(node_id + 1, 2);
         ImGui::Text("Out");
         ImNodes::EndOutputAttribute();
@@ -652,6 +661,17 @@ void CIMGUI_Shader_Tab::Check_Create_Link()
                     (*Texture_nodeit)->Push_Shade_Sprite(&it->fSpriteSizeNumber, &it->fSpeed);
                     (*Texture_nodeit)->Remove_InputFunction(FUNCTION_TEXMOVE);
                 }
+
+                // m_NodeTextureSRVs는 SRV는 내비두고 삭제
+                auto iter = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
+                    [&](const SRV_Texture& srv) {
+                        return srv.iID == (start_attr - 1 - 3001);
+                    });
+                if (iter != m_NodeTextureSRVs.end())
+                {
+                    m_NodeTextureSRVs.erase(iter);
+                }
+
             }
         }
         // Main_Node Diffuse에 연결된거임

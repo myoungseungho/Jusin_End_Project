@@ -249,8 +249,8 @@ HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 
 		m_RenderObjects[RG_NONBLEND_TEST].clear();
 
-		if (FAILED(m_pRenderInstance->End_MRT()))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->End_MRT()))
+		//	return E_FAIL;
 
 		return S_OK;
 	}
