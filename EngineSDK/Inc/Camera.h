@@ -32,6 +32,9 @@ public:
 	void Update_Camera(CCamera* camera);
 
 public:
+	virtual const _char* GetTabName() const = 0;
+
+public:
 	_float3					m_vEye{}, m_vAt{};
 	_float					m_fFovy{}, m_fNear{}, m_fFar{};
 

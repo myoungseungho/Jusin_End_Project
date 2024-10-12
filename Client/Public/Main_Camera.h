@@ -28,11 +28,16 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	virtual const _char* GetTabName() const { return "Main_Camara"; };
+
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
-private:
+
+public:
 	list<CCamera*> m_listVirtualCamera;
+
+private:
 	CCamera* m_current_Virtual_Camara = { nullptr };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 

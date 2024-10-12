@@ -16,6 +16,7 @@ private:
 
 public:
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex);
+	class CGameObject* Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex = 0);
 
 
 public:
@@ -42,7 +43,7 @@ private:
 
 private:
 	_uint										m_iNumLevels = { 0 };
-	map<const wstring, class CLayer*>*			m_pLayers = { nullptr };
+	map<const wstring, class CLayer*>* m_pLayers = { nullptr };
 	list<class CGameObject*>					m_DestoryObjects;
 
 private:

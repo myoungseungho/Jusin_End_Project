@@ -40,6 +40,38 @@ HRESULT CLayer::Add_List(list<CGameObject*>* pList)
 	return S_OK;
 }
 
+
+CGameObject* CLayer::Get_GameObject(_uint iIndex)
+{
+	auto iter = m_GameObjects.begin();
+
+	// 유효한 오브젝트만 세기 위한 카운터
+	size_t validIndex = 0;
+
+	while (iter != m_GameObjects.end())
+	{
+		// 현재 오브젝트가 유효하지 않다면 건너뛰기
+		if ((*iter)->m_bDied)
+		{
+			++iter;
+			continue;
+		}
+
+		// 유효한 오브젝트를 찾은 경우
+		if (validIndex == iIndex)
+		{
+			return (*iter);  // 유효한 오브젝트 반환
+		}
+
+		// 유효한 오브젝트일 때만 인덱스를 증가시킴
+		++validIndex;
+		++iter;
+	}
+
+	// 유효한 오브젝트를 찾지 못하면 nullptr 반환
+	return nullptr;
+}
+
 void CLayer::Priority_Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )

@@ -20,6 +20,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	virtual const _char* GetTabName() const { return "Camera_Skill"; };
+
 public:
 	static CVirtual_Camera_Skill* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

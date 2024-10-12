@@ -20,9 +20,9 @@ public:
 	HRESULT Render_Engine();
 	HRESULT Clear_LevelResources(_uint iLevelIndex);
 
-public: /* For.Graphic_Device */		
-	HRESULT Clear_BackBuffer_View(_float4 vClearColor);	
-	HRESULT Clear_DepthStencil_View();	
+public: /* For.Graphic_Device */
+	HRESULT Clear_BackBuffer_View(_float4 vClearColor);
+	HRESULT Clear_DepthStencil_View();
 	HRESULT Present();
 
 public: /* For.Input_Device */
@@ -60,6 +60,7 @@ public: /* For.Object_Manager */
 	HRESULT Get_Prototype_Names(vector<string>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < _wstring, list<CGameObject*>>>*);
+	class CGameObject* Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex = 0);
 
 public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);
@@ -96,20 +97,20 @@ public: /* For.FileManager */
 	void* LoadObjects(const wstring& filename);
 
 private:
-	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
-	class CInput_Device*				m_pInput_Device = { nullptr };
-	class CLevel_Manager*				m_pLevel_Manager = { nullptr };
-	class CTimer_Manager*				m_pTimer_Manager = { nullptr };
-	class CObject_Manager*				m_pObject_Manager = { nullptr };
-	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
-	class CCollider_Manager*			m_pCollider_Manager = { nullptr };
-	class CPipeLine*					m_pPipeLine = { nullptr };
-	class CThreadPool*					m_pThreadPool = { nullptr };
-	class CFile_Manager*				m_pFile_Manager = { nullptr };
-	
+	class CGraphic_Device* m_pGraphic_Device = { nullptr };
+	class CInput_Device* m_pInput_Device = { nullptr };
+	class CLevel_Manager* m_pLevel_Manager = { nullptr };
+	class CTimer_Manager* m_pTimer_Manager = { nullptr };
+	class CObject_Manager* m_pObject_Manager = { nullptr };
+	class CComponent_Manager* m_pComponent_Manager = { nullptr };
+	class CCollider_Manager* m_pCollider_Manager = { nullptr };
+	class CPipeLine* m_pPipeLine = { nullptr };
+	class CThreadPool* m_pThreadPool = { nullptr };
+	class CFile_Manager* m_pFile_Manager = { nullptr };
+
 public:
 	void Release_Engine();
-	
+
 	virtual void Free() override;
 
 };
