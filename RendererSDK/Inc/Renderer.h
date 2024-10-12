@@ -49,6 +49,7 @@ private:
 	class CGameInstance* m_pGameInstance = { nullptr };
 
 	class CShader* m_pShader = { nullptr };
+	class CShader* m_pGlowShader = { nullptr };
 	class CVIBuffer_Rect* m_pVIBuffer = { nullptr };
 	ID3D11DepthStencilView* m_pShadowDSV = { nullptr };
 
