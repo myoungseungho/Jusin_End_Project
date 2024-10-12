@@ -3,10 +3,6 @@
 #include "Client_Defines.h"
 #include "Camera.h"
 
-BEGIN(Engine)
-class CVirtual_Camera;
-END
-
 BEGIN(Client)
 
 class CMain_Camera final : public CCamera
@@ -18,12 +14,6 @@ public:
 		CAMERA_DEFAULT_MODE,
 		CAMERA_MODE_END
 	};
-
-public:
-	typedef struct : public CCamera::CAMERA_DESC
-	{
-		_float		fSensor = {};
-	}CAMERA_FREE_DESC;
 
 private:
 	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -42,9 +32,8 @@ private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
 private:
-	_float				m_fMouseSensor = {};
-	list<class CVirtual_Camera*> m_listVirtualCamera;
-	class CVirtual_Camera* m_current_Virtual_Camara = { nullptr };
+	list<CCamera*> m_listVirtualCamera;
+	CCamera* m_current_Virtual_Camara = { nullptr };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 
 public:

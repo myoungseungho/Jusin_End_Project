@@ -4,13 +4,13 @@
 #include "GameInstance.h"
 
 CVirtual_Camera_Normal::CVirtual_Camera_Normal(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CVirtual_Camera{ pDevice, pContext }
+	: CCamera{ pDevice, pContext }
 {
 
 }
 
 CVirtual_Camera_Normal::CVirtual_Camera_Normal(const CVirtual_Camera_Normal& Prototype)
-	: CVirtual_Camera{ Prototype }
+	: CCamera{ Prototype }
 {
 
 }
@@ -25,28 +25,26 @@ HRESULT CVirtual_Camera_Normal::Initialize_Prototype()
 
 HRESULT CVirtual_Camera_Normal::Initialize(void* pArg)
 {
+	CAMERA_DESC Desc{};
+
 	//초기 위치
-	m_Desc.vEye = _float3(0.f, 10.f, -10.f);
+	m_vEye = _float3(0.f, 10.f, -10.f);
 	//초기 각도
-	m_Desc.vAt = _float3(0.f, 0.f, 0.f);
+	m_vAt = _float3(0.f, 0.f, 0.f);
 	//시야각
-	m_Desc.fFovy = XMConvertToRadians(60.0f);
+	m_fFovy = XMConvertToRadians(60.0f);
 	//Near
-	m_Desc.fNear = 0.1f;
+	m_fNear = 0.1f;
 	//Far
-	m_Desc.fFar = 1000.f;
+	m_fFar = 1000.f;
 	//카메라 이동속도
-	m_Desc.fSpeedPerSec = 10.f;
+	Desc.fSpeedPerSec = 10.f;
 	//카메라 회전속도
-	m_Desc.fRotationPerSec = XMConvertToRadians(90.0f);
+	Desc.fRotationPerSec = XMConvertToRadians(90.0f);
 	//카메라 마우스 민감도
-	m_Desc.fSensor = 0.1f;
+	Desc.fSensor = 0.1f;
 
-	//뷰포트 셋팅
-	m_Desc.fViewportHeight = g_iWinSizeX;
-	m_Desc.fViewportWidth = g_iWinSizeY;
-
-	if (FAILED(__super::Initialize(&m_Desc)))
+	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
 	return S_OK;

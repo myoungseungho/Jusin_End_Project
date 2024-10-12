@@ -14,7 +14,7 @@ public:
 	typedef struct : public CTransform::TRANSFORM_DESC
 	{
 		_float3		vEye, vAt;
-		_float		fFovy, fNear, fFar;
+		_float		fFovy, fNear, fFar, fSensor;
 	}CAMERA_DESC;
 protected:
 	CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -29,13 +29,13 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 	
-	void CameraData_Update(class CVirtual_Camera* virtual_Camera);
-private:
+protected:
 	_float3					m_vEye{}, m_vAt{};
 	_float					m_fFovy{}, m_fNear{}, m_fFar{};
 
 	_float					m_fViewportWidth{}, m_fViewportHeight{};
-	
+	_float					m_fMouseSensor = {};
+
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

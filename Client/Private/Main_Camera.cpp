@@ -2,7 +2,6 @@
 #include "..\Public\Main_Camera.h"
 
 #include "GameInstance.h"
-#include "Virtual_Camera.h"
 
 CMain_Camera::CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCamera{ pDevice, pContext }
@@ -31,11 +30,11 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 	//처음에는 일반 가상 카메라를 메인 카메라로
 	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"));
-	m_listVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Normal));
+	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
 
 	//스킬 버츄얼 카메라
 	CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"));
-	m_listVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
+	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
 
 	//처음엔 일반 가상 카메라를 셋팅
 	m_current_Virtual_Camara = m_listVirtualCamera.front();
@@ -56,8 +55,7 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	//m_ptransform의 행렬과 가상카메라의 정보를 묶어서 던져주기
-	CameraData_Update(m_current_Virtual_Camara);
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CMain_Camera::Free_Camera(_float fTimeDelta)

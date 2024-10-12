@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "Virtual_Camera.h"
+#include "Camera.h"
 
 BEGIN(Client)
 
-class CVirtual_Camera_Normal final : public CVirtual_Camera
+class CVirtual_Camera_Normal final : public CCamera
 {
 protected:
 	CVirtual_Camera_Normal(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
