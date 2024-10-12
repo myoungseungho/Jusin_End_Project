@@ -62,6 +62,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 
     CRenderInstance*     pRenderInstance = CRenderInstance::Get_Instance();
+
     if (nullptr == pRenderInstance)
         return FALSE;
 
