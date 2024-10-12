@@ -74,10 +74,38 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 void CShader_Texture::Priority_Update(_float fTimeDelta)
 {
 	m_fTime += fTimeDelta;
+
+	if (m_Sprite.isOn == true)
+	{
+		m_Sprite.fAccTime += fTimeDelta * (*m_Sprite.fSpeed);
+		_float2 textureSize = m_pTextureCom->Get_TextureSize();
+		m_Sprite.fSpriteSize = _float2(textureSize.x / m_Sprite.fSpriteSizeNumber->x, textureSize.y / m_Sprite.fSpriteSizeNumber->y);
+
+		if (m_Sprite.fAccTime > m_Sprite.fSpriteSize.x)
+		{
+			m_Sprite.fAccTime = 0.f;
+			m_Sprite.fSpriteCurPos.x++;
+
+			if (m_Sprite.fSpriteCurPos.x == m_Sprite.fSpriteSizeNumber->x)
+			{
+				m_Sprite.fSpriteCurPos.x = 0.f;
+				m_Sprite.fSpriteCurPos.y++;
+			}
+
+			if (m_Sprite.fSpriteCurPos.y == m_Sprite.fSpriteSizeNumber->y)
+			{
+				m_Sprite.fSpriteCurPos.y = m_Sprite.fSpriteSizeNumber->y - 1;
+				m_Sprite.fSpriteCurPos.x = m_Sprite.fSpriteSizeNumber->x - 1;
+			}
+		}
+		
+	}
+
 }
 
 void CShader_Texture::Update(_float fTimeDelta)
 {
+
 }
 
 void CShader_Texture::Late_Update(_float fTimeDelta)
@@ -143,6 +171,16 @@ void CShader_Texture::Remove_InputFunction(_int iFunctionType)
 		m_MoveTex.fSpeed = nullptr;
 		m_MoveTex.vDirection = nullptr;
 	}
+	else if (iFunctionType == CIMGUI_Shader_Tab::FUNCTION_SPRITE)
+	{
+		m_Sprite.isOn = false;
+		m_Sprite.fSpriteSizeNumber = nullptr;
+		m_Sprite.fSpeed = nullptr;
+
+		m_Sprite.fSpriteSize	= {0.f,0.f};
+		m_Sprite.fSpriteCurPos	= {0.f,0.f};
+		m_Sprite.fAccTime = 0.f;
+	}
 }
 
 
@@ -151,6 +189,19 @@ void CShader_Texture::Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed)
 	m_MoveTex.isOn = true;
 	m_MoveTex.vDirection = pDirection;
 	m_MoveTex.fSpeed = pSpeed;
+}
+
+void CShader_Texture::Push_Shade_Sprite(_float2* fSpriteSizeNumber, _float* pSpeed)
+{
+	m_Sprite.isOn = true;
+	m_Sprite.fSpriteSizeNumber = fSpriteSizeNumber;
+	m_Sprite.fSpeed = pSpeed;
+
+	_float2 textureSize = m_pTextureCom->Get_TextureSize();
+
+	m_Sprite.fSpriteSize = _float2(textureSize.x / m_Sprite.fSpriteSizeNumber->x, textureSize.y / m_Sprite.fSpriteSizeNumber->y);
+	m_Sprite.fSpriteCurPos = _float2(0.f, 0.f);
+	m_Sprite.fAccTime = { 0.f };
 }
 
 HRESULT CShader_Texture::Ready_Components(void* pArg)
@@ -187,6 +238,9 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fTime, sizeof(float))))
 		return E_FAIL;
 
+	if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
+		return E_FAIL;
+
 	if (m_isTex == true)
 	{
 		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
@@ -195,10 +249,12 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 		if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
 			return E_FAIL;
 
+
 		if (FAILED(m_pShaderCom->Bind_RawValue("isAlpha", &m_isAlpha, sizeof(bool))))
 			return E_FAIL;
 		if(m_isAlpha == true)
 			m_pShaderCom->Bind_ShaderResourceView("g_AlphaTexture", m_InputTextures["Alpha"]);
+
 
 		if (FAILED(m_pShaderCom->Bind_RawValue("isDiffuse", &m_isDiffuse, sizeof(bool))))
 			return E_FAIL;
@@ -206,14 +262,6 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 			m_pShaderCom->Bind_ShaderResourceView("g_DiffuseTexture", m_InputTextures["Diffuse"]);
 		
 	}
-	else
-	{
-		if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
-			return E_FAIL;
-	}
-
-
-
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("isMoveTex", &m_MoveTex.isOn, sizeof(bool))))
 		return E_FAIL;
@@ -227,6 +275,18 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 			return E_FAIL;
 	}
 
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_isSprite", &m_Sprite.isOn, sizeof(bool))))
+		return E_FAIL;
+	
+	if (m_Sprite.isOn == true)
+	{
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteSize", &m_Sprite.fSpriteSize, sizeof(_float2))))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteCurPos", &m_Sprite.fSpriteCurPos, sizeof(_float2))))
+			return E_FAIL;
+	}
 
 	return S_OK;
 }

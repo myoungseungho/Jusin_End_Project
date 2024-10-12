@@ -26,6 +26,15 @@ public:
 		_float2* vDirection = { nullptr };
 		_float* fSpeed = { nullptr };
 	}Shade_MoveTex;
+	typedef struct
+	{
+		_bool isOn = { false };
+		_float2* fSpriteSizeNumber = { nullptr };
+		_float* fSpeed = { nullptr };
+		_float2 fSpriteSize = { 0.f,0.f };
+		_float2 fSpriteCurPos = { 0.f,0.f };
+		_float fAccTime = { 0.f };
+	}Shade_Sprite;
 private:
 	CShader_Texture(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CShader_Texture(const CShader_Texture& Prototype);
@@ -41,9 +50,11 @@ public:
 
 	void Push_InputTextures(ID3D11ShaderResourceView* pSRV, _int LineIndex);
 	void Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed);
+	void Push_Shade_Sprite(_float2* fSpriteSizeNumber, _float* pSpeed);
 	void Remove_InputTextures(_int LineIndex);
 	void Remove_InputFunction(_int iFunctionType);
 	_int m_iID = { 0 };
+	Shade_Sprite m_Sprite;
 	Shade_MoveTex m_MoveTex;
 	CTexture* m_pTextureCom = { nullptr };
 private:

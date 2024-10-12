@@ -15,6 +15,10 @@ bool isMoveTex = false;
 float g_Time = 0.f;
 float g_Speed = 0.05f;
 
+bool g_isSprite;
+float2 g_fSpriteSize;
+float2 g_fSpriteCurPos;
+
 struct VS_IN
 {
 	float3 vPosition : POSITION;
