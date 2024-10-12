@@ -96,7 +96,7 @@ PS_OUT PS_MAIN(PS_IN In)
 	
     vMtrlMask1 += vMtrlMask2;
 
-    Out.vDiffuse = vMtrlMask1 + vMtrlDiffuse * 0.3f;
+    Out.vDiffuse = vMtrlMask1 + vMtrlDiffuse * 0.7f;
 
 	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
 	Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
