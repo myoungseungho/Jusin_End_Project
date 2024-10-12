@@ -230,6 +230,39 @@ PS_OUT PS_COMBO(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_SUB_HP(PS_IN In)
+{
+    PS_OUT Out;
+    
+    float2 fPointA = float2(0.95f + (g_Radio - 1), 0.f);
+    float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
+
+     
+    float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 vMaskOffSet = float2(g_MaskTimer, g_MaskTimer);
+    float2 vMaskTexCoord = (In.vTexcoord + vMaskOffSet);
+     
+    float4 vMaskTex = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
+    
+    Out.vColor = vBaseTex ;
+    
+    float fLineY = (fPointB.y - fPointA.y) / (fPointB.x - fPointA.x) * (In.vTexcoord.x - fPointA.x) + fPointA.y - In.vTexcoord.y;
+     
+    if (fLineY > 0)
+    {
+        Out.vColor.rgb = (1 - vBaseTex) * float4(1.f, 0.831f, 0.f, 0.f);
+        //float3(1.f, 0.831f, 0.f);
+    }
+  
+
+    
+    if (Out.vColor.a <= 0.1f)
+        discard;
+        
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -308,5 +341,21 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_COMBO();
+    }
+
+//5
+
+    pass SubHp
+    {
+
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SUB_HP();
     }
 }

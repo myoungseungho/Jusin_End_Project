@@ -37,6 +37,7 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
+	//m_iSkillPoint  = max(m_pMainPawn->Get_PawnDesc().iSKillPoint, m_pSubPawn->Get_PawnDesc().iSKillPoint);
 	m_iSkillPoint = m_pMainPawn->Get_PawnDesc().iSKillPoint;
 	_uint iSkillCount = m_pMainPawn->Get_PawnDesc().iSKillCount;
 

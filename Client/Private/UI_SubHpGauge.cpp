@@ -44,13 +44,13 @@ void CUI_SubHpGauge::Priority_Update(_float fTimeDelta)
 
 	if(m_pSubPawn != nullptr)
 	{ 
-		m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 100.f;
+		m_fHpRadio = 1 - m_pSubPawn->Get_PawnDesc().iHp / 100.f;
 	}
 }
 
 void CUI_SubHpGauge::Update(_float fTimeDelta)
 {
-	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
+	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 5;
 }
 
 void CUI_SubHpGauge::Late_Update(_float fTimeDelta)

@@ -43,7 +43,8 @@ void CUI_Manager::UsingChangeCharacher(CPawn::PLAYER_SLOT eCurrSlotID)
 		CPawn* pSwapPanw = m_pPawnArray[CPawn::LPLAYER1];
 		m_pPawnArray[CPawn::LPLAYER1] = m_pPawnArray[CPawn::LPLAYER2];
 		m_pPawnArray[CPawn::LPLAYER2] = pSwapPanw;
-		int a = 10;
+
+
 	}
 	else if (eCurrSlotID == CPawn::RPLAYER1 || eCurrSlotID == CPawn::RPLAYER2)
 	{

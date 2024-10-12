@@ -54,6 +54,14 @@ void CPlayer::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_L))
 	{
+		/*
+		
+		객체 4개는 항상 존재 
+		교대 시켜주는 방식으로 구현
+		
+		*/
+
+
 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 	}
 
