@@ -2,6 +2,7 @@
 #include "..\Public\Main_Camera.h"
 
 #include "GameInstance.h"
+#include "Virtual_Camera.h"
 
 CMain_Camera::CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCamera{ pDevice, pContext }
@@ -30,10 +31,35 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	//처음에는 일반 가상 카메라를 메인 카메라로
+	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"));
+	m_listVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Normal));
+
+	//스킬 버츄얼 카메라
+	CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"));
+	m_listVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
+
+	//처음엔 일반 가상 카메라를 셋팅
+	m_current_Virtual_Camara = m_listVirtualCamera.front();
 	return S_OK;
 }
 
 void CMain_Camera::Priority_Update(_float fTimeDelta)
+{
+	switch (m_currentMode)
+	{
+	case Client::CMain_Camera::CAMERA_FREE_MODE:
+		FreeCamera(fTimeDelta);
+		break;
+	case Client::CMain_Camera::CAMERA_DEFAULT_MODE:
+		DefaultCamera(fTimeDelta);
+		break;
+	}
+
+	__super::Priority_Update(fTimeDelta);
+}
+
+void CMain_Camera::FreeCamera(_float fTimeDelta)
 {
 	//기본 이동 속도
 	_float fMoveSpeed = 1.0f;
@@ -90,9 +116,12 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		}
 
 	}
-
-	__super::Priority_Update(fTimeDelta);
 }
+
+void CMain_Camera::DefaultCamera(_float fTimeDelta)
+{
+}
+
 
 void CMain_Camera::Update(_float fTimeDelta)
 {
@@ -106,6 +135,7 @@ HRESULT CMain_Camera::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
+
 
 CMain_Camera* CMain_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
@@ -135,6 +165,9 @@ CGameObject* CMain_Camera::Clone(void* pArg)
 
 void CMain_Camera::Free()
 {
+	for (auto& iter : m_listVirtualCamera)
+		Safe_Release(iter);
+
 	__super::Free();
 
 }

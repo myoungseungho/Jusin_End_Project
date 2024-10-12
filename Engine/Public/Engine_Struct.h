@@ -76,6 +76,8 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
 
+#pragma region 명승호
+
 	//파일 저장 구조체
 	struct FILEDATA
 	{
@@ -143,6 +145,21 @@ namespace Engine
 		vector<ChannelData> channels;
 	};
 #pragma endregion
+
+#pragma region 카메라
+	struct CameraData
+	{
+		_float3					m_vEye{}, m_vAt{};
+		_float					m_fFovy{}, m_fNear{}, m_fFar{};
+
+		_float4x4 WorldMatrix;
+	};
+#pragma endregion
+
+#pragma endregion
+
+
+
 
 
 }
