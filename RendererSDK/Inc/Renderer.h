@@ -77,6 +77,8 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 #endif
 
+	HRESULT Draw_Glow(_float fTimeDelta);
+
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

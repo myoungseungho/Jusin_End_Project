@@ -16,7 +16,8 @@ private:
 
 public:
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex);
-
+	//void Set_GameObjectData(_uint iLevelIndex, const _wstring& strLayerTag, _uint iData);
+	//_uint Get_GameObjectData(_uint iLevelIndex, const _wstring& strLayerTag);
 
 public:
 	HRESULT Initialize(_uint iNumLevels);
