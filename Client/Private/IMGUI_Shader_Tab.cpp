@@ -264,6 +264,11 @@ void CIMGUI_Shader_Tab::Render_MoveTexNode()
     }
 }
 
+void CIMGUI_Shader_Tab::Render_SpriteNode()
+{
+
+}
+
 void CIMGUI_Shader_Tab::Render_Link()
 {
     // 노드들끼리 연결된 모든 애들을 시각화 하기 위한 함수

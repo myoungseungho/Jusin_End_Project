@@ -20,10 +20,10 @@ public:
 
 	typedef struct
 	{
-		_int MoveTex_node_id = { 1500 };
-		_float2 fDirection = { 0.f,0.f };
+		_int Sprite_node_id = { 3000 };
+		_float2 fSpriteSizeNumber = { 0.f,0.f };
 		_float fSpeed = { 0.f };
-	}MoveTex_Node;
+	}Sprite_Node;
 
 	typedef struct
 	{
@@ -45,6 +45,7 @@ public:
 	void Render_MainNode();
 	void Render_TextureNode();
 	void Render_MoveTexNode();
+	void Render_SpriteNode();
 	void Render_Link();
 	void Check_Create_Link();
 	void Check_Delete_Link();
@@ -77,6 +78,9 @@ private: /* ImNodes 와 관련된 멤버 변수 */
 	_int						m_MoveTex_node_id = 1501;		// 임시로 정해준 무브텍스 노드 아이디 시작점 
 	list<MoveTex_Node>			m_MoveTex_Node_ids;				// 무브텍스 노드들
 
+	_int						m_Sprite_node_id = 3001;		// 임시로 정해준 스프라이트 노드 아이디 시작점 
+	list<Sprite_Node>			m_Sprite_Node_ids;				// 스프라이트 노드들
+	
 	unordered_map<int, ImVec2>	node_positions;					// 탭 전환시 노드 위치가 초기화되는데 그걸 막기위해 항상 노드들의 위치를 모두 저장
 
 public:
