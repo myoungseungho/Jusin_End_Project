@@ -169,6 +169,7 @@
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Camera_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
     <ClInclude Include="..\Public\imgui_impl_dx11.h" />
     <ClInclude Include="..\Public\imgui_impl_win32.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="..\Private\Energy_Effect_2p.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Camera_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_demo.cpp" />
     <ClCompile Include="..\Private\imgui_draw.cpp" />
     <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp" />

@@ -91,6 +91,9 @@
     <ClCompile Include="..\Private\Melee_Effect_2p.cpp">
       <Filter>02.GameObjects\Effect_Test_MSH\Melee_Effect</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Camera_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\public\MainApp.h">
@@ -195,6 +198,9 @@
     <ClInclude Include="..\Public\Melee_Effect_2p.h">
       <Filter>02.GameObjects\Effect_Test_MSH\Melee_Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Camera_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -285,6 +291,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Effect_Test_MSH\Melee_Effect">
       <UniqueIdentifier>{239a392c-632f-40c0-b918-1a422c3035d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab">
+      <UniqueIdentifier>{52d63162-d805-4025-a5e3-ccc5ff9b1dfe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

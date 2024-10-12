@@ -13,8 +13,9 @@
 #include "IMGUI_UI_Tab.h"
 #include "IMGUI_Object_Tab.h"
 #include "IMGUI_Level_Tab.h"
+#include "IMGUI_Camera_Tab.h"
 
-_bool bShowImGuiWindows = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
@@ -47,6 +48,7 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	//IMGUI 탭 객체 생성
+	m_vecTabs.push_back(CIMGUI_Camera_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Level_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create(m_pDevice, m_pContext));
@@ -105,11 +107,6 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 	}
 
 	if (bShowImGuiWindows) {  // 이 조건을 통해 모든 ImGui 창의 표시 여부를 제어
-
-		static _bool bShowAnimation = true;
-		static _bool bShowEffect = true;
-		static _bool bShowUI = true;
-		static _bool bShowShader = true;
 
 		ImGui::Begin("Main Tab", &bShowImGuiWindows); // 메인 창 시작
 		if (ImGui::BeginTabBar("DragonBall_Tool")) { // 탭 바 시작
