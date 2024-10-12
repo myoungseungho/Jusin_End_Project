@@ -21,7 +21,7 @@ namespace Engine
 		XMFLOAT3		vRotation;
 		XMFLOAT3		vPosition;
 
-		bool			bIsPlaying;
+		bool			bIsNotPlaying;
 
 		float			fCurTime;
 		float			fDuration;

@@ -36,7 +36,7 @@ public:
 
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
-		//CRenderer::RENDERGROUP eRenderType = CRenderer::RG_NONBLEND_TEST;
+
 	}EFFECT_DESC;
 
 protected:
@@ -53,14 +53,13 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 public:
-	void Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame);
+	void Add_KeyFrame(_int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame);
 	void Set_Effect_Scaled(_float3 ChangeScaled);
 	void Set_Effect_Position(_float3 ChangePosition);
 	void Set_Effect_Rotation(_float3 ChangeRoation);
 	_float3 Get_Effect_Scaled();
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
-
 
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
@@ -70,24 +69,24 @@ protected:
 	CTexture* m_pDiffuseTextureCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };
 
+
+
 	_float		m_fAlpha = { 0.f };
-
 	_float		m_fCurPosition = { 0.f };
-
-	vector<EFFECT_KEYFRAME>	m_EffectKeyFrames;
 
 	_int m_iRenderIndex = { 0 };
 
 public:
-	_int m_iUnique_Index = { -1 };
+	_int				m_iUnique_Index = { -1 };
+	_wstring		m_EffectName;
+	_wstring		m_ModelName;
+	_wstring		m_MaskTextureName;
+	_wstring		m_DiffuseTextureName;
+	_int				m_iNumWidthImage = { 0 };
+	_int				m_iNumHeighthImage = { 0 };
 
-public:
-	_wstring m_EffectName;
-	_wstring m_ModelName;
-	_wstring m_MaskTextureName;
-	_wstring m_DiffuseTextureName;
-	_int			m_iNumWidthImage = { 0 };
-	_int			 m_iNumHeighthImage = { 0 };
+	vector<pair<_int, EFFECT_KEYFRAME>>	m_EffectKeyFrames;
+
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

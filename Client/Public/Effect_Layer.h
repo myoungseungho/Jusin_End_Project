@@ -12,22 +12,20 @@ private:
 	virtual ~CEffect_Layer() = default;
 
 public:
-	HRESULT Add_Effect(class CEffect* pEffect);
-
-public:
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
 	void	Render(_float fTimeDelta);
 
 public:
-	vector<class CEffect*> Get_Effects()
-	{
-		return m_MixtureEffects;
-	}
+	HRESULT Add_Effect(class CEffect* pEffect);
+	vector<class CEffect*> Get_Effects();
+	class CEffect* Find_Effect(const std::wstring& effectName);
+
+public:
 	_float			m_fDuration = { 0.f };
+
 private:
-	// ≥π∞≥ ¿Ã∆Â∆Æ ¡∂«’
 	vector<class CEffect*>			m_MixtureEffects;
 
 public:

@@ -26,7 +26,7 @@ public:
 
 public:
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
-
+	_bool Find_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameNumber);
 
 	HRESULT Delete_Layer(const wstring& strEffectLayerTag);
 
@@ -48,7 +48,7 @@ public:
 	_float3 Get_Effect_Position(_int EffectId);
 	_float3 Get_Effect_Rotation(_int EffectId);
 
-	void Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame);
+	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame);
 
 private:
 	HRESULT Ready_Components();
@@ -58,9 +58,11 @@ public:
 	map<const wstring, class CTexture*>		m_EffectTexture;
 
 	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
-
 	vector<class CEffect*>					m_TestEffect;
+
+public:
 	_int									m_TestEffect_Count = { 0 };
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
