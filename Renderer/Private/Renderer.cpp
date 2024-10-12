@@ -447,6 +447,9 @@ void CRenderer::Free()
 		m_RenderObjects[i].clear();
 	}
 
+	for (auto& pComponent : m_DebugComponent)
+		Safe_Release(pComponent);
+
 	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
