@@ -159,6 +159,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_Glow(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_Blend(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_UI(fTimeDelta)))
@@ -414,6 +416,11 @@ HRESULT CRenderer::Render_NonLight(_float fTimeDelta)
 	m_RenderObjects[RG_NONLIGHT].clear();
 
 	return S_OK;
+}
+
+HRESULT CRenderer::Render_Glow(_float fTimeDelta)
+{
+	return E_NOTIMPL;
 }
 
 HRESULT CRenderer::Render_Blend(_float fTimeDelta)
