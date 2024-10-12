@@ -8,12 +8,17 @@
 #include <locale>
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
+#include <Effect_Layer.h>
 
 const char* Effect[] = { "Each", "Layer", "Layer KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
 
 static int CurrentEffect = 0;
 static int CurrentEffectType = 0;
+
+static bool openKeyFrameWindow = false;
+static std::string selectedEffectName;
+static int selectedFrame = -1;
 
 CIMGUI_Effect_Tab::CIMGUI_Effect_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     :CIMGUI_Tab{ pDevice,pContext }
@@ -66,10 +71,9 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         Render_For_Layer_KeyFrame();
     }
 
-    if (CurrentEffect == 3)
-    {
-        Render_For_Effect_KeyFrame();
-    }
+    if(openKeyFrameWindow)
+      Render_For_Effect_KeyFrame();
+
 }
 
 void CIMGUI_Effect_Tab::Push_Initialize()
@@ -429,6 +433,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
 
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
+    ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("Editing Keyframe for Effect: %s", selectedEffectName.c_str());
+    ImGui::Text("Frame: %d", selectedFrame);
+
     static EFFECT_KEYFRAME newKeyFrame;
 
     ImGui::Text("Effect Keyframe Settings");
@@ -516,7 +524,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SliderFloat("##CurTime Slider", &newKeyFrame.fCurTime, 0.0f, 100.0f); ImGui::SameLine();
     if (ImGui::Button("-##CurTime")) newKeyFrame.fCurTime -= 0.1f; ImGui::SameLine();
     if (ImGui::Button("+##CurTime")) newKeyFrame.fCurTime += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("CurTime", &newKeyFrame.fCurTime); 
+    ImGui::InputFloat("CurTime", &newKeyFrame.fCurTime);
 
     ImGui::Separator();
 
@@ -524,21 +532,39 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Text("Duration");
     if (ImGui::Button("-##Duration")) newKeyFrame.fDuration -= 0.5f; ImGui::SameLine();
     if (ImGui::Button("+##Duration")) newKeyFrame.fDuration += 0.5f; ImGui::SameLine();
-    ImGui::InputFloat("Duration", &newKeyFrame.fDuration); 
-
+    ImGui::InputFloat("Duration", &newKeyFrame.fDuration);
 
     ImGui::Separator();
 
-    // Add Keyframe 버튼
+    // Add Keyframe 버튼과 Save Keyframe, Reset Keyframe 버튼
     if (ImGui::Button("Add Keyframe"))
     {
         m_pEffect_Manager->Add_KeyFrame(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id(), newKeyFrame);
         ImGui::Text("Keyframe added!");
     }
 
+    ImGui::SameLine();
+
+    if (ImGui::Button("Save Keyframe"))
+    {
+        // Save 기능 호출
+        ImGui::Text("Keyframe saved!");
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::Button("Reset Keyframe"))
+    {
+        // 키프레임 초기화
+        newKeyFrame = EFFECT_KEYFRAME();
+        ImGui::Text("Keyframe reset!");
+    }
+
     ImGui::Separator();
 
+    ImGui::End();
 }
+
 
 void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
 {
@@ -581,18 +607,76 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
         // 선택된 레이어의 이펙트 목록 가져오기
         auto effectNames = m_pEffect_Manager->Get_In_Layer_Effect_List(&selectedLayerWString);
 
-        // 이펙트 이름을 UTF-8로 변환하여 ImGui에 표시
+        CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerWString);
+
+        if (pLayer)
+        {
+            static float layerDuration = pLayer->m_fDuration;
+
+            ImGui::Text("Layer Duration:"); // 레이블 텍스트 표시
+            ImGui::SameLine();               // 같은 줄에 배치
+
+            ImGui::InputFloat("##LayerDuration", &layerDuration, 1.0f, 1.0f, "%.1f");
+
+            // layerDuration 값을 pLayer에 반영
+            pLayer->m_fDuration = max(0.0f, layerDuration);
+        }
+       
+
         if (!effectNames.empty())
         {
-            ImGui::Text("Effects in Selected Layer:");
-            for (const auto& effectName : effectNames)
+            const int frameCount = 200; // 총 프레임 수
+            const int buttonSize = 20;  // 버튼 크기
+            const float effectNameWidth = 150.0f; // 이펙트 이름 표시 너비
+
+            ImGui::BeginChild("TimelineRegion", ImVec2(0, 300), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+            // 상단에 프레임 번호 표시
+            ImGui::Text(" "); // 이름과의 간격을 위한 빈 텍스트
+            ImGui::SameLine(effectNameWidth); // 이펙트 이름 너비에 맞춤
+            for (int frame = 0; frame < frameCount; frame++)
             {
-                string effectNameUTF8 = WStringToUTF8(effectName);
-                ImGui::BulletText("%s", effectNameUTF8.c_str());
+                ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 크기와 간격 조정
+                ImGui::Text("%d", frame);
+                ImGui::SameLine();
             }
+            ImGui::NewLine();
+
+            // 각 이펙트의 이름 및 프레임 버튼 표시
+            for (int item = 0; item < effectNames.size(); item++)
+            {
+                // UTF-8 변환 후 이펙트 이름 표시
+                string effectNameUTF8 = WStringToUTF8(effectNames[item]);
+                ImGui::TextWrapped("%s", effectNameUTF8.c_str());
+
+                ImGui::SameLine(effectNameWidth); // 이름 뒤에 충분한 간격을 줌
+
+                // 각 프레임의 버튼 배치
+                for (int frame = 0; frame < frameCount; frame++)
+                {
+                    ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 위치 조정
+                    ImGui::PushID(frame + item * frameCount);
+
+                    // 키프레임을 나타내는 버튼
+                    if (ImGui::Button("##", ImVec2(buttonSize, buttonSize)))
+                    {
+                        // 버튼 클릭 시 선택된 효과 이름과 프레임 번호를 저장
+                        selectedEffectName = effectNameUTF8;
+                        selectedFrame = frame;
+                        openKeyFrameWindow = true;
+                    }
+
+                    ImGui::PopID();
+                    ImGui::SameLine();
+                }
+                ImGui::NewLine(); // 다음 이펙트는 새 줄로 이동
+            }
+
+            ImGui::EndChild();
         }
     }
 }
+
 
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

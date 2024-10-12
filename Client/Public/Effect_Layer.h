@@ -25,11 +25,11 @@ public:
 	{
 		return m_MixtureEffects;
 	}
-
+	_float			m_fDuration = { 0.f };
 private:
 	// ≥π∞≥ ¿Ã∆Â∆Æ ¡∂«’
 	vector<class CEffect*>			m_MixtureEffects;
-	_float			m_fDuration;
+
 public:
 	static CEffect_Layer* Create();
 	virtual void Free() override;

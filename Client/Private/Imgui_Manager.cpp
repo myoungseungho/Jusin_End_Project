@@ -18,6 +18,7 @@
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
+
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
 // IMGUI 창 표시 여부를 제어하는 전역 변수
@@ -102,7 +103,8 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
 	Render_ShaderTabs(fTimeDelta);
-	
+	Render_EffectAnimationTabs(fTimeDelta);
+
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	
@@ -233,6 +235,10 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 		ImGui::End(); // 메인 창 종료
 	}
 
+}
+
+void CImgui_Manager::Render_EffectAnimationTabs(_float fTimeDelta)
+{
 }
 
 void CImgui_Manager::Free()
