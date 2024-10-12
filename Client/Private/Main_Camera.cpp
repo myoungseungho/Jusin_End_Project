@@ -49,17 +49,21 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 	switch (m_currentMode)
 	{
 	case Client::CMain_Camera::CAMERA_FREE_MODE:
-		FreeCamera(fTimeDelta);
+		Free_Camera(fTimeDelta);
 		break;
 	case Client::CMain_Camera::CAMERA_DEFAULT_MODE:
-		DefaultCamera(fTimeDelta);
+		Default_Camera(fTimeDelta);
 		break;
 	}
 
-	__super::Priority_Update(fTimeDelta);
+	//m_ptransform의 행렬과 가상카메라의 정보를 묶어서 던져주기
+
+
+
+	CameraData_Update();
 }
 
-void CMain_Camera::FreeCamera(_float fTimeDelta)
+void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
 	_float fMoveSpeed = 1.0f;
@@ -114,11 +118,10 @@ void CMain_Camera::FreeCamera(_float fTimeDelta)
 		{
 			m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
 		}
-
 	}
 }
 
-void CMain_Camera::DefaultCamera(_float fTimeDelta)
+void CMain_Camera::Default_Camera(_float fTimeDelta)
 {
 }
 

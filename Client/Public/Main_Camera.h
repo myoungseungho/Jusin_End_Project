@@ -35,8 +35,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	void FreeCamera(_float fTimeDelta);
-	void DefaultCamera(_float fTimeDelta);
+	void Free_Camera(_float fTimeDelta);
+	void Default_Camera(_float fTimeDelta);
 private:
 	_float				m_fMouseSensor = {};
 	list<class CVirtual_Camera*> m_listVirtualCamera;

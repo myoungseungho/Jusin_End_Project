@@ -28,12 +28,33 @@ HRESULT CVirtual_Camera_Normal::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	//초기 위치
+	m_CameraData.vEye = _float3(0.f, 10.f, -10.f);
+	//초기 각도
+	m_CameraData.vAt = _float3(0.f, 0.f, 0.f);
+	//시야각
+	m_CameraData.fFovy = XMConvertToRadians(60.0f);
+	//Near
+	m_CameraData.fNear = 0.1f;
+	//Far
+	m_CameraData.fFar = 1000.f;
+	//카메라 이동속도
+	m_CameraData.fSpeedPerSec = 10.f;
+	//카메라 회전속도
+	m_CameraData.fRotationPerSec = XMConvertToRadians(90.0f);
+	//카메라 마우스 민감도
+	m_CameraData.fSensor = 0.1f;
+
+	//뷰포트 셋팅
+	m_CameraData.fViewportHeight = g_iWinSizeX;
+	m_CameraData.fViewportWidth = g_iWinSizeY;
+
 	return S_OK;
 }
 
 void CVirtual_Camera_Normal::Priority_Update(_float fTimeDelta)
 {
-	
+
 }
 
 void CVirtual_Camera_Normal::Update(_float fTimeDelta)
