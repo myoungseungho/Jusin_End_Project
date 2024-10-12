@@ -19,7 +19,7 @@ BEGIN(Renderer)
 class CRenderer final : public CBase
 {
 public:
-	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_SHADOWOBJ, RG_NONLIGHT, RG_BLEND, RG_UI, RG_NODE, RG_END };
+	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_SHADOWOBJ, RG_NONLIGHT, RG_GLOW, RG_BLEND, RG_UI, RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -67,6 +67,7 @@ private:
 	HRESULT Render_Lights(_float fTimeDelta);
 	HRESULT Render_Deferred(_float fTimeDelta);
 	HRESULT Render_NonLight(_float fTimeDelta);
+	HRESULT Render_Glow(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);

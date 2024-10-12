@@ -81,6 +81,11 @@ HRESULT CRenderInstance::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencil
 	return m_pTarget_Manager->Begin_MRT(strMRTTag, pDSV);
 }
 
+HRESULT CRenderInstance::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
+{
+	return m_pTarget_Manager->Begin_MRT_DoNotClear(strMRTTag, pDSV);
+}
+
 HRESULT CRenderInstance::End_MRT()
 {
 	return m_pTarget_Manager->End_MRT();
