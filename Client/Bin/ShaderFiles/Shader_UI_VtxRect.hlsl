@@ -269,10 +269,11 @@ PS_OUT PS_StartCircle(PS_IN In)
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
 
+    Out.vColor.a *= (Out.vColor.rgb);
+    
     if (Out.vColor.a <= 0.1f)
         discard;
     
-    Out.vColor.a -= 0.25f;
     //0.5f
     return Out;
 }

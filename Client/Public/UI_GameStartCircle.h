@@ -1,17 +1,21 @@
 #pragma once
 
-#include "UI_BaseAttBuf.h"
+#include "UI_GameStart.h"
 #include <queue>
 
 BEGIN(Client)
 
-class CUI_GameStartCircle final :public CUIObject
+class CUI_GameStartCircle final :public CUI_GameStart
 {
 public:
 	typedef struct
 	{
 		_uint iPos = {};
 		_float m_fSpeed = {};
+
+		_bool bStop = {FALSE};
+		_float fStopDuration = {0.f};
+		
 	}ANIM_INFO;
 private:
 	CUI_GameStartCircle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -31,20 +35,9 @@ private:
 
 private:
 	void Action_Rotaion(_float fTimeDelta);
-	void Action_ScaleAnim(_float fTimeDelta);
-
-	void Init_Position();
 
 private:
-	_bool m_bFinishCheck = { FALSE };
-	_bool m_isNegative = { FALSE };
-
 	_uint m_iTextureIndex = { 0 };
-	_uint m_iFinishPos = {};
-
-	_float m_fScaleAnimTimer = { 0.f };
-
-	queue<ANIM_INFO> m_QueueAnimPos = { };
 
 
 public:

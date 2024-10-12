@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_GameStartCircle::CUI_GameStartCircle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUIObject{ pDevice ,pContext }
+	:CUI_GameStart{ pDevice ,pContext }
 {
 }
 
 CUI_GameStartCircle::CUI_GameStartCircle(const CUI_GameStartCircle& Prototype)
-	:CUIObject{ Prototype }
+	:CUI_GameStart{ Prototype }
 {
 }
 
@@ -35,10 +35,13 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 
 	m_fSizeX = 800.f;
 	m_fSizeY = 800.f;
-
-	m_iFinishPos = 800.f;
-	Init_Position();
 	
+	Set_AnimPosition(500 , 10.f);
+	Set_AnimPosition(400, 50.f, TRUE , 5.f);
+	Set_AnimPosition(500, 80.f);
+	Set_AnimPosition(600, 80.f);
+	Set_AnimPosition(1000, 150.f, TRUE , 3.f);
+
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
 
 	return S_OK;
@@ -105,54 +108,6 @@ void CUI_GameStartCircle::Action_Rotaion(_float fTimeDelta)
 		m_iTextureIndex % 2 == 0 ? iOffsetRotation = 1 : iOffsetRotation = -1;
 		m_pTransformCom->Turn({ 0,0,iOffsetRotation }, fTimeDelta);
 	}
-}
-
-void CUI_GameStartCircle::Action_ScaleAnim(_float fTimeDelta)
-{
-	if (m_QueueAnimPos.empty() == FALSE)
-	{
-		if (m_QueueAnimPos.front().iPos > m_fSizeX)
-		{
-			m_fScaleAnimTimer += fTimeDelta;
-			m_isNegative = TRUE;
-
-			m_fSizeX += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-			m_fSizeY += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-
-		}
-		else
-		{
-			m_fScaleAnimTimer -= fTimeDelta;
-			m_isNegative = FALSE;
-
-			m_fSizeX += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-			m_fSizeY += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-		}
-
-		if (m_isNegative == TRUE && m_QueueAnimPos.front().iPos <= m_fSizeX)
-		{
-			m_QueueAnimPos.pop();
-			m_fScaleAnimTimer = 0.f;
-		}
-		else if (m_isNegative == FALSE && m_QueueAnimPos.front().iPos >= m_fSizeX)
-		{
-			m_QueueAnimPos.pop();
-			m_fScaleAnimTimer = 0.f;
-		}
-	}
-	else
-		m_bDead = true;
-
-
-	m_pTransformCom->Set_Scaled(m_fSizeX , m_fSizeY, 1.f);
-}
-
-void CUI_GameStartCircle::Init_Position()
-{
-	m_QueueAnimPos.push({ 500 ,10.f});
-	m_QueueAnimPos.push({ 550 ,50.f });
-	m_QueueAnimPos.push({ 500 ,50.f });
-	m_QueueAnimPos.push({ 900 ,10.f });
 }
 
 CUI_GameStartCircle* CUI_GameStartCircle::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

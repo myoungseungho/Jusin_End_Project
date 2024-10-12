@@ -321,6 +321,9 @@
     <ClInclude Include="..\public\UI_GameStartCircle.h">
       <Filter>02.GameObjects\UI\GameStart\Circle</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_GameStart.h">
+      <Filter>02.GameObjects\UI\GameStart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -469,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_GameStartCircle.cpp">
       <Filter>02.GameObjects\UI\GameStart\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_GameStart.cpp">
+      <Filter>02.GameObjects\UI\GameStart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
