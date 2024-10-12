@@ -6,8 +6,12 @@
 #include "Camera_Free.h"
 #include "Monster.h"
 #include "Player.h"
-#include "Effect.h"
-#include "Effect_2p.h"
+#include "Energy_Effect.h"
+#include "Energy_Effect_2p.h"
+#include "Melee_Effect.h"
+#include "Melee_Effect_2p.h"
+#include "Range_Effect.h"
+#include "Range_Effect_2p.h"
 
 //#include "Monster.h"
 //#include "Terrain.h"
@@ -130,12 +134,28 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CCamera_Free::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect"),
-		CEffect::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Energy_Effect"),
+		CEnergy_Effect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_2p"),
-		CEffect_2p::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Energy_Effect_2p"),
+		CEnergy_Effect_2p::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Range_Effect"),
+		CRange_Effect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Range_Effect_2p"),
+		CRange_Effect_2p::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Melee_Effect"),
+		CMelee_Effect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Melee_Effect_2p"),
+		CMelee_Effect_2p::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));

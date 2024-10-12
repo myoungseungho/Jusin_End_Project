@@ -1,68 +1,67 @@
 ﻿#include "stdafx.h"
-#include "..\Public\Effect_2p.h"
+#include "..\Public\Energy_Effect.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
 #include "Collider_Manager.h"
-CEffect_2p::CEffect_2p(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CEnergy_Effect::CEnergy_Effect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CEffect_2p::CEffect_2p(const CEffect_2p& Prototype)
+CEnergy_Effect::CEnergy_Effect(const CEnergy_Effect& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CEffect_2p::Initialize_Prototype()
+HRESULT CEnergy_Effect::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CEffect_2p::Initialize(void* pArg)
+HRESULT CEnergy_Effect::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	m_playerID = CEffect_2p::PLAYERID::PLAYER_2P;
+	m_playerID = CEnergy_Effect::PLAYERID::PLAYER_1P;
 
 	return S_OK;
 }
 
-void CEffect_2p::Priority_Update(_float fTimeDelta)
+void CEnergy_Effect::Priority_Update(_float fTimeDelta)
 {
 
 }
 
-void CEffect_2p::Update(_float fTimeDelta)
+void CEnergy_Effect::Update(_float fTimeDelta)
 {
 	for (auto& iter : m_vecColliderCom)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
 
-	_float speed = 0.1f;
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
-		m_fY += speed;
+	_float speed = 1.f;
+	m_fY += speed;
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		m_fY -= speed;
 
-	m_fX -= speed;
+	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+		m_fX -= speed;
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
-		m_fX += speed;
+	m_fX += speed;
 
 	CCollider_Manager::COLLIDERGROUP group;
 
 	switch (m_playerID)
 	{
-	case CEffect_2p::PLAYERID::PLAYER_1P:
-		group = CCollider_Manager::CG_1P_Energy_SKILL;
+	case CEnergy_Effect::PLAYERID::PLAYER_1P:
+		group = CCollider_Manager::CG_1P_Energy_Attack;
 		break;
-	case CEffect_2p::PLAYERID::PLAYER_2P:
-		group = CCollider_Manager::CG_2P_Energy_SKILL;
+	case CEnergy_Effect::PLAYERID::PLAYER_2P:
+		group = CCollider_Manager::CG_2P_Energy_Attack;
 		break;
 	}
 
@@ -70,7 +69,7 @@ void CEffect_2p::Update(_float fTimeDelta)
 	Make_Collider(group, DefaultFloat2, _float2(DefaultFloat2.x + m_fX, DefaultFloat2.y + m_fY));
 }
 
-void CEffect_2p::Late_Update(_float fTimeDelta)
+void CEnergy_Effect::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
@@ -78,20 +77,33 @@ void CEffect_2p::Late_Update(_float fTimeDelta)
 		m_pRenderInstance->Add_DebugComponent(iter);
 }
 
-HRESULT CEffect_2p::Render(_float fTimeDelta)
+HRESULT CEnergy_Effect::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
 
-void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+void CEnergy_Effect::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	switch (m_playerID)
 	{
 		//이펙트가 1P_Skill이라면
-	case CEffect_2p::PLAYERID::PLAYER_1P:
-		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_Energy_SKILL)
+	case CEnergy_Effect::PLAYERID::PLAYER_1P:
+		if (other->m_ColliderGroup == CCollider_Manager::CG_2P_Energy_Attack)
 		{
+			//기존 콜라이더 삭제
+			for (auto& iter : m_vecColliderCom)
+				Safe_Release(iter);
+
+			//콜라이더 컴포넌트 전부 삭제
+			Clear_Collider_Component();
+
+			//벡터 초기화
+			m_vecColliderCom.clear();
+
+			m_fX = 0.f;
+			m_fY = 0.f;
 		}
+
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_2P_BODY)
 		{
 			//기존 콜라이더 삭제
@@ -106,56 +118,33 @@ void CEffect_2p::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			m_fX = 0.f;
 			m_fY = 0.f;
+
 		}
 		break;
 
 		//이펙트가 2P_Skill이라면
-	case CEffect_2p::PLAYERID::PLAYER_2P:
-		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_Energy_SKILL)
+	case CEnergy_Effect::PLAYERID::PLAYER_2P:
+		if (other->m_ColliderGroup == CCollider_Manager::CG_1P_Energy_Attack)
 		{
-			//기존 콜라이더 삭제
-			for (auto& iter : m_vecColliderCom)
-				Safe_Release(iter);
 
-			//콜라이더 컴포넌트 전부 삭제
-			Clear_Collider_Component();
-
-			//벡터 초기화
-			m_vecColliderCom.clear();
-
-			m_fX = 0.f;
-			m_fY = 0.f;
 		}
 		else if (other->m_ColliderGroup == CCollider_Manager::CG_1P_BODY)
 		{
-			//기존 콜라이더 삭제
-			for (auto& iter : m_vecColliderCom)
-				Safe_Release(iter);
 
-			//콜라이더 컴포넌트 전부 삭제
-			Clear_Collider_Component();
-
-			//벡터 초기화
-			m_vecColliderCom.clear();
-
-			m_fX = 0.f;
-			m_fY = 0.f;
 		}
 		break;
 	}
 }
 
-void CEffect_2p::OnCollisionStay(CCollider* other, _float fTimeDelta)
+void CEnergy_Effect::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-	int a = 3;
 }
 
-void CEffect_2p::OnCollisionExit(CCollider* other)
+void CEnergy_Effect::OnCollisionExit(CCollider* other)
 {
-	int a = 3;
 }
 
-void CEffect_2p::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
+void CEnergy_Effect::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
 {
 	// 1. 시작점과 끝점 사이의 거리 및 방향 계산
 	_float dx = DestPos.x - SourcePos.x;
@@ -209,33 +198,33 @@ void CEffect_2p::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, 
 }
 
 
-CEffect_2p* CEffect_2p::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CEnergy_Effect* CEnergy_Effect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CEffect_2p* pInstance = new CEffect_2p(pDevice, pContext);
+	CEnergy_Effect* pInstance = new CEnergy_Effect(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CEffect_2p"));
+		MSG_BOX(TEXT("Failed to Created : CEnergy_Effect"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CEffect_2p::Clone(void* pArg)
+CGameObject* CEnergy_Effect::Clone(void* pArg)
 {
-	CEffect_2p* pInstance = new CEffect_2p(*this);
+	CEnergy_Effect* pInstance = new CEnergy_Effect(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CEffect_2p"));
+		MSG_BOX(TEXT("Failed to Cloned : CEnergy_Effect"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CEffect_2p::Free()
+void CEnergy_Effect::Free()
 {
 	__super::Free();
 

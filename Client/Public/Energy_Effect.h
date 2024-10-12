@@ -10,7 +10,7 @@ END
 
 BEGIN(Client)
 
-class CEffect_2p final : public CGameObject
+class CEnergy_Effect final : public CGameObject
 {
 public:
 	enum class PLAYERID
@@ -19,9 +19,9 @@ public:
 	};
 
 private:
-	CEffect_2p(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect_2p(const CEffect_2p& Prototype);
-	virtual ~CEffect_2p() = default;
+	CEnergy_Effect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CEnergy_Effect(const CEnergy_Effect& Prototype);
+	virtual ~CEnergy_Effect() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -48,7 +48,7 @@ private:
 	PLAYERID				m_playerID = {};
 
 public:
-	static CEffect_2p* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CEnergy_Effect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };
