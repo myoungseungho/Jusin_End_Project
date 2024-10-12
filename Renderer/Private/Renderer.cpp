@@ -389,33 +389,40 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 #ifdef _DEBUG
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
-	for (auto& pComponent : m_DebugComponent)
+	// Debug Component 관련 처리
+	if (m_bShow_Debug_Component)
 	{
-		pComponent->Render(fTimeDelta);
-		Safe_Release(pComponent);
+		for (auto& pComponent : m_DebugComponent)
+		{
+			pComponent->Render(fTimeDelta);
+			Safe_Release(pComponent);
+		}
+
+		m_DebugComponent.clear();
 	}
 
-	m_DebugComponent.clear();
+	// Render Target 관련 처리
+	if (m_bShow_RenderTarget)
+	{
+		// Matrix 바인딩
+		if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
 
-	if (!m_bShow_RenderTarget)
-		return S_OK;
-
-	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
+		// Render Target 디버그 렌더링
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+	}
 
 	return S_OK;
 }
 #endif
+
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CRenderer* pInstance = new CRenderer(pDevice, pContext);

@@ -17,6 +17,7 @@
 
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -99,10 +100,18 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 
 		if (ImGui::BeginMenu("Render_Target")) {
 			if (ImGui::MenuItem("Render_Target", NULL, &bShowImGuiRenderTarget)) {
-				 m_pRenderInstance->SetActive_RenderTarget(bShowImGuiRenderTarget);
+				m_pRenderInstance->SetActive_RenderTarget(bShowImGuiRenderTarget);
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("Debug_Component")) {
+			if (ImGui::MenuItem("Debug_Component", NULL, &bShowImGuiDebug_Component)) {
+				m_pRenderInstance->SetActive_Debug_Component(bShowImGuiDebug_Component);
+			}
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 

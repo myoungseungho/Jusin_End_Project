@@ -31,6 +31,8 @@ public:
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	HRESULT Draw(_float fTimeDelta);
 	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
+	void SetActive_Debug_Component(_bool isOn) { m_bShow_Debug_Component = isOn; };
+
 private:
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
@@ -50,6 +52,8 @@ private:
 	_float4x4					m_ProjMatrix = {};
 
 	_bool m_bShow_RenderTarget = { false };
+	_bool m_bShow_Debug_Component = { false };
+
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
