@@ -44,6 +44,9 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 	m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
 	m_iRenderIndex = pEffectDesc->iRenderIndex;
 
+	m_iNumWidthImage = pEffectDesc->iNumWidthImage;
+	m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
+
 	m_iUnique_Index = pEffectDesc->iUnique_Index;
 
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName,&m_DiffuseTextureName)))

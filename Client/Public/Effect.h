@@ -34,6 +34,8 @@ public:
 
 		_int iUnique_Index = -1;
 
+		_int iNumWidthImage = { 1 };
+		_int iNumHeightImage = { 1 };
 		//CRenderer::RENDERGROUP eRenderType = CRenderer::RG_NONBLEND_TEST;
 	}EFFECT_DESC;
 
@@ -78,13 +80,14 @@ protected:
 
 public:
 	_int m_iUnique_Index = { -1 };
-	//class CRenderer::RENDERGROUP m_eRenderType = CRenderer::RG_NONBLEND_TEST;
+
 public:
 	_wstring m_EffectName;
 	_wstring m_ModelName;
 	_wstring m_MaskTextureName;
 	_wstring m_DiffuseTextureName;
-
+	_int			m_iNumWidthImage = { 0 };
+	_int			 m_iNumHeighthImage = { 0 };
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();
