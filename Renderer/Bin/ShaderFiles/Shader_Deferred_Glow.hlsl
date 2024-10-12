@@ -125,7 +125,7 @@ PS_OUT PS_MAIN_BLUR_Y(PS_IN In)
 
     return Out;
 }
-
+texture2D g_BlurTexture;
 PS_OUT PS_MAIN_RESULT(PS_IN In)
 {
 
@@ -133,10 +133,10 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
 
     vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
 
-   // vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
 	/*vector		vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
 
-    Out.vColor = vResult; // + vBlur /*+ vEffect*/;
+    Out.vColor = vResult + vBlur /*+ vEffect*/;
 
     return Out;
 

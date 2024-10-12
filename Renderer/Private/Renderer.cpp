@@ -586,7 +586,7 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
 
-	m_pGlowShader->Begin(7);
+	m_pGlowShader->Begin(2);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
