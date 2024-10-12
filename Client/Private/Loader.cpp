@@ -3,7 +3,7 @@
 
 #include "GameInstance.h"
 #include "IMGUI_Shader_Tab.h"
-#include "Camera_Free.h"
+#include "Main_Camera.h"
 #include "Monster.h"
 #include "Player.h"
 #include "Energy_Effect.h"
@@ -130,8 +130,8 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CMonster::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
-		CCamera_Free::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera"),
+		CMain_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Energy_Effect"),

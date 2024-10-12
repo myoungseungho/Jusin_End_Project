@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "..\Public\Camera_Free.h"
+#include "..\Public\Main_Camera.h"
 
 #include "GameInstance.h"
 
-CCamera_Free::CCamera_Free(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CMain_Camera::CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCamera{ pDevice, pContext }
 {
 
 }
 
-CCamera_Free::CCamera_Free(const CCamera_Free& Prototype)
+CMain_Camera::CMain_Camera(const CMain_Camera& Prototype)
 	: CCamera{ Prototype }
 {
 
 }
 
-HRESULT CCamera_Free::Initialize_Prototype()
+HRESULT CMain_Camera::Initialize_Prototype()
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
@@ -23,9 +23,9 @@ HRESULT CCamera_Free::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CCamera_Free::Initialize(void* pArg)
+HRESULT CMain_Camera::Initialize(void* pArg)
 {
-	m_fMouseSensor = static_cast<CCamera_Free::CAMERA_FREE_DESC*>(pArg)->fSensor;
+	m_fMouseSensor = static_cast<CMain_Camera::CAMERA_FREE_DESC*>(pArg)->fSensor;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -33,7 +33,7 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CCamera_Free::Priority_Update(_float fTimeDelta)
+void CMain_Camera::Priority_Update(_float fTimeDelta)
 {
 	//기본 이동 속도
 	_float fMoveSpeed = 1.0f;
@@ -94,46 +94,46 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 	__super::Priority_Update(fTimeDelta);
 }
 
-void CCamera_Free::Update(_float fTimeDelta)
+void CMain_Camera::Update(_float fTimeDelta)
 {
 }
 
-void CCamera_Free::Late_Update(_float fTimeDelta)
+void CMain_Camera::Late_Update(_float fTimeDelta)
 {
 }
 
-HRESULT CCamera_Free::Render(_float fTimeDelta)
+HRESULT CMain_Camera::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
 
-CCamera_Free* CCamera_Free::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CMain_Camera* CMain_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CCamera_Free* pInstance = new CCamera_Free(pDevice, pContext);
+	CMain_Camera* pInstance = new CMain_Camera(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CCamera_Free"));
+		MSG_BOX(TEXT("Failed to Created : CMain_Camera"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CCamera_Free::Clone(void* pArg)
+CGameObject* CMain_Camera::Clone(void* pArg)
 {
-	CCamera_Free* pInstance = new CCamera_Free(*this);
+	CMain_Camera* pInstance = new CMain_Camera(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CCamera_Free"));
+		MSG_BOX(TEXT("Failed to Cloned : CMain_Camera"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CCamera_Free::Free()
+void CMain_Camera::Free()
 {
 	__super::Free();
 

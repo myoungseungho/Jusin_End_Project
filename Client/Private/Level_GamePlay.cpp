@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Public\Level_GamePlay.h"
 
-#include "Camera_Free.h"
+#include "Main_Camera.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
 //#include "LandObject.h"
@@ -17,7 +17,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 
 	//카메라 생성
-	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
+	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Main_Camera"))))
 		return E_FAIL;
 
 	//Light 준비
@@ -47,7 +47,7 @@ HRESULT CLevel_GamePlay::Render()
 
 HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 {
-	CCamera_Free::CAMERA_FREE_DESC			CameraDesc{};
+	CMain_Camera::CAMERA_FREE_DESC			CameraDesc{};
 
 	CameraDesc.vEye = _float3(0.f, 10.f, -10.f);
 	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
@@ -58,7 +58,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
 	CameraDesc.fSensor = 0.1f;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Camera_Free"), strLayerTag, &CameraDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Main_Camera"), strLayerTag, &CameraDesc)))
 		return E_FAIL;
 
 	return S_OK;

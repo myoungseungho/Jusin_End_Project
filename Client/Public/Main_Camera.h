@@ -5,7 +5,7 @@
 
 BEGIN(Client)
 
-class CCamera_Free final : public CCamera
+class CMain_Camera final : public CCamera
 {
 public:
 	typedef struct : public CCamera::CAMERA_DESC
@@ -14,9 +14,9 @@ public:
 	}CAMERA_FREE_DESC;
 
 private:
-	CCamera_Free(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CCamera_Free(const CCamera_Free& Prototype);
-	virtual ~CCamera_Free() = default;
+	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CMain_Camera(const CMain_Camera& Prototype);
+	virtual ~CMain_Camera() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -30,7 +30,7 @@ private:
 	_float				m_fMouseSensor = {};
 
 public:
-	static CCamera_Free* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

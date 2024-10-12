@@ -19,8 +19,8 @@
     <ClCompile Include="..\Private\Player.cpp">
       <Filter>02.GameObjects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Camera_Free.cpp">
-      <Filter>02.GameObjects\Camera\Free</Filter>
+    <ClCompile Include="..\Private\Main_Camera.cpp">
+      <Filter>02.GameObjects\Camera\Main</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui.cpp">
       <Filter>97.IMGUI\Plugin</Filter>
@@ -114,8 +114,8 @@
     <ClInclude Include="..\Public\Player.h">
       <Filter>02.GameObjects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Camera_Free.h">
-      <Filter>02.GameObjects\Camera\Free</Filter>
+    <ClInclude Include="..\Public\Main_Camera.h">
+      <Filter>02.GameObjects\Camera\Main</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imgui.h">
       <Filter>97.IMGUI\Plugin</Filter>
@@ -253,9 +253,6 @@
     <Filter Include="02.GameObjects\Player">
       <UniqueIdentifier>{5a24aa57-645e-4848-8965-d49cd2e37264}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Camera\Free">
-      <UniqueIdentifier>{d3383e26-b7b4-4839-9771-88d9f7315c5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.IMGUI\Plugin">
       <UniqueIdentifier>{3effce0e-87eb-4f3d-a5dd-8e2fe8db398b}</UniqueIdentifier>
     </Filter>
@@ -294,6 +291,12 @@
     </Filter>
     <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab">
       <UniqueIdentifier>{52d63162-d805-4025-a5e3-ccc5ff9b1dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Virtual">
+      <UniqueIdentifier>{9a6d198e-6653-4add-b94e-4b89399788bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Main">
+      <UniqueIdentifier>{d3383e26-b7b4-4839-9771-88d9f7315c5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
