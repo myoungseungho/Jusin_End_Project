@@ -20,6 +20,12 @@ public:
 	void Late_Update(_float fTimeDelta);
 	void	Render(_float fTimeDelta);
 
+public:
+	vector<class CEffect*> Get_Effects()
+	{
+		return m_MixtureEffects;
+	}
+
 private:
 	// ≥π∞≥ ¿Ã∆Â∆Æ ¡∂«’
 	vector<class CEffect*>			m_MixtureEffects;

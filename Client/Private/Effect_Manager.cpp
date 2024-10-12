@@ -128,8 +128,15 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 		{
 			CEffect::EFFECT_DESC EffectDesc{};
 			EffectDesc.ModelName = pEffect->m_ModelName;
+			EffectDesc.EffectName = pEffect->m_EffectName;
 			EffectDesc.MaskTextureName = pEffect->m_MaskTextureName;
 			EffectDesc.DiffuseTextureName = pEffect->m_DiffuseTextureName;
+			EffectDesc.vPosition = pEffect->Get_Effect_Position();
+			EffectDesc.vScaled = pEffect->Get_Effect_Scaled();
+			EffectDesc.vRotation = pEffect->Get_Effect_Rotation();
+			EffectDesc.iUnique_Index = pEffect->m_iUnique_Index;
+			EffectDesc.SRV_Ptr = static_cast<CTexture*>(pEffect->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+			EffectDesc.iRenderIndex = 2;
 
 			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
 		}
@@ -165,6 +172,28 @@ vector<wstring> CEffect_Manager::Get_Layer_List()
 	}
 
 	return LayerList;
+}
+
+vector<wstring> CEffect_Manager::Get_In_Layer_Effect_List(wstring* LayerName)
+{
+	vector<wstring> EffectNames;
+
+	auto it = m_FinalEffects.find(*LayerName);
+	if (it != m_FinalEffects.end())
+	{
+		CEffect_Layer* pLayer = it->second;
+		const auto& effects = pLayer->Get_Effects();
+
+		for (const auto& effect : effects)
+		{
+			if (effect)
+			{
+				EffectNames.push_back(effect->m_EffectName);
+			}
+		}
+	}
+
+	return EffectNames;
 }
 
 HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* EffectName, wstring* ModelName)

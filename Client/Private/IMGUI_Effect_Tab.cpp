@@ -9,7 +9,7 @@
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
 
-const char* Effect[] = { "Each", "Layer", "Each Effect KeyFrame", "Layer KeyFrame"};
+const char* Effect[] = { "Each", "Layer", "Layer KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
 
 static int CurrentEffect = 0;
@@ -63,12 +63,12 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     if (CurrentEffect == 2)
     {
-        Render_For_Effect_KeyFrame();
+        Render_For_Layer_KeyFrame();
     }
 
     if (CurrentEffect == 3)
     {
-        Render_For_Layer_KeyFrame();
+        Render_For_Effect_KeyFrame();
     }
 }
 
@@ -542,6 +542,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
 void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
 {
+    // 레이어 목록 가져오기
     auto LayerList = m_pEffect_Manager->Get_Layer_List();
 
     if (!LayerList.empty())
@@ -549,13 +550,13 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
         vector<string> layerListUTF8;
         for (const auto& layer : LayerList)
         {
-            layerListUTF8.push_back(WStringToUTF8(layer)); // wstring을 UTF-8로 변환하는 함수가 필요
+            layerListUTF8.push_back(WStringToUTF8(layer)); // wstring을 UTF-8로 변환
         }
 
-        // 현재 선택된 레이어 인덱스를 유지할 변수
         static int selectedLayerIndex = 0;
         const char* currentLayer = layerListUTF8[selectedLayerIndex].c_str();
 
+        // 레이어 선택 콤보 박스
         if (ImGui::BeginCombo("Select Layer", currentLayer))
         {
             for (int i = 0; i < layerListUTF8.size(); i++)
@@ -572,8 +573,27 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
             }
             ImGui::EndCombo();
         }
+
+        ImGui::Separator();
+        // 선택된 레이어의 이름을 wstring으로 변환
+        wstring selectedLayerWString = LayerList[selectedLayerIndex];
+
+        // 선택된 레이어의 이펙트 목록 가져오기
+        auto effectNames = m_pEffect_Manager->Get_In_Layer_Effect_List(&selectedLayerWString);
+
+        // 이펙트 이름을 UTF-8로 변환하여 ImGui에 표시
+        if (!effectNames.empty())
+        {
+            ImGui::Text("Effects in Selected Layer:");
+            for (const auto& effectName : effectNames)
+            {
+                string effectNameUTF8 = WStringToUTF8(effectName);
+                ImGui::BulletText("%s", effectNameUTF8.c_str());
+            }
+        }
     }
 }
+
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
