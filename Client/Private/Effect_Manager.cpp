@@ -386,14 +386,19 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 
 void CEffect_Manager::Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame)
 {
-	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	for (auto& layerPair : m_FinalEffects)
 	{
-		CEffect* pEffect = *it;
+		CEffect_Layer* pLayer = layerPair.second;
+		if (!pLayer)
+			continue;
 
-		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		for (auto& effect : pLayer->Get_Effects())
 		{
-			pEffect->Add_KeyFrame(NewKeyFrame);
-			return;
+			if (effect && effect->m_iUnique_Index == EffectId)
+			{
+				effect->Add_KeyFrame(NewKeyFrame);
+				return;
+			}
 		}
 	}
 }

@@ -55,6 +55,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
 
+    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
     Render_MainNode();
 
     Render_TextureNode();
@@ -64,7 +65,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     Render_Link();
 
     ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
-
+    ImGui::PopStyleColor();
     ImNodes::EndNodeEditor(); /* 노드 끝 */
 
     Check_Create_Link(); // 생성할때는 노드에디터가 끝날때 체크
