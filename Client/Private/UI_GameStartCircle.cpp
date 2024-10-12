@@ -110,39 +110,38 @@ void CUI_GameStartCircle::Action_Rotaion(_float fTimeDelta)
 void CUI_GameStartCircle::Action_ScaleAnim(_float fTimeDelta)
 {
 	if (m_QueueAnimPos.empty() == FALSE)
+	{
+		if (m_QueueAnimPos.front().iPos > m_fSizeX)
 		{
-			if (m_QueueAnimPos.front().iPos > m_fSizeX)
-			{
-				m_fScaleAnimTimer += fTimeDelta;
-				m_isNegative = TRUE;
+			m_fScaleAnimTimer += fTimeDelta;
+			m_isNegative = TRUE;
 
-				m_fSizeX += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-				m_fSizeY += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
+			m_fSizeX += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
+			m_fSizeY += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
 
-			}
-			else
-			{
-				m_fScaleAnimTimer -= fTimeDelta;
-				m_isNegative = FALSE;
+		}
+		else
+		{
+			m_fScaleAnimTimer -= fTimeDelta;
+			m_isNegative = FALSE;
 
-				m_fSizeX += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-				m_fSizeY += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
-			}
+			m_fSizeX += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
+			m_fSizeY += m_fScaleAnimTimer * m_QueueAnimPos.front().m_fSpeed;
+		}
 
-			if (m_isNegative == TRUE && m_QueueAnimPos.front().iPos <= m_fSizeX)
-			{
-				m_QueueAnimPos.pop();
-				m_fScaleAnimTimer = 0.f;
-				int a = 10;
-			}
-			else if (m_isNegative == FALSE && m_QueueAnimPos.front().iPos >= m_fSizeX)
-			{
-				m_QueueAnimPos.pop();
-				m_fScaleAnimTimer = 0.f;
-				int a = 10;
-			}
-
+		if (m_isNegative == TRUE && m_QueueAnimPos.front().iPos <= m_fSizeX)
+		{
+			m_QueueAnimPos.pop();
+			m_fScaleAnimTimer = 0.f;
+		}
+		else if (m_isNegative == FALSE && m_QueueAnimPos.front().iPos >= m_fSizeX)
+		{
+			m_QueueAnimPos.pop();
+			m_fScaleAnimTimer = 0.f;
+		}
 	}
+	else
+		m_bDead = true;
 
 
 	m_pTransformCom->Set_Scaled(m_fSizeX , m_fSizeY, 1.f);
