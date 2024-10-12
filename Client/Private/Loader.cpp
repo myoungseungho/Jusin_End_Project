@@ -10,7 +10,7 @@
 #include "Effect_MoveTex.h"
 #include "Effect_Multi.h"
 #include "Effect_Single.h"
-
+#include "SpaceSky.h"
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
@@ -105,15 +105,34 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Fill"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Shader/cmn_pattern00.png"), 1))))
 		return E_FAIL;
+	/* For.Prototype_Component_Shader_VtxMesh */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxMesh"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
+		return E_FAIL;
 
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxShaderRect"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxShaderRect.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Diffuse"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/sp_Space.png"), 1))))
+		return E_FAIL;
 
-	//손오공
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_Rotate0.bin", PreTransformMatrix))))
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star1"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/sp_star01.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star2"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/sp_star02.png"), 1))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSky"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/SpaceSky.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 #pragma region Effect Model
@@ -2542,6 +2561,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSky"),
+		CSpaceSky::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shader_Texture"),
 		CShader_Texture::Create(m_pDevice, m_pContext))))

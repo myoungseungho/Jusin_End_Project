@@ -246,15 +246,14 @@ void CIMGUI_Shader_Tab::Render_MoveTexNode()
     {
         int node_id = iter.MoveTex_node_id;
         
-        ImNodes::BeginNode(  node_id);
+        ImNodes::BeginNode(node_id);
 
         ImGui::Dummy(ImVec2(1, 1));
 
         ImGui::Text("MoveTex_Node %d", node_id - 1500);
 
-        ImGui::SetNextItemWidth(50);
+        ImGui::SetNextItemWidth(60);
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
-        
         ImGui::InputFloat2("Direction", &iter.fDirection.x, "%.1f");
 
         ImGui::SetNextItemWidth(50);

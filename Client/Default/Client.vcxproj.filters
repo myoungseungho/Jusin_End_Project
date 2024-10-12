@@ -43,6 +43,9 @@
     <Filter Include="02.GameObjects\02. Effect\Manager\Layer">
       <UniqueIdentifier>{683a4001-94e0-4898-ab99-3d12226ca1df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\SpaceSky">
+      <UniqueIdentifier>{85b7a815-c9d2-40c0-aec3-0498644d9390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -193,6 +196,9 @@
     <ClInclude Include="..\Public\Effect_Single.h">
       <Filter>02.GameObjects\02. Effect\Single</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceSky.h">
+      <Filter>02.GameObjects\SpaceSky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -285,6 +291,9 @@
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\SpaceSky.cpp">
+      <Filter>02.GameObjects\SpaceSky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -307,6 +316,9 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
