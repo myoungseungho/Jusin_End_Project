@@ -60,6 +60,26 @@ void CTransform::Go_Right(_float fTimeDelta)
 	Set_State(STATE_POSITION, vPosition);
 }
 
+void CTransform::Go_Up(_float fTimeDelta)
+{
+	_vector vPosition = Get_State(STATE_POSITION);
+	_vector vUp = Get_State(STATE_UP); // Up 벡터 가져오기
+
+	vPosition += XMVector3Normalize(vUp) * m_fSpeedPerSec * fTimeDelta;
+
+	Set_State(STATE_POSITION, vPosition);
+}
+
+void CTransform::Go_Down(_float fTimeDelta)
+{
+	_vector vPosition = Get_State(STATE_POSITION);
+	_vector vUp = Get_State(STATE_UP); // Up 벡터 가져오기
+
+	vPosition -= XMVector3Normalize(vUp) * m_fSpeedPerSec * fTimeDelta;
+
+	Set_State(STATE_POSITION, vPosition);
+}
+
 void CTransform::Turn(_fvector vAxis, _float fTimeDelta)
 {
 	_vector		vRight = Get_State(STATE_RIGHT);

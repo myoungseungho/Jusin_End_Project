@@ -93,6 +93,8 @@ public:
 	void Go_Backward(_float fTimeDelta);
 	void Go_Left(_float fTimeDelta);
 	void Go_Right(_float fTimeDelta);
+	void Go_Up(_float fTimeDelta);
+	void Go_Down(_float fTimeDelta);
 	void Turn(_fvector vAxis, _float fTimeDelta);
 	void Rotation(_fvector vAxis, _float fRadian);
 	void LookAt(_fvector vAt);

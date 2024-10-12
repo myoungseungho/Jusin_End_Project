@@ -18,6 +18,7 @@
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
+
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
 // IMGUI 창 표시 여부를 제어하는 전역 변수
@@ -43,7 +44,8 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
-	ImGui::ApplyCustomStyle();
+	ImGui::StyleColorsLight();
+
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX11_Init(m_pDevice, m_pContext);
 	ImGui_ImplWin32_EnableDpiAwareness();
@@ -102,7 +104,8 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
 	Render_ShaderTabs(fTimeDelta);
-	
+	Render_EffectAnimationTabs(fTimeDelta);
+
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	
@@ -233,6 +236,10 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 		ImGui::End(); // 메인 창 종료
 	}
 
+}
+
+void CImgui_Manager::Render_EffectAnimationTabs(_float fTimeDelta)
+{
 }
 
 void CImgui_Manager::Free()

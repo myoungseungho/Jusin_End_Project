@@ -70,6 +70,25 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
+_bool CEffect_Manager::Find_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameNumber)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+	if (!pLayer)
+		return false;
+
+	CEffect* pEffect = pLayer->Find_Effect(EffectName);
+	if (!pEffect)
+		return false;
+
+	for (const auto& keyframe : pEffect->m_EffectKeyFrames)
+	{
+		if (keyframe.first == KeyFrameNumber)
+			return true;
+	}
+
+	return false;
+}
+
 HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
@@ -80,6 +99,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 		CEffect::EFFECT_DESC EffectDesc {};
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
+		EffectDesc.EffectName = m_TestEffect[iCurTestEffectIndex]->m_EffectName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
 		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
@@ -96,6 +116,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 	{
 		CEffect::EFFECT_DESC EffectDesc{};
 		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
+		EffectDesc.EffectName = m_TestEffect[iCurTestEffectIndex]->m_EffectName;
 		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
 		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
 		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
@@ -126,8 +147,15 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 		{
 			CEffect::EFFECT_DESC EffectDesc{};
 			EffectDesc.ModelName = pEffect->m_ModelName;
+			EffectDesc.EffectName = pEffect->m_EffectName;
 			EffectDesc.MaskTextureName = pEffect->m_MaskTextureName;
 			EffectDesc.DiffuseTextureName = pEffect->m_DiffuseTextureName;
+			EffectDesc.vPosition = pEffect->Get_Effect_Position();
+			EffectDesc.vScaled = pEffect->Get_Effect_Scaled();
+			EffectDesc.vRotation = pEffect->Get_Effect_Rotation();
+			EffectDesc.iUnique_Index = pEffect->m_iUnique_Index;
+			EffectDesc.SRV_Ptr = static_cast<CTexture*>(pEffect->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+			EffectDesc.iRenderIndex = 2;
 
 			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
 		}
@@ -165,11 +193,34 @@ vector<wstring> CEffect_Manager::Get_Layer_List()
 	return LayerList;
 }
 
-HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* ModelName)
+vector<wstring> CEffect_Manager::Get_In_Layer_Effect_List(wstring* LayerName)
+{
+	vector<wstring> EffectNames;
+
+	auto it = m_FinalEffects.find(*LayerName);
+	if (it != m_FinalEffects.end())
+	{
+		CEffect_Layer* pLayer = it->second;
+		const auto& effects = pLayer->Get_Effects();
+
+		for (const auto& effect : effects)
+		{
+			if (effect)
+			{
+				EffectNames.push_back(effect->m_EffectName);
+			}
+		}
+	}
+
+	return EffectNames;
+}
+
+HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* EffectName, wstring* ModelName)
 {
 	CEffect::EFFECT_DESC EffectDesc{};
 
 	EffectDesc.ModelName = *ModelName;
+	EffectDesc.EffectName = *EffectName;
 	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
 	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
 	EffectDesc.iUnique_Index = m_TestEffect_Count++;
@@ -352,16 +403,20 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 	return _float3(0.f, 0.f, 0.f);
 }
 
-void CEffect_Manager::Add_KeyFrame(_int EffectId, EFFECT_KEYFRAME NewKeyFrame)
+void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame)
 {
-	for (auto it = m_TestEffect.begin(); it != m_TestEffect.end(); ++it)
+	auto layerIt = m_FinalEffects.find(LayerName);
+	if (layerIt != m_FinalEffects.end())
 	{
-		CEffect* pEffect = *it;
-
-		if (pEffect && pEffect->m_iUnique_Index == EffectId)
+		CEffect_Layer* pLayer = layerIt->second;
+		if (pLayer)
 		{
-			pEffect->Add_KeyFrame(NewKeyFrame);
-			return;
+			CEffect* pEffect = pLayer->Find_Effect(EffectName);
+			if (pEffect)
+			{
+				pEffect->Add_KeyFrame(KeyFrameIndex, NewKeyFrame);
+				return;
+			}
 		}
 	}
 }

@@ -8,12 +8,19 @@
 #include <locale>
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
+#include <Effect_Layer.h>
 
-const char* Effect[] = { "Each", "Layer", "Each Effect KeyFrame", "Layer KeyFrame"};
+const char* Effect[] = { "Each", "Layer", "Layer KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
 
 static int CurrentEffect = 0;
 static int CurrentEffectType = 0;
+
+static bool openKeyFrameWindow = false;
+static std::string selectedEffectName;
+static int selectedFrame = -1;
+
+static std::wstring selectedLayerName;
 
 CIMGUI_Effect_Tab::CIMGUI_Effect_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     :CIMGUI_Tab{ pDevice,pContext }
@@ -63,13 +70,12 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     if (CurrentEffect == 2)
     {
-        Render_For_Effect_KeyFrame();
-    }
-
-    if (CurrentEffect == 3)
-    {
         Render_For_Layer_KeyFrame();
     }
+
+    if(openKeyFrameWindow)
+      Render_For_Effect_KeyFrame();
+
 }
 
 void CIMGUI_Effect_Tab::Push_Initialize()
@@ -155,13 +161,21 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
             ImGui::EndCombo();
         }
 
+
+
+        static char EffectNameBuffer[128] = "";
+
+        ImGui::InputText("Effect Name", EffectNameBuffer, IM_ARRAYSIZE(EffectNameBuffer));
+
         if (ImGui::Button("Add Effect"))
         {
+            std::wstring wEffectName = UTF8ToWString(EffectNameBuffer);
+
             std::wstring wModelName = UTF8ToWString(ModelName[CurrentModel]);
 
             EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
 
-            m_pEffect_Manager->Add_Test_Effect(effectType, &wModelName);
+            m_pEffect_Manager->Add_Test_Effect(effectType, &wEffectName, &wModelName);
         }
 
         ImGui::SameLine();
@@ -419,121 +433,9 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
     }
 }
 
-void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
-{
-    static EFFECT_KEYFRAME newKeyFrame;
-
-    ImGui::Text("Effect Keyframe Settings");
-
-    // Scale 섹션
-    ImGui::Text("Scale");
-
-    // X 축
-    ImGui::Text("X"); ImGui::SameLine();
-    ImGui::SliderFloat("##Scale X Slider", &newKeyFrame.vScale.x, 0.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Scale X Dec")) newKeyFrame.vScale.x -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Scale X Inc")) newKeyFrame.vScale.x += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Scale X", &newKeyFrame.vScale.x, 0.1f);
-
-    // Y 축
-    ImGui::Text("Y"); ImGui::SameLine();
-    ImGui::SliderFloat("##Scale Y Slider", &newKeyFrame.vScale.y, 0.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Scale Y Dec")) newKeyFrame.vScale.y -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Scale Y Inc")) newKeyFrame.vScale.y += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Scale Y", &newKeyFrame.vScale.y, 0.1f);
-
-    // Z 축
-    ImGui::Text("Z"); ImGui::SameLine();
-    ImGui::SliderFloat("##Scale Z Slider", &newKeyFrame.vScale.z, 0.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Scale Z Dec")) newKeyFrame.vScale.z -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Scale Z Inc")) newKeyFrame.vScale.z += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Scale Z", &newKeyFrame.vScale.z, 0.1f);
-
-    ImGui::Separator();
-
-    // Rotation 섹션
-    ImGui::Text("Rotation");
-
-    // X 축
-    ImGui::Text("X"); ImGui::SameLine();
-    ImGui::SliderFloat("##Rotation X Slider", &newKeyFrame.vRotation.x, 0.0f, 360.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Rotation X Dec")) newKeyFrame.vRotation.x -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Rotation X Inc")) newKeyFrame.vRotation.x += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Rotation X", &newKeyFrame.vRotation.x, 0.1f);
-
-    // Y 축
-    ImGui::Text("Y"); ImGui::SameLine();
-    ImGui::SliderFloat("##Rotation Y Slider", &newKeyFrame.vRotation.y, 0.0f, 360.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Rotation Y Dec")) newKeyFrame.vRotation.y -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Rotation Y Inc")) newKeyFrame.vRotation.y += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Rotation Y", &newKeyFrame.vRotation.y, 0.1f);
-
-    // Z 축
-    ImGui::Text("Z"); ImGui::SameLine();
-    ImGui::SliderFloat("##Rotation Z Slider", &newKeyFrame.vRotation.z, 0.0f, 360.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Rotation Z Dec")) newKeyFrame.vRotation.z -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Rotation Z Inc")) newKeyFrame.vRotation.z += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Rotation Z", &newKeyFrame.vRotation.z, 0.1f);
-
-    ImGui::Separator();
-
-    // Position 섹션
-    ImGui::Text("Position");
-
-    // X 축
-    ImGui::Text("X"); ImGui::SameLine();
-    ImGui::SliderFloat("##Position X Slider", &newKeyFrame.vPosition.x, -100.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Position X Dec")) newKeyFrame.vPosition.x -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Position X Inc")) newKeyFrame.vPosition.x += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Position X", &newKeyFrame.vPosition.x, 0.1f);
-
-    // Y 축
-    ImGui::Text("Y"); ImGui::SameLine();
-    ImGui::SliderFloat("##Position Y Slider", &newKeyFrame.vPosition.y, -100.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Position Y Dec")) newKeyFrame.vPosition.y -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Position Y Inc")) newKeyFrame.vPosition.y += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Position Y", &newKeyFrame.vPosition.y, 0.1f);
-
-    // Z 축
-    ImGui::Text("Z"); ImGui::SameLine();
-    ImGui::SliderFloat("##Position Z Slider", &newKeyFrame.vPosition.z, -100.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##Position Z Dec")) newKeyFrame.vPosition.z -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##Position Z Inc")) newKeyFrame.vPosition.z += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("##Position Z", &newKeyFrame.vPosition.z, 0.1f);
-
-    ImGui::Separator();
-
-    // fCurTime: 슬라이더, 입력창, 증감 버튼
-    ImGui::Text("Current Time");
-    ImGui::SliderFloat("##CurTime Slider", &newKeyFrame.fCurTime, 0.0f, 100.0f); ImGui::SameLine();
-    if (ImGui::Button("-##CurTime")) newKeyFrame.fCurTime -= 0.1f; ImGui::SameLine();
-    if (ImGui::Button("+##CurTime")) newKeyFrame.fCurTime += 0.1f; ImGui::SameLine();
-    ImGui::InputFloat("CurTime", &newKeyFrame.fCurTime); 
-
-    ImGui::Separator();
-
-    // fDuration: 입력창과 0.5씩 증감 버튼
-    ImGui::Text("Duration");
-    if (ImGui::Button("-##Duration")) newKeyFrame.fDuration -= 0.5f; ImGui::SameLine();
-    if (ImGui::Button("+##Duration")) newKeyFrame.fDuration += 0.5f; ImGui::SameLine();
-    ImGui::InputFloat("Duration", &newKeyFrame.fDuration); 
-
-
-    ImGui::Separator();
-
-    // Add Keyframe 버튼
-    if (ImGui::Button("Add Keyframe"))
-    {
-        m_pEffect_Manager->Add_KeyFrame(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id(), newKeyFrame);
-        ImGui::Text("Keyframe added!");
-    }
-
-    ImGui::Separator();
-
-}
-
 void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
 {
+    // 레이어 목록 가져오기
     auto LayerList = m_pEffect_Manager->Get_Layer_List();
 
     if (!LayerList.empty())
@@ -541,13 +443,13 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
         vector<string> layerListUTF8;
         for (const auto& layer : LayerList)
         {
-            layerListUTF8.push_back(WStringToUTF8(layer)); // wstring을 UTF-8로 변환하는 함수가 필요
+            layerListUTF8.push_back(WStringToUTF8(layer)); // wstring을 UTF-8로 변환
         }
 
-        // 현재 선택된 레이어 인덱스를 유지할 변수
         static int selectedLayerIndex = 0;
         const char* currentLayer = layerListUTF8[selectedLayerIndex].c_str();
 
+        // 레이어 선택 콤보 박스
         if (ImGui::BeginCombo("Select Layer", currentLayer))
         {
             for (int i = 0; i < layerListUTF8.size(); i++)
@@ -556,6 +458,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
                 if (ImGui::Selectable(layerListUTF8[i].c_str(), isSelected))
                 {
                     selectedLayerIndex = i;
+                    selectedLayerName = LayerList[i]; // 선택된 레이어 이름을 저장
                 }
                 if (isSelected)
                 {
@@ -564,8 +467,225 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
             }
             ImGui::EndCombo();
         }
+
+        ImGui::Separator();
+
+        // 선택한 레이어의 Duration 가져오기
+        CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName);
+        if (pLayer)
+        {
+            float layerDuration = pLayer->m_fDuration; // 현재 Duration 값
+
+            // Duration 설정을 위한 입력란
+            ImGui::Text("Layer Duration:");
+            ImGui::SameLine();
+            if (ImGui::InputFloat("##LayerDuration", &layerDuration, 0.1f, 1.0f, "%.2f"))
+            {
+                // Duration 값이 수정되면 레이어에 반영
+                pLayer->m_fDuration = max(0.0f, layerDuration); // 음수로 설정되지 않도록
+            }
+        }
+
+        ImGui::Separator();
+
+        // 선택된 레이어의 이펙트 목록 가져오기
+        auto effectNames = m_pEffect_Manager->Get_In_Layer_Effect_List(&selectedLayerName);
+
+        if (!effectNames.empty())
+        {
+            const int frameCount = 200; // 총 프레임 수
+            const int buttonSize = 20;  // 버튼 크기
+            const float effectNameWidth = 150.0f; // 이펙트 이름 표시 너비
+
+            ImGui::BeginChild("TimelineRegion", ImVec2(0, 300), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+            // 상단에 프레임 번호 표시
+            ImGui::Text(" "); // 이름과의 간격을 위한 빈 텍스트
+            ImGui::SameLine(effectNameWidth); // 이펙트 이름 너비에 맞춤
+            for (int frame = 0; frame < frameCount; frame++)
+            {
+                ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 크기와 간격 조정
+                ImGui::Text("%d", frame);
+                ImGui::SameLine();
+            }
+            ImGui::NewLine();
+
+            // 각 이펙트의 이름 및 프레임 버튼 표시
+            for (int item = 0; item < effectNames.size(); item++)
+            {
+                // UTF-8 변환 후 이펙트 이름 표시
+                string effectNameUTF8 = WStringToUTF8(effectNames[item]);
+                ImGui::TextWrapped("%s", effectNameUTF8.c_str());
+
+                ImGui::SameLine(effectNameWidth); // 이름 뒤에 충분한 간격을 줌
+
+                // 각 프레임의 버튼 배치
+                for (int frame = 0; frame < frameCount; frame++)
+                {
+                    ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 위치 조정
+                    ImGui::PushID(frame + item * frameCount);
+
+                    // 키프레임이 존재하는지 확인
+                    bool isKeyFrameExist = m_pEffect_Manager->Find_KeyFrame(selectedLayerName, effectNames[item], frame);
+
+
+                    // 색상 조정
+                    if (isKeyFrameExist)
+                    {
+                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.f, 0.8f, 0.3f, 0.7f)); // 진한 색상 예시
+                    }
+
+                    // 키프레임을 나타내는 버튼
+                    if (ImGui::Button("##", ImVec2(buttonSize, buttonSize)))
+                    {
+                        // 버튼 클릭 시 선택된 효과 이름과 프레임 번호를 저장
+                        selectedEffectName = effectNameUTF8;
+                        selectedFrame = frame;
+                        openKeyFrameWindow = true;
+                    }
+
+                    // 색상 복원
+                    if (isKeyFrameExist)
+                    {
+                        ImGui::PopStyleColor();
+                    }
+
+                    ImGui::PopID();
+                    ImGui::SameLine();
+                }
+                ImGui::NewLine(); // 다음 이펙트는 새 줄로 이동
+            }
+
+            ImGui::EndChild();
+        }
     }
 }
+
+
+void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
+{
+    ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("Editing Keyframe for Effect: %s", selectedEffectName.c_str());
+    ImGui::Text("Frame: %d", selectedFrame);
+
+    static EFFECT_KEYFRAME newKeyFrame;
+
+    ImGui::Text("Effect Keyframe Settings");
+
+    // bIsNotPlaying 체크박스
+    ImGui::Checkbox("Is Not Playing", &newKeyFrame.bIsNotPlaying);
+
+    ImGui::Separator();
+
+    // Position 섹션
+    ImGui::Text("Position");
+
+    ImGui::Text("X"); ImGui::SameLine();
+    ImGui::SliderFloat("##Position X Slider", &newKeyFrame.vPosition.x, -100.0f, 100.0f); ImGui::SameLine();
+    ImGui::InputFloat("##Position X", &newKeyFrame.vPosition.x, 0.1f);
+
+    ImGui::Text("Y"); ImGui::SameLine();
+    ImGui::SliderFloat("##Position Y Slider", &newKeyFrame.vPosition.y, -100.0f, 100.0f); ImGui::SameLine();
+    ImGui::InputFloat("##Position Y", &newKeyFrame.vPosition.y, 0.1f);
+
+    ImGui::Text("Z"); ImGui::SameLine();
+    ImGui::SliderFloat("##Position Z Slider", &newKeyFrame.vPosition.z, -100.0f, 100.0f); ImGui::SameLine();
+    ImGui::InputFloat("##Position Z", &newKeyFrame.vPosition.z, 0.1f);
+
+    ImGui::Separator();
+
+    // Scale 섹션
+    ImGui::Text("Scale");
+
+    ImGui::Text("X"); ImGui::SameLine();
+    ImGui::SliderFloat("##Scale X Slider", &newKeyFrame.vScale.x, 0.01f, 100.0f); ImGui::SameLine();
+    if (ImGui::InputFloat("##Scale X", &newKeyFrame.vScale.x, 0.1f))
+        newKeyFrame.vScale.x = max(newKeyFrame.vScale.x, 0.01f);
+
+    ImGui::Text("Y"); ImGui::SameLine();
+    ImGui::SliderFloat("##Scale Y Slider", &newKeyFrame.vScale.y, 0.01f, 100.0f); ImGui::SameLine();
+    if (ImGui::InputFloat("##Scale Y", &newKeyFrame.vScale.y, 0.1f))
+        newKeyFrame.vScale.y = max(newKeyFrame.vScale.y, 0.01f);
+
+    ImGui::Text("Z"); ImGui::SameLine();
+    ImGui::SliderFloat("##Scale Z Slider", &newKeyFrame.vScale.z, 0.01f, 100.0f); ImGui::SameLine();
+    if (ImGui::InputFloat("##Scale Z", &newKeyFrame.vScale.z, 0.1f))
+        newKeyFrame.vScale.z = max(newKeyFrame.vScale.z, 0.01f);
+
+    ImGui::Separator();
+
+    // Rotation 섹션
+    ImGui::Text("Rotation");
+
+    ImGui::Text("X"); ImGui::SameLine();
+    ImGui::SliderFloat("##Rotation X Slider", &newKeyFrame.vRotation.x, 0.0f, 360.0f); ImGui::SameLine();
+    ImGui::InputFloat("##Rotation X", &newKeyFrame.vRotation.x, 1.f);
+
+    ImGui::Text("Y"); ImGui::SameLine();
+    ImGui::SliderFloat("##Rotation Y Slider", &newKeyFrame.vRotation.y, 0.0f, 360.0f); ImGui::SameLine();
+    ImGui::InputFloat("##Rotation Y", &newKeyFrame.vRotation.y, 1.f);
+
+    ImGui::Text("Z"); ImGui::SameLine();
+    ImGui::SliderFloat("##Rotation Z Slider", &newKeyFrame.vRotation.z, 0.0f, 360.0f); ImGui::SameLine();
+    ImGui::InputFloat("##Rotation Z", &newKeyFrame.vRotation.z, 1.f);
+
+    ImGui::Separator();
+
+    // Current Time 자동 설정
+    ImGui::Text("Current Time");
+    ImGui::SliderFloat("##CurTime Slider", &newKeyFrame.fCurTime, 0.0f, 100.0f);
+    ImGui::SameLine();
+    if (ImGui::Button("-##CurTimeDec"))
+        newKeyFrame.fCurTime -= 0.1f;
+    ImGui::SameLine();
+    if (ImGui::Button("+##CurTimeInc"))
+        newKeyFrame.fCurTime += 0.1f;
+    ImGui::SameLine();
+    ImGui::InputFloat("##CurTime", &newKeyFrame.fCurTime);
+
+    ImGui::Separator();
+
+    ImGui::Text("Duration");
+
+    // 선택된 레이어의 Duration 값을 자동으로 가져와 적용
+    if (CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName))
+    {
+        newKeyFrame.fDuration = pLayer->m_fDuration; // 선택한 레이어의 Duration 값 자동 적용
+    }
+
+    // Duration 값을 표시 (수정 불가, 읽기 전용)
+    ImGui::InputFloat("##Duration", &newKeyFrame.fDuration, 0.5f, 0.5f, "%.3f", ImGuiInputTextFlags_ReadOnly);
+
+    ImGui::Separator();
+
+    if (ImGui::Button("Add Keyframe"))
+    {
+        m_pEffect_Manager->Add_KeyFrame(selectedLayerName, wstring(selectedEffectName.begin(), selectedEffectName.end()), selectedFrame, newKeyFrame);
+        ImGui::Text("Keyframe added!");
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::Button("Save Keyframe"))
+    {
+        ImGui::Text("Keyframe saved!");
+    }
+
+    ImGui::SameLine();
+
+    if (ImGui::Button("Reset Keyframe"))
+    {
+        newKeyFrame = EFFECT_KEYFRAME();
+        ImGui::Text("Keyframe reset!");
+    }
+
+    ImGui::Separator();
+
+    ImGui::End();
+}
+
+
+
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

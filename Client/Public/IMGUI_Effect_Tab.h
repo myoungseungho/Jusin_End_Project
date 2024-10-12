@@ -14,7 +14,6 @@ protected:
 public:
 	HRESULT Initialize() override;
 	void Render(_float fTimeDelta) override;
-
 	void Push_Initialize();
 	void Save_To_Effect_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
 
@@ -24,8 +23,9 @@ public:
 
 	void Render_For_Each_Effect();
 	void Render_For_Effect_Layer();
-	void Render_For_Effect_KeyFrame();
 	void Render_For_Layer_KeyFrame();
+	void Render_For_Effect_KeyFrame();
+
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 	vector<string> ModelName;

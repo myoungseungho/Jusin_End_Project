@@ -57,6 +57,7 @@ public:
 private:
 	void Render_IMGUI(_float fTimeDelta);
 	void Render_ShaderTabs(_float fTimeDelta);
+	void Render_EffectAnimationTabs(_float fTimeDelta);
 
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };

@@ -61,8 +61,10 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
     }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
+
     ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
     
+
     Render_MainNode();
 
     Render_TextureNode();

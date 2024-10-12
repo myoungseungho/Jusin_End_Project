@@ -46,9 +46,9 @@ HRESULT CEffect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CEffect::Add_KeyFrame(EFFECT_KEYFRAME NewKeyFrame)
+void CEffect::Add_KeyFrame(_int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame)
 {
-	m_EffectKeyFrames.push_back(NewKeyFrame);
+	m_EffectKeyFrames.push_back(make_pair(KeyFrameIndex,NewKeyFrame));
 }
 
 void CEffect::Set_Effect_Scaled(_float3 ChangeScaled)
