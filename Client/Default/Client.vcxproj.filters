@@ -154,6 +154,12 @@
     <Filter Include="02.GameObjects\Effect">
       <UniqueIdentifier>{d8f025ca-2643-45a5-b6e3-c62e9fc77590}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\GameStart">
+      <UniqueIdentifier>{a98447fb-15b2-4844-a335-8779fac81470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameStart\Circle">
+      <UniqueIdentifier>{88c598ec-231c-479b-be3b-a8b0fe5fd694}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -312,6 +318,9 @@
     <ClInclude Include="..\Public\Level_GamePlay.h">
       <Filter>01.Level\99.Loading</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_GameStartCircle.h">
+      <Filter>02.GameObjects\UI\GameStart\Circle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -457,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Level_GamePlay.cpp">
       <Filter>01.Level\99.Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_GameStartCircle.cpp">
+      <Filter>02.GameObjects\UI\GameStart\Circle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

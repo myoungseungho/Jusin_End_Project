@@ -40,14 +40,23 @@ void CUI_Manager::UsingChangeCharacher(CPawn::PLAYER_SLOT eCurrSlotID)
 {
 	if (eCurrSlotID == CPawn::LPLAYER1 || eCurrSlotID == CPawn::LPLAYER2)
 	{
+		m_tTeamDesc[0].bAttBuf = m_pPawnArray[CPawn::LPLAYER1]->Get_PawnDesc().bAttBuf;
+		m_tTeamDesc[0].iSKillPoint = m_pPawnArray[CPawn::LPLAYER1]->Get_PawnDesc().iSKillPoint;
+		m_tTeamDesc[0].iSKillCount = m_pPawnArray[CPawn::LPLAYER1]->Get_PawnDesc().iSKillCount;
+
 		CPawn* pSwapPanw = m_pPawnArray[CPawn::LPLAYER1];
 		m_pPawnArray[CPawn::LPLAYER1] = m_pPawnArray[CPawn::LPLAYER2];
 		m_pPawnArray[CPawn::LPLAYER2] = pSwapPanw;
 
 
+
 	}
 	else if (eCurrSlotID == CPawn::RPLAYER1 || eCurrSlotID == CPawn::RPLAYER2)
 	{
+		m_tTeamDesc[1].bAttBuf = m_pPawnArray[CPawn::LPLAYER1]->Get_PawnDesc().bAttBuf;
+		m_tTeamDesc[1].iSKillPoint = m_pPawnArray[CPawn::LPLAYER1]->Get_PawnDesc().iSKillPoint;
+		m_tTeamDesc[1].iSKillCount = m_pPawnArray[CPawn::LPLAYER1]->Get_PawnDesc().iSKillCount;
+
 		CPawn* pSwapPanw = m_pPawnArray[CPawn::RPLAYER1];
 		m_pPawnArray[CPawn::RPLAYER1] = m_pPawnArray[CPawn::RPLAYER2];
 		m_pPawnArray[CPawn::RPLAYER2] = pSwapPanw;
@@ -71,13 +80,13 @@ void CUI_Manager::SKillCount()
 
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY,  _float fSizeRadio)
 {
-	if (m_pGameInstance->Get_DIKeyState(DIK_O))
+	if (m_pGameInstance->Get_DIKeyState(DIK_LEFT))
 	{
 		fSizeY--;
 		fSizeX = fSizeRadio * fSizeY;
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_P))
+	if (m_pGameInstance->Get_DIKeyState(DIK_RIGHT))
 	{
 		fSizeY++;
 		fSizeX = fSizeRadio * fSizeY;

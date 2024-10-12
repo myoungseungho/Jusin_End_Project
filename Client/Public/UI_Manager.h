@@ -16,6 +16,14 @@ class CUI_Manager final : public CBase
 {
 	DECLARE_SINGLETON(CUI_Manager)
 
+public:
+	typedef struct
+	{
+		_bool		bAttBuf = { FALSE };
+		_int		iSKillPoint = { 0 };
+		_int		iSKillCount = { 0 };
+	}TEAM_DESC;
+
 private:
 	CUI_Manager();
 	virtual ~CUI_Manager() = default;
@@ -39,6 +47,8 @@ public:
 	_bool m_bStun = { FALSE };
 	_bool m_bHit = { FALSE };
 	_uint m_iHp = {0};
+
+	TEAM_DESC	m_tTeamDesc[2] = {};
 	
 public:
 	//UsingAttckBuff

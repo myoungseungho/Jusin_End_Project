@@ -16,7 +16,7 @@ public:
 	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
 
 public:
-	typedef struct
+	typedef struct:public CGameObject::GAMEOBJECT_DESC
 	{
 		PLAYER_SLOT ePlayerSlot = {};
 	}SLOT_DESC;

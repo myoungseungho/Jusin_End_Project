@@ -36,15 +36,18 @@ HRESULT CGameObject::Initialize_Prototype()
 
 HRESULT CGameObject::Initialize(void* pArg)
 {
+	m_pTransformCom = CTransform::Create(m_pDevice, m_pContext);
+	if (nullptr == m_pTransformCom)
+		return E_FAIL;
+
+
 	if (nullptr != pArg)
 	{
 		GAMEOBJECT_DESC* pDesc = static_cast<GAMEOBJECT_DESC*>(pArg);
 		m_iGameObjectData = pDesc->iGameObjectData;
+		m_pTransformCom->SetUp_TransformDesc(static_cast<CTransform::TRANSFORM_DESC*>(pArg));
 	}
 
-	m_pTransformCom = CTransform::Create(m_pDevice, m_pContext);
-	if (nullptr == m_pTransformCom)
-		return E_FAIL;
 
 	if (nullptr != Get_Component(m_strTransformTag))
 		return E_FAIL;

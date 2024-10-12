@@ -34,6 +34,7 @@
 #include "UI_ComboNumber.h"
 #include "UI_ComboFont.h"
 #include "UI_ComboEffect.h"
+#include "UI_GameStartCircle.h"
 
 //
 
@@ -267,6 +268,12 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/AttBufEffect/ElectricEff/cp_spicon_ElectricEff%d.png"), 6))))
 		return E_FAIL;
 
+	//게임 스타트 
+	/* For.Prototype_Component_Texture_UI_GameStartCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartCircle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 9))))
+		return E_FAIL;
+
 
 	//게임 오브젝트
 
@@ -361,6 +368,13 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_UI_ComboEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ComboEffect"),
 		CUI_ComboEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//게임 스타트
+
+	/* For.Prototype_GameObject_UI_ComboEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_GameStartCircle"),
+		CUI_GameStartCircle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
