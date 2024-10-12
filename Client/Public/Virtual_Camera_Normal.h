@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Client_Defines.h"
 #include "Virtual_Camera.h"
 
 BEGIN(Client)
 
 class CVirtual_Camera_Normal final : public CVirtual_Camera
 {
-private:
+protected:
 	CVirtual_Camera_Normal(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVirtual_Camera_Normal(const CVirtual_Camera_Normal& Prototype);
 	virtual ~CVirtual_Camera_Normal() = default;

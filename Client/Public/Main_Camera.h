@@ -3,6 +3,10 @@
 #include "Client_Defines.h"
 #include "Camera.h"
 
+BEGIN(Engine)
+class CVirtual_Camera;
+END
+
 BEGIN(Client)
 
 class CMain_Camera final : public CCamera

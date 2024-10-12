@@ -1,12 +1,25 @@
 #pragma once
 
-#include "Client_Defines.h"
 #include "GameObject.h"
 
-BEGIN(Client)
+BEGIN(Engine)
 
-class CVirtual_Camera abstract : public CGameObject
+class ENGINE_DLL CVirtual_Camera abstract : public CGameObject
 {
+public:
+	struct VIRTUAL_CAMERA_DESC : public CGameObject::GAMEOBJECT_DESC
+	{
+		_float3					vEye{}, vAt{};
+		_float					fFovy{}, fNear{}, fFar{};
+
+		_float					fSpeedPerSec{};
+		_float					fRotationPerSec{};
+		_float					fSensor{};
+
+		_float					fViewportWidth{};
+		_float					fViewportHeight{};
+	};
+
 protected:
 	CVirtual_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVirtual_Camera(const CVirtual_Camera& Prototype);
@@ -20,9 +33,7 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-protected:
-	CameraData m_CameraData = {};
-
+	VIRTUAL_CAMERA_DESC m_Desc = {};
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

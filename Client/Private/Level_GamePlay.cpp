@@ -47,18 +47,7 @@ HRESULT CLevel_GamePlay::Render()
 
 HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 {
-	CMain_Camera::CAMERA_FREE_DESC			CameraDesc{};
-
-	CameraDesc.vEye = _float3(0.f, 10.f, -10.f);
-	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
-	CameraDesc.fFovy = XMConvertToRadians(60.0f);
-	CameraDesc.fNear = 0.1f;
-	CameraDesc.fFar = 1000.f;
-	CameraDesc.fSpeedPerSec = 10.f;
-	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
-	CameraDesc.fSensor = 0.1f;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Main_Camera"), strLayerTag, &CameraDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Main_Camera"), strLayerTag)))
 		return E_FAIL;
 
 	return S_OK;

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "..\Public\Virtual_Camera.h"
 
 #include "GameInstance.h"
@@ -27,6 +26,7 @@ HRESULT CVirtual_Camera::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
+
 
 	return S_OK;
 }

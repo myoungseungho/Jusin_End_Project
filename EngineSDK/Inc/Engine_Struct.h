@@ -146,22 +146,5 @@ namespace Engine
 	};
 #pragma endregion
 
-#pragma region Ä«¸Þ¶ó
-	struct CameraData
-	{
-		_float3					vEye{}, vAt{};
-		_float					fFovy{}, fNear{}, fFar{};
-
-		_float					fSpeedPerSec{};
-		_float					fRotationPerSec{};
-		_float					fSensor{};
-
-		_float					fViewportWidth{};
-		_float					fViewportHeight{};
-
-		_float4x4				WorldMatrix_Float4x4;
-	};
-#pragma endregion
-
 #pragma endregion
 }

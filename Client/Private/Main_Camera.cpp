@@ -26,8 +26,6 @@ HRESULT CMain_Camera::Initialize_Prototype()
 
 HRESULT CMain_Camera::Initialize(void* pArg)
 {
-	m_fMouseSensor = static_cast<CMain_Camera::CAMERA_FREE_DESC*>(pArg)->fSensor;
-
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -41,11 +39,13 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 	//처음엔 일반 가상 카메라를 셋팅
 	m_current_Virtual_Camara = m_listVirtualCamera.front();
+
 	return S_OK;
 }
 
 void CMain_Camera::Priority_Update(_float fTimeDelta)
 {
+	//여기서 가상카메라의 월드포지션과 회전정보를 갱신한다.
 	switch (m_currentMode)
 	{
 	case Client::CMain_Camera::CAMERA_FREE_MODE:
@@ -57,16 +57,15 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 	}
 
 	//m_ptransform의 행렬과 가상카메라의 정보를 묶어서 던져주기
-
-
-
-	CameraData_Update();
+	CameraData_Update(m_current_Virtual_Camara);
 }
 
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
 	_float fMoveSpeed = 1.0f;
+
+	CTransform* virtual_Transform = static_cast<CTransform*>(m_current_Virtual_Camara->Get_Component(TEXT("Com_Transform")));
 
 	// 오른쪽 버튼이 눌렸는지 확인
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
@@ -79,44 +78,44 @@ void CMain_Camera::Free_Camera(_float fTimeDelta)
 
 		if (m_pGameInstance->Get_DIKeyState(DIK_A) & 0x80)
 		{
-			m_pTransformCom->Go_Left(fTimeDelta * fMoveSpeed);
+			virtual_Transform->Go_Left(fTimeDelta * fMoveSpeed);
 		}
 
 		if (m_pGameInstance->Get_DIKeyState(DIK_D) & 0x80)
 		{
-			m_pTransformCom->Go_Right(fTimeDelta * fMoveSpeed);
+			virtual_Transform->Go_Right(fTimeDelta * fMoveSpeed);
 		}
 
 		if (m_pGameInstance->Get_DIKeyState(DIK_W) & 0x80)
 		{
-			m_pTransformCom->Go_Straight(fTimeDelta * fMoveSpeed);
+			virtual_Transform->Go_Straight(fTimeDelta * fMoveSpeed);
 		}
 
 		if (m_pGameInstance->Get_DIKeyState(DIK_S) & 0x80)
 		{
-			m_pTransformCom->Go_Backward(fTimeDelta * fMoveSpeed);
+			virtual_Transform->Go_Backward(fTimeDelta * fMoveSpeed);
 		}
 
 		if (m_pGameInstance->Get_DIKeyState(DIK_Q) & 0x80)
 		{
-			m_pTransformCom->Go_Down(fTimeDelta * fMoveSpeed);
+			virtual_Transform->Go_Down(fTimeDelta * fMoveSpeed);
 		}
 
 		if (m_pGameInstance->Get_DIKeyState(DIK_E) & 0x80)
 		{
-			m_pTransformCom->Go_Up(fTimeDelta * fMoveSpeed);
+			virtual_Transform->Go_Up(fTimeDelta * fMoveSpeed);
 		}
 
 		_long MouseMove = {};
 
 		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
 		{
-			m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
+			virtual_Transform->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 
 		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
 		{
-			m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
+			virtual_Transform->Turn(virtual_Transform->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 	}
 }

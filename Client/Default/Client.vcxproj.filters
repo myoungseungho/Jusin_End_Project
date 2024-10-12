@@ -94,9 +94,6 @@
     <ClCompile Include="..\Private\IMGUI_Camera_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Virtual_Camera.cpp">
-      <Filter>02.GameObjects\Camera\Virtual_Camera</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Virtual_Camera_Normal.cpp">
       <Filter>02.GameObjects\Camera\Virtual_Camera\Normal</Filter>
     </ClCompile>
@@ -209,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Camera_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Virtual_Camera.h">
-      <Filter>02.GameObjects\Camera\Virtual_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Virtual_Camera_Normal.h">
       <Filter>02.GameObjects\Camera\Virtual_Camera\Normal</Filter>

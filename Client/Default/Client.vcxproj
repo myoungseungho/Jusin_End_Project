@@ -193,7 +193,6 @@
     <ClInclude Include="..\Public\Player.h" />
     <ClInclude Include="..\Public\Range_Effect.h" />
     <ClInclude Include="..\Public\Range_Effect_2p.h" />
-    <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\Virtual_Camera_Normal.h" />
     <ClInclude Include="..\Public\Virtual_Camera_Skill.h" />
     <ClInclude Include="Client.h" />
@@ -231,7 +230,6 @@
     <ClCompile Include="..\Private\Player.cpp" />
     <ClCompile Include="..\Private\Range_Effect.cpp" />
     <ClCompile Include="..\Private\Range_Effect_2p.cpp" />
-    <ClCompile Include="..\Private\Virtual_Camera.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera_Normal.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera_Skill.cpp" />
     <ClCompile Include="Client.cpp" />
