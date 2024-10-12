@@ -20,7 +20,7 @@
       <Filter>02.GameObjects\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Main_Camera.cpp">
-      <Filter>02.GameObjects\Camera\Main</Filter>
+      <Filter>02.GameObjects\Camera\Main_Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imgui.cpp">
       <Filter>97.IMGUI\Plugin</Filter>
@@ -94,6 +94,15 @@
     <ClCompile Include="..\Private\IMGUI_Camera_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Virtual_Camera.cpp">
+      <Filter>02.GameObjects\Camera\Virtual_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Virtual_Camera_Normal.cpp">
+      <Filter>02.GameObjects\Camera\Virtual_Camera\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Virtual_Camera_Skill.cpp">
+      <Filter>02.GameObjects\Camera\Virtual_Camera\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\public\MainApp.h">
@@ -115,7 +124,7 @@
       <Filter>02.GameObjects\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Main_Camera.h">
-      <Filter>02.GameObjects\Camera\Main</Filter>
+      <Filter>02.GameObjects\Camera\Main_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imgui.h">
       <Filter>97.IMGUI\Plugin</Filter>
@@ -200,6 +209,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Camera_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Virtual_Camera.h">
+      <Filter>02.GameObjects\Camera\Virtual_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Virtual_Camera_Normal.h">
+      <Filter>02.GameObjects\Camera\Virtual_Camera\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Virtual_Camera_Skill.h">
+      <Filter>02.GameObjects\Camera\Virtual_Camera\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -292,11 +310,17 @@
     <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab">
       <UniqueIdentifier>{52d63162-d805-4025-a5e3-ccc5ff9b1dfe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Camera\Virtual">
+    <Filter Include="02.GameObjects\Camera\Virtual_Camera">
       <UniqueIdentifier>{9a6d198e-6653-4add-b94e-4b89399788bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Camera\Main">
+    <Filter Include="02.GameObjects\Camera\Main_Camera">
       <UniqueIdentifier>{d3383e26-b7b4-4839-9771-88d9f7315c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Virtual_Camera\Normal">
+      <UniqueIdentifier>{9e25e4a4-ba35-4797-b0f8-d6ee7d2611c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Virtual_Camera\Skill">
+      <UniqueIdentifier>{e45a2cd6-57b8-4cf2-893a-42462b88a577}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
