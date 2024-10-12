@@ -42,8 +42,10 @@ void CEnergy_Effect::Update(_float fTimeDelta)
 	for (auto& iter : m_vecColliderCom)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
 
-	_float speed = 1.f;
-	m_fY += speed;
+	_float speed = 0.1f;
+
+	if (GetAsyncKeyState(VK_UP) & 0x8000)
+		m_fY += speed;
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		m_fY -= speed;

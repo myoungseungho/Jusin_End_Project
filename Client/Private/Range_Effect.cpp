@@ -44,7 +44,7 @@ void CRange_Effect::Update(_float fTimeDelta)
 {
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 
-	_float speed = 0.2f;
+	_float speed = 0.1f;
 	m_pTransformCom->Move_Position(_float3(speed, 0.f, 0.f));
 }
 
