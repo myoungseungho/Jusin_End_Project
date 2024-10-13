@@ -35,9 +35,8 @@
 #include "UI_ComboFont.h"
 #include "UI_ComboEffect.h"
 #include "UI_GameStartCircle.h"
+#include "UI_ReadyFont.h"
 #include "UI_FightFont.h"
-
-//
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -281,8 +280,13 @@ HRESULT CLoader::Loading_For_UI()
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_GameStartFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartFont"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameReadyFont"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/Ready%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameStartFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameFightFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/Fight%d.png"), 2))))
 		return E_FAIL;
 
 
@@ -388,8 +392,13 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_GameStartCircle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_UI_StartFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_StartFont"),
+	/* For.Prototype_GameObject_UI_ReadyFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ReadyFont"),
+		CUI_ReadyFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_FightFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FightFont"),
 		CUI_FightFont::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 

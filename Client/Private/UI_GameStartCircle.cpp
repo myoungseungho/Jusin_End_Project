@@ -42,7 +42,7 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 	Set_AnimPosition(600, 80.f);
 	Set_AnimPosition(1000, 150.f, TRUE , 3.f);
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
 
 	return S_OK;
 }
@@ -57,7 +57,10 @@ void CUI_GameStartCircle::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 
 	Action_Rotaion(fTimeDelta);
-	Action_ScaleAnim(fTimeDelta);
+	Action_ScaleAnim(1.f,fTimeDelta);
+
+	if (m_QueueAnimPos.empty())
+		m_bDead = TRUE;
 
 }
 

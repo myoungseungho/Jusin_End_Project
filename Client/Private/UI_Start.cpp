@@ -51,12 +51,12 @@ HRESULT CUI_Start::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CUI_Start::Set_AnimPosition(_uint iPos, _float fAnimSpeed, _bool bStop, _float fStopDuration)
+void CUI_Start::Set_AnimPosition(_uint iPosX, _float fAnimSpeed, _bool bStop, _float fStopDuration)
 {
-	m_QueueAnimPos.push({ iPos ,fAnimSpeed ,bStop  ,fStopDuration });
+	m_QueueAnimPos.push({ iPosX ,fAnimSpeed ,bStop  ,fStopDuration });
 }
 
-void CUI_Start::Action_ScaleAnim(_float fTimeDelta)
+void CUI_Start::Action_ScaleAnim(_float fOffsetScaleY ,_float fTimeDelta)
 {
 	if (!m_QueueAnimPos.empty())
 	{
@@ -68,7 +68,7 @@ void CUI_Start::Action_ScaleAnim(_float fTimeDelta)
 			isGrowing ? m_fScaleAnimTimer += fTimeDelta : m_fScaleAnimTimer -= fTimeDelta;
 			_float fScaleAmount = m_fScaleAnimTimer * frontAnim.m_fSpeed;
 			m_fSizeX += fScaleAmount;
-			m_fSizeY += fScaleAmount;
+			//m_fSizeY += fScaleAmount * fOffsetScaleY;
 		}
 		else
 			m_fStopTimer += fTimeDelta;
@@ -84,7 +84,7 @@ void CUI_Start::Action_ScaleAnim(_float fTimeDelta)
 	//else
 	//	m_bDead = true;
 
-	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX * fOffsetScaleY, 1.f);
 }
 
 HRESULT CUI_Start::Bind_ShaderResources()

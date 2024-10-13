@@ -33,7 +33,7 @@ public:
 
 protected:
 	void Set_AnimPosition(_uint iPos, _float fAnimSpeed, _bool bStop = FALSE, _float fStopDuration = 0.f);
-	void Action_ScaleAnim(_float fTimeDelta);
+	void Action_ScaleAnim(_float fOffsetScaleY , _float fTimeDelta);
 
 protected:
 	_bool m_bAnimStop = { FALSE };

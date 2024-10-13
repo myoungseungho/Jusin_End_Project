@@ -166,6 +166,12 @@
     <Filter Include="02.GameObjects\UI\GameStart\Font">
       <UniqueIdentifier>{cf38ea3c-8ae1-40f0-a8fb-a49c3f586563}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\GameStart\Font\Ready">
+      <UniqueIdentifier>{b7f79c96-51cf-465c-b513-4e7353bdcf3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameStart\Font\Fight">
+      <UniqueIdentifier>{376f56a2-6519-40cd-b34f-76f1d8749380}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -333,8 +339,11 @@
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_ReadyFont.h">
+      <Filter>02.GameObjects\UI\GameStart\Font\Ready</Filter>
+    </ClInclude>
     <ClInclude Include="..\public\UI_FightFont.h">
-      <Filter>02.GameObjects\UI\GameStart\Font</Filter>
+      <Filter>02.GameObjects\UI\GameStart\Font\Fight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -491,8 +500,11 @@
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_ReadyFont.cpp">
+      <Filter>02.GameObjects\UI\GameStart\Font\Ready</Filter>
+    </ClCompile>
     <ClCompile Include="..\private\UI_FightFont.cpp">
-      <Filter>02.GameObjects\UI\GameStart\Font</Filter>
+      <Filter>02.GameObjects\UI\GameStart\Font\Fight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

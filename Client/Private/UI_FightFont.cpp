@@ -31,18 +31,16 @@ HRESULT CUI_FightFont::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 
-	m_fSizeX = 400.f;
-	m_fSizeY = 200.f;
+	m_fSizeX = 1000.f;
+	m_fSizeY = 500.f;
 
-	//Set_AnimPosition(500, 10.f);
-	//Set_AnimPosition(400, 50.f, TRUE, 5.f);
-	//Set_AnimPosition(500, 80.f);
-	//Set_AnimPosition(600, 80.f);
-	//Set_AnimPosition(1000, 150.f, TRUE, 3.f);
+	Set_AnimPosition(800, 10.f);
+	Set_AnimPosition(500, 50.f, TRUE, 2.5f);
+	Set_AnimPosition(800, 200.f);
+	Set_AnimPosition(750, 200.f);
+	Set_AnimPosition(1500, 200.f );
 
-	m_fOffSetPosY = 50.f;
-
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f  - m_fOffSetPosY, 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.8f);
 
 	return S_OK;
 }
@@ -51,16 +49,26 @@ void CUI_FightFont::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
+	if (m_QueueAnimPos.size() < 2)
+	{
+		m_fAlphaTimer -= fTimeDelta;
+		if (m_fAlphaTimer <= 0.f)
+			m_fAlphaTimer = 0.f;
+	}
+	else 
+	{ 
+		m_fAlphaTimer += fTimeDelta * 0.5f;
+		if (m_fAlphaTimer >= 1.f)
+			m_fAlphaTimer = 1.f;
+	}
 
-	
 }
 
 void CUI_FightFont::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_StartAnim(fTimeDelta);
-	//Action_ScaleAnim(fTimeDelta);
+	Action_ScaleAnim(1.f ,fTimeDelta);
 
 
 
@@ -78,7 +86,7 @@ HRESULT CUI_FightFont::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pShaderCom->Begin(7)))
+	if (FAILED(m_pShaderCom->Begin(8)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -96,14 +104,14 @@ HRESULT CUI_FightFont::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartFont"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameFightFont"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
 	/* For.Com_MaskTexture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartFont"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameFightFont"),
 		TEXT("Com_MaskTexture "), reinterpret_cast<CComponent**>(&m_pMaskTexture))))
-		return E_FAIL;	
+		return E_FAIL;
 
 }
 
@@ -120,49 +128,14 @@ HRESULT CUI_FightFont::Bind_ShaderResources()
 	if (FAILED(m_pMaskTexture->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 1)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskTimer, sizeof(_float))))
-		return E_FAIL;
+	_float fTemp = 1 - m_fAlphaTimer;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fAlphaTimer, sizeof(_float))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", & (fTemp), sizeof(_float))))
 		return E_FAIL;
 
 	//m_fAlphaTimer 
 
 	return S_OK;
-}
-
-void CUI_FightFont::Action_StartAnim(_float fTimeDelta)
-{
-	if (m_bStart == FALSE && m_fOffSetPosY >= 0.f)
-	{
-		m_fStartAnimTimer += fTimeDelta;
-
-		m_fOffSetPosY -= m_fStartAnimTimer;
-
-		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f - m_fOffSetPosY, 0.f);
-	}
-	else
-	{
-		m_bStart = TRUE;
-		m_fStartAnimTimer = 0.f;
-	}
-
-	if (m_bStart == TRUE && m_bEnd == FALSE)
-	{
-		m_fMaskTimer += fTimeDelta;
-
-		if (m_fMaskTimer >= 3.f)
-		{
-			m_bEnd = TRUE;
-			m_fMaskTimer = 1.f;
-
-		}
-	}
-	if (m_bEnd)
-	{
-		m_fMaskTimer -= fTimeDelta;
-		m_fAlphaTimer += fTimeDelta;
-	}
 }
 
 
