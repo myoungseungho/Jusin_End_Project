@@ -219,11 +219,11 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	StartDesc.fSpeedPerSec = 50.f;
 	StartDesc.fRotationPerSec = XMConvertToRadians(90.f);
 	
-	//for (int i = 0; i < 8; i++)
-	//{
-		StartDesc.iNumUI = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		StartDesc.iNumUI = i;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_GameStartCircle"), TEXT("Layer_UI_GameStartCircle"), &StartDesc);
-	//}
+	}
 	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ReadyFont"), TEXT("Layer_UI_GameStartFont"));
 	
 	//CUIObject::UI_DESC StartDesc = {};

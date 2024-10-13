@@ -10,24 +10,9 @@ class CUI_GameState abstract : public CUIObject
 public:
 	typedef struct
 	{
-		_uint iPos = {};
-		_float m_fSpeed = {};
-
-		_bool bStop = { FALSE };
-		_float fStopDuration = { 0.f };
-
-	}ANIM_INFO;
-
-public:
-	typedef struct
-	{
 		_int iPos = {};
 		_float fEventFrame = {};
-
-		//_bool bStop = { FALSE };
-		//_float fStopDuration = { 0.f };
-
-	}TEMP;
+	}ANIM_INFO;
 
 protected:
 	CUI_GameState(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -43,8 +28,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 
 protected:
-	void Set_AnimPosition(_uint iPos, _float fAnimSpeed, _bool bStop = FALSE, _float fStopDuration = 0.f);
-	void Action_ScaleAnim(_float fOffsetScaleY , _float fTimeDelta);
+	void Set_AnimPosition(_int iPosX, _float fAnimSpeed);
 	void Action_Anim(_float fSizeOffSet, _float fTimeDelta);
 
 protected:
@@ -53,12 +37,10 @@ protected:
 	_float m_fScaleAnimTimer = { 0.f };
 	_float m_fStopTimer = { 0.f };
 
-	queue<ANIM_INFO> m_QueueAnimPos = { };
-	deque<TEMP> m_vecTemp = {};
-	_float m_fTSrc = {};
-	_float m_fDest = { 0.f };
-	_float m_fData = { 0.f };
-	_float m_fLast = { 1200.f };
+	deque<ANIM_INFO> m_DequeAnim = {};
+
+	_float m_fAnimFrame = {};
+	_float m_fAnimPos = { 0.f};
 
 	_float m_fTotalAnimDuration = { 0.f };
 

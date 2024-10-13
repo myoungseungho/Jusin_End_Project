@@ -23,6 +23,9 @@ HRESULT CUI_GameStartCircle::Initialize_Prototype()
 
 HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 {
+	m_fSizeX = 1000.f;
+	m_fSizeY = 1000.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -32,24 +35,14 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 
 	m_iTextureIndex = pUI_Desc->iNumUI;
-
-	m_fSizeX = 1200.f;
-	m_fSizeY = 1200.f;
 	
-	//Set_AnimPosition(600 , 5.f);
-	//Set_AnimPosition(400, 50.f, TRUE , 6.75f);
-	//Set_AnimPosition(500, 80.f);
-	//Set_AnimPosition(600, 80.f);
-	//Set_AnimPosition(1000, 150.f, TRUE, 1.f);
+	Set_AnimPosition(600, 2.f);
+	Set_AnimPosition(600, 4.f);
+	Set_AnimPosition(400, 4.5f);
+	Set_AnimPosition(1000, 5.f);
+	Set_AnimPosition(600, 5.5f);
 
-	m_vecTemp.push_back({ 100 ,0.5f });
-	m_vecTemp.push_back({ 1200 ,1.f });
-	m_vecTemp.push_back({ 300 ,9.f });
-	m_vecTemp.push_back({ 1200 ,10.f });
-	m_vecTemp.push_back({ 100 ,15.f });
-
-
-	m_iTotalAnimSize = m_QueueAnimPos.size();
+	m_iTotalAnimSize = m_DequeAnim.size();
 
 	//if(m_eAnimType == UI_ANIM)
 		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
@@ -67,6 +60,8 @@ void CUI_GameStartCircle::Priority_Update(_float fTimeDelta)
 void CUI_GameStartCircle::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
+	//DebugTesting(1.f, 0.f);
 
 	//if (m_eAnimType == UI_ANIM)
 	//{

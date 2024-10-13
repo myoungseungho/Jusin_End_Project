@@ -32,6 +32,8 @@ HRESULT CUI_GameState::Initialize(void* pArg)
 	if(pDesc != nullptr)
 		m_eAnimType = pDesc->eType;
 
+	m_fAnimPos = m_fSizeX;
+
 	return S_OK;
 }
 
@@ -40,7 +42,6 @@ void CUI_GameState::Priority_Update(_float fTimeDelta)
 	__super::Priority_Update(fTimeDelta);
 
 	m_fTotalAnimDuration += fTimeDelta;
-	m_fDest += fTimeDelta;
 }
 
 void CUI_GameState::Update(_float fTimeDelta)
@@ -58,60 +59,28 @@ HRESULT CUI_GameState::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CUI_GameState::Set_AnimPosition(_uint iPosX, _float fAnimSpeed, _bool bStop, _float fStopDuration)
+void CUI_GameState::Set_AnimPosition(_int iNextPosX, _float fAnimSpeed)
 {
 	if(m_eAnimType == UI_ANIM)
-		m_QueueAnimPos.push({ iPosX ,fAnimSpeed ,bStop  ,fStopDuration });
-}
-
-void CUI_GameState::Action_ScaleAnim(_float fOffsetScaleY ,_float fTimeDelta)
-{
-	if (!m_QueueAnimPos.empty())
-	{
-		auto& frontAnim = m_QueueAnimPos.front();
-		_bool isGrowing = frontAnim.iPos > m_fSizeX;
-
-		if ((m_QueueAnimPos.front().bStop == FALSE) || (m_QueueAnimPos.front().fStopDuration <= m_fStopTimer))
-		{
-			isGrowing ? m_fScaleAnimTimer += fTimeDelta : m_fScaleAnimTimer -= fTimeDelta;
-			_float fScaleAmount = m_fScaleAnimTimer * frontAnim.m_fSpeed;
-			m_fSizeX += fScaleAmount;
-			//m_fSizeY += fScaleAmount * fOffsetScaleY;
-		}
-		else
-			m_fStopTimer += fTimeDelta;
-
-		if ((isGrowing && frontAnim.iPos <= m_fSizeX) ||
-			(!isGrowing && frontAnim.iPos >= m_fSizeX))
-		{
-			m_QueueAnimPos.pop();
-			m_fStopTimer = 0.f;
-			m_fScaleAnimTimer = 0.f;
-		}
-	}
-
-	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX * fOffsetScaleY, 1.f);
+		m_DequeAnim.push_back({ iNextPosX ,fAnimSpeed});
 }
 
 void CUI_GameState::Action_Anim(_float fSizeOffSet, _float fTimeDelta)
 {
-	if (m_vecTemp.empty() == FALSE )
+	if (m_DequeAnim.empty() == FALSE )
 	{
-		_float fVelocity = (m_vecTemp.at(0).iPos - m_fLast) / (m_vecTemp.at(0).fEventFrame - m_fTSrc);
+		_float fVelocity = (m_DequeAnim.at(0).iPos - m_fAnimPos) / (m_DequeAnim.at(0).fEventFrame - m_fAnimFrame);
 
-		if (m_vecTemp.at(0).fEventFrame >= m_fTotalAnimDuration)
+		if (m_DequeAnim.at(0).fEventFrame >= m_fTotalAnimDuration)
 		{
 			m_fSizeX +=  fVelocity* fTimeDelta;
-			//m_fSizeX = m_fData;
-			//m_fSizeX += fVelocity * fTimeDelta;
 		}
 		else
 		{
-			m_fTSrc = m_vecTemp.at(0).fEventFrame;
-			m_fLast = m_vecTemp.at(0).iPos;
-			m_vecTemp.pop_front();
-			m_fDest = 0.f;
-			m_fData = 0.f;
+			m_fAnimFrame = m_DequeAnim.at(0).fEventFrame;
+			m_fAnimPos = m_DequeAnim.at(0).iPos;
+
+			m_DequeAnim.pop_front();
 		}
 
 		m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX  * fSizeOffSet, 1.f);

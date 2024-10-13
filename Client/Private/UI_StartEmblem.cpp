@@ -34,11 +34,11 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 	m_fSizeX = 800.f;
 	m_fSizeY = 800.f;
 
-	Set_AnimPosition(500, 10.f);
-	Set_AnimPosition(400, 50.f, TRUE, 5.f);
-	Set_AnimPosition(500, 80.f);
-	Set_AnimPosition(600, 80.f);
-	Set_AnimPosition(1000, 150.f, TRUE, 3.f);
+	//Set_AnimPosition(500, 10.f);
+	//Set_AnimPosition(400, 50.f, TRUE, 5.f);
+	//Set_AnimPosition(500, 80.f);
+	//Set_AnimPosition(600, 80.f);
+	//Set_AnimPosition(1000, 150.f, TRUE, 3.f);
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
 
@@ -54,7 +54,7 @@ void CUI_StartEmblem::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_ScaleAnim(1.f,fTimeDelta);
+	//Action_ScaleAnim(1.f,fTimeDelta);
 
 }
 
