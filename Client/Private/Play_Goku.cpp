@@ -60,12 +60,44 @@ vector<CInput> Command_214Attack_Extra =
 	{MOVEKEY_LEFT, ATTACK_LIGHT}
 };
 
+vector<CInput> Command_236Special =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_SPECIAL}
+};
+
+vector<CInput> Command_236Special_Side =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL}
+};
+
+
+vector<CInput> Command_214FinalAttack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_SPECIAL}
+};
 
 
 vector<CInput> Command_LightAttack ={	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}};
 vector<CInput> Command_MediumAttack ={	{MOVEKEY_NEUTRAL, ATTACK_MEDIUM}};
 vector<CInput> Command_HeavyAttack ={	{MOVEKEY_NEUTRAL, ATTACK_HEAVY}};
 vector<CInput> Command_SpecialAttack ={	{MOVEKEY_NEUTRAL, ATTACK_SPECIAL}};
+
+
+
+vector<CInput> Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
+vector<CInput> Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
+vector<CInput> Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
+vector<CInput> Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
+
 
 
 
@@ -150,13 +182,24 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_214Attack,  bind(&CGoku_MeleeAttack::Attack_214, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_214Attack_Extra,  bind(&CGoku_MeleeAttack::Attack_214, &m_tAttackMap) });
 
+	MoveCommandPatternsFunction.push_back({ Command_236Special,  bind(&CGoku_MeleeAttack::Attack_236Special, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236Special_Side,  bind(&CGoku_MeleeAttack::Attack_236Special_Side, &m_tAttackMap) });
+	
+
+	MoveCommandPatternsFunction.push_back({ Command_214FinalAttack, bind(&CGoku_MeleeAttack::Attack_214Final, &m_tAttackMap) });
+
+
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_LightAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Light, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
+
+
 
 	//위에서 부터 확인하므로 간단한 커맨드가 아래로 가야함
 	MoveCommandPatternsFunction.push_back({ Command_LightAttack, bind(&CGoku_MeleeAttack::Attack_Light, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_MediumAttack, bind(&CGoku_MeleeAttack::Attack_Medium, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
-
+	MoveCommandPatternsFunction.push_back({ Command_SpecialAttack, bind(&CGoku_MeleeAttack::Attack_Special, &m_tAttackMap) });
 
 
 
@@ -224,40 +267,93 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	
 	if (Check_bCurAnimationisGroundMove())
 	{
-		if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FOWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
+		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FOWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
+		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
 		{
 			_short MoveKey = 0;
-
-			if (m_pGameInstance->Key_Pressing(DIK_A))
+			if (m_pGameInstance->Key_Pressing(DIK_W))
 			{
-				MoveKey -= m_iLookDirection;
+				m_pTransformCom->Add_Move({ 0,3,0 });
+				Set_Animation(ANIME_JUMP_UP);
 			}
 
-			else if (m_pGameInstance->Key_Pressing(DIK_D))
+			else if (m_pGameInstance->Key_Pressing(DIK_S))
 			{
-				MoveKey += m_iLookDirection;
-			}
-
-
-			if (MoveKey == -1)
-			{
-				m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-				m_iNextAnimation.first = ANIME_IDLE;
-				m_iNextAnimation.second = 100.f;
+				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
+				{
+					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
+				}
 
 			}
-			else if (MoveKey == 1)
-			{
-				m_pModelCom->SetUp_Animation(ANIME_FOWARD_WALK, false);
-				m_iNextAnimation.first = ANIME_IDLE;
-				m_iNextAnimation.second = 100.f;
-			}
+
 			else
 			{
-				m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-				m_iNextAnimation.first = ANIME_IDLE;
-				m_iNextAnimation.second = 100.f;
+				if (m_pGameInstance->Key_Pressing(DIK_A))
+				{
+					MoveKey -= m_iLookDirection;
+				}
+
+				else if (m_pGameInstance->Key_Pressing(DIK_D))
+				{
+					MoveKey += m_iLookDirection;
+				}
+
+
+				if (MoveKey == -1)
+				{
+					m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.second = 100.f;
+
+				}
+				else if (MoveKey == 1)
+				{
+					m_pModelCom->SetUp_Animation(ANIME_FOWARD_WALK, false);
+					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.second = 100.f;
+				}
+				else
+				{
+					m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.second = 100.f;
+				}
 			}
+
+			
+			//앉기 추가 전에는 이거만 있었음
+			//if (m_pGameInstance->Key_Pressing(DIK_A))
+			//{
+			//	MoveKey -= m_iLookDirection;
+			//}
+			//
+			//else if (m_pGameInstance->Key_Pressing(DIK_D))
+			//{
+			//	MoveKey += m_iLookDirection;
+			//}
+			//
+			//
+			//if (MoveKey == -1)
+			//{
+			//	m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+			//	m_iNextAnimation.first = ANIME_IDLE;
+			//	m_iNextAnimation.second = 100.f;
+			//
+			//}
+			//else if (MoveKey == 1)
+			//{
+			//	m_pModelCom->SetUp_Animation(ANIME_FOWARD_WALK, false);
+			//	m_iNextAnimation.first = ANIME_IDLE;
+			//	m_iNextAnimation.second = 100.f;
+			//}
+			//else
+			//{
+			//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+			//	m_iNextAnimation.first = ANIME_IDLE;
+			//	m_iNextAnimation.second = 100.f;
+			//}
+
+			
 		}
 	}
 

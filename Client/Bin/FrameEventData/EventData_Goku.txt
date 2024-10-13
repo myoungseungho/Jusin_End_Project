@@ -44,6 +44,7 @@ PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,120
 PLAY_GOKU,GKS202_body,35,AnimSpeedChange,0.02,20
 PLAY_GOKU,GKS202_body,35,NextAnimationCheck,33333333
 PLAY_GOKU,GKS202_body,40,AnimSpeedChange,0.02,100
+PLAY_GOKU,GKS202_body,42,NextAnimationCheck,33333333
 
 
 PLAY_GOKU,GKS202_body,12,ObjectMove,0.1,0,0,0
@@ -97,12 +98,15 @@ PLAY_GOKU,GKS204_body,42,ObjectMove,0.1,0,0,0
 
 //,지상특수
 PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,60
-PLAY_GOKU,GKS205_body,30,AttackEvent,205
+PLAY_GOKU,GKS205_body,20,AttackEvent,205
+PLAY_GOKU,GKS205_body,25,NextAnimationCheck,333333333
 PLAY_GOKU,GKS205_body,30,AnimSpeedChange,0.022,30
 PLAY_GOKU,GKS205_body,30,NextAnimationCheck,333333333
 PLAY_GOKU,GKS205_body,35,AnimSpeedChange,0.022,60
-PLAY_GOKU,GKS205_body,50,주석,0첫발시작 30공격시작 50단발끝 // 55연발시작  80 짝수발공격 95연발끝   95~109 3연발시작
-PLAY_GOKU,GKS205_body,50,주석,연발이면 30에서 55로  80에서 95로  109에서  15로
+PLAY_GOKU,GKS205_body,50,PositionChange,109
+
+//,PLAY_GOKU,GKS205_body,50,주석,0첫발시작 20공격시작 50단발끝 // 55연발시작  80 짝수발공격 95연발끝   95~109 3연발시작
+//,PLAY_GOKU,GKS205_body,50,주석,연발이면 30에서 55로  80에서 95로  109에서  15로
 
 //,앉아약
 PLAY_GOKU,GKS230_body,0,AnimSpeedChange,0.028,90
@@ -110,18 +114,29 @@ PLAY_GOKU,GKS230_body,10,AttackEvent,33333
 PLAY_GOKU,GKS230_body,10,NextAnimationCheck,333 3
 
 //,앉아중 기존 공격프레임은 11~14
-PLAY_GOKU,GKS231_body,0,AnimSpeedChange,0.04,90
+PLAY_GOKU,GKS231_body,0,AnimSpeedChange,0.02,90
 PLAY_GOKU,GKS231_body,21,AttackEvent,33333
 PLAY_GOKU,GKS231_body,25,AttackEvent,333333
+PLAY_GOKU,GKS231_body,30,NextAnimationCheck,333333333
 //,이러면 2히트 날 수 있는거 아닌가
-PLAY_GOKU,GKS231_body,5,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,7,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,9,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,11,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,13,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,15,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,17,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS231_body,19,ObjectMove,0.1,0,0,0
+
+
+PLAY_GOKU,GKS231_body,5,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,6,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,7,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,8,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,9,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,10,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,11,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,12,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,13,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,14,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,15,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,16,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,17,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,18,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,19,ObjectMove,0.05,0,0,0
+PLAY_GOKU,GKS231_body,20,ObjectMove,0.05,0,0,0
 PLAY_GOKU,GKS231_body,21,ObjectMove,0.1,0,0,0
 
 
@@ -136,11 +151,15 @@ PLAY_GOKU,GKS232_body,34,NextAnimationCheck,33333
 //,공중약
 PLAY_GOKU,GKS260_body,0,AnimSpeedChange,0.027000,120.000000
 PLAY_GOKU,GKS260_body,10,AttackEvent,33333333
+PLAY_GOKU,GKS260_body,11,NextAnimationCheck,333333
+PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
+
 
 //,공중 중
 PLAY_GOKU,GKS261_body,0,AnimSpeedChange,0.025000,120
 PLAY_GOKU,GKS261_body,30,AnimSpeedChange,0.027000,80
 PLAY_GOKU,GKS261_body,30,AttackEvent,33333333
+PLAY_GOKU,GKS261_body,35,NextAnimationCheck,333333
 
 //,원본은 0.061,120
 
@@ -174,7 +193,8 @@ PLAY_GOKU,GKS263_body,28,ObjectMove,0,0.1,0,0
 PLAY_GOKU,GKS265_body,0,AnimSpeedChange,0.030000,60.202000
 //,PLAY_GOKU,GKS265_body,6,StopEvent,
 PLAY_GOKU,GKS265_body,20,AttackEvent,33333
-//,PLAY_GOKU,GKS265_body,20,StopEventEnd,
+PLAY_GOKU,GKS265_body,25,NextAnimationCheck,333333
+PLAY_GOKU,GKS265_body,30,NextAnimationCheck,333333
 
 
 
@@ -391,9 +411,13 @@ PLAY_GOKU,GKS406_body,78,ObjectMove,0.09,0.01,0,0
 
 //,3필 시작 기모으기
 PLAY_GOKU,GKS436_body,0,AnimSpeedChange,0.023000,25
-//,AnimSpeedChange,0.043000,40.808998
 PLAY_GOKU,GKS436_body,30,ModelChange,4444444
 PLAY_GOKU,GKS436_body,30,EFFECT,4444444
+//,//,//,//,현재 기능이 없어서 임의 이동으로 만듦
+PLAY_GOKU,GKS436_body,44.000000,EnemyChase,1,0,0
+PLAY_GOKU,GKS436_body,44.000000,FlipPlayerDirection,0
+PLAY_GOKU,GKS436_body,44.000000,PositionChange,54
+PLAY_GOKU,GKS436_body,40.000000,SetNextAnimation,72,100
 
 
 //,3필 시작 기모으기 다른 애니메이션? 초3전용? 
@@ -402,6 +426,8 @@ PLAY_GOKU,GKS440_body,50.000000,AnimSpeedChange,0.023000,12
 PLAY_GOKU,GKS440_body,45.000000,EnemyChase,1,0,0
 PLAY_GOKU,GKS440_body,45.000000,FlipPlayerDirection,0
 PLAY_GOKU,GKS440_body,45.000000,PositionChange,54
+
+//,PLAY_GOKU,GKS440_body,45.000000,SetNextAnimation,72,100
 
 
 //,3필 모션 - 엘보
@@ -415,22 +441,25 @@ PLAY_GOKU,GKS441_body,24,ObjectMove,0.2,0,0,0
 PLAY_GOKU,GKS441_body,26,ObjectMove,0.2,0,0,0
 PLAY_GOKU,GKS441_body,28,ObjectMove,0.2,0,0,0
 PLAY_GOKU,GKS441_body,30,ObjectMove,0.2,0,0,0
-
+PLAY_GOKU,GKS441_body,45.000000,SetNextAnimation,74,100
 
 //,3필 모션 - 올려차기
 PLAY_GOKU,GKS443_body,0.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS443_body,30,AttackEvent,33333
+//,PLAY_GOKU,GKS443_body,74.000000,SetNextAnimation,73,100
+PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 
 
 //,3필 모션 - 공중강공
 PLAY_GOKU,GKS442_body,0,ObjectMove,2,3,0,0
-PLAY_GOKU,GKS442_body,1,FlipPlayerDirection,0
-//,PLAY_GOKU,GKS442_body,0.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS442_body,0.000000,AnimSpeedChange,0.020000,40.000000
+PLAY_GOKU,GKS442_body,4,FlipPlayerDirection,0
 PLAY_GOKU,GKS442_body,20.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS442_body,25,AttackEvent,33333
 //,그냥 정지하는게 맞을지도
 PLAY_GOKU,GKS442_body,25,AnimSpeedChange,0.020000,80.000000
+PLAY_GOKU,GKS442_body,60,SetNextAnimation,70
+
 
 
 //, 3필 모션-마지막

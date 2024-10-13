@@ -462,7 +462,26 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
         //pCharacter->NextMoveCheck();
 
     }
-    
+    else if (splitText[0] == "SetAnimation")
+    {
+        pCharacter->Set_Animation(fValue[0]);
+    }
+    else if (splitText[0] == "SetNextAnimation")
+    {
+        pCharacter->Set_NextAnimation(fValue[0],fValue[1]);
+        //pCharacter->Set_Animation(fValue[0]);
+    }
+    else if (splitText[0] == "FlipPlayerDirection")
+    {
+        pCharacter->FlipDirection();
+    }
+    else if (splitText[0] == "DebugPoint")
+    {
+        _int iDebug = pCharacter->Get_iDirection();
+        pCharacter->FlipDirection();
+        _bool bDebug = true;
+
+    }
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()

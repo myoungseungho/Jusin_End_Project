@@ -23,8 +23,21 @@ public:
 	void Attack_Light();
 	void Attack_Medium();
 	void Attack_Heavy();
+	void Attack_Special();
+
 	void Attack_236();
 	void Attack_214();
+
+	void Attack_236Special();
+	void Attack_236Special_Side();
+	
+	void Attack_214Final();
+
+
+	void Attack_Crouch_Light();
+	void Attack_Crouch_Medium();
+	void Attack_Crouch_Heavy();
+
 
 
 	class CPlay_Goku* m_pPlayer = { nullptr };

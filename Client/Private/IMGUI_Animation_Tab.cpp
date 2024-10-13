@@ -74,8 +74,12 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 
 
    //첫 실행일때, 루프돌았을때 ZeroFrame을 어떻게 구분하는가
-    CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
-    CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
+  
+
+   
+    //이거 ModelPreview로 이사감
+    //CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
+    //CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
 
 
 

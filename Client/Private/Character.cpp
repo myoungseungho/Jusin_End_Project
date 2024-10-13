@@ -356,7 +356,7 @@ void CCharacter::InputedCommandUpdate(_float fTimeDelta)
 	inputBuffer.erase(
 		remove_if(inputBuffer.begin(), inputBuffer.end(), [fTimeDelta](CInput& input) {
 			input.frameTime += fTimeDelta;  // frameTime에 fTimeDelta 더하기
-			return input.frameTime >= 0.3f; // 0.3 이상인 경우 삭제
+			return input.frameTime >= 0.35f; // 0.3 이상인 경우 삭제
 			}),
 		inputBuffer.end()
 	);

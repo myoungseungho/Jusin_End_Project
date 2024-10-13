@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-
+#include "FrameEvent_Manager.h"
 
 CModel_Preview::CModel_Preview(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -53,6 +53,10 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 	
+	CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
+	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
+
+
 	return S_OK;
 }
 
