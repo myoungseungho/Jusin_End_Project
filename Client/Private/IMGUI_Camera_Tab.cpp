@@ -72,7 +72,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select(_float fTimeDelta)
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
 
 	// 가상 카메라 목록 가져오기
-	list<CCamera*> cameraList = main_Camera->m_listVirtualCamera;
+	vector<CCamera*> cameraList = main_Camera->m_vecVirtualCamera;
 
 	// 카메라 이름을 보관할 임시 배열 생성
 	vector<const _char*> cameraNames;
@@ -82,13 +82,29 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select(_float fTimeDelta)
 	}
 
 	// 현재 선택된 카메라 인덱스를 추적할 정적 변수
-	static _int selectedCameraIndex = -1;
+	static _int selectedCameraIndex = (_int)main_Camera->Get_Virtual_Camera();
 
 	if (ImGui::Combo("Camera List", &selectedCameraIndex, cameraNames.data(), cameraNames.size())) {
-		// 콤보 박스에서 선택이 변경되었을 때 처리 로직
-		CCamera* selectedCamera = *next(cameraList.begin(), selectedCameraIndex);
-		// 선택된 카메라에 대해 추가 처리 수행 가능
+		// 선택된 카메라의 인덱스에 따라 활성화 함수 호출
+		Activate_Select_Camera(selectedCameraIndex, cameraList);
 	}
+}
+
+// 새로운 함수: 선택된 카메라를 활성화하는 함수
+void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex, const vector<CCamera*>& cameraList)
+{
+	if (selectedIndex < 0 || selectedIndex >= cameraList.size()) {
+		return;  // 유효하지 않은 인덱스일 경우 처리하지 않음
+	}
+
+	//메인카메라 가져오기, 나중에 이건 다 최적화해야함
+	CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
+
+	// 선택된 카메라 가져오기
+	CCamera* selectedCamera = *next(cameraList.begin(), selectedIndex);
+	// 선택된 카메라 셋팅하기
+	main_Camera->Set_Virtual_Camera((CMain_Camera::VIRTUAL_CAMERA)selectedIndex);
 }
 
 void CIMGUI_Camera_Tab::Render(_float fTimeDelta)

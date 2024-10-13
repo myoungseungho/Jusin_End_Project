@@ -15,6 +15,14 @@ public:
 		CAMERA_MODE_END
 	};
 
+	enum VIRTUAL_CAMERA
+	{
+		VIRTUAL_CAMERA_NORMAL,
+		VIRTUAL_CAMERA_SKILL_1,
+		VIRTUAL_CAMERA_SKILL_2,
+		VIRTUAL_CAMERA_END
+	};
+
 private:
 	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CMain_Camera(const CMain_Camera& Prototype);
@@ -28,15 +36,19 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	//버츄얼 카메라 셋팅
+	void Set_Virtual_Camera(VIRTUAL_CAMERA mode) { m_currentVirtualMode = mode; }
+	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
+
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
 
 public:
-	list<CCamera*> m_listVirtualCamera;
+	vector<CCamera*> m_vecVirtualCamera;
 
 private:
-	CCamera* m_current_Virtual_Camara = { nullptr };
+	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 
 public:

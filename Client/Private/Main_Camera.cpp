@@ -28,23 +28,22 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_vecVirtualCamera.reserve(VIRTUAL_CAMERA_END);
+
 	_char* name = "Camera_Normal";
 	//처음에는 일반 가상 카메라를 메인 카메라로
 	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"), &name);
-	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
+	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
 
 	//스킬 버츄얼 카메라
 	name = "Camera_Skill_1";
 	CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
-	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
+	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
 
 	//스킬 버츄얼 카메라2
 	name = "Camera_Skill_2";
 	CGameObject* virtualCamera_Skill2 = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
-	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill2));
-
-	//처음엔 일반 가상 카메라를 셋팅
-	m_current_Virtual_Camara = m_listVirtualCamera.front();
+	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill2));
 
 	return S_OK;
 }
@@ -62,15 +61,15 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	Update_Camera(m_current_Virtual_Camara);
+	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode]);
 }
 
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
-	_float fMoveSpeed = m_current_Virtual_Camara->m_fMoveSpeed;
+	_float fMoveSpeed = m_vecVirtualCamera[m_currentVirtualMode]->m_fMoveSpeed;
 
-	CTransform* virtual_Transform = static_cast<CTransform*>(m_current_Virtual_Camara->Get_Component(TEXT("Com_Transform")));
+	CTransform* virtual_Transform = static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")));
 
 	// 오른쪽 버튼이 눌렸는지 확인
 	if (m_pGameInstance->Mouse_Pressing(1))
@@ -78,7 +77,7 @@ void CMain_Camera::Free_Camera(_float fTimeDelta)
 		// Shift 키가 눌렸는지 확인하고, 눌렸다면 이동 속도를 증가
 		if (m_pGameInstance->Key_Pressing(DIK_LSHIFT))
 		{
-			fMoveSpeed *= 3.f;
+			fMoveSpeed *= 10.f;
 		}
 
 		if (m_pGameInstance->Key_Pressing(DIK_A))
@@ -115,12 +114,12 @@ void CMain_Camera::Free_Camera(_float fTimeDelta)
 
 		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
 		{
-			virtual_Transform->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_current_Virtual_Camara->m_fMouseSensor * MouseMove * fTimeDelta);
+			virtual_Transform->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_vecVirtualCamera[m_currentVirtualMode]->m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 
 		if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
 		{
-			virtual_Transform->Turn(virtual_Transform->Get_State(CTransform::STATE_RIGHT), m_current_Virtual_Camara->m_fMouseSensor * MouseMove * fTimeDelta);
+			virtual_Transform->Turn(virtual_Transform->Get_State(CTransform::STATE_RIGHT), m_vecVirtualCamera[m_currentVirtualMode]->m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 	}
 }
@@ -172,7 +171,7 @@ CGameObject* CMain_Camera::Clone(void* pArg)
 
 void CMain_Camera::Free()
 {
-	for (auto& iter : m_listVirtualCamera)
+	for (auto& iter : m_vecVirtualCamera)
 		Safe_Release(iter);
 
 	__super::Free();
