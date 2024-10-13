@@ -2,7 +2,7 @@
 
 #include "UIObject.h"
 #include <queue>
-
+#include <deque>
 BEGIN(Client)
 
 class CUI_GameState abstract : public CUIObject
@@ -17,6 +17,17 @@ public:
 		_float fStopDuration = { 0.f };
 
 	}ANIM_INFO;
+
+public:
+	typedef struct
+	{
+		_int iPos = {};
+		_float fEventFrame = {};
+
+		//_bool bStop = { FALSE };
+		//_float fStopDuration = { 0.f };
+
+	}TEMP;
 
 protected:
 	CUI_GameState(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -34,6 +45,7 @@ public:
 protected:
 	void Set_AnimPosition(_uint iPos, _float fAnimSpeed, _bool bStop = FALSE, _float fStopDuration = 0.f);
 	void Action_ScaleAnim(_float fOffsetScaleY , _float fTimeDelta);
+	void Action_Anim(_float fSizeOffSet, _float fTimeDelta);
 
 protected:
 	_bool m_bAnimStop = { FALSE };
@@ -42,6 +54,13 @@ protected:
 	_float m_fStopTimer = { 0.f };
 
 	queue<ANIM_INFO> m_QueueAnimPos = { };
+	deque<TEMP> m_vecTemp = {};
+	_float m_fTSrc = {};
+	_float m_fDest = { 0.f };
+	_float m_fData = { 0.f };
+	_float m_fLast = { 1200.f };
+
+	_float m_fTotalAnimDuration = { 0.f };
 
 protected:
 	virtual HRESULT Bind_ShaderResources();

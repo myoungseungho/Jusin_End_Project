@@ -38,6 +38,9 @@ HRESULT CUI_GameState::Initialize(void* pArg)
 void CUI_GameState::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_fTotalAnimDuration += fTimeDelta;
+	m_fDest += fTimeDelta;
 }
 
 void CUI_GameState::Update(_float fTimeDelta)
@@ -88,6 +91,31 @@ void CUI_GameState::Action_ScaleAnim(_float fOffsetScaleY ,_float fTimeDelta)
 	}
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX * fOffsetScaleY, 1.f);
+}
+
+void CUI_GameState::Action_Anim(_float fSizeOffSet, _float fTimeDelta)
+{
+	if (m_vecTemp.empty() == FALSE )
+	{
+		_float fVelocity = (m_vecTemp.at(0).iPos - m_fLast) / (m_vecTemp.at(0).fEventFrame - m_fTSrc);
+
+		if (m_vecTemp.at(0).fEventFrame >= m_fTotalAnimDuration)
+		{
+			m_fSizeX +=  fVelocity* fTimeDelta;
+			//m_fSizeX = m_fData;
+			//m_fSizeX += fVelocity * fTimeDelta;
+		}
+		else
+		{
+			m_fTSrc = m_vecTemp.at(0).fEventFrame;
+			m_fLast = m_vecTemp.at(0).iPos;
+			m_vecTemp.pop_front();
+			m_fDest = 0.f;
+			m_fData = 0.f;
+		}
+
+		m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX  * fSizeOffSet, 1.f);
+	}
 }
 
 HRESULT CUI_GameState::Bind_ShaderResources()

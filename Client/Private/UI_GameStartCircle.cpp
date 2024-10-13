@@ -36,18 +36,25 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 	m_fSizeX = 1200.f;
 	m_fSizeY = 1200.f;
 	
-	Set_AnimPosition(600 , 5.f);
-	Set_AnimPosition(400, 50.f, TRUE , 6.75f);
-	Set_AnimPosition(500, 80.f);
-	Set_AnimPosition(600, 80.f);
-	Set_AnimPosition(1000, 150.f, TRUE, 1.f);
+	//Set_AnimPosition(600 , 5.f);
+	//Set_AnimPosition(400, 50.f, TRUE , 6.75f);
+	//Set_AnimPosition(500, 80.f);
+	//Set_AnimPosition(600, 80.f);
+	//Set_AnimPosition(1000, 150.f, TRUE, 1.f);
+
+	m_vecTemp.push_back({ 100 ,0.5f });
+	m_vecTemp.push_back({ 1200 ,1.f });
+	m_vecTemp.push_back({ 300 ,9.f });
+	m_vecTemp.push_back({ 1200 ,10.f });
+	m_vecTemp.push_back({ 100 ,15.f });
+
 
 	m_iTotalAnimSize = m_QueueAnimPos.size();
 
-	if(m_eAnimType == UI_ANIM)
+	//if(m_eAnimType == UI_ANIM)
 		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
-	else if(m_eAnimType == UI_NONANIM)
-		__super::Set_UI_Setting(500, 500 , g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
+	//else if(m_eAnimType == UI_NONANIM)
+	//	__super::Set_UI_Setting(500, 500 , g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
 
 	return S_OK;
 }
@@ -61,21 +68,23 @@ void CUI_GameStartCircle::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if (m_eAnimType == UI_ANIM)
-	{
-		Action_Rotaion(fTimeDelta);
-		Action_ScaleAnim(1.f, fTimeDelta);
+	//if (m_eAnimType == UI_ANIM)
+	//{
+	//	Action_Rotaion(fTimeDelta);
+	//	Action_ScaleAnim(1.f, fTimeDelta);
+	//
+	//	if(m_QueueAnimPos.empty())
+	//		m_bDead = TRUE;
+	//
+	//}
+	//
+	//if (m_bEmblem == FALSE && m_QueueAnimPos.size() == m_iTotalAnimSize - 1)
+	//{
+	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_StartEmblem"), TEXT("Layer_UI_Emblem"));
+	//	m_bEmblem = TRUE;
+	//}
 
-		if(m_QueueAnimPos.empty())
-			m_bDead = TRUE;
-
-	}
-
-	if (m_bEmblem == FALSE && m_QueueAnimPos.size() == m_iTotalAnimSize - 1)
-	{
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_StartEmblem"), TEXT("Layer_UI_Emblem"));
-		m_bEmblem = TRUE;
-	}
+	Action_Anim(1.f, fTimeDelta);
 
 }
 
