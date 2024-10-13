@@ -83,6 +83,7 @@ float4 Blur_X(float2 vTexCoord)
     {
         vUV = vTexCoord + float2(1.f / 1920.0f * i, 0.f);
         vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
+
     }
 
     vOut /= 6.5f;
