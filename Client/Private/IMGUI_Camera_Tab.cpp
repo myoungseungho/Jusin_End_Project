@@ -69,9 +69,11 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 			// 카메라 선택 UI 호출
 			IMGUI_Show_Camera(fTimeDelta);
 
+			// 포인트 보여주기
 			IMGUI_Show_Points();
 
 			// Add_Point 버튼 호출
+			// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
 			IMGUI_Add_Point();
 
 			// 플레이 버튼
@@ -255,7 +257,7 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 		int cameraIndex = static_cast<int>(m_pMainCamera->Get_Virtual_Camera());
 
 		// 가상 카메라 목록 가져오기
-		std::vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
+		vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 		if (cameraIndex < 0 || cameraIndex >= static_cast<int>(cameraList.size())) {
 			ImGui::Text("Invalid camera index selected.");
@@ -298,8 +300,13 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 				break;
 			}
 
+			// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
+			// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
+			CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+			const _float4x4* worldMatrixPtr = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
+
 			// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
-			m_pMainCamera->Add_Point(duration, interpType);
+			m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr);
 
 			// 사용자에게 추가됨을 알림
 			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");

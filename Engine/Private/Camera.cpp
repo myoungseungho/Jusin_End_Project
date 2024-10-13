@@ -144,6 +144,8 @@ void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
 		break;
 	}
 
+	const _float4x4* pWorldFloat4x4 = currentPoint.pWorldFloat4x4;
+
 	// 포지션 보간
 	_float3 interpolatedPosition = {};
 	if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
@@ -175,7 +177,7 @@ void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
 	}
 
 	// 월드 매트릭스 생성
-	_matrix NewWorldMatrix = CreateWorldMatrix( interpolatedPosition, interpolatedRotation);
+	_matrix NewWorldMatrix = CreateWorldMatrix(interpolatedPosition, interpolatedRotation);
 
 	// 월드 매트릭스에서 Right, Up, Look 벡터 추출
 	_vector right = NewWorldMatrix.r[0];
@@ -190,6 +192,7 @@ void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
 	cameraTransform->Set_State(CTransform::STATE_RIGHT, right);
 	cameraTransform->Set_State(CTransform::STATE_UP, up);
 	cameraTransform->Set_State(CTransform::STATE_LOOK, look);
+
 	// 위치 설정
 	cameraTransform->Set_State(CTransform::STATE_POSITION, position);
 }
@@ -200,11 +203,28 @@ void CCamera::Prev_Stop()
 	m_currentPointIndex = 0;
 }
 
-void CCamera::Add_Point(_float duration, InterpolationType type)
+
+void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4)
 {
 	CameraPoint cameraPoint{};
-	//현재 가상카메라 포지션을 cameraPoint.Position을 넣기
-	XMStoreFloat3(&cameraPoint.position, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	//해당 모델의 월드행렬 저장
+	cameraPoint.pWorldFloat4x4 = pModelFloat4x4;
+
+	_matrix matrix = Float4x4ToMatrix(*pModelFloat4x4);
+
+	// 모델의 월드 행렬의 역행렬 계산
+	_vector determinant = XMVectorZero();
+	_matrix inverseModelMatrix = XMMatrixInverse(&determinant, matrix);
+
+	// 현재 가상카메라의 월드 포지션 가져오기
+	_vector worldPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	// 월드 포지션을 모델의 로컬 좌표로 변환
+	_vector localPosition = XMVector3TransformCoord(worldPosition, inverseModelMatrix);
+
+	// 변환된 로컬 포지션을 CameraPoint 구조체에 저장
+	XMStoreFloat3(&cameraPoint.position, localPosition);
 
 	// 카메라의 방향 벡터(Right, Up, Look) 노멀라이즈
 	_vector right = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_RIGHT));

@@ -62,7 +62,6 @@ namespace Engine
 
 using namespace Engine;
 
-
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
