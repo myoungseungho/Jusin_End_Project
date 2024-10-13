@@ -35,15 +35,51 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"), &name);
 	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
 
-	//스킬 버츄얼 카메라
-	name = "Camera_Skill_1";
-	CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
-	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
+	for (size_t i = 0; i < 12; i++)
+	{
+		switch (i)
+		{
+		case 0:
+			name = "Camera_Son_Skill_1";
+			break;
+		case 1:
+			name = "Camera_Son_Skill_2";
+			break;
+		case 2:
+			name = "Camera_Son_Skill_3";
+			break;
+		case 3:
+			name = "Camera_Hit_Skill_1";
+			break;
+		case 4:
+			name = "Camera_Hit_Skill_2";
+			break;
+		case 5:
+			name = "Camera_Hit_Skill_3";
+			break;
+		case 6:
+			name = "Camera_Mine_Skill_1";
+			break;
+		case 7:
+			name = "Camera_Mine_Skill_2";
+			break;
+		case 8:
+			name = "Camera_Mine_Skill_3";
+			break;
+		case 9:
+			name = "Camera_21_Skill_1";
+			break;
+		case 10:
+			name = "Camera_21_Skill_2";
+			break;
+		case 11:
+			name = "Camera_21_Skill_3";
+			break;
+		}
 
-	//스킬 버츄얼 카메라2
-	name = "Camera_Skill_2";
-	CGameObject* virtualCamera_Skill2 = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
-	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill2));
+		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
+		m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
+	}
 
 	return S_OK;
 }

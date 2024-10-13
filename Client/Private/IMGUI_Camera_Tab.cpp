@@ -14,7 +14,7 @@ CIMGUI_Camera_Tab::CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 
 HRESULT CIMGUI_Camera_Tab::Initialize()
 {
-	_int index = 0;
+	_int index = 1;
 
 	// 모델과 스킬 ID에 따른 카메라 인덱스 매핑 초기화
 	m_CameraIndexMap[{MODELID_SON, SKILL1}] = index++; // 손오공, 스킬1 -> 카메라 인덱스 1
@@ -49,10 +49,16 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 		// 스킬 선택 UI 호출
 		IMGUI_Camera_Select_Skill(fTimeDelta);
-	}
 
-	// 새 창 표시 함수 호출
-	Open_Select_Camera(fTimeDelta);
+		// 스킬이 선택된 경우에만 카메라 선택 UI를 표시
+		if (m_iSelected_Skill >= 0) {
+			ImGui::Spacing();  // 한 줄 띄우기
+			ImGui::Separator();  // 경계선 그리기
+
+			// 카메라 선택 UI 호출
+			IMGUI_Camera_Select(fTimeDelta);
+		}
+	}
 }
 
 
@@ -62,16 +68,16 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	const char* model_options[] = { "1. Son", "2. Hit", "3. Mine", "4. 21" };
 	static int previous_model = -1;  // 이전 모델을 추적하기 위한 변수
 
-	_int iSelected_Model = (MODELID)m_iSelected_Model;
+	int iSelected_Model = static_cast<int>(m_iSelected_Model);
 
 	ImGui::Text("Select Model");
 	if (ImGui::Combo("Model", &iSelected_Model, model_options, IM_ARRAYSIZE(model_options))) {
 		// 모델이 변경된 경우에만 스킬 선택을 초기화
-
-		m_iSelected_Model = (MODELID)iSelected_Model;
-		if (m_iSelected_Model != previous_model) {
-			previous_model = m_iSelected_Model;  // 새로운 모델로 업데이트
+		if (m_iSelected_Model != static_cast<MODELID>(iSelected_Model)) {
+			previous_model = m_iSelected_Model;  // 이전 모델 업데이트
+			m_iSelected_Model = static_cast<MODELID>(iSelected_Model); // 새로운 모델로 업데이트
 			m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 초기화
+			UpdateCameraSelection(); // 카메라 선택 업데이트
 		}
 	}
 
@@ -83,16 +89,20 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 {
-	// 예시로 스킬 선택 부분을 작성
+	// 스킬 선택 드롭다운
 	const char* skill_options[] = { "Skill 1", "Skill 2", "Skill 3" };
+	static int previous_skill = -1;  // 이전 스킬을 추적하기 위한 변수
 
-	_int iSelected_Skill = (SKILLID)m_iSelected_Skill;
+	int iSelected_Skill = static_cast<int>(m_iSelected_Skill);
 
 	ImGui::Text("Select Skill");
 	if (ImGui::Combo("Skill", &iSelected_Skill, skill_options, IM_ARRAYSIZE(skill_options))) {
-		m_iSelected_Skill = (SKILLID)iSelected_Skill;
-		// 스킬 선택에 따른 처리
-		UpdateCameraSelection(); // 카메라 선택 업데이트
+		// 스킬이 변경된 경우에만 카메라 선택 업데이트
+		if (m_iSelected_Skill != static_cast<SKILLID>(iSelected_Skill)) {
+			previous_skill = m_iSelected_Skill;  // 이전 스킬 업데이트
+			m_iSelected_Skill = static_cast<SKILLID>(iSelected_Skill); // 새로운 스킬로 업데이트
+			UpdateCameraSelection(); // 카메라 선택 업데이트
+		}
 	}
 
 	if (m_iSelected_Skill >= 0) {
@@ -101,42 +111,38 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 	}
 }
 
-void CIMGUI_Camera_Tab::Open_Select_Camera(_float fTimeDelta)
-{
-	if (bShowCameraWindow) {
-		ImGui::Begin("Camera_Select", &bShowCameraWindow);  // 새 창 생성
-
-		IMGUI_Camera_Select(fTimeDelta);  // 모델 선택 UI
-
-		ImGui::End();  // 새 창 종료
-	}
-}
-
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select(_float fTimeDelta)
 {
-	// 게임 인스턴스에서 메인 카메라 객체 가져오기
-	CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
-	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
+	// 모델과 스킬이 모두 선택된 경우에만 카메라 이름을 표시
+	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
+	{
+		// 게임 인스턴스에서 메인 카메라 객체 가져오기
+		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+		if (!camera) {
+			ImGui::Text("Main camera not found.");
+			return;
+		}
 
-	// 가상 카메라 목록 가져오기
-	vector<CCamera*> cameraList = main_Camera->m_vecVirtualCamera;
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
 
-	// 카메라 이름을 보관할 임시 배열 생성
-	vector<const _char*> cameraNames;
+		// 현재 선택된 카메라 인덱스 가져오기
+		_int cameraIndex = main_Camera->Get_Virtual_Camera();
 
-	for (auto& iter : cameraList) {
-		cameraNames.push_back(iter->GetTabName()); // 각 카메라의 이름을 배열에 저장
-	}
+		// 가상 카메라 목록 가져오기
+		vector<CCamera*> cameraList = main_Camera->m_vecVirtualCamera;
 
-	// 현재 선택된 카메라 인덱스를 추적할 정적 변수
-	static _int selectedCameraIndex = (_int)main_Camera->Get_Virtual_Camera();
+		if (cameraIndex < 0 || cameraIndex >= cameraList.size()) {
+			ImGui::Text("Invalid camera index selected.");
+			return;
+		}
 
-	if (ImGui::Combo("Camera List", &selectedCameraIndex, cameraNames.data(), cameraNames.size())) {
-		// 선택된 카메라의 인덱스에 따라 활성화 함수 호출
-		Activate_Select_Camera(selectedCameraIndex);
+		// 선택된 카메라의 이름 가져오기
+		const char* selectedCameraName = cameraList[cameraIndex]->GetTabName();
+
+		// 카메라 이름 표시
+		ImGui::Text("Selected Camera: %s", selectedCameraName);
 	}
 }
-
 // 새로운 함수: 선택된 카메라를 활성화하는 함수
 void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex)
 {

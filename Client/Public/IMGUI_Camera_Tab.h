@@ -33,7 +33,6 @@ public:
 private:
 	void IMGUI_Camera_Select_Model(_float fTimeDelta);
 	void IMGUI_Camera_Select_Skill(_float fTimeDelta);
-	void Open_Select_Camera(_float fTimeDelta);  // 새 창 생성 로직을 래핑한 함수
 	void IMGUI_Camera_Select(_float fTimeDelta);
 	void Activate_Select_Camera(_int selectedIndex);
 	void UpdateCameraSelection();
