@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CUI_StartFont final :public CUI_Start
+class CUI_FightFont final :public CUI_Start
 {
 private:
-	CUI_StartFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_StartFont(const CUI_StartFont& Prototype);
-	virtual ~CUI_StartFont() = default;
+	CUI_FightFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_FightFont(const CUI_FightFont& Prototype);
+	virtual ~CUI_FightFont() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -40,7 +40,7 @@ private:
 	CTexture* m_pMaskTexture = { nullptr };
 
 public:
-	static CUI_StartFont* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_FightFont* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

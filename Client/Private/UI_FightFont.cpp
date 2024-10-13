@@ -1,19 +1,19 @@
 #include "stdafx.h"
 
-#include "UI_StartFont.h"
+#include "UI_FightFont.h"
 #include "RenderInstance.h"
 
-CUI_StartFont::CUI_StartFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_FightFont::CUI_FightFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUI_Start{ pDevice ,pContext }
 {
 }
 
-CUI_StartFont::CUI_StartFont(const CUI_StartFont& Prototype)
+CUI_FightFont::CUI_FightFont(const CUI_FightFont& Prototype)
 	:CUI_Start{ Prototype }
 {
 }
 
-HRESULT CUI_StartFont::Initialize_Prototype()
+HRESULT CUI_FightFont::Initialize_Prototype()
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
@@ -21,7 +21,7 @@ HRESULT CUI_StartFont::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CUI_StartFont::Initialize(void* pArg)
+HRESULT CUI_FightFont::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -47,7 +47,7 @@ HRESULT CUI_StartFont::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_StartFont::Priority_Update(_float fTimeDelta)
+void CUI_FightFont::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
@@ -55,7 +55,7 @@ void CUI_StartFont::Priority_Update(_float fTimeDelta)
 	
 }
 
-void CUI_StartFont::Update(_float fTimeDelta)
+void CUI_FightFont::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
@@ -66,14 +66,14 @@ void CUI_StartFont::Update(_float fTimeDelta)
 
 }
 
-void CUI_StartFont::Late_Update(_float fTimeDelta)
+void CUI_FightFont::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_StartFont::Render(_float fTimeDelta)
+HRESULT CUI_FightFont::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
@@ -90,7 +90,7 @@ HRESULT CUI_StartFont::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CUI_StartFont::Ready_Components()
+HRESULT CUI_FightFont::Ready_Components()
 {
 	if (FAILED(__super::Ready_Components()))
 		return E_FAIL;
@@ -107,7 +107,7 @@ HRESULT CUI_StartFont::Ready_Components()
 
 }
 
-HRESULT CUI_StartFont::Bind_ShaderResources()
+HRESULT CUI_FightFont::Bind_ShaderResources()
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
@@ -131,7 +131,7 @@ HRESULT CUI_StartFont::Bind_ShaderResources()
 	return S_OK;
 }
 
-void CUI_StartFont::Action_StartAnim(_float fTimeDelta)
+void CUI_FightFont::Action_StartAnim(_float fTimeDelta)
 {
 	if (m_bStart == FALSE && m_fOffSetPosY >= 0.f)
 	{
@@ -166,33 +166,33 @@ void CUI_StartFont::Action_StartAnim(_float fTimeDelta)
 }
 
 
-CUI_StartFont* CUI_StartFont::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_FightFont* CUI_FightFont::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CUI_StartFont* pInstatnce = new CUI_StartFont(pDevice, pContext);
+	CUI_FightFont* pInstatnce = new CUI_FightFont(pDevice, pContext);
 
 	if (FAILED(pInstatnce->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CUI_StartFont"));
+		MSG_BOX(TEXT("Failed to Created : CUI_FightFont"));
 		Safe_Release(pInstatnce);
 	}
 
 	return pInstatnce;
 }
 
-CGameObject* CUI_StartFont::Clone(void* pArg)
+CGameObject* CUI_FightFont::Clone(void* pArg)
 {
-	CUI_StartFont* pInstatnce = new CUI_StartFont(*this);
+	CUI_FightFont* pInstatnce = new CUI_FightFont(*this);
 
 	if (FAILED(pInstatnce->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloend : CUI_StartFont"));
+		MSG_BOX(TEXT("Failed to Cloend : CUI_FightFont"));
 		Safe_Release(pInstatnce);
 	}
 
 	return pInstatnce;
 }
 
-void CUI_StartFont::Free()
+void CUI_FightFont::Free()
 {
 	Safe_Release(m_pMaskTexture);
 

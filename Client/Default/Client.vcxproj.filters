@@ -333,7 +333,7 @@
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_StartFont.h">
+    <ClInclude Include="..\public\UI_FightFont.h">
       <Filter>02.GameObjects\UI\GameStart\Font</Filter>
     </ClInclude>
   </ItemGroup>
@@ -491,7 +491,7 @@
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_StartFont.cpp">
+    <ClCompile Include="..\private\UI_FightFont.cpp">
       <Filter>02.GameObjects\UI\GameStart\Font</Filter>
     </ClCompile>
   </ItemGroup>

@@ -35,7 +35,7 @@
 #include "UI_ComboFont.h"
 #include "UI_ComboEffect.h"
 #include "UI_GameStartCircle.h"
-#include "UI_StartFont.h"
+#include "UI_FightFont.h"
 
 //
 
@@ -390,7 +390,7 @@ HRESULT CLoader::Loading_For_UI()
 
 	/* For.Prototype_GameObject_UI_StartFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_StartFont"),
-		CUI_StartFont::Create(m_pDevice, m_pContext))))
+		CUI_FightFont::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//UI_StartFont
