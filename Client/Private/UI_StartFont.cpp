@@ -31,8 +31,8 @@ HRESULT CUI_StartFont::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 
-	m_fSizeX = 600.f;
-	m_fSizeY = 300.f;
+	m_fSizeX = 400.f;
+	m_fSizeY = 200.f;
 
 	//Set_AnimPosition(500, 10.f);
 	//Set_AnimPosition(400, 50.f, TRUE, 5.f);
@@ -40,7 +40,9 @@ HRESULT CUI_StartFont::Initialize(void* pArg)
 	//Set_AnimPosition(600, 80.f);
 	//Set_AnimPosition(1000, 150.f, TRUE, 3.f);
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
+	m_fOffSetPosY = 50.f;
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f  - m_fOffSetPosY, 0.f);
 
 	return S_OK;
 }
@@ -48,26 +50,20 @@ HRESULT CUI_StartFont::Initialize(void* pArg)
 void CUI_StartFont::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+
+	
 }
 
 void CUI_StartFont::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	Action_StartAnim(fTimeDelta);
 	//Action_ScaleAnim(fTimeDelta);
 
-	/*if (m_pGameInstance->Key_Down(DIK_B))
-		m_bState = true;
-	if (m_pGameInstance->Key_Down(DIK_N))
-		m_bState = false;*/
 
-	if (m_bState == false)
-		m_fMaskTimer += 0.01f;
-	else
-		m_fMaskTimer -= 0.01f;
 
-	if (m_fMaskTimer >= 1.f && m_bState == false)
-		m_fMaskTimer = 1.f;
 }
 
 void CUI_StartFont::Late_Update(_float fTimeDelta)
@@ -127,13 +123,46 @@ HRESULT CUI_StartFont::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskTimer, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fMaskTimer, sizeof(_float))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fAlphaTimer, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &m_bState, sizeof(_bool))))
-		return E_FAIL;
+	//m_fAlphaTimer 
 
 	return S_OK;
+}
+
+void CUI_StartFont::Action_StartAnim(_float fTimeDelta)
+{
+	if (m_bStart == FALSE && m_fOffSetPosY >= 0.f)
+	{
+		m_fStartAnimTimer += fTimeDelta;
+
+		m_fOffSetPosY -= m_fStartAnimTimer;
+
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f - m_fOffSetPosY, 0.f);
+	}
+	else
+	{
+		m_bStart = TRUE;
+		m_fStartAnimTimer = 0.f;
+	}
+
+	if (m_bStart == TRUE && m_bEnd == FALSE)
+	{
+		m_fMaskTimer += fTimeDelta;
+
+		if (m_fMaskTimer >= 3.f)
+		{
+			m_bEnd = TRUE;
+			m_fMaskTimer = 1.f;
+
+		}
+	}
+	if (m_bEnd)
+	{
+		m_fMaskTimer -= fTimeDelta;
+		m_fAlphaTimer += fTimeDelta;
+	}
 }
 
 

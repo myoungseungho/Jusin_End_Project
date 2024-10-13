@@ -25,9 +25,18 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
-	_float m_fMaskTimer = { 0.f };
-	_bool m_bState = { FALSE };
+	void Action_StartAnim(_float fTimeDelta);
 
+private:
+	_float m_fMaskTimer = { 0.f };
+	_float m_fAlphaTimer = { 0.f };
+
+	_bool m_bStart = { FALSE};
+	_bool m_bEnd = { FALSE };
+
+	_float m_fStartAnimTimer = { 0.f };
+	_float m_fOffSetPosY = {0.f};
+	
 	CTexture* m_pMaskTexture = { nullptr };
 
 public:

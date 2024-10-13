@@ -11,7 +11,7 @@ float g_Radio;
 float g_fRedRadio;
 
 float g_MaskTimer;
-float g_DestroyTimer;
+float g_DestroyTimer = 0.f;
 
 vector g_vColor;
 
@@ -283,41 +283,15 @@ PS_OUT PS_READY(PS_IN In)
 {
     PS_OUT Out;
 
-    Out.vColor = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
     vector vDiffuseMaterial = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
-    //Out.vColor += vDiffuseMaterial * g_MaskTimer;
-     //Out.vColor = vBGMaterial;
     
-    if (g_bState == false)
-    {
-        if (vDiffuseMaterial.a != 0)
-        {
-            vDiffuseMaterial.rgb = 1 - g_MaskTimer;
-            vDiffuseMaterial *= 1.1f;
-
-        }
+    vDiffuseMaterial.rgb = 1 - g_MaskTimer; 
+    vBGMaterial = lerp(vBGMaterial, vDiffuseMaterial, vDiffuseMaterial.a * g_MaskTimer);
         
-        vBGMaterial = lerp(vBGMaterial, vDiffuseMaterial, vDiffuseMaterial.a * g_MaskTimer);
-        
-        //vBGMaterial.a *= g_MaskTimer;
-        
-        //vBGMaterial.a  = min(vBGMaterial.a, 1.f);
-        
-        //vBGMaterial += vDiffuseMaterial;
-
-    }
     Out.vColor = vBGMaterial;
-    //else
-    //{ 
-    //    vBGMaterial += vDiffuseMaterial* g_DestroyTimer;
-    //    vBGMaterial.a *= g_DestroyTimer;
-    //}
-    //
-    //Out.vColor = vBGMaterial;
+    Out.vColor.a -= g_DestroyTimer;
     
-    //if (Out.vColor.a <= 0.1f)
-    //    discard;
 
     return Out;
 }
