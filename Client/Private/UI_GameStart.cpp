@@ -81,8 +81,8 @@ void CUI_GameStart::Action_ScaleAnim(_float fTimeDelta)
 			m_fScaleAnimTimer = 0.f;
 		}
 	}
-	else
-		m_bDead = true;
+	//else
+	//	m_bDead = true;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 }

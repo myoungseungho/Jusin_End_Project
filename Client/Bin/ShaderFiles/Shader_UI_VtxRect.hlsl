@@ -279,6 +279,50 @@ PS_OUT PS_StartCircle(PS_IN In)
 }
 
 
+PS_OUT PS_READY(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vDiffuseMaterial = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vBGMaterial = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    //Out.vColor += vDiffuseMaterial * g_MaskTimer;
+     //Out.vColor = vBGMaterial;
+    
+    if (g_bState == false)
+    {
+        if (vDiffuseMaterial.a != 0)
+        {
+            vDiffuseMaterial.rgb = 1 - g_MaskTimer;
+            vDiffuseMaterial *= 1.1f;
+
+        }
+        
+        vBGMaterial = lerp(vBGMaterial, vDiffuseMaterial, vDiffuseMaterial.a * g_MaskTimer);
+        
+        //vBGMaterial.a *= g_MaskTimer;
+        
+        //vBGMaterial.a  = min(vBGMaterial.a, 1.f);
+        
+        //vBGMaterial += vDiffuseMaterial;
+
+    }
+    Out.vColor = vBGMaterial;
+    //else
+    //{ 
+    //    vBGMaterial += vDiffuseMaterial* g_DestroyTimer;
+    //    vBGMaterial.a *= g_DestroyTimer;
+    //}
+    //
+    //Out.vColor = vBGMaterial;
+    
+    //if (Out.vColor.a <= 0.1f)
+    //    discard;
+
+    return Out;
+}
+
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -389,5 +433,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_StartCircle();
+    }
+
+//7
+    pass Font
+    {
+
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_READY();
     }
 }

@@ -35,6 +35,7 @@
 #include "UI_ComboFont.h"
 #include "UI_ComboEffect.h"
 #include "UI_GameStartCircle.h"
+#include "UI_StartFont.h"
 
 //
 
@@ -271,7 +272,17 @@ HRESULT CLoader::Loading_For_UI()
 	//게임 스타트 
 	/* For.Prototype_Component_Texture_UI_GameStartCircle */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartCircle"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 9))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 8))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameStartEmblem */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartEmblem"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/Emblem%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameStartFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/Ready%d.png"), 2))))
 		return E_FAIL;
 
 
@@ -376,6 +387,13 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_GameStartCircle"),
 		CUI_GameStartCircle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_StartFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_StartFont"),
+		CUI_StartFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//UI_StartFont
 
 	return S_OK;
 }

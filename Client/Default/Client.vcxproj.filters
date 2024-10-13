@@ -160,6 +160,12 @@
     <Filter Include="02.GameObjects\UI\GameStart\Circle">
       <UniqueIdentifier>{88c598ec-231c-479b-be3b-a8b0fe5fd694}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\GameStart\Emblem">
+      <UniqueIdentifier>{7114070c-743e-4f1b-9732-2a0c291c6a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameStart\Font">
+      <UniqueIdentifier>{cf38ea3c-8ae1-40f0-a8fb-a49c3f586563}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -324,6 +330,12 @@
     <ClInclude Include="..\public\UI_GameStart.h">
       <Filter>02.GameObjects\UI\GameStart</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_StartEmblem.h">
+      <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_StartFont.h">
+      <Filter>02.GameObjects\UI\GameStart\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -475,6 +487,12 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_GameStart.cpp">
       <Filter>02.GameObjects\UI\GameStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_StartEmblem.cpp">
+      <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_StartFont.cpp">
+      <Filter>02.GameObjects\UI\GameStart\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

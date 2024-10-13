@@ -162,6 +162,10 @@
     <ClInclude Include="..\public\SubPlayer.h" />
     <ClInclude Include="..\public\UI_GameStart.h" />
     <ClInclude Include="..\public\UI_GameStartCircle.h" />
+    <ClInclude Include="..\public\UI_StartEmblem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_StartFont.h" />
     <ClInclude Include="..\public\UI_SubHpGauge.h" />
     <ClInclude Include="..\public\UI_AttBufEffect.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
@@ -217,6 +221,10 @@
     <ClCompile Include="..\private\SubPlayer.cpp" />
     <ClCompile Include="..\private\UI_GameStart.cpp" />
     <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
+    <ClCompile Include="..\private\UI_StartEmblem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_StartFont.cpp" />
     <ClCompile Include="..\private\UI_SubHpGauge.cpp" />
     <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />
