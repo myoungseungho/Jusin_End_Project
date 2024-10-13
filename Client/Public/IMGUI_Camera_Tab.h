@@ -33,9 +33,11 @@ public:
 private:
 	void IMGUI_Camera_Select_Model(_float fTimeDelta);
 	void IMGUI_Camera_Select_Skill(_float fTimeDelta);
-	void IMGUI_Camera_Select(_float fTimeDelta);
+	void IMGUI_Show_Camera(_float fTimeDelta);
 	void Activate_Select_Camera(_int selectedIndex);
 	void UpdateCameraSelection();
+	void IMGUI_Show_Points();	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
+	void IMGUI_Add_Point();        // Add_Point 버튼 처리 함수
 
 	MODELID m_iSelected_Model = MODELID_NOT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장

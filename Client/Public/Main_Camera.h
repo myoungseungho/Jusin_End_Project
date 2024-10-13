@@ -18,8 +18,18 @@ public:
 	enum VIRTUAL_CAMERA
 	{
 		VIRTUAL_CAMERA_NORMAL,
-		VIRTUAL_CAMERA_SKILL_1,
-		VIRTUAL_CAMERA_SKILL_2,
+		VIRTUAL_CAMERA_SON_SKILL_1,
+		VIRTUAL_CAMERA_SON_SKILL_2,
+		VIRTUAL_CAMERA_SON_SKILL_3,
+		VIRTUAL_CAMERA_HIT_SKILL_1,
+		VIRTUAL_CAMERA_HIT_SKILL_2,
+		VIRTUAL_CAMERA_HIT_SKILL_3,
+		VIRTUAL_CAMERA_MINE_SKILL_1,
+		VIRTUAL_CAMERA_MINE_SKILL_2,
+		VIRTUAL_CAMERA_MINE_SKILL_3,
+		VIRTUAL_CAMERA_21_SKILL_1,
+		VIRTUAL_CAMERA_21_SKILL_2,
+		VIRTUAL_CAMERA_21_SKILL_3,
 		VIRTUAL_CAMERA_END
 	};
 
@@ -39,6 +49,8 @@ public:
 	//버츄얼 카메라 셋팅
 	void Set_Virtual_Camera(VIRTUAL_CAMERA mode) { m_currentVirtualMode = mode; }
 	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
+	void Add_Point(_float duration, InterpolationType type);
+	const list<CameraPoint>& Get_ListPoint();
 
 private:
 	void Free_Camera(_float fTimeDelta);

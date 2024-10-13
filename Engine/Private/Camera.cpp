@@ -80,6 +80,23 @@ void CCamera::Update_Camera(CCamera* camera)
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(camera->m_fFovy, camera->m_fViewportWidth / camera->m_fViewportHeight, camera->m_fNear, camera->m_fFar));
 }
 
+void CCamera::Add_Point(_float duration, InterpolationType type)
+{
+	CameraPoint cameraPoint{};
+	//현재 가상카메라 포지션을 cameraPoint.Position을 넣기
+	XMStoreFloat3(&cameraPoint.position, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	//가상카메라의 방향벡터를 노말라이즈해서 각각 넣어주기
+	XMStoreFloat3(&cameraPoint.rotationX, XMVector4Normalize(m_pTransformCom->Get_State(CTransform::STATE_RIGHT)));
+	XMStoreFloat3(&cameraPoint.rotationY, XMVector4Normalize(m_pTransformCom->Get_State(CTransform::STATE_UP)));
+	XMStoreFloat3(&cameraPoint.rotationZ, XMVector4Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK)));
+
+	cameraPoint.duration = duration;
+	cameraPoint.interpolationType = type;
+
+	m_listPoints.push_back(cameraPoint);
+}
+
 void CCamera::Free()
 {
 	__super::Free();

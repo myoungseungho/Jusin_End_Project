@@ -22,6 +22,7 @@ public:
 	enum InterpolationType {
 		INTERPOLATION_LINEAR_MODE,
 		INTERPOLATION_SPLINE_MODE,
+		INTERPOLATION_SKIP_MODE,
 		INTERPOLATION_END
 	};
 
@@ -37,10 +38,6 @@ public:
 
 		_float duration; // 다음 포인트까지 이동 시간
 		InterpolationType interpolationType;
-
-		// 생성자
-		CameraPoint(const _float3& pos, const _float3& rotX, const _float3& rotY, const _float3& rotZ, _float dur, InterpolationType interp)
-			: position(pos), rotationX(rotX), rotationY(rotY), rotationZ(rotZ), duration(dur), interpolationType(interp) {}
 	};
 
 protected:
@@ -57,6 +54,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Update_Camera(CCamera* camera);
+	void Add_Point(_float duration, InterpolationType type);
 
 public:
 	const _char* GetTabName() const { return m_Name; };
@@ -70,6 +68,8 @@ public:
 	_float					m_fMoveSpeed = {};
 
 	_char* m_Name;
+
+	list<CameraPoint> m_listPoints;
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

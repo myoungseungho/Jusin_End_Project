@@ -56,7 +56,12 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 			ImGui::Separator();  // 경계선 그리기
 
 			// 카메라 선택 UI 호출
-			IMGUI_Camera_Select(fTimeDelta);
+			IMGUI_Show_Camera(fTimeDelta);
+
+			IMGUI_Show_Points();
+
+			// Add_Point 버튼 호출
+			IMGUI_Add_Point();
 		}
 	}
 }
@@ -111,7 +116,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 	}
 }
 
-void CIMGUI_Camera_Tab::IMGUI_Camera_Select(_float fTimeDelta)
+void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 {
 	// 모델과 스킬이 모두 선택된 경우에만 카메라 이름을 표시
 	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
@@ -182,6 +187,124 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 		}
 	}
 }
+
+
+void CIMGUI_Camera_Tab::IMGUI_Show_Points()
+{
+	// 모델과 스킬이 모두 선택된 경우에만 포인트 리스트를 표시
+	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
+	{
+		// 게임 인스턴스에서 메인 카메라 객체 가져오기
+		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+		if (!camera) {
+			ImGui::Text("Main camera not found.");
+			return;
+		}
+
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
+
+		// 포인트 리스트 가져오기
+		const list<CCamera::CameraPoint>& points = main_Camera->Get_ListPoint();
+
+		if (points.empty()) {
+			ImGui::Text("No camera points available.");
+			return;
+		}
+
+		ImGui::Separator();
+		ImGui::Text("Camera Points:");
+
+		int pointIndex = 1;
+		for (const auto& point : points) {
+			ImGui::BulletText("Point %d:", pointIndex++);
+			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
+			ImGui::Text("  RotationX: (%.2f, %.2f, %.2f)", point.rotationX.x, point.rotationX.y, point.rotationX.z);
+			ImGui::Text("  RotationY: (%.2f, %.2f, %.2f)", point.rotationY.x, point.rotationY.y, point.rotationY.z);
+			ImGui::Text("  RotationZ: (%.2f, %.2f, %.2f)", point.rotationZ.x, point.rotationZ.y, point.rotationZ.z);
+			ImGui::Text("  Duration: %.2f", point.duration);
+			//선택지 3개니까 그냥 이렇게 하자.
+			ImGui::Text("  Interpolation Type: %s",
+				(point.interpolationType == CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE)
+				? "Linear"
+				: ((point.interpolationType == CCamera::InterpolationType::INTERPOLATION_SPLINE_MODE)
+					? "Spline"
+					: "Skip"));
+
+			ImGui::Separator();
+		}
+	}
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Add_Point()
+{
+	// 모델과 스킬이 모두 선택된 경우에만 Add_Point 버튼을 표시
+	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
+	{
+		// 게임 인스턴스에서 메인 카메라 객체 가져오기
+		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+		if (!camera) {
+			ImGui::Text("Main camera not found.");
+			return;
+		}
+
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
+
+		// 현재 활성화된 가상 카메라 가져오기
+		int cameraIndex = static_cast<int>(main_Camera->Get_Virtual_Camera());
+
+		// 가상 카메라 목록 가져오기
+		std::vector<CCamera*>& cameraList = main_Camera->m_vecVirtualCamera;
+
+		if (cameraIndex < 0 || cameraIndex >= static_cast<int>(cameraList.size())) {
+			ImGui::Text("Invalid camera index selected.");
+			return;
+		}
+
+		// 사용자 입력을 저장할 변수
+		static float duration = 1.0f;
+		static int selected_interp = 0;
+		const char* interp_options[] = { "Linear", "Spline", "Skip" }; // 새로운 모드 추가
+
+		// Add_Point 버튼과 입력 필드 배치
+		ImGui::Separator();
+		ImGui::Text("Add Camera Point:");
+		ImGui::InputFloat("Duration", &duration, 0.1f, 1.0f, "%.2f");
+
+		if (ImGui::BeginCombo("Interpolation Type", interp_options[selected_interp])) {
+			for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
+				bool is_selected = (selected_interp == n);
+				if (ImGui::Selectable(interp_options[n], is_selected))
+					selected_interp = n;
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
+		}
+
+		// Add_Point 버튼
+		if (ImGui::Button("Add Point")) {
+			CCamera::InterpolationType interpType = CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE;
+			switch (selected_interp) {
+			case 0:
+				interpType = CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE;
+				break;
+			case 1:
+				interpType = CCamera::InterpolationType::INTERPOLATION_SPLINE_MODE;
+				break;
+			case 2:
+				interpType = CCamera::InterpolationType::INTERPOLATION_SKIP_MODE;
+				break;
+			}
+
+			// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
+			main_Camera->Add_Point( duration, interpType);
+
+			// 사용자에게 추가됨을 알림
+			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
+		}
+	}
+}
+
 
 
 CIMGUI_Camera_Tab* CIMGUI_Camera_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

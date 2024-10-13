@@ -35,44 +35,44 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"), &name);
 	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
 
-	for (size_t i = 0; i < 12; i++)
+	for (size_t i = VIRTUAL_CAMERA_SON_SKILL_1; i < VIRTUAL_CAMERA_END; i++)
 	{
 		switch (i)
 		{
-		case 0:
+		case VIRTUAL_CAMERA_SON_SKILL_1:
 			name = "Camera_Son_Skill_1";
 			break;
-		case 1:
+		case VIRTUAL_CAMERA_SON_SKILL_2:
 			name = "Camera_Son_Skill_2";
 			break;
-		case 2:
+		case VIRTUAL_CAMERA_SON_SKILL_3:
 			name = "Camera_Son_Skill_3";
 			break;
-		case 3:
+		case VIRTUAL_CAMERA_HIT_SKILL_1:
 			name = "Camera_Hit_Skill_1";
 			break;
-		case 4:
+		case VIRTUAL_CAMERA_HIT_SKILL_2:
 			name = "Camera_Hit_Skill_2";
 			break;
-		case 5:
+		case VIRTUAL_CAMERA_HIT_SKILL_3:
 			name = "Camera_Hit_Skill_3";
 			break;
-		case 6:
+		case VIRTUAL_CAMERA_MINE_SKILL_1:
 			name = "Camera_Mine_Skill_1";
 			break;
-		case 7:
+		case VIRTUAL_CAMERA_MINE_SKILL_2:
 			name = "Camera_Mine_Skill_2";
 			break;
-		case 8:
+		case VIRTUAL_CAMERA_MINE_SKILL_3:
 			name = "Camera_Mine_Skill_3";
 			break;
-		case 9:
+		case VIRTUAL_CAMERA_21_SKILL_1:
 			name = "Camera_21_Skill_1";
 			break;
-		case 10:
+		case VIRTUAL_CAMERA_21_SKILL_2:
 			name = "Camera_21_Skill_2";
 			break;
-		case 11:
+		case VIRTUAL_CAMERA_21_SKILL_3:
 			name = "Camera_21_Skill_3";
 			break;
 		}
@@ -98,6 +98,17 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 	}
 
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode]);
+}
+
+void CMain_Camera::Add_Point(_float duration, InterpolationType type)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type);
+}
+
+const list<CCamera::CameraPoint>& CMain_Camera::Get_ListPoint()
+{
+	//현재 메인카메라가 사용하고 있는 가상카메라의 listPoints를 가져온다.
+	return m_vecVirtualCamera[m_currentVirtualMode]->m_listPoints;
 }
 
 void CMain_Camera::Free_Camera(_float fTimeDelta)
