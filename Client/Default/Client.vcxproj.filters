@@ -181,6 +181,15 @@
     <Filter Include="02.GameObjects\UI\GameState\Font\KO">
       <UniqueIdentifier>{aca5a2da-c163-407b-a68f-01916810a255}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Level\01.Logo">
+      <UniqueIdentifier>{3bd8efd3-0afa-4c0a-814e-2a7871f6d911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround">
+      <UniqueIdentifier>{0dc4ab17-a9f7-4613-b7cc-2f5c966e1562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Logo">
+      <UniqueIdentifier>{ff16a923-f66c-48dd-b6a7-539888d9a0b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -336,9 +345,6 @@
     <ClInclude Include="..\Public\Player.h">
       <Filter>02.GameObjects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Level\99.Loading</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_GameStartCircle.h">
       <Filter>02.GameObjects\UI\GameState\Circle</Filter>
     </ClInclude>
@@ -356,6 +362,18 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_KOFont.h">
       <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Level_Logo.h">
+      <Filter>01.Level\01.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\BackGround.h">
+      <Filter>02.GameObjects\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Logo.h">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -500,9 +518,6 @@
     <ClCompile Include="..\Private\Player.cpp">
       <Filter>02.GameObjects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Level_GamePlay.cpp">
-      <Filter>01.Level\99.Loading</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\UI_GameStartCircle.cpp">
       <Filter>02.GameObjects\UI\GameState\Circle</Filter>
     </ClCompile>
@@ -520,6 +535,18 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_KOFont.cpp">
       <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_GamePlay.cpp">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Level_Logo.cpp">
+      <Filter>01.Level\01.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\BackGround.cpp">
+      <Filter>02.GameObjects\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Logo.cpp">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -540,6 +567,9 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

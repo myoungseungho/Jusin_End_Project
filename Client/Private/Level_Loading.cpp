@@ -2,6 +2,7 @@
 #include "..\Public\Level_Loading.h"
 
 #include "Loader.h"
+#include "Level_Logo.h"
 #include "Level_GamePlay.h"
 
 #include "GameInstance.h"
@@ -32,6 +33,10 @@ void CLevel_Loading::Update(_float fTimeDelta)
 
 		switch (m_eNextLevelID)
 		{
+		case LEVEL_LOGO:
+			pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
+			break;
+
 		case LEVEL_GAMEPLAY:
 			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
 			break;

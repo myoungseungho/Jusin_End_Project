@@ -15,6 +15,10 @@
 //#include "Effect.h"
 //#include "Sky.h"
 
+//LOGO
+#include "BackGround.h"
+#include "UI_Logo.h"
+
 //UI 헤더
 #include "UI_Cursor.h"
 #include "UI_HpPanel.h"
@@ -90,9 +94,14 @@ HRESULT CLoader::Loading()
 
 	switch (m_eLevelID)
 	{
+	case LEVEL_LOGO:
+		hr = Loading_For_Logo();
+		break;
+
 	case LEVEL_GAMEPLAY:
 		hr = Loading_For_GamePlayLevel();
 		break;
+
 	}
 
 	if (FAILED(hr))
@@ -103,6 +112,35 @@ HRESULT CLoader::Loading()
 	return S_OK;
 }
 
+
+HRESULT CLoader::Loading_For_Logo()
+{
+
+	/* For.Prototype_Component_Texture_Logo */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_Logo"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/E3_Title/tex/E3_Title_BG01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Logo_Mark */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_Logo_Mark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/E3_Title/tex/LOC/E3_Title_Logo.png")))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_BackGround"),
+		CBackGround::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Logo"),
+		CUI_Logo::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	m_isFinished = true;
+
+	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
+
+	return S_OK;
+}
 
 HRESULT CLoader::Loading_For_GamePlayLevel()
 {
