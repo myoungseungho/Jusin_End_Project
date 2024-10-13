@@ -15,8 +15,33 @@ public:
 	{
 		_float3		vEye, vAt;
 		_float		fFovy, fNear, fFar, fSensor;
-		_char*		cName;
+		_char* cName;
 	}CAMERA_DESC;
+
+public:
+	enum InterpolationType {
+		INTERPOLATION_LINEAR_MODE,
+		INTERPOLATION_SPLINE_MODE,
+		INTERPOLATION_END
+	};
+
+	// 카메라 포인트 구조체
+	struct CameraPoint {
+		//포지션
+		_float3 position = {};
+
+		//월드행렬의 각 1,2,3 행벡터의 단위벡터
+		_float3 rotationX = {};
+		_float3 rotationY = {};
+		_float3 rotationZ = {};
+
+		_float duration; // 다음 포인트까지 이동 시간
+		InterpolationType interpolationType;
+
+		// 생성자
+		CameraPoint(const _float3& pos, const _float3& rotX, const _float3& rotY, const _float3& rotZ, _float dur, InterpolationType interp)
+			: position(pos), rotationX(rotX), rotationY(rotY), rotationZ(rotZ), duration(dur), interpolationType(interp) {}
+	};
 
 protected:
 	CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -44,8 +69,8 @@ public:
 	_float					m_fMouseSensor = {};
 	_float					m_fMoveSpeed = {};
 
+	_char* m_Name;
 
-	_char*					m_Name;
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;
