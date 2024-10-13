@@ -76,6 +76,9 @@
     <Filter Include="02.GameObjects\Character\Input">
       <UniqueIdentifier>{1c48c94a-af26-4384-b0da-bd1183368b46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Goku\Goku_MeleeAttack">
+      <UniqueIdentifier>{1148b8a7-ee34-4fbf-9d48-74a841f9e01c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -174,6 +177,9 @@
     <ClInclude Include="..\Public\Input.h">
       <Filter>02.GameObjects\Character\Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -253,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Play_Goku.cpp">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

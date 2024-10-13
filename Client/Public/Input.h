@@ -40,8 +40,9 @@ public:
     ButtonInput button;        // 플레이어가 입력한 버튼
 
 
-   // int frameTime;             // 입력이 발생한 프레임 시간 (Optional)
+    _float frameTime{};             // 입력이 발생한 프레임 시간 (Optional)
 
+   
     // 기본 생성자
    // CInput(DirectionInput dir = NEUTRAL, ButtonInput btn = NONE, int frame = 0)
    //     : direction(dir), button(btn), frameTime(frame) {}
@@ -55,6 +56,9 @@ public:
     bool operator==(const CInput& other) const {
         return direction == other.direction && button == other.button;
     }
+
+    
+
 };
 
 END

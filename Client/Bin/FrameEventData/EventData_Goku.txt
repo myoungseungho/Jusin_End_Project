@@ -18,6 +18,8 @@ OPENING_GOKU,GKS600cs,275,ModelChange,4
 //,PLAY_GOKU,GKS200_body,0.000000,AnimSpeedChange,0.05,60원작기준 0.05쯤인데 너무 느려서 줄임
 PLAY_GOKU,GKS200_body,0.000000,AnimSpeedChange,0.008,60
 PLAY_GOKU,GKS200_body,10,AttackEvent,200
+PLAY_GOKU,GKS200_body,11,NextAnimationCheck,333333
+
 
 PLAY_GOKU,GKS201_body,0,AnimSpeedChange,0.008,120
 PLAY_GOKU,GKS201_body,30,AttackEvent,201
@@ -514,6 +516,7 @@ PLAY_GOKU,GKS021_body,0.000000,AnimSpeedChange,0.010000,37.172001
 
 //,점프 고점~하강 (공용)
 PLAY_GOKU,GKS022_body,0.000000,AnimSpeedChange,0.010000,37.172001
+
 
 //,앞으로 걷기 (공용)
 //,PLAY_GOKU,GKS030_body,0.000000,AnimSpeedChange,0.010000,41.212002

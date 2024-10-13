@@ -369,6 +369,8 @@ void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameo
     {
         CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
         pModelPreview->FlipDirection(fValue[0]);
+
+       
     }
 
 }
@@ -453,11 +455,12 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 
     else if (splitText[0] == "NextAnimationCheck")
     {
-        pCharacter->NextMoveCheck();
+        pCharacter->AttackNextMoveCheck();
     }
     else if (splitText[0] == "AttackEvent")
     {
-        pCharacter->NextMoveCheck();
+        //pCharacter->NextMoveCheck();
+
     }
     
 }

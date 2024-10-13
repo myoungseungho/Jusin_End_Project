@@ -32,11 +32,11 @@ public:
 		_uint AnimationIndex;
 	};
 
-	//struct CommandPatternFunction {
-	//	vector<CInput> pattern;  // 입력 패턴
-	//	std::function<void()> action;  // 해당 패턴이 성공했을 때 실행할 함수
-	//	//_uint AnimationIndex;
-	//};
+	struct CommandPatternFunction {
+		vector<CInput> pattern;  // 입력 패턴
+		std::function<void()> action;  // 해당 패턴이 성공했을 때 실행할 함수
+		//_uint AnimationIndex;
+	};
 
 protected:
 	CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -51,10 +51,13 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	virtual void NextMoveCheck();
+	virtual void AttackNextMoveCheck() {};
+	virtual void AnimeEndNextMoveCheck() {};
+
 	virtual void ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex);
 	virtual void ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
 	virtual void InputCommand();
+	virtual void InputedCommandUpdate(_float fTimeDelta) ;
 
 	virtual void UpdateInputBuffer(CInput newInput) 
 	{
@@ -71,22 +74,23 @@ public:
 	bool CheckCommandWithStartCondition(const vector<CInput>& pattern, int timeWindow);
 
 	_int Get_iDirection() { return m_iLookDirection; };
-	_uint CheckAllCommands() 
-	{
-		for (const auto& command : MoveCommandPatterns) 
-		{
-			if (CheckCommandSkippingExtras(command.pattern,0)) {
-				//command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
-				
-				return command.AnimationIndex;
-			}
-		}
-		return 0;
-	}
+	_uint CheckAllCommands();
 
 	virtual void ShowInputBuffer();
 
 	virtual void DebugPositionReset();
+	void FlipDirection(_int iDirection = 0);
+
+	void Create_Effect(_int iEffectIndex);
+
+	_uint* Get_pAnimationIndex();
+	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
+
+
+	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
+	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
+
+	virtual void Gravity(_float fTimeDelta);
 
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -113,12 +117,16 @@ protected:
 	_ushort m_iPlayerTeam = { 1 };
 	_int	m_iLookDirection = { 1 };
 	vector<CommandPattern> MoveCommandPatterns;
-	//vector<CommandPatternFunction> MoveCommandPatternsFunction;
+	vector<CommandPatternFunction> MoveCommandPatternsFunction;
 
 	//_uint					m_iNextAnimationIndex = { 0 };
 	
 	//index,시간
-	pair<_uint, _float>		m_iNextAnimation{ 0,0 };
+	pair<_uint, _float>		m_iNextAnimation{0,0 };
+
+	_ushort m_iFallAnimationIndex = {7};
+	_ushort m_iIdleAnimationIndex = { 0 };
+
 
 private:
 	HRESULT Ready_Components();

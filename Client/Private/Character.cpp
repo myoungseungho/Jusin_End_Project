@@ -123,9 +123,7 @@ HRESULT CCharacter::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CCharacter::NextMoveCheck()
-{
-}
+
 
 void CCharacter::ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex)
 {
@@ -289,22 +287,22 @@ void CCharacter::InputCommand()
 
 
 
-		 if (m_pGameInstance->Key_Pressing(DIK_U))
+		 if (m_pGameInstance->Key_Down(DIK_U))
 		 {
 			 iAttackkey = ATTACK_LIGHT;
 		 }
 
-		 if (m_pGameInstance->Key_Pressing(DIK_I))
+		 if (m_pGameInstance->Key_Down(DIK_I))
 		 {
 			 iAttackkey = ATTACK_MEDIUM;
 
 		 }
-		 if (m_pGameInstance->Key_Pressing(DIK_J))
+		 if (m_pGameInstance->Key_Down(DIK_J))
 		 {
 			 iAttackkey = ATTACK_SPECIAL;
 
 		 }
-		 if (m_pGameInstance->Key_Pressing(DIK_K))
+		 if (m_pGameInstance->Key_Down(DIK_K))
 		 {
 			 iAttackkey = ATTACK_HEAVY;
 
@@ -343,6 +341,35 @@ void CCharacter::InputCommand()
 		UpdateInputBuffer(CInput(iMoveKey, iAttackkey));
 	}
 }
+
+void CCharacter::InputedCommandUpdate(_float fTimeDelta)
+{
+
+	//for (auto tinput : inputBuffer)
+	//{
+	//	tinput.frameTime += fTimeDelta;
+	//	
+	//	if(tinput.frameTime>0.2)
+	//
+	//}
+
+	inputBuffer.erase(
+		remove_if(inputBuffer.begin(), inputBuffer.end(), [fTimeDelta](CInput& input) {
+			input.frameTime += fTimeDelta;  // frameTime에 fTimeDelta 더하기
+			return input.frameTime >= 0.3f; // 0.3 이상인 경우 삭제
+			}),
+		inputBuffer.end()
+	);
+
+	//inputBuffer.erase(remove_if(inputBuffer.begin(), inputBuffer.end(), [fTimeDelta](CInput& input) 
+	//	{
+	//		input.frameTime += fTimeDelta;
+	//		return input.frameTime > 0.2f;
+	//
+	//	};
+
+}
+
 
 _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 {
@@ -420,6 +447,33 @@ bool CCharacter::CheckCommandWithStartCondition(const vector<CInput>& pattern, i
 	return false;
 }
 
+_uint CCharacter::CheckAllCommands()
+{
+
+	{
+		//for (const auto& command : MoveCommandPatterns) 
+		//{
+		//	if (CheckCommandSkippingExtras(command.pattern,0)) {
+		//		//command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
+		//		
+		//		return command.AnimationIndex;
+		//	}
+		//}
+		//return 0;
+
+		for (const auto& command : MoveCommandPatternsFunction)
+		{
+			if (CheckCommandSkippingExtras(command.pattern, 0)) {
+				command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
+
+				return 0;
+			}
+		}
+		return 0;
+
+	}
+}
+
 void CCharacter::ShowInputBuffer()
 {
 	inputBuffer;
@@ -430,6 +484,85 @@ void CCharacter::ShowInputBuffer()
 void CCharacter::DebugPositionReset()
 {
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0,0,0,1 });
+}
+
+void CCharacter::FlipDirection(_int iDirection)
+{
+	if (iDirection == 0)
+	{
+		m_iLookDirection = -m_iLookDirection;
+	}
+	else
+	{
+		m_iLookDirection = iDirection;
+	}
+
+	m_pTransformCom->Set_Scaled(-1, 1, 1);
+}
+
+void CCharacter::Create_Effect(_int iEffectIndex)
+{
+	switch (iEffectIndex)
+	{
+	case 0:
+		//Create_kamehameha();
+		break;
+
+	case 1:
+		//Create_Smash();
+		break;
+
+	default:
+		break;
+	}
+}
+
+_uint* CCharacter::Get_pAnimationIndex()
+{
+	return &(m_pModelCom->m_iCurrentAnimationIndex);
+}
+
+void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime)
+{
+	m_iNextAnimation.first = iAnimationIndex;
+	m_iNextAnimation.second = fLifeTime;
+
+}
+
+void CCharacter::Gravity(_float fTimeDelta)
+{
+	
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float fHeight = XMVectorGetY(vPos);
+
+
+	if (fHeight > 0)
+	{
+		
+		if (Check_bCurAnimationisGroundMove())
+		{
+			//공중 하강 모션으로 변경
+			//Set_Animation(m_iFallAnimationIndex);
+			m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+		}
+
+		//하강 모션중이면 점점 추락
+		if(m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+		{
+			//fHeight -= fTimeDelta;
+			//m_pTransformCom->
+			m_pTransformCom->Add_Move({ 0,-fTimeDelta,0 });
+		}
+
+	}
+	else
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+		{
+			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+		}
+	}
+
 }
 
 
