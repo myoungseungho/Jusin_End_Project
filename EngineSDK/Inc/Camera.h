@@ -36,8 +36,8 @@ public:
 
 		_float duration; // 다음 포인트까지 이동 시간
 		InterpolationType interpolationType; //보간 타입
-
-		_float4x4		model_WorldFloat4x4; //지정된 모델의 월드행렬
+		
+		const _float4x4* pWorldFloat4x4;
 	};
 
 protected:
@@ -56,7 +56,7 @@ public:
 	void Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta);
 	void Prev_Play(CCamera* camera, _float fTimeDelta);
 	void Prev_Stop();
-	void Add_Point(_float duration, InterpolationType type, _fmatrix model_WorldMatrix);
+	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4);
 
 public:
 	const _char* GetTabName() const { return m_Name; };

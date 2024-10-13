@@ -102,9 +102,9 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], m_bPrevPlayMode, fTimeDelta);
 }
 
-void CMain_Camera::Add_Point(_float duration, InterpolationType type)
+void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type);
+	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr);
 }
 
 const list<CCamera::CameraPoint>& CMain_Camera::Get_ListPoint()
