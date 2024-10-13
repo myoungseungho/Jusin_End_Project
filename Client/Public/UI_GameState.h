@@ -5,7 +5,7 @@
 
 BEGIN(Client)
 
-class CUI_Start abstract : public CUIObject
+class CUI_GameState abstract : public CUIObject
 {
 public:
 	typedef struct
@@ -19,9 +19,9 @@ public:
 	}ANIM_INFO;
 
 protected:
-	CUI_Start(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_Start(const CUI_Start& Prototype);
-	virtual ~CUI_Start() = default;
+	CUI_GameState(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_GameState(const CUI_GameState& Prototype);
+	virtual ~CUI_GameState() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();

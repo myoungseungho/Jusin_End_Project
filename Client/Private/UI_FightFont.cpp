@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_FightFont::CUI_FightFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_Start{ pDevice ,pContext }
+	:CUI_GameState{ pDevice ,pContext }
 {
 }
 
 CUI_FightFont::CUI_FightFont(const CUI_FightFont& Prototype)
-	:CUI_Start{ Prototype }
+	:CUI_GameState{ Prototype }
 {
 }
 

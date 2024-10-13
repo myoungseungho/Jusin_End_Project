@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_ReadyFont::CUI_ReadyFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_Start{ pDevice ,pContext }
+	:CUI_GameState{ pDevice ,pContext }
 {
 }
 
 CUI_ReadyFont::CUI_ReadyFont(const CUI_ReadyFont& Prototype)
-	:CUI_Start{ Prototype }
+	:CUI_GameState{ Prototype }
 {
 }
 

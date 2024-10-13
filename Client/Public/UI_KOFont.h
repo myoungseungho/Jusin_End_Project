@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CUI_StartEmblem final :public CUI_GameState
+class CUI_KOFont final :public CUI_GameState
 {
 private:
-	CUI_StartEmblem(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_StartEmblem(const CUI_StartEmblem& Prototype);
-	virtual ~CUI_StartEmblem() = default;
+	CUI_KOFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_KOFont(const CUI_KOFont& Prototype);
+	virtual ~CUI_KOFont() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -22,9 +22,11 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	virtual HRESULT Bind_ShaderResources();
+
 
 public:
-	static CUI_StartEmblem* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_KOFont* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

@@ -20,11 +20,14 @@ class CUIObject abstract : public CGameObject
 {
 public:
 	enum UI_LRPOS  { LEFT , RIGHT  , POS_END };
+	enum UI_TYPE { UI_ANIM, UI_NONANIM, TYPE_END };
 
 public:
 	typedef struct :public CGameObject::GAMEOBJECT_DESC
 	{
 		UI_LRPOS eLRPos = {};
+		
+		UI_TYPE	eType = {};
 		_uint iNumUI = {};
 	}UI_DESC;
 
@@ -67,6 +70,8 @@ protected:
 
 	UI_LRPOS m_eLRPos = { POS_END };
 	UI_DESC* pDesc = {};
+
+	UI_TYPE m_eAnimType = { TYPE_END };
 
 
 	_float m_fSizeX = { 100.f };

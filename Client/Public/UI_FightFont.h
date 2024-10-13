@@ -1,11 +1,11 @@
 #pragma once
 
-#include "UI_Start.h"
+#include "UI_GameState.h"
 #include <queue>
 
 BEGIN(Client)
 
-class CUI_FightFont final :public CUI_Start
+class CUI_FightFont final :public CUI_GameState
 {
 private:
 	CUI_FightFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

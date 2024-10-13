@@ -154,23 +154,32 @@
     <Filter Include="02.GameObjects\Effect">
       <UniqueIdentifier>{d8f025ca-2643-45a5-b6e3-c62e9fc77590}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\GameStart">
+    <Filter Include="02.GameObjects\UI\GameEnd">
+      <UniqueIdentifier>{0e711b5f-d746-4c75-9a3b-addb2a5a3982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameEnd\Font">
+      <UniqueIdentifier>{fd41ee65-367d-4d36-87de-12e250cb82bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState">
       <UniqueIdentifier>{a98447fb-15b2-4844-a335-8779fac81470}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\GameStart\Circle">
+    <Filter Include="02.GameObjects\UI\GameState\Circle">
       <UniqueIdentifier>{88c598ec-231c-479b-be3b-a8b0fe5fd694}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\GameStart\Emblem">
+    <Filter Include="02.GameObjects\UI\GameState\Emblem">
       <UniqueIdentifier>{7114070c-743e-4f1b-9732-2a0c291c6a6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\GameStart\Font">
+    <Filter Include="02.GameObjects\UI\GameState\Font">
       <UniqueIdentifier>{cf38ea3c-8ae1-40f0-a8fb-a49c3f586563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\GameStart\Font\Ready">
+    <Filter Include="02.GameObjects\UI\GameState\Font\Ready">
       <UniqueIdentifier>{b7f79c96-51cf-465c-b513-4e7353bdcf3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\GameStart\Font\Fight">
+    <Filter Include="02.GameObjects\UI\GameState\Font\Fight">
       <UniqueIdentifier>{376f56a2-6519-40cd-b34f-76f1d8749380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO">
+      <UniqueIdentifier>{aca5a2da-c163-407b-a68f-01916810a255}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -331,19 +340,22 @@
       <Filter>01.Level\99.Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_GameStartCircle.h">
-      <Filter>02.GameObjects\UI\GameStart\Circle</Filter>
+      <Filter>02.GameObjects\UI\GameState\Circle</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_Start.h">
-      <Filter>02.GameObjects\UI\GameStart</Filter>
+    <ClInclude Include="..\public\UI_GameState.h">
+      <Filter>02.GameObjects\UI\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_StartEmblem.h">
-      <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
+      <Filter>02.GameObjects\UI\GameState\Emblem</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_ReadyFont.h">
-      <Filter>02.GameObjects\UI\GameStart\Font\Ready</Filter>
+      <Filter>02.GameObjects\UI\GameState\Font\Ready</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_FightFont.h">
-      <Filter>02.GameObjects\UI\GameStart\Font\Fight</Filter>
+      <Filter>02.GameObjects\UI\GameState\Font\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_KOFont.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -492,19 +504,22 @@
       <Filter>01.Level\99.Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_GameStartCircle.cpp">
-      <Filter>02.GameObjects\UI\GameStart\Circle</Filter>
+      <Filter>02.GameObjects\UI\GameState\Circle</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_Start.cpp">
-      <Filter>02.GameObjects\UI\GameStart</Filter>
+    <ClCompile Include="..\private\UI_GameState.cpp">
+      <Filter>02.GameObjects\UI\GameState</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
-      <Filter>02.GameObjects\UI\GameStart\Emblem</Filter>
+      <Filter>02.GameObjects\UI\GameState\Emblem</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_ReadyFont.cpp">
-      <Filter>02.GameObjects\UI\GameStart\Font\Ready</Filter>
+      <Filter>02.GameObjects\UI\GameState\Font\Ready</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_FightFont.cpp">
-      <Filter>02.GameObjects\UI\GameStart\Font\Fight</Filter>
+      <Filter>02.GameObjects\UI\GameState\Font\Fight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOFont.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

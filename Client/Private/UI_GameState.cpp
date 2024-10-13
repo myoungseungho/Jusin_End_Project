@@ -1,21 +1,21 @@
 #include "stdafx.h"
 
-#include "UI_Start.h"
+#include "UI_GameState.h"
 #include "RenderInstance.h"
 
-CUI_Start::CUI_Start(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_GameState::CUI_GameState(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
 {
 
 }
 
-CUI_Start::CUI_Start(const CUI_Start& Prototype)
+CUI_GameState::CUI_GameState(const CUI_GameState& Prototype)
 	:CUIObject{ Prototype }
 {
 
 }
 
-HRESULT CUI_Start::Initialize_Prototype()
+HRESULT CUI_GameState::Initialize_Prototype()
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
@@ -23,40 +23,45 @@ HRESULT CUI_Start::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CUI_Start::Initialize(void* pArg)
+HRESULT CUI_GameState::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
+	
+	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
+	if(pDesc != nullptr)
+		m_eAnimType = pDesc->eType;
 
 	return S_OK;
 }
 
-void CUI_Start::Priority_Update(_float fTimeDelta)
+void CUI_GameState::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 }
 
-void CUI_Start::Update(_float fTimeDelta)
+void CUI_GameState::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 }
 
-void CUI_Start::Late_Update(_float fTimeDelta)
+void CUI_GameState::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 }
 
-HRESULT CUI_Start::Render(_float fTimeDelta)
+HRESULT CUI_GameState::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
 
-void CUI_Start::Set_AnimPosition(_uint iPosX, _float fAnimSpeed, _bool bStop, _float fStopDuration)
+void CUI_GameState::Set_AnimPosition(_uint iPosX, _float fAnimSpeed, _bool bStop, _float fStopDuration)
 {
-	m_QueueAnimPos.push({ iPosX ,fAnimSpeed ,bStop  ,fStopDuration });
+	if(m_eAnimType == UI_ANIM)
+		m_QueueAnimPos.push({ iPosX ,fAnimSpeed ,bStop  ,fStopDuration });
 }
 
-void CUI_Start::Action_ScaleAnim(_float fOffsetScaleY ,_float fTimeDelta)
+void CUI_GameState::Action_ScaleAnim(_float fOffsetScaleY ,_float fTimeDelta)
 {
 	if (!m_QueueAnimPos.empty())
 	{
@@ -81,13 +86,11 @@ void CUI_Start::Action_ScaleAnim(_float fOffsetScaleY ,_float fTimeDelta)
 			m_fScaleAnimTimer = 0.f;
 		}
 	}
-	//else
-	//	m_bDead = true;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX * fOffsetScaleY, 1.f);
 }
 
-HRESULT CUI_Start::Bind_ShaderResources()
+HRESULT CUI_GameState::Bind_ShaderResources()
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
@@ -95,7 +98,7 @@ HRESULT CUI_Start::Bind_ShaderResources()
 	return S_OK;
 }
 
-HRESULT CUI_Start::Ready_Components()
+HRESULT CUI_GameState::Ready_Components()
 {
 	if (FAILED(__super::Ready_Components()))
 		return E_FAIL;
@@ -103,7 +106,7 @@ HRESULT CUI_Start::Ready_Components()
 	return S_OK;
 }
 
-void CUI_Start::Free()
+void CUI_GameState::Free()
 {
 
 	__super::Free();

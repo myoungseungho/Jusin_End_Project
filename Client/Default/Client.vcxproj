@@ -161,7 +161,10 @@
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\public\SubPlayer.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
-    <ClInclude Include="..\public\UI_Start.h" />
+    <ClInclude Include="..\public\UI_KOFont.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_GameState.h" />
     <ClInclude Include="..\public\UI_GameStartCircle.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -221,7 +224,10 @@
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\private\SubPlayer.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
-    <ClCompile Include="..\private\UI_Start.cpp" />
+    <ClCompile Include="..\private\UI_KOFont.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_GameState.cpp" />
     <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

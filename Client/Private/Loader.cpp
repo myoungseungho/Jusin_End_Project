@@ -38,6 +38,7 @@
 #include "UI_StartEmblem.h"
 #include "UI_ReadyFont.h"
 #include "UI_FightFont.h"
+#include "UI_KOFont.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -280,19 +281,23 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/Emblem%d.png"), 2))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_UI_GameStartFont */
+	/* For.Prototype_Component_Texture_UI_GameReadyFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameReadyFont"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/Ready%d.png"), 2))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_UI_GameStartFont */
+	/* For.Prototype_Component_Texture_UI_GameFightFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameFightFont"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/Fight%d.png"), 2))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_GameKOFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/BP_roundfinish_KO.png")))))
+		return E_FAIL;
+
 
 	//게임 오브젝트
-
 
 	/* For.Prototype_GameObject_Cursor */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Cursor"),
@@ -386,7 +391,7 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_ComboEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	//게임 스타트
+	//게임 스테이트
 
 	/* For.Prototype_GameObject_UI_ComboEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_GameStartCircle"),
@@ -406,6 +411,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_UI_FightFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_StartEmblem"),
 		CUI_StartEmblem::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_KOFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_KOFont"),
+		CUI_KOFont::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//UI_StartFont

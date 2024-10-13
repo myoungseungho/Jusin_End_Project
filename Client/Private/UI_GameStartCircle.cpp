@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_GameStartCircle::CUI_GameStartCircle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_Start{ pDevice ,pContext }
+	:CUI_GameState{ pDevice ,pContext }
 {
 }
 
 CUI_GameStartCircle::CUI_GameStartCircle(const CUI_GameStartCircle& Prototype)
-	:CUI_Start{ Prototype }
+	:CUI_GameState{ Prototype }
 {
 }
 
@@ -44,7 +44,10 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 
 	m_iTotalAnimSize = m_QueueAnimPos.size();
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
+	if(m_eAnimType == UI_ANIM)
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
+	else if(m_eAnimType == UI_NONANIM)
+		__super::Set_UI_Setting(500, 500 , g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
 
 	return S_OK;
 }
@@ -58,11 +61,15 @@ void CUI_GameStartCircle::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_Rotaion(fTimeDelta);
-	Action_ScaleAnim(1.f,fTimeDelta);
+	if (m_eAnimType == UI_ANIM)
+	{
+		Action_Rotaion(fTimeDelta);
+		Action_ScaleAnim(1.f, fTimeDelta);
 
-	if (m_QueueAnimPos.empty())
-		m_bDead = TRUE;
+		if(m_QueueAnimPos.empty())
+			m_bDead = TRUE;
+
+	}
 
 	if (m_bEmblem == FALSE && m_QueueAnimPos.size() == m_iTotalAnimSize - 1)
 	{

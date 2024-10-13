@@ -1,12 +1,14 @@
 #pragma once
 
-#include "UI_Start.h"
+#include "UI_GameState.h"
 #include <queue>
 
 BEGIN(Client)
 
-class CUI_GameStartCircle final :public CUI_Start
+class CUI_GameStartCircle final :public CUI_GameState
 {
+
+
 public:
 	typedef struct
 	{
