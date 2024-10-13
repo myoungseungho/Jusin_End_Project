@@ -45,6 +45,9 @@ private:
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
 	unordered_map<pair<MODELID, SKILLID>, _uint, pair_hash> m_CameraIndexMap;
 
+	//메인카메라
+	class CMain_Camera* m_pMainCamera = { nullptr };
+
 public:
 	static CIMGUI_Camera_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

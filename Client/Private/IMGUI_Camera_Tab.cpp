@@ -39,6 +39,17 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 
 void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 {
+	//초기 메인카메라 셋팅
+	if (m_pMainCamera == nullptr)
+	{
+		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+		m_pMainCamera = static_cast<CMain_Camera*>(camera);
+
+		Safe_AddRef(m_pMainCamera);
+		return;
+	}
+
+
 	// 모델 선택 UI 호출
 	IMGUI_Camera_Select_Model(fTimeDelta);
 
@@ -128,13 +139,11 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 			return;
 		}
 
-		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
-
 		// 현재 선택된 카메라 인덱스 가져오기
-		_int cameraIndex = main_Camera->Get_Virtual_Camera();
+		_int cameraIndex = m_pMainCamera->Get_Virtual_Camera();
 
 		// 가상 카메라 목록 가져오기
-		vector<CCamera*> cameraList = main_Camera->m_vecVirtualCamera;
+		vector<CCamera*> cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 		if (cameraIndex < 0 || cameraIndex >= cameraList.size()) {
 			ImGui::Text("Invalid camera index selected.");
@@ -151,12 +160,8 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 // 새로운 함수: 선택된 카메라를 활성화하는 함수
 void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex)
 {
-	// 메인 카메라 가져오기
-	CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
-	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
-
 	// 가상 카메라 목록 가져오기
-	vector<CCamera*>& cameraList = main_Camera->m_vecVirtualCamera;
+	vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 	if (selectedIndex < 0 || selectedIndex >= cameraList.size()) {
 		// 유효하지 않은 인덱스일 경우 처리
@@ -165,7 +170,7 @@ void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex)
 	}
 
 	// 선택된 카메라 활성화
-	main_Camera->Set_Virtual_Camera((CMain_Camera::VIRTUAL_CAMERA)selectedIndex);
+	m_pMainCamera->Set_Virtual_Camera((CMain_Camera::VIRTUAL_CAMERA)selectedIndex);
 }
 
 void CIMGUI_Camera_Tab::UpdateCameraSelection()
@@ -201,10 +206,8 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 			return;
 		}
 
-		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
-
 		// 포인트 리스트 가져오기
-		const list<CCamera::CameraPoint>& points = main_Camera->Get_ListPoint();
+		const list<CCamera::CameraPoint>& points = m_pMainCamera->Get_ListPoint();
 
 		if (points.empty()) {
 			ImGui::Text("No camera points available.");
@@ -247,13 +250,11 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 			return;
 		}
 
-		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(camera);
-
 		// 현재 활성화된 가상 카메라 가져오기
-		int cameraIndex = static_cast<int>(main_Camera->Get_Virtual_Camera());
+		int cameraIndex = static_cast<int>(m_pMainCamera->Get_Virtual_Camera());
 
 		// 가상 카메라 목록 가져오기
-		std::vector<CCamera*>& cameraList = main_Camera->m_vecVirtualCamera;
+		std::vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 		if (cameraIndex < 0 || cameraIndex >= static_cast<int>(cameraList.size())) {
 			ImGui::Text("Invalid camera index selected.");
@@ -297,7 +298,7 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 			}
 
 			// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
-			main_Camera->Add_Point( duration, interpType);
+			m_pMainCamera->Add_Point(duration, interpType);
 
 			// 사용자에게 추가됨을 알림
 			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
@@ -322,5 +323,6 @@ CIMGUI_Camera_Tab* CIMGUI_Camera_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 
 void CIMGUI_Camera_Tab::Free()
 {
+	Safe_Release(m_pMainCamera);
 	__super::Free();
 }
