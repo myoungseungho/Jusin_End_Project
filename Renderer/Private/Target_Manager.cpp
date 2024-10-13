@@ -37,8 +37,12 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 	if (nullptr == pRenderTarget)
 		return E_FAIL;
 
-	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
+	CRenderTarget* pAlphaRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pAlphaRenderTarget)
+		return E_FAIL;
 
+	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
+	m_RenderTargets.emplace(strTargetTag + L"_Alpha", pAlphaRenderTarget);
 
 	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
 
@@ -46,14 +50,17 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 	{
 		list<CRenderTarget*>	MRTList;
 		MRTList.push_back(pRenderTarget);
-
+		MRTList.push_back(pAlphaRenderTarget);
 		m_MRTs.emplace(strMRTTag, MRTList);
 	}
 	else
+	{
 		pMRTList->push_back(pRenderTarget);
+		pMRTList->push_back(pAlphaRenderTarget);
+	}
 
 	Safe_AddRef(pRenderTarget);
-
+	Safe_AddRef(pAlphaRenderTarget);
 	return S_OK;
 }
 

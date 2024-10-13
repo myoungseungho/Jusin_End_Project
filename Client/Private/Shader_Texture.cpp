@@ -74,10 +74,11 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 void CShader_Texture::Priority_Update(_float fTimeDelta)
 {
 	m_fTime += fTimeDelta;
-	m_Sprite.fAccTime += fTimeDelta;
-	if (m_Sprite.isOn == true)
+
+	if (m_Sprite.isOn == true && isSpritePlay == true)
 	{
-	
+		m_Sprite.fAccTime += fTimeDelta;
+
 		if (m_Sprite.fAccTime > (1.0f / (*m_Sprite.fSpeed))) 
 		{
 			m_Sprite.fAccTime = 0.f;
@@ -92,8 +93,16 @@ void CShader_Texture::Priority_Update(_float fTimeDelta)
 
 		if (m_Sprite.fSpriteCurPos.y == m_Sprite.fSpriteSizeNumber->y)
 		{
-			m_Sprite.fSpriteCurPos.y = 0.f;
-			m_Sprite.fSpriteCurPos.x = 0.f;
+			if (m_isLoop == true)
+			{
+				m_Sprite.fSpriteCurPos.y = 0.f;
+				m_Sprite.fSpriteCurPos.x = 0.f;
+			}
+			else
+			{
+				m_Sprite.fSpriteCurPos.y = m_Sprite.fSpriteSizeNumber->y - 1;
+				m_Sprite.fSpriteCurPos.x = m_Sprite.fSpriteSizeNumber->x - 1;
+			}
 		}
 	}
 
@@ -229,6 +238,23 @@ void CShader_Texture::Push_Shade_Sprite(_float2* fSpriteSizeNumber, _float* pSpe
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(fSize.x * 0.5f - m_fX, m_fY - fSize.y * 0.5f, 0.f, 1.f));*/
+}
+
+void CShader_Texture::Sprite_ButtonClick(_int iClickButton)
+{
+	if (iClickButton == SB_PLAY)
+	{
+		isSpritePlay = true;
+	}
+	else if (iClickButton == SB_PAUSE)
+	{
+		isSpritePlay = false;
+	}
+	else if (iClickButton == SB_RESET)
+	{
+		m_Sprite.fSpriteCurPos.y = 0.f;
+		m_Sprite.fSpriteCurPos.x = 0.f;
+	}
 }
 
 HRESULT CShader_Texture::Ready_Components(void* pArg)

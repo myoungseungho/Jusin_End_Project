@@ -71,6 +71,7 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 {
 	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 	m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 }
 
 HRESULT CEffect_Single::Render(_float fTimeDelta)
@@ -92,7 +93,8 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 			return E_FAIL;
 
-
+		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
+			return E_FAIL;
 
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;

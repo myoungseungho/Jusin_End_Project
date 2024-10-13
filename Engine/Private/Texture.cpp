@@ -68,6 +68,9 @@ HRESULT CTexture::Initialize(void * pArg)
 
 HRESULT CTexture::Bind_ShaderResource(CShader * pShader, const _char * pConstantName, _uint iTextureIndex)
 {
+	if (iTextureIndex >= m_SRVs.size())
+		return pShader->Bind_ShaderResourceView(pConstantName, m_SRVs.front());
+
 	return pShader->Bind_ShaderResourceView(pConstantName, m_SRVs[iTextureIndex]);	
 }
 
@@ -106,9 +109,18 @@ _float2 CTexture::Get_TextureSize()
 
 HRESULT CTexture::Set_SRV(ID3D11ShaderResourceView* pSRV, _int iArray)
 {
-	Safe_Release(m_SRVs[iArray]);
-	m_SRVs[iArray] = pSRV;
-	Safe_AddRef(m_SRVs[iArray]);
+	if (iArray < m_SRVs.size())
+	{
+		Safe_Release(m_SRVs[iArray]);
+		m_SRVs[iArray] = pSRV;
+		Safe_AddRef(m_SRVs[iArray]);
+	}
+	else
+	{
+		m_SRVs.push_back(pSRV);
+		Safe_AddRef(m_SRVs[iArray]);
+	}
+
 	return S_OK;
 }
 

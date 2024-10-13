@@ -165,8 +165,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_Deferred(fTimeDelta)))
-		return E_FAIL;
+	//if (FAILED(Render_Deferred(fTimeDelta)))
+	//	return E_FAIL;
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
@@ -432,16 +432,16 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_GLOW])
 	{
-		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+		//	return E_FAIL;
 
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 
-		if (FAILED(m_pRenderInstance->End_MRT()))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->End_MRT()))
+		//	return E_FAIL;
 
 		if (FAILED(Draw_Glow(fTimeDelta)))
 			return E_FAIL;

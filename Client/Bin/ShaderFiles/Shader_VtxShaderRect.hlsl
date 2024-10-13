@@ -78,6 +78,7 @@ struct PS_IN
 struct PS_OUT
 {
 	float4	vColor : SV_TARGET0;
+    float4 vAlpha : SV_TARGET1;
 };
 
 PS_OUT PS_MAIN(PS_IN In)
@@ -121,7 +122,8 @@ PS_OUT PS_MAIN(PS_IN In)
     }
 	else
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
-
+	
+    Out.vAlpha = vector(Out.vColor.a, 0.f, 0.f, 1.f);
 	return Out;
 }
 

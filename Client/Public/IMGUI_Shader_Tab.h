@@ -20,6 +20,7 @@ public:
 
 	typedef struct
 	{
+		_bool isLoop = { false };
 		_int Sprite_node_id = { 3000 };
 		_float2 fSpriteSizeNumber = { 0.f,0.f };
 		_float fSpeed = { 0.f };
@@ -29,6 +30,7 @@ public:
 	{
 		_int iID;
 		ImTextureID Texture;
+		ImTextureID Alpha;
 	}SRV_Texture;
 protected:
 	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
@@ -49,6 +51,7 @@ public:
 	void Render_Link();
 	void Check_Create_Link();
 	void Check_Delete_Link();
+	void Draw_MusicButton(CShader_Texture* pShaderTexture);
 public:
 	_int m_iNumberId = { -1 };
 	_bool m_TabPick = { false };
