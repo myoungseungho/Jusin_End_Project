@@ -149,7 +149,7 @@ namespace Engine
 	}
 
 	//11. 회전 축 벡터(Right, Up, Look)로부터 회전 행렬 생성
-	_matrix CreateRotationMatrix(const _float3& right, const _float3& up, const _float3& look) {
+	inline _matrix CreateRotationMatrix(const _float3& right, const _float3& up, const _float3& look) {
 		// 각 벡터를 DirectXMath의 XMVECTOR로 로드
 		_vector vRight = XMVectorSet(right.x, right.y, right.z, 0.0f);
 		_vector vUp = XMVectorSet(up.x, up.y, up.z, 0.0f);
@@ -166,7 +166,7 @@ namespace Engine
 	}
 
 	//12. 월드 매트리스 만들기
-	_matrix CreateWorldMatrix(const _float3& position, const _fvector& rotQuat)
+	inline _matrix CreateWorldMatrix(const _float3& position, const _fvector& rotQuat)
 	{
 		_matrix worldMatrix;
 

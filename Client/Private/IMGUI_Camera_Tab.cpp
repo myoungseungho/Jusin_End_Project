@@ -224,9 +224,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		for (const auto& point : points) {
 			ImGui::BulletText("Point %d:", pointIndex++);
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
-			ImGui::Text("  RotationX: (%.2f, %.2f, %.2f)", point.rotationX.x, point.rotationX.y, point.rotationX.z);
-			ImGui::Text("  RotationY: (%.2f, %.2f, %.2f)", point.rotationY.x, point.rotationY.y, point.rotationY.z);
-			ImGui::Text("  RotationZ: (%.2f, %.2f, %.2f)", point.rotationZ.x, point.rotationZ.y, point.rotationZ.z);
+			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
 			//선택지 3개니까 그냥 이렇게 하자.
 			ImGui::Text("  Interpolation Type: %s",
