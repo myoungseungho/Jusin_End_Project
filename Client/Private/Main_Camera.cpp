@@ -97,7 +97,9 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode]);
+	//PrevPlayMode면 Point에 있는 녀석을 순회하는 데이터를 뷰투영에 넣어주고
+	//아니라면 현재 선택된 카메라의 Transform 정보를 넣어주기
+	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], m_bPrevPlayMode, fTimeDelta);
 }
 
 void CMain_Camera::Add_Point(_float duration, InterpolationType type)
@@ -109,6 +111,11 @@ const list<CCamera::CameraPoint>& CMain_Camera::Get_ListPoint()
 {
 	//현재 메인카메라가 사용하고 있는 가상카메라의 listPoints를 가져온다.
 	return m_vecVirtualCamera[m_currentVirtualMode]->m_listPoints;
+}
+
+void CMain_Camera::Play()
+{
+	m_bPrevPlayMode = true;
 }
 
 void CMain_Camera::Free_Camera(_float fTimeDelta)

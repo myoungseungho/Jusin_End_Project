@@ -51,6 +51,7 @@ public:
 	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
 	void Add_Point(_float duration, InterpolationType type);
 	const list<CameraPoint>& Get_ListPoint();
+	void Play();
 
 private:
 	void Free_Camera(_float fTimeDelta);
@@ -62,6 +63,7 @@ public:
 private:
 	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
+
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

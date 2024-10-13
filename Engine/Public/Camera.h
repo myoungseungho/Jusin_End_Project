@@ -31,10 +31,8 @@ public:
 		//포지션
 		_float3 position = {};
 
-		//월드행렬의 각 1,2,3 행벡터의 단위벡터
-		_float3 rotationX = {};
-		_float3 rotationY = {};
-		_float3 rotationZ = {};
+		//회전 쿼터니언
+		_float4 rotation = {};
 
 		_float duration; // 다음 포인트까지 이동 시간
 		InterpolationType interpolationType;
@@ -53,7 +51,9 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Update_Camera(CCamera* camera);
+	void Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta);
+	void Prev_Play(CCamera* camera, _float fTimeDelta);
+	void Prev_Stop();
 	void Add_Point(_float duration, InterpolationType type);
 
 public:
@@ -70,6 +70,9 @@ public:
 	_char* m_Name;
 
 	list<CameraPoint> m_listPoints;
+	_int m_currentPointIndex = { 0 };
+	_float m_elapsedTime = { 0.f };
+	_bool m_bPrevPlayMode = { false };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
