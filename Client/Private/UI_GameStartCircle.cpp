@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_GameStartCircle::CUI_GameStartCircle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_GameStart{ pDevice ,pContext }
+	:CUI_Start{ pDevice ,pContext }
 {
 }
 
 CUI_GameStartCircle::CUI_GameStartCircle(const CUI_GameStartCircle& Prototype)
-	:CUI_GameStart{ Prototype }
+	:CUI_Start{ Prototype }
 {
 }
 

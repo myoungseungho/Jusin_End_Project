@@ -160,7 +160,7 @@
     <ClInclude Include="..\public\Pawn.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\public\SubPlayer.h" />
-    <ClInclude Include="..\public\UI_GameStart.h" />
+    <ClInclude Include="..\public\UI_Start.h" />
     <ClInclude Include="..\public\UI_GameStartCircle.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -219,7 +219,7 @@
     <ClCompile Include="..\private\Pawn.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\private\SubPlayer.cpp" />
-    <ClCompile Include="..\private\UI_GameStart.cpp" />
+    <ClCompile Include="..\private\UI_Start.cpp" />
     <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

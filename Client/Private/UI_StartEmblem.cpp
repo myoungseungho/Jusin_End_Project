@@ -4,12 +4,12 @@
 #include "RenderInstance.h"
 
 CUI_StartEmblem::CUI_StartEmblem(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUI_GameStart{ pDevice ,pContext }
+	:CUI_Start{ pDevice ,pContext }
 {
 }
 
 CUI_StartEmblem::CUI_StartEmblem(const CUI_StartEmblem& Prototype)
-	:CUI_GameStart{ Prototype }
+	:CUI_Start{ Prototype }
 {
 }
 

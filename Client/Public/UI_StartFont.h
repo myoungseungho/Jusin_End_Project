@@ -1,11 +1,11 @@
 #pragma once
 
-#include "UI_GameStart.h"
+#include "UI_Start.h"
 #include <queue>
 
 BEGIN(Client)
 
-class CUI_StartFont final :public CUI_GameStart
+class CUI_StartFont final :public CUI_Start
 {
 private:
 	CUI_StartFont(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
