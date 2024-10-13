@@ -70,23 +70,17 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
-_bool CEffect_Manager::Find_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameNumber)
+_bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
 {
-	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
 	if (!pLayer)
 		return false;
 
-	CEffect* pEffect = pLayer->Find_Effect(EffectName);
+	CEffect* pEffect = pLayer->Find_Effect(effectName);
 	if (!pEffect)
 		return false;
 
-	for (const auto& keyframe : pEffect->m_EffectKeyFrames)
-	{
-		if (keyframe.first == KeyFrameNumber)
-			return true;
-	}
-
-	return false;
+	return pEffect->Find_KeyFrame(frameNumber);
 }
 
 HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
@@ -403,7 +397,7 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 	return _float3(0.f, 0.f, 0.f);
 }
 
-void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame)
+void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
 	auto layerIt = m_FinalEffects.find(LayerName);
 	if (layerIt != m_FinalEffects.end())
@@ -414,11 +408,15 @@ void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& Effe
 			CEffect* pEffect = pLayer->Find_Effect(EffectName);
 			if (pEffect)
 			{
-				pEffect->Add_KeyFrame(KeyFrameIndex, NewKeyFrame);
+				pEffect->Add_KeyFrame(KeyFrameNumber, NewKeyFrame);
 				return;
 			}
 		}
 	}
+}
+
+void CEffect_Manager::Play_Effect_Animation(_float fTimeDelta, const wstring& LayerName)
+{
 }
 
 HRESULT CEffect_Manager::Ready_Components()

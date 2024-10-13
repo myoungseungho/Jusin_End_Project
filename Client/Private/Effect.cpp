@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "..\Public\Effect.h"
 #include "GameInstance.h"
+#include "Effect_Animation.h"
 
 CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice , pContext }
@@ -21,6 +22,11 @@ HRESULT CEffect::Initialize_Prototype()
 HRESULT CEffect::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
+
+	m_pAnimation = CEffect_Animation::Create();
+
+	if (nullptr == m_pAnimation)
 		return E_FAIL;
 
 	return S_OK;
@@ -46,9 +52,14 @@ HRESULT CEffect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CEffect::Add_KeyFrame(_int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame)
+void CEffect::Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
-	m_EffectKeyFrames.push_back(make_pair(KeyFrameIndex,NewKeyFrame));
+	m_pAnimation->Add_KeyFrame(KeyFrameNumber, NewKeyFrame);
+}
+
+_bool CEffect::Find_KeyFrame(_uint KeyFrameNumber)
+{
+	return m_pAnimation->Find_KeyFrame(KeyFrameNumber);
 }
 
 void CEffect::Set_Effect_Scaled(_float3 ChangeScaled)

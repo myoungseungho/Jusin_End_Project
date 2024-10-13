@@ -24,9 +24,11 @@ public:
 
 public:
 	_float			m_fDuration = { 0.f };
+	_float			m_fTickPerSecond = {};
 
 private:
 	vector<class CEffect*>			m_MixtureEffects;
+	_uint						m_iNumEffects = {0};
 
 public:
 	static CEffect_Layer* Create();

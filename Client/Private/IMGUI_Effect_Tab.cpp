@@ -70,7 +70,7 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     if (CurrentEffect == 2)
     {
-        Render_For_Layer_KeyFrame();
+        Render_For_Layer_KeyFrame(fTimeDelta);
     }
 
     if(openKeyFrameWindow)
@@ -422,7 +422,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Layer()
     }
 }
 
-void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
+void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 {
     // 레이어 목록 가져오기
     auto LayerList = m_pEffect_Manager->Get_Layer_List();
@@ -458,7 +458,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
         }
 
         ImGui::SameLine();
-        ImGui::Dummy(ImVec2(70.0f, 0.0f)); // 가로 20px 간격 추가
+        ImGui::Dummy(ImVec2(70.0f, 0.0f)); // 가로 70px 간격 추가
         ImGui::SameLine();
 
         if (ImGui::Button("Play"))
@@ -477,6 +477,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
 
         // 선택한 레이어의 Duration 가져오기
         CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName);
+        int totalKeyframes = 0;
+        const float frameInterval = 1.0f / 60.0f; // 60FPS 간격으로 고정
+
         if (pLayer)
         {
             float layerDuration = pLayer->m_fDuration; // 현재 Duration 값
@@ -489,6 +492,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
                 // Duration 값이 수정되면 레이어에 반영
                 pLayer->m_fDuration = max(0.0f, layerDuration); // 음수로 설정되지 않도록
             }
+
+            // 키프레임 개수 계산
+            totalKeyframes = static_cast<int>(layerDuration / frameInterval);
         }
 
         ImGui::Separator();
@@ -498,22 +504,10 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
 
         if (!effectNames.empty())
         {
-            const int frameCount = 200; // 총 프레임 수
-            const int buttonSize = 20;  // 버튼 크기
+            const int buttonSize = 20;       // 버튼 크기
             const float effectNameWidth = 150.0f; // 이펙트 이름 표시 너비
 
             ImGui::BeginChild("TimelineRegion", ImVec2(0, 300), false, ImGuiWindowFlags_HorizontalScrollbar);
-
-            // 상단에 프레임 번호 표시
-            ImGui::Text(" "); // 이름과의 간격을 위한 빈 텍스트
-            ImGui::SameLine(effectNameWidth); // 이펙트 이름 너비에 맞춤
-            for (int frame = 0; frame < frameCount; frame++)
-            {
-                ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 크기와 간격 조정
-                ImGui::Text("%d", frame);
-                ImGui::SameLine();
-            }
-            ImGui::NewLine();
 
             // 각 이펙트의 이름 및 프레임 버튼 표시
             for (int item = 0; item < effectNames.size(); item++)
@@ -525,34 +519,23 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
                 ImGui::SameLine(effectNameWidth); // 이름 뒤에 충분한 간격을 줌
 
                 // 각 프레임의 버튼 배치
-                for (int frame = 0; frame < frameCount; frame++)
+                for (int frame = 0; frame < totalKeyframes; frame++)
                 {
+                    float curtime = frame * frameInterval;
+
                     ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 위치 조정
-                    ImGui::PushID(frame + item * frameCount);
-
-                    // 키프레임이 존재하는지 확인
-                    bool isKeyFrameExist = m_pEffect_Manager->Find_KeyFrame(selectedLayerName, effectNames[item], frame);
-
-
-                    // 색상 조정
-                    if (isKeyFrameExist)
-                    {
-                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.f, 0.8f, 0.3f, 0.7f)); // 진한 색상 예시
-                    }
+                    ImGui::PushID(frame + item * totalKeyframes);
 
                     // 키프레임을 나타내는 버튼
                     if (ImGui::Button("##", ImVec2(buttonSize, buttonSize)))
                     {
-                        // 버튼 클릭 시 선택된 효과 이름과 프레임 번호를 저장
+                        // 버튼 클릭 시 선택된 효과 이름과 프레임 번호를 저장하고, curtime 설정
                         selectedEffectName = effectNameUTF8;
                         selectedFrame = frame;
                         openKeyFrameWindow = true;
-                    }
 
-                    // 색상 복원
-                    if (isKeyFrameExist)
-                    {
-                        ImGui::PopStyleColor();
+                        // 선택된 프레임의 curtime을 클래스 멤버 변수에 저장
+                        SelectCurTime = curtime;
                     }
 
                     ImGui::PopID();
@@ -566,7 +549,6 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame()
     }
 }
 
-
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
     ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
@@ -574,6 +556,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Text("Frame: %d", selectedFrame);
 
     static EFFECT_KEYFRAME newKeyFrame;
+
+    // CurTime을 선택된 프레임 시간으로 자동 설정
+    const float frameInterval = 1.0f / 60.0f;  // 예: 60 FPS 기준
+    newKeyFrame.fCurTime = selectedFrame * frameInterval;
 
     ImGui::Text("Effect Keyframe Settings");
 
@@ -702,9 +688,8 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     // Current Time
     ImGui::Text("Current Time");
-    ImGui::SliderFloat("##CurTime Slider", &newKeyFrame.fCurTime, 0.0f, 100.0f);
-    ImGui::SameLine();
-    ImGui::InputFloat("##CurTime", &newKeyFrame.fCurTime);
+    newKeyFrame.fCurTime = SelectCurTime;
+    ImGui::Text("CurTime: %.3f", newKeyFrame.fCurTime);
 
     ImGui::Separator();
 
@@ -712,12 +697,12 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Text("Duration");
     if (CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName))
         newKeyFrame.fDuration = pLayer->m_fDuration;
-    ImGui::InputFloat("##Duration", &newKeyFrame.fDuration, 0.5f, 0.5f, "%.3f", ImGuiInputTextFlags_ReadOnly);
+    ImGui::Text("Duration: %.3f", newKeyFrame.fDuration);
 
     ImGui::Separator();
 
     // Keyframe 저장 버튼
-    if (ImGui::Button("Add Keyframe"))
+    if (ImGui::Button("Save Keyframe"))
     {
         m_pEffect_Manager->Add_KeyFrame(selectedLayerName, wstring(selectedEffectName.begin(), selectedEffectName.end()), selectedFrame, newKeyFrame);
         ImGui::Text("Keyframe added!");
@@ -725,28 +710,15 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     ImGui::SameLine();
 
-    if (ImGui::Button("Save Keyframe"))
+    if (ImGui::Button("Delete Keyframe"))
     {
-        ImGui::Text("Keyframe saved!");
-    }
-
-    ImGui::SameLine();
-
-    if (ImGui::Button("Reset Keyframe"))
-    {
-        newKeyFrame = EFFECT_KEYFRAME();
-        ImGui::Text("Keyframe reset!");
+        // 삭제 추가
     }
 
     ImGui::Separator();
 
     ImGui::End();
 }
-
-
-
-
-
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

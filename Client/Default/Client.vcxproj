@@ -159,6 +159,7 @@
     <ClInclude Include="..\Public\Camera_Free.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\Effect.h" />
+    <ClInclude Include="..\public\Effect_Animation.h" />
     <ClInclude Include="..\Public\Effect_Layer.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Effect_MoveTex.h" />
@@ -196,6 +197,7 @@
   <ItemGroup>
     <ClCompile Include="..\Private\Camera_Free.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\private\Effect_Animation.cpp" />
     <ClCompile Include="..\Private\Effect_Layer.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Effect_MoveTex.cpp" />

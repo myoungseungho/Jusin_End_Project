@@ -26,7 +26,7 @@ public:
 
 public:
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
-	_bool Find_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameNumber);
+	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 
 	HRESULT Delete_Layer(const wstring& strEffectLayerTag);
 
@@ -48,7 +48,10 @@ public:
 	_float3 Get_Effect_Position(_int EffectId);
 	_float3 Get_Effect_Rotation(_int EffectId);
 
-	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame);
+	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
+
+public:
+	void Play_Effect_Animation(_float fTimeDelta, const wstring& LayerName);
 
 private:
 	HRESULT Ready_Components();
