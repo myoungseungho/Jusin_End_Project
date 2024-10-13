@@ -28,16 +28,19 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	_char* name = "Camera_Normal";
 	//처음에는 일반 가상 카메라를 메인 카메라로
-	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"));
+	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"), &name);
 	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
 
 	//스킬 버츄얼 카메라
-	CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"));
+	name = "Camera_Skill_1";
+	CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
 	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
 
 	//스킬 버츄얼 카메라2
-	CGameObject* virtualCamera_Skill2 = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"));
+	name = "Camera_Skill_2";
+	CGameObject* virtualCamera_Skill2 = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
 	m_listVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill2));
 
 	//처음엔 일반 가상 카메라를 셋팅

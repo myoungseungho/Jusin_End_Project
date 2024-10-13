@@ -39,6 +39,8 @@ HRESULT CCamera::Initialize(void* pArg)
 		m_fFar = pDesc->fFar;
 		m_fMouseSensor = pDesc->fSensor;
 
+		m_Name = pDesc->cName;
+
 		if (FAILED(__super::Initialize(pArg)))
 			return E_FAIL;
 

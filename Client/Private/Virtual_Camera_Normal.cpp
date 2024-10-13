@@ -43,7 +43,8 @@ HRESULT CVirtual_Camera_Normal::Initialize(void* pArg)
 	Desc.fSpeedPerSec = 1.f;
 	//카메라 회전속도
 	Desc.fRotationPerSec = XMConvertToRadians(90.0f);
-	
+	//카메라 이름
+	Desc.cName = *static_cast<_char**>(pArg);
 
 	m_fMoveSpeed = Desc.fSpeedPerSec;
 

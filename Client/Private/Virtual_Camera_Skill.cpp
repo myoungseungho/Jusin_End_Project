@@ -43,6 +43,10 @@ HRESULT CVirtual_Camera_Skill::Initialize(void* pArg)
 	Desc.fSpeedPerSec = 1.f;
 	//카메라 회전속도
 	Desc.fRotationPerSec = XMConvertToRadians(90.0f);
+	//카메라 이름
+	Desc.cName = *static_cast<_char**>(pArg);
+
+	m_fMoveSpeed = Desc.fSpeedPerSec;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -52,7 +56,7 @@ HRESULT CVirtual_Camera_Skill::Initialize(void* pArg)
 
 void CVirtual_Camera_Skill::Priority_Update(_float fTimeDelta)
 {
-	
+
 }
 
 void CVirtual_Camera_Skill::Update(_float fTimeDelta)

@@ -28,8 +28,6 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	virtual const _char* GetTabName() const { return "Main_Camara"; };
-
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);

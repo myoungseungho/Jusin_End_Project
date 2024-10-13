@@ -15,7 +15,9 @@ public:
 	{
 		_float3		vEye, vAt;
 		_float		fFovy, fNear, fFar, fSensor;
+		_char*		cName;
 	}CAMERA_DESC;
+
 protected:
 	CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CCamera(const CCamera& Prototype);
@@ -32,7 +34,7 @@ public:
 	void Update_Camera(CCamera* camera);
 
 public:
-	virtual const _char* GetTabName() const = 0;
+	const _char* GetTabName() const { return m_Name; };
 
 public:
 	_float3					m_vEye{}, m_vAt{};
@@ -42,6 +44,8 @@ public:
 	_float					m_fMouseSensor = {};
 	_float					m_fMoveSpeed = {};
 
+
+	_char*					m_Name;
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;
