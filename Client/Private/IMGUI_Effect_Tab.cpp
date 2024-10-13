@@ -526,6 +526,15 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 위치 조정
                     ImGui::PushID(frame + item * totalKeyframes);
 
+                    // 키프레임이 존재하는지 확인
+                    bool isKeyFrameExist = m_pEffect_Manager->Find_KeyFrame(selectedLayerName, effectNames[item], frame);
+
+                    // 색상 조정
+                    if (isKeyFrameExist)
+                    {
+                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.8f, 0.3f, 0.7f)); // 진한 색상 예시
+                    }
+
                     // 키프레임을 나타내는 버튼
                     if (ImGui::Button("##", ImVec2(buttonSize, buttonSize)))
                     {
@@ -538,6 +547,12 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                         SelectCurTime = curtime;
                     }
 
+                    // 색상 복원
+                    if (isKeyFrameExist)
+                    {
+                        ImGui::PopStyleColor();
+                    }
+
                     ImGui::PopID();
                     ImGui::SameLine();
                 }
@@ -548,6 +563,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         }
     }
 }
+
 
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
