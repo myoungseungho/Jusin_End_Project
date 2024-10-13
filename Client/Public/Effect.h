@@ -55,6 +55,7 @@ public:
 public:
 	void Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
 	_bool	Find_KeyFrame(_uint KeyFrameNumber);
+	EFFECT_KEYFRAME Get_KeyFrame(_uint KeyFrameNumber);
 	void Set_Effect_Scaled(_float3 ChangeScaled);
 	void Set_Effect_Position(_float3 ChangePosition);
 	void Set_Effect_Rotation(_float3 ChangeRoation);

@@ -22,6 +22,7 @@ public:
 public:
 	void		Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrameData);
 	_bool	Find_KeyFrame(_uint KeyFrameNumber);
+	EFFECT_KEYFRAME Get_KeyFrame(_uint KeyFrameNumber);
 
 private:
 	class CGameInstance* m_pGameInstance = { nullptr };

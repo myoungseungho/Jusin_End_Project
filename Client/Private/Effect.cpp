@@ -62,6 +62,11 @@ _bool CEffect::Find_KeyFrame(_uint KeyFrameNumber)
 	return m_pAnimation->Find_KeyFrame(KeyFrameNumber);
 }
 
+EFFECT_KEYFRAME CEffect::Get_KeyFrame(_uint KeyFrameNumber)
+{
+	return m_pAnimation->Get_KeyFrame(KeyFrameNumber);
+}
+
 void CEffect::Set_Effect_Scaled(_float3 ChangeScaled)
 {
 	m_pTransformCom->Set_Scaled(ChangeScaled.x, ChangeScaled.y, ChangeScaled.z);

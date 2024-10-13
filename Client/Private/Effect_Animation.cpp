@@ -23,7 +23,13 @@ HRESULT CEffect_Animation::Initialize()
 
 void CEffect_Animation::Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrameData)
 {
-	m_EffectKeyFrames.emplace(KeyFrameNumber, NewKeyFrameData);
+	auto it = m_EffectKeyFrames.find(KeyFrameNumber);
+	if (it != m_EffectKeyFrames.end()) {
+		it->second = NewKeyFrameData;
+	}
+	else {
+		m_EffectKeyFrames.emplace(KeyFrameNumber, NewKeyFrameData);
+	}
 }
 
 _bool CEffect_Animation::Find_KeyFrame(_uint KeyFrameNumber)
@@ -31,6 +37,18 @@ _bool CEffect_Animation::Find_KeyFrame(_uint KeyFrameNumber)
 	auto it = m_EffectKeyFrames.find(KeyFrameNumber);
 
 	return it != m_EffectKeyFrames.end();
+}
+
+EFFECT_KEYFRAME CEffect_Animation::Get_KeyFrame(_uint KeyFrameNumber)
+{
+	auto it = m_EffectKeyFrames.find(KeyFrameNumber);
+
+	if (it != m_EffectKeyFrames.end()) {
+		return it->second;
+	}
+	else {
+		return EFFECT_KEYFRAME();
+	}
 }
 
 CEffect_Animation* CEffect_Animation::Create()

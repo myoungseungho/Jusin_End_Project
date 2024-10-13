@@ -70,6 +70,16 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
+CEffect* CEffect_Manager::Find_Layer_Effect(wstring& layerName, wstring& effectName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer == nullptr)
+		return nullptr;
+
+	return pLayer->Find_Effect(effectName);
+}
+
 _bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
@@ -81,6 +91,15 @@ _bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _u
 		return false;
 
 	return pEffect->Find_KeyFrame(frameNumber);
+}
+
+EFFECT_KEYFRAME CEffect_Manager::Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	CEffect* pEffect = pLayer->Find_Effect(effectName);
+
+	return pEffect->Get_KeyFrame(frameNumber);
 }
 
 HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
@@ -120,6 +139,13 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
+	}
+
+	if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size()) 
+	{
+		Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+
+		m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
 	}
 
 	return S_OK;
@@ -395,6 +421,69 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 	}
 
 	return _float3(0.f, 0.f, 0.f);
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_Scaled(wstring& layerName, wstring& effectName, _float3 ChangeScaled)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_Scaled(ChangeScaled);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_Position(wstring& layerName, wstring& effectName, _float3 ChangePosition)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_Position(ChangePosition);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& effectName, _float3 ChangeRotation)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_Rotation(ChangeRotation);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+_float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_Effect_Scaled();
+	}
+	return _float3(0.f, 0.f, 0.f); // 기본값 반환
+}
+
+_float3 CEffect_Manager::Get_Layer_Effect_Position(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_Effect_Position();
+	}
+	return _float3(0.f, 0.f, 0.f); // 기본값 반환
+}
+
+_float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_Effect_Rotation();
+	}
+	return _float3(0.f, 0.f, 0.f); // 기본값 반환
 }
 
 void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
