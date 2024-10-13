@@ -39,6 +39,9 @@ private:
 private:
 	_uint m_iTextureIndex = { 0 };
 
+	_bool m_bEmblem = { FALSE };
+	_uint m_iTotalAnimSize = { 0 };
+
 
 public:
 	static CUI_GameStartCircle* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

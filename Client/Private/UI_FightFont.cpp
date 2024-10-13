@@ -34,11 +34,11 @@ HRESULT CUI_FightFont::Initialize(void* pArg)
 	m_fSizeX = 1000.f;
 	m_fSizeY = 500.f;
 
-	Set_AnimPosition(800, 10.f);
+	Set_AnimPosition(600, 10.f);
 	Set_AnimPosition(500, 50.f, TRUE, 2.5f);
 	Set_AnimPosition(800, 200.f);
 	Set_AnimPosition(750, 200.f);
-	Set_AnimPosition(1500, 200.f );
+	Set_AnimPosition(1500, 200.f , TRUE, 1.18f);
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.8f);
 
@@ -49,15 +49,15 @@ void CUI_FightFont::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	if (m_QueueAnimPos.size() < 2)
+	if (m_QueueAnimPos.size() < 1)
 	{
-		m_fAlphaTimer -= fTimeDelta;
+		m_fAlphaTimer -= fTimeDelta * 2.f;
 		if (m_fAlphaTimer <= 0.f)
 			m_fAlphaTimer = 0.f;
 	}
 	else 
 	{ 
-		m_fAlphaTimer += fTimeDelta * 0.5f;
+		m_fAlphaTimer += fTimeDelta * 1.25f;
 		if (m_fAlphaTimer >= 1.f)
 			m_fAlphaTimer = 1.f;
 	}

@@ -164,7 +164,7 @@
     <ClInclude Include="..\public\UI_Start.h" />
     <ClInclude Include="..\public\UI_GameStartCircle.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\public\UI_ReadyFont.h" />
     <ClInclude Include="..\public\UI_SubHpGauge.h" />
@@ -224,7 +224,7 @@
     <ClCompile Include="..\private\UI_Start.cpp" />
     <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\private\UI_ReadyFont.cpp" />
     <ClCompile Include="..\private\UI_SubHpGauge.cpp" />

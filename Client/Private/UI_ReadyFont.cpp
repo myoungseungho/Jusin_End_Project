@@ -34,12 +34,6 @@ HRESULT CUI_ReadyFont::Initialize(void* pArg)
 	m_fSizeX = 400.f;
 	m_fSizeY = 200.f;
 
-	//Set_AnimPosition(500, 10.f);
-	//Set_AnimPosition(400, 50.f, TRUE, 5.f);
-	//Set_AnimPosition(500, 80.f);
-	//Set_AnimPosition(600, 80.f);
-	//Set_AnimPosition(1000, 150.f, TRUE, 3.f);
-
 	m_fOffSetPosY = 50.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f  - m_fOffSetPosY, 0.f);
@@ -151,7 +145,7 @@ void CUI_ReadyFont::Action_StartAnim(_float fTimeDelta)
 	{
 		m_fMaskTimer += fTimeDelta;
 
-		if (m_fMaskTimer >= 3.f)
+		if (m_fMaskTimer >= 5.f)
 		{
 			m_bEnd = TRUE;
 			m_fMaskTimer = 1.f;

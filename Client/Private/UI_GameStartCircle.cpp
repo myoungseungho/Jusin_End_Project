@@ -33,14 +33,16 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 
 	m_iTextureIndex = pUI_Desc->iNumUI;
 
-	m_fSizeX = 800.f;
-	m_fSizeY = 800.f;
+	m_fSizeX = 1200.f;
+	m_fSizeY = 1200.f;
 	
-	Set_AnimPosition(500 , 10.f);
-	Set_AnimPosition(400, 50.f, TRUE , 5.f);
+	Set_AnimPosition(600 , 5.f);
+	Set_AnimPosition(400, 50.f, TRUE , 6.75f);
 	Set_AnimPosition(500, 80.f);
 	Set_AnimPosition(600, 80.f);
-	Set_AnimPosition(1000, 150.f, TRUE , 3.f);
+	Set_AnimPosition(1000, 150.f, TRUE, 1.f);
+
+	m_iTotalAnimSize = m_QueueAnimPos.size();
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
 
@@ -61,6 +63,12 @@ void CUI_GameStartCircle::Update(_float fTimeDelta)
 
 	if (m_QueueAnimPos.empty())
 		m_bDead = TRUE;
+
+	if (m_bEmblem == FALSE && m_QueueAnimPos.size() == m_iTotalAnimSize - 1)
+	{
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_StartEmblem"), TEXT("Layer_UI_Emblem"));
+		m_bEmblem = TRUE;
+	}
 
 }
 

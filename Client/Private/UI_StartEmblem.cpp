@@ -31,8 +31,6 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 
-	m_iTextureIndex = pUI_Desc->iNumUI;
-
 	m_fSizeX = 800.f;
 	m_fSizeY = 800.f;
 
@@ -56,8 +54,7 @@ void CUI_StartEmblem::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_Rotaion(fTimeDelta);
-	Action_ScaleAnim(fTimeDelta);
+	Action_ScaleAnim(1.f,fTimeDelta);
 
 }
 
@@ -73,7 +70,7 @@ HRESULT CUI_StartEmblem::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
 
@@ -95,20 +92,11 @@ HRESULT CUI_StartEmblem::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartCircle"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartEmblem"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 }
 
-void CUI_StartEmblem::Action_Rotaion(_float fTimeDelta)
-{
-	if (m_iTextureIndex != 0)
-	{
-		_float iOffsetRotation = 0;
-		m_iTextureIndex % 2 == 0 ? iOffsetRotation = 1 : iOffsetRotation = -1;
-		m_pTransformCom->Turn({ 0,0,iOffsetRotation }, fTimeDelta);
-	}
-}
 
 CUI_StartEmblem* CUI_StartEmblem::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
