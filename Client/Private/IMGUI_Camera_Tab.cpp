@@ -73,6 +73,9 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 			// Add_Point 버튼 호출
 			IMGUI_Add_Point();
+
+			// 플레이 버튼
+			IMGUI_Play_Button();
 		}
 	}
 }
@@ -304,6 +307,36 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
 		}
 	}
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Play_Button()
+{
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 35);
+	ImVec2 button_size = ImVec2(20, 20);
+	if (ImGui::InvisibleButton("play_button", button_size))
+	{
+		//함수 연결
+		//현재 카메라 셋팅에서 list를 Play한다.
+		m_pMainCamera->Play();
+	}
+
+	ImVec2 p = ImGui::GetItemRectMin();
+	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+	float size = 20.0f;
+	ImVec2 triangle_pos[3] = {
+		ImVec2(p.x + (button_size.x - size) * 0.5f, p.y),
+		ImVec2(p.x + (button_size.x + size) * 0.5f, p.y + size / 2),
+		ImVec2(p.x + (button_size.x - size) * 0.5f, p.y + size)
+	};
+
+	ImU32 triangle_color;
+
+	if (ImGui::IsItemHovered())
+		triangle_color = IM_COL32(155, 255, 155, 255);
+	else
+		triangle_color = IM_COL32(85, 255, 85, 255);
+
+	draw_list->AddTriangleFilled(triangle_pos[0], triangle_pos[1], triangle_pos[2], triangle_color);
 }
 
 
