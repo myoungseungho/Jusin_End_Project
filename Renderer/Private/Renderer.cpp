@@ -44,6 +44,10 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), g_iSizeX, g_iSizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_GlowDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowDiffuse"))))
+		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Blur_X"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_X"), TEXT("Target_Blur_X"))))
@@ -432,16 +436,16 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_GLOW])
 	{
-		//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+			return E_FAIL;
 
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 
-		//if (FAILED(m_pRenderInstance->End_MRT()))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
 
 		if (FAILED(Draw_Glow(fTimeDelta)))
 			return E_FAIL;
@@ -545,7 +549,7 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
 	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PriorityBlur"))))
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_GlowDiffuse"))))
 		return E_FAIL;
 
 	m_pVIBuffer->Bind_Buffers();
@@ -581,7 +585,7 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
 	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Diffuse"))))
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_GlowDiffuse"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;

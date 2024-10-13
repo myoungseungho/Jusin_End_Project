@@ -134,8 +134,6 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         CGameObject* pPrototype = m_pGameInstance->Find_Prototype(TEXT("Prototype_GameObject_Shader_Texture"));
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
  
-
-
         _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
 
         if (fTextureSize.x > g_iWinSizeX)
