@@ -8,7 +8,7 @@
 #include "Monster.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CLevel{ pDevice, pContext } 
+	: CLevel{ pDevice, pContext }
 {
 }
 
@@ -31,11 +31,16 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	}
 
-	//바이너리에 저장된 데이터들은 결국 mainCamera의 각 가상카메라들의 CameraPoint 벡터에 제각각 넣어줘야 한다.
-	filePath = L"../Bin/CameraPoints.txt";
-	if (FAILED(m_pGameInstance->Load_All_CameraPoints(filePath))) {
+	// 카메라 포인트 로드
+	wstring cameraFilePath = L"../Bin/CameraPoints.txt";
+	vector<CameraData> cameraDataList = m_pGameInstance->Load_All_CameraPoints(cameraFilePath);
+	if (cameraDataList.empty()) {
 		return E_FAIL;
 	}
+
+	// 로드된 데이터를 mainCamera에 적용
+	static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->ApplyCameraData(cameraDataList);
+
 	return S_OK;
 }
 
@@ -50,7 +55,7 @@ HRESULT CLevel_GamePlay::Render()
 	return S_OK;
 }
 
-HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
+HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring& strLayerTag)
 {
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Main_Camera"), strLayerTag)))
 		return E_FAIL;
@@ -71,9 +76,9 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 		return E_FAIL;
 }
 
-CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CLevel_GamePlay* CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CLevel_GamePlay*		pInstance = new CLevel_GamePlay(pDevice, pContext);
+	CLevel_GamePlay* pInstance = new CLevel_GamePlay(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize()))
 	{

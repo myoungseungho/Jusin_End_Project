@@ -54,7 +54,9 @@ public:
 	void Play();
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);
-
+	void ApplyCameraData(vector<CameraData>& cameraDataList);
+	_int Get_CameraIndex(_int modelID, _int skillID);
+	
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);

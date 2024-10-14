@@ -130,6 +130,76 @@ void CMain_Camera::Modify_Transform(_int index)
 	m_vecVirtualCamera[m_currentVirtualMode]->Modify_Transform(index);
 }
 
+void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
+{
+	for (const auto& cameraData : cameraDataList)
+	{
+		// modelID와 skillID를 사용하여 가상 카메라의 인덱스를 찾음
+		int cameraIndex = Get_CameraIndex(cameraData.modelID, cameraData.skillID);
+		if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size()) {
+			CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
+
+			// 기존 포인트 초기화
+			pCurrentCamera->m_vecPoints.clear();
+
+			// 새로운 포인트 할당
+			for (const auto& pointData : cameraData.points)
+			{
+				CameraPoint point;
+				point.position = pointData.position;
+				point.rotation = pointData.rotation;
+				point.duration = pointData.duration;
+				point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
+				point.damping = pointData.damping;
+
+				pCurrentCamera->m_vecPoints.push_back(point);
+			}
+		}
+	}
+
+	int a = 3;
+}
+
+_int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
+{
+	_int index = -1;
+
+	if (modelID == 0) { // MODELID_SON
+		if (skillID == 0)
+			index = VIRTUAL_CAMERA_SON_SKILL_1;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_SON_SKILL_2;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_SON_SKILL_3;
+	}
+	else if (modelID == 1) { // MODELID_HIT
+		if (skillID == 0)
+			index = VIRTUAL_CAMERA_HIT_SKILL_1;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_HIT_SKILL_2;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_HIT_SKILL_3;
+	}
+	else if (modelID == 2) { // MODELID_HIT
+		if (skillID == 0)
+			index = VIRTUAL_CAMERA_MINE_SKILL_1;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_MINE_SKILL_2;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_MINE_SKILL_3;
+	}
+	else if (modelID == 3) { // MODELID_HIT
+		if (skillID == 0)
+			index = VIRTUAL_CAMERA_21_SKILL_1;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_21_SKILL_2;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_21_SKILL_3;
+	}
+
+	return index;
+}
+
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
