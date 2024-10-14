@@ -228,6 +228,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		for (const auto& point : points) {
 			ImGui::PushID(currentIndex); // 각 포인트에 고유 ID 부여
 
+
 			ImGui::BulletText("Point %d:", pointIndex++);
 			ImGui::SameLine(ImGui::GetWindowContentRegionMax().x - 100); // 삭제 버튼 위치 조정
 			if (ImGui::Button("Delete")) {
