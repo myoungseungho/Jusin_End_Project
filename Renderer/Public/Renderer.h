@@ -55,6 +55,7 @@ private:
 	ID3D11DepthStencilView* m_pShadowDSV = { nullptr };
 
 	_float4x4					m_DownWorldMatrix = {};
+	_float4x4					m_DownWorldMatrix_Second = {};
 	_float4x4					m_WorldMatrix = {};
 	_float4x4					m_ViewMatrix = {};
 	_float4x4					m_ProjMatrix = {};

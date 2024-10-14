@@ -16,9 +16,8 @@ float2 g_DownTexSize;
 
 static const float g_fWeight[13] =
 {
-    0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521, 0.3989, 0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044
-    //0.0561, 0.1353, 0.278, 0.4868, 0.7261, 0.9231, 1.f, 0.9231, 0.7261, 0.4868, 0.278, 0.1353, 0.0561
-
+    // 0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521, 0.3989, 0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044
+    0.0561, 0.1353, 0.278, 0.4868, 0.7261, 0.9231, 1.f, 0.9231, 0.7261, 0.4868, 0.278, 0.1353, 0.0561 // 기존 것보다 더 강한 효과
 };
 
 struct VS_IN
@@ -75,7 +74,7 @@ float4 DownsamplePS(float2 inputTexSize, float2 texCoord, float2 sampleSize)
     {
         for (int x = -halfSizeX; x < halfSizeX; ++x)
         {
-            colorSample += g_Texture.Sample(PointSampler, texCoord + float2(x, y) * texelSize);
+            colorSample += g_Texture.Sample(LinearSampler, texCoord + float2(x, y) * texelSize);
         }
     }
     colorSample /= (sampleSize.x * sampleSize.y);
@@ -91,7 +90,7 @@ float4 Blur_X(float2 vTexCoord)
 
     for (int i = -6; i < 7; ++i)
     {
-        vUV = vTexCoord + float2(1.f / 1920.0f * i, 0.f);
+        vUV = vTexCoord + float2(3.f / (1920.0f * 0.25f) * i, 0.f);
         vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
 
     }
@@ -109,7 +108,7 @@ float4 Blur_Y(float2 vTexCoord)
 
     for (int i = -6; i < 7; ++i)
     {
-        vUV = vTexCoord + float2(0, 1.f / 1080.0f * i);
+        vUV = vTexCoord + float2(0, 3.f / (1080.0f * 0.25f) * i);
         vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
     }
 
@@ -146,7 +145,7 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
 	/*vector		vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
 
-    Out.vColor = vResult + vBlur /*+ vEffect*/;
+    Out.vColor = vResult + vBlur*1.2f /*+ vEffect*/;
 
     return Out;
 
@@ -215,7 +214,7 @@ technique11		DefaultTechnique
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_Default, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -233,7 +232,7 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_DOWN();
     }
 
-    pass DownSampleSecond // 4
+    pass UpSampleSecond // 4
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
