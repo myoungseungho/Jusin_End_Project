@@ -24,7 +24,6 @@ namespace Engine
 		bool bIsNotPlaying = false;
 		float fCurTime = 0.0f;
 		float fDuration = 0.0f;
-
 	}EFFECT_KEYFRAME;
 
 	typedef struct
