@@ -64,7 +64,7 @@ public:
 	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
 	EFFECT_KEYFRAME Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber);
 public:
-	void Play_Effect_Animation(_float fTimeDelta, const wstring& LayerName);
+	HRESULT Play_Layer_Animation(_float fTimeDelta, const wstring& LayerName);
 
 private:
 	HRESULT Ready_Components();

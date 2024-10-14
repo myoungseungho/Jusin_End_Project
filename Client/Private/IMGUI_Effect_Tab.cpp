@@ -493,18 +493,32 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         if (pLayer)
         {
             float layerDuration = pLayer->m_fDuration; // 현재 Duration 값
+            float tickPerSecond = pLayer->m_fTickPerSecond; // 현재 Tick Per Second 값
 
             // Duration 설정을 위한 입력란
             ImGui::Text("Layer Duration:");
             ImGui::SameLine();
+            ImGui::SetNextItemWidth(200.0f); // 입력란 너비 조정
             if (ImGui::InputFloat("##LayerDuration", &layerDuration, 0.1f, 1.0f, "%.2f"))
             {
                 // Duration 값이 수정되면 레이어에 반영
                 pLayer->m_fDuration = max(0.0f, layerDuration); // 음수로 설정되지 않도록
             }
 
+            // Tick Per Second 설정을 위한 입력란
+            ImGui::SameLine();
+            ImGui::Text("Animation Speed:");
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(200.0f); // 입력란 너비 조정
+            if (ImGui::InputFloat("##AnimationSpeed", &tickPerSecond, 0.1f, 1.0f, "%.1f"))
+            {
+                // Tick Per Second 값이 수정되면 레이어에 반영
+                pLayer->m_fTickPerSecond = max(0.1f, tickPerSecond); // 최소값 0.1로 설정
+            }
+
             // 키프레임 개수 계산
             totalKeyframes = static_cast<int>(layerDuration / frameInterval);
+            pLayer->m_iNumKeyFrames = totalKeyframes;
         }
 
         ImGui::Separator();
@@ -768,7 +782,6 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Separator();
     ImGui::End();
 }
-
 
 CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

@@ -51,6 +51,48 @@ EFFECT_KEYFRAME CEffect_Animation::Get_KeyFrame(_uint KeyFrameNumber)
 	}
 }
 
+EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos)
+{
+	if (m_EffectKeyFrames.size() <= 0)
+		return EFFECT_KEYFRAME();  // 빈 키프레임을 반환
+
+	// 현재 애니메이션 위치에 따라 두 키프레임을 찾아 보간
+	auto it1 = m_EffectKeyFrames.lower_bound(CurAnimPos);
+	auto it2 = (it1 == m_EffectKeyFrames.begin()) ? it1 : std::prev(it1);
+
+	if (it1 == m_EffectKeyFrames.end())
+		return it2->second;  // 마지막 키프레임을 반환
+
+	const EFFECT_KEYFRAME& keyFrame1 = it2->second;
+	const EFFECT_KEYFRAME& keyFrame2 = it1->second;
+
+	float factor = (CurAnimPos - it2->first) / (it1->first - it2->first);
+
+	// 각 구성 요소를 보간
+	EFFECT_KEYFRAME interpolatedKeyFrame;
+	interpolatedKeyFrame.vPosition = Lerp(keyFrame1.vPosition, keyFrame2.vPosition, factor);
+	interpolatedKeyFrame.vScale = Lerp(keyFrame1.vScale, keyFrame2.vScale, factor);
+	interpolatedKeyFrame.vRotation = Lerp(keyFrame1.vRotation, keyFrame2.vRotation, factor);
+	interpolatedKeyFrame.bIsNotPlaying = keyFrame1.bIsNotPlaying;  // 단순히 첫 번째 값을 사용 (필요 시 추가 로직)
+
+	return interpolatedKeyFrame;
+}
+
+_float3 CEffect_Animation::Lerp(const _float3& start, const _float3& end, _float factor)
+{
+	XMVECTOR vecStart = XMLoadFloat3(&start);
+	XMVECTOR vecEnd = XMLoadFloat3(&end);
+
+	// 보간 계산
+	XMVECTOR interpolatedVec = XMVectorLerp(vecStart, vecEnd, factor);
+
+	// 결과를 XMFLOAT3로 변환 후 반환
+	_float3 result;
+	XMStoreFloat3(&result, interpolatedVec);
+
+	return result;
+}
+
 CEffect_Animation* CEffect_Animation::Create()
 {
 	CEffect_Animation* pInstance = new CEffect_Animation();

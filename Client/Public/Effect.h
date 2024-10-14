@@ -63,7 +63,8 @@ public:
 	_float3 Get_Effect_Scaled();
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
-	
+	HRESULT Play_Animation(_float CurAnimPos);
+
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
 

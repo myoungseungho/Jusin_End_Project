@@ -108,6 +108,26 @@ _float3 CEffect::Get_Effect_Rotation()
 	return m_pTransformCom->Get_Rotation();
 }
 
+HRESULT CEffect::Play_Animation(_float CurAnimPos)
+{
+	if (m_pAnimation == nullptr)
+		return E_FAIL;
+
+	EFFECT_KEYFRAME interpolatedKeyFrame = m_pAnimation->Play_Animation(CurAnimPos);
+
+	Set_Effect_Position(interpolatedKeyFrame.vPosition);
+	Set_Effect_Scaled(interpolatedKeyFrame.vScale);
+	Set_Effect_Rotation(interpolatedKeyFrame.vRotation);
+
+	// IsNotPlaying 같은 플래그도 필요한 경우 처리
+	if (interpolatedKeyFrame.bIsNotPlaying)
+	{
+		// 필요한 추가 로직
+	}
+
+	return S_OK;
+}
+
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
 {
 	return S_OK;

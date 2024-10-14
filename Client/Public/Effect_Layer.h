@@ -12,19 +12,23 @@ private:
 	virtual ~CEffect_Layer() = default;
 
 public:
+	HRESULT Initialize();
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
-	void	Render(_float fTimeDelta);
+	HRESULT	Render(_float fTimeDelta);
 
 public:
 	HRESULT Add_Effect(class CEffect* pEffect);
 	vector<class CEffect*> Get_Effects();
 	class CEffect* Find_Effect(const std::wstring& effectName);
+	HRESULT Play_Effect_Animation(_float fTimeDelta);
 
 public:
+	_uint			m_iNumKeyFrames = { 0 };
 	_float			m_fDuration = { 0.f };
-	_float			m_fTickPerSecond = {};
+	_float			m_fTickPerSecond = {0.f};
+	_float			m_fCurrentAnimPosition = { 0.f };
 
 private:
 	vector<class CEffect*>			m_MixtureEffects;

@@ -23,6 +23,8 @@ public:
 	void		Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrameData);
 	_bool	Find_KeyFrame(_uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_KeyFrame(_uint KeyFrameNumber);
+	EFFECT_KEYFRAME Play_Animation(_float CurAnimPos);
+	_float3 Lerp(const _float3& start, const _float3& end, _float factor);
 
 private:
 	class CGameInstance* m_pGameInstance = { nullptr };

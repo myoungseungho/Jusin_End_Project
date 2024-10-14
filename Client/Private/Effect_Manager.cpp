@@ -540,8 +540,19 @@ EFFECT_KEYFRAME CEffect_Manager::Get_Layer_Effect_KeyFrame(wstring& layerName, w
 	return EFFECT_KEYFRAME();
 }
 
-void CEffect_Manager::Play_Effect_Animation(_float fTimeDelta, const wstring& LayerName)
+HRESULT CEffect_Manager::Play_Layer_Animation(_float fTimeDelta, const wstring& LayerName)
 {
+	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+
+	if (pLayer)
+	{
+		pLayer->Play_Effect_Animation(fTimeDelta);
+	}
+	else
+		return E_FAIL;
+	
+
+	return S_OK;
 }
 
 HRESULT CEffect_Manager::Ready_Components()
