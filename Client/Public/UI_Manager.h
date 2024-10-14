@@ -48,8 +48,6 @@ public:
 	_bool m_bStun = { FALSE };
 	_bool m_bHit = { FALSE };
 	_uint m_iHp = {0};
-
-	TEAM_DESC	m_tTeamDesc[2] = {};
 	
 public:
 
