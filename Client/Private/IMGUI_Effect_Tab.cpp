@@ -519,9 +519,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             ImGui::Text("Animation Speed:");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(200.0f);
-            if (ImGui::InputFloat("##AnimationSpeed", &tickPerSecond, 0.1f, 1.0f, "%.1f"))
+            if (ImGui::InputFloat("##AnimationSpeed", &tickPerSecond, 0.01f, 0.01f, "%.2f"))
             {
-                pLayer->m_fTickPerSecond = max(0.1f, tickPerSecond);
+                pLayer->m_fTickPerSecond = max(0.01f, tickPerSecond);
             }
 
             totalKeyframes = static_cast<int>(layerDuration / frameInterval);
@@ -594,7 +594,6 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         }
     }
 }
-
 
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
@@ -670,7 +669,9 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Position X Inc")) { CurPosition.x += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Position X", &CurPosition.x, 0.1f);
+    if (ImGui::InputFloat("##Position X Input", &CurPosition.x, 0.1f)) {
+        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
+    }
 
     ImGui::Text("Y"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Position Y Slider", &CurPosition.y, -100.0f, 100.0f))
@@ -680,7 +681,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Position Y Inc")) { CurPosition.y += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Position Y", &CurPosition.y, 0.1f);
+    if (ImGui::InputFloat("##Position Y", &CurPosition.y, 0.1f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
+    }
 
     ImGui::Text("Z"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Position Z Slider", &CurPosition.z, -100.0f, 100.0f))
@@ -690,7 +694,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Position Z Inc")) { CurPosition.z += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Position Z", &CurPosition.z, 0.1f);
+    if(ImGui::InputFloat("##Position Z", &CurPosition.z, 0.1f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
+    }
 
     ImGui::Separator();
 
@@ -705,7 +712,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Scale X Inc")) { CurScale.x += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Scale X", &CurScale.x, 0.1f);
+    if(ImGui::InputFloat("##Scale X", &CurScale.x, 0.1f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
+    }
 
     ImGui::Text("Y"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Scale Y Slider", &CurScale.y, 0.01f, 100.0f))
@@ -715,7 +725,11 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Scale Y Inc")) { CurScale.y += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Scale Y", &CurScale.y, 0.1f);
+    if(ImGui::InputFloat("##Scale Y", &CurScale.y, 0.1f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
+    }
+
 
     ImGui::Text("Z"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Scale Z Slider", &CurScale.z, 0.01f, 100.0f))
@@ -725,7 +739,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Scale Z Inc")) { CurScale.z += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Scale Z", &CurScale.z, 0.1f);
+    if(ImGui::InputFloat("##Scale Z", &CurScale.z, 0.1f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
+    }
 
     ImGui::Separator();
 
@@ -740,7 +757,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Rotation X Inc")) { CurRotation.x = fmod(CurRotation.x + 1.0f, 360.0f); m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Rotation X", &CurRotation.x, 1.0f);
+    if(ImGui::InputFloat("##Rotation X", &CurRotation.x, 1.0f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
+    }
 
     ImGui::Text("Y"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Rotation Y Slider", &CurRotation.y, 0.0f, 360.0f))
@@ -750,7 +770,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Rotation Y Inc")) { CurRotation.y = fmod(CurRotation.y + 1.0f, 360.0f); m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Rotation Y", &CurRotation.y, 1.0f);
+    if(ImGui::InputFloat("##Rotation Y", &CurRotation.y, 1.0f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
+    }
 
     ImGui::Text("Z"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Rotation Z Slider", &CurRotation.z, 0.0f, 360.0f))
@@ -760,7 +783,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if (ImGui::Button("+##Rotation Z Inc")) { CurRotation.z = fmod(CurRotation.z + 1.0f, 360.0f); m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); }
     ImGui::SameLine();
-    ImGui::InputFloat("##Rotation Z", &CurRotation.z, 1.0f);
+    if (ImGui::InputFloat("##Rotation Z", &CurRotation.z, 1.0f))
+    {
+        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
+    }
 
     ImGui::Separator();
 
