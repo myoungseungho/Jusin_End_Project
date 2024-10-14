@@ -128,6 +128,11 @@ void CMain_Camera::Move_Point(_int index)
 	m_vecVirtualCamera[m_currentVirtualMode]->Move_Point(index);
 }
 
+void CMain_Camera::Modify_Transform(_int index)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->Modify_Transform(index);
+}
+
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도

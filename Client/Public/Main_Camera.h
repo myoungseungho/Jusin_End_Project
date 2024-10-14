@@ -54,7 +54,7 @@ public:
 	vector<CameraPoint>& Get_VectorPoint();
 	void Play();
 	void Move_Point(_int index);
-
+	void Modify_Transform(_int index);
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
