@@ -311,6 +311,7 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 			CCamera::CameraPoint& point = points[index];
 			m_tempPointData.duration = point.duration;
 			m_tempPointData.interpType = point.interpolationType;
+			m_tempPointData.damping = point.damping;
 		}
 
 		// 선택된 포인트의 위치와 회전으로 카메라 업데이트
