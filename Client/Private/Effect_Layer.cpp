@@ -78,7 +78,7 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 	}
 
 	// 현재 키프레임 인덱스 계산
-	int currentFrame = static_cast<int>(m_fCurrentAnimPosition / frameInterval);
+	_float currentFrame = (m_fCurrentAnimPosition / frameInterval);
 
 	// 각 효과에 대해 현재 위치에 맞는 애니메이션 값을 적용
 	for (CEffect* pEffect : m_MixtureEffects)

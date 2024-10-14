@@ -53,37 +53,36 @@ EFFECT_KEYFRAME CEffect_Animation::Get_KeyFrame(_uint KeyFrameNumber)
 
 EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos)
 {
-	if (m_EffectKeyFrames.size() <= 0)
-		return EFFECT_KEYFRAME();  // 빈 키프레임을 반환
+	// 키프레임이 없으면 빈 키프레임 반환
+	if (m_EffectKeyFrames.empty())
+		return EFFECT_KEYFRAME();
 
 	// 현재 애니메이션 위치에 따라 두 키프레임을 찾아 보간
 	auto it1 = m_EffectKeyFrames.lower_bound(CurAnimPos);
 	auto it2 = (it1 == m_EffectKeyFrames.begin()) ? it1 : std::prev(it1);
 
+	// 만약 CurAnimPos가 마지막 키프레임 이후라면 마지막 키프레임 반환
 	if (it1 == m_EffectKeyFrames.end())
-		return it2->second;  // 마지막 키프레임을 반환
+		return std::prev(it1)->second;
 
+	// 현재 위치가 정확히 하나의 키프레임 위치와 일치하면 그 키프레임 반환
+	if (it1 == it2 || it1->first == CurAnimPos)
+		return it1->second;
+
+	// 보간이 필요한 경우 두 키프레임 정보를 가져옴
 	const EFFECT_KEYFRAME& keyFrame1 = it2->second;
 	const EFFECT_KEYFRAME& keyFrame2 = it1->second;
 
-	if (it1 == it2) {
-		return it1->second;
-	}
-
-	// 분모가 0이 아닌지 확인하여 보간 계산
+	// 보간 인자 계산 (0과 1 사이의 값)
 	float timeDiff = it1->first - it2->first;
-	if (timeDiff == 0.0f) {
-		return it1->second;  // 분모가 0이면 해당 키프레임 값 반환
-	}
-
 	float factor = (CurAnimPos - it2->first) / timeDiff;
 
-	// 각 구성 요소를 보간
+	// 보간하여 최종 키프레임 값 생성
 	EFFECT_KEYFRAME interpolatedKeyFrame;
 	interpolatedKeyFrame.vPosition = Lerp(keyFrame1.vPosition, keyFrame2.vPosition, factor);
 	interpolatedKeyFrame.vScale = Lerp(keyFrame1.vScale, keyFrame2.vScale, factor);
 	interpolatedKeyFrame.vRotation = Lerp(keyFrame1.vRotation, keyFrame2.vRotation, factor);
-	interpolatedKeyFrame.bIsNotPlaying = keyFrame1.bIsNotPlaying;  // 단순히 첫 번째 값을 사용 (필요 시 추가 로직)
+	interpolatedKeyFrame.bIsNotPlaying = keyFrame1.bIsNotPlaying;  // 단순히 첫 번째 값을 사용
 
 	return interpolatedKeyFrame;
 }

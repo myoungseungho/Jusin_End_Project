@@ -108,17 +108,17 @@ _float3 CEffect::Get_Effect_Rotation()
 	return m_pTransformCom->Get_Rotation();
 }
 
-HRESULT CEffect::Play_Animation(_uint CurrentFrame)
+HRESULT CEffect::Play_Animation(_float CurrentFrame)
 {
 	if (m_pAnimation == nullptr)
 		return E_FAIL;
 
-	// 현재 키프레임 값을 가져와 효과에 적용
-	EFFECT_KEYFRAME interpolatedKeyFrame = m_pAnimation->Get_KeyFrame(CurrentFrame);
 
-	Set_Effect_Position(interpolatedKeyFrame.vPosition);
-	Set_Effect_Scaled(interpolatedKeyFrame.vScale);
-	Set_Effect_Rotation(interpolatedKeyFrame.vRotation);
+	EFFECT_KEYFRAME ResultKeyFrame = m_pAnimation->Play_Animation(CurrentFrame);
+
+	Set_Effect_Scaled(ResultKeyFrame.vScale);
+	Set_Effect_Position(ResultKeyFrame.vPosition);
+	Set_Effect_Rotation(ResultKeyFrame.vRotation);
 
 	return S_OK;
 }
