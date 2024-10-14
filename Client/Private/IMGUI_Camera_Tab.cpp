@@ -347,7 +347,6 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point_UI(_int index)
 	// "Position and Rotation Save" 버튼 추가
 	if (ImGui::Button("Save")) {
 		// 사용자에게 저장됨을 알림
-		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Position and Rotation have been saved.");
 		IMGUI_Point_Modify_Save();
 	}
 
@@ -373,13 +372,6 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 
 	// 카메라의 뷰 업데이트
 	m_pMainCamera->Move_Point(m_selectedPoint);
-
-	// 사용자에게 저장됨을 알림
-	ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Point has been updated.");
-
-	// 수정 모드 종료
-	m_selectedPoint = -1;
-	m_isEditing = false;
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Add_Point()
