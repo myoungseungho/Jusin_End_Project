@@ -193,6 +193,9 @@
     <Filter Include="02.GameObjects\UI\Chara_Icon\Sub">
       <UniqueIdentifier>{45dcd192-5c1f-4757-9dd9-82347faad830}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Icon\Sub">
+      <UniqueIdentifier>{0dcc6c6d-3246-4694-9342-c769fe321832}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h">
       <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_Chara_SubIcon.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -556,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp">
       <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Chara_SubIcon.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

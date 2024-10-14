@@ -41,9 +41,6 @@ void CUI_Sub_Chara_Icon_Panel::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	if(m_pSubPawn != nullptr)
-		m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID;
-
 }
 
 void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
@@ -61,7 +58,7 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(8)))
+	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -82,11 +79,6 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubCharaIconPanel"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
-
-	/* For.m_pCharaIconTexture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
-		TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pCharaIconTexture))))
-		return E_FAIL;
 }
 
 HRESULT CUI_Sub_Chara_Icon_Panel::Bind_ShaderResources()
@@ -96,10 +88,6 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Bind_ShaderResources()
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-
-	if (FAILED(m_pCharaIconTexture->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", m_iCharaID)))
-		return E_FAIL;
-
 
 	return S_OK;
 }
@@ -132,7 +120,6 @@ CGameObject* CUI_Sub_Chara_Icon_Panel::Clone(void* pArg)
 
 void CUI_Sub_Chara_Icon_Panel::Free()
 {
-	Safe_Release(m_pCharaIconTexture);
 
 	__super::Free();
 }

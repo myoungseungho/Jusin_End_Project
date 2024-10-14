@@ -317,7 +317,23 @@ PS_OUT PS_FONT(PS_IN In)
         discard;
     
     return Out;
-   
+}
+
+PS_OUT PS_SubIcon(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    
+    if (In.vTexcoord.y < 0.7f || In.vTexcoord.y > 0.85f)
+        discard;
+    
+    if (Out.vColor.a <= 0.1f)
+        discard;
+  
+
+    return Out;
 }
 
 technique11 DefaultTechnique
@@ -450,15 +466,32 @@ technique11 DefaultTechnique
 //8
     pass Font
     {
-
+    
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-
+    
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_FONT();
     }
+
+
+//9
+ pass SubIcon
+ {
+ 
+     SetRasterizerState(RS_Cull_None);
+     SetDepthStencilState(DSS_Default, 0);
+     SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+     VertexShader = compile vs_5_0 VS_MAIN();
+     GeometryShader = NULL;
+     HullShader = NULL;
+     DomainShader = NULL;
+     PixelShader = compile ps_5_0 PS_SubIcon();
+ }
+
 }

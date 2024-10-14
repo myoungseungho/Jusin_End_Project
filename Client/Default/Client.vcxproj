@@ -164,6 +164,7 @@
     <ClInclude Include="..\public\Pawn.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\public\SubPlayer.h" />
+    <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_KOFont.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -233,6 +234,7 @@
     <ClCompile Include="..\private\Pawn.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\private\SubPlayer.cpp" />
+    <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_KOFont.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

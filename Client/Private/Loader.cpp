@@ -44,6 +44,8 @@
 #include "UI_ReadyFont.h"
 #include "UI_FightFont.h"
 #include "UI_KOFont.h"
+#include "UI_Chara_SubIcon.h"
+
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -368,14 +370,20 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_Chara_Icon_Panel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_UI_Sub_Chara_Icon */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Sub_Chara_Icon"),
+	/* For.Prototype_GameObject_UI_Sub_Chara_Icon_Panel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Sub_Chara_Icon_Panel"),
 		CUI_Sub_Chara_Icon_Panel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_Chara_Icon */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Chara_Icon"),
 		CUI_Chara_Icon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	/* For.Prototype_GameObject_UI_Chara_Icon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Chara_SubIcon"),
+		CUI_Chara_SubIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_AttBufMark */
