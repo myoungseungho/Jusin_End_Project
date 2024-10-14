@@ -69,10 +69,24 @@ void CEffect_Single::Update(_float fTimeDelta)
 
 void CEffect_Single::Late_Update(_float fTimeDelta)
 {
-	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
-	m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+	if (m_pRenderInstance->Get_isLayerView() == true)
+	{
+		if (m_iRenderIndex == 2)
+		{
+			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		}
+	}
+	else
+	{
+		if (m_iRenderIndex == 1)
+		{
+			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		}
+	}
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+
 }
 
 HRESULT CEffect_Single::Render(_float fTimeDelta)
@@ -97,12 +111,19 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(0)))
+		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) // 2
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
+
+
+
+	if (m_iPassIndex == 1)
+		m_iPassIndex = 0;
+	else
+		m_iPassIndex = 1;
 
 	return S_OK;
 }

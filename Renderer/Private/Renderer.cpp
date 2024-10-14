@@ -33,7 +33,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PickDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PickDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
 		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Shade"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
@@ -90,7 +90,9 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Depth"))))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_PickDepth"))))
+
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_EffectToolPick"), TEXT("Target_PickDepth"))))
 		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_LightAcc"), TEXT("Target_Shade"))))
@@ -175,8 +177,8 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
 		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 350.f, 450.f, 300.f, 300.f)))
+		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 1920.0f - 150.0f, 150.f, 300.f, 300.f)))
 	//	return E_FAIL;
 #endif
@@ -202,11 +204,11 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
 		return E_FAIL;
-
-	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
-		return E_FAIL;
 	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
 	//if (FAILED(Render_Deferred(fTimeDelta)))
@@ -312,7 +314,7 @@ HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 	}
 
 	/* Diffuse + Normal */
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_EffectToolPick"))))
 		return E_FAIL;
 
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_TEST])
@@ -335,10 +337,6 @@ HRESULT CRenderer::Render_NonBlend_Layer(_float fTimeDelta)
 {
 	if (m_isLayerView == false)
 	{
-		/* Diffuse + Normal */
-		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
-			return E_FAIL;
-
 		for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_LAYER])
 		{
 			Safe_Release(pRenderObject);
@@ -346,14 +344,11 @@ HRESULT CRenderer::Render_NonBlend_Layer(_float fTimeDelta)
 
 		m_RenderObjects[RG_NONBLEND_LAYER].clear();
 
-		if (FAILED(m_pRenderInstance->End_MRT()))
-			return E_FAIL;
-
 		return S_OK;
 	}
 
 	/* Diffuse + Normal */
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_EffectToolPick"))))
 		return E_FAIL;
 
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_LAYER])
@@ -576,6 +571,9 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
 		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
+	
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))

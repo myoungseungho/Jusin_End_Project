@@ -34,6 +34,7 @@ public:
 public:
 	void Show_OutLine() { m_isOutLine = !m_isOutLine; }
 	void Show_Layer_View() { m_isLayerView = !m_isLayerView; }
+	_bool Get_isLayerView() { return m_isLayerView; }
 private:
 	_bool m_isOutLine = { false };
 

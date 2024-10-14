@@ -25,6 +25,7 @@ public: /* For.Renderer */
 	void SetActive_RenderTarget(_bool isOn);
 	void Show_OutLine();
 	void Show_Layer_View();
+	_bool Get_isLayerView();
 public: /* For.Target_Manager */
 	HRESULT Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	HRESULT Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag);

@@ -104,7 +104,7 @@ _int CPicking::Picked_Effect_Index()
 	ScreenToClient(m_hWnd, &ptMouse);
 
 	/* Target_PickDepth렌더타겟을 미리 만들어놓은 텍스쳐에 복사한다. */
-	m_pRenderInstance->Copy_RenderTarget(TEXT("Target_Depth"), m_pTexture2D);
+	m_pRenderInstance->Copy_RenderTarget(TEXT("Target_PickDepth"), m_pTexture2D);
 
 	D3D11_MAPPED_SUBRESOURCE		SubResource{};
 
