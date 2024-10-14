@@ -75,7 +75,10 @@ public:
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
 	virtual void AttackNextMoveCheck() {};
 	virtual void AnimeEndNextMoveCheck() {};
-	virtual void Set_Animation(_uint iAnimationIndex) {};
+	//virtual void Set_Animation(_uint iAnimationIndex) {};
+	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof =false) {};
+
+	_bool		CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition = 0);
 
 	//키프레임 이벤트
 	virtual void ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex);
@@ -106,8 +109,8 @@ protected:
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
 
-	_uint					m_iMoveGrade = {};
-	_uint					m_iCurMoveIndex{};
+	//_uint					m_iMoveGrade = {};
+	//_uint					m_iCurMoveIndex{};
 	//커맨드 만들면 스택형으로 넣어두고 0.3초안에 지우기
 
 	_float					m_fAccAnimationLock{};

@@ -40,9 +40,23 @@ public:
 
 		ANIME_FINAL_START = 69,
 
-		ANIME_IDLE = 0, ANIME_FOWARD_WALK = 9, ANIME_BACK_WALK = 10,  
+		ANIME_IDLE = 0, 
+		ANIME_FORWARD_WALK = 9, ANIME_BACK_WALK = 10,  
+		ANIME_FORWARD_DASH = 11, ANIME_BACK_DASH = 12,
+		ANIME_FORWARD_DASH_END = 14, ANIME_BACK_DASH_END = 15,
+
+
 		ANIME_CROUCH_START = 3, ANIME_CROUCHING = 4,
 		ANIME_JUMP_UP = 6, ANIME_JUMP_DOWN = 7
+
+
+	};
+	enum AnimationCount
+	{
+		COUNT_ATTACK_MEDIUM =0,
+		COUNT_ATTACK_CROUCH_MEDUIM,
+		COUNT_ATTACK_SPECIAL,
+		COUNT_END
 	};
 
 private:
@@ -63,7 +77,8 @@ public:
 	virtual void AnimeEndNextMoveCheck() override;
 
 	virtual void Test_InputCommand();
-	virtual void Set_Animation(_uint iAnimationIndex) override;
+	//virtual void Set_Animation(_uint iAnimationIndex) override;
+	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
 
 	void KeyTest();
 
@@ -72,6 +87,9 @@ public:
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
 
 	
+	_bool* Get_pbAttackCount() { return m_bAttackCount; };
+	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
+	void Reset_AttackCount();
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
@@ -79,6 +97,8 @@ private:
 
 	CGoku_MeleeAttack m_tAttackMap;
 
+	_bool m_bAttackCount[COUNT_END] = { true };
+	_ushort m_iCountGroundSpecial = 0;
 
 
 private:

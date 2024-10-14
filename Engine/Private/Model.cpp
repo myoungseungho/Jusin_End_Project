@@ -280,12 +280,37 @@ _float CModel::Get_CurrentAnimationTickPerSecond()
 	 return m_Animations[m_iCurrentAnimationIndex]->m_fTickPerSecond; 
 }
 
+void CModel::Update_FrameIndex()
+{
+	m_Animations[m_iCurrentAnimationIndex]->Update_FrameIndex(&m_fCurrentAnimPosition, m_KeyFrameIndices[m_iCurrentAnimationIndex]);
+	
+}
+
 void CModel::CurrentAnimationPositionJump(_float fPosition)
 {
 
-	_float fCurPosition = Get_CurrentAnimationPosition();
-	_float fDelay = (fPosition - fCurPosition) / Get_CurrentAnimationTickPerSecond();
-	Play_Animation(fDelay);
+	//_float fCurPosition = Get_CurrentAnimationPosition();
+	//_float fDelay = (fPosition - fCurPosition) / Get_CurrentAnimationTickPerSecond();
+	//
+	//if (fDelay < 0)
+	//{
+	//	m_Animations[m_iCurrentAnimationIndex]->m_Channels;
+	//	
+	//	//_ushort iTemp = m_iCurrentAnimationIndex;
+	//	//SetUp_Animation(0, false);
+	//	//SetUp_Animation(iTemp, false);
+	//	//
+	//	//Play_Animation(fPosition);
+	//
+	//
+	//}
+	//else
+	//	Play_Animation(fDelay);
+
+
+	m_fCurrentAnimPosition = fPosition;
+	Update_FrameIndex();
+	Play_Animation(0);
 
 }
 

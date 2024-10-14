@@ -15,7 +15,7 @@
 //#define ANIME_ATTACK_HEAVY 45
 //
 //#define ANIME_IDLE 0
-//#define ANIME_FOWARD_WALK 9
+//#define ANIME_FORWARD_WALK 9
 //#define ANIME_BACK_WALK 10
 //
 //
@@ -85,6 +85,19 @@ vector<CInput> Command_214FinalAttack =
 	{MOVEKEY_LEFT, ATTACK_SPECIAL}
 };
 
+vector<CInput> Command_BackDash =
+{
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE}
+};
+
+vector<CInput> Command_Forward =
+{
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{ MOVEKEY_RIGHT, ATTACK_NONE }
+
+};
 
 vector<CInput> Command_LightAttack ={	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}};
 vector<CInput> Command_MediumAttack ={	{MOVEKEY_NEUTRAL, ATTACK_MEDIUM}};
@@ -98,6 +111,7 @@ vector<CInput> Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
 vector<CInput> Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
 vector<CInput> Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
 
+vector<CInput> Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
 
 
 
@@ -194,6 +208,9 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
 
 
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack_Extra, bind(&CGoku_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
+
+	
 
 	//위에서 부터 확인하므로 간단한 커맨드가 아래로 가야함
 	MoveCommandPatternsFunction.push_back({ Command_LightAttack, bind(&CGoku_MeleeAttack::Attack_Light, &m_tAttackMap) });
@@ -201,6 +218,8 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_SpecialAttack, bind(&CGoku_MeleeAttack::Attack_Special, &m_tAttackMap) });
 
+	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 
 	return S_OK;
@@ -265,11 +284,13 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	Gravity(fTimeDelta);
 
 	
-	if (Check_bCurAnimationisGroundMove())
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
 	{
-		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FOWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
+		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
 		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
 		{
+			Reset_AttackCount();
+
 			_short MoveKey = 0;
 			if (m_pGameInstance->Key_Pressing(DIK_W))
 			{
@@ -279,7 +300,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 			else if (m_pGameInstance->Key_Pressing(DIK_S))
 			{
-				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
+				//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
+				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
 				{
 					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
 				}
@@ -301,20 +323,40 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 				if (MoveKey == -1)
 				{
-					m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+					
+					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
+					//{
+					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
+					//}
+					//else
+						m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+
+
 					m_iNextAnimation.first = ANIME_IDLE;
 					m_iNextAnimation.second = 100.f;
 
 				}
 				else if (MoveKey == 1)
 				{
-					m_pModelCom->SetUp_Animation(ANIME_FOWARD_WALK, false);
+					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
+					{
+						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH, true);
+					}
+					else
+						m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
+
 					m_iNextAnimation.first = ANIME_IDLE;
 					m_iNextAnimation.second = 100.f;
 				}
 				else
 				{
-					m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
+					{
+						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH_END, false);
+					}
+					else
+						m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+
 					m_iNextAnimation.first = ANIME_IDLE;
 					m_iNextAnimation.second = 100.f;
 				}
@@ -342,7 +384,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			//}
 			//else if (MoveKey == 1)
 			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_FOWARD_WALK, false);
+			//	m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
 			//	m_iNextAnimation.first = ANIME_IDLE;
 			//	m_iNextAnimation.second = 100.f;
 			//}
@@ -462,6 +504,15 @@ void CPlay_Goku::NextMoveCheck()
 void CPlay_Goku::AttackNextMoveCheck()
 {
 	
+	//if (m_iNextAnimation.first != ANIME_IDLE)
+	//{
+	//	Set_Animation(m_iNextAnimation.first);
+	//
+	//	m_iNextAnimation.first = ANIME_IDLE;
+	//	m_iNextAnimation.second = 1000.f;
+	//
+	//}
+
 	if (m_iNextAnimation.first != ANIME_IDLE)
 	{
 		Set_Animation(m_iNextAnimation.first);
@@ -469,9 +520,13 @@ void CPlay_Goku::AttackNextMoveCheck()
 		m_iNextAnimation.first = ANIME_IDLE;
 		m_iNextAnimation.second = 1000.f;
 
-
-
+		if (m_fNextAnimationCurrentPosition != 0)
+		{
+			m_pModelCom->CurrentAnimationPositionJump(m_fNextAnimationCurrentPosition);
+			m_fNextAnimationCurrentPosition = 0.f;
+		}
 	}
+	
 
 }
 
@@ -511,6 +566,18 @@ void CPlay_Goku::Test_InputCommand()
 
 }
 
+void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
+{
+
+	if (iAnimationIndex == ANIME_IDLE)
+		m_pModelCom->SetUp_Animation(iAnimationIndex, true);
+	else
+		m_pModelCom->SetUp_Animation(iAnimationIndex, bloof);
+
+}
+
+
+/*
 void CPlay_Goku::Set_Animation(_uint iAnimationIndex)
 {
 
@@ -536,7 +603,7 @@ void CPlay_Goku::Set_Animation(_uint iAnimationIndex)
 	//
 	//
 	//_uint iDebug = iAnimationIndex;
-	//if (iAnimationIndex != 0 && (iAnimationIndex != ANIME_FOWARD_WALK && iAnimationIndex != ANIME_BACK_WALK))
+	//if (iAnimationIndex != 0 && (iAnimationIndex != ANIME_FORWARD_WALK && iAnimationIndex != ANIME_BACK_WALK))
 	//{
 	//	_bool bDebug = true;
 	//}
@@ -560,6 +627,7 @@ void CPlay_Goku::Set_Animation(_uint iAnimationIndex)
 
 
 }
+*/
 
 void CPlay_Goku::KeyTest()
 {
@@ -610,12 +678,21 @@ _bool CPlay_Goku::Check_bCurAnimationisGroundMove(_uint iAnimation)
 		 iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
 	
 
-	//if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FOWARD_WALK || iModelIndex == ANIME_BACK_WALK) )
+	//if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK) )
 	//{
 	//	return true;
 	//}
 
-	if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FOWARD_WALK || iModelIndex == ANIME_BACK_WALK) || iModelIndex == ANIME_CROUCH_START || iModelIndex == ANIME_CROUCHING)
+
+	//대시 추가하느라 주석
+	//if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK) || iModelIndex == ANIME_CROUCH_START || iModelIndex == ANIME_CROUCHING)
+	//{
+	//	return true;
+	//}
+
+
+	if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK) || iModelIndex == ANIME_CROUCH_START || iModelIndex == ANIME_CROUCHING
+		||iModelIndex == ANIME_FORWARD_DASH )
 	{
 		return true;
 	}
@@ -627,6 +704,16 @@ _bool CPlay_Goku::Check_bCurAnimationisAttack(_uint iAnimation)
 {
 
 	return false;
+}
+
+void CPlay_Goku::Reset_AttackCount()
+{
+
+	for (size_t i = 0; i < COUNT_END; i++)
+		m_bAttackCount[i] = true;
+
+	m_iCountGroundSpecial = 0;
+
 }
 
 

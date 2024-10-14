@@ -94,6 +94,16 @@ void CAnimation::Add_SoundEvent(_float triggerTime, const wstring& soundAlias, _
 	m_SoundEvents.push_back(event);
 }
 
+void CAnimation::Update_FrameIndex(_float* pCurrentAnimPosition, vector<_uint>& KeyFrameIndices)
+{
+	for (size_t i = 0; i < m_iNumChannels; i++)
+	{
+		m_Channels[i]->Update_FrameIndex(*pCurrentAnimPosition, &KeyFrameIndices[i]);
+	}
+}
+
+
+
 CAnimation* CAnimation::Create(AnimationData animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices)
 {
 	CAnimation* pInstance = new CAnimation();

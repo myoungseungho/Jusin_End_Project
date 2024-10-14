@@ -39,6 +39,7 @@ public:
 	_float Get_CurrentAnimationTickPerSecond();
 
 
+	void Update_FrameIndex();
 	void CurrentAnimationPositionJump(_float fPosition);
 
 	void Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime);

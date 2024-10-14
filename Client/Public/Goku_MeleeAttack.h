@@ -39,11 +39,15 @@ public:
 	void Attack_Crouch_Medium();
 	void Attack_Crouch_Heavy();
 
+	void BackDash();
+	void ForwardDash();
 
 
 	class CPlay_Goku* m_pPlayer = { nullptr };
 	_uint* m_pPlayerAnimationIndex = { nullptr };
 
+	_bool* m_pbAttackCount = { nullptr };
+	_ushort* m_piCountGroundSpecial = { nullptr };
 
 };
 

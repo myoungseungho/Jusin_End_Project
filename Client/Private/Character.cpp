@@ -125,6 +125,25 @@ HRESULT CCharacter::Render(_float fTimeDelta)
 
 
 
+_bool CCharacter::CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition)
+{
+	_bool bCompare = true;
+
+	if (fNextPosition != 0)
+	{
+		if (m_fNextAnimationCurrentPosition != fNextPosition)
+			bCompare = false;
+	}
+
+	if (iAnimationIndex != m_iNextAnimation.first)
+		bCompare = false;
+
+
+
+	return bCompare;
+
+}
+
 void CCharacter::ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex)
 {
 

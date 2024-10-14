@@ -36,6 +36,9 @@ public:
 
 	void Add_SoundEvent(_float triggerTime, const std::wstring& soundAlias, _float volume);
 
+
+	void Update_FrameIndex(_float* pCurrentAnimPosition,  vector<_uint>& KeyFrameIndices);
+
 public:
 	_char			m_szName[MAX_PATH] = {};
 	_float			m_fDuration = {};

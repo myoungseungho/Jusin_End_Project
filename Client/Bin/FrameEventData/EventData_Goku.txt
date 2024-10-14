@@ -101,14 +101,32 @@ PLAY_GOKU,GKS204_body,42,ObjectMove,0.1,0,0,0
 
 
 //,지상특수
-PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,60
+
+PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,90
+PLAY_GOKU,GKS205_body,55.11,AnimSpeedChange,0.022,90
+PLAY_GOKU,GKS205_body,10,AnimSpeedChange,0.022,90
+
+//,PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,120
+
 PLAY_GOKU,GKS205_body,20,AttackEvent,205
 PLAY_GOKU,GKS205_body,25,NextAnimationCheck,333333333
-PLAY_GOKU,GKS205_body,30,AnimSpeedChange,0.022,30
+//,PLAY_GOKU,GKS205_body,30,AnimSpeedChange,0.022,30
 PLAY_GOKU,GKS205_body,30,NextAnimationCheck,333333333
 PLAY_GOKU,GKS205_body,35,AnimSpeedChange,0.022,60
 PLAY_GOKU,GKS205_body,37,NextAnimationCheck,333333333
+
 PLAY_GOKU,GKS205_body,50,PositionChange,109
+PLAY_GOKU,GKS205_body,50,AnimSpeedChange,0.005,90
+
+PLAY_GOKU,GKS205_body,80,AttackEvent,205
+PLAY_GOKU,GKS205_body,83,NextAnimationCheck,333333333
+PLAY_GOKU,GKS205_body,90,NextAnimationCheck,333333333
+PLAY_GOKU,GKS205_body,95,PositionChange,109
+PLAY_GOKU,GKS205_body,95,AnimSpeedChange,0.005,90
+
+
+//,PLAY_GOKU,GKS205_body,109,PositionChange,15
+
 
 //,PLAY_GOKU,GKS205_body,50,주석,0첫발시작 20공격시작 50단발끝 // 55연발시작  80 짝수발공격 95연발끝   95~109 3연발시작
 //,PLAY_GOKU,GKS205_body,50,주석,연발이면 30에서 55로  80에서 95로  109에서  15로
@@ -175,7 +193,13 @@ PLAY_GOKU,GKS261_body,35,NextAnimationCheck,333333
 //,PLAY_GOKU,GKS262_body,30,AnimSpeedChange,0.053000,40.000000
 //,PLAY_GOKU,GKS262_body,30,AnimSpeedChange,0.053000,120.000000
 //,PLAY_GOKU,GKS262_body,35,AnimSpeedChange,0.053000,120.000000
-PLAY_GOKU,GKS262_body,0,AnimSpeedChange,0.040000,85.251999
+
+//,바로 아래꺼 사용중이었는데 너무 끊기는거처럼 보임
+//,PLAY_GOKU,GKS262_body,0,AnimSpeedChange,0.040000,85.251999
+
+PLAY_GOKU,GKS262_body,0,AnimSpeedChange,0.020000,85.251999
+
+
 PLAY_GOKU,GKS262_body,30,AttackEvent,33333
 PLAY_GOKU,GKS262_body,30,AnimSpeedChange,0.025,60
 PLAY_GOKU,GKS262_body,42,AnimSpeedChange,0.040000,85.251999
@@ -291,18 +315,22 @@ PLAY_GOKU,GKS404_body,59,ObjectMove,0.01,0,0,0
 
 
 //,공중 236약
-PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,85.656998
+
+//,공중 콤보중에 쓰기에 너무 느린거같아서 빠르게 해봄
+//,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,85.656998
+//,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,120.656998
+PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,180.656998
 PLAY_GOKU,GKS405_body,45,AttackEvent,33333
 PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS405_body,55,AnimSpeedChange,0.016000,80
 
-
-PLAY_GOKU,GKS405_body,15,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS405_body,16,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS405_body,17,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS405_body,18,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS405_body,19,ObjectMove,0.1,0,0,0
-PLAY_GOKU,GKS405_body,20,ObjectMove,0.1,0,0,0
+//,빠르게 바꾸니까 전진거리가 너무 길어서 줄여봄
+//,PLAY_GOKU,GKS405_body,15,ObjectMove,0.1,0,0,0
+//,PLAY_GOKU,GKS405_body,16,ObjectMove,0.1,0,0,0
+//,PLAY_GOKU,GKS405_body,17,ObjectMove,0.1,0,0,0
+//,PLAY_GOKU,GKS405_body,18,ObjectMove,0.1,0,0,0
+//,PLAY_GOKU,GKS405_body,19,ObjectMove,0.1,0,0,0
+//,PLAY_GOKU,GKS405_body,20,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS405_body,21,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS405_body,22,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS405_body,23,ObjectMove,0.1,0,0,0
@@ -311,6 +339,7 @@ PLAY_GOKU,GKS405_body,25,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS405_body,26,ObjectMove,0.05,0,0,0
 PLAY_GOKU,GKS405_body,27,ObjectMove,0.05,0,0,0
 PLAY_GOKU,GKS405_body,28,ObjectMove,0.05,0,0,0
+
 PLAY_GOKU,GKS405_body,29,ObjectMove,0.05,0,0,0
 PLAY_GOKU,GKS405_body,30,ObjectMove,0.05,0,0,0
 PLAY_GOKU,GKS405_body,31,ObjectMove,0.05,0,0,0
@@ -349,6 +378,7 @@ PLAY_GOKU,GKS405_body,59,ObjectMove,0.01,0,0,0
 
 //,214약
 PLAY_GOKU,GKS406_body,0.000000,AnimSpeedChange,0.023000,104.241997
+PLAY_GOKU,GKS406_body,20.1,AnimSpeedChange,0.023000,104.241997
 PLAY_GOKU,GKS406_body,40,AttackEvent,33333
 PLAY_GOKU,GKS406_body,70,AttackEvent,33333
 //, 2바퀴 회전시 80->105로,   그 이상 회전시  80~100->40  속도 매우 빠르게
@@ -672,48 +702,81 @@ PLAY_GOKU,GKS031_body, 45,ObjectMove,-0.03, 0, 0, 0
 PLAY_GOKU,GKS031_body, 47,ObjectMove,-0.03, 0, 0, 0
 
 
-//,앞으로 달리기 (공용)
+//,앞으로 달리기 (공용) 11
+
+//,PLAY_GOKU,GKS032_body,0.000000,AnimSpeedChange,0.010000,60.202000
 PLAY_GOKU,GKS032_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_GOKU,GKS032_body,0,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,1,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,2,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,3,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,4,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,5,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,6,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,7,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,8,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,9,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,10,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,11,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,12,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,13,ObjectMove, 0.06, 0, 0, 0
-PLAY_GOKU,GKS032_body,14,ObjectMove, 0.06, 0, 0, 0
 
 
-//,백대쉬 (공용)
+PLAY_GOKU,GKS032_body,0,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,1,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,2,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,3,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,4,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,5,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,6,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,7,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,8,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,9,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,10,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,11,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,12,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,13,ObjectMove, 0.1, 0, 0, 0
+PLAY_GOKU,GKS032_body,13,PositionChange,0
+//,PLAY_GOKU,GKS032_body,14,ObjectMove, 0.06, 0, 0, 0
+
+
+
+//,백대쉬 (공용) 12
 PLAY_GOKU,GKS033_body,0.000000,AnimSpeedChange,0.010000,60.202000
 
-PLAY_GOKU,GKS033_body, 0,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 2,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 4,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 6,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 8,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 1,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 3,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 5,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 7,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body, 9,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body,10,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body,11,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body,12,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body,13,ObjectMove, -0.06, 0, 0, 0
-PLAY_GOKU,GKS033_body,14,ObjectMove, -0.06, 0, 0, 0
+PLAY_GOKU,GKS033_body, 0,ObjectMove, -0.3, 0, 0, 0
+PLAY_GOKU,GKS033_body, 1,ObjectMove, -0.3, 0, 0, 0
+PLAY_GOKU,GKS033_body, 2,ObjectMove, -0.2, 0, 0, 0
+PLAY_GOKU,GKS033_body, 3,ObjectMove, -0.2, 0, 0, 0
+PLAY_GOKU,GKS033_body, 4,ObjectMove, -0.1, 0, 0, 0
+PLAY_GOKU,GKS033_body, 5,ObjectMove, -0.1, 0, 0, 0
+PLAY_GOKU,GKS033_body, 6,ObjectMove, -0.08, 0, 0, 0
+PLAY_GOKU,GKS033_body, 7,ObjectMove, -0.08, 0, 0, 0
+PLAY_GOKU,GKS033_body, 8,ObjectMove, -0.08, 0, 0, 0
+PLAY_GOKU,GKS033_body, 9,ObjectMove, -0.08 0, 0, 0
+PLAY_GOKU,GKS033_body,10,ObjectMove, -0.08, 0, 0, 0
+PLAY_GOKU,GKS033_body,11,ObjectMove, -0.07, 0, 0, 0
+PLAY_GOKU,GKS033_body,12,ObjectMove, -0.05, 0, 0, 0
+PLAY_GOKU,GKS033_body,13,ObjectMove, -0.03, 0, 0, 0
+PLAY_GOKU,GKS033_body,14,ObjectMove, -0.01, 0, 0, 0
 
-//,앞대쉬 끝 (공용)
+//,앞대쉬 끝 (공용) 14  duration 끝 24
 PLAY_GOKU,GKS035_body,0.000000,AnimSpeedChange,0.010000,90.505997
+PLAY_GOKU,GKS035_body,0,ObjectMove, 0.06, 0, 0, 0
+PLAY_GOKU,GKS035_body,1,ObjectMove, 0.06, 0, 0, 0
+PLAY_GOKU,GKS035_body,2,ObjectMove, 0.06, 0, 0, 0
+PLAY_GOKU,GKS035_body,3,ObjectMove, 0.06, 0, 0, 0
+PLAY_GOKU,GKS035_body,4,ObjectMove, 0.05, 0, 0, 0
+PLAY_GOKU,GKS035_body,5,ObjectMove, 0.05, 0, 0, 0
+PLAY_GOKU,GKS035_body,6,ObjectMove, 0.05, 0, 0, 0
+PLAY_GOKU,GKS035_body,7,ObjectMove, 0.05, 0, 0, 0
+PLAY_GOKU,GKS035_body,8,ObjectMove, 0.05, 0, 0, 0
+PLAY_GOKU,GKS035_body,9,ObjectMove, 0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,10,ObjectMove,0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,11,ObjectMove,0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,12,ObjectMove,0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,13,ObjectMove,0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,14,ObjectMove,0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,15,ObjectMove,0.04, 0, 0, 0
+PLAY_GOKU,GKS035_body,16,ObjectMove,0.03, 0, 0, 0
+PLAY_GOKU,GKS035_body,17,ObjectMove,0.03, 0, 0, 0
+PLAY_GOKU,GKS035_body,18,ObjectMove,0.02, 0, 0, 0
+PLAY_GOKU,GKS035_body,19,ObjectMove,0.02, 0, 0, 0
+PLAY_GOKU,GKS035_body,20,ObjectMove,0.02, 0, 0, 0
+PLAY_GOKU,GKS035_body,21,ObjectMove,0.02, 0, 0, 0
+PLAY_GOKU,GKS035_body,22,ObjectMove,0.01, 0, 0, 0
+PLAY_GOKU,GKS035_body,23,ObjectMove,0.01, 0, 0, 0
 
-//,백대쉬끝 (공용)
+
+
+
+//,백대쉬끝 (공용) 15
 PLAY_GOKU,GKS036_body,0.000000,AnimSpeedChange,0.010000,90.505997
 
 
