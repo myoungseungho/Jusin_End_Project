@@ -309,19 +309,22 @@ HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectID)
 	return E_FAIL;
 }
 
-HRESULT CEffect_Manager::Delete_All_Test_Effect()
+vector<_int> CEffect_Manager::Delete_All_Test_Effect()
 {
+	vector<_int> UniqueIDs;
+
 	for (auto& pEffect : m_TestEffect)
 	{
 		if (pEffect)
 		{
+			UniqueIDs.push_back(pEffect->m_iUnique_Index);
 			Safe_Release(pEffect);
 		}
 	}
 
 	m_TestEffect.clear();
 
-	return S_OK;
+	return UniqueIDs;
 }
 
 HRESULT CEffect_Manager::Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled)

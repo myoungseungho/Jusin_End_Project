@@ -41,7 +41,7 @@ public:
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* EffectName, wstring* ModelName);
 
 	HRESULT Delete_Test_Effect(_uint iCurTestEffectID);
-	HRESULT Delete_All_Test_Effect();
+	vector<_int> Delete_All_Test_Effect();
 
 	HRESULT Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled);
 	HRESULT Set_Effect_Position(_int EffectId, _float3 ChangePosition);

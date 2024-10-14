@@ -186,7 +186,17 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
 
         if (ImGui::Button("Delete All Effects"))
         {
-            m_pEffect_Manager->Delete_All_Test_Effect();
+            vector<_int> vecTabIndexs;
+
+
+            vecTabIndexs = m_pEffect_Manager->Delete_All_Test_Effect();
+
+            for (size_t i = 0; i < vecTabIndexs.size(); i++)
+            {
+                _int Index = vecTabIndexs[i];
+
+                CImgui_Manager::Get_Instance()->Delete_Shader_Tab(Index);
+            }
         }
 
         ImGui::Separator();
