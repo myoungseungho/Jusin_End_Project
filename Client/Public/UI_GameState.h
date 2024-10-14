@@ -2,7 +2,7 @@
 
 #include "UIObject.h"
 #include <queue>
-#include <deque>
+
 BEGIN(Client)
 
 class CUI_GameState abstract : public CUIObject
@@ -37,7 +37,7 @@ protected:
 	_float m_fScaleAnimTimer = { 0.f };
 	_float m_fStopTimer = { 0.f };
 
-	deque<ANIM_INFO> m_DequeAnim = {};
+	deque<ANIM_INFO> m_QueueAnim = {};
 
 	_float m_fAnimFrame = {};
 	_float m_fAnimPos = { 0.f};

@@ -215,21 +215,12 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 	//게임 시작
 
-	CUIObject::UI_DESC StartDesc = {};
-	StartDesc.fSpeedPerSec = 50.f;
-	StartDesc.fRotationPerSec = XMConvertToRadians(90.f);
 	
-	for (int i = 0; i < 8; i++)
-	{
-		StartDesc.iNumUI = i;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_GameStartCircle"), TEXT("Layer_UI_GameStartCircle"), &StartDesc);
-	}
-	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ReadyFont"), TEXT("Layer_UI_GameStartFont"));
 	
 	//CUIObject::UI_DESC StartDesc = {};
-	//
+	
 	//StartDesc.iNumUI = 0;
-	//StartDesc.eType = CUI_GameState::UI_NONANIM;
+	///StartDesc.eType = CUI_GameState::UI_NONANIM;
 	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_GameStartCircle"), TEXT("Layer_UI_GameStartCircle"), &StartDesc);
 	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFont"), TEXT("Layer_UI_KOFont"));
 

@@ -25,6 +25,7 @@ HRESULT CPlayer::Initialize_Prototype()
 
 HRESULT CPlayer::Initialize(void* pArg)
 {
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -35,6 +36,8 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 	m_pModelCom->SetUp_Animation(16, true);
 	m_iHp = 100;
+
+	m_ePawnID = GOGU;
 
 	return S_OK;
 }
@@ -56,6 +59,20 @@ void CPlayer::Update(_float fTimeDelta)
 	{
 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 	}
+
+	//게임시작 UI 생성
+	if (m_pGameInstance->Key_Down(DIK_Y))
+	{
+		m_pUI_Manager->m_fTotalDuration = 0.f;
+		m_pUI_Manager->UsingCreateStartUI();
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_N))
+	{
+		m_pUI_Manager->m_fTotalDuration = 0.f;
+		m_pUI_Manager->UsingCreateEndUI();
+	}
+
 
 	m_pModelCom->Play_Animation(fTimeDelta);
 }

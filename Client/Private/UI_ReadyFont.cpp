@@ -129,7 +129,7 @@ void CUI_ReadyFont::Action_StartAnim(_float fTimeDelta)
 {
 	if (m_bStart == FALSE && m_fOffSetPosY >= 0.f)
 	{
-		m_fStartAnimTimer += fTimeDelta;
+		m_fStartAnimTimer += fTimeDelta *25;
 
 		m_fOffSetPosY -= m_fStartAnimTimer;
 
@@ -145,7 +145,7 @@ void CUI_ReadyFont::Action_StartAnim(_float fTimeDelta)
 	{
 		m_fMaskTimer += fTimeDelta;
 
-		if (m_fMaskTimer >= 5.f)
+		if (m_fMaskTimer >= 1.f)
 		{
 			m_bEnd = TRUE;
 			m_fMaskTimer = 1.f;
@@ -154,11 +154,11 @@ void CUI_ReadyFont::Action_StartAnim(_float fTimeDelta)
 	}
 	if (m_bEnd)
 	{
-		m_fMaskTimer -= fTimeDelta;
-		m_fAlphaTimer += fTimeDelta;
+		m_fMaskTimer -= fTimeDelta ;
+		m_fAlphaTimer += fTimeDelta * 10;
 	}
 
-	if (m_fAlphaTimer >= 1.f)
+	if (m_fAlphaTimer >= 2.f)
 	{
 		m_bDead = TRUE;
 		m_fAlphaTimer = 0.f;

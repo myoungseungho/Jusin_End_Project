@@ -24,6 +24,8 @@ private:
 	virtual HRESULT Ready_Components();
 	virtual HRESULT Bind_ShaderResources();
 
+private:
+	_float m_fScaleAnim = { 0 };
 
 public:
 	static CUI_KOFont* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

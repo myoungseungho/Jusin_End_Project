@@ -36,6 +36,8 @@ HRESULT CSubPlayer::Initialize(void* pArg)
 	m_pModelCom->SetUp_Animation(16, true);
 	m_iHp = 100;
 
+	m_ePawnID = ANDROID21;
+
 	return S_OK;
 }
 

@@ -14,6 +14,7 @@ class CPawn abstract : public CGameObject
 {
 public:
 	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
+	enum PLAYER_ID { GOGU , ANDROID21 , BUU , HIT, PAWN_END };
 
 public:
 	typedef struct:public CGameObject::GAMEOBJECT_DESC
@@ -35,6 +36,8 @@ public:
 		_int		iSKillCount = { 0 };
 
 		PLAYER_SLOT ePlayer_Slot = {};
+		PLAYER_ID		ePlayerID = {};
+
 	}PAWN_DESC;
 
 protected:
@@ -81,6 +84,7 @@ protected:
 
 	//UI에 보내야할 정보
 	PAWN_DESC				 m_tPawnDesc = {};
+	PLAYER_ID					m_ePawnID = {};
 
 protected:
 	PLAYER_SLOT				m_ePlayerSlot = {};

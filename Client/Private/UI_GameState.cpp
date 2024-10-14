@@ -41,7 +41,7 @@ void CUI_GameState::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_fTotalAnimDuration += fTimeDelta;
+	m_fTotalAnimDuration = m_pUI_Manager->m_fTotalDuration;
 }
 
 void CUI_GameState::Update(_float fTimeDelta)
@@ -61,26 +61,26 @@ HRESULT CUI_GameState::Render(_float fTimeDelta)
 
 void CUI_GameState::Set_AnimPosition(_int iNextPosX, _float fAnimSpeed)
 {
-	if(m_eAnimType == UI_ANIM)
-		m_DequeAnim.push_back({ iNextPosX ,fAnimSpeed});
+	//if(m_eAnimType == UI_ANIM)
+		m_QueueAnim.push_back({ iNextPosX ,fAnimSpeed});
 }
 
 void CUI_GameState::Action_Anim(_float fSizeOffSet, _float fTimeDelta)
 {
-	if (m_DequeAnim.empty() == FALSE )
+	if (m_QueueAnim.empty() == FALSE )
 	{
-		_float fVelocity = (m_DequeAnim.at(0).iPos - m_fAnimPos) / (m_DequeAnim.at(0).fEventFrame - m_fAnimFrame);
+		_float fVelocity = (m_QueueAnim.at(0).iPos - m_fAnimPos) / (m_QueueAnim.at(0).fEventFrame - m_fAnimFrame);
 
-		if (m_DequeAnim.at(0).fEventFrame >= m_fTotalAnimDuration)
+		if (m_QueueAnim.at(0).fEventFrame >= m_fTotalAnimDuration)
 		{
 			m_fSizeX +=  fVelocity* fTimeDelta;
 		}
 		else
 		{
-			m_fAnimFrame = m_DequeAnim.at(0).fEventFrame;
-			m_fAnimPos = m_DequeAnim.at(0).iPos;
+			m_fAnimFrame = m_QueueAnim.at(0).fEventFrame;
+			m_fAnimPos = m_QueueAnim.at(0).iPos;
 
-			m_DequeAnim.pop_front();
+			m_QueueAnim.pop_front();
 		}
 
 		m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX  * fSizeOffSet, 1.f);

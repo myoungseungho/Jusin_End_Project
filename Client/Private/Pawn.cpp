@@ -32,6 +32,8 @@ HRESULT CPawn::Initialize(void* pArg)
 	SLOT_DESC* pSlotDesc = static_cast<SLOT_DESC*>(pArg);
 	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
 
+
+
 	return S_OK;
 }
 
@@ -50,6 +52,7 @@ void CPawn::Priority_Update(_float fTimeDelta)
 	m_tPawnDesc.iSKillPoint = m_iSKillPoint;
 
 	m_tPawnDesc.ePlayer_Slot = m_ePlayerSlot;
+	m_tPawnDesc.ePlayerID = m_ePawnID;
 }
 
 

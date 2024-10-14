@@ -36,13 +36,18 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 
 	m_iTextureIndex = pUI_Desc->iNumUI;
 	
+	Set_AnimPosition(600, 0.5f);
+	Set_AnimPosition(600, 1.5f);  
+	Set_AnimPosition(400, 1.6f);
+	Set_AnimPosition(600, 1.7f);
+	Set_AnimPosition(650, 1.75f);
+	Set_AnimPosition(550, 1.8f);
+	Set_AnimPosition(600, 1.9f);
 	Set_AnimPosition(600, 2.f);
-	Set_AnimPosition(600, 4.f);
-	Set_AnimPosition(400, 4.5f);
-	Set_AnimPosition(1000, 5.f);
-	Set_AnimPosition(600, 5.5f);
+	Set_AnimPosition(600, 2.2f);
+	Set_AnimPosition(900, 2.6f);
 
-	m_iTotalAnimSize = m_DequeAnim.size();
+	m_iTotalAnimSize = m_QueueAnim.size();
 
 	//if(m_eAnimType == UI_ANIM)
 		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
@@ -55,31 +60,35 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 void CUI_GameStartCircle::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	if(m_iTextureIndex == 0)
+		m_pUI_Manager->m_fTotalDuration += fTimeDelta;
+	//m_fTimer += fTimeDelta;
+
+	int a = 10;
 }
 
 void CUI_GameStartCircle::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	//DebugTesting(1.f, 0.f);
-
 	//if (m_eAnimType == UI_ANIM)
 	//{
-	//	Action_Rotaion(fTimeDelta);
-	//	Action_ScaleAnim(1.f, fTimeDelta);
-	//
-	//	if(m_QueueAnimPos.empty())
-	//		m_bDead = TRUE;
-	//
+		Action_Rotaion(fTimeDelta);
+		Action_Anim(1.f, fTimeDelta);
+	
+		if(m_QueueAnim.empty())
+			m_bDead = TRUE;
+	
 	//}
-	//
-	//if (m_bEmblem == FALSE && m_QueueAnimPos.size() == m_iTotalAnimSize - 1)
-	//{
-	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_StartEmblem"), TEXT("Layer_UI_Emblem"));
-	//	m_bEmblem = TRUE;
-	//}
+	
+	if (m_bEmblem == FALSE && m_QueueAnim.size() == m_iTotalAnimSize - 1)
+	{
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_StartEmblem"), TEXT("Layer_UI_Emblem"));
+		m_bEmblem = TRUE;
+	}
 
-	Action_Anim(1.f, fTimeDelta);
+	//Action_Anim(1.f, fTimeDelta);
 
 }
 

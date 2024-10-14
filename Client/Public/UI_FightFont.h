@@ -27,6 +27,7 @@ private:
 
 private:
 	_float m_fAlphaTimer = { 0.f };
+	_float m_fTemp = { 0.f };
 
 	CTexture* m_pMaskTexture = { nullptr };
 

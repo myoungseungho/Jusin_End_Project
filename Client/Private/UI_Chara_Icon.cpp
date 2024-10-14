@@ -34,15 +34,16 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 
 	__super::Set_UI_Setting(m_fSizeX, 150.f, m_fPosX, 40.f, 0.85f);
 
-	//Player의 선택 ID에 따라서 변경 현재 기본값은 : 0
-	//m_iCharaID = m_pGameInstance->Player->Get_ID();
-
 	return S_OK;
 }
 
 void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
 {
+	_uint iTexIndex = 0;
 
+	(m_eLRPos == LEFT) ? iTexIndex  = 0: iTexIndex = 2;
+
+	m_iCharaID = m_pUI_Manager->m_pPawnArray[iTexIndex]->Get_PawnDesc().ePlayerID;
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)

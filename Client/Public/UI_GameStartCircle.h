@@ -44,6 +44,8 @@ private:
 	_bool m_bEmblem = { FALSE };
 	_uint m_iTotalAnimSize = { 0 };
 
+	_float m_fTimer = { 0.f };
+
 
 public:
 	static CUI_GameStartCircle* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
