@@ -82,6 +82,11 @@ void CEffect::Set_Effect_Rotation(_float3 ChangeRotation)
 	m_pTransformCom->Rotate(ChangeRotation);
 }
 
+void CEffect::Set_Effect_IsNotPlaying(_bool bIsNotPlaying)
+{
+	m_bIsNotPlaying = bIsNotPlaying;
+}
+
 _float3 CEffect::Get_Effect_Scaled()
 {
 	return m_pTransformCom->Get_Scaled();

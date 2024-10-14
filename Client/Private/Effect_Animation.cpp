@@ -44,7 +44,7 @@ EFFECT_KEYFRAME CEffect_Animation::Get_KeyFrame(_uint KeyFrameNumber)
 	auto it = m_EffectKeyFrames.find(KeyFrameNumber);
 
 	if (it != m_EffectKeyFrames.end()) {
-		return it->second;
+		return (it->second);
 	}
 	else {
 		return EFFECT_KEYFRAME();

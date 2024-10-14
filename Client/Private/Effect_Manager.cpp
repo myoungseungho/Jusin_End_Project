@@ -456,6 +456,17 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& 
 	return E_FAIL;
 }
 
+HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstring& effectName, _bool bIsNotPlaying)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_IsNotPlaying(bIsNotPlaying);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
 _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)
 {
 	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
@@ -486,6 +497,17 @@ _float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& 
 	return _float3(0.f, 0.f, 0.f); // 기본값 반환
 }
 
+_bool CEffect_Manager::Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->m_bIsNotPlaying;
+	}
+
+	return false;
+}
+
 void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
 	auto layerIt = m_FinalEffects.find(LayerName);
@@ -502,6 +524,17 @@ void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& Effe
 			}
 		}
 	}
+}
+
+EFFECT_KEYFRAME CEffect_Manager::Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_KeyFrame(KeyFrameNumber);
+	}
+
+	return EFFECT_KEYFRAME();
 }
 
 void CEffect_Manager::Play_Effect_Animation(_float fTimeDelta, const wstring& LayerName)

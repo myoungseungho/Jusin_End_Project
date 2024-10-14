@@ -59,10 +59,11 @@ public:
 	void Set_Effect_Scaled(_float3 ChangeScaled);
 	void Set_Effect_Position(_float3 ChangePosition);
 	void Set_Effect_Rotation(_float3 ChangeRoation);
+	void Set_Effect_IsNotPlaying(_bool bIsNotPlaying);
 	_float3 Get_Effect_Scaled();
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
-
+	
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
 
@@ -78,6 +79,7 @@ protected:
 
 	_int m_iRenderIndex = { 0 };
 
+
 public:
 	_int				m_iUnique_Index = { -1 };
 	_wstring		m_EffectName;
@@ -86,7 +88,7 @@ public:
 	_wstring		m_DiffuseTextureName;
 	_int				m_iNumWidthImage = { 0 };
 	_int				m_iNumHeighthImage = { 0 };
-
+	_bool m_bIsNotPlaying = { false };
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

@@ -571,6 +571,10 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Text("Frame: %d", selectedFrame);
 
     EFFECT_KEYFRAME newKeyFrame;
+    _float3 CurPosition = { 0.f, 0.f, 0.f };
+    _float3 CurScale = { 0.f, 0.f, 0.f };
+    _float3 CurRotation = { 0.f, 0.f, 0.f };
+    _bool IsNotPlaying = { false };
 
     // 처음 창을 열 때 저장된 키프레임 불러오기
     if (!initialized)
@@ -580,12 +584,29 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
         if (keyFrameExists)
         {
             newKeyFrame = m_pEffect_Manager->Get_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
+
+            CurPosition = newKeyFrame.vPosition;
+            CurScale = newKeyFrame.vScale;
+            CurRotation = newKeyFrame.vRotation;
+            IsNotPlaying = newKeyFrame.bIsNotPlaying;
         }
         else
         {
-            memset(&newKeyFrame, 0, sizeof(EFFECT_KEYFRAME));
+            CurPosition = { 0.f, 0.f, 0.f };
+            CurScale = { 1.f, 1.f, 1.f };
+            CurRotation = { 0.f, 0.f, 0.f };
+            IsNotPlaying = false;
         }
+
+
         initialized = true;
+    }
+    else
+    {
+        CurPosition = m_pEffect_Manager->Get_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName));
+        CurScale = m_pEffect_Manager->Get_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName));
+        CurRotation = m_pEffect_Manager->Get_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName));
+        IsNotPlaying = m_pEffect_Manager->Get_Layer_Effect_IsPlaying(selectedLayerName, UTF8ToWString(selectedEffectName));
     }
 
     // CurTime을 선택된 프레임 시간에 따라 자동 설정
@@ -595,15 +616,19 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Text("Effect Keyframe Settings");
 
     // Is Not Playing 체크박스
-    if (ImGui::Checkbox("Is Not Playing", &newKeyFrame.bIsNotPlaying)) {
-        m_pEffect_Manager->Add_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame, newKeyFrame);
+    ImGui::Checkbox("Is Not Playing", &IsNotPlaying);
+    {
+        m_pEffect_Manager->Set_Layer_Effect_IsNotPlaying(selectedLayerName, UTF8ToWString(selectedEffectName), IsNotPlaying);
     }
 
     ImGui::Separator();
 
+    m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
+    m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
+    m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
+
     // Position 섹션
     ImGui::Text("Position");
-    _float3& CurPosition = newKeyFrame.vPosition;
 
     ImGui::Text("X"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Position X Slider", &CurPosition.x, -100.0f, 100.0f))
@@ -639,7 +664,6 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     // Scale 섹션
     ImGui::Text("Scale");
-    _float3& CurScale = newKeyFrame.vScale;
 
     ImGui::Text("X"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Scale X Slider", &CurScale.x, 0.01f, 100.0f))
@@ -675,7 +699,6 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     // Rotation 섹션
     ImGui::Text("Rotation");
-    _float3& CurRotation = newKeyFrame.vRotation;
 
     ImGui::Text("X"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Rotation X Slider", &CurRotation.x, 0.0f, 360.0f))
@@ -712,7 +735,15 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     // Keyframe 저장 버튼
     if (ImGui::Button("Save Keyframe"))
     {
+        newKeyFrame.vPosition = CurPosition;
+        newKeyFrame.vScale = CurScale;
+        newKeyFrame.vRotation = CurRotation;
+        newKeyFrame.bIsNotPlaying = IsNotPlaying;
+        newKeyFrame.fCurTime = selectedFrame * frameInterval;
+
+        // 업데이트된 newKeyFrame을 저장
         m_pEffect_Manager->Add_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame, newKeyFrame);
+
         ImGui::Text("Keyframe saved!");
     }
 

@@ -17,14 +17,13 @@ namespace Engine
 
 	typedef struct
 	{
-		XMFLOAT3		vScale;
-		XMFLOAT3		vRotation;
-		XMFLOAT3		vPosition;
+		XMFLOAT3 vScale = { 1.0f, 1.0f, 1.0f };
+		XMFLOAT3 vRotation = { 0.0f, 0.0f, 0.0f };
+		XMFLOAT3 vPosition = { 0.0f, 0.0f, 0.0f };
 
-		bool			bIsNotPlaying;
-
-		float			fCurTime;
-		float			fDuration;
+		bool bIsNotPlaying = false;
+		float fCurTime = 0.0f;
+		float fDuration = 0.0f;
 	}EFFECT_KEYFRAME;
 
 	typedef struct
