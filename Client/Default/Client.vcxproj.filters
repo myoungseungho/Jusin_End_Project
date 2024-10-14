@@ -133,9 +133,6 @@
     <Filter Include="02.GameObjects\Pawn\Monster">
       <UniqueIdentifier>{f32a15d7-0036-43da-a07e-0572965e7d26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Pawn\Player">
-      <UniqueIdentifier>{e15191a1-d182-4cc0-9424-3f21c06e6fef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI\Hp\SubHpGauge">
       <UniqueIdentifier>{a407ce47-96a1-41a6-bcd4-9cb7cf1e47ee}</UniqueIdentifier>
     </Filter>
@@ -336,9 +333,6 @@
     <ClInclude Include="..\Public\Monster.h">
       <Filter>02.GameObjects\Pawn\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Player.h">
-      <Filter>02.GameObjects\Pawn\Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\Pawn.h">
       <Filter>02.GameObjects\Pawn</Filter>
     </ClInclude>
@@ -386,6 +380,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Chara_SubIcon.h">
       <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -515,9 +512,6 @@
     <ClCompile Include="..\Private\Monster.cpp">
       <Filter>02.GameObjects\Pawn\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Player.cpp">
-      <Filter>02.GameObjects\Pawn\Player</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\Pawn.cpp">
       <Filter>02.GameObjects\Pawn</Filter>
     </ClCompile>
@@ -565,6 +559,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp">
       <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Player.cpp">
+      <Filter>02.GameObjects\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
