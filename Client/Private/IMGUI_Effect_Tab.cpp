@@ -857,6 +857,4 @@ void CIMGUI_Effect_Tab::Free()
     __super::Free();
 
     Safe_Release(m_pEffect_Manager);
-
-
 }
