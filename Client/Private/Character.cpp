@@ -7,6 +7,115 @@
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 
+
+vector<CInput> CCharacter::Command_236Attack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
+};
+vector<CInput> CCharacter::Command_236Attack_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_LIGHT}
+};
+
+
+vector<CInput> CCharacter::Command_214Attack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
+};
+vector<CInput> CCharacter::Command_214Attack_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_LIGHT}
+};
+
+vector<CInput> CCharacter::Command_236Special =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_SPECIAL}
+};
+
+vector<CInput> CCharacter::Command_236Special_Side =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL}
+};
+
+
+vector<CInput> CCharacter::Command_214FinalAttack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_SPECIAL}
+};
+
+
+vector<CInput> CCharacter::Command_236UltimateAttack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_GRAB}
+};
+
+
+vector<CInput> CCharacter::Command_236UltimateAttack_Side =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_GRAB}
+};
+
+
+
+vector<CInput> CCharacter::Command_BackDash =
+{
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE}
+};
+
+vector<CInput> CCharacter::Command_Forward =
+{
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{ MOVEKEY_RIGHT, ATTACK_NONE }
+
+};
+
+vector<CInput> CCharacter::Command_LightAttack = { {MOVEKEY_NEUTRAL, ATTACK_LIGHT} };
+vector<CInput> CCharacter::Command_MediumAttack = { {MOVEKEY_NEUTRAL, ATTACK_MEDIUM} };
+vector<CInput> CCharacter::Command_HeavyAttack = { {MOVEKEY_NEUTRAL, ATTACK_HEAVY} };
+vector<CInput> CCharacter::Command_SpecialAttack = { {MOVEKEY_NEUTRAL, ATTACK_SPECIAL} };
+			
+vector<CInput> CCharacter::Command_HeavyAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_HEAVY} };
+			 
+vector<CInput> CCharacter::Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
+vector<CInput> CCharacter::Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
+vector<CInput> CCharacter::Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
+vector<CInput> CCharacter::Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
+			  
+vector<CInput> CCharacter::Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
+vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
+
+
+
+
 CCharacter::CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -48,9 +157,10 @@ HRESULT CCharacter::Initialize(void* pArg)
 	
 	
 
-	//m_pModelCom->SetUp_Animation(16, true);
-	m_pModelCom->SetUp_Animation(0, false);
-	m_pModelCom->Play_Animation(0.f);
+
+	//모델 로드를 하위 클래스로 옮겼으니 각자 처리하기 
+	//m_pModelCom->SetUp_Animation(0, false);
+	//m_pModelCom->Play_Animation(0.f);
 
 
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
@@ -604,9 +714,9 @@ HRESULT CCharacter::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
-		return E_FAIL;
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	//	return E_FAIL;
 
 	/* Com_Model */
 	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, m_strModelName,

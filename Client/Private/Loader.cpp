@@ -17,7 +17,7 @@
 
 #include "Character.h"
 #include "Play_Goku.h"
-
+#include "Play_21.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -109,7 +109,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		return E_FAIL;
 
 
-
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	//ºÎ¿ì
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
@@ -142,9 +144,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	//	return E_FAIL;
 
 	//21È£
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 
 
@@ -184,6 +186,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CPlay_Goku::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_21"),
+		CPlay_21::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
 	//	CCamera_Free::Create(m_pDevice, m_pContext))))
 	//	return E_FAIL;

@@ -38,8 +38,15 @@ HRESULT CLevel_GamePlay::Initialize()
 	}
 	else
 	{
+
+
 		if (Ready_Character())
 			return E_FAIL;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
+			return E_FAIL;
+
+
 	}
 	return S_OK;
 }
@@ -92,6 +99,8 @@ HRESULT CLevel_GamePlay::Ready_Character()
 {
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"))))
 		return E_FAIL;
+
+
 
 	return S_OK;
 }

@@ -15,8 +15,147 @@ END
 
 BEGIN(Client)
 
+
+
+/*
+vector<CInput> Command_236Attack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
+};
+vector<CInput> Command_236Attack_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_LIGHT}
+};
+
+
+vector<CInput> Command_214Attack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
+};
+vector<CInput> Command_214Attack_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_LIGHT}
+};
+
+vector<CInput> Command_236Special =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_SPECIAL}
+};
+
+vector<CInput> Command_236Special_Side =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL}
+};
+
+
+vector<CInput> Command_214FinalAttack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_SPECIAL}
+};
+
+
+vector<CInput> Command_236UltimateAttack =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_GRAB}
+};
+
+
+vector<CInput> Command_236UltimateAttack_Side =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_GRAB}
+};
+
+
+
+vector<CInput> Command_BackDash =
+{
+	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_LEFT, ATTACK_NONE}
+};
+
+vector<CInput> Command_Forward =
+{
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{ MOVEKEY_RIGHT, ATTACK_NONE }
+
+};
+
+vector<CInput> Command_LightAttack = { {MOVEKEY_NEUTRAL, ATTACK_LIGHT} };
+vector<CInput> Command_MediumAttack = { {MOVEKEY_NEUTRAL, ATTACK_MEDIUM} };
+vector<CInput> Command_HeavyAttack = { {MOVEKEY_NEUTRAL, ATTACK_HEAVY} };
+vector<CInput> Command_SpecialAttack = { {MOVEKEY_NEUTRAL, ATTACK_SPECIAL} };
+
+vector<CInput> Command_HeavyAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_HEAVY} };
+
+
+
+vector<CInput> Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
+vector<CInput> Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
+vector<CInput> Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
+vector<CInput> Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
+
+
+
+vector<CInput> Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
+vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
+
+*/
+
 class CCharacter  : public CGameObject
 {
+public:
+	static vector<CInput> Command_236Attack;
+	static vector<CInput> Command_236Attack_Extra;
+	static vector<CInput> Command_214Attack;
+	static vector<CInput> Command_214Attack_Extra;
+	static vector<CInput> Command_236Special;
+	static vector<CInput> Command_236Special_Side;
+	static vector<CInput> Command_214FinalAttack;
+	static vector<CInput> Command_236UltimateAttack;
+	static vector<CInput> Command_236UltimateAttack_Side;
+	static vector<CInput> Command_BackDash;
+	static vector<CInput> Command_Forward;
+	static vector<CInput> Command_LightAttack;
+	static vector<CInput> Command_MediumAttack;
+	static vector<CInput> Command_HeavyAttack;
+	static vector<CInput> Command_SpecialAttack;
+	static vector<CInput> Command_HeavyAttack_Extra;
+	static vector<CInput> Command_Crouch_LightAttack;
+	static vector<CInput> Command_Crouch_MediumAttack;
+	static vector<CInput> Command_Crouch_HeavyAttack;
+	static vector<CInput> Command_Crouch_SpecialAttack;
+	static vector<CInput> Command_Crouch_MediumAttack_Extra;
+	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
+
+
 public:
 	const int BUFFER_SIZE = 30;
 	enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
@@ -150,6 +289,10 @@ public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
+
+
 };
+
+
 
 END

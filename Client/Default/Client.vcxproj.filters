@@ -79,6 +79,12 @@
     <Filter Include="02.GameObjects\Character\Play_Goku\Goku_MeleeAttack">
       <UniqueIdentifier>{1148b8a7-ee34-4fbf-9d48-74a841f9e01c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Character\Play_21">
+      <UniqueIdentifier>{d326ad05-c19f-49c1-ad95-75047f15234b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_21\S21_MeleeAttack">
+      <UniqueIdentifier>{0fea3a9c-712d-41fc-a50b-2d180e29ac2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -180,6 +186,12 @@
     <ClInclude Include="..\Public\Goku_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Play_21.h">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\S21_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -262,6 +274,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
       <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_21.cpp">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

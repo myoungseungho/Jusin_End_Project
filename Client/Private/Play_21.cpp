@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\Public\Play_Goku.h"
+#include "..\Public\Play_21.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
@@ -29,153 +29,41 @@
 //#define ANIME_JUMP_DOWN 7;
 
 
-/*
-
-vector<CInput> Command_236Attack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
-};
-vector<CInput> Command_236Attack_Extra =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_LIGHT}
-};
-
-
-vector<CInput> Command_214Attack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
-};
-vector<CInput> Command_214Attack_Extra =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_LIGHT}
-};
-
-vector<CInput> Command_236Special =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_SPECIAL}
-};
-
-vector<CInput> Command_236Special_Side =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_DOWN, ATTACK_SPECIAL}
-};
-
-
-vector<CInput> Command_214FinalAttack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_SPECIAL}
-};
-
-
-vector<CInput> Command_236UltimateAttack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_GRAB}
-};
-
-
-vector<CInput> Command_236UltimateAttack_Side =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_DOWN, ATTACK_GRAB}
-};
 
 
 
-vector<CInput> Command_BackDash =
-{
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE}
-};
-
-vector<CInput> Command_Forward =
-{
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{ MOVEKEY_RIGHT, ATTACK_NONE }
-
-};
-
-vector<CInput> Command_LightAttack ={	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}};
-vector<CInput> Command_MediumAttack ={	{MOVEKEY_NEUTRAL, ATTACK_MEDIUM}};
-vector<CInput> Command_HeavyAttack ={	{MOVEKEY_NEUTRAL, ATTACK_HEAVY}};
-vector<CInput> Command_SpecialAttack ={	{MOVEKEY_NEUTRAL, ATTACK_SPECIAL}};
-
-vector<CInput> Command_HeavyAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_HEAVY} };
-
-
-
-vector<CInput> Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
-vector<CInput> Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
-vector<CInput> Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
-vector<CInput> Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
-
-
-
-vector<CInput> Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
-vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
-
-*/
-
-
-
-CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
 
 }
 
-CPlay_Goku::CPlay_Goku(const CPlay_Goku& Prototype)
+CPlay_21::CPlay_21(const CPlay_21& Prototype)
 	: CCharacter{ Prototype }
 {
 
 }
 
-HRESULT CPlay_Goku::Initialize_Prototype()
+HRESULT CPlay_21::Initialize_Prototype()
 {
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 	CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
-	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Goku.txt");
+	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_21.txt");
 
 
 
 	return S_OK;
 }
 
-HRESULT CPlay_Goku::Initialize(void* pArg)
+HRESULT CPlay_21::Initialize(void* pArg)
 {
 
-	//Play_Goku_DESC* pDesc = static_cast<Play_Goku_DESC*>(pArg);
+	//Play_21_DESC* pDesc = static_cast<Play_21_DESC*>(pArg);
 	//m_strModelName = pDesc->strModelName;
 
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
-	m_eCharacterIndex = PLAY_GOKU;
+	m_eCharacterIndex = PLAY_21;
 	m_iFallAnimationIndex = 7;
 	m_iIdleAnimationIndex = 0;
 
@@ -212,47 +100,47 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatterns.push_back({ Command_HeavyAttack, ANIME_ATTACK_HEAVY });
 	
 
-	MoveCommandPatternsFunction.push_back({ Command_236UltimateAttack, bind(&CGoku_MeleeAttack::Attack_236Ultimate, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_236UltimateAttack_Side, bind(&CGoku_MeleeAttack::Attack_236Ultimate_Side, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236UltimateAttack, bind(&CS21_MeleeAttack::Attack_236Ultimate, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236UltimateAttack_Side, bind(&CS21_MeleeAttack::Attack_236Ultimate_Side, &m_tAttackMap) });
 
 
 
 
-	MoveCommandPatternsFunction.push_back({ Command_236Attack,  bind(&CGoku_MeleeAttack::Attack_236, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_236Attack_Extra,  bind(&CGoku_MeleeAttack::Attack_236, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236Attack,  bind(&CS21_MeleeAttack::Attack_236, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236Attack_Extra,  bind(&CS21_MeleeAttack::Attack_236, &m_tAttackMap) });
 
-	MoveCommandPatternsFunction.push_back({ Command_214Attack,  bind(&CGoku_MeleeAttack::Attack_214, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_214Attack_Extra,  bind(&CGoku_MeleeAttack::Attack_214, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_214Attack,  bind(&CS21_MeleeAttack::Attack_214, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_214Attack_Extra,  bind(&CS21_MeleeAttack::Attack_214, &m_tAttackMap) });
 
-	MoveCommandPatternsFunction.push_back({ Command_236Special,  bind(&CGoku_MeleeAttack::Attack_236Special, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_236Special_Side,  bind(&CGoku_MeleeAttack::Attack_236Special_Side, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236Special,  bind(&CS21_MeleeAttack::Attack_236Special, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236Special_Side,  bind(&CS21_MeleeAttack::Attack_236Special_Side, &m_tAttackMap) });
 	
 
-	MoveCommandPatternsFunction.push_back({ Command_214FinalAttack, bind(&CGoku_MeleeAttack::Attack_214Final, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_214FinalAttack, bind(&CS21_MeleeAttack::Attack_214Final, &m_tAttackMap) });
 
 
-	MoveCommandPatternsFunction.push_back({ Command_Crouch_LightAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Light, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_LightAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Light, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
 
 
-	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack_Extra, bind(&CGoku_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack_Extra, bind(&CGoku_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack_Extra, bind(&CS21_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack_Extra, bind(&CS21_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
 
 	
 
 	//위에서 부터 확인하므로 간단한 커맨드가 아래로 가야함
-	MoveCommandPatternsFunction.push_back({ Command_LightAttack, bind(&CGoku_MeleeAttack::Attack_Light, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_MediumAttack, bind(&CGoku_MeleeAttack::Attack_Medium, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack, bind(&CGoku_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_SpecialAttack, bind(&CGoku_MeleeAttack::Attack_Special, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_LightAttack, bind(&CS21_MeleeAttack::Attack_Light, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_MediumAttack, bind(&CS21_MeleeAttack::Attack_Medium, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack, bind(&CS21_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Special, &m_tAttackMap) });
 
 
-	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack_Extra, bind(&CGoku_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack_Extra, bind(&CS21_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
 
 
-	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CS21_MeleeAttack::BackDash, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CS21_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 
 	
@@ -260,12 +148,12 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CPlay_Goku::Priority_Update(_float fTimeDelta)
+void CPlay_21::Priority_Update(_float fTimeDelta)
 {
 
 }
 
-void CPlay_Goku::Update(_float fTimeDelta)
+void CPlay_21::Update(_float fTimeDelta)
 {
 	
 
@@ -454,12 +342,12 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	
 }
 
-void CPlay_Goku::Late_Update(_float fTimeDelta)
+void CPlay_21::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
-HRESULT CPlay_Goku::Render(_float fTimeDelta)
+HRESULT CPlay_21::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -488,7 +376,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 }
 
 /*
-void CPlay_Goku::NextMoveCheck()
+void CPlay_21::NextMoveCheck()
 {
 
 	//지금 당장 공격중에 체크했을때 IDLE이면 변경하지 않고 공격을 마저 진행함
@@ -536,7 +424,7 @@ void CPlay_Goku::NextMoveCheck()
 }
 */
 
-void CPlay_Goku::AttackNextMoveCheck()
+void CPlay_21::AttackNextMoveCheck()
 {
 	
 	//if (m_iNextAnimation.first != ANIME_IDLE)
@@ -565,7 +453,7 @@ void CPlay_Goku::AttackNextMoveCheck()
 
 }
 
-void CPlay_Goku::AnimeEndNextMoveCheck()
+void CPlay_21::AnimeEndNextMoveCheck()
 {
 
 	Set_Animation(m_iNextAnimation.first);
@@ -578,7 +466,7 @@ void CPlay_Goku::AnimeEndNextMoveCheck()
 
 }
 
-void CPlay_Goku::Test_InputCommand()
+void CPlay_21::Test_InputCommand()
 {
 	//if (m_pGameInstance->Key_Down(DIK_U))
 	//{
@@ -601,7 +489,7 @@ void CPlay_Goku::Test_InputCommand()
 
 }
 
-void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
+void CPlay_21::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
 
 	if (iAnimationIndex == ANIME_IDLE)
@@ -613,7 +501,7 @@ void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
 
 
 /*
-void CPlay_Goku::Set_Animation(_uint iAnimationIndex)
+void CPlay_21::Set_Animation(_uint iAnimationIndex)
 {
 
 
@@ -664,14 +552,14 @@ void CPlay_Goku::Set_Animation(_uint iAnimationIndex)
 }
 */
 
-void CPlay_Goku::KeyTest()
+void CPlay_21::KeyTest()
 {
 	
 }
 
 
 
-HRESULT CPlay_Goku::Ready_Components()
+HRESULT CPlay_21::Ready_Components()
 {
 	/* Com_Shader */
 	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -679,18 +567,19 @@ HRESULT CPlay_Goku::Ready_Components()
 	//	return E_FAIL;
 	//
 	///* Com_Model */
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
-	//	return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
-		return E_FAIL;
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, m_strModelName,
+	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	//	return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CPlay_Goku::Bind_ShaderResources()
+HRESULT CPlay_21::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -704,7 +593,7 @@ HRESULT CPlay_Goku::Bind_ShaderResources()
 	return S_OK;
 }
 
-_bool CPlay_Goku::Check_bCurAnimationisGroundMove(_uint iAnimation)
+_bool CPlay_21::Check_bCurAnimationisGroundMove(_uint iAnimation)
 {
 	_uint iModelIndex= iAnimation;
 
@@ -734,13 +623,13 @@ _bool CPlay_Goku::Check_bCurAnimationisGroundMove(_uint iAnimation)
 	return false;
 }
 
-_bool CPlay_Goku::Check_bCurAnimationisAttack(_uint iAnimation)
+_bool CPlay_21::Check_bCurAnimationisAttack(_uint iAnimation)
 {
 
 	return false;
 }
 
-void CPlay_Goku::Reset_AttackCount()
+void CPlay_21::Reset_AttackCount()
 {
 
 	for (size_t i = 0; i < COUNT_END; i++)
@@ -752,33 +641,33 @@ void CPlay_Goku::Reset_AttackCount()
 
 
 
-CPlay_Goku* CPlay_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CPlay_21* CPlay_21::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CPlay_Goku* pInstance = new CPlay_Goku(pDevice, pContext);
+	CPlay_21* pInstance = new CPlay_21(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CPlay_Goku"));
+		MSG_BOX(TEXT("Failed to Created : CPlay_21"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CPlay_Goku::Clone(void* pArg)
+CGameObject* CPlay_21::Clone(void* pArg)
 {
-	CPlay_Goku* pInstance = new CPlay_Goku(*this);
+	CPlay_21* pInstance = new CPlay_21(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CPlay_Goku"));
+		MSG_BOX(TEXT("Failed to Cloned : CPlay_21"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CPlay_Goku::Free()
+void CPlay_21::Free()
 {
 	__super::Free();
 

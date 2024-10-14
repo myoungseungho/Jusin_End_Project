@@ -184,7 +184,9 @@
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\Public\Play_21.h" />
     <ClInclude Include="..\Public\Play_Goku.h" />
+    <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -215,7 +217,9 @@
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
+    <ClCompile Include="..\Private\Play_21.cpp" />
     <ClCompile Include="..\Private\Play_Goku.cpp" />
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
