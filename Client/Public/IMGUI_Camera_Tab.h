@@ -1,6 +1,6 @@
 #pragma once
 #include "IMGUI_Tab.h"
-
+#include "Camera.h"
 
 BEGIN(Engine)
 class CCamera;
@@ -41,13 +41,23 @@ private:
 	void IMGUI_Play_Button();	   // Play 버튼
 	void IMGUI_Delete_Point(_int index); //Delete 버튼
 	void IMGUI_Modify_Point(_int index); //Modify 버튼
+	void IMGUI_Modify_Point_UI(_int index);
+	void IMGUI_Point_Modify_Save();
 
 	MODELID m_iSelected_Model = MODELID_NOT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
 	_int m_selectedPoint = -1;
-
+	_bool m_isEditing = {false};     // 수정 모드 여부
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
 	unordered_map<pair<MODELID, SKILLID>, _uint, pair_hash> m_CameraIndexMap;
+
+	// 임시 데이터 구조체
+	struct TempPointData {
+		_float duration;
+		CCamera::InterpolationType interpType;
+	};
+
+	TempPointData m_tempPointData;
 
 	//메인카메라
 	class CMain_Camera* m_pMainCamera = { nullptr };

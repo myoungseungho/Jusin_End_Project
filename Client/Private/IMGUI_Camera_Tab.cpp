@@ -201,7 +201,7 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 
 void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0) {
-		vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
+		std::vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
 
 		if (points.empty()) {
 			ImGui::Text("No camera points available.");
@@ -231,6 +231,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 
 			// Delete 버튼
 			if (ImGui::Button("Delete")) {
+				// 삭제 확인 팝업을 띄우려면 추가 구현 필요
 				IMGUI_Delete_Point(static_cast<int>(i));
 				ImGui::PopID();
 				break;  // 삭제 후 루프 종료
@@ -247,7 +248,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
 			}
 
-			const auto& point = points[i];
+			CCamera::CameraPoint& point = points[i];
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
 			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
@@ -259,9 +260,13 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 				? "Spline"
 				: "Skip");
 
-			if (isSelected) {
+			// 선택된 포인트에 대한 수정 UI 표시
+			if (isSelected)
+			{
 				ImGui::PopStyleColor();  // 텍스트 색상 복원
+				IMGUI_Modify_Point_UI(static_cast<int>(i));
 			}
+
 
 			ImGui::Separator();
 			ImGui::PopID();
@@ -289,14 +294,92 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 	if (m_selectedPoint == index) {
 		// 이미 선택된 상태라면 선택 해제
 		m_selectedPoint = -1;
+		m_isEditing = false;
 	}
 	else {
-		// 선택되지 않은 상태라면 선택 추가
+		// 새로운 포인트 선택
 		m_selectedPoint = index;
+		m_isEditing = true;
 
-		// 선택된 포인트의 위치와 로테이션으로 뷰투영 업데이트
+		// 선택된 포인트의 데이터를 임시 변수에 복사
+		vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+		if (index >= 0 && index < static_cast<int>(points.size())) {
+			CCamera::CameraPoint& point = points[index];
+			m_tempPointData.duration = point.duration;
+			m_tempPointData.interpType = point.interpolationType;
+		}
+
+		// 선택된 포인트의 위치와 회전으로 카메라 업데이트
 		m_pMainCamera->Move_Point(index);
 	}
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Modify_Point_UI(_int index)
+{
+	// 해당 포인트에 대한 참조 가져오기
+	vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+
+	// 선택된 포인트와 수정 모드인지 확인
+	if (!m_isEditing || m_selectedPoint != index) {
+		return;
+	}
+
+	ImGui::Indent(); // 들여쓰기 시작
+
+	// Duration 수정 (임시 변수에 바인딩)
+	ImGui::InputFloat("Duration", &m_tempPointData.duration, 0.1f, 1.0f, "%.2f");
+
+	// Interpolation Type 수정 (임시 변수에 바인딩)
+	const char* interp_options[] = { "Linear", "Spline", "Skip" };
+	int interpIndex = static_cast<int>(m_tempPointData.interpType);
+	if (ImGui::BeginCombo("Interpolation Type", interp_options[interpIndex])) {
+		for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
+			bool is_selected = (interpIndex == n);
+			if (ImGui::Selectable(interp_options[n], is_selected)) {
+				m_tempPointData.interpType = static_cast<CCamera::InterpolationType>(n);
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+
+	// "Position and Rotation Save" 버튼 추가
+	if (ImGui::Button("Save")) {
+		// 사용자에게 저장됨을 알림
+		ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Position and Rotation have been saved.");
+		IMGUI_Point_Modify_Save();
+	}
+
+	ImGui::Unindent(); // 들여쓰기 종료
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
+{
+	// 선택된 포인트 인덱스 확인
+	if (m_selectedPoint < 0) {
+		return;
+	}
+
+	vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+	if (m_selectedPoint >= static_cast<int>(points.size())) {
+		return;
+	}
+
+	// 선택된 포인트에 임시 데이터 적용
+	CCamera::CameraPoint& point = points[m_selectedPoint];
+	point.duration = m_tempPointData.duration;
+	point.interpolationType = m_tempPointData.interpType;
+
+	// 카메라의 뷰 업데이트
+	m_pMainCamera->Move_Point(m_selectedPoint);
+
+	// 사용자에게 저장됨을 알림
+	ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Point has been updated.");
+
+	// 수정 모드 종료
+	m_selectedPoint = -1;
+	m_isEditing = false;
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Add_Point()
