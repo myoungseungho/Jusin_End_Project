@@ -66,7 +66,17 @@ EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos)
 	const EFFECT_KEYFRAME& keyFrame1 = it2->second;
 	const EFFECT_KEYFRAME& keyFrame2 = it1->second;
 
-	float factor = (CurAnimPos - it2->first) / (it1->first - it2->first);
+	if (it1 == it2) {
+		return it1->second;
+	}
+
+	// 분모가 0이 아닌지 확인하여 보간 계산
+	float timeDiff = it1->first - it2->first;
+	if (timeDiff == 0.0f) {
+		return it1->second;  // 분모가 0이면 해당 키프레임 값 반환
+	}
+
+	float factor = (CurAnimPos - it2->first) / timeDiff;
 
 	// 각 구성 요소를 보간
 	EFFECT_KEYFRAME interpolatedKeyFrame;

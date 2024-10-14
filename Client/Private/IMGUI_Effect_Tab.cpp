@@ -471,107 +471,114 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         ImGui::Dummy(ImVec2(70.0f, 0.0f)); // 가로 70px 간격 추가
         ImGui::SameLine();
 
+        static bool isPlaying = false;
+        CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName);
+
         if (ImGui::Button("Play"))
         {
-            // 재생 기능 추가
-            // 예: m_pEffect_Manager->Play(selectedLayerName);
+            isPlaying = true;
         }
 
         ImGui::SameLine();
 
         if (ImGui::Button("Pause"))
         {
-            // 일시정지 기능 추가
-            // 예: m_pEffect_Manager->Pause(selectedLayerName);
+            isPlaying = false;
         }
 
-        // 선택한 레이어의 Duration 가져오기
-        CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName);
+        ImGui::SameLine();
+
+        if (ImGui::Button("Anim Pos Reset"))
+        {
+            m_pEffect_Manager->Reset_Layer_Animation_Position(selectedLayerName);
+        }
+
+        // 애니메이션이 재생 중일 때 m_fCurrentAnimPosition 업데이트
+        if (isPlaying)
+        {
+            m_pEffect_Manager->Play_Layer_Animation(fTimeDelta, selectedLayerName);
+        }
+
         int totalKeyframes = 0;
-        const float frameInterval = 1.0f / 60.0f; // 60FPS 간격으로 고정
+        const float frameInterval = 1.0f / 60.0f;
 
         if (pLayer)
         {
-            float layerDuration = pLayer->m_fDuration; // 현재 Duration 값
-            float tickPerSecond = pLayer->m_fTickPerSecond; // 현재 Tick Per Second 값
+            float layerDuration = pLayer->m_fDuration;
+            float tickPerSecond = pLayer->m_fTickPerSecond;
 
-            // Duration 설정을 위한 입력란
             ImGui::Text("Layer Duration:");
             ImGui::SameLine();
-            ImGui::SetNextItemWidth(200.0f); // 입력란 너비 조정
+            ImGui::SetNextItemWidth(200.0f);
             if (ImGui::InputFloat("##LayerDuration", &layerDuration, 0.1f, 1.0f, "%.2f"))
             {
-                // Duration 값이 수정되면 레이어에 반영
-                pLayer->m_fDuration = max(0.0f, layerDuration); // 음수로 설정되지 않도록
+                pLayer->m_fDuration = max(0.0f, layerDuration);
             }
 
-            // Tick Per Second 설정을 위한 입력란
             ImGui::SameLine();
             ImGui::Text("Animation Speed:");
             ImGui::SameLine();
-            ImGui::SetNextItemWidth(200.0f); // 입력란 너비 조정
+            ImGui::SetNextItemWidth(200.0f);
             if (ImGui::InputFloat("##AnimationSpeed", &tickPerSecond, 0.1f, 1.0f, "%.1f"))
             {
-                // Tick Per Second 값이 수정되면 레이어에 반영
-                pLayer->m_fTickPerSecond = max(0.1f, tickPerSecond); // 최소값 0.1로 설정
+                pLayer->m_fTickPerSecond = max(0.1f, tickPerSecond);
             }
 
-            // 키프레임 개수 계산
             totalKeyframes = static_cast<int>(layerDuration / frameInterval);
             pLayer->m_iNumKeyFrames = totalKeyframes;
         }
 
         ImGui::Separator();
 
-        // 선택된 레이어의 이펙트 목록 가져오기
         auto effectNames = m_pEffect_Manager->Get_In_Layer_Effect_List(&selectedLayerName);
 
         if (!effectNames.empty())
         {
-            const int buttonSize = 20;       // 버튼 크기
-            const float effectNameWidth = 150.0f; // 이펙트 이름 표시 너비
+            const int buttonSize = 20;
+            const float effectNameWidth = 150.0f;
 
             ImGui::BeginChild("TimelineRegion", ImVec2(0, 300), false, ImGuiWindowFlags_HorizontalScrollbar);
 
-            // 각 이펙트의 이름 및 프레임 버튼 표시
+            float currentXPosition = pLayer ? (pLayer->m_fCurrentAnimPosition / pLayer->m_fDuration) * (totalKeyframes * (buttonSize + 5.0f)) : 0.0f;
+
+            // 진행 바 (세로선)
+            ImDrawList* drawList = ImGui::GetWindowDrawList();
+            ImVec2 start = ImGui::GetCursorScreenPos();
+            drawList->AddLine(
+                ImVec2(start.x + effectNameWidth + currentXPosition, start.y),
+                ImVec2(start.x + effectNameWidth + currentXPosition, start.y + 300),
+                IM_COL32(255, 0, 0, 255), // 빨간색 세로선
+                2.0f // 선 두께
+            );
+
             for (int item = 0; item < effectNames.size(); item++)
             {
-                // UTF-8 변환 후 이펙트 이름 표시
                 string effectNameUTF8 = WStringToUTF8(effectNames[item]);
                 ImGui::TextWrapped("%s", effectNameUTF8.c_str());
 
-                ImGui::SameLine(effectNameWidth); // 이름 뒤에 충분한 간격을 줌
+                ImGui::SameLine(effectNameWidth);
 
-                // 각 프레임의 버튼 배치
                 for (int frame = 0; frame < totalKeyframes; frame++)
                 {
                     float curtime = frame * frameInterval;
-
-                    ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f)); // 버튼 위치 조정
+                    ImGui::SetCursorPosX(effectNameWidth + frame * (buttonSize + 5.0f));
                     ImGui::PushID(frame + item * totalKeyframes);
 
-                    // 키프레임이 존재하는지 확인
                     bool isKeyFrameExist = m_pEffect_Manager->Find_KeyFrame(selectedLayerName, effectNames[item], frame);
-
-                    // 색상 조정
                     if (isKeyFrameExist)
                     {
-                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.8f, 0.3f, 0.7f)); // 진한 색상 예시
+                        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.8f, 0.3f, 0.7f));
                     }
 
-                    // 키프레임을 나타내는 버튼
                     if (ImGui::Button("##", ImVec2(buttonSize, buttonSize)))
                     {
-                        // 버튼 클릭 시 선택된 효과 이름과 프레임 번호를 저장하고, curtime 설정
                         selectedEffectName = effectNameUTF8;
                         selectedFrame = frame;
                         openKeyFrameWindow = true;
                         initialized = false;
-                        // 선택된 프레임의 curtime을 클래스 멤버 변수에 저장
                         SelectCurTime = curtime;
                     }
 
-                    // 색상 복원
                     if (isKeyFrameExist)
                     {
                         ImGui::PopStyleColor();
@@ -580,13 +587,14 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     ImGui::PopID();
                     ImGui::SameLine();
                 }
-                ImGui::NewLine(); // 다음 이펙트는 새 줄로 이동
+                ImGui::NewLine();
             }
 
             ImGui::EndChild();
         }
     }
 }
+
 
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {

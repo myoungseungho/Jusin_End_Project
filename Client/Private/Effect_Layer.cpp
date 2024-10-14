@@ -65,20 +65,36 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 	if (m_iNumKeyFrames <= 0 || m_fTickPerSecond <= 0.0f)
 		return E_FAIL;
 
+	// 프레임 간격 계산
+	float frameInterval = m_fDuration / m_iNumKeyFrames;
+
+	// 현재 애니메이션 위치 업데이트
 	m_fCurrentAnimPosition += fTimeDelta * m_fTickPerSecond;
 
+	// 애니메이션 종료 시 위치 초기화
 	if (m_fCurrentAnimPosition > m_fDuration)
+	{
 		m_fCurrentAnimPosition = m_fDuration;
+	}
 
+	// 현재 키프레임 인덱스 계산
+	int currentFrame = static_cast<int>(m_fCurrentAnimPosition / frameInterval);
+
+	// 각 효과에 대해 현재 위치에 맞는 애니메이션 값을 적용
 	for (CEffect* pEffect : m_MixtureEffects)
 	{
 		if (pEffect)
 		{
-			pEffect->Play_Animation(m_fCurrentAnimPosition);
+			pEffect->Play_Animation(currentFrame);
 		}
 	}
 
 	return S_OK;
+}
+
+void CEffect_Layer::Reset_Animation_Position()
+{
+	m_fCurrentAnimPosition = 0.f;
 }
 
 CEffect_Layer* CEffect_Layer::Create()

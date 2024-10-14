@@ -555,6 +555,21 @@ HRESULT CEffect_Manager::Play_Layer_Animation(_float fTimeDelta, const wstring& 
 	return S_OK;
 }
 
+HRESULT CEffect_Manager::Reset_Layer_Animation_Position(const wstring& LayerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+
+	if (pLayer)
+	{
+		pLayer->Reset_Animation_Position();
+	}
+	else
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
 HRESULT CEffect_Manager::Ready_Components()
 {
 	vector<const _wstring*>* pModelKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));
