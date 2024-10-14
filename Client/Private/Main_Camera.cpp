@@ -107,6 +107,11 @@ void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _flo
 	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr);
 }
 
+void CMain_Camera::Remove_Point(_int currentIndex)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->Remove_Point(currentIndex);
+}
+
 const list<CCamera::CameraPoint>& CMain_Camera::Get_ListPoint()
 {
 	//현재 메인카메라가 사용하고 있는 가상카메라의 listPoints를 가져온다.

@@ -222,14 +222,27 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		ImGui::Separator();
 		ImGui::Text("Camera Points:");
 
-		int pointIndex = 1;
+		_int pointIndex = 1;
+		_int currentIndex = 0; // 실제 삭제를 위한 인덱스 추적
+
 		for (const auto& point : points) {
+			ImGui::PushID(currentIndex); // 각 포인트에 고유 ID 부여
+
 			ImGui::BulletText("Point %d:", pointIndex++);
+			ImGui::SameLine(ImGui::GetWindowContentRegionMax().x - 100); // 삭제 버튼 위치 조정
+			if (ImGui::Button("Delete")) {
+				m_pMainCamera->Remove_Point(currentIndex);
+				ImGui::PopID();
+				// 포인트가 삭제되었으므로 루프를 종료하여 인덱스 문제 방지
+				break;
+			}
+
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
 			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
-			//선택지 3개니까 그냥 이렇게 하자.
-			ImGui::Text("  Interpolation Type: %s",
+
+			// 보간 타입 표시
+			ImGui::Text("  Interpolation: %s",
 				(point.interpolationType == CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE)
 				? "Linear"
 				: ((point.interpolationType == CCamera::InterpolationType::INTERPOLATION_SPLINE_MODE)
@@ -237,6 +250,9 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 					: "Skip"));
 
 			ImGui::Separator();
+			ImGui::PopID();
+
+			currentIndex++;
 		}
 	}
 }
@@ -313,6 +329,7 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 		}
 	}
 }
+
 
 void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 {

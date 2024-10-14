@@ -265,6 +265,17 @@ void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4
 	m_listPoints.push_back(cameraPoint);
 }
 
+void CCamera::Remove_Point(_int currentIndex)
+{
+	if (currentIndex < 0 || currentIndex >= static_cast<int>(m_listPoints.size())) {
+		return; // 유효하지 않은 인덱스일 경우 아무 작업도 하지 않음
+	}
+
+	auto it = m_listPoints.begin();
+	advance(it, currentIndex);
+	m_listPoints.erase(it);
+}
+
 
 void CCamera::Free()
 {
