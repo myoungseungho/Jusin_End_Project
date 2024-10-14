@@ -26,7 +26,10 @@ public:
 
 public:
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
-	_bool Find_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameNumber);
+	class CEffect* Find_Layer_Effect(wstring& layerName, wstring& effectName);
+	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
+
+	EFFECT_KEYFRAME Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 
 	HRESULT Delete_Layer(const wstring& strEffectLayerTag);
 
@@ -38,7 +41,7 @@ public:
 	HRESULT Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* EffectName, wstring* ModelName);
 
 	HRESULT Delete_Test_Effect(_uint iCurTestEffectID);
-	HRESULT Delete_All_Test_Effect();
+	vector<_int> Delete_All_Test_Effect();
 
 	HRESULT Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled);
 	HRESULT Set_Effect_Position(_int EffectId, _float3 ChangePosition);
@@ -48,7 +51,21 @@ public:
 	_float3 Get_Effect_Position(_int EffectId);
 	_float3 Get_Effect_Rotation(_int EffectId);
 
-	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame);
+	HRESULT Set_Layer_Effect_Scaled(wstring& layerName, wstring& effectName, _float3 ChangeScaled);
+	HRESULT Set_Layer_Effect_Position(wstring& layerName, wstring& effectName, _float3 ChangePosition);
+	HRESULT Set_Layer_Effect_Rotation(wstring& layerName, wstring& effectName, _float3 ChangeRotation);
+	HRESULT Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstring& effectName, _bool bIsNotPlaying);
+
+	_float3 Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName);
+	_float3 Get_Layer_Effect_Position(wstring& layerName, wstring& effectName);
+	_float3 Get_Layer_Effect_Rotation(wstring& layerName, wstring& effectName);
+	_bool Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName);
+
+	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
+	EFFECT_KEYFRAME Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber);
+public:
+	HRESULT		Play_Layer_Animation(_float fTimeDelta, const wstring& LayerName);
+	HRESULT		Reset_Layer_Animation_Position(const wstring& LayerName);
 
 private:
 	HRESULT Ready_Components();

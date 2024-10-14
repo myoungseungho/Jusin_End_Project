@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "..\Public\Effect.h"
 #include "GameInstance.h"
+#include "Effect_Animation.h"
 
 CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice , pContext }
@@ -21,6 +22,11 @@ HRESULT CEffect::Initialize_Prototype()
 HRESULT CEffect::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
+
+	m_pAnimation = CEffect_Animation::Create();
+
+	if (nullptr == m_pAnimation)
 		return E_FAIL;
 
 	return S_OK;
@@ -46,9 +52,19 @@ HRESULT CEffect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CEffect::Add_KeyFrame(_int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame)
+void CEffect::Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
-	m_EffectKeyFrames.push_back(make_pair(KeyFrameIndex,NewKeyFrame));
+	m_pAnimation->Add_KeyFrame(KeyFrameNumber, NewKeyFrame);
+}
+
+_bool CEffect::Find_KeyFrame(_uint KeyFrameNumber)
+{
+	return m_pAnimation->Find_KeyFrame(KeyFrameNumber);
+}
+
+EFFECT_KEYFRAME CEffect::Get_KeyFrame(_uint KeyFrameNumber)
+{
+	return m_pAnimation->Get_KeyFrame(KeyFrameNumber);
 }
 
 void CEffect::Set_Effect_Scaled(_float3 ChangeScaled)
@@ -64,6 +80,11 @@ void CEffect::Set_Effect_Position(_float3 ChangePosition)
 void CEffect::Set_Effect_Rotation(_float3 ChangeRotation)
 {
 	m_pTransformCom->Rotate(ChangeRotation);
+}
+
+void CEffect::Set_Effect_IsNotPlaying(_bool bIsNotPlaying)
+{
+	m_bIsNotPlaying = bIsNotPlaying;
 }
 
 _float3 CEffect::Get_Effect_Scaled()
@@ -85,6 +106,21 @@ _float3 CEffect::Get_Effect_Position()
 _float3 CEffect::Get_Effect_Rotation()
 {
 	return m_pTransformCom->Get_Rotation();
+}
+
+HRESULT CEffect::Play_Animation(_float CurrentFrame)
+{
+	if (m_pAnimation == nullptr)
+		return E_FAIL;
+
+
+	EFFECT_KEYFRAME ResultKeyFrame = m_pAnimation->Play_Animation(CurrentFrame);
+
+	Set_Effect_Scaled(ResultKeyFrame.vScale);
+	Set_Effect_Position(ResultKeyFrame.vPosition);
+	Set_Effect_Rotation(ResultKeyFrame.vRotation);
+
+	return S_OK;
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

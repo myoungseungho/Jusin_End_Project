@@ -53,13 +53,17 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 public:
-	void Add_KeyFrame(_int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame);
+	void Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
+	_bool	Find_KeyFrame(_uint KeyFrameNumber);
+	EFFECT_KEYFRAME Get_KeyFrame(_uint KeyFrameNumber);
 	void Set_Effect_Scaled(_float3 ChangeScaled);
 	void Set_Effect_Position(_float3 ChangePosition);
 	void Set_Effect_Rotation(_float3 ChangeRoation);
+	void Set_Effect_IsNotPlaying(_bool bIsNotPlaying);
 	_float3 Get_Effect_Scaled();
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
+	HRESULT Play_Animation(_float CurrentFrame);
 
 protected:
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
@@ -68,13 +72,14 @@ protected:
 	CModel*	 m_pModelCom = { nullptr };
 	CTexture* m_pDiffuseTextureCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };
+	class CEffect_Animation* m_pAnimation= { nullptr };
 
-
+	_float			m_fCurrentAnimPos = {};
 
 	_float		m_fAlpha = { 0.f };
-	_float		m_fCurPosition = { 0.f };
 
 	_int m_iRenderIndex = { 0 };
+
 
 public:
 	_int				m_iUnique_Index = { -1 };
@@ -84,9 +89,7 @@ public:
 	_wstring		m_DiffuseTextureName;
 	_int				m_iNumWidthImage = { 0 };
 	_int				m_iNumHeighthImage = { 0 };
-
-	vector<pair<_int, EFFECT_KEYFRAME>>	m_EffectKeyFrames;
-
+	_bool m_bIsNotPlaying = { false };
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

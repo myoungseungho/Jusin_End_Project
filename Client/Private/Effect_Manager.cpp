@@ -70,23 +70,36 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
-_bool CEffect_Manager::Find_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameNumber)
+CEffect* CEffect_Manager::Find_Layer_Effect(wstring& layerName, wstring& effectName)
 {
-	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer == nullptr)
+		return nullptr;
+
+	return pLayer->Find_Effect(effectName);
+}
+
+_bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
 	if (!pLayer)
 		return false;
 
-	CEffect* pEffect = pLayer->Find_Effect(EffectName);
+	CEffect* pEffect = pLayer->Find_Effect(effectName);
 	if (!pEffect)
 		return false;
 
-	for (const auto& keyframe : pEffect->m_EffectKeyFrames)
-	{
-		if (keyframe.first == KeyFrameNumber)
-			return true;
-	}
+	return pEffect->Find_KeyFrame(frameNumber);
+}
 
-	return false;
+EFFECT_KEYFRAME CEffect_Manager::Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	CEffect* pEffect = pLayer->Find_Effect(effectName);
+
+	return pEffect->Get_KeyFrame(frameNumber);
 }
 
 HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
@@ -126,6 +139,13 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 		EffectDesc.iRenderIndex = 2;
 		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
+	}
+
+	if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size()) 
+	{
+		Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+
+		m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
 	}
 
 	return S_OK;
@@ -289,19 +309,22 @@ HRESULT CEffect_Manager::Delete_Test_Effect(_uint iCurTestEffectID)
 	return E_FAIL;
 }
 
-HRESULT CEffect_Manager::Delete_All_Test_Effect()
+vector<_int> CEffect_Manager::Delete_All_Test_Effect()
 {
+	vector<_int> UniqueIDs;
+
 	for (auto& pEffect : m_TestEffect)
 	{
 		if (pEffect)
 		{
+			UniqueIDs.push_back(pEffect->m_iUnique_Index);
 			Safe_Release(pEffect);
 		}
 	}
 
 	m_TestEffect.clear();
 
-	return S_OK;
+	return UniqueIDs;
 }
 
 HRESULT CEffect_Manager::Set_Effect_Scaled(_int EffectId, _float3 ChangeScaled)
@@ -403,7 +426,92 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 	return _float3(0.f, 0.f, 0.f);
 }
 
-void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _int KeyFrameIndex, EFFECT_KEYFRAME NewKeyFrame)
+HRESULT CEffect_Manager::Set_Layer_Effect_Scaled(wstring& layerName, wstring& effectName, _float3 ChangeScaled)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_Scaled(ChangeScaled);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_Position(wstring& layerName, wstring& effectName, _float3 ChangePosition)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_Position(ChangePosition);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& effectName, _float3 ChangeRotation)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_Rotation(ChangeRotation);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstring& effectName, _bool bIsNotPlaying)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		pEffect->Set_Effect_IsNotPlaying(bIsNotPlaying);
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+_float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_Effect_Scaled();
+	}
+	return _float3(0.f, 0.f, 0.f); // 기본값 반환
+}
+
+_float3 CEffect_Manager::Get_Layer_Effect_Position(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_Effect_Position();
+	}
+	return _float3(0.f, 0.f, 0.f); // 기본값 반환
+}
+
+_float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_Effect_Rotation();
+	}
+	return _float3(0.f, 0.f, 0.f); // 기본값 반환
+}
+
+_bool CEffect_Manager::Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->m_bIsNotPlaying;
+	}
+
+	return false;
+}
+
+void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
 	auto layerIt = m_FinalEffects.find(LayerName);
 	if (layerIt != m_FinalEffects.end())
@@ -414,11 +522,52 @@ void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& Effe
 			CEffect* pEffect = pLayer->Find_Effect(EffectName);
 			if (pEffect)
 			{
-				pEffect->Add_KeyFrame(KeyFrameIndex, NewKeyFrame);
+				pEffect->Add_KeyFrame(KeyFrameNumber, NewKeyFrame);
 				return;
 			}
 		}
 	}
+}
+
+EFFECT_KEYFRAME CEffect_Manager::Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber)
+{
+	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+
+	if (pEffect) {
+		return pEffect->Get_KeyFrame(KeyFrameNumber);
+	}
+
+	return EFFECT_KEYFRAME();
+}
+
+HRESULT CEffect_Manager::Play_Layer_Animation(_float fTimeDelta, const wstring& LayerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+
+	if (pLayer)
+	{
+		pLayer->Play_Effect_Animation(fTimeDelta);
+	}
+	else
+		return E_FAIL;
+	
+
+	return S_OK;
+}
+
+HRESULT CEffect_Manager::Reset_Layer_Animation_Position(const wstring& LayerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
+
+	if (pLayer)
+	{
+		pLayer->Reset_Animation_Position();
+	}
+	else
+		return E_FAIL;
+
+
+	return S_OK;
 }
 
 HRESULT CEffect_Manager::Ready_Components()
