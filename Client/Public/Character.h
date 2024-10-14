@@ -20,6 +20,7 @@ class CCharacter  : public CGameObject
 public:
 	const int BUFFER_SIZE = 30;
 	enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
+	static const _float fGroundHeight;  //0
 
 	typedef struct: CGameObject::GAMEOBJECT_DESC
 	{
@@ -87,6 +88,8 @@ public:
 	//키프레임 이벤트 파생
 	void Create_Effect(_int iEffectIndex);
 
+
+	_float Get_fHeight();
 
 	//디버그용 코드 
 	virtual void ShowInputBuffer();

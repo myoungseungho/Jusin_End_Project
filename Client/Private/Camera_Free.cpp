@@ -59,11 +59,18 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 		if (GetKeyState('W') & 0x8000)
 		{
 			m_pTransformCom->Go_Straight(fTimeDelta);
+			//_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			//vPos += {0.f, fTimeDelta * 2.f, 0.f, 0.f};
+			//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+
 		}
 
 		if (GetKeyState('S') & 0x8000)
 		{
 			m_pTransformCom->Go_Backward(fTimeDelta);
+			//_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			//vPos -= {0.f, fTimeDelta * 2.f, 0.f, 0.f};
+			//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
 		}
 
 		if (GetKeyState('Q') & 0x8000)
@@ -71,7 +78,7 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 			_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 			vPos += {0.f, fTimeDelta * 2.f, 0.f, 0.f};
 			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
-
+			//m_pTransformCom->Go_Straight(fTimeDelta);
 
 		}
 		if (GetKeyState('E') & 0x8000)
@@ -79,6 +86,7 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 			_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 			vPos -= {0.f, fTimeDelta * 2.f, 0.f, 0.f};
 			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+			//m_pTransformCom->Go_Backward(fTimeDelta);
 
 		}
 		_long		MouseMove = {};

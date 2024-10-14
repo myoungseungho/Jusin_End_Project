@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 
 
+const _float CCharacter::fGroundHeight = 0.f; //0
 
 CCharacter::CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -330,14 +331,14 @@ void CCharacter::InputCommand()
 
 		 if (m_pGameInstance->Key_Pressing(DIK_O))
 		 {
-			 iAttackkey = ATTACK_LIGHT;
-
+			 iAttackkey = ATTACK_GRAB;
+		
 		 }
-		 if (m_pGameInstance->Key_Pressing(DIK_Y))
-		 {
-			 iAttackkey = ATTACK_LIGHT;
-
-		 }
+		// if (m_pGameInstance->Key_Pressing(DIK_Y))
+		// {
+		//	 iAttackkey = ATTACK_LIGHT;
+		//
+		// }
 
 	}
 
@@ -534,6 +535,12 @@ void CCharacter::Create_Effect(_int iEffectIndex)
 	default:
 		break;
 	}
+}
+
+_float CCharacter::Get_fHeight()
+{
+	return 	XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
 }
 
 _uint* CCharacter::Get_pAnimationIndex()
