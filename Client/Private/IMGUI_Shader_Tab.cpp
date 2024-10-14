@@ -51,6 +51,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         MoveTex_Node nodeDesc{};
         nodeDesc.MoveTex_node_id = m_MoveTex_node_id++;
         m_MoveTex_Node_ids.push_back(nodeDesc);
+      //  node_ids.push_back(nodeDesc.MoveTex_node_id - 1500);
     }
     ImGui::SameLine();
     if (ImGui::Button("Add Sprite") && isStart)
@@ -58,6 +59,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         Sprite_Node nodeDesc{};
         nodeDesc.Sprite_node_id = m_Sprite_node_id++;
         m_Sprite_Node_ids.push_back(nodeDesc);
+      //  node_ids.push_back(nodeDesc.Sprite_node_id - 3000);
     }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
@@ -389,16 +391,26 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                 return;
             }
         }
-        ///*list<MoveTex_Node> m_MoveTex_Node_ids*/
-        //for (auto& iter : m_MoveTex_Node_ids)
-        //{
-        //    if (ImNodes::IsNodeHovered(&iter.MoveTex_node_id))
-        //    {
-        //        iID = iter.MoveTex_node_id;
-        //        eNodeType = NODE_FUNCTION;
-        //        return;
-        //    }
-        //}
+        /*list<MoveTex_Node> m_MoveTex_Node_ids*/
+        for (auto& iter : m_MoveTex_Node_ids)
+        {
+            if (ImNodes::IsNodeHovered(&iter.MoveTex_node_id))
+            {
+                iID = iter.MoveTex_node_id;
+                eNodeType = NODE_FUNCTION;
+                return;
+            }
+        }
+
+        for (auto& iter : m_Sprite_Node_ids)
+        {
+            if (ImNodes::IsNodeHovered(&iter.Sprite_node_id))
+            {
+                iID = iter.Sprite_node_id;
+                eNodeType = NODE_FUNCTION;
+                return;
+            }
+        }
     }
     
     if (m_pGameInstance->Get_DIKeyState(DIK_DELETE) && eNodeType != NODE_END)
@@ -592,25 +604,39 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     if (target_node_id > 1500 && target_node_id < 3000)
                     {
                         (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
-                        m_MoveTex_Node_ids.remove_if([&](const MoveTex_Node& node) {
-                            return node.MoveTex_node_id == iID;
-                            });
+                        
                     }
                     else if (target_node_id > 3000)
                     {
                         (*it)->Remove_InputFunction(FUNCTION_SPRITE);
-                        m_Sprite_Node_ids.remove_if([&](const Sprite_Node& node) {
-                            return node.Sprite_node_id == iID;
-                            });
+                       
                     }
                 }
 
             }
-
+            if (target_node_id > 1500 && target_node_id < 3000)
+            {
+                m_MoveTex_Node_ids.remove_if([&](const MoveTex_Node& node) {
+                    return node.MoveTex_node_id == iID;
+                    });
+            }
+            else if (target_node_id > 3000)
+            {
+                m_Sprite_Node_ids.remove_if([&](const Sprite_Node& node) {
+                    return node.Sprite_node_id == iID;
+                    });
+            }
             links.erase(remove_if(links.begin(), links.end(),
                 [node_id](const pair<_int, _int>& link) {
                     return link.first == node_id + 1; //||
                 }), links.end());
+            //Node 부터 지움
+
+          /*  if(iID < 3000)
+                node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID - 1500), node_ids.end());
+            else
+                node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID - 3000), node_ids.end());*/
+
             //// 그 노드 ID가 디퓨즈에 영향을 줬었냐?
             //else if (target_second_value % 4 == 1)
             //{

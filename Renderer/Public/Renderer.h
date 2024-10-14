@@ -51,9 +51,10 @@ private:
 	class CShader* m_pShader = { nullptr };
 	class CShader* m_pGlowShader = { nullptr };
 	class CVIBuffer_Rect* m_pVIBuffer = { nullptr };
+	class CVIBuffer_Rect* m_pVIBuffer_Half = { nullptr };
 	ID3D11DepthStencilView* m_pShadowDSV = { nullptr };
 
-
+	_float4x4					m_DownWorldMatrix = {};
 	_float4x4					m_WorldMatrix = {};
 	_float4x4					m_ViewMatrix = {};
 	_float4x4					m_ProjMatrix = {};

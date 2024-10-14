@@ -62,7 +62,7 @@ struct PS_IN
 struct PS_OUT
 {
     float4 vDiffuse : SV_TARGET0;
-    float4 vNormal : SV_TARGET1;
+    float4 vAlpha : SV_TARGET1;
     float4 vDepth : SV_TARGET2;
 };
 
@@ -76,7 +76,7 @@ PS_OUT PS_MAIN(PS_IN In)
     //    discard;
     vMtrlDiffuse.a = vMtrlAlpha.r;
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vAlpha = vMtrlAlpha.r;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
