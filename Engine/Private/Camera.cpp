@@ -88,21 +88,18 @@ void CCamera::Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta
 
 void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
 {
-	list<CameraPoint> points = camera->m_listPoints;
-
-	// 리스트를 벡터로 변환하여 인덱스로 접근 가능하게 함
-	vector<CameraPoint> pointVector(points.begin(), points.end());
+	vector<CameraPoint> points = camera->m_vecPoints;
 
 	//만약 3개의 Point가 들었다면 Index가 CurrentPoint가 마지막이라면 Stop
-	if (m_currentPointIndex >= pointVector.size() - 1)
+	if (m_currentPointIndex >= points.size() - 1)
 	{
 		// 마지막 포인트에 도달했으면 Play 모드 종료
 		Prev_Stop();
 		return;
 	}
 
-	CameraPoint currentPoint = pointVector[m_currentPointIndex];
-	CameraPoint nextPoint = pointVector[m_currentPointIndex + 1];
+	CameraPoint currentPoint = points[m_currentPointIndex];
+	CameraPoint nextPoint = points[m_currentPointIndex + 1];
 
 	m_elapsedTime += fTimeDelta;
 
@@ -112,15 +109,15 @@ void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
 		m_currentPointIndex++;
 		m_elapsedTime = 0.0f;
 
-		if (m_currentPointIndex >= pointVector.size() - 1)
+		if (m_currentPointIndex >= points.size() - 1)
 		{
 			// 마지막 포인트에 도달했으면 Play 모드 종료
 			Prev_Stop();
 			return;
 		}
 
-		currentPoint = pointVector[m_currentPointIndex];
-		nextPoint = pointVector[m_currentPointIndex + 1];
+		currentPoint = points[m_currentPointIndex];
+		nextPoint = points[m_currentPointIndex + 1];
 	}
 
 	// 보간 비율 계산
@@ -262,32 +259,28 @@ void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4
 	cameraPoint.duration = duration;
 	cameraPoint.interpolationType = type;
 
-	m_listPoints.push_back(cameraPoint);
+	m_vecPoints.push_back(cameraPoint);
 }
 
 void CCamera::Remove_Point(_int currentIndex)
 {
-	if (currentIndex < 0 || currentIndex >= static_cast<int>(m_listPoints.size())) {
+	if (currentIndex < 0 || currentIndex >= static_cast<int>(m_vecPoints.size())) {
 		return; // 유효하지 않은 인덱스일 경우 아무 작업도 하지 않음
 	}
 
-	auto it = m_listPoints.begin();
+	auto it = m_vecPoints.begin();
 	advance(it, currentIndex);
-	m_listPoints.erase(it);
+	m_vecPoints.erase(it);
 }
 
 //list의 index 순으로 찾아가서 나온 Position과 Rotation으로 카메라의 트랜스폼을 셋팅하면 되겠다
 void CCamera::Move_Point(_int index)
 {
-	if (index < 0 || index >= m_listPoints.size()) {
+	if (index < 0 || index >= m_vecPoints.size()) {
 		return;
 	}
 
-	auto it = m_listPoints.begin();
-	std::advance(it, index);  // index 위치로 반복자 이동
-
-	const CameraPoint& targetPoint = *it;
-
+	const CameraPoint& targetPoint = m_vecPoints[index];  // 인덱스 접근
 }
 
 

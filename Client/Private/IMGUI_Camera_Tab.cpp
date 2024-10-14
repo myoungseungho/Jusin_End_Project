@@ -199,20 +199,11 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 }
 
 
-void CIMGUI_Camera_Tab::IMGUI_Show_Points()
-{
-	// 모델과 스킬이 모두 선택된 경우에만 포인트 리스트를 표시
-	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
-	{
-		// 게임 인스턴스에서 메인 카메라 객체 가져오기
-		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
-		if (!camera) {
-			ImGui::Text("Main camera not found.");
-			return;
-		}
+void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 
-		// 포인트 리스트 가져오기
-		const std::list<CCamera::CameraPoint>& points = m_pMainCamera->Get_ListPoint();
+	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0) {
+
+		vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
 
 		if (points.empty()) {
 			ImGui::Text("No camera points available.");
@@ -222,70 +213,58 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		ImGui::Separator();
 		ImGui::Text("Camera Points:");
 
-		int pointIndex = 1;
-		int currentIndex = 0; // 실제 삭제를 위한 인덱스 추적
+		for (size_t i = 0; i < points.size(); ++i) {
+			ImGui::PushID(static_cast<int>(i));  // 각 포인트에 고유 ID 부여
 
-		for (const auto& point : points) {
-			ImGui::PushID(currentIndex); // 각 포인트에 고유 ID 부여
-
-			// 선택된 포인트라면 텍스트 색상을 변경하여 시각적 표시
-			bool isSelected = (m_selectedPoints.find(currentIndex) != m_selectedPoints.end());
+			bool isSelected = (m_selectedPoints.find(i) != m_selectedPoints.end());
 			if (isSelected) {
-				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); // 노란색 텍스트
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
 			}
 
-			// 포인트 제목
-			ImGui::BulletText("Point %d:", pointIndex++);
+			ImGui::BulletText("Point %d:", static_cast<int>(i) + 1);
 
 			if (isSelected) {
-				ImGui::PopStyleColor(); // 텍스트 색상 복원
+				ImGui::PopStyleColor();  // 텍스트 색상 복원
 			}
 
-			// Delete 버튼과 Modify 버튼을 같은 줄에 배치
-			// 버튼 간의 간격을 조정하기 위해 ImGui::SameLine()을 적절히 사용
 			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(50, 0)); // 50 픽셀의 가로 간격 (필요에 따라 조정)
+			ImGui::Dummy(ImVec2(50, 0));
 			ImGui::SameLine();
 
 			// Delete 버튼
 			if (ImGui::Button("Delete")) {
-				IMGUI_Delete_Point(currentIndex);
+				points.erase(points.begin() + i);  // 벡터에서 삭제
 				ImGui::PopID();
-				// 포인트가 삭제되었으므로 루프를 종료하여 인덱스 문제 방지
-				break;
+				break;  // 삭제 후 루프 종료
 			}
 
-			// Modify 버튼
 			ImGui::SameLine();
 			if (ImGui::Button("Modify")) {
-				IMGUI_Modify_Point(currentIndex);
+				IMGUI_Modify_Point(static_cast<int>(i));
 			}
 
-			// 포인트 정보 표시 (선택 상태에 따라 텍스트 색상 변경)
 			if (isSelected) {
-				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); // 노란색 텍스트
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
 			}
 
+			const auto& point = points[i];
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
 			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
 
-			// 보간 타입 표시
 			ImGui::Text("  Interpolation: %s",
 				(point.interpolationType == CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE)
 				? "Linear"
-				: ((point.interpolationType == CCamera::InterpolationType::INTERPOLATION_SPLINE_MODE)
-					? "Spline"
-					: "Skip"));
+				: (point.interpolationType == CCamera::InterpolationType::INTERPOLATION_SPLINE_MODE)
+				? "Spline"
+				: "Skip");
 
 			if (isSelected) {
-				ImGui::PopStyleColor(); // 텍스트 색상 복원
+				ImGui::PopStyleColor();  // 텍스트 색상 복원
 			}
 
 			ImGui::Separator();
 			ImGui::PopID();
-
-			currentIndex++;
 		}
 	}
 }

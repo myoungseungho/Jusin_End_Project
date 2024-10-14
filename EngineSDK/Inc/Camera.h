@@ -58,7 +58,7 @@ public:
 	void Prev_Stop();
 	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4);
 	void Remove_Point(_int currentIndex);
-
+	void Move_Point(_int index);
 public:
 	const _char* GetTabName() const { return m_Name; };
 
@@ -72,7 +72,7 @@ public:
 
 	_char* m_Name;
 
-	list<CameraPoint> m_listPoints;
+	vector<CameraPoint> m_vecPoints;
 	_int m_currentPointIndex = { 0 };
 	_float m_elapsedTime = { 0.f };
 	_bool m_bPrevPlayMode = { false };

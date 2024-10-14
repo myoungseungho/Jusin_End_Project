@@ -51,8 +51,9 @@ public:
 	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
 	void Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr);
 	void Remove_Point(_int currentIndex);
-	const list<CameraPoint>& Get_ListPoint();
+	vector<CameraPoint>& Get_VectorPoint();
 	void Play();
+	void Move_Point(_int index);
 
 private:
 	void Free_Camera(_float fTimeDelta);

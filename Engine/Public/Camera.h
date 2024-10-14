@@ -72,7 +72,7 @@ public:
 
 	_char* m_Name;
 
-	list<CameraPoint> m_listPoints;
+	vector<CameraPoint> m_vecPoints;
 	_int m_currentPointIndex = { 0 };
 	_float m_elapsedTime = { 0.f };
 	_bool m_bPrevPlayMode = { false };
