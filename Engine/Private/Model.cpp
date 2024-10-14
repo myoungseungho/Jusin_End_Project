@@ -280,6 +280,15 @@ _float CModel::Get_CurrentAnimationTickPerSecond()
 	 return m_Animations[m_iCurrentAnimationIndex]->m_fTickPerSecond; 
 }
 
+void CModel::CurrentAnimationPositionJump(_float fPosition)
+{
+
+	_float fCurPosition = Get_CurrentAnimationPosition();
+	_float fDelay = (fPosition - fCurPosition) / Get_CurrentAnimationTickPerSecond();
+	Play_Animation(fDelay);
+
+}
+
 void CModel::Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime)
 {
 	m_fMaxAnimationUpdateTime = fMaxUpdateTime;

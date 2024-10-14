@@ -357,11 +357,12 @@ void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameo
    else if (splitText[0] == "PositionChange")
     {
         CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
-        _float fCurPosition = pModel->Get_CurrentAnimationPosition();
-        _float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
 
+       //_float fCurPosition = pModel->Get_CurrentAnimationPosition();
+       //_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+       //pModel->Play_Animation(fDelay);
 
-        pModel->Play_Animation(fDelay);
+        pModel->CurrentAnimationPositionJump(fValue[0]);
 
     }
 

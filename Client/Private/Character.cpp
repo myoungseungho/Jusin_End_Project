@@ -522,10 +522,13 @@ _uint* CCharacter::Get_pAnimationIndex()
 	return &(m_pModelCom->m_iCurrentAnimationIndex);
 }
 
-void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime)
+void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition)
 {
 	m_iNextAnimation.first = iAnimationIndex;
 	m_iNextAnimation.second = fLifeTime;
+
+
+	m_fNextAnimationCurrentPosition = fAnimationPosition;
 
 }
 

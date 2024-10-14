@@ -38,6 +38,9 @@ public:
 	class CAnimation* Get_pCurrentAnimation() { return m_Animations[m_iCurrentAnimationIndex]; };
 	_float Get_CurrentAnimationTickPerSecond();
 
+
+	void CurrentAnimationPositionJump(_float fPosition);
+
 	void Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime);
 
 public:

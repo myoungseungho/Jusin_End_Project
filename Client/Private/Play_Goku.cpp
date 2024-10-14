@@ -468,7 +468,11 @@ void CPlay_Goku::AttackNextMoveCheck()
 
 		m_iNextAnimation.first = ANIME_IDLE;
 		m_iNextAnimation.second = 1000.f;
+
+
+
 	}
+
 }
 
 void CPlay_Goku::AnimeEndNextMoveCheck()

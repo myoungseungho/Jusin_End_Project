@@ -91,11 +91,30 @@ void CGoku_MeleeAttack::Attack_Medium()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_MEDIUM);
 	}
-
+	
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2, 0.5f);
 	}
+
+
+
+
+	//다음애니메이션으로 설정하는 방식이지만 약공격이 빨라서 이상함
+	//if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
+	//{
+	//	m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_MEDIUM);
+	//}
+	//else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2
+	//	|| *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM)
+	//{
+	//	m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_MEDIUM,0.5f);
+	//}
+	//
+	//else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1)
+	//{
+	//	m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2, 0.5f);
+	//}
 
 	
 	
@@ -144,8 +163,8 @@ void CGoku_MeleeAttack::Attack_Special()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_SPECIAL);
 	} 
-	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2
-		|| *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM)
+	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||
+			*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL, 0.5f);
 	}
@@ -220,13 +239,27 @@ void CGoku_MeleeAttack::Attack_236()
 
 void CGoku_MeleeAttack::Attack_214()
 {
-	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex ==  CPlay_Goku::ANIME_JUMP_UP  || *m_pPlayerAnimationIndex ==  CPlay_Goku::ANIME_JUMP_DOWN ||
-		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||
-		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3
-		|| *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY )
+	//if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex ==  CPlay_Goku::ANIME_JUMP_UP  || *m_pPlayerAnimationIndex ==  CPlay_Goku::ANIME_JUMP_DOWN ||
+	//	*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||
+	//	*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3
+	//	|| *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY )
+	//{
+	//	m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_214);
+	//}
+
+
+	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_214);
 	}
+	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
+		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3||
+		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR	)
+	{
+		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_214, 1.f);
+	}
+
+
 }
 
 void CGoku_MeleeAttack::Attack_236Special()
@@ -363,11 +396,24 @@ void CGoku_MeleeAttack::Attack_Crouch_Light()
 void CGoku_MeleeAttack::Attack_Crouch_Medium()
 {
 
-	if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_CROUCHING ||* m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT ||
-		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 )
+	
+	if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_CROUCHING || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT ||
+		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM);
 	}
+	
+
+	//이전에 나올것이 약공격이다보니 nextanimation을 사용하면 타이밍을 놓침
+	//if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_CROUCHING)
+	//{
+	//	m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM);
+	//} 
+	//else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT ||
+	//	*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 )
+	//{
+	//	m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM,0.4f);
+	//}
 
 	//서있는채로 중공격->앉은채로 중공격은 막아둠.   원래 횟수를 카운트 해서 1번씩만 써야하는데 긴으 축
 

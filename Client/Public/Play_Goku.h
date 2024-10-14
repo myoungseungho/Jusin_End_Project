@@ -27,9 +27,9 @@ public:
 		ANIME_ATTACK_MEDIUM = 46, ANIME_ATTACK_HEAVY = 45,
 		ANIME_ATTACK_SPECIAL =48,
 
-		ANIME_ATTACK_AIR1 = 52, ANIME_ATTACK_AIR2 = 53, ANIME_ATTACK_AIR3 = 54,
-		ANIME_ATTACK_UPPER_AIR = 55, ANIME_ATTACK_SPECIAL_AIR = 57,
-		ANIME_ATTACK_CROUCH_LIGHT = 49, ANIME_ATTACK_CROUCH_MEDUIM = 50, ANIME_ATTACK_CROUCH_HEAVY = 51,
+		ANIME_ATTACK_AIR1 = 52, ANIME_ATTACK_AIR2 = 53, ANIME_ATTACK_AIR3 = 54, ANIME_ATTACK_SPECIAL_AIR = 57,
+
+		ANIME_ATTACK_CROUCH_LIGHT = 49, ANIME_ATTACK_CROUCH_MEDUIM = 50, ANIME_ATTACK_CROUCH_HEAVY = 51, ANIME_ATTACK_UPPER_AIR = 55,
 
 
 		ANIME_ATTACK_236 = 66, ANIME_ATTACK_236_AIR = 67,
@@ -71,12 +71,14 @@ public:
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
 
+	
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
 
 	CGoku_MeleeAttack m_tAttackMap;
+
 
 
 private:

@@ -51,14 +51,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	virtual void AttackNextMoveCheck() {};
-	virtual void AnimeEndNextMoveCheck() {};
-
-	virtual void ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex);
-	virtual void ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
+	
+	//커맨드 입력
 	virtual void InputCommand();
 	virtual void InputedCommandUpdate(_float fTimeDelta) ;
-
 	virtual void UpdateInputBuffer(CInput newInput) 
 	{
 		if (inputBuffer.size() >= BUFFER_SIZE) {
@@ -66,29 +62,40 @@ public:
 		}
 		inputBuffer.push_back(newInput);
 	}
-
-	virtual _bool Character_Play_Animation(_float fTimeDelta);
-	virtual void Set_Animation(_uint iAnimationIndex) {};
 	virtual bool CheckCommandSkippingExtras(const vector<CInput>& pattern, int timeWindow);
-
 	bool CheckCommandWithStartCondition(const vector<CInput>& pattern, int timeWindow);
-
-	_int Get_iDirection() { return m_iLookDirection; };
 	_uint CheckAllCommands();
 
-	virtual void ShowInputBuffer();
 
-	virtual void DebugPositionReset();
-	void FlipDirection(_int iDirection = 0);
-
-	void Create_Effect(_int iEffectIndex);
-
-	_uint* Get_pAnimationIndex();
-	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
-
-
+	//애니메이션
+	virtual _bool Character_Play_Animation(_float fTimeDelta);
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
+	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition =0);
+	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
+	virtual void AttackNextMoveCheck() {};
+	virtual void AnimeEndNextMoveCheck() {};
+	virtual void Set_Animation(_uint iAnimationIndex) {};
+
+	//키프레임 이벤트
+	virtual void ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex);
+	virtual void ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
+
+	//키프레임 이벤트 파생
+	void Create_Effect(_int iEffectIndex);
+
+
+	//디버그용 코드 
+	virtual void ShowInputBuffer();
+	virtual void DebugPositionReset();
+
+	_int Get_iDirection() { return m_iLookDirection; };
+	void FlipDirection(_int iDirection = 0);
+	_uint* Get_pAnimationIndex();
+
+
+
+
 
 	virtual void Gravity(_float fTimeDelta);
 
@@ -123,6 +130,7 @@ protected:
 	
 	//index,시간
 	pair<_uint, _float>		m_iNextAnimation{0,0 };
+	_float					m_fNextAnimationCurrentPosition = {};
 
 	_ushort m_iFallAnimationIndex = {7};
 	_ushort m_iIdleAnimationIndex = { 0 };

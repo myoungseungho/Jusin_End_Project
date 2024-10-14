@@ -5,6 +5,7 @@
 //#include "AnimationEvent_Defines.h"
 //#include "FrameEvent_Manager.h"
 
+#include <bitset>
 
 BEGIN(Engine)
 class CShader;
@@ -42,6 +43,7 @@ public:
 
 	class CPlay_Goku* m_pPlayer = { nullptr };
 	_uint* m_pPlayerAnimationIndex = { nullptr };
+
 
 };
 
