@@ -30,6 +30,7 @@ public:
 	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 
 	EFFECT_KEYFRAME Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
+	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 
 	HRESULT Delete_Layer(const wstring& strEffectLayerTag);
 

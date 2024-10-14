@@ -102,6 +102,15 @@ EFFECT_KEYFRAME CEffect_Manager::Get_KeyFrame(wstring& layerName, wstring& effec
 	return pEffect->Get_KeyFrame(frameNumber);
 }
 
+EFFECT_KEYFRAME CEffect_Manager::Get_Near_Front_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	CEffect* pEffect = pLayer->Find_Effect(effectName);
+
+	return pEffect->Get_Near_Front_KeyFrame(frameNumber);
+}
+
 HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
@@ -111,34 +120,46 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 		CEffect_Layer* pLayer = CEffect_Layer::Create();
 
 		CEffect::EFFECT_DESC EffectDesc {};
-		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
-		EffectDesc.EffectName = m_TestEffect[iCurTestEffectIndex]->m_EffectName;
-		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
-		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
-		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
-		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
-		EffectDesc.vRotation= m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
-		EffectDesc.iUnique_Index = m_TestEffect[iCurTestEffectIndex]->m_iUnique_Index;
-		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
-		EffectDesc.iRenderIndex = 2;
-		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
-
-		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
+		for (auto& iter : m_TestEffect)
+		{
+			if (iter->m_iUnique_Index == iCurTestEffectIndex)
+			{
+				EffectDesc.ModelName =iter->m_ModelName;
+				EffectDesc.EffectName =iter->m_EffectName;
+				EffectDesc.MaskTextureName =iter->m_MaskTextureName;
+				EffectDesc.DiffuseTextureName =iter->m_DiffuseTextureName;
+				EffectDesc.vPosition =iter->Get_Effect_Position();
+				EffectDesc.vScaled =iter->Get_Effect_Scaled();
+				EffectDesc.vRotation =iter->Get_Effect_Rotation();
+				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
+				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+				EffectDesc.iRenderIndex = 2;
+				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
+				m_FinalEffects.emplace(strEffectLayerTag, pLayer);
+			}
+		}
 	}
 	else
 	{
 		CEffect::EFFECT_DESC EffectDesc{};
-		EffectDesc.ModelName = m_TestEffect[iCurTestEffectIndex]->m_ModelName;
-		EffectDesc.EffectName = m_TestEffect[iCurTestEffectIndex]->m_EffectName;
-		EffectDesc.MaskTextureName = m_TestEffect[iCurTestEffectIndex]->m_MaskTextureName;
-		EffectDesc.DiffuseTextureName = m_TestEffect[iCurTestEffectIndex]->m_DiffuseTextureName;
-		EffectDesc.vPosition = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Position();
-		EffectDesc.vScaled = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Scaled();
-		EffectDesc.vRotation = m_TestEffect[iCurTestEffectIndex]->Get_Effect_Rotation();
-		EffectDesc.iUnique_Index = m_TestEffect[iCurTestEffectIndex]->m_iUnique_Index;
-		EffectDesc.SRV_Ptr = static_cast<CTexture*>(m_TestEffect[iCurTestEffectIndex]->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
-		EffectDesc.iRenderIndex = 2;
-		pLayer->Add_Effect(static_cast<CEffect*>(m_TestEffect[iCurTestEffectIndex]->Clone(&EffectDesc)));
+		for (auto& iter : m_TestEffect)
+		{
+			if (iter->m_iUnique_Index == iCurTestEffectIndex)
+			{
+				EffectDesc.ModelName =iter->m_ModelName;
+				EffectDesc.EffectName =iter->m_EffectName;
+				EffectDesc.MaskTextureName =iter->m_MaskTextureName;
+				EffectDesc.DiffuseTextureName =iter->m_DiffuseTextureName;
+				EffectDesc.vPosition =iter->Get_Effect_Position();
+				EffectDesc.vScaled =iter->Get_Effect_Scaled();
+				EffectDesc.vRotation =iter->Get_Effect_Rotation();
+				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
+				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
+				EffectDesc.iRenderIndex = 2;
+				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
+			}
+		}
+	
 	}
 
 	if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size()) 

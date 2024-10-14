@@ -146,9 +146,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	//PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_htn_planeBig"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/htn_planeBig.bin", PreTransformMatrix))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_htn_planeBig"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/htn_planeBig.bin", PreTransformMatrix))))
+	//	return E_FAIL;
  
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_bun201_eff00"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/bun201_eff00.bin", PreTransformMatrix))))

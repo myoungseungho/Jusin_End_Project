@@ -77,8 +77,8 @@ PS_OUT PS_MAIN(PS_IN In)
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-    //if (vMtrlDiffuse.a < 0.99f)
-    //    discard;
+    if (vMtrlDiffuse.a < 0.99f)
+        discard;
     vMtrlDiffuse.a = vMtrlAlpha.r;
     Out.vDiffuse = vMtrlDiffuse;
     Out.vAlpha = vMtrlAlpha.r;
@@ -103,8 +103,8 @@ technique11 DefaultTechnique
     pass Default
     {
         SetRasterizerState(RS_Cull_None);
-        SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 		//SetDepthStencilState();
 		//SetBlendState();
 

@@ -645,10 +645,12 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
         }
         else
         {
-            CurPosition = { 0.f, 0.f, 0.f };
-            CurScale = { 1.f, 1.f, 1.f };
-            CurRotation = { 0.f, 0.f, 0.f };
-            IsNotPlaying = false;
+            newKeyFrame = m_pEffect_Manager->Get_Near_Front_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
+
+            CurPosition = newKeyFrame.vPosition;
+            CurScale = newKeyFrame.vScale;
+            CurRotation = newKeyFrame.vRotation;
+            IsNotPlaying = newKeyFrame.bIsNotPlaying;
         }
 
 

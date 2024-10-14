@@ -51,6 +51,19 @@ EFFECT_KEYFRAME CEffect_Animation::Get_KeyFrame(_uint KeyFrameNumber)
 	}
 }
 
+EFFECT_KEYFRAME CEffect_Animation::Get_Near_Front_KeyFrame(_uint KeyFrameNumber)
+{
+	if (m_EffectKeyFrames.empty())
+		return EFFECT_KEYFRAME();
+
+	auto it = m_EffectKeyFrames.upper_bound(KeyFrameNumber);
+	if (it == m_EffectKeyFrames.begin())
+		return EFFECT_KEYFRAME();
+
+	--it;
+	return it->second;
+}
+
 EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos)
 {
 	// 키프레임이 없으면 빈 키프레임 반환
