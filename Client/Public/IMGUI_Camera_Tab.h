@@ -43,7 +43,6 @@ private:
 	void IMGUI_Modify_Point(_int index); //Modify 버튼
 	void IMGUI_Modify_Point_UI(_int index);
 	void IMGUI_Point_Modify_Save();
-	void IMGUI_Debug_Point();
 
 	MODELID m_iSelected_Model = MODELID_NOT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장

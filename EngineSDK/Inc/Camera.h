@@ -60,6 +60,7 @@ public:
 	void Remove_Point(_int currentIndex);
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);
+
 public:
 	const _char* GetTabName() const { return m_Name; };
 

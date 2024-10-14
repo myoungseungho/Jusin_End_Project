@@ -373,11 +373,6 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 	m_pMainCamera->Modify_Transform(m_selectedPoint);
 }
 
-void CIMGUI_Camera_Tab::IMGUI_Debug_Point()
-{
-	m_pMainCamera->Debug_Point();
-}
-
 void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 {
 	// 모델과 스킬이 모두 선택된 경우에만 Add_Point 버튼을 표시

@@ -373,11 +373,6 @@ void CCamera::Modify_Transform(_int index)
 	targetPoint.rotation = rotation;
 }
 
-void CCamera::Debug_Point()
-{
-}
-
-
 void CCamera::Free()
 {
 	__super::Free();
