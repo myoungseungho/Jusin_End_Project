@@ -47,7 +47,7 @@ private:
 	MODELID m_iSelected_Model = MODELID_NOT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
 	_int m_selectedPoint = -1;
-	_bool m_isEditing = {false};     // 수정 모드 여부
+	_bool m_isEditing = { false };     // 수정 모드 여부
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
 	unordered_map<pair<MODELID, SKILLID>, _uint, pair_hash> m_CameraIndexMap;
 
@@ -55,6 +55,7 @@ private:
 	struct TempPointData {
 		_float duration;
 		CCamera::InterpolationType interpType;
+		_float damping = { 1.f };
 	};
 
 	TempPointData m_tempPointData;

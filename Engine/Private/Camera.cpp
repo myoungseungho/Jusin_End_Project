@@ -129,9 +129,8 @@ void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
 	case InterpolationType::INTERPOLATION_LINEAR_MODE:
 		// t는 그대로 사용
 		break;
-	case InterpolationType::INTERPOLATION_SPLINE_MODE:
-		// Spline 보간 (예시: 간단한 easing)
-		t = t * t * (3.0f - 2.0f * t); // Smoothstep
+	case InterpolationType::INTERPOLATION_DAMPING_MODE:
+		t = AdjustT_Damping(t, currentPoint.damping);
 		break;
 	case InterpolationType::INTERPOLATION_SKIP_MODE:
 		// Skip 보간: 즉시 다음 포인트로 이동
@@ -210,7 +209,7 @@ void CCamera::Prev_Stop()
 }
 
 
-void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4)
+void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping)
 {
 	CameraPoint cameraPoint{};
 
@@ -258,7 +257,7 @@ void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4
 
 	cameraPoint.duration = duration;
 	cameraPoint.interpolationType = type;
-
+	cameraPoint.damping = damping;
 	m_vecPoints.push_back(cameraPoint);
 }
 
@@ -371,6 +370,28 @@ void CCamera::Modify_Transform(_int index)
 	_float4 rotation = {};
 	XMStoreFloat4(&rotation, localQuaternion);
 	targetPoint.rotation = rotation;
+}
+
+_float CCamera::AdjustT_Damping(_float t, _float damping)
+{
+	// Damping 계수에 따라 t 값을 조절
+	 // damping > 1.0f: 더 느리게 시작하고 빠르게 끝남 (ease-in)
+	 // damping < 1.0f: 더 빠르게 시작하고 느리게 끝남 (ease-out)
+	 // damping = 1.0f: 기본 Smoothstep 함수와 동일
+	if (damping == 1.0f)
+	{
+		return t * t * (3.0f - 2.0f * t); // 기본 Smoothstep
+	}
+	else if (damping > 1.0f)
+	{
+		// Ease-in 효과 강화
+		return pow(t, damping) * (3.0f - 2.0f * t);
+	}
+	else // damping < 1.0f
+	{
+		// Ease-out 효과 강화
+		return t * t * (3.0f - 2.0f * t) + (1.0f - t) * t * (1.0f - damping);
+	}
 }
 
 void CCamera::Free()

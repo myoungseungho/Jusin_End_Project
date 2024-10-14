@@ -21,7 +21,7 @@ public:
 public:
 	enum InterpolationType {
 		INTERPOLATION_LINEAR_MODE,
-		INTERPOLATION_SPLINE_MODE,
+		INTERPOLATION_DAMPING_MODE,
 		INTERPOLATION_SKIP_MODE,
 		INTERPOLATION_END
 	};
@@ -36,8 +36,10 @@ public:
 
 		_float duration; // 다음 포인트까지 이동 시간
 		InterpolationType interpolationType; //보간 타입
-		
+
 		const _float4x4* pWorldFloat4x4;
+		// Damping Mode에서 사용되는 계수
+		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
 	};
 
 protected:
@@ -56,10 +58,11 @@ public:
 	void Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta);
 	void Prev_Play(CCamera* camera, _float fTimeDelta);
 	void Prev_Stop();
-	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4);
+	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping);
 	void Remove_Point(_int currentIndex);
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);
+	_float AdjustT_Damping(_float t, _float damping);
 
 public:
 	const _char* GetTabName() const { return m_Name; };
