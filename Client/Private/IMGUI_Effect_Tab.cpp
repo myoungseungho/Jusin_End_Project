@@ -506,6 +506,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         {
             float layerDuration = pLayer->m_fDuration;
             float tickPerSecond = pLayer->m_fTickPerSecond;
+            float AnimCurPos = pLayer->m_fCurrentAnimPosition;
 
             ImGui::Text("Layer Duration:");
             ImGui::SameLine();
@@ -541,15 +542,27 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
             float currentXPosition = pLayer ? (pLayer->m_fCurrentAnimPosition / pLayer->m_fDuration) * (totalKeyframes * (buttonSize + 5.0f)) : 0.0f;
 
-            // 진행 바 (세로선)
+            // 진행 바 (짧은 세로선)
             ImDrawList* drawList = ImGui::GetWindowDrawList();
             ImVec2 start = ImGui::GetCursorScreenPos();
-            drawList->AddLine(
-                ImVec2(start.x + effectNameWidth + currentXPosition, start.y),
-                ImVec2(start.x + effectNameWidth + currentXPosition, start.y + 300),
-                IM_COL32(255, 0, 0, 255), // 빨간색 세로선
-                2.0f // 선 두께
-            );
+            ImVec2 lineStart(start.x + effectNameWidth + currentXPosition, start.y);
+            ImVec2 lineEnd(lineStart.x, lineStart.y + 300); // 세로선 길이 50으로 설정
+
+            drawList->AddLine(lineStart, lineEnd, IM_COL32(255, 0, 0, 255), 2.0f); // 빨간색 세로선
+
+            // 드래그 가능한 영역
+            ImGui::SetCursorScreenPos(lineStart);
+            ImGui::InvisibleButton("##DragRedLine", ImVec2(10.0f, 30.0f));
+
+            if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+            {
+                float newXPos = ImGui::GetMousePos().x - start.x - effectNameWidth;
+                float normalizedPosition = newXPos / (totalKeyframes * (buttonSize + 5.0f));
+                pLayer->m_fCurrentAnimPosition = pLayer->m_fDuration * normalizedPosition;
+
+                if (pLayer->m_fCurrentAnimPosition < 0.0f) pLayer->m_fCurrentAnimPosition = 0.0f;
+                if (pLayer->m_fCurrentAnimPosition > pLayer->m_fDuration) pLayer->m_fCurrentAnimPosition = pLayer->m_fDuration;
+            }
 
             for (int item = 0; item < effectNames.size(); item++)
             {
@@ -594,6 +607,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         }
     }
 }
+
+
+
 
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
