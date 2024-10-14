@@ -200,9 +200,7 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 
 
 void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
-
 	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0) {
-
 		vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
 
 		if (points.empty()) {
@@ -216,7 +214,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 		for (size_t i = 0; i < points.size(); ++i) {
 			ImGui::PushID(static_cast<int>(i));  // 각 포인트에 고유 ID 부여
 
-			bool isSelected = (m_selectedPoints.find(i) != m_selectedPoints.end());
+			bool isSelected = (m_selectedPoint == static_cast<int>(i));
 			if (isSelected) {
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
 			}
@@ -228,21 +226,23 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 			}
 
 			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(50, 0));
+			ImGui::Dummy(ImVec2(50, 0)); // 50 픽셀의 가로 간격 (필요에 따라 조정)
 			ImGui::SameLine();
 
 			// Delete 버튼
 			if (ImGui::Button("Delete")) {
-				points.erase(points.begin() + i);  // 벡터에서 삭제
+				IMGUI_Delete_Point(static_cast<int>(i));
 				ImGui::PopID();
 				break;  // 삭제 후 루프 종료
 			}
 
+			// Modify 버튼
 			ImGui::SameLine();
 			if (ImGui::Button("Modify")) {
 				IMGUI_Modify_Point(static_cast<int>(i));
 			}
 
+			// 포인트 정보 표시 (선택 상태에 따라 텍스트 색상 변경)
 			if (isSelected) {
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
 			}
@@ -274,23 +274,27 @@ void CIMGUI_Camera_Tab::IMGUI_Delete_Point(_int index)
 	// 포인트 삭제
 	m_pMainCamera->Remove_Point(index);
 
-	// 선택된 목록에서 제거
-	m_selectedPoints.erase(index);
+	// 선택된 포인트가 삭제된 경우 선택 해제
+	if (m_selectedPoint == index) {
+		m_selectedPoint = -1;
+	}
+	else if (m_selectedPoint > index) {
+		// 삭제된 포인트 이전의 포인트가 삭제되면, 선택된 포인트의 인덱스가 감소합니다.
+		m_selectedPoint -= 1;
+	}
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 {
-	// 선택 상태 토글
-	if (m_selectedPoints.find(index) != m_selectedPoints.end()) {
+	if (m_selectedPoint == index) {
 		// 이미 선택된 상태라면 선택 해제
-		m_selectedPoints.erase(index);
+		m_selectedPoint = -1;
 	}
 	else {
 		// 선택되지 않은 상태라면 선택 추가
-		m_selectedPoints.insert(index);
+		m_selectedPoint = index;
 
-		//해당 Modify_Point를 누르면
-		//메인카메라에서 선택된 가상카메라의 Point중 index에 있는 위치와 로테이션으로 뷰투영을 업데이트함
+		// 선택된 포인트의 위치와 로테이션으로 뷰투영 업데이트
 		m_pMainCamera->Move_Point(index);
 	}
 }
