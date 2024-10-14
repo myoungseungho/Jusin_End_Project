@@ -212,7 +212,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		}
 
 		// 포인트 리스트 가져오기
-		const list<CCamera::CameraPoint>& points = m_pMainCamera->Get_ListPoint();
+		const std::list<CCamera::CameraPoint>& points = m_pMainCamera->Get_ListPoint();
 
 		if (points.empty()) {
 			ImGui::Text("No camera points available.");
@@ -228,16 +228,46 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		for (const auto& point : points) {
 			ImGui::PushID(currentIndex); // 각 포인트에 고유 ID 부여
 
+			// 선택된 포인트라면 텍스트 색상을 변경하여 시각적 표시
+			bool isSelected = (m_selectedPoints.find(currentIndex) != m_selectedPoints.end());
+			if (isSelected) {
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); // 노란색 텍스트
+			}
 
+			// 포인트 제목과 버튼을 동일한 줄에 배치
 			ImGui::BulletText("Point %d:", pointIndex++);
-			ImGui::SameLine(ImGui::GetWindowContentRegionMax().x - 100); // 삭제 버튼 위치 조정
+
+			// Delete 버튼과 Modify 버튼 사이에 일정 간격 삽입
+			ImGui::SameLine();
+			ImGui::Dummy(ImVec2(50, 0)); // 50 픽셀의 가로 간격 (필요에 따라 조정)
+			ImGui::SameLine();
+
+			// Delete 버튼
 			if (ImGui::Button("Delete")) {
 				m_pMainCamera->Remove_Point(currentIndex);
+				m_selectedPoints.erase(currentIndex); // 삭제 시 선택 목록에서도 제거
 				ImGui::PopID();
 				// 포인트가 삭제되었으므로 루프를 종료하여 인덱스 문제 방지
 				break;
 			}
 
+			// Modify 버튼
+			ImGui::SameLine();
+			if (ImGui::Button("Modify")) {
+				if (isSelected) {
+					m_selectedPoints.erase(currentIndex); // 이미 선택된 상태라면 선택 해제
+				}
+				else {
+					m_selectedPoints.insert(currentIndex); // 선택되지 않은 상태라면 선택
+				}
+			}
+
+			// 선택된 포인트라면 스타일 변경을 원래대로 복원
+			if (isSelected) {
+				ImGui::PopStyleColor();
+			}
+
+			// 포인트 정보 표시
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
 			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
