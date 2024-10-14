@@ -72,7 +72,7 @@ protected:
 	CModel*	 m_pModelCom = { nullptr };
 	CTexture* m_pDiffuseTextureCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };
-	class CEffect_Animation* m_pAnimation= { nullptr };
+	class CEffect_Animation* m_pAnimation = { nullptr };
 
 	_float			m_fCurrentAnimPos = {};
 

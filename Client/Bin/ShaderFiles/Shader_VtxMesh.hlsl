@@ -13,6 +13,9 @@ float g_MaskStar_Value_2;
 float g_Time;
 vector			g_vCamPosition;
 
+float2 g_fSpriteSize;
+float2 g_fSpriteCurPos;
+
 
 struct VS_IN
 {
@@ -78,7 +81,7 @@ struct PS_OUT
 	//float4	vPickDepth : SV_TARGET3;
 };
 
-PS_OUT PS_MAIN(PS_IN In)
+PS_OUT PS_MAIN_SKY(PS_IN In)
 {
 	PS_OUT			Out;	 
 	
@@ -103,6 +106,29 @@ PS_OUT PS_MAIN(PS_IN In)
 	//Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
 	return Out;
+}
+
+PS_OUT PS_MAIN_FSTAR(PS_IN In)
+{
+    PS_OUT Out;
+
+    float2 texFramePos = g_fSpriteCurPos * g_fSpriteSize;
+
+    In.vTexcoord = In.vTexcoord * g_fSpriteSize + texFramePos;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vMtrlDiffuse *= 3.3f;
+	
+    float luminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
+    vMtrlDiffuse.a = saturate(luminance * 2.0f);
+
+    //vMtrlDiffuse.a = (vMtrlDiffuse.x + vMtrlDiffuse.y + vMtrlDiffuse.z) / 3;
+	
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
 }
 
 PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
@@ -134,7 +160,7 @@ PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 
 technique11		DefaultTechnique
 {	
-	pass Default
+	pass Sky
 	{		
 		SetRasterizerState(RS_Default);
 		SetDepthStencilState(DSS_None, 0);
@@ -146,8 +172,23 @@ technique11		DefaultTechnique
 		GeometryShader = NULL;
 		HullShader = NULL;
 		DomainShader = NULL;
-		PixelShader = compile ps_5_0 PS_MAIN();
-	}
+        PixelShader = compile ps_5_0 PS_MAIN_SKY();
+    }
+
+    pass FallingStar
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_FSTAR();
+    }
 
 	pass NormalMapping
 	{

@@ -28,9 +28,6 @@
     <Filter Include="02.GameObjects\02. Effect">
       <UniqueIdentifier>{a118aae3-8ba7-416e-a709-e00fa2e17ce2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\SpaceSky">
-      <UniqueIdentifier>{85b7a815-c9d2-40c0-aec3-0498644d9390}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\02. Effect\00.Manager">
       <UniqueIdentifier>{c0a93e36-b2ad-4185-8cd3-73a927e1855a}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,18 @@
     </Filter>
     <Filter Include="02.GameObjects\02. Effect\03.MoveTex">
       <UniqueIdentifier>{2510c4b6-8824-429c-b36f-9d69c4fcd82a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map">
+      <UniqueIdentifier>{31d428c7-e810-4b31-bda4-15439cfab1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space">
+      <UniqueIdentifier>{fa8a6f2a-3f37-4da7-95f6-1ea2e9356dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceSky">
+      <UniqueIdentifier>{85b7a815-c9d2-40c0-aec3-0498644d9390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\FallingStar">
+      <UniqueIdentifier>{5c199490-2da7-4e60-a293-1ed58ece0a37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -200,10 +209,13 @@
       <Filter>02.GameObjects\02. Effect\02.Single</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SpaceSky.h">
-      <Filter>02.GameObjects\SpaceSky</Filter>
+      <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Effect_Animation.h">
       <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FallingStar.h">
+      <Filter>02.GameObjects\Map\Space\FallingStar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -298,10 +310,13 @@
       <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SpaceSky.cpp">
-      <Filter>02.GameObjects\SpaceSky</Filter>
+      <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Effect_Animation.cpp">
       <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FallingStar.cpp">
+      <Filter>02.GameObjects\Map\Space\FallingStar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
