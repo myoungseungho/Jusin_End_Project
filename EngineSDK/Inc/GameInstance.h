@@ -50,6 +50,7 @@ public: /* For.Object_Manager */
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
 	class list<class CGameObject*> Get_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex = 0);
 
 public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);
@@ -64,6 +65,14 @@ public: /* For.PipeLine */
 	_float4 Get_CamPosition_Float4() const;
 	void Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
 
+
+
+
+public: 
+	_bool Key_Down(_int _iKey);
+	_bool Key_Pressing(_uint _iKey);
+	_bool Key_Up(_uint _iKey);
+
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
 	class CInput_Device*				m_pInput_Device = { nullptr };
@@ -72,6 +81,9 @@ private:
 	class CObject_Manager*				m_pObject_Manager = { nullptr };
 	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
 	class CPipeLine* m_pPipeLine = { nullptr };
+
+	//class CKey_Manager* m_pKey_Manager = { nullptr };
+
 
 public:
 	void Release_Engine();

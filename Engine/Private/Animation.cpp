@@ -40,21 +40,29 @@ HRESULT CAnimation::Initialize(AnimationData& animationData, const vector<class 
 	return S_OK;
 }
 
-void CAnimation::Update_TransformationMatrix(_float* pCurrentAnimPosition, _float fTimeDelta, const vector<class CBone*>& Bones, _bool isLoop, vector<_uint>& KeyFrameIndices)
+_bool CAnimation::Update_TransformationMatrix(_float* pCurrentAnimPosition, _float fTimeDelta, const vector<class CBone*>& Bones, _bool isLoop, vector<_uint>& KeyFrameIndices)
 {
+	_bool bAnimationEnd = false;
+
 	*pCurrentAnimPosition += m_fTickPerSecond * fTimeDelta;
 
 	if (*pCurrentAnimPosition >= m_fDuration)
 	{
+		bAnimationEnd = true;
+
 		*pCurrentAnimPosition = m_fDuration;
 		if (isLoop)
+		{
 			*pCurrentAnimPosition = 0.f;
+		}
 	}
 
 	for (size_t i = 0; i < m_iNumChannels; i++)
 	{
 		m_Channels[i]->Compute_TransformationMatrix(*pCurrentAnimPosition, Bones, &KeyFrameIndices[i]);
 	}
+
+	return bAnimationEnd;
 }
 
 void CAnimation::Compute_FirstKeyFrameMatrixForBone(const char* boneName, const vector<class CBone*>& Bones, _matrix* outMatrix)
@@ -85,6 +93,16 @@ void CAnimation::Add_SoundEvent(_float triggerTime, const wstring& soundAlias, _
 	event.volume = volume;
 	m_SoundEvents.push_back(event);
 }
+
+void CAnimation::Update_FrameIndex(_float* pCurrentAnimPosition, vector<_uint>& KeyFrameIndices)
+{
+	for (size_t i = 0; i < m_iNumChannels; i++)
+	{
+		m_Channels[i]->Update_FrameIndex(*pCurrentAnimPosition, &KeyFrameIndices[i]);
+	}
+}
+
+
 
 CAnimation* CAnimation::Create(AnimationData animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices)
 {

@@ -20,7 +20,9 @@ public:
 	_char* GetName() { return m_szName; };
 	_int GetBoneIndex() { return m_iBoneIndex; };
 
-private:
+	void Update_FrameIndex(_float fCurrentPosition,_uint* pKeyFrameIndex);
+
+public:
 	_char				m_szName[MAX_PATH] = {};
 
 	_uint				m_iBoneIndex = {};

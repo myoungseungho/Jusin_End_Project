@@ -7,6 +7,8 @@
 #include "Timer_Manager.h"
 #include "Input_Device.h"
 
+//#include "Key_Manager.h"
+
 IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()	
@@ -54,6 +56,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	/* 여기에서 갱신을 수행해준다. */	
 	m_pInput_Device->Update();
 
+	m_pInput_Device->Update();
+
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
@@ -63,6 +67,9 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
 	m_pLevel_Manager->Update(fTimeDelta);
+
+
+
 }
 
 HRESULT CGameInstance::Render_Engine()
@@ -205,6 +212,14 @@ CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, voi
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
 }
 
+CGameObject* CGameInstance::Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Get_Object(iLevelIndex, strLayerTag, iindex);
+}
+
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag, CComponent * pPrototype)
 {
 	if (nullptr == m_pComponent_Manager)
@@ -256,6 +271,25 @@ void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix 
 {
 	m_pPipeLine->Set_Transform(eState, TransformMatrix);
 }
+
+_bool CGameInstance::Key_Down(_int _iKey)
+{
+
+	//return m_pKey_Manager->Key_Down(_iKey);
+
+	return m_pInput_Device->Key_Down(_iKey);
+}
+
+_bool CGameInstance::Key_Pressing(_uint _iKey)
+{
+	return m_pInput_Device->Key_Pressing(_iKey);
+}
+
+_bool CGameInstance::Key_Up(_uint _iKey)
+{
+	return m_pInput_Device->Key_Up(_iKey);
+}
+
 
 
 
