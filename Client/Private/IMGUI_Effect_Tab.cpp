@@ -490,7 +490,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
         if (ImGui::Button("Anim Pos Reset"))
         {
-            m_pEffect_Manager->Reset_Layer_Animation_Position(selectedLayerName);
+            m_pEffect_Manager->Set_Layer_Animation_Position(selectedLayerName, 0.f);
         }
 
         // 애니메이션이 재생 중일 때 m_fCurrentAnimPosition 업데이트
@@ -523,6 +523,15 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             if (ImGui::InputFloat("##AnimationSpeed", &tickPerSecond, 0.01f, 0.01f, "%.2f"))
             {
                 pLayer->m_fTickPerSecond = max(0.01f, tickPerSecond);
+            }
+
+            ImGui::SameLine();
+            ImGui::Text("Current Anim Pos:");
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(200.0f);
+            if (ImGui::InputFloat("##AnimPos", &AnimCurPos, 0.001f, 0.001f, "%.3f"))
+            {
+                pLayer->m_fCurrentAnimPosition = max(0.0f, min(AnimCurPos, pLayer->m_fDuration));
             }
 
             totalKeyframes = static_cast<int>(layerDuration / frameInterval);
@@ -607,9 +616,6 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
         }
     }
 }
-
-
-
 
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {

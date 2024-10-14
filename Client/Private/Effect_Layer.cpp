@@ -92,9 +92,17 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 	return S_OK;
 }
 
-void CEffect_Layer::Reset_Animation_Position()
+void CEffect_Layer::Set_Animation_Position(_float fNewCurPos)
 {
-	m_fCurrentAnimPosition = 0.f;
+	m_fCurrentAnimPosition = fNewCurPos;
+
+	for (CEffect* pEffect : m_MixtureEffects)
+	{
+		if (pEffect)
+		{
+			pEffect->Play_Animation(m_fCurrentAnimPosition);
+		}
+	}
 }
 
 CEffect_Layer* CEffect_Layer::Create()

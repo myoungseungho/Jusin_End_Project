@@ -555,13 +555,13 @@ HRESULT CEffect_Manager::Play_Layer_Animation(_float fTimeDelta, const wstring& 
 	return S_OK;
 }
 
-HRESULT CEffect_Manager::Reset_Layer_Animation_Position(const wstring& LayerName)
+HRESULT CEffect_Manager::Set_Layer_Animation_Position(const wstring& LayerName, _float CurAnimPos)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(LayerName);
 
 	if (pLayer)
 	{
-		pLayer->Reset_Animation_Position();
+		pLayer->Set_Animation_Position(CurAnimPos);
 	}
 	else
 		return E_FAIL;

@@ -65,7 +65,7 @@ public:
 	EFFECT_KEYFRAME Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber);
 public:
 	HRESULT		Play_Layer_Animation(_float fTimeDelta, const wstring& LayerName);
-	HRESULT		Reset_Layer_Animation_Position(const wstring& LayerName);
+	HRESULT		Set_Layer_Animation_Position(const wstring& LayerName, _float CurAnimPos);
 
 private:
 	HRESULT Ready_Components();

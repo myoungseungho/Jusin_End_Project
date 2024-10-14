@@ -23,7 +23,7 @@ public:
 	vector<class CEffect*> Get_Effects();
 	class CEffect* Find_Effect(const std::wstring& effectName);
 	HRESULT Play_Effect_Animation(_float fTimeDelta);
-	void Reset_Animation_Position();
+	void Set_Animation_Position(_float fNewCurPos);
 
 public:
 	_uint			m_iNumKeyFrames = { 0 };
