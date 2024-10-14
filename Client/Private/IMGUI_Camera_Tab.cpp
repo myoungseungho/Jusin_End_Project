@@ -234,10 +234,15 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); // 노란색 텍스트
 			}
 
-			// 포인트 제목과 버튼을 동일한 줄에 배치
+			// 포인트 제목
 			ImGui::BulletText("Point %d:", pointIndex++);
 
-			// Delete 버튼과 Modify 버튼 사이에 일정 간격 삽입
+			if (isSelected) {
+				ImGui::PopStyleColor(); // 텍스트 색상 복원
+			}
+
+			// Delete 버튼과 Modify 버튼을 같은 줄에 배치
+			// 버튼 간의 간격을 조정하기 위해 ImGui::SameLine()을 적절히 사용
 			ImGui::SameLine();
 			ImGui::Dummy(ImVec2(50, 0)); // 50 픽셀의 가로 간격 (필요에 따라 조정)
 			ImGui::SameLine();
@@ -262,12 +267,11 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 				}
 			}
 
-			// 선택된 포인트라면 스타일 변경을 원래대로 복원
+			// 포인트 정보 표시 (선택 상태에 따라 텍스트 색상 변경)
 			if (isSelected) {
-				ImGui::PopStyleColor();
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); // 노란색 텍스트
 			}
 
-			// 포인트 정보 표시
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
 			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
@@ -279,6 +283,10 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 				: ((point.interpolationType == CCamera::InterpolationType::INTERPOLATION_SPLINE_MODE)
 					? "Spline"
 					: "Skip"));
+
+			if (isSelected) {
+				ImGui::PopStyleColor(); // 텍스트 색상 복원
+			}
 
 			ImGui::Separator();
 			ImGui::PopID();
