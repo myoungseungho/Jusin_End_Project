@@ -40,11 +40,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	{
 
 
-		//if (Ready_Character())
-		//	return E_FAIL;
-
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
+		if (Ready_Character())
 			return E_FAIL;
+
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
+		//	return E_FAIL;
 
 
 	}
