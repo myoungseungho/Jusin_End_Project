@@ -281,6 +281,49 @@ void CCamera::Move_Point(_int index)
 	}
 
 	const CameraPoint& targetPoint = m_vecPoints[index];  // 인덱스 접근
+
+	// 1. 로컬 포지션
+	_float3 localPosition = targetPoint.position;
+
+	// 2. 로컬 회전
+	_float4 localQuaternion = targetPoint.rotation;
+
+	// **3. 모델의 월드 행렬 로드**
+	_matrix modelWorldMatrix = Float4x4ToMatrix(*targetPoint.pWorldFloat4x4);
+
+	// **4. 로컬 포지션을 월드 포지션으로 변환**
+	_vector interpolatedPositionWorld = XMVector3TransformCoord(XMLoadFloat3(&localPosition), modelWorldMatrix);
+
+	// **5. 로컬 회전을 월드 회전으로 변환**
+	// 모델의 회전 행렬 추출 (위치 정보 제거)
+	_matrix modelRotationMatrix = modelWorldMatrix;
+	modelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1);
+
+	// 로컬 회전 행렬 생성
+	_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(XMLoadFloat4(&localQuaternion));
+
+	// 월드 회전 행렬 계산
+	_matrix interpolatedRotationMatrixWorld = interpolatedRotationMatrixLocal * modelRotationMatrix;
+
+	// **6. 카메라의 월드 행렬 생성**
+	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
+	NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
+
+	// 월드 매트릭스에서 Right, Up, Look 벡터 추출
+	_vector right = NewWorldMatrix.r[0];
+	_vector up = NewWorldMatrix.r[1];
+	_vector look = NewWorldMatrix.r[2];
+	_vector position = NewWorldMatrix.r[3];
+
+	// CTransform 컴포넌트에 설정
+	CTransform* cameraTransform = static_cast<CTransform*>(Get_Component(TEXT("Com_Transform")));
+
+	// 방향 벡터 설정
+	cameraTransform->Set_State(CTransform::STATE_RIGHT, right);
+	cameraTransform->Set_State(CTransform::STATE_UP, up);
+	cameraTransform->Set_State(CTransform::STATE_LOOK, look);
+	// 위치 설정
+	cameraTransform->Set_State(CTransform::STATE_POSITION, position);
 }
 
 

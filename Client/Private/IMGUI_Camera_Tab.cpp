@@ -288,11 +288,11 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 	else {
 		// 선택되지 않은 상태라면 선택 추가
 		m_selectedPoints.insert(index);
-	}
 
-	//해당 Modify_Point를 누르면
-	//메인카메라에서 선택된 가상카메라의 Point중 index에 있는 위치와 로테이션으로 뷰투영을 업데이트함
-	m_pMainCamera->Move_Point(index);
+		//해당 Modify_Point를 누르면
+		//메인카메라에서 선택된 가상카메라의 Point중 index에 있는 위치와 로테이션으로 뷰투영을 업데이트함
+		m_pMainCamera->Move_Point(index);
+	}
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Add_Point()
