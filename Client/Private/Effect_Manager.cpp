@@ -182,7 +182,7 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
 	}
 
-	for (auto* pEffect : m_TestEffect)
+	for (auto& pEffect : m_TestEffect)
 	{
 		if (pEffect != nullptr)
 		{
@@ -201,6 +201,12 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
 		}
 	}
+
+	for (auto& pEffect : m_TestEffect)
+	{
+		Safe_Release(pEffect);
+	}
+	m_TestEffect.clear();
 
 	return S_OK;
 }
