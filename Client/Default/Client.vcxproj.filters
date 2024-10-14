@@ -58,6 +58,9 @@
     <Filter Include="02.GameObjects\Map\Space\FallingStar">
       <UniqueIdentifier>{5c199490-2da7-4e60-a293-1ed58ece0a37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Earth">
+      <UniqueIdentifier>{ddcd9411-3dcd-4916-b33b-6e63d5fab1c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -217,6 +220,9 @@
     <ClInclude Include="..\Public\FallingStar.h">
       <Filter>02.GameObjects\Map\Space\FallingStar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceEarth.h">
+      <Filter>02.GameObjects\Map\Space\Earth</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -317,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\FallingStar.cpp">
       <Filter>02.GameObjects\Map\Space\FallingStar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceEarth.cpp">
+      <Filter>02.GameObjects\Map\Space\Earth</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

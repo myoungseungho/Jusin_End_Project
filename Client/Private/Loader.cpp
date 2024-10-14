@@ -10,7 +10,9 @@
 #include "Effect_MoveTex.h"
 #include "Effect_Multi.h"
 #include "Effect_Single.h"
+
 #include "SpaceSky.h"
+#include "SpaceEarth.h"
 #include "FallingStar.h"
 //#include "Monster.h"
 //#include "Terrain.h"
@@ -119,17 +121,17 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Diffuse"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/sp_Space.png"), 1))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_Space.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star1"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/sp_star01.png"), 1))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_star01.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star2"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/sp_star02.png"), 1))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_star02.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Terrain */
@@ -144,6 +146,27 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_FallingStar"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/FallingStar/FallingStar.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEarth"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Earth/Earth.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Diffuse"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Diffuse.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Light"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Light.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Shadow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Shadow.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Cloud"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Cloud_%d.png"), 3))))
 		return E_FAIL;
 
 #pragma region Effect Model
@@ -2575,6 +2598,11 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEarth"),
+		CSpaceEarth::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_FallingStar"),
 		CFallingStar::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

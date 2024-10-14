@@ -8,6 +8,12 @@ texture2D		g_NormalTexture;
 texture2D g_MaskStar1;
 texture2D g_MaskStar2;
 
+texture2D g_EarthCloud0;
+texture2D g_EarthCloud1;
+texture2D g_EarthCloud2;
+texture2D g_EarthLight;
+texture2D g_EarthShadow;
+
 float g_MaskStar_Value_1;
 float g_MaskStar_Value_2;
 float g_Time;
@@ -131,6 +137,52 @@ PS_OUT PS_MAIN_FSTAR(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_EARTH(PS_IN In)
+{
+/*
+g_EarthCloud0;
+g_EarthCloud1;
+g_EarthCloud2;
+g_EarthLight;
+g_EarthShadow;
+*/
+    PS_OUT Out;
+	
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+	
+    vector vMtrlLight = g_EarthLight.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlShadow = g_EarthShadow.Sample(LinearSampler, In.vTexcoord);
+
+    float Lightluminance = 0.299f * vMtrlLight.x + 0.587f * vMtrlLight.y + 0.114f * vMtrlLight.z;
+    vMtrlLight.a = saturate(Lightluminance * 1.0f);
+	
+    float Shadowluminance = 0.299f * vMtrlShadow.x + 0.587f * vMtrlShadow.y + 0.114f * vMtrlShadow.z;
+    vMtrlShadow.a = saturate(Shadowluminance * 2.0f);
+	
+  //  vector vMtrlLerpLight = lerp(vMtrlLight, -vMtrlShadow, 0.5);
+	
+    vMtrlDiffuse += vMtrlLight * 2;
+	
+    //vMtrlDiffuse = lerp(vMtrlDiffuse, vMtrlShadow, vMtrlShadow.a);
+	
+    //vMtrlMask1 *= 1.f - g_MaskStar_Value_1;
+    //vMtrlMask2 *= 1.f - g_MaskStar_Value_2;
+
+    //vector vColorMask1 = vMtrlMask1;
+    //vMtrlMask1 = lerp(vMtrlMask1, vMtrlMask2, g_MaskStar_Value_1);
+    //vMtrlMask2 = lerp(vMtrlMask2, vColorMask1, g_MaskStar_Value_2);
+	
+    //vMtrlMask1 += vMtrlMask2;
+
+    Out.vDiffuse = vMtrlDiffuse; //vMtrlMask1 + vMtrlDiffuse * 0.7f;
+
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+	//Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
 PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 {
 	PS_OUT			Out;
@@ -160,6 +212,7 @@ PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 
 technique11		DefaultTechnique
 {	
+// 0
 	pass Sky
 	{		
 		SetRasterizerState(RS_Default);
@@ -174,7 +227,7 @@ technique11		DefaultTechnique
 		DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_SKY();
     }
-
+// 1
     pass FallingStar
     {
         SetRasterizerState(RS_Cull_None);
@@ -188,6 +241,21 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_FSTAR();
+    }
+// 2
+    pass Earth
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_EARTH();
     }
 
 	pass NormalMapping
