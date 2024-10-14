@@ -222,8 +222,8 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 		ImGui::Separator();
 		ImGui::Text("Camera Points:");
 
-		_int pointIndex = 1;
-		_int currentIndex = 0; // 실제 삭제를 위한 인덱스 추적
+		int pointIndex = 1;
+		int currentIndex = 0; // 실제 삭제를 위한 인덱스 추적
 
 		for (const auto& point : points) {
 			ImGui::PushID(currentIndex); // 각 포인트에 고유 ID 부여
@@ -249,8 +249,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 
 			// Delete 버튼
 			if (ImGui::Button("Delete")) {
-				m_pMainCamera->Remove_Point(currentIndex);
-				m_selectedPoints.erase(currentIndex); // 삭제 시 선택 목록에서도 제거
+				IMGUI_Delete_Point(currentIndex);
 				ImGui::PopID();
 				// 포인트가 삭제되었으므로 루프를 종료하여 인덱스 문제 방지
 				break;
@@ -259,12 +258,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 			// Modify 버튼
 			ImGui::SameLine();
 			if (ImGui::Button("Modify")) {
-				if (isSelected) {
-					m_selectedPoints.erase(currentIndex); // 이미 선택된 상태라면 선택 해제
-				}
-				else {
-					m_selectedPoints.insert(currentIndex); // 선택되지 않은 상태라면 선택
-				}
+				IMGUI_Modify_Point(currentIndex);
 			}
 
 			// 포인트 정보 표시 (선택 상태에 따라 텍스트 색상 변경)
@@ -294,6 +288,32 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points()
 			currentIndex++;
 		}
 	}
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Delete_Point(_int index)
+{
+	// 포인트 삭제
+	m_pMainCamera->Remove_Point(index);
+
+	// 선택된 목록에서 제거
+	m_selectedPoints.erase(index);
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
+{
+	// 선택 상태 토글
+	if (m_selectedPoints.find(index) != m_selectedPoints.end()) {
+		// 이미 선택된 상태라면 선택 해제
+		m_selectedPoints.erase(index);
+	}
+	else {
+		// 선택되지 않은 상태라면 선택 추가
+		m_selectedPoints.insert(index);
+	}
+
+	//해당 Modify_Point를 누르면
+	//메인카메라에서 선택된 가상카메라의 Point중 index에 있는 위치와 로테이션으로 뷰투영을 업데이트함
+	m_pMainCamera->Move_Point(index);
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Add_Point()
@@ -399,6 +419,8 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 
 	draw_list->AddTriangleFilled(triangle_pos[0], triangle_pos[1], triangle_pos[2], triangle_color);
 }
+
+
 
 
 

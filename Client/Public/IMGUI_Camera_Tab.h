@@ -39,6 +39,8 @@ private:
 	void IMGUI_Show_Points();	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
 	void IMGUI_Add_Point();        // Add_Point 버튼 처리 함수
 	void IMGUI_Play_Button();	   // Play 버튼
+	void IMGUI_Delete_Point(_int index); //Delete 버튼
+	void IMGUI_Modify_Point(_int index); //Modify 버튼
 
 	MODELID m_iSelected_Model = MODELID_NOT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장

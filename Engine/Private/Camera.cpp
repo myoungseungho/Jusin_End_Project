@@ -276,6 +276,20 @@ void CCamera::Remove_Point(_int currentIndex)
 	m_listPoints.erase(it);
 }
 
+//list의 index 순으로 찾아가서 나온 Position과 Rotation으로 카메라의 트랜스폼을 셋팅하면 되겠다
+void CCamera::Move_Point(_int index)
+{
+	if (index < 0 || index >= m_listPoints.size()) {
+		return;
+	}
+
+	auto it = m_listPoints.begin();
+	std::advance(it, index);  // index 위치로 반복자 이동
+
+	const CameraPoint& targetPoint = *it;
+
+}
+
 
 void CCamera::Free()
 {

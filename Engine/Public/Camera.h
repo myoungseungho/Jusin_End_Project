@@ -58,7 +58,7 @@ public:
 	void Prev_Stop();
 	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4);
 	void Remove_Point(_int currentIndex);
-
+	void Move_Point(_int index);
 public:
 	const _char* GetTabName() const { return m_Name; };
 
