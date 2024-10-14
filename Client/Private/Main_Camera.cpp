@@ -30,10 +30,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 	m_vecVirtualCamera.reserve(VIRTUAL_CAMERA_END);
 
-	_char* name = "Camera_Normal";
-	//처음에는 일반 가상 카메라를 메인 카메라로
-	CGameObject* virtualCamera_Normal = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Normal"), &name);
-	m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Normal));
+	_char* name = "";
 
 	for (size_t i = VIRTUAL_CAMERA_SON_SKILL_1; i < VIRTUAL_CAMERA_END; i++)
 	{

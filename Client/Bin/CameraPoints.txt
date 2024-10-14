@@ -1,42 +1,58 @@
 [VirtualCamera]
-ModelID: -1
-SkillID: -1
-PointCount: 0
-
-[VirtualCamera]
 ModelID: 0
 SkillID: 0
-PointCount: 0
+PointCount: 4
+
+[CameraPoint]
+Position: 7.03329 -9.94256 16.6124
+Rotation: 0.987687 -0.0004186 -0.15642 -0.00264293
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 13.3159 -9.94257 11.9073
+Rotation: 0.905356 0.00275497 -0.424604 0.00587439
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 17.0854 -9.94257 3.06274
+Rotation: -0.693935 0.00758176 0.71996 0.00730735
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 16.3112 -10.848 -10.3304
+Rotation: -0.458261 -0.0313559 0.888117 -0.0161796
+Duration: 1
+InterpolationType: 0
+Damping: 1
 
 [VirtualCamera]
 ModelID: 0
 SkillID: 1
-PointCount: 4
+PointCount: 3
 
 [CameraPoint]
-Position: 7.32032 -10.7776 20.2677
-Rotation: 0.985529 0.00374729 -0.168037 0.0219779
+Position: 5.99734 2.57258 -11.8112
+Rotation: -0.137834 -0.347286 0.926133 -0.0516858
 Duration: 1
 InterpolationType: 0
 Damping: 1
 
 [CameraPoint]
-Position: 15.6945 -10.767 14.6802
-Rotation: 0.884952 -0.00180998 -0.465665 -0.00343949
+Position: -10.0634 2.39964 -6.57327
+Rotation: 0.452886 -0.346515 0.797562 0.196765
 Duration: 1
 InterpolationType: 0
 Damping: 1
 
 [CameraPoint]
-Position: 20.432 -10.7355 0.154075
-Rotation: -0.62812 -0.00817437 0.778046 -0.00659935
-Duration: 1
-InterpolationType: 0
-Damping: 1
-
-[CameraPoint]
-Position: 15.7908 -10.704 -10.8806
-Rotation: -0.328594 0.0123363 0.944381 0.00429229
+Position: -1.94612 -2.09952 13.8891
+Rotation: 0.957452 0.0100534 -0.0336039 0.286451
 Duration: 1
 InterpolationType: 0
 Damping: 1

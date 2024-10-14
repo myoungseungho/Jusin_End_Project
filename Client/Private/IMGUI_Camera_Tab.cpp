@@ -14,7 +14,7 @@ CIMGUI_Camera_Tab::CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 
 HRESULT CIMGUI_Camera_Tab::Initialize()
 {
-	_int index = 1;
+	_int index = 0;
 
 	// 모델과 스킬 ID에 따른 카메라 인덱스 매핑 초기화
 	m_CameraIndexMap[{MODELID_SON, SKILL1}] = index++; // 손오공, 스킬1 -> 카메라 인덱스 1

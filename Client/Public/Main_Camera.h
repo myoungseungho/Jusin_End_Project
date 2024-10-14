@@ -17,7 +17,6 @@ public:
 
 	enum VIRTUAL_CAMERA
 	{
-		VIRTUAL_CAMERA_NORMAL,
 		VIRTUAL_CAMERA_SON_SKILL_1,
 		VIRTUAL_CAMERA_SON_SKILL_2,
 		VIRTUAL_CAMERA_SON_SKILL_3,
@@ -64,7 +63,7 @@ public:
 	vector<CCamera*> m_vecVirtualCamera;
 
 private:
-	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
+	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_SON_SKILL_1 };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 
 
