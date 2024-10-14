@@ -109,7 +109,7 @@ void CMain_Camera::Remove_Point(_int currentIndex)
 	m_vecVirtualCamera[m_currentVirtualMode]->Remove_Point(currentIndex);
 }
 
-vector<CCamera::CameraPoint>& CMain_Camera::Get_VectorPoint()
+vector<CameraPoint>& CMain_Camera::Get_VectorPoint()
 {
 	//현재 메인카메라가 사용하고 있는 가상카메라의 listPoints를 가져온다.
 	return m_vecVirtualCamera[m_currentVirtualMode]->m_vecPoints;

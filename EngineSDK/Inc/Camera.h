@@ -19,29 +19,6 @@ public:
 	}CAMERA_DESC;
 
 public:
-	enum InterpolationType {
-		INTERPOLATION_LINEAR_MODE,
-		INTERPOLATION_DAMPING_MODE,
-		INTERPOLATION_SKIP_MODE,
-		INTERPOLATION_END
-	};
-
-	// 카메라 포인트 구조체
-	struct CameraPoint {
-		//포지션
-		_float3 position = {};
-
-		//회전 쿼터니언
-		_float4 rotation = {};
-
-		_float duration; // 다음 포인트까지 이동 시간
-		InterpolationType interpolationType; //보간 타입
-
-		const _float4x4* pWorldFloat4x4;
-		// Damping Mode에서 사용되는 계수
-		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
-	};
-
 	struct CameraSaveData {
 		vector<CCamera*>& vecVirtualCamera;
 		unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;

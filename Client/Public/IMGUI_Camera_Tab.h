@@ -51,7 +51,7 @@ private:
 	// 임시 데이터 구조체
 	struct TempPointData {
 		_float duration;
-		CCamera::InterpolationType interpType;
+		InterpolationType interpType;
 		_float damping = { 1.f };
 	};
 

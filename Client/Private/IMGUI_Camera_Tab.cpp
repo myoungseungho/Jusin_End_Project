@@ -5,6 +5,7 @@
 #include "Main_Camera.h"
 
 _bool bShowCameraWindow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_wstring filename = L"../Bin/CameraPoints.txt"; //데이터 저장되는 txt
 
 
 CIMGUI_Camera_Tab::CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -205,7 +206,7 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 
 void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0) {
-		std::vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
+		std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
 
 		if (points.empty()) {
 			ImGui::Text("No camera points available.");
@@ -252,19 +253,19 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
 			}
 
-			CCamera::CameraPoint& point = points[i];
+			CameraPoint& point = points[i];
 			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
 			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
 			ImGui::Text("  Duration: %.2f", point.duration);
 			ImGui::Text("  Interpolation: %s",
-				(point.interpolationType == CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE)
+				(point.interpolationType == InterpolationType::INTERPOLATION_LINEAR_MODE)
 				? "Linear"
-				: (point.interpolationType == CCamera::InterpolationType::INTERPOLATION_DAMPING_MODE)
+				: (point.interpolationType == InterpolationType::INTERPOLATION_DAMPING_MODE)
 				? "Damping"
 				: "Skip");
 
 			// **Damping 값 표시 (Damping Mode인 경우)**
-			if (point.interpolationType == CCamera::InterpolationType::INTERPOLATION_DAMPING_MODE) {
+			if (point.interpolationType == InterpolationType::INTERPOLATION_DAMPING_MODE) {
 				ImGui::Text("  Damping: %.2f", point.damping);
 			}
 
@@ -310,9 +311,9 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 		m_isEditing = true;
 
 		// 선택된 포인트의 데이터를 임시 변수에 복사
-		vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+		vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
 		if (index >= 0 && index < static_cast<int>(points.size())) {
-			CCamera::CameraPoint& point = points[index];
+			CameraPoint& point = points[index];
 			m_tempPointData.duration = point.duration;
 			m_tempPointData.interpType = point.interpolationType;
 			m_tempPointData.damping = point.damping;
@@ -326,7 +327,7 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 void CIMGUI_Camera_Tab::IMGUI_Modify_Point_UI(_int index)
 {
 	// 해당 포인트에 대한 참조 가져오기
-	std::vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+	std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
 
 	// 선택된 포인트와 수정 모드인지 확인
 	if (!m_isEditing || m_selectedPoint != index) {
@@ -345,7 +346,7 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point_UI(_int index)
 		for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
 			bool is_selected = (interpIndex == n);
 			if (ImGui::Selectable(interp_options[n], is_selected)) {
-				m_tempPointData.interpType = static_cast<CCamera::InterpolationType>(n);
+				m_tempPointData.interpType = static_cast<InterpolationType>(n);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
@@ -354,7 +355,7 @@ void CIMGUI_Camera_Tab::IMGUI_Modify_Point_UI(_int index)
 	}
 
 	// Damping 계수 수정 (Damping Mode일 때만 표시)
-	if (m_tempPointData.interpType == CCamera::InterpolationType::INTERPOLATION_DAMPING_MODE)
+	if (m_tempPointData.interpType == InterpolationType::INTERPOLATION_DAMPING_MODE)
 	{
 		ImGui::SliderFloat("Damping Coefficient", &m_tempPointData.damping, 0.0f, 2.0f, "%.2f");
 	}
@@ -375,13 +376,13 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 		return;
 	}
 
-	vector<CCamera::CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+	vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
 	if (m_selectedPoint >= static_cast<int>(points.size())) {
 		return;
 	}
 
 	// 선택된 포인트에 임시 데이터 적용
-	CCamera::CameraPoint& point = points[m_selectedPoint];
+	CameraPoint& point = points[m_selectedPoint];
 	point.duration = m_tempPointData.duration;
 	point.interpolationType = m_tempPointData.interpType;
 	point.damping = m_tempPointData.damping;
@@ -443,16 +444,16 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 		// Add_Point 버튼
 		if (ImGui::Button("Add Point")) {
 			// Interpolation Type 설정
-			CCamera::InterpolationType interpType = CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE;
+			InterpolationType interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
 			switch (selected_interp) {
 			case 0:
-				interpType = CCamera::InterpolationType::INTERPOLATION_LINEAR_MODE;
+				interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
 				break;
 			case 1:
-				interpType = CCamera::InterpolationType::INTERPOLATION_DAMPING_MODE;
+				interpType = InterpolationType::INTERPOLATION_DAMPING_MODE;
 				break;
 			case 2:
-				interpType = CCamera::InterpolationType::INTERPOLATION_SKIP_MODE;
+				interpType = InterpolationType::INTERPOLATION_SKIP_MODE;
 				break;
 			}
 
@@ -471,7 +472,7 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 			const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
 
 			// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
-			m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == CCamera::InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f);
+			m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f);
 
 			// 사용자에게 추가됨을 알림
 			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
@@ -520,7 +521,6 @@ void CIMGUI_Camera_Tab::IMGUI_Save_Button()
 	if (ImGui::Button("Save"))
 	{
 		// 저장할 파일명 지정
-		std::wstring filename = L"../Bin/CameraPoints.txt";
 
 		CCamera::CameraSaveData saveData = { m_pMainCamera->m_vecVirtualCamera, m_CameraIndexMap };
 

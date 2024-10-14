@@ -96,6 +96,7 @@ public: /* For.FileManager */
 	HRESULT SaveObjects(const wstring& filename, void* pArg);
 	void* LoadObjects(const wstring& filename);
 	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
+	HRESULT Load_All_CameraPoints(const wstring& filename);
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };

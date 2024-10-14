@@ -31,6 +31,11 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	}
 
+	//바이너리에 저장된 데이터들은 결국 mainCamera의 각 가상카메라들의 CameraPoint 벡터에 제각각 넣어줘야 한다.
+	filePath = L"../Bin/CameraPoints.txt";
+	if (FAILED(m_pGameInstance->Load_All_CameraPoints(filePath))) {
+		return E_FAIL;
+	}
 	return S_OK;
 }
 

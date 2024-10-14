@@ -21,7 +21,7 @@ public:
 	void* LoadObjects(const wstring& filename);
 	HRESULT ParseLine(const wstring& line, FILEDATA& obj);
 	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
-	HRESULT Load_All_CameraPoints(const wstring& filename, void* pArg);
+	HRESULT Load_All_CameraPoints(const wstring& filename);
 private:
 	vector<FILEDATA> m_vecpFileData;
 

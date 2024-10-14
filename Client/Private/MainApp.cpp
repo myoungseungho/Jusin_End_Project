@@ -69,6 +69,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	//³ª¸ÓÁö ·»´õ´Â ·»´õÀÎ½ºÅÏ½º
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
+	//IMGUI ·»´õ´Â ·Îµù¶§´Â ÇÏ¸é ¾ÈµÊ
 	if (m_pGameInstance->Get_CurrentLevel_Index() != LEVEL_LOADING)
 	{
 		//IMGUI ·»´õ
