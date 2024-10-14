@@ -39,7 +39,7 @@ private:
 	CModel*					m_pModelCom = { nullptr };
 
 	_float					m_fRandom = {};
-	_wstring					m_strModelName{};
+	_wstring				m_strModelName{};
 
 
 	_int					m_iLookDirection = { 1 };

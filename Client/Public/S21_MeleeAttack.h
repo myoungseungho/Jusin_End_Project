@@ -30,12 +30,12 @@ public:
 	void Attack_214();
 
 	void Attack_236Special();
-	void Attack_236Special_Side();
+	//void Attack_236Special_Side();
 	
 
 
 	void Attack_236Ultimate();
-	void Attack_236Ultimate_Side();
+	//void Attack_236Ultimate_Side();
 
 	void Attack_214Final();
 

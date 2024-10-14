@@ -79,6 +79,7 @@ private:
 	//void LoadModelDataFromBinary();
 	//void LoadBoneFromBinary_Tool(ifstream& inFile, BoneData& bone);
     void SelectedModelLoad(ifstream& inFile, BoneData& bone);
+
     void LoadFromFile(const string& filename);
     //void ProcessEventsBetweenFrames(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
     void ProcessEventsBetweenFrames2(int characterIndex, int animationIndex, float prevFrame, float currentFrame);
@@ -111,14 +112,14 @@ private:
     FrameEventMap* m_pFrameEvent = { nullptr };
 
 
-    CHARACTER_INDEX m_iTestModelIndex = { PLAY_GOKU };
+    CHARACTER_INDEX m_iTestModelIndex = { PLAY_21 };
     _float m_fAnimationUpdateTime = {0.005f};
     _float m_fTool_TickPerSecond = { 25.f };
     _char m_PostionBuffer[30] = "0.0";
 
 
 
-    _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/Split.txt";
+    _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_21.txt";
 
 
  public:
