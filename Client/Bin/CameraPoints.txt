@@ -1,0 +1,93 @@
+[VirtualCamera]
+ModelID: -1
+SkillID: -1
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 0
+SkillID: 0
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 0
+SkillID: 1
+PointCount: 4
+
+[CameraPoint]
+Position: 7.32032 -10.7776 20.2677
+Rotation: 0.985529 0.00374729 -0.168037 0.0219779
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 15.6945 -10.767 14.6802
+Rotation: 0.884952 -0.00180998 -0.465665 -0.00343949
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 20.432 -10.7355 0.154075
+Rotation: -0.62812 -0.00817437 0.778046 -0.00659935
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 15.7908 -10.704 -10.8806
+Rotation: -0.328594 0.0123363 0.944381 0.00429229
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[VirtualCamera]
+ModelID: 0
+SkillID: 2
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 1
+SkillID: 0
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 1
+SkillID: 1
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 1
+SkillID: 2
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 2
+SkillID: 0
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 2
+SkillID: 1
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 2
+SkillID: 2
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 3
+SkillID: 0
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 3
+SkillID: 1
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 3
+SkillID: 2
+PointCount: 0
+

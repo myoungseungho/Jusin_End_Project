@@ -378,6 +378,14 @@ void* CGameInstance::LoadObjects(const wstring& filename)
 	return m_pFile_Manager->LoadObjects(filename);
 }
 
+HRESULT CGameInstance::Save_All_CameraPoints(const wstring& filename, void* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->Save_All_CameraPoints(filename, pArg);
+}
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);

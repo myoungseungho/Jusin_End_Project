@@ -42,6 +42,11 @@ public:
 		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
 	};
 
+	struct CameraSaveData {
+		vector<CCamera*>& vecVirtualCamera;
+		unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
+	};
+
 protected:
 	CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CCamera(const CCamera& Prototype);
@@ -56,7 +61,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta);
-	void Prev_Play(CCamera* camera, _float fTimeDelta);
+	void Play(CCamera* camera, _float fTimeDelta);
 	void Prev_Stop();
 	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping);
 	void Remove_Point(_int currentIndex);

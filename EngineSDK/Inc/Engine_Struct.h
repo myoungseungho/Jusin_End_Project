@@ -92,6 +92,12 @@ namespace Engine
 		_float3 scale;
 	};
 
+	struct pair_hash {
+		size_t operator()(const std::pair<_uint, _uint>& key) const {
+			return std::hash<int>()(static_cast<int>(key.first)) ^ (std::hash<int>()(static_cast<int>(key.second)) << 1);
+		}
+	};
+
 #pragma region 바이너리
 	struct BoneWeight {
 		_uint vertexID;

@@ -2,7 +2,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <fstream>
-
+#include "Camera.h"
 CFile_Manager::CFile_Manager()
 {
 }
@@ -144,6 +144,76 @@ HRESULT CFile_Manager::ParseLine(const wstring& line, FILEDATA& obj) {
 	}
 	else
 		return E_FAIL;
+}
+
+HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg)
+{
+	if (nullptr == pArg)
+		return E_FAIL;
+
+	// pArg를 CameraSaveData로 캐스팅
+	CCamera::CameraSaveData* pSaveData = static_cast<CCamera::CameraSaveData*>(pArg);
+	if (nullptr == pSaveData)
+		return E_FAIL;
+
+	const auto& vecVirtualCamera = pSaveData->vecVirtualCamera;
+	const auto& cameraIndexMap = pSaveData->cameraIndexMap;
+
+	// 파일 스트림 열기
+	std::wofstream file(filename);
+	if (!file.is_open())
+	{
+		// 파일 생성 실패 처리
+		return E_FAIL;
+	}
+
+	// 모든 가상 카메라 순회
+	for (size_t i = 0; i < vecVirtualCamera.size(); ++i)
+	{
+		CCamera* pVirtualCamera = vecVirtualCamera[i];
+
+		// 모델 ID와 스킬 ID를 얻기 위해 매핑된 값을 찾음
+		_int modelID = -1;
+		_int skillID = -1;
+
+		for (const auto& pair : cameraIndexMap)
+		{
+			if (pair.second == i)
+			{
+				modelID = pair.first.first;
+				skillID = pair.first.second;
+				break;
+			}
+		}
+
+		// 가상 카메라 섹션 시작
+		file << L"[VirtualCamera]\n";
+		file << L"ModelID: " << static_cast<int>(modelID) << L"\n";
+		file << L"SkillID: " << static_cast<int>(skillID) << L"\n";
+
+		const auto& vecPoints = pVirtualCamera->m_vecPoints;
+		file << L"PointCount: " << vecPoints.size() << L"\n\n";
+
+		// 각 CameraPoint 저장
+		for (const auto& point : vecPoints)
+		{
+			file << L"[CameraPoint]\n";
+			file << L"Position: " << point.position.x << L" " << point.position.y << L" " << point.position.z << L"\n";
+			file << L"Rotation: " << point.rotation.x << L" " << point.rotation.y << L" " << point.rotation.z << L" " << point.rotation.w << L"\n";
+			file << L"Duration: " << point.duration << L"\n";
+			file << L"InterpolationType: " << static_cast<int>(point.interpolationType) << L"\n";
+			file << L"Damping: " << point.damping << L"\n\n";
+		}
+	}
+
+	file.close();
+
+	return S_OK;
+}
+
+HRESULT CFile_Manager::Load_All_CameraPoints(const wstring& filename, void* pArg)
+{
+	return S_OK;
 }
 
 

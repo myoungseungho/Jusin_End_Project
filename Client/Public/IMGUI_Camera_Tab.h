@@ -15,11 +15,7 @@ public:
 	enum SKILLID { SKILL_NOT = -1, SKILL1, SKILL2, SKILL3, SKILL_END };
 
 private:
-	struct pair_hash {
-		size_t operator()(const std::pair<MODELID, SKILLID>& key) const {
-			return std::hash<int>()(static_cast<int>(key.first)) ^ (std::hash<int>()(static_cast<int>(key.second)) << 1);
-		}
-	};
+	
 
 protected:
 	CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -34,6 +30,7 @@ private:
 	void IMGUI_Camera_Select_Model(_float fTimeDelta);
 	void IMGUI_Camera_Select_Skill(_float fTimeDelta);
 	void IMGUI_Show_Camera(_float fTimeDelta);
+	void IMGUI_Save_Button();
 	void Activate_Select_Camera(_int selectedIndex);
 	void UpdateCameraSelection();
 	void IMGUI_Show_Points();	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
@@ -49,7 +46,7 @@ private:
 	_int m_selectedPoint = -1;
 	_bool m_isEditing = { false };     // 수정 모드 여부
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
-	unordered_map<pair<MODELID, SKILLID>, _uint, pair_hash> m_CameraIndexMap;
+	unordered_map<pair<_int, _int>, _uint, pair_hash> m_CameraIndexMap;
 
 	// 임시 데이터 구조체
 	struct TempPointData {

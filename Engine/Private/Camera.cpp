@@ -77,7 +77,7 @@ void CCamera::Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta
 	//실제 가상카메라의 트랜스폼을 이용하면 된다.
 	if (isPrevPlay)
 	{
-		Prev_Play(camera, fTimeDelta);
+		Play(camera, fTimeDelta);
 	}
 
 	//여기서는 가상카메라의 셋팅이 들어가야 한다.
@@ -86,7 +86,7 @@ void CCamera::Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(camera->m_fFovy, camera->m_fViewportWidth / camera->m_fViewportHeight, camera->m_fNear, camera->m_fFar));
 }
 
-void CCamera::Prev_Play(CCamera* camera, _float fTimeDelta)
+void CCamera::Play(CCamera* camera, _float fTimeDelta)
 {
 	vector<CameraPoint> points = camera->m_vecPoints;
 

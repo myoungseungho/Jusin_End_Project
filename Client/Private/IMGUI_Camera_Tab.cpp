@@ -78,6 +78,9 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 			// 플레이 버튼
 			IMGUI_Play_Button();
+
+			//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
+			IMGUI_Save_Button();
 		}
 	}
 }
@@ -162,6 +165,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 		ImGui::Text("Selected Camera: %s", selectedCameraName);
 	}
 }
+
 // 새로운 함수: 선택된 카메라를 활성화하는 함수
 void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex)
 {
@@ -511,7 +515,19 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 }
 
 
+void CIMGUI_Camera_Tab::IMGUI_Save_Button()
+{
+	if (ImGui::Button("Save"))
+	{
+		// 저장할 파일명 지정
+		std::wstring filename = L"../Bin/CameraPoints.txt";
 
+		CCamera::CameraSaveData saveData = { m_pMainCamera->m_vecVirtualCamera, m_CameraIndexMap };
+
+		// 파일 매니저를 통해 저장
+		m_pGameInstance->Save_All_CameraPoints(filename, &saveData);
+	}
+}
 
 
 CIMGUI_Camera_Tab* CIMGUI_Camera_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
