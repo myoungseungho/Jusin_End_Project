@@ -369,9 +369,6 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 	CCamera::CameraPoint& point = points[m_selectedPoint];
 	point.duration = m_tempPointData.duration;
 	point.interpolationType = m_tempPointData.interpType;
-
-	// 카메라의 뷰 업데이트
-	m_pMainCamera->Move_Point(m_selectedPoint);
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Add_Point()
