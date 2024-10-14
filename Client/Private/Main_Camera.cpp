@@ -152,12 +152,17 @@ void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
 				point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
 				point.damping = pointData.damping;
 
+				// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
+				// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
+				CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+				CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
+				const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
+				point.pWorldFloat4x4 = worldMatrixPtr;
+
 				pCurrentCamera->m_vecPoints.push_back(point);
 			}
 		}
 	}
-
-	int a = 3;
 }
 
 _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
