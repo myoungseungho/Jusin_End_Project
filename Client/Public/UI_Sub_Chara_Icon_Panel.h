@@ -3,14 +3,20 @@
 #include "UIObject.h"
 #include "Monster.h"
 
+BEGIN(Engine)
+
+class CTexture;
+
+END
+
 BEGIN(Client)
 
-class CUI_Chara_Icon final :public CUIObject
+class CUI_Sub_Chara_Icon_Panel final :public CUIObject
 {
 private:
-	CUI_Chara_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_Chara_Icon(const CUI_Chara_Icon& Prototype);
-	virtual ~CUI_Chara_Icon() = default;
+	CUI_Sub_Chara_Icon_Panel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_Sub_Chara_Icon_Panel(const CUI_Sub_Chara_Icon_Panel& Prototype);
+	virtual ~CUI_Sub_Chara_Icon_Panel() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -22,13 +28,15 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	virtual HRESULT Bind_ShaderResources();
 
 private:
 	_uint m_iCharaID = { 0 };
-	_uint  m_iTeamIndex = { 0 };
+
+	CTexture* m_pCharaIconTexture = { nullptr };
 
 public:
-	static CUI_Chara_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_Sub_Chara_Icon_Panel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

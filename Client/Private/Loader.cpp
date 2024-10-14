@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include "..\Public\Loader.h"
 
 #include "GameInstance.h"
@@ -25,6 +25,7 @@
 #include "UI_HpGauge.h"
 #include "UI_SubHpGauge.h"
 #include "UI_Chara_Icon_Panel.h"
+#include "UI_Sub_Chara_Icon_Panel.h"
 #include "UI_Chara_Icon.h"
 #include "UI_AttBuf.h"
 #include "UI_AttBufEffect.h"
@@ -271,9 +272,14 @@ HRESULT CLoader::Loading_For_UI()
 
 	//캐릭터 아이콘
 
-	/* For.Prototype_Component_Texture_UI_CharIcon */
+	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIconPanel"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame//Top/Cp_CharaIconPanel.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubCharaIconPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/SubIconPanel%d.png"),2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_CharIcon */
@@ -362,6 +368,11 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_Chara_Icon_Panel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_UI_Sub_Chara_Icon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Sub_Chara_Icon"),
+		CUI_Sub_Chara_Icon_Panel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	/* For.Prototype_GameObject_UI_Chara_Icon */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Chara_Icon"),
 		CUI_Chara_Icon::Create(m_pDevice, m_pContext))))
@@ -372,7 +383,7 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_AttBufMark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_UI_AttBufMark */
+	/* For.Prototype_GameObject_UI_AttBufNone */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_AttBufNone"),
 		CUI_AttBufNone::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -387,7 +398,7 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_AttBufEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_UI_AttBufEffect */
+	/* For.Prototype_GameObject_UI_AttBufThunderEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_AttBufThunderEffect"),
 		CUI_AttBufThunderEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

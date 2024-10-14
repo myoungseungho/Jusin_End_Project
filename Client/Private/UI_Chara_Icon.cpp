@@ -32,18 +32,15 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 150.f, m_fPosX, 40.f, 0.85f);
+	__super::Set_UI_Setting(m_fSizeX, 150.f, m_fPosX, 40, 0.85f);
 
 	return S_OK;
 }
 
 void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
 {
-	_uint iTexIndex = 0;
-
-	(m_eLRPos == LEFT) ? iTexIndex  = 0: iTexIndex = 2;
-
-	m_iCharaID = m_pUI_Manager->m_pPawnArray[iTexIndex]->Get_PawnDesc().ePlayerID;
+	__super::Priority_Update(fTimeDelta);
+	m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)
@@ -60,14 +57,14 @@ HRESULT CUI_Chara_Icon::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
-
+	 
 	//m_iCharaID → 캐릭터 ID가 만들어주면 0대신에 넣어주는 값 (캐릭터에 따라서 이미지가 바뀌도록)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iCharaID)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;
-
+	
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
 		return E_FAIL;
 

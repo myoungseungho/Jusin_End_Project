@@ -217,6 +217,7 @@
     <ClInclude Include="..\Public\UI_SkillGauge.h" />
     <ClInclude Include="..\public\UI_SkillGaugeBar.h" />
     <ClInclude Include="..\Public\UI_SkillNumber.h" />
+    <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h" />
     <ClInclude Include="..\Public\UI_Timer.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="..\Private\UI_SkillGauge.cpp" />
     <ClCompile Include="..\private\UI_SkillGaugeBar.cpp" />
     <ClCompile Include="..\Private\UI_SkillNumber.cpp" />
+    <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp" />
     <ClCompile Include="..\Private\UI_Timer.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

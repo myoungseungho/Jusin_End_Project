@@ -190,6 +190,9 @@
     <Filter Include="02.GameObjects\BackGround\Logo">
       <UniqueIdentifier>{ff16a923-f66c-48dd-b6a7-539888d9a0b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Sub">
+      <UniqueIdentifier>{45dcd192-5c1f-4757-9dd9-82347faad830}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -375,6 +378,9 @@
     <ClInclude Include="..\public\UI_Logo.h">
       <Filter>02.GameObjects\BackGround\Logo</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -547,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Logo.cpp">
       <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

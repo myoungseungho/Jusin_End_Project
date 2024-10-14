@@ -301,11 +301,11 @@ PS_OUT PS_READY(PS_IN In)
 PS_OUT PS_FONT(PS_IN In)
 {
     PS_OUT Out;
-
+   
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-    vector vDiffuseMaterial = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    vector vBGMaterial = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBGMaterial = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vDiffuseMaterial = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
     
     //vDiffuseMaterial.rgb = 1 - g_MaskTimer;
     vBGMaterial = lerp(vBGMaterial, vDiffuseMaterial, vDiffuseMaterial.a);
@@ -317,6 +317,7 @@ PS_OUT PS_FONT(PS_IN In)
         discard;
     
     return Out;
+   
 }
 
 technique11 DefaultTechnique
