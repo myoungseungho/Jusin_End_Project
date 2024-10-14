@@ -25,10 +25,13 @@ public: /* For.Renderer */
 	void SetActive_RenderTarget(_bool isOn);
 	void Show_OutLine();
 	void Show_Layer_View();
+	_bool Get_isLayerView();
 public: /* For.Target_Manager */
 	HRESULT Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	HRESULT Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag);
 	HRESULT Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV = nullptr);
+	HRESULT Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV = nullptr);
+	
 	HRESULT End_MRT();
 	HRESULT Copy_RenderTarget(const _wstring& strTargetTag, ID3D11Texture2D* pTexture2D);
 	ID3D11ShaderResourceView* Copy_RenderTarget_SRV(const _wstring& strTargetTag);

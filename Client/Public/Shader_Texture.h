@@ -13,6 +13,8 @@ BEGIN(Client)
 
 class CShader_Texture final : public CGameObject
 {
+public:/* 클라로 파싱할때 절대 안넘김*/
+	enum SPRITE_BUTTON_TYPE { SB_PLAY, SB_PAUSE,SB_RESET};
 public:
 	typedef struct : CGameObject::GAMEOBJECT_DESC
 	{
@@ -73,6 +75,12 @@ private:
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 
+public:	/* 클라로 파싱할때 절대 안넘김*/
+	void Sprite_ButtonClick(_int iClickButton);
+	void Sprite_Loop(_bool isLoop) { m_isLoop = isLoop; }
+private: /* 클라로 파싱할때 절대 안넘김*/
+	_bool isSpritePlay = { false };
+	_bool m_isLoop = { false };
 private:
 	HRESULT Ready_Components(void* pArg);
 	HRESULT Bind_ShaderResources();

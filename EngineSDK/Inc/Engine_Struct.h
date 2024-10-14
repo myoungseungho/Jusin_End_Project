@@ -15,17 +15,27 @@ namespace Engine
 		float			fTime;
 	}KEYFRAME;
 
-	typedef struct
+	struct EFFECT_KEYFRAME
 	{
-		XMFLOAT3 vScale = { 1.0f, 1.0f, 1.0f };
-		XMFLOAT3 vRotation = { 0.0f, 0.0f, 0.0f };
-		XMFLOAT3 vPosition = { 0.0f, 0.0f, 0.0f };
+		XMFLOAT3 vScale;
+		XMFLOAT3 vRotation;
+		XMFLOAT3 vPosition;
 
-		bool bIsNotPlaying = false;
-		float fCurTime = 0.0f;
-		float fDuration = 0.0f;
+		bool bIsNotPlaying;
+		float fCurTime;
+		float fDuration;
 
-	}EFFECT_KEYFRAME;
+		// 생성자에서 초기화
+		EFFECT_KEYFRAME()
+			: vScale(1.0f, 1.0f, 1.0f),
+			vRotation(0.0f, 0.0f, 0.0f),
+			vPosition(0.0f, 0.0f, 0.0f),
+			bIsNotPlaying(false),
+			fCurTime(0.0f),
+			fDuration(0.0f)
+		{
+		}
+	};
 
 	typedef struct
 	{

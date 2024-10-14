@@ -72,6 +72,10 @@ private:
 	_int m_iShaderCount = { 0 };
 	_int m_iCurShaderTabIndex = { -1 };
 	_int m_iCurShaderTabId = { -1 };
+private:
+	_uint						m_iNumCount = {};
+	_uint						m_iNumRender = {};
+	_float						m_fTimeAcc = {};
 public:
 	virtual void Free() override;
 };

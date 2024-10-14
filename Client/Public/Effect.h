@@ -80,7 +80,8 @@ protected:
 
 	_int m_iRenderIndex = { 0 };
 
-
+	/* 툴용 쉐이더 패스 인덱스 */
+	_int m_iPassIndex = { 1 };
 public:
 	_int				m_iUnique_Index = { -1 };
 	_wstring		m_EffectName;

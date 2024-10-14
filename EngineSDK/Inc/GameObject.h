@@ -31,7 +31,11 @@ public:
 			return nullptr;
 		return iter->second;
 	}
-
+	/* 항상 쓰지 않았던 m_iGameObjectData 를 렌더타겟 식별번호로서 쓸 수 있게 겟셋을 만듦*/
+	void Set_GameObjectData(_uint iData) {
+		m_iGameObjectData = iData;
+	}
+	_uint Get_GameObjectData() { return m_iGameObjectData; }
 public:
 	static const _wstring		m_strTransformTag;
 

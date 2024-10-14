@@ -66,6 +66,11 @@ void CRenderInstance::Show_Layer_View()
 	m_pRenderer->Show_Layer_View();
 }
 
+_bool CRenderInstance::Get_isLayerView()
+{
+	return m_pRenderer->Get_isLayerView();
+}
+
 HRESULT CRenderInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
 {
 	return m_pTarget_Manager->Add_RenderTarget(strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);
@@ -79,6 +84,11 @@ HRESULT CRenderInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strT
 HRESULT CRenderInstance::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
 {
 	return m_pTarget_Manager->Begin_MRT(strMRTTag, pDSV);
+}
+
+HRESULT CRenderInstance::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
+{
+	return m_pTarget_Manager->Begin_MRT_DoNotClear(strMRTTag, pDSV);
 }
 
 HRESULT CRenderInstance::End_MRT()

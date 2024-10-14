@@ -4,7 +4,7 @@
 float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 texture2D g_DiffuseTexture;
-
+texture2D g_AlphaTexture;
 vector g_vCamPosition;
 
 int g_iUnique_Index = -1;
@@ -62,8 +62,13 @@ struct PS_IN
 struct PS_OUT
 {
     float4 vDiffuse : SV_TARGET0;
-    float4 vNormal : SV_TARGET1;
+    float4 vAlpha : SV_TARGET1;
     float4 vDepth : SV_TARGET2;
+};
+
+struct PS_OUT_PICK
+{
+    float4 vDiffuse : SV_TARGET0;
 };
 
 PS_OUT PS_MAIN(PS_IN In)
@@ -71,12 +76,22 @@ PS_OUT PS_MAIN(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    if (vMtrlDiffuse.a < 0.99f)
-        discard;
-
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    //if (vMtrlDiffuse.a < 0.99f)
+    //    discard;
+    vMtrlDiffuse.a = vMtrlAlpha.r;
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vAlpha = vMtrlAlpha.r;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
+
+PS_OUT_PICK PS_MAIN_PICK(PS_IN In)
+{
+    PS_OUT_PICK Out;
+
+    Out.vDiffuse = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 1.f);;
 
     return Out;
 }
@@ -88,8 +103,8 @@ technique11 DefaultTechnique
     pass Default
     {
         SetRasterizerState(RS_Cull_None);
-        SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 		//SetDepthStencilState();
 		//SetBlendState();
 
@@ -98,6 +113,21 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN();
+    }
+
+    pass Pick
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_PICK();
     }
 
     pass Blend
@@ -114,6 +144,8 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN();
     }
+
+
 }
 
 

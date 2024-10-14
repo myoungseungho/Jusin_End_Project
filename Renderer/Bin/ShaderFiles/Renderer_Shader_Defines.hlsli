@@ -14,7 +14,6 @@ sampler PointSampler = sampler_state
 	AddressV = wrap;
 };
 
-
 /* D3D11_RASTERIZER_DESC */
 RasterizerState RS_Default
 {

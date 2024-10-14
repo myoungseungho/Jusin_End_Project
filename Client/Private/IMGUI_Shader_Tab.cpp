@@ -51,6 +51,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         MoveTex_Node nodeDesc{};
         nodeDesc.MoveTex_node_id = m_MoveTex_node_id++;
         m_MoveTex_Node_ids.push_back(nodeDesc);
+      //  node_ids.push_back(nodeDesc.MoveTex_node_id - 1500);
     }
     ImGui::SameLine();
     if (ImGui::Button("Add Sprite") && isStart)
@@ -58,6 +59,7 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         Sprite_Node nodeDesc{};
         nodeDesc.Sprite_node_id = m_Sprite_node_id++;
         m_Sprite_Node_ids.push_back(nodeDesc);
+      //  node_ids.push_back(nodeDesc.Sprite_node_id - 3000);
     }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
@@ -123,7 +125,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
         wstring prototypeKey = TEXT("Prototype_Component_Texture_Shader_");
         wstring prototypeKeyWithCount = prototypeKey + to_wstring(m_iNodeTextureCount) + TEXT("_") + to_wstring(m_iNumberId);
-
+        wstring prototypeKeyWithAlpha = prototypeKeyWithCount + TEXT("_Alpha");
         CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
         tDesc.prototypeKey = prototypeKeyWithCount.c_str();
 
@@ -134,8 +136,6 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         CGameObject* pPrototype = m_pGameInstance->Find_Prototype(TEXT("Prototype_GameObject_Shader_Texture"));
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
  
-
-
         _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
 
         if (fTextureSize.x > g_iWinSizeX)
@@ -152,11 +152,12 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
             fTextureSize.y += fDiff;
         }
 
-        m_pRenderInstance->Add_ClientRenderTarget(prototypeKeyWithCount.c_str(), prototypeKeyWithCount.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f));
+        m_pRenderInstance->Add_ClientRenderTarget(prototypeKeyWithCount.c_str(), prototypeKeyWithCount.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
         
         SRV_Texture SRVDesc{};
         SRVDesc.iID = unique_node_id;
         SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKeyWithCount.c_str());
+        SRVDesc.Alpha = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKeyWithAlpha.c_str());
         m_NodeTextureSRVs.push_back(SRVDesc);
 
         m_NodeTextures.back()->m_iID = unique_node_id;
@@ -291,19 +292,47 @@ void CIMGUI_Shader_Tab::Render_SpriteNode()
         ImGui::Text("Sprite_Node %d", node_id - 3000);
 
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
-        
         ImGui::SetNextItemWidth(50);
         _int a[2] = { iter.fSpriteSizeNumber.x ,iter.fSpriteSizeNumber.y };
         ImGui::InputInt2("Width & Height", a, ImGuiInputTextFlags_DisplayEmptyRefVal);
-
         iter.fSpriteSizeNumber = { (_float)a[0],(_float)a[1] };
         ImGui::SetNextItemWidth(50);
+
         ImGui::DragFloat("Speed", &iter.fSpeed, 0.1f, 0.0f, 30.0f, "%.2f");
 
         ImGui::PopStyleColor();
         ImNodes::BeginOutputAttribute(node_id + 1, 2);
         ImGui::Text("Out");
         ImNodes::EndOutputAttribute();
+
+        auto it = find_if(links.begin(), links.end(),
+            [node_id](const pair<_int, _int>& link) {
+                return link.first == node_id + 1;
+            });
+
+        if (it != links.end())
+        {
+            auto Texture_nodeit = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+                [&](CShader_Texture* texture) {
+                    return texture->m_iID == (*it).second / m_iAttributeCount;
+                });
+
+            if (Texture_nodeit != m_NodeTextures.end())
+            {
+
+                if (ImGui::Checkbox("Loop", &(iter.isLoop)))
+                    (*Texture_nodeit)->Sprite_Loop(iter.isLoop);
+
+                Draw_MusicButton((*Texture_nodeit));
+            }
+        }
+
+
+
+        //else
+        //{
+        //    Draw_MusicButton(nullptr);
+        //}
 
         ImNodes::EndNode();
 
@@ -362,16 +391,26 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                 return;
             }
         }
-        ///*list<MoveTex_Node> m_MoveTex_Node_ids*/
-        //for (auto& iter : m_MoveTex_Node_ids)
-        //{
-        //    if (ImNodes::IsNodeHovered(&iter.MoveTex_node_id))
-        //    {
-        //        iID = iter.MoveTex_node_id;
-        //        eNodeType = NODE_FUNCTION;
-        //        return;
-        //    }
-        //}
+        /*list<MoveTex_Node> m_MoveTex_Node_ids*/
+        for (auto& iter : m_MoveTex_Node_ids)
+        {
+            if (ImNodes::IsNodeHovered(&iter.MoveTex_node_id))
+            {
+                iID = iter.MoveTex_node_id;
+                eNodeType = NODE_FUNCTION;
+                return;
+            }
+        }
+
+        for (auto& iter : m_Sprite_Node_ids)
+        {
+            if (ImNodes::IsNodeHovered(&iter.Sprite_node_id))
+            {
+                iID = iter.Sprite_node_id;
+                eNodeType = NODE_FUNCTION;
+                return;
+            }
+        }
     }
     
     if (m_pGameInstance->Get_DIKeyState(DIK_DELETE) && eNodeType != NODE_END)
@@ -565,25 +604,39 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     if (target_node_id > 1500 && target_node_id < 3000)
                     {
                         (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
-                        m_MoveTex_Node_ids.remove_if([&](const MoveTex_Node& node) {
-                            return node.MoveTex_node_id == iID;
-                            });
+                        
                     }
                     else if (target_node_id > 3000)
                     {
                         (*it)->Remove_InputFunction(FUNCTION_SPRITE);
-                        m_Sprite_Node_ids.remove_if([&](const Sprite_Node& node) {
-                            return node.Sprite_node_id == iID;
-                            });
+                       
                     }
                 }
 
             }
-
+            if (target_node_id > 1500 && target_node_id < 3000)
+            {
+                m_MoveTex_Node_ids.remove_if([&](const MoveTex_Node& node) {
+                    return node.MoveTex_node_id == iID;
+                    });
+            }
+            else if (target_node_id > 3000)
+            {
+                m_Sprite_Node_ids.remove_if([&](const Sprite_Node& node) {
+                    return node.Sprite_node_id == iID;
+                    });
+            }
             links.erase(remove_if(links.begin(), links.end(),
                 [node_id](const pair<_int, _int>& link) {
                     return link.first == node_id + 1; //||
                 }), links.end());
+            //Node 부터 지움
+
+          /*  if(iID < 3000)
+                node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID - 1500), node_ids.end());
+            else
+                node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID - 3000), node_ids.end());*/
+
             //// 그 노드 ID가 디퓨즈에 영향을 줬었냐?
             //else if (target_second_value % 4 == 1)
             //{
@@ -606,6 +659,76 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
         }
         }
     }
+}
+
+void CIMGUI_Shader_Tab::Draw_MusicButton(CShader_Texture* pShaderTexture)
+{
+    //재생버튼   
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 35);
+    ImVec2 button_size = ImVec2(20, 20);
+    if (ImGui::InvisibleButton("play_button", button_size)) 
+    {
+        pShaderTexture->Sprite_ButtonClick(CShader_Texture::SB_PLAY);
+    }
+
+    ImVec2 p = ImGui::GetItemRectMin();
+    ImDrawList* draw_list = ImGui::GetWindowDrawList();
+    float size = 20.0f;
+    ImVec2 triangle_pos[3] = {
+        ImVec2(p.x + (button_size.x - size) * 0.5f, p.y),
+        ImVec2(p.x + (button_size.x + size) * 0.5f, p.y + size / 2),
+        ImVec2(p.x + (button_size.x - size) * 0.5f, p.y + size)
+    };
+
+    ImU32 triangle_color;
+
+    if (ImGui::IsItemHovered()) 
+        triangle_color = IM_COL32(155, 255, 155, 255);
+    else
+        triangle_color = IM_COL32(85, 255, 85, 255);
+
+    draw_list->AddTriangleFilled(triangle_pos[0], triangle_pos[1], triangle_pos[2], triangle_color);
+
+    // 일시정지 버튼
+    ImGui::SameLine();
+    if (ImGui::InvisibleButton("pause_button", button_size)) 
+    {
+        pShaderTexture->Sprite_ButtonClick(CShader_Texture::SB_PAUSE);
+    }
+
+    p = ImGui::GetItemRectMin();
+    ImVec2 pause_rect1_pos[2] = {
+        ImVec2(p.x + 4, p.y),
+        ImVec2(p.x + 8, p.y + size)
+    };
+    ImVec2 pause_rect2_pos[2] = {
+        ImVec2(p.x + 12, p.y),
+        ImVec2(p.x + 16, p.y + size)
+    };
+    ImU32 pause_color = IM_COL32(255, 255, 65, 255);
+    if (ImGui::IsItemHovered()) 
+        pause_color = IM_COL32(255, 255, 185, 255);
+
+    draw_list->AddRectFilled(pause_rect1_pos[0], pause_rect1_pos[1], pause_color);
+    draw_list->AddRectFilled(pause_rect2_pos[0], pause_rect2_pos[1], pause_color);
+
+    // 초기화 버튼
+    ImGui::SameLine();
+    if (ImGui::InvisibleButton("reset_button", button_size)) 
+    {
+        pShaderTexture->Sprite_ButtonClick(CShader_Texture::SB_RESET);
+    }
+
+    p = ImGui::GetItemRectMin();
+    ImVec2 reset_rect_pos[2] = {
+        ImVec2(p.x, p.y),
+        ImVec2(p.x + size, p.y + size)
+    };
+    ImU32 reset_color = IM_COL32(255, 85, 85, 255);
+    if (ImGui::IsItemHovered())
+        reset_color = IM_COL32(255, 135, 135, 255);
+
+    draw_list->AddRectFilled(reset_rect_pos[0], reset_rect_pos[1], reset_color);
 }
 
 void CIMGUI_Shader_Tab::Check_Create_Link()
@@ -663,16 +786,6 @@ void CIMGUI_Shader_Tab::Check_Create_Link()
                     (*Texture_nodeit)->Remove_InputFunction(FUNCTION_TEXMOVE);
                 }
 
-                // m_NodeTextureSRVs는 SRV는 내비두고 삭제
-                auto iter = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
-                    [&](const SRV_Texture& srv) {
-                        return srv.iID == (start_attr - 1 - 3001);
-                    });
-                if (iter != m_NodeTextureSRVs.end())
-                {
-                    m_NodeTextureSRVs.erase(iter);
-                }
-
             }
         }
         // Main_Node Diffuse에 연결된거임
@@ -687,6 +800,7 @@ void CIMGUI_Shader_Tab::Check_Create_Link()
                 });
 
             m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
+            m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha,1);
             //m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
         }
         else if (end_attr % 4 == 2)

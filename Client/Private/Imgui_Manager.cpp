@@ -97,6 +97,17 @@ void CImgui_Manager::Late_Update(_float fTimeDelta)
 
 HRESULT CImgui_Manager::Render(_float fTimeDelta)
 {
+	m_fTimeAcc += fTimeDelta;
+
+	++m_iNumCount;
+
+	if (m_fTimeAcc >= 1.f)
+	{
+		m_fTimeAcc = 0.f;
+		m_iNumRender = m_iNumCount;
+		m_iNumCount = 0;
+	}
+
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -156,6 +167,8 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 {
 	// 토글 버튼
 	if (ImGui::BeginMainMenuBar()) {
+		ImGui::Text("FPS : %d", m_iNumRender);
+
 		if (ImGui::BeginMenu("Option")) {
 			if (ImGui::MenuItem("IMGUI ON", NULL, &bShowImGuiWindows)) {
 			}

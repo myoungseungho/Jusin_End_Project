@@ -37,8 +37,12 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 	if (nullptr == pRenderTarget)
 		return E_FAIL;
 
-	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
+	CRenderTarget* pAlphaRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pAlphaRenderTarget)
+		return E_FAIL;
 
+	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
+	m_RenderTargets.emplace(strTargetTag + L"_Alpha", pAlphaRenderTarget);
 
 	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
 
@@ -46,14 +50,17 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 	{
 		list<CRenderTarget*>	MRTList;
 		MRTList.push_back(pRenderTarget);
-
+		MRTList.push_back(pAlphaRenderTarget);
 		m_MRTs.emplace(strMRTTag, MRTList);
 	}
 	else
+	{
 		pMRTList->push_back(pRenderTarget);
+		pMRTList->push_back(pAlphaRenderTarget);
+	}
 
 	Safe_AddRef(pRenderTarget);
-
+	Safe_AddRef(pAlphaRenderTarget);
 	return S_OK;
 }
 
@@ -126,6 +133,37 @@ HRESULT CTarget_Manager::Begin_MRT(const _wstring & strMRTTag, ID3D11DepthStenci
 	}
 
 	if(nullptr != pDSV)
+		m_pContext->ClearDepthStencilView(pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+
+	m_pContext->OMSetRenderTargets(iNumRTV, RenderTargets, nullptr == pDSV ? m_pOldDSV : pDSV);
+
+	return S_OK;
+}
+
+HRESULT CTarget_Manager::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
+{
+	ID3D11ShaderResourceView* pSRV[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = {
+	nullptr
+	};
+
+	m_pContext->PSSetShaderResources(0, D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT, pSRV);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
+	if (nullptr == pMRTList)
+		return E_FAIL;
+
+	m_pContext->OMGetRenderTargets(1, &m_pOldRTV, &m_pOldDSV);
+
+	_uint		iNumRTV = { 0 };
+
+	ID3D11RenderTargetView* RenderTargets[8] = { nullptr };
+
+	for (auto& pRenderTarget : *pMRTList)
+	{
+		RenderTargets[iNumRTV++] = pRenderTarget->Get_RTV();
+	}
+
+	if (nullptr != pDSV)
 		m_pContext->ClearDepthStencilView(pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 
 	m_pContext->OMSetRenderTargets(iNumRTV, RenderTargets, nullptr == pDSV ? m_pOldDSV : pDSV);

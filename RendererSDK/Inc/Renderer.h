@@ -19,7 +19,7 @@ BEGIN(Renderer)
 class CRenderer final : public CBase
 {
 public:
-	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_SHADOWOBJ, RG_NONLIGHT, RG_BLEND, RG_UI, RG_NODE, RG_END };
+	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_SHADOWOBJ, RG_NONLIGHT, RG_GLOW, RG_BLEND, RG_UI, RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -34,6 +34,7 @@ public:
 public:
 	void Show_OutLine() { m_isOutLine = !m_isOutLine; }
 	void Show_Layer_View() { m_isLayerView = !m_isLayerView; }
+	_bool Get_isLayerView() { return m_isLayerView; }
 private:
 	_bool m_isOutLine = { false };
 
@@ -49,10 +50,13 @@ private:
 	class CGameInstance* m_pGameInstance = { nullptr };
 
 	class CShader* m_pShader = { nullptr };
+	class CShader* m_pGlowShader = { nullptr };
 	class CVIBuffer_Rect* m_pVIBuffer = { nullptr };
+	class CVIBuffer_Rect* m_pVIBuffer_Half = { nullptr };
 	ID3D11DepthStencilView* m_pShadowDSV = { nullptr };
 
-
+	_float4x4					m_DownWorldMatrix = {};
+	_float4x4					m_DownWorldMatrix_Second = {};
 	_float4x4					m_WorldMatrix = {};
 	_float4x4					m_ViewMatrix = {};
 	_float4x4					m_ProjMatrix = {};
@@ -67,6 +71,7 @@ private:
 	HRESULT Render_Lights(_float fTimeDelta);
 	HRESULT Render_Deferred(_float fTimeDelta);
 	HRESULT Render_NonLight(_float fTimeDelta);
+	HRESULT Render_Glow(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
@@ -75,6 +80,8 @@ private:
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
 #endif
+
+	HRESULT Draw_Glow(_float fTimeDelta);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
