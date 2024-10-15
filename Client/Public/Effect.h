@@ -92,7 +92,8 @@ public:
 	_wstring		m_DiffuseTextureName;
 	_int				m_iNumWidthImage = { 0 };
 	_int				m_iNumHeighthImage = { 0 };
-	_bool m_bIsNotPlaying = { false };
+	_bool			m_bIsNotPlaying = { false };
+	_bool			m_bIsLoop = { false };
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

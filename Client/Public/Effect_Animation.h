@@ -25,13 +25,17 @@ public:
 	_bool	Find_KeyFrame(_uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_KeyFrame(_uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(_uint KeyFrameNumber);
-	EFFECT_KEYFRAME Play_Animation(_float CurAnimPos);
+	EFFECT_KEYFRAME Play_Animation(_float CurAnimPos, _bool bIsLoop);
 	_float3 Lerp(const _float3& start, const _float3& end, _float factor);
+
+public:
+
 
 private:
 	class CGameInstance* m_pGameInstance = { nullptr };
 
 	map<_uint, EFFECT_KEYFRAME>	m_EffectKeyFrames;
+
 public:
 	static CEffect_Animation* Create();
 	virtual void Free() override;

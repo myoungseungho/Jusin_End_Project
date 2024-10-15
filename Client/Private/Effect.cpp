@@ -124,7 +124,7 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 		return E_FAIL;
 
 
-	EFFECT_KEYFRAME ResultKeyFrame = m_pAnimation->Play_Animation(CurrentFrame);
+	EFFECT_KEYFRAME ResultKeyFrame = m_pAnimation->Play_Animation(CurrentFrame, m_bIsLoop);
 
 	Set_Effect_Scaled(ResultKeyFrame.vScale);
 	Set_Effect_Position(ResultKeyFrame.vPosition);

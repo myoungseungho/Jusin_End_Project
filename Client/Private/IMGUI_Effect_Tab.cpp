@@ -580,12 +580,55 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     m_pEffect_Manager->Set_Layer_Animation_Position(selectedLayerName, pLayer->m_fCurrentAnimPosition);
             }
 
+            std::vector<bool> effectChecks(effectNames.size(), false);
+
+            for (int item = 0; item < effectNames.size(); item++)
+            {
+                CEffect* pEffect = m_pEffect_Manager->Find_Layer_Effect(selectedLayerName, effectNames[item]);
+                if (pEffect)
+                {
+                    effectChecks[item] = pEffect->m_bIsLoop;  // 초기 상태 동기화
+                }
+            }
+
             for (int item = 0; item < effectNames.size(); item++)
             {
                 string effectNameUTF8 = WStringToUTF8(effectNames[item]);
                 ImGui::TextWrapped("%s", effectNameUTF8.c_str());
 
                 ImGui::SameLine(effectNameWidth);
+
+                ImGui::PushID(item);
+
+                ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));  // 패딩 조정으로 크기 조절
+                ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 4));   // 아이템 간 간격 줄임
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(180, 173, 255, 210));       // 체크박스 배경 색상 변경
+                ImGui::PushStyleColor(ImGuiCol_CheckMark, IM_COL32(0, 0, 0, 255));         // 체크마크 색상 변경
+
+                bool isChecked = effectChecks[item];
+                if (ImGui::Checkbox("##EffectCheck", &isChecked))
+                {
+                    // 체크박스를 클릭할 때마다 해당 이펙트를 찾아 m_bIsLoop 값 업데이트
+                    CEffect* pEffect = m_pEffect_Manager->Find_Layer_Effect(selectedLayerName, effectNames[item]);
+                    if (pEffect)
+                    {
+                        pEffect->m_bIsLoop = isChecked; // 체크 상태에 따라 m_bIsLoop 변경
+                    }
+
+                    // 체크 상태를 vector에 업데이트
+                    effectChecks[item] = isChecked;
+                }
+
+                // 스타일 원래대로 복구
+                ImGui::PopStyleColor(2);
+                ImGui::PopStyleVar(2);
+
+                ImGui::PopID();
+
+                // 간격 추가
+                ImGui::SameLine();
+                ImGui::Dummy(ImVec2(30.0f, 0.0f)); // 여유 공간을 추가하여 체크박스와 첫 번째 버튼 간격 조정
+                
 
                 for (int frame = 0; frame < totalKeyframes; frame++)
                 {
