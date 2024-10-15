@@ -12,7 +12,9 @@
 #include "Effect_Single.h"
 
 #include "SpaceSky.h"
+#include "SpaceCliff.h"
 #include "SpaceEarth.h"
+#include "SpaceStage.h"
 #include "SpaceGround.h"
 #include "SpaceEarth_Light.h"
 #include "FallingStar.h"
@@ -141,7 +143,7 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/FallingStar/sp_FallingStar.png"), 1))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Terrain */
+#pragma region SpaceGround_Resouces
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground.png"), 1))))
 		return E_FAIL;
@@ -157,12 +159,29 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Crater"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_crater.png"), 1))))
 		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceGround"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Ground/sp_Ground.bin", PreTransformMatrix))))
 		return E_FAIL;
+#pragma endregion
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Stage"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/BRGround/sp_BRGround.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStage"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/BRGround/BRGround.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Cliff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Cliff/sp_cliff.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceCliff"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Cliff/Cliff.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+
+
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSky"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/SpaceSky/SpaceSky.bin", PreTransformMatrix))))
@@ -2623,6 +2642,14 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceCliff"),
+		CSpaceCliff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceStage"),
+		CSpaceStage::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceGround"),
 		CSpaceGround::Create(m_pDevice, m_pContext))))

@@ -29,8 +29,8 @@ HRESULT CFallingStar::Initialize(void * pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 	//1.f*0.7f, 0.3f * 0.5f, 0.6f * 0.5f
-	m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
-	m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
+	m_pTransformCom->Set_Scaled(0.1f, 0.1f, 0.1f);
+	//m_pTransformCom->Rotation(XMVectorSet(0.5f, 0.f, 0.5f, 0.f), XMConvertToRadians(180.f));
 	m_fSpriteSize = _float2(1.0f / m_fSpriteAnimCount.x, 1.0f / m_fSpriteAnimCount.y);
 	return S_OK;
 }
@@ -68,8 +68,8 @@ void CFallingStar::Update(_float fTimeDelta)
 void CFallingStar::Late_Update(_float fTimeDelta)
 {
 	_vector vPos = m_pGameInstance->Get_CamPosition_Vector();
-	vPos = XMVectorSetZ(vPos, XMVectorGetZ(vPos) + 2);
-
+	vPos = XMVectorSetZ(vPos, XMVectorGetZ(vPos) + 50);
+	//vPos = XMVectorSetY(vPos, XMVectorGetY(vPos) + 50);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);

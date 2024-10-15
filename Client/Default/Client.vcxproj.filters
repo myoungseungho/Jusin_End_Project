@@ -67,6 +67,12 @@
     <Filter Include="02.GameObjects\Map\Space\Ground">
       <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Stage">
+      <UniqueIdentifier>{5e9d2120-ef8b-45f4-a05c-191c764956f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Cliff">
+      <UniqueIdentifier>{002116a6-d7ec-40ce-8ad9-a2993f34be47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -235,6 +241,12 @@
     <ClInclude Include="..\Public\SpaceGround.h">
       <Filter>02.GameObjects\Map\Space\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceStage.h">
+      <Filter>02.GameObjects\Map\Space\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceCliff.h">
+      <Filter>02.GameObjects\Map\Space\Cliff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -344,6 +356,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceGround.cpp">
       <Filter>02.GameObjects\Map\Space\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceStage.cpp">
+      <Filter>02.GameObjects\Map\Space\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceCliff.cpp">
+      <Filter>02.GameObjects\Map\Space\Cliff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

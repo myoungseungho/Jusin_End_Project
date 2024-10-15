@@ -189,10 +189,12 @@
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\Public\Shader_Texture.h" />
+    <ClInclude Include="..\Public\SpaceCliff.h" />
     <ClInclude Include="..\Public\SpaceEarth.h" />
     <ClInclude Include="..\Public\SpaceEarth_Light.h" />
     <ClInclude Include="..\Public\SpaceGround.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
+    <ClInclude Include="..\Public\SpaceStage.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -229,10 +231,12 @@
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />
+    <ClCompile Include="..\Private\SpaceCliff.cpp" />
     <ClCompile Include="..\Private\SpaceEarth.cpp" />
     <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
     <ClCompile Include="..\Private\SpaceGround.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
+    <ClCompile Include="..\Private\SpaceStage.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
