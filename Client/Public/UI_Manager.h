@@ -2,7 +2,7 @@
 
 #include "Base.h"
 #include "Client_Defines.h"
-#include "Pawn.h"
+#include "Character.h"
 
 BEGIN(Engine)
 
@@ -30,11 +30,11 @@ private:
 
 public:
 	void UsingStunCheck(_bool bStun) { m_bStun = bStun; }
-	void UsingAttckBuff(_float fAttBufDuration, CPawn::PLAYER_SLOT eSlotID);
+	void UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT eSlotID);
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
 	void UsingComboCount(_uint iComboCnt);
-	void UsingSelectCharacher(CPawn* pPawn, CPawn::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
-	void UsingChangeCharacher(CPawn::PLAYER_SLOT eCurrSlotID);
+	void UsingSelectCharacher(CCharacter* pPawn, CCharacter::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
+	void UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID);
 	void UsingCreateStartUI();
 	void UsingCreateEndUI();
 
@@ -61,7 +61,7 @@ public:
 	//Combo
 	_uint m_iComboCount = { 0 };
 
-	CPawn* m_pPawnArray[CPawn::SLOT_END] = {};
+	CCharacter* m_pPawnArray[CCharacter::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
 	//Anim
 	_float m_fTotalDuration = { 0.f };

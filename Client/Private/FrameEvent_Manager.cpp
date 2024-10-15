@@ -446,11 +446,11 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     else if (splitText[0] == "PositionChange")
     {
         CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
-        //_float fCurPosition = pModel->Get_CurrentAnimationPosition();
-        //_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
-        //pModel->Play_Animation(fDelay);
+        _float fCurPosition = pModel->Get_CurrentAnimationPosition();
+        _float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+        pModel->Play_Animation(fDelay);
 
-        pModel->CurrentAnimationPositionJump(fValue[0]);
+        //pModel->CurrentAnimationPositionJump(fValue[0]);
     }
 
     else if (splitText[0] == "NextAnimationCheck")

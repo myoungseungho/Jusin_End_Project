@@ -16,15 +16,15 @@ CUI_Manager::CUI_Manager()
 	Safe_AddRef(m_pGameInstance);
 }
 
-void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CPawn::PLAYER_SLOT eSlotID)
+void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT eSlotID)
 {
 	m_fDuration = fAttBufDuration;
 
 	CUIObject::UI_DESC tAttBufDesc = {};
 
-	if (eSlotID == CPawn::LPLAYER1 || eSlotID == CPawn::LPLAYER2)
+	if (eSlotID == CCharacter::LPLAYER1 || eSlotID == CCharacter::LPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::LEFT;
-	else if(eSlotID == CPawn::RPLAYER1 || eSlotID == CPawn::RPLAYER2)
+	else if(eSlotID == CCharacter::RPLAYER1 || eSlotID == CCharacter::RPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::RIGHT;
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"),&tAttBufDesc);
@@ -36,19 +36,19 @@ void CUI_Manager::UsingComboCount(_uint iComboCnt)
 	m_iComboCount = iComboCnt;
 }
 
-void CUI_Manager::UsingChangeCharacher(CPawn::PLAYER_SLOT eCurrSlotID)
+void CUI_Manager::UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID)
 {
-	if (eCurrSlotID == CPawn::LPLAYER1 || eCurrSlotID == CPawn::LPLAYER2)
+	if (eCurrSlotID == CCharacter::LPLAYER1 || eCurrSlotID == CCharacter::LPLAYER2)
 	{
-		CPawn* pSwapPanw = m_pPawnArray[CPawn::LPLAYER1];
-		m_pPawnArray[CPawn::LPLAYER1] = m_pPawnArray[CPawn::LPLAYER2];
-		m_pPawnArray[CPawn::LPLAYER2] = pSwapPanw;
+		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::LPLAYER1];
+		m_pPawnArray[CCharacter::LPLAYER1] = m_pPawnArray[CCharacter::LPLAYER2];
+		m_pPawnArray[CCharacter::LPLAYER2] = pSwapPanw;
 	}
-	else if (eCurrSlotID == CPawn::RPLAYER1 || eCurrSlotID == CPawn::RPLAYER2)
+	else if (eCurrSlotID == CCharacter::RPLAYER1 || eCurrSlotID == CCharacter::RPLAYER2)
 	{
-		CPawn* pSwapPanw = m_pPawnArray[CPawn::RPLAYER1];
-		m_pPawnArray[CPawn::RPLAYER1] = m_pPawnArray[CPawn::RPLAYER2];
-		m_pPawnArray[CPawn::RPLAYER2] = pSwapPanw;
+		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::RPLAYER1];
+		m_pPawnArray[CCharacter::RPLAYER1] = m_pPawnArray[CCharacter::RPLAYER2];
+		m_pPawnArray[CCharacter::RPLAYER2] = pSwapPanw;
 	}
 
 }

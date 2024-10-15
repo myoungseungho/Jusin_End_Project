@@ -82,8 +82,8 @@ protected:
 	_float4x4 m_ViewMatrix = {};
 	_float4x4 m_ProjMatrix = {};
 
-	CPawn* m_pMainPawn = { nullptr };
-	CPawn* m_pSubPawn = { nullptr };
+	CCharacter* m_pMainPawn = { nullptr };
+	CCharacter* m_pSubPawn = { nullptr };
 
 	CUI_Manager* m_pUI_Manager = { nullptr };
 

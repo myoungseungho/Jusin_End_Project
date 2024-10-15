@@ -170,7 +170,12 @@ _uint CUI_ComboNumber::Return_TextureIndex()
 
 void CUI_ComboNumber::ScaleAnimation()
 {
-	if (m_pMainPawn->Get_PawnDesc().bHit)
+	_bool bHit = FALSE;
+
+	if(m_pMainPawn != nullptr)
+		bHit = m_pMainPawn->Get_PawnDesc().bHit;
+
+	if (bHit)
 	{
 		__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, m_fDepth);
 	}

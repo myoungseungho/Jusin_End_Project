@@ -132,6 +132,10 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 class CCharacter  : public CGameObject
 {
 public:
+	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
+	enum PLAYER_ID { GOGU, ANDROID21, BUU, HIT, PAWN_END };
+
+public:
 	static vector<CInput> Command_236Attack;
 	static vector<CInput> Command_236Attack_Extra;
 	static vector<CInput> Command_214Attack;
@@ -171,7 +175,26 @@ public:
 	typedef struct: CGameObject::GAMEOBJECT_DESC
 	{
 		_wstring strModelName;
+		PLAYER_SLOT ePlayerSlot = {};
 	}Character_DESC;
+
+public:
+	typedef struct
+	{
+		_bool		bStun = { FALSE };
+		_bool		bHit = { FALSE };
+		_bool		bAttBuf = { FALSE };
+
+		_int		iHp = { 0 };
+		_uint		iComboCount = { 0 };
+
+		_int		iSKillPoint = { 0 };
+		_int		iSKillCount = { 0 };
+
+		PLAYER_SLOT ePlayer_Slot = {};
+		PLAYER_ID		ePlayerID = {};
+
+	}Character_INFO_DESC;
 
 	struct CommandPattern {
 		vector<CInput> pattern;  // 입력 패턴
@@ -251,6 +274,9 @@ public:
 
 	virtual void Gravity(_float fTimeDelta);
 
+public:
+	Character_INFO_DESC Get_PawnDesc() { return m_tPawnDesc; }
+
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
@@ -287,6 +313,34 @@ protected:
 	_ushort m_iFallAnimationIndex = {7};
 	_ushort m_iIdleAnimationIndex = { 0 };
 
+protected:
+	_uint					m_iComboCount = { 0 };
+	_int					m_iHp = { 0 };
+	_int					m_iSKillPoint = { 0 };
+	_int					m_iSKillCount = { 0 };
+
+	_bool					m_bStun = { FALSE };
+	_bool					m_bHit = { FALSE };
+	_bool					m_bAttBuf = { FALSE };
+
+	_uint					m_iNumAttBuf = { 1 };
+
+	//UI에 보내야할 정보
+	Character_INFO_DESC				 m_tPawnDesc = {};
+	PLAYER_ID					m_ePawnID = {};
+
+	PLAYER_SLOT				m_ePlayerSlot = {};
+
+	_float					m_fStunTImer = { 0.f };
+	_float					m_fAttBufTimer = { 0.f };
+
+	class CUI_Manager* m_pUI_Manager = { nullptr };
+
+protected:
+		void Action_AttBuf(_ubyte byKeyID, PLAYER_SLOT eSlot, _float fTimeDelta);
+		void Action_Hit(_ubyte byKeyID, _float fStunDuration, _float fTimeDelta);
+		void SkillGaugeLimit();
+		void StunRecover(_float fTimeDelta);
 
 private:
 	HRESULT Ready_Components();

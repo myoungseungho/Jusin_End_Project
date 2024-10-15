@@ -89,7 +89,10 @@ void CChannel::Update_FrameIndex(_float fCurrentPosition, _uint* pKeyFrameIndex)
 	*pKeyFrameIndex = 0;
 
 	
-	while (fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex) + 1].fTime)
+	//while (fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex) + 1].fTime)
+	//	++(*pKeyFrameIndex);
+
+	while ((*pKeyFrameIndex + 1 < m_KeyFrames.size()) && fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex) + 1].fTime)
 		++(*pKeyFrameIndex);
 
 }

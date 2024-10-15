@@ -3,6 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
+#include "UI_Manager.h"
 
 
 
@@ -254,23 +255,27 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
-
-	
+	m_iHp = 100;
+	m_ePawnID = GOGU;
 
 	return S_OK;
 }
 
 void CPlay_Goku::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CPlay_Goku::Update(_float fTimeDelta)
 {
 	
+	Action_Hit(DIK_0, 0.25f, fTimeDelta);
+	Action_AttBuf(DIK_9, m_ePlayerSlot, fTimeDelta);
 
-
-
+	if (m_pGameInstance->Key_Down(DIK_F3))
+	{
+		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+	}
 
 
 	InputedCommandUpdate(fTimeDelta);

@@ -32,7 +32,7 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 150.f, m_fPosX, 40, 0.85f);
+	__super::Set_UI_Setting(-m_fSizeX, 150.f, m_fPosX, 40, 0.85f);
 
 	return S_OK;
 }
@@ -40,7 +40,9 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
-	m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
+
+	if(m_pMainPawn != nullptr)
+		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)

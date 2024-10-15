@@ -41,7 +41,9 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
-	m_fHpRadio = m_pMainPawn->Get_PawnDesc().iHp / 100.f;
+
+	if(m_pMainPawn != nullptr)
+		m_fHpRadio = m_pMainPawn->Get_PawnDesc().iHp / 100.f;
 	
 
 

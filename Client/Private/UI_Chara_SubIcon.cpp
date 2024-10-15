@@ -32,7 +32,7 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 115.f, m_fPosX, 112.f, 0.5f);
+	__super::Set_UI_Setting(-m_fSizeX, 115.f, m_fPosX, 112.f, 0.5f);
 
 	return S_OK;
 }
