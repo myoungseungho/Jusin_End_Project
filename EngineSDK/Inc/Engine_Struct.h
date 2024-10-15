@@ -121,6 +121,7 @@ namespace Engine
 		const _float4x4* pWorldFloat4x4;
 		// Damping Mode에서 사용되는 계수
 		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
+		_bool hasWorldFloat4x4 = { true };
 	};
 
 	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };

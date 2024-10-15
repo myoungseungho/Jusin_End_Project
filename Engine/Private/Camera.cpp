@@ -209,7 +209,7 @@ void CCamera::Prev_Stop()
 }
 
 
-void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping)
+void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4)
 {
 	CameraPoint cameraPoint{};
 
@@ -217,7 +217,7 @@ void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4
 
 	//디폴트 카메라는 모델의 로컬이 없어서 월드행렬을 저장하고
 	//나머지 카메라는 모델의 로컬을 변환한 월드행렬 저장해야함
-	if (pModelFloat4x4 != nullptr)
+	if (hasWorldFloat4x4 == true)
 	{
 		_matrix matrix = Float4x4ToMatrix(*pModelFloat4x4);
 
@@ -260,6 +260,7 @@ void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4
 		cameraPoint.interpolationType = type;
 		cameraPoint.damping = damping;
 		cameraPoint.pWorldFloat4x4 = pModelFloat4x4;
+		cameraPoint.hasWorldFloat4x4 = hasWorldFloat4x4;
 
 		m_vecPoints.push_back(cameraPoint);
 	}
@@ -287,7 +288,7 @@ void CCamera::Add_Point(_float duration, InterpolationType type, const _float4x4
 		cameraPoint.interpolationType = type;
 		cameraPoint.damping = damping;
 		cameraPoint.pWorldFloat4x4 = nullptr;
-
+		cameraPoint.hasWorldFloat4x4 = hasWorldFloat4x4;
 		m_vecPoints.push_back(cameraPoint);
 	}
 }
@@ -312,7 +313,7 @@ void CCamera::Move_Point(_int index)
 
 	const CameraPoint& targetPoint = m_vecPoints[index];  // 인덱스 접근
 
-	if (targetPoint.pWorldFloat4x4 != nullptr)
+	if (targetPoint.hasWorldFloat4x4 == true)
 	{
 		// 1. 로컬 포지션
 		_float3 localPosition = targetPoint.position;
@@ -392,7 +393,7 @@ void CCamera::Move_Point(_int index)
 
 void CCamera::Modify_Transform(_int index)
 {
-	
+
 
 	CameraPoint& targetPoint = m_vecPoints[index];  // 인덱스 접근
 

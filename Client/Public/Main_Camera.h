@@ -49,7 +49,7 @@ public:
 	//버츄얼 카메라 셋팅
 	void Set_Virtual_Camera(VIRTUAL_CAMERA mode) { m_currentVirtualMode = mode; }
 	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
-	void Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping);
+	void Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4);
 	void Remove_Point(_int currentIndex);
 	vector<CameraPoint>& Get_VectorPoint();
 	void Play();

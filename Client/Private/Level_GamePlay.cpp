@@ -35,7 +35,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	wstring cameraFilePath = L"../Bin/CameraPoints.txt";
 	vector<CameraData> cameraDataList = m_pGameInstance->Load_All_CameraPoints(cameraFilePath);
 	if (cameraDataList.empty()) {
-		return E_FAIL;
+		return S_OK;
 	}
 
 	// 로드된 데이터를 mainCamera에 적용

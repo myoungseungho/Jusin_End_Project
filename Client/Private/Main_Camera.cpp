@@ -102,9 +102,9 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], m_bPrevPlayMode, fTimeDelta);
 }
 
-void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping)
+void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr, damping);
+	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr, damping, hasWorldFloat4x4);
 }
 
 void CMain_Camera::Remove_Point(_int currentIndex)
@@ -154,6 +154,7 @@ void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
 				point.duration = pointData.duration;
 				point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
 				point.damping = pointData.damping;
+				point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
 
 				// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
 				// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함

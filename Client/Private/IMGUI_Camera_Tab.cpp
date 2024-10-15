@@ -477,9 +477,10 @@ void CIMGUI_Camera_Tab::IMGUI_Button()
 
 		//설정된 모델의 월드행렬 포인트 주소 저장하기
 		const _float4x4* worldMatrixPtr = Get_Model_Float4x4();
+		_bool hasWorldFloat4x4 = worldMatrixPtr == nullptr ? false : true;
 
 		// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
-		m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f);
+		m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f, hasWorldFloat4x4);
 
 		// 사용자에게 추가됨을 알림
 		ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");

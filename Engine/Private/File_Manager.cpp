@@ -202,7 +202,8 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 			file << L"Rotation: " << point.rotation.x << L" " << point.rotation.y << L" " << point.rotation.z << L" " << point.rotation.w << L"\n";
 			file << L"Duration: " << point.duration << L"\n";
 			file << L"InterpolationType: " << static_cast<int>(point.interpolationType) << L"\n";
-			file << L"Damping: " << point.damping << L"\n\n";
+			file << L"Damping: " << point.damping << L"\n";
+			file << L"HasWorldFloat4x4: " << (point.hasWorldFloat4x4 ? 1 : 0) << L"\n\n";
 		}
 	}
 
@@ -324,6 +325,10 @@ vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
 			// Damping 읽기
 			std::getline(file, line);
 			point.damping = std::stof(line.substr(line.find(L":") + 1));
+
+			// HasWorldFloat4x4 읽기
+			std::getline(file, line);
+			point.hasWorldFloat4x4 = stoi(line.substr(line.find(L":") + 1));
 
 			// 포인트 추가
 			currentCameraData.points.push_back(point);
