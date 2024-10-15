@@ -1,7 +1,21 @@
 [VirtualCamera]
 ModelID: 0
 SkillID: -1
-PointCount: 0
+PointCount: 2
+
+[CameraPoint]
+Position: 6.30262 11.7638 -21.8741
+Rotation: 0.0264476 -0.267585 0.0073478 0.963143
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[CameraPoint]
+Position: 11.843 11.7638 -15.5149
+Rotation: -0.0035577 -0.441142 -0.00174883 0.897429
+Duration: 1
+InterpolationType: 0
+Damping: 1
 
 [VirtualCamera]
 ModelID: 1

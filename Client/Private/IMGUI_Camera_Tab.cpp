@@ -57,11 +57,6 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	// 카메라 선택 UI 호출
 	IMGUI_Show_Camera(fTimeDelta);
 
-	//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
-	IMGUI_Save_Button();
-
-
-
 	// 모델이 선택된 경우에만 스킬 선택 UI를 표시
 	if (m_iSelected_Model >= MODELID_SON) {
 		ImGui::Spacing();  // 한 줄 띄우기
@@ -69,20 +64,16 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 		// 스킬 선택 UI 호출
 		IMGUI_Camera_Select_Skill(fTimeDelta);
-
-		// 스킬이 선택된 경우에만 카메라 선택 UI를 표시
-		if (m_iSelected_Skill >= 0) {
-			ImGui::Spacing();  // 한 줄 띄우기
-			ImGui::Separator();  // 경계선 그리기
-
-			// 포인트 보여주기
-			IMGUI_Show_Points();
-		}
 	}
 
+	// 포인트 보여주기
+	IMGUI_Show_Points();
+
 	// Add_Point 버튼 호출
-// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
 	IMGUI_Button();
+
+	//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
+	IMGUI_Save_Button();
 }
 
 
@@ -161,7 +152,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 
 	//아직 스킬을 선택하지 않아서 카메라 셋팅이 안바뀌어있는 상황이라면
 	//또한 디폴트 카메라가 아니라면
-	if (!m_isCompleteCameraSelect && m_iSelected_Model!= MODELID_DEFAULT)
+	if (!m_isCompleteCameraSelect && m_iSelected_Model != MODELID_DEFAULT)
 		selectedCameraName = "Not Selected Camera";
 
 	// 카메라 이름 표시
@@ -203,80 +194,82 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 
 
 void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
-	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0) {
-		std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
 
-		if (points.empty()) {
-			ImGui::Text("No camera points available.");
-			return;
+	if (m_iSelected_Model != MODELID_DEFAULT && m_iSelected_Skill == SKILL_NOT)
+		return;
+
+	std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
+
+	if (points.empty()) {
+		ImGui::Text("No camera points available.");
+		return;
+	}
+
+	ImGui::Separator();
+	ImGui::Text("Camera Points:");
+
+	for (size_t i = 0; i < points.size(); ++i) {
+		ImGui::PushID(static_cast<int>(i));  // 각 포인트에 고유 ID 부여
+
+		bool isSelected = (m_selectedPoint == static_cast<int>(i));
+		if (isSelected) {
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
+		}
+
+		ImGui::BulletText("Point %d:", static_cast<int>(i) + 1);
+
+		if (isSelected) {
+			ImGui::PopStyleColor();  // 텍스트 색상 복원
+		}
+
+		ImGui::SameLine();
+		ImGui::Dummy(ImVec2(50, 0)); // 50 픽셀의 가로 간격 (필요에 따라 조정)
+		ImGui::SameLine();
+
+		// Delete 버튼
+		if (ImGui::Button("Delete")) {
+			// 삭제 확인 팝업을 띄우려면 추가 구현 필요
+			IMGUI_Delete_Point(static_cast<int>(i));
+			ImGui::PopID();
+			break;  // 삭제 후 루프 종료
+		}
+
+		// Modify 버튼
+		ImGui::SameLine();
+		if (ImGui::Button("Modify")) {
+			IMGUI_Modify_Point(static_cast<int>(i));
+		}
+
+		// 포인트 정보 표시 (선택 상태에 따라 텍스트 색상 변경)
+		if (isSelected) {
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
+		}
+
+		CameraPoint& point = points[i];
+		ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
+		ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
+		ImGui::Text("  Duration: %.2f", point.duration);
+		ImGui::Text("  Interpolation: %s",
+			(point.interpolationType == InterpolationType::INTERPOLATION_LINEAR_MODE)
+			? "Linear"
+			: (point.interpolationType == InterpolationType::INTERPOLATION_DAMPING_MODE)
+			? "Damping"
+			: "Skip");
+
+		// **Damping 값 표시 (Damping Mode인 경우)**
+		if (point.interpolationType == InterpolationType::INTERPOLATION_DAMPING_MODE) {
+			ImGui::Text("  Damping: %.2f", point.damping);
+		}
+
+		// 선택된 포인트에 대한 수정 UI 표시
+		if (isSelected)
+		{
+			ImGui::PopStyleColor();  // 텍스트 색상 복원
+			IMGUI_Modify_Point_UI(static_cast<int>(i));
 		}
 
 		ImGui::Separator();
-		ImGui::Text("Camera Points:");
-
-		for (size_t i = 0; i < points.size(); ++i) {
-			ImGui::PushID(static_cast<int>(i));  // 각 포인트에 고유 ID 부여
-
-			bool isSelected = (m_selectedPoint == static_cast<int>(i));
-			if (isSelected) {
-				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
-			}
-
-			ImGui::BulletText("Point %d:", static_cast<int>(i) + 1);
-
-			if (isSelected) {
-				ImGui::PopStyleColor();  // 텍스트 색상 복원
-			}
-
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(50, 0)); // 50 픽셀의 가로 간격 (필요에 따라 조정)
-			ImGui::SameLine();
-
-			// Delete 버튼
-			if (ImGui::Button("Delete")) {
-				// 삭제 확인 팝업을 띄우려면 추가 구현 필요
-				IMGUI_Delete_Point(static_cast<int>(i));
-				ImGui::PopID();
-				break;  // 삭제 후 루프 종료
-			}
-
-			// Modify 버튼
-			ImGui::SameLine();
-			if (ImGui::Button("Modify")) {
-				IMGUI_Modify_Point(static_cast<int>(i));
-			}
-
-			// 포인트 정보 표시 (선택 상태에 따라 텍스트 색상 변경)
-			if (isSelected) {
-				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // 노란색 텍스트
-			}
-
-			CameraPoint& point = points[i];
-			ImGui::Text("  Position: (%.2f, %.2f, %.2f)", point.position.x, point.position.y, point.position.z);
-			ImGui::Text("  Quaternion: (%.2f, %.2f, %.2f)", point.rotation.x, point.rotation.y, point.rotation.z);
-			ImGui::Text("  Duration: %.2f", point.duration);
-			ImGui::Text("  Interpolation: %s",
-				(point.interpolationType == InterpolationType::INTERPOLATION_LINEAR_MODE)
-				? "Linear"
-				: (point.interpolationType == InterpolationType::INTERPOLATION_DAMPING_MODE)
-				? "Damping"
-				: "Skip");
-
-			// **Damping 값 표시 (Damping Mode인 경우)**
-			if (point.interpolationType == InterpolationType::INTERPOLATION_DAMPING_MODE) {
-				ImGui::Text("  Damping: %.2f", point.damping);
-			}
-
-			// 선택된 포인트에 대한 수정 UI 표시
-			if (isSelected)
-			{
-				ImGui::PopStyleColor();  // 텍스트 색상 복원
-				IMGUI_Modify_Point_UI(static_cast<int>(i));
-			}
-
-			ImGui::Separator();
-			ImGui::PopID();
-		}
+		ImGui::PopID();
 	}
 }
 
@@ -392,8 +385,11 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 {
 	CGameObject* model = nullptr;
 	CTransform* modelTransform = nullptr;
+
 	switch (m_iSelected_Model)
 	{
+	case Client::CIMGUI_Camera_Tab::MODELID_DEFAULT:
+		return nullptr;
 	case Client::CIMGUI_Camera_Tab::MODELID_SON:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
