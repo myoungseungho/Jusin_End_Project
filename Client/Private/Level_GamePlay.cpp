@@ -54,7 +54,8 @@ HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 
 	//m_pEffect_Manager->Render(fTimeDelta);
 
-	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
+	//CImgui_Manager::Get_Instance()->Render(fTimeDelta);
+	int a = m_pGameInstance->Get_CurrentLevel_Index();
 
 	return S_OK;
 }

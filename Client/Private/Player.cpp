@@ -48,10 +48,10 @@ void CPlayer::Update(_float fTimeDelta)
 
 void CPlayer::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
 #ifdef _DEBUG
-	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 #endif
 }
 

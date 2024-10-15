@@ -48,10 +48,10 @@ void CMonster::Update(_float fTimeDelta)
 
 void CMonster::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
 #ifdef _DEBUG
-	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 #endif
 }
 

@@ -3,6 +3,7 @@
 #include "Effect_Multi.h"
 #include "GameInstance.h"
 
+
 CEffect_Multi::CEffect_Multi(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CEffect{ pDevice ,pContext }
 {
@@ -130,8 +131,5 @@ void CEffect_Multi::Free()
 {
     __super::Free();
 
-	Safe_Release(m_pShaderCom);
-	Safe_Release(m_pModelCom);
-	Safe_Release(m_pDiffuseTextureCom);
-	Safe_Release(m_pMaskTextureCom);
+
 }

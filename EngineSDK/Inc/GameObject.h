@@ -84,7 +84,7 @@ protected:
 	_bool						m_bIsImguiClick = { false };
 	//ÆÄ½Ì °ü·Ã
 	_bool						m_bIsPasingObject = { false };
-
+	_uint						m_iGameObjectData = { 0 };
 
 protected:
 	map<const _wstring, CComponent*>		m_Components;

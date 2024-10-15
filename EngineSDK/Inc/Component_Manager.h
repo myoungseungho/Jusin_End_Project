@@ -5,7 +5,7 @@
 #include "VIBuffer_Rect.h"
 //#include "VIBuffer_Cube.h"
 //#include "VIBuffer_Terrain.h"
-#include "Collider.h"
+// #include "Collider.h"
 #include "Component.h"
 #include "Model.h"
 #include "Shader.h"

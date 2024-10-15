@@ -64,7 +64,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Clear_DepthStencil_View();
 
 	//레벨매니저 렌더는 게임인스턴스
-	m_pGameInstance->Render_Engine();
+	m_pGameInstance->Render_Engine(fTimeDelta);
 
 	//나머지 렌더는 렌더인스턴스
 	m_pRenderInstance->Render_Engine(fTimeDelta);

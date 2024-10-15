@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "Effect_Animation.h"
 #include "GameInstance.h"
+#include "Effect_Animation.h"
 
 CEffect_Animation::CEffect_Animation()
 	: m_pGameInstance(CGameInstance::Get_Instance())
@@ -156,6 +157,8 @@ CEffect_Animation* CEffect_Animation::Create()
 void CEffect_Animation::Free()
 {
 	__super::Free();
+
+	m_EffectKeyFrames.clear();
 
 	Safe_Release(m_pGameInstance);
 

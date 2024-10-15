@@ -582,8 +582,6 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 
-
-<<<<<<< HEAD
 	return S_OK;
 }
 

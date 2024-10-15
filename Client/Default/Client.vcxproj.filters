@@ -101,9 +101,6 @@
     <Filter Include="02.GameObjects\Player">
       <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Effect">
-      <UniqueIdentifier>{d8f025ca-2643-45a5-b6e3-c62e9fc77590}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -193,9 +190,6 @@
     <ClInclude Include="..\Public\Shader_Texture.h">
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Effect.h">
-      <Filter>02.GameObjects\02. Effect</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Effect_Layer.h">
       <Filter>02.GameObjects\02. Effect\00.Manager\Layer</Filter>
     </ClInclude>
@@ -228,6 +222,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Effect.h">
       <Filter>02.GameObjects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\02. Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -300,9 +297,6 @@
     <ClCompile Include="..\Private\Shader_Texture.cpp">
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Effect.cpp">
-      <Filter>02.GameObjects\02. Effect</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Effect_Layer.cpp">
       <Filter>02.GameObjects\02. Effect\00.Manager\Layer</Filter>
     </ClCompile>
@@ -338,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Effect.cpp">
       <Filter>02.GameObjects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\02. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

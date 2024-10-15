@@ -163,7 +163,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-<<<<<<< HEAD
     g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
     RECT rcWindowed = { 0, 0, g_iWinSizeX, g_iWinSizeY };

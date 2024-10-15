@@ -206,8 +206,4 @@ void CEffect_Single::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pShaderCom);
-	Safe_Release(m_pModelCom);
-	Safe_Release(m_pDiffuseTextureCom);
-	Safe_Release(m_pMaskTextureCom);
 }
