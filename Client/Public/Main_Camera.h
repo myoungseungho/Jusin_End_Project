@@ -56,11 +56,11 @@ public:
 	void Modify_Transform(_int index);
 	void ApplyCameraData(vector<CameraData>& cameraDataList);
 	_int Get_CameraIndex(_int modelID, _int skillID);
+	void Delete_Points();
 	
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
-
 public:
 	vector<CCamera*> m_vecVirtualCamera;
 

@@ -45,6 +45,7 @@ public:
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);
 	_float AdjustT_Damping(_float t, _float damping);
+	void Delete_Points();
 
 public:
 	const _char* GetTabName() const { return m_Name; };

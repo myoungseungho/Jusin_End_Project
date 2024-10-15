@@ -75,13 +75,9 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 			// Add_Point 버튼 호출
 			// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
-			IMGUI_Add_Point();
+			IMGUI_Button();
 
-			// 플레이 버튼
-			IMGUI_Play_Button();
-
-			//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
-			IMGUI_Save_Button();
+		
 		}
 	}
 }
@@ -390,7 +386,7 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 	m_pMainCamera->Modify_Transform(m_selectedPoint);
 }
 
-void CIMGUI_Camera_Tab::IMGUI_Add_Point()
+void CIMGUI_Camera_Tab::IMGUI_Button()
 {
 	// 모델과 스킬이 모두 선택된 경우에만 Add_Point 버튼을 표시
 	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
@@ -441,7 +437,7 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 			ImGui::SliderFloat("Damping Coefficient", &damping, 0.0f, 2.0f, "%.2f");
 		}
 
-		// Add_Point 버튼
+		// Add Point와 Delete 버튼을 같은 라인에 배치
 		if (ImGui::Button("Add Point")) {
 			// Interpolation Type 설정
 			InterpolationType interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
@@ -482,6 +478,28 @@ void CIMGUI_Camera_Tab::IMGUI_Add_Point()
 			selected_interp = 0;
 			damping = 1.0f;
 		}
+
+		// Add a small space and place Delete button on the same line
+		ImGui::SameLine();
+		if (ImGui::Button("Delete")) {
+			m_pMainCamera->Delete_Points();
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "All camera points have been deleted.");
+		}
+
+
+		// 플레이 버튼
+		IMGUI_Play_Button();
+
+		//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
+		IMGUI_Save_Button();
+	}
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Delete_Points()
+{
+	//현재 가상카메라의 포인트들을 전부 지운다.
+	if (ImGui::Button("Delete")) {
+		m_pMainCamera->Delete_Points();
 	}
 }
 

@@ -394,6 +394,11 @@ _float CCamera::AdjustT_Damping(_float t, _float damping)
 	}
 }
 
+void CCamera::Delete_Points()
+{
+	m_vecPoints.clear();
+}
+
 void CCamera::Free()
 {
 	__super::Free();

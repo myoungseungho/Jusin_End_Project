@@ -205,6 +205,11 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 	return index;
 }
 
+void CMain_Camera::Delete_Points()
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->Delete_Points();
+}
+
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
