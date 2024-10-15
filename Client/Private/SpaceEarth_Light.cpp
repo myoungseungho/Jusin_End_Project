@@ -30,7 +30,7 @@ HRESULT CSpaceEarth_Light::Initialize(void * pArg)
 		return E_FAIL;
 	//m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-90.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -100.f, -300.5f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, -100.f, -300.f, 1.f));
 
 	return S_OK;
 }
@@ -76,7 +76,7 @@ void CSpaceEarth_Light::Late_Update(_float fTimeDelta)
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
 }
 
 HRESULT CSpaceEarth_Light::Render(_float fTimeDelta)

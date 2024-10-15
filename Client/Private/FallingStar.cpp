@@ -72,7 +72,7 @@ void CFallingStar::Late_Update(_float fTimeDelta)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
 }
 
 HRESULT CFallingStar::Render(_float fTimeDelta)

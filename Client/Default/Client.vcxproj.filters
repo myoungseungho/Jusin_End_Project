@@ -64,6 +64,9 @@
     <Filter Include="02.GameObjects\Map\Space\Earth\EarthLight">
       <UniqueIdentifier>{7c74267a-a233-4365-982d-8d7c3f82ef7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Ground">
+      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -229,6 +232,9 @@
     <ClInclude Include="..\Public\SpaceEarth_Light.h">
       <Filter>02.GameObjects\Map\Space\Earth\EarthLight</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceGround.h">
+      <Filter>02.GameObjects\Map\Space\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -335,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceEarth_Light.cpp">
       <Filter>02.GameObjects\Map\Space\Earth\EarthLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceGround.cpp">
+      <Filter>02.GameObjects\Map\Space\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

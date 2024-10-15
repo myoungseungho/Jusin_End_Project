@@ -14,9 +14,16 @@ texture2D g_EarthCloud2;
 texture2D g_EarthLight;
 texture2D g_EarthShadow;
 
+texture2D g_GroundPattern;
+texture2D g_GroundCliff;
+texture2D g_GroundCrater;
+texture2D g_GroundShadow;
+int g_GroundCount;
+
 float g_MaskStar_Value_1;
 float g_MaskStar_Value_2;
 float g_Time;
+float g_TimeEarth;
 vector			g_vCamPosition;
 
 float2 g_fSpriteSize;
@@ -147,24 +154,35 @@ g_EarthLight;
 g_EarthShadow;
 */
     PS_OUT Out;
+    float2 vTex, vTexEarth;
 	
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vTex.x = In.vTexcoord.x * 2;
+    vTex.y = In.vTexcoord.y;
+    vTexEarth.x = In.vTexcoord.x + 0.8f;
+    vTexEarth.y = In.vTexcoord.y + 0.3f;
+    vector vMtrlCloud1 = g_EarthCloud1.Sample(LinearSampler, vTex + g_Time * 0.003f);
+    vector vMtrlCloud2 = g_EarthCloud2.Sample(LinearSampler, vTex + g_Time * 0.003f);
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexEarth + g_Time * 0.001f);
+    vMtrlCloud1 *= vMtrlCloud2;
 	
-    vector vMtrlLight = g_EarthLight.Sample(LinearSampler, In.vTexcoord * 2.f);
-    vector vMtrlShadow = g_EarthShadow.Sample(LinearSampler, In.vTexcoord);
 
-    //float Lightluminance = 0.299f * vMtrlLight.x + 0.587f * vMtrlLight.y + 0.114f * vMtrlLight.z;
-    //vMtrlLight.a = saturate(Lightluminance * 1.0f);
 	
+    vTex.x = In.vTexcoord.x * 2;
+    vTex.y = In.vTexcoord.y;
+    vector vMtrlLight = g_EarthLight.Sample(LinearSampler, vTex);
+    vector vMtrlShadow = g_EarthShadow.Sample(LinearSampler, vTex);
+
     float Shadowluminance = 0.299f * vMtrlShadow.x + 0.587f * vMtrlShadow.y + 0.114f * vMtrlShadow.z;
-    vMtrlShadow.a = saturate(Shadowluminance * 2.0f);
-	
-  //  vector vMtrlLerpLight = lerp(vMtrlLight, -vMtrlShadow, 0.5);
-    if (In.vTexcoord.y >= 0.5)
-        vMtrlLight *= 0.f;
-	else
-        vMtrlLight *= 2.f;
-	
+    vMtrlShadow.rgba = saturate(Shadowluminance * 2.0f);
+
+    vMtrlLight.rgb *= saturate(1 - vMtrlShadow.r);
+
+    vMtrlDiffuse += vMtrlLight + vMtrlCloud1;
+    vMtrlDiffuse.b *= 1.3f;
+    
+    //float contrast = 1.7f;
+    //float3 enhancedColor = saturate((vMtrlDiffuse.rgb - 0.5f) * contrast + 0.5f);
+    //vMtrlDiffuse.rgb = enhancedColor;
    // vMtrlDiffuse += vMtrlLight;
 	
     //vMtrlDiffuse = lerp(vMtrlDiffuse, vMtrlShadow, vMtrlShadow.a);
@@ -177,11 +195,7 @@ g_EarthShadow;
     //vMtrlMask2 = lerp(vMtrlMask2, vColorMask1, g_MaskStar_Value_2);
 	
     //vMtrlMask1 += vMtrlMask2;
-    //-----------
-    float contrast = 1.7f;
-    float3 enhancedColor = saturate((vMtrlDiffuse.rgb - 0.5f) * contrast + 0.5f);
-    vMtrlDiffuse.rgb = enhancedColor;
-    //-----------
+
 
     Out.vDiffuse = vMtrlDiffuse; //vMtrlMask1 + vMtrlDiffuse * 0.7f;
 
@@ -212,35 +226,11 @@ g_EarthShadow;
 	
     float Shadowluminance = 0.299f * vMtrlShadow.x + 0.587f * vMtrlShadow.y + 0.114f * vMtrlShadow.z;
     vMtrlShadow.a = saturate(Shadowluminance * 2.0f);
-	
-    //vMtrlLight.a *= vMtrlShadow.a;
+
     vMtrlLight.a -= 1 - vMtrlShadow.a;
- //   vector vColor;
-	////vColor.rgb = lerp(vMtrlLight.rgb, vMtrlShadow.rgb, vMtrlShadow.a);
- //   vColor.rgb = vMtrlLight.rgb + vMtrlShadow.rgb;
- //   vColor.a = vMtrlLight.a;
-  //  vector vMtrlLerpLight = lerp(vMtrlLight, -vMtrlShadow, 0.5);
 
-	
-    //float Lightluminance = 0.299f * vMtrlLight.x + 0.587f * vMtrlLight.y + 0.114f * vMtrlLight.z;
-    //vMtrlLight.a = saturate(Lightluminance * 2.0f);
-    
-    //vMtrlLight.a = saturate(vMtrlLight.a - 0.3f);
-    
-    vMtrlDiffuse += vMtrlLight;
-	
-    //vMtrlDiffuse = lerp(vMtrlDiffuse, vMtrlShadow, vMtrlShadow.a);
-	
-    //vMtrlMask1 *= 1.f - g_MaskStar_Value_1;
-    //vMtrlMask2 *= 1.f - g_MaskStar_Value_2;
 
-    //vector vColorMask1 = vMtrlMask1;
-    //vMtrlMask1 = lerp(vMtrlMask1, vMtrlMask2, g_MaskStar_Value_1);
-    //vMtrlMask2 = lerp(vMtrlMask2, vColorMask1, g_MaskStar_Value_2);
-	
-    //vMtrlMask1 += vMtrlMask2;
-
-    Out.vDiffuse = vMtrlLight * 2; //vMtrlMask1 + vMtrlDiffuse * 0.7f;
+    Out.vDiffuse = vMtrlLight * 2;
 
     Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
@@ -248,6 +238,50 @@ g_EarthShadow;
 
     return Out;
 }
+PS_OUT PS_MAIN(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+   // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    //if (vMtrlDiffuse.a < 0.99f)
+    //    discard;
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_GROUND(PS_IN In)
+{
+    PS_OUT Out;
+    vector vMtrlDiffuse;
+    switch (g_GroundCount)
+    {
+    case 0:
+        {
+        vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);    
+        vector vMtrlPattern = g_GroundPattern.Sample(LinearSampler, In.vTexcoord);
+                vMtrlDiffuse *= vMtrlPattern;
+            }
+        break;
+    case 1:
+        vMtrlDiffuse = g_GroundCliff.Sample(LinearSampler, In.vTexcoord);
+        break;
+    case 2:
+        vMtrlDiffuse = g_GroundCrater.Sample(LinearSampler, In.vTexcoord);
+        break;
+    }
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
 PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 {
 	PS_OUT			Out;
@@ -296,7 +330,7 @@ technique11		DefaultTechnique
     pass FallingStar
     {
         SetRasterizerState(RS_Cull_None);
-        SetDepthStencilState(DSS_Default, 0);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 		//SetDepthStencilState();
 		//SetBlendState();
@@ -336,6 +370,36 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_EARTH_LIGHT();
+    }
+
+    pass Default // 4
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN();
+    }
+
+    pass Ground // 5
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_GROUND();
     }
 
 	pass NormalMapping

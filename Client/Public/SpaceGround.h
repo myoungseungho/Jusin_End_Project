@@ -11,15 +11,15 @@ END
 
 BEGIN(Client)
 
-class CSpaceEarth final : public CGameObject
+class CSpaceGround final : public CGameObject
 {
 public:
 	enum Space_TextureType { SPACE_DIFFUSE,SPACE_STAR_1, SPACE_STAR_2, SPACE_END};
 
 private:
-	CSpaceEarth(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CSpaceEarth(const CSpaceEarth& Prototype);
-	virtual ~CSpaceEarth() = default;
+	CSpaceGround(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CSpaceGround(const CSpaceGround& Prototype);
+	virtual ~CSpaceGround() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -32,14 +32,18 @@ public:
 private:
 	CShader*				m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom_Diffuse = { nullptr };
-	CTexture* m_pTextureCom_Light= { nullptr };
-	CTexture* m_pTextureCom_Shadow = { nullptr };
-	CTexture* m_pTextureCom_Cloud = { nullptr };
+	CTexture* m_pTextureCom_Ground_Pattern = { nullptr };
+	CTexture* m_pTextureCom_Ground_Shadow = { nullptr };
+	CTexture* m_pTextureCom_Ground_Cliff = { nullptr };
+	CTexture* m_pTextureCom_Crater = { nullptr };
 	CModel*					m_pModelCom = { nullptr };
 
 private:
-	_float m_fTimeEarth = { 0.f };
+	_float2 m_fSpriteAnimCount = { 16.f,1.f };
+	_float2 m_fSpriteSize = { 0.f,0.f };
+	_float2 m_fSpriteCurPos = { 0.f,0.f };
 	_float m_fAccTime = { 0.f };
+private:
 	_bool m_isStarSwitch = { false };
 	_float	m_fMaskStar_Value_1 = { 0.f };
 	_float	m_fMaskStar_Value_2 = { 0.3f };
@@ -49,7 +53,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CSpaceEarth* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CSpaceGround* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

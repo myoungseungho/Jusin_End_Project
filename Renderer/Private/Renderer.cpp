@@ -202,6 +202,12 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 {
 	if (FAILED(Render_Priority(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_Glow_Priority(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_NonBlend(fTimeDelta)))
+		return E_FAIL;
+	
+
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
@@ -288,6 +294,46 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	ViewPortDesc.MaxDepth = 1.f;
 
 	m_pContext->RSSetViewports(1, &ViewPortDesc);
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_GLOW_PRI])
+	{
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+			return E_FAIL;
+
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		if (FAILED(Draw_Glow(-1.f)))
+			return E_FAIL;
+
+	}
+
+	m_RenderObjects[RG_GLOW_PRI].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_NONBLEND].clear();
 
 	return S_OK;
 }
@@ -723,8 +769,10 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
 	//	return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
-	
-	m_pGlowShader->Begin(2);
+	if(fTimeDelta < 0)
+		m_pGlowShader->Begin(5);
+	else
+		m_pGlowShader->Begin(2);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 

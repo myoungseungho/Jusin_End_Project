@@ -30,7 +30,7 @@ HRESULT CSpaceEarth::Initialize(void * pArg)
 		return E_FAIL;
 	//m_pTransformCom->Set_Scaled(1.1f, 1.1f, 1.f);
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-90.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -100.f, -300.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, -100.f, -300.f, 1.f));
 
 	return S_OK;
 }
@@ -82,6 +82,10 @@ void CSpaceEarth::Late_Update(_float fTimeDelta)
 HRESULT CSpaceEarth::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
+
+	m_fTimeEarth = fTimeDelta;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_TimeEarth", &m_fTimeEarth, sizeof(float))))
 		return E_FAIL;
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
@@ -162,8 +166,8 @@ HRESULT CSpaceEarth::Bind_ShaderResources()
 	//if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskStar_Value_2", &m_fMaskStar_Value_2, sizeof(float))))
 	//	return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
-	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_TimeEarth", &m_fAccTime, sizeof(float))))
+		return E_FAIL;
 	
 	return S_OK;
 }
