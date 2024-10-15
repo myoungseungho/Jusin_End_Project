@@ -131,7 +131,7 @@ PS_OUT PS_MAIN_FSTAR(PS_IN In)
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vMtrlDiffuse *= 3.3f;
-	
+
     float luminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
     vMtrlDiffuse.a = saturate(luminance * 2.0f);
 
@@ -146,13 +146,6 @@ PS_OUT PS_MAIN_FSTAR(PS_IN In)
 
 PS_OUT PS_MAIN_EARTH(PS_IN In)
 {
-/*
-g_EarthCloud0;
-g_EarthCloud1;
-g_EarthCloud2;
-g_EarthLight;
-g_EarthShadow;
-*/
     PS_OUT Out;
     float2 vTex, vTexEarth;
 	
@@ -164,8 +157,6 @@ g_EarthShadow;
     vector vMtrlCloud2 = g_EarthCloud2.Sample(LinearSampler, vTex + g_Time * 0.003f);
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexEarth + g_Time * 0.001f);
     vMtrlCloud1 *= vMtrlCloud2;
-	
-
 	
     vTex.x = In.vTexcoord.x * 2;
     vTex.y = In.vTexcoord.y;
