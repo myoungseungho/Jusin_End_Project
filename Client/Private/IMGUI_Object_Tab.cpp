@@ -1222,4 +1222,7 @@ CIMGUI_Object_Tab* CIMGUI_Object_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 void CIMGUI_Object_Tab::Free()
 {
 	__super::Free();
+
+	m_hashSet_selectedGameObjects.clear();
+	m_hashSet_previousSelectedGameObjects.clear();
 }

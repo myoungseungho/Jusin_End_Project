@@ -119,9 +119,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pVIBuffer)
 		return E_FAIL;
 
-	m_pVIBuffer_Half = CVIBuffer_Rect::Create_Half(m_pDevice, m_pContext);
-	if (nullptr == m_pVIBuffer)
-		return E_FAIL;
 
 	m_pShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	if (nullptr == m_pShader)

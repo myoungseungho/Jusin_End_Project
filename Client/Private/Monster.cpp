@@ -79,7 +79,7 @@ HRESULT CMonster::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-
+	
 	return S_OK;
 }
 

@@ -21,6 +21,8 @@ private:
 	CSpaceEarth(const CSpaceEarth& Prototype);
 	virtual ~CSpaceEarth() = default;
 
+	void a() { return; }
+
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
