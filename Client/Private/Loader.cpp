@@ -13,6 +13,7 @@
 
 #include "SpaceSky.h"
 #include "SpaceEarth.h"
+#include "SpaceEarth_Light.h"
 #include "FallingStar.h"
 //#include "Monster.h"
 //#include "Terrain.h"
@@ -2599,6 +2600,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEarth_Light"),
+		CSpaceEarth_Light::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEarth"),
 		CSpaceEarth::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

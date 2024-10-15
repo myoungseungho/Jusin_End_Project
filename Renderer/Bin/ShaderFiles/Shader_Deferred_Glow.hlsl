@@ -144,9 +144,20 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
 
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
 	/*vector		vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
-
-    Out.vColor = vResult + vBlur*1.2f /*+ vEffect*/;
-
+    vBlur *= 1.3f;
+    Out.vColor = vResult + vBlur /*+ vEffect*/;
+    float fAlpha = (Out.vColor.r + Out.vColor.g + Out.vColor.b) / 3;
+    
+    if(fAlpha < 0.3f)
+        fAlpha = 0.5f;
+    
+    //else
+    //    Out.vColor.rgba *= 1.1f;
+    
+    Out.vColor.a = saturate(fAlpha - 0.1f);
+    //float3 emissive = float3(1.0, 0.8, 0.5); // 밝고 따뜻한 색상
+    
+    //Out.vColor.rgb += emissive;
     return Out;
 
 }
@@ -170,9 +181,9 @@ PS_OUT PS_MAIN_UP(PS_IN In)
 
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
 	/*vector		vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
-
     Out.vColor = vResult + vBlur /*+ vEffect*/;
-
+    float fAlpha = (Out.vColor.r + Out.vColor.g + Out.vColor.b) / 3;
+    Out.vColor.a = saturate(fAlpha * 2);
     return Out;
 }
 

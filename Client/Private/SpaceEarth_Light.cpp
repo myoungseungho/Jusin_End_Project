@@ -1,41 +1,41 @@
 #include "stdafx.h"
-#include "..\Public\SpaceEarth.h"
+#include "..\Public\SpaceEarth_Light.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CSpaceEarth::CSpaceEarth(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CSpaceEarth_Light::CSpaceEarth_Light(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 	: CGameObject { pDevice, pContext }
 {
 
 }
 
-CSpaceEarth::CSpaceEarth(const CSpaceEarth & Prototype)
+CSpaceEarth_Light::CSpaceEarth_Light(const CSpaceEarth_Light & Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CSpaceEarth::Initialize_Prototype()
+HRESULT CSpaceEarth_Light::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CSpaceEarth::Initialize(void * pArg)
+HRESULT CSpaceEarth_Light::Initialize(void * pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
-	//m_pTransformCom->Set_Scaled(1.1f, 1.1f, 1.f);
+	//m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-90.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -100.f, -300.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -100.f, -300.5f, 1.f));
 
 	return S_OK;
 }
 
-void CSpaceEarth::Priority_Update(_float fTimeDelta)
+void CSpaceEarth_Light::Priority_Update(_float fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
 
@@ -65,21 +65,21 @@ void CSpaceEarth::Priority_Update(_float fTimeDelta)
 	}
 }
 
-void CSpaceEarth::Update(_float fTimeDelta)
+void CSpaceEarth_Light::Update(_float fTimeDelta)
 {
 }
 
-void CSpaceEarth::Late_Update(_float fTimeDelta)
+void CSpaceEarth_Light::Late_Update(_float fTimeDelta)
 {
 	//_vector vPos = m_pGameInstance->Get_CamPosition_Vector();
 	//vPos = XMVectorSetZ(vPos, XMVectorGetZ(vPos) + 100);
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW, this);
 }
 
-HRESULT CSpaceEarth::Render(_float fTimeDelta)
+HRESULT CSpaceEarth_Light::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -88,7 +88,7 @@ HRESULT CSpaceEarth::Render(_float fTimeDelta)
 
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		if (FAILED(m_pShaderCom->Begin(2)))
+		if (FAILED(m_pShaderCom->Begin(3)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -98,7 +98,7 @@ HRESULT CSpaceEarth::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CSpaceEarth::Ready_Components()
+HRESULT CSpaceEarth_Light::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxMesh"),
@@ -129,7 +129,7 @@ HRESULT CSpaceEarth::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CSpaceEarth::Bind_ShaderResources()
+HRESULT CSpaceEarth_Light::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -168,33 +168,33 @@ HRESULT CSpaceEarth::Bind_ShaderResources()
 	return S_OK;
 }
 
-CSpaceEarth * CSpaceEarth::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CSpaceEarth_Light * CSpaceEarth_Light::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 {
-	CSpaceEarth*		pInstance = new CSpaceEarth(pDevice, pContext);
+	CSpaceEarth_Light*		pInstance = new CSpaceEarth_Light(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CSpaceEarth"));
+		MSG_BOX(TEXT("Failed to Created : CSpaceEarth_Light"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject * CSpaceEarth::Clone(void * pArg)
+CGameObject * CSpaceEarth_Light::Clone(void * pArg)
 {
-	CSpaceEarth*		pInstance = new CSpaceEarth(*this);
+	CSpaceEarth_Light*		pInstance = new CSpaceEarth_Light(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CSpaceEarth"));
+		MSG_BOX(TEXT("Failed to Cloned : CSpaceEarth_Light"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CSpaceEarth::Free()
+void CSpaceEarth_Light::Free()
 {
 
 	Safe_Release(m_pTextureCom_Diffuse);

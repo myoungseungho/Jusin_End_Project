@@ -215,9 +215,9 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	//	return E_FAIL;
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_Glow(fTimeDelta)))
-		return E_FAIL;
 	if (FAILED(Render_Blend(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_Glow(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_UI(fTimeDelta)))
 		return E_FAIL;

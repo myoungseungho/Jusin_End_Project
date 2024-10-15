@@ -190,6 +190,7 @@
     <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\Public\Shader_Texture.h" />
     <ClInclude Include="..\Public\SpaceEarth.h" />
+    <ClInclude Include="..\Public\SpaceEarth_Light.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="..\Private\Monster.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />
     <ClCompile Include="..\Private\SpaceEarth.cpp" />
+    <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
