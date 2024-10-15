@@ -82,11 +82,12 @@ EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos)
 
 	// 현재 애니메이션 위치에 따라 두 키프레임을 찾아 보간
 	auto it1 = m_EffectKeyFrames.lower_bound(CurAnimPos);
-	auto it2 = (it1 == m_EffectKeyFrames.begin()) ? it1 : std::prev(it1);
 
-	// 만약 CurAnimPos가 마지막 키프레임 이후라면 마지막 키프레임 반환
+	// 만약 CurAnimPos가 마지막 키프레임 이후라면 마지막 키프레임 상태를 유지
 	if (it1 == m_EffectKeyFrames.end())
 		return std::prev(it1)->second;
+
+	auto it2 = (it1 == m_EffectKeyFrames.begin()) ? it1 : std::prev(it1);
 
 	// 현재 위치가 정확히 하나의 키프레임 위치와 일치하면 그 키프레임 반환
 	if (it1 == it2 || it1->first == CurAnimPos)
@@ -109,6 +110,7 @@ EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos)
 
 	return interpolatedKeyFrame;
 }
+
 
 _float3 CEffect_Animation::Lerp(const _float3& start, const _float3& end, _float factor)
 {
