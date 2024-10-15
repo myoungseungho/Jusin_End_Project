@@ -256,7 +256,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 	m_iHp = 100;
-	m_ePawnID = GOGU;
+	m_eCharacterID = GOGU;
 
 	return S_OK;
 }

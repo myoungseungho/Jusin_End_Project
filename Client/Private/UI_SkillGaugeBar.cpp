@@ -102,17 +102,12 @@ HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	_int iSkillCount = 0;
-
-	if(m_pMainPawn != nullptr)
-		iSkillCount = m_pMainPawn->Get_PawnDesc().iSKillCount;
-
-	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", iSkillCount)))
+	if (FAILED(m_pSkillTexture[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iSkillNumber)))
 		return E_FAIL;
 
 	if (m_pMainPawn != nullptr && m_pMainPawn->Get_PawnDesc().iSKillCount != 7)
 	{
-		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", iSkillCount + 1)))
+		if (FAILED(m_pSkillTexture[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", m_iSkillNumber + 1)))
 			return E_FAIL;
 	}
 

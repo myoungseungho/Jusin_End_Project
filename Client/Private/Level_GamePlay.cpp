@@ -173,6 +173,10 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
+
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpEffect"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
+		//	return E_FAIL;
+
 	}
 	//캐릭터 아이콘
 
@@ -223,11 +227,14 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillGauge"), TEXT("Layer_UI_SkillGauge"), &SkilloDesc)))
 			return E_FAIL;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillGaugeBar"), TEXT("Layer_UI_SkillGaugeBar"), &SkilloDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillGaugeBar"), TEXT("Layer_UI_SkillGauge"), &SkilloDesc)))
 			return E_FAIL;
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillNumber"), TEXT("Layer_UI_SkillNumber"), &SkilloDesc)))
 			return E_FAIL;
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillEffect"), TEXT("Layer_UI_SkillGauge"), &SkilloDesc);
+
 
 	}
 
@@ -256,6 +263,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboEffect"), TEXT("Layer_UI_Combo_Effect"), &ComboDesc);
 	}
 
+
 	//게임 시작
 	//CUIObject::UI_DESC StartDesc = {};
 
@@ -277,8 +285,19 @@ HRESULT CLevel_GamePlay::Ready_Character()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"),&SlotDesc)))
 		return E_FAIL;
 
-	CCharacter* pPlayer = dynamic_cast<CCharacter*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Character")).back());
-	m_pUI_Manager->UsingSelectCharacher(pPlayer, CCharacter::LPLAYER1);
+
+	CCharacter* pGoku = dynamic_cast<CCharacter*>(m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"),0));
+	m_pUI_Manager->UsingSelectCharacher(pGoku, CCharacter::LPLAYER1);
+
+	SlotDesc.ePlayerSlot = CCharacter::LPLAYER2;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &SlotDesc)))
+		return E_FAIL;
+
+	CCharacter* p21 = dynamic_cast<CCharacter*>(m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"),1));
+	m_pUI_Manager->UsingSelectCharacher(p21, CCharacter::LPLAYER2);
+
+	
 
 	return S_OK;
 }

@@ -275,7 +275,7 @@ public:
 	virtual void Gravity(_float fTimeDelta);
 
 public:
-	Character_INFO_DESC Get_PawnDesc() { return m_tPawnDesc; }
+	Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
 
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -326,8 +326,8 @@ protected:
 	_uint					m_iNumAttBuf = { 1 };
 
 	//UI에 보내야할 정보
-	Character_INFO_DESC				 m_tPawnDesc = {};
-	PLAYER_ID					m_ePawnID = {};
+	Character_INFO_DESC				 m_tCharacterDesc = {};
+	PLAYER_ID					m_eCharacterID = {};
 
 	PLAYER_SLOT				m_ePlayerSlot = {};
 

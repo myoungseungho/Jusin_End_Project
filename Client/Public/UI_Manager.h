@@ -3,6 +3,7 @@
 #include "Base.h"
 #include "Client_Defines.h"
 #include "Character.h"
+#include "input.h"
 
 BEGIN(Engine)
 
@@ -65,6 +66,9 @@ public:
 
 	//Anim
 	_float m_fTotalDuration = { 0.f };
+
+	DirectionInput m_eDirInput = {};
+	ButtonInput m_eBtnInput = {};
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

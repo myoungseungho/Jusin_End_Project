@@ -203,18 +203,15 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_tPawnDesc.bStun = m_bStun;
-	m_tPawnDesc.bHit = m_bHit;
-	m_tPawnDesc.bAttBuf = m_bAttBuf;
-
-	m_tPawnDesc.iHp = m_iHp;
-	m_tPawnDesc.iComboCount = m_iComboCount;
-
-	m_tPawnDesc.iSKillCount = m_iSKillCount;
-	m_tPawnDesc.iSKillPoint = m_iSKillPoint;
-
-	m_tPawnDesc.ePlayer_Slot = m_ePlayerSlot;
-	m_tPawnDesc.ePlayerID = m_ePawnID;
+	m_tCharacterDesc.bStun = m_bStun;
+	m_tCharacterDesc.bHit = m_bHit;
+	m_tCharacterDesc.bAttBuf = m_bAttBuf;
+	m_tCharacterDesc.iHp = m_iHp;
+	m_tCharacterDesc.iComboCount = m_iComboCount;
+	m_tCharacterDesc.iSKillCount = m_iSKillCount;
+	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
+	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
+	m_tCharacterDesc.ePlayerID = m_eCharacterID;
 }
 
 void CCharacter::Update(_float fTimeDelta)
@@ -487,6 +484,9 @@ void CCharacter::InputCommand()
 		//	 iAttackkey = ATTACK_LIGHT;
 		//
 		// }
+
+		 m_pUI_Manager->m_eDirInput = (DirectionInput)DirectionX;
+		 m_pUI_Manager->m_eBtnInput = (ButtonInput)iAttackkey;
 
 	}
 

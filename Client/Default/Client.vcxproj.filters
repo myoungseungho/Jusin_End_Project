@@ -220,6 +220,12 @@
     <Filter Include="02.GameObjects\Character\Play_21\S21_MeleeAttack">
       <UniqueIdentifier>{0fea3a9c-712d-41fc-a50b-2d180e29ac2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\Effect">
+      <UniqueIdentifier>{0f49d9ab-7381-42c9-a90c-43d7efad4e75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\Effect">
+      <UniqueIdentifier>{c3a4e1a3-4f37-4eb7-9f70-0b88b4c3f9c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -441,6 +447,12 @@
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_SkillEffect.h">
+      <Filter>02.GameObjects\UI\Skill\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_HpEffect.h">
+      <Filter>02.GameObjects\UI\Hp\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -619,7 +631,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Player.cpp">
       <Filter>02.GameObjects\Player</Filter>
-   </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp">
       <Filter>02.GameObjects\Model_Preview</Filter>
     </ClCompile>
@@ -643,6 +655,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SkillEffect.cpp">
+      <Filter>02.GameObjects\UI\Skill\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_HpEffect.cpp">
+      <Filter>02.GameObjects\UI\Hp\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

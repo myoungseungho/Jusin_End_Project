@@ -26,6 +26,7 @@
 #include "UI_HpPanel.h"
 #include "UI_HpGauge.h"
 #include "UI_SubHpGauge.h"
+#include "UI_HpEffect.h"
 #include "UI_Chara_Icon_Panel.h"
 #include "UI_Sub_Chara_Icon_Panel.h"
 #include "UI_Chara_Icon.h"
@@ -37,6 +38,7 @@
 #include "UI_SkillGauge.h"
 #include "UI_SkillGaugeBar.h"
 #include "UI_SkillNumber.h"
+#include "UI_SkillEffect.h"
 #include "UI_Timer.h"
 #include "UI_ComboNumber.h"
 #include "UI_ComboFont.h"
@@ -322,6 +324,11 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_gauge_physical_frame01.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_HpEffect*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_lifegauge_base.png")))))
+		return E_FAIL;
+
 
 	//시간 초
 
@@ -351,6 +358,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_Component_Texture_UI_SkillFlowEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillFlowEffect"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_lifegauge_animmask_S3.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_SkillEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_tension_eff.png")))))
 		return E_FAIL;
 
 	//캐릭터 아이콘
@@ -446,6 +458,11 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_SubHpGauge::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_UI_HpEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_HpEffect"),
+		CUI_HpEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	/* For.Prototype_GameObject_UI_Chara_Icon */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Chara_Icon_Panel"),
 		CUI_Chara_Icon_Panel::Create(m_pDevice, m_pContext))))
@@ -506,6 +523,13 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_SkillNumber"),
 		CUI_SkillNumber::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_SkillEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_SkillEffect"),
+		CUI_SkillEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//시간 초
 
 	/* For.Prototype_GameObject_UI_Timer */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Timer"),

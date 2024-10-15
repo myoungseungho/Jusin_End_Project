@@ -18,6 +18,10 @@ vector g_vColor;
 
 vector g_vCamPosition;
 
+//스프라이트
+int iSpriteIndex = 0;
+int iNumSprite = 0;
+
 
 struct VS_IN
 {
@@ -332,7 +336,26 @@ PS_OUT PS_SubIcon(PS_IN In)
     if (Out.vColor.a <= 0.1f)
         discard;
   
+    return Out;
+}
 
+PS_OUT PS_Sprite(PS_IN In)
+{
+    PS_OUT Out;
+
+    
+    //(iSpriteIndex + 1);
+    float fImageRadio = (1.f / iNumSprite);
+    float fStartSprite = fImageRadio * (iSpriteIndex);
+    float fEndSprite = fImageRadio * (iSpriteIndex + 1);
+    
+    //In.vTexcoord.y = In.vTexcoord.y * fSprite;
+    In.vTexcoord.y = lerp(fStartSprite, fEndSprite, In.vTexcoord.y);
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor.a *= 0.75f;
+    
+    //if ()
+  
     return Out;
 }
 
@@ -493,5 +516,20 @@ technique11 DefaultTechnique
      DomainShader = NULL;
      PixelShader = compile ps_5_0 PS_SubIcon();
  }
+
+//10
+    pass SkillEff
+    {
+ 
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_Sprite();
+    }
 
 }

@@ -60,10 +60,7 @@ HRESULT CUI_SkillNumber::Render(_float fTimeDelta)
 
 	_int iSkillCount = 0;
 
-	if (m_pMainPawn != nullptr)
-		iSkillCount = m_pMainPawn->Get_PawnDesc().iSKillCount;
-
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", iSkillCount)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iSkillNumber)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))
