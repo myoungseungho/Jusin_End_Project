@@ -66,7 +66,7 @@ public:
 	vector<CCamera*> m_vecVirtualCamera;
 
 private:
-	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_SON_SKILL_1 };
+	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 
 

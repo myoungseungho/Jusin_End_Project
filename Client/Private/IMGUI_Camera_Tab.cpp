@@ -18,9 +18,10 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	_int index = 0;
 
 	// 모델과 스킬 ID에 따른 카메라 인덱스 매핑 초기화
-	m_CameraIndexMap[{MODELID_SON, SKILL1}] = index++; // 손오공, 스킬1 -> 카메라 인덱스 1
-	m_CameraIndexMap[{MODELID_SON, SKILL2}] = index++; // 손오공, 스킬2 -> 카메라 인덱스 2
-	m_CameraIndexMap[{MODELID_SON, SKILL3}] = index++; // 손오공, 스킬3 -> 카메라 인덱스 3
+	m_CameraIndexMap[{MODELID_DEFAULT, SKILL_NOT}] = index++;
+	m_CameraIndexMap[{MODELID_SON, SKILL1}] = index++;
+	m_CameraIndexMap[{MODELID_SON, SKILL2}] = index++;
+	m_CameraIndexMap[{MODELID_SON, SKILL3}] = index++;
 
 	m_CameraIndexMap[{MODELID_HIT, SKILL1}] = index++;
 	m_CameraIndexMap[{MODELID_HIT, SKILL2}] = index++;
@@ -50,12 +51,21 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 		return;
 	}
 
-
 	// 모델 선택 UI 호출
 	IMGUI_Camera_Select_Model(fTimeDelta);
 
+	// 카메라 선택 UI 호출
+	IMGUI_Show_Camera(fTimeDelta);
+
+	// Add_Point 버튼 호출
+	// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
+	IMGUI_Button();
+
+	//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
+	IMGUI_Save_Button();
+
 	// 모델이 선택된 경우에만 스킬 선택 UI를 표시
-	if (m_iSelected_Model >= 0) {
+	if (m_iSelected_Model >= MODELID_SON) {
 		ImGui::Spacing();  // 한 줄 띄우기
 		ImGui::Separator();  // 경계선 그리기
 
@@ -67,17 +77,8 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 			ImGui::Spacing();  // 한 줄 띄우기
 			ImGui::Separator();  // 경계선 그리기
 
-			// 카메라 선택 UI 호출
-			IMGUI_Show_Camera(fTimeDelta);
-
 			// 포인트 보여주기
 			IMGUI_Show_Points();
-
-			// Add_Point 버튼 호출
-			// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
-			IMGUI_Button();
-
-		
 		}
 	}
 }
@@ -86,10 +87,10 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 {
 	// Model selection dropdown
-	const char* model_options[] = { "1. Son", "2. Hit", "3. Mine", "4. 21" };
-	static int previous_model = -1;  // 이전 모델을 추적하기 위한 변수
+	const char* model_options[] = { "0. Default", "1. Son", "2. Hit", "3. Mine", "4. 21" };
+	static _int previous_model = -1;  // 이전 모델을 추적하기 위한 변수
 
-	int iSelected_Model = static_cast<int>(m_iSelected_Model);
+	_int iSelected_Model = static_cast<_int>(m_iSelected_Model);
 
 	ImGui::Text("Select Model");
 	if (ImGui::Combo("Model", &iSelected_Model, model_options, IM_ARRAYSIZE(model_options))) {
@@ -135,32 +136,29 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 {
 	// 모델과 스킬이 모두 선택된 경우에만 카메라 이름을 표시
-	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
-	{
 		// 게임 인스턴스에서 메인 카메라 객체 가져오기
-		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
-		if (!camera) {
-			ImGui::Text("Main camera not found.");
-			return;
-		}
-
-		// 현재 선택된 카메라 인덱스 가져오기
-		_int cameraIndex = m_pMainCamera->Get_Virtual_Camera();
-
-		// 가상 카메라 목록 가져오기
-		vector<CCamera*> cameraList = m_pMainCamera->m_vecVirtualCamera;
-
-		if (cameraIndex < 0 || cameraIndex >= cameraList.size()) {
-			ImGui::Text("Invalid camera index selected.");
-			return;
-		}
-
-		// 선택된 카메라의 이름 가져오기
-		const char* selectedCameraName = cameraList[cameraIndex]->GetTabName();
-
-		// 카메라 이름 표시
-		ImGui::Text("Selected Camera: %s", selectedCameraName);
+	CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+	if (!camera) {
+		ImGui::Text("Main camera not found.");
+		return;
 	}
+
+	// 현재 선택된 카메라 인덱스 가져오기
+	_int cameraIndex = m_pMainCamera->Get_Virtual_Camera();
+
+	// 가상 카메라 목록 가져오기
+	vector<CCamera*> cameraList = m_pMainCamera->m_vecVirtualCamera;
+
+	if (cameraIndex < 0 || cameraIndex >= cameraList.size()) {
+		ImGui::Text("Invalid camera index selected.");
+		return;
+	}
+
+	// 선택된 카메라의 이름 가져오기
+	const char* selectedCameraName = cameraList[cameraIndex]->GetTabName();
+
+	// 카메라 이름 표시
+	ImGui::Text("Selected Camera: %s", selectedCameraName);
 }
 
 // 새로운 함수: 선택된 카메라를 활성화하는 함수
@@ -181,21 +179,18 @@ void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex)
 
 void CIMGUI_Camera_Tab::UpdateCameraSelection()
 {
-	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
-	{
-		auto key = std::make_pair(m_iSelected_Model, m_iSelected_Skill);
-		auto it = m_CameraIndexMap.find(key);
+	auto key = make_pair(m_iSelected_Model, m_iSelected_Skill);
+	auto it = m_CameraIndexMap.find(key);
 
-		if (it != m_CameraIndexMap.end())
-		{
-			_int cameraIndex = it->second;
-			Activate_Select_Camera((_int)cameraIndex);
-		}
-		else
-		{
-			// 매핑된 카메라가 없을 경우 처리 (예: 기본 카메라 선택 또는 오류 메시지 표시)
-			ImGui::Text("No camera mapped for this model and skill combination.");
-		}
+	if (it != m_CameraIndexMap.end())
+	{
+		_int cameraIndex = it->second;
+		Activate_Select_Camera((_int)cameraIndex);
+	}
+	else
+	{
+		// 매핑된 카메라가 없을 경우 처리 (예: 기본 카메라 선택 또는 오류 메시지 표시)
+		ImGui::Text("No camera mapped for this model and skill combination.");
 	}
 }
 
@@ -388,7 +383,6 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 
 void CIMGUI_Camera_Tab::IMGUI_Button()
 {
-	// 모델과 스킬이 모두 선택된 경우에만 Add_Point 버튼을 표시
 	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
 	{
 		// 게임 인스턴스에서 메인 카메라 객체 가져오기
@@ -490,8 +484,6 @@ void CIMGUI_Camera_Tab::IMGUI_Button()
 		// 플레이 버튼
 		IMGUI_Play_Button();
 
-		//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
-		IMGUI_Save_Button();
 	}
 }
 
@@ -538,8 +530,6 @@ void CIMGUI_Camera_Tab::IMGUI_Save_Button()
 {
 	if (ImGui::Button("Save"))
 	{
-		// 저장할 파일명 지정
-
 		CCamera::CameraSaveData saveData = { m_pMainCamera->m_vecVirtualCamera, m_CameraIndexMap };
 
 		// 파일 매니저를 통해 저장

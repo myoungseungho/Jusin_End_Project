@@ -172,7 +172,10 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 {
 	_int index = -1;
 
-	if (modelID == 0) { // MODELID_SON
+	if (modelID == 0)
+		index = VIRTUAL_CAMERA_NORMAL;
+
+	else if (modelID == 1) { // MODELID_SON
 		if (skillID == 0)
 			index = VIRTUAL_CAMERA_SON_SKILL_1;
 		else if (skillID == 1)
@@ -180,7 +183,7 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 2)
 			index = VIRTUAL_CAMERA_SON_SKILL_3;
 	}
-	else if (modelID == 1) { // MODELID_HIT
+	else if (modelID == 2) { // MODELID_HIT
 		if (skillID == 0)
 			index = VIRTUAL_CAMERA_HIT_SKILL_1;
 		else if (skillID == 1)
@@ -188,7 +191,7 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 2)
 			index = VIRTUAL_CAMERA_HIT_SKILL_3;
 	}
-	else if (modelID == 2) { // MODELID_HIT
+	else if (modelID == 3) { // MODELID_HIT
 		if (skillID == 0)
 			index = VIRTUAL_CAMERA_MINE_SKILL_1;
 		else if (skillID == 1)
@@ -196,7 +199,7 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 2)
 			index = VIRTUAL_CAMERA_MINE_SKILL_3;
 	}
-	else if (modelID == 3) { // MODELID_HIT
+	else if (modelID == 4) { // MODELID_HIT
 		if (skillID == 0)
 			index = VIRTUAL_CAMERA_21_SKILL_1;
 		else if (skillID == 1)

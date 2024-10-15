@@ -1,10 +1,15 @@
 [VirtualCamera]
 ModelID: 0
+SkillID: -1
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 1
 SkillID: 0
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 0
+ModelID: 1
 SkillID: 1
 PointCount: 3
 
@@ -30,21 +35,6 @@ InterpolationType: 0
 Damping: 1
 
 [VirtualCamera]
-ModelID: 0
-SkillID: 2
-PointCount: 0
-
-[VirtualCamera]
-ModelID: 1
-SkillID: 0
-PointCount: 0
-
-[VirtualCamera]
-ModelID: 1
-SkillID: 1
-PointCount: 0
-
-[VirtualCamera]
 ModelID: 1
 SkillID: 2
 PointCount: 0
@@ -76,6 +66,21 @@ PointCount: 0
 
 [VirtualCamera]
 ModelID: 3
+SkillID: 2
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 4
+SkillID: 0
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 4
+SkillID: 1
+PointCount: 0
+
+[VirtualCamera]
+ModelID: 4
 SkillID: 2
 PointCount: 0
 

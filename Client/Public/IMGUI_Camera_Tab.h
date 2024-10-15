@@ -11,11 +11,11 @@ BEGIN(Client)
 class CIMGUI_Camera_Tab : public CIMGUI_Tab
 {
 public:
-	enum MODELID { MODELID_NOT = -1, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
+	enum MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
 	enum SKILLID { SKILL_NOT = -1, SKILL1, SKILL2, SKILL3, SKILL_END };
 
 private:
-	
+
 
 protected:
 	CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -42,7 +42,7 @@ private:
 	void IMGUI_Modify_Point_UI(_int index);
 	void IMGUI_Point_Modify_Save();
 
-	MODELID m_iSelected_Model = MODELID_NOT;  // 모델 선택 상태를 저장
+	MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
 	_int m_selectedPoint = -1;
 	_bool m_isEditing = { false };     // 수정 모드 여부
