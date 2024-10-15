@@ -21,9 +21,23 @@ public:
 
 public:
 	HRESULT Initialize(_uint iNumLevels);
-	HRESULT Add_Prototype(const wstring& strPrototypeTag, class CGameObject* pPrototype);
-	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg = nullptr);
-	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+	HRESULT Add_Prototype(const _wstring& strPrototypeTag, class CGameObject* pPrototype);
+	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const _wstring& strPrototypeTag, const _wstring& strLayerTag, void* pArg = nullptr);
+	class CGameObject* Clone_GameObject(const _wstring& strPrototypeTag, void* pArg = nullptr);
+
+	//파일 저장, 로드 관련 함수
+	HRESULT Get_Prototype_Names(vector<string>* pVector);
+	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < string, list<CGameObject*>>>* pVector);
+	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < _wstring, list<CGameObject*>>>* pVector);
+
+
+
+
+
+
+
+
+
 
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);

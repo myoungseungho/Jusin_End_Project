@@ -33,6 +33,13 @@ Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
 Client/Bin/ModelData/**/*.bin
+Client/Bin/*.exe
+Engine/Bin/*.exp
+Engine/Bin/*.dll
+Engine/Bin/*.lib
+Renderer/Bin/*.exp
+Renderer/Bin/*.dll
+Renderer/Bin/*.lib
 
 EngineSDK/lib/Engine.lib
 RendererSDK/lib/Renderer.lib

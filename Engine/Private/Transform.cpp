@@ -1,4 +1,4 @@
-#include "..\Public\Transform.h"
+ #include "..\Public\Transform.h"
 #include "Shader.h"
 
 CTransform::CTransform(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
@@ -63,6 +63,7 @@ void CTransform::Go_Right(_float fTimeDelta)
 void CTransform::Go_Up(_float fTimeDelta)
 {
 	_vector vPosition = Get_State(STATE_POSITION);
+
 	_vector vUp = Get_State(STATE_UP); // Up 벡터 가져오기
 
 	vPosition += XMVector3Normalize(vUp) * m_fSpeedPerSec * fTimeDelta;
@@ -73,6 +74,7 @@ void CTransform::Go_Up(_float fTimeDelta)
 void CTransform::Go_Down(_float fTimeDelta)
 {
 	_vector vPosition = Get_State(STATE_POSITION);
+
 	_vector vUp = Get_State(STATE_UP); // Up 벡터 가져오기
 
 	vPosition -= XMVector3Normalize(vUp) * m_fSpeedPerSec * fTimeDelta;
@@ -111,6 +113,27 @@ void CTransform::Rotation(_fvector vAxis, _float fRadian)
 	vUp = XMVector3TransformNormal(vUp, RotationMatrix);
 	vLook = XMVector3TransformNormal(vLook, RotationMatrix);
 
+	Set_State(STATE_RIGHT, vRight);
+	Set_State(STATE_UP, vUp);
+	Set_State(STATE_LOOK, vLook);
+}
+
+
+void CTransform::Rotation(_float3 vRotation)
+{
+	// 입력된 회전 값을 쿼터니언으로 변환
+	_vector newRotationQuaternion = XMQuaternionRotationRollPitchYaw(vRotation.x, vRotation.y, vRotation.z);
+
+	// 쿼터니언을 회전 행렬로 변환
+	_matrix rotationMatrix = XMMatrixRotationQuaternion(newRotationQuaternion);
+
+	// 스케일을 유지하기 위해 기존 코드를 사용
+	_float3 vScale = Get_Scaled();
+	_vector vRight = XMVector3Normalize(rotationMatrix.r[0]) * vScale.x;
+	_vector vUp = XMVector3Normalize(rotationMatrix.r[1]) * vScale.y;
+	_vector vLook = XMVector3Normalize(rotationMatrix.r[2]) * vScale.z;
+
+	// 상태 설정
 	Set_State(STATE_RIGHT, vRight);
 	Set_State(STATE_UP, vUp);
 	Set_State(STATE_LOOK, vLook);

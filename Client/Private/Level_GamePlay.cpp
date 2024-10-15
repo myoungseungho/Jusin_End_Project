@@ -30,8 +30,13 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
 	return E_FAIL;
 	
-	/*if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Effect_Rect"))))
-		return E_FAIL;*/
+
+	// 해당 레벨에 맞는 파일 경로를 설정
+	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
+
+	if (FAILED(ParseInitialize(filePath))) {
+		return E_FAIL;
+	}
 
 	return S_OK;
 }

@@ -35,6 +35,21 @@ HRESULT CLevel::Clear_Resources()
 	return m_pGameInstance->Clear_LevelResources(m_iLevelIndex);
 }
 
+HRESULT CLevel::ParseInitialize(const wstring& filePath)
+{
+	vector<FILEDATA>* pvecFileData = static_cast<vector<FILEDATA>*>(m_pGameInstance->LoadObjects(filePath.c_str()));
+	if (pvecFileData == nullptr)
+		return S_OK;
+
+	for (auto& iter : *pvecFileData)
+	{
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(iter.levelIndex, iter.prototypeTag, iter.layerName, &iter)))
+			return E_FAIL;
+	}
+
+	return S_OK;
+}
+
 void CLevel::Free()
 {
 	__super::Free();

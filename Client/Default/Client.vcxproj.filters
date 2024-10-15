@@ -92,6 +92,18 @@
     <Filter Include="02.GameObjects\Effect_Rect\Shader_Texture">
       <UniqueIdentifier>{36c865a4-6023-4cda-91d1-e5587c16dee6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Object_Tab">
+      <UniqueIdentifier>{47930f86-8285-4090-a54f-9f4c256d5495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
+      <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player">
+      <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect">
+      <UniqueIdentifier>{d8f025ca-2643-45a5-b6e3-c62e9fc77590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -205,6 +217,18 @@
     <ClInclude Include="..\public\Effect_Animation.h">
       <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Level_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -302,6 +326,18 @@
     </ClCompile>
     <ClCompile Include="..\private\Effect_Animation.cpp">
       <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Level_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Player.cpp">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

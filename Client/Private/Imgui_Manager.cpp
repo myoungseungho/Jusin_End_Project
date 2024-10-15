@@ -12,6 +12,8 @@
 #include "IMGUI_Animation_Tab.h"
 #include "IMGUI_Effect_Tab.h"
 #include "IMGUI_UI_Tab.h"
+#include "IMGUI_Object_Tab.h"
+#include "IMGUI_Level_Tab.h"
 
 #include "imnodes.h"
 
@@ -51,9 +53,11 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 	ImGui_ImplWin32_EnableDpiAwareness();
 
 	//IMGUI ÅÇ °´Ã¼ »ý¼º
+	m_vecTabs.push_back(CIMGUI_Level_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Animation_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_UI_Tab::Create(m_pDevice, m_pContext));
 	m_vecTabs.push_back(CIMGUI_Effect_Tab::Create(m_pDevice, m_pContext));
+	m_vecTabs.push_back(CIMGUI_Object_Tab::Create(m_pDevice, m_pContext));
 
 	return S_OK;
 }
@@ -271,7 +275,6 @@ void CImgui_Manager::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pRenderInstance);
-
 
 	__super::Free();
 }

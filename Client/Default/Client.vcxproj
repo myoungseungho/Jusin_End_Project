@@ -173,7 +173,9 @@
     <ClInclude Include="..\Public\imgui_impl_dx11.h" />
     <ClInclude Include="..\Public\imgui_impl_win32.h" />
     <ClInclude Include="..\Public\imgui_internal.h" />
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h" />
     <ClInclude Include="..\Public\Imgui_Manager.h" />
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h" />
     <ClInclude Include="..\public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\Public\Shader_Texture.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
+    <ClInclude Include="..\Public\Player.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -211,8 +214,11 @@
     <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Private\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp" />
     <ClCompile Include="..\Private\Imgui_Manager.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
+    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
@@ -225,6 +231,7 @@
     <ClCompile Include="..\Private\Monster.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
+    <ClCompile Include="..\Private\Player.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

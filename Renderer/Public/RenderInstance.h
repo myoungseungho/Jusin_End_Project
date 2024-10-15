@@ -22,6 +22,7 @@ public:
 
 public: /* For.Renderer */
 	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
+	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
 	void Show_OutLine();
 	void Show_Layer_View();

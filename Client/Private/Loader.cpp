@@ -11,10 +11,12 @@
 #include "Effect_Multi.h"
 #include "Effect_Single.h"
 #include "SpaceSky.h"
+#include "Player.h"
+#include "Effect.h"
+
 //#include "Monster.h"
 //#include "Terrain.h"
 //#include "Camera.h"
-//#include "Player.h"
 //#include "Effect.h"
 //#include "Sky.h"
 
@@ -46,6 +48,8 @@ HRESULT CLoader::Initialize(LEVELID eNextLevelID)
 {
 	/* 어떤 레벨에 대한 준비를 해야하는지 */
 	m_eLevelID = eNextLevelID;
+
+	m_pGameInstance->Set_LoadingLevel_Index(m_eLevelID);
 
 	InitializeCriticalSection(&m_Critical_Section);
 
@@ -89,6 +93,21 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 텍스쳐를 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
+
+	/* 컴포넌트를 로드한다. */
+	lstrcpy(m_szLoadingText, TEXT("컴포넌트를 로딩 중 입니다."));
+	/* For.Prototype_Component_Collider_AABB */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+		CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_AABB))))
+		return E_FAIL;
+	/* For.Prototype_Component_Collider_OBB */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_OBB"),
+		CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_OBB))))
+		return E_FAIL;
+	/* For.Prototype_Component_Collider_Sphere */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_Sphere"),
+		CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_SPHERE))))
+		return E_FAIL;
 
 	/* 모델을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));	
@@ -143,12 +162,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_bun_cookie"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/bun_cookie.bin", PreTransformMatrix))))
 		return E_FAIL;
-
-	//PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_htn_planeBig"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/htn_planeBig.bin", PreTransformMatrix))))
-	//	return E_FAIL;
  
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_bun201_eff00"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/bun201_eff00.bin", PreTransformMatrix))))
@@ -2563,7 +2576,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 #pragma endregion
 
 
-
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSky"),
@@ -2578,6 +2590,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CEffect_Rect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Player"),
+		CPlayer::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
 		CMonster::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -2585,6 +2601,11 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
 		CCamera_Free::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect"),
+		CEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 

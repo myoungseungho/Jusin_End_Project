@@ -7,11 +7,11 @@ BEGIN(Engine)
 class ENGINE_DLL CTransform final : public CComponent
 {
 public:
-	typedef struct
+	struct TRANSFORM_DESC
 	{
-		_float			fSpeedPerSec;
+		_float			fSpeedPerSec = 1.f;
 		_float			fRotationPerSec;
-	} TRANSFORM_DESC;
+	};
 
 public:
 	enum STATE { STATE_RIGHT, STATE_UP, STATE_LOOK, STATE_POSITION, STATE_END };
@@ -65,6 +65,35 @@ public:
 		XMStoreFloat4((_float4*)&m_WorldMatrix.m[eState][0], vState);
 	}
 
+	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix) {
+		_float3 eulerAngles;
+
+		// 행렬의 요소를 추출
+		float r11 = XMVectorGetX(rotationMatrix.r[0]);
+		float r12 = XMVectorGetY(rotationMatrix.r[0]);
+		float r13 = XMVectorGetZ(rotationMatrix.r[0]);
+
+		float r21 = XMVectorGetX(rotationMatrix.r[1]);
+		float r22 = XMVectorGetY(rotationMatrix.r[1]);
+		float r23 = XMVectorGetZ(rotationMatrix.r[1]);
+
+		float r31 = XMVectorGetX(rotationMatrix.r[2]);
+		float r32 = XMVectorGetY(rotationMatrix.r[2]);
+		float r33 = XMVectorGetZ(rotationMatrix.r[2]);
+
+		// 요(Yaw) 각도 계산 (rotation around Z axis)
+		eulerAngles.y = atan2(r13, r33);
+
+		// 피치(Pitch) 각도 계산 (rotation around Y axis)
+		float c = sqrt(r11 * r11 + r31 * r31);
+		eulerAngles.x = atan2(-r23, c);
+
+		// 롤(Roll) 각도 계산 (rotation around X axis)
+		eulerAngles.z = atan2(r21, r22);
+
+		return eulerAngles;
+	}
+
 	void Move_Position(_float x, _float y, _float z)
 	{
 		_vector currentPosition = Get_State(CTransform::STATE_POSITION);
@@ -97,6 +126,7 @@ public:
 	void Go_Down(_float fTimeDelta);
 	void Turn(_fvector vAxis, _float fTimeDelta);
 	void Rotation(_fvector vAxis, _float fRadian);
+	void Rotation(_float3 vRotation);
 	void LookAt(_fvector vAt);
 	void Rotate(_float3 ChangeRotation);
 

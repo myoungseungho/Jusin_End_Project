@@ -198,6 +198,15 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRend
 	return S_OK;
 }
 
+HRESULT CRenderer::Add_DebugComponent(CComponent* pDebugComponent)
+{
+	m_DebugComponent.emplace_back(pDebugComponent);
+
+	Safe_AddRef(pDebugComponent);
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Draw(_float fTimeDelta)
 {
 	if (FAILED(Render_Priority(fTimeDelta)))
@@ -539,16 +548,6 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
-	if (!m_bShow_RenderTarget)
-	{
-		for (auto& pComponent : m_DebugComponent)
-			Safe_Release(pComponent);
-
-		m_DebugComponent.clear();
-
-		return S_OK;
-	}
-
 	for (auto& pComponent : m_DebugComponent)
 	{
 		pComponent->Render(fTimeDelta);
@@ -556,6 +555,9 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	}
 
 	m_DebugComponent.clear();
+
+	if (!m_bShow_RenderTarget)
+		return S_OK;
 
 	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
@@ -573,13 +575,15 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
 		return E_FAIL;
-	
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 
 
+<<<<<<< HEAD
 	return S_OK;
 }
 

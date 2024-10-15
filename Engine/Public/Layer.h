@@ -17,6 +17,8 @@ public:
 
 public:
 	HRESULT Add_GameObject(class CGameObject* pGameObject);
+	//파일 저장관련
+	HRESULT Add_List(list<CGameObject*>*);
 
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);

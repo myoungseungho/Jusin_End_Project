@@ -31,9 +31,11 @@ public:
 private:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
+
 	CGameInstance*				m_pGameInstance = { nullptr };
 	CRenderInstance*			m_pRenderInstance = { nullptr };
 	CImgui_Manager* m_pImgui_Manager = { nullptr };
+
 private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
 	HRESULT Create_IMGUI_Manager();

@@ -6,6 +6,7 @@
 BEGIN(Engine)
 class CShader;
 class CModel;
+class CCollider;
 END
 
 BEGIN(Client)
@@ -25,10 +26,16 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+public:
+	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionExit(class CCollider* other) override;
+
 private:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	CCollider*				m_pColliderCom = { nullptr };
+
 	_float					m_fRandom = {};
 
 private:

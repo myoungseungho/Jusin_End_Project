@@ -22,6 +22,7 @@ HRESULT CCamera::Initialize_Prototype()
 	m_fViewportWidth =1920.f;
 	m_fViewportHeight = 1080.f;
 
+
 	return S_OK;
 }
 

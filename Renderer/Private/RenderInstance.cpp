@@ -51,6 +51,14 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject);
 }
 
+HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)
+{
+	if (nullptr == m_pRenderer)
+		return E_FAIL;
+
+	return m_pRenderer->Add_DebugComponent(pDebugComponent);
+}
+
 void CRenderInstance::SetActive_RenderTarget(_bool isOn)
 {
 	m_pRenderer->SetActive_RenderTarget(isOn);
