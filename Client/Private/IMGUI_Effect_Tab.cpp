@@ -602,8 +602,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
                 ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));  // 패딩 조정으로 크기 조절
                 ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 4));   // 아이템 간 간격 줄임
-                ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(180, 173, 255, 210));       // 체크박스 배경 색상 변경
-                ImGui::PushStyleColor(ImGuiCol_CheckMark, IM_COL32(0, 0, 0, 255));         // 체크마크 색상 변경
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(180, 197, 230, 230));       // 체크박스 배경 색상 변경
+                ImGui::PushStyleColor(ImGuiCol_CheckMark, IM_COL32(0, 0, 0, 230));         // 체크마크 색상 변경
 
                 bool isChecked = effectChecks[item];
                 if (ImGui::Checkbox("##EffectCheck", &isChecked))
