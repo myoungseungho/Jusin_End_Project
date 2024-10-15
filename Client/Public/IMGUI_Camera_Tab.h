@@ -42,10 +42,13 @@ private:
 	void IMGUI_Modify_Point_UI(_int index);
 	void IMGUI_Point_Modify_Save();
 
+	const _float4x4* Get_Model_Float4x4();
+
 	MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
 	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
 	_int m_selectedPoint = -1;
 	_bool m_isEditing = { false };     // 수정 모드 여부
+	_bool m_isCompleteCameraSelect = { true };
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
 	unordered_map<pair<_int, _int>, _uint, pair_hash> m_CameraIndexMap;
 

@@ -57,12 +57,10 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	// 카메라 선택 UI 호출
 	IMGUI_Show_Camera(fTimeDelta);
 
-	// Add_Point 버튼 호출
-	// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
-	IMGUI_Button();
-
 	//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
 	IMGUI_Save_Button();
+
+
 
 	// 모델이 선택된 경우에만 스킬 선택 UI를 표시
 	if (m_iSelected_Model >= MODELID_SON) {
@@ -81,6 +79,10 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 			IMGUI_Show_Points();
 		}
 	}
+
+	// Add_Point 버튼 호출
+// 저장할 때,애초에 CameraPoint에 좌표를 해당 모델의 월드 역행렬을 곱해서 로컬로 넣어야 한다.
+	IMGUI_Button();
 }
 
 
@@ -88,7 +90,6 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 {
 	// Model selection dropdown
 	const char* model_options[] = { "0. Default", "1. Son", "2. Hit", "3. Mine", "4. 21" };
-	static _int previous_model = -1;  // 이전 모델을 추적하기 위한 변수
 
 	_int iSelected_Model = static_cast<_int>(m_iSelected_Model);
 
@@ -96,10 +97,10 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	if (ImGui::Combo("Model", &iSelected_Model, model_options, IM_ARRAYSIZE(model_options))) {
 		// 모델이 변경된 경우에만 스킬 선택을 초기화
 		if (m_iSelected_Model != static_cast<MODELID>(iSelected_Model)) {
-			previous_model = m_iSelected_Model;  // 이전 모델 업데이트
 			m_iSelected_Model = static_cast<MODELID>(iSelected_Model); // 새로운 모델로 업데이트
 			m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 초기화
 			UpdateCameraSelection(); // 카메라 선택 업데이트
+			m_isCompleteCameraSelect = false;
 		}
 	}
 
@@ -124,6 +125,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 			previous_skill = m_iSelected_Skill;  // 이전 스킬 업데이트
 			m_iSelected_Skill = static_cast<SKILLID>(iSelected_Skill); // 새로운 스킬로 업데이트
 			UpdateCameraSelection(); // 카메라 선택 업데이트
+			m_isCompleteCameraSelect = true;
 		}
 	}
 
@@ -156,6 +158,11 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 
 	// 선택된 카메라의 이름 가져오기
 	const char* selectedCameraName = cameraList[cameraIndex]->GetTabName();
+
+	//아직 스킬을 선택하지 않아서 카메라 셋팅이 안바뀌어있는 상황이라면
+	//또한 디폴트 카메라가 아니라면
+	if (!m_isCompleteCameraSelect && m_iSelected_Model!= MODELID_DEFAULT)
+		selectedCameraName = "Not Selected Camera";
 
 	// 카메라 이름 표시
 	ImGui::Text("Selected Camera: %s", selectedCameraName);
@@ -381,110 +388,122 @@ void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 	m_pMainCamera->Modify_Transform(m_selectedPoint);
 }
 
+const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
+{
+	CGameObject* model = nullptr;
+	CTransform* modelTransform = nullptr;
+	switch (m_iSelected_Model)
+	{
+	case Client::CIMGUI_Camera_Tab::MODELID_SON:
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		break;
+	case Client::CIMGUI_Camera_Tab::MODELID_HIT:
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		break;
+	case Client::CIMGUI_Camera_Tab::MODELID_MINE:
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		break;
+	case Client::CIMGUI_Camera_Tab::MODELID_21:
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		break;
+	}
+	// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
+	// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
+
+	modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
+
+	return  modelTransform->Get_WorldMatrixPtr();
+}
+
 void CIMGUI_Camera_Tab::IMGUI_Button()
 {
-	if (m_iSelected_Model >= 0 && m_iSelected_Skill >= 0)
-	{
-		// 게임 인스턴스에서 메인 카메라 객체 가져오기
-		CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
-		if (!camera) {
-			ImGui::Text("Main camera not found.");
-			return;
-		}
-
-		// 현재 활성화된 가상 카메라 가져오기
-		int cameraIndex = static_cast<int>(m_pMainCamera->Get_Virtual_Camera());
-
-		// 가상 카메라 목록 가져오기
-		vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
-
-		if (cameraIndex < 0 || cameraIndex >= static_cast<int>(cameraList.size())) {
-			ImGui::Text("Invalid camera index selected.");
-			return;
-		}
-
-		// 사용자 입력을 저장할 변수
-		static float duration = 1.0f;
-		static int selected_interp = 0;
-		static float damping = 1.0f; // 기본 Damping 계수
-		const char* interp_options[] = { "Linear", "Damping", "Skip" }; // 새로운 모드 추가
-
-		// Add_Point 버튼과 입력 필드 배치
-		ImGui::Separator();
-		ImGui::Text("Add Camera Point:");
-		ImGui::InputFloat("Duration", &duration, 0.1f, 1.0f, "%.2f");
-
-		if (ImGui::BeginCombo("Interpolation Type", interp_options[selected_interp])) {
-			for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
-				bool is_selected = (selected_interp == n);
-				if (ImGui::Selectable(interp_options[n], is_selected))
-					selected_interp = n;
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();
-			}
-			ImGui::EndCombo();
-		}
-
-		// Damping 계수 수정 (Damping Mode일 때만 표시)
-		if (selected_interp == 1) // "Damping" 선택 시
-		{
-			ImGui::SliderFloat("Damping Coefficient", &damping, 0.0f, 2.0f, "%.2f");
-		}
-
-		// Add Point와 Delete 버튼을 같은 라인에 배치
-		if (ImGui::Button("Add Point")) {
-			// Interpolation Type 설정
-			InterpolationType interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
-			switch (selected_interp) {
-			case 0:
-				interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
-				break;
-			case 1:
-				interpType = InterpolationType::INTERPOLATION_DAMPING_MODE;
-				break;
-			case 2:
-				interpType = InterpolationType::INTERPOLATION_SKIP_MODE;
-				break;
-			}
-
-			// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
-			// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
-			CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
-			if (!model) {
-				ImGui::TextColored(ImVec4(1, 0, 0, 1), "Model not found.");
-				return;
-			}
-			CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
-			if (!modelTransform) {
-				ImGui::TextColored(ImVec4(1, 0, 0, 1), "Model Transform component not found.");
-				return;
-			}
-			const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
-
-			// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
-			m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f);
-
-			// 사용자에게 추가됨을 알림
-			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
-
-			// 입력 필드 초기화
-			duration = 1.0f;
-			selected_interp = 0;
-			damping = 1.0f;
-		}
-
-		// Add a small space and place Delete button on the same line
-		ImGui::SameLine();
-		if (ImGui::Button("Delete")) {
-			m_pMainCamera->Delete_Points();
-			ImGui::TextColored(ImVec4(1, 0, 0, 1), "All camera points have been deleted.");
-		}
-
-
-		// 플레이 버튼
-		IMGUI_Play_Button();
-
+	// 게임 인스턴스에서 메인 카메라 객체 가져오기
+	CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+	if (!camera) {
+		ImGui::Text("Main camera not found.");
+		return;
 	}
+
+	// 현재 활성화된 가상 카메라 가져오기
+	int cameraIndex = static_cast<int>(m_pMainCamera->Get_Virtual_Camera());
+
+	// 가상 카메라 목록 가져오기
+	vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
+
+	if (cameraIndex < 0 || cameraIndex >= static_cast<int>(cameraList.size())) {
+		ImGui::Text("Invalid camera index selected.");
+		return;
+	}
+
+	// 사용자 입력을 저장할 변수
+	static float duration = 1.0f;
+	static int selected_interp = 0;
+	static float damping = 1.0f; // 기본 Damping 계수
+	const char* interp_options[] = { "Linear", "Damping", "Skip" }; // 새로운 모드 추가
+
+	// Add_Point 버튼과 입력 필드 배치
+	ImGui::Separator();
+	ImGui::Text("Add Camera Point:");
+	ImGui::InputFloat("Duration", &duration, 0.1f, 1.0f, "%.2f");
+
+	if (ImGui::BeginCombo("Interpolation Type", interp_options[selected_interp])) {
+		for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
+			bool is_selected = (selected_interp == n);
+			if (ImGui::Selectable(interp_options[n], is_selected))
+				selected_interp = n;
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+
+	// Damping 계수 수정 (Damping Mode일 때만 표시)
+	if (selected_interp == 1) // "Damping" 선택 시
+	{
+		ImGui::SliderFloat("Damping Coefficient", &damping, 0.0f, 2.0f, "%.2f");
+	}
+
+	// Add Point와 Delete 버튼을 같은 라인에 배치
+	if (ImGui::Button("Add Point")) {
+		// Interpolation Type 설정
+		InterpolationType interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
+		switch (selected_interp) {
+		case 0:
+			interpType = InterpolationType::INTERPOLATION_LINEAR_MODE;
+			break;
+		case 1:
+			interpType = InterpolationType::INTERPOLATION_DAMPING_MODE;
+			break;
+		case 2:
+			interpType = InterpolationType::INTERPOLATION_SKIP_MODE;
+			break;
+		}
+
+		//설정된 모델의 월드행렬 포인트 주소 저장하기
+		const _float4x4* worldMatrixPtr = Get_Model_Float4x4();
+
+		// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
+		m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f);
+
+		// 사용자에게 추가됨을 알림
+		ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
+
+		// 입력 필드 초기화
+		duration = 1.0f;
+		selected_interp = 0;
+		damping = 1.0f;
+	}
+
+	// Add a small space and place Delete button on the same line
+	ImGui::SameLine();
+	if (ImGui::Button("Delete")) {
+		m_pMainCamera->Delete_Points();
+		ImGui::TextColored(ImVec4(1, 0, 0, 1), "All camera points have been deleted.");
+	}
+
+
+	// 플레이 버튼
+	IMGUI_Play_Button();
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Delete_Points()
