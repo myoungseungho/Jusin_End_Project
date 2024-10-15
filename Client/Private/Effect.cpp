@@ -57,6 +57,11 @@ void CEffect::Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 	m_pAnimation->Add_KeyFrame(KeyFrameNumber, NewKeyFrame);
 }
 
+void CEffect::Delete_KeyFrame(_uint KeyFrameNumber)
+{
+	m_pAnimation->Delete_KeyFrame(KeyFrameNumber);
+}
+
 _bool CEffect::Find_KeyFrame(_uint KeyFrameNumber)
 {
 	return m_pAnimation->Find_KeyFrame(KeyFrameNumber);

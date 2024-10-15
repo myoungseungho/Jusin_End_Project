@@ -32,6 +32,16 @@ void CEffect_Animation::Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKe
 	}
 }
 
+void CEffect_Animation::Delete_KeyFrame(_uint KeyFrameNumber)
+{
+	auto it = m_EffectKeyFrames.find(KeyFrameNumber);
+
+	if (it != m_EffectKeyFrames.end())
+	{
+		m_EffectKeyFrames.erase(it);
+	}
+}
+
 _bool CEffect_Animation::Find_KeyFrame(_uint KeyFrameNumber)
 {
 	auto it = m_EffectKeyFrames.find(KeyFrameNumber);

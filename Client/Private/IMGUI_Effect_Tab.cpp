@@ -532,6 +532,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             if (ImGui::InputFloat("##AnimPos", &AnimCurPos, 0.001f, 0.001f, "%.3f"))
             {
                 pLayer->m_fCurrentAnimPosition = max(0.0f, min(AnimCurPos, pLayer->m_fDuration));
+                m_pEffect_Manager->Set_Layer_Animation_Position(selectedLayerName, AnimCurPos);
             }
 
             totalKeyframes = static_cast<int>(layerDuration / frameInterval);
@@ -569,8 +570,14 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 float normalizedPosition = newXPos / (totalKeyframes * (buttonSize + 5.0f));
                 pLayer->m_fCurrentAnimPosition = pLayer->m_fDuration * normalizedPosition;
 
-                if (pLayer->m_fCurrentAnimPosition < 0.0f) pLayer->m_fCurrentAnimPosition = 0.0f;
-                if (pLayer->m_fCurrentAnimPosition > pLayer->m_fDuration) pLayer->m_fCurrentAnimPosition = pLayer->m_fDuration;
+                if (pLayer->m_fCurrentAnimPosition < 0.0f) 
+                    pLayer->m_fCurrentAnimPosition = 0.0f;
+
+                if (pLayer->m_fCurrentAnimPosition > pLayer->m_fDuration)
+                    pLayer->m_fCurrentAnimPosition = pLayer->m_fDuration;
+
+                if(!isPlaying)
+                    m_pEffect_Manager->Set_Layer_Animation_Position(selectedLayerName, pLayer->m_fCurrentAnimPosition);
             }
 
             for (int item = 0; item < effectNames.size(); item++)
@@ -833,7 +840,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     if (ImGui::Button("Delete Keyframe"))
     {
-        //m_pEffect_Manager->Delete_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
+        m_pEffect_Manager->Delete_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
         ImGui::Text("Keyframe deleted!");
     }
 

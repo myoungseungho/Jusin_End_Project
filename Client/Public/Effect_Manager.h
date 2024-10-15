@@ -63,6 +63,7 @@ public:
 	_bool Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName);
 
 	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
+	void Delete_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber);
 public:
 	HRESULT		Play_Layer_Animation(_float fTimeDelta, const wstring& LayerName);

@@ -21,6 +21,7 @@ public:
 
 public:
 	void		Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrameData);
+	void		Delete_KeyFrame(_uint KeyFrameNumber);
 	_bool	Find_KeyFrame(_uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_KeyFrame(_uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(_uint KeyFrameNumber);

@@ -538,6 +538,24 @@ _bool CEffect_Manager::Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& e
 	return false;
 }
 
+void CEffect_Manager::Delete_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber)
+{
+	auto layerIt = m_FinalEffects.find(LayerName);
+	if (layerIt != m_FinalEffects.end())
+	{
+		CEffect_Layer* pLayer = layerIt->second;
+		if (pLayer)
+		{
+			CEffect* pEffect = pLayer->Find_Effect(EffectName);
+			if (pEffect)
+			{
+				pEffect->Delete_KeyFrame(KeyFrameNumber);
+				return;
+			}
+		}
+	}
+}
+
 void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
 	auto layerIt = m_FinalEffects.find(LayerName);

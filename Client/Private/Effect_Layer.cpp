@@ -94,13 +94,24 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 
 void CEffect_Layer::Set_Animation_Position(_float fNewCurPos)
 {
+	// 포지션 값을 현재 애니메이션 위치로 설정
 	m_fCurrentAnimPosition = fNewCurPos;
 
+	// 유효한 키프레임 개수와 프레임 간격을 계산
+	if (m_iNumKeyFrames <= 0 || m_fDuration <= 0.0f)
+		return;
+
+	// 프레임 간격을 계산하여 현재 위치에서의 프레임을 얻음
+	float frameInterval = m_fDuration / m_iNumKeyFrames;
+	_float currentFrame = (m_fCurrentAnimPosition / frameInterval);
+
+	// 각 효과에 대해 현재 위치에 맞는 애니메이션 값을 적용
 	for (CEffect* pEffect : m_MixtureEffects)
 	{
 		if (pEffect)
 		{
-			pEffect->Play_Animation(m_fCurrentAnimPosition);
+			// currentFrame 값을 전달하여 해당 위치에 맞는 보간된 애니메이션 상태 설정
+			pEffect->Play_Animation(currentFrame);
 		}
 	}
 }
