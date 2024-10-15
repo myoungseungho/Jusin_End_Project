@@ -29,13 +29,14 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Priority_Update(fTimeDelta);
+
+
 }
 
 void CEffect_Manager::Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Update(fTimeDelta);
-
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Update(fTimeDelta);

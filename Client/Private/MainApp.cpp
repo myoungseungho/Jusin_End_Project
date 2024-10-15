@@ -92,6 +92,8 @@ HRESULT CMainApp::Create_IMGUI_Manager()
 	m_pImgui_Manager = CImgui_Manager::Get_Instance();
 	m_pImgui_Manager->Initialize(m_pDevice, m_pContext);
 
+	Safe_AddRef(m_pImgui_Manager);
+
 	return S_OK;
 }
 
@@ -128,6 +130,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDevice);
 
 	m_pImgui_Manager->Free();
+	Safe_Release(m_pImgui_Manager);
 
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
