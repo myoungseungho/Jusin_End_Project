@@ -32,10 +32,13 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 	_char* name = "";
 
-	for (size_t i = VIRTUAL_CAMERA_SON_SKILL_1; i < VIRTUAL_CAMERA_END; i++)
+	for (size_t i = VIRTUAL_CAMERA_NORMAL; i < VIRTUAL_CAMERA_END; i++)
 	{
 		switch (i)
 		{
+		case VIRTUAL_CAMERA_NORMAL:
+			name = "Camera_Normal";
+			break;
 		case VIRTUAL_CAMERA_SON_SKILL_1:
 			name = "Camera_Son_Skill_1";
 			break;
@@ -74,7 +77,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 			break;
 		}
 
-		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera_Skill"), &name);
+		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera"), &name);
 		m_vecVirtualCamera.push_back(static_cast<CCamera*>(virtualCamera_Skill));
 	}
 

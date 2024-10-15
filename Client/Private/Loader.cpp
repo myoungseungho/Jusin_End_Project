@@ -4,8 +4,7 @@
 #include "GameInstance.h"
 #include "IMGUI_Shader_Tab.h"
 #include "Main_Camera.h"
-#include "Virtual_Camera_Normal.h"
-#include "Virtual_Camera_Skill.h"
+#include "Virtual_Camera.h"
 #include "Monster.h"
 #include "Player.h"
 #include "Energy_Effect.h"
@@ -136,12 +135,8 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CMain_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Virtual_Camera_Normal"),
-		CVirtual_Camera_Normal::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Virtual_Camera_Skill"),
-		CVirtual_Camera_Skill::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Virtual_Camera"),
+		CVirtual_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Energy_Effect"),
