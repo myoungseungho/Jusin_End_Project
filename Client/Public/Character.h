@@ -138,22 +138,29 @@ public:
 	static vector<CInput> Command_214Attack_Extra;
 	static vector<CInput> Command_236Special;
 	static vector<CInput> Command_236Special_Side;
+	static vector<CInput> Command_214Special;
+	static vector<CInput> Command_214Special_Extra;
+
+
 	static vector<CInput> Command_214FinalAttack;
 	static vector<CInput> Command_236UltimateAttack;
 	static vector<CInput> Command_236UltimateAttack_Side;
+
 	static vector<CInput> Command_BackDash;
 	static vector<CInput> Command_Forward;
+
 	static vector<CInput> Command_LightAttack;
 	static vector<CInput> Command_MediumAttack;
 	static vector<CInput> Command_HeavyAttack;
 	static vector<CInput> Command_SpecialAttack;
 	static vector<CInput> Command_HeavyAttack_Extra;
+
 	static vector<CInput> Command_Crouch_LightAttack;
 	static vector<CInput> Command_Crouch_MediumAttack;
-	static vector<CInput> Command_Crouch_HeavyAttack;
-	static vector<CInput> Command_Crouch_SpecialAttack;
 	static vector<CInput> Command_Crouch_MediumAttack_Extra;
+	static vector<CInput> Command_Crouch_HeavyAttack;
 	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
+	static vector<CInput> Command_Crouch_SpecialAttack;
 
 
 public:

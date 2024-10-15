@@ -21,16 +21,16 @@ PLAY_21,TON600cs_body,300,PositionChange,395
 //,395 부터 보여야함
 
 
-//,오프닝 사이드 스탠딩 (공용)
-PLAY_21G,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+//,오프닝 사이드 스탠딩 (공용)  78
+PLAY_21,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_21,TON602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
-//,라운드 넘어갈때 맞대기1 (공용)
+//,라운드 넘어갈때 맞대기1 (공용) 81
 PLAY_21,TON620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
 PLAY_21,TON620cs_body,100,NextAnimation,630
 
 
-//,마지막 상태 정지모션 (공용)
+//,마지막 상태 정지모션 (공용) 83
 PLAY_21,TON630_body,0.000000,AnimSpeedChange,0.013000,59.798000
 
 
@@ -72,35 +72,232 @@ PLAY_21,TON025_body,0,AnimSpeedChange,0.010000,60.000000
 
 //, 002 뭔지모름 (공용)
 
-//,앉기 (공용)
+//,앉기 (공용) 4
 PLAY_21,TON010_body,0.000000,AnimSpeedChange,0.010000,22.625000
 
-//,앉아있기 (공용)
+//,앉아있기 (공용) 5
 PLAY_21,TON011_body,0.000000,AnimSpeedChange,0.010000,22.625000
 
 
-//,점프 상승 (공용)
+//,점프 상승 (공용) 7
 PLAY_21,TON021_body,0.000000,AnimSpeedChange,0.010000,37.172001
 
-//,점프 고점~하강 (공용)
+//,점프 고점~하강 (공용)  9
 PLAY_21,TON022_body,0.000000,AnimSpeedChange,0.010000,37.172001
 
-//,앞으로 걷기 (공용)
+//,앞으로 걷기 (공용) 10
 PLAY_21,TON030_body,0.000000,AnimSpeedChange,0.010000,41.212002
+PLAY_21,TON030_body,0,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,2,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,4,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,6,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,8,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,10,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,12,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,14,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,16,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,18,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,20,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,22,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,24,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,26,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,28,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,30,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,32,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,34,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,36,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,38,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,40,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,42,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,44,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,46,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,48,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,49,ObjectMove,0.03,0,0,0
 
-//,뒤로 걷기 (공용)
+
+PLAY_21,TON030_body,1,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,3,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,5,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,7,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,9,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,11,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,13,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,15,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,17,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,19,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,21,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,23,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,25,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,27,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,29,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,31,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,33,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,35,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,37,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,39,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,41,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,43,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,45,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,47,ObjectMove,0.03,0,0,0
+
+PLAY_21,TON030_body,50,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,51,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,52,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,53,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,54,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,55,ObjectMove,0.03,0,0,0
+PLAY_21,TON030_body,55,PositionChange,5
+
+//,뒤로 걷기 (공용) 11
 PLAY_21,TON031_body,0.000000,AnimSpeedChange,0.010000,41.212002
 
-//,앞으로 달리기 (공용)
+
+PLAY_21,TON031_body, 0,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 2,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 4,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 6,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 8,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_21,TON031_body, 1,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 3,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 5,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 7,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 9,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_21,TON031_body, 10,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 12,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 14,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 16,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 18,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 20,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 22,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 24,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 26,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 28,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 30,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 32,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 34,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 36,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 38,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 40,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 42,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 44,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 46,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 48,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON031_body, 49,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_21,TON031_body, 11,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 13,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 15,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 17,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 19,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 21,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 23,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 25,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 27,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 29,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 31,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 33,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 35,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 37,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 39,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 41,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 43,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 45,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 47,ObjectMove,-0.03, 0, 0, 0
+
+PLAY_21,TON031_body, 50,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 51,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 52,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 53,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 54,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 55,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 56,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 57,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 58,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 59,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 60,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 61,ObjectMove,-0.03, 0, 0, 0
+PLAY_21,TON031_body, 62,ObjectMove,-0.03, 0, 0, 0
+
+
+//,다리기준으로 이동.  손이 꿈틀거림
+//,PLAY_21,TON031_body, 62,PositionChange,2
+//,PLAY_21,TON031_body, 65.6,PositionChange,0.2
+
+//,손 기준으로 이동, 다리가 조금씩 움찔거림
+PLAY_21,TON031_body, 60,PositionChange,6
+
+
+
+//,앞으로 달리기 (공용) 12
 PLAY_21,TON032_body,0.000000,AnimSpeedChange,0.010000,60.202000
 
-//,백대쉬 (공용)
+PLAY_21,TON032_body,0,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,1,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,2,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,3,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,4,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,5,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,6,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,7,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,8,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,9,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,10,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,11,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,12,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,13,ObjectMove, 0.1, 0, 0, 0
+PLAY_21,TON032_body,13,PositionChange,0
+
+
+//,백대쉬 (공용) 13
 PLAY_21,TON033_body,0.000000,AnimSpeedChange,0.010000,60.202000
 
-//,앞대쉬 끝 (공용)
-PLAY_21,TON035_body,0.000000,AnimSpeedChange,0.010000,90.505997
+PLAY_21,TON033_body, 0,ObjectMove, -0.3, 0, 0, 0
+PLAY_21,TON033_body, 1,ObjectMove, -0.3, 0, 0, 0
+PLAY_21,TON033_body, 2,ObjectMove, -0.2, 0, 0, 0
+PLAY_21,TON033_body, 3,ObjectMove, -0.2, 0, 0, 0
+PLAY_21,TON033_body, 4,ObjectMove, -0.1, 0, 0, 0
+PLAY_21,TON033_body, 5,ObjectMove, -0.1, 0, 0, 0
+PLAY_21,TON033_body, 6,ObjectMove, -0.08, 0, 0, 0
+PLAY_21,TON033_body, 7,ObjectMove, -0.08, 0, 0, 0
+PLAY_21,TON033_body, 8,ObjectMove, -0.08, 0, 0, 0
+PLAY_21,TON033_body, 9,ObjectMove, -0.08 0, 0, 0
+PLAY_21,TON033_body,10,ObjectMove, -0.08, 0, 0, 0
+PLAY_21,TON033_body,11,ObjectMove, -0.07, 0, 0, 0
+PLAY_21,TON033_body,12,ObjectMove, -0.05, 0, 0, 0
+PLAY_21,TON033_body,13,ObjectMove, -0.03, 0, 0, 0
+PLAY_21,TON033_body,14,ObjectMove, -0.01, 0, 0, 0
 
-//,백대쉬끝 (공용)
+//,앞대쉬 끝 (공용) 15
+PLAY_21,TON035_body,0.000000,AnimSpeedChange,0.010000,90.505997
+PLAY_21,TON035_body,0,ObjectMove, 0.06, 0, 0, 0
+PLAY_21,TON035_body,1,ObjectMove, 0.06, 0, 0, 0
+PLAY_21,TON035_body,2,ObjectMove, 0.06, 0, 0, 0
+PLAY_21,TON035_body,3,ObjectMove, 0.06, 0, 0, 0
+PLAY_21,TON035_body,4,ObjectMove, 0.05, 0, 0, 0
+PLAY_21,TON035_body,5,ObjectMove, 0.05, 0, 0, 0
+PLAY_21,TON035_body,6,ObjectMove, 0.05, 0, 0, 0
+PLAY_21,TON035_body,7,ObjectMove, 0.05, 0, 0, 0
+PLAY_21,TON035_body,8,ObjectMove, 0.05, 0, 0, 0
+PLAY_21,TON035_body,9,ObjectMove, 0.04, 0, 0, 0
+PLAY_21,TON035_body,10,ObjectMove,0.04, 0, 0, 0
+PLAY_21,TON035_body,11,ObjectMove,0.04, 0, 0, 0
+PLAY_21,TON035_body,12,ObjectMove,0.04, 0, 0, 0
+PLAY_21,TON035_body,13,ObjectMove,0.04, 0, 0, 0
+PLAY_21,TON035_body,14,ObjectMove,0.04, 0, 0, 0
+PLAY_21,TON035_body,15,ObjectMove,0.04, 0, 0, 0
+PLAY_21,TON035_body,16,ObjectMove,0.03, 0, 0, 0
+PLAY_21,TON035_body,17,ObjectMove,0.03, 0, 0, 0
+PLAY_21,TON035_body,18,ObjectMove,0.02, 0, 0, 0
+PLAY_21,TON035_body,19,ObjectMove,0.02, 0, 0, 0
+PLAY_21,TON035_body,20,ObjectMove,0.02, 0, 0, 0
+PLAY_21,TON035_body,21,ObjectMove,0.02, 0, 0, 0
+PLAY_21,TON035_body,22,ObjectMove,0.01, 0, 0, 0
+PLAY_21,TON035_body,23,ObjectMove,0.01, 0, 0, 0
+
+
+//,백대쉬끝 (공용) 16
 PLAY_21,TON036_body,0.000000,AnimSpeedChange,0.010000,90.505997
 
 
@@ -111,7 +308,7 @@ PLAY_21,TON036_body,0.000000,AnimSpeedChange,0.010000,90.505997
 
 //,037 애니메이션 모름.
 
-//추적 준비 (공용)
+//추적 준비 (공용) 18
 PLAY_21,TON038_body,0.000000,AnimSpeedChange,0.010000,61.818001
 
 
@@ -238,85 +435,86 @@ PLAY_21,TON013_body,0.000000,AnimSpeedChange,0.023000,120
 
 
 
-//,약공1,  Duraton 39짜리인데 괜찮은가
+//,약공1,  Duraton 39짜리인데 괜찮은가   43
 PLAY_21,TON200_body,0.000000,AnimSpeedChange,0.028000,120.000000
 PLAY_21,TON200_body,20,AttackEvent,201
-//,약공2
+
+//,약공2  44
 PLAY_21,TON201_body,0.000000,AnimSpeedChange,0.028000,120.000000
 PLAY_21,TON201_body,20,AttackEvent,201
 
-//,약공3 빠르게 회전 느리게 차기
+//,약공3 빠르게 회전 느리게 차기  45
 //,PLAY_21,TON202_body,0.000000,AnimSpeedChange,0.015000,120.000000
 //,PLAY_21,TON202_body,37.613693,AnimSpeedChange,0.015000,58.990002
 
-//,약공3 느리게 회전 빠르게 차기
+//,약공3 느리게 회전 빠르게 차기 45
 PLAY_21,TON202_body,0.000000,AnimSpeedChange,0.015000,61.414001
 PLAY_21,TON202_body,22.535000,AnimSpeedChange,0.015000,120.000000
 
 PLAY_21,TON202_body,40.000000,AnimSpeedChange,0.015000,61.414001
 PLAY_21,TON202_body,40.000000,AttackEvent,202,
 
-//,서서 중
+//,서서 중 46
 PLAY_21,TON203_body,0.000000,AnimSpeedChange,0.015000,56.970001
 PLAY_21,TON203_body,15.636000,AnimSpeedChange,0.038000,118.788002
 PLAY_21,TON203_body,20,AttackEvent,203
 PLAY_21,TON203_body,25.090998,AnimSpeedChange,0.015000,47.676998
 
-//,서서 강공
+//,서서 강공  47
 //,PLAY_21,TON204_body,0.000000,AnimSpeedChange,0.021000,120.000000
 PLAY_21,TON204_body,0.000000,AnimSpeedChange,0.008000,100.000000
 PLAY_21,TON204_body,30,AnimSpeedChange,0.021000,60.202000
 PLAY_21,TON204_body,30,AttackEvent,204
 PLAY_21,TON204_body,40.657001,AnimSpeedChange,0.021000,100.606003
 
-//,서서 기탄
+//,서서 기탄 48
 PLAY_21,TON205_body,0.000000,AnimSpeedChange,0.018000,62.625999
 
-//,앉아 약공
+//,앉아 약공 49
 //,PLAY_21,TON230_body,0.000000,AnimSpeedChange,0.005000,90.504997
 PLAY_21,TON230_body,0,AnimSpeedChange,0.028,90
 PLAY_21,TON230_body,10,AttackEvent,33333     
 PLAY_21,TON230_body,10,NextAnimationCheck,3333
 
 
-//,앉아중
+//,앉아중 50
 PLAY_21,TON231_body,0,AnimSpeedChange,0.04,90
 PLAY_21,TON231_body,21,AttackEvent,33333
 PLAY_21,TON231_body,25,AttackEvent,333333
 
 
-//,앉아강
+//,앉아강 51
 PLAY_21,TON232_body,0.000000,AnimSpeedChange,0.005000,100
 PLAY_21,TON232_body,20.747000,AnimSpeedChange,0.005000,60
 PLAY_21,TON232_body,34,AttackEvent,232
 PLAY_21,TON232_body,40,AnimSpeedChange,0.005000,100
 
 
-//, 233 앉아 특수 기탄
+//, 233 앉아 특수 기탄  52
 //,빠르다가 던질때 느려짐. 던지는 모션 강조
 //,PLAY_21,TON233_body,0,AnimSpeedChange,0.005000,90
 //,PLAY_21,TON233_body,34.438000,AnimSpeedChange,0.005000,40.605999
 //,PLAY_21,TON233_body,48.384838,AnimSpeedChange,0.005000,60.605999
 
-//,느리다가 던질때 빨라짐. 던지는 순간을 최소화
+//,느리다가 던질때 빨라짐. 던지는 순간을 최소화   52
 PLAY_21,TON233_body,0,AnimSpeedChange,0.005000,60
 PLAY_21,TON233_body,34.438000,AnimSpeedChange,0.005000,90
 PLAY_21,TON233_body,41,AttackEvent,233
 PLAY_21,TON233_body,48.384838,AnimSpeedChange,0.005000,60.605999
 
 
-//,공중약
+//,공중약 53
 PLAY_21,TON260_body,0,AnimSpeedChange,0.027000,120.000000
 PLAY_21,TON260_body,20,AttackEvent,33333333
 
-//,공중 중
+//,공중 중 54
 PLAY_21,TON261_body,0,AnimSpeedChange,0.025000,120
 PLAY_21,TON261_body,20,AnimSpeedChange,0.027000,80
 PLAY_21,TON261_body,25,AttackEvent,33333333
 
 //,원본은 0.061,120
 
-//,공중강
+//,공중강 55
 //,PLAY_21,TON262_body,0,AnimSpeedChange,0.053000,120.000000
 //,PLAY_21,TON262_body,30,AnimSpeedChange,0.053000,40.000000
 //,PLAY_21,TON262_body,30,AnimSpeedChange,0.053000,120.000000
@@ -338,7 +536,7 @@ PLAY_21,TON262_body,42,AnimSpeedChange,0.020000,85.251999
 //,310 모름
 
 
-//,400 공중 214약
+//,400 공중 214약  61
 
 PLAY_21,TON400_body,0.000000,AnimSpeedChange,0.028000,92.525002
 PLAY_21,TON400_body,27.131001,AnimSpeedChange,0.028000,120.000000
@@ -352,7 +550,7 @@ PLAY_21,TON400_body,55,AttackEvent,400_2
 //,정면 잡기, 0~70 까지
 //,공중에서 사용시 170~190 이후 220으로 점프 후 220에서 잡기판정
 
-//,잡기 성공시 60~165
+//,잡기 성공시 60~165    62
 //, 60~165 는 잡기 이후 공격 
 //,70에서 흡혈
 //,105에서 추가데미지
@@ -400,7 +598,7 @@ PLAY_21,TON402_body,120,PositionChange,144
 
 
 
-//,403 236약   
+//,403 236약    64
 //,25까지 차지 
 //,지대지 50에서 발사,105까지 스탠딩으로 복귀
 //,지대공 105부터시작, 115에 발사 88로 이동, 105까지 스탠딩 복귀 실화냐
@@ -416,7 +614,7 @@ PLAY_21,TON403_body,105,PositionChange,139
 
 //,404~411 흡수기술임 생략
 
-//,430 1필
+//,430 1필  71
 PLAY_21,TON430_body,0.000000,ObjectMoveToEnemy,-1,1,0,0
 //,PLAY_21,TON430_body,0.000000,ObjectMove,-1,1,0,0
 PLAY_21,TON430_body,0.000000,AnimSpeedChange,0.012000,67.070999

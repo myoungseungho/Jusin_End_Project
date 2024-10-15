@@ -129,7 +129,7 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
     //ImGui::NewLine();
     if (ImGui::Button("Event ReLoad"))
     {
-        CFrameEvent_Manager::Get_Instance()->ReLoadFrameEvent("../Bin/FrameEventData/Split.txt");
+        CFrameEvent_Manager::Get_Instance()->ReLoadFrameEvent(m_EventTXTBuffer);
     }
 
     ImGui::SameLine();

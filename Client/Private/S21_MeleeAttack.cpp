@@ -309,15 +309,15 @@ void CS21_MeleeAttack::Attack_236()
 	}
 	
 	
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_AIR);
-	}
-	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_AIR, 0.5f);
-		
-	}
+	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
+	//{
+	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_AIR);
+	//}
+	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
+	//{
+	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_AIR, 0.5f);
+	//	
+	//}
 
 
 	
@@ -429,18 +429,19 @@ void CS21_MeleeAttack::Attack_236Special()
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL,3.5f);
 	}
 
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-	} 
-	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
-	}
+	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
+	//{
+	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
+	//} 
+	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 ||
+	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
+	//{
+	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
+	//}
 
 }
 
+/*
 void CS21_MeleeAttack::Attack_236Special_Side()
 {
 
@@ -472,6 +473,7 @@ void CS21_MeleeAttack::Attack_236Special_Side()
 
 
 }
+*/
 
 void CS21_MeleeAttack::Attack_236Ultimate()
 {
@@ -481,53 +483,25 @@ void CS21_MeleeAttack::Attack_236Ultimate()
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
 	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_ULTIMATE);
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236  ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE)
+		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_ULTIMATE)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL, 3.5f);
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_ULTIMATE, 3.5f);
 		//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
 	}
 
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-	}
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_AIR ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
-		//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-	}
-
-
-	//214 애니메이션은 지상,공중 구분이 없는데 어떻게 처리할것인가
-	//높이 기준이 일단 0. 바뀔수도 있음
-
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_214)
-	{
-		if(m_pPlayer->Get_fHeight() > CPlay_21::fGroundHeight)
-		{
-			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
-			//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-			
-		}
-		else
-		{
-			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL, 3.5f);
-			//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
-
-		}
-	}
+	
+	
 
 
 }
 
+/*
 void CS21_MeleeAttack::Attack_236Ultimate_Side()
 {
 
@@ -579,7 +553,7 @@ void CS21_MeleeAttack::Attack_236Ultimate_Side()
 	}
 
 }
-
+*/
 void CS21_MeleeAttack::Attack_214Final()
 {
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
