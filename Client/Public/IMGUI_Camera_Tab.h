@@ -10,9 +10,6 @@ BEGIN(Client)
 
 class CIMGUI_Camera_Tab : public CIMGUI_Tab
 {
-public:
-	enum MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
-	enum SKILLID { SKILL_NOT = -1, SKILL1, SKILL2, SKILL3, SKILL_END };
 
 private:
 
@@ -44,13 +41,13 @@ private:
 
 	const _float4x4* Get_Model_Float4x4();
 
-	MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
-	SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
+	CAMERA_MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
+	CAMERA_SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
 	_int m_selectedPoint = -1;
 	_bool m_isEditing = { false };     // 수정 모드 여부
 	_bool m_isCompleteCameraSelect = { true };
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
-	unordered_map<pair<_int, _int>, _uint, pair_hash> m_CameraIndexMap;
+	unordered_map<pair<CAMERA_MODELID, CAMERA_SKILLID>, _uint, pair_hash> m_CameraIndexMap;
 
 	// 임시 데이터 구조체
 	struct TempPointData {

@@ -93,11 +93,12 @@ namespace Engine
 	};
 
 	struct pair_hash {
-		size_t operator()(const std::pair<_uint, _uint>& key) const {
-			return std::hash<int>()(static_cast<int>(key.first)) ^ (std::hash<int>()(static_cast<int>(key.second)) << 1);
+		size_t operator()(const pair<_uint, _uint>& key) const {
+			return hash<int>()(static_cast<int>(key.first)) ^ (hash<int>()(static_cast<int>(key.second)) << 1);
 		}
 	};
 
+#pragma region 카메라
 	enum InterpolationType {
 		INTERPOLATION_LINEAR_MODE,
 		INTERPOLATION_DAMPING_MODE,
@@ -122,11 +123,29 @@ namespace Engine
 		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
 	};
 
+	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
+	enum CAMERA_SKILLID { SKILL_NOT = -1, SKILL1, SKILL2, SKILL3, SKILL_END };
+
 	struct CameraData {
-		int modelID;
-		int skillID;
+		CAMERA_MODELID modelID;
+		CAMERA_SKILLID skillID;
 		vector<CameraPoint> points;
 	};
+
+	//왜 extern이 필요할까?
+	//struct나 enum은 타입을 정의한다. 메모리를 즉시 할당 안하고 형식만 정의한다.
+	//unordered_map은 런타임에 메모리를 할당해야 한다.
+	//C++에서는 전역 객체를 여러 소스 파일에서 공유하려면, 한 곳에만 정의하고 나머지 파일에서는 선언만 해야 합니다.
+	//extern 키워드는 "이 변수의 정의는 다른 소스 파일에 있다"는 의미로 사용됩니다.
+
+	extern unordered_map<CAMERA_MODELID, _wstring> modelIDToString;
+	extern unordered_map<CAMERA_SKILLID, _wstring> skillIDToString;
+	extern unordered_map<_wstring, CAMERA_MODELID> stringToModelID;
+	extern unordered_map<_wstring, CAMERA_SKILLID> stringToSkillID;
+
+#pragma endregion
+
+
 
 #pragma region 바이너리
 	struct BoneWeight {

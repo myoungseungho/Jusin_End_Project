@@ -17,4 +17,37 @@ namespace Engine
 		{ "BLENDINDEX", 0, DXGI_FORMAT_R32G32B32A32_UINT, 0, 44,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "BLENDWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 60,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
+
+    std::unordered_map<CAMERA_MODELID, _wstring> modelIDToString = {
+        {MODELID_NOT, L"MODELID_NOT"},
+        {MODELID_DEFAULT, L"MODELID_DEFAULT"},
+        {MODELID_SON, L"MODELID_SON"},
+        {MODELID_HIT, L"MODELID_HIT"},
+        {MODELID_MINE, L"MODELID_MINE"},
+        {MODELID_21, L"MODELID_21"}
+    };
+
+    std::unordered_map<CAMERA_SKILLID, _wstring> skillIDToString = {
+        {SKILL_NOT, L"SKILL_NOT"},
+        {SKILL1, L"SKILL1"},
+        {SKILL2, L"SKILL2"},
+        {SKILL3, L"SKILL3"}
+    };
+
+    std::unordered_map<_wstring, CAMERA_MODELID> stringToModelID = {
+        {L"MODELID_NOT", MODELID_NOT},
+        {L"MODELID_DEFAULT", MODELID_DEFAULT},
+        {L"MODELID_SON", MODELID_SON},
+        {L"MODELID_HIT", MODELID_HIT},
+        {L"MODELID_MINE", MODELID_MINE},
+        {L"MODELID_21", MODELID_21}
+    };
+
+    std::unordered_map<_wstring, CAMERA_SKILLID> stringToSkillID = {
+        {L"SKILL_NOT", SKILL_NOT},
+        {L"SKILL1", SKILL1},
+        {L"SKILL2", SKILL2},
+        {L"SKILL3", SKILL3}
+    };
+
 }

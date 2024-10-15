@@ -173,8 +173,8 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 		CCamera* pVirtualCamera = vecVirtualCamera[i];
 
 		// 모델 ID와 스킬 ID를 얻기 위해 매핑된 값을 찾음
-		_int modelID = -1;
-		_int skillID = -1;
+		CAMERA_MODELID modelID = MODELID_NOT;
+		CAMERA_SKILLID skillID = SKILL_NOT;
 
 		for (const auto& pair : cameraIndexMap)
 		{
@@ -188,8 +188,8 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 
 		// 가상 카메라 섹션 시작
 		file << L"[VirtualCamera]\n";
-		file << L"ModelID: " << static_cast<int>(modelID) << L"\n";
-		file << L"SkillID: " << static_cast<int>(skillID) << L"\n";
+		file << L"ModelID: " << modelIDToString[modelID] << L"\n";
+		file << L"SkillID: " << skillIDToString[skillID] << L"\n";
 
 		const auto& vecPoints = pVirtualCamera->m_vecPoints;
 		file << L"PointCount: " << vecPoints.size() << L"\n\n";
@@ -241,15 +241,55 @@ vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
 			currentCameraData = CameraData();
 			currentCameraData.points.clear();
 
-			// 다음 3개의 라인 읽기
-			std::getline(file, line); // ModelID
-			currentCameraData.modelID = std::stoi(line.substr(line.find(L":") + 1));
+			// ModelID 읽기
+			std::getline(file, line);
+			size_t colonPos = line.find(L":");
+			if (colonPos != std::wstring::npos) {
+				size_t valueStart = colonPos + 1;
+				valueStart = line.find_first_not_of(L" \t", valueStart);
+				std::wstring modelIDStr = line.substr(valueStart);
 
-			std::getline(file, line); // SkillID
-			currentCameraData.skillID = std::stoi(line.substr(line.find(L":") + 1));
+				if (stringToModelID.find(modelIDStr) != stringToModelID.end()) {
+					currentCameraData.modelID = stringToModelID[modelIDStr];
+				}
+				else {
+					currentCameraData.modelID = MODELID_NOT; // 기본값 설정
+				}
+			}
+			else {
+				currentCameraData.modelID = MODELID_NOT; // 기본값 설정
+			}
 
-			std::getline(file, line); // PointCount
-			size_t pointCount = std::stoul(line.substr(line.find(L":") + 1));
+			// SkillID 읽기
+			std::getline(file, line);
+			colonPos = line.find(L":");
+			if (colonPos != std::wstring::npos) {
+				size_t valueStart = colonPos + 1;
+				valueStart = line.find_first_not_of(L" \t", valueStart);
+				std::wstring skillIDStr = line.substr(valueStart);
+
+				if (stringToSkillID.find(skillIDStr) != stringToSkillID.end()) {
+					currentCameraData.skillID = stringToSkillID[skillIDStr];
+				}
+				else {
+					currentCameraData.skillID = SKILL_NOT; // 기본값 설정
+				}
+			}
+			else {
+				currentCameraData.skillID = SKILL_NOT; // 기본값 설정
+			}
+
+			// PointCount 읽기
+			std::getline(file, line);
+			colonPos = line.find(L":");
+			if (colonPos != std::wstring::npos) {
+				size_t valueStart = colonPos + 1;
+				valueStart = line.find_first_not_of(L" \t", valueStart);
+				size_t pointCount = std::stoul(line.substr(valueStart));
+			}
+			else {
+				// 기본값 또는 에러 처리
+			}
 
 			// 다음 라인 (빈 줄) 건너뛰기
 			std::getline(file, line);

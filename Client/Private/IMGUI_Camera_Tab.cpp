@@ -87,8 +87,8 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	ImGui::Text("Select Model");
 	if (ImGui::Combo("Model", &iSelected_Model, model_options, IM_ARRAYSIZE(model_options))) {
 		// 모델이 변경된 경우에만 스킬 선택을 초기화
-		if (m_iSelected_Model != static_cast<MODELID>(iSelected_Model)) {
-			m_iSelected_Model = static_cast<MODELID>(iSelected_Model); // 새로운 모델로 업데이트
+		if (m_iSelected_Model != static_cast<CAMERA_MODELID>(iSelected_Model)) {
+			m_iSelected_Model = static_cast<CAMERA_MODELID>(iSelected_Model); // 새로운 모델로 업데이트
 			m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 초기화
 			UpdateCameraSelection(); // 카메라 선택 업데이트
 			m_isCompleteCameraSelect = false;
@@ -112,9 +112,9 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 	ImGui::Text("Select Skill");
 	if (ImGui::Combo("Skill", &iSelected_Skill, skill_options, IM_ARRAYSIZE(skill_options))) {
 		// 스킬이 변경된 경우에만 카메라 선택 업데이트
-		if (m_iSelected_Skill != static_cast<SKILLID>(iSelected_Skill)) {
+		if (m_iSelected_Skill != static_cast<CAMERA_SKILLID>(iSelected_Skill)) {
 			previous_skill = m_iSelected_Skill;  // 이전 스킬 업데이트
-			m_iSelected_Skill = static_cast<SKILLID>(iSelected_Skill); // 새로운 스킬로 업데이트
+			m_iSelected_Skill = static_cast<CAMERA_SKILLID>(iSelected_Skill); // 새로운 스킬로 업데이트
 			UpdateCameraSelection(); // 카메라 선택 업데이트
 			m_isCompleteCameraSelect = true;
 		}
@@ -388,18 +388,18 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 
 	switch (m_iSelected_Model)
 	{
-	case Client::CIMGUI_Camera_Tab::MODELID_DEFAULT:
+	case MODELID_DEFAULT:
 		return nullptr;
-	case Client::CIMGUI_Camera_Tab::MODELID_SON:
+	case MODELID_SON:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
-	case Client::CIMGUI_Camera_Tab::MODELID_HIT:
+	case MODELID_HIT:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
-	case Client::CIMGUI_Camera_Tab::MODELID_MINE:
+	case MODELID_MINE:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
-	case Client::CIMGUI_Camera_Tab::MODELID_21:
+	case MODELID_21:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
 	}

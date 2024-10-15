@@ -1,100 +1,93 @@
 [VirtualCamera]
-ModelID: 0
-SkillID: -1
+ModelID: MODELID_DEFAULT
+SkillID: SKILL_NOT
+PointCount: 1
+
+[CameraPoint]
+Position: 4.99826 10.2397 -19.2701
+Rotation: 0.017777 -0.237239 0.00434211 0.971279
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[VirtualCamera]
+ModelID: MODELID_SON
+SkillID: SKILL1
+PointCount: 1
+
+[CameraPoint]
+Position: 8.69714 -10.1857 12.4488
+Rotation: 0.936218 0.00598664 -0.351007 0.0159679
+Duration: 1
+InterpolationType: 0
+Damping: 1
+
+[VirtualCamera]
+ModelID: MODELID_SON
+SkillID: SKILL2
 PointCount: 2
 
 [CameraPoint]
-Position: 6.30262 11.7638 -21.8741
-Rotation: 0.0264476 -0.267585 0.0073478 0.963143
+Position: 7.40786 -11.2769 14.9545
+Rotation: 0.965314 -0.00612065 -0.26003 -0.0227216
 Duration: 1
 InterpolationType: 0
 Damping: 1
 
 [CameraPoint]
-Position: 11.843 11.7638 -15.5149
-Rotation: -0.0035577 -0.441142 -0.00174883 0.897429
+Position: -7.98566 -20.1914 17.9049
+Rotation: 0.94936 0.046073 0.166787 -0.262249
 Duration: 1
 InterpolationType: 0
 Damping: 1
 
 [VirtualCamera]
-ModelID: 1
-SkillID: 0
+ModelID: MODELID_SON
+SkillID: SKILL3
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 1
-SkillID: 1
-PointCount: 3
-
-[CameraPoint]
-Position: 5.99734 2.57258 -11.8112
-Rotation: -0.137834 -0.347286 0.926133 -0.0516858
-Duration: 1
-InterpolationType: 0
-Damping: 1
-
-[CameraPoint]
-Position: -10.0634 2.39964 -6.57327
-Rotation: 0.452886 -0.346515 0.797562 0.196765
-Duration: 1
-InterpolationType: 0
-Damping: 1
-
-[CameraPoint]
-Position: -1.94612 -2.09952 13.8891
-Rotation: 0.957452 0.0100534 -0.0336039 0.286451
-Duration: 1
-InterpolationType: 0
-Damping: 1
-
-[VirtualCamera]
-ModelID: 1
-SkillID: 2
+ModelID: MODELID_HIT
+SkillID: SKILL1
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 2
-SkillID: 0
+ModelID: MODELID_HIT
+SkillID: SKILL2
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 2
-SkillID: 1
+ModelID: MODELID_HIT
+SkillID: SKILL3
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 2
-SkillID: 2
+ModelID: MODELID_MINE
+SkillID: SKILL1
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 3
-SkillID: 0
+ModelID: MODELID_MINE
+SkillID: SKILL2
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 3
-SkillID: 1
+ModelID: MODELID_MINE
+SkillID: SKILL3
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 3
-SkillID: 2
+ModelID: MODELID_21
+SkillID: SKILL1
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 4
-SkillID: 0
+ModelID: MODELID_21
+SkillID: SKILL2
 PointCount: 0
 
 [VirtualCamera]
-ModelID: 4
-SkillID: 1
-PointCount: 0
-
-[VirtualCamera]
-ModelID: 4
-SkillID: 2
+ModelID: MODELID_21
+SkillID: SKILL3
 PointCount: 0
 
