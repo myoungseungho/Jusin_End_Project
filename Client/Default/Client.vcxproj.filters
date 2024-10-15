@@ -73,6 +73,9 @@
     <Filter Include="02.GameObjects\Map\Space\Cliff">
       <UniqueIdentifier>{002116a6-d7ec-40ce-8ad9-a2993f34be47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceHorizon">
+      <UniqueIdentifier>{615a15b1-e6dd-4fdd-a664-c6e2b5f10c9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -265,6 +268,9 @@
     <ClInclude Include="..\Public\SpaceCliff.h">
       <Filter>02.GameObjects\Map\Space\Cliff</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceHorizon.h">
+      <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -389,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceCliff.cpp">
       <Filter>02.GameObjects\Map\Space\Cliff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceHorizon.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

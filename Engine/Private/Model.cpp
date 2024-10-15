@@ -380,29 +380,10 @@ HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTran
 		}
 
 		// 만약 어떤 텍스처도 생성되지 않았다면, 파일 이름에서 확장자를 변경하여 경로를 생성합니다.
-		if (!textureCreated) {
-			// 파일 이름 추출 및 확장자 변경
-			size_t lastSlashPos = binFilePath.find_last_of("/\\");
-			string fileName = binFilePath.substr(lastSlashPos + 1);
-			size_t dotPos = fileName.find_last_of(".");
-			if (dotPos != string::npos) {
-				fileName = fileName.substr(0, dotPos) + "_" + std::to_string(i) + ".png";
-			}
-			else {
-				fileName += "_" + std::to_string(i) + ".png";
-			}
-
-			if (fileName == "hit_Anime4.fbm/HTN_base.png")
-				fileName = "HTN_base.png";
-			wstring basePath = L"../Bin/ModelData/";
-			wstring wTexturePath = basePath + wstring(fileName.begin(), fileName.end());
-
-			// m_Materials[i].pMaterials[1]에 경로 설정
-			m_Materials[i].pMaterials[1] = CTexture::Create(m_pDevice, m_pContext, wTexturePath.c_str(), 1);
-
-		/*	char buffer[256];
-			snprintf(buffer, sizeof(buffer), "Fallback texture path: %s\n", string(wTexturePath.begin(), wTexturePath.end()).c_str());
-			OutputDebugStringA(buffer);*/
+		if (!textureCreated) 
+		{
+			OutputDebugStringA("ERROR:: Failed to create Texture from binary data\n");
+			return E_FAIL;
 		}
 	}
 
