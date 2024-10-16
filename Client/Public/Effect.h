@@ -74,17 +74,15 @@ protected:
 	CModel*	 m_pModelCom = { nullptr };
 	CTexture* m_pDiffuseTextureCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };
-	class CEffect_Animation* m_pAnimation = { nullptr };
+
 
 	_float			m_fCurrentAnimPos = {};
 
-	_float		m_fAlpha = { 0.f };
-
-	_int m_iRenderIndex = { 0 };
 
 	/* Åø¿ë ½¦ÀÌ´õ ÆÐ½º ÀÎµ¦½º */
-	_int m_iPassIndex = { 1 };
+
 public:
+	class CEffect_Animation* m_pAnimation = { nullptr };
 	_int				m_iUnique_Index = { -1 };
 	_wstring		m_EffectName;
 	_wstring		m_ModelName;
@@ -94,7 +92,9 @@ public:
 	_int				m_iNumHeighthImage = { 0 };
 	_bool			m_bIsNotPlaying = { false };
 	_bool			m_bIsLoop = { false };
-
+	_float		m_fAlpha = { 0.f };
+	_int			m_iRenderIndex = { 0 };
+	_int			m_iPassIndex = { 1 };
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

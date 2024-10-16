@@ -16,6 +16,7 @@ public:
 	void Render(_float fTimeDelta) override;
 	void Push_Initialize();
 	void Save_To_Effect_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
+	HRESULT Save_Effects_File();
 
 	string WStringToUTF8(const std::wstring& wstr);
 	wstring UTF8ToWString(const string& utf8Str);
@@ -30,6 +31,7 @@ private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 	vector<string> ModelName;
 	vector<string> TextureName;
+	vector<EFFECT_LAYER_DATA> m_vecEffectData;
 	string EffectLayerKey;
 
 	_bool m_isInitialize = { false };

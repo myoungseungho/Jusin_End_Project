@@ -1,0 +1,36 @@
+[Layer]
+LayerName: asdfsdf
+Duration: 3
+TickPerSecond: 0.1
+KeyFramesCount: 179
+
+[Effect]
+EffectName: asfsdf
+ModelName: Model_Effect_bun201_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsNotPlaying: false
+IsLoop: false
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: 3 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 3
+

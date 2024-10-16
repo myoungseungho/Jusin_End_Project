@@ -146,6 +146,109 @@ HRESULT CFile_Manager::ParseLine(const wstring& line, FILEDATA& obj) {
 		return E_FAIL;
 }
 
+HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
+{
+	wofstream file(FilePath);
+	if (!file.is_open()) {
+		return E_FAIL;
+	}
+
+	vector<EFFECT_LAYER_DATA>* EffectDataList = reinterpret_cast<vector<EFFECT_LAYER_DATA>*>(pArg);
+
+	// 레이어 데이터를 파일에 저장합니다.
+	for (const auto& layerData : *EffectDataList) {
+		file << L"[Layer]" << L"\n";
+		file << L"LayerName: " << layerData.layerName << L"\n";
+		file << L"Duration: " << layerData.duration << L"\n";
+		file << L"TickPerSecond: " << layerData.tickPerSecond << L"\n";
+		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n\n";
+
+		// 이펙트 데이터를 파일에 저장합니다.
+		for (const auto& effectData : layerData.effects) {
+			file << L"[Effect]" << L"\n";
+			file << L"EffectName: " << effectData.effectName << L"\n";
+			file << L"ModelName: " << effectData.modelName << L"\n";
+			file << L"MaskTextureName: " << effectData.maskTextureName << L"\n";
+			file << L"DiffuseTextureName: " << effectData.diffuseTextureName << L"\n";
+			file << L"RenderIndex: " << effectData.renderIndex << L"\n";
+			file << L"PassIndex: " << effectData.passIndex << L"\n";
+			file << L"UniqueIndex: " << effectData.uniqueIndex << L"\n";
+			file << L"Position: " << effectData.position.x << L" " << effectData.position.y << L" " << effectData.position.z << L"\n";
+			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
+			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
+			file << L"IsNotPlaying: " << (effectData.isNotPlaying ? L"true" : L"false") << L"\n";
+			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n\n";
+
+			// 키프레임 데이터를 파일에 저장합니다.
+			for (const auto& keyFrameData : effectData.keyframes) {
+				file << L"[KeyFrame]" << L"\n";
+				file << L"KeyFrameNumber: " << keyFrameData.keyFrameNumber << L"\n";
+				file << L"Position: " << keyFrameData.position.x << L" " << keyFrameData.position.y << L" " << keyFrameData.position.z << L"\n";
+				file << L"Scale: " << keyFrameData.scale.x << L" " << keyFrameData.scale.y << L" " << keyFrameData.scale.z << L"\n";
+				file << L"Rotation: " << keyFrameData.rotation.x << L" " << keyFrameData.rotation.y << L" " << keyFrameData.rotation.z << L"\n";
+				file << L"CurTime: " << keyFrameData.curTime << L"\n";
+				file << L"Duration: " << keyFrameData.duration << L"\n\n";
+			}
+		}
+	}
+
+	file.close();
+	return S_OK;
+}
+
+void* CFile_Manager::Load_Effects(wstring& FilePath)
+{
+	vector<EFFECT_LAYER_DATA> effectDataList;
+
+	wifstream file(FilePath);
+	if (!file.is_open()) {
+		throw runtime_error("Cannot open file for reading.");
+	}
+
+	wstring line;
+	EFFECT_LAYER_DATA layerData;
+	EFFECT_DATA effectData;
+	EFFECT_KEYFRAME_DATA keyFrameData;
+
+	while (getline(file, line)) {
+		if (!line.empty()) {
+			Read_Effects(line, layerData, effectData, keyFrameData);
+		}
+	}
+
+	file.close();
+
+	return &effectDataList;
+}
+
+HRESULT CFile_Manager::Read_Effects(wstring& Line, EFFECT_LAYER_DATA& LayerData, EFFECT_DATA& EffectData, EFFECT_KEYFRAME_DATA& KeyFrameData)
+{
+	wistringstream iss(Line);
+	wstring key;
+	if (getline(iss, key, L':')) {
+		wstring value;
+		getline(iss, value);
+		value.erase(0, value.find_first_not_of(L' '));
+		value.erase(value.find_last_not_of(L' ') + 1);
+
+		if (key == L"LayerName") LayerData.layerName = value;
+		else if (key == L"Duration") LayerData.duration = stof(value);
+		else if (key == L"TickPerSecond") LayerData.tickPerSecond = stof(value);
+		else if (key == L"KeyFramesCount") LayerData.keyFramesCount = stoi(value);
+		else if (key == L"EffectName") EffectData.effectName = value;
+		else if (key == L"ModelName") EffectData.modelName = value;
+		// Handle other effect attributes similarly...
+		else if (key == L"KeyFrameNumber") KeyFrameData.keyFrameNumber = stoi(value);
+		// Handle other keyframe attributes similarly...
+
+		// Populate data structures when relevant sections end
+		if (key == L"IsLoop") LayerData.effects.push_back(EffectData);
+		if (key == L"KeyFrameNumber") EffectData.keyframes.push_back(KeyFrameData);
+
+		return S_OK;
+	}
+	return E_FAIL;
+}
 
 CFile_Manager* CFile_Manager::Create()
 {
