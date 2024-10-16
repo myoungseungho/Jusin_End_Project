@@ -60,14 +60,14 @@ HRESULT CVirtual_Camera::Initialize(void* pArg)
 
 void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 {
-	//여기서 가상카메라의 월드포지션과 회전정보를 갱신한다.
 	switch (m_currentMode)
 	{
 	case CAMERA_FREE_MODE:
 		Free_Camera(fTimeDelta);
 		break;
 	case CAMERA_CINEMATIC_MODE:
-		Play(fTimeDelta);
+		if (m_currentPlayMode == Playing)
+			Play(fTimeDelta);
 		break;
 	}
 }
@@ -89,11 +89,14 @@ HRESULT CVirtual_Camera::Render(_float fTimeDelta)
 
 void CVirtual_Camera::Play(_float fTimeDelta)
 {
-	//만약 3개의 Point가 들었다면 Index가 CurrentPoint가 마지막이라면 Stop
+	if (m_currentPlayMode != CAMERA_PLAY_MODE::Playing)
+		return; // 현재 상태가 Playing이 아니면 업데이트하지 않음
+
+	// 만약 3개의 Point가 들었다면 Index가 CurrentPoint가 마지막이라면 Stop
 	if (m_currentPointIndex >= m_vecPoints.size() - 1)
 	{
 		// 마지막 포인트에 도달했으면 Play 모드 종료
-		Prev_Stop();
+		Stop();
 		return;
 	}
 
@@ -111,7 +114,7 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		if (m_currentPointIndex >= m_vecPoints.size() - 1)
 		{
 			// 마지막 포인트에 도달했으면 Play 모드 종료
-			Prev_Stop();
+			Stop();
 			return;
 		}
 
@@ -198,10 +201,32 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
 }
 
-void CVirtual_Camera::Prev_Stop()
+void CVirtual_Camera::Start_Play()
+{
+	// Stopped 상태에서 Play를 시작하면 초기화
+	if (m_currentPlayMode == Stopped) {
+		m_currentPointIndex = 0;
+		m_elapsedTime = 0.f;
+	}
+
+	m_currentMode = CAMERA_CINEMATIC_MODE;
+	m_currentPlayMode = Playing;
+}
+
+void CVirtual_Camera::Pause()
+{
+	if (m_currentPlayMode == CAMERA_PLAY_MODE::Playing)
+		m_currentPlayMode = CAMERA_PLAY_MODE::Paused;
+}
+
+
+void CVirtual_Camera::Stop()
 {
 	m_currentMode = CAMERA_FREE_MODE;
+	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
+	m_elapsedTime = 0.f;
+	Move_Point(0);
 }
 
 void CVirtual_Camera::Free_Camera(_float fTimeDelta)

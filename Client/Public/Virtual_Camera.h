@@ -15,6 +15,12 @@ public:
 		CAMERA_MODE_END
 	};
 
+	enum CAMERA_PLAY_MODE {
+		Playing,
+		Paused,
+		Stopped
+	};
+
 protected:
 	CVirtual_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVirtual_Camera(const CVirtual_Camera& Prototype);
@@ -42,13 +48,18 @@ public:
 public:
 	const _char* GetTabName() const { return m_Name; };
 
+	void Start_Play();
+	void Pause();
+	void Stop();
+
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Play(_float fTimeDelta);
-	void Prev_Stop();
 
 public:
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
+	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
+
 	_char* m_Name;
 
 	_int m_currentPointIndex = { 0 };

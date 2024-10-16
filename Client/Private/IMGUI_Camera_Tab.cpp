@@ -70,7 +70,7 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	// 포인트 보여주기
 	IMGUI_Show_Points();
 
-	// Add_Point 버튼 호출
+	// Point 버튼 호출
 	IMGUI_Button();
 
 	//각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
@@ -502,6 +502,10 @@ void CIMGUI_Camera_Tab::IMGUI_Button()
 
 	// 플레이 버튼
 	IMGUI_Play_Button();
+	// 일시정지 버튼
+	IMGUI_Pause_Button();
+	// 정지 버튼
+	IMGUI_Stop_Button();
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Delete_Points()
@@ -517,11 +521,7 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 35);
 	ImVec2 button_size = ImVec2(20, 20);
 	if (ImGui::InvisibleButton("play_button", button_size))
-	{
-		//함수 연결
-		//현재 카메라 셋팅에서 list를 Play한다.
 		m_pMainCamera->Play();
-	}
 
 	ImVec2 p = ImGui::GetItemRectMin();
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();
@@ -540,6 +540,56 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 		triangle_color = IM_COL32(85, 255, 85, 255);
 
 	draw_list->AddTriangleFilled(triangle_pos[0], triangle_pos[1], triangle_pos[2], triangle_color);
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Pause_Button()
+{
+	ImVec2 button_size = ImVec2(20, 20);
+	ImGui::SameLine();
+	if (ImGui::InvisibleButton("pause_button", button_size))
+		m_pMainCamera->Pause();
+
+	ImVec2 p = ImGui::GetItemRectMin();
+	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+	float size = 20.0f;
+
+	ImVec2 pause_rect1_pos[2] = {
+		ImVec2(p.x + 4, p.y),
+		ImVec2(p.x + 8, p.y + size)
+	};
+	ImVec2 pause_rect2_pos[2] = {
+		ImVec2(p.x + 12, p.y),
+		ImVec2(p.x + 16, p.y + size)
+	};
+	ImU32 pause_color = IM_COL32(255, 255, 65, 255);
+	if (ImGui::IsItemHovered())
+		pause_color = IM_COL32(255, 255, 185, 255);
+
+	draw_list->AddRectFilled(pause_rect1_pos[0], pause_rect1_pos[1], pause_color);
+	draw_list->AddRectFilled(pause_rect2_pos[0], pause_rect2_pos[1], pause_color);
+
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Stop_Button()
+{
+	ImVec2 button_size = ImVec2(20, 20);
+	ImGui::SameLine();
+	if (ImGui::InvisibleButton("reset_button", button_size))
+		m_pMainCamera->Stop();
+
+	ImVec2 p = ImGui::GetItemRectMin();
+	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+	float size = 20.0f;
+
+	ImVec2 reset_rect_pos[2] = {
+		ImVec2(p.x, p.y),
+		ImVec2(p.x + size, p.y + size)
+	};
+	ImU32 reset_color = IM_COL32(255, 85, 85, 255);
+	if (ImGui::IsItemHovered())
+		reset_color = IM_COL32(255, 135, 135, 255);
+
+	draw_list->AddRectFilled(reset_rect_pos[0], reset_rect_pos[1], reset_color);
 }
 
 

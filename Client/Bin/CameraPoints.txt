@@ -1,15 +1,7 @@
 [VirtualCamera]
 ModelID: MODELID_DEFAULT
 SkillID: SKILL_NOT
-PointCount: 1
-
-[CameraPoint]
-Position: 1.32811 11.4816 -14.342
-Rotation: 0.071197 -0.203772 0.0148599 0.976313
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 0
+PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_SON

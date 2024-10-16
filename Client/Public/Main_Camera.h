@@ -46,6 +46,9 @@ public:
 	void Remove_Point(_int currentIndex);
 	vector<CameraPoint>& Get_VectorPoint();
 	void Play();
+	void Stop();
+	void Pause();
+
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);
 	void ApplyCameraData(vector<CameraData>& cameraDataList);
