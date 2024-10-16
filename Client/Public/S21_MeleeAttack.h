@@ -45,6 +45,9 @@ public:
 	void Attack_Crouch_Medium();
 	void Attack_Crouch_Heavy();
 
+	void Attack_Crouch_Speical();
+
+
 	void BackDash();
 	void ForwardDash();
 

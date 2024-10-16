@@ -176,8 +176,11 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	m_eCharacterIndex = PLAY_GOKU;
-	m_iFallAnimationIndex = 7;
-	m_iIdleAnimationIndex = 0;
+	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
+	m_iIdleAnimationIndex = ANIME_IDLE;
+
+
+	m_iNextAnimation.first = ANIME_IDLE;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

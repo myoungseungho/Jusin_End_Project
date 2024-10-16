@@ -30,7 +30,7 @@
 
 
 
-
+#include "Animation.h"
 
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -64,8 +64,11 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	m_eCharacterIndex = PLAY_21;
-	m_iFallAnimationIndex = 7;
-	m_iIdleAnimationIndex = 0;
+	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
+	m_iIdleAnimationIndex = ANIME_IDLE;
+
+
+	m_iNextAnimation.first = ANIME_IDLE;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -79,7 +82,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	
 
 	//m_pModelCom->SetUp_Animation(16, true);
-	m_pModelCom->SetUp_Animation(0, true);
+	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
 	m_pModelCom->Play_Animation(0.f);
 
 
@@ -142,7 +145,9 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CS21_MeleeAttack::BackDash, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CS21_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
 
+	
 	
 
 	return S_OK;
@@ -342,7 +347,7 @@ void CPlay_21::Update(_float fTimeDelta)
 	}
 
 	
-
+	Check_Ground();
 	
 }
 
@@ -595,6 +600,28 @@ HRESULT CPlay_21::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CPlay_21::Check_Ground()
+{
+
+	//_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	 _float fHeight = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	 if (fHeight <= fGroundHeight)
+	 {
+		 if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_214)
+		 {
+			 if(m_pModelCom->Get_CurrentAnimationPosition() < 55)
+			 {
+				 m_pModelCom->CurrentAnimationPositionJump(55.f);
+			 //m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 90.f;
+			 }
+		 }
+
+
+	 }
+
 }
 
 _bool CPlay_21::Check_bCurAnimationisGroundMove(_uint iAnimation)

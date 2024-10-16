@@ -451,6 +451,8 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
         //pModel->Play_Animation(fDelay);
 
         pModel->CurrentAnimationPositionJump(fValue[0]);
+
+
     }
 
     else if (splitText[0] == "NextAnimationCheck")
