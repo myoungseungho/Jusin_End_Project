@@ -97,13 +97,12 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	// 흔들림 효과 적용
-	if (m_bIsShaking)
-		ApplyCameraShake(fTimeDelta);
-
+	
 	//PrevPlayMode면 Point에 있는 녀석을 순회하는 데이터를 뷰투영에 넣어주고
 	//아니라면 현재 선택된 카메라의 Transform 정보를 넣어주기
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], m_bPrevPlayMode, fTimeDelta);
+
+	m_vecVirtualCamera[m_currentVirtualMode]->Priority_Update(fTimeDelta);
 }
 
 void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4)
@@ -221,54 +220,6 @@ void CMain_Camera::Delete_Points()
 	m_vecVirtualCamera[m_currentVirtualMode]->Delete_Points();
 }
 
-void CMain_Camera::ApplyCameraShake(_float fTimeDelta)
-{
-	m_fElapsedShakeTime += fTimeDelta;
-
-	if (m_fElapsedShakeTime >= m_fShakeDuration)
-	{
-		// 흔들림 종료
-		StopCameraShake();
-		return;
-	}
-
-	// 흔들림 오프셋 계산
-	_float progress = m_fElapsedShakeTime / m_fShakeDuration;
-	_float damper = 1.0f - progress; // 흔들림 감쇠 비율
-
-	// 랜덤 오프셋 계산
-	_float offsetX = ((rand() % 1000) / 500.0f - 1.0f) * m_fShakeMagnitude * damper;
-	_float offsetY = ((rand() % 1000) / 500.0f - 1.0f) * m_fShakeMagnitude * damper;
-	_float offsetZ = ((rand() % 1000) / 500.0f - 1.0f) * m_fShakeMagnitude * damper;
-
-	// 흔들림 오프셋 벡터 생성
-	m_vShakeOffset = XMVectorSet(offsetX, offsetY, offsetZ, 0.0f);
-
-	// **저장된 기준 위치에 흔들림 오프셋 적용**
-	_vector shakenPosition = m_vBaseCameraPosition + m_vShakeOffset;
-
-	// **카메라 위치 업데이트**
-	CTransform* virtual_Transform = static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")));
-	virtual_Transform->Set_State(CTransform::STATE_POSITION, shakenPosition);
-}
-
-
-void CMain_Camera::StartCameraShake(_float fDuration, _float fMagnitude)
-{
-	m_bIsShaking = true;
-	m_fShakeDuration = fDuration;
-	m_fShakeMagnitude = fMagnitude;
-	m_fElapsedShakeTime = 0.0f;
-}
-
-void CMain_Camera::StopCameraShake()
-{
-	m_bIsShaking = false;
-	m_fShakeDuration = 0.0f;
-	m_fElapsedShakeTime = 0.0f;
-	m_vShakeOffset = XMVectorZero();
-}
-
 void CMain_Camera::Free_Camera(_float fTimeDelta)
 {
 	//기본 이동 속도
@@ -330,7 +281,7 @@ void CMain_Camera::Free_Camera(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_U))
 	{
-		StartCameraShake(1.f, 1.f);
+		m_vecVirtualCamera[m_currentVirtualMode]->StartCameraShake(1.f, 1.f);
 	}
 }
 
@@ -341,10 +292,12 @@ void CMain_Camera::Default_Camera(_float fTimeDelta)
 
 void CMain_Camera::Update(_float fTimeDelta)
 {
+	m_vecVirtualCamera[m_currentVirtualMode]->Update(fTimeDelta);
 }
 
 void CMain_Camera::Late_Update(_float fTimeDelta)
 {
+	m_vecVirtualCamera[m_currentVirtualMode]->Late_Update(fTimeDelta);
 }
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)

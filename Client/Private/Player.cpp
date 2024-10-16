@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pModelCom->SetUp_Animation(0, true, 0.1f);
+	m_pModelCom->SetUp_Animation(0, false, 0.1f);
 
 	return S_OK;
 }

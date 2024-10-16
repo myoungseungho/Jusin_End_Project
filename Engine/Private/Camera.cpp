@@ -55,11 +55,14 @@ HRESULT CCamera::Initialize(void* pArg)
 //Main_Camera에서 호출되는 이 함수
 void CCamera::Priority_Update(_float fTimeDelta)
 {
-
+	// 흔들림 효과 적용
+	if (m_bIsShaking)
+		ApplyCameraShake(fTimeDelta);
 }
 
 void CCamera::Update(_float fTimeDelta)
 {
+
 }
 
 void CCamera::Late_Update(_float fTimeDelta)
@@ -190,6 +193,7 @@ void CCamera::Play(CCamera* camera, _float fTimeDelta)
 	_vector up = NewWorldMatrix.r[1];
 	_vector look = NewWorldMatrix.r[2];
 	_vector position = NewWorldMatrix.r[3];
+	m_vBaseCameraPosition = position;
 
 	// CTransform 컴포넌트에 설정
 	CTransform* cameraTransform = static_cast<CTransform*>(camera->Get_Component(TEXT("Com_Transform")));
@@ -200,6 +204,7 @@ void CCamera::Play(CCamera* camera, _float fTimeDelta)
 	cameraTransform->Set_State(CTransform::STATE_LOOK, look);
 	// 위치 설정
 	cameraTransform->Set_State(CTransform::STATE_POSITION, position);
+
 }
 
 void CCamera::Prev_Stop()
@@ -488,6 +493,53 @@ _float CCamera::AdjustT_Damping(_float t, _float damping)
 void CCamera::Delete_Points()
 {
 	m_vecPoints.clear();
+}
+
+void CCamera::ApplyCameraShake(_float fTimeDelta)
+{
+	m_fElapsedShakeTime += fTimeDelta;
+
+	if (m_fElapsedShakeTime >= m_fShakeDuration)
+	{
+		// 흔들림 종료
+		StopCameraShake();
+		return;
+	}
+
+	// 흔들림 오프셋 계산
+	_float progress = m_fElapsedShakeTime / m_fShakeDuration;
+	_float damper = 1.0f - progress; // 흔들림 감쇠 비율
+
+	// 랜덤 오프셋 계산
+	_float offsetX = ((rand() % 1000) / 500.0f - 1.0f) * m_fShakeMagnitude * damper;
+	_float offsetY = ((rand() % 1000) / 500.0f - 1.0f) * m_fShakeMagnitude * damper;
+	_float offsetZ = ((rand() % 1000) / 500.0f - 1.0f) * m_fShakeMagnitude * damper;
+
+	// 흔들림 오프셋 벡터 생성
+	m_vShakeOffset = XMVectorSet(offsetX, offsetY, offsetZ, 0.0f);
+
+	// **저장된 기준 위치에 흔들림 오프셋 적용**
+	_vector shakenPosition = m_vBaseCameraPosition + m_vShakeOffset;
+
+	// **카메라 위치 업데이트**
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, shakenPosition);
+}
+
+void CCamera::StartCameraShake(_float fDuration, _float fMagnitude)
+{
+	m_vBaseCameraPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	m_bIsShaking = true;
+	m_fShakeDuration = fDuration;
+	m_fShakeMagnitude = fMagnitude;
+	m_fElapsedShakeTime = 0.0f;
+}
+
+void CCamera::StopCameraShake()
+{
+	m_bIsShaking = false;
+	m_fShakeDuration = 0.0f;
+	m_fElapsedShakeTime = 0.0f;
+	m_vShakeOffset = XMVectorZero();
 }
 
 void CCamera::Free()

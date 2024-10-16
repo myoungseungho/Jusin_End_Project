@@ -58,10 +58,6 @@ public:
 	void ApplyCameraData(vector<CameraData>& cameraDataList);
 	_int Get_CameraIndex(_int modelID, _int skillID);
 	void Delete_Points();
-	void ApplyCameraShake(_float fTimeDelta);
-	void StartCameraShake(_float fDuration, _float fMagnitude);
-	void StopCameraShake();
-
 
 private:
 	void Free_Camera(_float fTimeDelta);
@@ -73,12 +69,7 @@ private:
 	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
 	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 
-	_bool				m_bIsShaking = { false };       // 흔들림 활성화 여부
-	_float				m_fShakeDuration = { 1.f };
-	_float				m_fElapsedShakeTime = 0.0f; // 흔들림 경과 시간
-	_float				m_fShakeMagnitude = { 0.5f };
-	_vector				m_vShakeOffset = XMVectorZero();
-	_vector				m_vBaseCameraPosition = {};
+
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

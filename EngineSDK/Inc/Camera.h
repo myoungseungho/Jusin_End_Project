@@ -47,6 +47,10 @@ public:
 	_float AdjustT_Damping(_float t, _float damping);
 	void Delete_Points();
 
+	void ApplyCameraShake(_float fTimeDelta);
+	void StartCameraShake(_float fDuration, _float fMagnitude);
+	void StopCameraShake();
+
 public:
 	const _char* GetTabName() const { return m_Name; };
 
@@ -65,6 +69,13 @@ public:
 	_float m_elapsedTime = { 0.f };
 	_bool m_bPrevPlayMode = { false };
 
+	//쉐이킹
+	_bool				m_bIsShaking = { false };       // 흔들림 활성화 여부
+	_float				m_fShakeDuration = { 1.f };
+	_float				m_fElapsedShakeTime = 0.0f; // 흔들림 경과 시간
+	_float				m_fShakeMagnitude = { 0.5f };
+	_vector				m_vShakeOffset = XMVectorZero();
+	_vector				m_vBaseCameraPosition = {};
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

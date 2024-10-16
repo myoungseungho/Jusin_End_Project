@@ -56,15 +56,17 @@ HRESULT CVirtual_Camera::Initialize(void* pArg)
 
 void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CVirtual_Camera::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
 }
 
 void CVirtual_Camera::Late_Update(_float fTimeDelta)
 {
+	__super::Late_Update(fTimeDelta);
 }
 
 HRESULT CVirtual_Camera::Render(_float fTimeDelta)

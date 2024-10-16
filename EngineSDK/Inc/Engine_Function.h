@@ -34,7 +34,6 @@ namespace Engine
 		return iRefCnt;
 	}
 
-
 	template<typename T>
 	unsigned int Safe_Release(T& pInstance)
 	{
