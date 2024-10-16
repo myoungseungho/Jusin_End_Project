@@ -39,13 +39,13 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 void CSpaceSun::Priority_Update(_float fTimeDelta)
 {
 	if(m_isPlus == true && m_isMaintain == false)
-		m_fAccTime += fTimeDelta * 0.15;
+		m_fAccTime += fTimeDelta * 0.25;
 	else if (m_isPlus == false && m_isMaintain == false)
-		m_fAccTime -= fTimeDelta * 0.15;
+		m_fAccTime -= fTimeDelta * 0.25;
 
-	if (m_isMaintain == false && m_isPlus == true && m_fAccTime > 0.8f )
+	if (m_isMaintain == false && m_isPlus == true && m_fAccTime > 0.7f )
 	{
-		m_fAccTime = 0.8f;
+		m_fAccTime = 0.7f;
 		m_isMaintain = true;
 
 		m_fOneTime = 0.f;
@@ -67,7 +67,7 @@ void CSpaceSun::Priority_Update(_float fTimeDelta)
 			m_isMaintain = false;
 			m_fOneTime = 0.f;
 			if(m_isPlus == true)
-				m_fAccTime = 0.8f;
+				m_fAccTime = 0.7f;
 			else
 				m_fAccTime = 0.3f;
 
@@ -85,7 +85,7 @@ void CSpaceSun::Update(_float fTimeDelta)
 void CSpaceSun::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
-	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND_PRI, this);
 
 }
 

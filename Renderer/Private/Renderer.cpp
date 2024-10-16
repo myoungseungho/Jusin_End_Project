@@ -210,9 +210,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Glow_Priority(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_Blend_Priority(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-	
 
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
 		return E_FAIL;
@@ -324,6 +325,40 @@ HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 	}
 
 	m_RenderObjects[RG_GLOW_PRI].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_BLEND_PRI])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_BLEND_PRI].clear();
+
+	for (auto& pRenderObject : m_RenderObjects[RG_GLOW_STAR])
+	{
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+			return E_FAIL;
+
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
+			return E_FAIL;
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_GLOW_STAR].clear();
 
 	return S_OK;
 }

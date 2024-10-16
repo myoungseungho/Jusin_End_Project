@@ -41,6 +41,7 @@ private:
 	_float m_fAccTime = { 0.f };
 private:
 	_bool m_isStarSwitch = { false };
+	_float m_fReStartTime = { 0.f };
 	_float	m_fMaskStar_Value_1 = { 0.f };
 	_float	m_fMaskStar_Value_2 = { 0.3f };
 
