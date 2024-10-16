@@ -73,46 +73,64 @@ void CPlayer::Update(_float fTimeDelta)
 	}
 
 
-
-
-
-
-	// 현재 애니메이션 인덱스와 이전 키 상태를 static 변수로 선언
-	static int currentAnimationIndex = 0; // 현재 애니메이션 인덱스 (0~88)
-	static bool previousUpKeyState = false;   // 이전 프레임의 위 방향키 상태
-	static bool previousDownKeyState = false; // 이전 프레임의 아래 방향키 상태
-	const int MAX_ANIMATION_INDEX = 88; // 최대 애니메이션 인덱스
-
-	// 위 방향키(VK_UP)와 아래 방향키(VK_DOWN) 상태 가져오기
-	SHORT upKeyState = GetAsyncKeyState(VK_UP);
-	SHORT downKeyState = GetAsyncKeyState(VK_DOWN);
-
-	bool isUpKeyPressed = (upKeyState & 0x8000) != 0;
-	bool isDownKeyPressed = (downKeyState & 0x8000) != 0;
-
-	// 위 방향키가 새로 눌렸을 때 인덱스 증가
-	if (isUpKeyPressed && !previousUpKeyState)
+	_float moveSpeed = 1.f;
+	if (m_pGameInstance->Key_Pressing(DIK_Y))
 	{
-		currentAnimationIndex++;
-		if (currentAnimationIndex > MAX_ANIMATION_INDEX)
-			currentAnimationIndex = 0; // 88에서 증가 시 0으로 순환
-
-		m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+		m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
 	}
 
-	// 아래 방향키가 새로 눌렸을 때 인덱스 감소
-	if (isDownKeyPressed && !previousDownKeyState)
+	if (m_pGameInstance->Key_Pressing(DIK_H))
 	{
-		currentAnimationIndex--;
-		if (currentAnimationIndex < 0)
-			currentAnimationIndex = MAX_ANIMATION_INDEX; // 0에서 감소 시 88로 순환
-
-		m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+		m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
 	}
 
-	// 현재 키 상태를 이전 상태로 저장
-	previousUpKeyState = isUpKeyPressed;
-	previousDownKeyState = isDownKeyPressed;
+	if (m_pGameInstance->Key_Pressing(DIK_G))
+	{
+		m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+	}
+	
+	if (m_pGameInstance->Key_Pressing(DIK_J))
+	{
+		m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
+	}
+
+
+	//// 현재 애니메이션 인덱스와 이전 키 상태를 static 변수로 선언
+	//static int currentAnimationIndex = 0; // 현재 애니메이션 인덱스 (0~88)
+	//static bool previousUpKeyState = false;   // 이전 프레임의 위 방향키 상태
+	//static bool previousDownKeyState = false; // 이전 프레임의 아래 방향키 상태
+	//const int MAX_ANIMATION_INDEX = 88; // 최대 애니메이션 인덱스
+
+	//// 위 방향키(VK_UP)와 아래 방향키(VK_DOWN) 상태 가져오기
+	//SHORT upKeyState = GetAsyncKeyState(VK_UP);
+	//SHORT downKeyState = GetAsyncKeyState(VK_DOWN);
+
+	//bool isUpKeyPressed = (upKeyState & 0x8000) != 0;
+	//bool isDownKeyPressed = (downKeyState & 0x8000) != 0;
+
+	//// 위 방향키가 새로 눌렸을 때 인덱스 증가
+	//if (isUpKeyPressed && !previousUpKeyState)
+	//{
+	//	currentAnimationIndex++;
+	//	if (currentAnimationIndex > MAX_ANIMATION_INDEX)
+	//		currentAnimationIndex = 0; // 88에서 증가 시 0으로 순환
+
+	//	m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+	//}
+
+	//// 아래 방향키가 새로 눌렸을 때 인덱스 감소
+	//if (isDownKeyPressed && !previousDownKeyState)
+	//{
+	//	currentAnimationIndex--;
+	//	if (currentAnimationIndex < 0)
+	//		currentAnimationIndex = MAX_ANIMATION_INDEX; // 0에서 감소 시 88로 순환
+
+	//	m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+	//}
+
+	//// 현재 키 상태를 이전 상태로 저장
+	//previousUpKeyState = isUpKeyPressed;
+	//previousDownKeyState = isDownKeyPressed;
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)

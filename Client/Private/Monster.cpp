@@ -29,7 +29,7 @@ HRESULT CMonster::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pModelCom->SetUp_Animation(16, true);
+	m_pModelCom->SetUp_Animation(0, false, 0.1f);
 
 	return S_OK;
 }
@@ -45,17 +45,25 @@ void CMonster::Update(_float fTimeDelta)
 
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 
-	if (m_pGameInstance->Key_Down(DIK_F8))
+	_float moveSpeed = 1.f;
+	if (m_pGameInstance->Key_Pressing(DIK_UP))
 	{
-		int a = 3;
+		m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
 	}
-	if (m_pGameInstance->Key_Pressing(DIK_F8))
+
+	if (m_pGameInstance->Key_Pressing(DIK_DOWN))
 	{
-		int a = 3;
+		m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
 	}
-	if (m_pGameInstance->Key_Up(DIK_F8))
+
+	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 	{
-		int a = 3;
+		m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+	}
+
+	if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+	{
+		m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
 	}
 }
 
