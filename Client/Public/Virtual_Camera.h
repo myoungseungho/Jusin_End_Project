@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "Camera.h"
+#include "Main_Camera.h"
 
 BEGIN(Client)
 
@@ -11,6 +11,7 @@ public:
 	enum CAMERA_MODE
 	{
 		CAMERA_FREE_MODE,
+		CAMERA_DEFAULT_MODE,
 		CAMERA_CINEMATIC_MODE,
 		CAMERA_MODE_END
 	};
@@ -47,6 +48,7 @@ public:
 
 public:
 	const _char* GetTabName() const { return m_Name; };
+	void SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
 
 	void Start_Play();
 	void Pause();
@@ -54,6 +56,7 @@ public:
 
 private:
 	void Free_Camera(_float fTimeDelta);
+	void Default_Camera(_float fTimeDelta);
 	void Play(_float fTimeDelta);
 
 public:
@@ -76,6 +79,8 @@ public:
 	_vector				m_vShakeOffset = XMVectorZero();
 	_vector				m_vBaseCameraPosition = {};
 
+	class CGameObject* m_p1pPlayer = { nullptr };
+	class CGameObject* m_p2pPlayer = { nullptr };
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -65,6 +65,9 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 	case CAMERA_FREE_MODE:
 		Free_Camera(fTimeDelta);
 		break;
+	case CAMERA_DEFAULT_MODE:
+		Default_Camera(fTimeDelta);
+		break;
 	case CAMERA_CINEMATIC_MODE:
 		if (m_currentPlayMode == Playing)
 			Play(fTimeDelta);
@@ -201,6 +204,16 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
 }
 
+void CVirtual_Camera::SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer)
+{
+	if (state == CMain_Camera::PLAYER_1P)
+		m_p1pPlayer = pPlayer;
+	else if (state == CMain_Camera::PLAYER_2P)
+		m_p2pPlayer = pPlayer;
+
+	Safe_AddRef(pPlayer);
+}
+
 void CVirtual_Camera::Start_Play()
 {
 	// Stopped 상태에서 Play를 시작하면 초기화
@@ -290,6 +303,11 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 	{
 		StartCameraShake(1.f, 1.f);
 	}
+}
+
+void CVirtual_Camera::Default_Camera(_float fTimeDelta)
+{
+
 }
 
 
@@ -647,6 +665,9 @@ CGameObject* CVirtual_Camera::Clone(void* pArg)
 
 void CVirtual_Camera::Free()
 {
+	Safe_Release(m_p1pPlayer);
+	Safe_Release(m_p2pPlayer);
+
 	__super::Free();
 
 }

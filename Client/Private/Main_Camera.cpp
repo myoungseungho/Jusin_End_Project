@@ -238,6 +238,11 @@ void CMain_Camera::SetPosition(_fvector position)
 	virtual_Transform->Set_State(CTransform::STATE_POSITION, position);
 }
 
+void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
+{
+	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->SetPlayer(state, pPlayer);
+}
+
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)
 {

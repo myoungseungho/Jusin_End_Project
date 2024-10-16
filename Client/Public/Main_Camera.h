@@ -26,6 +26,12 @@ public:
 		VIRTUAL_CAMERA_END
 	};
 
+	enum PLAYER_STATE
+	{
+		PLAYER_1P,
+		PLAYER_2P
+	};
+
 private:
 	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CMain_Camera(const CMain_Camera& Prototype);
@@ -56,13 +62,12 @@ public:
 	void Delete_Points();
 	void SetPosition(_fvector position);
 
+	void SetPlayer(PLAYER_STATE, CGameObject* pPlayer);
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 
 private:
 	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
-
-
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

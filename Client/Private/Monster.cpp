@@ -4,6 +4,8 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
+#include "Main_Camera.h"
+
 CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -30,6 +32,9 @@ HRESULT CMonster::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_pModelCom->SetUp_Animation(0, false, 0.1f);
+
+	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	mainCamera->SetPlayer(CMain_Camera::PLAYER_2P, this);
 
 	return S_OK;
 }
