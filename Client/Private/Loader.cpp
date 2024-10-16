@@ -49,6 +49,10 @@
 #include "UI_FightFont.h"
 #include "UI_KOFont.h"
 #include "UI_Chara_SubIcon.h"
+#include "UI_InputDir.h"
+#include "UI_Input_DirPanel.h"
+#include "UI_Input_Action.h"
+#include "UI_InputDirIcon.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -435,6 +439,28 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/BP_roundfinish_KO.png")))))
 		return E_FAIL;
 
+	//KeyInput 
+
+	/* For.Prototype_Component_Texture_UI_DirInputPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/KeyInputPanel.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_ActionInputPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/KeyInputButton%d.png"),6))))
+		return E_FAIL;
+
+	///* Prototype_Component_Texture_UI_ActionInputPanel */
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInput"),
+	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/UI_DirInput%d.png"), 8))))
+	//	return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_DirInputIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputIcon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/UI_DirInput%d.png"), 9))))
+		return E_FAIL;
+
 
 	//게임 오브젝트
 
@@ -580,6 +606,27 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_KOFont::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_UI_InputDir */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_InputDir"),
+		CUI_InputDir::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_InputDirPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_InputDirPanel"),
+		CUI_Input_DirPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_InputAction */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_InputAction"),
+		CUI_Input_Action::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_DirInputIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_DirInputIcon"),
+		CUI_InputDirIcon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	
 	//UI_StartFont
 
 	return S_OK;

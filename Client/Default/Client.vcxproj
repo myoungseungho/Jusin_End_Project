@@ -173,6 +173,14 @@
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_HpEffect.h" />
+    <ClInclude Include="..\public\UI_Input.h" />
+    <ClInclude Include="..\public\UI_InputDir.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirIcon.h" />
+    <ClInclude Include="..\public\UI_Input_Action.h" />
+    <ClInclude Include="..\public\UI_Input_ActionIcon.h" />
+    <ClInclude Include="..\public\UI_Input_DirPanel.h" />
     <ClInclude Include="..\public\UI_KOFont.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -263,6 +271,14 @@
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_HpEffect.cpp" />
+    <ClCompile Include="..\private\UI_Input.cpp" />
+    <ClCompile Include="..\private\UI_InputDir.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirIcon.cpp" />
+    <ClCompile Include="..\private\UI_Input_Action.cpp" />
+    <ClCompile Include="..\private\UI_Input_ActionIcon.cpp" />
+    <ClCompile Include="..\private\UI_Input_DirPanel.cpp" />
     <ClCompile Include="..\private\UI_KOFont.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

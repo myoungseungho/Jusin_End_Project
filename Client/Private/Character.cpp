@@ -399,17 +399,24 @@ void CCharacter::InputCommand()
 	_int DirectionY=0;
 
 
+	DirectionInput iUI_MoveKeyInput = MOVEKEY_NEUTRAL;
+
+	_int UI_DirectionInputX = 0;
+	_int UI_DirectionInputY = 0;
+
 	if (m_iPlayerTeam == 1)
 	{
 
 		if (m_pGameInstance->Key_Pressing(DIK_W))
 		{
 			DirectionY = 1;
+			UI_DirectionInputY = 1;
 		}
 
 		else if (m_pGameInstance->Key_Pressing(DIK_S))
 		{
 			DirectionY =-1;
+			UI_DirectionInputY = -1;
 		}
 
 
@@ -417,11 +424,13 @@ void CCharacter::InputCommand()
 		if (m_pGameInstance->Key_Pressing(DIK_A))
 		{
 			DirectionX -= m_iLookDirection;
+			UI_DirectionInputX -= m_iLookDirection;
 		}
 
 		else if (m_pGameInstance->Key_Pressing(DIK_D))
 		{
 			DirectionX += m_iLookDirection;
+			UI_DirectionInputX += m_iLookDirection;
 		}
 
 		
@@ -429,24 +438,53 @@ void CCharacter::InputCommand()
 
 		 //if(DirectionX==0 && DirectionY ==0)
 
-		 if (DirectionX == -1 && DirectionY == 0)
-			 iMoveKey = MOVEKEY_LEFT;
+		if (DirectionX == -1 && DirectionY == 0)
+			iMoveKey = MOVEKEY_LEFT;
 
-		 else if (DirectionX == -1 && DirectionY == -1)
-			 iMoveKey = MOVEKEY_DOWN_LEFT;
+		else if (DirectionX == -1 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN_LEFT;
 
-		 else if (DirectionX == 0 && DirectionY == -1)
-			 iMoveKey = MOVEKEY_DOWN;
+		else if (DirectionX == 1 && DirectionY == 0)
+			iMoveKey = MOVEKEY_RIGHT;
 
-		 else if (DirectionX == 0 && DirectionY == -1)
-			 iMoveKey = MOVEKEY_DOWN;
+		else if (DirectionX == 0 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN;
 
-		 else if (DirectionX == 1 && DirectionY == -1)
-			 iMoveKey = MOVEKEY_DOWN_RIGHT;
+		else if (DirectionX == 1 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN_RIGHT;
 
-		 else if (DirectionX == 1 && DirectionY == 0)
-			 iMoveKey = MOVEKEY_RIGHT;
+		/*else if (DirectionX == 1 && DirectionY == 0)
+			iMoveKey = MOVEKEY_RIGHT;
+		else if (DirectionX == -1 && DirectionY == 1)
+			iMoveKey = MOVEKEY_UP_LEFT;
+		else if (DirectionX == 1 && DirectionY == 1)
+			iMoveKey = MOVEKEY_UP_RIGHT;*/
 
+
+		//UI KeyInput에 관련한 처리
+		if (UI_DirectionInputX == -1 && UI_DirectionInputY == 0)
+			iUI_MoveKeyInput = MOVEKEY_LEFT;
+
+		else if (UI_DirectionInputX == -1 && UI_DirectionInputY == -1)
+			iUI_MoveKeyInput = MOVEKEY_DOWN_LEFT;
+
+		else if (UI_DirectionInputX == 1 && UI_DirectionInputY == 0)
+			iUI_MoveKeyInput = MOVEKEY_RIGHT;
+
+		else if (UI_DirectionInputX == 0 && UI_DirectionInputY == -1)
+			iUI_MoveKeyInput = MOVEKEY_DOWN;
+		else if (UI_DirectionInputX == 0 && UI_DirectionInputY == 1)
+			iUI_MoveKeyInput = MOVEKEY_UP;
+
+		else if (UI_DirectionInputX == 1 && UI_DirectionInputY == -1)
+			iUI_MoveKeyInput = MOVEKEY_DOWN_RIGHT;
+
+		else if (UI_DirectionInputX == 1 && UI_DirectionInputY == 0)
+			iUI_MoveKeyInput = MOVEKEY_RIGHT;
+		else if (UI_DirectionInputX == -1 && UI_DirectionInputY == 1)
+			iUI_MoveKeyInput = MOVEKEY_UP_LEFT;
+		else if (UI_DirectionInputX == 1 && UI_DirectionInputY == 1)
+			iUI_MoveKeyInput = MOVEKEY_UP_RIGHT;
 
 		 //둘 다 0인경우는 기본값이므로 지정하지 않음 대각선 위는 쓰이는 커맨드가 없으므로 지정하지 않음
 
@@ -485,7 +523,7 @@ void CCharacter::InputCommand()
 		//
 		// }
 
-		 m_pUI_Manager->m_eDirInput = (DirectionInput)DirectionX;
+		 m_pUI_Manager->m_eDirInput = (DirectionInput)iUI_MoveKeyInput;
 		 m_pUI_Manager->m_eBtnInput = (ButtonInput)iAttackkey;
 
 	}

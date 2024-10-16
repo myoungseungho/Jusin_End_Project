@@ -454,9 +454,6 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		FlipDirection();
 	}
 	
-	
-
-	
 }
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)

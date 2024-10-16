@@ -226,6 +226,24 @@
     <Filter Include="02.GameObjects\UI\Hp\Effect">
       <UniqueIdentifier>{c3a4e1a3-4f37-4eb7-9f70-0b88b4c3f9c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Input">
+      <UniqueIdentifier>{bd55162e-2bc9-4fef-9314-823e16742ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Dir">
+      <UniqueIdentifier>{3f32860f-9d3a-4295-963e-a6a40734eb6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Panel">
+      <UniqueIdentifier>{a167b174-2b4c-4ab8-8be9-cbf444a58255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Action">
+      <UniqueIdentifier>{99cabcff-787d-403e-a0a8-b42525b87c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Dir\Icon">
+      <UniqueIdentifier>{b6d73f6f-ef70-4298-848f-5f61f83ff613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Action\Icon">
+      <UniqueIdentifier>{8a790c38-5402-4803-9c90-ff452ae3ec7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -453,6 +471,24 @@
     <ClInclude Include="..\public\UI_HpEffect.h">
       <Filter>02.GameObjects\UI\Hp\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_InputDir.h">
+      <Filter>02.GameObjects\UI\Input\Dir</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input.h">
+      <Filter>02.GameObjects\UI\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_DirPanel.h">
+      <Filter>02.GameObjects\UI\Input\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_Action.h">
+      <Filter>02.GameObjects\UI\Input\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirIcon.h">
+      <Filter>02.GameObjects\UI\Input\Dir\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_ActionIcon.h">
+      <Filter>02.GameObjects\UI\Input\Action\Icon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -661,6 +697,24 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_HpEffect.cpp">
       <Filter>02.GameObjects\UI\Hp\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDir.cpp">
+      <Filter>02.GameObjects\UI\Input\Dir</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input.cpp">
+      <Filter>02.GameObjects\UI\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_DirPanel.cpp">
+      <Filter>02.GameObjects\UI\Input\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_Action.cpp">
+      <Filter>02.GameObjects\UI\Input\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirIcon.cpp">
+      <Filter>02.GameObjects\UI\Input\Dir\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_ActionIcon.cpp">
+      <Filter>02.GameObjects\UI\Input\Action\Icon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

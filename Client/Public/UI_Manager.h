@@ -69,6 +69,8 @@ public:
 
 	DirectionInput m_eDirInput = {};
 	ButtonInput m_eBtnInput = {};
+
+	_uint m_iNumCommandList = { 0 };
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

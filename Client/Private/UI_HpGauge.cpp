@@ -77,7 +77,7 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
-	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 1;
+	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
 }
 
 void CUI_HpGauge::Late_Update(_float fTimeDelta)
@@ -147,7 +147,7 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bRedAlpha), sizeof(_bool))))
 		return E_FAIL;
 
-	_vector vColor = { 0.043f , 0.952f , 0.945 , 1.f };
+	_vector vColor = { 0.043f , 0.952f , 0.945 , 0.f };
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
 		return E_FAIL;

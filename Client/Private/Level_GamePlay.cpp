@@ -263,6 +263,18 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboEffect"), TEXT("Layer_UI_Combo_Effect"), &ComboDesc);
 	}
 
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"));
+
+	CUIObject::UI_DESC KeyInputDesc = {};
+	
+	for (int i = 0; i < 6; i++)
+	{
+		KeyInputDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"),&KeyInputDesc);
+	}
+
+
 
 	//게임 시작
 	//CUIObject::UI_DESC StartDesc = {};
@@ -297,7 +309,9 @@ HRESULT CLevel_GamePlay::Ready_Character()
 	CCharacter* p21 = dynamic_cast<CCharacter*>(m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"),1));
 	m_pUI_Manager->UsingSelectCharacher(p21, CCharacter::LPLAYER2);
 
-	
+
+
+
 
 	return S_OK;
 }
