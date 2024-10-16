@@ -178,7 +178,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_eCharacterIndex = PLAY_GOKU;
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
-
+	m_iStandingMidAttackAnimationIndex = ANIME_ATTACK_MEDIUM;
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -252,11 +252,14 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	MoveCommandPatternsFunction.push_back({ Command_HeavyAttack_Extra, bind(&CGoku_MeleeAttack::Attack_Heavy, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_MediumAttack_Extra, bind(&CGoku_MeleeAttack::Attack_Medium, &m_tAttackMap) });
 
+	
+	//MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
+	//MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
-	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
-	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
-
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 	
 
@@ -272,12 +275,23 @@ void CPlay_Goku::Update(_float fTimeDelta)
 {
 	
 
+	if(m_pGameInstance->Key_Down(DIK_R))
+		Chase();
 
 
+	//if (m_bChase == true);
+	if(m_pGameInstance->Key_Pressing(DIK_R))
+	{
 
+
+		return;
+	}
 
 	InputedCommandUpdate(fTimeDelta);
-	InputCommand();
+	if (InputCommand())
+	{
+		CheckAllCommands();
+	}
 
 	//if(m_pGameInstance->Key_Down(DIK_U))
 	//	ShowInputBuffer();
@@ -291,7 +305,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	//Set_Animation(CheckAllCommands());
 
 
-	CheckAllCommands();
+	//CheckAllCommands();
 
 	if (m_bAnimationLock == false)
 	{
@@ -320,7 +334,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	
 
 	Gravity(fTimeDelta);
-
+	AttckCancleJump();
 	
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
 	{
@@ -330,7 +344,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			Reset_AttackCount();
 
 			_short MoveKey = 0;
-			if (m_pGameInstance->Key_Pressing(DIK_W))
+			//if (m_pGameInstance->Key_Pressing(DIK_W))
+			if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 			{
 				m_pTransformCom->Add_Move({ 0,0.3f,0 });
 				
@@ -346,7 +361,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 					//Set_fImpulse(m_iLookDirection);
 
 					//Set_fImpulse(-0.1f);
-					Set_fImpulse(-2.5f);
+					Set_fImpulse(-5.f);
 
 				}
 
@@ -354,7 +369,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				{
 					//Set_fImpulse(-m_iLookDirection);
 					//Set_fImpulse(0.1f);
-					Set_fImpulse(2.5f);
+					Set_fImpulse(5.f);
 
 				}
 
@@ -479,7 +494,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	
 	
 
-	Gravity(fTimeDelta);
+	//Gravity(fTimeDelta);
 
 	
 }
@@ -770,6 +785,23 @@ _bool CPlay_Goku::Check_bCurAnimationisAttack(_uint iAnimation)
 	return false;
 }
 
+_bool CPlay_Goku::Check_bCurAnimationisAirAttack(_uint iAnimation)
+{
+	_uint iModelIndex = iAnimation;
+
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+
+	if (iModelIndex == ANIME_ATTACK_AIR1 || iModelIndex == ANIME_ATTACK_AIR2 || iModelIndex == ANIME_ATTACK_AIR3 || iModelIndex ==ANIME_ATTACK_SPECIAL_AIR)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void CPlay_Goku::Reset_AttackCount()
 {
 
@@ -804,6 +836,8 @@ void CPlay_Goku::Gravity(_float fTimeDelta)
 			Set_fGravityTime(0.f);
 			Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
+			m_bAriDashEnable = true;
+			Set_bAttackGravity(true);
 		}
 
 	}

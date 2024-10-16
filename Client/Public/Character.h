@@ -151,6 +151,8 @@ public:
 
 	static vector<CInput> Command_LightAttack;
 	static vector<CInput> Command_MediumAttack;
+	static vector<CInput> Command_MediumAttack_Extra;
+
 	static vector<CInput> Command_HeavyAttack;
 	static vector<CInput> Command_SpecialAttack;
 	static vector<CInput> Command_HeavyAttack_Extra;
@@ -167,6 +169,7 @@ public:
 	const int BUFFER_SIZE = 30;
 	enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
 	static const _float fGroundHeight;  //0
+	static const _float fJumpPower;
 
 	typedef struct: CGameObject::GAMEOBJECT_DESC
 	{
@@ -200,7 +203,8 @@ public:
 
 	
 	//커맨드 입력
-	virtual void InputCommand();
+	//virtual void InputCommand();
+	virtual _bool InputCommand();
 	virtual void InputedCommandUpdate(_float fTimeDelta) ;
 	virtual void UpdateInputBuffer(CInput newInput) 
 	{
@@ -210,7 +214,7 @@ public:
 		inputBuffer.push_back(newInput);
 	}
 	virtual bool CheckCommandSkippingExtras(const vector<CInput>& pattern, int timeWindow);
-	bool CheckCommandWithStartCondition(const vector<CInput>& pattern, int timeWindow);
+	bool CheckCommand_Exactly(const std::vector<CInput>& pattern, int timeWindow);
 	_uint CheckAllCommands();
 
 
@@ -218,6 +222,8 @@ public:
 	virtual _bool Character_Play_Animation(_float fTimeDelta);
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
+	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000) { return false; };
+
 
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition =0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
@@ -227,6 +233,8 @@ public:
 	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof =false) {};
 
 	_bool		CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition = 0);
+
+	virtual void Set_CurrentAnimationPositionJump(_float fAnimationPosition);
 
 	//키프레임 이벤트
 	virtual void ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex);
@@ -247,14 +255,27 @@ public:
 
 
 	//중력관련
+	//virtual void Gravity(_float fTimeDelta);
 	virtual void Gravity(_float fTimeDelta);
+
 	virtual void Set_fJumpPower(_float fJumpPower) { m_fJumpPower = fJumpPower; };
 	virtual void Set_fGravityTime(_float fGravityTime) {	m_fGravityTime = fGravityTime;	};
 	virtual void Set_fImpulse(_float fImpulse) { m_fImpuse = fImpulse; };
 
 	_float Get_fHeight();
+	_bool Get_bAirDashEnable() { return m_bAriDashEnable; };
+	void Set_bAirDashEnable(_bool bAirDashEnable) { m_bAriDashEnable = bAirDashEnable; };
+
+	void Set_ForcedGravityDown();
+	void Set_ForcveGravityTime(_float fGravityTime);
 
 
+	void Set_bAttackGravity(_bool bAttackGravity) { m_bAttackGravity = bAttackGravity; };
+
+
+	void AttckCancleJump();
+
+	void Chase();
 
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -283,6 +304,9 @@ protected:
 	vector<CommandPattern> MoveCommandPatterns;
 	vector<CommandPatternFunction> MoveCommandPatternsFunction;
 
+	vector<CommandPatternFunction> MoveCommandPatternsFunction_Exactly;
+
+
 	//_uint					m_iNextAnimationIndex = { 0 };
 	
 	//index,시간
@@ -292,9 +316,10 @@ protected:
 	_ushort m_iJumpAnimationIndex = { 6 };
 	_ushort m_iFallAnimationIndex = {7};
 	_ushort m_iIdleAnimationIndex = { 0 };
+	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
 
 
-	_float m_fGravityTime = {0.f};
+	_float m_fGravityTime = {0.f}; 
 	_float m_fJumpPower = {0.f};
 
 	//가속도
@@ -302,8 +327,16 @@ protected:
 
 
 	_bool m_bDoubleJumpEnable = { true };
+	_bool m_bAriDashEnable = { true };
 	
+	_bool m_bJumpLock = { false };
+	_float m_fAccJumpLockTime= { 0.f };
 
+	_bool m_bAttackGravity = { true };
+
+
+	_bool m_bChase = { false };
+	
 
 private:
 	HRESULT Ready_Components();

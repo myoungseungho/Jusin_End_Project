@@ -6,6 +6,7 @@
 
 
 const _float CCharacter::fGroundHeight = 0.f; //0
+const _float CCharacter::fJumpPower	 = 3.f; //0
 
 
 vector<CInput> CCharacter::Command_236Attack =
@@ -105,19 +106,23 @@ vector<CInput> CCharacter::Command_236UltimateAttack_Side =
 vector<CInput> CCharacter::Command_BackDash =
 {
 	{MOVEKEY_LEFT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_NONE},
 	{MOVEKEY_LEFT, ATTACK_NONE}
 };
 
 vector<CInput> CCharacter::Command_Forward =
-{
+{ 
 	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_NONE},
 	{ MOVEKEY_RIGHT, ATTACK_NONE }
 
 };
 
 vector<CInput> CCharacter::Command_LightAttack = { {MOVEKEY_NEUTRAL, ATTACK_LIGHT} };
 vector<CInput> CCharacter::Command_MediumAttack = { {MOVEKEY_NEUTRAL, ATTACK_MEDIUM} };
+
+vector<CInput> CCharacter::Command_MediumAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_MEDIUM} };
+
 vector<CInput> CCharacter::Command_HeavyAttack = { {MOVEKEY_NEUTRAL, ATTACK_HEAVY} };
 vector<CInput> CCharacter::Command_SpecialAttack = { {MOVEKEY_NEUTRAL, ATTACK_SPECIAL} };
 			
@@ -273,6 +278,11 @@ _bool CCharacter::CompareNextAnimation(_uint iAnimationIndex, _float fNextPositi
 
 }
 
+void CCharacter::Set_CurrentAnimationPositionJump(_float fAnimationPosition)
+{
+	m_pModelCom->CurrentAnimationPositionJump(fAnimationPosition);
+}
+
 void CCharacter::ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex)
 {
 
@@ -372,7 +382,7 @@ void CCharacter::ProcessEventsBetweenFrames2(int characterIndex, int animationIn
 	
 }
 
-void CCharacter::InputCommand()
+_bool CCharacter::InputCommand()
 {
 
 	ButtonInput iAttackkey = ATTACK_NONE;
@@ -472,6 +482,8 @@ void CCharacter::InputCommand()
 
 
 
+	_bool bNewKey = false;
+
 	CInput newInput(iMoveKey, iAttackkey);
 
 	if(inputBuffer.size()>0)
@@ -482,12 +494,18 @@ void CCharacter::InputCommand()
 
 		}
 		else
+		{
 			UpdateInputBuffer(CInput(iMoveKey, iAttackkey));
+			bNewKey = true;
+		}
 	}
 	else
 	{
 		UpdateInputBuffer(CInput(iMoveKey, iAttackkey));
+		bNewKey = true;
 	}
+
+	return bNewKey;
 }
 
 void CCharacter::InputedCommandUpdate(_float fTimeDelta)
@@ -590,43 +608,75 @@ bool CCharacter::CheckCommandSkippingExtras(const vector<CInput>& pattern, int t
 	return false;
 }
 
-bool CCharacter::CheckCommandWithStartCondition(const vector<CInput>& pattern, int timeWindow)
+bool CCharacter::CheckCommand_Exactly(const std::vector<CInput>& pattern, int timeWindow)
 {
-	return false;
+	if (inputBuffer.size() < pattern.size()) return false;  // 입력 버퍼가 패턴보다 짧으면 실패
+
+
+	// 입력 버퍼 전체를 순회하면서 패턴을 찾음
+	for (int i = 0; i <= inputBuffer.size() - pattern.size(); ++i)
+	{
+		bool isPatternMatched = true;
+
+		// 현재 위치부터 패턴을 비교
+		for (int j = 0; j < pattern.size(); ++j) {
+			const CInput& inputCheck = inputBuffer[i + j];
+			const CInput& expected = pattern[j];
+
+			// 패턴과 일치하지 않으면 실패
+			if (inputCheck.direction != expected.direction || inputCheck.button != expected.button) {
+				isPatternMatched = false;
+				break;
+			}
+
+			
+		}
+
+		// 패턴이 일치했으면 true 반환
+		if (isPatternMatched) 
+		{
+			inputBuffer.clear();
+			return true;
+		}
+	}
+
+	return false;  // 패턴을 찾지 못하면 실패
 }
+
 
 _uint CCharacter::CheckAllCommands()
 {
 
+	
+	for (const auto& command : MoveCommandPatternsFunction)
 	{
-		//for (const auto& command : MoveCommandPatterns) 
-		//{
-		//	if (CheckCommandSkippingExtras(command.pattern,0)) {
-		//		//command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
-		//		
-		//		return command.AnimationIndex;
-		//	}
-		//}
-		//return 0;
+		if (CheckCommandSkippingExtras(command.pattern, 0)) {
+			command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
 
-		for (const auto& command : MoveCommandPatternsFunction)
-		{
-			if (CheckCommandSkippingExtras(command.pattern, 0)) {
-				command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
-
-				return 0;
-			}
+			return 0;
 		}
-		return 0;
-
 	}
+
+
+	//정확해야하만 하는 패턴 따로 구분
+	for (const auto& command : MoveCommandPatternsFunction_Exactly)
+	{
+		if (CheckCommand_Exactly(command.pattern, 0)) {
+			command.action();  // 해당 패턴이 매칭되면 해당 기술 실행
+
+			return 0;
+		}
+	}
+	return 0;
+
+	
 }
 
 void CCharacter::ShowInputBuffer()
 {
 	inputBuffer;
-
-	_bool bDebug = true;
+	m_fGravityTime;
+ 	_bool bDebug = true;
 }
 
 void CCharacter::DebugPositionReset()
@@ -671,6 +721,56 @@ _float CCharacter::Get_fHeight()
 
 }
 
+void CCharacter::Set_ForcedGravityDown()
+{
+	//중력 최고점
+	//if (m_fGravityTime < 0.305)
+	//	m_fGravityTime = 0.305f;
+
+	//공중대시용?
+	m_fGravityTime = 0.255f;
+
+
+}
+
+void CCharacter::Set_ForcveGravityTime(_float fGravityTime)
+{
+	m_fGravityTime = fGravityTime;
+}
+
+void CCharacter::AttckCancleJump()
+{
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iStandingMidAttackAnimationIndex && m_pGameInstance->Key_Down(DIK_W))
+	{
+
+		//m_pTransformCom->Add_Move({ 0,0.3f,0 });
+
+		//Set_fJumpPower(4.f); //중력Ver1 기준
+		Set_fJumpPower(3.f); //중력Ver2 기준
+
+
+		//Set_Animation(m_iJumpAnimationIndex);
+		Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+
+		if (m_pGameInstance->Key_Pressing(DIK_A))
+		{
+			Set_fImpulse(-5.f);
+		}
+
+		else if (m_pGameInstance->Key_Pressing(DIK_D))
+		{
+			Set_fImpulse(5.f);
+		}
+	}
+
+}
+
+void CCharacter::Chase()
+{
+
+}
+
+
 _uint* CCharacter::Get_pAnimationIndex()
 {
 	return &(m_pModelCom->m_iCurrentAnimationIndex);
@@ -689,8 +789,11 @@ void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _flo
 }
 
 void CCharacter::Gravity(_float fTimeDelta)
+//void CCharacter::Gravity(_float fTimeDeltaOrigin)
 {
 	
+	//_float fTimeDelta = fTimeDeltaOrigin * 2.f;
+
 	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	_float fHeight = XMVectorGetY(vPos);
 
@@ -724,10 +827,14 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.03f;
 
 		//Ver3  점프력 3
-		_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.05f;
-
-
 		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.05f;
+
+
+		//1~3짜리 전부 실수로 Gravity 두번씩 호출함.  
+
+		//Ver4 점프력3.   마지막 값을 *0.1 대신 *0.08해도 자연스러움
+		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.1;
+		_float fGravity = (-0.7f * (2*m_fGravityTime - m_fJumpPower) * (2*m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 
 
 		//하강 모션중이면 점점 추락,  상승 하강 동시에 처리하고싶은데
@@ -735,7 +842,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 		{
 
 			//중력ver2 용
-			if (m_fGravityTime < m_fJumpPower)
+			//if (m_fGravityTime < m_fJumpPower)
+			if (m_fGravityTime*2 < m_fJumpPower)
 			{
 				m_fGravityTime += fTimeDelta;
 			}
@@ -750,17 +858,21 @@ void CCharacter::Gravity(_float fTimeDelta)
 		
 			//중력Ver2 전용 처리.  올라가다가 공격때문에 멈췄는데  공격 끝나고 다시 올라가는거 이상해서 처리
 			//if (fGravity < 0 && m_fGravityTime < m_fJumpPower)
-			if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime < m_fJumpPower)))
-			{
-				m_fGravityTime += fTimeDelta;
+
+			if(m_bAttackGravity == true)
+			{ 
+				if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+				{
+					m_fGravityTime += fTimeDelta;
+				}
+
+
+				//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
+
+				if (m_pGameInstance->Key_Pressing(DIK_W))
+					m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+
 			}
-
-
-			//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-			
-			if(m_pGameInstance->Key_Pressing(DIK_W))
-				m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
-
 			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.
 			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,0,0 });
 
@@ -773,13 +885,22 @@ void CCharacter::Gravity(_float fTimeDelta)
 	else if (fHeight <0)
 	{
 
-		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
 		{
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
 			Set_fGravityTime(0.f);
 			Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
+
+			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+			m_bAriDashEnable = true;
+			Set_bAttackGravity(true);
+
+			if (m_bJumpLock == false)
+			{
+				m_bJumpLock = true;
+			}
 
 		}
 
@@ -801,8 +922,21 @@ void CCharacter::Gravity(_float fTimeDelta)
 			Set_fGravityTime(0.f);
 			Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
-
+			m_bAriDashEnable = true;
+			Set_bAttackGravity(true);
 		}
+
+		if (m_bJumpLock)
+		{
+			m_fAccAnimationLock += fTimeDelta;
+
+			if (m_fAccAnimationLock > 0.15f)
+			{
+				m_bJumpLock = false;
+				m_fAccAnimationLock = 0.f;
+			}
+		}
+
 	}
 
 

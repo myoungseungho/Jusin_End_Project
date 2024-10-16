@@ -67,6 +67,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
 	m_iJumpAnimationIndex = ANIME_JUMP_UP;
+	m_iStandingMidAttackAnimationIndex = ANIME_ATTACK_MEDIUM;
 
 
 	m_iNextAnimation.first = ANIME_IDLE;

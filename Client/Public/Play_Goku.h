@@ -85,7 +85,7 @@ public:
 
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
-
+	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000)override;
 	
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
