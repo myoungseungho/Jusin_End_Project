@@ -74,6 +74,7 @@ HRESULT CCamera::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+//얘는 메인카메라다.
 void CCamera::Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta)
 {
 	//메인카메라에서 선택된 가상카메라가 가지고 있는 포인트를 순회하면서 재생하는 모드
@@ -87,6 +88,7 @@ void CCamera::Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta
 	_matrix Inverse_Matrix = static_cast<CTransform*>(camera->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrix_Inverse();
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_VIEW, Inverse_Matrix);
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(camera->m_fFovy, camera->m_fViewportWidth / camera->m_fViewportHeight, camera->m_fNear, camera->m_fFar));
+
 }
 
 void CCamera::Play(CCamera* camera, _float fTimeDelta)
@@ -193,7 +195,7 @@ void CCamera::Play(CCamera* camera, _float fTimeDelta)
 	_vector up = NewWorldMatrix.r[1];
 	_vector look = NewWorldMatrix.r[2];
 	_vector position = NewWorldMatrix.r[3];
-	m_vBaseCameraPosition = position;
+	camera->m_vBaseCameraPosition = position;
 
 	// CTransform 컴포넌트에 설정
 	CTransform* cameraTransform = static_cast<CTransform*>(camera->Get_Component(TEXT("Com_Transform")));
@@ -202,9 +204,7 @@ void CCamera::Play(CCamera* camera, _float fTimeDelta)
 	cameraTransform->Set_State(CTransform::STATE_RIGHT, right);
 	cameraTransform->Set_State(CTransform::STATE_UP, up);
 	cameraTransform->Set_State(CTransform::STATE_LOOK, look);
-	// 위치 설정
-	cameraTransform->Set_State(CTransform::STATE_POSITION, position);
-
+	cameraTransform->Set_State(CTransform::STATE_POSITION, position + camera->m_vShakeOffset);
 }
 
 void CCamera::Prev_Stop()
@@ -520,9 +520,6 @@ void CCamera::ApplyCameraShake(_float fTimeDelta)
 
 	// **저장된 기준 위치에 흔들림 오프셋 적용**
 	_vector shakenPosition = m_vBaseCameraPosition + m_vShakeOffset;
-
-	// **카메라 위치 업데이트**
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, shakenPosition);
 }
 
 void CCamera::StartCameraShake(_float fDuration, _float fMagnitude)

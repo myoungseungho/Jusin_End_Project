@@ -97,12 +97,11 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	
+	m_vecVirtualCamera[m_currentVirtualMode]->Priority_Update(fTimeDelta);
+
 	//PrevPlayMode면 Point에 있는 녀석을 순회하는 데이터를 뷰투영에 넣어주고
 	//아니라면 현재 선택된 카메라의 Transform 정보를 넣어주기
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], m_bPrevPlayMode, fTimeDelta);
-
-	m_vecVirtualCamera[m_currentVirtualMode]->Priority_Update(fTimeDelta);
 }
 
 void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4)
