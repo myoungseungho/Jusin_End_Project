@@ -38,8 +38,12 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 
 void CSpaceSun::Priority_Update(_float fTimeDelta)
 {
-	if(m_isPlus == true && m_isMaintain == false)
+	static bool isOneCheck = false;
+	if (m_isPlus == true && m_isMaintain == false)
+	{
 		m_fAccTime += fTimeDelta * 0.25;
+		isOneCheck = false;
+	}
 	else if (m_isPlus == false && m_isMaintain == false)
 		m_fAccTime -= fTimeDelta * 0.25;
 
@@ -56,10 +60,17 @@ void CSpaceSun::Priority_Update(_float fTimeDelta)
 		m_isMaintain = true;
 
 		m_fOneTime = -3.25f;
+		
 	}
 
 	if (m_isMaintain == true)
 	{
+		if (isOneCheck == false && m_isRainbowSwitch == false)
+		{
+			m_isRainbowSwitch = true;
+			isOneCheck = true;
+		}
+
 		m_fOneTime += fTimeDelta;
 		if (m_fOneTime > 3.5f)
 		{
@@ -72,9 +83,33 @@ void CSpaceSun::Priority_Update(_float fTimeDelta)
 				m_fAccTime = 0.3f;
 
 			m_isPlus = !m_isPlus;
-
 		}
 	}
+
+	//if (m_isRainbowSwitch == false)
+	//{
+	//	m_fRainbowTime += fTimeDelta;
+
+	//	if (m_fRainbowTime > 5.f)
+	//	{
+	//		m_isRainbowSwitch = true;
+	//		m_fRainbowTime = 0.f;
+	//	}
+	//}
+
+	if (m_isRainbowSwitch == true)
+	{
+		m_fRainbowTime += fTimeDelta * 0.5f;
+		m_pTransformCom_Rainbow->Set_Scaled(0.6f + m_fRainbowTime, 0.6f + m_fRainbowTime, 1.f + m_fRainbowTime);
+		
+		if (m_fRainbowTime > 1.f)
+		{
+			m_isRainbowSwitch = false;
+			m_fRainbowTime = 0.f;
+			m_pTransformCom_Rainbow->Set_Scaled(0.6f, 0.6f, 1.f);
+		}
+	}
+
 }
 
 void CSpaceSun::Update(_float fTimeDelta)
@@ -86,7 +121,7 @@ void CSpaceSun::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND_PRI, this);
-
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND_PRI, this);
 }
 
 HRESULT CSpaceSun::Render(_float fTimeDelta)
@@ -111,7 +146,7 @@ HRESULT CSpaceSun::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(1)))
 			return E_FAIL;
 
-		m_iIndex = 0;
+		m_iIndex = 2;
 	}
 	else if (m_iIndex == 0)
 	{
@@ -130,20 +165,31 @@ HRESULT CSpaceSun::Render(_float fTimeDelta)
 
 		m_iIndex = 1;
 
+	}
+	else if (m_iIndex == 2)
+	{
+		m_iIndex = 0;
+		if (m_isRainbowSwitch == false)
+			return S_OK;
+
+		if (FAILED(m_pTransformCom_Rainbow->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fRainbowTime, sizeof(float))))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom_Rainbow->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(8)))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom_Rainbow->Render(0)))
+			return E_FAIL;
 
 	}
 
-	/*if (FAILED(m_pTransformCom_Rainbow->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
-		return E_FAIL;
-	
-	if (FAILED(m_pModelCom_Rainbow->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
-		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(8)))
-		return E_FAIL;
-
-	if (FAILED(m_pModelCom_Rainbow->Render(0)))
-		return E_FAIL;*/
 
 	return S_OK;
 }
@@ -177,7 +223,7 @@ HRESULT CSpaceSun::Ready_Components()
 		return E_FAIL;
 
 	m_pTransformCom_Rainbow->Set_Scaled(0.5f, 0.5f, 1.f);
-	m_pTransformCom_Rainbow->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 125.f, 300.f, 1.f));
+	m_pTransformCom_Rainbow->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 102.f, 300.f, 1.f));
 	
 	return S_OK;
 }

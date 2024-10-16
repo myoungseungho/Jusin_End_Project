@@ -48,9 +48,8 @@ private:
 	_bool m_isPlus = { true };
 	_bool m_isMaintain = { false };
 private:
-	_bool m_isStarSwitch = { false };
-	_float	m_fMaskStar_Value_1 = { 0.f };
-	_float	m_fMaskStar_Value_2 = { 0.3f };
+	_bool m_isRainbowSwitch = { false };
+	_float	m_fRainbowTime = { 0.f };
 
 private:
 	HRESULT Ready_Components();

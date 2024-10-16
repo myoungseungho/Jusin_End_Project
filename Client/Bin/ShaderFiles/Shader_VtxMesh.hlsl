@@ -368,15 +368,12 @@ PS_OUT_RAINBOW PS_MAIN_RAINBOW(PS_IN In)
     PS_OUT_RAINBOW Out;
     
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
-    vMtrlDiffuse.a = saturate(Shadowluminance * 2.f);
-    vMtrlDiffuse.rgb *= 1.5f;
-   // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-    //if (vMtrlDiffuse.a < 0.99f)
-    //    discard;
+    //float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
+    vMtrlDiffuse.a = saturate((vMtrlDiffuse.x + vMtrlDiffuse.y + vMtrlDiffuse.z) / 3.f) * 3.f - g_Time * 2.f;
+    //vMtrlDiffuse.rgb *= 1.5f;
 
     Out.vColor = vMtrlDiffuse;
-    
+      
     return Out;
 }
 
@@ -533,7 +530,7 @@ technique11		DefaultTechnique
     pass SunRainbow // 8
     {
         SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_Default, 0);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN_RECT();
