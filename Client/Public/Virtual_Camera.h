@@ -60,6 +60,8 @@ private:
 	void Play(_float fTimeDelta);
 	void Adjust_FOV(_float distanceX);
 	_float ComputeDistanceX(_gvector pos1, _gvector pos2);
+	void Set_Camera_Position(_float averageX);
+	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
 public:
 	CAMERA_MODE m_currentMode = { CAMERA_DEFAULT_MODE };

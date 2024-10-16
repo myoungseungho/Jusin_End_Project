@@ -211,8 +211,8 @@ void CVirtual_Camera::Adjust_FOV(_float distanceX)
 	const _float maxFOV = XMConvertToRadians(90.f);     // 90도
 
 	// 거리 임계값 설정
-	const _float minDistance = 30.f; // FOV 조절 시작 거리
-	const _float maxDistance = 50.f; // FOV 최대 조절 거리
+	const _float minDistance = 20.f; // FOV 조절 시작 거리
+	const _float maxDistance = 40.f; // FOV 최대 조절 거리
 
 	_float dynamicFOV = defaultFOV;
 
@@ -220,7 +220,7 @@ void CVirtual_Camera::Adjust_FOV(_float distanceX)
 	{
 		// 거리에 따라 FOV 보간
 		_float t = (distanceX - minDistance) / (maxDistance - minDistance);
-		t = XMVectorGetX(XMVectorClamp(XMVectorReplicate(t), XMVectorZero(), XMVectorReplicate(1.f)));
+		t = max(0.f, min(1.f, t)); // t를 [0, 1] 범위로 클램프
 
 		dynamicFOV = defaultFOV + t * (maxFOV - defaultFOV);
 	}
@@ -229,6 +229,39 @@ void CVirtual_Camera::Adjust_FOV(_float distanceX)
 	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
 	m_fFovy = m_previousFOV + (dynamicFOV - m_previousFOV) * smoothingFactor;
 	m_previousFOV = m_fFovy;
+}
+
+void CVirtual_Camera::Set_Camera_Position(_float averageX)
+{
+	// 카메라의 고정 Y와 Z 위치
+	const _float fixedY = 17.f;
+	const _float fixedZ = -30.f;
+
+	// 스무딩을 위한 현재 위치
+	_float3 targetPosition = _float3(averageX, fixedY, fixedZ);
+	_float3 smoothedPosition;
+	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
+
+	// 선형 보간을 통한 부드러운 위치 전환
+	smoothedPosition.x = m_previousPosition.x + (targetPosition.x - m_previousPosition.x) * smoothingFactor;
+	smoothedPosition.y = m_previousPosition.y + (targetPosition.y - m_previousPosition.y) * smoothingFactor;
+	smoothedPosition.z = m_previousPosition.z + (targetPosition.z - m_previousPosition.z) * smoothingFactor;
+
+	// 카메라 위치 설정
+	m_pTransformCom->Set_State_Position(smoothedPosition);
+	m_previousPosition = smoothedPosition;
+}
+
+void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2)
+{
+	// 카메라의 Look 방향을 고정된 값으로 설정 (예: Z축을 향하도록)
+	_vector fixedLook = XMVectorSet(-0.05f, -0.14f, 0.98f, 0.f);
+	_vector fixedRight = XMVectorSet(0.9984f, 0.f, 0.054f, 0.f);
+	_vector fixedUp = XMVectorSet(-0.00773f, 0.99f, 0.14f, 0.f);
+
+	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, fixedRight);
+	m_pTransformCom->Set_State(CTransform::STATE_UP, fixedUp);
+	m_pTransformCom->Set_State(CTransform::STATE_LOOK, fixedLook);
 }
 
 void CVirtual_Camera::SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer)
@@ -350,31 +383,11 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 	// 카메라의 시야각 조절
 	Adjust_FOV(distanceX);
 
-	// 카메라의 고정 Y와 Z 위치
-	const _float fixedY = 17.f;
-	const _float fixedZ = -30.f;
+	// 카메라의 위치 설정
+	Set_Camera_Position(averageX);
 
-	// 스무딩을 위한 현재 위치
-	_float3 targetPosition = _float3(averageX, fixedY, fixedZ);
-	_float3 smoothedPosition;
-	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
-
-	// 선형 보간을 통한 부드러운 위치 전환
-	smoothedPosition.x = m_previousPosition.x + (targetPosition.x - m_previousPosition.x) * smoothingFactor;
-	smoothedPosition.y = m_previousPosition.y + (targetPosition.y - m_previousPosition.y) * smoothingFactor;
-	smoothedPosition.z = m_previousPosition.z + (targetPosition.z - m_previousPosition.z) * smoothingFactor;
-
-	// 카메라 위치 설정
-	m_pTransformCom->Set_State_Position(smoothedPosition);
-	m_previousPosition = smoothedPosition;
-
-	// 카메라의 방향 벡터를 설정합니다.
-	_vector right = XMVectorSet(0.9984f, 0.f, 0.054f, 0.f);
-	_vector up = XMVectorSet(-0.00773f, 0.99f, 0.14f, 0.f);
-	_vector look = XMVectorSet(-0.05f, -0.14f, 0.98f, 0.f);
-	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
-	m_pTransformCom->Set_State(CTransform::STATE_UP, up);
-	m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
+	// 카메라의 방향 벡터 설정
+	Set_Camera_Direction(averageX, pos1, pos2);
 }
 
 _float CVirtual_Camera::ComputeDistanceX(_gvector pos1, _gvector pos2)
