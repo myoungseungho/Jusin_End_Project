@@ -1,3 +1,5 @@
+#include <string>
+#include <filesystem>
 #include "ModelConverter.h"
 
 bool ModelConverter::LoadModel(const std::string& filePath, ModelType modelType) {
@@ -288,7 +290,13 @@ void ModelConverter::LoadBoneFromBinary(std::ifstream& inFile, BoneData& bone) {
 	}
 }
 
-
+std::string ExtractFileName(const std::string& filePath) {
+	size_t pos = filePath.find_last_of("\\/");  // 마지막 경로 구분자 위치 찾기
+	if (pos != std::string::npos) {
+		return filePath.substr(pos + 1);  // 파일명만 추출
+	}
+	return filePath;  // 경로 구분자가 없으면 전체 문자열 반환
+}
 
 // FillModelData 함수 수정
 void ModelConverter::FillModelData(const aiScene* scene, ModelHeader& header, vector<BoneData>& bones, vector<MeshData>& meshes, vector<MaterialData>& materials, vector<AnimationData>& animations, bool printVertices) {
@@ -409,8 +417,11 @@ void ModelConverter::FillModelData(const aiScene* scene, ModelHeader& header, ve
 
 		for (unsigned int j = 0; j < AI_TEXTURE_TYPE_MAX; ++j) {
 			aiString str;
+
 			if (aiMaterial->GetTexture(static_cast<aiTextureType>(j), 0, &str) == AI_SUCCESS) {
-				material.texturePaths[j] = str.C_Str();
+				std::string texturePath = str.C_Str();
+				std::string fileName = ExtractFileName(texturePath); 
+				material.texturePaths[j] = fileName; 
 			}
 		}
 	}
