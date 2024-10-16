@@ -5,6 +5,10 @@
 #include "Effect.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
+#include <Effect_Single.h>
+#include "Effect_Multi.h"
+#include "Effect_MoveTex.h"
+
 IMPLEMENT_SINGLETON(CEffect_Manager)
 
 CEffect_Manager::CEffect_Manager()
@@ -103,36 +107,112 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
 
+			CEffect_Single* pSingleEffect = { nullptr };
+			CEffect_Multi* pMultiEffect = { nullptr };
+			CEffect_MoveTex* pMoveTexEffect = { nullptr };
+
 			// 이펙트를 클론하여 레이어에 추가
-			CEffect* pEffect = static_cast<CEffect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect"), &EffectDesc));
-			if (!pEffect) {
-				Safe_Release(pLayer);  // 이펙트 생성 실패 시 레이어 해제
-				return E_FAIL;
-			}
-
-			// 이펙트에 기본 설정값 적용
-			pEffect->m_bIsNotPlaying = effectData.isNotPlaying;
-			pEffect->m_bIsLoop = effectData.isLoop;
-
-			// 이펙트의 각 키프레임 설정
-			for (const auto& keyFrameData : effectData.keyframes)
+			switch (EffectDesc.EffectType)
 			{
-				EFFECT_KEYFRAME keyFrame;
-				keyFrame.vPosition = keyFrameData.position;
-				keyFrame.vScale = keyFrameData.scale;
-				keyFrame.vRotation = keyFrameData.rotation;
-				keyFrame.fCurTime = keyFrameData.curTime;
-				keyFrame.fDuration = keyFrameData.duration;
+			case EFFECT_SINGLE:
+				pSingleEffect = static_cast<CEffect_Single*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Single"), &EffectDesc));
 
-				// 키프레임 추가
-				pEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
-			}
+				if (!pSingleEffect) {
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
 
-			// 레이어에 이펙트를 추가
-			if (FAILED(pLayer->Add_Effect(pEffect))) {
-				Safe_Release(pEffect);  // 실패 시 이펙트를 해제
-				Safe_Release(pLayer);
-				return E_FAIL;
+				// 이펙트에 기본 설정값 적용
+				pSingleEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+				pSingleEffect->m_bIsLoop = effectData.isLoop;
+
+				// 이펙트의 각 키프레임 설정
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+
+					// 키프레임 추가
+					pSingleEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				// 레이어에 이펙트를 추가
+				if (FAILED(pLayer->Add_Effect(pSingleEffect))) {
+					Safe_Release(pSingleEffect);  // 실패 시 이펙트를 해제
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
+			case EFFECT_MULTI:
+				pMultiEffect = static_cast<CEffect_Multi*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Multi"), &EffectDesc));
+
+				if (!pMultiEffect) {
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+
+				// 이펙트에 기본 설정값 적용
+				pMultiEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+				pMultiEffect->m_bIsLoop = effectData.isLoop;
+
+				// 이펙트의 각 키프레임 설정
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+
+					// 키프레임 추가
+					pMultiEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				// 레이어에 이펙트를 추가
+				if (FAILED(pLayer->Add_Effect(pMultiEffect))) {
+					Safe_Release(pMultiEffect);  // 실패 시 이펙트를 해제
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
+			case EFFECT_MOVETEX:
+				pMoveTexEffect = static_cast<CEffect_MoveTex*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_MoveTex"), &EffectDesc));
+
+				if (!pMoveTexEffect) {
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+
+				// 이펙트에 기본 설정값 적용
+				pMoveTexEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+				pMoveTexEffect->m_bIsLoop = effectData.isLoop;
+
+				// 이펙트의 각 키프레임 설정
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+
+					// 키프레임 추가
+					pMoveTexEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				// 레이어에 이펙트를 추가
+				if (FAILED(pLayer->Add_Effect(pMoveTexEffect))) {
+					Safe_Release(pMoveTexEffect);  // 실패 시 이펙트를 해제
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
 			}
 		}
 

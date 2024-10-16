@@ -218,32 +218,41 @@ void* CFile_Manager::Load_Effects(wstring& FilePath)
 	EFFECT_DATA effectData;
 	EFFECT_KEYFRAME_DATA keyFrameData;
 
-	bool isNewLayer = false; // 새 레이어를 감지하는 플래그
+	bool isNewLayer = false;  // 새 레이어를 감지하는 플래그
 	bool isNewEffect = false; // 새 이펙트를 감지하는 플래그
 
 	while (getline(file, line)) {
-		if (!line.empty()) {
-			HRESULT result = Read_Effects(line, layerData, effectData, keyFrameData);
-			if (result == S_OK) {
-				// 섹션별 데이터를 추가
-				if (line.find(L"[Layer]") != wstring::npos) {
-					if (isNewLayer) {
-						m_pLoadedEffectData->push_back(layerData);
-						layerData.effects.clear(); // 새로운 레이어 시작 시 이펙트 초기화
-					}
-					isNewLayer = true;
+		if (line.empty()) {
+			// 빈 줄이 발견되면 현재 섹션의 종료 신호로 처리
+			if (isNewEffect) {
+				layerData.effects.push_back(effectData);
+				effectData.keyframes.clear();
+				isNewEffect = false;
+			}
+			continue;
+		}
+
+		HRESULT result = Read_Effects(line, layerData, effectData, keyFrameData);
+		if (result == S_OK) {
+			// 섹션별 데이터를 추가
+			if (line.find(L"[Layer]") != wstring::npos) {
+				if (isNewLayer) {
+					m_pLoadedEffectData->push_back(layerData);
+					layerData.effects.clear();
 				}
-				else if (line.find(L"[Effect]") != wstring::npos) {
-					if (isNewEffect) {
-						layerData.effects.push_back(effectData);
-						effectData.keyframes.clear(); // 새로운 이펙트 시작 시 키프레임 초기화
-					}
-					isNewEffect = true;
+				isNewLayer = true;
+			}
+			else if (line.find(L"[Effect]") != wstring::npos) {
+				if (isNewEffect) {
+					layerData.effects.push_back(effectData);
+					effectData.keyframes.clear();
 				}
-				else if (line.find(L"[KeyFrame]") != wstring::npos) {
-					// 키프레임 데이터를 이펙트에 추가
-					effectData.keyframes.push_back(keyFrameData);
-				}
+				isNewEffect = true;
+			}
+			else if (line.find(L"[KeyFrame]") != wstring::npos) {
+				// 키프레임 데이터를 이펙트에 추가
+				effectData.keyframes.push_back(keyFrameData);
+				keyFrameData = EFFECT_KEYFRAME_DATA();
 			}
 		}
 	}
@@ -317,7 +326,7 @@ HRESULT CFile_Manager::Read_Effects(wstring& Line, EFFECT_LAYER_DATA& LayerData,
 			else if (key == L"IsLoop") {
 				EffectData.isLoop = (value == L"true");
 				LayerData.effects.push_back(EffectData);  // Effect 정보 저장
-				EffectData = EFFECT_DATA();  // 다음 Effect 데이터를 위해 초기화
+				EffectData = EFFECT_DATA();               // 다음 Effect 데이터를 위해 초기화
 			}
 		}
 		else if (currentSection == L"KeyFrame") {
@@ -338,7 +347,7 @@ HRESULT CFile_Manager::Read_Effects(wstring& Line, EFFECT_LAYER_DATA& LayerData,
 			else if (key == L"Duration") {
 				KeyFrameData.duration = stof(value);
 				EffectData.keyframes.push_back(KeyFrameData);  // KeyFrame 정보 저장
-				KeyFrameData = EFFECT_KEYFRAME_DATA();  // 다음 KeyFrame 데이터를 위해 초기화
+				KeyFrameData = EFFECT_KEYFRAME_DATA();         // 다음 KeyFrame 데이터를 위해 초기화
 			}
 		}
 
@@ -347,6 +356,7 @@ HRESULT CFile_Manager::Read_Effects(wstring& Line, EFFECT_LAYER_DATA& LayerData,
 
 	return E_FAIL;
 }
+
 
 
 CFile_Manager* CFile_Manager::Create()
