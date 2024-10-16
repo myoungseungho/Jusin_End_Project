@@ -61,6 +61,89 @@ void CEffect_Manager::Render(_float fTimeDelta)
 		Pair->Render(fTimeDelta);
 }
 
+HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)
+{
+	// pSavedEffect가 nullptr인 경우 실패 반환
+	if (!pSavedEffect) return E_FAIL;
+
+	// 기존에 존재하는 레이어들을 제거
+	for (auto& layerPair : m_FinalEffects)
+	{
+		Safe_Release(layerPair.second);
+	}
+	m_FinalEffects.clear();
+
+	// pSavedEffect에 있는 각 레이어 데이터를 순회
+	for (const auto& layerData : *pSavedEffect)
+	{
+		// 새로운 레이어 생성
+		CEffect_Layer* pLayer = CEffect_Layer::Create();
+		if (!pLayer) continue;  // 레이어 생성에 실패한 경우 건너뜀
+
+		// 레이어에 필요한 설정 값을 할당
+		pLayer->m_fDuration = layerData.duration;
+		pLayer->m_fTickPerSecond = layerData.tickPerSecond;
+		pLayer->m_iNumKeyFrames = layerData.keyFramesCount;
+
+		// 각 이펙트 데이터를 순회하며 레이어에 추가
+		for (const auto& effectData : layerData.effects)
+		{
+			// 이펙트 생성 정보 초기화
+			CEffect::EFFECT_DESC EffectDesc;
+			EffectDesc.ModelName = effectData.modelName;
+			EffectDesc.EffectName = effectData.effectName;
+			EffectDesc.MaskTextureName = effectData.maskTextureName;
+			EffectDesc.DiffuseTextureName = effectData.diffuseTextureName;
+			EffectDesc.EffectType = static_cast<EFFECT_TYPE>(effectData.effectType);
+			EffectDesc.vPosition = effectData.position;
+			EffectDesc.vScaled = effectData.scale;
+			EffectDesc.vRotation = effectData.rotation;
+			EffectDesc.iUnique_Index = effectData.uniqueIndex;
+			EffectDesc.iRenderIndex = effectData.renderIndex;
+			EffectDesc.iPassIndex = effectData.passIndex;
+			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
+
+			// 이펙트를 클론하여 레이어에 추가
+			CEffect* pEffect = static_cast<CEffect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect"), &EffectDesc));
+			if (!pEffect) {
+				Safe_Release(pLayer);  // 이펙트 생성 실패 시 레이어 해제
+				return E_FAIL;
+			}
+
+			// 이펙트에 기본 설정값 적용
+			pEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+			pEffect->m_bIsLoop = effectData.isLoop;
+
+			// 이펙트의 각 키프레임 설정
+			for (const auto& keyFrameData : effectData.keyframes)
+			{
+				EFFECT_KEYFRAME keyFrame;
+				keyFrame.vPosition = keyFrameData.position;
+				keyFrame.vScale = keyFrameData.scale;
+				keyFrame.vRotation = keyFrameData.rotation;
+				keyFrame.fCurTime = keyFrameData.curTime;
+				keyFrame.fDuration = keyFrameData.duration;
+
+				// 키프레임 추가
+				pEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+			}
+
+			// 레이어에 이펙트를 추가
+			if (FAILED(pLayer->Add_Effect(pEffect))) {
+				Safe_Release(pEffect);  // 실패 시 이펙트를 해제
+				Safe_Release(pLayer);
+				return E_FAIL;
+			}
+		}
+
+		// 생성된 레이어를 m_FinalEffects에 추가
+		m_FinalEffects.emplace(layerData.layerName, pLayer);
+	}
+
+	return S_OK;
+}
+
+
 CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerTag)
 {
 	auto	iter = m_FinalEffects.find(strEffectLayerTag);

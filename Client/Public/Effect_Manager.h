@@ -25,6 +25,7 @@ public:
 	void Render(_float fTimeDelta);
 
 public:
+	HRESULT Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect);
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
 	class CEffect* Find_Layer_Effect(wstring& layerName, wstring& effectName);
 	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);

@@ -54,6 +54,10 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	}
 
+	if (Set_Effect() != nullptr)
+		m_pEffect_Manager->Set_Saved_Effects(Set_Effect());
+
+
 	return S_OK;
 }
 

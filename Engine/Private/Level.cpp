@@ -50,6 +50,15 @@ HRESULT CLevel::ParseInitialize(const wstring& filePath)
 	return S_OK;
 }
 
+vector<EFFECT_LAYER_DATA>* CLevel::Set_Effect()
+{
+	wstring filePath = L"../Bin/Effects.txt";
+
+	vector<EFFECT_LAYER_DATA>*	pvecFileData = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_Effects(filePath));
+
+	return pvecFileData;
+}
+
 void CLevel::Free()
 {
 	__super::Free();

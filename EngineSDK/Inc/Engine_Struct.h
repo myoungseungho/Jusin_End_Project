@@ -128,6 +128,7 @@ namespace Engine
 		wstring modelName;
 		wstring maskTextureName;
 		wstring diffuseTextureName;
+		_int	effectType;
 		_int renderIndex;
 		_int passIndex;
 		_int uniqueIndex;

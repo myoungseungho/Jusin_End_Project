@@ -43,7 +43,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 	m_MaskTextureName = pEffectDesc->MaskTextureName;
 	m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
 	m_iRenderIndex = pEffectDesc->iRenderIndex;
-
+	m_iPassIndex = pEffectDesc->iPassIndex;
 	m_iNumWidthImage = pEffectDesc->iNumWidthImage;
 	m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 

@@ -134,6 +134,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
             effectData.modelName = pEffect->m_ModelName;
             effectData.maskTextureName = pEffect->m_MaskTextureName;
             effectData.diffuseTextureName = pEffect->m_DiffuseTextureName;
+            effectData.effectType = pEffect->m_eEffect_Type;
             effectData.renderIndex = pEffect->m_iRenderIndex;
             effectData.passIndex = pEffect->m_iPassIndex;
             effectData.uniqueIndex = pEffect->m_iUnique_Index;

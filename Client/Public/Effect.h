@@ -28,12 +28,14 @@ public:
 		_wstring ModelName;
 		_wstring MaskTextureName;
 		_wstring DiffuseTextureName;
+		
+		EFFECT_TYPE EffectType;
 
 		void* SRV_Ptr = { nullptr };
 		_int iRenderIndex;
 
 		_int iUnique_Index = -1;
-
+		_int iPassIndex = 1;
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
 
@@ -68,7 +70,7 @@ public:
 	HRESULT Play_Animation(_float CurrentFrame);
 
 protected:
-	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
+
 
 	CShader* m_pShaderCom = { nullptr };
 	CModel*	 m_pModelCom = { nullptr };
@@ -83,6 +85,7 @@ protected:
 
 public:
 	class CEffect_Animation* m_pAnimation = { nullptr };
+	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
 	_int				m_iUnique_Index = { -1 };
 	_wstring		m_EffectName;
 	_wstring		m_ModelName;

@@ -27,7 +27,8 @@ public:
 
 private:
 	vector<FILEDATA> m_vecpFileData;
-	vector<EFFECT_LAYER_DATA>	m_vecEffectData;
+	vector<EFFECT_LAYER_DATA>* m_pLoadedEffectData = { nullptr };
+
 public:
 	static CFile_Manager* Create();
 	virtual void Free() override;
