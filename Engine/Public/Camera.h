@@ -13,12 +13,9 @@ class ENGINE_DLL CCamera abstract : public CGameObject
 public:
 	typedef struct : public CTransform::TRANSFORM_DESC
 	{
-		_float3		vEye, vAt;
-		_float		fFovy, fNear, fFar, fSensor;
-		_char* cName;
+		_float		fFovy, fNear, fFar;
 	}CAMERA_DESC;
 
-public:
 	struct CameraSaveData {
 		vector<CCamera*>& vecVirtualCamera;
 		unordered_map<pair<CAMERA_MODELID, CAMERA_SKILLID>, _uint, pair_hash>& cameraIndexMap;
@@ -37,45 +34,16 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Update_Camera(CCamera* camera, _bool isPrevPlay, _float fTimeDelta);
-	void Play(CCamera* camera, _float fTimeDelta);
-	void Prev_Stop();
-	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4);
-	void Remove_Point(_int currentIndex);
-	void Move_Point(_int index);
-	void Modify_Transform(_int index);
-	_float AdjustT_Damping(_float t, _float damping);
-	void Delete_Points();
+	void Update_Camera(CCamera* camera, _float fTimeDelta);
 
-	void ApplyCameraShake(_float fTimeDelta);
-	void StartCameraShake(_float fDuration, _float fMagnitude);
-	void StopCameraShake();
-
-public:
-	const _char* GetTabName() const { return m_Name; };
+	vector<CameraPoint> m_vecPoints;
 
 public:
 	_float3					m_vEye{}, m_vAt{};
 	_float					m_fFovy{}, m_fNear{}, m_fFar{};
 
 	_float					m_fViewportWidth{}, m_fViewportHeight{};
-	_float					m_fMouseSensor = {};
-	_float					m_fMoveSpeed = {};
 
-	_char* m_Name;
-
-	vector<CameraPoint> m_vecPoints;
-	_int m_currentPointIndex = { 0 };
-	_float m_elapsedTime = { 0.f };
-	_bool m_bPrevPlayMode = { false };
-
-	//쉐이킹
-	_bool				m_bIsShaking = { false };       // 흔들림 활성화 여부
-	_float				m_fShakeDuration = { 0.f };
-	_float				m_fElapsedShakeTime = 0.0f; // 흔들림 경과 시간
-	_float				m_fShakeMagnitude = { 0.5f };
-	_vector				m_vShakeOffset = XMVectorZero();
-	_vector				m_vBaseCameraPosition = {};
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

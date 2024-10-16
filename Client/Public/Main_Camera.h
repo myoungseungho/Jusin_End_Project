@@ -7,8 +7,7 @@ BEGIN(Client)
 
 class CMain_Camera final : public CCamera
 {
-
-
+public:
 	enum VIRTUAL_CAMERA
 	{
 		VIRTUAL_CAMERA_NORMAL,
@@ -54,9 +53,6 @@ public:
 	void Delete_Points();
 	void SetPosition(_fvector position);
 
-private:
-	void Free_Camera(_float fTimeDelta);
-	void Default_Camera(_float fTimeDelta);
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 

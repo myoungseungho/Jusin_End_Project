@@ -144,6 +144,8 @@ namespace Engine
 	extern unordered_map<_wstring, CAMERA_MODELID> stringToModelID;
 	extern unordered_map<_wstring, CAMERA_SKILLID> stringToSkillID;
 
+
+
 #pragma endregion
 
 

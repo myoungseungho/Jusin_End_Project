@@ -3,6 +3,7 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 #include "Main_Camera.h"
+#include "Virtual_Camera.h"
 
 _bool bShowCameraWindow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _wstring filename = L"../Bin/CameraPoints.txt"; //데이터 저장되는 txt
@@ -140,7 +141,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 	_int cameraIndex = m_pMainCamera->Get_Virtual_Camera();
 
 	// 가상 카메라 목록 가져오기
-	vector<CCamera*> cameraList = m_pMainCamera->m_vecVirtualCamera;
+	vector<CVirtual_Camera*> cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 	if (cameraIndex < 0 || cameraIndex >= cameraList.size()) {
 		ImGui::Text("Invalid camera index selected.");
@@ -163,7 +164,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 void CIMGUI_Camera_Tab::Activate_Select_Camera(_int selectedIndex)
 {
 	// 가상 카메라 목록 가져오기
-	vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
+	vector<CVirtual_Camera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 	if (selectedIndex < 0 || selectedIndex >= cameraList.size()) {
 		// 유효하지 않은 인덱스일 경우 처리
@@ -424,7 +425,7 @@ void CIMGUI_Camera_Tab::IMGUI_Button()
 	int cameraIndex = static_cast<int>(m_pMainCamera->Get_Virtual_Camera());
 
 	// 가상 카메라 목록 가져오기
-	vector<CCamera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
+	vector<CVirtual_Camera*>& cameraList = m_pMainCamera->m_vecVirtualCamera;
 
 	if (cameraIndex < 0 || cameraIndex >= static_cast<int>(cameraList.size())) {
 		ImGui::Text("Invalid camera index selected.");
@@ -546,7 +547,19 @@ void CIMGUI_Camera_Tab::IMGUI_Save_Button()
 {
 	if (ImGui::Button("Save"))
 	{
-		CCamera::CameraSaveData saveData = { m_pMainCamera->m_vecVirtualCamera, m_CameraIndexMap };
+		// 기존의 CVirtual_Camera* 벡터 가져오기
+		vector<CVirtual_Camera*> virtualCamerasDerived = m_pMainCamera->m_vecVirtualCamera;
+
+		// CCamera* 타입의 새로운 벡터 생성 및 업캐스팅
+		vector<CCamera*> virtualCamerasBase;
+		virtualCamerasBase.reserve(virtualCamerasDerived.size());
+		for (auto cam : virtualCamerasDerived)
+		{
+			virtualCamerasBase.push_back(static_cast<CCamera*>(cam));
+		}
+
+		// CameraSaveData 구조체 초기화
+		CCamera::CameraSaveData saveData = { virtualCamerasBase, m_CameraIndexMap };
 
 		// 파일 매니저를 통해 저장
 		m_pGameInstance->Save_All_CameraPoints(filename, &saveData);

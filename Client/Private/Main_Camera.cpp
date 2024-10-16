@@ -90,7 +90,7 @@ void CMain_Camera::Priority_Update(_float fTimeDelta)
 	m_vecVirtualCamera[m_currentVirtualMode]->Priority_Update(fTimeDelta);
 
 	//선택된 가상카메라의 정보로 뷰 투영 만들기
-	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], m_bPrevPlayMode, fTimeDelta);
+	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], fTimeDelta);
 
 	//가상카메라의 포지션의 정보를 메인카메라의 셋팅하기
 	_vector position =static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
@@ -125,7 +125,7 @@ vector<CameraPoint>& CMain_Camera::Get_VectorPoint()
 
 void CMain_Camera::Play()
 {
-	m_bPrevPlayMode = true;
+	m_vecVirtualCamera[m_currentVirtualMode]->m_currentMode = CVirtual_Camera::CAMERA_CINEMATIC_MODE;
 }
 
 void CMain_Camera::Move_Point(_int index)
