@@ -34,6 +34,9 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 		Desc.iNumUI = i;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingMark"), TEXT("Layer_UI_LoadingBackGround"),&Desc);
 	}
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingFont"), TEXT("Layer_UI_LoadingBackGround"));
+
 	return S_OK;
 }
 

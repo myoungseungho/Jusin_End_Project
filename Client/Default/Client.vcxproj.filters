@@ -256,6 +256,9 @@
     <Filter Include="02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark">
       <UniqueIdentifier>{854c2ebf-133c-4941-95aa-fdd59e91e589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Font">
+      <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -510,6 +513,9 @@
     <ClInclude Include="..\public\UI_LoadingMark.h">
       <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_Font.h">
+      <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -745,6 +751,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_Font.cpp">
+      <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

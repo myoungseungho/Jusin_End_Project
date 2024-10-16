@@ -14,6 +14,7 @@
 
 #include "UI_Loading.h"
 #include "UI_LoadingMark.h"
+#include "UI_Loading_Font.h"
 
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
@@ -119,6 +120,22 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
 		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/DB_load_00.png")))))
+		return E_FAIL;
+
+
+	/* For.Prototype_GameObject_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingFont"),
+		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+
+
 
 	//Component_Shader
 
