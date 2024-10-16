@@ -676,6 +676,8 @@ _uint* CCharacter::Get_pAnimationIndex()
 	return &(m_pModelCom->m_iCurrentAnimationIndex);
 }
 
+
+
 void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition)
 {
 	m_iNextAnimation.first = iAnimationIndex;
@@ -693,32 +695,108 @@ void CCharacter::Gravity(_float fTimeDelta)
 	_float fHeight = XMVectorGetY(vPos);
 
 
+	
+	//테스트용 임시 중력
+
 	if (fHeight > 0)
 	{
+
+
 		
+
+		// IDLE이면 공중 하강모션으로 변경
 		if (Check_bCurAnimationisGroundMove())
-		{
-			//공중 하강 모션으로 변경
-			//Set_Animation(m_iFallAnimationIndex);
 			m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+		
+		
+
+		//중력 ver1 일때는 항상 더해야 자연스러운데 2에서는 아님
+		//if (m_fGravityTime < m_fJumpPower)
+		//{
+		//	m_fGravityTime += fTimeDelta;
+		//}
+
+
+		//ver1  괜찮은데 너무 둥실둥실함  점프력4 베이스.
+		//_float fGravity = ( - 0.3f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 2) *0.03f;
+
+		//ver  점프에 속도감이 좀 느껴지고 전체적으로 낮음, 점프력 3 베이스.
+		_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.03f;
+
+
+		//하강 모션중이면 점점 추락,  상승 하강 동시에 처리하고싶은데
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+		{
+
+			//중력ver2 용
+			if (m_fGravityTime < m_fJumpPower)
+			{
+				m_fGravityTime += fTimeDelta;
+			}
+
+			
+			m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+
+
+		}
+		else
+		{
+		
+			//중력Ver2 전용 처리.  올라가다가 공격때문에 멈췄는데  공격 끝나고 다시 올라가는거 이상해서 처리
+			if (fGravity < 0 && m_fGravityTime < m_fJumpPower)
+			{
+				m_fGravityTime += fTimeDelta;
+			}
+
+
+			//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
+			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+
+			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.
+			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,0,0 });
+
+
 		}
 
-		//하강 모션중이면 점점 추락
-		if(m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
-		{
-			//fHeight -= fTimeDelta;
-			//m_pTransformCom->
-			m_pTransformCom->Add_Move({ 0,-fTimeDelta,0 });
-		}
+
 
 	}
-	else
+	else if (fHeight <0)
 	{
+
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 		{
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+
+			Set_fGravityTime(0.f);
+			Set_fJumpPower(0.f);
+			Set_fImpulse(0.f);
+
+		}
+
+
+		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
+
+		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
+
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { XMVectorGetX(vPos),0.f,XMVectorGetZ(vPos),1.f });
+		
+	}
+
+	else if (fHeight == 0)
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+		{
+			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+
+			Set_fGravityTime(0.f);
+			Set_fJumpPower(0.f);
+			Set_fImpulse(0.f);
+
 		}
 	}
+
+
 
 }
 

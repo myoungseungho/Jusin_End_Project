@@ -317,6 +317,7 @@ void CGoku_MeleeAttack::Attack_236()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236);
+		m_pPlayer->Set_fImpulse(1.f);
 	} 
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||  *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
@@ -324,16 +325,20 @@ void CGoku_MeleeAttack::Attack_236()
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236,0.5f);
+		m_pPlayer->Set_fImpulse(1.f);
 	}
 	
 	
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_AIR);
+		m_pPlayer->Set_fImpulse(1.f);
+
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_AIR, 0.5f);
+		m_pPlayer->Set_fImpulse(1.f);
 		
 	}
 

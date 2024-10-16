@@ -235,7 +235,6 @@ public:
 	void Create_Effect(_int iEffectIndex);
 
 
-	_float Get_fHeight();
 
 	//디버그용 코드 
 	virtual void ShowInputBuffer();
@@ -246,10 +245,15 @@ public:
 	_uint* Get_pAnimationIndex();
 
 
-
-
-
+	//중력관련
 	virtual void Gravity(_float fTimeDelta);
+	virtual void Set_fJumpPower(_float fJumpPower) { m_fJumpPower = fJumpPower; };
+	virtual void Set_fGravityTime(_float fGravityTime) {	m_fGravityTime = fGravityTime;	};
+	virtual void Set_fImpulse(_float fImpulse) { m_fImpuse = fImpulse; };
+
+	_float Get_fHeight();
+
+
 
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -284,8 +288,16 @@ protected:
 	pair<_uint, _float>		m_iNextAnimation{0,0 };
 	_float					m_fNextAnimationCurrentPosition = {};
 
+	_ushort m_iJumpAnimationIndex = { 6 };
 	_ushort m_iFallAnimationIndex = {7};
 	_ushort m_iIdleAnimationIndex = { 0 };
+
+
+	_float m_fGravityTime = {0.f};
+	_float m_fJumpPower = {0.f};
+
+	//가속도
+	_float m_fImpuse = { 0.f };
 
 
 private:

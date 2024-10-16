@@ -332,8 +332,33 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			_short MoveKey = 0;
 			if (m_pGameInstance->Key_Pressing(DIK_W))
 			{
-				m_pTransformCom->Add_Move({ 0,3,0 });
+				m_pTransformCom->Add_Move({ 0,0.3f,0 });
+				
+				//Set_fJumpPower(4.f); //중력Ver1 기준
+				Set_fJumpPower(3.f);
+
+
 				Set_Animation(ANIME_JUMP_UP);
+
+
+				if (m_pGameInstance->Key_Pressing(DIK_A))
+				{
+					//Set_fImpulse(m_iLookDirection);
+
+					//Set_fImpulse(-0.1f);
+					Set_fImpulse(-2.f);
+
+				}
+
+				else if (m_pGameInstance->Key_Pressing(DIK_D))
+				{
+					//Set_fImpulse(-m_iLookDirection);
+					//Set_fImpulse(0.1f);
+					Set_fImpulse(2.f);
+
+				}
+
+
 			}
 
 			else if (m_pGameInstance->Key_Pressing(DIK_S))
@@ -453,6 +478,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 	
 	
+
+	Gravity(fTimeDelta);
 
 	
 }
