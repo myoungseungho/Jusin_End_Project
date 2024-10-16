@@ -244,6 +244,18 @@
     <Filter Include="02.GameObjects\UI\Input\Action\Icon">
       <UniqueIdentifier>{8a790c38-5402-4803-9c90-ff452ae3ec7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Timer\Panel">
+      <UniqueIdentifier>{7fb31d51-0692-4b79-856a-d91b455f2f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading">
+      <UniqueIdentifier>{9df6cb54-4d08-480b-aa7d-8ae74b892a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Mark">
+      <UniqueIdentifier>{76269d6c-a433-42bf-8f88-0f428eb5dbaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark">
+      <UniqueIdentifier>{854c2ebf-133c-4941-95aa-fdd59e91e589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -489,6 +501,15 @@
     <ClInclude Include="..\public\UI_Input_ActionIcon.h">
       <Filter>02.GameObjects\UI\Input\Action\Icon</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_TimerPanel.h">
+      <Filter>02.GameObjects\UI\Timer\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading.h">
+      <Filter>02.GameObjects\BackGround\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_LoadingMark.h">
+      <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -715,6 +736,15 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Input_ActionIcon.cpp">
       <Filter>02.GameObjects\UI\Input\Action\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_TimerPanel.cpp">
+      <Filter>02.GameObjects\UI\Timer\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading.cpp">
+      <Filter>02.GameObjects\BackGround\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

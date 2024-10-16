@@ -12,6 +12,9 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
+#include "UI_Loading.h"
+#include "UI_LoadingMark.h"
+
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
 	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
@@ -92,6 +95,29 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	/* For.Prototype_Component_VIBuffer_Rect */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
 		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Loading */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
+		CUI_Loading::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_GameStartCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 8))))
+		return E_FAIL;
+
+
+	/* For.Prototype_GameObject_UI_LoadingMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
+		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//Component_Shader

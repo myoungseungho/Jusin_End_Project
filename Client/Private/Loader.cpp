@@ -40,6 +40,7 @@
 #include "UI_SkillNumber.h"
 #include "UI_SkillEffect.h"
 #include "UI_Timer.h"
+#include "UI_TimerPanel.h"
 #include "UI_ComboNumber.h"
 #include "UI_ComboFont.h"
 #include "UI_ComboEffect.h"
@@ -337,11 +338,16 @@ HRESULT CLoader::Loading_For_UI()
 
 	//시간 초
 
-	/* For.Prototype_Component_Texture_UI_Time */
+	/* For.Prototype_Component_Texture_UI_Timer */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Timer"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/TimerNumber/TimerNum%d.png"), 11))))
 		return E_FAIL;
 
+
+	/* For.Prototype_Component_Texture_UI_Time_Panel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_TimerPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_gauge_Timebase.png")))))
+		return E_FAIL;
 
 	//스킬 게이지
 
@@ -439,6 +445,11 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFont"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/BP_roundfinish_KO.png")))))
 		return E_FAIL;
+
+	///* For.Prototype_Component_Texture_UI_GameKOFont */
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_LodingImage"),
+	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/window_title_00.png")))))
+//		return E_FAIL;
 
 	//KeyInput 
 
@@ -561,6 +572,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* For.Prototype_GameObject_UI_Timer */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Timer"),
 		CUI_Timer::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_TimerPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_TimerPanel"),
+		CUI_TimerPanel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//콤보

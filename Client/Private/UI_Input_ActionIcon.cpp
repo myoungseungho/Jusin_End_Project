@@ -79,7 +79,7 @@ HRESULT CUI_Input_ActionIcon::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex - 1)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))

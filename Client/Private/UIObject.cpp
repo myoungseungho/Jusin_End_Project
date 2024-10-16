@@ -91,7 +91,7 @@ void CUIObject::Update(_float fTimeDelta)
 
 void CUIObject::Late_Update(_float fTimeDelta)
 {
-	
+
 }
 
 HRESULT CUIObject::Render(_float fTimeDelta)

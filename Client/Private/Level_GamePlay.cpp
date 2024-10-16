@@ -274,7 +274,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"),&KeyInputDesc);
 	}
 
-
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_TimerPanel"), TEXT("Layer_UI_Timer"));
 
 	//게임 시작
 	//CUIObject::UI_DESC StartDesc = {};
