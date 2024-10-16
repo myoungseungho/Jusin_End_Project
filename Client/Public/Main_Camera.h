@@ -7,13 +7,7 @@ BEGIN(Client)
 
 class CMain_Camera final : public CCamera
 {
-public:
-	enum CAMERA_MODE
-	{
-		CAMERA_FREE_MODE,
-		CAMERA_DEFAULT_MODE,
-		CAMERA_MODE_END
-	};
+
 
 	enum VIRTUAL_CAMERA
 	{
@@ -64,11 +58,10 @@ private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
 public:
-	vector<CCamera*> m_vecVirtualCamera;
+	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 
 private:
 	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
-	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 
 
 
