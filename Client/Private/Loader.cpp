@@ -53,6 +53,7 @@
 #include "UI_Input_DirPanel.h"
 #include "UI_Input_Action.h"
 #include "UI_InputDirIcon.h"
+#include "UI_Input_ActionIcon.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -624,6 +625,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* Prototype_GameObject_UI_DirInputIcon */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_DirInputIcon"),
 		CUI_InputDirIcon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_ActionInputIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ActionInputIcon"),
+		CUI_Input_ActionIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	

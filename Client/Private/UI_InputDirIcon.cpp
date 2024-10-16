@@ -33,6 +33,7 @@ HRESULT CUI_InputDirIcon::Initialize(void* pArg)
 	m_iTextureIndex = pDirDesc->eDirInput;
 
 	m_fPosY = 190;
+
 	__super::Set_UI_Setting(35.f, 35.f, 20.f, m_fPosY, 1.f);
 
 	m_pUI_Manager->m_iNumCommandList++;

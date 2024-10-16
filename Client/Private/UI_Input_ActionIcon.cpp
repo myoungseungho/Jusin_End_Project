@@ -30,13 +30,20 @@ HRESULT CUI_Input_ActionIcon::Initialize(void* pArg)
 		return E_FAIL;
 
 	UI_INPUT_DESC* pDirDesc = static_cast<UI_INPUT_DESC*>(pArg);
-	m_iTextureIndex = pDirDesc->eDirInput;
+	m_iTextureIndex = pDirDesc->eActionInput;
+
+	m_fPosX = 50.f;
 
 	m_fPosY = 190;
-	__super::Set_UI_Setting(35.f, 35.f, 20.f, m_fPosY, 1.f);
 
-	m_pUI_Manager->m_iNumCommandList++;
+	if (m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+	{
+		m_pUI_Manager->m_iNumCommandList++;
+		m_fPosX = 20;
+	}
 	m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
+
+	__super::Set_UI_Setting(35.f, 35.f, m_fPosX, m_fPosY, 1.f);
 
 	return S_OK;
 }
@@ -56,13 +63,14 @@ void CUI_Input_ActionIcon::Update(_float fTimeDelta)
 	if (fOffSetPosY >= 575)
 		m_bDead = TRUE;
 
-	__super::Set_UI_Setting(35.f, 35.f, 20, fOffSetPosY, 1.f);
+	__super::Set_UI_Setting(35.f, 35.f, m_fPosX, fOffSetPosY, 1.f);
 }
 
 void CUI_Input_ActionIcon::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
+	//if(m_iTextureIndex)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -92,7 +100,7 @@ HRESULT CUI_Input_ActionIcon::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputIcon"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 }
