@@ -31,13 +31,50 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
-
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -1.5f, -300.f, 1.f));
+	m_iGameObjectData = 8;
 	return S_OK;
 }
 
 void CSpaceSun::Priority_Update(_float fTimeDelta)
 {
-	//m_fAccTime += fTimeDelta * 5;
+	if(m_isPlus == true && m_isMaintain == false)
+		m_fAccTime += fTimeDelta * 0.15;
+	else if (m_isPlus == false && m_isMaintain == false)
+		m_fAccTime -= fTimeDelta * 0.15;
+
+	if (m_isMaintain == false && m_isPlus == true && m_fAccTime > 0.8f )
+	{
+		m_fAccTime = 0.8f;
+		m_isMaintain = true;
+
+		m_fOneTime = 0.f;
+	}
+	else if (m_isMaintain == false && m_isPlus == false && m_fAccTime < 0.3f)
+	{
+		m_fAccTime = 0.3f;
+		m_isMaintain = true;
+
+		m_fOneTime = -3.25f;
+	}
+
+	if (m_isMaintain == true)
+	{
+		m_fOneTime += fTimeDelta;
+		if (m_fOneTime > 3.5f)
+		{
+			
+			m_isMaintain = false;
+			m_fOneTime = 0.f;
+			if(m_isPlus == true)
+				m_fAccTime = 0.8f;
+			else
+				m_fAccTime = 0.3f;
+
+			m_isPlus = !m_isPlus;
+
+		}
+	}
 }
 
 void CSpaceSun::Update(_float fTimeDelta)
@@ -47,31 +84,66 @@ void CSpaceSun::Update(_float fTimeDelta)
 
 void CSpaceSun::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_, this);
+
 }
 
 HRESULT CSpaceSun::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
-
-	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
-	for (size_t i = 0; i < iNumMeshes; i++)
+	_int iCount;
+	if (m_iIndex == 1)
 	{
-		_int iCount = i;
+		iCount = 1;
 		if (FAILED(m_pShaderCom->Bind_RawValue("g_SunMeshIndex", &iCount, sizeof(int))))
 			return E_FAIL;
-
-		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
 			return E_FAIL;
 		
+		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 1)))
+			return E_FAIL;
+
 		if (FAILED(m_pShaderCom->Begin(7)))
 			return E_FAIL;
 
-		if (FAILED(m_pModelCom->Render(i)))
+		if (FAILED(m_pModelCom->Render(1)))
 			return E_FAIL;
+
+		m_iIndex = 0;
 	}
+	else if (m_iIndex == 0)
+	{
+		iCount = 0;
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_SunMeshIndex", &iCount, sizeof(int))))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(7)))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Render(0)))
+			return E_FAIL;
+
+		m_iIndex = 1;
+
+
+	}
+
+	/*if (FAILED(m_pTransformCom_Rainbow->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+		return E_FAIL;
+	
+	if (FAILED(m_pModelCom_Rainbow->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(8)))
+		return E_FAIL;
+
+	if (FAILED(m_pModelCom_Rainbow->Render(0)))
+		return E_FAIL;*/
 
 	return S_OK;
 }
@@ -95,15 +167,17 @@ HRESULT CSpaceSun::Ready_Components()
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Rect"),
-		TEXT("Com_Rect"), reinterpret_cast<CComponent**>(&m_pVIBufferCom_Rainbow))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRainbow"),
+		TEXT("Com_Rect"), reinterpret_cast<CComponent**>(&m_pModelCom_Rainbow))))
 		return E_FAIL;
 
 	m_pTransformCom_Rainbow = CTransform::Create(m_pDevice, m_pContext);
-	//611
+
 	if (nullptr == m_pTransformCom_Rainbow)
 		return E_FAIL;
 
+	m_pTransformCom_Rainbow->Set_Scaled(0.5f, 0.5f, 1.f);
+	m_pTransformCom_Rainbow->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 125.f, 300.f, 1.f));
 	
 	return S_OK;
 }
@@ -164,7 +238,7 @@ void CSpaceSun::Free()
 {
 
 	Safe_Release(m_pTransformCom_Rainbow);
-	Safe_Release(m_pVIBufferCom_Rainbow);
+	Safe_Release(m_pModelCom_Rainbow);
 	Safe_Release(m_pTextureCom_Rainbow);
 	Safe_Release(m_pTextureCom_Light);
 	Safe_Release(m_pShaderCom);

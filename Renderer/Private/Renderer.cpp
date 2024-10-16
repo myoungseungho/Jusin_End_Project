@@ -314,14 +314,13 @@ HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
 
-		Safe_Release(pRenderObject);
-
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		if (FAILED(Draw_Glow(-1.f)))
+		if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
 			return E_FAIL;
 
+		Safe_Release(pRenderObject);
 	}
 
 	m_RenderObjects[RG_GLOW_PRI].clear();
@@ -628,7 +627,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
+HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 {
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
 		return E_FAIL;
@@ -768,10 +767,20 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
 	//	return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
-	if(fTimeDelta < 0)
-		m_pGlowShader->Begin(5);
+
+	if (fTimeDelta < 0)
+	{
+		if(iPassIndex == 0)
+			m_pGlowShader->Begin(5);
+		else
+			m_pGlowShader->Begin(iPassIndex);
+	}
 	else
+	{
+
 		m_pGlowShader->Begin(2);
+	}
+
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 

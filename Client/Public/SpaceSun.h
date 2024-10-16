@@ -36,13 +36,17 @@ private:
 	CModel*					m_pModelCom = { nullptr };
 
 	CTexture* m_pTextureCom_Rainbow = { nullptr };
-	CVIBuffer_Rect* m_pVIBufferCom_Rainbow = { nullptr };
+	CModel* m_pModelCom_Rainbow = { nullptr };
 	CTransform* m_pTransformCom_Rainbow = { nullptr };
+	_int m_iIndex = { 1 };
 private:
 	_float2 m_fSpriteAnimCount = { 16.f,1.f };
 	_float2 m_fSpriteSize = { 0.f,0.f };
 	_float2 m_fSpriteCurPos = { 0.f,0.f };
-	_float m_fAccTime = { 0.f };
+	_float m_fAccTime = { 0.3f };
+	_float m_fOneTime = { 0.f };
+	_bool m_isPlus = { true };
+	_bool m_isMaintain = { false };
 private:
 	_bool m_isStarSwitch = { false };
 	_float	m_fMaskStar_Value_1 = { 0.f };
