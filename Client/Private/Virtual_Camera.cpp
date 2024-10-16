@@ -204,6 +204,33 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
 }
 
+void CVirtual_Camera::Adjust_FOV(_float distanceX)
+{
+	// 기본 시야각과 최대 시야각 설정 (라디안 단위)
+	const _float defaultFOV = XMConvertToRadians(60.f); // 60도
+	const _float maxFOV = XMConvertToRadians(90.f);     // 90도
+
+	// 거리 임계값 설정
+	const _float minDistance = 30.f; // FOV 조절 시작 거리
+	const _float maxDistance = 50.f; // FOV 최대 조절 거리
+
+	_float dynamicFOV = defaultFOV;
+
+	if (distanceX > minDistance)
+	{
+		// 거리에 따라 FOV 보간
+		_float t = (distanceX - minDistance) / (maxDistance - minDistance);
+		t = XMVectorGetX(XMVectorClamp(XMVectorReplicate(t), XMVectorZero(), XMVectorReplicate(1.f)));
+
+		dynamicFOV = defaultFOV + t * (maxFOV - defaultFOV);
+	}
+
+	// FOV 스무딩 (부드러운 전환을 위해 선형 보간)
+	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
+	m_fFovy = m_previousFOV + (dynamicFOV - m_previousFOV) * smoothingFactor;
+	m_previousFOV = m_fFovy;
+}
+
 void CVirtual_Camera::SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer)
 {
 	if (state == CMain_Camera::PLAYER_1P)
@@ -307,7 +334,54 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 
 void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 {
+	if (m_p1pPlayer == nullptr || m_p2pPlayer == nullptr)
+		return;
 
+	// 플레이어들의 위치를 가져옵니다.
+	_vector pos1 = static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+	_vector pos2 = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+
+	// 두 플레이어 간의 X 거리 계산
+	_float distanceX = ComputeDistanceX(pos1, pos2);
+
+	// 평균 X 위치 계산
+	_float averageX = (XMVectorGetX(pos1) + XMVectorGetX(pos2)) * 0.5f;
+
+	// 카메라의 시야각 조절
+	Adjust_FOV(distanceX);
+
+	// 카메라의 고정 Y와 Z 위치
+	const _float fixedY = 17.f;
+	const _float fixedZ = -30.f;
+
+	// 스무딩을 위한 현재 위치
+	_float3 targetPosition = _float3(averageX, fixedY, fixedZ);
+	_float3 smoothedPosition;
+	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
+
+	// 선형 보간을 통한 부드러운 위치 전환
+	smoothedPosition.x = m_previousPosition.x + (targetPosition.x - m_previousPosition.x) * smoothingFactor;
+	smoothedPosition.y = m_previousPosition.y + (targetPosition.y - m_previousPosition.y) * smoothingFactor;
+	smoothedPosition.z = m_previousPosition.z + (targetPosition.z - m_previousPosition.z) * smoothingFactor;
+
+	// 카메라 위치 설정
+	m_pTransformCom->Set_State_Position(smoothedPosition);
+	m_previousPosition = smoothedPosition;
+
+	// 카메라의 방향 벡터를 설정합니다.
+	_vector right = XMVectorSet(0.9984f, 0.f, 0.054f, 0.f);
+	_vector up = XMVectorSet(-0.00773f, 0.99f, 0.14f, 0.f);
+	_vector look = XMVectorSet(-0.05f, -0.14f, 0.98f, 0.f);
+	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
+	m_pTransformCom->Set_State(CTransform::STATE_UP, up);
+	m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
+}
+
+_float CVirtual_Camera::ComputeDistanceX(_gvector pos1, _gvector pos2)
+{
+	// 두 플레이어 간의 X축 차이 계산
+	_float deltaX = XMVectorGetX(XMVectorSubtract(pos2, pos1));
+	return abs(deltaX);
 }
 
 

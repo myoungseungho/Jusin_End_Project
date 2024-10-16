@@ -58,9 +58,11 @@ private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
 	void Play(_float fTimeDelta);
+	void Adjust_FOV(_float distanceX);
+	_float ComputeDistanceX(_gvector pos1, _gvector pos2);
 
 public:
-	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
+	CAMERA_MODE m_currentMode = { CAMERA_DEFAULT_MODE };
 	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 
 	_char* m_Name;
@@ -81,6 +83,11 @@ public:
 
 	class CGameObject* m_p1pPlayer = { nullptr };
 	class CGameObject* m_p2pPlayer = { nullptr };
+
+	_float m_previousFOV = {};
+
+	// 카메라 위치 스무딩을 위한 변수
+	_float3 m_previousPosition = _float3(0.f, 17.f, -30.f);
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -216,5 +216,20 @@ namespace Engine
 
 		return worldMatrix;
 	}
+
+	//13. 벡터 거리구하기
+	inline _float ComputeDistance(_vector pos1, _vector pos2)
+	{
+		// 두 벡터의 차이를 구합니다.
+		_vector diff = XMVectorSubtract(pos1, pos2);
+
+		// 차이 벡터의 길이를 계산합니다.
+		_vector distanceVec = XMVector3Length(diff);
+
+		// XMVector에서 float 값을 추출합니다.
+		float distance = XMVectorGetX(distanceVec);
+
+		return distance;
+	}
 #pragma endregion
 }

@@ -107,6 +107,12 @@ void CMain_Camera::Late_Update(_float fTimeDelta)
 	m_vecVirtualCamera[m_currentVirtualMode]->Late_Update(fTimeDelta);
 }
 
+void CMain_Camera::Set_Virtual_Camera(VIRTUAL_CAMERA mode)
+{
+	m_currentVirtualMode = mode; 
+	m_vecVirtualCamera[m_currentVirtualMode]->m_currentMode = CVirtual_Camera::CAMERA_FREE_MODE;
+}
+
 void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr, damping, hasWorldFloat4x4);
