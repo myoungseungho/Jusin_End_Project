@@ -83,8 +83,11 @@ bool ModelConverter::SaveModelToBinary(const std::string& filePath, const ModelH
 		}
 	}
 
+	int MeshCount = { 0 };
 	// Save materials
 	for (const auto& material : materials) {
+		
+		std::cout << "MeshIndex : " << MeshCount << std::endl;
 		for (const auto& texturePath : material.texturePaths) {
 			size_t pathLength = texturePath.length();
 			outFile.write(reinterpret_cast<const char*>(&pathLength), sizeof(pathLength));
@@ -93,6 +96,7 @@ bool ModelConverter::SaveModelToBinary(const std::string& filePath, const ModelH
 			// Print the texture path
 			std::cout << "Saving texture path: " << texturePath << std::endl;
 		}
+		MeshCount++;
 	}
 
 	// Save animations

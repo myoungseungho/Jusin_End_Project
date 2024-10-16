@@ -199,6 +199,7 @@
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\Player.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
+    <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\Player.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
+    <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

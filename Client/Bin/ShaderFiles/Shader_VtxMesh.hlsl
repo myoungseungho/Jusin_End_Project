@@ -18,6 +18,11 @@ texture2D g_GroundPattern;
 texture2D g_GroundCliff;
 texture2D g_GroundCrater;
 texture2D g_GroundShadow;
+
+texture2D g_SunLight;
+texture2D g_SunRainbow;
+
+int g_SunMeshIndex;
 int g_GroundCount;
 
 float g_MaskStar_Value_1;
@@ -245,6 +250,23 @@ PS_OUT PS_MAIN(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_HORIZON(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
+    vMtrlDiffuse.a = saturate(Shadowluminance * 1.5f);
+ 
+    vMtrlDiffuse.rgb = float3(0.2431f, 0.4823f, 0.8117f);
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
 PS_OUT PS_MAIN_GROUND(PS_IN In)
 {
     PS_OUT Out;
@@ -265,6 +287,22 @@ PS_OUT PS_MAIN_GROUND(PS_IN In)
         vMtrlDiffuse = g_GroundCrater.Sample(LinearSampler, In.vTexcoord);
         break;
     }
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_SUN(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+   // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    //if (vMtrlDiffuse.a < 0.99f)
+    //    discard;
 
     Out.vDiffuse = vMtrlDiffuse;
 
@@ -391,6 +429,36 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_GROUND();
+    }
+
+    pass Horizon // 6
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_HORIZON();
+    }
+
+    pass Sun // 7
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SUN();
     }
 
 	pass NormalMapping
