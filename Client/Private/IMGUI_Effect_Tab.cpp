@@ -657,18 +657,27 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
     }
 }
 
-
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
-    ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::Text("Editing Keyframe for Effect: %s", selectedEffectName.c_str());
-    ImGui::Text("Frame: %d", selectedFrame);
-
     EFFECT_KEYFRAME newKeyFrame;
     _float3 CurPosition = { 0.f, 0.f, 0.f };
     _float3 CurScale = { 0.f, 0.f, 0.f };
     _float3 CurRotation = { 0.f, 0.f, 0.f };
     _bool IsNotPlaying = { false };
+
+    newKeyFrame.fDuration = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName)->m_fDuration;
+
+    // CurTime을 선택된 프레임 시간에 따라 자동 설정
+    const float frameInterval = 1.0f / 60.0f;
+    newKeyFrame.fCurTime = selectedFrame * frameInterval;
+
+    ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("Editing Keyframe for Effect: %s", selectedEffectName.c_str());
+    ImGui::Text("Frame: %d", selectedFrame);
+    ImGui::SameLine();
+    ImGui::Text("CurAnimPos: %.3f", newKeyFrame.fCurTime);
+    ImGui::SameLine();
+    ImGui::Text("Duration: %.2f", newKeyFrame.fDuration);
 
     // 처음 창을 열 때 저장된 키프레임 불러오기
     if (!initialized)
@@ -705,9 +714,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
         IsNotPlaying = m_pEffect_Manager->Get_Layer_Effect_IsPlaying(selectedLayerName, UTF8ToWString(selectedEffectName));
     }
 
-    // CurTime을 선택된 프레임 시간에 따라 자동 설정
-    const float frameInterval = 1.0f / 60.0f;
-    newKeyFrame.fCurTime = selectedFrame * frameInterval;
+
 
     ImGui::Text("Effect Keyframe Settings");
 

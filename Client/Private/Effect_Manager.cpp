@@ -137,6 +137,14 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iRenderIndex = 2;
 				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
 				m_FinalEffects.emplace(strEffectLayerTag, pLayer);
+
+				EFFECT_KEYFRAME FirstKeyFrame{};
+
+				FirstKeyFrame.vPosition = EffectDesc.vPosition;
+				FirstKeyFrame.vRotation = EffectDesc.vRotation;
+				FirstKeyFrame.vScale = EffectDesc.vScaled;
+
+				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 			}
 		}
 	}
@@ -158,6 +166,14 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
 				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
+
+				EFFECT_KEYFRAME FirstKeyFrame{};
+
+				FirstKeyFrame.vPosition = EffectDesc.vPosition;
+				FirstKeyFrame.vRotation = EffectDesc.vRotation;
+				FirstKeyFrame.vScale = EffectDesc.vScaled;
+
+				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 			}
 		}
 	
@@ -200,6 +216,14 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 			EffectDesc.iRenderIndex = 2;
 
 			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
+
+			EFFECT_KEYFRAME FirstKeyFrame{};
+
+			FirstKeyFrame.vPosition = EffectDesc.vPosition;
+			FirstKeyFrame.vRotation = EffectDesc.vRotation;
+			FirstKeyFrame.vScale = EffectDesc.vScaled;
+
+			pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 		}
 	}
 

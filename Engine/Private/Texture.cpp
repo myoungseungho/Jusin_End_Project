@@ -51,6 +51,7 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 		{
 			// HRESULT 값을 출력하여 원인 파악
 			wprintf(L"CreateWICTextureFromFile failed with HRESULT 0x%08X\n", hr);
+			//return E_FAIL;
 			continue;
 		}
 			
