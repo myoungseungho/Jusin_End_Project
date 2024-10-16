@@ -91,6 +91,8 @@ public:
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
 	void Reset_AttackCount();
 
+	virtual void Gravity(_float fTimeDelta) override;
+
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };

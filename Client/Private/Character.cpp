@@ -721,7 +721,13 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//_float fGravity = ( - 0.3f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 2) *0.03f;
 
 		//ver  점프에 속도감이 좀 느껴지고 전체적으로 낮음, 점프력 3 베이스.
-		_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.03f;
+		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.03f;
+
+		//Ver3  점프력 3
+		_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.05f;
+
+
+		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.05f;
 
 
 		//하강 모션중이면 점점 추락,  상승 하강 동시에 처리하고싶은데
@@ -743,14 +749,17 @@ void CCharacter::Gravity(_float fTimeDelta)
 		{
 		
 			//중력Ver2 전용 처리.  올라가다가 공격때문에 멈췄는데  공격 끝나고 다시 올라가는거 이상해서 처리
-			if (fGravity < 0 && m_fGravityTime < m_fJumpPower)
+			//if (fGravity < 0 && m_fGravityTime < m_fJumpPower)
+			if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime < m_fJumpPower)))
 			{
 				m_fGravityTime += fTimeDelta;
 			}
 
 
 			//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+			
+			if(m_pGameInstance->Key_Pressing(DIK_W))
+				m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
 
 			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.
 			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,0,0 });

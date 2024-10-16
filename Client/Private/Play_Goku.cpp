@@ -335,7 +335,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				m_pTransformCom->Add_Move({ 0,0.3f,0 });
 				
 				//Set_fJumpPower(4.f); //중력Ver1 기준
-				Set_fJumpPower(3.f);
+				Set_fJumpPower(3.f); //중력Ver2 기준
 
 
 				Set_Animation(ANIME_JUMP_UP);
@@ -346,7 +346,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 					//Set_fImpulse(m_iLookDirection);
 
 					//Set_fImpulse(-0.1f);
-					Set_fImpulse(-2.f);
+					Set_fImpulse(-2.5f);
 
 				}
 
@@ -354,7 +354,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				{
 					//Set_fImpulse(-m_iLookDirection);
 					//Set_fImpulse(0.1f);
-					Set_fImpulse(2.f);
+					Set_fImpulse(2.5f);
 
 				}
 
@@ -777,6 +777,38 @@ void CPlay_Goku::Reset_AttackCount()
 		m_bAttackCount[i] = true;
 
 	m_iCountGroundSpecial = 0;
+
+}
+
+void CPlay_Goku::Gravity(_float fTimeDelta)
+{
+
+	__super::Gravity(fTimeDelta);
+
+
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float fHeight = XMVectorGetY(vPos);
+	_ushort iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+	// iAnimationIndex == ANIME_ATTACK_236_SPECIAL_AIR || iAnimationIndex == ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE || 
+
+
+	if (iAnimationIndex == ANIME_ATTACK_236_AIR || iAnimationIndex == ANIME_ATTACK_AIR1 || iAnimationIndex == ANIME_ATTACK_AIR2 || iAnimationIndex == ANIME_ATTACK_AIR3 ||
+		iAnimationIndex == ANIME_ATTACK_SPECIAL_AIR)
+	{
+		if (fHeight == 0)
+		{
+			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+
+			Set_fGravityTime(0.f);
+			Set_fJumpPower(0.f);
+			Set_fImpulse(0.f);
+		}
+
+	}
+
+	
 
 }
 

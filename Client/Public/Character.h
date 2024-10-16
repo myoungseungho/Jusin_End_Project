@@ -218,6 +218,7 @@ public:
 	virtual _bool Character_Play_Animation(_float fTimeDelta);
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
+
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition =0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
 	virtual void AttackNextMoveCheck() {};
@@ -298,6 +299,10 @@ protected:
 
 	//°¡¼Óµµ
 	_float m_fImpuse = { 0.f };
+
+
+	_bool m_bDoubleJumpEnable = { true };
+	
 
 
 private:
