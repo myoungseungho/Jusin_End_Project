@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "ContainerObject.h"
 #include "PartObject.h"
-
+#include "Main_Camera.h"
 CIMGUI_Object_Tab::CIMGUI_Object_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CIMGUI_Tab{ pDevice,pContext }
 {
@@ -41,7 +41,7 @@ void CIMGUI_Object_Tab::Render(_float fTimeDelta)
 			ImGui::EndTabItem(); // 하위 Prototype 탭 종료
 		}
 
-		if (ImGui::BeginTabItem("Save", &bShowSettings)) { 
+		if (ImGui::BeginTabItem("Save", &bShowSettings)) {
 			if (ImGui::Button("Save")) { // "Save" 버튼
 				IMGUI_Save_Button_Pressed(&bShowSaveSuccessMessage, &bShowSaveFailMessage);
 			}
@@ -54,7 +54,7 @@ void CIMGUI_Object_Tab::Render(_float fTimeDelta)
 				ImGui::Text("Failed to save file!");
 			}
 
-			ImGui::EndTabItem(); 
+			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar(); // 하위 탭 바 종료
 	}
@@ -618,7 +618,14 @@ void CIMGUI_Object_Tab::HandleObjectPosition(CGameObject* _pSelectedGameObject)
 	_vector newPosition = XMLoadFloat3(&currentPos);
 	newPosition = XMVectorSetW(newPosition, 1.0f);
 
-	transform->Set_State(CTransform::STATE_POSITION, newPosition);
+	if (CMain_Camera* camera = dynamic_cast<CMain_Camera*>(_pSelectedGameObject))
+	{
+		camera->SetPosition(newPosition);
+	}
+	else
+	{
+		transform->Set_State(CTransform::STATE_POSITION, newPosition);
+	}
 }
 
 void CIMGUI_Object_Tab::HandleColliderTransform(CCollider* _pCollider)

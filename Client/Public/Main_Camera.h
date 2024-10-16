@@ -58,6 +58,7 @@ public:
 	void ApplyCameraData(vector<CameraData>& cameraDataList);
 	_int Get_CameraIndex(_int modelID, _int skillID);
 	void Delete_Points();
+	void SetPosition(_fvector position);
 
 private:
 	void Free_Camera(_float fTimeDelta);
