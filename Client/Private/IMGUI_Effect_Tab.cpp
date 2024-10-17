@@ -533,6 +533,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 {
                     selectedLayerIndex = i;
                     selectedLayerName = LayerList[i]; // 선택된 레이어 이름을 저장
+                    m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
                 }
                 if (isSelected)
                 {
@@ -656,7 +657,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
             for (int item = 0; item < effectNames.size(); item++)
             {
-                CEffect* pEffect = m_pEffect_Manager->Find_Layer_Effect(selectedLayerName, effectNames[item]);
+                CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                 if (pEffect)
                 {
                     effectChecks[item] = pEffect->m_bIsLoop;
@@ -675,7 +676,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 bool isChecked = effectChecks[item];
                 if (ImGui::Checkbox("##EffectCheck", &isChecked))
                 {
-                    CEffect* pEffect = m_pEffect_Manager->Find_Layer_Effect(selectedLayerName, effectNames[item]);
+                    CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                     if (pEffect)
                     {
                         pEffect->m_bIsLoop = isChecked;

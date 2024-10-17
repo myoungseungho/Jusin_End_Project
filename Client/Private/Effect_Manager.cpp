@@ -49,8 +49,10 @@ void CEffect_Manager::Update(_float fTimeDelta)
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
-		Pair.second->Late_Update(fTimeDelta);
-
+		if (Pair.second->m_bIsRender)
+		{
+			Pair.second->Late_Update(fTimeDelta);
+		}
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Late_Update(fTimeDelta);
@@ -60,6 +62,7 @@ void CEffect_Manager::Render(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
+		
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Render(fTimeDelta);
@@ -223,7 +226,6 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 	return S_OK;
 }
 
-
 CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerTag)
 {
 	auto	iter = m_FinalEffects.find(strEffectLayerTag);
@@ -234,7 +236,7 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
-CEffect* CEffect_Manager::Find_Layer_Effect(wstring& layerName, wstring& effectName)
+CEffect* CEffect_Manager::Find_In_Layer_Effect(wstring& layerName, wstring& effectName)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
 
@@ -255,6 +257,14 @@ _bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _u
 		return false;
 
 	return pEffect->Find_KeyFrame(frameNumber);
+}
+
+void CEffect_Manager::Set_Render_Layer(const wstring& strEffectLayerTag)
+{
+	for (auto& Pair : m_FinalEffects)
+		Pair.second->m_bIsRender = { false };
+
+	Find_Effect_Layer(strEffectLayerTag)->m_bIsRender = { true };
 }
 
 EFFECT_KEYFRAME CEffect_Manager::Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
@@ -643,7 +653,7 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 
 HRESULT CEffect_Manager::Set_Layer_Effect_Scaled(wstring& layerName, wstring& effectName, _float3 ChangeScaled)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_Scaled(ChangeScaled);
@@ -654,7 +664,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Scaled(wstring& layerName, wstring& ef
 
 HRESULT CEffect_Manager::Set_Layer_Effect_Position(wstring& layerName, wstring& effectName, _float3 ChangePosition)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_Position(ChangePosition);
@@ -665,7 +675,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Position(wstring& layerName, wstring& 
 
 HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& effectName, _float3 ChangeRotation)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_Rotation(ChangeRotation);
@@ -676,7 +686,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& 
 
 HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstring& effectName, _bool bIsNotPlaying)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_IsNotPlaying(bIsNotPlaying);
@@ -687,7 +697,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstri
 
 _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_Effect_Scaled();
@@ -697,7 +707,7 @@ _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& ef
 
 _float3 CEffect_Manager::Get_Layer_Effect_Position(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_Effect_Position();
@@ -707,7 +717,7 @@ _float3 CEffect_Manager::Get_Layer_Effect_Position(wstring& layerName, wstring& 
 
 _float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_Effect_Rotation();
@@ -717,7 +727,7 @@ _float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& 
 
 _bool CEffect_Manager::Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->m_bIsNotPlaying;
@@ -764,7 +774,7 @@ void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& Effe
 
 EFFECT_KEYFRAME CEffect_Manager::Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_KeyFrame(KeyFrameNumber);

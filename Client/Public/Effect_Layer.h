@@ -31,6 +31,7 @@ public:
 	_float			m_fTickPerSecond = {0.f};
 	_float			m_fCurrentAnimPosition = { 0.f };
 	vector<class CEffect*>			m_MixtureEffects;
+	_bool			m_bIsRender = { true };
 
 private:
 	_uint						m_iNumEffects = {0};
