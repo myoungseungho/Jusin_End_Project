@@ -23,7 +23,9 @@ public:
 
 	HRESULT Save_Effects(wstring& FilePath, void* pArg);
 	void*		Load_Effects(wstring& FilePath);
-	HRESULT Read_Effects(wstring& Line, EFFECT_LAYER_DATA& LayerData, EFFECT_DATA& EffectData, EFFECT_KEYFRAME_DATA& KeyFrameData);
+	void Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData);
+	void Read_EffectData(wifstream& file, EFFECT_DATA& effectData);
+	void Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& keyFrameData);
 
 private:
 	vector<FILEDATA> m_vecpFileData;

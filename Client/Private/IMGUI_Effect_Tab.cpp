@@ -125,6 +125,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
         layerData.duration = pLayer->m_fDuration;
         layerData.tickPerSecond = pLayer->m_fTickPerSecond;
         layerData.keyFramesCount = pLayer->m_iNumKeyFrames;
+        layerData.iNumEffect = pLayer->m_MixtureEffects.size();
 
         // 각 레이어 안의 이펙트들 정보를 수집
         for (auto& pEffect : pLayer->Get_Effects())
@@ -143,6 +144,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
             effectData.position = pEffect->Get_Effect_Position();
             effectData.scale = pEffect->Get_Effect_Scaled();
             effectData.rotation = pEffect->Get_Effect_Rotation();
+            effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
             // 이펙트의 키프레임 정보 추가
             for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)

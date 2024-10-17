@@ -161,7 +161,8 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 		file << L"LayerName: " << layerData.layerName << L"\n";
 		file << L"Duration: " << layerData.duration << L"\n";
 		file << L"TickPerSecond: " << layerData.tickPerSecond << L"\n";
-		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n\n";
+		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n";
+		file << L"NumEffec: " << layerData.iNumEffect << L"\n\n";
 
 		// 이펙트 데이터를 파일에 저장합니다.
 		for (const auto& effectData : layerData.effects) {
@@ -178,7 +179,8 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
 			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
 			file << L"IsNotPlaying: " << (effectData.isNotPlaying ? L"true" : L"false") << L"\n";
-			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n\n";
+			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n";
+			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
 
 			// 키프레임 데이터를 파일에 저장합니다.
 			for (const auto& keyFrameData : effectData.keyframes) {
@@ -205,7 +207,6 @@ void* CFile_Manager::Load_Effects(wstring& FilePath)
 		m_pLoadedEffectData = nullptr;
 	}
 
-	// 새로운 데이터 동적 할당
 	m_pLoadedEffectData = new vector<EFFECT_LAYER_DATA>;
 
 	wifstream file(FilePath);
@@ -215,149 +216,122 @@ void* CFile_Manager::Load_Effects(wstring& FilePath)
 
 	wstring line;
 	EFFECT_LAYER_DATA layerData;
-	EFFECT_DATA effectData;
-	EFFECT_KEYFRAME_DATA keyFrameData;
-
-	bool isNewLayer = false;  // 새 레이어를 감지하는 플래그
-	bool isNewEffect = false; // 새 이펙트를 감지하는 플래그
 
 	while (getline(file, line)) {
-		if (line.empty()) {
-			// 빈 줄이 발견되면 현재 섹션의 종료 신호로 처리
-			if (isNewEffect) {
-				layerData.effects.push_back(effectData);
-				effectData.keyframes.clear();
-				isNewEffect = false;
-			}
-			continue;
+		if (line.find(L"[Layer]") != wstring::npos) {
+			layerData = EFFECT_LAYER_DATA();
+			// 레이어 정보를 읽어오기
+			Read_LayerData(file, layerData);
+			m_pLoadedEffectData->push_back(layerData);
 		}
-
-		HRESULT result = Read_Effects(line, layerData, effectData, keyFrameData);
-		if (result == S_OK) {
-			// 섹션별 데이터를 추가
-			if (line.find(L"[Layer]") != wstring::npos) {
-				if (isNewLayer) {
-					m_pLoadedEffectData->push_back(layerData);
-					layerData.effects.clear();
-				}
-				isNewLayer = true;
-			}
-			else if (line.find(L"[Effect]") != wstring::npos) {
-				if (isNewEffect) {
-					layerData.effects.push_back(effectData);
-					effectData.keyframes.clear();
-				}
-				isNewEffect = true;
-			}
-			else if (line.find(L"[KeyFrame]") != wstring::npos) {
-				// 키프레임 데이터를 이펙트에 추가
-				effectData.keyframes.push_back(keyFrameData);
-				keyFrameData = EFFECT_KEYFRAME_DATA();
-			}
-		}
-	}
-
-	// 마지막 레이어와 이펙트를 추가
-	if (isNewEffect) {
-		layerData.effects.push_back(effectData);
-	}
-	if (isNewLayer) {
-		m_pLoadedEffectData->push_back(layerData);
 	}
 
 	file.close();
-
-	return m_pLoadedEffectData;  // 할당된 데이터 반환
+	return m_pLoadedEffectData;
 }
-
-HRESULT CFile_Manager::Read_Effects(wstring& Line, EFFECT_LAYER_DATA& LayerData, EFFECT_DATA& EffectData, EFFECT_KEYFRAME_DATA& KeyFrameData)
+void CFile_Manager::Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData)
 {
-	static wstring currentSection = L"";
-	wistringstream iss(Line);
-	wstring key;
+	wstring line;
 
-	if (Line.find(L"[Layer]") != wstring::npos) {
-		currentSection = L"Layer";
-		return S_OK;
-	}
-	if (Line.find(L"[Effect]") != wstring::npos) {
-		currentSection = L"Effect";
-		return S_OK;
-	}
-	if (Line.find(L"[KeyFrame]") != wstring::npos) {
-		currentSection = L"KeyFrame";
-		return S_OK;
-	}
+	// 레이어 기본 정보 읽기
+	while (getline(file, line) && !line.empty()) {
+		wistringstream iss(line);
+		wstring key, value;
 
-	if (getline(iss, key, L':')) {
-		wstring value;
+		getline(iss, key, L':');
 		getline(iss, value);
 		value.erase(0, value.find_first_not_of(L' '));
-		value.erase(value.find_last_not_of(L' ') + 1);
 
-		if (currentSection == L"Layer") {
-			if (key == L"LayerName") LayerData.layerName = value;
-			else if (key == L"Duration") LayerData.duration = stof(value);
-			else if (key == L"TickPerSecond") LayerData.tickPerSecond = stof(value);
-			else if (key == L"KeyFramesCount") LayerData.keyFramesCount = stoi(value);
-		}
-		else if (currentSection == L"Effect") {
-			if (key == L"EffectName") EffectData.effectName = value;
-			else if (key == L"ModelName") EffectData.modelName = value;
-			else if (key == L"MaskTextureName") EffectData.maskTextureName = value;
-			else if (key == L"DiffuseTextureName") EffectData.diffuseTextureName = value;
-			else if (key == L"EffectType") EffectData.effectType = stoi(value);
-			else if (key == L"RenderIndex") EffectData.renderIndex = stoi(value);
-			else if (key == L"PassIndex") EffectData.passIndex = stoi(value);
-			else if (key == L"UniqueIndex") EffectData.uniqueIndex = stoi(value);
-			else if (key == L"Position") {
-				wistringstream pos(value);
-				pos >> EffectData.position.x >> EffectData.position.y >> EffectData.position.z;
-			}
-			else if (key == L"Scale") {
-				wistringstream scale(value);
-				scale >> EffectData.scale.x >> EffectData.scale.y >> EffectData.scale.z;
-			}
-			else if (key == L"Rotation") {
-				wistringstream rot(value);
-				rot >> EffectData.rotation.x >> EffectData.rotation.y >> EffectData.rotation.z;
-			}
-			else if (key == L"IsNotPlaying") EffectData.isNotPlaying = (value == L"true");
-			else if (key == L"IsLoop") {
-				EffectData.isLoop = (value == L"true");
-				LayerData.effects.push_back(EffectData);  // Effect 정보 저장
-				EffectData = EFFECT_DATA();               // 다음 Effect 데이터를 위해 초기화
-			}
-		}
-		else if (currentSection == L"KeyFrame") {
-			if (key == L"KeyFrameNumber") KeyFrameData.keyFrameNumber = stoi(value);
-			else if (key == L"Position") {
-				wistringstream pos(value);
-				pos >> KeyFrameData.position.x >> KeyFrameData.position.y >> KeyFrameData.position.z;
-			}
-			else if (key == L"Scale") {
-				wistringstream scale(value);
-				scale >> KeyFrameData.scale.x >> KeyFrameData.scale.y >> KeyFrameData.scale.z;
-			}
-			else if (key == L"Rotation") {
-				wistringstream rot(value);
-				rot >> KeyFrameData.rotation.x >> KeyFrameData.rotation.y >> KeyFrameData.rotation.z;
-			}
-			else if (key == L"CurTime") KeyFrameData.curTime = stof(value);
-			else if (key == L"Duration") {
-				KeyFrameData.duration = stof(value);
-				EffectData.keyframes.push_back(KeyFrameData);  // KeyFrame 정보 저장
-				KeyFrameData = EFFECT_KEYFRAME_DATA();         // 다음 KeyFrame 데이터를 위해 초기화
-			}
-		}
-
-		return S_OK;
+		if (key == L"LayerName") layerData.layerName = value;
+		else if (key == L"Duration") layerData.duration = stof(value);
+		else if (key == L"TickPerSecond") layerData.tickPerSecond = stof(value);
+		else if (key == L"KeyFramesCount") layerData.keyFramesCount = stoi(value);
+		else if (key == L"NumEffec") layerData.iNumEffect = stoi(value);
 	}
 
-	return E_FAIL;
+	// 각 이펙트 데이터 읽기
+	for (int i = 0; i < layerData.iNumEffect; ++i) {
+		EFFECT_DATA effectData;
+		Read_EffectData(file, effectData);
+		layerData.effects.push_back(effectData);
+	}
 }
 
+void CFile_Manager::Read_EffectData(wifstream& file, EFFECT_DATA& effectData)
+{
+	wstring line;
 
+	// 이펙트 기본 정보 읽기
+	while (getline(file, line) && !line.empty()) {
+		wistringstream iss(line);
+		wstring key, value;
+
+		getline(iss, key, L':');
+		getline(iss, value);
+		value.erase(0, value.find_first_not_of(L' '));
+
+		if (key == L"EffectName") effectData.effectName = value;
+		else if (key == L"ModelName") effectData.modelName = value;
+		else if (key == L"MaskTextureName") effectData.maskTextureName = value;
+		else if (key == L"DiffuseTextureName") effectData.diffuseTextureName = value;
+		else if (key == L"EffectType") effectData.effectType = stoi(value);
+		else if (key == L"RenderIndex") effectData.renderIndex = stoi(value);
+		else if (key == L"PassIndex") effectData.passIndex = stoi(value);
+		else if (key == L"UniqueIndex") effectData.uniqueIndex = stoi(value);
+		else if (key == L"Position") {
+			wistringstream pos(value);
+			pos >> effectData.position.x >> effectData.position.y >> effectData.position.z;
+		}
+		else if (key == L"Scale") {
+			wistringstream scale(value);
+			scale >> effectData.scale.x >> effectData.scale.y >> effectData.scale.z;
+		}
+		else if (key == L"Rotation") {
+			wistringstream rot(value);
+			rot >> effectData.rotation.x >> effectData.rotation.y >> effectData.rotation.z;
+		}
+		else if (key == L"IsNotPlaying") effectData.isNotPlaying = (value == L"true");
+		else if (key == L"IsLoop") effectData.isLoop = (value == L"true");
+		else if (key == L"NumKeyFrame") effectData.iNumKeyFrame = stoi(value);
+	}
+
+	// 각 키프레임 데이터 읽기
+	for (int i = 0; i < effectData.iNumKeyFrame; ++i) {
+		EFFECT_KEYFRAME_DATA keyFrameData;
+		Read_KeyFrameData(file, keyFrameData);
+		effectData.keyframes.push_back(keyFrameData);
+	}
+}
+
+void CFile_Manager::Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& keyFrameData)
+{
+	wstring line;
+
+	while (getline(file, line) && !line.empty()) {
+		wistringstream iss(line);
+		wstring key, value;
+
+		getline(iss, key, L':');
+		getline(iss, value);
+		value.erase(0, value.find_first_not_of(L' '));
+
+		if (key == L"KeyFrameNumber") keyFrameData.keyFrameNumber = stoi(value);
+		else if (key == L"Position") {
+			wistringstream pos(value);
+			pos >> keyFrameData.position.x >> keyFrameData.position.y >> keyFrameData.position.z;
+		}
+		else if (key == L"Scale") {
+			wistringstream scale(value);
+			scale >> keyFrameData.scale.x >> keyFrameData.scale.y >> keyFrameData.scale.z;
+		}
+		else if (key == L"Rotation") {
+			wistringstream rot(value);
+			rot >> keyFrameData.rotation.x >> keyFrameData.rotation.y >> keyFrameData.rotation.z;
+		}
+		else if (key == L"CurTime") keyFrameData.curTime = stof(value);
+		else if (key == L"Duration") keyFrameData.duration = stof(value);
+	}
+}
 
 CFile_Manager* CFile_Manager::Create()
 {

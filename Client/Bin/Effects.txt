@@ -1,11 +1,12 @@
 [Layer]
-LayerName: layer
-Duration: 3
+LayerName: layer1
+Duration: 1
 TickPerSecond: 0.1
-KeyFramesCount: 179
+KeyFramesCount: 59
+NumEffec: 2
 
 [Effect]
-EffectName: effect
+EffectName: effect1
 ModelName: Model_Effect_bun201_eff00
 MaskTextureName: Texture_Effect_Default_Mask
 DiffuseTextureName: Texture_Effect_Default_Diffuse
@@ -13,16 +14,16 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.1 0 0
+Position: -0.1 0 0
 Scale: 1 1 1
 Rotation: 1 0 0
 IsNotPlaying: false
-IsLoop: false
-
+IsLoop: true
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.1 0 0
+Position: -0.1 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
@@ -30,11 +31,11 @@ Duration: 0
 
 [KeyFrame]
 KeyFrameNumber: 1
-Position: 0.1 0 0
+Position: -0.1 0 0
 Scale: 1 1 1
 Rotation: 1 0 0
 CurTime: 0.0166667
-Duration: 3
+Duration: 1
 
 [Effect]
 EffectName: effect2
@@ -50,6 +51,7 @@ Scale: 1 1 1
 Rotation: 2 0 0
 IsNotPlaying: false
 IsLoop: false
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -65,5 +67,76 @@ Position: 0.2 0 0
 Scale: 1 1 1
 Rotation: 2 0 0
 CurTime: 0.0333333
-Duration: 3
+Duration: 1
+
+[Layer]
+LayerName: layer2
+Duration: 2
+TickPerSecond: 0.2
+KeyFramesCount: 119
+NumEffec: 2
+
+[Effect]
+EffectName: effect2-1
+ModelName: Model_Effect_bun201_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 2
+Position: -0.2 0 0
+Scale: 1 1 1
+Rotation: 3 0 0
+IsNotPlaying: false
+IsLoop: false
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+
+[KeyFrame]
+KeyFrameNumber: 1
+Position: -0.2 0 0
+Scale: 1 1 1
+Rotation: 3 0 0
+CurTime: 0.0166667
+Duration: 2
+
+[Effect]
+EffectName: effect2-2
+ModelName: Model_Effect_bun203_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 3
+Position: 0.2 0 0
+Scale: 1 0.999999 0.999999
+Rotation: 4 0 0
+IsNotPlaying: false
+IsLoop: true
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+
+[KeyFrame]
+KeyFrameNumber: 2
+Position: 0.2 0 0
+Scale: 1 0.999999 0.999999
+Rotation: 4 0 0
+CurTime: 0.0333333
+Duration: 2
 

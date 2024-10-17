@@ -137,6 +137,7 @@ namespace Engine
 		_float3 position;
 		_float3 scale;
 		_float3 rotation;
+		_int iNumKeyFrame;
 		vector<EFFECT_KEYFRAME_DATA> keyframes;
 	};
 
@@ -146,6 +147,7 @@ namespace Engine
 		_float duration;
 		_float tickPerSecond;
 		_uint keyFramesCount;
+		_int iNumEffect;
 		vector<EFFECT_DATA> effects;
 	};
 
