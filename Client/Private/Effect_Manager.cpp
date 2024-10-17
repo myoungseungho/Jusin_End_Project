@@ -318,6 +318,13 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				FirstKeyFrame.vScale = EffectDesc.vScaled;
 
 				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
+
+				if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size())
+				{
+					Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+
+					m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+				}
 			}
 		}
 	}
@@ -347,16 +354,16 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				FirstKeyFrame.vScale = EffectDesc.vScaled;
 
 				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
+
+				if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size())
+				{
+					Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+
+					m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+				}
 			}
 		}
 	
-	}
-
-	if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size()) 
-	{
-		Safe_Release(m_TestEffect[iCurTestEffectIndex]);
-
-		m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
 	}
 
 	return S_OK;

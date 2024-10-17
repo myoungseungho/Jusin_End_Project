@@ -140,3 +140,34 @@ Rotation: 4 0 0
 CurTime: 0.0333333
 Duration: 2
 
+[Layer]
+LayerName: new
+Duration: 3
+TickPerSecond: 0
+KeyFramesCount: 179
+NumEffec: 1
+
+[Effect]
+EffectName: neweffect
+ModelName: Model_Effect_bun201_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 1
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 5 0 0
+IsNotPlaying: false
+IsLoop: false
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+
