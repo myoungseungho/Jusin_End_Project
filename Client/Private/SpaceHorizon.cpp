@@ -47,7 +47,7 @@ void CSpaceHorizon::Update(_float fTimeDelta)
 
 void CSpaceHorizon::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CSpaceHorizon::Render(_float fTimeDelta)

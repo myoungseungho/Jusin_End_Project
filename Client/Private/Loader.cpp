@@ -15,6 +15,7 @@
 #include "Effect.h"
 
 #include "SpaceSun.h"
+#include "SpaceMoon.h"
 #include "SpaceCliff.h"
 #include "SpaceEarth.h"
 #include "SpaceStage.h"
@@ -232,6 +233,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEarth"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Earth/Earth.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMoon"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Moon/Moon.bin", PreTransformMatrix))))
 		return E_FAIL;
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 	/* For.Prototype_Component_Texture_Terrain */
@@ -2661,6 +2666,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceMoon"),
+		CSpaceMoon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSun"),
 		CSpaceSun::Create(m_pDevice, m_pContext))))

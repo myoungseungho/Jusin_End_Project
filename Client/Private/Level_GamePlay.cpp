@@ -48,6 +48,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_FallingStar"), TEXT("Layer__FallingStar"))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMoon"), TEXT("Layer_SpaceMoon"))))
+		return E_FAIL;
 	
 
 	// 해당 레벨에 맞는 파일 경로를 설정

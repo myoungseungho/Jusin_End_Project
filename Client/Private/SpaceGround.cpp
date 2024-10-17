@@ -47,7 +47,7 @@ void CSpaceGround::Update(_float fTimeDelta)
 
 void CSpaceGround::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CSpaceGround::Render(_float fTimeDelta)
