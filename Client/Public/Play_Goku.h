@@ -21,11 +21,11 @@ public:
 	{
 		_wstring strModelName;
 	}Play_Goku_DESC;
-	enum AnimationIndex 
+	enum AnimationIndex
 	{
 		ANIME_ATTACK_LIGHT1 = 43, ANIME_ATTACK_LIGHT2 = 44, ANIME_ATTACK_LIGHT3 = 47,
 		ANIME_ATTACK_MEDIUM = 46, ANIME_ATTACK_HEAVY = 45,
-		ANIME_ATTACK_SPECIAL =48,
+		ANIME_ATTACK_SPECIAL = 48,
 
 		ANIME_ATTACK_AIR1 = 52, ANIME_ATTACK_AIR2 = 53, ANIME_ATTACK_AIR3 = 54, ANIME_ATTACK_SPECIAL_AIR = 57,
 
@@ -35,20 +35,21 @@ public:
 		ANIME_ATTACK_236 = 66, ANIME_ATTACK_236_AIR = 67,
 		ANIME_ATTACK_214 = 68,
 
-		ANIME_ATTACK_236_SPECIAL =62, ANIME_ATTACK_236_SPECIAL_UPSIDE = 63,
-		ANIME_ATTACK_236_SPECIAL_AIR = 64,  ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE = 65,
+		ANIME_ATTACK_236_SPECIAL = 62, ANIME_ATTACK_236_SPECIAL_UPSIDE = 63,
+		ANIME_ATTACK_236_SPECIAL_AIR = 64, ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE = 65,
 
 		ANIME_FINAL_START = 69,
 
-		ANIME_IDLE = 0, 
-		ANIME_FORWARD_WALK = 9, ANIME_BACK_WALK = 10,  
+		ANIME_IDLE = 0,
+		ANIME_FORWARD_WALK = 9, ANIME_BACK_WALK = 10,
 		ANIME_FORWARD_DASH = 11, ANIME_BACK_DASH = 12,
 		ANIME_FORWARD_DASH_END = 14, ANIME_BACK_DASH_END = 15,
 
 
 		ANIME_CROUCH_START = 3, ANIME_CROUCHING = 4,
-		ANIME_JUMP_UP = 6, ANIME_JUMP_DOWN = 7
+		ANIME_JUMP_UP = 6, ANIME_JUMP_DOWN = 7,
 
+		ANIME_CHASE = 13
 
 	};
 	enum AnimationCount
@@ -76,7 +77,7 @@ public:
 	virtual void AttackNextMoveCheck() override;
 	virtual void AnimeEndNextMoveCheck() override;
 
-	virtual void Test_InputCommand();
+	//virtual void Test_InputCommand();
 	//virtual void Set_Animation(_uint iAnimationIndex) override;
 	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
 
@@ -92,6 +93,9 @@ public:
 	void Reset_AttackCount();
 
 	virtual void Gravity(_float fTimeDelta) override;
+
+	virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0)override;
+
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };

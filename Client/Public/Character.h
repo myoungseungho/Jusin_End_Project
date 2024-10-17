@@ -170,10 +170,12 @@ public:
 	enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
 	static const _float fGroundHeight;  //0
 	static const _float fJumpPower;
+	//const enum LOOK{ LOOK_LEFT = -1,  LOOK_RIGHT = 1};
 
 	typedef struct: CGameObject::GAMEOBJECT_DESC
 	{
-		_wstring strModelName;
+		//_wstring strModelName;
+		_ushort iTeam = 1;
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -245,14 +247,21 @@ public:
 
 
 
+	void FlipDirection(_int iDirection = 0);
+	_int Get_iDirection() { return m_iLookDirection; };
+	_uint* Get_pAnimationIndex();
+
+
+	virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
+
+
+
+
 	//디버그용 코드 
 	virtual void ShowInputBuffer();
 	virtual void DebugPositionReset();
 
-	_int Get_iDirection() { return m_iLookDirection; };
-	void FlipDirection(_int iDirection = 0);
-	_uint* Get_pAnimationIndex();
-
+	
 
 	//중력관련
 	//virtual void Gravity(_float fTimeDelta);
@@ -275,7 +284,10 @@ public:
 
 	void AttckCancleJump();
 
-	void Chase();
+	void Chase(_float fTimeDelta);
+	void Chase2(_float fTimeDelta);
+	void Chase_Ready(_float fTimeDelta);
+
 
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -317,6 +329,7 @@ protected:
 	_ushort m_iFallAnimationIndex = {7};
 	_ushort m_iIdleAnimationIndex = { 0 };
 	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
+	_ushort m_iChaseAnimationIndex = { 13 };
 
 
 	_float m_fGravityTime = {0.f}; 
@@ -336,7 +349,18 @@ protected:
 
 
 	_bool m_bChase = { false };
-	
+	_float m_fAccChaseTime = { 0.f };
+	_vector m_vChaseDir{ 0 };
+
+
+
+	//스턴 관련
+	_bool m_bStun = { false };
+
+
+
+	//디버그용 임시 collider
+	CCollider_Test* m_pColliderCom = { nullptr };
 
 private:
 	HRESULT Ready_Components();

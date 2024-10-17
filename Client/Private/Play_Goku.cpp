@@ -6,6 +6,8 @@
 
 
 
+
+#include "iostream"
 //#define ANIME_ATTACK_LIGHT1 43
 //#define ANIME_ATTACK_LIGHT2 44
 //#define ANIME_ATTACK_LIGHT3 47
@@ -143,7 +145,6 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 */
 
 
-
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -179,6 +180,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
 	m_iStandingMidAttackAnimationIndex = ANIME_ATTACK_MEDIUM;
+	m_iChaseAnimationIndex = ANIME_CHASE;
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -262,6 +264,15 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 	
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
+
 
 	return S_OK;
 }
@@ -275,37 +286,57 @@ void CPlay_Goku::Update(_float fTimeDelta)
 {
 	
 
-	if(m_pGameInstance->Key_Down(DIK_R))
-		Chase();
+	if (m_pGameInstance->Key_Down(DIK_R))
+	{
+		//Chase2(fTimeDelta);
+		Chase_Ready(fTimeDelta);
+	}
 
-
-	//if (m_bChase == true);
-	if(m_pGameInstance->Key_Pressing(DIK_R))
+	
+	//if(m_pModelCom->m_iCurrentAnimationIndex == ANIME_CHASE)
+	if(m_bChase)
 	{
 
+		Chase2(fTimeDelta);
 
-		return;
+		
+
+		if (m_bChase == false)
+		{
+			m_fAccChaseTime = 0.f;
+			//m_fGravityTime = 0.365f;
+			//Set_fImpulse( XMVectorGetX(vDir));
+			m_fGravityTime = 0.185f;
+			m_pModelCom->SetUp_Animation(ANIME_JUMP_DOWN, false);
+		}
+
+
+
 	}
+
+	
+	
 
 	InputedCommandUpdate(fTimeDelta);
-	if (InputCommand())
+	
+
+	//Chase == true거나  Stun==ture면 안받음
+	// 둘 다 false일때만 받음 
+
+	if (m_bChase == false && m_bStun == false)   //선입력을 받아야 하는가?
 	{
-		CheckAllCommands();
+		if (InputCommand())
+		{
+			CheckAllCommands();
+		}
+
+	}
+	else   //선입력.  커맨드 체크는 안하고 입력만 받음
+	{
+		InputCommand();
 	}
 
-	//if(m_pGameInstance->Key_Down(DIK_U))
-	//	ShowInputBuffer();
 
-	//CheckCommandWithStartCondition()
-
-	//CheckAllCommands();
-
-	//_uint iTest = CheckAllCommands();
-
-	//Set_Animation(CheckAllCommands());
-
-
-	//CheckAllCommands();
 
 	if (m_bAnimationLock == false)
 	{
@@ -336,15 +367,15 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	Gravity(fTimeDelta);
 	AttckCancleJump();
 	
+
+
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
 	{
-		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
 		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
 		{
 			Reset_AttackCount();
 
 			_short MoveKey = 0;
-			//if (m_pGameInstance->Key_Pressing(DIK_W))
 			if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 			{
 				m_pTransformCom->Add_Move({ 0,0.3f,0 });
@@ -357,20 +388,13 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 				if (m_pGameInstance->Key_Pressing(DIK_A))
-				{
-					//Set_fImpulse(m_iLookDirection);
-
-					//Set_fImpulse(-0.1f);
+				{					
 					Set_fImpulse(-5.f);
-
 				}
 
 				else if (m_pGameInstance->Key_Pressing(DIK_D))
 				{
-					//Set_fImpulse(-m_iLookDirection);
-					//Set_fImpulse(0.1f);
 					Set_fImpulse(5.f);
-
 				}
 
 
@@ -378,12 +402,10 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 			else if (m_pGameInstance->Key_Pressing(DIK_S))
 			{
-				//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
 				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
 				{
 					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
 				}
-
 			}
 
 			else
@@ -400,17 +422,11 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 				if (MoveKey == -1)
-				{
-					
-					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
-					//{
-					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
-					//}
-					//else
-						m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-
+				{						
+					m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
 
 					m_iNextAnimation.first = ANIME_IDLE;
+
 					m_iNextAnimation.second = 100.f;
 
 				}
@@ -441,38 +457,6 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			}
 
 			
-			//앉기 추가 전에는 이거만 있었음
-			//if (m_pGameInstance->Key_Pressing(DIK_A))
-			//{
-			//	MoveKey -= m_iLookDirection;
-			//}
-			//
-			//else if (m_pGameInstance->Key_Pressing(DIK_D))
-			//{
-			//	MoveKey += m_iLookDirection;
-			//}
-			//
-			//
-			//if (MoveKey == -1)
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//
-			//}
-			//else if (MoveKey == 1)
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//}
-			//else
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//}
-
 			
 		}
 	}
@@ -496,6 +480,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 	//Gravity(fTimeDelta);
 
+	m_pColliderCom->Update();
 	
 }
 
@@ -529,70 +514,16 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 			return E_FAIL;
 	}
 
+#ifdef  _DEBUG
+	m_pColliderCom->Render();
+#endif //  _DEBUG
 	return S_OK;
 }
 
-/*
-void CPlay_Goku::NextMoveCheck()
-{
-
-	//지금 당장 공격중에 체크했을때 IDLE이면 변경하지 않고 공격을 마저 진행함
-
-	//점프,이동 중이 아니라는 뜻
-
-
-	//if (m_pModelCom->m_iCurrentAnimationIndex < m_iNextAnimation.first)
-	//{
-	//	//Set_Animation(m_iNextAnimation.first);
-	//	m_pModelCom->SetUp_Animation(m_iNextAnimation.first,false);
-	//	m_iNextAnimation.first = ANIME_IDLE;
-	//	m_iNextAnimation.second = 100;
-	//
-	//}
-
-	
-
-	//공격중인경우  로 바꾸자  *체크*
-	//if (Check_bCurAnimationisGroundMove() == false)
-	//{
-	//	//다음 애니메이션도 공격이 아니면 Set
-	//	//if (Check_bCurAnimationisMove(m_iNextAnimation.first))
-	//	//{
-	//	//	Set_Animation(m_iNextAnimation.first);
-	//	//}
-	//
-	//	if (m_iNextAnimation.first != ANIME_IDLE)
-	//	{
-	//		Set_Animation(m_iNextAnimation.first);
-	//	}
-	//
-	//}
-
-	// 체크*
-	//if(m_iNextAnimation.first != ANIME_IDLE)
-	//{
-	//	m_pModelCom->SetUp_Animation(m_iNextAnimation.first, false);
-	//
-	//	m_iNextAnimation.first = ANIME_IDLE;
-	//	m_iNextAnimation.second = 100.f;
-	//}
-
-
-}
-*/
 
 void CPlay_Goku::AttackNextMoveCheck()
 {
 	
-	//if (m_iNextAnimation.first != ANIME_IDLE)
-	//{
-	//	Set_Animation(m_iNextAnimation.first);
-	//
-	//	m_iNextAnimation.first = ANIME_IDLE;
-	//	m_iNextAnimation.second = 1000.f;
-	//
-	//}
-
 	if (m_iNextAnimation.first != ANIME_IDLE)
 	{
 		Set_Animation(m_iNextAnimation.first);
@@ -619,32 +550,8 @@ void CPlay_Goku::AnimeEndNextMoveCheck()
 	m_iNextAnimation.second = 1000.f;
 
 
-	
-
 }
 
-void CPlay_Goku::Test_InputCommand()
-{
-	//if (m_pGameInstance->Key_Down(DIK_U))
-	//{
-	//	m_pModelCom->SetUp_Animation(ANIME_ATTACK_LIGHT1,false);
-	//}
-	//
-	//if (m_pGameInstance->Key_Down(DIK_I))
-	//{
-	//	m_pModelCom->SetUp_Animation(ANIME_ATTACK_MEDIUM, false);
-	//
-	//}
-	//
-	//
-	//if (m_pGameInstance->Key_Down(DIK_K))
-	//{
-	//	m_pModelCom->SetUp_Animation(ANIME_ATTACK_HEAVY, false);
-	//
-	//}
-
-
-}
 
 void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
@@ -657,57 +564,7 @@ void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
 }
 
 
-/*
-void CPlay_Goku::Set_Animation(_uint iAnimationIndex)
-{
 
-
-	//if(iAnimationIndex !=ANIME_IDLE)
-	//	m_pModelCom->SetUp_Animation(iAnimationIndex,false);
-	//
-	//else
-	//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-
-
-
-	//ver2
-
-	//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_IDLE)
-	//{
-	//	m_iNextAnimation.first = iAnimationIndex;
-	//	m_iNextAnimation.second = 0.5f;
-	//	return;
-	//}
-	//
-	//
-	//
-	//
-	//_uint iDebug = iAnimationIndex;
-	//if (iAnimationIndex != 0 && (iAnimationIndex != ANIME_FORWARD_WALK && iAnimationIndex != ANIME_BACK_WALK))
-	//{
-	//	_bool bDebug = true;
-	//}
-	//
-	//if(iAnimationIndex != ANIME_IDLE)
-	//	m_pModelCom->SetUp_Animation(iAnimationIndex, false);
-
-
-
-	//if (iAnimationIndex != ANIME_IDLE)
-	//	m_pModelCom->SetUp_Animation(iAnimationIndex, true);
-	//else
-	//	m_pModelCom->SetUp_Animation(iAnimationIndex, false);
-
-
-
-	if (iAnimationIndex == ANIME_IDLE)
-		m_pModelCom->SetUp_Animation(iAnimationIndex, true);
-	else
-		m_pModelCom->SetUp_Animation(iAnimationIndex, false);
-
-
-}
-*/
 
 void CPlay_Goku::KeyTest()
 {
@@ -756,18 +613,6 @@ _bool CPlay_Goku::Check_bCurAnimationisGroundMove(_uint iAnimation)
 	if(iAnimation == 1000)
 		 iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
 	
-
-	//if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK) )
-	//{
-	//	return true;
-	//}
-
-
-	//대시 추가하느라 주석
-	//if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK) || iModelIndex == ANIME_CROUCH_START || iModelIndex == ANIME_CROUCHING)
-	//{
-	//	return true;
-	//}
 
 
 	if (iModelIndex == ANIME_IDLE || iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK || iModelIndex == ANIME_CROUCH_START || iModelIndex == ANIME_CROUCHING
@@ -843,6 +688,87 @@ void CPlay_Goku::Gravity(_float fTimeDelta)
 	}
 
 	
+
+}
+
+void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
+{
+
+	switch (m_pModelCom->m_iCurrentAnimationIndex)
+	{
+	case Client::CPlay_Goku::ANIME_ATTACK_LIGHT1:
+		
+		break;
+
+	case Client::CPlay_Goku::ANIME_ATTACK_LIGHT2:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_LIGHT3:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_MEDIUM:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_HEAVY:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_SPECIAL:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_AIR1:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_AIR2:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_AIR3:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_HEAVY:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_UPPER_AIR:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_236:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_236_AIR:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_214:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR:
+		break;
+	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE:
+		break;
+	case Client::CPlay_Goku::ANIME_FINAL_START:
+		break;
+	case Client::CPlay_Goku::ANIME_IDLE:
+		break;
+	case Client::CPlay_Goku::ANIME_FORWARD_WALK:
+		break;
+	case Client::CPlay_Goku::ANIME_BACK_WALK:
+		break;
+	case Client::CPlay_Goku::ANIME_FORWARD_DASH:
+		break;
+	case Client::CPlay_Goku::ANIME_BACK_DASH:
+		break;
+	case Client::CPlay_Goku::ANIME_FORWARD_DASH_END:
+		break;
+	case Client::CPlay_Goku::ANIME_BACK_DASH_END:
+		break;
+	case Client::CPlay_Goku::ANIME_CROUCH_START:
+		break;
+	case Client::CPlay_Goku::ANIME_CROUCHING:
+		break;
+	case Client::CPlay_Goku::ANIME_JUMP_UP:
+		break;
+	case Client::CPlay_Goku::ANIME_JUMP_DOWN:
+		break;
+	case Client::CPlay_Goku::ANIME_CHASE:
+		break;
+	default:
+		break;
+	}
 
 }
 

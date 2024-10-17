@@ -5,6 +5,8 @@
 #include "GameInstance.h"
 
 
+
+#include "iostream"
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower	 = 3.f; //0
 
@@ -164,7 +166,7 @@ HRESULT CCharacter::Initialize_Prototype()
 HRESULT CCharacter::Initialize(void* pArg)
 {
 
-	//Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
+	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	//m_strModelName = pDesc->strModelName;
 
 	m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
@@ -176,9 +178,19 @@ HRESULT CCharacter::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-	
-	
+
+	if(pDesc->iTeam == 1)
+	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+		m_iPlayerTeam = 1;
+		FlipDirection(1);
+	}
+	else
+	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(1.f, 0.f, 0.f, 1.f));
+		m_iPlayerTeam = 2;
+		FlipDirection(-1);
+	}
 
 
 	//모델 로드를 하위 클래스로 옮겼으니 각자 처리하기 
@@ -511,13 +523,7 @@ _bool CCharacter::InputCommand()
 void CCharacter::InputedCommandUpdate(_float fTimeDelta)
 {
 
-	//for (auto tinput : inputBuffer)
-	//{
-	//	tinput.frameTime += fTimeDelta;
-	//	
-	//	if(tinput.frameTime>0.2)
-	//
-	//}
+	
 
 	inputBuffer.erase(
 		remove_if(inputBuffer.begin(), inputBuffer.end(), [fTimeDelta](CInput& input) {
@@ -527,12 +533,7 @@ void CCharacter::InputedCommandUpdate(_float fTimeDelta)
 		inputBuffer.end()
 	);
 
-	//inputBuffer.erase(remove_if(inputBuffer.begin(), inputBuffer.end(), [fTimeDelta](CInput& input) 
-	//	{
-	//		input.frameTime += fTimeDelta;
-	//		return input.frameTime > 0.2f;
-	//
-	//	};
+	
 
 }
 
@@ -676,7 +677,9 @@ void CCharacter::ShowInputBuffer()
 {
 	inputBuffer;
 	m_fGravityTime;
- 	_bool bDebug = true;
+	m_pModelCom->m_iCurrentAnimationIndex;
+	m_pModelCom->m_fCurrentAnimPosition;
+   	_bool bDebug = true;
 }
 
 void CCharacter::DebugPositionReset()
@@ -689,13 +692,19 @@ void CCharacter::FlipDirection(_int iDirection)
 	if (iDirection == 0)
 	{
 		m_iLookDirection = -m_iLookDirection;
+
+		m_pTransformCom->Set_Scaled(-1, 1, 1);
 	}
-	else
+	else if(m_iLookDirection != iDirection)
 	{
+
 		m_iLookDirection = iDirection;
+
+		m_pTransformCom->Set_Scaled(-1, 1, 1);
 	}
 
-	m_pTransformCom->Set_Scaled(-1, 1, 1);
+	//m_pTransformCom->Set_Scaled(-1, 1, 1);
+
 }
 
 void CCharacter::Create_Effect(_int iEffectIndex)
@@ -765,8 +774,191 @@ void CCharacter::AttckCancleJump()
 
 }
 
-void CCharacter::Chase()
+void CCharacter::Chase(_float fTimeDelta)
 {
+
+	m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
+	m_pModelCom->Play_Animation(0.f);
+
+
+	CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
+	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
+
+	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	m_fAccChaseTime += fTimeDelta;
+
+	_vector vDir = XMVector4Normalize(vTargetPos - vMyPos);
+	Set_fImpulse(XMVectorGetX(vDir) * 2.f);
+
+	//_float angle = atan2(XMVectorGetY(vDir), XMVectorGetX(vDir));
+	_float angle = atan2(XMVectorGetY(vDir), XMVectorGetX(vDir)) * (180.0 / 3.14);
+
+	angle = (angle + 90) * 0.5f;
+	//cout << angle << endl;
+
+
+
+	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
+	{
+		FlipDirection(1);
+	}
+
+	else if (angle > 90)   //적이 왼쪽 위에 있는 경우 
+	{
+		//110의 경우 70으로 바꿔야 한다.    초과값 20.   90으로부터 초과값 만큼 빼면 됨
+		// angle = 90 - (90 - angle);    =  180-angle;
+
+		FlipDirection(-1);
+		angle = 180 - angle;
+	}
+	else if (angle < 0)   //적이 왼쪽에 아래에 있는 경우 
+	{
+		FlipDirection(-1);
+		angle = -angle;
+	}
+
+
+	//추적 속도를 점점 빠르게
+	vDir = vDir * m_fAccChaseTime * 0.5f;
+
+	m_pTransformCom->Add_MoveVector(vDir);
+	Set_CurrentAnimationPositionJump(angle);
+}
+
+void CCharacter::Chase2(_float fTimeDelta)
+{
+
+	//m_bChase 가 true일 때만 들어올것
+
+
+	
+	//디버그용 예외처리.  멈춰버리면 지랄남
+	if (fTimeDelta > 1)
+	{
+		return;
+	}
+
+	
+
+	m_fAccChaseTime += fTimeDelta;
+	//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex && m_fAccChaseTime > 0.3f)
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+	{
+
+		if (m_fAccChaseTime > 0.2f)
+		{
+			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
+			m_fJumpPower = fJumpPower;
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	else if (m_fAccChaseTime > 5.f)
+	{
+		m_bChase = false;
+		return;
+	}
+
+
+	CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
+	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
+
+	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+
+	
+	_float vLength = GetVectorLength((vTargetPos - vMyPos));
+	if (vLength < 0.3f)
+	{
+		m_bChase = false;
+
+
+
+		//테스트
+		m_fAccChaseTime = 0.f;
+		m_fGravityTime = 0.185f;
+		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+
+		return;
+	}
+
+
+	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
+	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
+
+
+
+
+	//애니메이션 이용을 위해 각도값을 특수 처리 할 필요가 있음
+	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
+	angle = (angle + 90) * 0.5f;
+
+	cout << angle << endl;
+
+	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
+	{
+		//캐릭터 보는 방향 오른쪽으로 변경
+		FlipDirection(1);
+	}
+
+	else if (angle > 90)   //적이 왼쪽 위에 있는 경우 
+	{
+		//110의 경우 70으로 바꿔야 한다.    초과값 20.   90으로부터 초과값 만큼 빼면 됨
+		// angle = 90 - (90 - angle);    =  180-angle;
+
+		FlipDirection(-1);
+		angle = 180 - angle;
+	}
+	else if (angle < 0)   //적이 왼쪽에 아래에 있는 경우 
+	{
+		FlipDirection(-1);
+		angle = -angle;
+	}
+
+
+	//추적 속도를 점점 빠르게
+	//m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * 0.5f);
+	m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * m_fAccChaseTime );
+
+
+
+	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
+	Set_CurrentAnimationPositionJump(angle);
+
+}
+
+void CCharacter::Chase_Ready(_float fTimeDelta)
+{
+	
+	//if (m_pModelCom->m_iCurrentAnimationIndex != m_iChaseAnimationIndex)
+	//{
+	//	m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
+	//	m_pModelCom->Play_Animation(0.f);
+	//
+	//	m_bChase = true;
+	//
+	//}
+
+
+	m_pModelCom->SetUp_Animation(m_iFallAnimationIndex,false);
+
+	//m_pModelCom->CurrentAnimationPositionJump(8.0f);
+
+	m_bChase = true;
+	
+	if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) <0.5)
+	{
+		m_pTransformCom->Add_Move({ 0.f,0.6f,0.f });
+		
+	}
+
+	//Set_NextAnimation(m_iChaseAnimationIndex, 2.f);
+
 
 }
 
@@ -793,6 +985,12 @@ void CCharacter::Gravity(_float fTimeDelta)
 {
 	
 	//_float fTimeDelta = fTimeDeltaOrigin * 2.f;
+
+
+	if (m_bChase == true)
+	{
+		return;
+	}
 
 	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	_float fHeight = XMVectorGetY(vPos);
@@ -962,6 +1160,22 @@ HRESULT CCharacter::Ready_Components()
 	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 	//	return E_FAIL;
 
+
+
+
+	CCollider_Test::COLLIDER_DESC ColliderDesc{};
+	ColliderDesc.pTransform = m_pTransformCom;
+	ColliderDesc.fSizeX = 1.2f;
+	ColliderDesc.fSizeY = 1.5f;
+	ColliderDesc.fSizeZ = 0.7f;
+	ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
+
+
+	//Com_Collider
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
+		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
+		return E_FAIL;
+	
 	return S_OK;
 }
 

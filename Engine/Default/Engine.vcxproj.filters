@@ -91,6 +91,12 @@
     <Filter Include="01.Utility\90.DIK_KeyManager">
       <UniqueIdentifier>{387532bd-77c9-4e3c-834e-63b893474db6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\03.Components\Collider_Test">
+      <UniqueIdentifier>{cdfae424-aa28-4dff-b542-920eaade6d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\Collider_Test\DebugDraw">
+      <UniqueIdentifier>{3a315d68-6ab0-48ab-adb2-c8228e14dbe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -173,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Key_Manager.cpp">
       <Filter>01.Utility\90.DIK_KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Collider_Test.cpp">
+      <Filter>01.Utility\03.Components\Collider_Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\DebugDraw.cpp">
+      <Filter>01.Utility\03.Components\Collider_Test\DebugDraw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +280,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Key_Manager.h">
       <Filter>01.Utility\90.DIK_KeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Collider_Test.h">
+      <Filter>01.Utility\03.Components\Collider_Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\DebugDraw.h">
+      <Filter>01.Utility\03.Components\Collider_Test\DebugDraw</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

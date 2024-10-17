@@ -29,7 +29,7 @@ HRESULT CMonster::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, 2.f, 0.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(1.f, 1.f, 0.f, 1.f));
 	
 	m_pModelCom->SetUp_Animation(0, true);
 	m_pModelCom->Play_Animation(0.f);

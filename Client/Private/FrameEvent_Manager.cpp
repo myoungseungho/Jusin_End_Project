@@ -461,8 +461,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     }
     else if (splitText[0] == "AttackEvent")
     {
-        //pCharacter->NextMoveCheck();
-
+        pCharacter->AttackEvent(fValue[0], fValue[1]);
     }
     else if (splitText[0] == "SetAnimation")
     {

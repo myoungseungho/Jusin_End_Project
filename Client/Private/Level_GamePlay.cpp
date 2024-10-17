@@ -7,6 +7,8 @@
 //#include "LandObject.h"
 #include "Monster.h"
 
+#include "Character.h"
+
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext } 
 {
@@ -40,12 +42,25 @@ HRESULT CLevel_GamePlay::Initialize()
 	{
 
 
-		if (Ready_Character())
-			return E_FAIL;
+		//if (Ready_Character())
+		//	return E_FAIL;
 
 		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
 		//	return E_FAIL;
 		 
+
+		//1P
+		CCharacter::Character_DESC CharacterDesc{};
+		CharacterDesc.iTeam = 1;
+				
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"),&CharacterDesc)))
+			return E_FAIL;
+
+		CharacterDesc.iTeam = 2;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
+
+
 		 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Target"))))
 			return E_FAIL;
