@@ -90,7 +90,7 @@ public:
 	
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
-	void Reset_AttackCount();
+	virtual void Reset_AttackCount() override;
 
 	virtual void Gravity(_float fTimeDelta) override;
 

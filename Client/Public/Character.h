@@ -288,6 +288,11 @@ public:
 	void Chase2(_float fTimeDelta);
 	void Chase_Ready(_float fTimeDelta);
 
+	void Move(_float fTimeDelta);
+	void MoveKey1Team(_float fTimeDelta);
+	void MoveKey2Team(_float fTimeDelta);
+	virtual void Reset_AttackCount() {};
+
 
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -325,12 +330,21 @@ protected:
 	pair<_uint, _float>		m_iNextAnimation{0,0 };
 	_float					m_fNextAnimationCurrentPosition = {};
 
+
 	_ushort m_iJumpAnimationIndex = { 6 };
 	_ushort m_iFallAnimationIndex = {7};
+
 	_ushort m_iIdleAnimationIndex = { 0 };
+	_ushort m_iCrouchAnimationIndex = {4};
+	_ushort m_iBackWalkAnimationIndex = { 10 };
+	_ushort m_iForwardWalkAnimationIndex = { 9 };
+	_ushort m_iForwardDashAnimationIndex = {11};
+	_ushort m_iForwardDashEndAnimationIndex = { 14 };
+
+
+
 	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
 	_ushort m_iChaseAnimationIndex = { 13 };
-
 
 	_float m_fGravityTime = {0.f}; 
 	_float m_fJumpPower = {0.f};
@@ -361,6 +375,7 @@ protected:
 
 	//디버그용 임시 collider
 	CCollider_Test* m_pColliderCom = { nullptr };
+	CCharacter* m_pDebugEnemy = { nullptr };
 
 private:
 	HRESULT Ready_Components();

@@ -200,6 +200,15 @@ CGameObject* CGameInstance::Get_Object(_uint iLevelIndex, const wstring& strLaye
 	return m_pObject_Manager->Get_Object(iLevelIndex, strLayerTag, iindex);
 }
 
+_uint CGameInstance::Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return m_pObject_Manager->GetLayerSize(iLevelIndex, strLayerTag);
+
+}
+
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag, CComponent * pPrototype)
 {
 	if (nullptr == m_pComponent_Manager)

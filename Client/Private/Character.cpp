@@ -416,8 +416,6 @@ _bool CCharacter::InputCommand()
 		{
 			DirectionY =-1;
 		}
-
-
 		
 		if (m_pGameInstance->Key_Pressing(DIK_A))
 		{
@@ -428,9 +426,6 @@ _bool CCharacter::InputCommand()
 		{
 			DirectionX += m_iLookDirection;
 		}
-
-		
-		
 
 		 //if(DirectionX==0 && DirectionY ==0)
 
@@ -491,7 +486,86 @@ _bool CCharacter::InputCommand()
 		// }
 
 	}
+	else  //2팀
+	{
+		if (m_pGameInstance->Key_Pressing(DIK_UP))
+		{
+			DirectionY = 1;
+		}
 
+		else if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+		{
+			DirectionY = -1;
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+		{
+			DirectionX -= m_iLookDirection;
+		}
+
+		else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+		{
+			DirectionX += m_iLookDirection;
+		}
+
+		//if(DirectionX==0 && DirectionY ==0)
+
+		if (DirectionX == -1 && DirectionY == 0)
+			iMoveKey = MOVEKEY_LEFT;
+
+		else if (DirectionX == -1 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN_LEFT;
+
+		else if (DirectionX == 0 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN;
+
+		else if (DirectionX == 0 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN;
+
+		else if (DirectionX == 1 && DirectionY == -1)
+			iMoveKey = MOVEKEY_DOWN_RIGHT;
+
+		else if (DirectionX == 1 && DirectionY == 0)
+			iMoveKey = MOVEKEY_RIGHT;
+
+
+		//둘 다 0인경우는 기본값이므로 지정하지 않음 대각선 위는 쓰이는 커맨드가 없으므로 지정하지 않음
+
+
+
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
+		{
+			iAttackkey = ATTACK_LIGHT;
+		}
+
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
+		{
+			iAttackkey = ATTACK_MEDIUM;
+
+		}
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
+		{
+			iAttackkey = ATTACK_SPECIAL;
+
+		}
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
+		{
+			iAttackkey = ATTACK_HEAVY;
+
+		}
+
+
+		if (m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+		{
+			iAttackkey = ATTACK_GRAB;
+
+		}
+		// if (m_pGameInstance->Key_Pressing(DIK_Y))
+		// {
+		//	 iAttackkey = ATTACK_LIGHT;
+		//
+		// }
+	}
 
 
 	_bool bNewKey = false;
@@ -684,7 +758,7 @@ void CCharacter::ShowInputBuffer()
 
 void CCharacter::DebugPositionReset()
 {
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0,0,0,1 });
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (_float)m_iPlayerTeam,0,0,1 });
 }
 
 void CCharacter::FlipDirection(_int iDirection)
@@ -749,28 +823,52 @@ void CCharacter::Set_ForcveGravityTime(_float fGravityTime)
 
 void CCharacter::AttckCancleJump()
 {
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iStandingMidAttackAnimationIndex && m_pGameInstance->Key_Down(DIK_W))
+
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iStandingMidAttackAnimationIndex)
 	{
-
-		//m_pTransformCom->Add_Move({ 0,0.3f,0 });
-
-		//Set_fJumpPower(4.f); //중력Ver1 기준
-		Set_fJumpPower(3.f); //중력Ver2 기준
-
-
-		//Set_Animation(m_iJumpAnimationIndex);
-		Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
-
-		if (m_pGameInstance->Key_Pressing(DIK_A))
+		
+		//1팀
+		if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Down(DIK_W))
 		{
-			Set_fImpulse(-5.f);
+
+			//Set_fJumpPower(4.f); //중력Ver1 기준
+			Set_fJumpPower(3.f); //중력Ver2 기준
+
+			Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+
+			if (m_pGameInstance->Key_Pressing(DIK_A))
+			{
+				Set_fImpulse(-5.f);
+			}
+
+			else if (m_pGameInstance->Key_Pressing(DIK_D))
+			{
+				Set_fImpulse(5.f);
+			}
 		}
 
-		else if (m_pGameInstance->Key_Pressing(DIK_D))
+		//2팀
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Down(DIK_UP))
 		{
-			Set_fImpulse(5.f);
+			//Set_fJumpPower(4.f); //중력Ver1 기준
+			Set_fJumpPower(3.f); //중력Ver2 기준
+
+			Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+
+			if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+			{
+				Set_fImpulse(-5.f);
+			}
+
+			else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+			{
+				Set_fImpulse(5.f);
+			}
 		}
+
 	}
+
+
 
 }
 
@@ -864,7 +962,9 @@ void CCharacter::Chase2(_float fTimeDelta)
 	}
 
 
-	CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
+	//CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
+	CTransform* pTarget = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+
 	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
 
 	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
@@ -959,6 +1059,198 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 	//Set_NextAnimation(m_iChaseAnimationIndex, 2.f);
 
+
+}
+
+void CCharacter::Move(_float fTimeDelta)
+{
+
+
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
+	{
+		if (Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
+		{
+
+
+
+			Reset_AttackCount();
+
+			if (m_iPlayerTeam == 1)
+				MoveKey1Team(fTimeDelta);
+			else
+				MoveKey2Team(fTimeDelta);
+
+
+		}
+	}
+}
+
+void CCharacter::MoveKey1Team(_float fTimeDelta)
+{
+	_short MoveKey = 0;
+	if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
+	{
+		m_pTransformCom->Add_Move({ 0,0.3f,0 });
+
+		//Set_fJumpPower(4.f); //중력Ver1 기준
+		Set_fJumpPower(3.f); //중력Ver2 기준
+
+
+		Set_Animation(m_iJumpAnimationIndex);
+
+
+		if (m_pGameInstance->Key_Pressing(DIK_A))
+		{
+			Set_fImpulse(-5.f);
+		}
+
+		else if (m_pGameInstance->Key_Pressing(DIK_D))
+		{
+			Set_fImpulse(5.f);
+		}
+
+
+	}
+
+	else if (m_pGameInstance->Key_Pressing(DIK_S))
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex != m_iForwardDashAnimationIndex)
+		{
+			m_pModelCom->SetUp_Animation(m_iCrouchAnimationIndex, true);
+		}
+	}
+
+	else
+	{
+		if (m_pGameInstance->Key_Pressing(DIK_A))
+		{
+			MoveKey -= m_iLookDirection;
+		}
+
+		else if (m_pGameInstance->Key_Pressing(DIK_D))
+		{
+			MoveKey += m_iLookDirection;
+		}
+
+
+		if (MoveKey == -1)
+		{
+			m_pModelCom->SetUp_Animation(m_iBackWalkAnimationIndex, false);
+
+			m_iNextAnimation.first = m_iIdleAnimationIndex;
+
+			m_iNextAnimation.second = 100.f;
+
+		}
+		else if (MoveKey == 1)
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
+			{
+				m_pModelCom->SetUp_Animation(m_iForwardDashAnimationIndex, true);
+			}
+			else
+				m_pModelCom->SetUp_Animation(m_iForwardWalkAnimationIndex, false);
+
+			m_iNextAnimation.first = m_iIdleAnimationIndex;
+			m_iNextAnimation.second = 100.f;
+		}
+		else
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
+			{
+				m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
+			}
+			else
+				m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+
+			m_iNextAnimation.first = m_iIdleAnimationIndex;
+			m_iNextAnimation.second = 100.f;
+		}
+	}
+}
+
+void CCharacter::MoveKey2Team(_float fTimeDelta)
+{
+	_short MoveKey = 0;
+	if (m_pGameInstance->Key_Pressing(DIK_UP) && m_bJumpLock == false)
+	{
+		m_pTransformCom->Add_Move({ 0,0.3f,0 });
+
+		//Set_fJumpPower(4.f); //중력Ver1 기준
+		Set_fJumpPower(3.f); //중력Ver2 기준
+
+
+		Set_Animation(m_iJumpAnimationIndex);
+
+
+		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+		{
+			Set_fImpulse(-5.f);
+		}
+
+		else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+		{
+			Set_fImpulse(5.f);
+		}
+
+
+	}
+
+	else if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex != m_iForwardDashAnimationIndex)
+		{
+			m_pModelCom->SetUp_Animation(m_iCrouchAnimationIndex, true);
+		}
+	}
+
+	else
+	{
+		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+		{
+			MoveKey -= m_iLookDirection;
+		}
+
+		else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+		{
+			MoveKey += m_iLookDirection;
+		}
+
+
+		if (MoveKey == -1)
+		{
+			m_pModelCom->SetUp_Animation(m_iBackWalkAnimationIndex, false);
+
+			m_iNextAnimation.first = m_iIdleAnimationIndex;
+
+			m_iNextAnimation.second = 100.f;
+
+		}
+		else if (MoveKey == 1)
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
+			{
+				m_pModelCom->SetUp_Animation(m_iForwardDashAnimationIndex, true);
+			}
+			else
+				m_pModelCom->SetUp_Animation(m_iForwardWalkAnimationIndex, false);
+
+			m_iNextAnimation.first = m_iIdleAnimationIndex;
+			m_iNextAnimation.second = 100.f;
+		}
+		else
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
+			{
+				m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
+			}
+			else
+				m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+
+			m_iNextAnimation.first = m_iIdleAnimationIndex;
+			m_iNextAnimation.second = 100.f;
+		}
+	}
 
 }
 
@@ -1059,16 +1351,34 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 			if(m_bAttackGravity == true)
 			{ 
-				if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+
+				if(m_iPlayerTeam ==1)
 				{
-					m_fGravityTime += fTimeDelta;
+					if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+					{
+						m_fGravityTime += fTimeDelta;
+					}
+
+
+					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
+
+					if (m_pGameInstance->Key_Pressing(DIK_W))
+						m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+
 				}
+				else
+				{
+					if ((m_pGameInstance->Key_Pressing(DIK_UP) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+					{
+						m_fGravityTime += fTimeDelta;
+					}
 
 
-				//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
+					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
 
-				if (m_pGameInstance->Key_Pressing(DIK_W))
-					m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+					if (m_pGameInstance->Key_Pressing(DIK_UP))
+						m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+				}
 
 			}
 			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.

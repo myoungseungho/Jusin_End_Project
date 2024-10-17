@@ -181,6 +181,14 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iIdleAnimationIndex = ANIME_IDLE;
 	m_iStandingMidAttackAnimationIndex = ANIME_ATTACK_MEDIUM;
 	m_iChaseAnimationIndex = ANIME_CHASE;
+	m_iForwardDashAnimationIndex = ANIME_FORWARD_DASH;
+
+	m_iForwardDashEndAnimationIndex = { ANIME_FORWARD_DASH_END };
+
+	m_iCrouchAnimationIndex = { ANIME_CROUCHING };
+	m_iBackWalkAnimationIndex = { ANIME_BACK_WALK };
+	m_iForwardWalkAnimationIndex = { ANIME_FORWARD_WALK };
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -285,21 +293,74 @@ void CPlay_Goku::Priority_Update(_float fTimeDelta)
 void CPlay_Goku::Update(_float fTimeDelta)
 {
 	
-
-	if (m_pGameInstance->Key_Down(DIK_R))
+	//합치기 전 임시 코드.  적 탐지코드임
+	if (m_pDebugEnemy == nullptr)
 	{
-		//Chase2(fTimeDelta);
-		Chase_Ready(fTimeDelta);
+		//_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+
+		for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
+		{
+			CGameObject* pObject = m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
+
+			if (pObject != this)
+			{
+				m_pDebugEnemy = static_cast<CCharacter*>(pObject);
+			}
+
+		}
 	}
 
+
+
+
+	//방향전환 코드.  적 탐지가 추가된 이후엔  CCharacter로 옮기기
+	if(Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+	{
+		CTransform* pEnemyTransform = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+
+		//적 방향의 X값 체크
+		_float fX = XMVectorGetX(pEnemyTransform->Get_State(CTransform::STATE_POSITION) - m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+
+		//차이가 좁으면 반전 안함. 둘 다 벽에 붙어있을 때 대비.
+		if(fabsf(fX) > 0.1)
+		{
+
+			if (fX > 0)
+			{
+				FlipDirection(1);
+			}
+			else
+			{
+				FlipDirection(-1);
+			}
+
+		}
+	}
+
+
+
+	if(m_iPlayerTeam == 1)
+	{
+		if (m_pGameInstance->Key_Down(DIK_R))
+		{
+			Chase_Ready(fTimeDelta);
+		}
+	}
+	else  //Team2
+	{
+		if (m_pGameInstance->Key_Down(DIK_PGDN))  //PageDown 키
+		{
+			Chase_Ready(fTimeDelta);
+		}
+	}
+
+
+
 	
-	//if(m_pModelCom->m_iCurrentAnimationIndex == ANIME_CHASE)
 	if(m_bChase)
 	{
-
 		Chase2(fTimeDelta);
-
-		
 
 		if (m_bChase == false)
 		{
@@ -310,19 +371,13 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			m_pModelCom->SetUp_Animation(ANIME_JUMP_DOWN, false);
 		}
 
-
-
 	}
 
 	
-	
-
+	//입력되어있는 커맨드 시간에 따라 휘발
 	InputedCommandUpdate(fTimeDelta);
 	
-
 	//Chase == true거나  Stun==ture면 안받음
-	// 둘 다 false일때만 받음 
-
 	if (m_bChase == false && m_bStun == false)   //선입력을 받아야 하는가?
 	{
 		if (InputCommand())
@@ -331,7 +386,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		}
 
 	}
-	else   //선입력.  커맨드 체크는 안하고 입력만 받음
+	else   //입력 불가 상태여도 선입력받음.  커맨드 체크는 안하고 입력만 받음
 	{
 		InputCommand();
 	}
@@ -363,13 +418,15 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 	
-
+	//중력 처리.  
 	Gravity(fTimeDelta);
+
+	//일부 공격 캔슬
 	AttckCancleJump();
 	
 
-
-	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
+	/*
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==m_iForwardDashAnimationIndex)
 	{
 		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
 		{
@@ -384,7 +441,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				Set_fJumpPower(3.f); //중력Ver2 기준
 
 
-				Set_Animation(ANIME_JUMP_UP);
+				Set_Animation(m_iJumpAnimationIndex);
 
 
 				if (m_pGameInstance->Key_Pressing(DIK_A))
@@ -402,9 +459,9 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 			else if (m_pGameInstance->Key_Pressing(DIK_S))
 			{
-				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
+				if (m_pModelCom->m_iCurrentAnimationIndex != m_iForwardDashAnimationIndex)
 				{
-					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
+					m_pModelCom->SetUp_Animation(m_iCrouchAnimationIndex, true);
 				}
 			}
 
@@ -423,35 +480,35 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 				if (MoveKey == -1)
 				{						
-					m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+					m_pModelCom->SetUp_Animation(m_iBackWalkAnimationIndex, false);
 
-					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.first = m_iIdleAnimationIndex;
 
 					m_iNextAnimation.second = 100.f;
 
 				}
 				else if (MoveKey == 1)
 				{
-					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
+					if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 					{
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH, true);
+						m_pModelCom->SetUp_Animation(m_iForwardDashAnimationIndex, true);
 					}
 					else
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
+						m_pModelCom->SetUp_Animation(m_iForwardWalkAnimationIndex, false);
 
-					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.first = m_iIdleAnimationIndex;
 					m_iNextAnimation.second = 100.f;
 				}
 				else
 				{
-					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
+					if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 					{
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH_END, false);
+						m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
 					}
 					else
-						m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+						m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
-					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.first = m_iIdleAnimationIndex;
 					m_iNextAnimation.second = 100.f;
 				}
 			}
@@ -460,7 +517,9 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			
 		}
 	}
+	*/
 
+	Move(fTimeDelta);
 
 	if (m_pGameInstance->Key_Down(DIK_8))
 	{

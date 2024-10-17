@@ -33,6 +33,7 @@ public:
 
 	//
 	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex);
+	_uint GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag);
 
 
 private:

@@ -141,6 +141,21 @@ CGameObject* CObject_Manager::Get_Object(_uint iLevelIndex, const wstring& strLa
 
 }
 
+_uint CObject_Manager::GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (m_pLayers[iLevelIndex].size() == 0)
+		return 0;
+
+	auto iterator = m_pLayers[iLevelIndex].find(strLayerTag);
+
+	if (iterator == m_pLayers[iLevelIndex].end())
+		return 0;
+
+
+	//return m_pLayers[iLevelIndex].find(strLayerTag)->second->GetSize();
+	return iterator->second->GetSize();
+}
+
 CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
 {
 	auto	iter = m_Prototypes.find(strPrototypeTag);
