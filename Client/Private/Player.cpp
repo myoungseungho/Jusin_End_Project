@@ -114,87 +114,106 @@ void CPlayer::Update(_float fTimeDelta)
 	//previousUpKeyState = isUpKeyPressed;
 	//previousDownKeyState = isDownKeyPressed;
 
-	if (m_pMonster == nullptr)
+	/*if (m_pMonster == nullptr)
 	{
 		CMonster* mainMonster = static_cast<CMonster*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Monster")));
 		m_pMonster = mainMonster;
 		return;
-	}
+	}*/
 
-	//플레이어는 자기 자신과 몬스터와의 거리를 알아야 한다.
-	CTransform* monster_Transform = static_cast<CTransform*>(m_pMonster->Get_Component(TEXT("Com_Transform")));
-	_vector monsterState = monster_Transform->Get_State(CTransform::STATE_POSITION);
-	_vector playerState = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-	_float distance = ComputeDistance(playerState, monsterState);
+	////플레이어는 자기 자신과 몬스터와의 거리를 알아야 한다.
+	//CTransform* monster_Transform = static_cast<CTransform*>(m_pMonster->Get_Component(TEXT("Com_Transform")));
+	//_vector monsterState = monster_Transform->Get_State(CTransform::STATE_POSITION);
+	//_vector playerState = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	//_float distance = ComputeDistance(playerState, monsterState);
 
-	_float moveSpeed = 1.f;
+	//_float moveSpeed = 1.f;
 
-	if (distance >= 80)
+	//if (distance >= 80)
+	//{
+	//	_float monsterX = XMVectorGetX(monsterState);
+	//	_float playerX = XMVectorGetX(playerState);
+
+	//	//플레이어가 몬스터보다 왼쪽이면 더 왼쪽 못감
+	//	if (playerX < monsterX)
+	//	{
+	//		if (m_pGameInstance->Key_Pressing(DIK_Y))
+	//		{
+	//			m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+	//		}
+
+	//		if (m_pGameInstance->Key_Pressing(DIK_H))
+	//		{
+	//			m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
+	//		}
+
+	//		if (m_pGameInstance->Key_Pressing(DIK_J))
+	//		{
+	//			m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
+	//		}
+	//	}
+	//	else if (playerX > monsterX)
+	//	{
+	//		if (m_pGameInstance->Key_Pressing(DIK_Y))
+	//		{
+	//			m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+	//		}
+
+	//		if (m_pGameInstance->Key_Pressing(DIK_H))
+	//		{
+	//			m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
+	//		}
+
+	//		if (m_pGameInstance->Key_Pressing(DIK_G))
+	//		{
+	//			m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	if (m_pGameInstance->Key_Pressing(DIK_Y))
+	//	{
+	//		m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+	//	}
+
+	//	if (m_pGameInstance->Key_Pressing(DIK_H))
+	//	{
+	//		m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
+	//	}
+
+	//	if (m_pGameInstance->Key_Pressing(DIK_G))
+	//	{
+	//		m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+	//	}
+
+	//	if (m_pGameInstance->Key_Pressing(DIK_J))
+	//	{
+	//		m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
+	//	}
+	//}
+
+
+	if (m_pGameInstance->Key_Down(DIK_1))
 	{
-		_float monsterX = XMVectorGetX(monsterState);
-		_float playerX = XMVectorGetX(playerState);
-
-		//플레이어가 몬스터보다 왼쪽이면 더 왼쪽 못감
-		if (playerX < monsterX)
-		{
-			if (m_pGameInstance->Key_Pressing(DIK_Y))
-			{
-				m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
-			}
-
-			if (m_pGameInstance->Key_Pressing(DIK_H))
-			{
-				m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
-			}
-
-			if (m_pGameInstance->Key_Pressing(DIK_J))
-			{
-				m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
-			}
-		}
-		else if (playerX > monsterX)
-		{
-			if (m_pGameInstance->Key_Pressing(DIK_Y))
-			{
-				m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
-			}
-
-			if (m_pGameInstance->Key_Pressing(DIK_H))
-			{
-				m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
-			}
-
-			if (m_pGameInstance->Key_Pressing(DIK_G))
-			{
-				m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
-			}
-		}
+		m_pModelCom->SetUp_Animation(1, true, 0.1f);
 	}
-	else
+	if (m_pGameInstance->Key_Down(DIK_2))
 	{
-		if (m_pGameInstance->Key_Pressing(DIK_Y))
-		{
-			m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
-		}
-
-		if (m_pGameInstance->Key_Pressing(DIK_H))
-		{
-			m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
-		}
-
-		if (m_pGameInstance->Key_Pressing(DIK_G))
-		{
-			m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
-		}
-
-		if (m_pGameInstance->Key_Pressing(DIK_J))
-		{
-			m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
-		}
+		m_pModelCom->SetUp_Animation(2, true, 0.1f);
 	}
-
-
-
+	if (m_pGameInstance->Key_Down(DIK_3))
+	{
+		m_pModelCom->SetUp_Animation(4, true, 0.1f);
+	}
+	if (m_pGameInstance->Key_Down(DIK_4))
+	{
+		m_pModelCom->SetUp_Animation(3, true, 0.1f);
+	}
+	if (m_pGameInstance->Key_Down(DIK_5))
+	{
+		m_pModelCom->SetUp_Animation(0, true, 0.1f);
+	}
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)
