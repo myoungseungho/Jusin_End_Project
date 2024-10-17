@@ -54,6 +54,8 @@ public:
 	void Play();
 	void Stop();
 	void Pause();
+	void Button_Stop();
+	void StartCameraShake(_float fDuration, _float fMagnitude);
 
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);

@@ -575,7 +575,7 @@ void CIMGUI_Camera_Tab::IMGUI_Stop_Button()
 	ImVec2 button_size = ImVec2(20, 20);
 	ImGui::SameLine();
 	if (ImGui::InvisibleButton("reset_button", button_size))
-		m_pMainCamera->Stop();
+		m_pMainCamera->Button_Stop();
 
 	ImVec2 p = ImGui::GetItemRectMin();
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();

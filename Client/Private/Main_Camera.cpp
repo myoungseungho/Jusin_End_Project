@@ -144,6 +144,16 @@ void CMain_Camera::Pause()
 	m_vecVirtualCamera[m_currentVirtualMode]->Pause();
 }
 
+void CMain_Camera::Button_Stop()
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->Button_Stop();
+}
+
+void CMain_Camera::StartCameraShake(_float fDuration, _float fMagnitude)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->StartCameraShake(fDuration, fMagnitude);
+}
+
 void CMain_Camera::Move_Point(_int index)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Move_Point(index);

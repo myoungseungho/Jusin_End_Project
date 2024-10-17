@@ -31,7 +31,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pModelCom->SetUp_Animation(0, false, 0.1f);
+	m_pModelCom->SetUp_Animation(1, false, 0.1f);
 
 	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	mainCamera->SetPlayer(CMain_Camera::PLAYER_1P, this);
@@ -214,6 +214,12 @@ void CPlayer::Update(_float fTimeDelta)
 	{
 		m_pModelCom->SetUp_Animation(0, true, 0.1f);
 	}
+
+	//if (m_pGameInstance->Key_Down(DIK_SPACE))
+	//{
+	//	CMain_Camera* camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	//	camera->StartCameraShake(1.f, 0.5f);
+	//}
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)

@@ -53,6 +53,7 @@ public:
 	void Start_Play();
 	void Pause();
 	void Stop();
+	void Button_Stop();
 
 private:
 	void Free_Camera(_float fTimeDelta);

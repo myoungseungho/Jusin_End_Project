@@ -112,8 +112,16 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	/* 모델을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));	
 	
-	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+	// Identity 매트릭스를 초기화
+	_matrix PreTransformMatrix = XMMatrixIdentity();
+
+	// 크기를 3배씩 해주는 스케일 매트릭스 생성
+	XMMATRIX scaleMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+
+	// Y축을 기준으로 180도 회전하는 회전 매트릭스 생성
+	XMMATRIX rotationMatrix = XMMatrixRotationX(XMConvertToRadians(-90.f));
+
+	PreTransformMatrix = scaleMatrix * rotationMatrix;
 
 	//손오공
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
