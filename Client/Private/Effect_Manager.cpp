@@ -105,7 +105,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.vPosition = effectData.position;
 			EffectDesc.vScaled = effectData.scale;
 			EffectDesc.vRotation = effectData.rotation;
-			EffectDesc.iUnique_Index = effectData.uniqueIndex;
+			EffectDesc.iUnique_Index = m_TestEffect_Count++;
 			EffectDesc.iRenderIndex = effectData.renderIndex;
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
@@ -124,6 +124,8 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
+
+				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pSingleEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
 
 				// 이펙트에 기본 설정값 적용
 				pSingleEffect->m_bIsNotPlaying = effectData.isNotPlaying;
@@ -158,6 +160,8 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
+				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pMultiEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+
 				// 이펙트에 기본 설정값 적용
 				pMultiEffect->m_bIsNotPlaying = effectData.isNotPlaying;
 				pMultiEffect->m_bIsLoop = effectData.isLoop;
@@ -190,6 +194,8 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
+
+				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pMoveTexEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
 
 				// 이펙트에 기본 설정값 적용
 				pMoveTexEffect->m_bIsNotPlaying = effectData.isNotPlaying;
