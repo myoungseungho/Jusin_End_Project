@@ -1,8 +1,8 @@
 [Layer]
 LayerName: layer1
-Duration: 1
-TickPerSecond: 0.1
-KeyFramesCount: 59
+Duration: 2
+TickPerSecond: 0.32
+KeyFramesCount: 119
 NumEffec: 2
 
 [Effect]
@@ -14,27 +14,27 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.1 0 0
+Position: -4 0 0
 Scale: 1 1 1
-Rotation: 1 0 0
+Rotation: 0 0 0
 IsNotPlaying: false
 IsLoop: true
 NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -0.1 0 0
+Position: -4 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 0
+Duration: 1
 
 [KeyFrame]
-KeyFrameNumber: 1
-Position: -0.1 0 0
+KeyFrameNumber: 51
+Position: 5 0 0
 Scale: 1 1 1
-Rotation: 1 0 0
-CurTime: 0.0166667
+Rotation: 0 0 0
+CurTime: 0.85
 Duration: 1
 
 [Effect]
@@ -46,27 +46,27 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 1
-Position: 0.2 0 0
+Position: -2 0 0
 Scale: 1 1 1
-Rotation: 2 0 0
+Rotation: 0 0 0
 IsNotPlaying: false
-IsLoop: false
+IsLoop: true
 NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 0 0
+Position: -2 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 0
+Duration: 1
 
 [KeyFrame]
-KeyFrameNumber: 2
-Position: 0.2 0 0
+KeyFrameNumber: 51
+Position: 4 0 0
 Scale: 1 1 1
-Rotation: 2 0 0
-CurTime: 0.0333333
+Rotation: 0 0 0
+CurTime: 0.85
 Duration: 1
 
 [Layer]
@@ -155,7 +155,7 @@ DiffuseTextureName: Texture_Effect_Default_Diffuse
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 1
+UniqueIndex: 4
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 5 0 0
