@@ -72,6 +72,9 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 			Play(fTimeDelta);
 		break;
 	}
+
+	if (m_bIsShaking)
+		ApplyCameraShake(fTimeDelta);
 }
 
 void CVirtual_Camera::Update(_float fTimeDelta)
@@ -357,10 +360,6 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 		}
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_U))
-	{
-		StartCameraShake(1.f, 1.f);
-	}
 }
 
 void CVirtual_Camera::Default_Camera(_float fTimeDelta)
