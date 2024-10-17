@@ -258,6 +258,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iHp = 100;
 	m_eCharacterID = GOGU;
 
+
 	return S_OK;
 }
 
@@ -274,7 +275,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_F3))
 	{
-		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+ 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 	}
 
 

@@ -329,7 +329,7 @@ protected:
 	Character_INFO_DESC				 m_tCharacterDesc = {};
 	PLAYER_ID					m_eCharacterID = {};
 
-	PLAYER_SLOT				m_ePlayerSlot = {};
+	PLAYER_SLOT				m_ePlayerSlot = { SLOT_END };
 
 	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };

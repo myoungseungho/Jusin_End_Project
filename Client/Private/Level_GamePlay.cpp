@@ -63,8 +63,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	// m_pUI_Manager->UsingSelectCharacher(pSubPlayer, CPawn::LPLAYER2);
 	// m_pUI_Manager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
 
-	if (FAILED(Ready_UIObjects()))
-		return E_FAIL;
+	
 
 
 	//몬스터 생성
@@ -91,6 +90,9 @@ HRESULT CLevel_GamePlay::Initialize()
 
 
 	}
+
+	if (FAILED(Ready_UIObjects()))
+		return E_FAIL;
 	return S_OK;
 }
 
@@ -163,20 +165,14 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpPanel"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
 
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpEffect"), TEXT("Layer_UI_HpGauge"),&tHpDesc)))
+			return E_FAIL;
+
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		tHpDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
-
-		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpEffect"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
-		//	return E_FAIL;
-
 	}
 	//캐릭터 아이콘
 
@@ -267,14 +263,23 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"));
 
 	CUIObject::UI_DESC KeyInputDesc = {};
-	
+
 	for (int i = 0; i < 6; i++)
 	{
 		KeyInputDesc.iNumUI = i;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"),&KeyInputDesc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
 	}
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_TimerPanel"), TEXT("Layer_UI_Timer"));
+
+
+	CUIObject::UI_DESC FontNameDesc = {};
+	for (int i = 0; i < 2; ++i)	
+	{
+		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_FontName"), TEXT("Layer_UI_FontName"), &KeyInputDesc);
+		
+	}
 
 	//게임 시작
 	//CUIObject::UI_DESC StartDesc = {};
@@ -297,19 +302,13 @@ HRESULT CLevel_GamePlay::Ready_Character()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"),&SlotDesc)))
 		return E_FAIL;
 
-
-	CCharacter* pGoku = dynamic_cast<CCharacter*>(m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"),0));
-	m_pUI_Manager->UsingSelectCharacher(pGoku, CCharacter::LPLAYER1);
-
 	SlotDesc.ePlayerSlot = CCharacter::LPLAYER2;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;
 
-	CCharacter* p21 = dynamic_cast<CCharacter*>(m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"),1));
-	m_pUI_Manager->UsingSelectCharacher(p21, CCharacter::LPLAYER2);
 
-
+	m_pUI_Manager->InitUIObject();
 
 
 

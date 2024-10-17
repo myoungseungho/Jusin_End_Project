@@ -259,6 +259,9 @@
     <Filter Include="02.GameObjects\BackGround\Loading\Font">
       <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\FontName">
+      <UniqueIdentifier>{c620642a-0cdc-42e8-bdee-14d918ea5b1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -516,6 +519,9 @@
     <ClInclude Include="..\public\UI_Loading_Font.h">
       <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_FontName.h">
+      <Filter>02.GameObjects\UI\FontName</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -754,6 +760,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Loading_Font.cpp">
       <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_FontName.cpp">
+      <Filter>02.GameObjects\UI\FontName</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

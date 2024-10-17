@@ -44,7 +44,7 @@ HRESULT CUI_HpPanel::Initialize(void* pArg)
 
 void CUI_HpPanel::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CUI_HpPanel::Update(_float fTimeDelta)
@@ -54,6 +54,7 @@ void CUI_HpPanel::Update(_float fTimeDelta)
 
 void CUI_HpPanel::Late_Update(_float fTimeDelta)
 {
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 

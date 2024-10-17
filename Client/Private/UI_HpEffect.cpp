@@ -23,7 +23,8 @@ HRESULT CUI_HpEffect::Initialize_Prototype()
 
 HRESULT CUI_HpEffect::Initialize(void* pArg)
 {
-	m_fPosX = 437.f;
+	m_fPosX = 330.f;
+	m_fSizeX = 464.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -31,7 +32,7 @@ HRESULT CUI_HpEffect::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(40.f, 40.f, m_fPosX, 146.f, 0.f);
+	__super::Set_UI_Setting(m_fSizeX * 1.05f , 116.f * 1.05f, m_fPosX, 87.f, 0.f);
 
 	return S_OK;
 }
@@ -39,13 +40,27 @@ HRESULT CUI_HpEffect::Initialize(void* pArg)
 void CUI_HpEffect::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+	
+	if (m_pMainPawn != nullptr && m_pMainPawn->Get_PawnDesc().iHp / 100.f <= 0.25f)
+	{
+		if (m_fAlphaTimer <= 0.f)
+		{
+			m_bSign = TRUE;
+		}
+		else if (m_fAlphaTimer >= 1.f)
+		{
+			m_bSign = FALSE;
+		}
+
+		m_bSign ? m_fAlphaTimer += fTimeDelta : m_fAlphaTimer -= fTimeDelta;
+	}
+	
 }
 
 void CUI_HpEffect::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	DebugTesting(16.f, 1.f);
 }
 
 void CUI_HpEffect::Late_Update(_float fTimeDelta)
@@ -63,7 +78,16 @@ HRESULT CUI_HpEffect::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	_vector vColor = { 1.f , 0.f , 0.f , 1.f };
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlphaTimer, sizeof(_float))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pShaderCom->Begin(13)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

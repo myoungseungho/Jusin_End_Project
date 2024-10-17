@@ -43,6 +43,7 @@ void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
 
 	if(m_pMainPawn != nullptr)
 		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
+		//m_pMainPawn->Get_PawnDesc().ePlayerID;
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)

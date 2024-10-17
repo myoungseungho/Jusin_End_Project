@@ -172,6 +172,7 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
+    <ClInclude Include="..\public\UI_FontName.h" />
     <ClInclude Include="..\public\UI_HpEffect.h" />
     <ClInclude Include="..\public\UI_Input.h" />
     <ClInclude Include="..\public\UI_InputDir.h">
@@ -274,6 +275,7 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
+    <ClCompile Include="..\private\UI_FontName.cpp" />
     <ClCompile Include="..\private\UI_HpEffect.cpp" />
     <ClCompile Include="..\private\UI_Input.cpp" />
     <ClCompile Include="..\private\UI_InputDir.cpp">

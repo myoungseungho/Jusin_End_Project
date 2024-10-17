@@ -55,6 +55,7 @@
 #include "UI_Input_Action.h"
 #include "UI_InputDirIcon.h"
 #include "UI_Input_ActionIcon.h"
+#include "UI_FontName.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -463,15 +464,24 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/KeyInputButton%d.png"),6))))
 		return E_FAIL;
 
-	///* Prototype_Component_Texture_UI_ActionInputPanel */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInput"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/UI_DirInput%d.png"), 8))))
-	//	return E_FAIL;
-
 	/* Prototype_Component_Texture_UI_DirInputIcon */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputIcon"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/UI_DirInput%d.png"), 9))))
 		return E_FAIL;
+
+
+	/* Prototype_Component_Texture_UI_InputPanel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/TON_Icon_none.png")))))
+		return E_FAIL;
+
+	//Font
+
+	/* Prototype_Component_Texture_UI_FontName */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontName"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Chara_Name%d.png"), 4))))
+		return E_FAIL;
+
 
 
 	//게임 오브젝트
@@ -648,6 +658,10 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_Input_ActionIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* Prototype_GameObject_UI_FontName */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FontName"),
+		CUI_FontName::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 	
 	//UI_StartFont
 

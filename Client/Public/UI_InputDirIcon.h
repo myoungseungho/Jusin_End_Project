@@ -2,6 +2,13 @@
 
 #include "UI_Input.h"
 
+BEGIN(Engine)
+
+class CTexture;
+
+END
+
+
 BEGIN(Client)
 
 class CUI_InputDirIcon final :public CUI_Input
@@ -27,6 +34,8 @@ private:
 private:
 	_uint m_iNumCommandList = { 0 };
 	_uint m_iTextureIndex = { 0 };
+
+	CTexture* m_pBGTexture = { nullptr };
 	
 
 public:

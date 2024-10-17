@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "UIObject.h"
+#include "RenderInstance.h"
 
 
 CUIObject::CUIObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -36,18 +37,21 @@ HRESULT CUIObject::Initialize(void* pArg)
 
 	//m_eLRPos = pDesc->eLRPos;
 
+	// 메인 캐릭슬롯은 0 , 2(짝수) / 서브 캐릭슬롯은 1. 3 (홀수)
+	//메인 서브 캐릭터 정보를 구분하기 위해서 넣는 정보
+
 
 	if (pDesc != nullptr)
 	{
 		m_eLRPos = pDesc->eLRPos;
-
+	
 		switch (m_eLRPos)
 		{
 		case LEFT:
 			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			break;
-
+	
 		case RIGHT:
 			m_fPosX = g_iWinSizeX - m_fPosX;
 			m_fSizeX *= -1;
@@ -61,32 +65,41 @@ HRESULT CUIObject::Initialize(void* pArg)
 
 void CUIObject::Priority_Update(_float fTimeDelta)
 {
+	__super::Priority_Update(fTimeDelta);
+
 	if (m_pMainPawn != nullptr)
 		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 
-
-	if (m_eLRPos != POS_END)
+	if (pDesc != nullptr)
 	{
-
-
+		m_eLRPos = pDesc->eLRPos;
+	
 		switch (m_eLRPos)
 		{
 		case LEFT:
 			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			break;
-
+	
 		case RIGHT:
+			m_fPosX = g_iWinSizeX - m_fPosX;
+			m_fSizeX *= -1;
 			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
 			break;
 		}
 	}
+
+	if (m_pGameInstance->Key_Down(DIK_Z))
+		m_bIsActive = true;
+	if (m_pGameInstance->Key_Down(DIK_X))
+		m_bIsActive = FALSE;
 }
 
 void CUIObject::Update(_float fTimeDelta)
 {
-	
+
+
 }
 
 void CUIObject::Late_Update(_float fTimeDelta)

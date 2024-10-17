@@ -43,7 +43,7 @@ public:
 
 public:
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
-
+	void InitUIObject();
 
 public:
 	_bool m_bStun = { FALSE };
@@ -71,6 +71,9 @@ public:
 	ButtonInput m_eBtnInput = {};
 
 	_uint m_iNumCommandList = { 0 };
+
+	//Rneder
+	_bool m_isRender = { TRUE };
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

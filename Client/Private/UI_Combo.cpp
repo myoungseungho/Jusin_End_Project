@@ -61,7 +61,7 @@ void CUI_Combo::Update(_float fTimeDelta)
 
 void CUI_Combo::Late_Update(_float fTimeDelta)
 {
-	__super::Late_Update(fTimeDelta);
+	
 }
 
 HRESULT CUI_Combo::Render(_float fTimeDelta)

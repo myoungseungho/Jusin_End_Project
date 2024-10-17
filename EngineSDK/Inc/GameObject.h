@@ -67,6 +67,7 @@ protected:
 	_bool m_bDead = { FALSE };
 
 	//
+public:
 	void SetActive(_bool active) { m_bIsActive = active; }
 	_bool IsActive() const { return m_bIsActive; }
 

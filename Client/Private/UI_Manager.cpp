@@ -122,6 +122,21 @@ void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX
 	}
 }
 
+void CUI_Manager::InitUIObject()
+{
+	list<CGameObject*>CharacterList = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+
+	for (auto& iter : CharacterList)
+	{
+		CCharacter::PLAYER_SLOT eSlot = dynamic_cast<CCharacter*>(iter)->Get_PawnDesc().ePlayer_Slot;
+
+		if (eSlot == CCharacter::SLOT_END)
+			continue;
+
+		m_pPawnArray[eSlot] = dynamic_cast<CCharacter*>(iter);
+	}	
+}
+
 void CUI_Manager::Free()
 {
 	CUI_Manager::Get_Instance()->Destroy_Instance();

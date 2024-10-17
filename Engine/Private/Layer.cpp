@@ -54,6 +54,11 @@ void CLayer::Late_Update(_float fTimeDelta)
 		}
 		else
 		{
+			if ((*it)->IsActive() == FALSE)
+			{
+				++it;
+				continue;
+			}
 			(*it)->Late_Update(fTimeDelta);
 			++it; 
 		}

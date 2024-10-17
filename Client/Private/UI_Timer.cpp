@@ -36,7 +36,8 @@ HRESULT CUI_Timer::Initialize(void* pArg)
 
 void CUI_Timer::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
+		
 }
 
 void CUI_Timer::Update(_float fTimeDelta)

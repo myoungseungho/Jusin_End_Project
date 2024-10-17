@@ -75,7 +75,7 @@ HRESULT CUI_InputDirIcon::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(12)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -96,6 +96,7 @@ HRESULT CUI_InputDirIcon::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputIcon"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+		
 }
 
 CUI_InputDirIcon* CUI_InputDirIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -126,5 +127,6 @@ CGameObject* CUI_InputDirIcon::Clone(void* pArg)
 
 void CUI_InputDirIcon::Free()
 {
+
 	__super::Free();
 }

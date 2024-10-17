@@ -40,7 +40,7 @@ HRESULT CUI_SkillGauge::Initialize(void* pArg)
 
 void CUI_SkillGauge::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CUI_SkillGauge::Update(_float fTimeDelta)

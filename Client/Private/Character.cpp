@@ -176,7 +176,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 	Character_DESC* pSlotDesc = static_cast<Character_DESC*>(pArg);
 	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
-
+	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	
 	

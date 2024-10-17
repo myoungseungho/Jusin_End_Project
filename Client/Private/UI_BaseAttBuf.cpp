@@ -33,7 +33,7 @@ HRESULT CUI_BaseAttBuf::Initialize(void* pArg)
 
 void CUI_BaseAttBuf::Priority_Update(_float fTimeDelta)
 {
-	
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CUI_BaseAttBuf::Update(_float fTimeDelta)
