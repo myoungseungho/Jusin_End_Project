@@ -52,9 +52,15 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
         ptMouse.y >= tDesc.ShaderImGuiPos.y &&
         ptMouse.y <= tDesc.ShaderImGuiPos.y + tDesc.ShaderImGuiSize.y);
 
-    if (isOverShaderImGui == true)
+    _bool isOverMainImGui = (ptMouse.x >= tDesc.MainImGuiPos.x &&
+        ptMouse.x <= tDesc.MainImGuiPos.x + tDesc.MainImGuiSize.x &&
+        ptMouse.y >= tDesc.MainImGuiPos.y &&
+        ptMouse.y <= tDesc.MainImGuiPos.y + tDesc.MainImGuiSize.y);
+
+    if (isOverShaderImGui == true || isOverMainImGui == true)
     {
         __super::Priority_Update(fTimeDelta);
+
         return;
     }
 
