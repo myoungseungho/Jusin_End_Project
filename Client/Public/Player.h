@@ -37,7 +37,7 @@ private:
 	CCollider*				m_pColliderCom = { nullptr };
 
 	_float					m_fRandom = {};
-
+	class CGameObject* m_pMonster = { nullptr };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

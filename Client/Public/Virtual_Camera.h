@@ -58,9 +58,8 @@ private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
 	void Play(_float fTimeDelta);
-	void Adjust_FOV(_float distanceX);
 	_float ComputeDistanceX(_gvector pos1, _gvector pos2);
-	void Set_Camera_Position(_float averageX);
+	void Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2);
 	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
 public:

@@ -9,6 +9,8 @@
 #include "Collider_Manager.h"
 #include "File_Manager.h"
 #include "ThreadPool.h"
+#include "Frustum.h"
+
 IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()
@@ -58,6 +60,10 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 	if (nullptr == m_pFile_Manager)
 		return E_FAIL;
 
+	m_pFrustum = CFrustum::Create();
+	if (nullptr == m_pFrustum)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -71,6 +77,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
+
+	m_pFrustum->Update();
 
 	m_pCollider_Manager->Update(fTimeDelta);
 
@@ -356,6 +364,11 @@ _uint CGameInstance::Get_ThreadNumber()
 	return m_pThreadPool->Get_ThreadNumber();
 }
 
+void CGameInstance::Get_ParallelVectorsInPlane(_float3& tangent1, _float3& tangent2, _float fov)
+{
+	m_pFrustum->Get_ParallelVectorsInPlane(tangent1, tangent2, fov);
+}
+
 HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, CCollider* pRenderObject)
 {
 	return m_pCollider_Manager->Add_ColliderObject(eRenderGroup, pRenderObject);
@@ -400,6 +413,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pInput_Device);
 	Safe_Release(m_pCollider_Manager);
+	Safe_Release(m_pFrustum);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }

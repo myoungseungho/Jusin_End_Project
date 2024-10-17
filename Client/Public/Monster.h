@@ -32,12 +32,13 @@ public:
 	virtual void OnCollisionExit(class CCollider* other) override;
 
 private:
-	CShader*				m_pShaderCom = { nullptr };	
-	CModel*					m_pModelCom = { nullptr };
-	CCollider*				m_pColliderCom = { nullptr };
+	CShader* m_pShaderCom = { nullptr };
+	CModel* m_pModelCom = { nullptr };
+	CCollider* m_pColliderCom = { nullptr };
 
 	_float					m_fRandom = {};
 
+	class CGameObject* m_pPlayer = { nullptr };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

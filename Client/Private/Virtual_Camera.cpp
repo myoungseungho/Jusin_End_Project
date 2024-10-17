@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "..\Public\Virtual_Camera.h"
-
 #include "GameInstance.h"
 
 CVirtual_Camera::CVirtual_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -41,7 +40,7 @@ HRESULT CVirtual_Camera::Initialize(void* pArg)
 	m_fMoveSpeed = Desc.fSpeedPerSec;
 
 	//시야각
-	Desc.fFovy = XMConvertToRadians(60.0f);
+	Desc.fFovy = XMConvertToRadians(40.0f);
 	//Near
 	Desc.fNear = 0.1f;
 	//Far
@@ -204,52 +203,42 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
 }
 
-void CVirtual_Camera::Adjust_FOV(_float distanceX)
+void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2)
 {
-	// 기본 시야각과 최대 시야각 설정 (라디안 단위)
-	const _float defaultFOV = XMConvertToRadians(60.f); // 60도
-	const _float maxFOV = XMConvertToRadians(90.f);     // 90도
+	const float fixedY = 20.f;
+	const float fixedZ = -50.f;
 
-	// 거리 임계값 설정
-	const _float minDistance = 20.f; // FOV 조절 시작 거리
-	const _float maxDistance = 40.f; // FOV 최대 조절 거리
+	const float thresholdDistance = 40.f;
+	const float maxDistance = 60.f;
 
-	_float dynamicFOV = defaultFOV;
+	float offsetX = 0.f;
+	_float3 targetPosition = _float3(averageX + offsetX, fixedY, fixedZ);
 
-	if (distanceX > minDistance)
+	//DistanceX가 20을 넘으면
+	if (distanceX > thresholdDistance)
 	{
-		// 거리에 따라 FOV 보간
-		_float t = (distanceX - minDistance) / (maxDistance - minDistance);
-		t = max(0.f, min(1.f, t)); // t를 [0, 1] 범위로 클램프
+		// 비율 계산 (distanceX가 thresholdDistance 이상일 때부터 maxDistance까지)
+		// t의 비율을 구한뒤
+		float t = (distanceX - thresholdDistance) / (maxDistance - thresholdDistance);
+		t = max(0.f, min(t, 1.f)); // [0, 1] 범위로 클램프
 
-		dynamicFOV = defaultFOV + t * (maxFOV - defaultFOV);
+		const float maxYOffset = 7.f; // 최대 Y 이동 거리
+		const float maxZOffset = 50.f; // 최대 Z 이동 거리
+
+		// 평행 벡터 가져오기 (x=0을 만족함)
+		_float3 tangent1, tangent2;
+		m_pGameInstance->Get_ParallelVectorsInPlane(tangent1, tangent2, m_fFovy);
+
+		// 두 평행 벡터을 이용하여 Y와 Z 조절
+		// 예를 들어, tangent1을 이용하여 Y를, tangent2를 이용하여 Z를 조절할 수 있습니다.
+		// 여기서는 단순히 두 벡터을 가중합하여 Y와 Z를 조절
+		targetPosition.y += tangent1.y * maxYOffset * t;
+		targetPosition.z += tangent1.z * maxZOffset * t;
+		// 또는 다른 방식으로 조절할 수 있습니다.
 	}
 
-	// FOV 스무딩 (부드러운 전환을 위해 선형 보간)
-	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
-	m_fFovy = m_previousFOV + (dynamicFOV - m_previousFOV) * smoothingFactor;
-	m_previousFOV = m_fFovy;
-}
-
-void CVirtual_Camera::Set_Camera_Position(_float averageX)
-{
-	// 카메라의 고정 Y와 Z 위치
-	const _float fixedY = 17.f;
-	const _float fixedZ = -30.f;
-
-	// 스무딩을 위한 현재 위치
-	_float3 targetPosition = _float3(averageX, fixedY, fixedZ);
-	_float3 smoothedPosition;
-	const _float smoothingFactor = 0.1f; // 0 < smoothingFactor <= 1
-
-	// 선형 보간을 통한 부드러운 위치 전환
-	smoothedPosition.x = m_previousPosition.x + (targetPosition.x - m_previousPosition.x) * smoothingFactor;
-	smoothedPosition.y = m_previousPosition.y + (targetPosition.y - m_previousPosition.y) * smoothingFactor;
-	smoothedPosition.z = m_previousPosition.z + (targetPosition.z - m_previousPosition.z) * smoothingFactor;
-
 	// 카메라 위치 설정
-	m_pTransformCom->Set_State_Position(smoothedPosition);
-	m_previousPosition = smoothedPosition;
+	m_pTransformCom->Set_State_Position(targetPosition);
 }
 
 void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2)
@@ -313,7 +302,7 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 		// Shift 키가 눌렸는지 확인하고, 눌렸다면 이동 속도를 증가
 		if (m_pGameInstance->Key_Pressing(DIK_LSHIFT))
 		{
-			fMoveSpeed *= 10.f;
+			fMoveSpeed *= 50.f;
 		}
 
 		if (m_pGameInstance->Key_Pressing(DIK_A))
@@ -370,23 +359,20 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 	if (m_p1pPlayer == nullptr || m_p2pPlayer == nullptr)
 		return;
 
-	// 플레이어들의 위치를 가져옵니다.
+	//// 플레이어들의 위치를 가져옵니다.
 	_vector pos1 = static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 	_vector pos2 = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 
-	// 두 플레이어 간의 X 거리 계산
+	//// 두 플레이어 간의 X 거리 계산
 	_float distanceX = ComputeDistanceX(pos1, pos2);
 
 	// 평균 X 위치 계산
 	_float averageX = (XMVectorGetX(pos1) + XMVectorGetX(pos2)) * 0.5f;
 
-	// 카메라의 시야각 조절
-	Adjust_FOV(distanceX);
-
 	// 카메라의 위치 설정
-	Set_Camera_Position(averageX);
+	Set_Camera_Position(averageX, distanceX, pos1, pos2);
 
-	// 카메라의 방향 벡터 설정
+	//// 카메라의 방향 벡터 설정
 	Set_Camera_Direction(averageX, pos1, pos2);
 }
 

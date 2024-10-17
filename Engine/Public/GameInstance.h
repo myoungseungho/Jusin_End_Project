@@ -89,6 +89,10 @@ public: /* For.ThreadPool */
 			throw runtime_error("ThreadPool is not initialized.");
 	}
 
+public:/*For. Frustum*/
+	void Get_ParallelVectorsInPlane(_float3& tangent1, _float3& tangent2, _float fov);
+
+
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
 
@@ -109,6 +113,7 @@ private:
 	class CPipeLine* m_pPipeLine = { nullptr };
 	class CThreadPool* m_pThreadPool = { nullptr };
 	class CFile_Manager* m_pFile_Manager = { nullptr };
+	class CFrustum* m_pFrustum = { nullptr };
 
 public:
 	void Release_Engine();

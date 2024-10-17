@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
 #include "Main_Camera.h"
+#include "Player.h"
 
 CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -50,26 +51,150 @@ void CMonster::Update(_float fTimeDelta)
 
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 
+	static _bool m_isJump = false;
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		m_isJump = !m_isJump;
+
+		if (m_isJump)
+		{
+			// 현재 콜라이더의 원래 위치와 크기를 가져오기
+			BoundingBox boundingBox = m_pColliderCom->AABB_GetDesc();
+
+			// 현재 위치와 스케일 값을 업데이트된 값으로 설정
+			boundingBox.Center = _float3(0.f, 0.6f, 0.f);
+			boundingBox.Extents = _float3(1.5f, 0.5f, 1.5f);
+			m_pColliderCom->AABB_SetDesc(boundingBox);
+		}
+		else
+		{
+			// 현재 콜라이더의 원래 위치와 크기를 가져오기
+			BoundingBox boundingBox = m_pColliderCom->AABB_GetDesc();
+
+			// 현재 위치와 스케일 값을 업데이트된 값으로 설정
+			boundingBox.Center = _float3(0.f, 0.f, 0.f);
+			boundingBox.Extents = _float3(1.5f, 1.5f, 1.5f);
+			m_pColliderCom->AABB_SetDesc(boundingBox);
+		}
+	}
+
+	//// 현재 애니메이션 인덱스와 이전 키 상태를 static 변수로 선언
+	//static int currentAnimationIndex = 0; // 현재 애니메이션 인덱스 (0~88)
+	//static bool previousUpKeyState = false;   // 이전 프레임의 위 방향키 상태
+	//static bool previousDownKeyState = false; // 이전 프레임의 아래 방향키 상태
+	//const int MAX_ANIMATION_INDEX = 88; // 최대 애니메이션 인덱스
+
+	//// 위 방향키(VK_UP)와 아래 방향키(VK_DOWN) 상태 가져오기
+	//SHORT upKeyState = GetAsyncKeyState(VK_UP);
+	//SHORT downKeyState = GetAsyncKeyState(VK_DOWN);
+
+	//bool isUpKeyPressed = (upKeyState & 0x8000) != 0;
+	//bool isDownKeyPressed = (downKeyState & 0x8000) != 0;
+
+	//// 위 방향키가 새로 눌렸을 때 인덱스 증가
+	//if (isUpKeyPressed && !previousUpKeyState)
+	//{
+	//	currentAnimationIndex++;
+	//	if (currentAnimationIndex > MAX_ANIMATION_INDEX)
+	//		currentAnimationIndex = 0; // 88에서 증가 시 0으로 순환
+
+	//	m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+	//}
+
+	//// 아래 방향키가 새로 눌렸을 때 인덱스 감소
+	//if (isDownKeyPressed && !previousDownKeyState)
+	//{
+	//	currentAnimationIndex--;
+	//	if (currentAnimationIndex < 0)
+	//		currentAnimationIndex = MAX_ANIMATION_INDEX; // 0에서 감소 시 88로 순환
+
+	//	m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+	//}
+
+	//// 현재 키 상태를 이전 상태로 저장
+	//previousUpKeyState = isUpKeyPressed;
+	//previousDownKeyState = isDownKeyPressed;
+
+	if (m_pPlayer == nullptr)
+	{
+		CPlayer* mainPlayer = static_cast<CPlayer*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player")));
+		m_pPlayer = mainPlayer;
+		return;
+	}
+
+	//플레이어는 자기 자신과 몬스터와의 거리를 알아야 한다.
+	CTransform* player_Transform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+	_vector playerState = player_Transform->Get_State(CTransform::STATE_POSITION);
+	_vector monsterState = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float distance = ComputeDistance(playerState, monsterState);
+
 	_float moveSpeed = 1.f;
-	if (m_pGameInstance->Key_Pressing(DIK_UP))
+
+	if (distance >= 80)
 	{
-		m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+		_float monsterX = XMVectorGetX(monsterState);
+		_float playerX = XMVectorGetX(playerState);
+
+		//플레이어가 몬스터보다 왼쪽이면 더 왼쪽 못감
+		if (playerX < monsterX)
+		{
+			if (m_pGameInstance->Key_Pressing(DIK_UP))
+			{
+				m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+			}
+
+			if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+			{
+				m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
+			}
+
+			if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+			{
+				m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+			}
+		}
+		else if (playerX > monsterX)
+		{
+			if (m_pGameInstance->Key_Pressing(DIK_UP))
+			{
+				m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+			}
+
+			if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+			{
+				m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
+			}
+
+			if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+			{
+				m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
+			}
+		}
+	}
+	else
+	{
+		if (m_pGameInstance->Key_Pressing(DIK_UP))
+		{
+			m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+		{
+			m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+		{
+			m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+		{
+			m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
+		}
 	}
 
-	if (m_pGameInstance->Key_Pressing(DIK_DOWN))
-	{
-		m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
-	}
 
-	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
-	{
-		m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
-	}
-
-	if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
-	{
-		m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
-	}
 }
 
 void CMonster::Late_Update(_float fTimeDelta)
