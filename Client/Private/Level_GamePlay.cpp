@@ -84,9 +84,9 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 
 	CameraDesc.vEye = _float3(0.f, 0.f, -1.f);
 	CameraDesc.vAt = _float3(0.f, 0.f, 1.f);
-	CameraDesc.fFovy = XMConvertToRadians(70.f);
+	CameraDesc.fFovy = XMConvertToRadians(54.f);
 	CameraDesc.fNear = 0.1f;
-	CameraDesc.fFar = 100000.f;
+	CameraDesc.fFar = 1000.f; //1000.f;
 	CameraDesc.fSpeedPerSec = 10.f;
 	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
 	CameraDesc.fSensor = 0.1f;
@@ -100,11 +100,29 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 HRESULT CLevel_GamePlay::Ready_Lights()
 {
 	LIGHT_DESC			LightDesc{};
-	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
-	LightDesc.vDirection = _float4(0.f, 0.f, -1.f, 0.f);
-	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 0.0f);
-	LightDesc.vAmbient = _float4(0.6f, 0.6f, 0.6f, 0.f);
-	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 0.f);
+	//ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	//LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	//LightDesc.vDirection = _float4(-1.f, 0.f, 0.f, 0.f);
+	//LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
+	//LightDesc.vAmbient = _float4(0.6f, 0.6f, 0.6f, 1.f);
+	//LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(30.f, 50.f, 1800.f, 1.f);
+	LightDesc.fRange = 10000.f;
+	LightDesc.vDiffuse = _float4(0.78f,0.95f, 1.f, 1.f);
+	LightDesc.vAmbient = _float4(0.2f, 0.3f, 0.4f, 1.f);
+	LightDesc.vSpecular = _float4(0.1f, 0.1f, 0.1f, 0.1f);
+
+	//LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	//_float4 dir = _float4(0.5f, -0.5f, -0.5f, 0.f);
+	//LightDesc.vDirection = dir;
+	//LightDesc.vDiffuse = _float4(1.f, 1.f, 1.f, 1.f);
+	//LightDesc.vAmbient = _float4(0.6f, 0.6f, 0.6f, 1.f);
+	////LightDesc.vDiffuse = _float4(0.9294f, 0.8f, 0.9372f, 0.3f);
+	////LightDesc.vAmbient = _float4(0.84117647058f, 0.6117647058f, 0.85686f, 1.f);
+	//LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;

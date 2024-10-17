@@ -28,16 +28,19 @@ HRESULT CSpaceMoon::Initialize(void * pArg)
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
-
+	CTransform::TRANSFORM_DESC tDesc{};
+	tDesc.fRotationPerSec = XMConvertToRadians(5.f);
+	m_pTransformCom->SetUp_TransformDesc(&tDesc);
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
-	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, -300.f, 1.f));
+	//m_pTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(45.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-30.f, 10.f, -200.f, 1.f));
 	return S_OK;
 }
 
 void CSpaceMoon::Priority_Update(_float fTimeDelta)
 {
-	//m_fAccTime += fTimeDelta * 5;
+	m_fAccTime += fTimeDelta;
+	//m_pTransformCom->Turn(XMVectorSet(0.5f, 0.5f, 0.f, 0.f),fTimeDelta);
 }
 
 void CSpaceMoon::Update(_float fTimeDelta)
@@ -62,7 +65,7 @@ HRESULT CSpaceMoon::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(4)))
+		if (FAILED(m_pShaderCom->Begin(9)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -101,12 +104,15 @@ HRESULT CSpaceMoon::Bind_ShaderResources()
 
 	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteSize", &m_fSpriteSize, sizeof(_float2))))
 	//	return E_FAIL;
+	
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteCurPos", &m_fSpriteCurPos, sizeof(_float2))))
+		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteCurPos", &m_fSpriteCurPos, sizeof(_float2))))
-	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
+		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
-	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCamPos", &m_pGameInstance->Get_CamPosition_Float4(), sizeof(_float4))))
+		return E_FAIL;
 	
 	return S_OK;
 }

@@ -31,7 +31,7 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -1.5f, -300.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -1.5f, -200.f, 1.f));
 	m_iGameObjectData = 8;
 	return S_OK;
 }
@@ -223,7 +223,7 @@ HRESULT CSpaceSun::Ready_Components()
 		return E_FAIL;
 
 	m_pTransformCom_Rainbow->Set_Scaled(0.5f, 0.5f, 1.f);
-	m_pTransformCom_Rainbow->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 102.f, 300.f, 1.f));
+	m_pTransformCom_Rainbow->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 75.f, 300.f, 1.f));
 	
 	return S_OK;
 }

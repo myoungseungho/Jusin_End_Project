@@ -169,8 +169,8 @@ PS_OUT PS_MAIN_RESULT_SUN(PS_IN In)
 
     //Out.vColor.a = saturate(fAlpha - 0.15f);
     
-    Out.vColor = saturate(vResult + vBlur * 2.5f) /*+ vEffect*/;
-    Out.vColor.a = saturate(Out.vColor.a - 0.6f);
+    Out.vColor = saturate(vResult * 0.3f + vBlur * 1.f) /*+ vEffect*/;
+    Out.vColor.a = saturate(Out.vColor.a - 0.3f);
 
     return Out;
 }

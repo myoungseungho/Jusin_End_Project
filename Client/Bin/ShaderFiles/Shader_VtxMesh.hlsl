@@ -33,7 +33,7 @@ vector			g_vCamPosition;
 
 float2 g_fSpriteSize;
 float2 g_fSpriteCurPos;
-
+float4 g_vCamPos;
 
 struct VS_IN
 {
@@ -239,7 +239,7 @@ g_EarthShadow;
     float Shadowluminance = 0.299f * vMtrlShadow.x + 0.587f * vMtrlShadow.y + 0.114f * vMtrlShadow.z;
     vMtrlShadow.a = saturate(Shadowluminance * 2.0f);
 
-    vMtrlLight.a -= 1 - vMtrlShadow.a;
+    vMtrlLight.a -= saturate(1 - vMtrlShadow.a) * 0.5f;
 
 
     Out.vDiffuse = vMtrlLight * 2;
@@ -262,8 +262,8 @@ PS_OUT PS_MAIN(PS_IN In)
 
     Out.vDiffuse = vMtrlDiffuse;
 
+    //Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-
     return Out;
 }
 
@@ -271,12 +271,34 @@ PS_OUT PS_MAIN_MOON(PS_IN In)
 {
     PS_OUT Out;
 
-
+    In.vTexcoord.x += g_Time* 0.003f;
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    
     if (vMtrlDiffuse.a < 0.1f)
         discard;
 
-    Out.vDiffuse = vMtrlDiffuse;
+    float3 vCamDir = normalize(In.vWorldPos - g_vCamPos);
+
+    float fDotProduct = abs(dot(normalize(In.vNormal), vCamDir));
+    float3 vLineColor = { 0.05f, 0.2f, 0.27f };
+    float fOffSet = 0.3f;
+    float fFilterOffSet = 0.6f;
+    float darkeningFactor = 1.0f;
+
+    if (fDotProduct < fFilterOffSet)
+    {
+        
+        darkeningFactor = 0.5f + 0.5f * (1.0f - fDotProduct / fOffSet);
+        vMtrlDiffuse.rgb = saturate(vMtrlDiffuse.rgb + vLineColor * darkeningFactor);
+    }
+    
+    
+    
+
+    // 여기서 darkeningFactor를 사용하여 색상을 조정하세요.
+    // 예: float4 color = baseColor * darkeningFactor;
+
+    Out.vDiffuse = vMtrlDiffuse ;
     Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
@@ -288,8 +310,8 @@ PS_OUT PS_MAIN_HORIZON(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
-    vMtrlDiffuse.a = saturate(Shadowluminance * 1.5f);
+
+    vMtrlDiffuse.a = vMtrlDiffuse.x;
  
     vMtrlDiffuse.rgb = float3(0.2431f, 0.4823f, 0.8117f);
 
@@ -344,23 +366,10 @@ PS_OUT PS_MAIN_SUN(PS_IN In)
     }
     else // 십자
     {
-        float2 vTex = In.vTexcoord;
-        vTex.y -= 0.1f;
-        
+
         vector vColor = { 0.1921f, 0.6f, 0.8274f, 0.f };
-        vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTex);
-        vMtrlDiffuse.a = saturate(vMtrlDiffuse.b * 2.5f) * g_Time * 1.5f; //saturate(Shadowluminance * 2.f);
-        //if(vMtrlDiffuse.a < g_Time)
-        //    vMtrlDiffuse.a -= g_Time;
-        //else
-        //    vMtrlDiffuse.a += g_Time;
-        //if(vMtrlDiffuse.a > g_Time)
-        //    vMtrlDiffuse.a += g_Time;
-        
-        //float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
-        //vMtrlDiffuse.a = saturate(Shadowluminance * 2.f);
-        
-       // float Shadowluminance = (vMtrlDiffuse.y + vMtrlDiffuse.z) / 2.f;
+        vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+        vMtrlDiffuse.a = saturate(vMtrlDiffuse.b) * g_Time * 1.46f; 
         
         vMtrlDiffuse.rgb = vColor.rgb;
 
@@ -559,7 +568,7 @@ technique11		DefaultTechnique
     pass Moon // 9
     {
         SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_Default, 0);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
