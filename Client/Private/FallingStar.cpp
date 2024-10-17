@@ -95,17 +95,25 @@ void CFallingStar::Priority_Update(_float fTimeDelta)
 		if (m_fReStartTime > 0.1f)
 		{
 			_float fRandomX = static_cast<_float>(rand()) / static_cast<_float>(RAND_MAX);
-			_float fRandomY = static_cast<_float>(rand()) / static_cast<_float>(RAND_MAX);
+			_float fRandomY = static_cast<_float>(rand()) / static_cast<_float>(RAND_MAX);    
 			_float fRandomZ = static_cast<_float>(rand()) / static_cast<_float>(RAND_MAX);
 
 			float randomAngle = XMConvertToRadians(static_cast<float>((rand() % 360) - 180));
 
 			m_pTransformCom->Turn(XMVectorSet(fRandomX, fRandomY, fRandomZ, 0.f), randomAngle);
 
-			_float fRanPosY = static_cast<_float>(rand() % 51);
-			_float fRanPosZ = static_cast<_float>(rand() % 71 + 180);
-			_float fRanPosX = static_cast<_float>(rand() % 101);
-
+			_float fRanPosX, fRanPosY, fRanPosZ;
+			do
+			{
+				fRanPosY = static_cast<_float>(rand() % 200 - 50);
+			}while (fRanPosY > -20 && fRanPosY < 20);
+			
+			fRanPosZ = static_cast<_float>(rand() % 71 + 220);
+			do
+			{
+				fRanPosX = static_cast<_float>(rand() % 201 - 100);
+			} while (fRanPosX > -40 && fRanPosX < 40);
+			  
 			m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(fRanPosX, fRanPosY, fRanPosZ, 1.f));
 
 			m_isStarSwitch = false;
