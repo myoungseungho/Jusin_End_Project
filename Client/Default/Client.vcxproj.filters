@@ -82,6 +82,9 @@
     <Filter Include="02.GameObjects\Map\Space\Moon">
       <UniqueIdentifier>{0b6e2440-ed9e-43ce-b3b2-9fd31271863e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\NewFilter1">
+      <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
