@@ -5,6 +5,10 @@
 #include "Effect.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
+#include <Effect_Single.h>
+#include "Effect_Multi.h"
+#include "Effect_MoveTex.h"
+
 IMPLEMENT_SINGLETON(CEffect_Manager)
 
 CEffect_Manager::CEffect_Manager()
@@ -29,13 +33,14 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Priority_Update(fTimeDelta);
+
+
 }
 
 void CEffect_Manager::Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Update(fTimeDelta);
-
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Update(fTimeDelta);
@@ -44,8 +49,10 @@ void CEffect_Manager::Update(_float fTimeDelta)
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
-		Pair.second->Late_Update(fTimeDelta);
-
+		if (Pair.second->m_bIsRender)
+		{
+			Pair.second->Late_Update(fTimeDelta);
+		}
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Late_Update(fTimeDelta);
@@ -55,9 +62,174 @@ void CEffect_Manager::Render(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
+		
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Render(fTimeDelta);
+}
+
+HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)
+{
+	// pSavedEffect가 nullptr인 경우 실패 반환
+	if (!pSavedEffect) return E_FAIL;
+
+	// 기존에 존재하는 레이어들을 제거
+	for (auto& layerPair : m_FinalEffects)
+	{
+		Safe_Release(layerPair.second);
+	}
+	m_FinalEffects.clear();
+
+	// pSavedEffect에 있는 각 레이어 데이터를 순회
+	for (const auto& layerData : *pSavedEffect)
+	{
+		// 새로운 레이어 생성
+		CEffect_Layer* pLayer = CEffect_Layer::Create();
+		if (!pLayer) continue;  // 레이어 생성에 실패한 경우 건너뜀
+
+		// 레이어에 필요한 설정 값을 할당
+		pLayer->m_fDuration = layerData.duration;
+		pLayer->m_fTickPerSecond = layerData.tickPerSecond;
+		pLayer->m_iNumKeyFrames = layerData.keyFramesCount;
+
+		// 각 이펙트 데이터를 순회하며 레이어에 추가
+		for (const auto& effectData : layerData.effects)
+		{
+			// 이펙트 생성 정보 초기화
+			CEffect::EFFECT_DESC EffectDesc;
+			EffectDesc.ModelName = effectData.modelName;
+			EffectDesc.EffectName = effectData.effectName;
+			EffectDesc.MaskTextureName = effectData.maskTextureName;
+			EffectDesc.DiffuseTextureName = effectData.diffuseTextureName;
+			EffectDesc.EffectType = static_cast<EFFECT_TYPE>(effectData.effectType);
+			EffectDesc.vPosition = effectData.position;
+			EffectDesc.vScaled = effectData.scale;
+			EffectDesc.vRotation = effectData.rotation;
+			EffectDesc.iUnique_Index = m_TestEffect_Count++;
+			EffectDesc.iRenderIndex = effectData.renderIndex;
+			EffectDesc.iPassIndex = effectData.passIndex;
+			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
+
+			CEffect_Single* pSingleEffect = { nullptr };
+			CEffect_Multi* pMultiEffect = { nullptr };
+			CEffect_MoveTex* pMoveTexEffect = { nullptr };
+
+			// 이펙트를 클론하여 레이어에 추가
+			switch (EffectDesc.EffectType)
+			{
+			case EFFECT_SINGLE:
+				pSingleEffect = static_cast<CEffect_Single*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Single"), &EffectDesc));
+
+				if (!pSingleEffect) {
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+
+				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pSingleEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+				// 이펙트에 기본 설정값 적용
+				pSingleEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+				pSingleEffect->m_bIsLoop = effectData.isLoop;
+
+				// 이펙트의 각 키프레임 설정
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+
+					// 키프레임 추가
+					pSingleEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				// 레이어에 이펙트를 추가
+				if (FAILED(pLayer->Add_Effect(pSingleEffect))) {
+					Safe_Release(pSingleEffect);  // 실패 시 이펙트를 해제
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
+			case EFFECT_MULTI:
+				pMultiEffect = static_cast<CEffect_Multi*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Multi"), &EffectDesc));
+
+				if (!pMultiEffect) {
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+
+				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pMultiEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+				// 이펙트에 기본 설정값 적용
+				pMultiEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+				pMultiEffect->m_bIsLoop = effectData.isLoop;
+
+				// 이펙트의 각 키프레임 설정
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+
+					// 키프레임 추가
+					pMultiEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				// 레이어에 이펙트를 추가
+				if (FAILED(pLayer->Add_Effect(pMultiEffect))) {
+					Safe_Release(pMultiEffect);  // 실패 시 이펙트를 해제
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
+			case EFFECT_MOVETEX:
+				pMoveTexEffect = static_cast<CEffect_MoveTex*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_MoveTex"), &EffectDesc));
+
+				if (!pMoveTexEffect) {
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+
+				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pMoveTexEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+				// 이펙트에 기본 설정값 적용
+				pMoveTexEffect->m_bIsNotPlaying = effectData.isNotPlaying;
+				pMoveTexEffect->m_bIsLoop = effectData.isLoop;
+
+				// 이펙트의 각 키프레임 설정
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+
+					// 키프레임 추가
+					pMoveTexEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				// 레이어에 이펙트를 추가
+				if (FAILED(pLayer->Add_Effect(pMoveTexEffect))) {
+					Safe_Release(pMoveTexEffect);  // 실패 시 이펙트를 해제
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
+			}
+		}
+
+		// 생성된 레이어를 m_FinalEffects에 추가
+		m_FinalEffects.emplace(layerData.layerName, pLayer);
+	}
+
+	return S_OK;
 }
 
 CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerTag)
@@ -70,7 +242,7 @@ CEffect_Layer* CEffect_Manager::Find_Effect_Layer(const wstring& strEffectLayerT
 	return iter->second;
 }
 
-CEffect* CEffect_Manager::Find_Layer_Effect(wstring& layerName, wstring& effectName)
+CEffect* CEffect_Manager::Find_In_Layer_Effect(wstring& layerName, wstring& effectName)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
 
@@ -91,6 +263,14 @@ _bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _u
 		return false;
 
 	return pEffect->Find_KeyFrame(frameNumber);
+}
+
+void CEffect_Manager::Set_Render_Layer(const wstring& strEffectLayerTag)
+{
+	for (auto& Pair : m_FinalEffects)
+		Pair.second->m_bIsRender = { false };
+
+	Find_Effect_Layer(strEffectLayerTag)->m_bIsRender = { true };
 }
 
 EFFECT_KEYFRAME CEffect_Manager::Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
@@ -136,6 +316,21 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iRenderIndex = 2;
 				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
 				m_FinalEffects.emplace(strEffectLayerTag, pLayer);
+
+				EFFECT_KEYFRAME FirstKeyFrame{};
+
+				FirstKeyFrame.vPosition = EffectDesc.vPosition;
+				FirstKeyFrame.vRotation = EffectDesc.vRotation;
+				FirstKeyFrame.vScale = EffectDesc.vScaled;
+
+				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
+
+				if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size())
+				{
+					Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+
+					m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+				}
 			}
 		}
 	}
@@ -157,16 +352,24 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
 				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
+
+				EFFECT_KEYFRAME FirstKeyFrame{};
+
+				FirstKeyFrame.vPosition = EffectDesc.vPosition;
+				FirstKeyFrame.vRotation = EffectDesc.vRotation;
+				FirstKeyFrame.vScale = EffectDesc.vScaled;
+
+				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
+
+				if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size())
+				{
+					Safe_Release(m_TestEffect[iCurTestEffectIndex]);
+
+					m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+				}
 			}
 		}
 	
-	}
-
-	if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size()) 
-	{
-		Safe_Release(m_TestEffect[iCurTestEffectIndex]);
-
-		m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
 	}
 
 	return S_OK;
@@ -199,6 +402,14 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 			EffectDesc.iRenderIndex = 2;
 
 			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
+
+			EFFECT_KEYFRAME FirstKeyFrame{};
+
+			FirstKeyFrame.vPosition = EffectDesc.vPosition;
+			FirstKeyFrame.vRotation = EffectDesc.vRotation;
+			FirstKeyFrame.vScale = EffectDesc.vScaled;
+
+			pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 		}
 	}
 
@@ -455,7 +666,7 @@ _float3 CEffect_Manager::Get_Effect_Rotation(_int EffectId)
 
 HRESULT CEffect_Manager::Set_Layer_Effect_Scaled(wstring& layerName, wstring& effectName, _float3 ChangeScaled)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_Scaled(ChangeScaled);
@@ -466,7 +677,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Scaled(wstring& layerName, wstring& ef
 
 HRESULT CEffect_Manager::Set_Layer_Effect_Position(wstring& layerName, wstring& effectName, _float3 ChangePosition)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_Position(ChangePosition);
@@ -477,7 +688,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Position(wstring& layerName, wstring& 
 
 HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& effectName, _float3 ChangeRotation)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_Rotation(ChangeRotation);
@@ -488,7 +699,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_Rotation(wstring& layerName, wstring& 
 
 HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstring& effectName, _bool bIsNotPlaying)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		pEffect->Set_Effect_IsNotPlaying(bIsNotPlaying);
@@ -499,7 +710,7 @@ HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstri
 
 _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_Effect_Scaled();
@@ -509,7 +720,7 @@ _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& ef
 
 _float3 CEffect_Manager::Get_Layer_Effect_Position(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_Effect_Position();
@@ -519,7 +730,7 @@ _float3 CEffect_Manager::Get_Layer_Effect_Position(wstring& layerName, wstring& 
 
 _float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_Effect_Rotation();
@@ -529,7 +740,7 @@ _float3 CEffect_Manager::Get_Layer_Effect_Rotation(wstring& layerName, wstring& 
 
 _bool CEffect_Manager::Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->m_bIsNotPlaying;
@@ -576,7 +787,7 @@ void CEffect_Manager::Add_KeyFrame(const wstring& LayerName, const wstring& Effe
 
 EFFECT_KEYFRAME CEffect_Manager::Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber)
 {
-	CEffect* pEffect = Find_Layer_Effect(layerName, effectName);
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
 	if (pEffect) {
 		return pEffect->Get_KeyFrame(KeyFrameNumber);

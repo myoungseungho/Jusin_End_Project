@@ -112,6 +112,46 @@ namespace Engine
 		_float3 scale;
 	};
 
+	struct EFFECT_KEYFRAME_DATA
+	{
+		_uint keyFrameNumber;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_float curTime;
+		_float duration;
+	};
+
+	struct EFFECT_DATA
+	{
+		wstring effectName;
+		wstring modelName;
+		wstring maskTextureName;
+		wstring diffuseTextureName;
+		_int	effectType;
+		_int renderIndex;
+		_int passIndex;
+		_int uniqueIndex;
+		_bool isNotPlaying;
+		_bool isLoop;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_int iNumKeyFrame;
+		vector<EFFECT_KEYFRAME_DATA> keyframes;
+	};
+
+	struct EFFECT_LAYER_DATA
+	{
+		wstring layerName;
+		_float duration;
+		_float tickPerSecond;
+		_uint keyFramesCount;
+		_int iNumEffect;
+		vector<EFFECT_DATA> effects;
+	};
+
+
 #pragma region 바이너리
 	struct BoneWeight {
 		_uint vertexID;

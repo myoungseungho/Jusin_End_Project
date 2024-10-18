@@ -29,12 +29,12 @@ public:
 	_float3 Lerp(const _float3& start, const _float3& end, _float factor);
 
 public:
-
+	map<_uint, EFFECT_KEYFRAME>	m_EffectKeyFrames;
 
 private:
 	class CGameInstance* m_pGameInstance = { nullptr };
 
-	map<_uint, EFFECT_KEYFRAME>	m_EffectKeyFrames;
+
 
 public:
 	static CEffect_Animation* Create();

@@ -453,7 +453,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

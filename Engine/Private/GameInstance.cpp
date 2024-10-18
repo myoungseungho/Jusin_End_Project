@@ -357,6 +357,22 @@ void* CGameInstance::LoadObjects(const wstring& filename)
 	return m_pFile_Manager->LoadObjects(filename);
 }
 
+HRESULT CGameInstance::Save_Effects(wstring& FilePath, void* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->Save_Effects(FilePath, pArg);
+}
+
+void* CGameInstance::Load_Effects(wstring& FilePath)
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->Load_Effects(FilePath);
+}
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);

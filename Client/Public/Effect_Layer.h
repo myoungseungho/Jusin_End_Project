@@ -30,9 +30,10 @@ public:
 	_float			m_fDuration = { 0.f };
 	_float			m_fTickPerSecond = {0.f};
 	_float			m_fCurrentAnimPosition = { 0.f };
+	vector<class CEffect*>			m_MixtureEffects;
+	_bool			m_bIsRender = { false };
 
 private:
-	vector<class CEffect*>			m_MixtureEffects;
 	_uint						m_iNumEffects = {0};
 
 public:

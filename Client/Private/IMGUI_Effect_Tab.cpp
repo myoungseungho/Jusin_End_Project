@@ -9,6 +9,7 @@
 #include <codecvt>
 #include <IMGUI_Shader_Tab.h>
 #include <Effect_Layer.h>
+#include "Effect_Animation.h"
 
 const char* Effect[] = { "Each", "Layer", "Layer KeyFrame"};
 const char* EffectType[] = { "Single", "MoveTex", "Multi" };
@@ -56,6 +57,12 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         ImGui::EndCombo();
     }
 
+    ImGui::SameLine();
+    if (ImGui::Button("Save"))
+    {
+        Save_Effects_File();
+    }
+
     ImGui::Separator();
     ImGui::Separator();
 
@@ -98,6 +105,74 @@ void CIMGUI_Effect_Tab::Push_Initialize()
 void CIMGUI_Effect_Tab::Save_To_Effect_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg)
 {
     m_pEffect_Manager->Add_Effect_To_Layer(iCurTestEffectIndex, strEffectLayerTag);
+}
+
+HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
+{
+    wstring filename = L"../Bin/Effects.txt"; // 파일 경로 설정
+
+    // m_vecEffectData에 저장할 데이터를 수집합니다.
+    m_vecEffectData.clear(); // 기존 데이터 초기화
+
+    // FinalEffects 맵에서 각 Layer 정보를 가져와서 m_vecEffectData에 추가
+    for (const auto& layerPair : m_pEffect_Manager->m_FinalEffects)
+    {
+        const wstring& layerName = layerPair.first;
+        CEffect_Layer* pLayer = layerPair.second;
+
+        EFFECT_LAYER_DATA layerData;
+        layerData.layerName = layerName;
+        layerData.duration = pLayer->m_fDuration;
+        layerData.tickPerSecond = pLayer->m_fTickPerSecond;
+        layerData.keyFramesCount = pLayer->m_iNumKeyFrames;
+        layerData.iNumEffect = pLayer->m_MixtureEffects.size();
+
+        // 각 레이어 안의 이펙트들 정보를 수집
+        for (auto& pEffect : pLayer->Get_Effects())
+        {
+            EFFECT_DATA effectData;
+            effectData.effectName = pEffect->m_EffectName;
+            effectData.modelName = pEffect->m_ModelName;
+            effectData.maskTextureName = pEffect->m_MaskTextureName;
+            effectData.diffuseTextureName = pEffect->m_DiffuseTextureName;
+            effectData.effectType = pEffect->m_eEffect_Type;
+            effectData.renderIndex = pEffect->m_iRenderIndex;
+            effectData.passIndex = pEffect->m_iPassIndex;
+            effectData.uniqueIndex = pEffect->m_iUnique_Index;
+            effectData.isLoop = pEffect->m_bIsLoop;
+            effectData.isNotPlaying = pEffect->m_bIsNotPlaying;
+            effectData.position = pEffect->Get_Effect_Position();
+            effectData.scale = pEffect->Get_Effect_Scaled();
+            effectData.rotation = pEffect->Get_Effect_Rotation();
+            effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
+
+            // 이펙트의 키프레임 정보 추가
+            for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
+            {
+                EFFECT_KEYFRAME_DATA keyFrameData;
+                keyFrameData.keyFrameNumber = keyFramePair.first;
+                keyFrameData.position = keyFramePair.second.vPosition;
+                keyFrameData.scale = keyFramePair.second.vScale;
+                keyFrameData.rotation = keyFramePair.second.vRotation;
+                keyFrameData.curTime = keyFramePair.second.fCurTime;
+                keyFrameData.duration = keyFramePair.second.fDuration;
+
+                effectData.keyframes.push_back(keyFrameData);
+            }
+
+            layerData.effects.push_back(effectData); // 레이어에 이펙트 추가
+        }
+
+        m_vecEffectData.push_back(layerData); // 레이어 데이터를 최종 벡터에 추가
+    }
+
+    // GameInstance에 있는 Save_Effects 함수로 m_vecEffectData 저장
+    if (FAILED(m_pGameInstance->Save_Effects(filename, &m_vecEffectData)))
+    {
+        return E_FAIL; // 저장 실패 시 오류 반환
+    }
+
+    return S_OK; // 저장 성공 시 S_OK 반환
 }
 
 
@@ -458,6 +533,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 {
                     selectedLayerIndex = i;
                     selectedLayerName = LayerList[i]; // 선택된 레이어 이름을 저장
+                    m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
                 }
                 if (isSelected)
                 {
@@ -581,7 +657,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
             for (int item = 0; item < effectNames.size(); item++)
             {
-                CEffect* pEffect = m_pEffect_Manager->Find_Layer_Effect(selectedLayerName, effectNames[item]);
+                CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                 if (pEffect)
                 {
                     effectChecks[item] = pEffect->m_bIsLoop;
@@ -600,7 +676,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 bool isChecked = effectChecks[item];
                 if (ImGui::Checkbox("##EffectCheck", &isChecked))
                 {
-                    CEffect* pEffect = m_pEffect_Manager->Find_Layer_Effect(selectedLayerName, effectNames[item]);
+                    CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                     if (pEffect)
                     {
                         pEffect->m_bIsLoop = isChecked;
@@ -657,18 +733,27 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
     }
 }
 
-
 void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 {
-    ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::Text("Editing Keyframe for Effect: %s", selectedEffectName.c_str());
-    ImGui::Text("Frame: %d", selectedFrame);
-
     EFFECT_KEYFRAME newKeyFrame;
     _float3 CurPosition = { 0.f, 0.f, 0.f };
     _float3 CurScale = { 0.f, 0.f, 0.f };
     _float3 CurRotation = { 0.f, 0.f, 0.f };
     _bool IsNotPlaying = { false };
+
+    newKeyFrame.fDuration = m_pEffect_Manager->Find_Effect_Layer(selectedLayerName)->m_fDuration;
+
+    // CurTime을 선택된 프레임 시간에 따라 자동 설정
+    const float frameInterval = 1.0f / 60.0f;
+    newKeyFrame.fCurTime = selectedFrame * frameInterval;
+
+    ImGui::Begin("Keyframe Editor", &openKeyFrameWindow, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Text("Editing Keyframe for Effect: %s", selectedEffectName.c_str());
+    ImGui::Text("Frame: %d", selectedFrame);
+    ImGui::SameLine();
+    ImGui::Text("CurAnimPos: %.3f", newKeyFrame.fCurTime);
+    ImGui::SameLine();
+    ImGui::Text("Duration: %.2f", newKeyFrame.fDuration);
 
     // 처음 창을 열 때 저장된 키프레임 불러오기
     if (!initialized)
@@ -705,9 +790,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
         IsNotPlaying = m_pEffect_Manager->Get_Layer_Effect_IsPlaying(selectedLayerName, UTF8ToWString(selectedEffectName));
     }
 
-    // CurTime을 선택된 프레임 시간에 따라 자동 설정
-    const float frameInterval = 1.0f / 60.0f;
-    newKeyFrame.fCurTime = selectedFrame * frameInterval;
+
 
     ImGui::Text("Effect Keyframe Settings");
 
@@ -900,4 +983,7 @@ void CIMGUI_Effect_Tab::Free()
     __super::Free();
 
     Safe_Release(m_pEffect_Manager);
+
+    ModelName.clear();
+    TextureName.clear();
 }

@@ -91,7 +91,9 @@ HRESULT CMainApp::Create_IMGUI_Manager()
 {
 	m_pImgui_Manager = CImgui_Manager::Get_Instance();
 	m_pImgui_Manager->Initialize(m_pDevice, m_pContext);
+
 	Safe_AddRef(m_pImgui_Manager);
+
 	return S_OK;
 }
 

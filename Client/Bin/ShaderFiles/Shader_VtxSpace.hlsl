@@ -369,7 +369,7 @@ PS_OUT PS_MAIN_SUN(PS_IN In)
 
         vector vColor = { 0.1921f, 0.6f, 0.8274f, 0.f };
         vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-        vMtrlDiffuse.a = saturate(vMtrlDiffuse.b) * g_Time * 1.46f; 
+        vMtrlDiffuse.a = saturate(vMtrlDiffuse.b) * g_Time * 1.56f; 
         
         vMtrlDiffuse.rgb = vColor.rgb;
 

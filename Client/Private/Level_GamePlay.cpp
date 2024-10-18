@@ -59,6 +59,10 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	}
 
+	if (Set_Effect() != nullptr)
+		m_pEffect_Manager->Set_Saved_Effects(Set_Effect());
+
+
 	return S_OK;
 }
 
@@ -82,7 +86,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring & strLayerTag)
 {
 	CCamera_Free::CAMERA_FREE_DESC			CameraDesc{};
 
-	CameraDesc.vEye = _float3(0.f, 0.f, -1.f);
+	CameraDesc.vEye = _float3(0.f, 10.f, -15.f);
 	CameraDesc.vAt = _float3(0.f, 0.f, 1.f);
 	CameraDesc.fFovy = XMConvertToRadians(54.f);
 	CameraDesc.fNear = 0.1f;
