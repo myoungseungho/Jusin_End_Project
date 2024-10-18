@@ -32,7 +32,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	}
 
 	// 카메라 포인트 로드
-	std::wstring cameraFilePath = L"../Bin/CameraPoints.txt";
+	_wstring cameraFilePath = L"../Bin/CameraPoints.txt";
 	CameraSaveData cameraSaveData;
 
 	HRESULT hr = m_pGameInstance->Load_All_CameraPoints(cameraFilePath, &cameraSaveData);

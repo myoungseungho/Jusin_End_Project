@@ -81,6 +81,56 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		m_vecVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
 	}
 
+	stringToSkillID[{1, L"SKILLID_SON_SKILL1"}] = 0;
+	stringToSkillID[{1, L"SKILLID_SON_SKILL2"}] = 1;
+
+	// MODELID_HIT 스킬 초기화
+	stringToSkillID[{2, L"SKILLID_HIT_SKILL1"}] = 0;
+
+	// MODELID_MINE 스킬 초기화
+	stringToSkillID[{3, L"SKILLID_MINE_SKILL1"}] = 0;
+	stringToSkillID[{3, L"SKILLID_MINE_SKILL2"}] = 1;
+
+	// MODELID_21 스킬 초기화
+	stringToSkillID[{4, L"SKILLID_21_SKILL1"}] = 0;
+	stringToSkillID[{4, L"SKILLID_21_SKILL2"}] = 1;
+	stringToSkillID[{4, L"SKILLID_21_SKILL3"}] = 2;
+
+	// MODELID_SON 스킬1 애니메이션 초기화
+	stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM1"}] = 0;
+	stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM2"}] = 1;
+	stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM3"}] = 2;
+
+	// MODELID_SON 스킬2 애니메이션 초기화
+	stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM1"}] = 0;
+	stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM2"}] = 1;
+
+	// MODELID_HIT 스킬1 애니메이션 초기화
+	stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM1"}] = 0;
+	stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM2"}] = 1;
+
+	// MODELID_MINE 스킬1 애니메이션 초기화
+	stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM1"}] = 0;
+	stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM2"}] = 1;
+
+	// MODELID_MINE 스킬2 애니메이션 초기화
+	stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM1"}] = 0;
+	stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM2"}] = 1;
+	stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM3"}] = 2;
+
+	// MODELID_21 스킬1 애니메이션 초기화
+	stringToAnimID[{4, 0, L"ANIMID_21_SKILL1_ANIM1"}] = 0;
+
+	// MODELID_21 스킬2 애니메이션 초기화
+	stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM1"}] = 0;
+	stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM2"}] = 1;
+
+	// MODELID_21 스킬3 애니메이션 초기화
+	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM1"}] = 0;
+	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM2"}] = 1;
+	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM3"}] = 2;
+	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM4"}] = 3;
+
 	return S_OK;
 }
 
@@ -166,98 +216,73 @@ void CMain_Camera::Modify_Transform(_int index, _int animationIndex)
 
 void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 {
-	//// 모든 모델에 대해 순회합니다.
-	//for (const auto& modelData : cameraData.models)
-	//{
-	//	_int modelID = modelData.modelID;
+	for (const auto& modelData : cameraData.models)
+	{
+		//모델마다 돈다.
+		_int modelID = modelData.modelID;
 
-	//	// 모델 ID에 해당하는 게임 오브젝트를 가져옵니다.
-	//	// 여기서는 레벨과 레이어 이름을 예시로 사용합니다.
-	//	CGameObject* pModelObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, GetLayerNameByModelID(modelID));
-	//	if (nullptr == pModelObject)
-	//		continue; // 해당 모델 오브젝트가 없으면 건너뜁니다.
+		//모델의 스킬마다 돈다
+		for (const auto& skillData : modelData.skills)
+		{
+			//스킬마다 카메라가 있다.
+			string skillNameStr = skillData.skillName;
+			// 문자열 변환이 필요하다면 WStringToString 함수를 사용합니다.
+			_wstring skillName = _wstring(skillNameStr.begin(), skillNameStr.end());
 
-	//	// 모델의 Transform 컴포넌트를 가져옵니다.
-	//	CTransform* pModelTransform = static_cast<CTransform*>(pModelObject->Get_Component(TEXT("Com_Transform")));
-	//	if (nullptr == pModelTransform)
-	//		continue;
+			// 스킬 이름을 스킬 ID로 매핑
+			_int skillID = -1;
+			auto skillIt = stringToSkillID.find(skillName);
+			if (skillIt != stringToSkillID.end())
+			{
+				skillID = skillIt->second;
+			}
+			else
+				continue;
 
-	//	const _float4x4* worldMatrixPtr = pModelTransform->Get_WorldMatrixPtr();
+			// 카메라 인덱스 얻기
+			_int cameraIndex = Get_CameraIndex(modelID, skillID);
 
-	//	// 각 스킬에 대해 순회합니다.
-	//	for (const auto& skillData : modelData.skills)
-	//	{
-	//		std::string skillName = skillData.skillName;
+			CVirtual_Camera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
 
-	//		// 각 애니메이션에 대해 순회합니다.
-	//		for (const auto& animData : skillData.animations)
-	//		{
-	//			std::string animName = animData.animationName;
+			//스킬에 있는 애니메이션
+			for (const auto& animData : skillData.animations)
+			{
+				string animNameStr = animData.animationName;
+				_wstring animName = _wstring(animNameStr.begin(), animNameStr.end());
 
-	//			// 해당 모델, 스킬, 애니메이션에 대한 카메라 인덱스를 가져옵니다.
-	//			int cameraIndex = Get_CameraIndex(modelID, skillName, animName);
-	//			if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size())
-	//			{
-	//				CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
+				// 애니메이션 이름을 애니메이션 ID로 매핑
+				_int animID = -1;
+				auto animIt = stringToAnimID.find(animName);
+				if (animIt != stringToAnimID.end())
+				{
+					animID = animIt->second;
+				}
 
-	//				// 기존 포인트 초기화
-	//				pCurrentCamera->m_vecPoints.clear();
+				// 기존 포인트 초기화
+				pCurrentCamera->m_mapPoints[animID].clear();
 
-	//				// 새로운 포인트 할당
-	//				for (const auto& pointData : animData.points)
-	//				{
-	//					CameraPoint point;
-	//					point.position = pointData.position;
-	//					point.rotation = pointData.rotation;
-	//					point.duration = pointData.duration;
-	//					point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
-	//					point.damping = pointData.damping;
-	//					point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
-	//					point.pWorldFloat4x4 = worldMatrixPtr;
+				// 새로운 포인트 할당
+				vector<CameraPoint> points;
+				for (const auto& pointData : animData.points)
+				{
+					CameraPoint point;
+					point.position = pointData.position;
+					point.rotation = pointData.rotation;
+					point.duration = pointData.duration;
+					point.interpolationType = static_cast<_int>(pointData.interpolationType);
+					point.damping = pointData.damping;
+					point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
+					point.pWorldFloat4x4 = nullptr; // 필요에 따라 설정
 
-	//					pCurrentCamera->m_vecPoints.push_back(point);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+					points.push_back(point);
+				}
+
+				// 포인트 저장
+				pCurrentCamera->m_mapPoints[animID] = points;
+			}
+		}
+	}
 }
-
-//void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
-//{
-//	for (const auto& cameraData : cameraDataList)
-//	{
-//		// modelID와 skillID를 사용하여 가상 카메라의 인덱스를 찾음
-//		int cameraIndex = Get_CameraIndex(cameraData.modelID, cameraData.skillID);
-//		if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size()) {
-//			CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
-//
-//			// 기존 포인트 초기화
-//			pCurrentCamera->m_vecPoints.clear();
-//
-//			// 새로운 포인트 할당
-//			for (const auto& pointData : cameraData.points)
-//			{
-//				CameraPoint point;
-//				point.position = pointData.position;
-//				point.rotation = pointData.rotation;
-//				point.duration = pointData.duration;
-//				point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
-//				point.damping = pointData.damping;
-//				point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
-//
-//				// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
-//				// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
-//				CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
-//				CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
-//				const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
-//				point.pWorldFloat4x4 = worldMatrixPtr;
-//
-//				pCurrentCamera->m_vecPoints.push_back(point);
-//			}
-//		}
-//	}
-//}
 
 _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 {

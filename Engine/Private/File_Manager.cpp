@@ -219,9 +219,6 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
         return E_FAIL;
     }
 
-    // Unicode 파일 읽기를 위한 설정 (필요한 경우)
-    // file.imbue(std::locale("kor")); // 로케일 설정 (시스템에 따라 다를 수 있음)
-
     std::wstring line;
     CameraSaveData::ModelData currentModel;
     CameraSaveData::ModelData::SkillData currentSkill;
@@ -309,7 +306,7 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
             std::getline(file, line);
             if (line.find(L"AnimationName: ") != std::wstring::npos)
             {
-                std::wstring animNameStr = line.substr(16);
+                std::wstring animNameStr = line.substr(15);
                 // 선행 공백 제거
                 size_t first = animNameStr.find_first_not_of(L" \t");
                 if (first != std::wstring::npos)
@@ -322,7 +319,7 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
             std::getline(file, line);
             if (line.find(L"PointCount: ") != std::wstring::npos)
             {
-                // size_t pointCount = std::stoul(line.substr(12));
+                 size_t pointCount = std::stoul(line.substr(12));
                 // 현재는 PointCount를 사용하지 않으므로 주석 처리
             }
 
@@ -363,7 +360,7 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
             std::getline(file, line);
             if (line.find(L"InterpolationType: ") != std::wstring::npos)
             {
-                std::wstring interpStr = line.substr(19);
+                std::wstring interpStr = line.substr(18);
                 point.interpolationType = std::stoi(interpStr);
             }
 
