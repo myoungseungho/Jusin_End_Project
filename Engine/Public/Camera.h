@@ -18,7 +18,7 @@ public:
 
 	struct CameraSaveData {
 		vector<CCamera*>& vecVirtualCamera;
-		unordered_map<pair<CAMERA_MODELID, CAMERA_SKILLID>, _uint, pair_hash>& cameraIndexMap;
+		unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
 	};
 
 protected:

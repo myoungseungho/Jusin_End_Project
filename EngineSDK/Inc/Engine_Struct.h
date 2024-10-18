@@ -93,20 +93,12 @@ namespace Engine
 	};
 
 	struct pair_hash {
-		size_t operator()(const pair<_uint, _uint>& key) const {
+		size_t operator()(const pair<_uint, _int>& key) const {
 			return hash<int>()(static_cast<int>(key.first)) ^ (hash<int>()(static_cast<int>(key.second)) << 1);
 		}
 	};
 
 #pragma region 카메라
-	enum InterpolationType {
-		INTERPOLATION_LINEAR_MODE,
-		INTERPOLATION_DAMPING_MODE,
-		INTERPOLATION_SKIP_MODE,
-		INTERPOLATION_END
-	};
-
-
 	// 카메라 포인트 구조체
 	struct CameraPoint {
 		//포지션
@@ -116,7 +108,7 @@ namespace Engine
 		_float4 rotation = {};
 
 		_float duration; // 다음 포인트까지 이동 시간
-		InterpolationType interpolationType; //보간 타입
+		_int interpolationType; //보간 타입
 
 		const _float4x4* pWorldFloat4x4;
 		// Damping Mode에서 사용되는 계수
@@ -124,8 +116,6 @@ namespace Engine
 		_bool hasWorldFloat4x4 = { true };
 	};
 
-	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
-	enum CAMERA_SKILLID { SKILL_NOT = -1, SKILL1, SKILL2, SKILL3, SKILL_END };
 
 	struct CameraData {
 		CAMERA_MODELID modelID;

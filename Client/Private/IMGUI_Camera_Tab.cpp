@@ -18,23 +18,74 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 {
 	_int index = 0;
 
-	// 모델과 스킬 ID에 따른 카메라 인덱스 매핑 초기화
-	m_CameraIndexMap[{MODELID_DEFAULT, SKILL_NOT}] = index++;
-	m_CameraIndexMap[{MODELID_SON, SKILL1}] = index++;
-	m_CameraIndexMap[{MODELID_SON, SKILL2}] = index++;
-	m_CameraIndexMap[{MODELID_SON, SKILL3}] = index++;
+	// 모델별 스킬 목록 초기화
+	m_ModelSkills[MODELID_SON] = { "Son_Skill1", "Son_Skill2" };
+	m_ModelSkills[MODELID_HIT] = { "Hit_Skill1" };
+	m_ModelSkills[MODELID_MINE] = { "Mine_Skill1", "Mine_Skill2" };
+	m_ModelSkills[MODELID_21] = { "21_Skill1", "21_Skill2", "21_Skill3" };
 
-	m_CameraIndexMap[{MODELID_HIT, SKILL1}] = index++;
-	m_CameraIndexMap[{MODELID_HIT, SKILL2}] = index++;
-	m_CameraIndexMap[{MODELID_HIT, SKILL3}] = index++;
+	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
+	// 기본 카메라 매핑
+	m_CameraIndexMap[{MODELID_DEFAULT, -1}] = index++;
 
-	m_CameraIndexMap[{MODELID_MINE, SKILL1}] = index++;
-	m_CameraIndexMap[{MODELID_MINE, SKILL2}] = index++;
-	m_CameraIndexMap[{MODELID_MINE, SKILL3}] = index++;
+	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
+	for (const auto& modelSkillPair : m_ModelSkills)
+	{
+		CAMERA_MODELID model = modelSkillPair.first;
+		const std::vector<std::string>& skills = modelSkillPair.second;
 
-	m_CameraIndexMap[{MODELID_21, SKILL1}] = index++;
-	m_CameraIndexMap[{MODELID_21, SKILL2}] = index++;
-	m_CameraIndexMap[{MODELID_21, SKILL3}] = index;
+		for (int skillIdx = 0; skillIdx < static_cast<int>(skills.size()); ++skillIdx)
+		{
+			m_CameraIndexMap[{model, skillIdx}] = index++;
+
+			// 스킬별 애니메이션 목록 초기화 (예시 데이터)
+			if (model == MODELID_SON)
+			{
+				if (skillIdx == 0) // Son_Skill1
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Skill1_Anim1", "Son_Skill1_Anim2", "Son_Skill1_Anim3" };
+				}
+				else if (skillIdx == 1) // Son_Skill2
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Skill2_Anim1", "Son_Skill2_Anim2" };
+				}
+			}
+			else if (model == MODELID_HIT)
+			{
+				if (skillIdx == 0) // Hit_Skill1
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_Skill1_Anim1", "Hit_Skill1_Anim2" };
+				}
+			}
+			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화
+			else if (model == MODELID_MINE)
+			{
+				if (skillIdx == 0) // Mine_Skill1
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Mine_Skill1_Anim1", "Mine_Skill1_Anim2" };
+				}
+				else if (skillIdx == 1) // Mine_Skill2
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Mine_Skill2_Anim1", "Mine_Skill2_Anim2", "Mine_Skill2_Anim3" };
+				}
+			}
+			else if (model == MODELID_21)
+			{
+				if (skillIdx == 0) // 21_Skill1
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "21_Skill1_Anim1" };
+				}
+				else if (skillIdx == 1) // 21_Skill2
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "21_Skill2_Anim1", "21_Skill2_Anim2" };
+				}
+				else if (skillIdx == 2) // 21_Skill3
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "21_Skill3_Anim1", "21_Skill3_Anim2", "21_Skill3_Anim3", "21_Skill3_Anim4" };
+				}
+			}
+		}
+	}
 
 	return S_OK;
 }
@@ -55,9 +106,6 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	// 모델 선택 UI 호출
 	IMGUI_Camera_Select_Model(fTimeDelta);
 
-	// 카메라 선택 UI 호출
-	IMGUI_Show_Camera(fTimeDelta);
-
 	// 모델이 선택된 경우에만 스킬 선택 UI를 표시
 	if (m_iSelected_Model >= MODELID_SON) {
 		ImGui::Spacing();  // 한 줄 띄우기
@@ -67,8 +115,24 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 		IMGUI_Camera_Select_Skill(fTimeDelta);
 	}
 
-	// 포인트 보여주기
-	IMGUI_Show_Points();
+	//선택안되면 -1임.
+	if (m_iSelected_Skill >= 0)
+	{
+		ImGui::Spacing();  // 한 줄 띄우기
+		ImGui::Separator();  // 경계선 그리기
+
+		// 애니메이션 선택 UI 호출
+		IMGUI_Camera_Select_Animation(fTimeDelta);
+	}
+
+	if (m_iSelected_Animation >= 0)
+	{
+		// 포인트 보여주기
+		IMGUI_Show_Points();
+	}
+
+	// 카메라 선택 UI 호출
+	IMGUI_Show_Camera(fTimeDelta);
 
 	// Point 버튼 호출
 	IMGUI_Button();
@@ -81,56 +145,101 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 {
 	// Model selection dropdown
-	const char* model_options[] = { "0. Default", "1. Son", "2. Hit", "3. Mine", "4. 21" };
-
 	_int iSelected_Model = static_cast<_int>(m_iSelected_Model);
 
 	ImGui::Text("Select Model");
-	if (ImGui::Combo("Model", &iSelected_Model, model_options, IM_ARRAYSIZE(model_options))) {
+	if (ImGui::Combo("Model", &iSelected_Model, MODEL_NAMES, IM_ARRAYSIZE(MODEL_NAMES))) {
 		// 모델이 변경된 경우에만 스킬 선택을 초기화
 		if (m_iSelected_Model != static_cast<CAMERA_MODELID>(iSelected_Model)) {
 			m_iSelected_Model = static_cast<CAMERA_MODELID>(iSelected_Model); // 새로운 모델로 업데이트
-			m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 초기화
-			UpdateCameraSelection(); // 카메라 선택 업데이트
-			m_isCompleteCameraSelect = false;
+			m_iSelected_Skill = -1;  // 스킬 선택 초기화
 		}
 	}
 
-	if (m_iSelected_Model >= 0) {
+	if (m_iSelected_Model >= 0 && m_iSelected_Model < CAMERA_MODELID::MODELID_END) {
 		// 모델이 선택된 경우 현재 선택된 모델을 출력
-		ImGui::Text("Currently Selected Model: %s", model_options[m_iSelected_Model]);
+		ImGui::Text("Currently Selected Model: %s", MODEL_NAMES[m_iSelected_Model]);
 	}
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)
 {
-	// 스킬 선택 드롭다운
-	const char* skill_options[] = { "Skill 1", "Skill 2", "Skill 3" };
-	static int previous_skill = -1;  // 이전 스킬을 추적하기 위한 변수
+	// 현재 선택된 모델에 대한 스킬 목록 가져오기
+	auto it = m_ModelSkills.find(m_iSelected_Model);
+	if (it == m_ModelSkills.end()) {
+		ImGui::Text("No skills available for this model.");
+		return;
+	}
 
-	int iSelected_Skill = static_cast<int>(m_iSelected_Skill);
+	//모델이 가지고 있는 string 배열 가져오기
+	const vector<string>& skills = it->second;
+
+	// 스킬 목록을 const char* 배열로 변환
+	vector<const char*> skill_options;
+	for (const auto& skill : skills) {
+		skill_options.push_back(skill.c_str());
+	}
+
+	// 현재 선택된 스킬 인덱스 가져오기
+	int iSelected_Skill = m_iSelected_Skill;
 
 	ImGui::Text("Select Skill");
-	if (ImGui::Combo("Skill", &iSelected_Skill, skill_options, IM_ARRAYSIZE(skill_options))) {
-		// 스킬이 변경된 경우에만 카메라 선택 업데이트
-		if (m_iSelected_Skill != static_cast<CAMERA_SKILLID>(iSelected_Skill)) {
-			previous_skill = m_iSelected_Skill;  // 이전 스킬 업데이트
-			m_iSelected_Skill = static_cast<CAMERA_SKILLID>(iSelected_Skill); // 새로운 스킬로 업데이트
-			UpdateCameraSelection(); // 카메라 선택 업데이트
-			m_isCompleteCameraSelect = true;
+	if (ImGui::Combo("Skill", &iSelected_Skill, skill_options.data(), static_cast<int>(skill_options.size()))) {
+		// 스킬 선택이 변경된 경우
+		if (m_iSelected_Skill != iSelected_Skill) {
+			m_iSelected_Skill = iSelected_Skill; // 새로운 스킬으로 업데이트 (인덱스 기반)
 		}
 	}
 
-	if (m_iSelected_Skill >= 0) {
-		// 스킬이 선택된 경우 현재 선택된 스킬을 출력
-		ImGui::Text("Currently Selected Skill: %s", skill_options[m_iSelected_Skill]);
+	// 현재 선택된 스킬 표시
+	if (iSelected_Skill >= 0 && iSelected_Skill < static_cast<int>(skills.size())) {
+		ImGui::Text("Currently Selected Skill: %s", skills[iSelected_Skill].c_str());
+	}
+}
+
+void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Animation(_float fTimeDelta)
+{
+	// 현재 선택된 모델과 스킬에 대한 애니메이션 목록 가져오기
+	auto key = make_pair(m_iSelected_Model, m_iSelected_Skill);
+	auto it = m_SkillAnimations.find(key);
+	if (it == m_SkillAnimations.end()) {
+		ImGui::Text("No animations available for this skill.");
+		return;
+	}
+
+	const vector<string>& animations = it->second;
+
+	// 애니메이션 목록을 const char* 배열로 변환
+	vector<const char*> animation_options;
+	for (const auto& anim : animations) {
+		animation_options.push_back(anim.c_str());
+	}
+
+	// 현재 선택된 애니메이션 인덱스 가져오기
+	int iSelected_Animation = m_iSelected_Animation;
+
+	ImGui::Text("Select Animation");
+	if (ImGui::Combo("Animation", &iSelected_Animation, animation_options.data(), static_cast<int>(animation_options.size()))) {
+		// 애니메이션 선택이 변경된 경우
+		if (m_iSelected_Animation != iSelected_Animation) {
+			m_iSelected_Animation = iSelected_Animation; // 새로운 애니메이션으로 업데이트
+
+			if (m_iSelected_Animation >= 0) {
+				// 애니메이션 선택에 따른 추가 로직이 필요하면 여기서 구현
+				// 예: 카메라 설정, 애니메이션 재생 등
+				// UpdateCameraWithAnimation();
+			}
+		}
+	}
+
+	// 현재 선택된 애니메이션 표시
+	if (m_iSelected_Animation >= 0 && m_iSelected_Animation < static_cast<int>(animations.size())) {
+		ImGui::Text("Currently Selected Animation: %s", animations[m_iSelected_Animation].c_str());
 	}
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Show_Camera(_float fTimeDelta)
 {
-	// 모델과 스킬이 모두 선택된 경우에만 카메라 이름을 표시
-		// 게임 인스턴스에서 메인 카메라 객체 가져오기
 	CGameObject* camera = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
 	if (!camera) {
 		ImGui::Text("Main camera not found.");
@@ -196,10 +305,11 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 
 void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 
-	if (m_iSelected_Model != MODELID_DEFAULT && m_iSelected_Skill == SKILL_NOT)
+	//스킬에 따른 애니메이션이 선택되지 않았다면
+	if (m_iSelected_Animation == -1)
 		return;
 
-	std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
+	vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();  // 포인트 벡터 가져오기
 
 	if (points.empty()) {
 		ImGui::Text("No camera points available.");

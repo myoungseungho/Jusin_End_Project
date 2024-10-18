@@ -92,12 +92,6 @@ namespace Engine
 		_float3 scale;
 	};
 
-	struct pair_hash {
-		size_t operator()(const pair<_uint, _uint>& key) const {
-			return hash<int>()(static_cast<int>(key.first)) ^ (hash<int>()(static_cast<int>(key.second)) << 1);
-		}
-	};
-
 #pragma region 카메라
 	enum InterpolationType {
 		INTERPOLATION_LINEAR_MODE,
@@ -116,7 +110,7 @@ namespace Engine
 		_float4 rotation = {};
 
 		_float duration; // 다음 포인트까지 이동 시간
-		InterpolationType interpolationType; //보간 타입
+		_int interpolationType; //보간 타입
 
 		const _float4x4* pWorldFloat4x4;
 		// Damping Mode에서 사용되는 계수
@@ -124,12 +118,9 @@ namespace Engine
 		_bool hasWorldFloat4x4 = { true };
 	};
 
-	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
-	enum CAMERA_SKILLID { SKILL_NOT = -1, SKILL1, SKILL2, SKILL3, SKILL_END };
-
 	struct CameraData {
-		CAMERA_MODELID modelID;
-		CAMERA_SKILLID skillID;
+		_int modelID;
+		_int skillID;
 		vector<CameraPoint> points;
 	};
 
@@ -139,12 +130,10 @@ namespace Engine
 	//C++에서는 전역 객체를 여러 소스 파일에서 공유하려면, 한 곳에만 정의하고 나머지 파일에서는 선언만 해야 합니다.
 	//extern 키워드는 "이 변수의 정의는 다른 소스 파일에 있다"는 의미로 사용됩니다.
 
-	extern unordered_map<CAMERA_MODELID, _wstring> modelIDToString;
-	extern unordered_map<CAMERA_SKILLID, _wstring> skillIDToString;
-	extern unordered_map<_wstring, CAMERA_MODELID> stringToModelID;
-	extern unordered_map<_wstring, CAMERA_SKILLID> stringToSkillID;
-
-
+	extern unordered_map<_int, _wstring> modelIDToString;
+	extern unordered_map<_int, _wstring> skillIDToString;
+	extern unordered_map<_wstring, _int> stringToModelID;
+	extern unordered_map<_wstring, _int> stringToSkillID;
 
 #pragma endregion
 

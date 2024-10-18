@@ -10,10 +10,16 @@ BEGIN(Client)
 
 class CIMGUI_Camera_Tab : public CIMGUI_Tab
 {
+	enum InterpolationType {
+		INTERPOLATION_LINEAR_MODE,
+		INTERPOLATION_DAMPING_MODE,
+		INTERPOLATION_SKIP_MODE,
+		INTERPOLATION_END
+	};
 
-private:
-
-
+	//모델은 정해져있음
+	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
+	//스킬은 각 모델마다 enum이 달라서 map
 protected:
 	CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CIMGUI_Camera_Tab() = default;
@@ -26,6 +32,8 @@ public:
 private:
 	void IMGUI_Camera_Select_Model(_float fTimeDelta);
 	void IMGUI_Camera_Select_Skill(_float fTimeDelta);
+	void IMGUI_Camera_Select_Animation(_float fTimeDelta);
+
 	void IMGUI_Show_Camera(_float fTimeDelta);
 	void IMGUI_Save_Button();
 	void Activate_Select_Camera(_int selectedIndex);
@@ -44,13 +52,49 @@ private:
 
 	const _float4x4* Get_Model_Float4x4();
 
+private:
 	CAMERA_MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
-	CAMERA_SKILLID m_iSelected_Skill = SKILL_NOT;  // 스킬 선택 상태를 저장
+	_int  m_iSelected_Skill = -1;
+	_int m_iSelected_Animation = -1; // 애니메이션 선택 상태를 저장 (인덱스 기반)
+
+	// 모델별 스킬 목록
+	unordered_map<CAMERA_MODELID, vector<string>> m_ModelSkills;
+	// 모델 이름 배열 선언
+	static const char* MODEL_NAMES[MODELID_END];
+
+	// 스킬과 애니메이션 인덱스 쌍을 키로 받고 애니메이션 목록을 값으로 갖는 맵
+	unordered_map<pair<CAMERA_MODELID, int>, vector<string>, pair_hash> m_SkillAnimations;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	_int m_selectedPoint = -1;
 	_bool m_isEditing = { false };     // 수정 모드 여부
 	_bool m_isCompleteCameraSelect = { true };
 	//모델과 스킬 pair쌍을 키로 받고 가상카메라 인덱스를 값으로 갖는
-	unordered_map<pair<CAMERA_MODELID, CAMERA_SKILLID>, _uint, pair_hash> m_CameraIndexMap;
+	unordered_map<pair<CAMERA_MODELID, _int>, _uint, pair_hash> m_CameraIndexMap;
+
 
 	// 임시 데이터 구조체
 	struct TempPointData {

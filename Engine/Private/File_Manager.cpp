@@ -173,8 +173,8 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 		CCamera* pVirtualCamera = vecVirtualCamera[i];
 
 		// 모델 ID와 스킬 ID를 얻기 위해 매핑된 값을 찾음
-		CAMERA_MODELID modelID = MODELID_NOT;
-		CAMERA_SKILLID skillID = SKILL_NOT;
+		_int modelID = -1;
+		_int skillID = -1;
 
 		for (const auto& pair : cameraIndexMap)
 		{
@@ -201,7 +201,7 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 			file << L"Position: " << point.position.x << L" " << point.position.y << L" " << point.position.z << L"\n";
 			file << L"Rotation: " << point.rotation.x << L" " << point.rotation.y << L" " << point.rotation.z << L" " << point.rotation.w << L"\n";
 			file << L"Duration: " << point.duration << L"\n";
-			file << L"InterpolationType: " << static_cast<int>(point.interpolationType) << L"\n";
+			file << L"InterpolationType: " << point.interpolationType << L"\n";
 			file << L"Damping: " << point.damping << L"\n";
 			file << L"HasWorldFloat4x4: " << (point.hasWorldFloat4x4 ? 1 : 0) << L"\n\n";
 		}
@@ -254,11 +254,11 @@ vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
 					currentCameraData.modelID = stringToModelID[modelIDStr];
 				}
 				else {
-					currentCameraData.modelID = MODELID_NOT; // 기본값 설정
+					currentCameraData.modelID = -1; // 기본값 설정
 				}
 			}
 			else {
-				currentCameraData.modelID = MODELID_NOT; // 기본값 설정
+				currentCameraData.modelID = -1; // 기본값 설정
 			}
 
 			// SkillID 읽기
@@ -273,11 +273,11 @@ vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
 					currentCameraData.skillID = stringToSkillID[skillIDStr];
 				}
 				else {
-					currentCameraData.skillID = SKILL_NOT; // 기본값 설정
+					currentCameraData.skillID = -1; // 기본값 설정
 				}
 			}
 			else {
-				currentCameraData.skillID = SKILL_NOT; // 기본값 설정
+				currentCameraData.skillID = -1; // 기본값 설정
 			}
 
 			// PointCount 읽기
@@ -320,7 +320,7 @@ vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
 
 			// InterpolationType 읽기
 			std::getline(file, line);
-			point.interpolationType = (InterpolationType)std::stoi(line.substr(line.find(L":") + 1));
+			point.interpolationType = std::stoi(line.substr(line.find(L":") + 1));
 
 			// Damping 읽기
 			std::getline(file, line);
