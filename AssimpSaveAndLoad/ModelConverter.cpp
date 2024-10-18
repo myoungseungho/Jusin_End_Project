@@ -424,8 +424,9 @@ void ModelConverter::FillModelData(const aiScene* scene, ModelHeader& header, ve
 
 			if (aiMaterial->GetTexture(static_cast<aiTextureType>(j), 0, &str) == AI_SUCCESS) {
 				std::string texturePath = str.C_Str();
-				std::string fileName = ExtractFileName(texturePath); 
-				material.texturePaths[j] = fileName; 
+				std::string fileName = ExtractFileName(texturePath);
+				material.texturePaths[j] = fileName + "0";
+				material.texturePaths[j + 1] = fileName + "1";
 			}
 		}
 	}
