@@ -163,7 +163,66 @@ void CMain_Camera::Modify_Transform(_int index, _int animationIndex)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Modify_Transform(index, animationIndex);
 }
-//
+
+void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
+{
+	//// 모든 모델에 대해 순회합니다.
+	//for (const auto& modelData : cameraData.models)
+	//{
+	//	_int modelID = modelData.modelID;
+
+	//	// 모델 ID에 해당하는 게임 오브젝트를 가져옵니다.
+	//	// 여기서는 레벨과 레이어 이름을 예시로 사용합니다.
+	//	CGameObject* pModelObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, GetLayerNameByModelID(modelID));
+	//	if (nullptr == pModelObject)
+	//		continue; // 해당 모델 오브젝트가 없으면 건너뜁니다.
+
+	//	// 모델의 Transform 컴포넌트를 가져옵니다.
+	//	CTransform* pModelTransform = static_cast<CTransform*>(pModelObject->Get_Component(TEXT("Com_Transform")));
+	//	if (nullptr == pModelTransform)
+	//		continue;
+
+	//	const _float4x4* worldMatrixPtr = pModelTransform->Get_WorldMatrixPtr();
+
+	//	// 각 스킬에 대해 순회합니다.
+	//	for (const auto& skillData : modelData.skills)
+	//	{
+	//		std::string skillName = skillData.skillName;
+
+	//		// 각 애니메이션에 대해 순회합니다.
+	//		for (const auto& animData : skillData.animations)
+	//		{
+	//			std::string animName = animData.animationName;
+
+	//			// 해당 모델, 스킬, 애니메이션에 대한 카메라 인덱스를 가져옵니다.
+	//			int cameraIndex = Get_CameraIndex(modelID, skillName, animName);
+	//			if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size())
+	//			{
+	//				CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
+
+	//				// 기존 포인트 초기화
+	//				pCurrentCamera->m_vecPoints.clear();
+
+	//				// 새로운 포인트 할당
+	//				for (const auto& pointData : animData.points)
+	//				{
+	//					CameraPoint point;
+	//					point.position = pointData.position;
+	//					point.rotation = pointData.rotation;
+	//					point.duration = pointData.duration;
+	//					point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
+	//					point.damping = pointData.damping;
+	//					point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
+	//					point.pWorldFloat4x4 = worldMatrixPtr;
+
+	//					pCurrentCamera->m_vecPoints.push_back(point);
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+}
+
 //void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
 //{
 //	for (const auto& cameraData : cameraDataList)

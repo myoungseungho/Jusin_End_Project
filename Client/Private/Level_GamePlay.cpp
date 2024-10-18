@@ -47,11 +47,11 @@ HRESULT CLevel_GamePlay::Initialize()
 		return S_OK;
 	}
 
-	//// 로드된 데이터를 mainCamera에 적용
-	//CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Main_Camera"));
-	//if (mainCamera) {
-	//	mainCamera->ApplyCameraData(cameraSaveData);
-	//}
+	// 로드된 데이터를 mainCamera에 적용
+	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Main_Camera"));
+	if (mainCamera) {
+		mainCamera->ApplyCameraData(cameraSaveData);
+	}
 
 	return S_OK;
 }
