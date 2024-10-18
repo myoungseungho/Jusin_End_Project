@@ -94,116 +94,116 @@ HRESULT CVirtual_Camera::Render(_float fTimeDelta)
 
 void CVirtual_Camera::Play(_float fTimeDelta)
 {
-	//if (m_currentPlayMode != CAMERA_PLAY_MODE::Playing)
-	//	return; // 현재 상태가 Playing이 아니면 업데이트하지 않음
+	if (m_currentPlayMode != CAMERA_PLAY_MODE::Playing || m_AnimationIndex == -1)
+		return; // 현재 상태가 Playing이 아니면 업데이트하지 않음
 
-	//// 만약 3개의 Point가 들었다면 Index가 CurrentPoint가 마지막이라면 Stop
-	//if (m_currentPointIndex >= m_vecPoints.size() - 1)
-	//{
-	//	// 마지막 포인트에 도달했으면 Play 모드 종료
-	//	Stop();
-	//	return;
-	//}
+	// 만약 3개의 Point가 들었다면 Index가 CurrentPoint가 마지막이라면 Stop
+	if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size() - 1)
+	{
+		// 마지막 포인트에 도달했으면 Play 모드 종료
+		Stop();
+		return;
+	}
 
-	//CameraPoint currentPoint = m_vecPoints[m_currentPointIndex];
-	//CameraPoint nextPoint = m_vecPoints[m_currentPointIndex + 1];
+	CameraPoint currentPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex];
+	CameraPoint nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
 
-	//m_elapsedTime += fTimeDelta;
+	m_elapsedTime += fTimeDelta;
 
-	//if (m_elapsedTime >= currentPoint.duration)
-	//{
-	//	// 다음 포인트로 이동
-	//	m_currentPointIndex++;
-	//	m_elapsedTime = 0.0f;
+	if (m_elapsedTime >= currentPoint.duration)
+	{
+		// 다음 포인트로 이동
+		m_currentPointIndex++;
+		m_elapsedTime = 0.0f;
 
-	//	if (m_currentPointIndex >= m_vecPoints.size() - 1)
-	//	{
-	//		// 마지막 포인트에 도달했으면 Play 모드 종료
-	//		Stop();
-	//		return;
-	//	}
+		if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size() - 1)
+		{
+			// 마지막 포인트에 도달했으면 Play 모드 종료
+			Stop();
+			return;
+		}
 
-	//	currentPoint = m_vecPoints[m_currentPointIndex];
-	//	nextPoint = m_vecPoints[m_currentPointIndex + 1];
-	//}
+		currentPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex];
+		nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
+	}
 
-	//// 보간 비율 계산
-	//float t = m_elapsedTime / currentPoint.duration;
+	// 보간 비율 계산
+	float t = m_elapsedTime / currentPoint.duration;
 
-	//// 보간 방식에 따른 t 값 조정
-	//switch (currentPoint.interpolationType)
-	//{
-	//case InterpolationType::INTERPOLATION_LINEAR_MODE:
-	//	// t는 그대로 사용
-	//	break;
-	//case InterpolationType::INTERPOLATION_DAMPING_MODE:
-	//	t = AdjustT_Damping(t, currentPoint.damping);
-	//	break;
-	//case InterpolationType::INTERPOLATION_SKIP_MODE:
-	//	// Skip 보간: 즉시 다음 포인트로 이동
-	//	t = 1.0f;
-	//	break;
-	//default:
-	//	break;
-	//}
+	// 보간 방식에 따른 t 값 조정
+	switch (currentPoint.interpolationType)
+	{
+	case InterpolationType::INTERPOLATION_LINEAR_MODE:
+		// t는 그대로 사용
+		break;
+	case InterpolationType::INTERPOLATION_DAMPING_MODE:
+		t = AdjustT_Damping(t, currentPoint.damping);
+		break;
+	case InterpolationType::INTERPOLATION_SKIP_MODE:
+		// Skip 보간: 즉시 다음 포인트로 이동
+		t = 1.0f;
+		break;
+	default:
+		break;
+	}
 
-	//// **1. 로컬 포지션 보간**
-	//_vector interpolatedPositionLocal;
-	//if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
-	//{
-	//	interpolatedPositionLocal = XMVectorLerp(XMLoadFloat3(&currentPoint.position), XMLoadFloat3(&nextPoint.position), t);
-	//}
-	//else
-	//{
-	//	interpolatedPositionLocal = XMLoadFloat3(&nextPoint.position);
-	//}
+	// **1. 로컬 포지션 보간**
+	_vector interpolatedPositionLocal;
+	if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
+	{
+		interpolatedPositionLocal = XMVectorLerp(XMLoadFloat3(&currentPoint.position), XMLoadFloat3(&nextPoint.position), t);
+	}
+	else
+	{
+		interpolatedPositionLocal = XMLoadFloat3(&nextPoint.position);
+	}
 
-	//// **2. 로컬 회전 보간 (Quaternion Slerp 사용)**
-	//_vector interpolatedRotationLocal;
-	//if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
-	//{
-	//	_vector q1 = XMLoadFloat4(&currentPoint.rotation);
-	//	_vector q2 = XMLoadFloat4(&nextPoint.rotation);
-	//	interpolatedRotationLocal = XMQuaternionSlerp(q1, q2, t);
-	//}
-	//else
-	//{
-	//	interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
-	//}
+	// **2. 로컬 회전 보간 (Quaternion Slerp 사용)**
+	_vector interpolatedRotationLocal;
+	if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
+	{
+		_vector q1 = XMLoadFloat4(&currentPoint.rotation);
+		_vector q2 = XMLoadFloat4(&nextPoint.rotation);
+		interpolatedRotationLocal = XMQuaternionSlerp(q1, q2, t);
+	}
+	else
+	{
+		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
+	}
 
-	//// **3. 모델의 월드 행렬 로드**
-	//_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
+	// **3. 모델의 월드 행렬 로드**
+	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 
-	//// **4. 로컬 포지션을 월드 포지션으로 변환**
-	//_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrix);
+	// **4. 로컬 포지션을 월드 포지션으로 변환**
+	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrix);
 
-	//// **5. 로컬 회전을 월드 회전으로 변환**
-	//// 모델의 회전 행렬 추출 (위치 정보 제거)
-	//_matrix modelRotationMatrix = modelWorldMatrix;
-	//modelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1);
+	// **5. 로컬 회전을 월드 회전으로 변환**
+	// 모델의 회전 행렬 추출 (위치 정보 제거)
+	_matrix modelRotationMatrix = modelWorldMatrix;
+	modelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1);
 
-	//// 로컬 회전 행렬 생성
-	//_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(interpolatedRotationLocal);
+	// 로컬 회전 행렬 생성
+	_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(interpolatedRotationLocal);
 
-	//// 월드 회전 행렬 계산
-	//_matrix interpolatedRotationMatrixWorld = interpolatedRotationMatrixLocal * modelRotationMatrix;
+	// 월드 회전 행렬 계산
+	_matrix interpolatedRotationMatrixWorld = interpolatedRotationMatrixLocal * modelRotationMatrix;
 
-	//// **6. 카메라의 월드 행렬 생성**
-	//_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
-	//NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
+	// **6. 카메라의 월드 행렬 생성**
+	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
+	NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
 
-	//// 월드 매트릭스에서 Right, Up, Look 벡터 추출
-	//_vector right = NewWorldMatrix.r[0];
-	//_vector up = NewWorldMatrix.r[1];
-	//_vector look = NewWorldMatrix.r[2];
-	//_vector position = NewWorldMatrix.r[3];
-	//m_vBaseCameraPosition = position;
+	// 월드 매트릭스에서 Right, Up, Look 벡터 추출
+	_vector right = NewWorldMatrix.r[0];
+	_vector up = NewWorldMatrix.r[1];
+	_vector look = NewWorldMatrix.r[2];
+	_vector position = NewWorldMatrix.r[3];
+	m_vBaseCameraPosition = position;
 
-	//// 방향 벡터 설정
-	//m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
-	//m_pTransformCom->Set_State(CTransform::STATE_UP, up);
-	//m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
+	// 방향 벡터 설정
+	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
+	m_pTransformCom->Set_State(CTransform::STATE_UP, up);
+	m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
 }
 
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2)
@@ -266,19 +266,21 @@ void CVirtual_Camera::SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* p
 	Safe_AddRef(pPlayer);
 }
 
-void CVirtual_Camera::Start_Play()
+void CVirtual_Camera::Start_Play(_int animationIndex)
 {
-	//if (m_vecPoints.size() == 0)
-	//	return;
+	if (m_mapPoints[animationIndex].size() == 0)
+		return;
 
-	//// Stopped 상태에서 Play를 시작하면 초기화
-	//if (m_currentPlayMode == Stopped) {
-	//	m_currentPointIndex = 0;
-	//	m_elapsedTime = 0.f;
-	//}
+	m_AnimationIndex = animationIndex;
 
-	//m_currentMode = CAMERA_CINEMATIC_MODE;
-	//m_currentPlayMode = Playing;
+	// Stopped 상태에서 Play를 시작하면 초기화
+	if (m_currentPlayMode == Stopped) {
+		m_currentPointIndex = 0;
+		m_elapsedTime = 0.f;
+	}
+
+	m_currentMode = CAMERA_CINEMATIC_MODE;
+	m_currentPlayMode = Playing;
 }
 
 void CVirtual_Camera::Pause()
@@ -294,16 +296,16 @@ void CVirtual_Camera::Stop()
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;
-	//Move_Point(0);
+	//Move_Point(0, m_AnimationIndex);
 }
 
 void CVirtual_Camera::Button_Stop()
 {
-	/*m_currentMode = CAMERA_FREE_MODE;
+	m_currentMode = CAMERA_FREE_MODE;
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;
-	Move_Point(0);*/
+	Move_Point(0, m_AnimationIndex);
 }
 
 void CVirtual_Camera::Free_Camera(_float fTimeDelta)

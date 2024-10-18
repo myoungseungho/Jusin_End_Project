@@ -563,7 +563,7 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 35);
 	ImVec2 button_size = ImVec2(20, 20);
 	if (ImGui::InvisibleButton("play_button", button_size))
-		m_pMainCamera->Play();
+		m_pMainCamera->Play(m_iSelected_Animation);
 
 	ImVec2 p = ImGui::GetItemRectMin();
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();

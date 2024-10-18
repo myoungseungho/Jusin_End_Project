@@ -129,9 +129,9 @@ vector<CameraPoint>& CMain_Camera::Get_VectorPoint(_int index)
 	return m_vecVirtualCamera[m_currentVirtualMode]->m_mapPoints[index];
 }
 
-void CMain_Camera::Play()
+void CMain_Camera::Play(_int animationIndex)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play();
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex);
 }
 
 void CMain_Camera::Stop()

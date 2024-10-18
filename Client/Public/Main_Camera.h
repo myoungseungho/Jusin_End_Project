@@ -51,7 +51,7 @@ public:
 	void Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
-	void Play();
+	void Play(_int animationIndex);
 	void Stop();
 	void Pause();
 	void Button_Stop();

@@ -57,7 +57,7 @@ public:
 	const _char* GetTabName() const { return m_Name; };
 	void SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
 
-	void Start_Play();
+	void Start_Play(_int animationIndex);
 	void Pause();
 	void Stop();
 	void Button_Stop();
@@ -99,6 +99,7 @@ public:
 	_float3 m_previousPosition = _float3(0.f, 17.f, -30.f);
 
 	unordered_map<_int, vector<CameraPoint>> m_mapPoints;
+	_int m_AnimationIndex = -1;
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
