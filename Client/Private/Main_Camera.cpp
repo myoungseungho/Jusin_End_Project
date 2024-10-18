@@ -163,42 +163,42 @@ void CMain_Camera::Modify_Transform(_int index, _int animationIndex)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Modify_Transform(index, animationIndex);
 }
-
-void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
-{
-	//for (const auto& cameraData : cameraDataList)
-	//{
-	//	// modelID와 skillID를 사용하여 가상 카메라의 인덱스를 찾음
-	//	int cameraIndex = Get_CameraIndex(cameraData.modelID, cameraData.skillID);
-	//	if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size()) {
-	//		CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
-
-	//		// 기존 포인트 초기화
-	//		pCurrentCamera->m_vecPoints.clear();
-
-	//		// 새로운 포인트 할당
-	//		for (const auto& pointData : cameraData.points)
-	//		{
-	//			CameraPoint point;
-	//			point.position = pointData.position;
-	//			point.rotation = pointData.rotation;
-	//			point.duration = pointData.duration;
-	//			point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
-	//			point.damping = pointData.damping;
-	//			point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
-
-	//			// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
-	//			// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
-	//			CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
-	//			CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
-	//			const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
-	//			point.pWorldFloat4x4 = worldMatrixPtr;
-
-	//			pCurrentCamera->m_vecPoints.push_back(point);
-	//		}
-	//	}
-	//}
-}
+//
+//void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
+//{
+//	for (const auto& cameraData : cameraDataList)
+//	{
+//		// modelID와 skillID를 사용하여 가상 카메라의 인덱스를 찾음
+//		int cameraIndex = Get_CameraIndex(cameraData.modelID, cameraData.skillID);
+//		if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size()) {
+//			CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
+//
+//			// 기존 포인트 초기화
+//			pCurrentCamera->m_vecPoints.clear();
+//
+//			// 새로운 포인트 할당
+//			for (const auto& pointData : cameraData.points)
+//			{
+//				CameraPoint point;
+//				point.position = pointData.position;
+//				point.rotation = pointData.rotation;
+//				point.duration = pointData.duration;
+//				point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
+//				point.damping = pointData.damping;
+//				point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
+//
+//				// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
+//				// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
+//				CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+//				CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
+//				const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
+//				point.pWorldFloat4x4 = worldMatrixPtr;
+//
+//				pCurrentCamera->m_vecPoints.push_back(point);
+//			}
+//		}
+//	}
+//}
 
 _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 {

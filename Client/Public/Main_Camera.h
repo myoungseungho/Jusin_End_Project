@@ -59,7 +59,7 @@ public:
 
 	void Move_Point(_int index, _int animationIndex);
 	void Modify_Transform(_int index, _int animationIndex);
-	void ApplyCameraData(vector<CameraData>& cameraDataList);
+	//void ApplyCameraData(vector<CameraData>& cameraDataList);
 	_int Get_CameraIndex(_int modelID, _int skillID);
 	void Delete_Points(_int animationIndex);
 	void SetPosition(_fvector position);

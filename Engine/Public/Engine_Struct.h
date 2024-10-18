@@ -113,10 +113,24 @@ namespace Engine
 		_bool hasWorldFloat4x4 = { true };
 	};
 
-	struct CameraData {
-		_int modelID;
-		_int skillID;
-		vector<CameraPoint> points;
+	struct CameraSaveData {
+		// 모델별 스킬, 애니메이션, 포인트를 저장하는 구조체
+
+		struct ModelData 
+		{
+			_int modelID;
+			struct SkillData {
+				string skillName;
+				struct AnimationData {
+					string animationName;
+					vector<CameraPoint> points;
+				};
+				vector<AnimationData> animations;
+			};
+			vector<SkillData> skills;
+		};
+
+		vector<ModelData> models;
 	};
 
 	//왜 extern이 필요할까?
@@ -126,9 +140,7 @@ namespace Engine
 	//extern 키워드는 "이 변수의 정의는 다른 소스 파일에 있다"는 의미로 사용됩니다.
 
 	extern unordered_map<_int, _wstring> modelIDToString;
-	extern unordered_map<_int, _wstring> skillIDToString;
 	extern unordered_map<_wstring, _int> stringToModelID;
-	extern unordered_map<_wstring, _int> stringToSkillID;
 
 #pragma endregion
 

@@ -16,10 +16,10 @@ public:
 		_float		fFovy, fNear, fFar;
 	}CAMERA_DESC;
 
-	struct CameraSaveData {
-		//vector<CCamera*>& vecVirtualCamera;
-		//unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
-	};
+	//struct CameraSaveData {
+	//	vector<CCamera*>& vecVirtualCamera;
+	//	unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
+	//};
 
 protected:
 	CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

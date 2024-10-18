@@ -1,129 +1,136 @@
 [VirtualCamera]
-ModelID: MODELID_DEFAULT
-SkillID: SKILL_NOT
+ModelID: MODELID_SON
+
+[Skill]
+SkillName: Son_Skill1
+
+[Animation]
+AnimationName: Son_Skill1_Anim1
 PointCount: 0
 
-[VirtualCamera]
-ModelID: MODELID_SON
-SkillID: SKILL1
-PointCount: 5
+[Animation]
+AnimationName: Son_Skill1_Anim2
+PointCount: 0
 
-[CameraPoint]
-Position: 7.64254 -11.3394 41.1668
-Rotation: 0.994756 0.000807713 -0.101966 0.00788006
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
+[Animation]
+AnimationName: Son_Skill1_Anim3
+PointCount: 0
 
-[CameraPoint]
-Position: 5.13717 -11.0817 25.2845
-Rotation: 0.995312 -0.00149328 -0.0954436 -0.015572
-Duration: 0.3
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
+[Skill]
+SkillName: Son_Skill2
 
-[CameraPoint]
-Position: 2.63676 -7.06708 13.0548
-Rotation: 0.984003 0.013212 -0.0826715 0.157257
-Duration: 1
-InterpolationType: 2
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: 7.64254 -11.3394 41.1668
-Rotation: 0.994756 0.000807713 -0.101966 0.00788006
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: 4.37978 -5.76152 17.8778
-Rotation: 0.986168 -0.00488704 0.0295634 0.16302
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[VirtualCamera]
-ModelID: MODELID_SON
-SkillID: SKILL2
+[Animation]
+AnimationName: Son_Skill2_Anim1
 PointCount: 3
 
 [CameraPoint]
-Position: 6.36726 -10.6407 14.3867
-Rotation: 0.986908 0.00537265 -0.157647 0.0336344
-Duration: 50
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: 14.5251 -10.6407 9.2063
-Rotation: 0.902437 0.0168709 -0.429026 0.0354873
+Position: 9.39187 -12.5072 24.1139
+Rotation: 0.984696 -0.010224 -0.162587 -0.0619208
 Duration: 1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 17.9912 -10.6407 -2.39207
-Rotation: 0.741209 0.0350958 -0.669229 0.0388707
+Position: 18.613 -12.5072 14.5006
+Rotation: 0.909378 -0.0362554 -0.406368 -0.081133
 Duration: 1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
-[VirtualCamera]
-ModelID: MODELID_SON
-SkillID: SKILL3
+[CameraPoint]
+Position: 22.6899 -12.5072 -5.49289
+Rotation: -0.647775 0.0674991 0.756632 0.0577878
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Skill2_Anim2
 PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_HIT
-SkillID: SKILL1
+
+[Skill]
+SkillName: Hit_Skill1
+
+[Animation]
+AnimationName: Hit_Skill1_Anim1
 PointCount: 0
 
-[VirtualCamera]
-ModelID: MODELID_HIT
-SkillID: SKILL2
-PointCount: 0
-
-[VirtualCamera]
-ModelID: MODELID_HIT
-SkillID: SKILL3
-PointCount: 0
-
-[VirtualCamera]
-ModelID: MODELID_MINE
-SkillID: SKILL1
+[Animation]
+AnimationName: Hit_Skill1_Anim2
 PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_MINE
-SkillID: SKILL2
+
+[Skill]
+SkillName: Mine_Skill1
+
+[Animation]
+AnimationName: Mine_Skill1_Anim1
 PointCount: 0
 
-[VirtualCamera]
-ModelID: MODELID_MINE
-SkillID: SKILL3
+[Animation]
+AnimationName: Mine_Skill1_Anim2
+PointCount: 0
+
+[Skill]
+SkillName: Mine_Skill2
+
+[Animation]
+AnimationName: Mine_Skill2_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Mine_Skill2_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Mine_Skill2_Anim3
 PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_21
-SkillID: SKILL1
+
+[Skill]
+SkillName: 21_Skill1
+
+[Animation]
+AnimationName: 21_Skill1_Anim1
 PointCount: 0
 
-[VirtualCamera]
-ModelID: MODELID_21
-SkillID: SKILL2
+[Skill]
+SkillName: 21_Skill2
+
+[Animation]
+AnimationName: 21_Skill2_Anim1
 PointCount: 0
 
-[VirtualCamera]
-ModelID: MODELID_21
-SkillID: SKILL3
+[Animation]
+AnimationName: 21_Skill2_Anim2
+PointCount: 0
+
+[Skill]
+SkillName: 21_Skill3
+
+[Animation]
+AnimationName: 21_Skill3_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill3_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill3_Anim3
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill3_Anim4
 PointCount: 0
 

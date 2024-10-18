@@ -296,7 +296,6 @@ void CVirtual_Camera::Stop()
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;
-	//Move_Point(0, m_AnimationIndex);
 }
 
 void CVirtual_Camera::Button_Stop()

@@ -142,7 +142,7 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	}
 
 	////각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
-	//IMGUI_Save_Button();
+	IMGUI_Save_Button();
 }
 
 
@@ -637,25 +637,78 @@ void CIMGUI_Camera_Tab::IMGUI_Stop_Button()
 
 void CIMGUI_Camera_Tab::IMGUI_Save_Button()
 {
-	//if (ImGui::Button("Save"))
-	//{
-	//	// 기존의 CVirtual_Camera* 벡터 가져오기
-	//	vector<CVirtual_Camera*> virtualCamerasDerived = m_pMainCamera->m_vecVirtualCamera;
+	if (ImGui::Button("Save"))
+	{
+		// CameraSaveData 구조체 초기화
+		CameraSaveData saveData;
 
-	//	// CCamera* 타입의 새로운 벡터 생성 및 업캐스팅
-	//	vector<CCamera*> virtualCamerasBase;
-	//	virtualCamerasBase.reserve(virtualCamerasDerived.size());
-	//	for (auto cam : virtualCamerasDerived)
-	//	{
-	//		virtualCamerasBase.push_back(static_cast<CCamera*>(cam));
-	//	}
+		// 모델별 데이터 순회
+		for (const auto& modelPair : m_ModelSkills)
+		{
+			//모델 Enum
+			CAMERA_MODELID modelID = modelPair.first;
+			//모델 string
+			const vector<string>& skills = modelPair.second;
 
-	//	// CameraSaveData 구조체 초기화
-	//	CCamera::CameraSaveData saveData = { virtualCamerasBase, m_CameraIndexMap };
+			CameraSaveData::ModelData modelData;
+			//모델 ID
+			modelData.modelID = (_int)modelID;
 
-	//	// 파일 매니저를 통해 저장
-	//	m_pGameInstance->Save_All_CameraPoints(filename, &saveData);
-	//}
+			//모델들 순회
+			for (size_t skillIdx = 0; skillIdx < skills.size(); ++skillIdx)
+			{
+				//스킬 이름
+				const string& skillName = skills[skillIdx];
+				CameraSaveData::ModelData::SkillData skillData;
+				skillData.skillName = skillName;
+
+				// 해당 모델과 스킬에 매핑된 카메라 인덱스 찾기
+				auto cameraKey = make_pair(modelID, static_cast<int>(skillIdx));
+				auto cameraIt = m_CameraIndexMap.find(cameraKey);
+				
+				_int cameraIndex = cameraIt->second;
+
+				//각 모델과 스킬에 따른 버츄얼 카메라
+				CVirtual_Camera* virtualCamera = m_pMainCamera->m_vecVirtualCamera[cameraIndex];
+
+				// 해당 스킬에 대한 애니메이션 목록 가져오기
+				auto animIt = m_SkillAnimations.find(cameraKey);
+
+				//애니메이션들의 이름
+				const vector<string>& animations = animIt->second;
+
+				for (size_t animIdx = 0; animIdx < animations.size(); ++animIdx)
+				{
+					const string& animationName = animations[animIdx];
+					CameraSaveData::ModelData::SkillData::AnimationData animData;
+					animData.animationName = animationName;
+
+					// 해당 애니메이션의 포인트 가져오기
+					vector<CameraPoint> points = virtualCamera->m_mapPoints[static_cast<int>(animIdx)];
+					animData.points = points;
+
+					skillData.animations.push_back(animData);
+				}
+
+				modelData.skills.push_back(skillData);
+			}
+
+			saveData.models.push_back(modelData);
+		}
+
+		// 파일 매니저를 통해 저장
+		HRESULT hr = m_pGameInstance->Save_All_CameraPoints(filename, &saveData);
+		if (SUCCEEDED(hr))
+		{
+			// 사용자에게 저장 완료 메시지 표시
+			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Camera points saved successfully.");
+		}
+		else
+		{
+			// 저장 실패 메시지 표시
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "Failed to save camera points.");
+		}
+	}
 }
 
 

@@ -146,211 +146,206 @@ HRESULT CFile_Manager::ParseLine(const wstring& line, FILEDATA& obj) {
 		return E_FAIL;
 }
 
-HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg)
+HRESULT CFile_Manager::Save_All_CameraPoints(const std::wstring& filename, void* pArg)
 {
-	//if (nullptr == pArg)
-	//	return E_FAIL;
+	if (nullptr == pArg)
+		return E_FAIL;
 
-	//// pArg를 CameraSaveData로 캐스팅
-	//CCamera::CameraSaveData* pSaveData = static_cast<CCamera::CameraSaveData*>(pArg);
-	//if (nullptr == pSaveData)
-	//	return E_FAIL;
+	std::wofstream file(filename);
+	if (!file.is_open())
+	{
+		// 파일 생성 실패 처리
+		return E_FAIL;
+	}
 
-	//const auto& vecVirtualCamera = pSaveData->vecVirtualCamera;
-	//const auto& cameraIndexMap = pSaveData->cameraIndexMap;
+	CameraSaveData* saveData = static_cast<CameraSaveData*>(pArg);
 
-	//// 파일 스트림 열기
-	//std::wofstream file(filename);
-	//if (!file.is_open())
-	//{
-	//	// 파일 생성 실패 처리
-	//	return E_FAIL;
-	//}
+	// 각 모델 순회
+	for (const auto& model : saveData->models)
+	{
+		file << L"[VirtualCamera]\n";
+		auto modelIt = modelIDToString.find(model.modelID);
+		if (modelIt != modelIDToString.end())
+		{
+			file << L"ModelID: " << modelIt->second << L"\n\n";
+		}
+		else
+		{
+			file << L"ModelID: " << L"Unknown" << L"\n\n";
+		}
 
-	//// 모든 가상 카메라 순회
-	//for (size_t i = 0; i < vecVirtualCamera.size(); ++i)
-	//{
-	//	CCamera* pVirtualCamera = vecVirtualCamera[i];
+		// 각 스킬 순회
+		for (const auto& skill : model.skills)
+		{
+			file << L"[Skill]\n";
+			file << L"SkillName: " << skill.skillName.c_str() << L"\n\n";
 
-	//	// 모델 ID와 스킬 ID를 얻기 위해 매핑된 값을 찾음
-	//	_int modelID = -1;
-	//	_int skillID = -1;
+			// 각 애니메이션 순회
+			for (const auto& anim : skill.animations)
+			{
+				file << L"[Animation]\n";
+				file << L"AnimationName: " << anim.animationName.c_str() << L"\n";
+				file << L"PointCount: " << anim.points.size() << L"\n\n";
 
-	//	for (const auto& pair : cameraIndexMap)
-	//	{
-	//		if (pair.second == i)
-	//		{
-	//			modelID = pair.first.first;
-	//			skillID = pair.first.second;
-	//			break;
-	//		}
-	//	}
+				// 각 포인트 순회
+				for (const auto& point : anim.points)
+				{
+					file << L"[CameraPoint]\n";
+					file << L"Position: " << point.position.x << L" " << point.position.y << L" " << point.position.z << L"\n";
+					file << L"Rotation: " << point.rotation.x << L" " << point.rotation.y << L" " << point.rotation.z << L" " << point.rotation.w << L"\n";
+					file << L"Duration: " << point.duration << L"\n";
+					file << L"InterpolationType: " << point.interpolationType << L"\n";
+					file << L"Damping: " << point.damping << L"\n";
+					file << L"HasWorldFloat4x4: " << (point.hasWorldFloat4x4 ? 1 : 0) << L"\n\n";
+				}
+			}
+		}
+	}
 
-	//	// 가상 카메라 섹션 시작
-	//	file << L"[VirtualCamera]\n";
-	//	file << L"ModelID: " << modelIDToString[modelID] << L"\n";
-	//	file << L"SkillID: " << skillIDToString[skillID] << L"\n";
-
-	//	const auto& vecPoints = pVirtualCamera->m_vecPoints;
-	//	file << L"PointCount: " << vecPoints.size() << L"\n\n";
-
-	//	// 각 CameraPoint 저장
-	//	for (const auto& point : vecPoints)
-	//	{
-	//		file << L"[CameraPoint]\n";
-	//		file << L"Position: " << point.position.x << L" " << point.position.y << L" " << point.position.z << L"\n";
-	//		file << L"Rotation: " << point.rotation.x << L" " << point.rotation.y << L" " << point.rotation.z << L" " << point.rotation.w << L"\n";
-	//		file << L"Duration: " << point.duration << L"\n";
-	//		file << L"InterpolationType: " << point.interpolationType << L"\n";
-	//		file << L"Damping: " << point.damping << L"\n";
-	//		file << L"HasWorldFloat4x4: " << (point.hasWorldFloat4x4 ? 1 : 0) << L"\n\n";
-	//	}
-	//}
-
-	//file.close();
-
+	file.close();
 	return S_OK;
 }
 
-vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
-{
-	vector<CameraData> cameraDataList;
-
-	//// 파일 스트림 열기
-	//std::wifstream file(filename);
-	//if (!file.is_open()) {
-	//	// 파일 열기 실패 처리
-	//	return cameraDataList; // 빈 리스트 반환
-	//}
-
-	//std::wstring line;
-	//CameraData currentCameraData;
-	//bool insideVirtualCamera = false;
-
-	//while (std::getline(file, line)) {
-	//	// 공백 라인 무시
-	//	if (line.empty())
-	//		continue;
-
-	//	if (line == L"[VirtualCamera]") {
-	//		// 이전 VirtualCamera 데이터 저장
-	//		if (insideVirtualCamera) {
-	//			cameraDataList.push_back(currentCameraData);
-	//		}
-
-	//		// 새로운 CameraData 초기화
-	//		currentCameraData = CameraData();
-	//		currentCameraData.points.clear();
-
-	//		// ModelID 읽기
-	//		std::getline(file, line);
-	//		size_t colonPos = line.find(L":");
-	//		if (colonPos != std::wstring::npos) {
-	//			size_t valueStart = colonPos + 1;
-	//			valueStart = line.find_first_not_of(L" \t", valueStart);
-	//			std::wstring modelIDStr = line.substr(valueStart);
-
-	//			if (stringToModelID.find(modelIDStr) != stringToModelID.end()) {
-	//				currentCameraData.modelID = stringToModelID[modelIDStr];
-	//			}
-	//			else {
-	//				currentCameraData.modelID = -1; // 기본값 설정
-	//			}
-	//		}
-	//		else {
-	//			currentCameraData.modelID = -1; // 기본값 설정
-	//		}
-
-	//		// SkillID 읽기
-	//		std::getline(file, line);
-	//		colonPos = line.find(L":");
-	//		if (colonPos != std::wstring::npos) {
-	//			size_t valueStart = colonPos + 1;
-	//			valueStart = line.find_first_not_of(L" \t", valueStart);
-	//			std::wstring skillIDStr = line.substr(valueStart);
-
-	//			if (stringToSkillID.find(skillIDStr) != stringToSkillID.end()) {
-	//				currentCameraData.skillID = stringToSkillID[skillIDStr];
-	//			}
-	//			else {
-	//				currentCameraData.skillID = -1; // 기본값 설정
-	//			}
-	//		}
-	//		else {
-	//			currentCameraData.skillID = -1; // 기본값 설정
-	//		}
-
-	//		// PointCount 읽기
-	//		std::getline(file, line);
-	//		colonPos = line.find(L":");
-	//		if (colonPos != std::wstring::npos) {
-	//			size_t valueStart = colonPos + 1;
-	//			valueStart = line.find_first_not_of(L" \t", valueStart);
-	//			size_t pointCount = std::stoul(line.substr(valueStart));
-	//		}
-	//		else {
-	//			// 기본값 또는 에러 처리
-	//		}
-
-	//		// 다음 라인 (빈 줄) 건너뛰기
-	//		std::getline(file, line);
-
-	//		insideVirtualCamera = true;
-	//	}
-	//	else if (line == L"[CameraPoint]") {
-	//		CameraPoint point;
-
-	//		// Position 읽기
-	//		std::getline(file, line);
-	//		{
-	//			std::wistringstream iss(line.substr(line.find(L":") + 1));
-	//			iss >> point.position.x >> point.position.y >> point.position.z;
-	//		}
-
-	//		// Rotation 읽기
-	//		std::getline(file, line);
-	//		{
-	//			std::wistringstream iss(line.substr(line.find(L":") + 1));
-	//			iss >> point.rotation.x >> point.rotation.y >> point.rotation.z >> point.rotation.w;
-	//		}
-
-	//		// Duration 읽기
-	//		std::getline(file, line);
-	//		point.duration = std::stof(line.substr(line.find(L":") + 1));
-
-	//		// InterpolationType 읽기
-	//		std::getline(file, line);
-	//		point.interpolationType = std::stoi(line.substr(line.find(L":") + 1));
-
-	//		// Damping 읽기
-	//		std::getline(file, line);
-	//		point.damping = std::stof(line.substr(line.find(L":") + 1));
-
-	//		// HasWorldFloat4x4 읽기
-	//		std::getline(file, line);
-	//		point.hasWorldFloat4x4 = stoi(line.substr(line.find(L":") + 1));
-
-	//		// 포인트 추가
-	//		currentCameraData.points.push_back(point);
-
-	//		// 다음 라인 (빈 줄) 건너뛰기
-	//		std::getline(file, line);
-	//	}
-	//	else {
-	//		// 다른 경우는 무시
-	//	}
-	//}
-
-	//// 파일의 끝에 도달했을 때 마지막 VirtualCamera 데이터 저장
-	//if (insideVirtualCamera) {
-	//	cameraDataList.push_back(currentCameraData);
-	//}
-
-	//file.close();
-	//return cameraDataList;
-
-	return cameraDataList;
-}
+//
+//vector<CameraData> CFile_Manager::Load_All_CameraPoints(const wstring& filename)
+//{
+//	vector<CameraData> cameraDataList;
+//
+//	//// 파일 스트림 열기
+//	//std::wifstream file(filename);
+//	//if (!file.is_open()) {
+//	//	// 파일 열기 실패 처리
+//	//	return cameraDataList; // 빈 리스트 반환
+//	//}
+//
+//	//std::wstring line;
+//	//CameraData currentCameraData;
+//	//bool insideVirtualCamera = false;
+//
+//	//while (std::getline(file, line)) {
+//	//	// 공백 라인 무시
+//	//	if (line.empty())
+//	//		continue;
+//
+//	//	if (line == L"[VirtualCamera]") {
+//	//		// 이전 VirtualCamera 데이터 저장
+//	//		if (insideVirtualCamera) {
+//	//			cameraDataList.push_back(currentCameraData);
+//	//		}
+//
+//	//		// 새로운 CameraData 초기화
+//	//		currentCameraData = CameraData();
+//	//		currentCameraData.points.clear();
+//
+//	//		// ModelID 읽기
+//	//		std::getline(file, line);
+//	//		size_t colonPos = line.find(L":");
+//	//		if (colonPos != std::wstring::npos) {
+//	//			size_t valueStart = colonPos + 1;
+//	//			valueStart = line.find_first_not_of(L" \t", valueStart);
+//	//			std::wstring modelIDStr = line.substr(valueStart);
+//
+//	//			if (stringToModelID.find(modelIDStr) != stringToModelID.end()) {
+//	//				currentCameraData.modelID = stringToModelID[modelIDStr];
+//	//			}
+//	//			else {
+//	//				currentCameraData.modelID = -1; // 기본값 설정
+//	//			}
+//	//		}
+//	//		else {
+//	//			currentCameraData.modelID = -1; // 기본값 설정
+//	//		}
+//
+//	//		// SkillID 읽기
+//	//		std::getline(file, line);
+//	//		colonPos = line.find(L":");
+//	//		if (colonPos != std::wstring::npos) {
+//	//			size_t valueStart = colonPos + 1;
+//	//			valueStart = line.find_first_not_of(L" \t", valueStart);
+//	//			std::wstring skillIDStr = line.substr(valueStart);
+//
+//	//			if (stringToSkillID.find(skillIDStr) != stringToSkillID.end()) {
+//	//				currentCameraData.skillID = stringToSkillID[skillIDStr];
+//	//			}
+//	//			else {
+//	//				currentCameraData.skillID = -1; // 기본값 설정
+//	//			}
+//	//		}
+//	//		else {
+//	//			currentCameraData.skillID = -1; // 기본값 설정
+//	//		}
+//
+//	//		// PointCount 읽기
+//	//		std::getline(file, line);
+//	//		colonPos = line.find(L":");
+//	//		if (colonPos != std::wstring::npos) {
+//	//			size_t valueStart = colonPos + 1;
+//	//			valueStart = line.find_first_not_of(L" \t", valueStart);
+//	//			size_t pointCount = std::stoul(line.substr(valueStart));
+//	//		}
+//	//		else {
+//	//			// 기본값 또는 에러 처리
+//	//		}
+//
+//	//		// 다음 라인 (빈 줄) 건너뛰기
+//	//		std::getline(file, line);
+//
+//	//		insideVirtualCamera = true;
+//	//	}
+//	//	else if (line == L"[CameraPoint]") {
+//	//		CameraPoint point;
+//
+//	//		// Position 읽기
+//	//		std::getline(file, line);
+//	//		{
+//	//			std::wistringstream iss(line.substr(line.find(L":") + 1));
+//	//			iss >> point.position.x >> point.position.y >> point.position.z;
+//	//		}
+//
+//	//		// Rotation 읽기
+//	//		std::getline(file, line);
+//	//		{
+//	//			std::wistringstream iss(line.substr(line.find(L":") + 1));
+//	//			iss >> point.rotation.x >> point.rotation.y >> point.rotation.z >> point.rotation.w;
+//	//		}
+//
+//	//		// Duration 읽기
+//	//		std::getline(file, line);
+//	//		point.duration = std::stof(line.substr(line.find(L":") + 1));
+//
+//	//		// InterpolationType 읽기
+//	//		std::getline(file, line);
+//	//		point.interpolationType = std::stoi(line.substr(line.find(L":") + 1));
+//
+//	//		// Damping 읽기
+//	//		std::getline(file, line);
+//	//		point.damping = std::stof(line.substr(line.find(L":") + 1));
+//
+//	//		// HasWorldFloat4x4 읽기
+//	//		std::getline(file, line);
+//	//		point.hasWorldFloat4x4 = stoi(line.substr(line.find(L":") + 1));
+//
+//	//		// 포인트 추가
+//	//		currentCameraData.points.push_back(point);
+//
+//	//		// 다음 라인 (빈 줄) 건너뛰기
+//	//		std::getline(file, line);
+//	//	}
+//	//	else {
+//	//		// 다른 경우는 무시
+//	//	}
+//	//}
+//
+//	//// 파일의 끝에 도달했을 때 마지막 VirtualCamera 데이터 저장
+//	//if (insideVirtualCamera) {
+//	//	cameraDataList.push_back(currentCameraData);
+//	//}
+//
+//	//file.close();
+//	//return cameraDataList;
+//
+//	return cameraDataList;
+//}
 
 
 CFile_Manager* CFile_Manager::Create()
