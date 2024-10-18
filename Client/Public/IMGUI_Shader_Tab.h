@@ -35,7 +35,7 @@ public:
 protected:
 	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	virtual ~CIMGUI_Shader_Tab() = default;
-
+	
 public:
 	HRESULT Initialize() override;
 	void Render(_float fTimeDelta) override;
@@ -86,6 +86,12 @@ private: /* ImNodes 와 관련된 멤버 변수 */
 	
 	unordered_map<int, ImVec2>	node_positions;					// 탭 전환시 노드 위치가 초기화되는데 그걸 막기위해 항상 노드들의 위치를 모두 저장
 
+public:
+	void Save_ClientBinary();
+
+private:
+
+	//vector
 public:
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture);
 	virtual void Free() override;

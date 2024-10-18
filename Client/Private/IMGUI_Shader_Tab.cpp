@@ -731,6 +731,11 @@ void CIMGUI_Shader_Tab::Draw_MusicButton(CShader_Texture* pShaderTexture)
     draw_list->AddRectFilled(reset_rect_pos[0], reset_rect_pos[1], reset_color);
 }
 
+void CIMGUI_Shader_Tab::Save_ClientBinary()
+{
+
+}
+
 void CIMGUI_Shader_Tab::Check_Create_Link()
 {
     // start ÁÖ´Â³ð end ¹Þ´Â³ð

@@ -88,6 +88,9 @@
     <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
       <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Effect_Rect\Shader_Materials">
+      <UniqueIdentifier>{4777c123-625a-4580-b4ad-aaf08a2c4ad9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -292,6 +295,9 @@
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h">
       <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Shader_Material.h">
+      <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -429,6 +435,9 @@
     <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Shader_Material.cpp">
+      <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -454,6 +463,12 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

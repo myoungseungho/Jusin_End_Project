@@ -191,6 +191,7 @@
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
+    <ClInclude Include="..\Public\Shader_Material.h" />
     <ClInclude Include="..\Public\Shader_Texture.h" />
     <ClInclude Include="..\Public\SpaceCliff.h" />
     <ClInclude Include="..\Public\SpaceEarth.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
     <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp" />
+    <ClCompile Include="..\Private\Shader_Material.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />
     <ClCompile Include="..\Private\SpaceCliff.cpp" />
     <ClCompile Include="..\Private\SpaceEarth.cpp" />
@@ -267,8 +269,10 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>

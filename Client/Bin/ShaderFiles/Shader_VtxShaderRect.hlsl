@@ -19,6 +19,20 @@ bool g_isSprite;
 float2 g_fSpriteSize;
 float2 g_fSpriteCurPos;
 
+struct TestInA
+{
+    float fAlpha;
+};
+
+struct Test
+{
+	int dkfewadf;
+    TestInA Alpha;
+};
+
+texture2D aaa[100];
+Test g_Test[100];
+
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -110,7 +124,7 @@ PS_OUT PS_MAIN(PS_IN In)
         {
             vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
             Out.vColor.rgb = vDiffuse.rgb;
-            Out.vColor.a = step(0.01, Out.vColor.a);
+          //  Out.vColor.a = step(0.01, Out.vColor.a);
         }
         
         if (isAlpha == true) 

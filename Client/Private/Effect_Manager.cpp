@@ -325,12 +325,19 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 
-				if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size())
-				{
-					Safe_Release(m_TestEffect[iCurTestEffectIndex]);
 
-					m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+				_int iCount = 0;
+				for (auto& iter : m_TestEffect)
+				{
+					if (iter->m_iUnique_Index == iCurTestEffectIndex)
+					{
+						Safe_Release(iter);
+						m_TestEffect.erase(m_TestEffect.begin() + iCount);
+						break;
+					}
+					iCount++;
 				}
+
 			}
 		}
 	}
@@ -361,11 +368,16 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 
-				if (iCurTestEffectIndex >= 0 && iCurTestEffectIndex < m_TestEffect.size())
+				_int iCount = 0;
+				for (auto& iter : m_TestEffect)
 				{
-					Safe_Release(m_TestEffect[iCurTestEffectIndex]);
-
-					m_TestEffect.erase(m_TestEffect.begin() + iCurTestEffectIndex);
+					if (iter->m_iUnique_Index == iCurTestEffectIndex)
+					{
+						Safe_Release(iter);
+						m_TestEffect.erase(m_TestEffect.begin() + iCount);
+						break;
+					}
+					iCount++;
 				}
 			}
 		}
