@@ -32,7 +32,7 @@ HRESULT CMonster::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pModelCom->SetUp_Animation(0, false, 0.1f);
+	m_pModelCom->SetUp_Animation(1, false, 0.1f);
 
 	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	mainCamera->SetPlayer(CMain_Camera::PLAYER_2P, this);

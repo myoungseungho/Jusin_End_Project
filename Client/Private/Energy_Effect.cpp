@@ -43,14 +43,14 @@ void CEnergy_Effect::Update(_float fTimeDelta)
 
 	_float speed = 0.1f;
 
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	/*if (GetAsyncKeyState(VK_UP) & 0x8000)
 		m_fY += speed;
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		m_fY -= speed;
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-		m_fX -= speed;
+		m_fX -= speed;*/
 
 	m_fX += speed;
 
