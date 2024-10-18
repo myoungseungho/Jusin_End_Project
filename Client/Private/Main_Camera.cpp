@@ -109,24 +109,24 @@ void CMain_Camera::Late_Update(_float fTimeDelta)
 
 void CMain_Camera::Set_Virtual_Camera(VIRTUAL_CAMERA mode)
 {
-	m_currentVirtualMode = mode; 
+	m_currentVirtualMode = mode;
 	m_vecVirtualCamera[m_currentVirtualMode]->m_currentMode = CVirtual_Camera::CAMERA_FREE_MODE;
 }
 
-void CMain_Camera::Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4)
+void CMain_Camera::Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr, damping, hasWorldFloat4x4);
+	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr, damping, hasWorldFloat4x4, animationIndex);
 }
 
-void CMain_Camera::Remove_Point(_int currentIndex)
+void CMain_Camera::Remove_Point(_int currentIndex, _int animationIndex)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Remove_Point(currentIndex);
+	m_vecVirtualCamera[m_currentVirtualMode]->Remove_Point(currentIndex, animationIndex);
 }
 
-vector<CameraPoint>& CMain_Camera::Get_VectorPoint()
+vector<CameraPoint>& CMain_Camera::Get_VectorPoint(_int index)
 {
 	//현재 메인카메라가 사용하고 있는 가상카메라의 listPoints를 가져온다.
-	return m_vecVirtualCamera[m_currentVirtualMode]->m_vecPoints;
+	return m_vecVirtualCamera[m_currentVirtualMode]->m_mapPoints[index];
 }
 
 void CMain_Camera::Play()
@@ -166,38 +166,38 @@ void CMain_Camera::Modify_Transform(_int index)
 
 void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)
 {
-	for (const auto& cameraData : cameraDataList)
-	{
-		// modelID와 skillID를 사용하여 가상 카메라의 인덱스를 찾음
-		int cameraIndex = Get_CameraIndex(cameraData.modelID, cameraData.skillID);
-		if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size()) {
-			CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
+	//for (const auto& cameraData : cameraDataList)
+	//{
+	//	// modelID와 skillID를 사용하여 가상 카메라의 인덱스를 찾음
+	//	int cameraIndex = Get_CameraIndex(cameraData.modelID, cameraData.skillID);
+	//	if (cameraIndex >= 0 && cameraIndex < m_vecVirtualCamera.size()) {
+	//		CCamera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
 
-			// 기존 포인트 초기화
-			pCurrentCamera->m_vecPoints.clear();
+	//		// 기존 포인트 초기화
+	//		pCurrentCamera->m_vecPoints.clear();
 
-			// 새로운 포인트 할당
-			for (const auto& pointData : cameraData.points)
-			{
-				CameraPoint point;
-				point.position = pointData.position;
-				point.rotation = pointData.rotation;
-				point.duration = pointData.duration;
-				point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
-				point.damping = pointData.damping;
-				point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
+	//		// 새로운 포인트 할당
+	//		for (const auto& pointData : cameraData.points)
+	//		{
+	//			CameraPoint point;
+	//			point.position = pointData.position;
+	//			point.rotation = pointData.rotation;
+	//			point.duration = pointData.duration;
+	//			point.interpolationType = static_cast<InterpolationType>(pointData.interpolationType);
+	//			point.damping = pointData.damping;
+	//			point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
 
-				// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
-				// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
-				CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
-				CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
-				const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
-				point.pWorldFloat4x4 = worldMatrixPtr;
+	//			// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
+	//			// 각 카메라에 매핑된 모델의 Transform을 가져오는것도 만들긴해야함
+	//			CGameObject* model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+	//			CTransform* modelTransform = static_cast<CTransform*>(model->Get_Component(TEXT("Com_Transform")));
+	//			const _float4x4* worldMatrixPtr = modelTransform->Get_WorldMatrixPtr();
+	//			point.pWorldFloat4x4 = worldMatrixPtr;
 
-				pCurrentCamera->m_vecPoints.push_back(point);
-			}
-		}
-	}
+	//			pCurrentCamera->m_vecPoints.push_back(point);
+	//		}
+	//	}
+	//}
 }
 
 _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
@@ -243,9 +243,9 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 	return index;
 }
 
-void CMain_Camera::Delete_Points()
+void CMain_Camera::Delete_Points(_int animationIndex)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Delete_Points();
+	m_vecVirtualCamera[m_currentVirtualMode]->Delete_Points(animationIndex);
 }
 
 void CMain_Camera::SetPosition(_fvector position)
@@ -257,6 +257,11 @@ void CMain_Camera::SetPosition(_fvector position)
 void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 {
 	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->SetPlayer(state, pPlayer);
+}
+
+const char* CMain_Camera::Get_Current_CameraName()
+{
+	return m_vecVirtualCamera[m_currentVirtualMode]->GetTabName();
 }
 
 

@@ -19,35 +19,35 @@ namespace Engine
 	};
 
     std::unordered_map<_int, _wstring> modelIDToString = {
-        {MODELID_NOT, L"MODELID_NOT"},
-        {MODELID_DEFAULT, L"MODELID_DEFAULT"},
-        {MODELID_SON, L"MODELID_SON"},
-        {MODELID_HIT, L"MODELID_HIT"},
-        {MODELID_MINE, L"MODELID_MINE"},
-        {MODELID_21, L"MODELID_21"}
+        {-1, L"MODELID_NOT"},
+        {0, L"MODELID_DEFAULT"},
+        {1, L"MODELID_SON"},
+        {2, L"MODELID_HIT"},
+        {3, L"MODELID_MINE"},
+        {4, L"MODELID_21"}
     };
 
     std::unordered_map<_int, _wstring> skillIDToString = {
-        {SKILL_NOT, L"SKILL_NOT"},
+        /*{SKILL_NOT, L"SKILL_NOT"},
         {SKILL1, L"SKILL1"},
         {SKILL2, L"SKILL2"},
-        {SKILL3, L"SKILL3"}
+        {SKILL3, L"SKILL3"}*/
     };
 
     std::unordered_map<_wstring, _int> stringToModelID = {
-        {L"MODELID_NOT", MODELID_NOT},
-        {L"MODELID_DEFAULT", MODELID_DEFAULT},
-        {L"MODELID_SON", MODELID_SON},
-        {L"MODELID_HIT", MODELID_HIT},
-        {L"MODELID_MINE", MODELID_MINE},
-        {L"MODELID_21", MODELID_21}
+        {L"MODELID_NOT", -1},
+        {L"MODELID_DEFAULT", 0},
+        {L"MODELID_SON", 1},
+        {L"MODELID_HIT", 2},
+        {L"MODELID_MINE", 3},
+        {L"MODELID_21", 4}
     };
 
     std::unordered_map<_wstring, _int> stringToSkillID = {
-        {L"SKILL_NOT", SKILL_NOT},
-        {L"SKILL1", SKILL1},
-        {L"SKILL2", SKILL2},
-        {L"SKILL3", SKILL3}
+    /*    {L"SKILL_NOT", -1},
+        {L"SKILL1", 0},
+        {L"SKILL2", 1},
+        {L"SKILL3", 2}*/
     };
 
 }

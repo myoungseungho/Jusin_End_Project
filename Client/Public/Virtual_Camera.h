@@ -22,6 +22,13 @@ public:
 		Stopped
 	};
 
+	enum InterpolationType {
+		INTERPOLATION_LINEAR_MODE,
+		INTERPOLATION_DAMPING_MODE,
+		INTERPOLATION_SKIP_MODE,
+		INTERPOLATION_END
+	};
+
 protected:
 	CVirtual_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVirtual_Camera(const CVirtual_Camera& Prototype);
@@ -35,12 +42,12 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Add_Point(_float duration, InterpolationType type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4);
-	void Remove_Point(_int currentIndex);
+	void Add_Point(_float duration, _int type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
+	void Remove_Point(_int currentIndex, _int animationIndex);
 	void Move_Point(_int index);
 	void Modify_Transform(_int index);
 	_float AdjustT_Damping(_float t, _float damping);
-	void Delete_Points();
+	void Delete_Points(_int animationIndex);
 
 	void ApplyCameraShake(_float fTimeDelta);
 	void StartCameraShake(_float fDuration, _float fMagnitude);
@@ -90,6 +97,8 @@ public:
 
 	// 카메라 위치 스무딩을 위한 변수
 	_float3 m_previousPosition = _float3(0.f, 17.f, -30.f);
+
+	unordered_map<_int, vector<CameraPoint>> m_mapPoints;
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

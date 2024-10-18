@@ -17,8 +17,8 @@ public:
 	}CAMERA_DESC;
 
 	struct CameraSaveData {
-		vector<CCamera*>& vecVirtualCamera;
-		unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
+		//vector<CCamera*>& vecVirtualCamera;
+		//unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
 	};
 
 protected:
@@ -35,8 +35,6 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Update_Camera(CCamera* camera, _float fTimeDelta);
-
-	vector<CameraPoint> m_vecPoints;
 
 public:
 	_float3					m_vEye{}, m_vAt{};

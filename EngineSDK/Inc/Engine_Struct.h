@@ -92,13 +92,10 @@ namespace Engine
 		_float3 scale;
 	};
 
-	struct pair_hash {
-		size_t operator()(const pair<_uint, _int>& key) const {
-			return hash<int>()(static_cast<int>(key.first)) ^ (hash<int>()(static_cast<int>(key.second)) << 1);
-		}
-	};
-
 #pragma region 카메라
+
+
+	//파일매니저에서 저장을 해야 하는 구조체는 여기 있어야 한다.
 	// 카메라 포인트 구조체
 	struct CameraPoint {
 		//포지션
@@ -116,10 +113,9 @@ namespace Engine
 		_bool hasWorldFloat4x4 = { true };
 	};
 
-
 	struct CameraData {
-		CAMERA_MODELID modelID;
-		CAMERA_SKILLID skillID;
+		_int modelID;
+		_int skillID;
 		vector<CameraPoint> points;
 	};
 
@@ -129,12 +125,10 @@ namespace Engine
 	//C++에서는 전역 객체를 여러 소스 파일에서 공유하려면, 한 곳에만 정의하고 나머지 파일에서는 선언만 해야 합니다.
 	//extern 키워드는 "이 변수의 정의는 다른 소스 파일에 있다"는 의미로 사용됩니다.
 
-	extern unordered_map<CAMERA_MODELID, _wstring> modelIDToString;
-	extern unordered_map<CAMERA_SKILLID, _wstring> skillIDToString;
-	extern unordered_map<_wstring, CAMERA_MODELID> stringToModelID;
-	extern unordered_map<_wstring, CAMERA_SKILLID> stringToSkillID;
-
-
+	extern unordered_map<_int, _wstring> modelIDToString;
+	extern unordered_map<_int, _wstring> skillIDToString;
+	extern unordered_map<_wstring, _int> stringToModelID;
+	extern unordered_map<_wstring, _int> stringToSkillID;
 
 #pragma endregion
 

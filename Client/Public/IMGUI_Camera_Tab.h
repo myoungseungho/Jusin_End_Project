@@ -1,7 +1,7 @@
 #pragma once
 #include "IMGUI_Tab.h"
 #include "Camera.h"
-
+#include "Virtual_Camera.h"
 BEGIN(Engine)
 class CCamera;
 END
@@ -10,12 +10,14 @@ BEGIN(Client)
 
 class CIMGUI_Camera_Tab : public CIMGUI_Tab
 {
-	enum InterpolationType {
-		INTERPOLATION_LINEAR_MODE,
-		INTERPOLATION_DAMPING_MODE,
-		INTERPOLATION_SKIP_MODE,
-		INTERPOLATION_END
+	struct pair_hash {
+		template <class T1, class T2>
+		std::size_t operator()(const std::pair<T1, T2>& pair) const {
+			return std::hash<T1>()(pair.first) ^ (std::hash<T2>()(pair.second) << 1);
+		}
 	};
+
+
 
 	//모델은 정해져있음
 	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
@@ -34,18 +36,16 @@ private:
 	void IMGUI_Camera_Select_Skill(_float fTimeDelta);
 	void IMGUI_Camera_Select_Animation(_float fTimeDelta);
 
-	void IMGUI_Show_Camera(_float fTimeDelta);
 	void IMGUI_Save_Button();
-	void Activate_Select_Camera(_int selectedIndex);
 	void UpdateCameraSelection();
 	void IMGUI_Show_Points();	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
 	void IMGUI_Button();        // Add_Point 버튼 처리 함수
-	void IMGUI_Delete_Points();
+	void IMGUI_Delete_Points(_int animationIndex);
 	void IMGUI_Play_Button();	   // Play 버튼
 	void IMGUI_Pause_Button();	   // Pause 버튼
 	void IMGUI_Stop_Button();	   // Stop 버튼
 
-	void IMGUI_Delete_Point(_int index); //Delete 버튼
+	void IMGUI_Delete_Point(_int index, _int animationIndex); //Delete 버튼
 	void IMGUI_Modify_Point(_int index); //Modify 버튼
 	void IMGUI_Modify_Point_UI(_int index);
 	void IMGUI_Point_Modify_Save();
@@ -60,7 +60,7 @@ private:
 	// 모델별 스킬 목록
 	unordered_map<CAMERA_MODELID, vector<string>> m_ModelSkills;
 	// 모델 이름 배열 선언
-	static const char* MODEL_NAMES[MODELID_END];
+	const char* MODEL_NAMES[MODELID_END];
 
 	// 스킬과 애니메이션 인덱스 쌍을 키로 받고 애니메이션 목록을 값으로 갖는 맵
 	unordered_map<pair<CAMERA_MODELID, int>, vector<string>, pair_hash> m_SkillAnimations;
@@ -99,7 +99,7 @@ private:
 	// 임시 데이터 구조체
 	struct TempPointData {
 		_float duration;
-		InterpolationType interpType;
+		CVirtual_Camera::InterpolationType interpType;
 		_float damping = { 1.f };
 	};
 

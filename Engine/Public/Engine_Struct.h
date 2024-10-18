@@ -93,14 +93,9 @@ namespace Engine
 	};
 
 #pragma region 카메라
-	enum InterpolationType {
-		INTERPOLATION_LINEAR_MODE,
-		INTERPOLATION_DAMPING_MODE,
-		INTERPOLATION_SKIP_MODE,
-		INTERPOLATION_END
-	};
 
 
+	//파일매니저에서 저장을 해야 하는 구조체는 여기 있어야 한다.
 	// 카메라 포인트 구조체
 	struct CameraPoint {
 		//포지션

@@ -48,9 +48,9 @@ public:
 	//버츄얼 카메라 셋팅
 	void Set_Virtual_Camera(VIRTUAL_CAMERA mode);
 	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
-	void Add_Point(_float duration, InterpolationType type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4);
-	void Remove_Point(_int currentIndex);
-	vector<CameraPoint>& Get_VectorPoint();
+	void Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
+	void Remove_Point(_int currentIndex, _int animationIndex);
+	vector<CameraPoint>& Get_VectorPoint(_int index);
 	void Play();
 	void Stop();
 	void Pause();
@@ -61,10 +61,11 @@ public:
 	void Modify_Transform(_int index);
 	void ApplyCameraData(vector<CameraData>& cameraDataList);
 	_int Get_CameraIndex(_int modelID, _int skillID);
-	void Delete_Points();
+	void Delete_Points(_int animationIndex);
 	void SetPosition(_fvector position);
 
 	void SetPlayer(PLAYER_STATE, CGameObject* pPlayer);
+	const char* Get_Current_CameraName();
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 
