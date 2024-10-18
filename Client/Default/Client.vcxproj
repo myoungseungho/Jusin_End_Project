@@ -190,6 +190,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
     <ClInclude Include="..\Public\Shader_Texture.h" />
     <ClInclude Include="..\Public\SpaceCliff.h" />
     <ClInclude Include="..\Public\SpaceEarth.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
+    <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />
     <ClCompile Include="..\Private\SpaceCliff.cpp" />
     <ClCompile Include="..\Private\SpaceEarth.cpp" />

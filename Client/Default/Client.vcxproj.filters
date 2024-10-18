@@ -85,6 +85,9 @@
     <Filter Include="02.GameObjects\Map\Space\NewFilter1">
       <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
+      <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -286,6 +289,9 @@
     <ClInclude Include="..\Public\SpaceMoon.h">
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\ShaderTool_SaveLoader.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -419,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceMoon.cpp">
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
