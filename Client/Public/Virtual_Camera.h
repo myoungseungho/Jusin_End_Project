@@ -44,8 +44,8 @@ public:
 
 	void Add_Point(_float duration, _int type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
-	void Move_Point(_int index);
-	void Modify_Transform(_int index);
+	void Move_Point(_int index, _int animationIndex);
+	void Modify_Transform(_int index, _int animationIndex);
 	_float AdjustT_Damping(_float t, _float damping);
 	void Delete_Points(_int animationIndex);
 

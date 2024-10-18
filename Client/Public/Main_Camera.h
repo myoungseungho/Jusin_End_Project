@@ -57,8 +57,8 @@ public:
 	void Button_Stop();
 	void StartCameraShake(_float fDuration, _float fMagnitude);
 
-	void Move_Point(_int index);
-	void Modify_Transform(_int index);
+	void Move_Point(_int index, _int animationIndex);
+	void Modify_Transform(_int index, _int animationIndex);
 	void ApplyCameraData(vector<CameraData>& cameraDataList);
 	_int Get_CameraIndex(_int modelID, _int skillID);
 	void Delete_Points(_int animationIndex);

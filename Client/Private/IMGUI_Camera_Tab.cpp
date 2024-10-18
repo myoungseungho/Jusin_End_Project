@@ -287,7 +287,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 		// Delete 버튼
 		if (ImGui::Button("Delete")) {
 			// 삭제 확인 팝업을 띄우려면 추가 구현 필요
-			IMGUI_Delete_Point(static_cast<int>(i), m_iSelected_Animation);
+			IMGUI_Delete_Point(static_cast<int>(i));
 			ImGui::PopID();
 			break;  // 삭제 후 루프 종료
 		}
@@ -332,10 +332,10 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 }
 
 
-void CIMGUI_Camera_Tab::IMGUI_Delete_Point(_int index, _int animationIndex)
+void CIMGUI_Camera_Tab::IMGUI_Delete_Point(_int index)
 {
 	// 포인트 삭제
-	m_pMainCamera->Remove_Point(index, animationIndex);
+	m_pMainCamera->Remove_Point(index, m_iSelected_Animation);
 
 	// 선택된 포인트가 삭제된 경우 선택 해제
 	if (m_selectedPoint == index) {
@@ -349,94 +349,94 @@ void CIMGUI_Camera_Tab::IMGUI_Delete_Point(_int index, _int animationIndex)
 
 void CIMGUI_Camera_Tab::IMGUI_Modify_Point(_int index)
 {
-	//if (m_selectedPoint == index) {
-	//	// 이미 선택된 상태라면 선택 해제
-	//	m_selectedPoint = -1;
-	//	m_isEditing = false;
-	//}
-	//else {
-	//	// 새로운 포인트 선택
-	//	m_selectedPoint = index;
-	//	m_isEditing = true;
+	if (m_selectedPoint == index) {
+		// 이미 선택된 상태라면 선택 해제
+		m_selectedPoint = -1;
+		m_isEditing = false;
+	}
+	else {
+		// 새로운 포인트 선택
+		m_selectedPoint = index;
+		m_isEditing = true;
 
-	//	// 선택된 포인트의 데이터를 임시 변수에 복사
-	//	vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
-	//	if (index >= 0 && index < static_cast<int>(points.size())) {
-	//		CameraPoint& point = points[index];
-	//		m_tempPointData.duration = point.duration;
-	//		m_tempPointData.interpType = point.interpolationType;
-	//		m_tempPointData.damping = point.damping;
-	//	}
+		// 선택된 포인트의 데이터를 임시 변수에 복사
+		vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint(m_iSelected_Animation);
+		if (index >= 0 && index < static_cast<int>(points.size())) {
+			CameraPoint& point = points[index];
+			m_tempPointData.duration = point.duration;
+			m_tempPointData.interpType = (CVirtual_Camera::InterpolationType)point.interpolationType;
+			m_tempPointData.damping = point.damping;
+		}
 
-	//	// 선택된 포인트의 위치와 회전으로 카메라 업데이트
-	//	m_pMainCamera->Move_Point(index);
-	//}
+		// 선택된 포인트의 위치와 회전으로 카메라 업데이트
+		m_pMainCamera->Move_Point(index, m_iSelected_Animation);
+	}
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Modify_Point_UI(_int index)
 {
-	//// 해당 포인트에 대한 참조 가져오기
-	//std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
+	// 해당 포인트에 대한 참조 가져오기
+	std::vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint(m_iSelected_Animation);
 
-	//// 선택된 포인트와 수정 모드인지 확인
-	//if (!m_isEditing || m_selectedPoint != index) {
-	//	return;
-	//}
+	// 선택된 포인트와 수정 모드인지 확인
+	if (!m_isEditing || m_selectedPoint != index) {
+		return;
+	}
 
-	//ImGui::Indent(); // 들여쓰기 시작
+	ImGui::Indent(); // 들여쓰기 시작
 
-	//// Duration 수정 (임시 변수에 바인딩)
-	//ImGui::InputFloat("Duration", &m_tempPointData.duration, 0.1f, 1.0f, "%.2f");
+	// Duration 수정 (임시 변수에 바인딩)
+	ImGui::InputFloat("Duration", &m_tempPointData.duration, 0.1f, 1.0f, "%.2f");
 
-	//// Interpolation Type 수정 (임시 변수에 바인딩)
-	//const char* interp_options[] = { "Linear", "Damping", "Skip" };
-	//int interpIndex = static_cast<int>(m_tempPointData.interpType);
-	//if (ImGui::BeginCombo("Interpolation Type", interp_options[interpIndex])) {
-	//	for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
-	//		bool is_selected = (interpIndex == n);
-	//		if (ImGui::Selectable(interp_options[n], is_selected)) {
-	//			m_tempPointData.interpType = static_cast<InterpolationType>(n);
-	//		}
-	//		if (is_selected)
-	//			ImGui::SetItemDefaultFocus();
-	//	}
-	//	ImGui::EndCombo();
-	//}
+	// Interpolation Type 수정 (임시 변수에 바인딩)
+	const char* interp_options[] = { "Linear", "Damping", "Skip" };
+	int interpIndex = static_cast<int>(m_tempPointData.interpType);
+	if (ImGui::BeginCombo("Interpolation Type", interp_options[interpIndex])) {
+		for (int n = 0; n < IM_ARRAYSIZE(interp_options); n++) {
+			bool is_selected = (interpIndex == n);
+			if (ImGui::Selectable(interp_options[n], is_selected)) {
+				m_tempPointData.interpType = static_cast<CVirtual_Camera::InterpolationType>(n);
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
 
-	//// Damping 계수 수정 (Damping Mode일 때만 표시)
-	//if (m_tempPointData.interpType == InterpolationType::INTERPOLATION_DAMPING_MODE)
-	//{
-	//	ImGui::SliderFloat("Damping Coefficient", &m_tempPointData.damping, 0.0f, 2.0f, "%.2f");
-	//}
+	// Damping 계수 수정 (Damping Mode일 때만 표시)
+	if (m_tempPointData.interpType == CVirtual_Camera::InterpolationType::INTERPOLATION_DAMPING_MODE)
+	{
+		ImGui::SliderFloat("Damping Coefficient", &m_tempPointData.damping, 0.0f, 2.0f, "%.2f");
+	}
 
-	//// "Save" 버튼 추가
-	//if (ImGui::Button("Save")) {
-	//	// 사용자에게 저장됨을 알림
-	//	IMGUI_Point_Modify_Save();
-	//}
+	// "Save" 버튼 추가
+	if (ImGui::Button("Save")) {
+		// 사용자에게 저장됨을 알림
+		IMGUI_Point_Modify_Save();
+	}
 
-	//ImGui::Unindent(); // 들여쓰기 종료
+	ImGui::Unindent(); // 들여쓰기 종료
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Point_Modify_Save()
 {
-	//// 선택된 포인트 인덱스 확인
-	//if (m_selectedPoint < 0) {
-	//	return;
-	//}
+	// 선택된 포인트 인덱스 확인
+	if (m_selectedPoint < 0) {
+		return;
+	}
 
-	//vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint();
-	//if (m_selectedPoint >= static_cast<int>(points.size())) {
-	//	return;
-	//}
+	vector<CameraPoint>& points = m_pMainCamera->Get_VectorPoint(m_iSelected_Animation);
+	if (m_selectedPoint >= static_cast<int>(points.size())) {
+		return;
+	}
 
-	//// 선택된 포인트에 임시 데이터 적용
-	//CameraPoint& point = points[m_selectedPoint];
-	//point.duration = m_tempPointData.duration;
-	//point.interpolationType = m_tempPointData.interpType;
-	//point.damping = m_tempPointData.damping;
+	// 선택된 포인트에 임시 데이터 적용
+	CameraPoint& point = points[m_selectedPoint];
+	point.duration = m_tempPointData.duration;
+	point.interpolationType = m_tempPointData.interpType;
+	point.damping = m_tempPointData.damping;
 
-	//m_pMainCamera->Modify_Transform(m_selectedPoint);
+	m_pMainCamera->Modify_Transform(m_selectedPoint, m_iSelected_Animation);
 }
 
 const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
@@ -550,11 +550,11 @@ void CIMGUI_Camera_Tab::IMGUI_Button()
 	IMGUI_Stop_Button();
 }
 
-void CIMGUI_Camera_Tab::IMGUI_Delete_Points(_int animationIndex)
+void CIMGUI_Camera_Tab::IMGUI_Delete_Points()
 {
 	//현재 가상카메라의 포인트들을 전부 지운다.
 	if (ImGui::Button("Delete")) {
-		m_pMainCamera->Delete_Points(animationIndex);
+		m_pMainCamera->Delete_Points(m_iSelected_Animation);
 	}
 }
 

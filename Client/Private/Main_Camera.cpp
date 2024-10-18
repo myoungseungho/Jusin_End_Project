@@ -154,14 +154,14 @@ void CMain_Camera::StartCameraShake(_float fDuration, _float fMagnitude)
 	m_vecVirtualCamera[m_currentVirtualMode]->StartCameraShake(fDuration, fMagnitude);
 }
 
-void CMain_Camera::Move_Point(_int index)
+void CMain_Camera::Move_Point(_int index, _int animationIndex)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Move_Point(index);
+	m_vecVirtualCamera[m_currentVirtualMode]->Move_Point(index, animationIndex);
 }
 
-void CMain_Camera::Modify_Transform(_int index)
+void CMain_Camera::Modify_Transform(_int index, _int animationIndex)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Modify_Transform(index);
+	m_vecVirtualCamera[m_currentVirtualMode]->Modify_Transform(index, animationIndex);
 }
 
 void CMain_Camera::ApplyCameraData(vector<CameraData>& cameraDataList)

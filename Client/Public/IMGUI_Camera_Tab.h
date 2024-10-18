@@ -40,12 +40,12 @@ private:
 	void UpdateCameraSelection();
 	void IMGUI_Show_Points();	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
 	void IMGUI_Button();        // Add_Point 버튼 처리 함수
-	void IMGUI_Delete_Points(_int animationIndex);
+	void IMGUI_Delete_Points();
 	void IMGUI_Play_Button();	   // Play 버튼
 	void IMGUI_Pause_Button();	   // Pause 버튼
 	void IMGUI_Stop_Button();	   // Stop 버튼
 
-	void IMGUI_Delete_Point(_int index, _int animationIndex); //Delete 버튼
+	void IMGUI_Delete_Point(_int index); //Delete 버튼
 	void IMGUI_Modify_Point(_int index); //Modify 버튼
 	void IMGUI_Modify_Point_UI(_int index);
 	void IMGUI_Point_Modify_Save();
