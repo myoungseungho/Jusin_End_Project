@@ -268,6 +268,9 @@ void CVirtual_Camera::SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* p
 
 void CVirtual_Camera::Start_Play()
 {
+	if (m_vecPoints.size() == 0)
+		return;
+
 	// Stopped 상태에서 Play를 시작하면 초기화
 	if (m_currentPlayMode == Stopped) {
 		m_currentPointIndex = 0;

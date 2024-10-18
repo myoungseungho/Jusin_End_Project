@@ -6,7 +6,47 @@ PointCount: 0
 [VirtualCamera]
 ModelID: MODELID_SON
 SkillID: SKILL1
-PointCount: 0
+PointCount: 5
+
+[CameraPoint]
+Position: 7.64254 -11.3394 41.1668
+Rotation: 0.994756 0.000807713 -0.101966 0.00788006
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 5.13717 -11.0817 25.2845
+Rotation: 0.995312 -0.00149328 -0.0954436 -0.015572
+Duration: 0.3
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 2.63676 -7.06708 13.0548
+Rotation: 0.984003 0.013212 -0.0826715 0.157257
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 7.64254 -11.3394 41.1668
+Rotation: 0.994756 0.000807713 -0.101966 0.00788006
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 4.37978 -5.76152 17.8778
+Rotation: 0.986168 -0.00488704 0.0295634 0.16302
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [VirtualCamera]
 ModelID: MODELID_SON

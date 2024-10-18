@@ -218,7 +218,7 @@ void CPlayer::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_SPACE))
 	{
 		CMain_Camera* camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		camera->StartCameraShake(2.f, 1.f);
+		camera->StartCameraShake(3.f, 1.f);
 	}
 }
 
