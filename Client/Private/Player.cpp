@@ -129,7 +129,7 @@ void CPlayer::Update(_float fTimeDelta)
 
 	_float moveSpeed = 1.f;
 
-	if (distance >= 80)
+	if (distance >= 70)
 	{
 		_float monsterX = XMVectorGetX(monsterState);
 		_float playerX = XMVectorGetX(playerState);

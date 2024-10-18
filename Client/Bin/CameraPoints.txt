@@ -6,7 +6,23 @@ SkillName: Son_Skill1
 
 [Animation]
 AnimationName: Son_Skill1_Anim1
-PointCount: 0
+PointCount: 2
+
+[CameraPoint]
+Position: 1.04661 -36.8697 26.7933
+Rotation: 0.916141 -0.00210302 -0.00480675 -0.400822
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -22.3929 -21.8012 15.4277
+Rotation: 0.877711 0.109776 0.399116 -0.241413
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Son_Skill1_Anim2
@@ -21,31 +37,7 @@ SkillName: Son_Skill2
 
 [Animation]
 AnimationName: Son_Skill2_Anim1
-PointCount: 3
-
-[CameraPoint]
-Position: 9.39187 -12.5072 24.1139
-Rotation: 0.984696 -0.010224 -0.162587 -0.0619208
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: 18.613 -12.5072 14.5006
-Rotation: 0.909378 -0.0362554 -0.406368 -0.081133
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: 22.6899 -12.5072 -5.49289
-Rotation: -0.647775 0.0674991 0.756632 0.0577878
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
+PointCount: 0
 
 [Animation]
 AnimationName: Son_Skill2_Anim2
