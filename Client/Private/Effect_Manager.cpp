@@ -73,12 +73,12 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 	// pSavedEffect가 nullptr인 경우 실패 반환
 	if (!pSavedEffect) return E_FAIL;
 
-	// 기존에 존재하는 레이어들을 제거
-	for (auto& layerPair : m_FinalEffects)
-	{
-		Safe_Release(layerPair.second);
-	}
-	m_FinalEffects.clear();
+	//// 기존에 존재하는 레이어들을 제거
+	//for (auto& layerPair : m_FinalEffects)
+	//{
+	//	Safe_Release(layerPair.second);
+	//}
+	//m_FinalEffects.clear();
 
 	// pSavedEffect에 있는 각 레이어 데이터를 순회
 	for (const auto& layerData : *pSavedEffect)

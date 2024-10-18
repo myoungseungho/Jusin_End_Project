@@ -2,12 +2,17 @@
 //
 
 #include "stdafx.h"
+#include <locale>
+#include <codecvt>
+#include <string>
+#include <iostream>
 #include "imgui_impl_win32.h"
 #include "Client.h"
 #include "MainApp.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
 #include "Imgui_Manager.h"
+#include "Effect_Manager.h"
 #include "IMGUI_Shader_Tab.h"
 #define MAX_LOADSTRING 100
 
@@ -77,7 +82,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//FixedUpdate에 대한 누적시간
 	_float fixedTimeStep = 1.0f / 50.0f; // FixedUpdate를 위한 고정 시간 간격 (0.02초)
 	_float fixedTimeAcc = 0.0f;          // FixedUpdate 호출을 위한 누적 시간
-
+	DragAcceptFiles(g_hWnd, TRUE);
 	while (true)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -214,10 +219,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             WideCharToMultiByte(CP_ACP, 0, szFile, -1, ch, 260, &DefChar, NULL);
 
             string filePath(ch);
+			size_t testPos = filePath.find(".");
+			string relativePath = filePath.substr(testPos);
 
-            CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
-            pImGui_Manager->Access_Shader_Tab()->Create_NodeTexture(filePath);
+			if (relativePath == ".txt")
+			{
+				size_t testPos = filePath.find("Effects");
+				string LoadPath = filePath.substr(testPos);
+
+				string FullPath = string("../Bin/") + LoadPath;
+				replace(FullPath.begin(), FullPath.end(), '\\', '/');
+				wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
+				wstring wfbxFilePath = converter.from_bytes(FullPath);
+
+				CEffect_Manager::Get_Instance()->Set_Saved_Effects(static_cast<vector<EFFECT_LAYER_DATA>*>(CGameInstance::Get_Instance()->Load_Effects(wfbxFilePath)));
+			}
+			else// if (relativePath == ".png")
+			{
+				CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
+				pImGui_Manager->Access_Shader_Tab()->Create_NodeTexture(filePath);
+			}
+
         }
+
+		
+			// 
+			  //
         DragFinish(hDrop);
     }
     break;

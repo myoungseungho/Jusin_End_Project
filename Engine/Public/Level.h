@@ -23,7 +23,7 @@ public:
 	HRESULT Clear_Resources();
 	_uint GetLevelIndex() { return m_iLevelIndex; };
 	HRESULT ParseInitialize(const wstring& filePath);
-	vector<EFFECT_LAYER_DATA>*  Set_Effect();
+	vector<EFFECT_LAYER_DATA>*  Set_Effect(wstring FilePath);
 
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };
