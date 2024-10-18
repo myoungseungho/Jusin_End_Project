@@ -262,6 +262,9 @@
     <Filter Include="02.GameObjects\UI\FontName">
       <UniqueIdentifier>{c620642a-0cdc-42e8-bdee-14d918ea5b1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Dir\Effect">
+      <UniqueIdentifier>{cdacd484-4454-4db1-b1dd-f0cb407077c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -522,6 +525,9 @@
     <ClInclude Include="..\public\UI_FontName.h">
       <Filter>02.GameObjects\UI\FontName</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirEffect.h">
+      <Filter>02.GameObjects\UI\Input\Dir\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -763,6 +769,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_FontName.cpp">
       <Filter>02.GameObjects\UI\FontName</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirEffect.cpp">
+      <Filter>02.GameObjects\UI\Input\Dir\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

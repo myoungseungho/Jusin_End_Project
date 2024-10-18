@@ -280,14 +280,6 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_FontName"), TEXT("Layer_UI_FontName"), &KeyInputDesc);
 		
 	}
-
-	//게임 시작
-	//CUIObject::UI_DESC StartDesc = {};
-
-	//StartDesc.iNumUI = 0;
-	///StartDesc.eType = CUI_GameState::UI_NONANIM;
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_GameStartCircle"), TEXT("Layer_UI_GameStartCircle"), &StartDesc);
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFont"), TEXT("Layer_UI_KOFont"));
 }
 
 HRESULT CLevel_GamePlay::Ready_Character()

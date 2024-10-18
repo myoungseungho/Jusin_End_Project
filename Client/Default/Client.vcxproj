@@ -178,6 +178,7 @@
     <ClInclude Include="..\public\UI_InputDir.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirEffect.h" />
     <ClInclude Include="..\public\UI_InputDirIcon.h" />
     <ClInclude Include="..\public\UI_Input_Action.h" />
     <ClInclude Include="..\public\UI_Input_ActionIcon.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="..\private\UI_InputDir.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirEffect.cpp" />
     <ClCompile Include="..\private\UI_InputDirIcon.cpp" />
     <ClCompile Include="..\private\UI_Input_Action.cpp" />
     <ClCompile Include="..\private\UI_Input_ActionIcon.cpp" />

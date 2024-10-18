@@ -74,6 +74,9 @@ public:
 
 	//Rneder
 	_bool m_isRender = { TRUE };
+
+	//Input
+	_bool m_isInput = { FALSE };
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

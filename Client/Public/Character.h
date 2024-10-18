@@ -223,7 +223,7 @@ public:
 
 	
 	//커맨드 입력
-	virtual void InputCommand();
+	virtual _bool InputCommand();
 	virtual void InputedCommandUpdate(_float fTimeDelta) ;
 	virtual void UpdateInputBuffer(CInput newInput) 
 	{
@@ -268,7 +268,7 @@ public:
 	void FlipDirection(_int iDirection = 0);
 	_uint* Get_pAnimationIndex();
 
-
+	void GetUI_Input(_uint iInputDirX, _uint iInputDirY,DirectionInput eDirInput , ButtonInput eBtnInput);
 
 
 

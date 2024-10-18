@@ -22,6 +22,20 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+private:
+	_float RotaionValue(_float2 vPrevPos ,_float2 vCurrPos);
+	_float ScaleValue(_float2 vPrevPos, _float2 vCurrPos);
+	_vector CreatePostion(_float2 vPrevPos, _float2 vCurrPos);
+
+
+private:
+	_bool m_bCheck = { FALSE };
+
+	DirectionInput ePrevDirInput = {};
+	_float2 m_vPos = {};
+
+	
+
 public:
 	static CUI_InputDir* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);

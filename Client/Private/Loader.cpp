@@ -55,6 +55,7 @@
 #include "UI_Input_Action.h"
 #include "UI_InputDirIcon.h"
 #include "UI_Input_ActionIcon.h"
+#include "UI_InputDirEffect.h"
 #include "UI_FontName.h"
 
 #include "Character.h"
@@ -475,6 +476,11 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/TON_Icon_none.png")))))
 		return E_FAIL;
 
+	/* Prototype_Component_Texture_UI_DirKeyInputEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirKeyInputEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/window_arrow_key_%d.png"),2))))
+		return E_FAIL;
+
 	//Font
 
 	/* Prototype_Component_Texture_UI_FontName */
@@ -657,6 +663,12 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ActionInputIcon"),
 		CUI_Input_ActionIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* Prototype_GameObject_UI_DirInputEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_DirInputEffect"),
+		CUI_InputDirEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	/* Prototype_GameObject_UI_FontName */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FontName"),

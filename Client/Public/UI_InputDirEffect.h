@@ -6,6 +6,14 @@ BEGIN(Client)
 
 class CUI_InputDirEffect final :public CUI_Input
 {
+public:
+	typedef struct :public CUIObject::UI_DESC
+	{
+		_vector vCreatePos = {};
+		_float fAngle = { };
+		_float fScaled = { 0 };
+	}UI_DIREFFECT;
+
 private:
 	CUI_InputDirEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CUI_InputDirEffect(const CUI_InputDirEffect& Prototype);
@@ -21,6 +29,9 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+
+private:
+	_float m_fDestroyTimer = { 0.f };
 
 public:
 	static CUI_InputDirEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

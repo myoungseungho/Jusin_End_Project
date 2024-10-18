@@ -29,9 +29,24 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 230.f;
-	m_fPosY = 510.f;
-	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 1.f);
+	UI_DIREFFECT* pDesc = static_cast<UI_DIREFFECT*>(pArg);
+	_vector vCreatePos = pDesc->vCreatePos;
+	_float CreatePosX = XMVectorGetX(vCreatePos);
+	_float CreatePosY = XMVectorGetY(vCreatePos);
+
+	_float fAngle = pDesc->fAngle;
+	_float fScaled = pDesc->fScaled;
+	
+	__super::Set_UI_Setting(60 * fScaled, 15, CreatePosX, CreatePosY, 0.9f);
+
+	fAngle += 90.f;
+
+	if (fAngle >= 360.f)
+	{
+		fAngle -= 360.f;
+	}
+
+	m_pTransformCom->Rotation({ 0,0,1 }, XMConvertToRadians(fAngle));
 
 	return S_OK;
 }
@@ -39,64 +54,19 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 void CUI_InputDirEffect::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_fDestroyTimer += fTimeDelta;
 }
 
 void CUI_InputDirEffect::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	DirectionInput eDirInput = m_pUI_Manager->m_eDirInput;
-
-	switch (eDirInput)
+	if (m_fDestroyTimer >= 0.25f)
 	{
-	case DirectionInput::MOVEKEY_NEUTRAL:
-
-		m_fPosX = 230.f;
-		m_fPosY = 510.f;
-		break;
-
-	case DirectionInput::MOVEKEY_UP:
-		m_fPosX = 230.f;
-		m_fPosY = 450.f;
-		break;
-
-	case DirectionInput::MOVEKEY_DOWN:
-		m_fPosX = 230.f;
-		m_fPosY = 570.f;
-		break;
-
-	case DirectionInput::MOVEKEY_LEFT:
-		m_fPosX = 170.f;
-		m_fPosY = 510.f;
-		break;
-
-	case DirectionInput::MOVEKEY_RIGHT:
-		m_fPosX = 290.f;
-		m_fPosY = 510.f;
-		break;
-
-	case DirectionInput::MOVEKEY_UP_LEFT:
-		m_fPosX = 170.f;
-		m_fPosY = 450.f;
-		break;
-
-	case DirectionInput::MOVEKEY_UP_RIGHT:
-		m_fPosX = 290.f;
-		m_fPosY = 450.f;
-		break;
-
-	case DirectionInput::MOVEKEY_DOWN_LEFT:
-		m_fPosX = 170.f;
-		m_fPosY = 570.f;
-		break;
-
-	case DirectionInput::MOVEKEY_DOWN_RIGHT:
-		m_fPosX = 290.f;
-		m_fPosY = 570.f;
-		break;
+		m_fDestroyTimer = 0.f;
+		m_bDead = TRUE;
 	}
-
-	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 1.f);
 }
 
 void CUI_InputDirEffect::Late_Update(_float fTimeDelta)
@@ -111,10 +81,19 @@ HRESULT CUI_InputDirEffect::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	_vector vColor = { 1.f , 0.f , 0. , 1.f };
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
+
+	_float m_fAlpha = 1.f;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlpha, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(13)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -132,7 +111,7 @@ HRESULT CUI_InputDirEffect::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Cursor"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirKeyInputEffect"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 }

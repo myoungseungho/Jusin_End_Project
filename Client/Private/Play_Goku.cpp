@@ -277,7 +277,10 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	{
  		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 	}
-
+	if (m_pUI_Manager->m_isInput)
+	{
+		int a = 10;
+	}
 
 	InputedCommandUpdate(fTimeDelta);
 	InputCommand();
