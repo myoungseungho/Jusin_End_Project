@@ -33,13 +33,6 @@ HRESULT CUIObject::Initialize(void* pArg)
 
 
 	pDesc = static_cast<UI_DESC*>(pArg);
-	//m_eLRPos = pDesc->eLRPos;
-
-	//m_eLRPos = pDesc->eLRPos;
-
-	// 메인 캐릭슬롯은 0 , 2(짝수) / 서브 캐릭슬롯은 1. 3 (홀수)
-	//메인 서브 캐릭터 정보를 구분하기 위해서 넣는 정보
-
 
 	if (pDesc != nullptr)
 	{
@@ -60,6 +53,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 			break;
 		}
 	}
+
 	return S_OK;
 }
 
@@ -70,20 +64,18 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 	if (m_pMainPawn != nullptr)
 		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 
+
+
 	if (pDesc != nullptr)
 	{
-		m_eLRPos = pDesc->eLRPos;
-	
 		switch (m_eLRPos)
 		{
 		case LEFT:
 			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			break;
-	
+
 		case RIGHT:
-			m_fPosX = g_iWinSizeX - m_fPosX;
-			m_fSizeX *= -1;
 			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
 			break;
