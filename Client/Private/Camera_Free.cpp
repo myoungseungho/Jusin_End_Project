@@ -26,7 +26,7 @@ HRESULT CCamera_Free::Initialize_Prototype()
 HRESULT CCamera_Free::Initialize(void* pArg)
 {
 	m_fMouseSensor = static_cast<CCamera_Free::CAMERA_FREE_DESC*>(pArg)->fSensor;	
-	m_fMouseSensor = 10.f;
+	m_fMouseSensor = 3.f;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 	CTransform::TRANSFORM_DESC tDesc{};

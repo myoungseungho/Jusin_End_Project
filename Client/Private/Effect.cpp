@@ -27,33 +27,6 @@ HRESULT CEffect::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
-	if (pArg != nullptr)
-	{
-		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
-
-		_float3 vPos = pEffectDesc->vPosition;
-		_float3 vScale = pEffectDesc->vScaled;
-		_float3 vRot = pEffectDesc->vRotation;
-
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(vPos.x, vPos.y, vPos.z, 1.f));
-		m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
-		m_pTransformCom->Rotate(vRot);
-
-		m_EffectName = pEffectDesc->EffectName;
-		m_ModelName = pEffectDesc->ModelName;
-		m_MaskTextureName = pEffectDesc->MaskTextureName;
-		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
-		m_iRenderIndex = pEffectDesc->iRenderIndex;
-		m_iPassIndex = pEffectDesc->iPassIndex;
-		m_iNumWidthImage = pEffectDesc->iNumWidthImage;
-		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
-
-		m_iUnique_Index = pEffectDesc->iUnique_Index;
-
-		if (pEffectDesc->SRV_Ptr != nullptr)
-			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
-	}
-
 	m_pAnimation = CEffect_Animation::Create();
 
 	if (nullptr == m_pAnimation)
