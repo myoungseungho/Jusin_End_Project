@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\SpaceStage.h"
+#include "..\Public\SpaceHorizon.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CSpaceStage::CSpaceStage(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CSpaceHorizon::CSpaceHorizon(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 	: CGameObject { pDevice, pContext }
 {
 
 }
 
-CSpaceStage::CSpaceStage(const CSpaceStage & Prototype)
+CSpaceHorizon::CSpaceHorizon(const CSpaceHorizon & Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CSpaceStage::Initialize_Prototype()
+HRESULT CSpaceHorizon::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CSpaceStage::Initialize(void * pArg)
+HRESULT CSpaceHorizon::Initialize(void * pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -35,22 +35,22 @@ HRESULT CSpaceStage::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceStage::Priority_Update(_float fTimeDelta)
+void CSpaceHorizon::Priority_Update(_float fTimeDelta)
 {
 	//m_fAccTime += fTimeDelta * 5;
 }
 
-void CSpaceStage::Update(_float fTimeDelta)
+void CSpaceHorizon::Update(_float fTimeDelta)
 {
 
 }
 
-void CSpaceStage::Late_Update(_float fTimeDelta)
+void CSpaceHorizon::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
-HRESULT CSpaceStage::Render(_float fTimeDelta)
+HRESULT CSpaceHorizon::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -59,8 +59,10 @@ HRESULT CSpaceStage::Render(_float fTimeDelta)
 
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
+		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+			return E_FAIL;
 		
-		if (FAILED(m_pShaderCom->Begin(4)))
+		if (FAILED(m_pShaderCom->Begin(6)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -70,7 +72,7 @@ HRESULT CSpaceStage::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CSpaceStage::Ready_Components()
+HRESULT CSpaceHorizon::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxMesh"),
@@ -78,18 +80,18 @@ HRESULT CSpaceStage::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Stage"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Horizon"),
 		TEXT("Com_Texture_Diffuse"), reinterpret_cast<CComponent**>(&m_pTextureCom_Diffuse))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStage"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceHorizon"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CSpaceStage::Bind_ShaderResources()
+HRESULT CSpaceHorizon::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -100,8 +102,8 @@ HRESULT CSpaceStage::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-		return E_FAIL;
+	//if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteSize", &m_fSpriteSize, sizeof(_float2))))
 	//	return E_FAIL;
@@ -115,33 +117,33 @@ HRESULT CSpaceStage::Bind_ShaderResources()
 	return S_OK;
 }
 
-CSpaceStage * CSpaceStage::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CSpaceHorizon * CSpaceHorizon::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 {
-	CSpaceStage*		pInstance = new CSpaceStage(pDevice, pContext);
+	CSpaceHorizon*		pInstance = new CSpaceHorizon(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CSpaceStage"));
+		MSG_BOX(TEXT("Failed to Created : CSpaceHorizon"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject * CSpaceStage::Clone(void * pArg)
+CGameObject * CSpaceHorizon::Clone(void * pArg)
 {
-	CSpaceStage*		pInstance = new CSpaceStage(*this);
+	CSpaceHorizon*		pInstance = new CSpaceHorizon(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CSpaceStage"));
+		MSG_BOX(TEXT("Failed to Cloned : CSpaceHorizon"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CSpaceStage::Free()
+void CSpaceHorizon::Free()
 {
 
 	Safe_Release(m_pTextureCom_Diffuse);

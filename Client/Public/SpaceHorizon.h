@@ -11,15 +11,15 @@ END
 
 BEGIN(Client)
 
-class CFallingStar final : public CGameObject
+class CSpaceHorizon final : public CGameObject
 {
 public:
 	enum Space_TextureType { SPACE_DIFFUSE,SPACE_STAR_1, SPACE_STAR_2, SPACE_END};
 
 private:
-	CFallingStar(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CFallingStar(const CFallingStar& Prototype);
-	virtual ~CFallingStar() = default;
+	CSpaceHorizon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CSpaceHorizon(const CSpaceHorizon& Prototype);
+	virtual ~CSpaceHorizon() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -41,7 +41,6 @@ private:
 	_float m_fAccTime = { 0.f };
 private:
 	_bool m_isStarSwitch = { false };
-	_float m_fReStartTime = { 0.f };
 	_float	m_fMaskStar_Value_1 = { 0.f };
 	_float	m_fMaskStar_Value_2 = { 0.3f };
 
@@ -50,7 +49,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CFallingStar* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CSpaceHorizon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

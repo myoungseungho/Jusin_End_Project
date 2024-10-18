@@ -47,7 +47,7 @@ void CSpaceCliff::Update(_float fTimeDelta)
 
 void CSpaceCliff::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CSpaceCliff::Render(_float fTimeDelta)

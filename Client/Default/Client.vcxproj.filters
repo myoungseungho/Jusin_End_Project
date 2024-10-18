@@ -73,6 +73,18 @@
     <Filter Include="02.GameObjects\Map\Space\Cliff">
       <UniqueIdentifier>{002116a6-d7ec-40ce-8ad9-a2993f34be47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceHorizon">
+      <UniqueIdentifier>{615a15b1-e6dd-4fdd-a664-c6e2b5f10c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Sun">
+      <UniqueIdentifier>{30f4d0c2-f9e6-4762-8097-9b750e9e0f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Moon">
+      <UniqueIdentifier>{0b6e2440-ed9e-43ce-b3b2-9fd31271863e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\NewFilter1">
+      <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -265,6 +277,15 @@
     <ClInclude Include="..\Public\SpaceCliff.h">
       <Filter>02.GameObjects\Map\Space\Cliff</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceHorizon.h">
+      <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceSun.h">
+      <Filter>02.GameObjects\Map\Space\Sun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceMoon.h">
+      <Filter>02.GameObjects\Map\Space\Moon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -389,6 +410,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceCliff.cpp">
       <Filter>02.GameObjects\Map\Space\Cliff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceHorizon.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceSun.cpp">
+      <Filter>02.GameObjects\Map\Space\Sun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceMoon.cpp">
+      <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

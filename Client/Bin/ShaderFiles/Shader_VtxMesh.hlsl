@@ -18,6 +18,11 @@ texture2D g_GroundPattern;
 texture2D g_GroundCliff;
 texture2D g_GroundCrater;
 texture2D g_GroundShadow;
+
+texture2D g_SunLight;
+texture2D g_SunRainbow;
+
+int g_SunMeshIndex;
 int g_GroundCount;
 
 float g_MaskStar_Value_1;
@@ -28,7 +33,7 @@ vector			g_vCamPosition;
 
 float2 g_fSpriteSize;
 float2 g_fSpriteCurPos;
-
+float4 g_vCamPos;
 
 struct VS_IN
 {
@@ -48,6 +53,21 @@ struct VS_OUT
 	float3 vTangent : TANGENT;
 	float3 vBinormal : BINORMAL;
 };
+
+VS_OUT VS_MAIN_RECT(VS_IN In)
+{
+    VS_OUT Out;
+
+	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
+    vector vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+    vPosition = mul(vPosition, g_ViewMatrix);
+    vPosition = mul(vPosition, g_ProjMatrix);
+
+    Out.vPosition = vPosition;
+    Out.vTexcoord = In.vTexcoord;
+
+    return Out;
+}
 
 VS_OUT VS_MAIN(VS_IN In)
 {
@@ -131,7 +151,7 @@ PS_OUT PS_MAIN_FSTAR(PS_IN In)
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vMtrlDiffuse *= 3.3f;
-	
+
     float luminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
     vMtrlDiffuse.a = saturate(luminance * 2.0f);
 
@@ -146,13 +166,6 @@ PS_OUT PS_MAIN_FSTAR(PS_IN In)
 
 PS_OUT PS_MAIN_EARTH(PS_IN In)
 {
-/*
-g_EarthCloud0;
-g_EarthCloud1;
-g_EarthCloud2;
-g_EarthLight;
-g_EarthShadow;
-*/
     PS_OUT Out;
     float2 vTex, vTexEarth;
 	
@@ -164,8 +177,6 @@ g_EarthShadow;
     vector vMtrlCloud2 = g_EarthCloud2.Sample(LinearSampler, vTex + g_Time * 0.003f);
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexEarth + g_Time * 0.001f);
     vMtrlCloud1 *= vMtrlCloud2;
-	
-
 	
     vTex.x = In.vTexcoord.x * 2;
     vTex.y = In.vTexcoord.y;
@@ -205,6 +216,7 @@ g_EarthShadow;
 
     return Out;
 }
+
 PS_OUT PS_MAIN_EARTH_LIGHT(PS_IN In)
 {
 /*
@@ -227,7 +239,7 @@ g_EarthShadow;
     float Shadowluminance = 0.299f * vMtrlShadow.x + 0.587f * vMtrlShadow.y + 0.114f * vMtrlShadow.z;
     vMtrlShadow.a = saturate(Shadowluminance * 2.0f);
 
-    vMtrlLight.a -= 1 - vMtrlShadow.a;
+    vMtrlLight.a -= saturate(1 - vMtrlShadow.a) * 0.5f;
 
 
     Out.vDiffuse = vMtrlLight * 2;
@@ -238,6 +250,7 @@ g_EarthShadow;
 
     return Out;
 }
+
 PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
@@ -246,6 +259,61 @@ PS_OUT PS_MAIN(PS_IN In)
    // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
     //if (vMtrlDiffuse.a < 0.99f)
     //    discard;
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    //Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    return Out;
+}
+
+PS_OUT PS_MAIN_MOON(PS_IN In)
+{
+    PS_OUT Out;
+
+    In.vTexcoord.x += g_Time* 0.003f;
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    if (vMtrlDiffuse.a < 0.1f)
+        discard;
+
+    float3 vCamDir = normalize(In.vWorldPos - g_vCamPos);
+
+    float fDotProduct = abs(dot(normalize(In.vNormal), vCamDir));
+    float3 vLineColor = { 0.05f, 0.2f, 0.27f };
+    float fOffSet = 0.3f;
+    float fFilterOffSet = 0.6f;
+    float darkeningFactor = 1.0f;
+
+    if (fDotProduct < fFilterOffSet)
+    {
+        
+        darkeningFactor = 0.5f + 0.5f * (1.0f - fDotProduct / fOffSet);
+        vMtrlDiffuse.rgb = saturate(vMtrlDiffuse.rgb + vLineColor * darkeningFactor);
+    }
+    
+    
+    
+
+    // 여기서 darkeningFactor를 사용하여 색상을 조정하세요.
+    // 예: float4 color = baseColor * darkeningFactor;
+
+    Out.vDiffuse = vMtrlDiffuse ;
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_HORIZON(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+
+    vMtrlDiffuse.a = vMtrlDiffuse.x;
+ 
+    vMtrlDiffuse.rgb = float3(0.2431f, 0.4823f, 0.8117f);
 
     Out.vDiffuse = vMtrlDiffuse;
 
@@ -279,6 +347,58 @@ PS_OUT PS_MAIN_GROUND(PS_IN In)
 
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
+    return Out;
+}
+
+PS_OUT PS_MAIN_SUN(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse;
+     
+    if (g_SunMeshIndex == 0) // 태양
+    {
+        vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+        //float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
+        //vMtrlDiffuse.a = saturate(Shadowluminance * 1.5f);
+        float Shadowluminance = (vMtrlDiffuse.x + vMtrlDiffuse.y + vMtrlDiffuse.z) / 3;
+        vMtrlDiffuse.a = saturate(Shadowluminance * 1.f);
+    }
+    else // 십자
+    {
+
+        vector vColor = { 0.1921f, 0.6f, 0.8274f, 0.f };
+        vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+        vMtrlDiffuse.a = saturate(vMtrlDiffuse.b) * g_Time * 1.46f; 
+        
+        vMtrlDiffuse.rgb = vColor.rgb;
+
+    }
+
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
+struct PS_OUT_RAINBOW
+{
+    float4 vColor : SV_TARGET0;
+};
+
+PS_OUT_RAINBOW PS_MAIN_RAINBOW(PS_IN In)
+{
+    PS_OUT_RAINBOW Out;
+    
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    //float Shadowluminance = 0.299f * vMtrlDiffuse.x + 0.587f * vMtrlDiffuse.y + 0.114f * vMtrlDiffuse.z;
+    vMtrlDiffuse.a = saturate((vMtrlDiffuse.x + vMtrlDiffuse.y + vMtrlDiffuse.z) / 3.f) * 3.f - g_Time * 2.f;
+    //vMtrlDiffuse.rgb *= 1.5f;
+
+    Out.vColor = vMtrlDiffuse;
+      
     return Out;
 }
 
@@ -400,6 +520,62 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_GROUND();
+    }
+
+    pass Horizon // 6
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_HORIZON();
+    }
+
+    pass Sun // 7
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SUN();
+    }
+
+    pass SunRainbow // 8
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN_RECT();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_RAINBOW();
+    }
+
+    pass Moon // 9
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_MOON();
     }
 
 	pass NormalMapping

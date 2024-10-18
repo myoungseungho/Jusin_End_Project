@@ -48,6 +48,7 @@ public:
 	static const _wstring		m_strTransformTag;
 
 public:
+	void a();
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
 	virtual void Priority_Update(_float fTimeDelta);

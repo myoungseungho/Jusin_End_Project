@@ -119,9 +119,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pVIBuffer)
 		return E_FAIL;
 
-	m_pVIBuffer_Half = CVIBuffer_Rect::Create_Half(m_pDevice, m_pContext);
-	if (nullptr == m_pVIBuffer)
-		return E_FAIL;
 
 	m_pShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	if (nullptr == m_pShader)
@@ -169,16 +166,29 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
 		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
-	//	return E_FAIL;
+
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 350.f, 450.f, 300.f, 300.f)))
-		return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Depth"), 100.f, 500.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 600.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Shade"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 350.f, 450.f, 300.f, 300.f)))
+	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 1920.0f - 150.0f, 150.f, 300.f, 300.f)))
 	//	return E_FAIL;
 #endif
@@ -213,9 +223,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Glow_Priority(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_Blend_Priority(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-	
 
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
 		return E_FAIL;
@@ -226,8 +237,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
-	//if (FAILED(Render_Deferred(fTimeDelta)))
-	//	return E_FAIL;
+	if (FAILED(Render_Deferred(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Blend(fTimeDelta)))
@@ -317,14 +328,13 @@ HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
 
-		Safe_Release(pRenderObject);
-
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		if (FAILED(Draw_Glow(-1.f)))
+		if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
 			return E_FAIL;
 
+		Safe_Release(pRenderObject);
 	}
 
 	m_RenderObjects[RG_GLOW_PRI].clear();
@@ -332,8 +342,45 @@ HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_BLEND_PRI])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_BLEND_PRI].clear();
+
+	for (auto& pRenderObject : m_RenderObjects[RG_GLOW_STAR])
+	{
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+			return E_FAIL;
+
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
+			return E_FAIL;
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_GLOW_STAR].clear();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 {
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+		return E_FAIL;
+
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
 	{
 		if (nullptr != pRenderObject)
@@ -343,6 +390,9 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 	}
 
 	m_RenderObjects[RG_NONBLEND].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -619,10 +669,12 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
@@ -631,7 +683,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
+HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 {
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
 		return E_FAIL;
@@ -771,10 +823,20 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta)
 	//	return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
-	if(fTimeDelta < 0)
-		m_pGlowShader->Begin(5);
+
+	if (fTimeDelta < 0)
+	{
+		if(iPassIndex == 0)
+			m_pGlowShader->Begin(5);
+		else
+			m_pGlowShader->Begin(iPassIndex);
+	}
 	else
+	{
+
 		m_pGlowShader->Begin(2);
+	}
+
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
@@ -804,6 +866,10 @@ void CRenderer::Free()
 			Safe_Release(pRenderObject);
 		m_RenderObjects[i].clear();
 	}
+	for (auto& pRenderObject : m_DebugComponent)
+		Safe_Release(pRenderObject);
+	m_DebugComponent.clear();
+	
 
 	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);

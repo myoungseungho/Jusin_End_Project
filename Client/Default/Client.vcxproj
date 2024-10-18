@@ -103,7 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../RendererSDK/Inc/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../RendererSDK/Inc/;./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,9 +195,12 @@
     <ClInclude Include="..\Public\SpaceEarth.h" />
     <ClInclude Include="..\Public\SpaceEarth_Light.h" />
     <ClInclude Include="..\Public\SpaceGround.h" />
+    <ClInclude Include="..\Public\SpaceHorizon.h" />
+    <ClInclude Include="..\Public\SpaceMoon.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\Player.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
+    <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -240,9 +243,12 @@
     <ClCompile Include="..\Private\SpaceEarth.cpp" />
     <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
     <ClCompile Include="..\Private\SpaceGround.cpp" />
+    <ClCompile Include="..\Private\SpaceHorizon.cpp" />
+    <ClCompile Include="..\Private\SpaceMoon.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\Player.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
+    <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

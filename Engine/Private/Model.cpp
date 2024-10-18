@@ -227,6 +227,16 @@ HRESULT CModel::Bind_BoneMatrices(CShader* pShader, const _char* pConstantName, 
 	return S_OK;
 }
 
+string CModel::ExtractFileName(const std::string& filePath) 
+{
+	size_t pos = filePath.find_last_of("\\/");  // 마지막 경로 위치 찾기
+
+	if (pos != std::string::npos) 
+		return filePath.substr(pos + 1);  // 파일명만 추출
+
+	return filePath;  // 경로 구분자가 없으면 전체 문자열 반환
+}
+
 HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTransformMatrix) {
 	std::ifstream inFile(binFilePath, std::ios::binary);
 	if (!inFile) {
@@ -354,6 +364,12 @@ HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTran
 		m_Materials.resize(m_iNumMaterials);
 	}
 
+	_char			szDrive[MAX_PATH] = {};
+	_char			szDir[MAX_PATH] = {};
+	_char			szFullPath[MAX_PATH] = {};
+
+	_splitpath_s(binFilePath.c_str(), szDrive, MAX_PATH, szDir, MAX_PATH, nullptr, 0, nullptr, 0);
+
 	// 재료 데이터를 읽어들입니다.
 	for (_uint i = 0; i < m_iNumMaterials; ++i) {
 		bool textureCreated = false;
@@ -366,43 +382,20 @@ HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTran
 				string texturePath(pathLength, '\0');
 				inFile.read(&texturePath[0], pathLength);
 
-				wstring basePath = L"../Bin/ModelData/";
-				wstring wTexturePath = basePath + wstring(texturePath.begin(), texturePath.end());
+				string binPath = ExtractFileName(texturePath);
+				strcpy_s(szFullPath, szDrive);
+				strcat_s(szFullPath, szDir);
+				strcat_s(szFullPath, binPath.c_str());
 
-				m_Materials[i].pMaterials[j] = CTexture::Create(m_pDevice, m_pContext, wTexturePath.c_str(), 1);
+				size_t len = strlen(szFullPath);
+				int size_needed = MultiByteToWideChar(CP_ACP, 0, szFullPath, len, NULL, 0);
+				wstring wstr(size_needed, 0);
+				MultiByteToWideChar(CP_ACP, 0, szFullPath, len, &wstr[0], size_needed);
+				wstring wFullPath = wstr;
 
-				char buffer[256];
-				snprintf(buffer, sizeof(buffer), "Reading material[%u] texturePath[%u]: %s\n", i, j, texturePath.c_str());
-				OutputDebugStringA(buffer);
+				m_Materials[i].pMaterials[j] = CTexture::Create(m_pDevice, m_pContext, wFullPath.c_str(), 1);
 
-				textureCreated = true;
 			}
-		}
-
-		// 만약 어떤 텍스처도 생성되지 않았다면, 파일 이름에서 확장자를 변경하여 경로를 생성합니다.
-		if (!textureCreated) {
-			// 파일 이름 추출 및 확장자 변경
-			size_t lastSlashPos = binFilePath.find_last_of("/\\");
-			string fileName = binFilePath.substr(lastSlashPos + 1);
-			size_t dotPos = fileName.find_last_of(".");
-			if (dotPos != string::npos) {
-				fileName = fileName.substr(0, dotPos) + "_" + std::to_string(i) + ".png";
-			}
-			else {
-				fileName += "_" + std::to_string(i) + ".png";
-			}
-
-			if (fileName == "hit_Anime4.fbm/HTN_base.png")
-				fileName = "HTN_base.png";
-			wstring basePath = L"../Bin/ModelData/";
-			wstring wTexturePath = basePath + wstring(fileName.begin(), fileName.end());
-
-			// m_Materials[i].pMaterials[1]에 경로 설정
-			m_Materials[i].pMaterials[1] = CTexture::Create(m_pDevice, m_pContext, wTexturePath.c_str(), 1);
-
-		/*	char buffer[256];
-			snprintf(buffer, sizeof(buffer), "Fallback texture path: %s\n", string(wTexturePath.begin(), wTexturePath.end()).c_str());
-			OutputDebugStringA(buffer);*/
 		}
 	}
 

@@ -27,7 +27,7 @@ public:
 	virtual HRESULT Initialize_Prototype(const _char* strModelFilePath, _fmatrix PreTransformMatrix);
 	virtual HRESULT Initialize(void* pArg) override;
 	virtual HRESULT Render(_uint iMeshIndex);
-
+	string ExtractFileName(const std::string& filePath);
 public:
 	void Play_Animation(_float fTimeDelta);
 	void SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration = 0.0f);

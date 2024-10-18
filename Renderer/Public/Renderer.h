@@ -19,7 +19,7 @@ BEGIN(Renderer)
 class CRenderer final : public CBase
 {
 public:
-	enum RENDERGROUP { RG_PRIORITY,RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI,RG_NONBLEND, RG_SHADOWOBJ, RG_NONLIGHT, RG_GLOW, RG_BLEND, RG_UI, RG_NODE, RG_END };
+	enum RENDERGROUP { RG_PRIORITY,RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI,RG_GLOW_STAR,RG_NONBLEND, RG_SHADOWOBJ, RG_NONLIGHT, RG_GLOW, RG_BLEND, RG_UI, RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -53,7 +53,7 @@ private:
 	class CShader* m_pShader = { nullptr };
 	class CShader* m_pGlowShader = { nullptr };
 	class CVIBuffer_Rect* m_pVIBuffer = { nullptr };
-	class CVIBuffer_Rect* m_pVIBuffer_Half = { nullptr };
+
 	ID3D11DepthStencilView* m_pShadowDSV = { nullptr };
 
 	_float4x4					m_DownWorldMatrix = {};
@@ -68,6 +68,7 @@ private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
 	HRESULT Render_Glow_Priority(_float fTimeDelta);
+	HRESULT Render_Blend_Priority(_float fTimeDelta);
 	HRESULT Render_NonBlend(_float fTimeDelta);
 	HRESULT Render_NonBlend_Test(_float fTimeDelta);
 	HRESULT Render_NonBlend_Layer(_float fTimeDelta);
@@ -84,7 +85,7 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 #endif
 
-	HRESULT Draw_Glow(_float fTimeDelta);
+	HRESULT Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
