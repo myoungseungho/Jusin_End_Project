@@ -77,6 +77,9 @@ public:
 
 	//Input
 	_bool m_isInput = { FALSE };
+
+	//RedBlueTimer
+	_float m_fColorValue = { 0.f };
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

@@ -84,16 +84,28 @@ HRESULT CUI_InputDirEffect::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
 		return E_FAIL;
 
-	_vector vColor = { 1.f , 0.f , 0. , 1.f };
+	_vector vColor = { 1 - m_pUI_Manager->m_fColorValue  , 0.f , m_pUI_Manager->m_fColorValue  , 1.f };
+
+	_float fColorTimer = m_pUI_Manager->m_fColorValue + 0.25f; 
+
+	if (fColorTimer >= 1.f)
+		fColorTimer = 1.f;
+	
+
+	_vector vEndColor = { 1 - fColorTimer, 0.f , fColorTimer, 1.f };
+
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vEndColor", &vEndColor, sizeof(_vector))))
 		return E_FAIL;
 
 	_float m_fAlpha = 1.f;
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlpha, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(13)))
+	if (FAILED(m_pShaderCom->Begin(14)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

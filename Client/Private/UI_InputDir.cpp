@@ -48,6 +48,15 @@ HRESULT CUI_InputDir::Initialize(void* pArg)
 void CUI_InputDir::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_pUI_Manager->m_fColorValue += fTimeDelta * 0.25f;
+	
+	if (m_pUI_Manager->m_fColorValue >= 1.f)
+		m_pUI_Manager->m_fColorValue = 1.f;
+
+	if (m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).empty())
+		m_pUI_Manager->m_fColorValue = 0.f;
+
 }
 
 void CUI_InputDir::Update(_float fTimeDelta)
@@ -120,7 +129,7 @@ void CUI_InputDir::Update(_float fTimeDelta)
 		 Desc.fAngle	= RotaionValue(m_vPos , vMovePos);
 		 Desc.fScaled = ScaleValue(m_vPos, vMovePos);
 	
-		 m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputEffect"), TEXT("Layer_UI_Input") , &Desc);
+		 m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputEffect"), TEXT("Layer_UI_EffectInput") , &Desc);
 	
 		 m_vPos.x = m_fPosX;
 		 m_vPos.y = m_fPosY;
@@ -129,82 +138,6 @@ void CUI_InputDir::Update(_float fTimeDelta)
 	}
 	
 	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 0.8f);
-
-	//DirectionInput eDirInput = m_pUI_Manager->m_eDirInput;
-	//
-	//if (ePrevDirInput != eDirInput )
-	//{
-	//	 ePrevDirInput = eDirInput;
-	//	 m_bCheck = TRUE;
-	//	
-	//}
-	//
-	//switch (eDirInput)
-	//{
-	//case DirectionInput::MOVEKEY_NEUTRAL:
-	//	 m_fPosX = 230.f;
-	//	 m_fPosY = 510.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_UP:
-	//	 m_fPosX = 230.f;
-	//	 m_fPosY = 450.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_DOWN:
-	//	 m_fPosX = 230.f;
-	//	 m_fPosY = 570.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_LEFT:
-	//	 m_fPosX = 170.f;
-	//	 m_fPosY = 510.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_RIGHT:
-	//	 m_fPosX = 290.f;
-	//	 m_fPosY = 510.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_UP_LEFT:
-	//	 m_fPosX = 170.f;
-	//	 m_fPosY = 450.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_UP_RIGHT:
-	//	 m_fPosX = 290.f;
-	//	 m_fPosY = 450.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_DOWN_LEFT:
-	//	 m_fPosX = 170.f;
-	//	 m_fPosY = 570.f;
-	//	 break;
-	//
-	//case DirectionInput::MOVEKEY_DOWN_RIGHT:
-	//	 m_fPosX = 290.f;
-	//	 m_fPosY = 570.f;
-	//	 break;
-	//}
-	//
-	//if (m_bCheck)
-	//{
-	//	 CUI_InputDirEffect::UI_DIREFFECT Desc = {};
-	//	 _float2 vMovePos = { m_fPosX , m_fPosY };
-	//
-	//	 Desc.vCreatePos =  CreatePostion(m_vPos , vMovePos);
-	//	 Desc.fAngle	= RotaionValue(m_vPos , vMovePos);
-	//	 Desc.fScaled = ScaleValue(m_vPos, vMovePos);
-	//
-	//	 m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputEffect"), TEXT("Layer_UI_Input") , &Desc);
-	//
-	//	 m_vPos.x = m_fPosX;
-	//	 m_vPos.y = m_fPosY;
-	//
-	//	 m_bCheck = FALSE;
-	//}
-	//
-	//__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 0.8f);
 }
 
 void CUI_InputDir::Late_Update(_float fTimeDelta)
