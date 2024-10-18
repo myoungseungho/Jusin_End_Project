@@ -21,43 +21,14 @@ HRESULT CEffect_Single::Initialize_Prototype()
 
 HRESULT CEffect_Single::Initialize(void* pArg)
 {
-	CTransform::TRANSFORM_DESC tDesc{};
-	tDesc.fRotationPerSec = XMConvertToRadians(90.f);
-	if (FAILED(__super::Initialize(&tDesc)))
-		return E_FAIL;
-
 	m_eEffect_Type = EFFECT_SINGLE;
 
-	if (pArg != nullptr)
-	{
-		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
+	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
 
-		_float3 vPos = pEffectDesc->vPosition;
-		_float3 vScale = pEffectDesc->vScaled;
-		_float3 vRot = pEffectDesc->vRotation;
+	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
+		return E_FAIL;
 
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(vPos.x, vPos.y, vPos.z, 1.f));
-		m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
-		m_pTransformCom->Rotate(vRot);
-
-		m_EffectName = pEffectDesc->EffectName;
-		m_ModelName = pEffectDesc->ModelName;
-		m_MaskTextureName = pEffectDesc->MaskTextureName;
-		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
-		m_iRenderIndex = pEffectDesc->iRenderIndex;
-		m_iPassIndex = pEffectDesc->iPassIndex;
-		m_iNumWidthImage = pEffectDesc->iNumWidthImage;
-		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
-
-		m_iUnique_Index = pEffectDesc->iUnique_Index;
-
-		if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
-			return E_FAIL;
-
-		if (pEffectDesc->SRV_Ptr != nullptr)
-			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
-	}
-	
 	return S_OK;
 }
 

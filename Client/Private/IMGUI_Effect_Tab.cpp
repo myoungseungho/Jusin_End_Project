@@ -109,7 +109,7 @@ void CIMGUI_Effect_Tab::Save_To_Effect_Layer(_uint iCurTestEffectIndex, const ws
 
 HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
 {
-    wstring filename = L"../Bin/Effects.txt"; // 파일 경로 설정
+    wstring filename = L"../Bin/Effects/Effects.txt"; // 파일 경로 설정
 
     // m_vecEffectData에 저장할 데이터를 수집합니다.
     m_vecEffectData.clear(); // 기존 데이터 초기화
@@ -612,6 +612,14 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
             totalKeyframes = static_cast<int>(layerDuration / frameInterval);
             pLayer->m_iNumKeyFrames = totalKeyframes;
+
+            ImGui::SameLine();
+            ImGui::Dummy(ImVec2(100.0f, 0.0f)); // 가로 70px 간격 추가
+            if (ImGui::Button("Copy"))
+            {
+                m_pEffect_Manager->Copy_Layer(selectedLayerName);
+            }
+            // 카피버튼 테스트용
         }
 
         ImGui::Separator();

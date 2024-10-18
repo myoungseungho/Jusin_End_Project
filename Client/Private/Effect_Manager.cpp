@@ -34,6 +34,8 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 	for (auto& Pair : m_TestEffect)
 		Pair->Priority_Update(fTimeDelta);
 
+	for (auto& Pair : m_UsingEffect)
+		Pair->Priority_Update(fTimeDelta);
 
 }
 
@@ -43,6 +45,9 @@ void CEffect_Manager::Update(_float fTimeDelta)
 		Pair.second->Update(fTimeDelta);
 
 	for (auto& Pair : m_TestEffect)
+		Pair->Update(fTimeDelta);
+
+	for (auto& Pair : m_UsingEffect)
 		Pair->Update(fTimeDelta);
 }
 
@@ -56,6 +61,9 @@ void CEffect_Manager::Late_Update(_float fTimeDelta)
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Late_Update(fTimeDelta);
+
+	for (auto& Pair : m_UsingEffect)
+		Pair->Late_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Render(_float fTimeDelta)
@@ -63,9 +71,23 @@ void CEffect_Manager::Render(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
 		
-
 	for (auto& Pair : m_TestEffect)
 		Pair->Render(fTimeDelta);
+
+	for (auto& Pair : m_UsingEffect)
+		Pair->Render(fTimeDelta);
+}
+
+HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
+
+	if (pLayer == nullptr)
+		return E_FAIL;
+
+	m_UsingEffect.push_back(pLayer->Clone());
+
+	return S_OK;
 }
 
 HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)

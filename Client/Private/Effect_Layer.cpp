@@ -7,7 +7,20 @@ CEffect_Layer::CEffect_Layer()
 {
 }
 
-HRESULT CEffect_Layer::Initialize()
+CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
+	: m_fDuration{Prototype.m_fDuration}
+	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
+	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
+	, m_MixtureEffects {Prototype.m_MixtureEffects }
+{
+}
+
+HRESULT CEffect_Layer::Initialize_Prototype()
+{
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Initialize(void* pArg)
 {
 	return S_OK;
 }
@@ -119,6 +132,19 @@ void CEffect_Layer::Set_Animation_Position(_float fNewCurPos)
 CEffect_Layer* CEffect_Layer::Create()
 {
 	return new CEffect_Layer();
+}
+
+CEffect_Layer* CEffect_Layer::Clone(void* pArg)
+{
+	CEffect_Layer* pInstance = new CEffect_Layer(*this);
+
+	if (FAILED(pInstance->Initialize(pArg)))
+	{
+		MSG_BOX(TEXT("Failed to Cloned : CEffect_Layer"));
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
 }
 
 void CEffect_Layer::Free()
