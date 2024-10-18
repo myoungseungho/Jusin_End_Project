@@ -122,7 +122,7 @@ namespace Engine
 			struct SkillData {
 				string skillName;
 				struct AnimationData {
-					string animationName;
+					string  animationName;
 					vector<CameraPoint> points;
 				};
 				vector<AnimationData> animations;
@@ -143,8 +143,6 @@ namespace Engine
 	extern unordered_map<_wstring, _int> stringToModelID;
 
 #pragma endregion
-
-
 
 #pragma region 바이너리
 	struct BoneWeight {

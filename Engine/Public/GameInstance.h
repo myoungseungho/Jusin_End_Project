@@ -100,7 +100,8 @@ public: /* For.FileManager */
 	HRESULT SaveObjects(const wstring& filename, void* pArg);
 	void* LoadObjects(const wstring& filename);
 	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
-	//vector<CameraData> Load_All_CameraPoints(const wstring& filename);
+	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
+
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };

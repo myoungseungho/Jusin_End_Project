@@ -399,10 +399,13 @@ HRESULT CGameInstance::Save_All_CameraPoints(const wstring& filename, void* pArg
 	return m_pFile_Manager->Save_All_CameraPoints(filename, pArg);
 }
 
-//vector<CameraData> CGameInstance::Load_All_CameraPoints(const wstring& filename)
-//{
-//	return m_pFile_Manager->Load_All_CameraPoints(filename);
-//}
+HRESULT CGameInstance::Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->Load_All_CameraPoints(filename, pArg);
+}
 
 void CGameInstance::Release_Engine()
 {

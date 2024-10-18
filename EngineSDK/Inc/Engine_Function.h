@@ -231,5 +231,31 @@ namespace Engine
 
 		return distance;
 	}
+
+	//string을 wstring으로
+	inline string WStringToString(const _wstring& wstr)
+	{
+		if (wstr.empty())
+			return std::string();
+
+		// 필요한 버퍼 크기를 얻습니다.
+		int size_needed = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), (int)wstr.length(), NULL, 0, NULL, NULL);
+		std::string strTo(size_needed, 0);
+
+		// 변환을 수행합니다.
+		WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), (int)wstr.length(), &strTo[0], size_needed, NULL, NULL);
+
+		return strTo;
+	}
+
+	inline _wstring Trim(const _wstring& str)
+	{
+		const _wstring whitespace = L" \t\n\r";
+		size_t start = str.find_first_not_of(whitespace);
+		if (start == _wstring::npos)
+			return L"";
+		size_t end = str.find_last_not_of(whitespace);
+		return str.substr(start, end - start + 1);
+	}
 #pragma endregion
 }

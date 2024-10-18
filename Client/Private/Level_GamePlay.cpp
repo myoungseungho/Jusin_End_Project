@@ -31,15 +31,27 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	}
 
-	//// 카메라 포인트 로드
-	//wstring cameraFilePath = L"../Bin/CameraPoints.txt";
-	//vector<CameraData> cameraDataList = m_pGameInstance->Load_All_CameraPoints(cameraFilePath);
-	//if (cameraDataList.empty()) {
-	//	return S_OK;
-	//}
+	// 카메라 포인트 로드
+	std::wstring cameraFilePath = L"../Bin/CameraPoints.txt";
+	CameraSaveData cameraSaveData;
+
+	HRESULT hr = m_pGameInstance->Load_All_CameraPoints(cameraFilePath, &cameraSaveData);
+	if (FAILED(hr)) {
+		// 로드 실패 처리
+		// 예: 로그 남기기 또는 기본 설정 적용
+		return E_FAIL;
+	}
+
+	if (cameraSaveData.models.empty()) {
+		// 로드된 데이터가 없으면 기본 설정 적용
+		return S_OK;
+	}
 
 	//// 로드된 데이터를 mainCamera에 적용
-	//static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->ApplyCameraData(cameraDataList);
+	//CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Main_Camera"));
+	//if (mainCamera) {
+	//	mainCamera->ApplyCameraData(cameraSaveData);
+	//}
 
 	return S_OK;
 }
