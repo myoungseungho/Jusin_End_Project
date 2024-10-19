@@ -87,9 +87,9 @@ public:
 	class CEffect_Animation* m_pAnimation = { nullptr };
 	EFFECT_TYPE			m_eEffect_Type = { EFFECT_END };
 	_int				m_iUnique_Index = { -1 };
-	_wstring		m_EffectName;
+	_wstring		m_EffectName;		// 이거 쉐이더탭으로 가져오기
 	_wstring		m_ModelName;
-	_wstring		m_MaskTextureName;
+	_wstring		m_MaskTextureName; // 이거 쉐이더탭 저장한 파일 이름
 	_wstring		m_DiffuseTextureName;
 	_int				m_iNumWidthImage = { 0 };
 	_int				m_iNumHeighthImage = { 0 };

@@ -135,12 +135,16 @@ void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 	m_iShaderCount++;
 }
 
+void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename)
+{
+	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
+	m_vecShader_Tabs[to_string(m_iShaderCount)]->m_iNumberId = m_iShaderCount;
+}
+
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
 {
-
 	Safe_Release(m_vecShader_Tabs[to_string(iIndex)]);
 	m_vecShader_Tabs.erase(to_string(iIndex));
-
 }
 
 _int CImgui_Manager::Pick_Effect_Mesh()

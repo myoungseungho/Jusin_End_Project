@@ -298,6 +298,9 @@
     <ClInclude Include="..\Public\Shader_Material.h">
       <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Shader_Tab_Defines.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
