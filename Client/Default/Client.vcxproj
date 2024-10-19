@@ -183,6 +183,7 @@
     <ClInclude Include="..\public\UI_Input_Action.h" />
     <ClInclude Include="..\public\UI_Input_ActionIcon.h" />
     <ClInclude Include="..\public\UI_Input_DirPanel.h" />
+    <ClInclude Include="..\public\UI_Input_IconPanel.h" />
     <ClInclude Include="..\public\UI_KOFont.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -288,6 +289,7 @@
     <ClCompile Include="..\private\UI_Input_Action.cpp" />
     <ClCompile Include="..\private\UI_Input_ActionIcon.cpp" />
     <ClCompile Include="..\private\UI_Input_DirPanel.cpp" />
+    <ClCompile Include="..\private\UI_Input_IconPanel.cpp" />
     <ClCompile Include="..\private\UI_KOFont.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

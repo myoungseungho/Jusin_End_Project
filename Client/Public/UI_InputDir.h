@@ -33,8 +33,12 @@ private:
 
 	DirectionInput ePrevDirInput = {};
 	_float2 m_vPos = {};
-
+	_bool m_bOnBtn = { FALSE };
 	
+	_uint m_iTextureIndex = { 6 };
+	_float m_fOnTimer = { 0.f };
+
+	_float m_fOffsetScaled = {0.f};
 
 public:
 	static CUI_InputDir* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

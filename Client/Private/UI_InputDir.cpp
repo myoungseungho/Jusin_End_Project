@@ -40,6 +40,8 @@ HRESULT CUI_InputDir::Initialize(void* pArg)
 
 	ePrevDirInput = MOVEKEY_NEUTRAL;
 
+	m_fOffsetScaled = 1.f;
+
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 	 
 	return S_OK;
@@ -53,6 +55,9 @@ void CUI_InputDir::Priority_Update(_float fTimeDelta)
 	
 	if (m_pUI_Manager->m_fColorValue >= 1.f)
 		m_pUI_Manager->m_fColorValue = 1.f;
+
+	if (m_bOnBtn)
+		m_fOnTimer += fTimeDelta;
 }
 
 void CUI_InputDir::Update(_float fTimeDelta)
@@ -132,8 +137,33 @@ void CUI_InputDir::Update(_float fTimeDelta)
 	
 		 m_bCheck = FALSE;
 	}
+
+
+	//ButtonInput eActionInput = m_pUI_Manager->m_eBtnInput;
+
+	if (m_pUI_Manager->m_eBtnInput != ATTACK_NONE)
+	{
+		m_bOnBtn = TRUE;
+		m_iTextureIndex = m_pUI_Manager->m_eBtnInput - 1;
+
+		m_fOffsetScaled = 1.25f;
+		
+		_bool bDebug = false;	
+	}
+
+	if (m_fOnTimer >= 0.1f)
+	{
+		m_fOnTimer = 0.f;
+		m_bOnBtn = FALSE;
+		m_iTextureIndex = 6;
+
+		m_fOffsetScaled = 1.f;
+	}
+
+
+
 	
-	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 0.8f);
+	__super::Set_UI_Setting(30.f * m_fOffsetScaled, 30.f * m_fOffsetScaled, m_fPosX, m_fPosY, 0.8f);
 }
 
 void CUI_InputDir::Late_Update(_float fTimeDelta)
@@ -146,9 +176,10 @@ void CUI_InputDir::Late_Update(_float fTimeDelta)
 HRESULT CUI_InputDir::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
+		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
 
 
@@ -171,7 +202,7 @@ HRESULT CUI_InputDir::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Cursor"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 }

@@ -11,6 +11,8 @@ public:
 	{
 		DirectionInput eDirInput = {};
 		ButtonInput		eActionInput = {  };
+
+		_bool  isGrab = {};
 	}UI_INPUT_DESC;
 
 protected:
@@ -31,7 +33,7 @@ protected:
 	virtual HRESULT Ready_Components();
 
 protected:
-	void CreateList();
+	_uint CreateList();
 
 	_bool m_bInitCommand = { FALSE };
 	DirectionInput m_eDir= { MOVEKEY_NEUTRAL };

@@ -34,7 +34,7 @@ HRESULT CUI_InputDirIcon::Initialize(void* pArg)
 
 	m_fPosY = 190;
 
-	__super::Set_UI_Setting(35.f, 35.f, 20.f, m_fPosY, 1.f);
+	__super::Set_UI_Setting(35.f, 35.f, 20.f, m_fPosY, 0.8f);
 
 	m_pUI_Manager->m_iNumCommandList++;
 	m_iNumCommandList  = m_pUI_Manager->m_iNumCommandList;
@@ -57,7 +57,7 @@ void CUI_InputDirIcon::Update(_float fTimeDelta)
 	if (fOffSetPosY >= 575)
 		m_bDead = TRUE;
 
-	__super::Set_UI_Setting(35.f, 35.f, 20 , fOffSetPosY , 1.f);
+	__super::Set_UI_Setting(35.f, 35.f, 20 , fOffSetPosY , 0.8f);
 }
 
 void CUI_InputDirIcon::Late_Update(_float fTimeDelta)
@@ -75,7 +75,7 @@ HRESULT CUI_InputDirIcon::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(12)))
+	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

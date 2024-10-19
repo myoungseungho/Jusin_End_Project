@@ -32,18 +32,44 @@ HRESULT CUI_Input_ActionIcon::Initialize(void* pArg)
 	UI_INPUT_DESC* pDirDesc = static_cast<UI_INPUT_DESC*>(pArg);
 	m_iTextureIndex = pDirDesc->eActionInput;
 
-	m_fPosX = 50.f;
+	if (m_iTextureIndex == ATTACK_GRAB)
+	{
+		m_iTextureIndex = ATTACK_LIGHT;
+
+		UI_INPUT_DESC InputDesc = {};
+		InputDesc.isGrab = TRUE;
+		InputDesc.eActionInput = ATTACK_MEDIUM;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ActionInputIcon"), TEXT("Layer_DirInput"), &InputDesc);
+	}
+
+	m_fPosX = 60.f;
 
 	m_fPosY = 190;
 
-	if (m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+	if (m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL && m_pUI_Manager->m_eBtnInput != ATTACK_GRAB)
 	{
 		m_pUI_Manager->m_iNumCommandList++;
-		m_fPosX = 20;
+		
 	}
+
+
+	if(m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+		m_fPosX = 20;
+
+	if (pDirDesc->isGrab)
+	{
+		m_fPosX += 40;
+		if(m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+			m_pUI_Manager->m_iNumCommandList++;
+	}
+
 	m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
 
-	__super::Set_UI_Setting(35.f, 35.f, m_fPosX, m_fPosY, 1.f);
+	
+
+	
+
+	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 0.8f);
 
 	return S_OK;
 }
@@ -63,7 +89,7 @@ void CUI_Input_ActionIcon::Update(_float fTimeDelta)
 	if (fOffSetPosY >= 575)
 		m_bDead = TRUE;
 
-	__super::Set_UI_Setting(35.f, 35.f, m_fPosX, fOffSetPosY, 1.f);
+	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, fOffSetPosY, 0.8f);
 }
 
 void CUI_Input_ActionIcon::Late_Update(_float fTimeDelta)
@@ -82,7 +108,7 @@ HRESULT CUI_Input_ActionIcon::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex - 1)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(12)))
+	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

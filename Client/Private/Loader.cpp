@@ -57,6 +57,7 @@
 #include "UI_InputDirIcon.h"
 #include "UI_Input_ActionIcon.h"
 #include "UI_InputDirEffect.h"
+#include "UI_Input_IconPanel.h"
 #include "UI_FontName.h"
 
 #include "Character.h"
@@ -290,11 +291,6 @@ HRESULT CLoader::Loading_For_UI()
 
 	//Ä¿¼­
 
-	/* For.Prototype_Component_Texture_UI_Cursor */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Cursor"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_dg_ball_Eff00.png")))))
-		return E_FAIL;
-
 	//Combo
 	/* For.Prototype_Component_Texture_UI_ComboNumber */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
@@ -457,7 +453,7 @@ HRESULT CLoader::Loading_For_UI()
 	///* For.Prototype_Component_Texture_UI_GameKOFont */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_LodingImage"),
 	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/window_title_00.png")))))
-//		return E_FAIL;
+	//	return E_FAIL;
 
 	//KeyInput 
 
@@ -468,7 +464,7 @@ HRESULT CLoader::Loading_For_UI()
 
 	/* Prototype_Component_Texture_UI_ActionInputPanel */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/KeyInputButton%d.png"),6))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/KeyInputButton%d.png"),7))))
 		return E_FAIL;
 
 	/* Prototype_Component_Texture_UI_DirInputIcon */
@@ -485,6 +481,11 @@ HRESULT CLoader::Loading_For_UI()
 	/* Prototype_Component_Texture_UI_DirKeyInputEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirKeyInputEffect"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/window_arrow_key_%d.png"),2))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_InputIconPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputIconPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Training_BlackBG_00.png")))))
 		return E_FAIL;
 
 	//Font
@@ -671,6 +672,12 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_InputDirIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* Prototype_GameObject_UI_DirInputIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_InputIconPanel"),
+		CUI_Input_IconPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
 	/* Prototype_GameObject_UI_ActionInputIcon */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_ActionInputIcon"),
 		CUI_Input_ActionIcon::Create(m_pDevice, m_pContext))))
@@ -680,6 +687,7 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_DirInputEffect"),
 		CUI_InputDirEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 
 
 	/* Prototype_GameObject_UI_FontName */

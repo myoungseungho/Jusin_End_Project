@@ -68,8 +68,10 @@ HRESULT CUI_Input::Ready_Components()
 	return S_OK;
 }
 
-void CUI_Input::CreateList()
+_uint CUI_Input::CreateList()
 {
+	_uint iNumCreate = { 0 };
+
 	//m_bInitCommand 
 	if (m_bInitCommand  == FALSE && DirectionInput::MOVEKEY_NEUTRAL != m_pUI_Manager->m_eDirInput)
 	{
@@ -84,7 +86,8 @@ void CUI_Input::CreateList()
 
 		m_eDir = m_pUI_Manager->m_eDirInput;
 		m_eAction = m_pUI_Manager->m_eBtnInput;
-
+		
+		iNumCreate = 1;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputIcon"), TEXT("Layer_DirInput"), &tDirInput);
 		
 		m_bInitCommand = TRUE;
@@ -99,10 +102,24 @@ void CUI_Input::CreateList()
 		tActionInput.eActionInput = m_pUI_Manager->m_eBtnInput;
 	
 		m_eAction = m_pUI_Manager->m_eBtnInput;
-	
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ActionInputIcon"), TEXT("Layer_DirInput"), &tActionInput);
-		//m_bInitCommand = TRUE;
+		
+		if (m_pUI_Manager->m_eDirInput != MOVEKEY_NEUTRAL)
+		{
+			iNumCreate = 2;
+		}
+		else
+			iNumCreate = 1;
+
+		if (m_pUI_Manager->m_eBtnInput == ATTACK_GRAB && m_pUI_Manager->m_eDirInput != MOVEKEY_NEUTRAL)
+			iNumCreate = 3;
+
+		if (m_pUI_Manager->m_eBtnInput == ATTACK_GRAB && m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+			iNumCreate = 2;
 	}
+
+	return iNumCreate;
 }
 
 void CUI_Input::Free()

@@ -268,6 +268,9 @@
     <Filter Include="02.GameObjects\UI\GameState\Font\KO\Effect">
       <UniqueIdentifier>{b4f3f884-7d51-4b66-ae1b-6d074e252777}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Panel\UI_Input_IconPanel">
+      <UniqueIdentifier>{9250434b-4768-4e41-8fe7-58ad664320bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -534,6 +537,9 @@
     <ClInclude Include="..\public\UI_KOFontEffect.h">
       <Filter>02.GameObjects\UI\GameState\Font\KO\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_Input_IconPanel.h">
+      <Filter>02.GameObjects\UI\Input\Panel\UI_Input_IconPanel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -781,6 +787,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_KOFontEffect.cpp">
       <Filter>02.GameObjects\UI\GameState\Font\KO\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_IconPanel.cpp">
+      <Filter>02.GameObjects\UI\Input\Panel\UI_Input_IconPanel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
