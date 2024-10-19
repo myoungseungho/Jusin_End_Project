@@ -6,27 +6,43 @@ SkillName: Son_Skill1
 
 [Animation]
 AnimationName: Son_Skill1_Anim1
-PointCount: 3
+PointCount: 5
 
 [CameraPoint]
-Position: 5.1768 -15.9982 27.8106
-Rotation: 0.98784 -0.0121052 -0.104228 -0.114729
-Duration: 1
+Position: 6.31321 -14.5694 31.7102
+Rotation: 0.989457 -0.0096113 -0.121459 -0.0782973
+Duration: 0.5
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 3.59994 -14.0526 18.9568
-Rotation: 0.990484 -0.00934655 -0.0874623 -0.105847
+Position: 5.36668 -13.8221 27.1499
+Rotation: 0.991651 -0.00807171 -0.102002 -0.0784718
 Duration: 0.1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 3.41764 -6.46653 15.6721
-Rotation: 0.990453 0.00915472 -0.0822415 0.110253
+Position: 3.61411 -12.451 18.7209
+Rotation: 0.991651 -0.00807171 -0.102002 -0.0784718
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 2.19362 -8.05582 11.889
+Rotation: 0.987123 0.0126477 -0.101536 0.122959
+Duration: 5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 2.19362 -8.05582 11.889
+Rotation: 0.987123 0.0126477 -0.101536 0.122959
 Duration: 1
 InterpolationType: 0
 Damping: 1
