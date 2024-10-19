@@ -35,8 +35,6 @@ void CLine_Draw::Priority_Update(_float fTimeDelta)
 
 void CLine_Draw::Update(_float fTimeDelta)
 {
-	// ·»´õ °´Ã¼ Ãß°¡
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 void CLine_Draw::Late_Update(_float fTimeDelta)
@@ -61,15 +59,21 @@ HRESULT CLine_Draw::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CLine_Draw::Set_LinePoints(const _float3& vStart, const _float3& vEnd)
+{
+	m_vStartPoint = vStart;
+	m_vEndPoint = vEnd;
+}
+
 HRESULT CLine_Draw::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxLineTex"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
 	/* Com_VIBuffer */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Line"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 
@@ -91,6 +95,13 @@ HRESULT CLine_Draw::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &color, sizeof(_float4))))
 		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vStartPoint", &m_vStartPoint, sizeof(_float3))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vEndPoint", &m_vEndPoint, sizeof(_float3))))
+		return E_FAIL;
+
 
 	return S_OK;
 }

@@ -162,6 +162,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\Energy_Effect.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
     <ClCompile Include="..\Private\Energy_Effect.cpp" />
     <ClCompile Include="..\Private\Energy_Effect_2p.cpp" />
@@ -247,6 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

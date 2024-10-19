@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
-
+#include "Line_Draw.h"
 _bool bShowCameraWindow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _wstring filename = L"../Bin/CameraPoints.txt"; //데이터 저장되는 txt
 
@@ -99,11 +99,6 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	return S_OK;
 }
 
-void CIMGUI_Camera_Tab::Update(_float fTimeDelta)
-{
-	m_pLineDraw->Update(fTimeDelta);
-}
-
 void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 {
 	//초기 메인카메라 셋팅
@@ -142,7 +137,7 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	if (m_iSelected_Animation >= 0)
 	{
 		// 포인트 보여주기
-		IMGUI_Show_Points();
+		IMGUI_Show_Points(fTimeDelta);
 
 		// Point 버튼 호출
 		IMGUI_Button();
@@ -150,8 +145,6 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 	////각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
 	IMGUI_Save_Button();
-
-	m_pLineDraw->Update(fTimeDelta);
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
@@ -256,7 +249,7 @@ void CIMGUI_Camera_Tab::UpdateCameraSelection()
 }
 
 
-void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
+void CIMGUI_Camera_Tab::IMGUI_Show_Points(_float fTimeDelta) {
 
 	//스킬에 따른 애니메이션이 선택되지 않았다면
 	if (m_iSelected_Animation == -1)
@@ -339,7 +332,7 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 	}
 
 	// 포인트 시각화 함수 호출
-	VisualizeCameraPoints(points);
+	VisualizeCameraPoints(points, fTimeDelta);
 }
 
 
@@ -480,41 +473,37 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 	return  modelTransform->Get_WorldMatrixPtr();
 }
 
-void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points)
+void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points, _float fTimeDelta)
 {
+	if (points.size() < 2)
+		return;
+
 	for (size_t i = 0; i < points.size(); ++i)
 	{
 		const CameraPoint& point = points[i];
-		_float3 worldPosition = point.position;
+		const CameraPoint& nextPoint = points[i + 1];
+
+		_float3 startPos = point.position;
+		_float3 endPos = nextPoint.position;
 
 		if (point.hasWorldFloat4x4 && point.pWorldFloat4x4)
 		{
 			_vector localPos = XMLoadFloat3(&point.position);
 			_matrix worldMatrix = XMLoadFloat4x4(point.pWorldFloat4x4);
 			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
-			XMStoreFloat3(&worldPosition, worldPosVec);
+			XMStoreFloat3(&startPos, worldPosVec);
 		}
 
-		DrawDebugSphere(worldPosition, 0.5f, (_float4)Colors::Yellow);
-
-		/*wstring pointNumber = L"Point " + std::to_wstring(i + 1);
-		DrawDebugText(AddFloat3(worldPosition, _float3(0, 1, 0)), pointNumber, (_float4)Colors::White);*/
-
-		if (i < points.size() - 1)
+		if (nextPoint.hasWorldFloat4x4 && nextPoint.pWorldFloat4x4)
 		{
-			const CameraPoint& nextPoint = points[i + 1];
-			_float3 nextWorldPosition = nextPoint.position;
-
-			if (nextPoint.hasWorldFloat4x4 && nextPoint.pWorldFloat4x4)
-			{
-				_vector localPos = XMLoadFloat3(&nextPoint.position);
-				_matrix worldMatrix = XMLoadFloat4x4(nextPoint.pWorldFloat4x4);
-				_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
-				XMStoreFloat3(&nextWorldPosition, worldPosVec);
-			}
-
-			DrawDebugLine(worldPosition, nextWorldPosition, (_float4)Colors::Green);
+			_vector localPos = XMLoadFloat3(&nextPoint.position);
+			_matrix worldMatrix = XMLoadFloat4x4(nextPoint.pWorldFloat4x4);
+			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
+			XMStoreFloat3(&endPos, worldPosVec);
 		}
+
+		static_cast<CLine_Draw*>(m_pLineDraw)->Set_LinePoints(startPos, endPos);
+		m_pLineDraw->Render(fTimeDelta);
 	}
 }
 

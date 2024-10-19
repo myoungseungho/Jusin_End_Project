@@ -25,7 +25,6 @@ protected:
 
 public:
 	HRESULT Initialize() override;
-	virtual void Update(_float fTimeDelta) override;
 	void Render(_float fTimeDelta) override;
 	virtual const _char* GetTabName() const { return "Camera"; };
 
@@ -36,7 +35,7 @@ private:
 
 	void IMGUI_Save_Button();
 	void UpdateCameraSelection();
-	void IMGUI_Show_Points();	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
+	void IMGUI_Show_Points(_float fTimeDelta);	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
 	void IMGUI_Button();        // Add_Point 버튼 처리 함수
 	void IMGUI_Delete_Points();
 	void IMGUI_Play_Button();	   // Play 버튼
@@ -48,7 +47,7 @@ private:
 	void IMGUI_Point_Modify_Save();
 
 	const _float4x4* Get_Model_Float4x4();
-	void VisualizeCameraPoints(const vector<CameraPoint>& points);
+	void VisualizeCameraPoints(const vector<CameraPoint>& points, _float fTimeDelta);
 	void DrawDebugSphere(const _float3& position, float radius, const _float4& color);
 	void DrawDebugLine(const _float3& start, const _float3& end, const _float4& color);
 	void DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color);

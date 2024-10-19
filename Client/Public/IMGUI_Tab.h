@@ -23,7 +23,6 @@ protected:
 
 public:
 	virtual HRESULT Initialize() = 0;
-	virtual void Update(_float fTimeDelta);
 	virtual void Render(_float fTimeDelta) = 0;
 
 public:

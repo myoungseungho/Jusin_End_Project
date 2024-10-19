@@ -6,7 +6,7 @@
 BEGIN(Engine)
 class CShader;
 class CTexture;
-class CVIBuffer_Rect;
+class CVIBuffer_Line;
 END
 
 
@@ -27,13 +27,19 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+public:
+	void Set_LinePoints(const _float3& vStart, const _float3& vEnd);
+
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CVIBuffer_Line* m_pVIBufferCom = { nullptr };
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+
+	_float3 m_vStartPoint = {};
+	_float3 m_vEndPoint = {};
 
 public:
     static CLine_Draw* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

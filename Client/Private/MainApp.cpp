@@ -51,8 +51,6 @@ HRESULT CMainApp::Initialize()
 void CMainApp::Update(_float fTimeDelta)
 {
 	m_pGameInstance->Update_Engine(fTimeDelta);
-
-	m_pImgui_Manager->Update(fTimeDelta);
 }
 
 // 1/50 -> 0.02ÃÊ °íÁ¤ Update
@@ -113,6 +111,14 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
 		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxLineTex"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxLineTex.hlsl"), VTXLINE::Elements, VTXLINE::iNumElements))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Line"),
+		CVIBuffer_Line::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
