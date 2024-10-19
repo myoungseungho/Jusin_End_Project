@@ -257,7 +257,34 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		return E_FAIL;
 
 #pragma region Effect Model
- 
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_aTestModel02"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/TestModel02.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_aTestModel03"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/TestModel03.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_aTestModel04"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/TestModel04.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_aTestModel05"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/TestModel05.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_aTestModel06"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/TestModel06.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_aTestModel07"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/TestModel07.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	PreTransformMatrix = XMMatrixScaling(0.0001f, 0.0001f, 0.0001f);
    

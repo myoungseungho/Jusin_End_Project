@@ -512,7 +512,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 	EffectDesc.ModelName = *ModelName;
 	EffectDesc.EffectName = *EffectName;
 	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
-	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
+	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_cmn_test");
 	EffectDesc.iUnique_Index = m_TestEffect_Count++;
 	EffectDesc.vPosition = { 0.f, 0.f, 0.f };
 	EffectDesc.vScaled = { 1.f, 1.f, 1.f };
