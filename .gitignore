@@ -220,3 +220,4 @@ EngineSDK/lib/DirectXTKd.lib
 Client/Bin/assimp-vc140-mtd.dll
 AssimpSaveAndLoad/assimp-vc140-mtd.dll
 AssimpSaveAndLoad/Bin/assimp-vc140-mtd.dll
+Client/Bin/Resources/Fonts/144ex.spritefont

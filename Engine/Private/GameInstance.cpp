@@ -10,7 +10,7 @@
 #include "File_Manager.h"
 #include "ThreadPool.h"
 #include "Frustum.h"
-
+#include "Font_Manager.h"
 IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()
@@ -62,6 +62,10 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 
 	m_pFrustum = CFrustum::Create();
 	if (nullptr == m_pFrustum)
+		return E_FAIL;
+
+	m_pFont_Manager = CFont_Manager::Create();
+	if (nullptr == m_pFont_Manager)
 		return E_FAIL;
 
 	return S_OK;
@@ -407,6 +411,16 @@ HRESULT CGameInstance::Load_All_CameraPoints(const std::wstring& filename, Camer
 	return m_pFile_Manager->Load_All_CameraPoints(filename, pArg);
 }
 
+HRESULT CGameInstance::Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath)
+{
+	return m_pFont_Manager->Add_Font(pDevice, pContext, strFontTag, pFontFilePath);
+}
+
+HRESULT CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor, _float fRadian, _float2 vPivotPos, _float fScale)
+{
+	return m_pFont_Manager->Draw_Font(strFontTag, pText, vPosition, vFontColor, fRadian, vPivotPos, fScale);
+}
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);
@@ -417,6 +431,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pInput_Device);
 	Safe_Release(m_pCollider_Manager);
 	Safe_Release(m_pFrustum);
+	Safe_Release(m_pFont_Manager);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }

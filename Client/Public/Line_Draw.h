@@ -11,13 +11,13 @@ END
 
 
 BEGIN(Client)
-class CLine_Draw :  public CGameObject
+class CLine_Draw : public CGameObject
 {
 
 private:
-    CLine_Draw(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-    CLine_Draw(const CLine_Draw& Prototype);
-    virtual ~CLine_Draw() = default;
+	CLine_Draw(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CLine_Draw(const CLine_Draw& Prototype);
+	virtual ~CLine_Draw() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -27,8 +27,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	void TextRender(const vector<CameraPoint>& points, _float fTimeDelta);
+
 public:
-	void Set_LinePoints(const _float3& vStart, const _float3& vEnd);
+	void Set_LinePoints(const vector<CameraPoint>& points, const _float3& vStart, const _float3& vEnd);
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
@@ -42,9 +44,9 @@ private:
 	_float m_fThickness = 0.5f;
 
 public:
-    static CLine_Draw* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-    virtual CGameObject* Clone(void* pArg) override;
-    virtual void Free() override;
+	static CLine_Draw* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	virtual CGameObject* Clone(void* pArg) override;
+	virtual void Free() override;
 };
 
 END

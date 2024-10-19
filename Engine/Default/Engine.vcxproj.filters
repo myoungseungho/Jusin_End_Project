@@ -115,6 +115,12 @@
     <ClCompile Include="..\Private\Frustum.cpp">
       <Filter>01.Utility\02.GameObjects\Frustum</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Font_Manager.cpp">
+      <Filter>01.Utility\03.Components\Font\Font_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CustomFont.cpp">
+      <Filter>01.Utility\03.Components\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Timer.h">
@@ -243,6 +249,12 @@
     <ClInclude Include="..\Public\Frustum.h">
       <Filter>01.Utility\02.GameObjects\Frustum</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Font_Manager.h">
+      <Filter>01.Utility\03.Components\Font\Font_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CustomFont.h">
+      <Filter>01.Utility\03.Components\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00.System">
@@ -364,6 +376,12 @@
     </Filter>
     <Filter Include="01.Utility\02.GameObjects\Frustum">
       <UniqueIdentifier>{6cbccc6f-d697-4a3b-80c1-1a79a88eb77f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\Font">
+      <UniqueIdentifier>{b0fdb511-296c-4fff-8d7d-0e658f694f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\Font\Font_Manager">
+      <UniqueIdentifier>{de632579-d663-4a20-bd9d-bc9d35fbbf5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

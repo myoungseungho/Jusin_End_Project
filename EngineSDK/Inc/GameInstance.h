@@ -102,6 +102,9 @@ public: /* For.FileManager */
 	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
 	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
 
+public: /* For.Font_Manager */
+	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);
+	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };
@@ -115,6 +118,7 @@ private:
 	class CThreadPool* m_pThreadPool = { nullptr };
 	class CFile_Manager* m_pFile_Manager = { nullptr };
 	class CFrustum* m_pFrustum = { nullptr };
+	class CFont_Manager* m_pFont_Manager = { nullptr };
 
 public:
 	void Release_Engine();

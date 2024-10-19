@@ -477,6 +477,13 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 	if (points.size() < 2)
 		return;
 
+	if (m_pLineDraw == nullptr)
+	{
+		m_pLineDraw = static_cast<CLine_Draw*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Line_Draw")));
+		return;
+	}
+
+
 	for (size_t i = 0; i < points.size() - 1; ++i)
 	{
 		const CameraPoint& point = points[i];
@@ -501,15 +508,12 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 			XMStoreFloat3(&endPos, worldPosVec);
 		}
 
-		if (m_pLineDraw == nullptr)
-		{
-			m_pLineDraw = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Line_Draw"));
-			return;
-		}
 
-		static_cast<CLine_Draw*>(m_pLineDraw)->Set_LinePoints(startPos, endPos);
+		m_pLineDraw->Set_LinePoints(points, startPos, endPos);
 		m_pLineDraw->Render(fTimeDelta);
 	}
+
+	m_pLineDraw->TextRender(points, fTimeDelta);
 }
 
 void CIMGUI_Camera_Tab::DrawDebugSphere(const _float3& position, float radius, const _float4& color)

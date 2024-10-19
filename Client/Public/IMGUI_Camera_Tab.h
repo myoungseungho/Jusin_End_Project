@@ -83,7 +83,7 @@ private:
 
 	//메인카메라
 	class CMain_Camera* m_pMainCamera = { nullptr };
-	class CGameObject* m_pLineDraw = { nullptr };
+	class CLine_Draw* m_pLineDraw = { nullptr };
 public:
 	static CIMGUI_Camera_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;
