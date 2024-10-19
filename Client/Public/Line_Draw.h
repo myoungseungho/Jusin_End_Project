@@ -29,7 +29,6 @@ public:
 
 public:
 	void Set_LinePoints(const _float3& vStart, const _float3& vEnd);
-	_matrix ComputeWorldMatrix(const _float3& startPoint, const _float3& endPoint, _float thickness);
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
@@ -40,6 +39,7 @@ private:
 
 	_float3 m_vStartPoint = {};
 	_float3 m_vEndPoint = {};
+	_float m_fThickness = 0.5f;
 
 public:
     static CLine_Draw* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
