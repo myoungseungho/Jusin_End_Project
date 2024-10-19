@@ -24,8 +24,8 @@ HRESULT CUI_HpGauge::Initialize_Prototype()
 
 HRESULT CUI_HpGauge::Initialize(void* pArg)
 {
-	m_fPosX = 330.f;
-	m_fSizeX = 464.f;
+	m_fPosX = 319.f;
+	m_fSizeX = 417.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -33,7 +33,11 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 116.f, m_fPosX, 87.f, 0.75f);
+	//87
+	if(m_eLRPos == LEFT)
+		__super::Set_UI_Setting(m_fSizeX, 30, 319, 87.f, 0.75f);
+	else if(m_eLRPos == RIGHT)
+		__super::Set_UI_Setting(m_fSizeX, 30, 959, 87.f, 0.75f);
 
 	return S_OK;
 }
@@ -43,8 +47,10 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 	__super::Priority_Update(fTimeDelta);
 
 	if(m_pMainPawn != nullptr)
-		m_fHpRadio = m_pMainPawn->Get_PawnDesc().iHp / 100.f;
+		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 100.f);
 	
+	if (m_fHpRadio <= 0.f)
+		m_fHpRadio = 0.f;
 
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
@@ -77,6 +83,7 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
+
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
 }
 
@@ -90,6 +97,7 @@ HRESULT CUI_HpGauge::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
 
+	//m_iShaderID
 	if (FAILED(m_pShaderCom->Begin(m_iShaderID)))
 		return E_FAIL;
 	

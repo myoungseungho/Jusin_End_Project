@@ -81,10 +81,10 @@ PS_OUT PS_HP(PS_IN In)
 {
         PS_OUT Out;
     
-    float2 fPointA = float2(0.85f + (g_Radio - 1), 0.f);
+    float2 fPointA = float2(0.9519f + (g_Radio - 1), 0.f);
     float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
     
-    float2 fRedRointA = float2(0.85f + (g_fRedRadio - 1), 0.f);
+    float2 fRedRointA = float2(0.9519f + (g_fRedRadio - 1), 0.f);
     float2 fRedPointB = float2(1.f + (g_fRedRadio - 1), 1.f);
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
@@ -131,39 +131,6 @@ PS_OUT PS_COLOR(PS_IN In)
     return Out;
 }
 
-//float CalculateDepthDiff
-//    (
-//    float2 vTexcoord, float fViewZ)
-//{
-//    float2 fOffsetRight = float2(1.0f / 1280.f, 0.0f);
-//    float2 fOffsetDown = float2(0.0f, 1.0f / 720.f);
-//    float2 fOffsetLeft = float2(-1.0f / 1280.f, 0.0f);
-//    float2 fOffsetUp = float2(0.0f, -1.0f / 720.f);
-//
-//    float fDepthRight = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).x * 1000.f;
-//    float fDepthDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).x * 1000.f;
-//    float fDepthLeft = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).x * 1000.f;
-//    float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
-//
-//    float fDepthDiff = abs(fViewZ - fDepthRight) + abs(fViewZ - fDepthDown)
-//                       + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp);
-//
-//    return fDepthDiff;
-//}
-// 외곽선 검출 함수
-//float CalculateEdge
-//    (
-//    float2 vTexcoord, float fViewZ, float4 vNormal, float fEdgeThreshold, float fEdgeNormalThreshold, float fEdgeDepthThreshold)
-//{
-//
-//    float fDepthDiff = CalculateDepthDiff(vTexcoord, fViewZ);
-//   
-//    float fEdge = step(fEdgeDepthThreshold, fDepthDiff) ;
-//
-//    return fEdge;
-//}
-
-
 PS_OUT PS_SKILL(PS_IN In)
 {
     
@@ -199,25 +166,7 @@ PS_OUT PS_SKILL(PS_IN In)
 
     if (Out.vColor.a <= 0.1f)
         discard;
-    
-    //if (In.vTexcoord.y == 0 || In.vTexcoord.y == 1)
-    //{
-    //    Out.vColor = float4(0.f, 0.f, 0.f, 1.0f);
-    //
-    //}
-    //else if (In.vTexcoord.x == 0 || In.vTexcoord.x == 1)
-    //{
-    //    Out.vColor = float4(0.f, 0.f, 0.f, 1.0f);
-    //}
-    
-    
-    //float fEdgeNormalThreshold = 0.2f;
-    //float fEdgeDepthThreshold = 0.5f;
    
-    //float fEdge = CalculateEdge(In.vTexcoord,1 , 1, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
-
-    //vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
-    //Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
 
         return Out;
 }
@@ -259,11 +208,8 @@ PS_OUT PS_SUB_HP(PS_IN In)
     if (fLineY > 0)
     {
         Out.vColor.rgb = (1 - vBaseTex) * float4(1.f, 0.831f, 0.f, 0.f);
-        //float3(1.f, 0.831f, 0.f);
     }
   
-
-    
     if (Out.vColor.a <= 0.1f)
         discard;
         
@@ -429,6 +375,27 @@ PS_OUT PS_ALPHA(PS_IN In)
   
     Out.vColor.a = g_fAlphaTimer;
 
+    return Out;
+}
+
+
+PS_OUT HP_DEBUG(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+      
+    
+    if (Out.vColor.a <= 0.1f)
+        discard;
+    
+    if (In.vTexcoord.x >= g_fRedRadio)
+    {
+        Out.vColor.rgb = float3(0, 1, 0);
+    }
+    
+        
+  
     return Out;
 }
 
@@ -679,5 +646,19 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_ALPHA();
     }
 
+//16
+//HP 바 클래스에서 테스트 할려고 넣은 코드 지워도 됨.
+    pass HpDebug
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 HP_DEBUG();
+    }
 
 }
