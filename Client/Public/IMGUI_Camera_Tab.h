@@ -2,9 +2,6 @@
 #include "IMGUI_Tab.h"
 #include "Camera.h"
 #include "Virtual_Camera.h"
-BEGIN(Engine)
-class CCamera;
-END
 
 BEGIN(Client)
 
@@ -28,6 +25,7 @@ protected:
 
 public:
 	HRESULT Initialize() override;
+	virtual void Update(_float fTimeDelta) override;
 	void Render(_float fTimeDelta) override;
 	virtual const _char* GetTabName() const { return "Camera"; };
 
@@ -44,13 +42,16 @@ private:
 	void IMGUI_Play_Button();	   // Play 버튼
 	void IMGUI_Pause_Button();	   // Pause 버튼
 	void IMGUI_Stop_Button();	   // Stop 버튼
-
 	void IMGUI_Delete_Point(_int index); //Delete 버튼
 	void IMGUI_Modify_Point(_int index); //Modify 버튼
 	void IMGUI_Modify_Point_UI(_int index);
 	void IMGUI_Point_Modify_Save();
 
 	const _float4x4* Get_Model_Float4x4();
+	void VisualizeCameraPoints(const vector<CameraPoint>& points);
+	void DrawDebugSphere(const _float3& position, float radius, const _float4& color);
+	void DrawDebugLine(const _float3& start, const _float3& end, const _float4& color);
+	void DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color);
 
 private:
 	CAMERA_MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
@@ -64,30 +65,6 @@ private:
 
 	// 스킬과 애니메이션 인덱스 쌍을 키로 받고 애니메이션 목록을 값으로 갖는 맵
 	unordered_map<pair<CAMERA_MODELID, int>, vector<string>, pair_hash> m_SkillAnimations;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	_int m_selectedPoint = -1;
 	_bool m_isEditing = { false };     // 수정 모드 여부
@@ -107,7 +84,7 @@ private:
 
 	//메인카메라
 	class CMain_Camera* m_pMainCamera = { nullptr };
-
+	class CGameObject* m_pLineDraw = { nullptr };
 public:
 	static CIMGUI_Camera_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

@@ -13,6 +13,10 @@ CIMGUI_Tab::CIMGUI_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	Safe_AddRef(m_pRenderInstance);
 }
 
+void CIMGUI_Tab::Update(_float fTimeDelta)
+{
+}
+
 void CIMGUI_Tab::Free()
 {
 	Safe_Release(m_pDevice);

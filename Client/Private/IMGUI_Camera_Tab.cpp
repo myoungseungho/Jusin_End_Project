@@ -94,7 +94,14 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 		}
 	}
 
+	m_pLineDraw = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Line_Draw"));
+
 	return S_OK;
+}
+
+void CIMGUI_Camera_Tab::Update(_float fTimeDelta)
+{
+	m_pLineDraw->Update(fTimeDelta);
 }
 
 void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
@@ -143,8 +150,9 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 
 	////각 모델과 각 스킬에 연결된 카메라가 가지고 있는 Point를 메모장으로 저장하는 방식
 	IMGUI_Save_Button();
-}
 
+	m_pLineDraw->Update(fTimeDelta);
+}
 
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 {
@@ -329,6 +337,9 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points() {
 		ImGui::Separator();
 		ImGui::PopID();
 	}
+
+	// 포인트 시각화 함수 호출
+	VisualizeCameraPoints(points);
 }
 
 
@@ -469,6 +480,73 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 	return  modelTransform->Get_WorldMatrixPtr();
 }
 
+void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points)
+{
+	for (size_t i = 0; i < points.size(); ++i)
+	{
+		const CameraPoint& point = points[i];
+		_float3 worldPosition = point.position;
+
+		if (point.hasWorldFloat4x4 && point.pWorldFloat4x4)
+		{
+			_vector localPos = XMLoadFloat3(&point.position);
+			_matrix worldMatrix = XMLoadFloat4x4(point.pWorldFloat4x4);
+			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
+			XMStoreFloat3(&worldPosition, worldPosVec);
+		}
+
+		DrawDebugSphere(worldPosition, 0.5f, (_float4)Colors::Yellow);
+
+		/*wstring pointNumber = L"Point " + std::to_wstring(i + 1);
+		DrawDebugText(AddFloat3(worldPosition, _float3(0, 1, 0)), pointNumber, (_float4)Colors::White);*/
+
+		if (i < points.size() - 1)
+		{
+			const CameraPoint& nextPoint = points[i + 1];
+			_float3 nextWorldPosition = nextPoint.position;
+
+			if (nextPoint.hasWorldFloat4x4 && nextPoint.pWorldFloat4x4)
+			{
+				_vector localPos = XMLoadFloat3(&nextPoint.position);
+				_matrix worldMatrix = XMLoadFloat4x4(nextPoint.pWorldFloat4x4);
+				_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
+				XMStoreFloat3(&nextWorldPosition, worldPosVec);
+			}
+
+			DrawDebugLine(worldPosition, nextWorldPosition, (_float4)Colors::Green);
+		}
+	}
+}
+
+void CIMGUI_Camera_Tab::DrawDebugSphere(const _float3& position, float radius, const _float4& color)
+{
+
+}
+
+void CIMGUI_Camera_Tab::DrawDebugLine(const _float3& start, const _float3& end, const _float4& color)
+{
+	//ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
+	//draw_list->AddLine(start, end, ImGui::ColorConvertFloat4ToU32(color), 1.0f);
+}
+
+void CIMGUI_Camera_Tab::DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color)
+{
+	// 월드 좌표를 스크린 좌표로 변환
+	_vector worldPos = XMLoadFloat3(&position);
+	_matrix viewMatrix = m_pGameInstance->Get_Transform_Matrix(CPipeLine::D3DTS_VIEW);    // 뷰 행렬 가져오기
+	_matrix projMatrix = m_pGameInstance->Get_Transform_Matrix(CPipeLine::D3DTS_PROJ);   // 프로젝션 행렬 가져오기
+
+	_vector screenPos = XMVector3TransformCoord(worldPos, viewMatrix * projMatrix);
+
+	// 스크린 좌표를 가져옵니다.
+	_float screenX = (XMVectorGetX(screenPos) + 1.0f) * 0.5f * g_iWinSizeX;
+	_float screenY = (1.0f - XMVectorGetY(screenPos)) * 0.5f * g_iWinSizeY;
+
+	// 텍스트를 화면에 렌더링
+	//AddText(ImVec2(screenX, screenY), ImGui::ColorConvertFloat4ToU32(ImVec4(color.x, color.y, color.z, color.w)), text.c_str());
+}
+
+
 void CIMGUI_Camera_Tab::IMGUI_Button()
 {
 	// 현재 활성화된 가상 카메라 가져오기
@@ -560,7 +638,6 @@ void CIMGUI_Camera_Tab::IMGUI_Delete_Points()
 
 void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 {
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 35);
 	ImVec2 button_size = ImVec2(20, 20);
 	if (ImGui::InvisibleButton("play_button", button_size))
 		m_pMainCamera->Play(m_iSelected_Animation);
@@ -665,7 +742,7 @@ void CIMGUI_Camera_Tab::IMGUI_Save_Button()
 				// 해당 모델과 스킬에 매핑된 카메라 인덱스 찾기
 				auto cameraKey = make_pair(modelID, static_cast<int>(skillIdx));
 				auto cameraIt = m_CameraIndexMap.find(cameraKey);
-				
+
 				_int cameraIndex = cameraIt->second;
 
 				//각 모델과 스킬에 따른 버츄얼 카메라
@@ -718,5 +795,7 @@ CIMGUI_Camera_Tab* CIMGUI_Camera_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 void CIMGUI_Camera_Tab::Free()
 {
 	Safe_Release(m_pMainCamera);
+	Safe_Release(m_pLineDraw);
+
 	__super::Free();
 }

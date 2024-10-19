@@ -67,6 +67,9 @@ void CImgui_Manager::Priority_Update(_float fTimeDelta)
 
 void CImgui_Manager::Update(_float fTimeDelta)
 {
+	for (auto& tab : m_vecTabs) {
+		tab->Update(fTimeDelta);
+	}
 }
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)

@@ -257,5 +257,14 @@ namespace Engine
 		size_t end = str.find_last_not_of(whitespace);
 		return str.substr(start, end - start + 1);
 	}
+
+	inline _float3 AddFloat3(const _float3& f1, const _float3& f2)
+	{
+		_float3 result;
+		result.x = f1.x + f2.x;
+		result.y = f1.y + f2.y;
+		result.z = f1.z + f2.z;
+		return result;
+	}
 #pragma endregion
 }
