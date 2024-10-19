@@ -45,26 +45,14 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_SON_SKILL_2:
 			name = "Camera_Son_Skill_2";
 			break;
-		case VIRTUAL_CAMERA_SON_SKILL_3:
-			name = "Camera_Son_Skill_3";
-			break;
 		case VIRTUAL_CAMERA_HIT_SKILL_1:
 			name = "Camera_Hit_Skill_1";
-			break;
-		case VIRTUAL_CAMERA_HIT_SKILL_2:
-			name = "Camera_Hit_Skill_2";
-			break;
-		case VIRTUAL_CAMERA_HIT_SKILL_3:
-			name = "Camera_Hit_Skill_3";
 			break;
 		case VIRTUAL_CAMERA_MINE_SKILL_1:
 			name = "Camera_Mine_Skill_1";
 			break;
 		case VIRTUAL_CAMERA_MINE_SKILL_2:
 			name = "Camera_Mine_Skill_2";
-			break;
-		case VIRTUAL_CAMERA_MINE_SKILL_3:
-			name = "Camera_Mine_Skill_3";
 			break;
 		case VIRTUAL_CAMERA_21_SKILL_1:
 			name = "Camera_21_Skill_1";
@@ -81,55 +69,41 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		m_vecVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
 	}
 
-	//stringToSkillID[{1, L"SKILLID_SON_SKILL1"}] = 0;
-	//stringToSkillID[{1, L"SKILLID_SON_SKILL2"}] = 1;
+	stringToSkillID["Son_Skill1"] = VIRTUAL_CAMERA_SON_SKILL_1;
+	stringToSkillID["Son_Skill2"] = VIRTUAL_CAMERA_SON_SKILL_2;
+	stringToSkillID["Hit_Skill1"] = VIRTUAL_CAMERA_HIT_SKILL_1;
+	stringToSkillID["Mine_Skill1"] = VIRTUAL_CAMERA_MINE_SKILL_1;
+	stringToSkillID["Mine_Skill2"] = VIRTUAL_CAMERA_MINE_SKILL_2;
+	stringToSkillID["21_Skill1"] = VIRTUAL_CAMERA_21_SKILL_1;
+	stringToSkillID["21_Skill2"] = VIRTUAL_CAMERA_21_SKILL_2;
+	stringToSkillID["21_Skill3"] = VIRTUAL_CAMERA_21_SKILL_3;
 
-	//// MODELID_HIT 스킬 초기화
-	//stringToSkillID[{2, L"SKILLID_HIT_SKILL1"}] = 0;
+	stringToAnimID["Son_Skill1_Anim1"] = 0;
+	stringToAnimID["Son_Skill1_Anim2"] = 1;
+	stringToAnimID["Son_Skill1_Anim3"] = 2;
 
-	//// MODELID_MINE 스킬 초기화
-	//stringToSkillID[{3, L"SKILLID_MINE_SKILL1"}] = 0;
-	//stringToSkillID[{3, L"SKILLID_MINE_SKILL2"}] = 1;
+	stringToAnimID["Son_Skill2_Anim1"] = 0;
+	stringToAnimID["Son_Skill2_Anim2"] = 1;
 
-	//// MODELID_21 스킬 초기화
-	//stringToSkillID[{4, L"SKILLID_21_SKILL1"}] = 0;
-	//stringToSkillID[{4, L"SKILLID_21_SKILL2"}] = 1;
-	//stringToSkillID[{4, L"SKILLID_21_SKILL3"}] = 2;
+	stringToAnimID["Hit_Skill1_Anim1"] = 0;
+	stringToAnimID["Hit_Skill1_Anim2"] = 1;
 
-	//// MODELID_SON 스킬1 애니메이션 초기화
-	//stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM1"}] = 0;
-	//stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM2"}] = 1;
-	//stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM3"}] = 2;
+	stringToAnimID["Mine_Skill1_Anim1"] = 0;
+	stringToAnimID["Mine_Skill1_Anim2"] = 1;
 
-	//// MODELID_SON 스킬2 애니메이션 초기화
-	//stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM1"}] = 0;
-	//stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM2"}] = 1;
+	stringToAnimID["Mine_Skill2_Anim1"] = 0;
+	stringToAnimID["Mine_Skill2_Anim2"] = 1;
+	stringToAnimID["Mine_Skill2_Anim3"] = 2;
 
-	//// MODELID_HIT 스킬1 애니메이션 초기화
-	//stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM1"}] = 0;
-	//stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM2"}] = 1;
+	stringToAnimID["21_Skill1_Anim1"] = 0;
 
-	//// MODELID_MINE 스킬1 애니메이션 초기화
-	//stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM1"}] = 0;
-	//stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM2"}] = 1;
+	stringToAnimID["21_Skill2_Anim1"] = 0;
+	stringToAnimID["21_Skill2_Anim2"] = 1;
 
-	//// MODELID_MINE 스킬2 애니메이션 초기화
-	//stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM1"}] = 0;
-	//stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM2"}] = 1;
-	//stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM3"}] = 2;
-
-	//// MODELID_21 스킬1 애니메이션 초기화
-	//stringToAnimID[{4, 0, L"ANIMID_21_SKILL1_ANIM1"}] = 0;
-
-	//// MODELID_21 스킬2 애니메이션 초기화
-	//stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM1"}] = 0;
-	//stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM2"}] = 1;
-
-	//// MODELID_21 스킬3 애니메이션 초기화
-	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM1"}] = 0;
-	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM2"}] = 1;
-	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM3"}] = 2;
-	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM4"}] = 3;
+	stringToAnimID["21_Skill3_Anim1"] = 0;
+	stringToAnimID["21_Skill3_Anim2"] = 1;
+	stringToAnimID["21_Skill3_Anim3"] = 2;
+	stringToAnimID["21_Skill3_Anim4"] = 3;
 
 	return S_OK;
 }
@@ -218,60 +192,82 @@ void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 {
 	for (const auto& modelData : cameraData.models)
 	{
-		//모델마다 돈다.
+		// 모델마다 돈다.
 		_int modelID = modelData.modelID;
 
-		//모델의 스킬마다 돈다
+		// 모델의 월드 행렬 포인터를 가져옵니다.
+		const _float4x4* pWorldMatrix = nullptr;
+
+		switch (modelID)
+		{
+		case 1:
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			break;
+		case 2:
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			break;
+		case 3:
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			break;
+		case 4:
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			break;
+		default:
+			// 알 수 없는 모델 ID 처리
+			continue;
+		}
+
+		// 모델의 스킬마다 돈다
 		for (const auto& skillData : modelData.skills)
 		{
-			//스킬마다 카메라가 있다.
-			string skillNameStr = skillData.skillName;
-			// 문자열 변환이 필요하다면 WStringToString 함수를 사용합니다.
-			_wstring skillName = _wstring(skillNameStr.begin(), skillNameStr.end());
-
 			// 스킬 이름을 스킬 ID로 매핑
-			_int skillID = -1;
-			//auto skillIt = stringToSkillID.find(skillName);
-			if (skillIt != stringToSkillID.end())
+			std::string skillNameStr = skillData.skillName;
+			auto skillIt = stringToSkillID.find(skillNameStr);
+			if (skillIt == stringToSkillID.end())
 			{
-				skillID = skillIt->second;
-			}
-			else
+				// 스킬이 맵에 없으면 건너뜁니다.
 				continue;
+			}
+
+			_int skillID = skillIt->second;
 
 			// 카메라 인덱스 얻기
-			_int cameraIndex = Get_CameraIndex(modelID, skillID);
+			_int cameraIndex = skillID;
+			if (cameraIndex >= m_vecVirtualCamera.size())
+			{
+				// 유효하지 않은 인덱스면 건너뜁니다.
+				continue;
+			}
 
 			CVirtual_Camera* pCurrentCamera = m_vecVirtualCamera[cameraIndex];
 
-			//스킬에 있는 애니메이션
+			// 스킬에 있는 애니메이션
 			for (const auto& animData : skillData.animations)
 			{
-				string animNameStr = animData.animationName;
-				_wstring animName = _wstring(animNameStr.begin(), animNameStr.end());
-
 				// 애니메이션 이름을 애니메이션 ID로 매핑
-				_int animID = -1;
-				auto animIt = stringToAnimID.find(animName);
-				if (animIt != stringToAnimID.end())
-					animID = animIt->second;
+				std::string animNameStr = animData.animationName;
+				auto animIt = stringToAnimID.find(animNameStr);
+				if (animIt == stringToAnimID.end())
+				{
+					// 애니메이션이 맵에 없으면 건너뜁니다.
+					continue;
+				}
+
+				_int animID = animIt->second;
 
 				// 기존 포인트 초기화
 				pCurrentCamera->m_mapPoints[animID].clear();
 
 				// 새로운 포인트 할당
 				vector<CameraPoint> points;
+
 				for (const auto& pointData : animData.points)
 				{
-					CameraPoint point;
-					point.position = pointData.position;
-					point.rotation = pointData.rotation;
-					point.duration = pointData.duration;
-					point.interpolationType = static_cast<_int>(pointData.interpolationType);
-					point.damping = pointData.damping;
-					point.hasWorldFloat4x4 = pointData.hasWorldFloat4x4;
-					point.pWorldFloat4x4 = nullptr; // 필요에 따라 설정
+					CameraPoint point = pointData;
+					// pWorldFloat4x4 설정
+					point.pWorldFloat4x4 = pWorldMatrix;
 
+					// 포인트 벡터에 추가
 					points.push_back(point);
 				}
 
@@ -294,24 +290,16 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_SON_SKILL_1;
 		else if (skillID == 1)
 			index = VIRTUAL_CAMERA_SON_SKILL_2;
-		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_SON_SKILL_3;
 	}
 	else if (modelID == 2) { // MODELID_HIT
 		if (skillID == 0)
 			index = VIRTUAL_CAMERA_HIT_SKILL_1;
-		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_HIT_SKILL_2;
-		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_HIT_SKILL_3;
 	}
 	else if (modelID == 3) { // MODELID_HIT
 		if (skillID == 0)
 			index = VIRTUAL_CAMERA_MINE_SKILL_1;
 		else if (skillID == 1)
 			index = VIRTUAL_CAMERA_MINE_SKILL_2;
-		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_MINE_SKILL_3;
 	}
 	else if (modelID == 4) { // MODELID_HIT
 		if (skillID == 0)

@@ -13,13 +13,9 @@ public:
 		VIRTUAL_CAMERA_NORMAL,
 		VIRTUAL_CAMERA_SON_SKILL_1,
 		VIRTUAL_CAMERA_SON_SKILL_2,
-		VIRTUAL_CAMERA_SON_SKILL_3,
 		VIRTUAL_CAMERA_HIT_SKILL_1,
-		VIRTUAL_CAMERA_HIT_SKILL_2,
-		VIRTUAL_CAMERA_HIT_SKILL_3,
 		VIRTUAL_CAMERA_MINE_SKILL_1,
 		VIRTUAL_CAMERA_MINE_SKILL_2,
-		VIRTUAL_CAMERA_MINE_SKILL_3,
 		VIRTUAL_CAMERA_21_SKILL_1,
 		VIRTUAL_CAMERA_21_SKILL_2,
 		VIRTUAL_CAMERA_21_SKILL_3,
@@ -77,6 +73,9 @@ public:
 
 private:
 	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
+
+	unordered_map<std::string, int> stringToSkillID;
+	unordered_map<std::string, int> stringToAnimID;
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
