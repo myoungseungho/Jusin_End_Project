@@ -330,8 +330,10 @@ void CIMGUI_Camera_Tab::IMGUI_Show_Points(_float fTimeDelta) {
 		ImGui::PopID();
 	}
 
-	// 포인트 시각화 함수 호출
-	VisualizeCameraPoints(points, fTimeDelta);
+	_bool isPlay = m_pMainCamera->Get_IsPlay();
+	if (!isPlay)
+		// 포인트 시각화 함수 호출
+		VisualizeCameraPoints(points, fTimeDelta);
 }
 
 
@@ -512,6 +514,7 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 		m_pLineDraw->Set_LinePoints(points, startPos, endPos);
 		m_pLineDraw->Render(fTimeDelta);
 	}
+
 
 	m_pLineDraw->TextRender(points, fTimeDelta);
 }

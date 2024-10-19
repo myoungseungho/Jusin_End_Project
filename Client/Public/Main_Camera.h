@@ -68,6 +68,8 @@ public:
 
 	void SetPlayer(PLAYER_STATE, CGameObject* pPlayer);
 	const char* Get_Current_CameraName();
+	_bool Get_IsPlay();
+
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 

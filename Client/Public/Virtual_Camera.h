@@ -62,6 +62,11 @@ public:
 	void Stop();
 	void Button_Stop();
 
+	_bool Get_IsPlay()
+	{
+		return m_currentPlayMode == CAMERA_PLAY_MODE::Playing;
+	};
+
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);

@@ -334,6 +334,11 @@ const char* CMain_Camera::Get_Current_CameraName()
 	return m_vecVirtualCamera[m_currentVirtualMode]->GetTabName();
 }
 
+_bool CMain_Camera::Get_IsPlay()
+{
+	return m_vecVirtualCamera[m_currentVirtualMode]->Get_IsPlay();
+}
+
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)
 {
