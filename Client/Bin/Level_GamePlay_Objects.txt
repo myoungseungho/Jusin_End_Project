@@ -8,16 +8,6 @@ LookRotation: 0 2.38419e-07 -1
 Scale: 1 1 1
 IsParsing: 1
 
-LayerName: Layer_Monster
-PrototypeTag: Prototype_GameObject_Monster
-LevelIndex: 2
-Position: 5 0 0
-RightRotation: 1 0 0
-UpRotation: -0 -1 -2.38419e-07
-LookRotation: 0 2.38419e-07 -1
-Scale: 1 1 1
-IsParsing: 1
-
 LayerName: Layer_Melee_Effect
 PrototypeTag: Prototype_GameObject_Melee_Effect
 LevelIndex: 2
