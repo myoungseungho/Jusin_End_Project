@@ -1730,8 +1730,10 @@ void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 	else
 		m_pModelCom->SetUp_Animation(iAnimationIndex, bloof);
 
-
-	//m_bNextAnimationGravityEvent = false;
+	if (iAnimationIndex == m_iHit_Air_LightAnimationIndex)
+	{
+		m_pModelCom->CurrentAnimationPositionJump(0.f);
+	}
 
 }
 
