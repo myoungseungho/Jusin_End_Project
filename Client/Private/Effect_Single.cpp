@@ -91,8 +91,8 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 			//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 
 			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 			m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 		}
 	}
 }
