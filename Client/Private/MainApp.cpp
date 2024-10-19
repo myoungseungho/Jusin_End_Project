@@ -113,14 +113,6 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxLineTex"),
-		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxLineTex.hlsl"), VTXLINE::Elements, VTXLINE::iNumElements))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Line"),
-		CVIBuffer_Line::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
 	return S_OK;
 }
 

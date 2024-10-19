@@ -7,6 +7,9 @@ texture2D g_Texture;
 float g_Alpha = 1.f;
 float4 g_vColor;
 
+float3 g_vStartPoint;
+float3 g_vEndPoint;
+
 struct VS_IN
 {
     float3 vPosition : POSITION;
@@ -25,6 +28,7 @@ VS_OUT VS_MAIN(VS_IN In)
 
 	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
     vector vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+
     vPosition = mul(vPosition, g_ViewMatrix);
     vPosition = mul(vPosition, g_ProjMatrix);
 
@@ -62,7 +66,7 @@ technique11 DefaultTechnique
     //0
     pass Default
     {
-        SetRasterizerState(RS_Default);
+        SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 

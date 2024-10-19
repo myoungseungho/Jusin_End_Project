@@ -6,7 +6,7 @@
 BEGIN(Engine)
 class CShader;
 class CTexture;
-class CVIBuffer_Line;
+class CVIBuffer_Rect;
 END
 
 
@@ -29,10 +29,10 @@ public:
 
 public:
 	void Set_LinePoints(const _float3& vStart, const _float3& vEnd);
-
+	_matrix ComputeWorldMatrix(const _float3& startPoint, const _float3& endPoint, _float thickness);
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
-	CVIBuffer_Line* m_pVIBufferCom = { nullptr };
+	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 private:
 	HRESULT Ready_Components();

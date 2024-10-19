@@ -94,7 +94,6 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 		}
 	}
 
-	m_pLineDraw = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Line_Draw"));
 
 	return S_OK;
 }
@@ -478,7 +477,7 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 	if (points.size() < 2)
 		return;
 
-	for (size_t i = 0; i < points.size(); ++i)
+	for (size_t i = 0; i < points.size() - 1; ++i)
 	{
 		const CameraPoint& point = points[i];
 		const CameraPoint& nextPoint = points[i + 1];
@@ -500,6 +499,12 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 			_matrix worldMatrix = XMLoadFloat4x4(nextPoint.pWorldFloat4x4);
 			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
 			XMStoreFloat3(&endPos, worldPosVec);
+		}
+
+		if (m_pLineDraw == nullptr)
+		{
+			m_pLineDraw = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Line_Draw"));
+			return;
 		}
 
 		static_cast<CLine_Draw*>(m_pLineDraw)->Set_LinePoints(startPos, endPos);
