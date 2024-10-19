@@ -280,6 +280,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_FontName"), TEXT("Layer_UI_FontName"), &KeyInputDesc);
 		
 	}
+
 }
 
 HRESULT CLevel_GamePlay::Ready_Character()

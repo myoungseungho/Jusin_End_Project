@@ -49,6 +49,7 @@
 #include "UI_ReadyFont.h"
 #include "UI_FightFont.h"
 #include "UI_KOFont.h"
+#include "UI_KOFontEffect.h"
 #include "UI_Chara_SubIcon.h"
 #include "UI_InputDir.h"
 #include "UI_Input_DirPanel.h"
@@ -448,6 +449,11 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/BP_roundfinish_KO.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_GameKOFontEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFontEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/BP_roundfinish_KO_eff.png")))))
+		return E_FAIL;
+
 	///* For.Prototype_Component_Texture_UI_GameKOFont */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_LodingImage"),
 	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/window_title_00.png")))))
@@ -638,6 +644,12 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_KOFont"),
 		CUI_KOFont::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_KOFontEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_KOFontEffect"),
+		CUI_KOFontEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	/* For.Prototype_GameObject_UI_InputDir */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_InputDir"),

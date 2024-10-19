@@ -41,7 +41,7 @@ HRESULT CUI_InputDir::Initialize(void* pArg)
 	ePrevDirInput = MOVEKEY_NEUTRAL;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
-
+	 
 	return S_OK;
 }
 
@@ -49,14 +49,10 @@ void CUI_InputDir::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_pUI_Manager->m_fColorValue += fTimeDelta * 0.25f;
+	m_pUI_Manager->m_fColorValue = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).size() * 0.1f;
 	
 	if (m_pUI_Manager->m_fColorValue >= 1.f)
 		m_pUI_Manager->m_fColorValue = 1.f;
-
-	if (m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).empty())
-		m_pUI_Manager->m_fColorValue = 0.f;
-
 }
 
 void CUI_InputDir::Update(_float fTimeDelta)
@@ -203,12 +199,17 @@ _float CUI_InputDir::ScaleValue(_float2 vPrevPos, _float2 vCurrPos)
 	fPos.x = fabs(vCurrPos.x - vPrevPos.x);
 	fPos.y = fabs(vCurrPos.y - vPrevPos.y);
 
+
+	_float fDistance = sqrt(fPos.x * fPos.x + fPos.y * fPos.y);
+
 	_float fScaled = 1;
 
-	if (fPos.x > 90.f || fPos.y > 90.f)
-	{
-		fScaled = 2.f;
-	}
+	if(fDistance >100.f)
+		fScaled = 2.2f;
+	else if(fDistance >65)
+		fScaled = 1.5f;
+	else 
+		fScaled = 1.f;
 
 	return fScaled;
 }

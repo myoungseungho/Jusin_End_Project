@@ -37,7 +37,7 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 	_float fAngle = pDesc->fAngle;
 	_float fScaled = pDesc->fScaled;
 	
-	__super::Set_UI_Setting(60 * fScaled, 15, CreatePosX, CreatePosY, 0.9f);
+	__super::Set_UI_Setting(60 * fScaled, 12, CreatePosX, CreatePosY, 0.9f);
 
 	fAngle += 90.f;
 
@@ -86,7 +86,7 @@ HRESULT CUI_InputDirEffect::Render(_float fTimeDelta)
 
 	_vector vColor = { 1 - m_pUI_Manager->m_fColorValue  , 0.f , m_pUI_Manager->m_fColorValue  , 1.f };
 
-	_float fColorTimer = m_pUI_Manager->m_fColorValue + 0.25f; 
+	_float fColorTimer = m_pUI_Manager->m_fColorValue + 0.125f; 
 
 	if (fColorTimer >= 1.f)
 		fColorTimer = 1.f;

@@ -36,8 +36,7 @@ HRESULT CUI_KOFont::Initialize(void* pArg)
 	
 
 	Set_AnimPosition(300, 0.5f);
-	Set_AnimPosition(400, 1.f);
-	Set_AnimPosition(400, 1.5f);
+	Set_AnimPosition(400, 0.75f);
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f , 0.f);
 
@@ -58,7 +57,7 @@ void CUI_KOFont::Update(_float fTimeDelta)
 
 	if (m_QueueAnim.empty())
 	{
-		m_fScaleAnim += fTimeDelta * 400.f;
+		m_fScaleAnim += fTimeDelta * 1000.f;
 
 		m_pTransformCom->Set_Scaled(m_fSizeX + m_fScaleAnim * 2.f, m_fSizeY - m_fScaleAnim, 1.f);
 

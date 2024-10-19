@@ -265,6 +265,9 @@
     <Filter Include="02.GameObjects\UI\Input\Dir\Effect">
       <UniqueIdentifier>{cdacd484-4454-4db1-b1dd-f0cb407077c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO\Effect">
+      <UniqueIdentifier>{b4f3f884-7d51-4b66-ae1b-6d074e252777}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -528,6 +531,9 @@
     <ClInclude Include="..\public\UI_InputDirEffect.h">
       <Filter>02.GameObjects\UI\Input\Dir\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_KOFontEffect.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -772,6 +778,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_InputDirEffect.cpp">
       <Filter>02.GameObjects\UI\Input\Dir\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOFontEffect.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

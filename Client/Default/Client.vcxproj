@@ -188,6 +188,7 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_GameState.h" />
     <ClInclude Include="..\public\UI_GameStartCircle.h" />
+    <ClInclude Include="..\public\UI_KOFontEffect.h" />
     <ClInclude Include="..\public\UI_Loading.h" />
     <ClInclude Include="..\public\UI_LoadingMark.h" />
     <ClInclude Include="..\public\UI_Loading_Font.h" />
@@ -292,6 +293,7 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_GameState.cpp" />
     <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
+    <ClCompile Include="..\private\UI_KOFontEffect.cpp" />
     <ClCompile Include="..\private\UI_Loading.cpp" />
     <ClCompile Include="..\private\UI_LoadingMark.cpp" />
     <ClCompile Include="..\private\UI_Loading_Font.cpp" />
