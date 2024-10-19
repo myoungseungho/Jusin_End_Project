@@ -234,13 +234,24 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
 
         if (line == L"[VirtualCamera]")
         {
-            // 이전 모델 데이터 저장
+            // Save current Animation and Skill before moving to new Model
+            if (!currentAnim.animationName.empty())
+            {
+                currentSkill.animations.push_back(currentAnim);
+                currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
+            }
+            if (!currentSkill.skillName.empty())
+            {
+                currentModel.skills.push_back(currentSkill);
+                currentSkill = CameraSaveData::ModelData::SkillData();
+            }
             if (currentModel.modelID != -1)
             {
                 pArg->models.push_back(currentModel);
-                currentModel = CameraSaveData::ModelData();
-                currentModel.modelID = -1; // 모델 ID 초기화
             }
+
+            currentModel = CameraSaveData::ModelData();
+            currentModel.modelID = -1; // 모델 ID 초기화
 
             // ModelID 읽기
             std::getline(file, line);
@@ -270,7 +281,13 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
 
         else if (line == L"[Skill]")
         {
-            // 이전 스킬 데이터 저장
+            // Save current Animation before moving to new Skill
+            if (!currentAnim.animationName.empty())
+            {
+                currentSkill.animations.push_back(currentAnim);
+                currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
+            }
+            // Save current Skill before starting new one
             if (!currentSkill.skillName.empty())
             {
                 currentModel.skills.push_back(currentSkill);
@@ -295,7 +312,7 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
         }
         else if (line == L"[Animation]")
         {
-            // 이전 애니메이션 데이터 저장
+            // Save current Animation before starting new one
             if (!currentAnim.animationName.empty())
             {
                 currentSkill.animations.push_back(currentAnim);
@@ -315,11 +332,10 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
                 currentAnim.animationName = WStringToString(animNameStr);
             }
 
-            // PointCount 읽기 (필요시 사용)
+            // PointCount 읽기
             std::getline(file, line);
             if (line.find(L"PointCount: ") != std::wstring::npos)
             {
-                 size_t pointCount = std::stoul(line.substr(12));
                 // 현재는 PointCount를 사용하지 않으므로 주석 처리
             }
 
@@ -384,9 +400,7 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
                 }
                 catch (const std::exception& e)
                 {
-                    // Handle error (e.g., log it and set a default value)
                     point.hasWorldFloat4x4 = false;
-                    // You might want to log e.what() for debugging
                 }
             }
 
@@ -399,11 +413,10 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
         else
         {
             // 기타 섹션 또는 무시할 내용
-            // 필요시 처리 추가
         }
     }
 
-    // 파일의 끝에 도달했을 때 마지막 데이터 추가
+    // Save any remaining data at the end of the file
     if (!currentAnim.animationName.empty())
     {
         currentSkill.animations.push_back(currentAnim);

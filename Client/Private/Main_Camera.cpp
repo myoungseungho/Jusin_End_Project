@@ -81,55 +81,55 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		m_vecVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
 	}
 
-	stringToSkillID[{1, L"SKILLID_SON_SKILL1"}] = 0;
-	stringToSkillID[{1, L"SKILLID_SON_SKILL2"}] = 1;
+	//stringToSkillID[{1, L"SKILLID_SON_SKILL1"}] = 0;
+	//stringToSkillID[{1, L"SKILLID_SON_SKILL2"}] = 1;
 
-	// MODELID_HIT 스킬 초기화
-	stringToSkillID[{2, L"SKILLID_HIT_SKILL1"}] = 0;
+	//// MODELID_HIT 스킬 초기화
+	//stringToSkillID[{2, L"SKILLID_HIT_SKILL1"}] = 0;
 
-	// MODELID_MINE 스킬 초기화
-	stringToSkillID[{3, L"SKILLID_MINE_SKILL1"}] = 0;
-	stringToSkillID[{3, L"SKILLID_MINE_SKILL2"}] = 1;
+	//// MODELID_MINE 스킬 초기화
+	//stringToSkillID[{3, L"SKILLID_MINE_SKILL1"}] = 0;
+	//stringToSkillID[{3, L"SKILLID_MINE_SKILL2"}] = 1;
 
-	// MODELID_21 스킬 초기화
-	stringToSkillID[{4, L"SKILLID_21_SKILL1"}] = 0;
-	stringToSkillID[{4, L"SKILLID_21_SKILL2"}] = 1;
-	stringToSkillID[{4, L"SKILLID_21_SKILL3"}] = 2;
+	//// MODELID_21 스킬 초기화
+	//stringToSkillID[{4, L"SKILLID_21_SKILL1"}] = 0;
+	//stringToSkillID[{4, L"SKILLID_21_SKILL2"}] = 1;
+	//stringToSkillID[{4, L"SKILLID_21_SKILL3"}] = 2;
 
-	// MODELID_SON 스킬1 애니메이션 초기화
-	stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM1"}] = 0;
-	stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM2"}] = 1;
-	stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM3"}] = 2;
+	//// MODELID_SON 스킬1 애니메이션 초기화
+	//stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM1"}] = 0;
+	//stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM2"}] = 1;
+	//stringToAnimID[{1, 0, L"ANIMID_SON_SKILL1_ANIM3"}] = 2;
 
-	// MODELID_SON 스킬2 애니메이션 초기화
-	stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM1"}] = 0;
-	stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM2"}] = 1;
+	//// MODELID_SON 스킬2 애니메이션 초기화
+	//stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM1"}] = 0;
+	//stringToAnimID[{1, 1, L"ANIMID_SON_SKILL2_ANIM2"}] = 1;
 
-	// MODELID_HIT 스킬1 애니메이션 초기화
-	stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM1"}] = 0;
-	stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM2"}] = 1;
+	//// MODELID_HIT 스킬1 애니메이션 초기화
+	//stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM1"}] = 0;
+	//stringToAnimID[{2, 0, L"ANIMID_HIT_SKILL1_ANIM2"}] = 1;
 
-	// MODELID_MINE 스킬1 애니메이션 초기화
-	stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM1"}] = 0;
-	stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM2"}] = 1;
+	//// MODELID_MINE 스킬1 애니메이션 초기화
+	//stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM1"}] = 0;
+	//stringToAnimID[{3, 0, L"ANIMID_MINE_SKILL1_ANIM2"}] = 1;
 
-	// MODELID_MINE 스킬2 애니메이션 초기화
-	stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM1"}] = 0;
-	stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM2"}] = 1;
-	stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM3"}] = 2;
+	//// MODELID_MINE 스킬2 애니메이션 초기화
+	//stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM1"}] = 0;
+	//stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM2"}] = 1;
+	//stringToAnimID[{3, 1, L"ANIMID_MINE_SKILL2_ANIM3"}] = 2;
 
-	// MODELID_21 스킬1 애니메이션 초기화
-	stringToAnimID[{4, 0, L"ANIMID_21_SKILL1_ANIM1"}] = 0;
+	//// MODELID_21 스킬1 애니메이션 초기화
+	//stringToAnimID[{4, 0, L"ANIMID_21_SKILL1_ANIM1"}] = 0;
 
-	// MODELID_21 스킬2 애니메이션 초기화
-	stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM1"}] = 0;
-	stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM2"}] = 1;
+	//// MODELID_21 스킬2 애니메이션 초기화
+	//stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM1"}] = 0;
+	//stringToAnimID[{4, 1, L"ANIMID_21_SKILL2_ANIM2"}] = 1;
 
-	// MODELID_21 스킬3 애니메이션 초기화
-	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM1"}] = 0;
-	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM2"}] = 1;
-	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM3"}] = 2;
-	stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM4"}] = 3;
+	//// MODELID_21 스킬3 애니메이션 초기화
+	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM1"}] = 0;
+	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM2"}] = 1;
+	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM3"}] = 2;
+	//stringToAnimID[{4, 2, L"ANIMID_21_SKILL3_ANIM4"}] = 3;
 
 	return S_OK;
 }
@@ -231,7 +231,7 @@ void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 
 			// 스킬 이름을 스킬 ID로 매핑
 			_int skillID = -1;
-			auto skillIt = stringToSkillID.find(skillName);
+			//auto skillIt = stringToSkillID.find(skillName);
 			if (skillIt != stringToSkillID.end())
 			{
 				skillID = skillIt->second;
@@ -254,9 +254,7 @@ void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 				_int animID = -1;
 				auto animIt = stringToAnimID.find(animName);
 				if (animIt != stringToAnimID.end())
-				{
 					animID = animIt->second;
-				}
 
 				// 기존 포인트 초기화
 				pCurrentCamera->m_mapPoints[animID].clear();

@@ -39,7 +39,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(hr)) {
 		// 로드 실패 처리
 		// 예: 로그 남기기 또는 기본 설정 적용
-		return E_FAIL;
+		return S_OK;
 	}
 
 	if (cameraSaveData.models.empty()) {

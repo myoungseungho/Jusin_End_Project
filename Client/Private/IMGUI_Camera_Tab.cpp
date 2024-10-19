@@ -698,16 +698,6 @@ void CIMGUI_Camera_Tab::IMGUI_Save_Button()
 
 		// 파일 매니저를 통해 저장
 		HRESULT hr = m_pGameInstance->Save_All_CameraPoints(filename, &saveData);
-		if (SUCCEEDED(hr))
-		{
-			// 사용자에게 저장 완료 메시지 표시
-			ImGui::TextColored(ImVec4(0, 1, 0, 1), "Camera points saved successfully.");
-		}
-		else
-		{
-			// 저장 실패 메시지 표시
-			ImGui::TextColored(ImVec4(1, 0, 0, 1), "Failed to save camera points.");
-		}
 	}
 }
 

@@ -33,10 +33,10 @@ public:
 	};
 
 
-	// 스킬 이름을 모델 ID와 스킬 ID로 매핑
-	unordered_map<std::pair<_int, _wstring>, _int> stringToSkillID;
-	// 애니메이션 이름을 모델 ID, 스킬 ID, 애니메이션 ID로 매핑
-	unordered_map<std::tuple<_int, _int, _wstring>, _int> stringToAnimID;
+	//// 스킬 이름을 모델 ID와 스킬 ID로 매핑
+	//unordered_map<std::pair<_int, _wstring>, _int> stringToSkillID;
+	//// 애니메이션 이름을 모델 ID, 스킬 ID, 애니메이션 ID로 매핑
+	//unordered_map<std::tuple<_int, _int, _wstring>, _int> stringToAnimID;
 
 private:
 	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

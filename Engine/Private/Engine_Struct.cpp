@@ -26,6 +26,7 @@ namespace Engine
         {3, L"MODELID_MINE"},
         {4, L"MODELID_21"}
     };
+
     unordered_map<_wstring, _int> stringToModelID = {
         {L"MODELID_NOT", -1},
         {L"MODELID_DEFAULT", 0},
