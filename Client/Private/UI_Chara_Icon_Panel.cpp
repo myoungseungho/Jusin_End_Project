@@ -60,7 +60,12 @@ HRESULT CUI_Chara_Icon_Panel::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	_vector vColor = { 1.f , 0.f , 0.f , 1.f };
+	_vector vColor = { 1,1,1,1 };
+
+	if(m_eLRPos == LEFT)
+		vColor = { 1.f , 0.f , 0.f , 1.f };
+	else if (m_eLRPos == RIGHT)
+		vColor = { 0.f , 0.f , 1.f , 1.f };
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
 		return E_FAIL;

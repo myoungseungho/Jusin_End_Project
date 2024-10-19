@@ -86,7 +86,14 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	_uint  iTexIdx = { 0 };
+
+	if (m_eLRPos == LEFT)
+		iTexIdx = 1;
+	else if (m_eLRPos == RIGHT)
+		iTexIdx = 0;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", iTexIdx)))
 		return E_FAIL;
 
 	return S_OK;
