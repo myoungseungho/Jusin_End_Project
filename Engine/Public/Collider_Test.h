@@ -40,8 +40,9 @@ public:
 	//virtual void Update(_float3 Offset);	// 디폴트 0.f 로 해서 하나만 만들까
 	virtual void Update(_float3 Offset = { 0.f,0.f,0.f });
 	virtual HRESULT Render(); 
+	virtual HRESULT Render(_float4 fColor);
 
-
+	 
 	bool isColliding(const CCollider_Test* other);// const;
 	bool isColliding(CComponent* other);// const;
 

@@ -85,6 +85,9 @@
     <Filter Include="02.GameObjects\Character\Play_21\S21_MeleeAttack">
       <UniqueIdentifier>{0fea3a9c-712d-41fc-a50b-2d180e29ac2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\AttackObject">
+      <UniqueIdentifier>{c19be185-f15f-4931-907f-1c4f8f917daf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -192,6 +195,9 @@
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\AttackObject.h">
+      <Filter>02.GameObjects\AttackObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -280,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AttackObject.cpp">
+      <Filter>02.GameObjects\AttackObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -384,7 +384,7 @@ void CGoku_MeleeAttack::Attack_214()
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_214);
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
-		m_pPlayer->Set_CurrentAnimationPositionJump(0.5f);
+		m_pPlayer->Set_CurrentAnimationPositionJump(20.f);
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{

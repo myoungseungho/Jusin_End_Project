@@ -19,6 +19,9 @@
 #include "Play_Goku.h"
 #include "Play_21.h"
 
+
+#include "AttackObject.h"
+
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
 	, m_pContext { pContext }
@@ -197,6 +200,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
 	//	CCamera_Free::Create(m_pDevice, m_pContext))))
 	//	return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack"),
+		CAttacKObject::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 

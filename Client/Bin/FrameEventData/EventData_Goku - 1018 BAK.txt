@@ -46,11 +46,9 @@ PLAY_GOKU,GKS201_body,20,ObjectMove,0.05,0,0,0
 //,PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,240,TEST
 PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,120
 PLAY_GOKU,GKS202_body,35,AnimSpeedChange,0.02,20
-PLAY_GOKU,GKS202_body,35,AttackEvent,202
-PLAY_GOKU,GKS202_body,38,NextAnimationCheck,33333333
+PLAY_GOKU,GKS202_body,35,NextAnimationCheck,33333333
 PLAY_GOKU,GKS202_body,40,AnimSpeedChange,0.02,100
 PLAY_GOKU,GKS202_body,42,NextAnimationCheck,33333333
-
 
 
 PLAY_GOKU,GKS202_body,12,ObjectMove,0.1,0,0,0
@@ -850,27 +848,27 @@ PLAY_GOKU,GKS038_body,0.000000,AnimSpeedChange,0.010000,61.818001
 
 //,서서 가드 (공용)
 PLAY_GOKU,GKS040_body,0,AnimSpeedChange,0.010000,61.818001
-PLAY_GOKU,GKS040_body,0,PositionChange,10
+PLAY_GOKU,GKS040_body,0,FrameMove,10
 
 //,앉아 가드 (공용)
 PLAY_GOKU,GKS041_body,0,AnimSpeedChange,0.010000,61.818001
-PLAY_GOKU,GKS041_body,0,PositionChange,10
+PLAY_GOKU,GKS041_body,0,FrameMove,10
 
 //,공중 가드 (공용)
 PLAY_GOKU,GKS042_body,0,AnimSpeedChange,0.010000,61.818001
-PLAY_GOKU,GKS042_body,0,PositionChange,10
+PLAY_GOKU,GKS042_body,0,FrameMove,10
 
 
 //,서서 피격 (뒤로밀림) 5프레임에서 멈춤, 10에서끝남...?  경직시간만큼 position을 가짐...왜?  중공격 10~24 **
-//,PLAY_GOKU,GKS050_body,0,PositionChange,5
-//,PLAY_GOKU,GKS050_body,10,PositionChange,5
+//,PLAY_GOKU,GKS050_body,0,FrameMove,5
+//,PLAY_GOKU,GKS050_body,10,FrameMove,5
 PLAY_GOKU,GKS050_body,0.000000,AnimSpeedChange,0.064000,86.060997
 
 //,PLAY_GOKU,GKS050_body,0,AnimSpeedChange,0.022000,61.818001
 
 //,숙이는 피격모션
 PLAY_GOKU,GKS051_body,0.000000,AnimSpeedChange,0.064000,86
-PLAY_GOKU,GKS051_body,0,PositionChange,15
+PLAY_GOKU,GKS051_body,0,FrameMove,15
 
 //,앉아 피격모션
 PLAY_GOKU,GKS052_body,0,AnimSpeedChange,0.020000,57.374001
@@ -905,8 +903,7 @@ PLAY_GOKU,GKS070_body,0.000000,AnimSpeedChange,0.013000,24.646999
 
 //,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
 PLAY_GOKU,GKS072_body,0.000000,AnimSpeedChange,0.013000,62.223000
-//,PLAY_GOKU,GKS072_body,37,PositionChange,4
-PLAY_GOKU,GKS072_body,37,PositionChange,2.78
+PLAY_GOKU,GKS072_body,39,PositionChange,0
 
 
 //,왼쪽위로 회전하며 날아가는 자세
@@ -918,20 +915,14 @@ PLAY_GOKU,GKS074_body,0.000000,AnimSpeedChange,0.013000,62.223000
 
 //,강공맞고 왼쪽으로
 PLAY_GOKU,GKS075_body,0.000000,AnimSpeedChange,0.030000,44.040001
-PLAY_GOKU,GKS075_body,0,ObjectMove,0, 0.1, 0, 0
-
 PLAY_GOKU,GKS075_body,5,AnimSpeedChange,0.030000,10.353000
 
 //, 076 벽에 부딪힘. 4duration짜리 정지모션   보통 062로 연계됨
-PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,25
+PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,1
 
 //,어퍼맞고 상승
-
-//,기존속도
-//,PLAY_GOKU,GKS077_body,0.000000,AnimSpeedChange,0.006000,29.091000
-//,PLAY_GOKU,GKS077_body,5.235000,AnimSpeedChange,0.006000,3.636000
-	29.091000
-
+PLAY_GOKU,GKS077_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_GOKU,GKS077_body,5.235000,AnimSpeedChange,0.006000,3.636000
 
 //,강공맞고 왼쪽 인데 공중? 살짝왼쪽위
 PLAY_GOKU,GKS078_body,0.000000,AnimSpeedChange,0.006000,29.091000

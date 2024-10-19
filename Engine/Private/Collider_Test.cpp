@@ -5,6 +5,8 @@
 
 #define COLOR_GREEN  { 0.f,1.f,0.f,1.f }
 #define COLOR_BLUE  { 0.f,0.f,1.f,1.f }
+#define COLOR_RED  { 1.f,0.f,0.f,1.f }
+
 /*
 CCollider_Test::CCollider_Test(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CVIBuffer{ pDevice,  pContext }
@@ -277,28 +279,82 @@ HRESULT CCollider_Test::Render()
 
 
 
+HRESULT CCollider_Test::Render(_float4 fColor)
+{
+
+#ifdef _DEBUG
+	m_pEffect->SetWorld(XMMatrixIdentity());
+	m_pEffect->SetView(m_pGameInstance->Get_Transform_Matrix(CPipeLine::D3DTS_VIEW));
+	m_pEffect->SetProjection(m_pGameInstance->Get_Transform_Matrix(CPipeLine::D3DTS_PROJ));
+
+	m_pContext->IASetInputLayout(m_pInputLayout);
+
+	m_pEffect->Apply(m_pContext);
+
+	m_pBatch->Begin();
+
+	//m_pBounding->Render(m_pBatch, m_isColl == false ? XMVectorSet(0.f, 1.f, 0.f, 1.f) : XMVectorSet(1.f, 0.f, 0.f, 1.f));
+	//DX::Draw(m_pBatch, *m_pDesc, DirectX::Colors::White);
+
+	//생각해보니까  직육면체의 선분은 8개가 아니라 12개임   직육면체가 아닌 X모양이 그려지나 범위는 얼추 눈에 들어옴
+	//for(int i=0; i<7; i++)
+	//{
+	//	VertexPositionColor v1(m_WorldVertices[i],  COLOR_GREEN);
+	//	VertexPositionColor v2(m_WorldVertices[i + 1], COLOR_GREEN);
+	//
+	//	m_pBatch->DrawLine(v1,v2);
+	//}
+	//{
+	//	VertexPositionColor v1(m_WorldVertices[7], COLOR_GREEN);
+	//	VertexPositionColor v2(m_WorldVertices[0], COLOR_GREEN);
+	//
+	//	m_pBatch->DrawLine(v1, v2);
+	//}
+
+	{
+		VertexPositionColor v0(m_WorldVertices[0], fColor);
+		VertexPositionColor v1(m_WorldVertices[1],fColor);
+		VertexPositionColor v2(m_WorldVertices[2],fColor);
+		VertexPositionColor v3(m_WorldVertices[3],fColor);
+		VertexPositionColor v4(m_WorldVertices[4],fColor);
+		VertexPositionColor v5(m_WorldVertices[5],fColor);
+		VertexPositionColor v6(m_WorldVertices[6],fColor);
+		VertexPositionColor v7(m_WorldVertices[7],fColor);
+
+		//앞면
+		m_pBatch->DrawLine(v0, v1);
+		m_pBatch->DrawLine(v1, v2);
+		m_pBatch->DrawLine(v2, v3);
+		m_pBatch->DrawLine(v3, v0);
+
+		//뒷면
+		m_pBatch->DrawLine(v4, v5);
+		m_pBatch->DrawLine(v5, v6);
+		m_pBatch->DrawLine(v6, v7);
+		m_pBatch->DrawLine(v7, v4);
+
+
+		//앞면 뒷면 사이 연결점
+		m_pBatch->DrawLine(v0, v4);
+		m_pBatch->DrawLine(v3, v7);
+		m_pBatch->DrawLine(v2, v6);
+		m_pBatch->DrawLine(v1, v5);
+	}
+
+	m_pBatch->End();
+
+#endif
+	return S_OK;
+}
+
+
+
 bool CCollider_Test::isColliding(const CCollider_Test* other) //const
 {
 	
 
-	
-	/*
-	return (m_WorldVertices[MIN].vPosition.x <= other->m_WorldVertices[MAX].vPosition.x && m_WorldVertices[MAX].vPosition.x >= other->m_WorldVertices[MIN].vPosition.x) &&
-		(m_WorldVertices[MIN].vPosition.y <= other->m_WorldVertices[MAX].vPosition.y && m_WorldVertices[MAX].vPosition.y >= other->m_WorldVertices[MIN].vPosition.y) &&
-		(m_WorldVertices[MIN].vPosition.z <= other->m_WorldVertices[MAX].vPosition.z && m_WorldVertices[MAX].vPosition.z >= other->m_WorldVertices[MIN].vPosition.z);
-		*/
-
-
-	/*
 	return (m_WorldVertices[MIN].x <= other->m_WorldVertices[MAX].x && m_WorldVertices[MAX].x >= other->m_WorldVertices[MIN].x) &&
-		(m_WorldVertices[MIN].y <= other->m_WorldVertices[MAX].y && m_WorldVertices[MAX].y >= other->m_WorldVertices[MIN].y) &&
-		(m_WorldVertices[MIN].z <= other->m_WorldVertices[MAX].z && m_WorldVertices[MAX].z >= other->m_WorldVertices[MIN].z);
-	*/
-
-
-	//줄단위로 컷 되고  동숲 특성상 y축은 대부분 맞을테니  제일 뒤로 미뤄서 조금이라도 최적화
-	return (m_WorldVertices[MIN].x <= other->m_WorldVertices[MAX].x && m_WorldVertices[MAX].x >= other->m_WorldVertices[MIN].x) &&
-		(m_WorldVertices[MIN].z <= other->m_WorldVertices[MAX].z && m_WorldVertices[MAX].z >= other->m_WorldVertices[MIN].z) &&
+		//(m_WorldVertices[MIN].z <= other->m_WorldVertices[MAX].z && m_WorldVertices[MAX].z >= other->m_WorldVertices[MIN].z) &&
 		(m_WorldVertices[MIN].y <= other->m_WorldVertices[MAX].y && m_WorldVertices[MAX].y >= other->m_WorldVertices[MIN].y);
 
 
@@ -314,8 +370,8 @@ bool CCollider_Test::isColliding( CComponent* other)
 		(m_WorldVertices[MIN].vPosition.z <= Collider_other->m_WorldVertices[MAX].vPosition.z && m_WorldVertices[MAX].vPosition.z >= Collider_other->m_WorldVertices[MIN].vPosition.z);
 */
 	return (m_WorldVertices[MIN].x <= Collider_other->m_WorldVertices[MAX].x && m_WorldVertices[MAX].x >= Collider_other->m_WorldVertices[MIN].x) &&
-		(m_WorldVertices[MIN].y <= Collider_other->m_WorldVertices[MAX].y && m_WorldVertices[MAX].y >= Collider_other->m_WorldVertices[MIN].y) &&
-		(m_WorldVertices[MIN].z <= Collider_other->m_WorldVertices[MAX].z && m_WorldVertices[MAX].z >= Collider_other->m_WorldVertices[MIN].z);
+		(m_WorldVertices[MIN].y <= Collider_other->m_WorldVertices[MAX].y && m_WorldVertices[MAX].y >= Collider_other->m_WorldVertices[MIN].y);
+		//&&(m_WorldVertices[MIN].z <= Collider_other->m_WorldVertices[MAX].z && m_WorldVertices[MAX].z >= Collider_other->m_WorldVertices[MIN].z);
 
 
 }

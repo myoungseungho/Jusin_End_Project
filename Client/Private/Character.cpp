@@ -4,9 +4,11 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-
-
 #include "iostream"
+
+#include "AttackObject.h"
+
+
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower	 = 3.f; //0
 
@@ -187,7 +189,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 	}
 	else
 	{
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(1.f, 0.f, 0.f, 1.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, 0.f, 0.f, 1.f));
 		m_iPlayerTeam = 2;
 		FlipDirection(-1);
 	}
@@ -519,9 +521,6 @@ _bool CCharacter::InputCommand()
 		else if (DirectionX == 0 && DirectionY == -1)
 			iMoveKey = MOVEKEY_DOWN;
 
-		else if (DirectionX == 0 && DirectionY == -1)
-			iMoveKey = MOVEKEY_DOWN;
-
 		else if (DirectionX == 1 && DirectionY == -1)
 			iMoveKey = MOVEKEY_DOWN_RIGHT;
 
@@ -590,6 +589,9 @@ _bool CCharacter::InputCommand()
 		UpdateInputBuffer(CInput(iMoveKey, iAttackkey));
 		bNewKey = true;
 	}
+
+
+
 
 	return bNewKey;
 }
@@ -927,6 +929,121 @@ void CCharacter::Chase(_float fTimeDelta)
 void CCharacter::Chase2(_float fTimeDelta)
 {
 
+
+	//디버그용 예외처리.  멈춰버리면 지랄남
+	if (fTimeDelta > 1)
+	{
+		return;
+	}
+
+
+	m_fAccChaseTime += fTimeDelta;
+
+
+	//준비자세면 이렇게 한다.
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+	{
+
+		if (m_fAccChaseTime > 0.2f)
+		{
+			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
+			m_fJumpPower = fJumpPower;
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	//돌진중이면 이렇게 한다
+	else if (m_pModelCom->m_iCurrentAnimationIndex == m_iChaseAnimationIndex)
+	{
+		if (m_fAccChaseTime > 5.f)
+		{
+			m_bChase = false;
+			return;
+		}
+	}
+	else   //돌진중도 준비자세도 아니면
+	{
+		return;
+		AttackNextMoveCheck();
+
+	}
+
+
+	//CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
+	CTransform* pTarget = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+
+	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
+
+	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+
+
+	_float vLength = GetVectorLength((vTargetPos - vMyPos));
+	if (vLength < 0.5f) //0.3
+	{
+		m_bChase = false;
+
+
+
+		//테스트
+		m_fAccChaseTime = 0.f;
+		m_fGravityTime = 0.185f;
+		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+
+		return;
+	}
+
+
+	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
+	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
+
+
+
+
+	//애니메이션 이용을 위해 각도값을 특수 처리 할 필요가 있음
+	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
+	angle = (angle + 90) * 0.5f;
+
+	cout << angle << endl;
+
+	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
+	{
+		//캐릭터 보는 방향 오른쪽으로 변경
+		FlipDirection(1);
+	}
+
+	else if (angle > 90)   //적이 왼쪽 위에 있는 경우 
+	{
+		//110의 경우 70으로 바꿔야 한다.    초과값 20.   90으로부터 초과값 만큼 빼면 됨
+		// angle = 90 - (90 - angle);    =  180-angle;
+
+		FlipDirection(-1);
+		angle = 180 - angle;
+	}
+	else if (angle < 0)   //적이 왼쪽에 아래에 있는 경우 
+	{
+		FlipDirection(-1);
+		angle = -angle;
+	}
+
+
+	//추적 속도를 점점 빠르게
+	//m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * 0.5f);
+	m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * m_fAccChaseTime);
+
+
+
+	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
+	Set_CurrentAnimationPositionJump(angle);
+
+
+
+	//반드시 Set이던 시절 코드 백업용.
+	/*
 	//m_bChase 가 true일 때만 들어올것
 
 
@@ -972,7 +1089,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	
 	_float vLength = GetVectorLength((vTargetPos - vMyPos));
-	if (vLength < 0.3f)
+	if (vLength < 0.5f) //0.3
 	{
 		m_bChase = false;
 
@@ -1030,34 +1147,112 @@ void CCharacter::Chase2(_float fTimeDelta)
 	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
 	Set_CurrentAnimationPositionJump(angle);
 
+	*/
 }
 
 void CCharacter::Chase_Ready(_float fTimeDelta)
 {
 	
-	//if (m_pModelCom->m_iCurrentAnimationIndex != m_iChaseAnimationIndex)
+	
+
+
+	/*
+	//반드시 Set에서 Next로 변경하고싶은데
+	//Ready
+	m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+
+	//if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	//{
-	//	m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
-	//	m_pModelCom->Play_Animation(0.f);
-	//
-	//	m_bChase = true;
 	//
 	//}
-
-
-	m_pModelCom->SetUp_Animation(m_iFallAnimationIndex,false);
-
-	//m_pModelCom->CurrentAnimationPositionJump(8.0f);
-
-	m_bChase = true;
-	
-	if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) <0.5)
+	//else
+	//{
+	//	Set_NextAnimation(m_iFallAnimationIndex, 1.f);
+	//}
+	 
 	{
-		m_pTransformCom->Add_Move({ 0.f,0.6f,0.f });
-		
+		m_bChase = true;
+
+		if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) < 0.5)
+		{
+			m_pTransformCom->Add_Move({ 0.f,0.6f,0.f });
+
+		}
+
+
+		//공격판정 테스트
+		{
+			CAttacKObject::ATTACK_DESC Desc{};
+			Desc.ColliderDesc.fSizeX = 2.0;
+			Desc.ColliderDesc.fSizeY = 2.0f;
+			Desc.ColliderDesc.Offset = { 0.f,0.6f,0.f };
+			Desc.ColliderDesc.pTransform = m_pTransformCom;
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0.3f };
+			Desc.fhitCharacter_StunTime = 0.3f;
+			Desc.iDamage = 400 * Get_DamageScale();
+			Desc.fLifeTime = 5.f;
+			Desc.ihitCharacter_Motion = { CAttacKObject::HIT_LIGHT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.pOwner = this;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
 	}
 
-	//Set_NextAnimation(m_iChaseAnimationIndex, 2.f);
+	*/
+
+
+
+	//반드시 Set에서 Next로 변경하고싶은데
+	
+
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+	{
+		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+		m_bChase = true;
+
+		if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) < 0.5)
+		{
+			m_pTransformCom->Add_Move({ 0.f,0.6f,0.f });
+
+		}
+
+
+		//공격판정 테스트
+		{
+			CAttacKObject::ATTACK_DESC Desc{};
+			Desc.ColliderDesc.fSizeX = 2.0;
+			Desc.ColliderDesc.fSizeY = 2.0f;
+			Desc.ColliderDesc.Offset = { 0.f,0.6f,0.f };
+			Desc.ColliderDesc.pTransform = m_pTransformCom;
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0.3f };
+			Desc.fhitCharacter_StunTime = 0.3f;
+			Desc.iDamage = 400 * Get_DamageScale();
+			Desc.fLifeTime = 5.f;
+			Desc.ihitCharacter_Motion = { CAttacKObject::HIT_LIGHT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.pOwner = this;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+	}
+	else
+	{
+		Set_NextAnimation(m_iFallAnimationIndex, 1.f);
+		m_bChase = true;
+	}
+	
+
+
+
+
+
+
+
 
 
 }
@@ -1255,6 +1450,157 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 }
 
 
+
+
+void CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
+{
+	m_bStun = true;
+
+	m_fMaxStunTime = fStunTime;
+
+	Set_HitAnimation(eAnimation, Impus);
+	Set_AnimationStop(fStopTime);
+
+
+	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+
+	if (m_iHP < 0)
+	{
+		m_iHP = 0;
+	}
+	
+}
+
+void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
+{
+
+	//하나라도 0이 아니면 적용
+	if (Impus.x != 0 || Impus.y != 0)
+	{
+		m_fImpuse = Impus;
+	}
+
+
+	if (eAnimation == HIT_LIGHT)
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+		{
+			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
+		}
+		else
+			Set_Animation(m_iHit_Stand_LightAnimationIndex, false);
+	}
+
+	else if (eAnimation == HIT_HEAVY)
+	{
+
+	}
+
+	else if (eAnimation == HIT_KNOCK_AWAY_LEFT)
+	{
+		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
+
+	}
+	else if (eAnimation == HIT_KNOCK_AWAY_UP)
+	{
+		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
+
+	}
+
+
+}
+
+void CCharacter::Set_AnimationStop(_float fStopTime)
+{
+	m_bAnimationLock = true;
+	m_fMaxAnimationLock = fStopTime;
+	m_fAccAnimationLock = 0.f;
+
+	m_pModelCom->Play_Animation(0.f);
+}
+
+
+
+
+
+void CCharacter::Check_StunEnd()
+{
+
+}
+
+void CCharacter::Stun_Shake()
+{
+	m_bStunShakeDirection = !m_bStunShakeDirection;
+
+	m_pTransformCom->Add_Move({ 0.02f-m_bStunShakeDirection*(0.04f),0,0 });
+
+}
+
+void CCharacter::Update_AnimationLock(_float fTimeDelta)
+{
+	m_fAccAnimationLock += fTimeDelta;
+	if (m_fAccAnimationLock > m_fMaxAnimationLock)
+	{
+		m_bAnimationLock = false;
+		m_fAccAnimationLock = 0.f;
+	}
+
+}
+
+void CCharacter::Update_StunImpus(_float fTimeDelta)
+{
+	m_pTransformCom->Add_Move({ m_fImpuse.x *fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
+}
+
+_float CCharacter::Get_DamageScale()
+{
+
+
+	//깡으로 더하는건 쉬운데 1히트당 1이 아닌데 따로 더해도 되나  //스파킹도 있는데 받는쪽에서 더하는게 아니라 때리는쪽에 더해야하는거 아님?
+	//뎀감비율
+	//Step Count	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17 +
+	//Next Hit		0%	10%	20% 30% 40% 50% 60% 70% 70% 70% 70% 75% 75% 75% 80% 80% 80% 85%
+	//데미지비율    1.0 0.9 0.8 0              0.3   
+
+
+	_float fDamageScale;// = 1.f;
+
+	if (m_iAttackStepCount <= 7) 
+	{
+		fDamageScale = 1.0f - m_iAttackStepCount * 0.1f;  
+	}
+
+	else if (m_iAttackStepCount <= 10) 
+	{
+		fDamageScale = 0.3f;  
+	}
+
+	else if (m_iAttackStepCount <= 13) 
+	{
+		fDamageScale = 0.25f;
+	}
+
+	else if (m_iAttackStepCount <= 16)
+	{
+		fDamageScale = 0.2f;  
+	}
+	else 
+	{
+		fDamageScale = 0.15f; 
+	}
+
+
+	if (m_bSparking)
+	{
+		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
+		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+	}
+
+
+	return fDamageScale;
+}
+
+
 _uint* CCharacter::Get_pAnimationIndex()
 {
 	return &(m_pModelCom->m_iCurrentAnimationIndex);
@@ -1339,7 +1685,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 			
-			m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+			m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
 
 
 		}
@@ -1363,7 +1709,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
 
 					if (m_pGameInstance->Key_Pressing(DIK_W))
-						m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+						m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
 
 				}
 				else
@@ -1377,7 +1723,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
 
 					if (m_pGameInstance->Key_Pressing(DIK_UP))
-						m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,-fGravity,0 });
+						m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
 				}
 
 			}

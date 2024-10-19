@@ -167,7 +167,8 @@ public:
 
 public:
 	const int BUFFER_SIZE = 30;
-	enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
+	//enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
+	enum HitMotion { HIT_LIGHT, HIT_HEAVY, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 	static const _float fGroundHeight;  //0
 	static const _float fJumpPower;
 	//const enum LOOK{ LOOK_LEFT = -1,  LOOK_RIGHT = 1};
@@ -251,6 +252,7 @@ public:
 	_int Get_iDirection() { return m_iLookDirection; };
 	_uint* Get_pAnimationIndex();
 
+	_uint Get_iPlayerTeam() { return m_iPlayerTeam; };
 
 	virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
 
@@ -269,7 +271,11 @@ public:
 
 	virtual void Set_fJumpPower(_float fJumpPower) { m_fJumpPower = fJumpPower; };
 	virtual void Set_fGravityTime(_float fGravityTime) {	m_fGravityTime = fGravityTime;	};
-	virtual void Set_fImpulse(_float fImpulse) { m_fImpuse = fImpulse; };
+	//virtual void Set_fImpulse(_float fImpulse) { m_fImpuse = fImpulse; };
+	virtual void Set_fImpulse(_float2 fImpulse) { m_fImpuse = fImpulse; };
+	virtual void Set_fImpulse(_float fImpulseX) { m_fImpuse.x = fImpulseX; };
+	//virtual void Set_fImpulse(_float fImpulseX, _float fImpusY=0) { m_fImpuse.x = fImpulseX;   m_fImpuseImpus.y=fImpusY };  //반드시 0으로 초기화되는거니 패스
+
 
 	_float Get_fHeight();
 	_bool Get_bAirDashEnable() { return m_bAriDashEnable; };
@@ -294,6 +300,26 @@ public:
 	virtual void Reset_AttackCount() {};
 
 
+	//피격 관련
+	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
+	void Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+
+	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
+	void Set_AnimationStop(_float fStopTime);
+
+	void Check_StunEnd();
+
+	void Stun_Shake();
+
+	void Update_AnimationLock(_float fTimeDelta);
+
+	void Update_StunImpus(_float fTimeDelta);
+
+
+	//공격 관련
+	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
+	_float Get_DamageScale();
+
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
@@ -305,6 +331,7 @@ protected:
 	//_uint					m_iCurMoveIndex{};
 	//커맨드 만들면 스택형으로 넣어두고 0.3초안에 지우기
 
+	//피격 스턴과 다름
 	_float					m_fAccAnimationLock{};
 	_float					m_fMaxAnimationLock{};
 	_bool					m_bAnimationLock{};
@@ -331,6 +358,8 @@ protected:
 	_float					m_fNextAnimationCurrentPosition = {};
 
 
+
+
 	_ushort m_iJumpAnimationIndex = { 6 };
 	_ushort m_iFallAnimationIndex = {7};
 
@@ -341,16 +370,29 @@ protected:
 	_ushort m_iForwardDashAnimationIndex = {11};
 	_ushort m_iForwardDashEndAnimationIndex = { 14 };
 
-
-
 	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
 	_ushort m_iChaseAnimationIndex = { 13 };
+
+
+	_ushort m_iHit_Stand_LightAnimationIndex = { 21 };		//050
+	//_ushort m_iHit_Stand_LightFrontAnimationIndex = { 21 };		//050
+
+	_ushort m_iHit_Stand_MediumAnimationIndex = { 22 };		//051
+	_ushort m_iHit_Crouch_AnimationIndex = { 23 };			//052
+
+	_ushort m_iHit_Away_LeftAnimationIndex = {33};
+	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
+
 
 	_float m_fGravityTime = {0.f}; 
 	_float m_fJumpPower = {0.f};
 
 	//가속도
-	_float m_fImpuse = { 0.f };
+	//_float m_fImpuse = { 0.f };
+
+
+	//피격시 Y축 이동을 대비해 xy로 만듦.  각도별로 되어있으니 그냥 애니메이션으로 처리할까 생각도 듦
+	_float2 m_fImpuse = { 0.f,0.f };
 
 
 	_bool m_bDoubleJumpEnable = { true };
@@ -370,12 +412,21 @@ protected:
 
 	//스턴 관련
 	_bool m_bStun = { false };
+	_float m_fAccStunTime = {};
+	_float m_fMaxStunTime = {};
 
-
+	_bool m_bStunShakeDirection = { false };
 
 	//디버그용 임시 collider
 	CCollider_Test* m_pColliderCom = { nullptr };
 	CCharacter* m_pDebugEnemy = { nullptr };
+
+	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
+
+
+	_ushort		m_iAttackStepCount;  //콤보수 아님.
+
+	_bool		m_bSparking = false;
 
 private:
 	HRESULT Ready_Components();

@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
     <ClInclude Include="..\Public\AnimationNameMap.h" />
+    <ClInclude Include="..\Public\AttackObject.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
     <ClInclude Include="..\Public\Character.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
@@ -194,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\AnimationNameMap.cpp" />
+    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />
     <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />

@@ -62,7 +62,8 @@ public: /* For.PipeLine */
 	void Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
 
 
-
+//테스트용 콜리더
+	
 
 public: 
 	_bool Key_Down(_int _iKey);
