@@ -11,12 +11,12 @@ END
 
 BEGIN(Client)
 
-class CPlayer final : public CGameObject
+class CPlayer_MSH final : public CGameObject
 {
 private:
-	CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CPlayer(const CPlayer& Prototype);
-	virtual ~CPlayer() = default;
+	CPlayer_MSH(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CPlayer_MSH(const CPlayer_MSH& Prototype);
+	virtual ~CPlayer_MSH() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -43,7 +43,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CPlayer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CPlayer_MSH* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

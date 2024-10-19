@@ -1,30 +1,30 @@
 #include "stdafx.h"
-#include "..\Public\Monster.h"
+#include "..\Public\Player_MSH.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
 #include "Main_Camera.h"
-#include "Player.h"
+#include "Monster_MSH.h"
 
-CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CPlayer_MSH::CPlayer_MSH(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CMonster::CMonster(const CMonster& Prototype)
+CPlayer_MSH::CPlayer_MSH(const CPlayer_MSH& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CMonster::Initialize_Prototype()
+HRESULT CPlayer_MSH::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CMonster::Initialize(void* pArg)
+HRESULT CPlayer_MSH::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -35,18 +35,24 @@ HRESULT CMonster::Initialize(void* pArg)
 	m_pModelCom->SetUp_Animation(1, false, 0.1f);
 
 	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	mainCamera->SetPlayer(CMain_Camera::PLAYER_2P, this);
+	mainCamera->SetPlayer(CMain_Camera::PLAYER_1P, this);
 
 	return S_OK;
 }
 
-void CMonster::Priority_Update(_float fTimeDelta)
+void CPlayer_MSH::Priority_Update(_float fTimeDelta)
 {
 
 }
 
-void CMonster::Update(_float fTimeDelta)
+void CPlayer_MSH::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+	{
+		CMain_Camera* camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		camera->StartCameraShake(3.f, 0.5f);
+	}
+
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
@@ -78,54 +84,54 @@ void CMonster::Update(_float fTimeDelta)
 		}
 	}
 
-	//// 현재 애니메이션 인덱스와 이전 키 상태를 static 변수로 선언
-	//static int currentAnimationIndex = 0; // 현재 애니메이션 인덱스 (0~88)
-	//static bool previousUpKeyState = false;   // 이전 프레임의 위 방향키 상태
-	//static bool previousDownKeyState = false; // 이전 프레임의 아래 방향키 상태
-	//const int MAX_ANIMATION_INDEX = 88; // 최대 애니메이션 인덱스
+	// 현재 애니메이션 인덱스와 이전 키 상태를 static 변수로 선언
+	static int currentAnimationIndex = 0; // 현재 애니메이션 인덱스 (0~88)
+	static bool previousUpKeyState = false;   // 이전 프레임의 위 방향키 상태
+	static bool previousDownKeyState = false; // 이전 프레임의 아래 방향키 상태
+	const int MAX_ANIMATION_INDEX = 88; // 최대 애니메이션 인덱스
 
-	//// 위 방향키(VK_UP)와 아래 방향키(VK_DOWN) 상태 가져오기
-	//SHORT upKeyState = GetAsyncKeyState(VK_UP);
-	//SHORT downKeyState = GetAsyncKeyState(VK_DOWN);
+	// 위 방향키(VK_UP)와 아래 방향키(VK_DOWN) 상태 가져오기
+	SHORT upKeyState = GetAsyncKeyState(VK_UP);
+	SHORT downKeyState = GetAsyncKeyState(VK_DOWN);
 
-	//bool isUpKeyPressed = (upKeyState & 0x8000) != 0;
-	//bool isDownKeyPressed = (downKeyState & 0x8000) != 0;
+	bool isUpKeyPressed = (upKeyState & 0x8000) != 0;
+	bool isDownKeyPressed = (downKeyState & 0x8000) != 0;
 
-	//// 위 방향키가 새로 눌렸을 때 인덱스 증가
-	//if (isUpKeyPressed && !previousUpKeyState)
-	//{
-	//	currentAnimationIndex++;
-	//	if (currentAnimationIndex > MAX_ANIMATION_INDEX)
-	//		currentAnimationIndex = 0; // 88에서 증가 시 0으로 순환
-
-	//	m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
-	//}
-
-	//// 아래 방향키가 새로 눌렸을 때 인덱스 감소
-	//if (isDownKeyPressed && !previousDownKeyState)
-	//{
-	//	currentAnimationIndex--;
-	//	if (currentAnimationIndex < 0)
-	//		currentAnimationIndex = MAX_ANIMATION_INDEX; // 0에서 감소 시 88로 순환
-
-	//	m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
-	//}
-
-	//// 현재 키 상태를 이전 상태로 저장
-	//previousUpKeyState = isUpKeyPressed;
-	//previousDownKeyState = isDownKeyPressed;
-
-	if (m_pPlayer == nullptr)
+	// 위 방향키가 새로 눌렸을 때 인덱스 증가
+	if (isUpKeyPressed && !previousUpKeyState)
 	{
-		CPlayer* mainPlayer = static_cast<CPlayer*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player")));
-		m_pPlayer = mainPlayer;
+		currentAnimationIndex++;
+		if (currentAnimationIndex > MAX_ANIMATION_INDEX)
+			currentAnimationIndex = 0; // 88에서 증가 시 0으로 순환
+
+		m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+	}
+
+	// 아래 방향키가 새로 눌렸을 때 인덱스 감소
+	if (isDownKeyPressed && !previousDownKeyState)
+	{
+		currentAnimationIndex--;
+		if (currentAnimationIndex < 0)
+			currentAnimationIndex = MAX_ANIMATION_INDEX; // 0에서 감소 시 88로 순환
+
+		m_pModelCom->SetUp_Animation(currentAnimationIndex, true, 0.1f);
+	}
+
+	// 현재 키 상태를 이전 상태로 저장
+	previousUpKeyState = isUpKeyPressed;
+	previousDownKeyState = isDownKeyPressed;
+
+	if (m_pMonster == nullptr)
+	{
+		CMonster_MSH* mainMonster = static_cast<CMonster_MSH*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Monster")));
+		m_pMonster = mainMonster;
 		return;
 	}
 
 	//플레이어는 자기 자신과 몬스터와의 거리를 알아야 한다.
-	CTransform* player_Transform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
-	_vector playerState = player_Transform->Get_State(CTransform::STATE_POSITION);
-	_vector monsterState = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	CTransform* monster_Transform = static_cast<CTransform*>(m_pMonster->Get_Component(TEXT("Com_Transform")));
+	_vector monsterState = monster_Transform->Get_State(CTransform::STATE_POSITION);
+	_vector playerState = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	_float distance = ComputeDistance(playerState, monsterState);
 
 	_float moveSpeed = 1.f;
@@ -138,66 +144,86 @@ void CMonster::Update(_float fTimeDelta)
 		//플레이어가 몬스터보다 왼쪽이면 더 왼쪽 못감
 		if (playerX < monsterX)
 		{
-			if (m_pGameInstance->Key_Pressing(DIK_UP))
+			if (m_pGameInstance->Key_Pressing(DIK_Y))
 			{
 				m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
 			}
 
-			if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+			if (m_pGameInstance->Key_Pressing(DIK_H))
 			{
 				m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
 			}
 
-			if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+			if (m_pGameInstance->Key_Pressing(DIK_J))
 			{
-				m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
+				m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
 			}
 		}
 		else if (playerX > monsterX)
 		{
-			if (m_pGameInstance->Key_Pressing(DIK_UP))
+			if (m_pGameInstance->Key_Pressing(DIK_Y))
 			{
 				m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
 			}
 
-			if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+			if (m_pGameInstance->Key_Pressing(DIK_H))
 			{
 				m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
 			}
 
-			if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+			if (m_pGameInstance->Key_Pressing(DIK_G))
 			{
-				m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
+				m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
 			}
 		}
 	}
 	else
 	{
-		if (m_pGameInstance->Key_Pressing(DIK_UP))
+		if (m_pGameInstance->Key_Pressing(DIK_Y))
 		{
 			m_pTransformCom->Move_Position(_float3(0.f, moveSpeed, 0.f));
 		}
 
-		if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+		if (m_pGameInstance->Key_Pressing(DIK_H))
 		{
 			m_pTransformCom->Move_Position(_float3(0.f, -moveSpeed, 0.f));
 		}
 
-		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+		if (m_pGameInstance->Key_Pressing(DIK_G))
 		{
 			m_pTransformCom->Move_Position(_float3(-moveSpeed, 0.f, 0.f));
 		}
 
-		if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+		if (m_pGameInstance->Key_Pressing(DIK_J))
 		{
 			m_pTransformCom->Move_Position(_float3(moveSpeed, 0.f, 0.f));
 		}
 	}
 
 
+	if (m_pGameInstance->Key_Down(DIK_1))
+	{
+		m_pModelCom->SetUp_Animation(1, true, 0.1f);
+	}
+	if (m_pGameInstance->Key_Down(DIK_2))
+	{
+		m_pModelCom->SetUp_Animation(2, true, 0.1f);
+	}
+	if (m_pGameInstance->Key_Down(DIK_3))
+	{
+		m_pModelCom->SetUp_Animation(4, true, 0.1f);
+	}
+	if (m_pGameInstance->Key_Down(DIK_4))
+	{
+		m_pModelCom->SetUp_Animation(3, true, 0.1f);
+	}
+	if (m_pGameInstance->Key_Down(DIK_5))
+	{
+		m_pModelCom->SetUp_Animation(0, true, 0.1f);
+	}
 }
 
-void CMonster::Late_Update(_float fTimeDelta)
+void CPlayer_MSH::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
@@ -206,7 +232,7 @@ void CMonster::Late_Update(_float fTimeDelta)
 #endif
 }
 
-HRESULT CMonster::Render(_float fTimeDelta)
+HRESULT CPlayer_MSH::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -234,22 +260,22 @@ HRESULT CMonster::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CMonster::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+void CPlayer_MSH::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	int a = 3;
 }
 
-void CMonster::OnCollisionStay(CCollider* other, _float fTimeDelta)
+void CPlayer_MSH::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 	int a = 3;
 }
 
-void CMonster::OnCollisionExit(CCollider* other)
+void CPlayer_MSH::OnCollisionExit(CCollider* other)
 {
 	int a = 3;
 }
 
-HRESULT CMonster::Ready_Components()
+HRESULT CPlayer_MSH::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -266,7 +292,8 @@ HRESULT CMonster::Ready_Components()
 	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
 	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
 	BoundingDesc.pMineGameObject = this;
-	BoundingDesc.colliderGroup = CCollider_Manager::CG_2P_BODY;
+	BoundingDesc.colliderGroup = CCollider_Manager::CG_1P_BODY;
+
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
 		return E_FAIL;
@@ -276,7 +303,7 @@ HRESULT CMonster::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CMonster::Bind_ShaderResources()
+HRESULT CPlayer_MSH::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -290,33 +317,33 @@ HRESULT CMonster::Bind_ShaderResources()
 	return S_OK;
 }
 
-CMonster* CMonster::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CPlayer_MSH* CPlayer_MSH::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CMonster* pInstance = new CMonster(pDevice, pContext);
+	CPlayer_MSH* pInstance = new CPlayer_MSH(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CMonster"));
+		MSG_BOX(TEXT("Failed to Created : CPlayer_MSH"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CMonster::Clone(void* pArg)
+CGameObject* CPlayer_MSH::Clone(void* pArg)
 {
-	CMonster* pInstance = new CMonster(*this);
+	CPlayer_MSH* pInstance = new CPlayer_MSH(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CMonster"));
+		MSG_BOX(TEXT("Failed to Cloned : CPlayer_MSH"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CMonster::Free()
+void CPlayer_MSH::Free()
 {
 	__super::Free();
 

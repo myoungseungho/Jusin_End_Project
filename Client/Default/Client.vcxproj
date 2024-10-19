@@ -190,8 +190,8 @@
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Melee_Effect.h" />
     <ClInclude Include="..\Public\Melee_Effect_2p.h" />
-    <ClInclude Include="..\Public\Monster.h" />
-    <ClInclude Include="..\Public\Player.h" />
+    <ClInclude Include="..\Public\Monster_MSH.h" />
+    <ClInclude Include="..\Public\Player_MSH.h" />
     <ClInclude Include="..\Public\Range_Effect.h" />
     <ClInclude Include="..\Public\Range_Effect_2p.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
@@ -227,8 +227,8 @@
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\Private\Melee_Effect.cpp" />
     <ClCompile Include="..\Private\Melee_Effect_2p.cpp" />
-    <ClCompile Include="..\Private\Monster.cpp" />
-    <ClCompile Include="..\Private\Player.cpp" />
+    <ClCompile Include="..\Private\Monster_MSH.cpp" />
+    <ClCompile Include="..\Private\Player_MSH.cpp" />
     <ClCompile Include="..\Private\Range_Effect.cpp" />
     <ClCompile Include="..\Private\Range_Effect_2p.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />

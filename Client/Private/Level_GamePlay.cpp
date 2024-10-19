@@ -5,7 +5,7 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 //#include "LandObject.h"
-#include "Monster.h"
+#include "Monster_MSH.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }

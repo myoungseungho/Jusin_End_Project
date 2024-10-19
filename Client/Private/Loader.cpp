@@ -5,8 +5,8 @@
 #include "IMGUI_Shader_Tab.h"
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
-#include "Monster.h"
-#include "Player.h"
+#include "Monster_MSH.h"
+#include "Player_MSH.h"
 #include "Energy_Effect.h"
 #include "Energy_Effect_2p.h"
 #include "Melee_Effect.h"
@@ -86,7 +86,6 @@ HRESULT CLoader::Loading()
 	return S_OK;
 }
 
-
 HRESULT CLoader::Loading_For_GamePlayLevel()
 {
 	/* 게임플레이레벨용 자원을 로드하자. */
@@ -132,11 +131,11 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Player"),
-		CPlayer::Create(m_pDevice, m_pContext))))
+		CPlayer_MSH::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
-		CMonster::Create(m_pDevice, m_pContext))))
+		CMonster_MSH::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera"),

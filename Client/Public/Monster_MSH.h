@@ -11,12 +11,12 @@ END
 
 BEGIN(Client)
 
-class CMonster final : public CGameObject
+class CMonster_MSH final : public CGameObject
 {
 private:
-	CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CMonster(const CMonster& Prototype);
-	virtual ~CMonster() = default;
+	CMonster_MSH(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CMonster_MSH(const CMonster_MSH& Prototype);
+	virtual ~CMonster_MSH() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -44,7 +44,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CMonster* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CMonster_MSH* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

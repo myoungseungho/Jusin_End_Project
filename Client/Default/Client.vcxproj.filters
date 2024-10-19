@@ -13,11 +13,11 @@
     <ClCompile Include="..\Private\Loader.cpp">
       <Filter>01.Level\01.Level\99.Loading\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Monster.cpp">
-      <Filter>02.GameObjects\Monster</Filter>
+    <ClCompile Include="..\Private\Monster_MSH.cpp">
+      <Filter>02.GameObjects\Monster_MSH</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Player.cpp">
-      <Filter>02.GameObjects\Player</Filter>
+    <ClCompile Include="..\Private\Player_MSH.cpp">
+      <Filter>02.GameObjects\Player_MSH</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Main_Camera.cpp">
       <Filter>02.GameObjects\Camera\Main_Camera</Filter>
@@ -114,11 +114,11 @@
     <ClInclude Include="..\Public\Loader.h">
       <Filter>01.Level\01.Level\99.Loading\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Monster.h">
-      <Filter>02.GameObjects\Monster</Filter>
+    <ClInclude Include="..\Public\Monster_MSH.h">
+      <Filter>02.GameObjects\Monster_MSH</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Player.h">
-      <Filter>02.GameObjects\Player</Filter>
+    <ClInclude Include="..\Public\Player_MSH.h">
+      <Filter>02.GameObjects\Player_MSH</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Main_Camera.h">
       <Filter>02.GameObjects\Camera\Main_Camera</Filter>
@@ -259,12 +259,6 @@
     <Filter Include="02.GameObjects\Camera">
       <UniqueIdentifier>{508482e7-501d-454b-a956-8d221fac5489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Monster">
-      <UniqueIdentifier>{ed1abb2b-7437-4937-bb61-28428273bfe5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\Player">
-      <UniqueIdentifier>{5a24aa57-645e-4848-8965-d49cd2e37264}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.IMGUI\Plugin">
       <UniqueIdentifier>{3effce0e-87eb-4f3d-a5dd-8e2fe8db398b}</UniqueIdentifier>
     </Filter>
@@ -312,6 +306,12 @@
     </Filter>
     <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw">
       <UniqueIdentifier>{e066d276-a58d-42d7-ac0b-53a766307df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Monster_MSH">
+      <UniqueIdentifier>{ed1abb2b-7437-4937-bb61-28428273bfe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player_MSH">
+      <UniqueIdentifier>{5a24aa57-645e-4848-8965-d49cd2e37264}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
