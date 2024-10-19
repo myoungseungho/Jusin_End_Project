@@ -174,7 +174,8 @@ PLAY_GOKU,GKS232_body,0,AnimSpeedChange,0.025,80
 PLAY_GOKU,GKS232_body,15,AnimSpeedChange,0.025,120
 PLAY_GOKU,GKS232_body,30,AnimSpeedChange,0.025,80
 PLAY_GOKU,GKS232_body,34,AttackEvent,333333
-PLAY_GOKU,GKS232_body,34,NextAnimationCheck,33333
+PLAY_GOKU,GKS232_body,39,NextAnimationCheck,33333
+PLAY_GOKU,GKS232_body,43,NextAnimationCheck,33333
 
 
 //,공중약

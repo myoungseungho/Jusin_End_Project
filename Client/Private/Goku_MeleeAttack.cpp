@@ -68,11 +68,21 @@ void CGoku_MeleeAttack::Attack_Light()
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1)
 	{
+		
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,0.5f);
+		if (m_pPlayer->Get_fGravityTime() > 0.135)
+		{
+			m_pPlayer->Set_bNextAnimationGravityEvent();
+		}
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR3,0.5f);
+		if (m_pPlayer->Get_fGravityTime() > 0.135)
+		{
+			//m_pPlayer->Set_ForcedGravityTime_LittleUp();
+			m_pPlayer->Set_bNextAnimationGravityEvent();
+		}
 	}
 
 	
@@ -88,31 +98,6 @@ void CGoku_MeleeAttack::Attack_Light()
 
 void CGoku_MeleeAttack::Attack_Medium()
 {
-
-
-	
-
-	//if(m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex) ||
-	//	*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2
-	//	|| *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM)
-	//{
-	//
-	//	//서서 중공격 횟수가 남아있으면 일단 사용
-	//	if (m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_MEDIUM] == true)
-	//	{
-	//		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_MEDIUM);
-	//		m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_MEDIUM] = false;
-	//
-	//		m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_MEDIUM];
-	//		m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_CROUCH_MEDUIM];
-	//		m_pbAttackCount;
-	//
-	//		_bool bDebug = true;
-	//
-	//
-	//	}
-	//
-	//}
 
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
@@ -136,14 +121,6 @@ void CGoku_MeleeAttack::Attack_Medium()
 		{
 			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_MEDIUM, 0.5f);
 			m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_MEDIUM] = false;
-
-			m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_MEDIUM];
-			m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_CROUCH_MEDUIM];
-			m_pbAttackCount;
-
-			_bool bDebug = true;
-
-
 		}
 
 	}

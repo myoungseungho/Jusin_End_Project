@@ -30,6 +30,8 @@ public:
 
 		_uint	iDamage = { 1 };
 		_float	fAnimationLockTime = { 0.1f };
+
+		//_bool   bOwnerGravityTimeReset = { false };
 		class CCharacter* pOwner = { nullptr };
 	};
 private:
@@ -61,6 +63,9 @@ private:
 	_float3					m_fOffset{};
 
 	_float					m_fAnimationLockTime = { 0.1f };
+
+	//_bool					m_bOwnerGravityTimeReset = false;
+
 	class CCharacter*				m_pOwner = { nullptr };
 
 	CTransform*				m_pOwnerTransform = { nullptr };

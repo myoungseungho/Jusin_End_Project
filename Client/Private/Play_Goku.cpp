@@ -31,118 +31,7 @@
 //#define ANIME_JUMP_DOWN 7;
 
 
-/*
 
-vector<CInput> Command_236Attack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
-};
-vector<CInput> Command_236Attack_Extra =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_LIGHT}
-};
-
-
-vector<CInput> Command_214Attack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
-};
-vector<CInput> Command_214Attack_Extra =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_LIGHT}
-};
-
-vector<CInput> Command_236Special =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_SPECIAL}
-};
-
-vector<CInput> Command_236Special_Side =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_DOWN, ATTACK_SPECIAL}
-};
-
-
-vector<CInput> Command_214FinalAttack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_SPECIAL}
-};
-
-
-vector<CInput> Command_236UltimateAttack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_GRAB}
-};
-
-
-vector<CInput> Command_236UltimateAttack_Side =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_DOWN, ATTACK_GRAB}
-};
-
-
-
-vector<CInput> Command_BackDash =
-{
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE}
-};
-
-vector<CInput> Command_Forward =
-{
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{ MOVEKEY_RIGHT, ATTACK_NONE }
-
-};
-
-vector<CInput> Command_LightAttack ={	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}};
-vector<CInput> Command_MediumAttack ={	{MOVEKEY_NEUTRAL, ATTACK_MEDIUM}};
-vector<CInput> Command_HeavyAttack ={	{MOVEKEY_NEUTRAL, ATTACK_HEAVY}};
-vector<CInput> Command_SpecialAttack ={	{MOVEKEY_NEUTRAL, ATTACK_SPECIAL}};
-
-vector<CInput> Command_HeavyAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_HEAVY} };
-
-
-
-vector<CInput> Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
-vector<CInput> Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
-vector<CInput> Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
-vector<CInput> Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
-
-
-
-vector<CInput> Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
-vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
-
-*/
 
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -171,10 +60,6 @@ HRESULT CPlay_Goku::Initialize_Prototype()
 HRESULT CPlay_Goku::Initialize(void* pArg)
 {
 
-	//Play_Goku_DESC* pDesc = static_cast<Play_Goku_DESC*>(pArg);
-	//m_strModelName = pDesc->strModelName;
-
-	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	m_eCharacterIndex = PLAY_GOKU;
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
@@ -190,6 +75,15 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iForwardWalkAnimationIndex = { ANIME_FORWARD_WALK };
 	m_iHit_Away_LeftAnimationIndex = { ANIME_HIT_HEAVY_AWAY_LEFT };
 	m_iHit_Away_UpAnimationIndex = { ANIME_HIT_HEAVY_AWAY_UP };
+
+	m_iHit_Air_LightAnimationIndex = { ANIE_HIT_AIR };
+	m_iHit_Air_FallAnimationIndex = { ANIME_HIT_FALL };
+
+
+	m_iAttack_Air1 = { ANIME_ATTACK_AIR1 };
+	m_iAttack_Air2 = { ANIME_ATTACK_AIR2 };
+	m_iAttack_Air3 = { ANIME_ATTACK_AIR3 };
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -393,7 +287,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				//m_fGravityTime = 0.365f;
 				//Set_fImpulse( XMVectorGetX(vDir));
 				m_fGravityTime = 0.185f;
-				m_pModelCom->SetUp_Animation(ANIME_JUMP_DOWN, false);
+				//m_pModelCom->SetUp_Animation(ANIME_JUMP_DOWN, false);
+				Set_Animation(ANIME_JUMP_DOWN, false);
 			}
 
 		}
@@ -410,8 +305,19 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			//	AnimeEndNextMoveCheck();
 
 
-			if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
+			if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
+			{
+				Set_Animation(m_iHit_Air_FallAnimationIndex);
+
+
+			}
+
+
+			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
+
+
+
 		}
 
 
@@ -427,6 +333,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			}
 			Update_StunImpus(fTimeDelta);
 		}
+		Gravity(fTimeDelta);
+
 
 	}
 	else
@@ -442,8 +350,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 	
-	//중력 처리.  
-	Gravity(fTimeDelta);
+	//중력 처리.    ANimation Lock의 영향을 받아야하나? 위로 옮겨봄
+	//Gravity(fTimeDelta);
 
 	//일부 공격 캔슬
 	AttckCancleJump();
@@ -624,14 +532,17 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 }
 
 
+
+//공용 처리 가능해서 Character로 이사가고 백업.
+/*
 void CPlay_Goku::AttackNextMoveCheck()
 {
 	
-	if (m_iNextAnimation.first != ANIME_IDLE)
+	if (m_iNextAnimation.first != m_iIdleAnimationIndex)
 	{
 		Set_Animation(m_iNextAnimation.first);
 
-		m_iNextAnimation.first = ANIME_IDLE;
+		m_iNextAnimation.first = m_iIdleAnimationIndex;
 		m_iNextAnimation.second = 1000.f;
 
 		if (m_fNextAnimationCurrentPosition != 0)
@@ -656,17 +567,18 @@ void CPlay_Goku::AnimeEndNextMoveCheck()
 }
 
 
+
 void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
 
-	if (iAnimationIndex == ANIME_IDLE)
+	if (iAnimationIndex == m_iIdleAnimationIndex)
 		m_pModelCom->SetUp_Animation(iAnimationIndex, true);
 	else
 		m_pModelCom->SetUp_Animation(iAnimationIndex, bloof);
 
 }
 
-
+*/
 
 
 void CPlay_Goku::KeyTest()
@@ -779,7 +691,10 @@ void CPlay_Goku::Gravity(_float fTimeDelta)
 	{
 		if (fHeight == 0)
 		{
-			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+
+			//m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+			Set_Animation(m_iIdleAnimationIndex);
+
 
 			Set_fGravityTime(0.f);
 			Set_fJumpPower(0.f);
@@ -878,7 +793,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { CAttacKObject::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.03f;
+		//Desc.bOwnerGravityTimeReset = true;
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -898,7 +814,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { CAttacKObject::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.04f;
+		//Desc.bOwnerGravityTimeReset = true;
+
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -917,7 +835,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { CAttacKObject::HIT_KNOCK_AWAY_LEFT };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.5f;
+		Desc.fAnimationLockTime = 0.15f;
+		//Desc.bOwnerGravityTimeReset = true;
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
@@ -935,7 +854,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
 		Desc.ColliderDesc.fSizeY = 1.0;
 		Desc.ColliderDesc.Offset = { 1.0f * m_iLookDirection,0.8f,0.f };
 		Desc.ColliderDesc.pTransform = m_pTransformCom;
-		Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };
+		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
+		Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
+
 		Desc.fhitCharacter_StunTime = 1.0f;
 		Desc.iDamage = 1000 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;

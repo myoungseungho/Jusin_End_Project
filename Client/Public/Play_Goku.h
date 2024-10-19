@@ -57,7 +57,7 @@ public:
 		
 		
 		//°øÁß
-		ANIE_HIT_AIR = 24, ANIME_HIT_FALL_UPPER = 26,									//060 061
+		ANIE_HIT_AIR = 24, ANIME_HIT_FALL = 26,									//060 061
 		
 
 		//¶¥¿¡ ´ê´Â ¼ø°£
@@ -109,12 +109,12 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	//virtual void NextMoveCheck() override;
-	virtual void AttackNextMoveCheck() override;
-	virtual void AnimeEndNextMoveCheck() override;
+	//virtual void AttackNextMoveCheck() override;
+	//virtual void AnimeEndNextMoveCheck() override;
 
 	//virtual void Test_InputCommand();
 	//virtual void Set_Animation(_uint iAnimationIndex) override;
-	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
+	//virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
 
 	void KeyTest();
 

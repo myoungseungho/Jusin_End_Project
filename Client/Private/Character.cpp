@@ -476,7 +476,8 @@ _bool CCharacter::InputCommand()
 		 }
 
 
-		 if (m_pGameInstance->Key_Pressing(DIK_O))
+		 //if (m_pGameInstance->Key_Pressing(DIK_O))
+		 if (m_pGameInstance->Key_Down(DIK_O))
 		 {
 			 iAttackkey = ATTACK_GRAB;
 		
@@ -554,7 +555,7 @@ _bool CCharacter::InputCommand()
 		}
 
 
-		if (m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD9))
 		{
 			iAttackkey = ATTACK_GRAB;
 
@@ -812,10 +813,20 @@ void CCharacter::Set_ForcedGravityDown()
 	//if (m_fGravityTime < 0.305)
 	//	m_fGravityTime = 0.305f;
 
-	//공중대시용?
+	//공중 앞대시 
 	m_fGravityTime = 0.255f;
 
 
+}
+
+void CCharacter::Set_ForcedGravityTime_LittleUp()
+{
+	m_fGravityTime = 0.135f;
+
+	if (m_fJumpPower == 0)
+	{
+		m_fJumpPower = fJumpPower;
+	}
 }
 
 void CCharacter::Set_ForcveGravityTime(_float fGravityTime)
@@ -1487,6 +1498,12 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		{
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
 		}
+		else if (Get_fHeight() >0)
+		{
+			Set_Animation(m_iHit_Air_LightAnimationIndex, false);
+			Set_ForcedGravityTime_LittleUp();
+
+		}
 		else
 			Set_Animation(m_iHit_Stand_LightAnimationIndex, false);
 	}
@@ -1549,7 +1566,21 @@ void CCharacter::Update_AnimationLock(_float fTimeDelta)
 
 void CCharacter::Update_StunImpus(_float fTimeDelta)
 {
-	m_pTransformCom->Add_Move({ m_fImpuse.x *fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
+
+	//공중에서 맞고 낙하중에는 중력 비슷하게 적용
+	//if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_FallAnimationIndex)
+
+	{
+		;
+	}
+
+	//그 외에 맞고서 강하게 날라가는 중에는 전용 가속도를 받음
+	else
+		m_pTransformCom->Add_Move({ m_fImpuse.x *fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
+
+
+
 }
 
 _float CCharacter::Get_DamageScale()
@@ -1608,6 +1639,41 @@ _uint* CCharacter::Get_pAnimationIndex()
 
 
 
+_bool CCharacter::Check_bCurAnimationisAirHit(_uint iAnimation)
+{
+	_uint iModelIndex = iAnimation;
+
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+
+	//if (iModelIndex == m_iHit_Air_LightAnimationIndex || iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex || iModelIndex == m_iHit_Air_FallAnimationIndex)
+	if (iModelIndex == m_iHit_Air_LightAnimationIndex || iModelIndex == m_iHit_Air_FallAnimationIndex)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+_bool CCharacter::Check_bCurAnimationisHitAway(_uint iAnimation)
+{
+	_uint iModelIndex = iAnimation;
+
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+
+	if (iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex )
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition)
 {
 	m_iNextAnimation.first = iAnimationIndex;
@@ -1618,11 +1684,60 @@ void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _flo
 
 }
 
+void CCharacter::AttackNextMoveCheck()
+{
+	if (m_iNextAnimation.first != m_iIdleAnimationIndex)
+	{
+
+	
+		if (m_bNextAnimationGravityEvent) 	//Set_Animation보다 위에 있어야함
+		{
+			m_bNextAnimationGravityEvent = false;
+			Set_ForcedGravityTime_LittleUp();
+		}
+
+		Set_Animation(m_iNextAnimation.first);
+
+		m_iNextAnimation.first = m_iIdleAnimationIndex;
+		m_iNextAnimation.second = 1000.f;
+
+		if (m_fNextAnimationCurrentPosition != 0)
+		{
+			m_pModelCom->CurrentAnimationPositionJump(m_fNextAnimationCurrentPosition);
+			m_fNextAnimationCurrentPosition = 0.f;
+		}
+		
+	}
+}
+
+void CCharacter::AnimeEndNextMoveCheck()
+{
+
+	Set_Animation(m_iNextAnimation.first);
+
+	m_iNextAnimation.first = m_iIdleAnimationIndex;
+	m_iNextAnimation.second = 1000.f;
+
+}
+
+void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
+{
+
+
+
+	if (iAnimationIndex == m_iIdleAnimationIndex)
+		m_pModelCom->SetUp_Animation(iAnimationIndex, true);
+	else
+		m_pModelCom->SetUp_Animation(iAnimationIndex, bloof);
+
+
+	//m_bNextAnimationGravityEvent = false;
+
+}
+
 void CCharacter::Gravity(_float fTimeDelta)
-//void CCharacter::Gravity(_float fTimeDeltaOrigin)
 {
 	
-	//_float fTimeDelta = fTimeDeltaOrigin * 2.f;
 
 
 	if (m_bChase == true)
@@ -1635,7 +1750,6 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 
 	
-	//테스트용 임시 중력
 
 	if (fHeight > 0)
 	{
@@ -1644,10 +1758,20 @@ void CCharacter::Gravity(_float fTimeDelta)
 		
 
 		// IDLE이면 공중 하강모션으로 변경
-		if (Check_bCurAnimationisGroundMove())
+
+
+		if (m_bStun)
+		{
+
+		}
+
+
+		else if (Check_bCurAnimationisGroundMove())
 			m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
 		
 		
+		// if (Check_bCurAnimationisGroundMove())
+		//m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
 
 		//중력 ver1 일때는 항상 더해야 자연스러운데 2에서는 아님
 		//if (m_fGravityTime < m_fJumpPower)
@@ -1673,19 +1797,46 @@ void CCharacter::Gravity(_float fTimeDelta)
 		_float fGravity = (-0.7f * (2*m_fGravityTime - m_fJumpPower) * (2*m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 
 
-		//하강 모션중이면 점점 추락,  상승 하강 동시에 처리하고싶은데
-		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+
+		//점프시작, 점프중에 중력 따름 
+		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+
+		//공중 약공격으로 맞는중 추가
+		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
+
+		//공중 기본공격중 추가( 기탄제외)
+		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
+		//	m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
+		//	m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
+			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
+			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
 		{
+
+		
+			//스매시 당했으면 시간 더하지 않음
+			if (Check_bCurAnimationisHitAway())
+			{
+				;
+			}
 
 			//중력ver2 용
 			//if (m_fGravityTime < m_fJumpPower)
-			if (m_fGravityTime*2 < m_fJumpPower)
+
+
+			else if (m_fGravityTime*2.f < m_fJumpPower)
 			{
 				m_fGravityTime += fTimeDelta;
+
+				//일시정지해서 여기서 넘어가면 값이 확 높아질 수 있음.  예외처리해서 시간값 한번 더?
+			}
+			else if (m_fGravityTime*2.f > m_fJumpPower)
+			{
+				m_fGravityTime = m_fJumpPower * 0.5f;
 			}
 
-			
-			m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+			if(Check_bCurAnimationisHitAway() == false)
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
 
 
 		}
@@ -1736,15 +1887,23 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 
 	}
-	else if (fHeight <0)
+
+
+
+
+	//이부분은 Gravity랑 다르게 분리해도될지도 
+
+	//	else if (fHeight <0)   //왜 else if 였는지 기억이 안남. 실수였을지도
+	if (fHeight <0)
 	{
 
-		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
+		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() )
 		{
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
 			Set_fGravityTime(0.f);
-			Set_fJumpPower(0.f);
+			//Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
 
 			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
@@ -1757,9 +1916,23 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 		}
+		else if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
+		{
+			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
+			Set_fGravityTime(0.f);
+			//Set_fJumpPower(0.f);
+			Set_fImpulse(0.f);
 
-		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
+			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+			m_bAriDashEnable = true;
+			Set_bAttackGravity(true);
+
+			if (m_bJumpLock == false)
+			{
+				m_bJumpLock = true;
+			}
+		}
 
 		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
 
@@ -1774,7 +1947,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
 			Set_fGravityTime(0.f);
-			Set_fJumpPower(0.f);
+			//Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);

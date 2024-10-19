@@ -226,14 +226,15 @@ public:
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000) { return false; };
-
+	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
+	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
 
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition =0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
-	virtual void AttackNextMoveCheck() {};
-	virtual void AnimeEndNextMoveCheck() {};
+	virtual void AttackNextMoveCheck();
+	virtual void AnimeEndNextMoveCheck();
 	//virtual void Set_Animation(_uint iAnimationIndex) {};
-	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof =false) {};
+	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof =false);
 
 	_bool		CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition = 0);
 
@@ -282,10 +283,16 @@ public:
 	void Set_bAirDashEnable(_bool bAirDashEnable) { m_bAriDashEnable = bAirDashEnable; };
 
 	void Set_ForcedGravityDown();
+	void Set_ForcedGravityTime_LittleUp();
+
 	void Set_ForcveGravityTime(_float fGravityTime);
 
+	void Set_bNextAnimationGravityEvent() { m_bNextAnimationGravityEvent = true; };
 
 	void Set_bAttackGravity(_bool bAttackGravity) { m_bAttackGravity = bAttackGravity; };
+
+	_float Get_fGravityTime() { return m_fGravityTime; };
+
 
 
 	void AttckCancleJump();
@@ -320,6 +327,7 @@ public:
 	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
 	_float Get_DamageScale();
 
+	
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
@@ -383,9 +391,24 @@ protected:
 	_ushort m_iHit_Away_LeftAnimationIndex = {33};
 	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
 
+	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
+	_ushort m_iHit_Air_FallAnimationIndex = { 26 };	
+
+	//±â»ó
+	_ushort m_iBreakFall_Ground = { 41 };   //100
+	_ushort m_iBreakFall_Air = { 42 };   //101
+
+
+	_ushort m_iAttack_Air1 = { 52 };		
+	_ushort m_iAttack_Air2 = { 53 };		
+	_ushort m_iAttack_Air3 = { 54 };		
+
+
+
+
 
 	_float m_fGravityTime = {0.f}; 
-	_float m_fJumpPower = {0.f};
+	_float m_fJumpPower = 3;// { 0.f };
 
 	//°¡¼Óµµ
 	//_float m_fImpuse = { 0.f };
@@ -427,6 +450,7 @@ protected:
 	_ushort		m_iAttackStepCount;  //ÄÞº¸¼ö ¾Æ´Ô.
 
 	_bool		m_bSparking = false;
+	_bool m_bNextAnimationGravityEvent = false;
 
 private:
 	HRESULT Ready_Components();

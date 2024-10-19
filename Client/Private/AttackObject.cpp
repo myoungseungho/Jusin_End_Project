@@ -42,6 +42,8 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 
 	m_fAnimationLockTime = pDesc->fAnimationLockTime;
 
+	//m_bOwnerGravityTimeReset = pDesc->bOwnerGravityTimeReset;
+
 	m_pOwner = pDesc->pOwner;
 
 
@@ -119,7 +121,14 @@ void CAttacKObject::Late_Update(_float fTimeDelta)
 		}
 
 		if (bisCollsing)
+		{
 			m_bIsActive = false;
+			//if (m_bOwnerGravityTimeReset)
+			//{
+			//	m_pOwner->Set_ForcedGravityTime_LittleUp();
+			//}
+		}
+
 
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 	}
