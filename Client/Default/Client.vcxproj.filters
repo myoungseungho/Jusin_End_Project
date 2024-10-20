@@ -82,14 +82,14 @@
     <Filter Include="02.GameObjects\Map\Space\Moon">
       <UniqueIdentifier>{0b6e2440-ed9e-43ce-b3b2-9fd31271863e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Space\NewFilter1">
-      <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
       <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Effect_Rect\Shader_Materials">
       <UniqueIdentifier>{4777c123-625a-4580-b4ad-aaf08a2c4ad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceStone">
+      <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +301,9 @@
     <ClInclude Include="..\public\Shader_Tab_Defines.h">
       <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceStone.h">
+      <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -440,6 +443,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Shader_Material.cpp">
       <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceStone.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

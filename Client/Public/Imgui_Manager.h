@@ -44,7 +44,7 @@ public:
 
 	class CIMGUI_Shader_Tab* Access_Shader_Tab(_int iShader_Tab_Index = -1) { 
 		if(iShader_Tab_Index == -1)
-			return m_vecShader_Tabs[to_string(m_iShaderCount)];
+			return m_vecShader_Tabs[to_string(m_iCurShaderTabId)];
 		else
 			return m_vecShader_Tabs[to_string(iShader_Tab_Index)];
 	}
