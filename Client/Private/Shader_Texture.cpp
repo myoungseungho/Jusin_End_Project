@@ -122,7 +122,7 @@ HRESULT CShader_Texture::Render(_float fTimeDelta)
 {
 	if (FAILED(m_pRenderInstance->Begin_MRT(m_Key)))
 		return E_FAIL;
-
+	  
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
