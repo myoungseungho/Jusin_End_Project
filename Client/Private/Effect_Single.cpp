@@ -145,10 +145,10 @@ HRESULT CEffect_Single::Ready_Components(_wstring* pModelName, _wstring* pMaskTe
 
 	wstring MaskTextureName = L"Prototype_Component_" + *pMaskTextureName;
 
-	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, MaskTextureName,
-		TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
-		return E_FAIL;
+	///* Com_Texture */
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, MaskTextureName,
+	//	TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
+	//	return E_FAIL;
 
 	wstring DiffuseTexturueName = L"Prototype_Component_" + *pDiffuseTexturueName;
 

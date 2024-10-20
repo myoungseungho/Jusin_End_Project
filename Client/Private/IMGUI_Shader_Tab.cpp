@@ -34,12 +34,23 @@ HRESULT CIMGUI_Shader_Tab::Load_Initialize(string strFilename)
     isStart = true;
     m_PrototypeKeys.clear();
 
-    if (strFilename.size() != NULL)
-    {
-        Click_Load_Shader_Tab(strFilename.c_str());
-    }
+    //if (strFilename.size() != NULL)
+    //{
+    //    
+    //}
 
     return S_OK;
+}
+
+void CIMGUI_Shader_Tab::Update(_float fTimeDelta)
+{
+    for (auto& iter : m_NodeTextures)
+    {
+        iter->Priority_Update(fTimeDelta);
+        iter->Update(fTimeDelta);
+        iter->Late_Update(fTimeDelta);
+    }
+
 }
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
@@ -874,11 +885,126 @@ void CIMGUI_Shader_Tab::Click_Load_Shader_Tab(string fileName)
     links.clear();  // 기존 연결 정보 초기화
     for (const auto& link : tDesc.links)
     {
-        links.push_back({ link.srcNodeID, link.destNodeID });  // 노드 연결 리스트에 추가
+        Create_Link(link.srcNodeID, link.destNodeID);
+        //links.push_back({ link.srcNodeID, link.destNodeID });  // 노드 연결 리스트에 추가
     }
 
     // 6. 추가적인 초기화가 필요한 내용이 있으면 추가
     // 예를 들어, 노드들의 ID 또는 속성 재설정 등이 필요할 수 있습니다.
+}
+
+void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
+{
+
+    auto it = find_if(links.begin(), links.end(),
+        [end_attr](const pair<_int, _int>& link) {
+            return link.second == end_attr;
+        });
+
+    if (it != links.end())
+    {
+
+        links.erase(it);
+    }
+
+
+    // 함수 노드들
+    if (start_attr > 1500)
+    {
+        if (start_attr < 3000)
+        {
+            auto it = m_MoveTex_Node_ids.begin();
+            advance(it, (start_attr - 1 - 1501));
+
+            links.push_back(make_pair(start_attr, end_attr));
+            auto Texture_nodeit = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+                [&](CShader_Texture* texture) {
+                    return texture->m_iID == end_attr / m_iAttributeCount;
+                });
+
+            if (Texture_nodeit != m_NodeTextures.end())
+            {
+                (*Texture_nodeit)->Push_Shade_MoveTex(&it->fDirection, &it->fSpeed);
+                (*Texture_nodeit)->Remove_InputFunction(FUNCTION_SPRITE);
+            }
+        }
+        else if (start_attr > 3000/* 노드 종류 추가되면 조건 더 달아야됨*/)
+        {
+            auto it = m_Sprite_Node_ids.begin();
+            advance(it, (start_attr - 1 - 3001));
+
+            links.push_back(make_pair(start_attr, end_attr));
+            auto Texture_nodeit = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+                [&](CShader_Texture* texture) {
+                    return texture->m_iID == end_attr / m_iAttributeCount;
+                });
+
+            if (Texture_nodeit != m_NodeTextures.end())
+            {
+                (*Texture_nodeit)->Push_Shade_Sprite(&it->fSpriteSizeNumber, &it->fSpeed);
+                (*Texture_nodeit)->Remove_InputFunction(FUNCTION_TEXMOVE);
+            }
+
+        }
+    }
+    // Main_Node Diffuse에 연결된거임
+    else if (end_attr == -2)
+    {
+        m_iMain_Input_Diffuse_id = (start_attr) / 3;
+        links.push_back(make_pair(start_attr, end_attr));
+
+        auto SRVit = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
+            [&](SRV_Texture SRV) {
+                return SRV.iID == start_attr / m_iAttributeCount;
+            });
+
+        m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
+        m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha, 1);
+        //m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
+    }
+    else if (end_attr % 4 == 2)
+    {
+        links.push_back(make_pair(start_attr, end_attr));
+
+        auto it = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+            [&](CShader_Texture* texture) {
+                return texture->m_iID == end_attr / m_iAttributeCount;
+            });
+
+        if (it != m_NodeTextures.end())
+        {
+            auto SRVit = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
+                [&](SRV_Texture SRV) {
+                    return SRV.iID == start_attr / m_iAttributeCount;
+                });
+
+            (*it)->Push_InputTextures((ID3D11ShaderResourceView*)SRVit->Texture, END_ALPHA);
+
+        }
+        //m_NodeTextures[(end_attr - 2) / 4 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[(start_attr) / 4 - 1].Texture, END_ALPHA);
+    }
+    else if (end_attr % 4 == 1)
+    {
+        links.push_back(make_pair(start_attr, end_attr));
+
+        auto it = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+            [&](CShader_Texture* texture) {
+                return texture->m_iID == end_attr / m_iAttributeCount;
+            });
+        if (it != m_NodeTextures.end())
+        {
+            auto SRVit = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
+                [&](SRV_Texture SRV) {
+                    return SRV.iID == start_attr / 4;
+                });
+
+            (*it)->Push_InputTextures((ID3D11ShaderResourceView*)SRVit->Texture, END_DIFFUSE);
+
+        }
+
+        // m_NodeTextures[(end_attr - 1) / 4 - 1]->Push_InputTextures((ID3D11ShaderResourceView*)m_NodeTextureSRVs[(start_attr) / 4 - 1].Texture, END_DIFFUSE);
+    }
+    
 }
 
 
@@ -893,7 +1019,7 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
 
         CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
         tDesc.prototypeKey = iter.key.c_str();
-     
+        tDesc.iShaderTab_ID = m_iNumberId;
 
         CGameObject* pPrototype = m_pGameInstance->Find_Prototype(TEXT("Prototype_GameObject_Shader_Texture"));
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));

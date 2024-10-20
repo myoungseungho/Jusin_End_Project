@@ -237,7 +237,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			else// if (relativePath == ".png")
 			{
 				CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
-				pImGui_Manager->Access_Shader_Tab()->Create_NodeTexture(filePath);
+				pImGui_Manager->Access_Shader_Tab(-1)->Create_NodeTexture(filePath);
 			}
 
         }

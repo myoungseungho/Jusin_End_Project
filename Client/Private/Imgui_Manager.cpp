@@ -135,10 +135,16 @@ void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 	m_iShaderCount++;
 }
 
-void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename)
+void CImgui_Manager::Save_Shader_Tab(_int iIndex, string fileName)
 {
-	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
-	m_vecShader_Tabs[to_string(m_iShaderCount)]->m_iNumberId = m_iShaderCount;
+	m_vecShader_Tabs[to_string(iIndex)]->Click_Save_Shader_Tab(fileName);
+}
+
+void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex)
+{
+	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
+	m_vecShader_Tabs[to_string(iIndex)]->m_iNumberId = iIndex;
+	m_vecShader_Tabs[to_string(iIndex)]->Click_Load_Shader_Tab(strFilename.c_str());
 }
 
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
@@ -249,7 +255,10 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 			//ImGui::EndTabItem();
 		}
 		else
+		{
 			tab.second->m_TabPick = false;
+			tab.second->Update(fTimeDelta);
+		}
 
 
 		m_ImGuiScreen.ShaderImGuiPos = ImGui::GetWindowPos();

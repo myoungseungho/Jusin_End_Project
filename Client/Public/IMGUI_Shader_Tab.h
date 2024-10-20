@@ -43,11 +43,14 @@ public:
 	HRESULT Initialize() override;
 	HRESULT Load_Initialize(string strFilename);
 	
+	void Update(_float fTimeDelta);
 	void Render(_float fTimeDelta) override;
 	void TabPos_Init(); 
 	void Set_EffectRect(CEffect_Rect* pEffectRect) { m_Effect_Rect = pEffectRect; }
 	void Create_NodeTexture(string szPath);
-	void Push_ShaderTexture(CShader_Texture* pShaderTexture) { m_NodeTextures.push_back(pShaderTexture); }
+	void Push_ShaderTexture(CShader_Texture* pShaderTexture) {
+		m_NodeTextures.push_back(pShaderTexture);
+	}
 	virtual const _char* GetTabName() const { return "Shader"; };
 	void Render_MainNode();
 	void Render_TextureNode();
@@ -60,7 +63,7 @@ public:
 
 	void Click_Save_Shader_Tab(string fileName);
 	void Click_Load_Shader_Tab(string fileName);
-
+	void Create_Link(_int start_attr, _int end_attr);
 	void Load_NodeTextures(vector<Save_Key>& PrototypeKeys);
 
 	void Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave);

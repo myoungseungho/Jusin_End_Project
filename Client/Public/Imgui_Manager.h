@@ -42,9 +42,15 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 
-	class CIMGUI_Shader_Tab* Access_Shader_Tab() { return m_vecShader_Tabs[to_string(m_iCurShaderTabIndex)]; }
+	class CIMGUI_Shader_Tab* Access_Shader_Tab(_int iShader_Tab_Index = -1) { 
+		if(iShader_Tab_Index == -1)
+			return m_vecShader_Tabs[to_string(m_iShaderCount)];
+		else
+			return m_vecShader_Tabs[to_string(iShader_Tab_Index)];
+	}
 	void Push_Shader_Tab(CTexture* pTexture);
-	void Load_Shader_Tab(CTexture* pTexture, string strFilename);
+	void Save_Shader_Tab(_int iIndex, string fileName);
+	void Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex);
 	void Delete_Shader_Tab(_int iIndex);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
