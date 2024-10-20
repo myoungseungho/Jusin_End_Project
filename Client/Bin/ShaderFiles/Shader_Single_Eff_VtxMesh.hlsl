@@ -77,7 +77,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-    if (vMtrlDiffuse.a < 0.99f)
+    if (vMtrlDiffuse.a < 0.95f)
         discard;
     vMtrlDiffuse.a = vMtrlAlpha.r;
     Out.vDiffuse = vMtrlDiffuse;
@@ -202,6 +202,7 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_DOUBLE();
+        //°ËÀº¹è°æ¿ë
     }
 
     pass Double_D
@@ -217,6 +218,7 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_DOUBLE_D();
+        //¸ðµ¨ µÎ°ã¿ë
     }
 }
 

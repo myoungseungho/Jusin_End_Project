@@ -1,0 +1,31 @@
+[Layer]
+LayerName: Smoke04
+Duration: 0.1
+TickPerSecond: 2
+KeyFramesCount: 6
+NumEffec: 1
+
+[Effect]
+EffectName: aa
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke04aa
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 0
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.3 0.6 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.3 0.6 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+

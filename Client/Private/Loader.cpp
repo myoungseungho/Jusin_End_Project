@@ -390,8 +390,8 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/cmn_povot_plane00.bin", PreTransformMatrix)))) // stand
 		return E_FAIL;
 
-
 	PreTransformMatrix = XMMatrixScaling(0.0001f, 0.0001f, 0.0001f);
+
    
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_bun_cookie"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/bun_cookie.bin", PreTransformMatrix))))
@@ -984,6 +984,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 #pragma endregion
 
 #pragma region Effect Texture
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_smoke06_test"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_smoke06_test.png"), 1))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_Default_Mask"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/Default_Mask.png"), 1))))

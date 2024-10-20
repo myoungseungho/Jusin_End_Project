@@ -94,12 +94,12 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
-				//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
-
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+
+				//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 			}
 		}
 	}
@@ -142,6 +142,11 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 		m_iPassIndex = 4; // 알파브랜드 + 디폴트
 	else
 		m_iPassIndex = 1;
+
+	//if (m_iPassIndex == 1)
+	//	m_iPassIndex = 0;
+	//else
+	//	m_iPassIndex = 1;
 
 	return S_OK;
 }
