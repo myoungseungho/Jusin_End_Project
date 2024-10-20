@@ -77,22 +77,30 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 {
 	if (m_pRenderInstance->Get_isLayerView() == true)
 	{
-		if (m_iRenderIndex == 2) // 레이어
+		if (!m_bIsNotPlaying)
 		{
-			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			if (m_iRenderIndex == 2) // 레이어
+			{
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			}
 		}
+
 	}
 	else
 	{
-		if (m_iRenderIndex == 1) //테스트
+		if (!m_bIsNotPlaying)
 		{
-			//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-			//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			if (m_iRenderIndex == 1) //테스트
+			{
+				//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 
-			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			}
 		}
 	}
 }
