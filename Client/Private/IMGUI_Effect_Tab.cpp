@@ -240,8 +240,28 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
             ImGui::EndCombo();
         }
 
+
         static char EffectNameBuffer[128] = "";
         ImGui::InputText("Effect Name", EffectNameBuffer, IM_ARRAYSIZE(EffectNameBuffer));
+
+        ImGui::SameLine();
+        if (ImGui::Button("Add Lying Rect"))
+        {
+            std::wstring wEffectName = UTF8ToWString(EffectNameBuffer);
+            std::wstring wModelName = UTF8ToWString("Model_Effect_acmn_pivot_plane01");
+            EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
+            m_pEffect_Manager->Add_Test_Effect(effectType, &wEffectName, &wModelName);
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("Add Standing Rect"))
+        {
+            std::wstring wEffectName = UTF8ToWString(EffectNameBuffer);
+            std::wstring wModelName = UTF8ToWString("Model_Effect_acmn_povot_plane00");
+            EFFECT_TYPE effectType = static_cast<EFFECT_TYPE>(CurrentEffectType);
+            m_pEffect_Manager->Add_Test_Effect(effectType, &wEffectName, &wModelName);
+        }
 
         if (ImGui::Button("Add Effect"))
         {
