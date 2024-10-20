@@ -6,6 +6,9 @@
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
 #include <Effect_Single.h>
+#include <string>
+#include <locale>
+#include <codecvt>
 #include "Effect_Multi.h"
 #include "Effect_MoveTex.h"
 
@@ -136,6 +139,9 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			CEffect_Multi* pMultiEffect = { nullptr };
 			CEffect_MoveTex* pMoveTexEffect = { nullptr };
 
+			wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+			string sMaskTextureName = converter.to_bytes(EffectDesc.MaskTextureName);
+
 			// 이펙트를 클론하여 레이어에 추가
 			switch (EffectDesc.EffectType)
 			{
@@ -147,7 +153,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pSingleEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pSingleEffect->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
 
 				// 이펙트에 기본 설정값 적용
 				pSingleEffect->m_bIsNotPlaying = effectData.isNotPlaying;
@@ -182,7 +188,8 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pMultiEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pMultiEffect->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
 
 				// 이펙트에 기본 설정값 적용
 				pMultiEffect->m_bIsNotPlaying = effectData.isNotPlaying;
@@ -217,7 +224,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pMoveTexEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pMoveTexEffect->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
 
 				// 이펙트에 기본 설정값 적용
 				pMoveTexEffect->m_bIsNotPlaying = effectData.isNotPlaying;
@@ -358,6 +365,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 					}
 					iCount++;
 				}
+
 			}
 		}
 	}

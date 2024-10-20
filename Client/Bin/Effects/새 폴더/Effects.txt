@@ -1,0 +1,173 @@
+[Layer]
+LayerName: layer1
+Duration: 2
+TickPerSecond: 0.32
+KeyFramesCount: 119
+NumEffec: 2
+
+[Effect]
+EffectName: effect1
+ModelName: Model_Effect_bun201_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -4 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsNotPlaying: false
+IsLoop: true
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -4 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+
+[KeyFrame]
+KeyFrameNumber: 51
+Position: 5 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.85
+Duration: 1
+
+[Effect]
+EffectName: effect2
+ModelName: Model_Effect_bun203_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 1
+Position: -2 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsNotPlaying: false
+IsLoop: true
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+
+[KeyFrame]
+KeyFrameNumber: 51
+Position: 4 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.85
+Duration: 1
+
+[Layer]
+LayerName: layer2
+Duration: 2
+TickPerSecond: 0.2
+KeyFramesCount: 119
+NumEffec: 2
+
+[Effect]
+EffectName: effect2-1
+ModelName: Model_Effect_bun201_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 2
+Position: -0.2 0 0
+Scale: 1 1 1
+Rotation: 3 0 0
+IsNotPlaying: false
+IsLoop: false
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+
+[KeyFrame]
+KeyFrameNumber: 1
+Position: -0.2 0 0
+Scale: 1 1 1
+Rotation: 3 0 0
+CurTime: 0.0166667
+Duration: 2
+
+[Effect]
+EffectName: effect2-2
+ModelName: Model_Effect_bun203_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 3
+Position: 0.2 0 0
+Scale: 1 0.999999 0.999999
+Rotation: 4 0 0
+IsNotPlaying: false
+IsLoop: true
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+
+[KeyFrame]
+KeyFrameNumber: 2
+Position: 0.2 0 0
+Scale: 1 0.999999 0.999999
+Rotation: 4 0 0
+CurTime: 0.0333333
+Duration: 2
+
+[Layer]
+LayerName: new
+Duration: 3
+TickPerSecond: 0
+KeyFramesCount: 179
+NumEffec: 1
+
+[Effect]
+EffectName: neweffect
+ModelName: Model_Effect_bun201_eff00
+MaskTextureName: Texture_Effect_Default_Mask
+DiffuseTextureName: Texture_Effect_Default_Diffuse
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 5 0 0
+IsNotPlaying: false
+IsLoop: false
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+

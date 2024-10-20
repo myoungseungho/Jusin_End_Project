@@ -75,6 +75,14 @@ HRESULT CTexture::Bind_ShaderResource(CShader * pShader, const _char * pConstant
 	return pShader->Bind_ShaderResourceView(pConstantName, m_SRVs[iTextureIndex]);	
 }
 
+HRESULT CTexture::Bind_ShaderResourceArray(CShader* pShader, const _char* pConstantName, _uint iNumTextures)
+{
+	if (iNumTextures >= m_SRVs.size())
+		return E_FAIL;
+
+	return pShader->Bind_ShaderResourceViews(pConstantName, &m_SRVs.front(), iNumTextures);
+}
+
 _float2 CTexture::Get_TextureSize()
 {
 	_float2 fTextureSize = { 0.f,0.f };

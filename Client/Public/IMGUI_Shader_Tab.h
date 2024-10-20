@@ -2,6 +2,7 @@
 #include "IMGUI_Tab.h"
 #include "Effect_Rect.h"
 #include "Shader_Texture.h"
+#include "Shader_Tab_Defines.h"
 BEGIN(Client)
 
 class CIMGUI_Shader_Tab : public CIMGUI_Tab
@@ -32,17 +33,24 @@ public:
 		ImTextureID Texture;
 		ImTextureID Alpha;
 	}SRV_Texture;
+
+
 protected:
 	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	virtual ~CIMGUI_Shader_Tab() = default;
-
+	
 public:
 	HRESULT Initialize() override;
+	HRESULT Load_Initialize(string strFilename);
+	
+	void Update(_float fTimeDelta);
 	void Render(_float fTimeDelta) override;
-	void TabPos_Init();
+	void TabPos_Init(); 
 	void Set_EffectRect(CEffect_Rect* pEffectRect) { m_Effect_Rect = pEffectRect; }
 	void Create_NodeTexture(string szPath);
-	void Push_ShaderTexture(CShader_Texture* pShaderTexture) { m_NodeTextures.push_back(pShaderTexture); }
+	void Push_ShaderTexture(CShader_Texture* pShaderTexture) {
+		m_NodeTextures.push_back(pShaderTexture);
+	}
 	virtual const _char* GetTabName() const { return "Shader"; };
 	void Render_MainNode();
 	void Render_TextureNode();
@@ -52,16 +60,27 @@ public:
 	void Check_Create_Link();
 	void Check_Delete_Link();
 	void Draw_MusicButton(CShader_Texture* pShaderTexture);
+
+	void Click_Save_Shader_Tab(string fileName);
+	void Click_Load_Shader_Tab(string fileName);
+	void Create_Link(_int start_attr, _int end_attr);
+	void Load_NodeTextures(vector<Save_Key>& PrototypeKeys);
+
+	void Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave);
+	void Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave);
 public:
 	_int m_iNumberId = { -1 };
 	_bool m_TabPick = { false };
-private:
+
+	string m_FileName;
+private: /* 이 m_PrototypeKeys 로 Load_NodeTextures() 함수호출로 객체들을 다 생성한다 */
+	vector<Save_Key>			m_PrototypeKeys;							
+	/*----------------------------m_PrototypeKeys-----------------------------------------------------------------------------------------*/
 	CTexture*					m_pDefaultTexture = { nullptr };			// 꼇다 뺏다 할때 필요한 흰색텍스쳐컴
 	vector<CShader_Texture*>	m_NodeTextures;								// 텍스쳐 노드에 텍스쳐객체들
 	vector<SRV_Texture>			m_NodeTextureSRVs;							// 그 텍스쳐객체가 그리는 렌더타겟의 그려진 결과 ShaderReasouceView*
-
 	CTexture*					m_TestEffectModel_Texture = { nullptr };	// 누나가 생성한 테스트이펙트객체의 텍스쳐 컴포넌트
-
+	/*------------------------------------------------------------------------------------------------------------------------------------*/
 	CEffect_Rect*				m_Effect_Rect = { nullptr };	// 임시로 이펙트툴에서 생성한게 아닌 렉트
 
 	_int						m_iNodeTextureCount = 0;		// 노드 텍스쳐의 개수
@@ -87,7 +106,11 @@ private: /* ImNodes 와 관련된 멤버 변수 */
 	unordered_map<int, ImVec2>	node_positions;					// 탭 전환시 노드 위치가 초기화되는데 그걸 막기위해 항상 노드들의 위치를 모두 저장
 
 public:
-	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture);
+	void Save_ClientBinary();
+
+public:
+	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
+	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture, string strFilename);
 	virtual void Free() override;
 };
 

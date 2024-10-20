@@ -133,7 +133,6 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
             EFFECT_DATA effectData;
             effectData.effectName = pEffect->m_EffectName;
             effectData.modelName = pEffect->m_ModelName;
-            effectData.maskTextureName = pEffect->m_MaskTextureName;
             effectData.diffuseTextureName = pEffect->m_DiffuseTextureName;
             effectData.effectType = pEffect->m_eEffect_Type;
             effectData.renderIndex = pEffect->m_iRenderIndex;
@@ -146,6 +145,9 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
             effectData.rotation = pEffect->Get_Effect_Rotation();
             effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
+            effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
+
+            CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
             // 이펙트의 키프레임 정보 추가
             for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
             {
@@ -160,6 +162,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
                 effectData.keyframes.push_back(keyFrameData);
             }
 
+            //effectData.maskTextureName
             layerData.effects.push_back(effectData); // 레이어에 이펙트 추가
         }
 

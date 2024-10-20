@@ -135,12 +135,22 @@ void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
 	m_iShaderCount++;
 }
 
+void CImgui_Manager::Save_Shader_Tab(_int iIndex, string fileName)
+{
+	m_vecShader_Tabs[to_string(iIndex)]->Click_Save_Shader_Tab(fileName);
+}
+
+void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex)
+{
+	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
+	m_vecShader_Tabs[to_string(iIndex)]->m_iNumberId = iIndex;
+	m_vecShader_Tabs[to_string(iIndex)]->Click_Load_Shader_Tab(strFilename.c_str());
+}
+
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
 {
-
 	Safe_Release(m_vecShader_Tabs[to_string(iIndex)]);
 	m_vecShader_Tabs.erase(to_string(iIndex));
-
 }
 
 _int CImgui_Manager::Pick_Effect_Mesh()
@@ -245,7 +255,10 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 			//ImGui::EndTabItem();
 		}
 		else
+		{
 			tab.second->m_TabPick = false;
+			tab.second->Update(fTimeDelta);
+		}
 
 
 		m_ImGuiScreen.ShaderImGuiPos = ImGui::GetWindowPos();

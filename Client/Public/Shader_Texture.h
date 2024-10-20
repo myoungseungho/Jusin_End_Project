@@ -21,6 +21,8 @@ public:
 		_wstring prototypeKey;
 		const _tchar* filePath;
 		_int iID;
+
+		_int iShaderTab_ID;
 	}SHADER_TEXTURE_DESC;
 	typedef struct
 	{
