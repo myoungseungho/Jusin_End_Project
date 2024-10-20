@@ -87,6 +87,7 @@ protected:
 
 	CUI_Manager* m_pUI_Manager = { nullptr };
 
+	_bool m_bAnimStart = { FALSE };
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

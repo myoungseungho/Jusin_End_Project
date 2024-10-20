@@ -34,8 +34,6 @@ HRESULT CUI_HpPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	//UI_DESC* pUIDesc = static_cast<UI_DESC*>(pArg);
-
 	__super::Set_UI_Setting(m_fSizeX , 116.f, m_fPosX, 87.f,0.8f);
 
 
@@ -49,46 +47,24 @@ void CUI_HpPanel::Priority_Update(_float fTimeDelta)
 
 void CUI_HpPanel::Update(_float fTimeDelta)
 {
-
 	__super::Update(fTimeDelta);
-	/*if (m_pUI_Manager->m_iTeam == CUIObject::LEFT)
+
+	_vector vTarget = { 330.f, 87.f, 0, 0 };
+	
+	if (m_pUI_Manager->m_iTeam == m_eLRPos)
 	{
-		m_bCharaChange = TRUE;
+		if (m_bStart == FALSE)
+		{
+			_vector vStartPos = { 271 + g_iWinSizeX * 0.5f, 147 + g_iWinSizeY * -0.5f ,0.8f ,1.f };
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vStartPos);
+			m_bStart = TRUE;
+		}
+		UI_Anim(vTarget, 300.f, fTimeDelta);
 	}
+	
 
-	if (m_bCharaChange && m_eLRPos == CUIObject::LEFT)
-	{
-		_vector vTargetPos = { 330.f, 87.f};
 
-		if (m_bInitInfo == FALSE)
-		{
-			__super::Set_UI_Setting(m_fSizeX, 116.f, m_fPosX - 30 , 87.f+ 50, 0.8f);
-			m_vOffsetPos.x = m_fPosX - 30;
-			m_vOffsetPos.y = 87.f + 50;
 
-			m_bInitInfo = TRUE;
-		}
-
-		m_vOffsetPos.x += fTimeDelta * 60.f;
-		m_vOffsetPos.y -= fTimeDelta * 100.f;
-
-		if (m_vOffsetPos.x >= 330.f)
-		{
-			m_vOffsetPos.x = 330.f;
-		}
-
-		if (m_vOffsetPos.y <= 87.f)
-			m_vOffsetPos.y = 87.f;
-
-		if (m_vOffsetPos.x >= 330.f && m_vOffsetPos.y <= 87.f)
-		{
-			m_bInitInfo = FALSE; 
-			m_bCharaChange = FALSE;
-			m_pUI_Manager->m_iTeam = CUIObject::POS_END;
-		}
-
-		__super::Set_UI_Setting(m_fSizeX, 116.f, m_vOffsetPos.x , m_vOffsetPos.y, 0.8f);
-	}*/
 }
 
 void CUI_HpPanel::Late_Update(_float fTimeDelta)
@@ -130,6 +106,35 @@ HRESULT CUI_HpPanel::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpPanel"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+}
+
+void CUI_HpPanel::UI_Anim(_vector vTargetPos, _float fSpeed,_float fTimeDelta)
+{
+	vTargetPos = XMVectorSetX(vTargetPos, XMVectorGetX(vTargetPos) - g_iWinSizeX * 0.5f);
+	vTargetPos = XMVectorSetY(vTargetPos, -XMVectorGetY(vTargetPos) + g_iWinSizeY * 0.5f);
+
+	//_vector vPos = { 271 + g_iWinSizeX * -0.5f , -528 + g_iWinSizeY * 0.5f, 0.8f, 1.f };
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+
+	//_vector vSubtract = { g_iWinSizeX * -0.5f,g_iWinSizeY * 0.5f , 0.f,0.f };
+	//vTargetPos = vTargetPos - vSubtract;
+
+	_vector vOriginPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_vector vMoveDir = XMVector2Normalize(vTargetPos - vOriginPos);
+
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION) + vMoveDir * fSpeed * fTimeDelta;
+
+	vPos = XMVectorSetW(vPos, 1.f);
+	vPos = XMVectorSetZ(vPos, 0.8f);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+
+	_float fDistance = XMVectorGetX( XMVector3Length(vTargetPos - vOriginPos));
+
+	if (fDistance <= 5.f)
+	{
+		m_pUI_Manager->m_iTeam = POS_END;
+		m_bStart = FALSE;
+	}
 }
 
 CUI_HpPanel* CUI_HpPanel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

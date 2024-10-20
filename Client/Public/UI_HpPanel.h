@@ -22,12 +22,11 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	void  UI_Anim(_vector vTargetPos, _float fSpeed, _float fTimeDelta);
 
 private:
-	_bool m_bCharaChange = { FALSE };
-	_bool m_bInitInfo = { FALSE };
-
-	_float2 m_vOffsetPos = {};
+	_bool m_bAnimStop = { FALSE };
+	_bool m_bStart = {FALSE};
 
 public:
 	static CUI_HpPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
