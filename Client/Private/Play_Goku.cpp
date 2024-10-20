@@ -84,6 +84,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iAttack_Air2 = { ANIME_ATTACK_AIR2 };
 	m_iAttack_Air3 = { ANIME_ATTACK_AIR3 };
 
+	m_iBound_Ground = { ANIME_HIT_BOUND_DOWN };
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -472,6 +473,14 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	//Gravity(fTimeDelta);
 
 	m_pColliderCom->Update();
+
+
+	if (m_iPlayerTeam == 2)
+	{
+		m_pModelCom->m_iCurrentAnimationIndex;
+
+		_bool debuga = true;
+	}
 	
 }
 
@@ -829,7 +838,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
 		Desc.ColliderDesc.fSizeY = 1.0;
 		Desc.ColliderDesc.Offset = { 1.0f * m_iLookDirection,0.8f,0.f };
 		Desc.ColliderDesc.pTransform = m_pTransformCom;
-		Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,-10.f };
+		Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,-10.f };
 		Desc.fhitCharacter_StunTime = 1.0f;
 		Desc.iDamage = 1000 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
@@ -837,6 +846,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEventEnum, _int AddEvent)
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.15f;
 		//Desc.bOwnerGravityTimeReset = true;
+		Desc.bGroundSmash = true;
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}

@@ -1631,6 +1631,11 @@ _float CCharacter::Get_DamageScale()
 	return fDamageScale;
 }
 
+void CCharacter::Set_GroundSmash(_bool bSmash)
+{
+	m_bHitGroundSmashed = bSmash;
+}
+
 
 _uint* CCharacter::Get_pAnimationIndex()
 {
@@ -1851,32 +1856,35 @@ void CCharacter::Gravity(_float fTimeDelta)
 			if(m_bAttackGravity == true)
 			{ 
 
-				if(m_iPlayerTeam ==1)
+				//if(m_iPlayerTeam ==1)
+				//{
+				//	if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+				//	{
+				//		m_fGravityTime += fTimeDelta;
+				//	}
+				//
+				//
+				//	//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
+				//
+				//	//if (m_pGameInstance->Key_Pressing(DIK_W))
+				//	//	m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+				//
+				//}
+				//else
 				{
-					if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+					//if ((m_pGameInstance->Key_Pressing(DIK_UP) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
+					//{
+					//	m_fGravityTime += fTimeDelta;
+					//}
+
+					if (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)
 					{
 						m_fGravityTime += fTimeDelta;
 					}
-
-
 					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
 
-					if (m_pGameInstance->Key_Pressing(DIK_W))
-						m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
-
-				}
-				else
-				{
-					if ((m_pGameInstance->Key_Pressing(DIK_UP) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
-					{
-						m_fGravityTime += fTimeDelta;
-					}
-
-
-					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-
-					if (m_pGameInstance->Key_Pressing(DIK_UP))
-						m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+					//if (m_pGameInstance->Key_Pressing(DIK_UP))
+					//	m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
 				}
 
 			}
@@ -1896,7 +1904,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 	//이부분은 Gravity랑 다르게 분리해도될지도 
 
 	//	else if (fHeight <0)   //왜 else if 였는지 기억이 안남. 실수였을지도
-	if (fHeight <0)
+	//if (fHeight <0)
+	if (fHeight < 0)
 	{
 
 		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
@@ -1920,13 +1929,30 @@ void CCharacter::Gravity(_float fTimeDelta)
 		}
 		else if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
 		{
-			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
+			//m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
+			if (m_bHitGroundSmashed)
+			{
+				Set_Animation(m_iHit_Air_LightAnimationIndex);
+				m_pModelCom->CurrentAnimationPositionJump(55.f);
+				Set_NextAnimation(m_iBound_Ground, 5.f);
+
+				//m_bHitGroundSmashed = false;
+			}
+			else
+			{
+				//m_pModelCom->SetUp_Animation(m_iBound_Ground, false);
+				Set_Animation(m_iBreakFall_Ground, 2.f);
+				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+			}
 			Set_fGravityTime(0.f);
 			//Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
 
-			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+			//Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+			//Set_NextAnimation(m_iBreakFall_Ground, 2.f);
+
+
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);
 
@@ -1954,6 +1980,56 @@ void CCharacter::Gravity(_float fTimeDelta)
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);
 		}
+		
+		else if (m_bHitGroundSmashed == true && m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
+		{
+			if (m_bMotionPlaying == false)
+			{
+				Set_Animation(m_iBreakFall_Ground, 2.f);
+				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+				m_bHitGroundSmashed = false;
+			}
+
+		}
+
+		else if (Check_bCurAnimationisHitAway() || Check_bCurAnimationisAirHit())
+		{
+			//낙법 또는 스매시 
+			if (m_bHitGroundSmashed)
+			{
+				Set_Animation(m_iHit_Air_LightAnimationIndex);
+				m_pModelCom->CurrentAnimationPositionJump(55.f);
+				Set_NextAnimation(m_iBound_Ground, 5.f);
+
+				//m_bHitGroundSmashed = false;
+			}
+			else
+			{
+				//Set_Animation(m_iBound_Ground);
+
+				Set_Animation(m_iBreakFall_Ground, 2.f);
+				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+			}
+		}
+		//else if (m_bHitGroundSmashed == true && m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
+		//{
+		//	if (m_bMotionPlaying == false)
+		//	{
+		//		Set_Animation(m_iBreakFall_Ground, 2.f);
+		//		Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+		//		m_bHitGroundSmashed = false;
+		//	}
+		//
+		//}
+		else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+		{
+			if (m_bMotionPlaying == false)
+			{
+				Set_Animation(m_iBreakFall_Ground);
+			}
+
+		}
+		
 
 		if (m_bJumpLock)
 		{
@@ -1966,6 +2042,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 		}
 
+		
 	}
 
 

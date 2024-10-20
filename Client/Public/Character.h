@@ -327,6 +327,10 @@ public:
 	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
 	_float Get_DamageScale();
 
+
+
+	//1020 추가
+	void Set_GroundSmash(_bool bSmash);
 	
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -394,9 +398,13 @@ protected:
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
 	_ushort m_iHit_Air_FallAnimationIndex = { 26 };	
 
+
+
 	//기상
 	_ushort m_iBreakFall_Ground = { 41 };   //100
 	_ushort m_iBreakFall_Air = { 42 };   //101
+	_ushort m_iBound_Ground = { 25 };
+
 
 
 	_ushort m_iAttack_Air1 = { 52 };		
@@ -450,7 +458,19 @@ protected:
 	_ushort		m_iAttackStepCount;  //콤보수 아님.
 
 	_bool		m_bSparking = false;
-	_bool m_bNextAnimationGravityEvent = false;
+	_bool		m_bNextAnimationGravityEvent = false;
+
+
+
+
+	//1020추가분량
+
+	//스턴관련
+	_bool m_bHitGroundSmashed = { false };
+
+
+
+
 
 private:
 	HRESULT Ready_Components();

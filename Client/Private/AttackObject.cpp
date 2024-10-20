@@ -43,6 +43,7 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 	m_fAnimationLockTime = pDesc->fAnimationLockTime;
 
 	//m_bOwnerGravityTimeReset = pDesc->bOwnerGravityTimeReset;
+	m_bGroundSmash = pDesc->bGroundSmash;
 
 	m_pOwner = pDesc->pOwner;
 
@@ -112,6 +113,7 @@ void CAttacKObject::Late_Update(_float fTimeDelta)
 				{
 					//pCharacter->Chase_Ready(0);
 					pCharacter->Set_Hit(m_ihitCharacter_Motion, m_fhitCharacter_StunTime,m_iDamage, m_fAnimationLockTime,m_fhitCharacter_Impus);
+					pCharacter->Set_GroundSmash(m_bGroundSmash);
 					bisCollsing = true;
 
 					m_pOwner->Set_AnimationStop(m_fAnimationLockTime);

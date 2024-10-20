@@ -32,6 +32,7 @@ public:
 		_float	fAnimationLockTime = { 0.1f };
 
 		//_bool   bOwnerGravityTimeReset = { false };
+		_bool		bGroundSmash = { true};
 		class CCharacter* pOwner = { nullptr };
 	};
 private:
@@ -65,6 +66,10 @@ private:
 	_float					m_fAnimationLockTime = { 0.1f };
 
 	//_bool					m_bOwnerGravityTimeReset = false;
+	
+	//1020Ãß°¡
+	_bool					m_bGroundSmash = { false };
+
 
 	class CCharacter*				m_pOwner = { nullptr };
 
