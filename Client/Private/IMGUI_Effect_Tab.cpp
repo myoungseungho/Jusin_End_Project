@@ -152,7 +152,6 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
             effectData.passIndex = pEffect->m_iPassIndex;
             effectData.uniqueIndex = pEffect->m_iUnique_Index;
             effectData.isLoop = pEffect->m_bIsLoop;
-            effectData.isNotPlaying = pEffect->m_bIsNotPlaying;
             effectData.position = pEffect->Get_Effect_Position();
             effectData.scale = pEffect->Get_Effect_Scaled();
             effectData.rotation = pEffect->Get_Effect_Rotation();
@@ -171,6 +170,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
                 keyFrameData.rotation = keyFramePair.second.vRotation;
                 keyFrameData.curTime = keyFramePair.second.fCurTime;
                 keyFrameData.duration = keyFramePair.second.fDuration;
+                keyFrameData.bIsNotPlaying = keyFramePair.second.bIsNotPlaying;
 
                 effectData.keyframes.push_back(keyFrameData);
             }
