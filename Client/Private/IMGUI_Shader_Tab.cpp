@@ -169,7 +169,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         wstring prototypeKeyWithAlpha = prototypeKey + TEXT("_Alpha");
         CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
         tDesc.prototypeKey = prototypeKey.c_str();
-
+        tDesc.iShaderTab_ID = m_iNumberId;
         //Prototype_Component_Texture_Effect_cmn_aura00
         //if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, prototypeKeyWithCount.c_str(),
         //    CTexture::Create(m_pDevice, m_pContext, converter.from_bytes(fullPath).c_str(), 1))))

@@ -42,9 +42,9 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 
-	class CIMGUI_Shader_Tab* Access_Shader_Tab(_int iShader_Tab_Index = -1) { 
-		if(iShader_Tab_Index == -1)
-			return m_vecShader_Tabs[to_string(m_iShaderCount)];
+	class CIMGUI_Shader_Tab* Access_Shader_Tab(_int iShader_Tab_Index = -1) {
+		if (iShader_Tab_Index == -1)
+			return m_vecShader_Tabs[to_string(m_iCurShaderTabId)];
 		else
 			return m_vecShader_Tabs[to_string(iShader_Tab_Index)];
 	}
