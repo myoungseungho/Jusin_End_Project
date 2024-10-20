@@ -50,6 +50,45 @@ void CUI_HpPanel::Priority_Update(_float fTimeDelta)
 void CUI_HpPanel::Update(_float fTimeDelta)
 {
 
+	__super::Update(fTimeDelta);
+	/*if (m_pUI_Manager->m_iTeam == CUIObject::LEFT)
+	{
+		m_bCharaChange = TRUE;
+	}
+
+	if (m_bCharaChange && m_eLRPos == CUIObject::LEFT)
+	{
+		_vector vTargetPos = { 330.f, 87.f};
+
+		if (m_bInitInfo == FALSE)
+		{
+			__super::Set_UI_Setting(m_fSizeX, 116.f, m_fPosX - 30 , 87.f+ 50, 0.8f);
+			m_vOffsetPos.x = m_fPosX - 30;
+			m_vOffsetPos.y = 87.f + 50;
+
+			m_bInitInfo = TRUE;
+		}
+
+		m_vOffsetPos.x += fTimeDelta * 60.f;
+		m_vOffsetPos.y -= fTimeDelta * 100.f;
+
+		if (m_vOffsetPos.x >= 330.f)
+		{
+			m_vOffsetPos.x = 330.f;
+		}
+
+		if (m_vOffsetPos.y <= 87.f)
+			m_vOffsetPos.y = 87.f;
+
+		if (m_vOffsetPos.x >= 330.f && m_vOffsetPos.y <= 87.f)
+		{
+			m_bInitInfo = FALSE; 
+			m_bCharaChange = FALSE;
+			m_pUI_Manager->m_iTeam = CUIObject::POS_END;
+		}
+
+		__super::Set_UI_Setting(m_fSizeX, 116.f, m_vOffsetPos.x , m_vOffsetPos.y, 0.8f);
+	}*/
 }
 
 void CUI_HpPanel::Late_Update(_float fTimeDelta)

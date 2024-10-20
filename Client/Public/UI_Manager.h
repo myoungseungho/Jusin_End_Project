@@ -80,6 +80,10 @@ public:
 
 	//RedBlueTimer
 	_float m_fColorValue = { 0.f };
+
+	//CUIObject::UI_LRPOS m_eTeam = { };
+	 _uint m_iTeam = { 2 };
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

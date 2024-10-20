@@ -23,6 +23,12 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+private:
+	_bool m_bCharaChange = { FALSE };
+	_bool m_bInitInfo = { FALSE };
+
+	_float2 m_vOffsetPos = {};
+
 public:
 	static CUI_HpPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
