@@ -38,8 +38,10 @@ HRESULT CUI_KOFont::Initialize(void* pArg)
 	Set_AnimPosition(400, 0.5f);
 	Set_AnimPosition(300, 0.55f);
 	Set_AnimPosition(350, 0.65f);
-	Set_AnimPosition(400, 0.75f);
+	Set_AnimPosition(700, 0.75f);
 	Set_AnimPosition(800, 1.f);
+
+	m_fAlphaValue = 1.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f , 0.f);
 
@@ -65,8 +67,8 @@ void CUI_KOFont::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	//if (m_QueueAnim.empty())
-	//	m_bDead = TRUE;
+	if (m_QueueAnim.empty())
+		m_bDead = TRUE;
 
 	Action_Anim(1.f, fTimeDelta);
 }

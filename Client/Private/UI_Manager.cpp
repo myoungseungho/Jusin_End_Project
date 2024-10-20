@@ -38,19 +38,23 @@ void CUI_Manager::UsingComboCount(_uint iComboCnt)
 
 void CUI_Manager::UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID)
 {
+	m_iTeam = CUIObject::POS_END;
 	if (eCurrSlotID == CCharacter::LPLAYER1 || eCurrSlotID == CCharacter::LPLAYER2)
 	{
 		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::LPLAYER1];
 		m_pPawnArray[CCharacter::LPLAYER1] = m_pPawnArray[CCharacter::LPLAYER2];
 		m_pPawnArray[CCharacter::LPLAYER2] = pSwapPanw;
+
+		m_iTeam = CUIObject::LEFT;
 	}
 	else if (eCurrSlotID == CCharacter::RPLAYER1 || eCurrSlotID == CCharacter::RPLAYER2)
 	{
 		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::RPLAYER1];
 		m_pPawnArray[CCharacter::RPLAYER1] = m_pPawnArray[CCharacter::RPLAYER2];
 		m_pPawnArray[CCharacter::RPLAYER2] = pSwapPanw;
-	}
 
+		m_iTeam = CUIObject::RIGHT;
+	}
 }
 
 void CUI_Manager::UsingCreateStartUI()
@@ -71,7 +75,7 @@ void CUI_Manager::UsingCreateStartUI()
 void CUI_Manager::UsingCreateEndUI()
 { 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFont"), TEXT("Layer_UI_KOFont"));
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFontEffect"), TEXT("Layer_UI_KOFont"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFontEffect"), TEXT("Layer_UI_KOFont"));
 	
 }
 

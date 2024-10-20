@@ -16,13 +16,32 @@ private:
 
 public:
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex);
+<<<<<<< HEAD
 	class list<class CGameObject*> Get_Layer(_uint iLevelIndex, const wstring& strLayerTag);
+=======
+	//void Set_GameObjectData(_uint iLevelIndex, const _wstring& strLayerTag, _uint iData);
+	//_uint Get_GameObjectData(_uint iLevelIndex, const _wstring& strLayerTag);
+>>>>>>> origin/ê¹€?œì™„
 
 public:
 	HRESULT Initialize(_uint iNumLevels);
-	HRESULT Add_Prototype(const wstring& strPrototypeTag, class CGameObject* pPrototype);
-	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg = nullptr);
-	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+	HRESULT Add_Prototype(const _wstring& strPrototypeTag, class CGameObject* pPrototype);
+	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const _wstring& strPrototypeTag, const _wstring& strLayerTag, void* pArg = nullptr);
+	class CGameObject* Clone_GameObject(const _wstring& strPrototypeTag, void* pArg = nullptr);
+
+	//ÆÄÀÏ ÀúÀå, ·Îµå °ü·Ã ÇÔ¼ö
+	HRESULT Get_Prototype_Names(vector<string>* pVector);
+	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < string, list<CGameObject*>>>* pVector);
+	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < _wstring, list<CGameObject*>>>* pVector);
+
+
+
+
+
+
+
+
+
 
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
@@ -42,7 +61,7 @@ private:
 	_uint										m_iNumLevels = { 0 };
 	map<const wstring, class CLayer*>*			m_pLayers = { nullptr };
 
-private:
+public:
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
 	class CLayer* Find_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 

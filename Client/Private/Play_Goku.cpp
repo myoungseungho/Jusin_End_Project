@@ -271,15 +271,11 @@ void CPlay_Goku::Update(_float fTimeDelta)
 {
 	
 	Action_Hit(DIK_0, 0.25f, fTimeDelta);
-	Action_AttBuf(DIK_9, m_ePlayerSlot, fTimeDelta);
+	Action_AttBuf(DIK_F4, m_ePlayerSlot, fTimeDelta);
 
 	if (m_pGameInstance->Key_Down(DIK_F3))
 	{
  		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
-	}
-	if (m_pUI_Manager->m_isInput)
-	{
-		int a = 10;
 	}
 
 	InputedCommandUpdate(fTimeDelta);

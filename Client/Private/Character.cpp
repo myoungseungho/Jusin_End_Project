@@ -843,7 +843,7 @@ void CCharacter::Action_AttBuf(_ubyte byKeyID, PLAYER_SLOT eSlot, _float fTimeDe
 	if (m_iNumAttBuf <= 1 && m_pGameInstance->Get_DIKeyState(byKeyID))
 	{
 		m_bAttBuf = TRUE;
-	//	m_pUI_Manager->UsingAttckBuff(5.f, eSlot);
+		m_pUI_Manager->UsingAttckBuff(5.f, eSlot);
 		m_iNumAttBuf--;
 	}
 	if (m_bAttBuf == TRUE)

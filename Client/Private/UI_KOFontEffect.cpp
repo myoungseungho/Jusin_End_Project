@@ -35,13 +35,14 @@ HRESULT CUI_KOFontEffect::Initialize(void* pArg)
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 	
 	
-	Set_AnimPosition(300, 0.5f);
-	Set_AnimPosition(400, 0.75f);
-	//Set_AnimPosition(900, 1.f);
-
+	Set_AnimPosition(400, 0.5f);
+	Set_AnimPosition(300, 0.55f);
+	Set_AnimPosition(350, 0.65f);
+	Set_AnimPosition(700, 0.7f);
+	Set_AnimPosition(1000, 1.f);
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
 
-	m_fAlphaTimer = 0.5f;
+	m_fAlphaTimer = 1.f;
 
 	return S_OK;
 }
@@ -50,7 +51,7 @@ void CUI_KOFontEffect::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_fAlphaTimer -= fTimeDelta * 0.5f;
+	m_fAlphaTimer -= fTimeDelta;// *0.5f;
 	if (m_fAlphaTimer <= 0.f)
 	{
 		m_fAlphaTimer = 0.f;
