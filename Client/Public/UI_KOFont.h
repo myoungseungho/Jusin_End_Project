@@ -26,6 +26,7 @@ private:
 
 private:
 	_float m_fScaleAnim = { 0 };
+	_float m_fAlphaValue = { 1.f };
 
 public:
 	static CUI_KOFont* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

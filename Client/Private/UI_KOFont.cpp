@@ -23,8 +23,8 @@ HRESULT CUI_KOFont::Initialize_Prototype()
 
 HRESULT CUI_KOFont::Initialize(void* pArg)
 {
-	m_fSizeX =500.f;
-	m_fSizeY = 500.f;
+	m_fSizeX = 600.f;
+	m_fSizeY = 600.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -35,8 +35,11 @@ HRESULT CUI_KOFont::Initialize(void* pArg)
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 	
 
-	Set_AnimPosition(300, 0.5f);
+	Set_AnimPosition(400, 0.5f);
+	Set_AnimPosition(300, 0.55f);
+	Set_AnimPosition(350, 0.65f);
 	Set_AnimPosition(400, 0.75f);
+	Set_AnimPosition(800, 1.f);
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f , 0.f);
 
@@ -49,26 +52,23 @@ void CUI_KOFont::Priority_Update(_float fTimeDelta)
 
 	m_pUI_Manager->m_fTotalDuration += fTimeDelta;
 
+	if(m_QueueAnim.size() <= 1)
+		m_fAlphaValue -= fTimeDelta * 4.f;
+
+	if (m_fAlphaValue <= 0.f)
+		m_fAlphaValue = 0.f;
+
+
 }
 
 void CUI_KOFont::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if (m_QueueAnim.empty())
-	{
-		m_fScaleAnim += fTimeDelta * 1000.f;
-
-		m_pTransformCom->Set_Scaled(m_fSizeX + m_fScaleAnim * 2.f, m_fSizeY - m_fScaleAnim, 1.f);
-
-		if (m_fSizeY - m_fScaleAnim <= 0)
-			m_bDead = TRUE;
-	}
-
-	
+	//if (m_QueueAnim.empty())
+	//	m_bDead = TRUE;
 
 	Action_Anim(1.f, fTimeDelta);
-
 }
 
 void CUI_KOFont::Late_Update(_float fTimeDelta)
@@ -83,7 +83,7 @@ HRESULT CUI_KOFont::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(15)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -113,9 +113,11 @@ HRESULT CUI_KOFont::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
 
-
 	//1번이 BG(노란색) 2번이 Main(검정색)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlphaValue, sizeof(_float))))
 		return E_FAIL;
 
 	return S_OK;
