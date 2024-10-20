@@ -137,7 +137,6 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	else
 	{
 		m_bIsNotPlaying = false;
-		return S_OK;
 	}
 
 	Set_Effect_Scaled(ResultKeyFrame.vScale);
