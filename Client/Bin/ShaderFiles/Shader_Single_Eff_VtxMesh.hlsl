@@ -96,7 +96,51 @@ PS_OUT_PICK PS_MAIN_PICK(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_DOUBLE(PS_IN In)
+{
+    PS_OUT Out;
 
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    float3 vBrown = { 166.f / 255.f, 131.f / 255.f, 115.f / 255.f };
+    
+    vMtrlDiffuse.rgb *= vBrown;
+
+// 비율에 따라 색상 조정
+    Out.vDiffuse = vector(0.f, 0.f, 0.f,1.f);
+
+    Out.vAlpha = vMtrlAlpha.r;
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_DOUBLE_D(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    float3 vBrown = { 166.f / 255.f, 131.f / 255.f, 115.f / 255.f };
+    
+    vMtrlDiffuse.rgb *= vBrown;
+
+// 비율에 따라 색상 조정
+    Out.vDiffuse = vector(
+    min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
+    min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
+    min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
+    //vMtrlDiffuse.a
+    0.5f
+    );
+
+    Out.vAlpha = vMtrlAlpha.r;
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
 
 technique11 DefaultTechnique
 {
@@ -145,7 +189,35 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN();
     }
 
+    pass Double
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
 
+        VertexShader = compile vs_5_0 VS_MAIN(); 
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DOUBLE();
+    }
+
+    pass Double_D
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DOUBLE_D();
+    }
 }
 
 

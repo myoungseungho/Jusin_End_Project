@@ -21,12 +21,10 @@ HRESULT CEffect_Single::Initialize_Prototype()
 
 HRESULT CEffect_Single::Initialize(void* pArg)
 {
-	CTransform::TRANSFORM_DESC tDesc{};
-	tDesc.fRotationPerSec = XMConvertToRadians(90.f);
-	if (FAILED(__super::Initialize(&tDesc)))
-		return E_FAIL;
-
 	m_eEffect_Type = EFFECT_SINGLE;
+
+	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
 
 	if (pArg != nullptr)
 	{
@@ -44,6 +42,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 		m_ModelName = pEffectDesc->ModelName;
 		m_MaskTextureName = pEffectDesc->MaskTextureName;
 		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
+
 		m_iRenderIndex = pEffectDesc->iRenderIndex;
 		m_iPassIndex = pEffectDesc->iPassIndex;
 		m_iNumWidthImage = pEffectDesc->iNumWidthImage;
@@ -56,9 +55,13 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
+			return S_OK;
 	}
-	
-	return S_OK;
+
+	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
+		return S_OK;
+
+
 }
 
 void CEffect_Single::Priority_Update(_float fTimeDelta)
@@ -74,18 +77,30 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 {
 	if (m_pRenderInstance->Get_isLayerView() == true)
 	{
-		if (m_iRenderIndex == 2)
+		if (!m_bIsNotPlaying)
 		{
-			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			if (m_iRenderIndex == 2) // 레이어
+			{
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			}
 		}
+
 	}
 	else
 	{
-		if (m_iRenderIndex == 1)
+		if (!m_bIsNotPlaying)
 		{
-			m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			if (m_iRenderIndex == 1) //테스트
+			{
+				//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+			}
 		}
 	}
 }
@@ -122,7 +137,9 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 
 
 	if (m_iPassIndex == 1)
-		m_iPassIndex = 0;
+		m_iPassIndex = 3; //컬논 + 디폴트
+	else if(m_iPassIndex == 3)
+		m_iPassIndex = 4; // 알파브랜드 + 디폴트
 	else
 		m_iPassIndex = 1;
 

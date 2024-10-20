@@ -9,10 +9,12 @@ class CEffect_Layer : public CBase
 {
 private:
 	CEffect_Layer();
+	CEffect_Layer(const CEffect_Layer& Prototype);
 	virtual ~CEffect_Layer() = default;
 
 public:
-	HRESULT Initialize();
+	HRESULT Initialize_Prototype();
+	HRESULT Initialize(void* pArg);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -38,6 +40,7 @@ private:
 
 public:
 	static CEffect_Layer* Create();
+	CEffect_Layer* Clone(void* pArg = nullptr);
 	virtual void Free() override;
 };
 

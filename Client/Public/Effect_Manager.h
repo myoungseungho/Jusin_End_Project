@@ -25,6 +25,8 @@ public:
 	void Render(_float fTimeDelta);
 
 public:
+	HRESULT Copy_Layer(const wstring& strEffectLayerTag);
+
 	HRESULT Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect);
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
 	class CEffect* Find_In_Layer_Effect(wstring& layerName, wstring& effectName);
@@ -80,6 +82,8 @@ public:
 
 	map<const wstring, class CEffect_Layer*>		m_FinalEffects;
 	vector<class CEffect*>					m_TestEffect;
+
+	deque<CEffect_Layer*>					m_UsingEffect;
 
 public:
 	_int									m_TestEffect_Count = { 0 };

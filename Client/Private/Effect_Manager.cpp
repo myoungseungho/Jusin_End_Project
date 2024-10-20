@@ -37,6 +37,8 @@ void CEffect_Manager::Priority_Update(_float fTimeDelta)
 	for (auto& Pair : m_TestEffect)
 		Pair->Priority_Update(fTimeDelta);
 
+	for (auto& Pair : m_UsingEffect)
+		Pair->Priority_Update(fTimeDelta);
 
 }
 
@@ -46,6 +48,9 @@ void CEffect_Manager::Update(_float fTimeDelta)
 		Pair.second->Update(fTimeDelta);
 
 	for (auto& Pair : m_TestEffect)
+		Pair->Update(fTimeDelta);
+
+	for (auto& Pair : m_UsingEffect)
 		Pair->Update(fTimeDelta);
 }
 
@@ -59,6 +64,9 @@ void CEffect_Manager::Late_Update(_float fTimeDelta)
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Late_Update(fTimeDelta);
+
+	for (auto& Pair : m_UsingEffect)
+		Pair->Late_Update(fTimeDelta);
 }
 
 void CEffect_Manager::Render(_float fTimeDelta)
@@ -66,9 +74,23 @@ void CEffect_Manager::Render(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
 		
-
 	for (auto& Pair : m_TestEffect)
 		Pair->Render(fTimeDelta);
+
+	for (auto& Pair : m_UsingEffect)
+		Pair->Render(fTimeDelta);
+}
+
+HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
+
+	if (pLayer == nullptr)
+		return E_FAIL;
+
+	m_UsingEffect.push_back(pLayer->Clone());
+
+	return S_OK;
 }
 
 HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)
@@ -332,7 +354,6 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 				pLayer->Find_Effect(EffectDesc.EffectName)->Add_KeyFrame(0, FirstKeyFrame);
 
-
 				_int iCount = 0;
 				for (auto& iter : m_TestEffect)
 				{
@@ -499,7 +520,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 	EffectDesc.ModelName = *ModelName;
 	EffectDesc.EffectName = *EffectName;
 	EffectDesc.MaskTextureName = TEXT("Texture_Effect_Default_Mask");
-	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_Default_Diffuse");
+	EffectDesc.DiffuseTextureName = TEXT("Texture_Effect_cmn_test");
 	EffectDesc.iUnique_Index = m_TestEffect_Count++;
 	EffectDesc.vPosition = { 0.f, 0.f, 0.f };
 	EffectDesc.vScaled = { 1.f, 1.f, 1.f };

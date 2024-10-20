@@ -21,7 +21,10 @@ HRESULT CEffect::Initialize_Prototype()
 
 HRESULT CEffect::Initialize(void* pArg)
 {
-	if (FAILED(__super::Initialize(pArg)))
+	CTransform::TRANSFORM_DESC tDesc{};
+	tDesc.fRotationPerSec = XMConvertToRadians(90.f);
+
+	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
 	m_pAnimation = CEffect_Animation::Create();
@@ -125,6 +128,16 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 
 
 	EFFECT_KEYFRAME ResultKeyFrame = m_pAnimation->Play_Animation(CurrentFrame, m_bIsLoop);
+
+	if (ResultKeyFrame.bIsNotPlaying == true)
+	{
+		m_bIsNotPlaying = true;
+		return S_OK;
+	}
+	else
+	{
+		m_bIsNotPlaying = false;
+	}
 
 	Set_Effect_Scaled(ResultKeyFrame.vScale);
 	Set_Effect_Position(ResultKeyFrame.vPosition);
