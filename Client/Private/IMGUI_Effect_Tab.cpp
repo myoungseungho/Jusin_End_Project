@@ -58,9 +58,16 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
     }
 
     ImGui::SameLine();
+
+    ImGui::SetNextItemWidth(200.0f); // 200 픽셀로 너비 설정
+    static char EffectNameBuffer[128] = "";
+    ImGui::InputText("File Name", EffectNameBuffer, IM_ARRAYSIZE(EffectNameBuffer));
+
+    ImGui::SameLine();
+
     if (ImGui::Button("Save"))
     {
-        Save_Effects_File();
+        Save_Effects_File(UTF8ToWString(EffectNameBuffer));
     }
 
     ImGui::Separator();
@@ -107,9 +114,15 @@ void CIMGUI_Effect_Tab::Save_To_Effect_Layer(_uint iCurTestEffectIndex, const ws
     m_pEffect_Manager->Add_Effect_To_Layer(iCurTestEffectIndex, strEffectLayerTag);
 }
 
-HRESULT CIMGUI_Effect_Tab::Save_Effects_File()
+HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
 {
-    wstring filename = L"../Bin/Effects/Effects.txt"; // 파일 경로 설정
+    wstring FolderName = L"../Bin/Effects/"; // 파일 경로 설정
+    wstring FileName = strEffectLayerTag;
+    wstring TXT = L".txt";
+
+    wstring filename = L"";
+
+    filename = FolderName + FileName + TXT;
 
     // m_vecEffectData에 저장할 데이터를 수집합니다.
     m_vecEffectData.clear(); // 기존 데이터 초기화
