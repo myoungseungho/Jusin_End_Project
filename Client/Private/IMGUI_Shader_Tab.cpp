@@ -573,9 +573,9 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     });
                 if (it != m_NodeTextures.end())
                 {
-                    if (iID > 1500)
+                    if (linkPos->first > 1500 && linkPos->first < 3000)
                         (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
-                    else if (iID > 3000)
+                    else if (linkPos->first > 3000)
                         (*it)->Remove_InputFunction(FUNCTION_SPRITE);
                 }
             }

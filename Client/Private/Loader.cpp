@@ -992,11 +992,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/TextureDDS/cmn_smoke06.dds"), 1))))
 		return E_FAIL;
 
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_smoke06_test"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_smoke06_test.png"), 1))))
-		return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_Default_Mask"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/Default_Mask.png"), 1))))
 		return E_FAIL;
