@@ -47,6 +47,19 @@ HRESULT Engine::CInput_Device::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 	return S_OK;
 }
 
+_bool CInput_Device::Key_Pressing(_uint _iKey) {
+	return (m_byKeyState[_iKey] & 0x80) != 0;
+}
+
+_bool CInput_Device::Key_Down(_uint _iKey) {
+	return (!(m_byPrevKeyState[_iKey] & 0x80) && (m_byKeyState[_iKey] & 0x80));
+}
+
+_bool CInput_Device::Key_Up(_uint _iKey) {
+	return ((m_byPrevKeyState[_iKey] & 0x80) && !(m_byKeyState[_iKey] & 0x80));
+}
+
+
 void Engine::CInput_Device::Update(void)
 {
 	/* 키보드와 마우스의 상태를 얻어와서 저장해준다. */

@@ -50,6 +50,10 @@ public:
 		return *(((_long*)&m_tMouseState) + eMouseState);	
 	}
 	
+	_bool Key_Pressing(_uint _iKey);
+	_bool Key_Down(_uint _iKey);
+	_bool Key_Up(_uint _iKey);
+
 public:
 	HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 	void	Update(void);
@@ -63,10 +67,15 @@ private:
 
 
 
+
 private:	
 	_byte					m_byKeyState[256] = {};		// 키보드에 있는 모든 키값을 저장하기 위한 변수
 	DIMOUSESTATE			m_tMouseState = {};
 
+	BYTE m_byPrevKeyState[256];   // Previous key state변수
+	_bool m_bKeyState[256] = { false }; // 이전 키 상태를 저장하기 위한 변수
+	_bool m_bMouseState[8] = { false }; // 이전 마우스 상태를 저장하기 위한 변수
+	_bool m_bPrevMouseState[8] = { false }; // 이전 프레임의 마우스 상태를 저장하기 위한 변수
 public:
 	static CInput_Device* Create(HINSTANCE hInst, HWND hWnd);
 	virtual void	Free(void);

@@ -389,6 +389,24 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
 
+_bool CGameInstance::Key_Down(_int _iKey)
+{
+
+	//return m_pKey_Manager->Key_Down(_iKey);
+
+	return m_pInput_Device->Key_Down(_iKey);
+}
+
+_bool CGameInstance::Key_Pressing(_uint _iKey)
+{
+	return m_pInput_Device->Key_Pressing(_iKey);
+}
+
+_bool CGameInstance::Key_Up(_uint _iKey)
+{
+	return m_pInput_Device->Key_Up(_iKey);
+}
+
 
 
 void CGameInstance::Release_Engine()

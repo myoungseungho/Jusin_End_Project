@@ -8,6 +8,7 @@
 #include "Imgui_Manager.h"
 //#include "LandObject.h"
 #include "Monster.h"
+#include "Character.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext } 
@@ -55,6 +56,51 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
 		return E_FAIL;
 	
+	//몬스터 생성
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
+	//	return E_FAIL;
+
+
+	_bool bTest = false;
+	if (bTest)
+	{
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
+			return E_FAIL;
+	}
+	else
+	{
+
+
+		//if (Ready_Character())
+		//	return E_FAIL;
+
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
+		//	return E_FAIL;
+
+
+		//1P
+		CCharacter::Character_DESC CharacterDesc{};
+		CharacterDesc.iTeam = 1;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
+
+		CharacterDesc.iTeam = 2;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
+
+
+
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Target"))))
+		//	return E_FAIL;
+
+
+
+
+
+	}
+
 	// 해당 레벨에 맞는 파일 경로를 설정
 	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
 

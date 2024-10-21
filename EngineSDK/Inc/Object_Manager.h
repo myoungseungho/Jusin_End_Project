@@ -30,7 +30,8 @@ public:
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < string, list<CGameObject*>>>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < _wstring, list<CGameObject*>>>* pVector);
 
-
+	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex);
+	_uint GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag);
 
 
 
