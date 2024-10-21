@@ -156,7 +156,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
+    <ClInclude Include="..\Public\AnimationNameMap.h" />
+    <ClInclude Include="..\Public\AttackObject.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
+    <ClInclude Include="..\Public\Character.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\Effect.h" />
     <ClInclude Include="..\public\Effect_Animation.h" />
@@ -167,6 +171,8 @@
     <ClInclude Include="..\public\Effect_Rect.h" />
     <ClInclude Include="..\Public\Effect_Single.h" />
     <ClInclude Include="..\Public\FallingStar.h" />
+    <ClInclude Include="..\Public\FrameEvent_Manager.h" />
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
@@ -185,11 +191,16 @@
     <ClInclude Include="..\Public\imstb_rectpack.h" />
     <ClInclude Include="..\Public\imstb_textedit.h" />
     <ClInclude Include="..\Public\imstb_truetype.h" />
+    <ClInclude Include="..\Public\Input.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
+    <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\Public\Play_21.h" />
+    <ClInclude Include="..\Public\Play_Goku.h" />
+    <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
     <ClInclude Include="..\Public\Shader_Material.h" />
     <ClInclude Include="..\public\Shader_Tab_Defines.h" />
@@ -212,7 +223,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp" />
+    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />
+    <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\private\Effect_Animation.cpp" />
     <ClCompile Include="..\Private\Effect_Layer.cpp" />
@@ -222,6 +236,8 @@
     <ClCompile Include="..\private\Effect_Rect.cpp" />
     <ClCompile Include="..\Private\Effect_Single.cpp" />
     <ClCompile Include="..\Private\FallingStar.cpp" />
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_demo.cpp" />
@@ -242,7 +258,11 @@
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
+    <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\Monster.cpp" />
+    <ClCompile Include="..\Private\Play_21.cpp" />
+    <ClCompile Include="..\Private\Play_Goku.cpp" />
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp" />
     <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp" />
     <ClCompile Include="..\Private\Shader_Material.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />

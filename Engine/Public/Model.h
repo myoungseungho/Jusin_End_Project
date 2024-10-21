@@ -27,12 +27,22 @@ public:
 	virtual HRESULT Initialize_Prototype(const _char* strModelFilePath, _fmatrix PreTransformMatrix);
 	virtual HRESULT Initialize(void* pArg) override;
 	virtual HRESULT Render(_uint iMeshIndex);
-	string ExtractFileName(const std::string& filePath);
+
 public:
-	void Play_Animation(_float fTimeDelta);
+	_bool Play_Animation(_float fTimeDelta);
+	_bool Play_Animation_Lick(_float fTimeDelta);
+
 	void SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration = 0.0f);
 	_float GetDurationByIndex(_uint _animationIndex);
-	_float Get_CurrentAnimationTime() const { return m_fCurrentAnimPosition; }
+	_float Get_CurrentAnimationPosition() const { return m_fCurrentAnimPosition; }
+	class CAnimation* Get_pCurrentAnimation() { return m_Animations[m_iCurrentAnimationIndex]; };
+	_float Get_CurrentAnimationTickPerSecond();
+
+
+	void Update_FrameIndex();
+	void CurrentAnimationPositionJump(_float fPosition);
+
+	void Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime);
 
 public:
 	HRESULT Bind_MaterialSRV(class CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex);
@@ -53,7 +63,7 @@ private: /* For.Materials */
 private: /* For.Bones */
 	vector<class CBone*>		m_Bones;
 
-private: /* For.Animation */
+public: /* For.Animation */
 	_float						m_fCurrentAnimPosition = {};
 	_uint						m_iCurrentAnimationIndex = {};
 	_bool						m_isLoopAnim = { false };
@@ -66,10 +76,20 @@ private: /* For.Animation */
 	_uint						m_iNextAnimationIndex = {};
 	_float						m_fBlendDuration = {};
 	_float						m_fNextAnimPosition = {};
+
+	_float						m_fPriviousAnimPosition = {};
+private:
+	_float						m_fAccAnimationUpdateTime = {};
+	_float						m_fMaxAnimationUpdateTime = { 0.1f };
+
 public:
 	// 바이너리 로드
 	HRESULT InitializeFromBinary(const string& binFilePath, _fmatrix PreTransformMatrix);
 	void LoadBoneFromBinary(std::ifstream& inFile, BoneData& bone);
+
+	HRESULT SaveToBinary(const std::string& binFilePath) const;
+	void SaveBoneToBinary(std::ofstream& outFile, const BoneData& bone) const;
+
 
 public:
 	static CModel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _char* pModelFilePath, _fmatrix PreTransformMatrix);

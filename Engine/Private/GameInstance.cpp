@@ -285,6 +285,22 @@ CComponent* CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring& st
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
 }
 
+
+CGameObject* CGameInstance::Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Get_Object(iLevelIndex, strLayerTag, iindex);
+}
+
+_uint CGameInstance::Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return m_pObject_Manager->GetLayerSize(iLevelIndex, strLayerTag);
+}
 vector<const _wstring*>* CGameInstance::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
 {
 	return m_pComponent_Manager->Find_Prototype_Include_Key(iLevelIndex, strIncludeTag);
@@ -372,6 +388,8 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
+
+
 
 void CGameInstance::Release_Engine()
 {

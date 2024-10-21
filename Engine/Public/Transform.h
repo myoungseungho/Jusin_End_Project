@@ -111,7 +111,19 @@ public:
 
 		Set_State(CTransform::STATE_POSITION, FinalPosition);
 	}
+	void Add_Move(_float3 fMovement)
+	{
+		_vector vPos = Get_State(CTransform::STATE_POSITION);
+		_vector vNewPosition = { XMVectorGetX(vPos) + fMovement.x, XMVectorGetY(vPos) + fMovement.y, XMVectorGetZ(vPos) + fMovement.z, 1 };
 
+		Set_State(STATE_POSITION, vNewPosition);
+	}
+	void Add_MoveVector(_vector vMovement)
+	{
+		_vector vPos = Get_State(CTransform::STATE_POSITION);
+		_vector vNewPosition = { vPos + vMovement };
+		Set_State(STATE_POSITION, vNewPosition);
+	}
 public:
 	HRESULT Initialize();
 	void SetUp_TransformDesc(const TRANSFORM_DESC* pTransformDesc);

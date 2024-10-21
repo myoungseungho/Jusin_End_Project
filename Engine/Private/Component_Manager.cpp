@@ -56,22 +56,6 @@ HRESULT CComponent_Manager::Clear_Resources(_uint iLevelIndex)
 	return S_OK;
 }
 
-vector<const _wstring*>* CComponent_Manager::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
-{
-	m_pIncludeKeys.clear();
-
-	for (const auto& pair : m_pPrototypes[iLevelIndex]) {
-		if (pair.first.find(strIncludeTag) != wstring::npos) { 
-			m_pIncludeKeys.emplace_back(&pair.first);
-		}
-	}
-
-	if (m_pIncludeKeys.empty())
-		return nullptr;
-
-	return &m_pIncludeKeys;
-}
-
 CComponent * CComponent_Manager::Find_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag)
 {
 	auto	iter = m_pPrototypes[iLevelIndex].find(strPrototypeTag);
@@ -109,9 +93,6 @@ void CComponent_Manager::Free()
 	}
 
 	Safe_Delete_Array(m_pPrototypes);
-
-	m_pIncludeKeys.clear();
-
 }
 
 

@@ -23,7 +23,11 @@ public:
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
-
+	CGameObject* Get_Object(_uint index);
+	_uint GetSize()
+	{
+		return m_GameObjects.size();
+	}
 private:
 	list<class CGameObject*>			m_GameObjects;
 
