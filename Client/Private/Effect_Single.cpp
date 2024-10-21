@@ -79,7 +79,8 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 	{
 		if (!m_bIsNotPlaying)
 		{
-			Add_Render_Object();
+			if (m_iRenderIndex == 2) //레이어
+				Add_Render_Object();
 		}
 
 	}
@@ -88,9 +89,7 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 		if (!m_bIsNotPlaying)
 		{
 			if (m_iRenderIndex == 1) //테스트
-			{
 				Add_Render_Object();
-			}
 		}
 	}
 }
@@ -199,8 +198,7 @@ HRESULT CEffect_Single::Add_Render_Object()
 		break;
 	case 1:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 		break;
 	case 2:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);

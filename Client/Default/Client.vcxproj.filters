@@ -91,6 +91,9 @@
     <Filter Include="02.GameObjects\Map\Space\SpaceStone">
       <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceRock">
+      <UniqueIdentifier>{2dd1dd60-338b-4de4-a074-093b811899f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -304,6 +307,9 @@
     <ClInclude Include="..\Public\SpaceStone.h">
       <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceRock.h">
+      <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -446,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceStone.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceRock.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
