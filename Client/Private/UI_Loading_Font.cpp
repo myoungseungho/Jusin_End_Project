@@ -30,7 +30,7 @@ HRESULT CUI_Loading_Font::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(200, 50, 1150, 600, 0.f);
+	__super::Set_UI_Setting(200, 50, g_iWinSizeX - 100, g_iWinSizeY - 100, 0.f);
 
 	return S_OK;
 }

@@ -132,7 +132,6 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 class CCharacter  : public CGameObject
 {
 public:
-
 	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
 	enum PLAYER_ID { GOGU, ANDROID21, BUU, HIT, PAWN_END };
 
@@ -402,7 +401,6 @@ protected:
 
 protected:
 	_uint					m_iComboCount = { 0 };
-	_int					m_iHp = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
 
@@ -505,7 +503,6 @@ protected:
 
 
 	//스턴 관련
-	_bool m_bStun = { false };
 	_float m_fAccStunTime = {};
 	_float m_fMaxStunTime = {};
 

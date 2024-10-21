@@ -268,7 +268,6 @@
     <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h" />
     <ClInclude Include="..\Public\UI_Timer.h" />
     <ClInclude Include="..\Public\Play_21.h" />
-    <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\UI_TimerPanel.h" />
     <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\Public\Play_Goku.h" />

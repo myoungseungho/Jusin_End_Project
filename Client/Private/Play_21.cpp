@@ -152,7 +152,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CS21_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 
-	m_iHp = 100;
+	//m_iHp = 100;
 	m_eCharacterID = ANDROID21;
 
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });

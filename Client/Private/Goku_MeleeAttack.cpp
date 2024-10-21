@@ -704,12 +704,12 @@ void CGoku_MeleeAttack::BackDash()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_BACK_DASH);
 		m_pPlayer->Set_CurrentAnimationPositionJump(12.f);
-		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() *(-10.f));
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (-10.f));
 
 		m_pPlayer->Set_bAirDashEnable(false);
 		m_pPlayer->Set_ForcedGravityDown();
 		m_pPlayer->Set_ForcveGravityTime(0.135f);
-
+	}
 }
 
 void CGoku_MeleeAttack::ForwardDash()

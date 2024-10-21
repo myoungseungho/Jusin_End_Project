@@ -5,9 +5,6 @@
 #include "GameInstance.h"
 #include "UI_Manager.h"
 
-
-const _float CCharacter::fGroundHeight = 0.f; //0
-
 #include "iostream"
 
 #include "AttackObject.h"
@@ -15,8 +12,6 @@ const _float CCharacter::fGroundHeight = 0.f; //0
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower	 = 3.f; //0
->>>>>>> origin/?œìš±_?œì™„_ë¨¸ì?
-
 
 vector<CInput> CCharacter::Command_236Attack =
 {
@@ -230,7 +225,7 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 	m_tCharacterDesc.bStun = m_bStun;
 	m_tCharacterDesc.bHit = m_bHit;
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
-	m_tCharacterDesc.iHp = m_iHp;
+	m_tCharacterDesc.iHp = m_iHP;
 	m_tCharacterDesc.iComboCount = m_iComboCount;
 	m_tCharacterDesc.iSKillCount = m_iSKillCount;
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
@@ -778,7 +773,7 @@ _uint CCharacter::CheckAllCommands()
 void CCharacter::ShowInputBuffer()
 {
 	inputBuffer;
-<
+
 	m_fGravityTime;
 	m_pModelCom->m_iCurrentAnimationIndex;
 	m_pModelCom->m_fCurrentAnimPosition;
@@ -1929,6 +1924,74 @@ void CCharacter::Guard_Update()
 	}
 
 
+}
+
+void CCharacter::Action_AttBuf(_ubyte byKeyID, PLAYER_SLOT eSlot, _float fTimeDelta)
+{
+	if (m_iNumAttBuf <= 1 && m_pGameInstance->Get_DIKeyState(byKeyID))
+	{
+		m_bAttBuf = TRUE;
+		m_pUI_Manager->UsingAttckBuff(5.f, eSlot);
+		m_iNumAttBuf--;
+	}
+	if (m_bAttBuf == TRUE)
+	{
+		m_fAttBufTimer += fTimeDelta;
+
+		if (m_fAttBufTimer >= 5.f)
+		{
+			m_bAttBuf = FALSE;
+			m_fAttBufTimer = 0.f;
+		}
+	}
+}
+
+void CCharacter::Action_Hit(_ubyte byKeyID, _float fStunDuration, _float fTimeDelta)
+{
+	if (m_pGameInstance->Get_DIKeyState(byKeyID))
+	{
+		m_iComboCount++;
+
+		m_fStunTImer = fStunDuration;
+		m_bStun = TRUE;
+		m_bHit = TRUE;
+
+		m_iSKillPoint += 3;
+	}
+	else
+		m_bHit = FALSE;
+
+	SkillGaugeLimit();
+	StunRecover(fTimeDelta);
+}
+
+void CCharacter::SkillGaugeLimit()
+{
+	if (m_iSKillPoint > 100)
+	{
+		m_iSKillPoint -= 100;
+		m_iSKillCount++;
+	}
+	else if (m_iSKillPoint < 0)
+	{
+		m_iSKillPoint += 100;
+		m_iSKillCount--;
+	}
+}
+
+void CCharacter::StunRecover(_float fTimeDelta)
+{
+	if (m_bStun == TRUE)
+	{
+		m_fStunTImer -= fTimeDelta;
+
+		if (m_fStunTImer <= 0.f)
+		{
+			m_fStunTImer = 0.f;
+			m_bStun = FALSE;
+			m_iComboCount = 0;
+		}
+	}
 }
 
 _uint* CCharacter::Get_pAnimationIndex()

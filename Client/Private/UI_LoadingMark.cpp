@@ -33,7 +33,7 @@ HRESULT CUI_LoadingMark::Initialize(void* pArg)
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	m_iTextureIndex = pDesc->iNumUI;
 
-	__super::Set_UI_Setting(200, 200, 1150, 600, 0.f);
+	__super::Set_UI_Setting(200, 200, g_iWinSizeX - 100, g_iWinSizeY - 100, 0.f);
 
 	return S_OK;
 }

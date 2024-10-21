@@ -203,6 +203,7 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 컴포넌트를 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("컴포넌트를 로딩 중 입니다."));
+
 	///* For.Prototype_Component_Collider_AABB */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 	//	CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_AABB))))
@@ -374,8 +375,7 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-
-
+#pragma region 선택화면 주석
 	//21호 선택화면
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton_Select.bin", PreTransformMatrix))))
@@ -390,6 +390,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Select.bin", PreTransformMatrix))))
 	//	return E_FAIL;
+#pragma endregion
+
+	
 
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSky"),
@@ -2217,6 +2220,8 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	PreTransformMatrix = XMMatrixIdentity();
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
+#pragma region 주석 리소스 파일
+
 	//손오공 오프닝
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Opening.bin", PreTransformMatrix))))
@@ -2224,28 +2229,28 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 
 	//손오공
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
-		return E_FAIL;
+		return E_FAIL;*/
 
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
-		return E_FAIL;
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		//	return E_FAIL;
 
-	//부우
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Bou.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-
-	//히트 선택화면
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit_Select.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+		//부우
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Bou.bin", PreTransformMatrix))))
+		//	return E_FAIL;
 
 
-	//PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));  //이것도 방향 이상함
+		//히트 선택화면
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit_Select.bin", PreTransformMatrix))))
+		//	return E_FAIL;
+
+
+		//PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));  //이것도 방향 이상함
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
 
@@ -2262,9 +2267,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	//	return E_FAIL;
 
 	//21호
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
@@ -2290,20 +2295,16 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
 	//	return E_FAIL;
+#pragma endregion
+	
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
-		CMonster::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Model_Preview"),
 		CModel_Preview::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
-		CCamera_Free::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Goku"),
 		CPlay_Goku::Create(m_pDevice, m_pContext))))
@@ -2312,9 +2313,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_21"),
 		CPlay_21::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
-	//	CCamera_Free::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack"),
 		CAttacKObject::Create(m_pDevice, m_pContext))))
@@ -2322,20 +2320,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-		//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
-		//	CMonster::Create(m_pDevice, m_pContext))))
-		//	return E_FAIL;
-
-		//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Player"),
-		//	CPlayer::Create(m_pDevice, m_pContext))))
-		//	return E_FAIL;
-		//
-		//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SubPlayer"),
-		//	CSubPlayer::Create(m_pDevice, m_pContext))))
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Model_Preview"),
-		CModel_Preview::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceStone"),
@@ -2389,28 +2373,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CEffect_Rect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Player"),
-	//	CPlayer::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Monster"),
-	//	CMonster::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
 		CCamera_Free::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Goku"),
-		CPlay_Goku::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_21"),
-		CPlay_21::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera_Free"),
-	//	CCamera_Free::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect"),
 		CEffect::Create(m_pDevice, m_pContext))))

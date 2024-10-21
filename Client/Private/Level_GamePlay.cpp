@@ -91,11 +91,13 @@ HRESULT CLevel_GamePlay::Initialize()
 		//1P
 		CCharacter::Character_DESC CharacterDesc{};
 		CharacterDesc.iTeam = 1;
+		CharacterDesc.ePlayerSlot = CCharacter::LPLAYER1;
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
+		CharacterDesc.ePlayerSlot = CCharacter::RPLAYER1;
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
@@ -141,13 +143,8 @@ HRESULT CLevel_GamePlay::Initialize()
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStone"), TEXT("Layer_SpaceStone"))))
 			return E_FAIL;
 		
-		// 해당 레벨에 맞는 파일 경로를 설정
-		wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
 
 		if (FAILED(ParseInitialize(filePath))) 
-	
-		if (Ready_Character())
-			return E_FAIL;
 	
 	if (FAILED(Ready_UIObjects()))
 		return E_FAIL;
@@ -370,7 +367,7 @@ HRESULT CLevel_GamePlay::Ready_Character()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;
 
-	SlotDesc.ePlayerSlot = CCharacter::RPLAYER1;
+	SlotDesc.ePlayerSlot = CCharacter::LPLAYER2;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;
