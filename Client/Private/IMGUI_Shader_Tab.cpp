@@ -181,18 +181,21 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
         _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
 
-        if (fTextureSize.x > g_iWinSizeX)
-        {
-            _float fDiff = g_iWinSizeX - fTextureSize.x;
-            fTextureSize.x += fDiff;
-            fTextureSize.y += fDiff;
-        }
+        _float fAspectRatio = fTextureSize.x / fTextureSize.y;
+        _float fWinAspectRatio = (_float)g_iWinSizeX / (_float)g_iWinSizeY;
 
-        if (fTextureSize.y > g_iWinSizeY)
+        if (fTextureSize.x > g_iWinSizeX || fTextureSize.y > g_iWinSizeY)
         {
-            _float fDiff = g_iWinSizeY - fTextureSize.y;
-            fTextureSize.x += fDiff;
-            fTextureSize.y += fDiff;
+            if (fTextureSize.x / g_iWinSizeX > fTextureSize.y / g_iWinSizeY)
+            {
+                fTextureSize.x = g_iWinSizeX;
+                fTextureSize.y = g_iWinSizeX / fAspectRatio;
+            }
+            else
+            {
+                fTextureSize.y = g_iWinSizeY;
+                fTextureSize.x = g_iWinSizeY * fAspectRatio;
+            }
         }
 
         m_pRenderInstance->Add_ClientRenderTarget(prototypeKey.c_str(), prototypeKey.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
