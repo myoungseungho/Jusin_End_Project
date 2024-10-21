@@ -32,45 +32,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	//CPawn::SLOT_DESC SlotDesc = {};
-	//
-	//
-	////플레이어 생성
-	//SlotDesc.ePlayerSlot = CPawn::LPLAYER1;
-	//SlotDesc.fSpeedPerSec = 5.f;
-
-	//if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"), TEXT("Layer_Player"),&SlotDesc)))
-	//	return E_FAIL;
-
-
-	//몬스터 생성
-	//SlotDesc.ePlayerSlot = CPawn::RPLAYER1;
-	//
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"),&SlotDesc)))
-	//	return E_FAIL;
-	//
-	////서브 플레이어 생성
-	//SlotDesc.ePlayerSlot = CPawn::LPLAYER2;
-	//
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SubPlayer"), TEXT("Layer_SubPlayer"), &SlotDesc)))
-	//	return E_FAIL;
-
-	//CPawn* pPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Player")).back());
-	//CPawn* pMonster = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Monster")).back());
-	//CPawn* pSubPlayer = dynamic_cast<CPawn*>(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_SubPlayer")).back());
-	//
-	// m_pUI_Manager->UsingSelectCharacher(pPlayer, CPawn::LPLAYER1);
-	// m_pUI_Manager->UsingSelectCharacher(pSubPlayer, CPawn::LPLAYER2);
-	// m_pUI_Manager->UsingSelectCharacher(pMonster, CPawn::RPLAYER1);
-
-	
-
-
-	//몬스터 생성
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
-	//	return E_FAIL;
-
-
 	_bool bTest = false;
 	if(bTest)
 	{
@@ -153,10 +114,6 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 HRESULT CLevel_GamePlay::Ready_UIObjects()
 {
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Cursor"), TEXT("Layer_UI_Cursor"))))
-	//	return E_FAIL;
-
-	//HP
 	CUIObject::UI_DESC tHpDesc = {};
 
 	for (int i = 0; i < 2; ++i)
@@ -289,13 +246,13 @@ HRESULT CLevel_GamePlay::Ready_Character()
 
 
 	//플레이어 생성
-	SlotDesc.ePlayerSlot = CCharacter::LPLAYER1;
+	SlotDesc.ePlayerSlot = CCharacter::RPLAYER1;
 	SlotDesc.fSpeedPerSec = 5.f;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"),&SlotDesc)))
 		return E_FAIL;
 
-	SlotDesc.ePlayerSlot = CCharacter::LPLAYER2;
+	SlotDesc.ePlayerSlot = CCharacter::RPLAYER2;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;

@@ -57,7 +57,10 @@ protected:
 
 private:
 	void InitPlayer();
-
+protected:
+	void MoveAnimUI(_vector vTargetPos, _float fSpeed,  _float fDepth , _float fTimeDelta);
+	_vector GetOffsetPostion(_vector  vPosition);
+	void Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed , _float fDepth, _float fTimeDelta);
 
 protected:
 	CShader* m_pShaderCom = { nullptr };
@@ -88,6 +91,18 @@ protected:
 	CUI_Manager* m_pUI_Manager = { nullptr };
 
 	_bool m_bAnimStart = { FALSE };
+
+
+protected:
+//Animation
+	_bool m_bStart = { FALSE };
+	_bool m_bAnimEnd = { FALSE };
+	_vector m_vAnimStartPos = {};
+	_vector m_vAnimTargetPos = {};
+	_float m_fAnimDelayTiemr = { 0.f };
+
+	_bool m_bCheck = { FALSE };
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

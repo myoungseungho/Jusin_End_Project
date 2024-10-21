@@ -64,8 +64,6 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 	if (m_pMainPawn != nullptr)
 		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 
-
-
 	if (pDesc != nullptr)
 	{
 		switch (m_eLRPos)
@@ -166,6 +164,82 @@ void CUIObject::InitPlayer()
 		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
 		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
 		break;
+	}
+}
+
+void CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _float fTimeDelta)
+{
+	vTargetPos = XMVectorSetX(vTargetPos, XMVectorGetX(vTargetPos) - g_iWinSizeX * 0.5f);
+	vTargetPos = XMVectorSetY(vTargetPos, -XMVectorGetY(vTargetPos) + g_iWinSizeY * 0.5f);
+
+	_vector vOriginPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_vector vMoveDir = XMVector2Normalize(vTargetPos - vOriginPos);
+
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION) + vMoveDir * fSpeed * fTimeDelta;
+
+	vPos = XMVectorSetW(vPos, 1.f);
+	vPos = XMVectorSetZ(vPos, fDepth);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+
+	_float fDistance = XMVectorGetX(XMVector3Length(vTargetPos - vOriginPos));
+
+	if (fDistance <= 5.f)
+	{
+		vTargetPos = XMVectorSetW(vTargetPos, 1.f);
+		vTargetPos = XMVectorSetZ(vTargetPos, fDepth);
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+		m_bCheck = TRUE;
+	}
+}
+
+_vector CUIObject::GetOffsetPostion(_vector vPosition)
+{
+	//직교의 0,0좌표는 뷰포트 상에 중앙으로 설정되어 있기에 왼쪽위를 따로 설정
+
+	vPosition = XMVectorSetX(vPosition, XMVectorGetX(vPosition) - g_iWinSizeX * 0.5f );
+	vPosition = XMVectorSetY(vPosition,  - XMVectorGetY(vPosition) + g_iWinSizeY * 0.5f);
+
+	return vPosition;
+}
+
+void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, _float fDepth,_float fTimeDelta)
+{
+	if (m_bCheck)
+	{
+		m_fAnimDelayTiemr += fTimeDelta;
+
+		if (m_fAnimDelayTiemr >= 0.25f)
+		{
+			m_bCheck = FALSE;
+			m_fAnimDelayTiemr = 0.f;
+			m_bStart = FALSE;
+			m_pUI_Manager->m_iTeam = POS_END;
+		}
+	}
+
+	if (m_pUI_Manager->m_iTeam == m_eLRPos )
+	{
+		if (m_eLRPos == LEFT)
+		{
+			m_vAnimStartPos = GetOffsetPostion(vStartPos);
+			m_vAnimTargetPos = vTargetPos;
+		}
+		else if (m_eLRPos == RIGHT)
+		{
+			vStartPos= XMVectorSetX(vStartPos, g_iWinSizeX  - XMVectorGetX(vStartPos));
+			m_vAnimStartPos = GetOffsetPostion(vStartPos);
+			m_vAnimTargetPos = vTargetPos; 
+		}
+
+		if (m_bStart == FALSE && m_bCheck== FALSE)
+		{
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, m_vAnimStartPos);
+			m_bStart = TRUE;
+		}
+		
+		if(m_bStart)
+			MoveAnimUI(vTargetPos, 300.f, fDepth , fTimeDelta);
 	}
 }
 

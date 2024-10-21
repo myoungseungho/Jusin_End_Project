@@ -24,6 +24,7 @@ HRESULT CUI_Chara_Icon::Initialize_Prototype()
 HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 {
 	m_fPosX = 50.f;
+	m_fPosY = 40.f;
 	m_fSizeX = 150.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -32,7 +33,7 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(-m_fSizeX, 150.f, m_fPosX, 40, 0.85f);
+	__super::Set_UI_Setting(-m_fSizeX, 150.f, m_fPosX, m_fPosY ,0.85f);
 
 	return S_OK;
 }
@@ -48,7 +49,7 @@ void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)
 {
-
+	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 100.f, 0.85f, fTimeDelta);
 }
 
 void CUI_Chara_Icon::Late_Update(_float fTimeDelta)

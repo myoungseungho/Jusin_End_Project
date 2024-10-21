@@ -24,6 +24,7 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize_Prototype()
 HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 {
 	m_fPosX = 73.f;
+	m_fPosY = 145.f;
 	m_fSizeX = 184.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -32,7 +33,7 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(-m_fSizeX, 46.f, m_fPosX, 145.f);
+	__super::Set_UI_Setting(-m_fSizeX, 46.f, m_fPosX, m_fPosY);
 
 	return S_OK;
 }
@@ -45,7 +46,7 @@ void CUI_Sub_Chara_Icon_Panel::Priority_Update(_float fTimeDelta)
 
 void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 {
-
+	Animation({ 73.f ,88.f ,1.f, 1.f }, { m_fPosX, m_fPosY, 1.f, 1.f }, 100.f, 1.f, fTimeDelta);
 }
 
 void CUI_Sub_Chara_Icon_Panel::Late_Update(_float fTimeDelta)

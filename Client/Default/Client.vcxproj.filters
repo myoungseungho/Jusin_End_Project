@@ -52,9 +52,6 @@
     <Filter Include="02.GameObjects\Camera\Free">
       <UniqueIdentifier>{d27343f5-a3bb-400e-9f55-c6d55c0435ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="96.ShaderFiles">
-      <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI">
       <UniqueIdentifier>{4ac33916-2ecf-4e1d-9fe0-e7e4c8e0e68b}</UniqueIdentifier>
     </Filter>
@@ -270,6 +267,12 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Input\Panel\UI_Input_IconPanel">
       <UniqueIdentifier>{9250434b-4768-4e41-8fe7-58ad664320bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO\Panel">
+      <UniqueIdentifier>{d93acb53-925d-4c57-b49c-88520f4ae2ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.FrameEvent_Manager\96.ShaderFiles">
+      <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -540,6 +543,9 @@
     <ClInclude Include="..\public\UI_Input_IconPanel.h">
       <Filter>02.GameObjects\UI\Input\Panel\UI_Input_IconPanel</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_KOPanel.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Panel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -791,6 +797,9 @@
     <ClCompile Include="..\private\UI_Input_IconPanel.cpp">
       <Filter>02.GameObjects\UI\Input\Panel\UI_Input_IconPanel</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_KOPanel.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Panel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -807,13 +816,13 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
-      <Filter>96.ShaderFiles</Filter>
+      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl">
-      <Filter>96.ShaderFiles</Filter>
+      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
-      <Filter>96.ShaderFiles</Filter>
+      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

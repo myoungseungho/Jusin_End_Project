@@ -25,6 +25,7 @@ HRESULT CUI_HpGauge::Initialize_Prototype()
 HRESULT CUI_HpGauge::Initialize(void* pArg)
 {
 	m_fPosX = 319.f;
+	m_fPosY = 87.f;
 	m_fSizeX = 417.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -83,8 +84,9 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
-
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
+
+	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);
 }
 
 void CUI_HpGauge::Late_Update(_float fTimeDelta)

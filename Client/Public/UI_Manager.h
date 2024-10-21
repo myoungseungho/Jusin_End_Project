@@ -83,7 +83,7 @@ public:
 
 	//CUIObject::UI_LRPOS m_eTeam = { };
 	 _uint m_iTeam = { 2 };
-
+	 _uint m_iAnimEndCnt = { 0 };
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
