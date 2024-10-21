@@ -513,7 +513,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -1107,7 +1107,7 @@ CGameObject* CPlay_Goku::Clone(void* pArg)
 	{
 		MSG_BOX(TEXT("Failed to Cloned : CPlay_Goku"));
 		Safe_Release(pInstance);
-	}
+	} 
 
 	return pInstance;
 }

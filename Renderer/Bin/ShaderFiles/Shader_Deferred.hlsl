@@ -166,7 +166,6 @@ PS_OUT_LIGHT PS_MAIN_POINT(PS_IN In)
 	Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f) * fAtt;
 
 	return Out;
-
 }
 
 bool isOutLine = false;
@@ -195,25 +194,25 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
     float2 fOffsetLeft = float2(-1.0f / 1920.f, 0.0f);
     float2 fOffsetUp = float2(0.0f, -1.0f / 1080.f);
 
-    float2 fOffsetRightUp = float2(1.0f / 1920.f, -1.0f / 1080.f);
-    float2 fOffsetRightDown = float2(1.0f / 1920.f, 1.0f / 1080.f);
-    float2 fOffsetLeftUp = float2(-1.0f / 1920.f, -1.0f / 1080.f);
-    float2 fOffsetLeftDown = float2(-1.0f / 1920.f, 1.0f / 1080.f);
+    //float2 fOffsetRightUp = float2(1.0f / 1920.f, -1.0f / 1080.f);
+    //float2 fOffsetRightDown = float2(1.0f / 1920.f, 1.0f / 1080.f);
+    //float2 fOffsetLeftUp = float2(-1.0f / 1920.f, -1.0f / 1080.f);
+    //float2 fOffsetLeftDown = float2(-1.0f / 1920.f, 1.0f / 1080.f);
 
     float fDepthRight = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).x * 1000.f;
     float fDepthDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).x * 1000.f;
     float fDepthLeft = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).x * 1000.f;
     float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
 
-    float fDepthRightUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightUp).x * 1000.f;
-    float fDepthRightDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightDown).x * 1000.f;
-    float fDepthLeftUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftUp).x * 1000.f;
-    float fDepthLeftDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftDown).x * 1000.f;
+    //float fDepthRightUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightUp).x * 1000.f;
+    //float fDepthRightDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightDown).x * 1000.f;
+    //float fDepthLeftUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftUp).x * 1000.f;
+    //float fDepthLeftDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftDown).x * 1000.f;
 
     float fDepthDiff = abs(fViewZ - fDepthRight) + abs(fViewZ - fDepthDown)
-                     + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp)
-                     + abs(fViewZ - fDepthRightUp) + abs(fViewZ - fDepthRightDown)
-                     + abs(fViewZ - fDepthLeftUp) + abs(fViewZ - fDepthLeftDown);
+                     + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp);
+                     //+ abs(fViewZ - fDepthRightUp) + abs(fViewZ - fDepthRightDown)
+                     //+ abs(fViewZ - fDepthLeftUp) + abs(fViewZ - fDepthLeftDown);
 
     return fDepthDiff;
 }
@@ -249,16 +248,15 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     float fViewZ = vDepthDesc.x * 1000.f;
     float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
    
-    if (isOutLine == true)
-    {
-		float fEdgeNormalThreshold = 0.2f;
-		float fEdgeDepthThreshold = 0.5f;
-   
-		float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
 
-		vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
-		Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
-    }
+    float fEdgeNormalThreshold = 0.2f;
+    float fEdgeDepthThreshold = 0.05f;
+	
+    float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
+
+    vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
+    Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
+   
 
     return Out;
 }

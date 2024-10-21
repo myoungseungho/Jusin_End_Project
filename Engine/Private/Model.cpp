@@ -476,6 +476,12 @@ HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTran
 		m_Materials.resize(m_iNumMaterials);
 	}
 
+	_char			szDrive[MAX_PATH] = {};
+	_char			szDir[MAX_PATH] = {};
+	_char			szFullPath[MAX_PATH] = {};
+
+	_splitpath_s(binFilePath.c_str(), szDrive, MAX_PATH, szDir, MAX_PATH, nullptr, 0, nullptr, 0);
+
 	// 재료 데이터를 읽어들입니다.
 	for (_uint i = 0; i < m_iNumMaterials; ++i) {
 		bool textureCreated = false;

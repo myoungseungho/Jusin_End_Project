@@ -27,7 +27,7 @@ public:
 	virtual HRESULT Initialize_Prototype(const _char* strModelFilePath, _fmatrix PreTransformMatrix);
 	virtual HRESULT Initialize(void* pArg) override;
 	virtual HRESULT Render(_uint iMeshIndex);
-
+	string ExtractFileName(const std::string& filePath);
 public:
 	_bool Play_Animation(_float fTimeDelta);
 	_bool Play_Animation_Lick(_float fTimeDelta);

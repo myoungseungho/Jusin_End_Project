@@ -1,0 +1,8 @@
+PLAY_HIT,63,7,ObjectMove,1.003,0,0,0
+PLAY_HIT,57,0,TickPerSecondChange,25
+PLAY_HIT,57,20,TickPerSecondChange,125
+PLAY_HIT,57,70,TickPerSecondChange,25
+PLAY_HIT,57,90,TickPerSecondChange,125
+PLAY_HIT,41,AnimSpeedChange,0.044000,66.077003
+PLAY_HIT,HTN021_body,20.000000,AnimSpeedChange,0.000000,25.000000
+PLAY_HIT,HTN620cs_body,40.000000,AnimSpeedChange,0.000000,25.000000

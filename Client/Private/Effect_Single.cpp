@@ -200,6 +200,7 @@ HRESULT CEffect_Single::Add_Render_Object()
 	case 1:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+
 		//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 		break;
 	case 2:

@@ -62,10 +62,26 @@ _bool CInput_Device::Key_Up(_uint _iKey) {
 
 void Engine::CInput_Device::Update(void)
 {
+	// 이전 키 상태를 저장합니다.
+	memcpy(m_byPrevKeyState, m_byKeyState, sizeof(m_byKeyState));
 	/* 키보드와 마우스의 상태를 얻어와서 저장해준다. */
+
+	//현재 키 상태
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
+
 	m_pMouse->GetDeviceState(sizeof(m_tMouseState), &m_tMouseState);
+
+	// 이전 마우스 상태를 저장합니다.
+	for (int i = 0; i < 3; ++i) {
+		m_bPrevMouseState[i] = m_bMouseState[i];
+	}
+
+	// 현재 프레임의 마우스 상태를 저장합니다.
+	for (int i = 0; i < 3; ++i) {
+		m_bMouseState[i] = (m_tMouseState.rgbButtons[i] & 0x80) != 0;
+	}
 }
+
 
 CInput_Device * CInput_Device::Create(HINSTANCE hInst, HWND hWnd)
 {
