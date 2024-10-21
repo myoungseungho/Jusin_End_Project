@@ -37,7 +37,7 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 	_float fAngle = pDesc->fAngle;
 	_float fScaled = pDesc->fScaled;
 	
-	__super::Set_UI_Setting(60 * fScaled, 12, CreatePosX, CreatePosY, 0.9f);
+	__super::Set_UI_Setting(60 * fScaled, 12, CreatePosX, CreatePosY, 0.8f);
 
 	fAngle += 90.f;
 

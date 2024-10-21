@@ -213,17 +213,6 @@ HRESULT CCharacter::Initialize(void* pArg)
 	CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
 	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
 	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
-
-	m_tCharacterDesc.bStun = m_bStun;
-	m_tCharacterDesc.bHit = m_bHit;
-	m_tCharacterDesc.bAttBuf = m_bAttBuf;
-	m_tCharacterDesc.iHp = m_iHP;
-	m_tCharacterDesc.iComboCount = m_iComboCount;
-	m_tCharacterDesc.iSKillCount = m_iSKillCount;
-	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
-	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
-	m_tCharacterDesc.ePlayerID = m_eCharacterID;
 	
 	return S_OK;
 }
@@ -517,6 +506,8 @@ _bool CCharacter::InputCommand()
 			 iAttackkey = ATTACK_GRAB;
 		
 		 }
+
+		 GetUI_Input(DirectionX, DirectionY, iMoveKey, iAttackkey);
 	}
 	else  //2ÆÀ
 	{
@@ -620,7 +611,7 @@ _bool CCharacter::InputCommand()
 		bNewKey = true;
 	}
 
-	GetUI_Input(DirectionX , DirectionY,iMoveKey , iAttackkey);
+
 
 
 

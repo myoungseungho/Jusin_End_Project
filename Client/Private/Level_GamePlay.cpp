@@ -65,29 +65,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
 		return E_FAIL;
 	
-	//몬스터 생성
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
-	//	return E_FAIL;
-
-
-	//_bool bTest = false;
-	//if (bTest)
-	//{
-	//
-	//	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
-	//		return E_FAIL;
-	//}
-	//else
-	//{
-
-
-		//if (Ready_Character())
-		//	return E_FAIL;
-
-		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
-		//	return E_FAIL;
-
-
 		//1P
 		CCharacter::Character_DESC CharacterDesc{};
 		CharacterDesc.iTeam = 1;
@@ -103,14 +80,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 		m_pUI_Manager->InitUIObject();
 
-		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Target"))))
-		//	return E_FAIL;
-
-
-
-
-
-	//}
+		if (FAILED(Ready_UIObjects()))
+			return E_FAIL;
 
 	// 해당 레벨에 맞는 파일 경로를 설정
 	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
@@ -144,10 +115,10 @@ HRESULT CLevel_GamePlay::Initialize()
 			return E_FAIL;
 		
 
-		if (FAILED(ParseInitialize(filePath))) 
-	
-	if (FAILED(Ready_UIObjects()))
+	if (FAILED(ParseInitialize(filePath)))
 		return E_FAIL;
+
+
 
 	return S_OK;
 }

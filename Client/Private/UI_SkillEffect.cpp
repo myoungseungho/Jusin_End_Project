@@ -33,7 +33,7 @@ HRESULT CUI_SkillEffect::Initialize(void* pArg)
 
 	m_iTotalIndex = 4;
 	// 665
-	__super::Set_UI_Setting(408.f , 102.f , m_fPosX, 665.f, 0.1f);
+	__super::Set_UI_Setting(408.f , 102.f , m_fPosX, g_iWinSizeY - 100, 0.1f);
 
 	return S_OK;
 }

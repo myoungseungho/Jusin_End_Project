@@ -32,7 +32,7 @@ HRESULT CUI_SkillGaugeBar::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 26.f, m_fPosX, 669.f , 0.5f);
+	__super::Set_UI_Setting(m_fSizeX, 26.f, m_fPosX, g_iWinSizeY - 100 , 0.5f);
 
 	return S_OK;
 }

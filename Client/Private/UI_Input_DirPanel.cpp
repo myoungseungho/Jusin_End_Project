@@ -31,7 +31,7 @@ HRESULT CUI_Input_DirPanel::Initialize(void* pArg)
 
 	m_fPosX = 230.f;
 	m_fPosY = 510.f;
-	__super::Set_UI_Setting(190.f, 190.f, 228, 503, 1.f);
+	__super::Set_UI_Setting(190.f, 190.f, 228, 503, 0.9f);
 
 	return S_OK;
 }

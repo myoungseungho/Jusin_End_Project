@@ -31,7 +31,7 @@ HRESULT CUI_SkillNumber::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(117.f, 117.f, m_fPosX, 635.f);
+	__super::Set_UI_Setting(117.f, 117.f, m_fPosX, g_iWinSizeY - 100);
 
 	return S_OK;
 }

@@ -38,7 +38,7 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if(m_eLRPos == LEFT)
 		__super::Set_UI_Setting(m_fSizeX, 30, 319, 87.f, 0.75f);
 	else if(m_eLRPos == RIGHT)
-		__super::Set_UI_Setting(m_fSizeX, 30, 959, 87.f, 0.75f);
+		__super::Set_UI_Setting(m_fSizeX, 30, g_iWinSizeX- 319, 87.f, 0.75f);
 
 	return S_OK;
 }

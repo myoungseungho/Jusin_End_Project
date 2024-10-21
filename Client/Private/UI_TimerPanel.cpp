@@ -31,7 +31,7 @@ HRESULT CUI_TimerPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(250.f, 250.f, 640, 85.f, 1.f);
+	__super::Set_UI_Setting(250.f, 250.f, g_iWinSizeX * 0.5f, 85.f, 1.f);
 
 	return S_OK;
 }

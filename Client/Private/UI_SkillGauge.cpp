@@ -33,7 +33,7 @@ HRESULT CUI_SkillGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 52.f, m_fPosX, 668.f);
+	__super::Set_UI_Setting(m_fSizeX, 52.f, m_fPosX, g_iWinSizeY - 100 );
 
 	return S_OK;
 }
