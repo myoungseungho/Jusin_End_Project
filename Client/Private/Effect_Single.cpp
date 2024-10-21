@@ -115,7 +115,7 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
 			return E_FAIL;
-
+		
 		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) // 2
 			return E_FAIL;
 
@@ -127,8 +127,6 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 
 	if (m_iPassIndex == 1)
 		m_iPassIndex = 3; //컬논 + 디폴트
-	else if(m_iPassIndex == 3)
-		m_iPassIndex = 4; // 알파브랜드 + 디폴트
 	else
 		m_iPassIndex = 1;
 
@@ -198,7 +196,6 @@ HRESULT CEffect_Single::Add_Render_Object()
 		break;
 	case 1:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 		break;
 	case 2:
@@ -207,13 +204,7 @@ HRESULT CEffect_Single::Add_Render_Object()
 		break;
 	case 3:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
-		break;
-	case 4:
-		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 		break;
 	}
 	

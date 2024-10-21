@@ -56,6 +56,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	HRESULT Effect_Render(_float fTimeDelta, _int iIndex);
+	HRESULT Pick_Effect_Render(_float fTimeDelta, _int iIndex);
 public:
 	void Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
 	void Delete_KeyFrame(_uint KeyFrameNumber);
