@@ -48,20 +48,6 @@ public:
 		return bUp;
 	}
 
-	_bool Mouse_Pressing(_uint _iButton);
-	_bool Mouse_Down(_uint _iButton);
-	_bool Mouse_Up(_uint _iButton);
-
-
-	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)	
-	{	
-		return *(((_long*)&m_tMouseState) + eMouseState);	
-	}
-	
-	_bool Key_Pressing(_uint _iKey);
-	_bool Key_Down(_uint _iKey);
-	_bool Key_Up(_uint _iKey);
-
 public:
 	HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 	void   Update(void);
@@ -70,10 +56,6 @@ private:
 	LPDIRECTINPUT8         m_pInputSDK = { nullptr };
 	LPDIRECTINPUTDEVICE8   m_pKeyBoard = { nullptr };
 	LPDIRECTINPUTDEVICE8   m_pMouse = { nullptr };
-
-private:
-	LPDIRECTINPUTDEVICE8	m_pKeyBoard = { nullptr };
-	LPDIRECTINPUTDEVICE8	m_pMouse = { nullptr };
 
 private:	
 	_byte					m_byKeyState[256] = {};		// 키보드에 있는 모든 키값을 저장하기 위한 변수

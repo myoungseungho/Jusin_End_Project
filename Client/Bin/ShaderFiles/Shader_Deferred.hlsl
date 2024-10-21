@@ -269,12 +269,13 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
     float fDepthDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetDown).x * 1000.f;
     float fDepthLeft = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).x * 1000.f;
     float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
-	
-	
+
+
     //float fDepthRightUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightUp).x * 1000.f;
     //float fDepthRightDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightDown).x * 1000.f;
     //float fDepthLeftUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftUp).x * 1000.f;
     //float fDepthLeftDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftDown).x * 1000.f;
+
 
     float fDepthDiff = abs(fViewZ - fDepthRight) + abs(fViewZ - fDepthDown)
                      + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp);
@@ -317,7 +318,6 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
    
     float fViewZ = vDepthDesc.x * 1000.f;
     float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
-  
 
     float fEdgeNormalThreshold = 0.2f;
     float fEdgeDepthThreshold = 0.05f;

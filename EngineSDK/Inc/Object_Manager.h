@@ -34,23 +34,11 @@ public:
 	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex);
 	_uint GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag);
 
-
-
-
-
-
-
-
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
 
 	HRESULT Clear_Resources(_uint iLevelIndex);
-
-
-	//
-	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex);
-
 
 private:
 	map<const wstring, class CGameObject*>		m_Prototypes;

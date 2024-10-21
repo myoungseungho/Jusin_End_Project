@@ -210,7 +210,6 @@
     <ClInclude Include="..\Public\Character.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\FrameEvent_Manager.h" />
-    <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\Effect.h" />
     <ClInclude Include="..\public\Effect_Animation.h" />
     <ClInclude Include="..\Public\Effect_Layer.h" />
@@ -220,7 +219,6 @@
     <ClInclude Include="..\public\Effect_Rect.h" />
     <ClInclude Include="..\Public\Effect_Single.h" />
     <ClInclude Include="..\Public\FallingStar.h" />
-    <ClInclude Include="..\Public\FrameEvent_Manager.h" />
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
@@ -244,8 +242,7 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
-    <ClInclude Include="..\Public\Model_Preview.h" />
-    <ClInclude Include="..\Public\Monster.h">
+    <ClInclude Include="..\Public\Model_Preview.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Public\UIObject.h" />
@@ -271,11 +268,9 @@
     <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h" />
     <ClInclude Include="..\Public\UI_Timer.h" />
     <ClInclude Include="..\Public\Play_21.h" />
-    <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\UI_TimerPanel.h" />
     <ClInclude Include="..\Public\Monster.h" />
-    <ClInclude Include="..\Public\Play_21.h" />
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
@@ -349,8 +344,6 @@
     <ClCompile Include="..\Private\AnimationNameMap.cpp" />
     <ClCompile Include="..\Private\Camera_Free.cpp" />
     <ClCompile Include="..\Private\Character.cpp" />
-    <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
-    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\private\Effect_Animation.cpp" />

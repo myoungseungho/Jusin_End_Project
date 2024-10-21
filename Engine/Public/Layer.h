@@ -26,8 +26,6 @@ public:
 	void Late_Update(_float fTimeDelta);
 
 	CGameObject* Get_Object(_uint index);
-
-	CGameObject* Get_Object(_uint index);
 	_uint GetSize()
 	{
 		return m_GameObjects.size();

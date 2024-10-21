@@ -21,8 +21,6 @@ public:
 	_int GetBoneIndex() { return m_iBoneIndex; };
 	void Update_FrameIndex(_float fCurrentPosition, _uint* pKeyFrameIndex);
 
-	void Update_FrameIndex(_float fCurrentPosition,_uint* pKeyFrameIndex);
-
 public:
 	_char				m_szName[MAX_PATH] = {};
 
