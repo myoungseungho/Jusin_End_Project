@@ -134,7 +134,7 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 	//	m_iPassIndex = 1;
 
 	if (m_iPassIndex == 1)
-		m_iPassIndex = 4;
+		m_iPassIndex = 3;
 	else
 		m_iPassIndex = 1;
 

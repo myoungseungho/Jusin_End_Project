@@ -945,6 +945,7 @@ void CCharacter::AttckCancleJump()
 			Set_fJumpPower(3.f); //중력Ver2 기준
 
 			Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+			Set_ForcveGravityTime(0.03f);
 
 			if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 			{

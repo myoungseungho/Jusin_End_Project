@@ -47,6 +47,7 @@ private:
 	ID3D11DeviceContext*	m_pContext = { nullptr };
 
 	list<class CGameObject*>			m_RenderObjects[RG_END];
+	list<class CBaseEffect*>			m_RenderEffects[RG_END];
 	list<class CComponent*>		m_DebugComponent;
 
 	class CRenderInstance* m_pRenderInstance = { nullptr };
