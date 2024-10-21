@@ -1,43 +1,19 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/ModelData/Eff/TestModel/"
+#define DATAFILEPATH "../Client/Bin/Resources/Map/Space/"
 
 int main() {
 	ModelConverter converter;
 
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/cmn_SmokeModels0101.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0102.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0103.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0104.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0105.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0106.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0107.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0108.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0109.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0110.fbx", TYPE_NONANIM},
+		{"Models/BRRock_1.fbx", TYPE_NONANIM},
+		{"Models/Meteo_1.fbx", TYPE_NONANIM},
+		{"Models/Meteo_2.fbx", TYPE_NONANIM},
+		{"Models/Meteo_3.fbx", TYPE_NONANIM},
+		{"Models/Rock_1.fbx", TYPE_NONANIM},
+		{"Models/Rock_2.fbx", TYPE_NONANIM},
+		{"Models/Rock_3.fbx", TYPE_NONANIM}
 
-		{"Models/cmn_SmokeModels0111.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0112.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0201.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0202.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0203.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0204.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0205.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0206.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0301.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0302.fbx", TYPE_NONANIM},
-
-		{"Models/cmn_SmokeModels0303.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0304.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0305.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0306.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0307.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0308.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0309.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0310.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0311.fbx", TYPE_NONANIM},
-		{"Models/cmn_SmokeModels0312.fbx", TYPE_NONANIM},
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그

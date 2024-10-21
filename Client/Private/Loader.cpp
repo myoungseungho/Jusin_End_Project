@@ -16,6 +16,7 @@
 
 #include "SpaceSun.h"
 #include "SpaceMoon.h"
+#include "SpaceStone.h"
 #include "SpaceCliff.h"
 #include "SpaceEarth.h"
 #include "SpaceStage.h"
@@ -219,7 +220,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		return E_FAIL;
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
-
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStone"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Stone/Stone.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSky"),
@@ -2032,6 +2035,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 	/* 객체원형을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("객체원형을 로딩 중 입니다."));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceStone"),
+		CSpaceStone::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceMoon"),
 		CSpaceMoon::Create(m_pDevice, m_pContext))))

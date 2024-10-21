@@ -9,6 +9,7 @@
 #include <string>
 #include <locale>
 #include <codecvt>
+#include "IMGUI_Shader_Tab.h"
 #include "Effect_Multi.h"
 #include "Effect_MoveTex.h"
 
@@ -346,7 +347,13 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
-				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
+
+				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
+
+				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+				pLayer->Add_Effect(pClone);
+
 				m_FinalEffects.emplace(strEffectLayerTag, pLayer);
 
 				EFFECT_KEYFRAME FirstKeyFrame{};
@@ -389,7 +396,11 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
-				pLayer->Add_Effect(static_cast<CEffect*>(iter->Clone(&EffectDesc)));
+				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
+				
+				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
+					
+				pLayer->Add_Effect(pClone);
 
 				EFFECT_KEYFRAME FirstKeyFrame{};
 
@@ -444,7 +455,11 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 			EffectDesc.SRV_Ptr = static_cast<CTexture*>(pEffect->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 			EffectDesc.iRenderIndex = 2;
 
-			pLayer->Add_Effect(static_cast<CEffect*>(pEffect->Clone(&EffectDesc)));
+			CEffect* pClone = static_cast<CEffect*>(pEffect->Clone(&EffectDesc));
+
+			CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+			pLayer->Add_Effect(pClone);
 
 			EFFECT_KEYFRAME FirstKeyFrame{};
 

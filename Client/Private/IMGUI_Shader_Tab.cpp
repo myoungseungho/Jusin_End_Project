@@ -8,8 +8,9 @@
 #include <codecvt>
 #include <string>
 #include <iostream>
-
+#include "Effect_Single.h"
 #include "IMGUI_Shader_Tab.h"
+#include "Effect_Manager.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
@@ -169,6 +170,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         wstring prototypeKeyWithAlpha = prototypeKey + TEXT("_Alpha");
         CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
         tDesc.prototypeKey = prototypeKey.c_str();
+        tDesc.iID = unique_node_id;
         tDesc.iShaderTab_ID = m_iNumberId;
         //Prototype_Component_Texture_Effect_cmn_aura00
         //if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, prototypeKeyWithCount.c_str(),
@@ -177,7 +179,6 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
         CGameObject* pPrototype = m_pGameInstance->Find_Prototype(TEXT("Prototype_GameObject_Shader_Texture"));
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
- 
         _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
 
         if (fTextureSize.x > g_iWinSizeX)
@@ -957,6 +958,9 @@ void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
             [&](SRV_Texture SRV) {
                 return SRV.iID == start_attr / m_iAttributeCount;
             });
+        //wstring abs = L"a";
+        //wstring absb = L"b";
+        //m_TestEffectModel_Texture = static_cast<CTexture*>(static_cast<CEffect_Single*>(CEffect_Manager::Get_Instance()->Find_In_Layer_Effect(abs, absb))->Get_Component(TEXT("Com_DiffuseTexture")));
 
         m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
         m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha, 1);
@@ -1026,18 +1030,21 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
 
         _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
 
-        if (fTextureSize.x > g_iWinSizeX)
-        {
-            _float fDiff = g_iWinSizeX - fTextureSize.x;
-            fTextureSize.x += fDiff;
-            fTextureSize.y += fDiff;
-        }
+        _float fAspectRatio = fTextureSize.x / fTextureSize.y;
+        _float fWinAspectRatio = (_float)g_iWinSizeX / (_float)g_iWinSizeY;
 
-        if (fTextureSize.y > g_iWinSizeY)
+        if (fTextureSize.x > g_iWinSizeX || fTextureSize.y > g_iWinSizeY)
         {
-            _float fDiff = g_iWinSizeY - fTextureSize.y;
-            fTextureSize.x += fDiff;
-            fTextureSize.y += fDiff;
+            if (fTextureSize.x / g_iWinSizeX > fTextureSize.y / g_iWinSizeY)
+            {
+                fTextureSize.x = g_iWinSizeX;
+                fTextureSize.y = g_iWinSizeX / fAspectRatio;
+            }
+            else
+            {
+                fTextureSize.y = g_iWinSizeY;
+                fTextureSize.x = g_iWinSizeY * fAspectRatio;
+            }
         }
 
         m_pRenderInstance->Add_ClientRenderTarget(iter.key.c_str(), iter.key.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
@@ -1134,6 +1141,9 @@ void CIMGUI_Shader_Tab::Check_Create_Link()
                 [&](SRV_Texture SRV) {
                     return SRV.iID == start_attr / m_iAttributeCount;
                 });
+            //wstring abs = L"a";
+            //wstring absb = L"b";
+            //m_TestEffectModel_Texture = static_cast<CTexture*>(static_cast<CEffect_Single*>(CEffect_Manager::Get_Instance()->Find_In_Layer_Effect(abs, absb))->Get_Component(TEXT("Com_DiffuseTexture")));
 
             m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
             m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha,1);
