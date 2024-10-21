@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CUI_KOPanel final :public CUI_GameState
+class CUI_KOParticle final :public CUI_GameState
 {
 private:
-	CUI_KOPanel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_KOPanel(const CUI_KOPanel& Prototype);
-	virtual ~CUI_KOPanel() = default;
+	CUI_KOParticle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_KOParticle(const CUI_KOParticle& Prototype);
+	virtual ~CUI_KOParticle() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -25,13 +25,10 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
-	_bool m_bDeadCheck = {FALSE};
+	_float m_fTexCoord = { -0.5f };
 
-	_float m_fDestroyTimer = { 0.f };
-	_float m_fLightTimer = { 0.f };
-	
 public:
-	static CUI_KOPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_KOParticle* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

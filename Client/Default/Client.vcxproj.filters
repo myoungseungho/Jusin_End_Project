@@ -274,6 +274,9 @@
     <Filter Include="90.FrameEvent_Manager\96.ShaderFiles">
       <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO\Particle">
+      <UniqueIdentifier>{7bb57d8d-8c2b-476a-9132-ae3d5413bcda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -546,6 +549,9 @@
     <ClInclude Include="..\public\UI_KOPanel.h">
       <Filter>02.GameObjects\UI\GameState\Font\KO\Panel</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_KOParticle.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -799,6 +805,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_KOPanel.cpp">
       <Filter>02.GameObjects\UI\GameState\Font\KO\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOParticle.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

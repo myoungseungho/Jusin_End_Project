@@ -191,6 +191,7 @@
     <ClInclude Include="..\public\UI_GameStartCircle.h" />
     <ClInclude Include="..\public\UI_KOFontEffect.h" />
     <ClInclude Include="..\public\UI_KOPanel.h" />
+    <ClInclude Include="..\public\UI_KOParticle.h" />
     <ClInclude Include="..\public\UI_Loading.h" />
     <ClInclude Include="..\public\UI_LoadingMark.h" />
     <ClInclude Include="..\public\UI_Loading_Font.h" />
@@ -298,6 +299,7 @@
     <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
     <ClCompile Include="..\private\UI_KOFontEffect.cpp" />
     <ClCompile Include="..\private\UI_KOPanel.cpp" />
+    <ClCompile Include="..\private\UI_KOParticle.cpp" />
     <ClCompile Include="..\private\UI_Loading.cpp" />
     <ClCompile Include="..\private\UI_LoadingMark.cpp" />
     <ClCompile Include="..\private\UI_Loading_Font.cpp" />

@@ -42,8 +42,7 @@ void CUI_Chara_SubIcon::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	if(m_pSubPawn != nullptr)
-		m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID;
+	(m_pSubPawn != nullptr) ? m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID : m_bDead = TRUE;
 }
 
 void CUI_Chara_SubIcon::Update(_float fTimeDelta)

@@ -24,9 +24,9 @@ HRESULT CUI_SubHpGauge::Initialize_Prototype()
 
 HRESULT CUI_SubHpGauge::Initialize(void* pArg)
 {
-	m_fPosX = 271.f;
-	m_fPosY = 147.f;
-	m_fSizeX = 416.f;
+	m_fPosX = 270.f;
+	m_fPosY = 140.f;
+	m_fSizeX = 238;
 
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -35,7 +35,7 @@ HRESULT CUI_SubHpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 26.f, m_fPosX, m_fPosY, 0.75f);
+	__super::Set_UI_Setting(m_fSizeX, 17, m_fPosX, m_fPosY, 0.75f);
 
 	return S_OK;
 }
@@ -44,15 +44,14 @@ void CUI_SubHpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	if(m_pSubPawn != nullptr)
-	{ 
-		m_fHpRadio = 1 - m_pSubPawn->Get_PawnDesc().iHp / 100.f;
-	}
+	(m_pSubPawn != nullptr) ? m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 100.f : m_bDead = TRUE;
 }
 
 void CUI_SubHpGauge::Update(_float fTimeDelta)
 {
-	(m_fHpRadio >= 1.f) ? m_iShaderID = 2 : m_iShaderID = 5;
+	//DebugTesting(14.f, 1.f);
+
+	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 5;
 
 	Animation({ 250.f , 87.f ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);
 }
@@ -85,7 +84,7 @@ HRESULT CUI_SubHpGauge::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubHp"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGauge"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 }
@@ -101,7 +100,7 @@ HRESULT CUI_SubHpGauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_Radio", &m_fHpRadio, sizeof(_float))))
 		return E_FAIL;
 
-	_vector vColor = { 0.043f , 0.952f , 0.945 , 1.f };
+	_vector vColor = { 0.043f , 0.952f , 0.945 , 0.f };
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
 		return E_FAIL; 

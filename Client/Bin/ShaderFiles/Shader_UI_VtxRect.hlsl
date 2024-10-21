@@ -163,12 +163,10 @@ PS_OUT PS_SKILL(PS_IN In)
 
     }
     
-
     if (Out.vColor.a <= 0.1f)
         discard;
    
-
-        return Out;
+    return Out;
 }
 
 PS_OUT PS_COMBO(PS_IN In)
@@ -181,7 +179,6 @@ PS_OUT PS_COMBO(PS_IN In)
 
     if (Out.vColor.a <= 0.1f)
         discard;
-  
 
     return Out;
 }
@@ -207,7 +204,7 @@ PS_OUT PS_SUB_HP(PS_IN In)
      
     if (fLineY > 0)
     {
-        Out.vColor.rgb = (1 - vBaseTex) * float4(1.f, 0.831f, 0.f, 0.f);
+        Out.vColor.rgb = (1 - vBaseTex) * float4(1.f, 0.831f, 0.f, 0.f);    
     }
   
     if (Out.vColor.a <= 0.1f)
@@ -291,7 +288,6 @@ PS_OUT PS_Sprite(PS_IN In)
 {
     PS_OUT Out;
 
-    
     //(iSpriteIndex + 1);
     float fImageRadio = (1.f / iNumSprite);
     float fStartSprite = fImageRadio * (iSpriteIndex);
@@ -301,8 +297,6 @@ PS_OUT PS_Sprite(PS_IN In)
     In.vTexcoord.y = lerp(fStartSprite, fEndSprite, In.vTexcoord.y);
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     Out.vColor.a *= 0.75f;
-    
-    //if ()
   
     return Out;
 }
@@ -378,24 +372,40 @@ PS_OUT PS_ALPHA(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_TEX_MOVE(PS_IN In)
+{
+    PS_OUT Out;
 
-PS_OUT HP_DEBUG(PS_IN In)
+    float2 offset = float2(g_MaskTimer, g_MaskTimer);
+    float2 newTexcoord = In.vTexcoord + offset ;
+    
+    float fDistance = abs(In.vTexcoord - float2(0.5f, 0.5f));
+        
+    
+    Out.vColor = g_Texture.Sample(DestroySampler, newTexcoord);
+    
+    Out.vColor.a -= (fDistance * 2);
+    
+    if (Out.vColor.a <= 0.1f)
+        discard;
+   
+    return Out;
+}
+
+PS_OUT PS_PANEL(PS_IN In)
 {
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-      
     
+    if (g_MaskTimer <= In.vTexcoord.x)
+        discard;
+  
+    //Out.vColor += g_fAlphaTimer;
+
     if (Out.vColor.a <= 0.1f)
         discard;
-    
-    if (In.vTexcoord.x >= g_fRedRadio)
-    {
-        Out.vColor.rgb = float3(0, 1, 0);
-    }
-    
-        
-  
+
     return Out;
 }
 
@@ -647,8 +657,7 @@ technique11 DefaultTechnique
     }
 
 //16
-//HP 바 클래스에서 테스트 할려고 넣은 코드 지워도 됨.
-    pass HpDebug
+    pass TEX
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
@@ -658,7 +667,20 @@ technique11 DefaultTechnique
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
-        PixelShader = compile ps_5_0 HP_DEBUG();
+        PixelShader = compile ps_5_0 PS_TEX_MOVE();
     }
 
+//17
+    pass PANEL
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_PANEL();
+    }
 }

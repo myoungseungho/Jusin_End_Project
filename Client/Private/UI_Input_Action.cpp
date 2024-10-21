@@ -86,7 +86,13 @@ void CUI_Input_Action::Update(_float fTimeDelta)
 
 	ButtonInput eActionInput = m_pUI_Manager->m_eBtnInput;
 
-	if (eActionInput - 1 == m_iTextureIndex || m_bOnBtn)
+	if (  (eActionInput == ATTACK_GRAB && m_iTextureIndex <= 1 || m_bOnBtn))
+	{
+		m_fColor = 1.f;
+		m_bOnBtn = TRUE;
+	}
+
+	if (eActionInput != ATTACK_GRAB && (eActionInput - 1 == m_iTextureIndex || m_bOnBtn))
 	{
 		m_fColor = 1.f;
 		m_bOnBtn = TRUE;
@@ -103,8 +109,6 @@ void CUI_Input_Action::Update(_float fTimeDelta)
 	}
 
 	m_bOnBtn ? __super::Set_UI_Setting(35.f * 1.25f, 35.f * 1.25f, m_fPosX, m_fPosY, 1.f) : __super::Set_UI_Setting(35.f, 35.f, m_fPosX, m_fPosY, 1.f);;
-
-
 }
 
 void CUI_Input_Action::Late_Update(_float fTimeDelta)

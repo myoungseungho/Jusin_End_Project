@@ -23,8 +23,8 @@ HRESULT CUI_KOPanel::Initialize_Prototype()
 
 HRESULT CUI_KOPanel::Initialize(void* pArg)
 {
-	m_fSizeX = 800.f;
-	m_fSizeY = 800.f;
+	m_fSizeX = 1000.f;
+	m_fSizeY = 250.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -34,15 +34,9 @@ HRESULT CUI_KOPanel::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 
+	m_pTransformCom->Rotation({ 0,0,1 }, XMConvertToRadians(345.f));
 
-	Set_AnimPosition(400, 0.5f);
-	Set_AnimPosition(300, 0.55f);
-	Set_AnimPosition(350, 0.65f);
-	Set_AnimPosition(700, 0.7f);
-	Set_AnimPosition(1000, 1.f);
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
-
-	m_fAlphaTimer = 1.f;
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.0f);
 
 	return S_OK;
 }
@@ -51,26 +45,29 @@ void CUI_KOPanel::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_fAlphaTimer -= fTimeDelta;// *0.5f;
-	if (m_fAlphaTimer <= 0.f)
-	{
-		m_fAlphaTimer = 0.f;
-	}
-	//m_pUI_Manager->m_fTotalDuration += fTimeDelta;
+	if (m_bDeadCheck)
+		m_fLightTimer += fTimeDelta * 4.f;
 
+	m_fDestroyTimer += fTimeDelta;
 }
 
 void CUI_KOPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if (m_QueueAnim.empty())
+	Action_Anim(0.25f, fTimeDelta);
+
+	if (m_fDestroyTimer >= 1.f)
+	{
+		m_fDestroyTimer = 0.f;
+		m_bDeadCheck = TRUE;
+	}
+
+	if (m_fLightTimer >= 0.25f)
+	{
+		m_fLightTimer = 0.f;
 		m_bDead = TRUE;
-
-
-
-
-	Action_Anim(1.f, fTimeDelta);
+	}
 
 }
 
@@ -86,7 +83,7 @@ HRESULT CUI_KOPanel::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pShaderCom->Begin(15)))
+	if (FAILED(m_pShaderCom->Begin(17)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -104,7 +101,7 @@ HRESULT CUI_KOPanel::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFontEffect"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOPanel"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
@@ -116,13 +113,14 @@ HRESULT CUI_KOPanel::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 6)))
 		return E_FAIL;
 
-	_float fAlpha = 0.5f;
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlphaTimer, sizeof(_float))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fDestroyTimer, sizeof(_float))))
 		return E_FAIL;
+
+	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fLightTimer, sizeof(_float))))
+	//	return E_FAIL;
 
 	return S_OK;
 }

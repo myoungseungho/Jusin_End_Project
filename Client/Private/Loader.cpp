@@ -59,6 +59,8 @@
 #include "UI_InputDirEffect.h"
 #include "UI_Input_IconPanel.h"
 #include "UI_FontName.h"
+#include "UI_KOPanel.h"
+#include "UI_KOParticle.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -450,10 +452,15 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/BP_roundfinish_KO_eff.png")))))
 		return E_FAIL;
 
-	///* For.Prototype_Component_Texture_UI_GameKOFont */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_LodingImage"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/Font/window_title_00.png")))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Texture_UI_KOPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/BP_roundfinish_eff0%d.png"),7))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_KOParticle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOParticle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/BP_roundfinish_KO_eff_sumi.png")))))
+		return E_FAIL;
 
 	//KeyInput 
 
@@ -487,6 +494,7 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputIconPanel"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Training_BlackBG_00.png")))))
 		return E_FAIL;
+
 
 	//Font
 
@@ -651,6 +659,15 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_KOFontEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_UI_KOPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_KOPanel"),
+		CUI_KOPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_KOParticle */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_KOParticle"),
+		CUI_KOParticle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_InputDir */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_InputDir"),
@@ -688,7 +705,7 @@ HRESULT CLoader::Loading_For_UI()
 		CUI_InputDirEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-
+	
 
 	/* Prototype_GameObject_UI_FontName */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FontName"),
