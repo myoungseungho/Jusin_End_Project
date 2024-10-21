@@ -49,7 +49,7 @@ void CSpaceRock::Update(_float fTimeDelta)
 
 void CSpaceRock::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CSpaceRock::Render(_float fTimeDelta)
