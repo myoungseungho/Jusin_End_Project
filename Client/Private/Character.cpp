@@ -433,11 +433,11 @@ _bool CCharacter::InputCommand()
 		 if (DirectionX == -1 && DirectionY == 0)
 			 iMoveKey = MOVEKEY_LEFT;
 
+		 else if (DirectionX == 0 && DirectionY == 1)
+			 iMoveKey = MOVEKEY_UP;
+
 		 else if (DirectionX == -1 && DirectionY == -1)
 			 iMoveKey = MOVEKEY_DOWN_LEFT;
-
-		 else if (DirectionX == 0 && DirectionY == -1)
-			 iMoveKey = MOVEKEY_DOWN;
 
 		 else if (DirectionX == 0 && DirectionY == -1)
 			 iMoveKey = MOVEKEY_DOWN;
@@ -448,6 +448,11 @@ _bool CCharacter::InputCommand()
 		 else if (DirectionX == 1 && DirectionY == 0)
 			 iMoveKey = MOVEKEY_RIGHT;
 
+		 else if (DirectionX == -1 && DirectionY == 1)
+			 iMoveKey = MOVEKEY_UP_LEFT;
+
+		 else if (DirectionX == 1 && DirectionY == 1)
+			 iMoveKey = MOVEKEY_UP_RIGHT;
 
 		 //둘 다 0인경우는 기본값이므로 지정하지 않음 대각선 위는 쓰이는 커맨드가 없으므로 지정하지 않음
 
@@ -515,6 +520,9 @@ _bool CCharacter::InputCommand()
 		if (DirectionX == -1 && DirectionY == 0)
 			iMoveKey = MOVEKEY_LEFT;
 
+		else if (DirectionX == 0 && DirectionY == 1)
+			iMoveKey = MOVEKEY_UP;
+
 		else if (DirectionX == -1 && DirectionY == -1)
 			iMoveKey = MOVEKEY_DOWN_LEFT;
 
@@ -526,6 +534,12 @@ _bool CCharacter::InputCommand()
 
 		else if (DirectionX == 1 && DirectionY == 0)
 			iMoveKey = MOVEKEY_RIGHT;
+
+		else if (DirectionX == -1 && DirectionY == 1)
+			iMoveKey = MOVEKEY_UP_LEFT;
+
+		else if (DirectionX == 1 && DirectionY == 1)
+			iMoveKey = MOVEKEY_UP_RIGHT;
 
 
 		//둘 다 0인경우는 기본값이므로 지정하지 않음 대각선 위는 쓰이는 커맨드가 없으므로 지정하지 않음
@@ -1552,7 +1566,11 @@ _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _fl
 
 	if (m_bStun == false)
 	{
-		if (m_bGuard == true)
+
+		//Guard_Update();
+
+		//if (m_bGuard == true)
+		if (Guard_Check())
 		{
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 				Set_Animation(m_iGuard_CrouchAnimationIndex);
@@ -1779,6 +1797,79 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 }
 
+void CCharacter::Set_BreakFall_Ground()
+{
+	Set_Animation(m_iBreakFall_Ground, 2.f);
+	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+
+
+
+	DirectionInput iMoveKey = inputBuffer.back().direction;
+
+	if (iMoveKey == MOVEKEY_UP  || iMoveKey == MOVEKEY_UP_LEFT)
+	{
+		Set_fImpulse({ -3.f * m_iLookDirection,1.f });
+		Set_ForcveGravityTime(0.f);
+	}
+	else if (iMoveKey == MOVEKEY_RIGHT)
+	{
+		//Set_fImpulse({ 0.f , 0.3f });
+		Set_fImpulse({ 0.f , 0.1f });
+
+		Set_ForcedGravityTime_LittleUp();
+	}
+
+
+	else //if (iMoveKey == MOVEKEY_LEFT)
+	{
+		Set_fImpulse({ -5.f * m_iLookDirection, 0.f });
+		Set_ForcedGravityTime_LittleUp();
+	}
+
+	
+
+
+
+}
+
+void CCharacter::BreakFall_Air()
+{
+	if (Check_bCurAnimationisAirHit())
+	{
+		InputCommand();
+
+		CInput InputKey = inputBuffer.back();
+
+		if (InputKey.button != ATTACK_NONE)
+		{
+			Set_Animation(m_iBreakFall_Air);
+			Set_ForcedGravityDown();
+
+			if (InputKey.direction == MOVEKEY_UP)
+			{
+				Set_fImpulse({ 0.f, 5.f });
+			}
+			else if (InputKey.direction == MOVEKEY_DOWN)
+			{
+				Set_fImpulse({ 0.f, -15.f });
+			}
+
+			else if (InputKey.direction == MOVEKEY_LEFT || InputKey.direction == MOVEKEY_UP_LEFT)
+			{
+				Set_fImpulse({ -10.f * m_iLookDirection, 1.f });
+			}
+
+			else //(InputKey.direction == MOVEKEY_RIGHT || InputKey.direction == MOVEKEY_UP_RIGHT)
+			{
+				Set_fImpulse({ 10.f * m_iLookDirection, 1.f });
+			}
+
+
+		}
+
+	}
+}
+
 _float CCharacter::Get_DamageScale()
 {
 
@@ -1832,6 +1923,7 @@ void CCharacter::Set_GroundSmash(_bool bSmash)
 	m_bHitGroundSmashed = bSmash;
 }
 
+/*
 void CCharacter::Guard_Update()
 {
 
@@ -1873,6 +1965,48 @@ void CCharacter::Guard_Update()
 	}
 
 
+}
+*/
+
+_bool CCharacter::Guard_Check()
+{
+
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+	{
+		if (m_iPlayerTeam == 1)
+		{
+			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_A))
+			{
+				return true;
+			}
+
+			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_D))
+			{
+				return true;
+			}
+			else
+				return false;
+		}
+
+		else
+		{
+			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_LEFT))
+			{
+				return true;
+			}
+
+			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_RIGHT))
+			{
+				return true;
+			}
+			else
+				return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
 }
 
 
@@ -2056,11 +2190,12 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//	m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
-			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper ||
+			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground ||
 			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex)
 		{
 
-		
+			
+
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
 			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper)
 			{
@@ -2081,13 +2216,18 @@ void CCharacter::Gravity(_float fTimeDelta)
 			{
 				m_fGravityTime = m_fJumpPower * 0.5f;
 			}
+			
 
 
 			//m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper ||
 			//HitAway가 아니고, Upper도 아니여야됨
 
 			//if(Check_bCurAnimationisHitAway() == false )
-			if (Check_bCurAnimationisHitAway() == false && m_pModelCom->m_iCurrentAnimationIndex != m_iAttack_AirUpper)
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground)
+			{
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y *fTimeDelta,0 });
+			}
+			else if (Check_bCurAnimationisHitAway() == false && m_pModelCom->m_iCurrentAnimationIndex != m_iAttack_AirUpper)
 				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
 
 
@@ -2097,6 +2237,13 @@ void CCharacter::Gravity(_float fTimeDelta)
 		
 			//중력Ver2 전용 처리.  올라가다가 공격때문에 멈췄는데  공격 끝나고 다시 올라가는거 이상해서 처리
 			//if (fGravity < 0 && m_fGravityTime < m_fJumpPower)
+
+
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air)
+			{
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta, m_fImpuse.y * fTimeDelta,0.f });
+			}
+
 
 			if(m_bAttackGravity == true)
 			{ 
@@ -2154,7 +2301,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 	{
 
 		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
-		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() )
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air)
 		{
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 
@@ -2184,19 +2331,24 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 				//m_bHitGroundSmashed = false;
 			}
-			else
+			else 
 			{
 				//m_pModelCom->SetUp_Animation(m_iBound_Ground, false);
-				Set_Animation(m_iBreakFall_Ground, 2.f);
-				Set_fImpulse({ 1.f,0.f });
+				
+				//백업
+				//Set_Animation(m_iBreakFall_Ground, 2.f);
+				//Set_fImpulse({ 5.f,0.f });
+				Set_BreakFall_Ground();
+
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 			}
-			Set_fGravityTime(0.f);
-			//Set_fJumpPower(0.f);
-			Set_fImpulse(0.f);
+			
 
-			//Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
-			//Set_NextAnimation(m_iBreakFall_Ground, 2.f);
+			if (m_pModelCom->m_iCurrentAnimationIndex != m_iBreakFall_Ground)
+			{
+				Set_fGravityTime(0.f);
+				Set_fImpulse(0.f);
+			}
 
 
 			m_bAriDashEnable = true;
@@ -2251,6 +2403,11 @@ void CCharacter::Gravity(_float fTimeDelta)
 				{
 					Set_Animation(m_iBound_Ground, 2.f);
 					Set_NextAnimation(m_iBreakFall_Ground, 2.f);
+
+					if (inputBuffer.back() == CInput{ MOVEKEY_UP, ATTACK_LIGHT })
+					{
+						m_fImpuse = { -3.f * m_iLookDirection, 2.f };
+					}
 					m_bHitGroundSmashed = false;
 				}
 
@@ -2272,6 +2429,10 @@ void CCharacter::Gravity(_float fTimeDelta)
 				//Set_Animation(m_iBound_Ground);
 
 				Set_Animation(m_iBreakFall_Ground, 2.f);
+				if (inputBuffer.back() == CInput{ MOVEKEY_UP, ATTACK_LIGHT })
+				{
+					m_fImpuse = { -3.f * m_iLookDirection, 2.f };
+				}
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 			}
 		}
@@ -2290,10 +2451,25 @@ void CCharacter::Gravity(_float fTimeDelta)
 			if (m_bMotionPlaying == false)
 			{
 				Set_Animation(m_iBreakFall_Ground);
+				
 			}
 
 		}
-		
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground)
+		{
+
+			//낙법체크
+			//1회만 실행될것
+			m_fGravityTime += fTimeDelta;
+			if (m_fGravityTime * 2.f > m_fJumpPower)
+			{
+				m_fGravityTime = m_fJumpPower * 0.5f;
+			}
+			//_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
+			//m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y * fTimeDelta,0 });
+			m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,0.3f,0 });
+
+		}
 
 		if (m_bJumpLock)
 		{

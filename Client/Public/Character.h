@@ -323,6 +323,8 @@ public:
 
 	void Update_StunImpus(_float fTimeDelta);
 
+	void Set_BreakFall_Ground();
+	void BreakFall_Air();
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
@@ -332,7 +334,8 @@ public:
 
 	//1020 추가
 	void Set_GroundSmash(_bool bSmash);
-	void Guard_Update();
+	//void Guard_Update();   //서브캐릭터용도로 써야하나?
+	_bool Guard_Check();
 	
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -476,7 +479,8 @@ protected:
 	//스턴관련
 	_bool m_bHitGroundSmashed = { false };
 
-	_bool m_bGuard = { false };
+	//멤버변수에 넣는 대신 함수로 체크?   이거 없으면  서브캐릭터들도 가드를 해버림.  교체할때 그냥 사라지게?
+	//_bool m_bGuard = { false };
 
 
 	//디버그용

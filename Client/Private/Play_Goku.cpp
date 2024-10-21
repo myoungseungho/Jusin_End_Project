@@ -349,10 +349,14 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		}
 		else
 		{
+			BreakFall_Air();
 
-			//if(m_pGameInstance->Key_Pressing())
+
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex && Get_fHeight() == 0)
 				m_fImpuse = { 0.f,0.f };
+
+
+
 		}
 		Gravity(fTimeDelta);
 
@@ -475,7 +479,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 	Move(fTimeDelta);
-	Guard_Update();
+	//Guard_Update();
 
 
 	if (m_pGameInstance->Key_Down(DIK_8))
@@ -498,6 +502,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 	//Gravity(fTimeDelta);
+	
+
 
 	m_pColliderCom->Update();
 
@@ -903,7 +909,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 1.f * m_iLookDirection,0.3f };
 		Desc.fhitCharacter_Impus = { 1.5f * m_iLookDirection,0.3f };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
