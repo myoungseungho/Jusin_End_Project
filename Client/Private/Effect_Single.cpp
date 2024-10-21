@@ -126,17 +126,17 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 
 
 
-	if (m_iPassIndex == 1)
-		m_iPassIndex = 3; //컬논 + 디폴트
-	else if(m_iPassIndex == 3)
-		m_iPassIndex = 4; // 알파브랜드 + 디폴트
-	else
-		m_iPassIndex = 1;
-
 	//if (m_iPassIndex == 1)
-	//	m_iPassIndex = 0;
+	//	m_iPassIndex = 3; //컬논 + 디폴트
+	//else if(m_iPassIndex == 3)
+	//	m_iPassIndex = 4; // 알파브랜드 + 디폴트
 	//else
 	//	m_iPassIndex = 1;
+
+	if (m_iPassIndex == 1)
+		m_iPassIndex = 4;
+	else
+		m_iPassIndex = 1;
 
 	return S_OK;
 }
@@ -200,7 +200,7 @@ HRESULT CEffect_Single::Add_Render_Object()
 	case 1:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 		break;
 	case 2:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
@@ -214,7 +214,7 @@ HRESULT CEffect_Single::Add_Render_Object()
 	case 4:
 		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 		break;
 	}
 	

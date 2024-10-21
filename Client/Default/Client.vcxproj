@@ -200,6 +200,7 @@
     <ClInclude Include="..\Public\SpaceGround.h" />
     <ClInclude Include="..\Public\SpaceHorizon.h" />
     <ClInclude Include="..\Public\SpaceMoon.h" />
+    <ClInclude Include="..\Public\SpaceRock.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\Player.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="..\Private\SpaceGround.cpp" />
     <ClCompile Include="..\Private\SpaceHorizon.cpp" />
     <ClCompile Include="..\Private\SpaceMoon.cpp" />
+    <ClCompile Include="..\Private\SpaceRock.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\Player.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
