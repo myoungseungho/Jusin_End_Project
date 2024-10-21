@@ -63,15 +63,13 @@ public:
 		//땅에 닿는 순간
 		ANIME_HIT_BOUND_DOWN = 25, 
 
-		//공용
+		//피격
 		ANIME_HIT_HEAVY_AWAY_LEFT =33,
 		ANIME_HIT_HEAVY_AWAY_UP = 35, //077      보통 061(26번) 으로 연계됨 
 		ANIME_HIT_HEAVY_AWAY_LEFTDOWN = 39, //081
 		ANIME_HIT_HEAVY_AWAY_SPIN_UP = 30,
 		ANIME_HIT_HEAVY_AWAY_SPIN_LEFTUP = 31,
 		ANIME_HIT_HEAVY_AWAY_SPIN_LEFT = 32,
-
-		
 
 		ANIME_HIT_WALLBOUCE = 34,				//076.  이 다음 062(26번 ANIME_HIT_FALL_UPPER)로 연계됨
 
@@ -85,6 +83,12 @@ public:
 		//078 : HIT_AWAY_LEFTUP
 
 		ANIME_DIE_STAND = 29,
+
+
+		//가드
+		ANIME_GUARD_GROUND = 18,	//040
+		ANIME_GUARD_CROUCH = 19,	//041
+		ANIME_GUARD_AIR    = 20		//042
 
 	};
 	enum AnimationCount
@@ -129,7 +133,7 @@ public:
 
 	virtual void Gravity(_float fTimeDelta) override;
 
-	virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0)override;
+	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
 
 
 private:

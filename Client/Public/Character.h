@@ -168,7 +168,7 @@ public:
 public:
 	const int BUFFER_SIZE = 30;
 	//enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
-	enum HitMotion { HIT_LIGHT, HIT_HEAVY, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
+	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 	static const _float fGroundHeight;  //0
 	static const _float fJumpPower;
 	//const enum LOOK{ LOOK_LEFT = -1,  LOOK_RIGHT = 1};
@@ -255,7 +255,8 @@ public:
 
 	_uint Get_iPlayerTeam() { return m_iPlayerTeam; };
 
-	virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
+	//virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
+	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0) {};
 
 
 
@@ -309,7 +310,7 @@ public:
 
 	//피격 관련
 	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
-	void Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
@@ -331,6 +332,7 @@ public:
 
 	//1020 추가
 	void Set_GroundSmash(_bool bSmash);
+	void Guard_Update();
 	
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
@@ -350,7 +352,7 @@ protected:
 
 	CHARACTER_INDEX			m_eCharacterIndex={ PLAY_GOKU };
 	
-	FrameEventMap* m_pFrameEvent = { nullptr };
+	FrameEventMap*			m_pFrameEvent = { nullptr };
 	_bool					m_bMotionPlaying = false;
 
 	vector<CInput> inputBuffer;
@@ -398,6 +400,7 @@ protected:
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
 	_ushort m_iHit_Air_FallAnimationIndex = { 26 };	
 
+	_ushort m_iHit_Air_Spin_LeftUp = {31};
 
 
 	//기상
@@ -410,8 +413,13 @@ protected:
 	_ushort m_iAttack_Air1 = { 52 };		
 	_ushort m_iAttack_Air2 = { 53 };		
 	_ushort m_iAttack_Air3 = { 54 };		
+	_ushort m_iAttack_AirUpper = { 55 };
 
 
+	//가드
+	_ushort m_iGuard_GroundAnimationIndex = { 18 };
+	_ushort m_iGuard_CrouchAnimationIndex = { 19 };
+	_ushort m_iGuard_AirAnimationIndex = { 20 };
 
 
 
@@ -455,7 +463,7 @@ protected:
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 
 
-	_ushort		m_iAttackStepCount;  //콤보수 아님.
+	_ushort		m_iAttackStepCount = { 0 };  //콤보수 아님.
 
 	_bool		m_bSparking = false;
 	_bool		m_bNextAnimationGravityEvent = false;
@@ -468,8 +476,11 @@ protected:
 	//스턴관련
 	_bool m_bHitGroundSmashed = { false };
 
+	_bool m_bGuard = { false };
 
 
+	//디버그용
+	_uint m_iDebugComoboDamage = { 0 };
 
 
 private:

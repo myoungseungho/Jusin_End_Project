@@ -487,7 +487,8 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 
 void CFrameEvent_Manager::Initalize_NameMap()
 {
-    m_AnimationIndex.Initalize();
+    if(m_bInitalizeCount == false)
+        m_AnimationIndex.Initalize();
 }
 
 CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)

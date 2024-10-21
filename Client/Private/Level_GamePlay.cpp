@@ -55,7 +55,7 @@ HRESULT CLevel_GamePlay::Initialize()
 				
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"),&CharacterDesc)))
 			return E_FAIL;
-
+		
 		CharacterDesc.iTeam = 2;
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
@@ -143,4 +143,7 @@ CLevel_GamePlay * CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCon
 void CLevel_GamePlay::Free()
 {
 	__super::Free();
+
+	CFrameEvent_Manager::Destroy_Instance();
+
 }

@@ -17,6 +17,8 @@ namespace Client
 		OPENING_GOKU, OPENIING_21, SKILL_GOKU, CHARACTER_INDEX_END
 	};
 
+	const static enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
+
 
 	using Event = list<string>;
 	using FrameEvent_KeyFrame = map<_float, Event>;

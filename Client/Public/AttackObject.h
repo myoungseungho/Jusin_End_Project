@@ -4,7 +4,7 @@
 #include "Client_Defines.h"
 #include "Collider_Test.h"
 
-
+#include "AnimationEvent_Defines.h"
 
 BEGIN(Engine)
 class CShader;
@@ -17,7 +17,8 @@ BEGIN(Client)
 class CAttacKObject final : public CGameObject
 {
 public:
-	enum HitMotion {HIT_LIGHT, HIT_HEAVY, HIT_KNOCK_AWAY_LEFT,  HIT_KNOCK_AWAY_UP};
+	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
+
 	typedef struct ATTACK_DESC
 	{
 		CCollider_Test::COLLIDER_DESC ColliderDesc{};
@@ -32,7 +33,8 @@ public:
 		_float	fAnimationLockTime = { 0.1f };
 
 		//_bool   bOwnerGravityTimeReset = { false };
-		_bool		bGroundSmash = { true};
+		_bool		bGroundSmash = { false};
+		_bool		bGainAttackStep = { true };
 		class CCharacter* pOwner = { nullptr };
 	};
 private:
@@ -69,7 +71,7 @@ private:
 	
 	//1020Ãß°¡
 	_bool					m_bGroundSmash = { false };
-
+	_bool					m_bGain_AttackStep = { true };
 
 	class CCharacter*				m_pOwner = { nullptr };
 

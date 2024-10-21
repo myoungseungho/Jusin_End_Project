@@ -44,6 +44,7 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 
 	//m_bOwnerGravityTimeReset = pDesc->bOwnerGravityTimeReset;
 	m_bGroundSmash = pDesc->bGroundSmash;
+	m_bGain_AttackStep =	pDesc->bGainAttackStep;
 
 	m_pOwner = pDesc->pOwner;
 
@@ -111,12 +112,26 @@ void CAttacKObject::Late_Update(_float fTimeDelta)
 
 				if (m_pColliderCom->isColliding(pCharacter->Get_Component(TEXT("Com_Collider"))))
 				{
-					//pCharacter->Chase_Ready(0);
-					pCharacter->Set_Hit(m_ihitCharacter_Motion, m_fhitCharacter_StunTime,m_iDamage, m_fAnimationLockTime,m_fhitCharacter_Impus);
-					pCharacter->Set_GroundSmash(m_bGroundSmash);
 					bisCollsing = true;
+					
+					//공격성공시
+					if(pCharacter->Set_Hit(m_ihitCharacter_Motion, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus))
+					{
+						pCharacter->Set_GroundSmash(m_bGroundSmash);
+						m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
-					m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+						if (m_bGain_AttackStep)
+						{
+							m_pOwner->Gain_AttackStep(1);
+						}
+
+					}
+					else  //가드당했을시 충돌은 했으니
+					{
+						m_pOwner->Set_AnimationStop(0.05f);
+						pCharacter->Set_AnimationStop(0.05f);
+					}
+
 
 				}
 			}
