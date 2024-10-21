@@ -40,27 +40,29 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 	CImgui_Manager* pImGui_Manager = CImgui_Manager::Get_Instance();
 
 	pImGui_Manager->Access_Shader_Tab(static_cast<SHADER_TEXTURE_DESC*>(pArg)->iShaderTab_ID)->Push_ShaderTexture(this);
-	_float2 fSize = m_pTextureCom->Get_TextureSize();
-	_float fDiff;
+	_float2 fTextureSize = m_pTextureCom->Get_TextureSize();
 
-	if (fSize.x > g_iWinSizeX)
+	_float fAspectRatio = fTextureSize.x / fTextureSize.y;
+	_float fWinAspectRatio = (_float)g_iWinSizeX / (_float)g_iWinSizeY;
+
+	if (fTextureSize.x > g_iWinSizeX || fTextureSize.y > g_iWinSizeY)
 	{
-		fDiff = 1920 - fSize.x;
-		fSize.x += fDiff;
-		fSize.y += fDiff;
+		if (fTextureSize.x / g_iWinSizeX > fTextureSize.y / g_iWinSizeY)
+		{
+			fTextureSize.x = g_iWinSizeX;
+			fTextureSize.y = g_iWinSizeX / fAspectRatio;
+		}
+		else
+		{
+			fTextureSize.y = g_iWinSizeY;
+			fTextureSize.x = g_iWinSizeY * fAspectRatio;
+		}
 	}
 
-	if (fSize.y > g_iWinSizeY)
-	{
-		fDiff = 1080 - fSize.y;
-		fSize.x += fDiff;
-		fSize.y += fDiff;
-	}
-
-	m_pTransformCom->Set_Scaled(fSize.x, fSize.y, 1.f);
+	m_pTransformCom->Set_Scaled(fTextureSize.x, fTextureSize.y, 1.f);
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-		XMVectorSet(fSize.x *0.5f - m_fX, m_fY - fSize.y * 0.5f, 0.f, 1.f));
+		XMVectorSet(fTextureSize.x *0.5f - m_fX, m_fY - fTextureSize.y * 0.5f, 0.f, 1.f));
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 	//	XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 

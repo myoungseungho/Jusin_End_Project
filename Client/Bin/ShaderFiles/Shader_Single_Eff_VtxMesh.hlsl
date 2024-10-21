@@ -126,15 +126,16 @@ PS_OUT PS_MAIN_DOUBLE_D(PS_IN In)
     float3 vBrown = { 166.f / 255.f, 131.f / 255.f, 115.f / 255.f };
     
     vMtrlDiffuse.rgb *= vBrown;
-
-// 비율에 따라 색상 조정
-    Out.vDiffuse = vector(
-    min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
-    min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
-    min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
-    //vMtrlDiffuse.a
-    0.5f
-    );
+    // 비율에 따라 색상 조정
+    Out.vDiffuse = vMtrlDiffuse;
+//// 비율에 따라 색상 조정
+//    Out.vDiffuse = vector(
+//    min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
+//    min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
+//    min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
+//    //vMtrlDiffuse.a
+//    0.5f
+//    );
 
     Out.vAlpha = vMtrlAlpha.r;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);

@@ -82,7 +82,7 @@ CGameObject* CObject_Manager::Clone_GameObject(const _wstring& strPrototypeTag, 
 	CGameObject* pGameObject = pPrototype->Clone(pArg);
 	if (nullptr == pGameObject)
 		return nullptr;
-
+	
 	return pGameObject;
 }
 

@@ -68,6 +68,8 @@ public:
 
 	void Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave);
 	void Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave);
+
+	void Update_TestToLayer_TextureCom(CTexture* pTexture) { m_TestEffectModel_Texture = pTexture; }
 public:
 	_int m_iNumberId = { -1 };
 	_bool m_TabPick = { false };
