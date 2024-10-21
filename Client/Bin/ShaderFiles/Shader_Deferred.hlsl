@@ -124,6 +124,10 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL(PS_IN In)
 
 	
     PS_OUT_LIGHT Out = (PS_OUT_LIGHT) 0;
+	
+	vector			vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
+	vector			vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+	float			fViewZ = vDepthDesc.x * 1000.f;
 
     float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
 
@@ -154,8 +158,8 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL(PS_IN In)
 	Out.vShade = g_vLightDiffuse * max(dot(normalize(g_vLightDir) * -1.f, vNormal), 0.f) + vAmbient;
 	Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
 
-    float4 vReflect = reflect(normalize(g_vLightDir), vNormal);
-    float4 vLook = vWorldPos - g_vCamPosition;
+    //float4 vReflect = reflect(normalize(g_vLightDir), vNormal);
+    //float4 vLook = vWorldPos - g_vCamPosition;
    // 따로 죽이기위해 분리
     float specularIntensity = max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f);
    
@@ -229,7 +233,6 @@ PS_OUT_LIGHT PS_MAIN_POINT(PS_IN In)
 
 }
 
-
 bool isOutLine = false;
 float CalculateNormalDiff(float2 vTexcoord, float4 vNormal)
 {
@@ -268,6 +271,7 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
     float fDepthLeft = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeft).x * 1000.f;
     float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
 
+
     float fDepthRightUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightUp).x * 1000.f;
     float fDepthRightDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightDown).x * 1000.f;
     float fDepthLeftUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftUp).x * 1000.f;
@@ -277,6 +281,8 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
                      + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp)
                      + abs(fViewZ - fDepthRightUp) + abs(fViewZ - fDepthRightDown)
                      + abs(fViewZ - fDepthLeftUp) + abs(fViewZ - fDepthLeftDown);
+
+
     return fDepthDiff;
 }
 
@@ -289,6 +295,7 @@ float CalculateEdge(float2 vTexcoord, float fViewZ, float4 vNormal, float fEdgeT
     float fDepthDiff = CalculateDepthDiff(vTexcoord, fViewZ);
    
     float fEdge = step(fEdgeDepthThreshold, fDepthDiff); // * step(fEdgeNormalThreshold, fNormalDiff);
+
 
     return fEdge;
 }

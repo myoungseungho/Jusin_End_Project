@@ -30,11 +30,9 @@ public: /* For.Input_Device */
 	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouseKeyState);
 	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState);
 
-
 	_bool Key_Pressing(_uint _iKey);
 	_bool Key_Down(_uint _iKey);
 	_bool Key_Up(_uint _iKey);
-
 
 	_bool MouseDown(MOUSEKEYSTATE eMouse);
 	_bool MousePress(MOUSEKEYSTATE eMouse);
@@ -68,6 +66,7 @@ public: /* For.Object_Manager */
 	HRESULT Get_Prototype_Names(vector<string>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < _wstring, list<CGameObject*>>>*);
+
 
 public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);

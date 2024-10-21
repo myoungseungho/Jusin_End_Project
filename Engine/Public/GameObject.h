@@ -93,9 +93,6 @@ protected:
 
 	//
 public:
-	void SetActive(_bool active) { m_bIsActive = active; }
-	_bool IsActive() const { return m_bIsActive; }
-
 	//IMGUI 관련
 	_bool						m_bIsImguiClick = { false };
 	//파싱 관련

@@ -271,7 +271,6 @@
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\UI_TimerPanel.h" />
-    <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
     <ClInclude Include="..\Public\Shader_Material.h" />
     <ClInclude Include="..\public\Shader_Tab_Defines.h" />
@@ -283,7 +282,6 @@
     <ClInclude Include="..\Public\SpaceHorizon.h" />
     <ClInclude Include="..\Public\SpaceMoon.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
-    <ClInclude Include="..\Public\Player.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
     <ClInclude Include="..\Public\SpaceStone.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
@@ -369,7 +367,6 @@
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
@@ -404,7 +401,6 @@
     <ClCompile Include="..\Private\S21_MeleeAttack.cpp" />
     <ClCompile Include="..\private\UI_TimerPanel.cpp" />
     <ClCompile Include="..\Private\imnodes.cpp" />
-    <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp" />
     <ClCompile Include="..\Private\Shader_Material.cpp" />
     <ClCompile Include="..\Private\Shader_Texture.cpp" />
@@ -415,7 +411,6 @@
     <ClCompile Include="..\Private\SpaceHorizon.cpp" />
     <ClCompile Include="..\Private\SpaceMoon.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
-    <ClCompile Include="..\Private\Player.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
     <ClCompile Include="..\Private\SpaceStone.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />

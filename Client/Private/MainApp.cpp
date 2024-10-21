@@ -17,7 +17,7 @@
 #include "UI_Loading_Font.h"
 
 #include "thread"
->>>>>>> origin/김?�완
+
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
 	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
@@ -148,9 +148,10 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-
-
-
+	//For  Prototype Collision
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
+	//	CCollider_Test::Create(m_pDevice, m_pContext))))
+	//	return E_FAIL;
 
 	//Component_Shader
 

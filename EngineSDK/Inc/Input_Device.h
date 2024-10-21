@@ -16,6 +16,7 @@ public:
 	_long Get_DIMouseMove(MOUSEMOVESTATE eMouseState) { return *(((_long*)&m_tMouseState) + eMouseState); }
 	_byte Get_DIMouseWheelState() { return m_tMouseState.lZ; }
 
+
 	_bool Key_Pressing(_uint _iKey);
 	_bool Key_Down(_uint _iKey);
 	_bool Key_Up(_uint _iKey);

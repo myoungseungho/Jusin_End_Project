@@ -14,7 +14,7 @@ private:
 public:
 	virtual HRESULT Initialize() override;
 	virtual void Update(_float fTimeDelta) override;
-	virtual HRESULT Render() override;
+	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
 	/* 내 게임내에 배경을 구성하는 객체들을 추가한다. */
