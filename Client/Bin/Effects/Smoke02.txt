@@ -1,0 +1,250 @@
+[Layer]
+LayerName: Smoke02
+Duration: 2
+TickPerSecond: 0.8
+KeyFramesCount: 119
+NumEffec: 6
+
+[Effect]
+EffectName: Smoke0201
+ModelName: Model_Effect_cmn_SmokeModels0202
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0201
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 13
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.0666667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0202
+ModelName: Model_Effect_cmn_SmokeModels0203
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0202
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 14
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.0666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0203
+ModelName: Model_Effect_cmn_SmokeModels0204
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0203
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 15
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0204
+ModelName: Model_Effect_cmn_SmokeModels0205
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0204
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0205
+ModelName: Model_Effect_cmn_SmokeModels0206
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0205
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 17
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.333333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0206
+ModelName: Model_Effect_cmn_SmokeModels0201
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0206
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 18
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.333333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.4
+Duration: 2
+IsNotPlaying: true
+

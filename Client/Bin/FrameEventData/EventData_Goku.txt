@@ -3,6 +3,8 @@ PLAY_HIT,HTN021_body,20.000000,AnimSpeedChange,0.000000,25.000000
 PLAY_HIT,HTN620cs_body,40.000000,AnimSpeedChange,0.000000,25.000000
 
 
+//,체이스는 034  인덱스 13
+
 
 //,오공 오프닝
 //,변신타이밍 260시작 290에서 내려감
@@ -44,9 +46,11 @@ PLAY_GOKU,GKS201_body,20,ObjectMove,0.05,0,0,0
 //,PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,240,TEST
 PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,120
 PLAY_GOKU,GKS202_body,35,AnimSpeedChange,0.02,20
-PLAY_GOKU,GKS202_body,35,NextAnimationCheck,33333333
+PLAY_GOKU,GKS202_body,35,AttackEvent,202
+PLAY_GOKU,GKS202_body,38,NextAnimationCheck,33333333
 PLAY_GOKU,GKS202_body,40,AnimSpeedChange,0.02,100
 PLAY_GOKU,GKS202_body,42,NextAnimationCheck,33333333
+
 
 
 PLAY_GOKU,GKS202_body,12,ObjectMove,0.1,0,0,0
@@ -138,7 +142,7 @@ PLAY_GOKU,GKS230_body,10,NextAnimationCheck,333 3
 
 //,앉아중 기존 공격프레임은 11~14
 PLAY_GOKU,GKS231_body,0,AnimSpeedChange,0.02,90
-PLAY_GOKU,GKS231_body,21,AttackEvent,33333
+//,PLAY_GOKU,GKS231_body,21,AttackEvent,33333
 PLAY_GOKU,GKS231_body,25,AttackEvent,333333
 PLAY_GOKU,GKS231_body,30,NextAnimationCheck,333333333
 PLAY_GOKU,GKS231_body,40,NextAnimationCheck,333333333
@@ -170,7 +174,8 @@ PLAY_GOKU,GKS232_body,0,AnimSpeedChange,0.025,80
 PLAY_GOKU,GKS232_body,15,AnimSpeedChange,0.025,120
 PLAY_GOKU,GKS232_body,30,AnimSpeedChange,0.025,80
 PLAY_GOKU,GKS232_body,34,AttackEvent,333333
-PLAY_GOKU,GKS232_body,34,NextAnimationCheck,33333
+PLAY_GOKU,GKS232_body,39,NextAnimationCheck,33333
+PLAY_GOKU,GKS232_body,43,NextAnimationCheck,33333
 
 
 //,공중약
@@ -183,8 +188,10 @@ PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
 //,공중 중
 PLAY_GOKU,GKS261_body,0,AnimSpeedChange,0.025000,120
 PLAY_GOKU,GKS261_body,30,AnimSpeedChange,0.027000,80
-PLAY_GOKU,GKS261_body,30,AttackEvent,33333333
+PLAY_GOKU,GKS261_body,31,AttackEvent,33333333
 PLAY_GOKU,GKS261_body,35,NextAnimationCheck,333333
+PLAY_GOKU,GKS261_body,46,NextAnimationCheck,333333
+PLAY_GOKU,GKS261_body,58,NextAnimationCheck,333333
 
 //,원본은 0.061,120
 
@@ -205,18 +212,38 @@ PLAY_GOKU,GKS262_body,30,AnimSpeedChange,0.025,60
 PLAY_GOKU,GKS262_body,42,AnimSpeedChange,0.040000,85.251999
 
 //,공중 아래강
-PLAY_GOKU,GKS263_body,0.000000,AnimSpeedChange,0.024000,61.011002
+//,PLAY_GOKU,GKS263_body,0.000000,AnimSpeedChange,0.024000,61.011002
+//,PLAY_GOKU,GKS263_body,0.000000,AnimSpeedChange,0.024000,80.011002
+//,PLAY_GOKU,GKS263_body,0.000000,AnimSpeedChange,0.024000,160.011002
+PLAY_GOKU,GKS263_body,0.000000,AnimSpeedChange,0.024000,200.011002
 PLAY_GOKU,GKS263_body,19.200006,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS263_body,30,AnimSpeedChange,0.02,20
-PLAY_GOKU,GKS263_body,30,AttackEvent,33333
-PLAY_GOKU,GKS263_body,34,AnimSpeedChange,0.02,120
-PLAY_GOKU,GKS263_body,50,AnimSpeedChange,0.02,80
+PLAY_GOKU,GKS263_body,31,AttackEvent,33333
+//,PLAY_GOKU,GKS263_body,34,AnimSpeedChange,0.02,120
+PLAY_GOKU,GKS263_body,34,AnimSpeedChange,0.02,160
+PLAY_GOKU,GKS263_body,35,NextAnimationCheck,333333
+
+//,PLAY_GOKU,GKS263_body,50,AnimSpeedChange,0.02,80
 
 PLAY_GOKU,GKS263_body,20,ObjectMove,0,0.1,0,0
 PLAY_GOKU,GKS263_body,22,ObjectMove,0,0.1,0,0
 PLAY_GOKU,GKS263_body,24,ObjectMove,0,0.1,0,0
 PLAY_GOKU,GKS263_body,26,ObjectMove,0,0.1,0,0
 PLAY_GOKU,GKS263_body,28,ObjectMove,0,0.1,0,0
+
+
+
+PLAY_GOKU,GKS263_body,0,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,2,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,4,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,6,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,8,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,10,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,12,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,14,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,16,ObjectMove,0.1,0,0,0
+PLAY_GOKU,GKS263_body,18,ObjectMove,0.1,0,0,0
+
 
 
 //,공중 특
@@ -410,12 +437,15 @@ PLAY_GOKU,GKS405_body,59,ObjectMove,0.01,0,0,0
 
 
 //,214약
-PLAY_GOKU,GKS406_body,0.000000,AnimSpeedChange,0.023000,104.241997
-PLAY_GOKU,GKS406_body,20.1,AnimSpeedChange,0.023000,104.241997
-PLAY_GOKU,GKS406_body,40,AttackEvent,33333
+PLAY_GOKU,GKS406_body,0.000000,AnimSpeedChange,0.013000,121
+PLAY_GOKU,GKS406_body,20.1,AnimSpeedChange,0.013000,121
+PLAY_GOKU,GKS406_body,40,AttackEvent,0,0
 PLAY_GOKU,GKS406_body,45,NextAnimationCheck,333333
-PLAY_GOKU,GKS406_body,70,AttackEvent,33333
+PLAY_GOKU,GKS406_body,70,AttackEvent,1,0
 PLAY_GOKU,GKS406_body,75,NextAnimationCheck,333333
+PLAY_GOKU,GKS406_body,80,AnimSpeedChange,0.023000,120
+
+
 
 //, 2바퀴 회전시 80->105로,   그 이상 회전시  80~100->40  속도 매우 빠르게
 
@@ -479,6 +509,19 @@ PLAY_GOKU,GKS406_body,72,ObjectMove,0.09,0.01,0,0
 PLAY_GOKU,GKS406_body,74,ObjectMove,0.09,0.01,0,0
 PLAY_GOKU,GKS406_body,76,ObjectMove,0.09,0.01,0,0
 PLAY_GOKU,GKS406_body,78,ObjectMove,0.09,0.01,0,0
+
+PLAY_GOKU,GKS406_body,80,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,82,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,84,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,86,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,88,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,90,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,92,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,94,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,96,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,98,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,100,ObjectMove,0.09,0.01,0,0
+PLAY_GOKU,GKS406_body,102,ObjectMove,0.09,0.01,0,0
 
 
 
@@ -829,33 +872,40 @@ PLAY_GOKU,GKS038_body,0.000000,AnimSpeedChange,0.010000,61.818001
 
 //,서서 가드 (공용)
 PLAY_GOKU,GKS040_body,0,AnimSpeedChange,0.010000,61.818001
-PLAY_GOKU,GKS040_body,0,FrameMove,10
+PLAY_GOKU,GKS040_body,0,PositionChange,10
 
 //,앉아 가드 (공용)
 PLAY_GOKU,GKS041_body,0,AnimSpeedChange,0.010000,61.818001
-PLAY_GOKU,GKS041_body,0,FrameMove,10
+PLAY_GOKU,GKS041_body,0,PositionChange,10
 
 //,공중 가드 (공용)
 PLAY_GOKU,GKS042_body,0,AnimSpeedChange,0.010000,61.818001
-PLAY_GOKU,GKS042_body,0,FrameMove,10
+PLAY_GOKU,GKS042_body,0,PositionChange,10
 
 
 //,서서 피격 (뒤로밀림) 5프레임에서 멈춤, 10에서끝남...?  경직시간만큼 position을 가짐...왜?  중공격 10~24 **
-//,PLAY_GOKU,GKS050_body,0,FrameMove,5
-//,PLAY_GOKU,GKS050_body,10,FrameMove,5
+//,PLAY_GOKU,GKS050_body,0,PositionChange,5
+//,PLAY_GOKU,GKS050_body,10,PositionChange,5
 PLAY_GOKU,GKS050_body,0.000000,AnimSpeedChange,0.064000,86.060997
 
+//,PLAY_GOKU,GKS050_body,0,AnimSpeedChange,0.022000,61.818001
+
 //,숙이는 피격모션
-PLAY_GOKU,GKS051_body,0.000000,AnimSpeedChange,0.064000,5
-PLAY_GOKU,GKS051_body,0,FrameMove,15
+PLAY_GOKU,GKS051_body,0.000000,AnimSpeedChange,0.064000,86
+PLAY_GOKU,GKS051_body,0,PositionChange,15
 
 //,앉아 피격모션
 PLAY_GOKU,GKS052_body,0,AnimSpeedChange,0.020000,57.374001
-PLAY_GOKU,GKS052_body,0,FrameMove,10
+//,PLAY_GOKU,GKS052_body,0,PositionChange,10
 
 
 //, 공중피격 약 10   스턴끝날때 40이 되도록 속도를 조정...?  스피드가  스턴시간*4라고?  상대방의 TickPerSecond를 조절하는 기능필요?
-PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,49.292999
+//,PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,49.292999
+PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,30
+PLAY_GOKU,GKS060_body,0,PositionChange,14
+PLAY_GOKU,GKS060_body,30,AnimSpeedChange,0.044000,60
+PLAY_GOKU,GKS060_body,40,AnimSpeedChange,0.044000,1
+PLAY_GOKU,GKS060_body,56,AnimSpeedChange,0.01,2
 
 
 //,낙법 없이 바닥에 누움
@@ -878,7 +928,8 @@ PLAY_GOKU,GKS070_body,0.000000,AnimSpeedChange,0.013000,24.646999
 
 //,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
 PLAY_GOKU,GKS072_body,0.000000,AnimSpeedChange,0.013000,62.223000
-PLAY_GOKU,GKS072_body,39,FrameMove,0
+//,PLAY_GOKU,GKS072_body,37,PositionChange,4
+PLAY_GOKU,GKS072_body,37,PositionChange,2.78
 
 
 //,왼쪽위로 회전하며 날아가는 자세
@@ -890,14 +941,20 @@ PLAY_GOKU,GKS074_body,0.000000,AnimSpeedChange,0.013000,62.223000
 
 //,강공맞고 왼쪽으로
 PLAY_GOKU,GKS075_body,0.000000,AnimSpeedChange,0.030000,44.040001
+PLAY_GOKU,GKS075_body,0,ObjectMove,0, 0.1, 0, 0
+
 PLAY_GOKU,GKS075_body,5,AnimSpeedChange,0.030000,10.353000
 
 //, 076 벽에 부딪힘. 4duration짜리 정지모션   보통 062로 연계됨
-PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,1
+PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,25
 
 //,어퍼맞고 상승
-PLAY_GOKU,GKS077_body,0.000000,AnimSpeedChange,0.006000,29.091000
-PLAY_GOKU,GKS077_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+//,기존속도
+//,PLAY_GOKU,GKS077_body,0.000000,AnimSpeedChange,0.006000,29.091000
+//,PLAY_GOKU,GKS077_body,5.235000,AnimSpeedChange,0.006000,3.636000
+	29.091000
+
 
 //,강공맞고 왼쪽 인데 공중? 살짝왼쪽위
 PLAY_GOKU,GKS078_body,0.000000,AnimSpeedChange,0.006000,29.091000

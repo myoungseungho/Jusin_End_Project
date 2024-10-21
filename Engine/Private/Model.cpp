@@ -339,11 +339,11 @@ HRESULT CModel::Bind_BoneMatrices(CShader* pShader, const _char* pConstantName, 
 	return S_OK;
 }
 
-string CModel::ExtractFileName(const std::string& filePath) 
+string CModel::ExtractFileName(const std::string& filePath)
 {
 	size_t pos = filePath.find_last_of("\\/");  // 마지막 경로 위치 찾기
 
-	if (pos != std::string::npos) 
+	if (pos != std::string::npos)
 		return filePath.substr(pos + 1);  // 파일명만 추출
 
 	return filePath;  // 경로 구분자가 없으면 전체 문자열 반환
@@ -356,7 +356,7 @@ HRESULT CModel::InitializeFromBinary(const string& binFilePath, _fmatrix PreTran
 		return E_FAIL;
 	}
 
- 	XMStoreFloat4x4(&m_PreTransformMatrix, PreTransformMatrix);
+	XMStoreFloat4x4(&m_PreTransformMatrix, PreTransformMatrix);
 
 	// 헤더 읽기
 	ModelHeader header;

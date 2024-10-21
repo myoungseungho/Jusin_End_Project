@@ -169,6 +169,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					keyFrame.vRotation = keyFrameData.rotation;
 					keyFrame.fCurTime = keyFrameData.curTime;
 					keyFrame.fDuration = keyFrameData.duration;
+					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
 
 					// 키프레임 추가
 					pSingleEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
@@ -205,6 +206,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					keyFrame.vRotation = keyFrameData.rotation;
 					keyFrame.fCurTime = keyFrameData.curTime;
 					keyFrame.fDuration = keyFrameData.duration;
+					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
 
 					// 키프레임 추가
 					pMultiEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
@@ -240,6 +242,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					keyFrame.vRotation = keyFrameData.rotation;
 					keyFrame.fCurTime = keyFrameData.curTime;
 					keyFrame.fDuration = keyFrameData.duration;
+					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
 
 					// 키프레임 추가
 					pMoveTexEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);

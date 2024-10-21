@@ -30,6 +30,7 @@
 
 
 
+#include "Animation.h"
 
 
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -64,8 +65,15 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	m_eCharacterIndex = PLAY_21;
-	m_iFallAnimationIndex = 7;
-	m_iIdleAnimationIndex = 0;
+
+	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
+	m_iIdleAnimationIndex = ANIME_IDLE;
+	m_iJumpAnimationIndex = ANIME_JUMP_UP;
+	m_iStandingMidAttackAnimationIndex = ANIME_ATTACK_MEDIUM;
+
+
+	m_iNextAnimation.first = ANIME_IDLE;
+
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -79,7 +87,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	
 
 	//m_pModelCom->SetUp_Animation(16, true);
-	m_pModelCom->SetUp_Animation(0, true);
+
+	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
 	m_pModelCom->Play_Animation(0.f);
 
 
@@ -146,12 +155,19 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iHp = 100;
 	m_eCharacterID = ANDROID21;
 
+	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
+
+	
+
+
 	return S_OK;
 }
 
 void CPlay_21::Priority_Update(_float fTimeDelta)
 {
+
 	__super::Priority_Update(fTimeDelta);
+
 }
 
 void CPlay_21::Update(_float fTimeDelta)
@@ -160,193 +176,188 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	Action_Hit(DIK_F9, 0.25f, fTimeDelta);
 
-	//Action_AttBuf(DIK_9, m_ePlayerSlot, fTimeDelta);
+	InputedCommandUpdate(fTimeDelta);
+	InputCommand();
+
+	//if(m_pGameInstance->Key_Down(DIK_U))
+	//	ShowInputBuffer();
+
+	//CheckCommandWithStartCondition()
+
+	//CheckAllCommands();
+
+	//_uint iTest = CheckAllCommands();
+
+	//Set_Animation(CheckAllCommands());
 
 
+	CheckAllCommands();
 
-//	InputedCommandUpdate(fTimeDelta);
-//	InputCommand();
-//
-//	//if(m_pGameInstance->Key_Down(DIK_U))
-//	//	ShowInputBuffer();
-//
-//	//CheckCommandWithStartCondition()
-//
-//	//CheckAllCommands();
-//
-//	//_uint iTest = CheckAllCommands();
-//
-//	//Set_Animation(CheckAllCommands());
-//
-//
-//	CheckAllCommands();
-//
-//	if (m_bAnimationLock == false)
-//	{
-//
-//		Character_Play_Animation(fTimeDelta);
-//
-//		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
-//		if (m_bMotionPlaying == false)
-//		{
-//			if(m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
-//				AnimeEndNextMoveCheck();
-//		}
-//
-//
-//	}
-//	else
-//	{
-//		m_fAccAnimationLock += fTimeDelta;
-//		if (m_fAccAnimationLock > m_fMaxAnimationLock)
-//		{
-//			m_fAccAnimationLock = 0.f;
-//			m_bAnimationLock = false;
-//		}
-//	}
-//
-//	
-//
-//	Gravity(fTimeDelta);
-//
-//	
-//	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
-//	{
-//		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
-//		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
-//		{
-//			Reset_AttackCount();
-//
-//			_short MoveKey = 0;
-//			if (m_pGameInstance->Key_Pressing(DIK_W))
-//			{
-//				m_pTransformCom->Add_Move({ 0,3,0 });
-//				Set_Animation(ANIME_JUMP_UP);
-//			}
-//
-//			else if (m_pGameInstance->Key_Pressing(DIK_S))
-//			{
-//				//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
-//				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
-//				{
-//					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
-//				}
-//
-//			}
-//
-//			else
-//			{
-//				if (m_pGameInstance->Key_Pressing(DIK_A))
-//				{
-//					MoveKey -= m_iLookDirection;
-//				}
-//
-//				else if (m_pGameInstance->Key_Pressing(DIK_D))
-//				{
-//					MoveKey += m_iLookDirection;
-//				}
-//
-//
-//				if (MoveKey == -1)
-//				{
-//					
-//					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
-//					//{
-//					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
-//					//}
-//					//else
-//						m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-//
-//
-//					m_iNextAnimation.first = ANIME_IDLE;
-//					m_iNextAnimation.second = 100.f;
-//
-//				}
-//				else if (MoveKey == 1)
-//				{
-//					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
-//					{
-//						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH, true);
-//					}
-//					else
-//						m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-//
-//					m_iNextAnimation.first = ANIME_IDLE;
-//					m_iNextAnimation.second = 100.f;
-//				}
-//				else
-//				{
-//					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
-//					{
-//						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH_END, false);
-//					}
-//					else
-//						m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-//
-//					m_iNextAnimation.first = ANIME_IDLE;
-//					m_iNextAnimation.second = 100.f;
-//				}
-//			}
-//
-//			
-//			//앉기 추가 전에는 이거만 있었음
-//			//if (m_pGameInstance->Key_Pressing(DIK_A))
-//			//{
-//			//	MoveKey -= m_iLookDirection;
-//			//}
-//			//
-//			//else if (m_pGameInstance->Key_Pressing(DIK_D))
-//			//{
-//			//	MoveKey += m_iLookDirection;
-//			//}
-//			//
-//			//
-//			//if (MoveKey == -1)
-//			//{
-//			//	m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-//			//	m_iNextAnimation.first = ANIME_IDLE;
-//			//	m_iNextAnimation.second = 100.f;
-//			//
-//			//}
-//			//else if (MoveKey == 1)
-//			//{
-//			//	m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-//			//	m_iNextAnimation.first = ANIME_IDLE;
-//			//	m_iNextAnimation.second = 100.f;
-//			//}
-//			//else
-//			//{
-//			//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-//			//	m_iNextAnimation.first = ANIME_IDLE;
-//			//	m_iNextAnimation.second = 100.f;
-//			//}
-//
-//			
-//		}
-//	}
-//
-//
-//	if (m_pGameInstance->Key_Down(DIK_8))
-//	{
-//		ShowInputBuffer();
-//	}
-//	if (m_pGameInstance->Key_Down(DIK_1))
-//	{
-//		DebugPositionReset();
-//	}
-//
-//	if (m_pGameInstance->Key_Down(DIK_2))
-//	{
-//		FlipDirection();
-//	}
-//	if (m_pGameInstance->Key_Down(DIK_3))
-//	{
-//		m_pModelCom->SetUp_Animation(0,true);
-//	}
-//
-//	
-//
-//	
+	if (m_bAnimationLock == false)
+	{
+
+		Character_Play_Animation(fTimeDelta);
+
+		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
+		if (m_bMotionPlaying == false)
+		{
+			if(m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
+				AnimeEndNextMoveCheck();
+		}
+
+
+	}
+	else
+	{
+		m_fAccAnimationLock += fTimeDelta;
+		if (m_fAccAnimationLock > m_fMaxAnimationLock)
+		{
+			m_fAccAnimationLock = 0.f;
+			m_bAnimationLock = false;
+		}
+	}
+
+	
+
+	Gravity(fTimeDelta);
+
+	
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
+	{
+		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
+		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
+		{
+			Reset_AttackCount();
+
+			_short MoveKey = 0;
+			if (m_pGameInstance->Key_Pressing(DIK_W))
+			{
+				m_pTransformCom->Add_Move({ 0,3,0 });
+				Set_Animation(ANIME_JUMP_UP);
+			}
+
+			else if (m_pGameInstance->Key_Pressing(DIK_S))
+			{
+				//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
+				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
+				{
+					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
+				}
+
+			}
+
+			else
+			{
+				if (m_pGameInstance->Key_Pressing(DIK_A))
+				{
+					MoveKey -= m_iLookDirection;
+				}
+
+				else if (m_pGameInstance->Key_Pressing(DIK_D))
+				{
+					MoveKey += m_iLookDirection;
+				}
+
+
+				if (MoveKey == -1)
+				{
+					
+					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
+					//{
+					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
+					//}
+					//else
+						m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+
+
+					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.second = 100.f;
+
+				}
+				else if (MoveKey == 1)
+				{
+					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
+					{
+						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH, true);
+					}
+					else
+						m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
+
+					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.second = 100.f;
+				}
+				else
+				{
+					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
+					{
+						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH_END, false);
+					}
+					else
+						m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+
+					m_iNextAnimation.first = ANIME_IDLE;
+					m_iNextAnimation.second = 100.f;
+				}
+			}
+
+			
+			//앉기 추가 전에는 이거만 있었음
+			//if (m_pGameInstance->Key_Pressing(DIK_A))
+			//{
+			//	MoveKey -= m_iLookDirection;
+			//}
+			//
+			//else if (m_pGameInstance->Key_Pressing(DIK_D))
+			//{
+			//	MoveKey += m_iLookDirection;
+			//}
+			//
+			//
+			//if (MoveKey == -1)
+			//{
+			//	m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
+			//	m_iNextAnimation.first = ANIME_IDLE;
+			//	m_iNextAnimation.second = 100.f;
+			//
+			//}
+			//else if (MoveKey == 1)
+			//{
+			//	m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
+			//	m_iNextAnimation.first = ANIME_IDLE;
+			//	m_iNextAnimation.second = 100.f;
+			//}
+			//else
+			//{
+			//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
+			//	m_iNextAnimation.first = ANIME_IDLE;
+			//	m_iNextAnimation.second = 100.f;
+			//}
+
+			
+		}
+	}
+
+
+	if (m_pGameInstance->Key_Down(DIK_8))
+	{
+		ShowInputBuffer();
+	}
+	if (m_pGameInstance->Key_Down(DIK_1))
+	{
+		DebugPositionReset();
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_2))
+	{
+		FlipDirection();
+	}
+	if (m_pGameInstance->Key_Down(DIK_3))
+	{
+		m_pModelCom->SetUp_Animation(0,true);
+	}
+
+	
+	Check_Ground();
 }
 
 void CPlay_21::Late_Update(_float fTimeDelta)
@@ -598,6 +609,28 @@ HRESULT CPlay_21::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CPlay_21::Check_Ground()
+{
+
+	//_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	 _float fHeight = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	 if (fHeight <= fGroundHeight)
+	 {
+		 if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_214)
+		 {
+			 if(m_pModelCom->Get_CurrentAnimationPosition() < 55)
+			 {
+				 m_pModelCom->CurrentAnimationPositionJump(55.f);
+			 //m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 90.f;
+			 }
+		 }
+
+
+	 }
+
 }
 
 _bool CPlay_21::Check_bCurAnimationisGroundMove(_uint iAnimation)

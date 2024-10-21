@@ -178,7 +178,6 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 			file << L"Position: " << effectData.position.x << L" " << effectData.position.y << L" " << effectData.position.z << L"\n";
 			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
 			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
-			file << L"IsNotPlaying: " << (effectData.isNotPlaying ? L"true" : L"false") << L"\n";
 			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n";
 			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
 
@@ -190,7 +189,8 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 				file << L"Scale: " << keyFrameData.scale.x << L" " << keyFrameData.scale.y << L" " << keyFrameData.scale.z << L"\n";
 				file << L"Rotation: " << keyFrameData.rotation.x << L" " << keyFrameData.rotation.y << L" " << keyFrameData.rotation.z << L"\n";
 				file << L"CurTime: " << keyFrameData.curTime << L"\n";
-				file << L"Duration: " << keyFrameData.duration << L"\n\n";
+				file << L"Duration: " << keyFrameData.duration << L"\n";
+				file << L"IsNotPlaying: " << (keyFrameData.bIsNotPlaying ? L"true" : L"false") << L"\n\n";
 			}
 		}
 	}
@@ -330,6 +330,10 @@ void CFile_Manager::Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& key
 		}
 		else if (key == L"CurTime") keyFrameData.curTime = stof(value);
 		else if (key == L"Duration") keyFrameData.duration = stof(value);
+		else if (key == L"IsNotPlaying") {
+			if (value == L"true") keyFrameData.bIsNotPlaying = true;
+			else if (value == L"false") keyFrameData.bIsNotPlaying = false;
+		}
 	}
 }
 

@@ -66,6 +66,8 @@ public: /* For.Object_Manager */
 	HRESULT Get_Prototype_Names(vector<string>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < _wstring, list<CGameObject*>>>*);
+	CGameObject* Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex = 0);
+	_uint Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag);
 
 
 public: /* For.Component_Manager */
@@ -104,6 +106,13 @@ public: /* For.FileManager */
 	void* LoadObjects(const wstring& filename);
 	HRESULT Save_Effects(wstring& FilePath, void* pArg);
 	void* Load_Effects(wstring& FilePath);
+
+
+
+public:
+	_bool Key_Down(_int _iKey);
+	_bool Key_Pressing(_uint _iKey);
+	_bool Key_Up(_uint _iKey);
 
 private:
 	class CGraphic_Device*				m_pGraphic_Device = { nullptr };

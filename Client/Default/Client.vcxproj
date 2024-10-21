@@ -205,6 +205,7 @@
     <ClInclude Include="..\public\UI_AttBufEffect.h" />
     <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
     <ClInclude Include="..\Public\AnimationNameMap.h" />
+    <ClInclude Include="..\Public\AttackObject.h" />
     <ClInclude Include="..\Public\Camera_Free.h" />
     <ClInclude Include="..\Public\Character.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
@@ -219,6 +220,8 @@
     <ClInclude Include="..\public\Effect_Rect.h" />
     <ClInclude Include="..\Public\Effect_Single.h" />
     <ClInclude Include="..\Public\FallingStar.h" />
+    <ClInclude Include="..\Public\FrameEvent_Manager.h" />
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
@@ -271,6 +274,10 @@
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\UI_TimerPanel.h" />
+    <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\Public\Play_21.h" />
+    <ClInclude Include="..\Public\Play_Goku.h" />
+    <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
     <ClInclude Include="..\Public\Shader_Material.h" />
     <ClInclude Include="..\public\Shader_Tab_Defines.h" />
@@ -281,6 +288,7 @@
     <ClInclude Include="..\Public\SpaceGround.h" />
     <ClInclude Include="..\Public\SpaceHorizon.h" />
     <ClInclude Include="..\Public\SpaceMoon.h" />
+    <ClInclude Include="..\Public\SpaceRock.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
     <ClInclude Include="..\Public\SpaceStone.h" />
@@ -343,6 +351,7 @@
     <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
     <ClCompile Include="..\Private\Goku_MeleeAttack.cpp" />
+    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\private\Effect_Animation.cpp" />
     <ClCompile Include="..\Private\Effect_Layer.cpp" />
@@ -352,6 +361,8 @@
     <ClCompile Include="..\private\Effect_Rect.cpp" />
     <ClCompile Include="..\Private\Effect_Single.cpp" />
     <ClCompile Include="..\Private\FallingStar.cpp" />
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_demo.cpp" />
@@ -410,6 +421,7 @@
     <ClCompile Include="..\Private\SpaceGround.cpp" />
     <ClCompile Include="..\Private\SpaceHorizon.cpp" />
     <ClCompile Include="..\Private\SpaceMoon.cpp" />
+    <ClCompile Include="..\Private\SpaceRock.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
     <ClCompile Include="..\Private\SpaceStone.cpp" />

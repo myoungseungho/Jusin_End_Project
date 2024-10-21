@@ -227,65 +227,17 @@ void CS21_MeleeAttack::Attack_Special()
 
 	}
 
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
-	{
-		_ushort iCount = *m_piCountGroundSpecial;
-
-		
-		//0에선 더할 수 없으니 5대신 4,    4발째일때까지 다음공격 가능하니 이하 대신 미만.
-		if (iCount < 4)
-		{
-
-			//m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_SPECIAL, 0.5f);
-			
-			//홀짝 판별 비트연산 (최적화)  true일때 홀수
-			if (iCount & 1)  //홀수만큼 썻으니 왼손
-			{
-
-				//if (m_pPlayer->CompareNextAnimation(CPlay_21::ANIME_ATTACK_SPECIAL, 10.f) == false)
-
-				if (m_pPlayer->CompareNextAnimation(CPlay_21::ANIME_IDLE))
-				{
-					m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
-					(*m_piCountGroundSpecial)++;
-				}
-				
-			}
-			else
-			{
-				//if (m_pPlayer->CompareNextAnimation(CPlay_21::ANIME_ATTACK_SPECIAL, 55.f) == false)
-				if (m_pPlayer->CompareNextAnimation(CPlay_21::ANIME_IDLE))
-				{
-					m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_SPECIAL, 0.5f, 55);
-					(*m_piCountGroundSpecial)++;
-				}
-
-			}
-
-
-		}
-		else
-		{
-			iCount;
-			_bool bDebugf = true;
-		}
-	}
-
-
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_SPECIAL_AIR);
-	//}
-
-
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
 	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_SPECIAL_AIR);
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL);
+		//16부터
+		CModel* pModel = static_cast<CModel*>(m_pPlayer->Get_Component(TEXT("Com_Model")));
+		pModel->m_fCurrentAnimPosition = 16.f;
+		pModel->Update_FrameIndex();
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_SPECIAL_AIR,0.5f);
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL,0.5f,16.f);
 	}
 	
 
@@ -308,77 +260,18 @@ void CS21_MeleeAttack::Attack_236()
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236,0.5f);
 	}
 	
-	
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_AIR);
-	//}
-	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_AIR, 0.5f);
-	//	
-	//}
-
-
-	
-
-
 }
 
 void CS21_MeleeAttack::Attack_214()
 {
-	//if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex ==  CPlay_21::ANIME_JUMP_UP  || *m_pPlayerAnimationIndex ==  CPlay_21::ANIME_JUMP_DOWN ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3
-	//	|| *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY )
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
-	//}
-
-
-	//공중에서 사용해도 땅 자세 나오는 코드
-	//if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
-	//}
-	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR	)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 1.f);
-	//}
-
-
-
-	//공중에서 사용해도 발디딤 있는 코드
-	//if (m_pPlayer->Check_bCurAnimationisGroundMove())
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
-	//}
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 1.f);
-	//}
-	//
-	//
-	//if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
-	//
-	//}
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || 
-	//		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 1.f);
-	//}
-
-
-
+	
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
 	{
+		CTransform* pTrasnform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+		pTrasnform->Add_Move({ 0.f,1.f,0.f });
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
+		
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
@@ -392,7 +285,7 @@ void CS21_MeleeAttack::Attack_214()
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
 	}
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
+	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f, 20.f);
 
@@ -404,76 +297,24 @@ void CS21_MeleeAttack::Attack_214()
 void CS21_MeleeAttack::Attack_236Special()
 {
 
-	//if (m_pPlayer->Check_bCurAnimationisGroundMove() ||		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 )
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
-	//}
-	//
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-	//}
 
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
-	} 
-	
-	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL,3.5f);
-	}
 
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-	//} 
-	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
-	//}
-
-}
-
-/*
-void CS21_MeleeAttack::Attack_236Special_Side()
-{
-
-
-	if (m_pPlayer->Check_bCurAnimationisGroundMove())
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE);
+		//디버그코드 체크
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES, 10.5f);
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE)
+		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE, 3.5f);
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL, 3.5f);
 	}
-
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE);
-	}
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR )
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE, 3.f);
-	}
-	
-
-
-
 
 }
-*/
 
 void CS21_MeleeAttack::Attack_236Ultimate()
 {
@@ -500,60 +341,6 @@ void CS21_MeleeAttack::Attack_236Ultimate()
 
 
 }
-
-/*
-void CS21_MeleeAttack::Attack_236Ultimate_Side()
-{
-
-
-	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE);
-	}
-
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE, 3.5f);
-		//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
-	}
-
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
-	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE);
-	}
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_AIR ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE, 3.5f);
-		//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-	}
-
-
-	//214 애니메이션은 지상,공중 구분이 없는데 어떻게 처리할것인가
-	//높이 기준이 일단 0. 바뀔수도 있음
-
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_214)
-	{
-		if (m_pPlayer->Get_fHeight() > CPlay_21::fGroundHeight)
-		{
-			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE, 3.5f);
-			//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL_AIR);
-
-		}
-		else
-		{
-			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_UPSIDE, 3.5f);
-			//m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
-
-		}
-	}
-
-}
-*/
 void CS21_MeleeAttack::Attack_214Final()
 {
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
@@ -598,37 +385,12 @@ void CS21_MeleeAttack::Attack_Crouch_Medium()
 
 
 
-	//이전에 나올것이 약공격이다보니 nextanimation을 사용하면 타이밍을 놓침
-	//if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_CROUCHING)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM);
-	//} 
-	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 )
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM,0.4f);
-	//}
-
 	
 }
 
 void CS21_MeleeAttack::Attack_Crouch_Heavy()
 {
 
-
-
-	//if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_CROUCHING || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_CROUCH_HEAVY);
-	//}
-	//
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2)
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_UPPER_AIR);
-	//}
 
 
 
@@ -639,7 +401,7 @@ void CS21_MeleeAttack::Attack_Crouch_Heavy()
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
-		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
+		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM )
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_HEAVY, 0.5f);
 	}
@@ -648,13 +410,23 @@ void CS21_MeleeAttack::Attack_Crouch_Heavy()
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_UPPER_AIR);
 	} 
-	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL_AIR)
+	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_UPPER_AIR, 0.5f);
 	}
 
 
 
+
+}
+
+void CS21_MeleeAttack::Attack_Crouch_Speical()
+{
+
+	if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_CROUCHING || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL);
+	}
 
 }
 
@@ -669,7 +441,6 @@ void CS21_MeleeAttack::BackDash()
 
 void CS21_MeleeAttack::ForwardDash()
 {
-	//if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_21::ANIME_BACK_WALK)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_FORWARD_DASH);

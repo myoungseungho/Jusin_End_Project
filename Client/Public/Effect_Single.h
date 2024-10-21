@@ -24,6 +24,7 @@ public:
 private:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
 	virtual HRESULT Bind_ShaderResources() override;
+	HRESULT Add_Render_Object();
 
 public:
 	static CEffect_Single* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

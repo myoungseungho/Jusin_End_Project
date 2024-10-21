@@ -446,11 +446,13 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     else if (splitText[0] == "PositionChange")
     {
         CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
-        _float fCurPosition = pModel->Get_CurrentAnimationPosition();
-        _float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
-        pModel->Play_Animation(fDelay);
 
-        //pModel->CurrentAnimationPositionJump(fValue[0]);
+        //_float fCurPosition = pModel->Get_CurrentAnimationPosition();
+        //_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+        //pModel->Play_Animation(fDelay);
+
+        pModel->CurrentAnimationPositionJump(fValue[0]);
+
     }
 
     else if (splitText[0] == "NextAnimationCheck")
@@ -459,8 +461,8 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     }
     else if (splitText[0] == "AttackEvent")
     {
-        //pCharacter->NextMoveCheck();
 
+        pCharacter->AttackEvent(fValue[0], fValue[1]);
     }
     else if (splitText[0] == "SetAnimation")
     {
@@ -486,7 +488,9 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 
 void CFrameEvent_Manager::Initalize_NameMap()
 {
-    m_AnimationIndex.Initalize();
+
+    if(m_bInitalizeCount == false)
+        m_AnimationIndex.Initalize();
 }
 
 CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)

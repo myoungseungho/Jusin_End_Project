@@ -105,6 +105,19 @@ CGameObject* CLayer::Get_Object(_uint index)
 	
 }
 
+CGameObject* CLayer::Get_Object(_uint index)
+{
+	//0이 첫번째임
+
+	if (index >= m_GameObjects.size())
+		return nullptr;
+
+	auto it = m_GameObjects.begin();
+	std::advance(it, index);
+	return *it;
+
+}
+
 CLayer * CLayer::Create()
 {
 	return new CLayer();

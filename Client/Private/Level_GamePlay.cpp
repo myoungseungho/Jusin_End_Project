@@ -13,6 +13,7 @@
 #include "Pawn.h"
 #include "UIObject.h"
 #include "UI_GameState.h"
+
 #include "Character.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -33,6 +34,84 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Effect_Manager()))
 		return E_FAIL;
 
+
+	if (FAILED(Ready_Lights()))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceHorizon"), TEXT("Layer_SpaceHorizon"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSun"), TEXT("Layer_SpaceSun"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceGround"), TEXT("Layer_SpaceGround"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceCliff"), TEXT("Layer_SpaceSky"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStage"), TEXT("Layer_SpaceStage"))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth"), TEXT("Layer_Space_Earth"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth_Light"), TEXT("Layer_SpaceEarth_Light"))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_FallingStar"), TEXT("Layer__FallingStar"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMoon"), TEXT("Layer_SpaceMoon"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStone"), TEXT("Layer_SpaceStone"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
+		return E_FAIL;
+	
+	//몬스터 생성
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Monster"))))
+	//	return E_FAIL;
+
+
+	//_bool bTest = false;
+	//if (bTest)
+	//{
+	//
+	//	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
+	//		return E_FAIL;
+	//}
+	//else
+	//{
+
+
+		//if (Ready_Character())
+		//	return E_FAIL;
+
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"))))
+		//	return E_FAIL;
+
+
+		//1P
+		CCharacter::Character_DESC CharacterDesc{};
+		CharacterDesc.iTeam = 1;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
+
+		CharacterDesc.iTeam = 2;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
+
+
+
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Monster"), TEXT("Layer_Target"))))
+		//	return E_FAIL;
+
+
+
+
+
+	//}
+
+	// 해당 레벨에 맞는 파일 경로를 설정
+	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
 
 		if (FAILED(Ready_Lights()))
 			return E_FAIL;
@@ -65,9 +144,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		// 해당 레벨에 맞는 파일 경로를 설정
 		wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
 
-		if (FAILED(ParseInitialize(filePath))) {
-			return E_FAIL;
-		
+		if (FAILED(ParseInitialize(filePath))) 
 	
 		if (Ready_Character())
 			return E_FAIL;
@@ -129,6 +206,16 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 {
 	LIGHT_DESC			LightDesc{};
 
+
+	//LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	////LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
+	//LightDesc.vDirection = _float4(-0.5f, -0.2f, 0.5f, 0.f);
+	//LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
+	//LightDesc.vAmbient = _float4(0.7f, 0.7f, 0.7f, 1.f);
+	//LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+
+	//if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+	//	return E_FAIL;
 
 
 	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));

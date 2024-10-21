@@ -41,6 +41,8 @@ public:
 
 	}EFFECT_DESC;
 
+	enum SHADER_PASS{PASS_};
+
 protected:
 	CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CEffect(const CGameObject& Prototype);

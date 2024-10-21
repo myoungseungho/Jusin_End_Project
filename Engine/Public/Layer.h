@@ -27,6 +27,12 @@ public:
 
 	CGameObject* Get_Object(_uint index);
 
+	CGameObject* Get_Object(_uint index);
+	_uint GetSize()
+	{
+		return m_GameObjects.size();
+	}
+
 private:
 	list<class CGameObject*>			m_GameObjects;
 

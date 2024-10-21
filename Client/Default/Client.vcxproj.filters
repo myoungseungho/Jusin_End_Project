@@ -91,6 +91,15 @@
     <Filter Include="02.GameObjects\Map\Space\SpaceStone">
       <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceRock">
+      <UniqueIdentifier>{cfaa1746-e800-40aa-baf0-e55c9531c442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceMeteo">
+      <UniqueIdentifier>{94139fd2-eb62-4d55-a87e-a860d7f79b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Test">
+      <UniqueIdentifier>{350ab04e-a43c-483b-81fa-68cfecd0c9e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -718,6 +727,42 @@
     <ClInclude Include="..\Public\SpaceStone.h">
       <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceRock.h">
+      <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationNameMap.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FrameEvent_Manager.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Input.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Model_Preview.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_21.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\S21_MeleeAttack.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1049,6 +1094,36 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceStone.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceRock.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AttackObject.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Character.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Model_Preview.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_21.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_Goku.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

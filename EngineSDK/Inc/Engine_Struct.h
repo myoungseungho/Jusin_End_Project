@@ -120,6 +120,7 @@ namespace Engine
 		_float3 rotation;
 		_float curTime;
 		_float duration;
+		_bool bIsNotPlaying;
 	};
 
 	struct EFFECT_DATA

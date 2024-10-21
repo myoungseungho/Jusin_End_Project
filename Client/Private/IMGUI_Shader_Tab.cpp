@@ -181,18 +181,21 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
         _float2 fTextureSize = m_NodeTextures.back()->m_pTextureCom->Get_TextureSize();
 
-        if (fTextureSize.x > g_iWinSizeX)
-        {
-            _float fDiff = g_iWinSizeX - fTextureSize.x;
-            fTextureSize.x += fDiff;
-            fTextureSize.y += fDiff;
-        }
+        _float fAspectRatio = fTextureSize.x / fTextureSize.y;
+        _float fWinAspectRatio = (_float)g_iWinSizeX / (_float)g_iWinSizeY;
 
-        if (fTextureSize.y > g_iWinSizeY)
+        if (fTextureSize.x > g_iWinSizeX || fTextureSize.y > g_iWinSizeY)
         {
-            _float fDiff = g_iWinSizeY - fTextureSize.y;
-            fTextureSize.x += fDiff;
-            fTextureSize.y += fDiff;
+            if (fTextureSize.x / g_iWinSizeX > fTextureSize.y / g_iWinSizeY)
+            {
+                fTextureSize.x = g_iWinSizeX;
+                fTextureSize.y = g_iWinSizeX / fAspectRatio;
+            }
+            else
+            {
+                fTextureSize.y = g_iWinSizeY;
+                fTextureSize.x = g_iWinSizeY * fAspectRatio;
+            }
         }
 
         m_pRenderInstance->Add_ClientRenderTarget(prototypeKey.c_str(), prototypeKey.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
@@ -423,11 +426,12 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
         /*vector<_int> node_ids*/
         for (auto iter : node_ids)
         {
+            if (iter == -1)
+                return;
+
             if (ImNodes::IsNodeHovered(&iter))
             {
-                if (iter == -1)
-                    return;
-                else if (iter > 1500)
+                if (iter > 1500)
                 {
                     iID = iter;
                     eNodeType = NODE_FUNCTION;
@@ -440,27 +444,33 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
             }
         }
         /*list<MoveTex_Node> m_MoveTex_Node_ids*/
-        for (auto& iter : m_MoveTex_Node_ids)
+        for (auto iter : m_MoveTex_Node_ids)
         {
             if (ImNodes::IsNodeHovered(&iter.MoveTex_node_id))
             {
+                if (iter.MoveTex_node_id == -1)
+                    return;
+
                 iID = iter.MoveTex_node_id;
                 eNodeType = NODE_FUNCTION;
                 return;
             }
         }
 
-        for (auto& iter : m_Sprite_Node_ids)
+        for (auto iter : m_Sprite_Node_ids)
         {
             if (ImNodes::IsNodeHovered(&iter.Sprite_node_id))
             {
+                if (iter.Sprite_node_id == -1)
+                    return;
+
                 iID = iter.Sprite_node_id;
                 eNodeType = NODE_FUNCTION;
                 return;
             }
         }
     }
-    
+
     if (m_pGameInstance->Get_DIKeyState(DIK_DELETE) && eNodeType != NODE_END)
     {
         //id 일단 저장
@@ -493,7 +503,7 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
             {
                 m_NodeTextureSRVs.erase(iter);
             }
-            
+
             // 이 노드가 다른 노드에게 영향을 줬을수도 있음 그 타겟노드아이디
             _int target_node_id = node_id * m_iAttributeCount;
             _int target_second_value = -1;
@@ -512,9 +522,9 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                 {
                     m_pDefaultTexture = static_cast<CTexture*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_Default_Diffuse")));
                 }
-                
+
                 m_TestEffectModel_Texture->Set_SRV(m_pDefaultTexture->Get_SRV(0));
- 
+
             }
             // 그 노드 ID가 알파에 영향을 줬었냐?
             else if (target_second_value % 4 == 2)
@@ -570,9 +580,9 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     });
                 if (it != m_NodeTextures.end())
                 {
-                    if (iID > 1500)
+                    if (linkPos->first > 1500 && linkPos->first < 3000)
                         (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
-                    else if (iID > 3000)
+                    else if (linkPos->first > 3000)
                         (*it)->Remove_InputFunction(FUNCTION_SPRITE);
                 }
             }
@@ -652,12 +662,12 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
                     if (target_node_id > 1500 && target_node_id < 3000)
                     {
                         (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
-                        
+
                     }
                     else if (target_node_id > 3000)
                     {
                         (*it)->Remove_InputFunction(FUNCTION_SPRITE);
-                       
+
                     }
                 }
 
@@ -685,21 +695,21 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
             else
                 node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID - 3000), node_ids.end());*/
 
-            //// 그 노드 ID가 디퓨즈에 영향을 줬었냐?
-            //else if (target_second_value % 4 == 1)
-            //{
-            //    // m_NodeTextures에서 찾아서 삭제
-            //    auto it = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
-            //        [&](CShader_Texture* texture) {
-            //            return texture->m_iID == target_second_value / 4;
-            //        });
-            //    if (it != m_NodeTextures.end())
-            //    {
-            //        (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
-            //    }
-            //}
+                //// 그 노드 ID가 디퓨즈에 영향을 줬었냐?
+                //else if (target_second_value % 4 == 1)
+                //{
+                //    // m_NodeTextures에서 찾아서 삭제
+                //    auto it = std::find_if(m_NodeTextures.begin(), m_NodeTextures.end(),
+                //        [&](CShader_Texture* texture) {
+                //            return texture->m_iID == target_second_value / 4;
+                //        });
+                //    if (it != m_NodeTextures.end())
+                //    {
+                //        (*it)->Remove_InputFunction(FUNCTION_TEXMOVE);
+                //    }
+                //}
 
-            
+
 
             iID = -999;
             eNodeType = NODE_END;
@@ -708,6 +718,7 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
         }
     }
 }
+
 
 void CIMGUI_Shader_Tab::Draw_MusicButton(CShader_Texture* pShaderTexture)
 {

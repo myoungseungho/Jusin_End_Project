@@ -79,12 +79,7 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 	{
 		if (!m_bIsNotPlaying)
 		{
-			if (m_iRenderIndex == 2) // 레이어
-			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
-			}
+			Add_Render_Object();
 		}
 
 	}
@@ -94,12 +89,7 @@ void CEffect_Single::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
-				//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
-
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				Add_Render_Object();
 			}
 		}
 	}
@@ -136,10 +126,15 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 
 
 
+	//if (m_iPassIndex == 1)
+	//	m_iPassIndex = 3; //컬논 + 디폴트
+	//else if(m_iPassIndex == 3)
+	//	m_iPassIndex = 4; // 알파브랜드 + 디폴트
+	//else
+	//	m_iPassIndex = 1;
+
 	if (m_iPassIndex == 1)
-		m_iPassIndex = 3; //컬논 + 디폴트
-	else if(m_iPassIndex == 3)
-		m_iPassIndex = 4; // 알파브랜드 + 디폴트
+		m_iPassIndex = 4;
 	else
 		m_iPassIndex = 1;
 
@@ -191,6 +186,40 @@ HRESULT CEffect_Single::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iUnique_Index", &m_iUnique_Index,sizeof(int))))
 		return E_FAIL;
 	
+	return S_OK;
+}
+
+HRESULT CEffect_Single::Add_Render_Object()
+{
+	switch (m_iPassIndex)
+	{
+	case 0:
+		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+		break;
+	case 1:
+		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+
+		//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		break;
+	case 2:
+		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		break;
+	case 3:
+		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		break;
+	case 4:
+		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+		//m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+		break;
+	}
+	
+
 	return S_OK;
 }
 

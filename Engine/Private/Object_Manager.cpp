@@ -183,6 +183,38 @@ void CObject_Manager::Late_Update(_float fTimeDelta)
 	}
 }
 
+CGameObject* CObject_Manager::Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex)
+{
+	if (nullptr == m_pLayers)
+		return nullptr;
+
+
+	auto it = m_pLayers[iLevelIndex].find(strLayerTag);
+	if (it == m_pLayers[iLevelIndex].end()) {
+
+		return nullptr;
+	}
+
+
+	return it->second->Get_Object(iindex);
+
+}
+
+_uint CObject_Manager::GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (m_pLayers[iLevelIndex].size() == 0)
+		return 0;
+
+	auto iterator = m_pLayers[iLevelIndex].find(strLayerTag);
+
+	if (iterator == m_pLayers[iLevelIndex].end())
+		return 0;
+
+
+	//return m_pLayers[iLevelIndex].find(strLayerTag)->second->GetSize();
+	return iterator->second->GetSize();
+}
+
 HRESULT CObject_Manager::Clear_Resources(_uint iLevelIndex)
 {
 	if (iLevelIndex >= m_iNumLevels)
