@@ -81,10 +81,11 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 
 	AddCollisionPairs(CG_1P_BODY, CG_2P_Melee_Attack);
 
+	// 1P_MELEE_ATTACK vs 2P_MELL_ATTACK
+	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_Melee_Attack);
 
 	// 시간 측정 시작
 	auto startTime = std::chrono::high_resolution_clock::now();
-
 
 	// 스레드풀을 사용하여 작업 분할 및 충돌 검사 수행
 	size_t numThreads = m_pGameInstance->Get_ThreadNumber();
@@ -96,7 +97,9 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 
 	for (size_t t = 0; t < numThreads; ++t) {
 		size_t startIdx = t * pairsPerThread;
-		if (startIdx >= totalPairs) break;
+		if (startIdx >= totalPairs)
+			break;
+
 		size_t endIdx = min(startIdx + pairsPerThread, totalPairs);
 
 		// 각 스레드가 처리할 충돌 쌍 부분 벡터 생성
@@ -174,6 +177,15 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		_bool is_1P_Energy_Skill_Vs_2P_Energy_Skill = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
 		_bool is_1P_Energy_Skill_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
 
+		_bool is_1P_Ranged_Attack_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is_1P_Ranged_Attack_Vs_2P_Energy_Skill = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
+		_bool is_1P_Ranged_Attack_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Melee_Attack_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is_1P_Body_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Energy_Skill_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Body_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
+		_bool is_1P_Melee_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
+
 		// 충돌 그룹에 따른 처리
 		if (is_1P_Body_Vs_2P_Energy_Skill)
 		{
@@ -198,16 +210,6 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			//1P_Skill VS 2P_Body
 			Energy_1P_Skill_VS_Body_2P_Collisions.push_back(pair);
 		}
-
-		_bool is_1P_Ranged_Attack_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
-		_bool is_1P_Ranged_Attack_Vs_2P_Energy_Skill = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
-		_bool is_1P_Ranged_Attack_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
-		_bool is_1P_Melee_Attack_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
-
-		_bool is_1P_Body_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
-		_bool is_1P_Energy_Skill_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
-		_bool is_1P_Body_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
-
 
 		if (is_1P_Ranged_Attack_Vs_2P_Body)
 		{
@@ -242,6 +244,11 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		if (is_1P_Body_Vs_2P_Melee_Attack)
 		{
 			Process_1P_Body_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Melee_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
 		}
 	}
 
@@ -559,6 +566,33 @@ void CCollider_Manager::Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollide
 		}
 	}
 
+	Destory_Reserve(CG_2P_Melee_Attack);
+}
+
+void CCollider_Manager::Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+
+	Destory_Reserve(CG_1P_Melee_Attack);
 	Destory_Reserve(CG_2P_Melee_Attack);
 }
 

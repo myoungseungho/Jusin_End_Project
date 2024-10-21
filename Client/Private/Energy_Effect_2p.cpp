@@ -42,17 +42,7 @@ void CEnergy_Effect_2p::Update(_float fTimeDelta)
 		iter->Update(m_pTransformCom->Get_WorldMatrix());
 
 	_float speed = 0.1f;
-
-	//if (GetAsyncKeyState(VK_UP) & 0x8000)
-	//	m_fY += speed;
-
-	//if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-	//	m_fY -= speed;
-
 	m_fX -= speed;
-
-	//if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
-	//	m_fX += speed;
 
 	CCollider_Manager::COLLIDERGROUP group;
 
