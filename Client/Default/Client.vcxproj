@@ -103,7 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../RendererSDK/Inc/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../RendererSDK/Inc/;./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -210,6 +210,15 @@
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\FrameEvent_Manager.h" />
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
+    <ClInclude Include="..\Public\Effect.h" />
+    <ClInclude Include="..\public\Effect_Animation.h" />
+    <ClInclude Include="..\Public\Effect_Layer.h" />
+    <ClInclude Include="..\Public\Effect_Manager.h" />
+    <ClInclude Include="..\Public\Effect_MoveTex.h" />
+    <ClInclude Include="..\Public\Effect_Multi.h" />
+    <ClInclude Include="..\public\Effect_Rect.h" />
+    <ClInclude Include="..\Public\Effect_Single.h" />
+    <ClInclude Include="..\Public\FallingStar.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
@@ -217,10 +226,14 @@
     <ClInclude Include="..\Public\imgui_impl_dx11.h" />
     <ClInclude Include="..\Public\imgui_impl_win32.h" />
     <ClInclude Include="..\Public\imgui_internal.h" />
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h" />
     <ClInclude Include="..\Public\Imgui_Manager.h" />
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h" />
     <ClInclude Include="..\public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
+    <ClInclude Include="..\Public\imnodes.h" />
+    <ClInclude Include="..\Public\imnodes_internal.h" />
     <ClInclude Include="..\Public\imstb_rectpack.h" />
     <ClInclude Include="..\Public\imstb_textedit.h" />
     <ClInclude Include="..\Public\imstb_truetype.h" />
@@ -258,6 +271,22 @@
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\UI_TimerPanel.h" />
+    <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
+    <ClInclude Include="..\Public\Shader_Material.h" />
+    <ClInclude Include="..\public\Shader_Tab_Defines.h" />
+    <ClInclude Include="..\Public\Shader_Texture.h" />
+    <ClInclude Include="..\Public\SpaceCliff.h" />
+    <ClInclude Include="..\Public\SpaceEarth.h" />
+    <ClInclude Include="..\Public\SpaceEarth_Light.h" />
+    <ClInclude Include="..\Public\SpaceGround.h" />
+    <ClInclude Include="..\Public\SpaceHorizon.h" />
+    <ClInclude Include="..\Public\SpaceMoon.h" />
+    <ClInclude Include="..\Public\SpaceSky.h" />
+    <ClInclude Include="..\Public\Player.h" />
+    <ClInclude Include="..\Public\SpaceStage.h" />
+    <ClInclude Include="..\Public\SpaceStone.h" />
+    <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -316,6 +345,15 @@
     <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
     <ClCompile Include="..\Private\Goku_MeleeAttack.cpp" />
+    <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\private\Effect_Animation.cpp" />
+    <ClCompile Include="..\Private\Effect_Layer.cpp" />
+    <ClCompile Include="..\Private\Effect_Manager.cpp" />
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp" />
+    <ClCompile Include="..\Private\Effect_Multi.cpp" />
+    <ClCompile Include="..\private\Effect_Rect.cpp" />
+    <ClCompile Include="..\Private\Effect_Single.cpp" />
+    <ClCompile Include="..\Private\FallingStar.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_demo.cpp" />
@@ -323,12 +361,15 @@
     <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Private\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp" />
     <ClCompile Include="..\Private\Imgui_Manager.cpp" />
-    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
@@ -362,6 +403,22 @@
     <ClCompile Include="..\Private\Play_Goku.cpp" />
     <ClCompile Include="..\Private\S21_MeleeAttack.cpp" />
     <ClCompile Include="..\private\UI_TimerPanel.cpp" />
+    <ClCompile Include="..\Private\imnodes.cpp" />
+    <ClCompile Include="..\Private\Level_GamePlay.cpp" />
+    <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp" />
+    <ClCompile Include="..\Private\Shader_Material.cpp" />
+    <ClCompile Include="..\Private\Shader_Texture.cpp" />
+    <ClCompile Include="..\Private\SpaceCliff.cpp" />
+    <ClCompile Include="..\Private\SpaceEarth.cpp" />
+    <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
+    <ClCompile Include="..\Private\SpaceGround.cpp" />
+    <ClCompile Include="..\Private\SpaceHorizon.cpp" />
+    <ClCompile Include="..\Private\SpaceMoon.cpp" />
+    <ClCompile Include="..\Private\SpaceSky.cpp" />
+    <ClCompile Include="..\Private\Player.cpp" />
+    <ClCompile Include="..\Private\SpaceStage.cpp" />
+    <ClCompile Include="..\Private\SpaceStone.cpp" />
+    <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -381,6 +438,11 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

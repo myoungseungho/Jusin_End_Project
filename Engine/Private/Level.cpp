@@ -25,7 +25,7 @@ void CLevel::Update(_float fTimeDelta)
 
 }
 
-HRESULT CLevel::Render()
+HRESULT CLevel::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
@@ -33,6 +33,29 @@ HRESULT CLevel::Render()
 HRESULT CLevel::Clear_Resources()
 {
 	return m_pGameInstance->Clear_LevelResources(m_iLevelIndex);
+}
+
+HRESULT CLevel::ParseInitialize(const wstring& filePath)
+{
+	vector<FILEDATA>* pvecFileData = static_cast<vector<FILEDATA>*>(m_pGameInstance->LoadObjects(filePath.c_str()));
+	if (pvecFileData == nullptr)
+		return S_OK;
+
+	for (auto& iter : *pvecFileData)
+	{
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(iter.levelIndex, iter.prototypeTag, iter.layerName, &iter)))
+			return E_FAIL;
+	}
+
+	return S_OK;
+}
+
+vector<EFFECT_LAYER_DATA>* CLevel::Set_Effect(_wstring FilePath)
+{
+
+	vector<EFFECT_LAYER_DATA>*	pvecFileData = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_Effects(FilePath));
+
+	return pvecFileData;
 }
 
 void CLevel::Free()

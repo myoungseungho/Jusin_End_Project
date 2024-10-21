@@ -20,6 +20,33 @@ public:
 	_bool Key_Down(_uint _iKey);
 	_bool Key_Up(_uint _iKey);
 
+	_bool MouseDown(MOUSEKEYSTATE eMouse) const {
+		static _byte byLastState[3] = {};
+		bool bDown = false;
+		if ((m_tMouseState.rgbButtons[eMouse] & 0x80) && !(byLastState[eMouse] & 0x80))
+			bDown = true;
+		byLastState[eMouse] = m_tMouseState.rgbButtons[eMouse];
+		return bDown;
+	}
+
+	_bool MousePress(MOUSEKEYSTATE eMouse) const {
+		static _byte byLastState[3] = {};
+		bool bPress = false;
+		if ((m_tMouseState.rgbButtons[eMouse] & 0x80) && !(byLastState[eMouse] & 0x80))
+			bPress = true;
+		byLastState[eMouse] = m_tMouseState.rgbButtons[eMouse];
+		return bPress;
+	}
+
+	_bool MouseUp(MOUSEKEYSTATE eMouse) const {
+		static _byte byLastState[3] = {};
+		bool bUp = false;
+		if (!(m_tMouseState.rgbButtons[eMouse] & 0x80) && (byLastState[eMouse] & 0x80))
+			bUp = true;
+		byLastState[eMouse] = m_tMouseState.rgbButtons[eMouse];
+		return bUp;
+	}
+
 	_bool Mouse_Pressing(_uint _iButton);
 	_bool Mouse_Down(_uint _iButton);
 	_bool Mouse_Up(_uint _iButton);

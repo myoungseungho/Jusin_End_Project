@@ -28,6 +28,61 @@ HRESULT CTarget_Manager::Add_RenderTarget(const _wstring & strTargetTag, _uint i
 	return S_OK;
 }
 
+HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+{
+	if (nullptr != Find_RenderTarget(strTargetTag))
+		return E_FAIL;
+
+	CRenderTarget* pRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pRenderTarget)
+		return E_FAIL;
+
+	CRenderTarget* pAlphaRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pAlphaRenderTarget)
+		return E_FAIL;
+
+	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
+	m_RenderTargets.emplace(strTargetTag + L"_Alpha", pAlphaRenderTarget);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
+
+	if (nullptr == pMRTList)
+	{
+		list<CRenderTarget*>	MRTList;
+		MRTList.push_back(pRenderTarget);
+		MRTList.push_back(pAlphaRenderTarget);
+		m_MRTs.emplace(strMRTTag, MRTList);
+	}
+	else
+	{
+		pMRTList->push_back(pRenderTarget);
+		pMRTList->push_back(pAlphaRenderTarget);
+	}
+
+	Safe_AddRef(pRenderTarget);
+	Safe_AddRef(pAlphaRenderTarget);
+	return S_OK;
+}
+
+HRESULT CTarget_Manager::Add_ClientRenderTargetToMRT(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+{
+	if (nullptr != Find_RenderTarget(strTargetTag + L"2"))
+		return S_OK;
+
+	CRenderTarget* pRenderTarget2 = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+	if (nullptr == pRenderTarget2)
+		return E_FAIL;
+
+	m_RenderTargets.emplace(strTargetTag + L"2", pRenderTarget2);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
+
+	pMRTList->push_back(pRenderTarget2);
+
+	Safe_AddRef(pRenderTarget2);
+	return S_OK;
+}
+
 HRESULT CTarget_Manager::Add_MRT(const _wstring & strMRTTag, const _wstring & strTargetTag)
 {
 	CRenderTarget*	pRenderTarget = Find_RenderTarget(strTargetTag);
@@ -85,6 +140,37 @@ HRESULT CTarget_Manager::Begin_MRT(const _wstring & strMRTTag, ID3D11DepthStenci
 	return S_OK;
 }
 
+HRESULT CTarget_Manager::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
+{
+	ID3D11ShaderResourceView* pSRV[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = {
+	nullptr
+	};
+
+	m_pContext->PSSetShaderResources(0, D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT, pSRV);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag);
+	if (nullptr == pMRTList)
+		return E_FAIL;
+
+	m_pContext->OMGetRenderTargets(1, &m_pOldRTV, &m_pOldDSV);
+
+	_uint		iNumRTV = { 0 };
+
+	ID3D11RenderTargetView* RenderTargets[8] = { nullptr };
+
+	for (auto& pRenderTarget : *pMRTList)
+	{
+		RenderTargets[iNumRTV++] = pRenderTarget->Get_RTV();
+	}
+
+	if (nullptr != pDSV)
+		m_pContext->ClearDepthStencilView(pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+
+	m_pContext->OMSetRenderTargets(iNumRTV, RenderTargets, nullptr == pDSV ? m_pOldDSV : pDSV);
+
+	return S_OK;
+}
+
 HRESULT CTarget_Manager::End_MRT()
 {
 	m_pContext->OMSetRenderTargets(1, &m_pOldRTV, m_pOldDSV);
@@ -94,6 +180,7 @@ HRESULT CTarget_Manager::End_MRT()
 
 	return S_OK;
 }
+
 HRESULT CTarget_Manager::Copy_RenderTarget(const _wstring & strTargetTag, ID3D11Texture2D * pTexture2D)
 {
 	CRenderTarget*		pRenderTarget = Find_RenderTarget(strTargetTag);
@@ -101,6 +188,15 @@ HRESULT CTarget_Manager::Copy_RenderTarget(const _wstring & strTargetTag, ID3D11
 		return E_FAIL;
 
 	return pRenderTarget->Copy_RenderTarget(pTexture2D);	
+}
+
+ID3D11ShaderResourceView* CTarget_Manager::Copy_RenderTarget_SRV(const _wstring& strTargetTag)
+{
+	CRenderTarget* pRenderTarget = Find_RenderTarget(strTargetTag);
+	if (nullptr == pRenderTarget)
+		return nullptr;
+	
+	return pRenderTarget->Copy_ShaderResourceView();
 }
 
 HRESULT CTarget_Manager::Bind_ShaderResource(CShader * pShader, const _char * pConstantName, const _wstring & strTargetTag)
@@ -111,6 +207,7 @@ HRESULT CTarget_Manager::Bind_ShaderResource(CShader * pShader, const _char * pC
 
 	return pRenderTarget->Bind_ShaderResource(pShader, pConstantName);	
 }
+
 #ifdef _DEBUG
 HRESULT CTarget_Manager::Ready_Debug(const _wstring & strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY)
 {

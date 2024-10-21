@@ -17,12 +17,14 @@ protected:
 public:
 	virtual HRESULT Initialize();
 	virtual void Update(_float fTimeDelta);
-	virtual HRESULT Render();
+	virtual HRESULT Render(_float fTimeDelta);
 
 public:
 	HRESULT Clear_Resources();
+	_uint GetLevelIndex() { return m_iLevelIndex; };
+	HRESULT ParseInitialize(const wstring& filePath);
+	vector<EFFECT_LAYER_DATA>*  Set_Effect(wstring FilePath);
 
-	
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };

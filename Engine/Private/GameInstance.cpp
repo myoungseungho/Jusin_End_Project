@@ -7,11 +7,13 @@
 #include "Timer_Manager.h"
 #include "Input_Device.h"
 
-//#include "Key_Manager.h"
+#include "Collider_Manager.h"
+#include "File_Manager.h"
+#include "ThreadPool.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
-CGameInstance::CGameInstance()	
+CGameInstance::CGameInstance()
 {
 
 }
@@ -46,6 +48,17 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 	if (nullptr == m_pPipeLine)
 		return E_FAIL;
 
+	m_pCollider_Manager = CCollider_Manager::Create();
+	if (nullptr == m_pCollider_Manager)
+		return E_FAIL;
+
+	m_pThreadPool = CThreadPool::Create();
+	if (nullptr == m_pThreadPool)
+		return E_FAIL;
+
+	m_pFile_Manager = CFile_Manager::Create();
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -60,6 +73,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pPipeLine->Update();
 
+	m_pCollider_Manager->Update(fTimeDelta);
+
 	m_pObject_Manager->Update(fTimeDelta);
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
@@ -70,12 +85,12 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 }
 
-HRESULT CGameInstance::Render_Engine()
+HRESULT CGameInstance::Render_Engine(_float fTimeDelta)
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
-	if (FAILED(m_pLevel_Manager->Render()))
+	if (FAILED(m_pLevel_Manager->Render(fTimeDelta)))
 		return E_FAIL;
 
 	return S_OK;
@@ -86,15 +101,20 @@ HRESULT CGameInstance::Clear_LevelResources(_uint iLevelIndex)
 	if (FAILED(m_pObject_Manager->Clear_Resources(iLevelIndex)))
 		return E_FAIL;
 
-	if(FAILED(m_pComponent_Manager->Clear_Resources(iLevelIndex)))
+	if (FAILED(m_pComponent_Manager->Clear_Resources(iLevelIndex)))
 		return E_FAIL;
 
 	return S_OK;
 }
 
+CGameObject* CGameInstance::Find_Prototype(const wstring& strPrototypeTag)
+{
+	return m_pObject_Manager->Find_Prototype(strPrototypeTag);
+}
+
 HRESULT CGameInstance::Clear_BackBuffer_View(_float4 vClearColor)
 {
-	return m_pGraphic_Device->Clear_BackBuffer_View(vClearColor);	
+	return m_pGraphic_Device->Clear_BackBuffer_View(vClearColor);
 }
 
 HRESULT CGameInstance::Clear_DepthStencil_View()
@@ -123,6 +143,7 @@ _long CGameInstance::Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState)
 	return m_pInput_Device->Get_DIMouseMove(eMouseMoveState);
 }
 
+
 _bool CGameInstance::Key_Pressing(_uint _iKey)
 {
 	return m_pInput_Device->Key_Pressing(_iKey);
@@ -138,13 +159,53 @@ _bool CGameInstance::Key_Up(_uint _iKey)
 	return m_pInput_Device->Key_Up(_iKey);
 }
 
+_bool CGameInstance::MouseDown(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MouseDown(eMouse);
+}
 
-HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
+
+_bool CGameInstance::MousePress(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MousePress(eMouse);
+}
+
+_bool CGameInstance::MouseUp(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MouseUp(eMouse);
+}
+
+
+HRESULT CGameInstance::Change_Level(CLevel* pNewLevel)
 {
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;
 
-	return m_pLevel_Manager->Change_Level(pNewLevel);	
+	return m_pLevel_Manager->Change_Level(pNewLevel);
+}
+
+_uint CGameInstance::Get_CurrentLevel_Index()
+{
+	if (nullptr == m_pLevel_Manager)
+		return E_FAIL;
+
+	return m_pLevel_Manager->Get_CurrentLevel_Index();
+}
+
+_uint CGameInstance::Get_LoadingLevel_Index()
+{
+	if (nullptr == m_pLevel_Manager)
+		return E_FAIL;
+
+	return m_pLevel_Manager->Get_LoadingLevel_Index();
+}
+
+HRESULT CGameInstance::Set_LoadingLevel_Index(_uint _level)
+{
+	if (nullptr == m_pLevel_Manager)
+		return E_FAIL;
+
+	return m_pLevel_Manager->Set_LoadingLevel_Index(_level);
 }
 
 HRESULT CGameInstance::Add_Timer(const _wstring& strTimerTag)
@@ -176,15 +237,15 @@ _float CGameInstance::Get_ScaledDeltaTime(const _wstring& strTimerTag)
 {
 	return m_pTimer_Manager->Get_ScaledDeltaTime(strTimerTag);
 }
-HRESULT CGameInstance::Add_Prototype(const wstring & strPrototypeTag, CGameObject * pPrototype)
+HRESULT CGameInstance::Add_Prototype(const wstring& strPrototypeTag, CGameObject* pPrototype)
 {
 	if (nullptr == m_pObject_Manager)
 		return E_FAIL;
 
-	return m_pObject_Manager->Add_Prototype(strPrototypeTag, pPrototype);	
+	return m_pObject_Manager->Add_Prototype(strPrototypeTag, pPrototype);
 }
 
-HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iLevelIndex, const wstring & strPrototypeTag, const wstring & strLayerTag, void * pArg)
+HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg)
 {
 	if (nullptr == m_pObject_Manager)
 		return E_FAIL;
@@ -192,7 +253,7 @@ HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iLevelIndex, const wstring &
 	return m_pObject_Manager->Add_GameObject_ToLayer(iLevelIndex, strPrototypeTag, strLayerTag, pArg);
 }
 
-CComponent * CGameInstance::Get_Component(_uint iLevelIndex, const _wstring & strLayerTag, const _wstring & strComponentTag, _uint iIndex)
+CComponent* CGameInstance::Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex)
 {
 	if (nullptr == m_pObject_Manager)
 		return nullptr;
@@ -210,6 +271,7 @@ CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, voi
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
 }
 
+
 CGameObject* CGameInstance::Get_Object(_uint iLevelIndex, const wstring& strLayerTag, _uint iindex)
 {
 	if (nullptr == m_pObject_Manager)
@@ -218,15 +280,40 @@ CGameObject* CGameInstance::Get_Object(_uint iLevelIndex, const wstring& strLaye
 	return m_pObject_Manager->Get_Object(iLevelIndex, strLayerTag, iindex);
 }
 
-HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag, CComponent * pPrototype)
+HRESULT CGameInstance::Get_Prototype_Names(vector<string>* pVector)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return	m_pObject_Manager->Get_Prototype_Names(pVector);
+}
+
+HRESULT CGameInstance::Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair<string, list<CGameObject*>>>* pVector)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return	m_pObject_Manager->Add_Object_Layers_Vector(iLevelIndex, pVector);
+}
+
+HRESULT CGameInstance::Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair<_wstring, list<CGameObject*>>>* pVector)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return	m_pObject_Manager->Add_Object_Layers_Vector(iLevelIndex, pVector);
+}
+
+
+HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, CComponent* pPrototype)
 {
 	if (nullptr == m_pComponent_Manager)
 		return E_FAIL;
 
-	return m_pComponent_Manager->Add_Prototype(iLevelIndex, strPrototypeTag, pPrototype);	
+	return m_pComponent_Manager->Add_Prototype(iLevelIndex, strPrototypeTag, pPrototype);
 }
 
-CComponent * CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring & strPrototypeTag, void * pArg)
+CComponent* CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring& strPrototypeTag, void* pArg)
 {
 	if (nullptr == m_pComponent_Manager)
 		return nullptr;
@@ -234,6 +321,10 @@ CComponent * CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring & 
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
 }
 
+vector<const _wstring*>* CGameInstance::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
+{
+	return m_pComponent_Manager->Find_Prototype_Include_Key(iLevelIndex, strIncludeTag);
+}
 
 _matrix CGameInstance::Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
 {
@@ -270,6 +361,52 @@ void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix 
 	m_pPipeLine->Set_Transform(eState, TransformMatrix);
 }
 
+HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
+{
+	return m_pThreadPool->Initialize(ThreadCount);
+}
+
+_uint CGameInstance::Get_ThreadNumber()
+{
+	return m_pThreadPool->Get_ThreadNumber();
+}
+
+HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, CCollider* pRenderObject)
+{
+	return m_pCollider_Manager->Add_ColliderObject(eRenderGroup, pRenderObject);
+}
+
+HRESULT CGameInstance::SaveObjects(const wstring& filename, void* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->SaveObjects(filename, pArg);
+}
+
+void* CGameInstance::LoadObjects(const wstring& filename)
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->LoadObjects(filename);
+}
+
+HRESULT CGameInstance::Save_Effects(wstring& FilePath, void* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->Save_Effects(FilePath, pArg);
+}
+
+void* CGameInstance::Load_Effects(wstring& FilePath)
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->Load_Effects(FilePath);
+}
 
 void CGameInstance::Release_Engine()
 {
@@ -279,6 +416,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pLevel_Manager);
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pInput_Device);
+	Safe_Release(m_pCollider_Manager);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }
@@ -286,6 +424,4 @@ void CGameInstance::Release_Engine()
 void CGameInstance::Free()
 {
 	__super::Free();
-
-	
 }

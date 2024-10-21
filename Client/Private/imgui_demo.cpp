@@ -2199,9 +2199,9 @@ static void ShowDemoWindowWidgets()
         // Setup limits (as helper variables so we can take their address, as explained above)
         // Note: SliderScalar() functions have a maximum usable range of half the natural type maximum, hence the /2.
         #ifndef LLONG_MIN
-        ImS64 LLONG_MIN = -9223372036854775807LL - 1;
-        ImS64 LLONG_MAX = 9223372036854775807LL;
-        ImU64 ULLONG_MAX = (2ULL * 9223372036854775807LL + 1);
+        ImS64 LLONG_MIN = -92233108036854775807LL - 1;
+        ImS64 LLONG_MAX = 92233108036854775807LL;
+        ImU64 ULLONG_MAX = (2ULL * 92233108036854775807LL + 1);
         #endif
         const char    s8_zero  = 0,   s8_one  = 1,   s8_fifty  = 50, s8_min  = -128,        s8_max = 127;
         const ImU8    u8_zero  = 0,   u8_one  = 1,   u8_fifty  = 50, u8_min  = 0,           u8_max = 255;

@@ -1,11 +1,13 @@
+#include <string>
+#include <filesystem>
 #include "ModelConverter.h"
 
 bool ModelConverter::LoadModel(const std::string& filePath, ModelType modelType) {
 	unsigned int iFlag = aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_Fast;
 
-	/*if (modelType == TYPE_NONANIM) {
+	if (modelType == TYPE_NONANIM) {
 		iFlag |= aiProcess_PreTransformVertices;
-	}*/
+	}
 
 	m_ai_Scene = importer.ReadFile(filePath, iFlag);
 
@@ -81,8 +83,11 @@ bool ModelConverter::SaveModelToBinary(const std::string& filePath, const ModelH
 		}
 	}
 
+	int MeshCount = { 0 };
 	// Save materials
 	for (const auto& material : materials) {
+		
+		std::cout << "MeshIndex : " << MeshCount << std::endl;
 		for (const auto& texturePath : material.texturePaths) {
 			size_t pathLength = texturePath.length();
 			outFile.write(reinterpret_cast<const char*>(&pathLength), sizeof(pathLength));
@@ -91,6 +96,7 @@ bool ModelConverter::SaveModelToBinary(const std::string& filePath, const ModelH
 			// Print the texture path
 			std::cout << "Saving texture path: " << texturePath << std::endl;
 		}
+		MeshCount++;
 	}
 
 	// Save animations
@@ -268,7 +274,8 @@ void ModelConverter::SaveBoneToBinary(std::ofstream& outFile, const BoneData& bo
 	outFile.write(reinterpret_cast<const char*>(&bone.transformationMatrix), sizeof(bone.transformationMatrix));
 	uint32_t numChildren = bone.children.size();
 	outFile.write(reinterpret_cast<const char*>(&numChildren), sizeof(numChildren));
-	for (const auto& child : bone.children) {
+	for (const auto& child : bone.children) 
+	{
 		SaveBoneToBinary(outFile, child);
 	}
 }
@@ -287,7 +294,13 @@ void ModelConverter::LoadBoneFromBinary(std::ifstream& inFile, BoneData& bone) {
 	}
 }
 
-
+std::string ExtractFileName(const std::string& filePath) {
+	size_t pos = filePath.find_last_of("\\/");  // 마지막 경로 구분자 위치 찾기
+	if (pos != std::string::npos) {
+		return filePath.substr(pos + 1);  // 파일명만 추출
+	}
+	return filePath;  // 경로 구분자가 없으면 전체 문자열 반환
+}
 
 // FillModelData 함수 수정
 void ModelConverter::FillModelData(const aiScene* scene, ModelHeader& header, vector<BoneData>& bones, vector<MeshData>& meshes, vector<MaterialData>& materials, vector<AnimationData>& animations, bool printVertices) {
@@ -408,8 +421,12 @@ void ModelConverter::FillModelData(const aiScene* scene, ModelHeader& header, ve
 
 		for (unsigned int j = 0; j < AI_TEXTURE_TYPE_MAX; ++j) {
 			aiString str;
+
 			if (aiMaterial->GetTexture(static_cast<aiTextureType>(j), 0, &str) == AI_SUCCESS) {
-				material.texturePaths[j] = str.C_Str();
+				std::string texturePath = str.C_Str();
+				std::string fileName = ExtractFileName(texturePath);
+				material.texturePaths[j] = fileName;
+				//material.texturePaths[j + 1] = fileName + "1";
 			}
 		}
 	}

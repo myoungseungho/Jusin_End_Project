@@ -2,6 +2,8 @@
 
 #include "Layer.h"
 #include "GameObject.h"
+#include <locale>
+#include <codecvt>
 
 CObject_Manager::CObject_Manager()
 {
@@ -37,22 +39,22 @@ HRESULT CObject_Manager::Initialize(_uint iNumLevels)
 {
 	m_iNumLevels = iNumLevels;
 
-	m_pLayers = new map<const wstring, class CLayer*>[iNumLevels];
+	m_pLayers = new map<const _wstring, class CLayer*>[iNumLevels];
 
 	return S_OK;
 }
 
-HRESULT CObject_Manager::Add_Prototype(const wstring & strPrototypeTag, CGameObject * pPrototype)
+HRESULT CObject_Manager::Add_Prototype(const _wstring & strPrototypeTag, CGameObject * pPrototype)
 {
-	if (nullptr != Find_Prototype(strPrototypeTag))
-		return E_FAIL;
-
-	m_Prototypes.emplace(strPrototypeTag, pPrototype);
+	if (nullptr == Find_Prototype(strPrototypeTag))
+		m_Prototypes.emplace(strPrototypeTag, pPrototype);
+	else
+		Safe_Release(pPrototype);
 
 	return S_OK;
 }
 
-HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iLevelIndex, const wstring & strPrototypeTag, const wstring & strLayerTag, void* pArg)
+HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iLevelIndex, const _wstring & strPrototypeTag, const _wstring & strLayerTag, void* pArg)
 {
 	/* 복제할 원형객체를 찾자. */
 	CGameObject*		pPrototype = Find_Prototype(strPrototypeTag);
@@ -82,7 +84,7 @@ HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iLevelIndex, const wstring
 }
 
 
-CGameObject* CObject_Manager::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
+CGameObject* CObject_Manager::Clone_GameObject(const _wstring& strPrototypeTag, void* pArg)
 {
 	/* 복제할 원형객체를 찾자. */
 	CGameObject* pPrototype = Find_Prototype(strPrototypeTag);
@@ -93,8 +95,65 @@ CGameObject* CObject_Manager::Clone_GameObject(const wstring& strPrototypeTag, v
 	CGameObject* pGameObject = pPrototype->Clone(pArg);
 	if (nullptr == pGameObject)
 		return nullptr;
-
+	
 	return pGameObject;
+}
+
+HRESULT CObject_Manager::Get_Prototype_Names(vector<string>* pVector)
+{
+	if (pVector == nullptr)
+		return E_FAIL;
+
+	wstring_convert<codecvt_utf8<wchar_t>> converter;
+
+	for (auto& iter : m_Prototypes)
+	{
+		// Convert _wstring (iter.first) to string
+		string converted = converter.to_bytes(iter.first);
+		pVector->push_back(converted);
+	}
+
+	return S_OK;
+}
+
+HRESULT CObject_Manager::Add_Object_Layers_Vector(_uint _level, vector<pair<string, list<CGameObject*>>>* pVector)
+{
+	if (pVector == nullptr)
+		return E_FAIL;
+
+	// Create a wstring_convert object to perform conversion
+	wstring_convert<codecvt_utf8<wchar_t>> converter;
+	list<CGameObject*> tempList;
+	for (auto& iter : m_pLayers[_level])
+	{
+		// Convert wstring (iter.first) to string
+		string converted = converter.to_bytes(iter.first);
+		iter.second->Add_List(&tempList);
+
+		pair<string, list<CGameObject*>> tempPair;
+		tempPair = { converted ,tempList };
+		pVector->push_back(tempPair);
+	}
+
+	return S_OK;
+}
+
+HRESULT CObject_Manager::Add_Object_Layers_Vector(_uint _level, vector<pair<_wstring, list<CGameObject*>>>* pVector)
+{
+	if (pVector == nullptr)
+		return E_FAIL;
+
+	list<CGameObject*> tempList;
+	for (auto& iter : m_pLayers[_level])
+	{
+		iter.second->Add_List(&tempList);
+
+		pair<wstring, list<CGameObject*>> tempPair;
+		tempPair = { iter.first ,tempList };
+		pVector->push_back(tempPair);
+	}
+
+	return S_OK;
 }
 
 void CObject_Manager::Priority_Update(_float fTimeDelta)
@@ -154,7 +213,8 @@ CGameObject* CObject_Manager::Get_Object(_uint iLevelIndex, const wstring& strLa
 
 }
 
-CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
+
+CGameObject * CObject_Manager::Find_Prototype(const _wstring & strPrototypeTag)
 {
 	auto	iter = m_Prototypes.find(strPrototypeTag);
 
@@ -164,7 +224,7 @@ CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
 	return iter->second;	
 }
 
-CLayer * CObject_Manager::Find_Layer(_uint iLevelIndex, const wstring & strLayerTag)
+CLayer * CObject_Manager::Find_Layer(_uint iLevelIndex, const _wstring & strLayerTag)
 {
 	auto	iter = m_pLayers[iLevelIndex].find(strLayerTag);
 

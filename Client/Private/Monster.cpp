@@ -3,7 +3,9 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
+
 #include "UI_Manager.h"
+#include "Imgui_Manager.h"
 
 CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CPawn{ pDevice, pContext }
@@ -30,8 +32,6 @@ HRESULT CMonster::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-	
 	m_pModelCom->SetUp_Animation(16, true);
 	m_iHp = 100;
 
@@ -54,13 +54,18 @@ void CMonster::Update(_float fTimeDelta)
 	Action_AttBuf(DIK_B, m_ePlayerSlot,fTimeDelta);
 
 	m_pModelCom->Play_Animation(fTimeDelta);
+
+	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CMonster::Late_Update(_float fTimeDelta)
 {
+
 	__super::Late_Update(fTimeDelta);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+
+
 }
 
 HRESULT CMonster::Render(_float fTimeDelta)
@@ -83,14 +88,29 @@ HRESULT CMonster::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-
+	
 	return S_OK;
+}
+
+void CMonster::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+{
+	int a = 3;
+}
+
+void CMonster::OnCollisionStay(CCollider* other, _float fTimeDelta)
+{
+	int a = 3;
+}
+
+void CMonster::OnCollisionExit(CCollider* other)
+{
+	int a = 3;
 }
 
 HRESULT CMonster::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -98,6 +118,18 @@ HRESULT CMonster::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
+
+	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
+
+	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
+	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
+	BoundingDesc.pMineGameObject = this;
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
+		return E_FAIL;
+
+	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_1P_BODY, m_pColliderCom);
 
 	return S_OK;
 }
@@ -148,4 +180,5 @@ void CMonster::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pColliderCom);
 }

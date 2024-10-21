@@ -1,16 +1,22 @@
 #pragma once
 
+
 #include "Pawn.h"
+
+#include "GameObject.h"
+
 #include "Client_Defines.h"
 
 BEGIN(Engine)
 class CShader;
 class CModel;
+
 END
 
 BEGIN(Client)
 
 class CPlayer final : public CPawn
+
 {
 private:
 	CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -24,6 +30,19 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
+
+
+public:
+	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionExit(class CCollider* other) override;
+
+private:
+	CShader*				m_pShaderCom = { nullptr };	
+	CModel*					m_pModelCom = { nullptr };
+	CCollider*				m_pColliderCom = { nullptr };
+
+	_float					m_fRandom = {};
 
 private:
 	HRESULT Ready_Components();

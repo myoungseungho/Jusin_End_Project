@@ -13,10 +13,12 @@ private:
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
+	virtual HRESULT Initialize_Prototype_Half();
 	virtual HRESULT Initialize(void* pArg) override;
 
 public:
 	static CVIBuffer_Rect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CVIBuffer_Rect* Create_Half(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 };

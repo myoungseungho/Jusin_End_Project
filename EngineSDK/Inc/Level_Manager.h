@@ -17,13 +17,17 @@ private:
 public:
 	HRESULT Initialize();
 	void Update(_float fTimeDelta);
-	HRESULT Render();
+	HRESULT Render(_float fTimeDelta);
 
 public:
 	HRESULT Change_Level(class CLevel* pNewLevel);
+	_uint Get_CurrentLevel_Index();
+	_uint Get_LoadingLevel_Index();
+	HRESULT Set_LoadingLevel_Index(_uint);
 
 private:
 	class CLevel*				m_pCurrentLevel = { nullptr };	
+	_uint m_iloadingLevelIndex = { 0 };
 
 public:
 	static CLevel_Manager* Create();

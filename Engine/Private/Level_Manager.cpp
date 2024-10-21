@@ -19,12 +19,12 @@ void CLevel_Manager::Update(_float fTimeDelta)
 	m_pCurrentLevel->Update(fTimeDelta);
 }
 
-HRESULT CLevel_Manager::Render()
+HRESULT CLevel_Manager::Render(_float fTimeDelta)
 {
 	if (nullptr == m_pCurrentLevel)
 		return E_FAIL;
 
-	return m_pCurrentLevel->Render();
+	return m_pCurrentLevel->Render(fTimeDelta);
 }
 
 HRESULT CLevel_Manager::Change_Level(CLevel * pNewLevel)
@@ -39,6 +39,23 @@ HRESULT CLevel_Manager::Change_Level(CLevel * pNewLevel)
 
 	return S_OK;
 }
+
+_uint CLevel_Manager::Get_CurrentLevel_Index()
+{
+	return m_pCurrentLevel->GetLevelIndex();
+}
+
+_uint CLevel_Manager::Get_LoadingLevel_Index()
+{
+	return m_iloadingLevelIndex;
+}
+
+HRESULT CLevel_Manager::Set_LoadingLevel_Index(_uint _level)
+{
+	m_iloadingLevelIndex = _level;
+	return S_OK;
+}
+
 
 CLevel_Manager * CLevel_Manager::Create()
 {

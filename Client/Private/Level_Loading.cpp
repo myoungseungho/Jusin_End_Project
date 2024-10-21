@@ -62,7 +62,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 	}
 }
 
-HRESULT CLevel_Loading::Render()
+HRESULT CLevel_Loading::Render(_float fTimeDelta)
 {
 	m_pLoader->Draw_Text();
 

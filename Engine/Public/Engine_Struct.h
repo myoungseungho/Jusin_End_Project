@@ -15,6 +15,28 @@ namespace Engine
 		float			fTime;
 	}KEYFRAME;
 
+	struct EFFECT_KEYFRAME
+	{
+		XMFLOAT3 vScale;
+		XMFLOAT3 vRotation;
+		XMFLOAT3 vPosition;
+
+		bool bIsNotPlaying;
+		float fCurTime;
+		float fDuration;
+
+		// 생성자에서 초기화
+		EFFECT_KEYFRAME()
+			: vScale(1.0f, 1.0f, 1.0f),
+			vRotation(0.0f, 0.0f, 0.0f),
+			vPosition(0.0f, 0.0f, 0.0f),
+			bIsNotPlaying(false),
+			fCurTime(0.0f),
+			fDuration(0.0f)
+		{
+		}
+	};
+
 	typedef struct
 	{
 		class CTexture* pMaterials[AI_TEXTURE_TYPE_MAX];
@@ -45,11 +67,11 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
 
-	typedef struct
+	struct ENGINE_DLL VTXCUBE
 	{
 		XMFLOAT3		vPosition;
 		XMFLOAT3		vTexcoord;
-	}VTXCUBE;
+	};
 
 	struct ENGINE_DLL VTXMESH
 	{
@@ -76,6 +98,61 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
 
+	//파일 저장 구조체
+	struct FILEDATA
+	{
+		_bool isParsing;
+		wstring prototypeTag;
+		wstring layerName;
+		_uint levelIndex;
+		_float3 position;
+		_float3 rightRotation;
+		_float3 upRotation;
+		_float3 lookRotation;
+		_float3 scale;
+	};
+
+	struct EFFECT_KEYFRAME_DATA
+	{
+		_uint keyFrameNumber;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_float curTime;
+		_float duration;
+	};
+
+	struct EFFECT_DATA
+	{
+		wstring effectName;
+		wstring modelName;
+		wstring maskTextureName;
+		wstring diffuseTextureName;
+		_int	effectType;
+		_int renderIndex;
+		_int passIndex;
+		_int uniqueIndex;
+		_bool isNotPlaying;
+		_bool isLoop;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_int iNumKeyFrame;
+		vector<EFFECT_KEYFRAME_DATA> keyframes;
+	};
+
+	struct EFFECT_LAYER_DATA
+	{
+		wstring layerName;
+		_float duration;
+		_float tickPerSecond;
+		_uint keyFramesCount;
+		_int iNumEffect;
+		vector<EFFECT_DATA> effects;
+	};
+
+
+#pragma region 바이너리
 	struct BoneWeight {
 		_uint vertexID;
 		_float weight;
@@ -127,4 +204,7 @@ namespace Engine
 		float ticksPerSecond;
 		vector<ChannelData> channels;
 	};
+#pragma endregion
+
+
 }

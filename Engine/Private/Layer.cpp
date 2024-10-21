@@ -29,6 +29,17 @@ HRESULT CLayer::Add_GameObject(CGameObject * pGameObject)
 	return S_OK;
 }
 
+HRESULT CLayer::Add_List(list<CGameObject*>* pList)
+{
+	if (pList == nullptr)
+		return E_FAIL;
+
+	//¾èÀºº¹»ç
+	*pList = m_GameObjects;
+
+	return S_OK;
+}
+
 void CLayer::Priority_Update(_float fTimeDelta)
 {
 	for (auto& pGameObject : m_GameObjects)

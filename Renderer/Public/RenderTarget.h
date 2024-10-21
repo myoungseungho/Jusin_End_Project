@@ -29,8 +29,7 @@ public:
 	void Clear();
 	HRESULT Copy_RenderTarget(ID3D11Texture2D* pTexture2D);
 
-
-
+	ID3D11ShaderResourceView* Copy_ShaderResourceView();
 #ifdef _DEBUG
 public:
 	HRESULT Ready_Debug(_float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY);

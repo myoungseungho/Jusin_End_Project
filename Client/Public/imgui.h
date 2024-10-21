@@ -337,7 +337,7 @@ namespace ImGui
     IMGUI_API void          StyleColorsDark(ImGuiStyle* dst = NULL);    // new, recommended style (default)
     IMGUI_API void          StyleColorsLight(ImGuiStyle* dst = NULL);   // best used with borders and a custom, thicker font
     IMGUI_API void          StyleColorsClassic(ImGuiStyle* dst = NULL); // classic imgui style
-
+    IMGUI_API void          ApplyCustomStyle(ImGuiStyle* dst = NULL); // classic imgui style
     // Windows
     // - Begin() = push window to the stack and start appending to it. End() = pop window from the stack.
     // - Passing 'bool* p_open != NULL' shows a window-closing widget in the upper-right corner of the window,
@@ -1967,6 +1967,10 @@ struct ImGuiTableColumnSortSpecs
 //-----------------------------------------------------------------------------
 
 #undef new
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/김태완
 struct ImNewWrapper {};
 inline void* operator new(size_t, ImNewWrapper, void* ptr) { return ptr; }
 inline void  operator delete(void*, ImNewWrapper, void*)   {} // This is only required so we can use the symmetrical new()

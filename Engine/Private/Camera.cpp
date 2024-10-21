@@ -19,10 +19,10 @@ HRESULT CCamera::Initialize_Prototype()
 
 	_uint		iNumViewports = { 1 };
 
-	//m_pContext->RSGetViewports(&iNumViewports, &ViewPortDesc);
 
-	m_fViewportWidth = 1280;
-	m_fViewportHeight = 720;
+	m_fViewportWidth =1920.f;
+	m_fViewportHeight = 1080.f;
+
 
 	return S_OK;
 }

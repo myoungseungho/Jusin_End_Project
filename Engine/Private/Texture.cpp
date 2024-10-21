@@ -51,13 +51,14 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 		{
 			// HRESULT 값을 출력하여 원인 파악
 			wprintf(L"CreateWICTextureFromFile failed with HRESULT 0x%08X\n", hr);
+
 			return E_FAIL;
 		}
 			
 
 		m_SRVs.emplace_back(pSRV);		
 	}
-
+	
 	return S_OK;
 }
 
@@ -68,7 +69,68 @@ HRESULT CTexture::Initialize(void * pArg)
 
 HRESULT CTexture::Bind_ShaderResource(CShader * pShader, const _char * pConstantName, _uint iTextureIndex)
 {
+	if (iTextureIndex >= m_SRVs.size())
+		return pShader->Bind_ShaderResourceView(pConstantName, m_SRVs.front());
+
 	return pShader->Bind_ShaderResourceView(pConstantName, m_SRVs[iTextureIndex]);	
+}
+
+HRESULT CTexture::Bind_ShaderResourceArray(CShader* pShader, const _char* pConstantName, _uint iNumTextures)
+{
+	if (iNumTextures >= m_SRVs.size())
+		return E_FAIL;
+
+	return pShader->Bind_ShaderResourceViews(pConstantName, &m_SRVs.front(), iNumTextures);
+}
+
+_float2 CTexture::Get_TextureSize()
+{
+	_float2 fTextureSize = { 0.f,0.f };
+	ID3D11Resource* pResource = nullptr;
+
+	m_SRVs[0]->GetResource(&pResource);
+
+	if (pResource)
+	{
+		// Resource를 ID3D11Texture2D로 캐스팅합니다.
+		ID3D11Texture2D* pTexture2D = nullptr;
+		if (SUCCEEDED(pResource->QueryInterface(__uuidof(ID3D11Texture2D), (void**)&pTexture2D)))
+		{
+			// 텍스처의 디스크립터를 가져옵니다.
+			D3D11_TEXTURE2D_DESC desc;
+			pTexture2D->GetDesc(&desc);
+
+
+			// 텍스처의 크기를 출력합니다.
+			fTextureSize.x = desc.Width;
+			fTextureSize.y = desc.Height;
+
+			// 사용 후 pTexture2D 해제
+			pTexture2D->Release();
+		}
+
+		// 사용 후 pResource 해제
+		pResource->Release();
+	}
+
+	return fTextureSize;
+}
+
+HRESULT CTexture::Set_SRV(ID3D11ShaderResourceView* pSRV, _int iArray)
+{
+	if (iArray < m_SRVs.size())
+	{
+		Safe_Release(m_SRVs[iArray]);
+		m_SRVs[iArray] = pSRV;
+		Safe_AddRef(m_SRVs[iArray]);
+	}
+	else
+	{
+		m_SRVs.push_back(pSRV);
+		Safe_AddRef(m_SRVs[iArray]);
+	}
+
+	return S_OK;
 }
 
 CTexture * CTexture::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext, const _tchar * pTextureFilePath, _uint iNumTextures)

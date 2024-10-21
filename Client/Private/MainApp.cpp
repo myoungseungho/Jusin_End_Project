@@ -16,6 +16,8 @@
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 
+#include "thread"
+>>>>>>> origin/ê¹€?œì™„
 CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
 	, m_pRenderInstance{ CRenderInstance::Get_Instance() }
@@ -34,13 +36,20 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
+	//½¦ÀÌ´õ »ý¼º
 	if (FAILED(Ready_Prototype_Component_ForStatic()))
 		return E_FAIL;
 
 	//IMGUI »ý¼º, ½Ì±ÛÅÏ
 	Create_IMGUI_Manager();
 
-	if (FAILED(Open_Level(LEVEL_LOGO)))
+
+	//½º·¹µåÇ® ÃÊ±âÈ­
+	//ÇÏµå¿þ¾îÀÇ ½º·¹µå ¼ö¸¦ ³Ñ°ÜÁØ´Ù. (¼ÒÇÁÆ®¿þ¾î ½º·¹µå ¼ö ¾Æ´Ô)
+	if (FAILED(m_pGameInstance->Initialize_ThreadPool(4)))
+		return E_FAIL;
+
+	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
 
 	return S_OK;
@@ -51,6 +60,7 @@ void CMainApp::Update(_float fTimeDelta)
 	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
+// 1/50 -> 0.02ÃÊ °íÁ¤ Update
 void CMainApp::Fixed_Update(_float fTimeDelta)
 {
 }
@@ -60,14 +70,16 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pGameInstance->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGameInstance->Clear_DepthStencil_View();
 
-	//IMGUI ·»´õ
-	m_pIMGUI_Manager->Render(fTimeDelta);
-
-	//·¹º§¸Å´ÏÀú ·»´õ´Â °ÔÀÓÀÎ½ºÅÏ½º
-	m_pGameInstance->Render_Engine();
 
 	//³ª¸ÓÁö ·»´õ´Â ·»´õÀÎ½ºÅÏ½º
 	m_pRenderInstance->Render_Engine(fTimeDelta);
+
+	//·¹º§¸Å´ÏÀú ·»´õ´Â °ÔÀÓÀÎ½ºÅÏ½º
+	m_pGameInstance->Render_Engine(fTimeDelta);
+
+
+	//IMGUI ·»´õ
+	//m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
@@ -84,7 +96,10 @@ HRESULT CMainApp::Open_Level(LEVELID eStartLevelID)
 
 HRESULT CMainApp::Create_IMGUI_Manager()
 {
-	m_pIMGUI_Manager = CImgui_Manager::Create(m_pDevice, m_pContext);
+	m_pImgui_Manager = CImgui_Manager::Get_Instance();
+	m_pImgui_Manager->Initialize(m_pDevice, m_pContext);
+
+	Safe_AddRef(m_pImgui_Manager);
 
 	return S_OK;
 }
@@ -140,7 +155,7 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	//Component_Shader
 
 	/* For.Prototype_Component_Shader_VtxPosTex */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxAnimMesh.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
 		return E_FAIL;
 
@@ -152,6 +167,10 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxPosTex.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Single_Eff_VtxMesh"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Single_Eff_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
 		return E_FAIL;
 
 	return S_OK;
@@ -175,7 +194,9 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-	Safe_Release(m_pIMGUI_Manager);
+	m_pImgui_Manager->Free();
+	Safe_Release(m_pImgui_Manager);
+
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 

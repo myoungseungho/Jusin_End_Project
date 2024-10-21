@@ -25,7 +25,6 @@ HRESULT CPlayer::Initialize_Prototype()
 
 HRESULT CPlayer::Initialize(void* pArg)
 {
-
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -38,6 +37,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 	m_iHp = 100;
 
 	m_ePawnID = GOGU;
+
 
 	return S_OK;
 }
@@ -75,6 +75,7 @@ void CPlayer::Update(_float fTimeDelta)
 
 
 	m_pModelCom->Play_Animation(fTimeDelta);
+
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)
@@ -116,6 +117,7 @@ HRESULT CPlayer::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Model */
+
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
@@ -169,4 +171,5 @@ void CPlayer::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+
 }
