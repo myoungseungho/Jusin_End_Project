@@ -64,9 +64,6 @@
     <Filter Include="02.GameObjects\Map\Space\Moon">
       <UniqueIdentifier>{0b6e2440-ed9e-43ce-b3b2-9fd31271863e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
-      <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Effect_Rect\Shader_Materials">
       <UniqueIdentifier>{4777c123-625a-4580-b4ad-aaf08a2c4ad9}</UniqueIdentifier>
     </Filter>
@@ -91,29 +88,44 @@
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\Character\AttackObject</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\Character.cpp">
       <Filter>02.GameObjects\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Play_Goku.cpp">
-      <Filter>02.GameObjects\Character\Play_Goku</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
-      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
-      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Play_21.cpp">
       <Filter>02.GameObjects\Character\Play_21</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
-      <Filter>90.FrameEvent_Manager</Filter>
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\AnimationNameMap.cpp">
-      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    <ClCompile Include="..\Private\Play_Goku.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp">
       <Filter>02.GameObjects\Character\Model_Preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
+      <Filter>90.FrameEvent_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\IMGUI_Tab.cpp">
+      <Filter>97.IMGUI\Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,21 +134,6 @@
     </Filter>
     <Filter Include="97.IMGUI\Plugin">
       <UniqueIdentifier>{deafa4fd-162b-4826-aeed-8c1d57afb415}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap">
-      <UniqueIdentifier>{8ddf4c73-62da-4b46-94da-b23a1e7cfe5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab">
-      <UniqueIdentifier>{2bf9007a-1d5d-42e0-9c61-dffd73b17475}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_UI_Tab">
-      <UniqueIdentifier>{1d0db8c7-17eb-4550-b9f2-b5bfc768b40d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Effect_Tab">
-      <UniqueIdentifier>{28e285c3-67fb-462a-8fcf-6e9ebebde4a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Animation_Tab">
-      <UniqueIdentifier>{dbf2a29a-d723-4ed7-bbfd-2e7dfec4b380}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Camera">
       <UniqueIdentifier>{b362e33a-b9f1-461c-86ab-664700762dd2}</UniqueIdentifier>
@@ -213,20 +210,8 @@
     <Filter Include="02.GameObjects\UI\Combo\Effect">
       <UniqueIdentifier>{e4331be0-f3aa-44c9-a0aa-7c30f79e76b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Pawn">
-      <UniqueIdentifier>{48b3df65-2088-440e-aef4-4a29cfd0b387}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI\Hp\SubHpGauge">
       <UniqueIdentifier>{a407ce47-96a1-41a6-bcd4-9cb7cf1e47ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\Pawn\Sub">
-      <UniqueIdentifier>{38783f42-d2aa-4bc3-ba55-0c23c2efa146}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Object_Tab">
-      <UniqueIdentifier>{47930f86-8285-4090-a54f-9f4c256d5495}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
-      <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\GameEnd">
       <UniqueIdentifier>{0e711b5f-d746-4c75-9a3b-addb2a5a3982}</UniqueIdentifier>
@@ -348,9 +333,6 @@
     <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
       <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Player">
-      <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Effect">
       <UniqueIdentifier>{a118aae3-8ba7-416e-a709-e00fa2e17ce2}</UniqueIdentifier>
     </Filter>
@@ -395,6 +377,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Loading\Font">
       <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
+      <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -442,21 +427,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\imstb_truetype.h">
       <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\IMGUI_Tab.h">
-      <Filter>97.IMGUI\Tap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\IMGUI_Shader_Tab.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Animation_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Effect_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
-      <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\UI_AttBuf.h">
       <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
@@ -524,14 +494,8 @@
     <ClInclude Include="..\public\UI_ComboEffect.h">
       <Filter>02.GameObjects\UI\Combo\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Pawn.h">
-      <Filter>02.GameObjects\Pawn</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_SubHpGauge.h">
       <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\SubPlayer.h">
-      <Filter>02.GameObjects\Pawn\Sub</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Effect_Rect.h">
       <Filter>02.GameObjects\Effect_Rect</Filter>
@@ -565,12 +529,6 @@
     </ClInclude>
     <ClInclude Include="..\public\Effect_Animation.h">
       <Filter>02.GameObjects\Effect\01.Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Level_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_GameStartCircle.h">
       <Filter>02.GameObjects\UI\GameState\Circle</Filter>
@@ -690,13 +648,10 @@
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClInclude>
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Shader_Material.h">
       <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Shader_Tab_Defines.h">
-      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SpaceStone.h">
       <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
@@ -704,38 +659,8 @@
     <ClInclude Include="..\Public\SpaceRock.h">
       <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
-      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Play_Goku.h">
-      <Filter>02.GameObjects\Character\Play_Goku</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Play_21.h">
-      <Filter>02.GameObjects\Character\Play_21</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\S21_MeleeAttack.h">
-      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Input.h">
-      <Filter>02.GameObjects\Character\Input</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\Character\AttackObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Character.h">
-      <Filter>02.GameObjects\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\AnimationNameMap.h">
-      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FrameEvent_Manager.h">
-      <Filter>90.FrameEvent_Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
-      <Filter>99.Defines</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Model_Preview.h">
-      <Filter>02.GameObjects\Character\Model_Preview</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
@@ -747,14 +672,68 @@
     <ClInclude Include="..\Public\Play_21.h" />
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
-    <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Level\00.GamePlay</Filter>
+    <ClInclude Include="..\Public\AnimationNameMap.h">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_21.h">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\S21_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Model_Preview.h">
+      <Filter>02.GameObjects\Character\Model_Preview</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Level_Loading.h">
       <Filter>01.Level\99.Loading</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\Loader.h">
       <Filter>01.Level\99.Loading\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FrameEvent_Manager.h">
+      <Filter>90.FrameEvent_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Input.h">
+      <Filter>02.GameObjects\Character\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Shader_Tab_Defines.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Shader_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Tab.h">
+      <Filter>97.IMGUI\Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -793,15 +772,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\Imgui_Manager.cpp">
       <Filter>97.IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\IMGUI_Tab.cpp">
-      <Filter>97.IMGUI\Tap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
-      <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
-      <Filter>97.IMGUI\Tap\IMGUI_Effect_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
@@ -872,14 +842,8 @@
     <ClCompile Include="..\private\UI_ComboEffect.cpp">
       <Filter>02.GameObjects\UI\Combo\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Pawn.cpp">
-      <Filter>02.GameObjects\Pawn</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\UI_SubHpGauge.cpp">
       <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\SubPlayer.cpp">
-      <Filter>02.GameObjects\Pawn\Sub</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Effect_Rect.cpp">
       <Filter>02.GameObjects\Effect_Rect</Filter>
@@ -905,17 +869,11 @@
     <ClCompile Include="..\Private\Effect_Single.cpp">
       <Filter>02.GameObjects\Effect\02.Single</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
-      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\SpaceSky.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Effect_Animation.cpp">
       <Filter>02.GameObjects\Effect\01.Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
-      <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
@@ -1041,7 +999,7 @@
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClCompile>
     <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp">
-      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Shader_Material.cpp">
       <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>

@@ -162,6 +162,13 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Shader_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_Tab.h" />
+    <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\public\BackGround.h" />
@@ -170,12 +177,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h" />
-    <ClInclude Include="..\public\Pawn.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\public\SubPlayer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_FontName.h" />
@@ -227,18 +228,11 @@
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
-    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Camera_Tab.h" />
-    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
     <ClInclude Include="..\Public\imgui_impl_dx11.h" />
     <ClInclude Include="..\Public\imgui_impl_win32.h" />
     <ClInclude Include="..\Public\imgui_internal.h" />
-    <ClInclude Include="..\Public\IMGUI_Level_Tab.h" />
     <ClInclude Include="..\Public\Imgui_Manager.h" />
-    <ClInclude Include="..\Public\IMGUI_Object_Tab.h" />
-    <ClInclude Include="..\public\IMGUI_Shader_Tab.h" />
-    <ClInclude Include="..\public\IMGUI_Tab.h" />
-    <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
     <ClInclude Include="..\Public\imnodes.h" />
     <ClInclude Include="..\Public\imnodes_internal.h" />
     <ClInclude Include="..\Public\imstb_rectpack.h" />
@@ -296,6 +290,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
@@ -304,12 +299,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp" />
-    <ClCompile Include="..\private\Pawn.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\private\SubPlayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_FontName.cpp" />
@@ -371,7 +360,6 @@
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
-    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
