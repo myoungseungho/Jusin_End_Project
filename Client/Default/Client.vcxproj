@@ -220,7 +220,6 @@
     <ClInclude Include="..\public\Effect_Animation.h" />
     <ClInclude Include="..\Public\Effect_Blend.h" />
     <ClInclude Include="..\Public\Effect_Layer.h" />
-    <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Effect_Overlap.h" />
     <ClInclude Include="..\Public\Effect_ZNone.h" />
     <ClInclude Include="..\Public\Effect_NoneLight.h" />
@@ -288,6 +287,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
@@ -337,7 +338,6 @@
     <ClCompile Include="..\private\Effect_Animation.cpp" />
     <ClCompile Include="..\Private\Effect_Blend.cpp" />
     <ClCompile Include="..\Private\Effect_Layer.cpp" />
-    <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Effect_Overlap.cpp" />
     <ClCompile Include="..\Private\Effect_ZNone.cpp" />
     <ClCompile Include="..\Private\Effect_NoneLight.cpp" />
@@ -354,8 +354,6 @@
     <ClCompile Include="..\Private\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp" />
     <ClCompile Include="..\Private\Imgui_Manager.cpp" />
-    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
-    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
