@@ -82,6 +82,23 @@ void CChannel::Compute_TransformationMatrix(_float fCurrentPosition, const vecto
 	Bones[m_iBoneIndex]->SetUp_TransformationMatrix(TransformationMatrix);
 }
 
+void CChannel::Update_FrameIndex(_float fCurrentPosition, _uint* pKeyFrameIndex)
+{
+
+
+	*pKeyFrameIndex = 0;
+
+
+	//while (fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex) + 1].fTime)
+	//   ++(*pKeyFrameIndex);
+
+
+	//size가 2인 경우 예외처리
+
+	while ((*pKeyFrameIndex + 1 < m_KeyFrames.size()) && fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex) + 1].fTime)
+		++(*pKeyFrameIndex);
+
+}
 
 CChannel* CChannel::Create(ChannelData& chanelData, const vector<class CBone*>& Bones)
 {

@@ -103,7 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../RendererSDK/Inc/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../RendererSDK/Inc/;./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,6 +167,69 @@
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\Energy_Effect.h" />
     <ClInclude Include="..\Public\Energy_Effect_2p.h" />
+    <ClInclude Include="..\public\BackGround.h" />
+    <ClInclude Include="..\Public\Level_GamePlay.h" />
+    <ClInclude Include="..\public\Level_Logo.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\Pawn.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\SubPlayer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
+    <ClInclude Include="..\public\UI_FightFont.h" />
+    <ClInclude Include="..\public\UI_FontName.h" />
+    <ClInclude Include="..\public\UI_HpEffect.h" />
+    <ClInclude Include="..\public\UI_Input.h" />
+    <ClInclude Include="..\public\UI_InputDir.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirEffect.h" />
+    <ClInclude Include="..\public\UI_InputDirIcon.h" />
+    <ClInclude Include="..\public\UI_Input_Action.h" />
+    <ClInclude Include="..\public\UI_Input_ActionIcon.h" />
+    <ClInclude Include="..\public\UI_Input_DirPanel.h" />
+    <ClInclude Include="..\public\UI_Input_IconPanel.h" />
+    <ClInclude Include="..\public\UI_KOFont.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_GameState.h" />
+    <ClInclude Include="..\public\UI_GameStartCircle.h" />
+    <ClInclude Include="..\public\UI_KOFontEffect.h" />
+    <ClInclude Include="..\public\UI_KOPanel.h" />
+    <ClInclude Include="..\public\UI_KOParticle.h" />
+    <ClInclude Include="..\public\UI_Loading.h" />
+    <ClInclude Include="..\public\UI_LoadingMark.h" />
+    <ClInclude Include="..\public\UI_Loading_Font.h" />
+    <ClInclude Include="..\public\UI_Logo.h" />
+    <ClInclude Include="..\public\UI_SkillEffect.h" />
+    <ClInclude Include="..\public\UI_StartEmblem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ReadyFont.h" />
+    <ClInclude Include="..\public\UI_SubHpGauge.h" />
+    <ClInclude Include="..\public\UI_AttBufEffect.h" />
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
+    <ClInclude Include="..\Public\AnimationNameMap.h" />
+    <ClInclude Include="..\Public\AttackObject.h" />
+    <ClInclude Include="..\Public\Character.h" />
+    <ClInclude Include="..\Public\Client_Defines.h" />
+    <ClInclude Include="..\Public\FrameEvent_Manager.h" />
+    <ClInclude Include="..\Public\Effect.h" />
+    <ClInclude Include="..\public\Effect_Animation.h" />
+    <ClInclude Include="..\Public\Effect_Layer.h" />
+    <ClInclude Include="..\Public\Effect_Manager.h" />
+    <ClInclude Include="..\Public\Effect_MoveTex.h" />
+    <ClInclude Include="..\Public\Effect_Multi.h" />
+    <ClInclude Include="..\public\Effect_Rect.h" />
+    <ClInclude Include="..\Public\Effect_Single.h" />
+    <ClInclude Include="..\Public\FallingStar.h" />
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\imconfig.h" />
     <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
@@ -181,10 +244,12 @@
     <ClInclude Include="..\public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
+    <ClInclude Include="..\Public\imnodes.h" />
+    <ClInclude Include="..\Public\imnodes_internal.h" />
     <ClInclude Include="..\Public\imstb_rectpack.h" />
     <ClInclude Include="..\Public\imstb_textedit.h" />
     <ClInclude Include="..\Public\imstb_truetype.h" />
-    <ClInclude Include="..\Public\Level_GamePlay.h" />
+    <ClInclude Include="..\Public\Input.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
@@ -195,6 +260,51 @@
     <ClInclude Include="..\Public\Range_Effect.h" />
     <ClInclude Include="..\Public\Range_Effect_2p.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
+    <ClInclude Include="..\Public\Model_Preview.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Public\UIObject.h" />
+    <ClInclude Include="..\Public\UI_AttBuf.h" />
+    <ClInclude Include="..\Public\UI_AttBufMark.h" />
+    <ClInclude Include="..\public\UI_AttBufNone.h" />
+    <ClInclude Include="..\public\UI_AttBufThunderEffect.h" />
+    <ClInclude Include="..\Public\UI_BaseAttBuf.h" />
+    <ClInclude Include="..\Public\UI_Chara_Icon.h" />
+    <ClInclude Include="..\public\UI_Chara_Icon_Panel.h" />
+    <ClInclude Include="..\public\UI_Combo.h" />
+    <ClInclude Include="..\public\UI_ComboEffect.h" />
+    <ClInclude Include="..\public\UI_ComboFont.h" />
+    <ClInclude Include="..\public\UI_ComboNumber.h" />
+    <ClInclude Include="..\Public\UI_Cursor.h" />
+    <ClInclude Include="..\public\UI_HpGauge.h" />
+    <ClInclude Include="..\Public\UI_HpPanel.h" />
+    <ClInclude Include="..\Public\UI_Manager.h" />
+    <ClInclude Include="..\Public\UI_Skill.h" />
+    <ClInclude Include="..\Public\UI_SkillGauge.h" />
+    <ClInclude Include="..\public\UI_SkillGaugeBar.h" />
+    <ClInclude Include="..\Public\UI_SkillNumber.h" />
+    <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h" />
+    <ClInclude Include="..\Public\UI_Timer.h" />
+    <ClInclude Include="..\Public\Play_21.h" />
+    <ClInclude Include="..\public\UI_TimerPanel.h" />
+    <ClInclude Include="..\Public\Monster.h" />
+    <ClInclude Include="..\Public\Play_Goku.h" />
+    <ClInclude Include="..\Public\S21_MeleeAttack.h" />
+    <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
+    <ClInclude Include="..\Public\Shader_Material.h" />
+    <ClInclude Include="..\public\Shader_Tab_Defines.h" />
+    <ClInclude Include="..\Public\Shader_Texture.h" />
+    <ClInclude Include="..\Public\SpaceCliff.h" />
+    <ClInclude Include="..\Public\SpaceEarth.h" />
+    <ClInclude Include="..\Public\SpaceEarth_Light.h" />
+    <ClInclude Include="..\Public\SpaceGround.h" />
+    <ClInclude Include="..\Public\SpaceHorizon.h" />
+    <ClInclude Include="..\Public\SpaceMoon.h" />
+    <ClInclude Include="..\Public\SpaceRock.h" />
+    <ClInclude Include="..\Public\SpaceSky.h" />
+    <ClInclude Include="..\Public\SpaceStage.h" />
+    <ClInclude Include="..\Public\SpaceStone.h" />
+    <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -205,6 +315,67 @@
     <ClCompile Include="..\Private\Main_Camera.cpp" />
     <ClCompile Include="..\Private\Energy_Effect.cpp" />
     <ClCompile Include="..\Private\Energy_Effect_2p.cpp" />
+    <ClCompile Include="..\private\BackGround.cpp" />
+    <ClCompile Include="..\Private\Level_GamePlay.cpp" />
+    <ClCompile Include="..\private\Level_Logo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\Pawn.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Private\Player.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\SubPlayer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
+    <ClCompile Include="..\private\UI_FightFont.cpp" />
+    <ClCompile Include="..\private\UI_FontName.cpp" />
+    <ClCompile Include="..\private\UI_HpEffect.cpp" />
+    <ClCompile Include="..\private\UI_Input.cpp" />
+    <ClCompile Include="..\private\UI_InputDir.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirEffect.cpp" />
+    <ClCompile Include="..\private\UI_InputDirIcon.cpp" />
+    <ClCompile Include="..\private\UI_Input_Action.cpp" />
+    <ClCompile Include="..\private\UI_Input_ActionIcon.cpp" />
+    <ClCompile Include="..\private\UI_Input_DirPanel.cpp" />
+    <ClCompile Include="..\private\UI_Input_IconPanel.cpp" />
+    <ClCompile Include="..\private\UI_KOFont.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_GameState.cpp" />
+    <ClCompile Include="..\private\UI_GameStartCircle.cpp" />
+    <ClCompile Include="..\private\UI_KOFontEffect.cpp" />
+    <ClCompile Include="..\private\UI_KOPanel.cpp" />
+    <ClCompile Include="..\private\UI_KOParticle.cpp" />
+    <ClCompile Include="..\private\UI_Loading.cpp" />
+    <ClCompile Include="..\private\UI_LoadingMark.cpp" />
+    <ClCompile Include="..\private\UI_Loading_Font.cpp" />
+    <ClCompile Include="..\private\UI_Logo.cpp" />
+    <ClCompile Include="..\private\UI_SkillEffect.cpp" />
+    <ClCompile Include="..\private\UI_StartEmblem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ReadyFont.cpp" />
+    <ClCompile Include="..\private\UI_SubHpGauge.cpp" />
+    <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
+    <ClCompile Include="..\Private\AnimationNameMap.cpp" />
+    <ClCompile Include="..\Private\Character.cpp" />
+    <ClCompile Include="..\Private\AttackObject.cpp" />
+    <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\private\Effect_Animation.cpp" />
+    <ClCompile Include="..\Private\Effect_Layer.cpp" />
+    <ClCompile Include="..\Private\Effect_Manager.cpp" />
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp" />
+    <ClCompile Include="..\Private\Effect_Multi.cpp" />
+    <ClCompile Include="..\private\Effect_Rect.cpp" />
+    <ClCompile Include="..\Private\Effect_Single.cpp" />
+    <ClCompile Include="..\Private\FallingStar.cpp" />
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\imgui.cpp" />
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Camera_Tab.cpp" />
@@ -215,13 +386,12 @@
     <ClCompile Include="..\Private\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp" />
     <ClCompile Include="..\Private\Imgui_Manager.cpp" />
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
-    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\private\IMGUI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_tables.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\Private\imgui_widgets.cpp" />
-    <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
@@ -232,6 +402,51 @@
     <ClCompile Include="..\Private\Range_Effect.cpp" />
     <ClCompile Include="..\Private\Range_Effect_2p.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
+    <ClCompile Include="..\Private\Model_Preview.cpp" />
+    <ClCompile Include="..\Private\Monster.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Private\UIObject.cpp" />
+    <ClCompile Include="..\Private\UI_AttBuf.cpp" />
+    <ClCompile Include="..\Private\UI_AttBufMark.cpp" />
+    <ClCompile Include="..\private\UI_AttBufNone.cpp" />
+    <ClCompile Include="..\private\UI_AttBufThunderEffect.cpp" />
+    <ClCompile Include="..\Private\UI_BaseAttBuf.cpp" />
+    <ClCompile Include="..\Private\UI_Chara_Icon.cpp" />
+    <ClCompile Include="..\private\UI_Chara_Icon_Panel.cpp" />
+    <ClCompile Include="..\private\UI_Combo.cpp" />
+    <ClCompile Include="..\private\UI_ComboEffect.cpp" />
+    <ClCompile Include="..\private\UI_ComboFont.cpp" />
+    <ClCompile Include="..\private\UI_ComboNumber.cpp" />
+    <ClCompile Include="..\Private\UI_Cursor.cpp" />
+    <ClCompile Include="..\private\UI_HpGauge.cpp" />
+    <ClCompile Include="..\Private\UI_HpPanel.cpp" />
+    <ClCompile Include="..\Private\UI_Manager.cpp" />
+    <ClCompile Include="..\Private\UI_Skill.cpp" />
+    <ClCompile Include="..\Private\UI_SkillGauge.cpp" />
+    <ClCompile Include="..\private\UI_SkillGaugeBar.cpp" />
+    <ClCompile Include="..\Private\UI_SkillNumber.cpp" />
+    <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp" />
+    <ClCompile Include="..\Private\UI_Timer.cpp" />
+    <ClCompile Include="..\Private\Play_21.cpp" />
+    <ClCompile Include="..\Private\Play_Goku.cpp" />
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp" />
+    <ClCompile Include="..\private\UI_TimerPanel.cpp" />
+    <ClCompile Include="..\Private\imnodes.cpp" />
+    <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp" />
+    <ClCompile Include="..\Private\Shader_Material.cpp" />
+    <ClCompile Include="..\Private\Shader_Texture.cpp" />
+    <ClCompile Include="..\Private\SpaceCliff.cpp" />
+    <ClCompile Include="..\Private\SpaceEarth.cpp" />
+    <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
+    <ClCompile Include="..\Private\SpaceGround.cpp" />
+    <ClCompile Include="..\Private\SpaceHorizon.cpp" />
+    <ClCompile Include="..\Private\SpaceMoon.cpp" />
+    <ClCompile Include="..\Private\SpaceRock.cpp" />
+    <ClCompile Include="..\Private\SpaceSky.cpp" />
+    <ClCompile Include="..\Private\SpaceStage.cpp" />
+    <ClCompile Include="..\Private\SpaceStone.cpp" />
+    <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -248,8 +463,14 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -47,6 +47,11 @@ public:
 		return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix));
 	}
 
+	_float3 Get_Rotation() const
+	{
+		return m_fCurrentRotation;
+	}
+
 public:
 
 	void Set_Scaled(_float fScaleX, _float fScaleY, _float fScaleZ) {
@@ -65,7 +70,16 @@ public:
 	}
 
 
-	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix) {
+	void Add_Move(_float3 fMovement)
+	{
+		_vector vPos = Get_State(CTransform::STATE_POSITION);
+		_vector vNewPosition = { XMVectorGetX(vPos) + fMovement.x, XMVectorGetY(vPos) + fMovement.y, XMVectorGetZ(vPos) + fMovement.z, 1 };
+
+		Set_State(STATE_POSITION, vNewPosition);
+	}
+
+	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix)
+	{
 		_float3 eulerAngles;
 
 		// 행렬의 요소를 추출
@@ -112,6 +126,12 @@ public:
 		Set_State(CTransform::STATE_POSITION, FinalPosition);
 	}
 
+	void Add_MoveVector(_vector vMovement)
+	{
+		_vector vPos = Get_State(CTransform::STATE_POSITION);
+		_vector vNewPosition = { vPos + vMovement };
+		Set_State(STATE_POSITION, vNewPosition);
+	}
 public:
 	HRESULT Initialize();
 	void SetUp_TransformDesc(const TRANSFORM_DESC* pTransformDesc);
@@ -128,12 +148,14 @@ public:
 	void Rotation(_fvector vAxis, _float fRadian);
 	void Rotation(_float3 vRotation);
 	void LookAt(_fvector vAt);
-
+	void Rotate(_float3 ChangeRotation);
 
 private:
 	_float4x4				m_WorldMatrix = {};
 	_float					m_fSpeedPerSec = {};
 	_float					m_fRotationPerSec = {};
+
+	_float3 m_fCurrentRotation = { 0.0f, 0.0f, 0.0f }; // 초기 회전 값 0, 0, 0
 
 public:
 	static CTransform* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -35,6 +35,19 @@ CGameObject* CObject_Manager::Get_GameObject(_uint iLevelIndex, const _wstring& 
 	return pLayer->Get_GameObject(iIndex);
 }
 
+list<class CGameObject*> CObject_Manager::Get_Layer(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	CLayer* pLayer = Find_Layer(iLevelIndex, strLayerTag);
+
+	if (pLayer == nullptr)
+	{
+		list<class CGameObject*> NullList = {};
+		return NullList;
+	}
+
+	return pLayer->Get_Object_List();
+}
+
 HRESULT CObject_Manager::Initialize(_uint iNumLevels)
 {
 	m_iNumLevels = iNumLevels;
@@ -95,7 +108,7 @@ CGameObject* CObject_Manager::Clone_GameObject(const _wstring& strPrototypeTag, 
 	CGameObject* pGameObject = pPrototype->Clone(pArg);
 	if (nullptr == pGameObject)
 		return nullptr;
-
+	
 	return pGameObject;
 }
 
@@ -193,6 +206,21 @@ void CObject_Manager::Late_Update(_float fTimeDelta)
 void CObject_Manager::Destory_Reserve(CGameObject* gameObject)
 {
 	m_DestoryObjects.push_back(gameObject);
+}
+
+_uint CObject_Manager::GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (m_pLayers[iLevelIndex].size() == 0)
+		return 0;
+
+	auto iterator = m_pLayers[iLevelIndex].find(strLayerTag);
+
+	if (iterator == m_pLayers[iLevelIndex].end())
+		return 0;
+
+
+	//return m_pLayers[iLevelIndex].find(strLayerTag)->second->GetSize();
+	return iterator->second->GetSize();
 }
 
 HRESULT CObject_Manager::Clear_Resources(_uint iLevelIndex)

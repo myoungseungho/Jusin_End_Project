@@ -15,6 +15,28 @@ namespace Engine
 		float			fTime;
 	}KEYFRAME;
 
+	struct EFFECT_KEYFRAME
+	{
+		XMFLOAT3 vScale;
+		XMFLOAT3 vRotation;
+		XMFLOAT3 vPosition;
+
+		bool bIsNotPlaying;
+		float fCurTime;
+		float fDuration;
+
+		// 생성자에서 초기화
+		EFFECT_KEYFRAME()
+			: vScale(1.0f, 1.0f, 1.0f),
+			vRotation(0.0f, 0.0f, 0.0f),
+			vPosition(0.0f, 0.0f, 0.0f),
+			bIsNotPlaying(false),
+			fCurTime(0.0f),
+			fDuration(0.0f)
+		{
+		}
+	};
+
 	typedef struct
 	{
 		class CTexture* pMaterials[AI_TEXTURE_TYPE_MAX];
@@ -75,7 +97,6 @@ namespace Engine
 		static const unsigned int					iNumElements = { 6 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
-#pragma region 명승호
 
 	//파일 저장 구조체
 	struct FILEDATA
@@ -91,57 +112,46 @@ namespace Engine
 		_float3 scale;
 	};
 
-#pragma region 카메라
-
-
-	//파일매니저에서 저장을 해야 하는 구조체는 여기 있어야 한다.
-	// 카메라 포인트 구조체
-	struct CameraPoint {
-		//포지션
-		_float3 position = {};
-
-		//회전 쿼터니언
-		_float4 rotation = {};
-
-		_float duration; // 다음 포인트까지 이동 시간
-		_int interpolationType; //보간 타입
-
-		const _float4x4* pWorldFloat4x4;
-		// Damping Mode에서 사용되는 계수
-		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
-		_bool hasWorldFloat4x4 = { true };
+	struct EFFECT_KEYFRAME_DATA
+	{
+		_uint keyFrameNumber;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_float curTime;
+		_float duration;
+		_bool bIsNotPlaying;
 	};
 
-	struct CameraSaveData {
-		// 모델별 스킬, 애니메이션, 포인트를 저장하는 구조체
-
-		struct ModelData 
-		{
-			_int modelID;
-			struct SkillData {
-				string skillName;
-				struct AnimationData {
-					string  animationName;
-					vector<CameraPoint> points;
-				};
-				vector<AnimationData> animations;
-			};
-			vector<SkillData> skills;
-		};
-
-		vector<ModelData> models;
+	struct EFFECT_DATA
+	{
+		wstring effectName;
+		wstring modelName;
+		wstring maskTextureName;
+		wstring diffuseTextureName;
+		_int	effectType;
+		_int renderIndex;
+		_int passIndex;
+		_int uniqueIndex;
+		_bool isNotPlaying;
+		_bool isLoop;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_int iNumKeyFrame;
+		vector<EFFECT_KEYFRAME_DATA> keyframes;
 	};
 
-	//왜 extern이 필요할까?
-	//struct나 enum은 타입을 정의한다. 메모리를 즉시 할당 안하고 형식만 정의한다.
-	//unordered_map은 런타임에 메모리를 할당해야 한다.
-	//C++에서는 전역 객체를 여러 소스 파일에서 공유하려면, 한 곳에만 정의하고 나머지 파일에서는 선언만 해야 합니다.
-	//extern 키워드는 "이 변수의 정의는 다른 소스 파일에 있다"는 의미로 사용됩니다.
+	struct EFFECT_LAYER_DATA
+	{
+		wstring layerName;
+		_float duration;
+		_float tickPerSecond;
+		_uint keyFramesCount;
+		_int iNumEffect;
+		vector<EFFECT_DATA> effects;
+	};
 
-	extern unordered_map<_int, _wstring> modelIDToString;
-	extern unordered_map<_wstring, _int> stringToModelID;
-
-#pragma endregion
 
 #pragma region 바이너리
 	struct BoneWeight {
@@ -197,5 +207,5 @@ namespace Engine
 	};
 #pragma endregion
 
-#pragma endregion
+
 }

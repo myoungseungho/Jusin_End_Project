@@ -14,7 +14,7 @@ private:
 
 public:
 	class CComponent* Get_Component(const _wstring& strComponentTag, _uint iIndex);
-	class CGameObject* Get_GameObject(_uint iIndex);
+	list<class CGameObject*> Get_Object_List() { return m_GameObjects; }
 
 public:
 	HRESULT Add_GameObject(class CGameObject* pGameObject);
@@ -24,6 +24,12 @@ public:
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
+
+	CGameObject* Get_Object(_uint index);
+	_uint GetSize()
+	{
+		return m_GameObjects.size();
+	}
 
 private:
 	list<class CGameObject*>			m_GameObjects;

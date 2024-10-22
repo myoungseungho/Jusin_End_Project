@@ -207,235 +207,428 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 }
 
 
-HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg)
+
+HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 {
-    if (nullptr == pArg)
-        return E_FAIL;
+	wofstream file(FilePath);
+	if (!file.is_open()) {
+		return E_FAIL;
+	}
 
-    std::wifstream file(filename);
-    if (!file.is_open())
-    {
-        // 파일 열기 실패 처리
-        return E_FAIL;
-    }
+	vector<EFFECT_LAYER_DATA>* EffectDataList = reinterpret_cast<vector<EFFECT_LAYER_DATA>*>(pArg);
 
-    std::wstring line;
-    CameraSaveData::ModelData currentModel;
-    CameraSaveData::ModelData::SkillData currentSkill;
-    CameraSaveData::ModelData::SkillData::AnimationData currentAnim;
+	// 레이어 데이터를 파일에 저장합니다.
+	for (const auto& layerData : *EffectDataList) {
+		file << L"[Layer]" << L"\n";
+		file << L"LayerName: " << layerData.layerName << L"\n";
+		file << L"Duration: " << layerData.duration << L"\n";
+		file << L"TickPerSecond: " << layerData.tickPerSecond << L"\n";
+		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n";
+		file << L"NumEffec: " << layerData.iNumEffect << L"\n\n";
 
-    // 변수 초기화
-    currentModel.modelID = -1;
+		// 이펙트 데이터를 파일에 저장합니다.
+		for (const auto& effectData : layerData.effects) {
+			file << L"[Effect]" << L"\n";
+			file << L"EffectName: " << effectData.effectName << L"\n";
+			file << L"ModelName: " << effectData.modelName << L"\n";
+			file << L"MaskTextureName: " << effectData.maskTextureName << L"\n";
+			file << L"DiffuseTextureName: " << effectData.diffuseTextureName << L"\n";
+			file << L"EffectType: " << effectData.effectType << L"\n";
+			file << L"RenderIndex: " << effectData.renderIndex << L"\n";
+			file << L"PassIndex: " << effectData.passIndex << L"\n";
+			file << L"UniqueIndex: " << effectData.uniqueIndex << L"\n";
+			file << L"Position: " << effectData.position.x << L" " << effectData.position.y << L" " << effectData.position.z << L"\n";
+			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
+			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
+			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n";
+			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
 
-    while (std::getline(file, line))
-    {
-        if (line.empty())
-            continue;
+			// 키프레임 데이터를 파일에 저장합니다.
+			for (const auto& keyFrameData : effectData.keyframes) {
+				file << L"[KeyFrame]" << L"\n";
+				file << L"KeyFrameNumber: " << keyFrameData.keyFrameNumber << L"\n";
+				file << L"Position: " << keyFrameData.position.x << L" " << keyFrameData.position.y << L" " << keyFrameData.position.z << L"\n";
+				file << L"Scale: " << keyFrameData.scale.x << L" " << keyFrameData.scale.y << L" " << keyFrameData.scale.z << L"\n";
+				file << L"Rotation: " << keyFrameData.rotation.x << L" " << keyFrameData.rotation.y << L" " << keyFrameData.rotation.z << L"\n";
+				file << L"CurTime: " << keyFrameData.curTime << L"\n";
+				file << L"Duration: " << keyFrameData.duration << L"\n";
+				file << L"IsNotPlaying: " << (keyFrameData.bIsNotPlaying ? L"true" : L"false") << L"\n\n";
+			}
+		}
+	}
 
-        if (line == L"[VirtualCamera]")
-        {
-            // Save current Animation and Skill before moving to new Model
-            if (!currentAnim.animationName.empty())
-            {
-                currentSkill.animations.push_back(currentAnim);
-                currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
-            }
-            if (!currentSkill.skillName.empty())
-            {
-                currentModel.skills.push_back(currentSkill);
-                currentSkill = CameraSaveData::ModelData::SkillData();
-            }
-            if (currentModel.modelID != -1)
-            {
-                pArg->models.push_back(currentModel);
-            }
-
-            currentModel = CameraSaveData::ModelData();
-            currentModel.modelID = -1; // 모델 ID 초기화
-
-            // ModelID 읽기
-            std::getline(file, line);
-            if (line.find(L"ModelID: ") != std::wstring::npos)
-            {
-                std::wstring modelStr = line.substr(9);
-                // 선행 공백 제거
-                size_t first = modelStr.find_first_not_of(L" \t");
-                if (first != std::wstring::npos)
-                    modelStr = modelStr.substr(first);
-
-                // WStringToString 함수 호출 제거
-                auto it = stringToModelID.find(modelStr);
-                if (it != stringToModelID.end())
-                {
-                    currentModel.modelID = it->second;
-                }
-                else
-                {
-                    currentModel.modelID = -1; // 알 수 없는 모델
-                }
-            }
-
-            // 다음 라인 (빈 줄) 건너뛰기
-            std::getline(file, line);
-        }
-
-        else if (line == L"[Skill]")
-        {
-            // Save current Animation before moving to new Skill
-            if (!currentAnim.animationName.empty())
-            {
-                currentSkill.animations.push_back(currentAnim);
-                currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
-            }
-            // Save current Skill before starting new one
-            if (!currentSkill.skillName.empty())
-            {
-                currentModel.skills.push_back(currentSkill);
-                currentSkill = CameraSaveData::ModelData::SkillData();
-            }
-
-            // SkillName 읽기
-            std::getline(file, line);
-            if (line.find(L"SkillName: ") != std::wstring::npos)
-            {
-                std::wstring skillNameStr = line.substr(11);
-                // 선행 공백 제거
-                size_t first = skillNameStr.find_first_not_of(L" \t");
-                if (first != std::wstring::npos)
-                    skillNameStr = skillNameStr.substr(first);
-
-                currentSkill.skillName = WStringToString(skillNameStr);
-            }
-
-            // 다음 라인 (빈 줄) 건너뛰기
-            std::getline(file, line);
-        }
-        else if (line == L"[Animation]")
-        {
-            // Save current Animation before starting new one
-            if (!currentAnim.animationName.empty())
-            {
-                currentSkill.animations.push_back(currentAnim);
-                currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
-            }
-
-            // AnimationName 읽기
-            std::getline(file, line);
-            if (line.find(L"AnimationName: ") != std::wstring::npos)
-            {
-                std::wstring animNameStr = line.substr(15);
-                // 선행 공백 제거
-                size_t first = animNameStr.find_first_not_of(L" \t");
-                if (first != std::wstring::npos)
-                    animNameStr = animNameStr.substr(first);
-
-                currentAnim.animationName = WStringToString(animNameStr);
-            }
-
-            // PointCount 읽기
-            std::getline(file, line);
-            if (line.find(L"PointCount: ") != std::wstring::npos)
-            {
-                // 현재는 PointCount를 사용하지 않으므로 주석 처리
-            }
-
-            // 다음 라인 (빈 줄) 건너뛰기
-            std::getline(file, line);
-        }
-        else if (line == L"[CameraPoint]")
-        {
-            CameraPoint point;
-
-            // Position 읽기
-            std::getline(file, line);
-            if (line.find(L"Position: ") != std::wstring::npos)
-            {
-                std::wstring posStr = line.substr(10);
-                std::wistringstream iss(posStr);
-                iss >> point.position.x >> point.position.y >> point.position.z;
-            }
-
-            // Rotation 읽기
-            std::getline(file, line);
-            if (line.find(L"Rotation: ") != std::wstring::npos)
-            {
-                std::wstring rotStr = line.substr(10);
-                std::wistringstream iss(rotStr);
-                iss >> point.rotation.x >> point.rotation.y >> point.rotation.z >> point.rotation.w;
-            }
-
-            // Duration 읽기
-            std::getline(file, line);
-            if (line.find(L"Duration: ") != std::wstring::npos)
-            {
-                std::wstring durStr = line.substr(10);
-                point.duration = std::stof(durStr);
-            }
-
-            // InterpolationType 읽기
-            std::getline(file, line);
-            if (line.find(L"InterpolationType: ") != std::wstring::npos)
-            {
-                std::wstring interpStr = line.substr(18);
-                point.interpolationType = std::stoi(interpStr);
-            }
-
-            // Damping 읽기
-            std::getline(file, line);
-            if (line.find(L"Damping: ") != std::wstring::npos)
-            {
-                std::wstring dampingStr = line.substr(9);
-                point.damping = std::stof(dampingStr);
-            }
-
-            std::getline(file, line);
-            if (line.find(L"HasWorldFloat4x4: ") != std::wstring::npos)
-            {
-                std::wstring hasWStr = line.substr(17);
-                hasWStr = Trim(hasWStr); // Trim whitespace
-
-                try
-                {
-                    point.hasWorldFloat4x4 = (std::stoi(hasWStr) != 0);
-                }
-                catch (const std::exception& e)
-                {
-                    point.hasWorldFloat4x4 = false;
-                }
-            }
-
-            // 다음 라인 (빈 줄) 건너뛰기
-            std::getline(file, line);
-
-            // 포인트 추가
-            currentAnim.points.push_back(point);
-        }
-        else
-        {
-            // 기타 섹션 또는 무시할 내용
-        }
-    }
-
-    // Save any remaining data at the end of the file
-    if (!currentAnim.animationName.empty())
-    {
-        currentSkill.animations.push_back(currentAnim);
-    }
-    if (!currentSkill.skillName.empty())
-    {
-        currentModel.skills.push_back(currentSkill);
-    }
-    if (currentModel.modelID != -1)
-    {
-        pArg->models.push_back(currentModel);
-    }
-
-    file.close();
-    return S_OK;
+	file.close();
+	return S_OK;
 }
 
 
-CFile_Manager* CFile_Manager::Create()
+HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg)
+{
+	if (nullptr == pArg)
+		return E_FAIL;
+
+	std::wifstream file(filename);
+	if (!file.is_open())
+	{
+		// 파일 열기 실패 처리
+		return E_FAIL;
+	}
+
+	std::wstring line;
+	CameraSaveData::ModelData currentModel;
+	CameraSaveData::ModelData::SkillData currentSkill;
+	CameraSaveData::ModelData::SkillData::AnimationData currentAnim;
+
+	// 변수 초기화
+	currentModel.modelID = -1;
+
+	while (std::getline(file, line))
+	{
+		if (line.empty())
+			continue;
+
+		if (line == L"[VirtualCamera]")
+		{
+			// Save current Animation and Skill before moving to new Model
+			if (!currentAnim.animationName.empty())
+			{
+				currentSkill.animations.push_back(currentAnim);
+				currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
+			}
+			if (!currentSkill.skillName.empty())
+			{
+				currentModel.skills.push_back(currentSkill);
+				currentSkill = CameraSaveData::ModelData::SkillData();
+			}
+			if (currentModel.modelID != -1)
+			{
+				pArg->models.push_back(currentModel);
+			}
+
+			currentModel = CameraSaveData::ModelData();
+			currentModel.modelID = -1; // 모델 ID 초기화
+
+			// ModelID 읽기
+			std::getline(file, line);
+			if (line.find(L"ModelID: ") != std::wstring::npos)
+			{
+				std::wstring modelStr = line.substr(9);
+				// 선행 공백 제거
+				size_t first = modelStr.find_first_not_of(L" \t");
+				if (first != std::wstring::npos)
+					modelStr = modelStr.substr(first);
+
+				// WStringToString 함수 호출 제거
+				auto it = stringToModelID.find(modelStr);
+				if (it != stringToModelID.end())
+				{
+					currentModel.modelID = it->second;
+				}
+				else
+				{
+					currentModel.modelID = -1; // 알 수 없는 모델
+				}
+			}
+
+			// 다음 라인 (빈 줄) 건너뛰기
+			std::getline(file, line);
+		}
+
+		else if (line == L"[Skill]")
+		{
+			// Save current Animation before moving to new Skill
+			if (!currentAnim.animationName.empty())
+			{
+				currentSkill.animations.push_back(currentAnim);
+				currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
+			}
+			// Save current Skill before starting new one
+			if (!currentSkill.skillName.empty())
+			{
+				currentModel.skills.push_back(currentSkill);
+				currentSkill = CameraSaveData::ModelData::SkillData();
+			}
+
+			// SkillName 읽기
+			std::getline(file, line);
+			if (line.find(L"SkillName: ") != std::wstring::npos)
+			{
+				std::wstring skillNameStr = line.substr(11);
+				// 선행 공백 제거
+				size_t first = skillNameStr.find_first_not_of(L" \t");
+				if (first != std::wstring::npos)
+					skillNameStr = skillNameStr.substr(first);
+
+				currentSkill.skillName = WStringToString(skillNameStr);
+			}
+
+			// 다음 라인 (빈 줄) 건너뛰기
+			std::getline(file, line);
+		}
+		else if (line == L"[Animation]")
+		{
+			// Save current Animation before starting new one
+			if (!currentAnim.animationName.empty())
+			{
+				currentSkill.animations.push_back(currentAnim);
+				currentAnim = CameraSaveData::ModelData::SkillData::AnimationData();
+			}
+
+			// AnimationName 읽기
+			std::getline(file, line);
+			if (line.find(L"AnimationName: ") != std::wstring::npos)
+			{
+				std::wstring animNameStr = line.substr(15);
+				// 선행 공백 제거
+				size_t first = animNameStr.find_first_not_of(L" \t");
+				if (first != std::wstring::npos)
+					animNameStr = animNameStr.substr(first);
+
+				currentAnim.animationName = WStringToString(animNameStr);
+			}
+
+			// PointCount 읽기
+			std::getline(file, line);
+			if (line.find(L"PointCount: ") != std::wstring::npos)
+			{
+				// 현재는 PointCount를 사용하지 않으므로 주석 처리
+			}
+
+			// 다음 라인 (빈 줄) 건너뛰기
+			std::getline(file, line);
+		}
+		else if (line == L"[CameraPoint]")
+		{
+			CameraPoint point;
+
+			// Position 읽기
+			std::getline(file, line);
+			if (line.find(L"Position: ") != std::wstring::npos)
+			{
+				std::wstring posStr = line.substr(10);
+				std::wistringstream iss(posStr);
+				iss >> point.position.x >> point.position.y >> point.position.z;
+			}
+
+			// Rotation 읽기
+			std::getline(file, line);
+			if (line.find(L"Rotation: ") != std::wstring::npos)
+			{
+				std::wstring rotStr = line.substr(10);
+				std::wistringstream iss(rotStr);
+				iss >> point.rotation.x >> point.rotation.y >> point.rotation.z >> point.rotation.w;
+			}
+
+			// Duration 읽기
+			std::getline(file, line);
+			if (line.find(L"Duration: ") != std::wstring::npos)
+			{
+				std::wstring durStr = line.substr(10);
+				point.duration = std::stof(durStr);
+			}
+
+			// InterpolationType 읽기
+			std::getline(file, line);
+			if (line.find(L"InterpolationType: ") != std::wstring::npos)
+			{
+				std::wstring interpStr = line.substr(18);
+				point.interpolationType = std::stoi(interpStr);
+			}
+
+			// Damping 읽기
+			std::getline(file, line);
+			if (line.find(L"Damping: ") != std::wstring::npos)
+			{
+				std::wstring dampingStr = line.substr(9);
+				point.damping = std::stof(dampingStr);
+			}
+
+			std::getline(file, line);
+			if (line.find(L"HasWorldFloat4x4: ") != std::wstring::npos)
+			{
+				std::wstring hasWStr = line.substr(17);
+				hasWStr = Trim(hasWStr); // Trim whitespace
+
+				try
+				{
+					point.hasWorldFloat4x4 = (std::stoi(hasWStr) != 0);
+				}
+				catch (const std::exception& e)
+				{
+					point.hasWorldFloat4x4 = false;
+				}
+			}
+
+			// 다음 라인 (빈 줄) 건너뛰기
+			std::getline(file, line);
+
+			// 포인트 추가
+			currentAnim.points.push_back(point);
+		}
+		else
+		{
+			// 기타 섹션 또는 무시할 내용
+		}
+	}
+
+	// Save any remaining data at the end of the file
+	if (!currentAnim.animationName.empty())
+	{
+		currentSkill.animations.push_back(currentAnim);
+	}
+	if (!currentSkill.skillName.empty())
+	{
+		currentModel.skills.push_back(currentSkill);
+	}
+	if (currentModel.modelID != -1)
+	{
+		pArg->models.push_back(currentModel);
+	}
+
+	file.close();
+	return S_OK;
+}
+
+void* CFile_Manager::Load_Effects(wstring& FilePath)
+{
+	// 기존에 로드된 데이터가 있으면 해제
+	if (m_pLoadedEffectData != nullptr) {
+		delete m_pLoadedEffectData;
+		m_pLoadedEffectData = nullptr;
+	}
+
+	m_pLoadedEffectData = new vector<EFFECT_LAYER_DATA>;
+
+	wifstream file(FilePath);
+	if (!file.is_open()) {
+		return nullptr;
+	}
+
+	wstring line;
+	EFFECT_LAYER_DATA layerData;
+
+	while (getline(file, line)) {
+		if (line.find(L"[Layer]") != wstring::npos) {
+			layerData = EFFECT_LAYER_DATA();
+			// 레이어 정보를 읽어오기
+			Read_LayerData(file, layerData);
+			m_pLoadedEffectData->push_back(layerData);
+		}
+	}
+
+	file.close();
+	return m_pLoadedEffectData;
+}
+void CFile_Manager::Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData)
+{
+	wstring line;
+
+	// 레이어 기본 정보 읽기
+	while (getline(file, line) && !line.empty()) {
+		wistringstream iss(line);
+		wstring key, value;
+
+		getline(iss, key, L':');
+		getline(iss, value);
+		value.erase(0, value.find_first_not_of(L' '));
+
+		if (key == L"LayerName") layerData.layerName = value;
+		else if (key == L"Duration") layerData.duration = stof(value);
+		else if (key == L"TickPerSecond") layerData.tickPerSecond = stof(value);
+		else if (key == L"KeyFramesCount") layerData.keyFramesCount = stoi(value);
+		else if (key == L"NumEffec") layerData.iNumEffect = stoi(value);
+	}
+
+	// 각 이펙트 데이터 읽기
+	for (int i = 0; i < layerData.iNumEffect; ++i) {
+		EFFECT_DATA effectData;
+		Read_EffectData(file, effectData);
+		layerData.effects.push_back(effectData);
+	}
+}
+
+void CFile_Manager::Read_EffectData(wifstream& file, EFFECT_DATA& effectData)
+{
+	wstring line;
+
+	// 이펙트 기본 정보 읽기
+	while (getline(file, line) && !line.empty()) {
+		wistringstream iss(line);
+		wstring key, value;
+
+		getline(iss, key, L':');
+		getline(iss, value);
+		value.erase(0, value.find_first_not_of(L' '));
+
+		if (key == L"EffectName") effectData.effectName = value;
+		else if (key == L"ModelName") effectData.modelName = value;
+		else if (key == L"MaskTextureName") effectData.maskTextureName = value;
+		else if (key == L"DiffuseTextureName") effectData.diffuseTextureName = value;
+		else if (key == L"EffectType") effectData.effectType = stoi(value);
+		else if (key == L"RenderIndex") effectData.renderIndex = stoi(value);
+		else if (key == L"PassIndex") effectData.passIndex = stoi(value);
+		else if (key == L"UniqueIndex") effectData.uniqueIndex = stoi(value);
+		else if (key == L"Position") {
+			wistringstream pos(value);
+			pos >> effectData.position.x >> effectData.position.y >> effectData.position.z;
+		}
+		else if (key == L"Scale") {
+			wistringstream scale(value);
+			scale >> effectData.scale.x >> effectData.scale.y >> effectData.scale.z;
+		}
+		else if (key == L"Rotation") {
+			wistringstream rot(value);
+			rot >> effectData.rotation.x >> effectData.rotation.y >> effectData.rotation.z;
+		}
+		else if (key == L"IsNotPlaying") effectData.isNotPlaying = (value == L"true");
+		else if (key == L"IsLoop") effectData.isLoop = (value == L"true");
+		else if (key == L"NumKeyFrame") effectData.iNumKeyFrame = stoi(value);
+	}
+
+	// 각 키프레임 데이터 읽기
+	for (int i = 0; i < effectData.iNumKeyFrame; ++i) {
+		EFFECT_KEYFRAME_DATA keyFrameData;
+		Read_KeyFrameData(file, keyFrameData);
+		effectData.keyframes.push_back(keyFrameData);
+	}
+}
+
+void CFile_Manager::Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& keyFrameData)
+{
+	wstring line;
+
+	while (getline(file, line) && !line.empty()) {
+		wistringstream iss(line);
+		wstring key, value;
+
+		getline(iss, key, L':');
+		getline(iss, value);
+		value.erase(0, value.find_first_not_of(L' '));
+
+		if (key == L"KeyFrameNumber") keyFrameData.keyFrameNumber = stoi(value);
+		else if (key == L"Position") {
+			wistringstream pos(value);
+			pos >> keyFrameData.position.x >> keyFrameData.position.y >> keyFrameData.position.z;
+		}
+		else if (key == L"Scale") {
+			wistringstream scale(value);
+			scale >> keyFrameData.scale.x >> keyFrameData.scale.y >> keyFrameData.scale.z;
+		}
+		else if (key == L"Rotation") {
+			wistringstream rot(value);
+			rot >> keyFrameData.rotation.x >> keyFrameData.rotation.y >> keyFrameData.rotation.z;
+		}
+		else if (key == L"CurTime") keyFrameData.curTime = stof(value);
+		else if (key == L"Duration") keyFrameData.duration = stof(value);
+		else if (key == L"IsNotPlaying") {
+			if (value == L"true") keyFrameData.bIsNotPlaying = true;
+			else if (value == L"false") keyFrameData.bIsNotPlaying = false;
+		}
+	}
+}
+>>>>>> > ? 먭꺽 / ? 꾩떆癒몄 ?
+
+CFile_Manager * CFile_Manager::Create()
 {
 	CFile_Manager* pInstance = new CFile_Manager();
 
@@ -451,4 +644,9 @@ CFile_Manager* CFile_Manager::Create()
 void CFile_Manager::Free()
 {
 	__super::Free();
+
+	if (m_pLoadedEffectData != nullptr)
+	{
+		Safe_Delete(m_pLoadedEffectData);
+	}
 }

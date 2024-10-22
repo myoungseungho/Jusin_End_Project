@@ -18,7 +18,7 @@ private:
 public:
 	virtual HRESULT Initialize(LEVELID eNextLevelID);
 	virtual void Update(_float fTimeDelta) override;
-	virtual HRESULT Render() override;
+	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
 	LEVELID				m_eNextLevelID = {};

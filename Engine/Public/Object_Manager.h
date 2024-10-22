@@ -17,7 +17,8 @@ private:
 public:
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex);
 	class CGameObject* Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex = 0);
-
+	class list<class CGameObject*> Get_Layer(_uint iLevelIndex, const wstring& strLayerTag);
+	_uint GetLayerSize(_uint iLevelIndex, const wstring& strLayerTag);
 
 public:
 	HRESULT Initialize(_uint iNumLevels);
@@ -30,11 +31,13 @@ public:
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < string, list<CGameObject*>>>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < _wstring, list<CGameObject*>>>* pVector);
 
+	//사이클 함수
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
-	void Destory_Update();
 
+	//삭제 관련 함수
+	void Destory_Update();
 	void Destory_Reserve(class CGameObject* gameObject);
 	HRESULT Clear_Resources(_uint iLevelIndex);
 
@@ -46,7 +49,7 @@ private:
 	map<const wstring, class CLayer*>* m_pLayers = { nullptr };
 	list<class CGameObject*>					m_DestoryObjects;
 
-private:
+public:
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
 	class CLayer* Find_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 

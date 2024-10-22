@@ -26,7 +26,7 @@ public:
 
 public:
 	HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
-	void	Update(void);
+	void   Update(void);
 
 private:
 	LPDIRECTINPUT8			m_pInputSDK = { nullptr };
@@ -40,9 +40,13 @@ private:
 	_bool m_bMouseState[8] = { false }; // 이전 마우스 상태를 저장하기 위한 변수
 	_bool m_bPrevMouseState[8] = { false }; // 이전 프레임의 마우스 상태를 저장하기 위한 변수
 
+	BYTE m_byPrevKeyState[256];   // Previous key state변수
+	_bool m_bKeyState[256] = { false }; // 이전 키 상태를 저장하기 위한 변수
+	_bool m_bMouseState[8] = { false }; // 이전 마우스 상태를 저장하기 위한 변수
+	_bool m_bPrevMouseState[8] = { false }; // 이전 프레임의 마우스 상태를 저장하기 위한 변수
 public:
 	static CInput_Device* Create(HINSTANCE hInst, HWND hWnd);
-	virtual void	Free(void);
+	virtual void   Free(void);
 
 };
 END

@@ -1,5 +1,12 @@
 
 
+sampler DestroySampler = sampler_state
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = clamp;
+    AddressV = clamp;
+};
+
 sampler LinearSampler = sampler_state
 {
 	Filter = MIN_MAG_MIP_LINEAR;
@@ -13,7 +20,6 @@ sampler PointSampler = sampler_state
 	AddressU = wrap;
 	AddressV = wrap;
 };
-
 
 /* D3D11_RASTERIZER_DESC */
 RasterizerState RS_Default

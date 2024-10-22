@@ -7,6 +7,779 @@
     <ClCompile Include="..\Private\Level_GamePlay.cpp">
       <Filter>01.Level\01.Level\00.GamePlay</Filter>
     </ClCompile>
+    <Filter Include="99.Defines">
+      <UniqueIdentifier>{8c591318-15da-4ab5-b108-cece8bf9b4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Default">
+      <UniqueIdentifier>{a5d7bb35-f60e-4e85-ab2b-29cb4ae4c032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.MainApp">
+      <UniqueIdentifier>{e6010c80-2883-4fc2-a6f6-ce0528d5ebf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level">
+      <UniqueIdentifier>{0b8ec721-c28f-451e-b757-50c51a21f922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\99.Loading">
+      <UniqueIdentifier>{703b851b-5e87-4f19-ae17-6dd977e9b740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\99.Loading\Loader">
+      <UniqueIdentifier>{c4ee70b7-b4c6-4fa4-8dab-9120dcb92c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects">
+      <UniqueIdentifier>{30e5a356-2ca5-4a6b-a213-83b9dd46555e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\00.GamePlay">
+      <UniqueIdentifier>{3c568b36-eb82-4660-a444-b3034e67d6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect">
+      <UniqueIdentifier>{a118aae3-8ba7-416e-a709-e00fa2e17ce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\00.Manager">
+      <UniqueIdentifier>{c0a93e36-b2ad-4185-8cd3-73a927e1855a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\00.Manager\Layer">
+      <UniqueIdentifier>{683a4001-94e0-4898-ab99-3d12226ca1df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\01.Animation">
+      <UniqueIdentifier>{dd48db30-78d4-4faa-b80e-4631ed797fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\02.Single">
+      <UniqueIdentifier>{493f650d-556d-4509-be13-08853e2c3d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\04.Multi">
+      <UniqueIdentifier>{3a83342c-356f-48e0-b678-b6711abe33d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\03.MoveTex">
+      <UniqueIdentifier>{2510c4b6-8824-429c-b36f-9d69c4fcd82a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map">
+      <UniqueIdentifier>{31d428c7-e810-4b31-bda4-15439cfab1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space">
+      <UniqueIdentifier>{fa8a6f2a-3f37-4da7-95f6-1ea2e9356dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceSky">
+      <UniqueIdentifier>{85b7a815-c9d2-40c0-aec3-0498644d9390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\FallingStar">
+      <UniqueIdentifier>{5c199490-2da7-4e60-a293-1ed58ece0a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Earth">
+      <UniqueIdentifier>{ddcd9411-3dcd-4916-b33b-6e63d5fab1c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Earth\EarthLight">
+      <UniqueIdentifier>{7c74267a-a233-4365-982d-8d7c3f82ef7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Ground">
+      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Stage">
+      <UniqueIdentifier>{5e9d2120-ef8b-45f4-a05c-191c764956f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Cliff">
+      <UniqueIdentifier>{002116a6-d7ec-40ce-8ad9-a2993f34be47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceHorizon">
+      <UniqueIdentifier>{615a15b1-e6dd-4fdd-a664-c6e2b5f10c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Sun">
+      <UniqueIdentifier>{30f4d0c2-f9e6-4762-8097-9b750e9e0f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Moon">
+      <UniqueIdentifier>{0b6e2440-ed9e-43ce-b3b2-9fd31271863e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
+      <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect_Rect\Shader_Materials">
+      <UniqueIdentifier>{4777c123-625a-4580-b4ad-aaf08a2c4ad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceStone">
+      <UniqueIdentifier>{b16f0265-0dea-46b1-aac6-5ba98b2f689d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceRock">
+      <UniqueIdentifier>{cfaa1746-e800-40aa-baf0-e55c9531c442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\SpaceMeteo">
+      <UniqueIdentifier>{94139fd2-eb62-4d55-a87e-a860d7f79b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Test">
+      <UniqueIdentifier>{350ab04e-a43c-483b-81fa-68cfecd0c9e3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="IMGUI">
+    </Filter>
+    <Filter Include="97.IMGUI">
+      <UniqueIdentifier>{871a9861-3ac5-4274-b312-5a263c75354b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Plugin">
+      <UniqueIdentifier>{deafa4fd-162b-4826-aeed-8c1d57afb415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap">
+      <UniqueIdentifier>{8ddf4c73-62da-4b46-94da-b23a1e7cfe5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Shader_Tab">
+      <UniqueIdentifier>{2bf9007a-1d5d-42e0-9c61-dffd73b17475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_UI_Tab">
+      <UniqueIdentifier>{1d0db8c7-17eb-4550-b9f2-b5bfc768b40d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Effect_Tab">
+      <UniqueIdentifier>{28e285c3-67fb-462a-8fcf-6e9ebebde4a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Animation_Tab">
+      <UniqueIdentifier>{dbf2a29a-d723-4ed7-bbfd-2e7dfec4b380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera">
+      <UniqueIdentifier>{b362e33a-b9f1-461c-86ab-664700762dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Free">
+      <UniqueIdentifier>{d27343f5-a3bb-400e-9f55-c6d55c0435ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI">
+      <UniqueIdentifier>{4ac33916-2ecf-4e1d-9fe0-e7e4c8e0e68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf">
+      <UniqueIdentifier>{174b8222-a690-44d2-80b9-c280172cf07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon">
+      <UniqueIdentifier>{858d4f96-b8bf-4cfd-b89d-7ca06a7f655c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Cursor">
+      <UniqueIdentifier>{00c7ba57-e4ba-4fcc-9252-dfc34c76b181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp">
+      <UniqueIdentifier>{00941d54-f040-463a-a1bc-c5a592f1d9e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Manager">
+      <UniqueIdentifier>{e0cac42f-aa71-4d38-a146-e515ac068f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Timer">
+      <UniqueIdentifier>{d08679a8-db6e-48b3-a3d9-3647262fb885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBuf">
+      <UniqueIdentifier>{0875a66a-f7c7-4df4-adaf-8ba9cdfa68e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufMark">
+      <UniqueIdentifier>{fd2d44d9-4bda-4209-ba7e-52df7b9e6235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\HpPanel">
+      <UniqueIdentifier>{af6f303a-ff41-4098-a67a-a30b20e2f051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill">
+      <UniqueIdentifier>{8af830a2-bf10-4246-9b4c-da217b0a0e3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\SkillGauge">
+      <UniqueIdentifier>{03be62f9-a537-486e-babf-2f985dd8f4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\SkillNumber">
+      <UniqueIdentifier>{945dedb7-2310-428c-92b7-d3bf73f9da37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufEffect">
+      <UniqueIdentifier>{24732d6a-3eeb-4d4c-a280-5d97b5c33d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\HpGauge">
+      <UniqueIdentifier>{54435702-1bed-42c6-829a-6d6ca31c43d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Icon">
+      <UniqueIdentifier>{d57fed1f-be73-42c8-a152-5db2a580cb10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Panel">
+      <UniqueIdentifier>{43f6ccdc-0eeb-4355-a922-46ce8a5a68c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\SkillGaugeBar">
+      <UniqueIdentifier>{e3d6c943-52a0-45d4-9a67-736c026e5dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufThunderEffect">
+      <UniqueIdentifier>{55e9df8b-78fe-488f-83b6-e89a736b0904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufNone">
+      <UniqueIdentifier>{2de4858f-aa72-437a-8df8-60e8c62cbe55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Combo">
+      <UniqueIdentifier>{397c5dea-0624-4bfb-b277-46c53e816284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Combo\Number">
+      <UniqueIdentifier>{da8df0b2-4ba5-4217-81ae-2a280e0857ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Combo\Font">
+      <UniqueIdentifier>{791b1df1-c73e-4cd4-a15f-e9c06bef33d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Combo\Effect">
+      <UniqueIdentifier>{e4331be0-f3aa-44c9-a0aa-7c30f79e76b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Pawn">
+      <UniqueIdentifier>{48b3df65-2088-440e-aef4-4a29cfd0b387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Pawn\Monster">
+      <UniqueIdentifier>{f32a15d7-0036-43da-a07e-0572965e7d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\SubHpGauge">
+      <UniqueIdentifier>{a407ce47-96a1-41a6-bcd4-9cb7cf1e47ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Pawn\Sub">
+      <UniqueIdentifier>{38783f42-d2aa-4bc3-ba55-0c23c2efa146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Object_Tab">
+      <UniqueIdentifier>{47930f86-8285-4090-a54f-9f4c256d5495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
+      <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player">
+      <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect">
+      <UniqueIdentifier>{d8f025ca-2643-45a5-b6e3-c62e9fc77590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameEnd">
+      <UniqueIdentifier>{0e711b5f-d746-4c75-9a3b-addb2a5a3982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameEnd\Font">
+      <UniqueIdentifier>{fd41ee65-367d-4d36-87de-12e250cb82bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState">
+      <UniqueIdentifier>{a98447fb-15b2-4844-a335-8779fac81470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Circle">
+      <UniqueIdentifier>{88c598ec-231c-479b-be3b-a8b0fe5fd694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Emblem">
+      <UniqueIdentifier>{7114070c-743e-4f1b-9732-2a0c291c6a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font">
+      <UniqueIdentifier>{cf38ea3c-8ae1-40f0-a8fb-a49c3f586563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\Ready">
+      <UniqueIdentifier>{b7f79c96-51cf-465c-b513-4e7353bdcf3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\Fight">
+      <UniqueIdentifier>{376f56a2-6519-40cd-b34f-76f1d8749380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO">
+      <UniqueIdentifier>{aca5a2da-c163-407b-a68f-01916810a255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\01.Logo">
+      <UniqueIdentifier>{3bd8efd3-0afa-4c0a-814e-2a7871f6d911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround">
+      <UniqueIdentifier>{0dc4ab17-a9f7-4613-b7cc-2f5c966e1562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Logo">
+      <UniqueIdentifier>{ff16a923-f66c-48dd-b6a7-539888d9a0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Sub">
+      <UniqueIdentifier>{45dcd192-5c1f-4757-9dd9-82347faad830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Chara_Icon\Icon\Sub">
+      <UniqueIdentifier>{0dcc6c6d-3246-4694-9342-c769fe321832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Model_Preview">
+      <UniqueIdentifier>{d70fdf43-0e6e-4d1b-8c36-4b9a0377cca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.FrameEvent_Manager">
+      <UniqueIdentifier>{757ebb14-9fe5-4780-82c1-11a43531d0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.FrameEvent_Manager\AnimationNameMap">
+      <UniqueIdentifier>{31dac042-d971-4fd1-a29c-8d007cb09102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character">
+      <UniqueIdentifier>{4ada2d1e-ed2b-47d8-b773-de6c0fbc53b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Goku">
+      <UniqueIdentifier>{acf9319f-0636-44f1-ba84-3fd2ffbeeae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Input">
+      <UniqueIdentifier>{1c48c94a-af26-4384-b0da-bd1183368b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Goku\Goku_MeleeAttack">
+      <UniqueIdentifier>{1148b8a7-ee34-4fbf-9d48-74a841f9e01c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_21">
+      <UniqueIdentifier>{d326ad05-c19f-49c1-ad95-75047f15234b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_21\S21_MeleeAttack">
+      <UniqueIdentifier>{0fea3a9c-712d-41fc-a50b-2d180e29ac2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Skill\Effect">
+      <UniqueIdentifier>{0f49d9ab-7381-42c9-a90c-43d7efad4e75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\Effect">
+      <UniqueIdentifier>{c3a4e1a3-4f37-4eb7-9f70-0b88b4c3f9c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input">
+      <UniqueIdentifier>{bd55162e-2bc9-4fef-9314-823e16742ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Dir">
+      <UniqueIdentifier>{3f32860f-9d3a-4295-963e-a6a40734eb6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Panel">
+      <UniqueIdentifier>{a167b174-2b4c-4ab8-8be9-cbf444a58255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Action">
+      <UniqueIdentifier>{99cabcff-787d-403e-a0a8-b42525b87c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Dir\Icon">
+      <UniqueIdentifier>{b6d73f6f-ef70-4298-848f-5f61f83ff613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Action\Icon">
+      <UniqueIdentifier>{8a790c38-5402-4803-9c90-ff452ae3ec7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Timer\Panel">
+      <UniqueIdentifier>{7fb31d51-0692-4b79-856a-d91b455f2f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading">
+      <UniqueIdentifier>{9df6cb54-4d08-480b-aa7d-8ae74b892a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Mark">
+      <UniqueIdentifier>{76269d6c-a433-42bf-8f88-0f428eb5dbaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark">
+      <UniqueIdentifier>{854c2ebf-133c-4941-95aa-fdd59e91e589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Font">
+      <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\FontName">
+      <UniqueIdentifier>{c620642a-0cdc-42e8-bdee-14d918ea5b1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Dir\Effect">
+      <UniqueIdentifier>{cdacd484-4454-4db1-b1dd-f0cb407077c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO\Effect">
+      <UniqueIdentifier>{b4f3f884-7d51-4b66-ae1b-6d074e252777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Input\Panel\UI_Input_IconPanel">
+      <UniqueIdentifier>{9250434b-4768-4e41-8fe7-58ad664320bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO\Panel">
+      <UniqueIdentifier>{d93acb53-925d-4c57-b49c-88520f4ae2ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.FrameEvent_Manager\96.ShaderFiles">
+      <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\GameState\Font\KO\Particle">
+      <UniqueIdentifier>{7bb57d8d-8c2b-476a-9132-ae3d5413bcda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect_Rect">
+      <UniqueIdentifier>{aaa30863-417a-4d26-a814-09208782c908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Effect_Rect\Shader_Texture">
+      <UniqueIdentifier>{36c865a4-6023-4cda-91d1-e5587c16dee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Object_Tab">
+      <UniqueIdentifier>{47930f86-8285-4090-a54f-9f4c256d5495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
+      <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player">
+      <UniqueIdentifier>{e18df143-928f-433f-983e-8a14191acc99}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MainApp.h">
+      <Filter>00.MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Client_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Loading.h">
+      <Filter>01.Level\99.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Level\99.Loading\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Imgui_Manager.h">
+      <Filter>97.IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui_internal.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imconfig.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui_impl_dx11.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imgui_impl_win32.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imstb_rectpack.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imstb_textedit.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imstb_truetype.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\IMGUI_Tab.h">
+      <Filter>97.IMGUI\Tap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\IMGUI_Shader_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Animation_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Effect_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Camera_Free.h">
+      <Filter>02.GameObjects\Camera\Free</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_AttBuf.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_AttBufMark.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_BaseAttBuf.h">
+      <Filter>02.GameObjects\UI\AttBuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Cursor.h">
+      <Filter>02.GameObjects\UI\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_HpPanel.h">
+      <Filter>02.GameObjects\UI\Hp\HpPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Manager.h">
+      <Filter>02.GameObjects\UI\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Skill.h">
+      <Filter>02.GameObjects\UI\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_SkillGauge.h">
+      <Filter>02.GameObjects\UI\Skill\SkillGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_SkillNumber.h">
+      <Filter>02.GameObjects\UI\Skill\SkillNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Timer.h">
+      <Filter>02.GameObjects\UI\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UIObject.h">
+      <Filter>02.GameObjects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufEffect.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_HpGauge.h">
+      <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Chara_Icon.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Chara_Icon_Panel.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SkillGaugeBar.h">
+      <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufThunderEffect.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufThunderEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufNone.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ComboNumber.h">
+      <Filter>02.GameObjects\UI\Combo\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Combo.h">
+      <Filter>02.GameObjects\UI\Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ComboFont.h">
+      <Filter>02.GameObjects\UI\Combo\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ComboEffect.h">
+      <Filter>02.GameObjects\UI\Combo\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Monster.h">
+      <Filter>02.GameObjects\Pawn\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Pawn.h">
+      <Filter>02.GameObjects\Pawn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SubHpGauge.h">
+      <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\SubPlayer.h">
+      <Filter>02.GameObjects\Pawn\Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Effect_Rect.h">
+      <Filter>02.GameObjects\Effect_Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imnodes.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imnodes_internal.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shader_Texture.h">
+      <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Layer.h">
+      <Filter>02.GameObjects\02. Effect\00.Manager\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Manager.h">
+      <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_MoveTex.h">
+      <Filter>02.GameObjects\02. Effect\03.MoveTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Multi.h">
+      <Filter>02.GameObjects\02. Effect\04.Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Single.h">
+      <Filter>02.GameObjects\02. Effect\02.Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceSky.h">
+      <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Effect_Animation.h">
+      <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Level_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_GameStartCircle.h">
+      <Filter>02.GameObjects\UI\GameState\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_GameState.h">
+      <Filter>02.GameObjects\UI\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_StartEmblem.h">
+      <Filter>02.GameObjects\UI\GameState\Emblem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ReadyFont.h">
+      <Filter>02.GameObjects\UI\GameState\Font\Ready</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_FightFont.h">
+      <Filter>02.GameObjects\UI\GameState\Font\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_KOFont.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Level_Logo.h">
+      <Filter>01.Level\01.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\BackGround.h">
+      <Filter>02.GameObjects\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Logo.h">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Chara_SubIcon.h">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Model_Preview.h">
+      <Filter>02.GameObjects\Model_Preview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FrameEvent_Manager.h">
+      <Filter>90.FrameEvent_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationNameMap.h">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Input.h">
+      <Filter>02.GameObjects\Character\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_21.h">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\S21_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SkillEffect.h">
+      <Filter>02.GameObjects\UI\Skill\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_HpEffect.h">
+      <Filter>02.GameObjects\UI\Hp\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_InputDir.h">
+      <Filter>02.GameObjects\UI\Input\Dir</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input.h">
+      <Filter>02.GameObjects\UI\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_DirPanel.h">
+      <Filter>02.GameObjects\UI\Input\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_Action.h">
+      <Filter>02.GameObjects\UI\Input\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirIcon.h">
+      <Filter>02.GameObjects\UI\Input\Dir\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_ActionIcon.h">
+      <Filter>02.GameObjects\UI\Input\Action\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_TimerPanel.h">
+      <Filter>02.GameObjects\UI\Timer\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading.h">
+      <Filter>02.GameObjects\BackGround\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_LoadingMark.h">
+      <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_Font.h">
+      <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_FontName.h">
+      <Filter>02.GameObjects\UI\FontName</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_InputDirEffect.h">
+      <Filter>02.GameObjects\UI\Input\Dir\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_KOFontEffect.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Input_IconPanel.h">
+      <Filter>02.GameObjects\UI\Input\Panel\UI_Input_IconPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_KOPanel.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_KOParticle.h">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\02. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FallingStar.h">
+      <Filter>02.GameObjects\Map\Space\FallingStar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceEarth.h">
+      <Filter>02.GameObjects\Map\Space\Earth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceEarth_Light.h">
+      <Filter>02.GameObjects\Map\Space\Earth\EarthLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceGround.h">
+      <Filter>02.GameObjects\Map\Space\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceStage.h">
+      <Filter>02.GameObjects\Map\Space\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceCliff.h">
+      <Filter>02.GameObjects\Map\Space\Cliff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceHorizon.h">
+      <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceSun.h">
+      <Filter>02.GameObjects\Map\Space\Sun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceMoon.h">
+      <Filter>02.GameObjects\Map\Space\Moon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\ShaderTool_SaveLoader.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shader_Material.h">
+      <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Shader_Tab_Defines.h">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceStone.h">
+      <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceRock.h">
+      <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AnimationNameMap.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FrameEvent_Manager.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Input.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Model_Preview.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_21.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\S21_MeleeAttack.h">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MainApp.cpp">
+      <Filter>00.MainApp</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\Level_Loading.cpp">
       <Filter>01.Level\01.Level\99.Loading</Filter>
     </ClCompile>
@@ -47,22 +820,322 @@
       <Filter>97.IMGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\private\IMGUI_Tab.cpp">
-      <Filter>97.IMGUI\Tab</Filter>
+      <Filter>97.IMGUI\Tap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_UI_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Effect_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
-      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
+    <ClCompile Include="..\Private\Camera_Free.cpp">
+      <Filter>02.GameObjects\Camera\Free</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UIObject.cpp">
+      <Filter>02.GameObjects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_AttBuf.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_AttBufMark.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_BaseAttBuf.cpp">
+      <Filter>02.GameObjects\UI\AttBuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Cursor.cpp">
+      <Filter>02.GameObjects\UI\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_HpPanel.cpp">
+      <Filter>02.GameObjects\UI\Hp\HpPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Manager.cpp">
+      <Filter>02.GameObjects\UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Skill.cpp">
+      <Filter>02.GameObjects\UI\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_SkillGauge.cpp">
+      <Filter>02.GameObjects\UI\Skill\SkillGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_SkillNumber.cpp">
+      <Filter>02.GameObjects\UI\Skill\SkillNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Timer.cpp">
+      <Filter>02.GameObjects\UI\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufEffect.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_HpGauge.cpp">
+      <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Chara_Icon.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Chara_Icon_Panel.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SkillGaugeBar.cpp">
+      <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufThunderEffect.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufThunderEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufNone.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ComboNumber.cpp">
+      <Filter>02.GameObjects\UI\Combo\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Combo.cpp">
+      <Filter>02.GameObjects\UI\Combo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ComboFont.cpp">
+      <Filter>02.GameObjects\UI\Combo\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ComboEffect.cpp">
+      <Filter>02.GameObjects\UI\Combo\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Monster.cpp">
+      <Filter>02.GameObjects\Pawn\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Pawn.cpp">
+      <Filter>02.GameObjects\Pawn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SubHpGauge.cpp">
+      <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\SubPlayer.cpp">
+      <Filter>02.GameObjects\Pawn\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Effect_Rect.cpp">
+      <Filter>02.GameObjects\Effect_Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imnodes.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shader_Texture.cpp">
+      <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Layer.cpp">
+      <Filter>02.GameObjects\02. Effect\00.Manager\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Manager.cpp">
+      <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_MoveTex.cpp">
+      <Filter>02.GameObjects\02. Effect\03.MoveTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Multi.cpp">
+      <Filter>02.GameObjects\02. Effect\04.Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Single.cpp">
+      <Filter>02.GameObjects\02. Effect\02.Single</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceSky.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Effect_Animation.cpp">
+      <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
-      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    <ClCompile Include="..\private\UI_GameStartCircle.cpp">
+      <Filter>02.GameObjects\UI\GameState\Circle</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\IMGUI_Shader_Tab.cpp">
-      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    <ClCompile Include="..\private\UI_GameState.cpp">
+      <Filter>02.GameObjects\UI\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_StartEmblem.cpp">
+      <Filter>02.GameObjects\UI\GameState\Emblem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_ReadyFont.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\Ready</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_FightFont.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\Fight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOFont.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_GamePlay.cpp">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Level_Logo.cpp">
+      <Filter>01.Level\01.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\BackGround.cpp">
+      <Filter>02.GameObjects\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Logo.cpp">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Chara_SubIcon.cpp">
+      <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Player.cpp">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Model_Preview.cpp">
+      <Filter>02.GameObjects\Model_Preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
+      <Filter>90.FrameEvent_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Character.cpp">
+      <Filter>02.GameObjects\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_Goku.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_21.cpp">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SkillEffect.cpp">
+      <Filter>02.GameObjects\UI\Skill\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_HpEffect.cpp">
+      <Filter>02.GameObjects\UI\Hp\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDir.cpp">
+      <Filter>02.GameObjects\UI\Input\Dir</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input.cpp">
+      <Filter>02.GameObjects\UI\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_DirPanel.cpp">
+      <Filter>02.GameObjects\UI\Input\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_Action.cpp">
+      <Filter>02.GameObjects\UI\Input\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirIcon.cpp">
+      <Filter>02.GameObjects\UI\Input\Dir\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_ActionIcon.cpp">
+      <Filter>02.GameObjects\UI\Input\Action\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_TimerPanel.cpp">
+      <Filter>02.GameObjects\UI\Timer\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading.cpp">
+      <Filter>02.GameObjects\BackGround\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_Font.cpp">
+      <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_FontName.cpp">
+      <Filter>02.GameObjects\UI\FontName</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_InputDirEffect.cpp">
+      <Filter>02.GameObjects\UI\Input\Dir\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOFontEffect.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Input_IconPanel.cpp">
+      <Filter>02.GameObjects\UI\Input\Panel\UI_Input_IconPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOPanel.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_KOParticle.cpp">
+      <Filter>02.GameObjects\UI\GameState\Font\KO\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\02. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FallingStar.cpp">
+      <Filter>02.GameObjects\Map\Space\FallingStar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceEarth.cpp">
+      <Filter>02.GameObjects\Map\Space\Earth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceEarth_Light.cpp">
+      <Filter>02.GameObjects\Map\Space\Earth\EarthLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceGround.cpp">
+      <Filter>02.GameObjects\Map\Space\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceStage.cpp">
+      <Filter>02.GameObjects\Map\Space\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceCliff.cpp">
+      <Filter>02.GameObjects\Map\Space\Cliff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceHorizon.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceSun.cpp">
+      <Filter>02.GameObjects\Map\Space\Sun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceMoon.cpp">
+      <Filter>02.GameObjects\Map\Space\Moon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp">
+      <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shader_Material.cpp">
+      <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceStone.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceStone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceRock.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AttackObject.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Character.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Model_Preview.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_21.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_Goku.cpp">
+      <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Test</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
@@ -316,6 +1389,27 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
+      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl">
+      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
+      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">

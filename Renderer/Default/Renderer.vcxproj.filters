@@ -19,6 +19,15 @@
     <ClCompile Include="..\Private\Target_Manager.cpp">
       <Filter>03.Target_Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Light_Manager.cpp">
+      <Filter>04.Lights\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Light.cpp">
+      <Filter>04.Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Picking.cpp">
+      <Filter>05.Picking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Light.h">
@@ -41,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Renderer_Defines.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Picking.h">
+      <Filter>05.Picking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +80,9 @@
     <Filter Include="04.Lights\Manager">
       <UniqueIdentifier>{d4ff3660-3de0-4ea2-9ce8-844dbb6e8603}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Picking">
+      <UniqueIdentifier>{28c06fb2-2241-4b9e-9b53-ec1359844db6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bin\ShaderFiles\Renderer_Shader_Defines.hlsli">
@@ -76,6 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred.hlsl">
+      <Filter>98.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred_Glow.hlsl">
       <Filter>98.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

@@ -15,6 +15,28 @@ namespace Engine
 		float			fTime;
 	}KEYFRAME;
 
+	struct EFFECT_KEYFRAME
+	{
+		XMFLOAT3 vScale;
+		XMFLOAT3 vRotation;
+		XMFLOAT3 vPosition;
+
+		bool bIsNotPlaying;
+		float fCurTime;
+		float fDuration;
+
+		// 생성자에서 초기화
+		EFFECT_KEYFRAME()
+			: vScale(1.0f, 1.0f, 1.0f),
+			vRotation(0.0f, 0.0f, 0.0f),
+			vPosition(0.0f, 0.0f, 0.0f),
+			bIsNotPlaying(false),
+			fCurTime(0.0f),
+			fDuration(0.0f)
+		{
+		}
+	};
+
 	typedef struct
 	{
 		class CTexture* pMaterials[AI_TEXTURE_TYPE_MAX];
@@ -142,6 +164,49 @@ namespace Engine
 	extern unordered_map<_wstring, _int> stringToModelID;
 
 #pragma endregion
+
+#pragma region 이펙트
+	struct EFFECT_KEYFRAME_DATA
+	{
+		_uint keyFrameNumber;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_float curTime;
+		_float duration;
+		_bool bIsNotPlaying;
+	};
+
+	struct EFFECT_DATA
+	{
+		wstring effectName;
+		wstring modelName;
+		wstring maskTextureName;
+		wstring diffuseTextureName;
+		_int	effectType;
+		_int renderIndex;
+		_int passIndex;
+		_int uniqueIndex;
+		_bool isNotPlaying;
+		_bool isLoop;
+		_float3 position;
+		_float3 scale;
+		_float3 rotation;
+		_int iNumKeyFrame;
+		vector<EFFECT_KEYFRAME_DATA> keyframes;
+	};
+
+	struct EFFECT_LAYER_DATA
+	{
+		wstring layerName;
+		_float duration;
+		_float tickPerSecond;
+		_uint keyFramesCount;
+		_int iNumEffect;
+		vector<EFFECT_DATA> effects;
+	};
+#pragma endregion
+	
 
 #pragma region 바이너리
 	struct BoneWeight {

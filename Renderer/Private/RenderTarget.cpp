@@ -61,6 +61,11 @@ HRESULT CRenderTarget::Copy_RenderTarget(ID3D11Texture2D * pTexture2D)
 	return S_OK;
 }
 
+ID3D11ShaderResourceView* CRenderTarget::Copy_ShaderResourceView()
+{
+	return m_pSRV;
+}
+
 #ifdef _DEBUG
 
 HRESULT CRenderTarget::Ready_Debug(_float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY)

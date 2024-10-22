@@ -29,21 +29,22 @@ private:
 public:
 	HRESULT Initialize(AnimationData& animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices);
 
-	void Update_TransformationMatrix(_float* pCurrentAnimPosition, _float fTimeDelta, const vector<class CBone*>& Bones, _bool isLoop, vector<_uint>& KeyFrameIndices);
+	_bool Update_TransformationMatrix(_float* pCurrentAnimPosition, _float fTimeDelta, const vector<class CBone*>& Bones, _bool isLoop, vector<_uint>& KeyFrameIndices);
 	void Compute_FirstKeyFrameMatrixForBone(const char* boneName, const vector<class CBone*>& Bones, _matrix* outMatrix);
 	_uint GetNumChannels() { return m_iNumChannels; };
 	_float GetDuration() { return m_fDuration; };
 
 	void Add_SoundEvent(_float triggerTime, const std::wstring& soundAlias, _float volume);
 
-private:
+
+	void Update_FrameIndex(_float* pCurrentAnimPosition,  vector<_uint>& KeyFrameIndices);
+
+public:
 	_char			m_szName[MAX_PATH] = {};
 	_float			m_fDuration = {};
 	_float			m_fTickPerSecond = {};
 	_float			m_fCurrentPosition = {};
 
-private:
-	class CGameInstance* m_pGameInstance = { nullptr };
 
 	/* 이 애니메이션을 표현하기위해 컨트롤해야하는 뼈의 갯수 */
 	_uint						m_iNumChannels = {};
@@ -52,6 +53,9 @@ private:
 	vector<class CChannel*>		m_Channels;
 	vector<SoundEvent> m_SoundEvents;
 
+private:
+	class CGameInstance* m_pGameInstance = { nullptr };
+	
 public:
 	static CAnimation* Create(AnimationData animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices);
 

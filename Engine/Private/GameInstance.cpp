@@ -11,6 +11,7 @@
 #include "ThreadPool.h"
 #include "Frustum.h"
 #include "Font_Manager.h"
+
 IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()
@@ -93,12 +94,12 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pLevel_Manager->Update(fTimeDelta);
 }
 
-HRESULT CGameInstance::Render_Engine()
+HRESULT CGameInstance::Render_Engine(_float fTimeDelta)
 {
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
-	if (FAILED(m_pLevel_Manager->Render()))
+	if (FAILED(m_pLevel_Manager->Render(fTimeDelta)))
 		return E_FAIL;
 
 	return S_OK;
@@ -113,6 +114,11 @@ HRESULT CGameInstance::Clear_LevelResources(_uint iLevelIndex)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+CGameObject* CGameInstance::Find_Prototype(const wstring& strPrototypeTag)
+{
+	return m_pObject_Manager->Find_Prototype(strPrototypeTag);
 }
 
 HRESULT CGameInstance::Clear_BackBuffer_View(_float4 vClearColor)
@@ -174,6 +180,38 @@ _bool CGameInstance::Mouse_Down(_uint _iButton)
 _bool CGameInstance::Mouse_Up(_uint _iButton)
 {
 	return m_pInput_Device->Mouse_Up(_iButton);
+}
+
+
+_bool CGameInstance::Key_Pressing(_uint _iKey)
+{
+	return m_pInput_Device->Key_Pressing(_iKey);
+}
+
+_bool CGameInstance::Key_Down(_uint _iKey)
+{
+	return m_pInput_Device->Key_Down(_iKey);
+}
+
+_bool CGameInstance::Key_Up(_uint _iKey)
+{
+	return m_pInput_Device->Key_Up(_iKey);
+}
+
+_bool CGameInstance::MouseDown(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MouseDown(eMouse);
+}
+
+
+_bool CGameInstance::MousePress(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MousePress(eMouse);
+}
+
+_bool CGameInstance::MouseUp(MOUSEKEYSTATE eMouse)
+{
+	return m_pInput_Device->MouseUp(eMouse);
 }
 
 
@@ -262,6 +300,11 @@ CComponent* CGameInstance::Get_Component(_uint iLevelIndex, const _wstring& strL
 	return	m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
 }
 
+list<class CGameObject*> CGameInstance::Get_Layer(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	return m_pObject_Manager->Get_Layer(iLevelIndex, strLayerTag);
+}
+
 CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
 {
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
@@ -271,6 +314,7 @@ void CGameInstance::Destory_Reserve(CGameObject* gameObject)
 {
 	m_pObject_Manager->Destory_Reserve(gameObject);
 }
+
 
 HRESULT CGameInstance::Get_Prototype_Names(vector<string>* pVector)
 {
@@ -321,6 +365,17 @@ CComponent* CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring& st
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
 }
 
+_uint CGameInstance::Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return m_pObject_Manager->GetLayerSize(iLevelIndex, strLayerTag);
+}
+vector<const _wstring*>* CGameInstance::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
+{
+	return m_pComponent_Manager->Find_Prototype_Include_Key(iLevelIndex, strIncludeTag);
+}
 
 _matrix CGameInstance::Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
 {
@@ -360,7 +415,6 @@ void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix 
 HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
 {
 	return m_pThreadPool->Initialize(ThreadCount);
-
 }
 
 _uint CGameInstance::Get_ThreadNumber()
@@ -397,10 +451,15 @@ void* CGameInstance::LoadObjects(const wstring& filename)
 
 HRESULT CGameInstance::Save_All_CameraPoints(const wstring& filename, void* pArg)
 {
+	return m_pFile_Manager->Save_All_CameraPoints(filename, pArg);
+}
+
+HRESULT CGameInstance::Save_Effects(wstring& FilePath, void* pArg)
+{
 	if (nullptr == m_pFile_Manager)
 		return E_FAIL;
 
-	return m_pFile_Manager->Save_All_CameraPoints(filename, pArg);
+	return m_pFile_Manager->Save_Effects(FilePath, pArg);
 }
 
 HRESULT CGameInstance::Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg)
@@ -421,6 +480,14 @@ HRESULT CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText
 	return m_pFont_Manager->Draw_Font(strFontTag, pText, vPosition, vFontColor, fRadian, vPivotPos, fScale);
 }
 
+void* CGameInstance::Load_Effects(wstring& FilePath)
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->Load_Effects(FilePath);
+}
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);
@@ -439,6 +506,4 @@ void CGameInstance::Release_Engine()
 void CGameInstance::Free()
 {
 	__super::Free();
-
-
 }

@@ -6,7 +6,7 @@ CLayer::CLayer()
 {
 }
 
-CComponent * CLayer::Get_Component(const _wstring & strComponentTag, _uint iIndex)
+CComponent* CLayer::Get_Component(const _wstring& strComponentTag, _uint iIndex)
 {
 	auto	iter = m_GameObjects.begin();
 
@@ -19,7 +19,7 @@ CComponent * CLayer::Get_Component(const _wstring & strComponentTag, _uint iInde
 	return (*iter)->Get_Component(strComponentTag);
 }
 
-HRESULT CLayer::Add_GameObject(CGameObject * pGameObject)
+HRESULT CLayer::Add_GameObject(CGameObject* pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -114,7 +114,7 @@ void CLayer::Late_Update(_float fTimeDelta)
 	}
 }
 
-CLayer * CLayer::Create()
+CLayer* CLayer::Create()
 {
 	return new CLayer();
 }

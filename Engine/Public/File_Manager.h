@@ -23,8 +23,15 @@ public:
 	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
 	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
 
+	HRESULT Save_Effects(wstring& FilePath, void* pArg);
+	void*		Load_Effects(wstring& FilePath);
+	void Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData);
+	void Read_EffectData(wifstream& file, EFFECT_DATA& effectData);
+	void Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& keyFrameData);
+
 private:
 	vector<FILEDATA> m_vecpFileData;
+	vector<EFFECT_LAYER_DATA>* m_pLoadedEffectData = { nullptr };
 
 public:
 	static CFile_Manager* Create();

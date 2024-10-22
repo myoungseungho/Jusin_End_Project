@@ -25,7 +25,7 @@ void CLevel::Update(_float fTimeDelta)
 
 }
 
-HRESULT CLevel::Render()
+HRESULT CLevel::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
@@ -48,6 +48,14 @@ HRESULT CLevel::ParseInitialize(const wstring& filePath)
 	}
 
 	return S_OK;
+}
+
+vector<EFFECT_LAYER_DATA>* CLevel::Set_Effect(_wstring FilePath)
+{
+
+	vector<EFFECT_LAYER_DATA>*	pvecFileData = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_Effects(FilePath));
+
+	return pvecFileData;
 }
 
 void CLevel::Free()

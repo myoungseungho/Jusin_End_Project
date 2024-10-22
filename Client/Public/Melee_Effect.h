@@ -1,11 +1,16 @@
 #pragma once
 
-#include "GameObject.h"
 #include "Client_Defines.h"
-#include "Collider_Manager.h"
+#include "GameObject.h"
 
 BEGIN(Engine)
-class CCollider;
+class CShader;
+class CModel;
+class CTexture;
+END
+
+BEGIN(Renderer)
+class CRenderer;
 END
 
 BEGIN(Client)
@@ -31,17 +36,11 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-public:
-	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
-	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
-	virtual void OnCollisionExit(class CCollider* other) override;
-
 private:
 	HRESULT Ready_Components();
 
 private:
 	CCollider* m_pColliderCom = { nullptr };
-
 
 	_float					m_fX = 0.f;
 	_float					m_fY = 0.f;

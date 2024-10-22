@@ -6,7 +6,7 @@
 BEGIN(Engine)
 class CShader;
 class CModel;
-class CCollider;
+
 END
 
 BEGIN(Client)
@@ -25,6 +25,7 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
+
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;

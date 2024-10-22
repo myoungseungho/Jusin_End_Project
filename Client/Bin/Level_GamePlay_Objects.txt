@@ -15,7 +15,6 @@ Position: 10 0 0
 RightRotation: 1 0 -0
 UpRotation: -0 -1 -2.38419e-07
 LookRotation: 0 2.38419e-07 -1
-
 Scale: 1 1 1
 IsParsing: 1
 

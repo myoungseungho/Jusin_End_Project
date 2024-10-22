@@ -39,17 +39,27 @@ public:
 			return nullptr;
 		return iter->second;
 	}
-
+	/* 항상 쓰지 않았던 m_iGameObjectData 를 렌더타겟 식별번호로서 쓸 수 있게 겟셋을 만듦*/
+	void Set_GameObjectData(_uint iData) {
+		m_iGameObjectData = iData;
+	}
+	_uint Get_GameObjectData() { return m_iGameObjectData; }
 public:
 	static const _wstring		m_strTransformTag;
 
 public:
+	void a();
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
 	virtual void Priority_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
+
+	// 객체 삭제 (최진영)
+	_bool Get_Dead() { return m_bDead; }
+	void Set_Dead() { m_bDead = TRUE; }
+	//
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta);
@@ -80,10 +90,19 @@ protected:
 
 	//활성화 비활성화 관련
 	_bool						m_bIsActive = { true };
+
+	// 객체 삭제 (최진영)
+
+	_bool m_bDead = { FALSE };
+
+	//
+public:
 	//IMGUI 관련
 	_bool						m_bIsImguiClick = { false };
 	//파싱 관련
 	_bool						m_bIsPasingObject = { false };
+	_uint						m_iGameObjectData = { 0 };
+
 
 	map<const _wstring, CComponent*>		m_Components;
 

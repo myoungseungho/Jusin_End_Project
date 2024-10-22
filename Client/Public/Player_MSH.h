@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameObject.h"
 #include "Client_Defines.h"
+#include "GameObject.h"
 
 BEGIN(Engine)
 class CShader;
@@ -38,6 +38,7 @@ private:
 
 	_float					m_fRandom = {};
 	class CGameObject* m_pMonster = { nullptr };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
