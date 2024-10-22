@@ -25,10 +25,6 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 
-	//카메라 생성
-	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Main_Camera"))))
-		return E_FAIL;
-
 	//빛 준비
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -61,12 +57,6 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
 		return E_FAIL;
-	
-	// 해당 레벨에 맞는 파일 경로를 설정
-	//wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
-
-	//if (FAILED(ParseInitialize(filePath))) 
-	//	return E_FAIL;
 
 #pragma endregion
 
@@ -94,6 +84,10 @@ HRESULT CLevel_GamePlay::Initialize()
 #pragma endregion
 
 #pragma region 카메라 포인트 로드
+
+	//카메라 생성
+	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Main_Camera"))))
+		return E_FAIL;
 
 	// 카메라 포인트 로드
 	_wstring cameraFilePath = L"../Bin/CameraPoints.txt";

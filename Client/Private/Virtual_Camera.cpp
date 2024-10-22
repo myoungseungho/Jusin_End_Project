@@ -208,11 +208,11 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2)
 {
-	const float fixedY = 20.f;
-	const float fixedZ = -50.f;
+	const float fixedY = 1.f;
+	const float fixedZ = -5.f;
 
-	const float thresholdDistance = 40.f;
-	const float maxDistance = 60.f;
+	const float thresholdDistance = 2.f;
+	const float maxDistance = 5.17f;
 
 	float offsetX = 0.f;
 	_float3 targetPosition = _float3(averageX + offsetX, fixedY, fixedZ);
@@ -225,8 +225,8 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gv
 		float t = (distanceX - thresholdDistance) / (maxDistance - thresholdDistance);
 		t = max(0.f, min(t, 1.f)); // [0, 1] 범위로 클램프
 
-		const float maxYOffset = 7.f; // 최대 Y 이동 거리
-		const float maxZOffset = 50.f; // 최대 Z 이동 거리
+		const float maxYOffset = 0.8f; // 최대 Y 이동 거리
+		const float maxZOffset = 9.f; // 최대 Z 이동 거리
 
 		// 평행 벡터 가져오기 (x=0을 만족함)
 		_float3 tangent1, tangent2;
@@ -247,9 +247,9 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gv
 void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2)
 {
 	// 카메라의 Look 방향을 고정된 값으로 설정 (예: Z축을 향하도록)
-	_vector fixedLook = XMVectorSet(-0.05f, -0.14f, 0.98f, 0.f);
-	_vector fixedRight = XMVectorSet(0.9984f, 0.f, 0.054f, 0.f);
-	_vector fixedUp = XMVectorSet(-0.00773f, 0.99f, 0.14f, 0.f);
+	_vector fixedRight = XMVectorSet(0.999f, 0.f, 0.01f, 0.f);
+	_vector fixedUp = XMVectorSet(-0.00773f, 0.99f, -0.04f, 0.f);
+	_vector fixedLook = XMVectorSet(-0.01f, 0.04, 0.99f, 0.f);
 
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, fixedRight);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, fixedUp);

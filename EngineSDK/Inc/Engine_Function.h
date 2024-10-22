@@ -266,5 +266,9 @@ namespace Engine
 		result.z = f1.z + f2.z;
 		return result;
 	}
+
+	inline _float ZeroIfSmall(_float value) {
+		return (fabs(value) < 1e-5) ? 0.0f : value;
+	}
 #pragma endregion
 }

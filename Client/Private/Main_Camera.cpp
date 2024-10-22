@@ -108,6 +108,13 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Skill3_Anim3"] = 2;
 	stringToAnimID["21_Skill3_Anim4"] = 3;
 
+
+	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
+	SetPlayer(CMain_Camera::PLAYER_1P, player1p);
+
+	CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
+	SetPlayer(CMain_Camera::PLAYER_2P, player2p);
+
 	return S_OK;
 }
 
