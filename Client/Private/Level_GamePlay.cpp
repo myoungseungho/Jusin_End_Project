@@ -134,7 +134,7 @@ HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
 
-	m_pIMGUI_Manager->Render(fTimeDelta);
+	//m_pIMGUI_Manager->Render(fTimeDelta);
 
 	return S_OK;
 }

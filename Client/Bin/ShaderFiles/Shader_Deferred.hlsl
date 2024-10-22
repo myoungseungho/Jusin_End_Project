@@ -320,7 +320,7 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
 
     float fEdgeNormalThreshold = 0.2f;
-    float fEdgeDepthThreshold = 0.05f;
+    float fEdgeDepthThreshold = 10.f;
 	
     float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
 

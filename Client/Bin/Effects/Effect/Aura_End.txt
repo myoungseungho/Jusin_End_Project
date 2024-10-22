@@ -1,30 +1,31 @@
 [Layer]
-LayerName: Aura12_Gray
+LayerName: Aura_End
 Duration: 1
 TickPerSecond: 0
 KeyFramesCount: 59
 NumEffec: 1
 
 [Effect]
-EffectName: Aura12_Gray
+EffectName: Aura_End
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Aura12_GrayAura12_Gray
+MaskTextureName: ../Bin/Effects/Shader_Tab/Aura_EndAura_End
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 1
-Position: 0 0 0
-Scale: 0.5 0.5 0.5
+UniqueIndex: 0
+Position: 0.5 0.5 0.5
+Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.5 0.5 0.5
+Position: 0.5 0.5 0.5
+Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
 Duration: 0
 IsNotPlaying: false
+
