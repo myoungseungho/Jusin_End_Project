@@ -1021,12 +1021,6 @@
     <ClInclude Include="..\public\MainApp.h">
       <Filter>00.MainApp</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Level\01.Level\00.GamePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Level_Loading.h">
-      <Filter>01.Level\01.Level\99.Loading</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Main_Camera.h">
       <Filter>02.GameObjects\Camera\Main_Camera</Filter>
     </ClInclude>

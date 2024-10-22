@@ -20,7 +20,6 @@ void CIMGUI_Level_Tab::Render(_float fTimeDelta)
 	IMGUI_ShowLevels();
 }
 
-
 HRESULT CIMGUI_Level_Tab::IMGUI_ShowLevels()
 {
 	// 가정: 레벨 이름과 ID를 가진 배열 또는 리스트
