@@ -3,7 +3,7 @@
 
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D		g_Texture;
-
+float4			g_vColor;
 texture2D		g_DepthTexture;
 
 struct VS_IN
@@ -32,6 +32,20 @@ VS_OUT VS_MAIN(VS_IN In)
 
 	return Out;
 }
+
+VS_OUT VS_CAMERA_LINE(VS_IN In)
+{
+    VS_OUT Out;
+
+    vector vPosition = (In.vPosition, 1.f);
+    vPosition = mul(vPosition, g_ViewMatrix);
+    vPosition = mul(vPosition, g_ProjMatrix);
+
+    Out.vPosition = vPosition;
+
+    return Out;
+}
+
 
 struct VS_OUT_EFFECT
 {
@@ -78,6 +92,16 @@ PS_OUT PS_MAIN(PS_IN In)
 	
 	return Out;
 }
+
+PS_OUT PS_CAMERA_LINE(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_vColor;
+	
+    return Out;
+}
+
 
 struct PS_IN_EFFECT
 {
@@ -139,11 +163,11 @@ technique11		DefaultTechnique
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
-        VertexShader = compile vs_5_0 VS_MAIN();
+        VertexShader = compile vs_5_0 VS_CAMERA_LINE();
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
-        PixelShader = compile ps_5_0 PS_MAIN();
+        PixelShader = compile ps_5_0 PS_CAMERA_LINE();
     }
 
 }
