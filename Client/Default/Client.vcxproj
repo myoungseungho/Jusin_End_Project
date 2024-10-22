@@ -169,13 +169,13 @@
     <ClInclude Include="..\Public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
+    <ClInclude Include="..\Public\Level_GamePlay.h" />
+    <ClInclude Include="..\Public\Level_Loading.h" />
+    <ClInclude Include="..\Public\Level_Logo.h" />
     <ClInclude Include="..\Public\Line_Draw.h" />
+    <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\public\BackGround.h" />
-    <ClInclude Include="..\Public\Level_GamePlay.h" />
-    <ClInclude Include="..\public\Level_Logo.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
@@ -238,8 +238,6 @@
     <ClInclude Include="..\Public\imstb_textedit.h" />
     <ClInclude Include="..\Public\imstb_truetype.h" />
     <ClInclude Include="..\Public\Input.h" />
-    <ClInclude Include="..\Public\Level_Loading.h" />
-    <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\UIObject.h" />

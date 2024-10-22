@@ -539,9 +539,6 @@
     <ClInclude Include="..\public\UI_KOFont.h">
       <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Level_Logo.h">
-      <Filter>01.Level\01.Logo</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\BackGround.h">
       <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClInclude>
@@ -717,14 +714,17 @@
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Level_Logo.h">
+      <Filter>01.Level\01.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Level\99.Loading\Loader</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\Level_GamePlay.h">
       <Filter>01.Level\00.GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Level_Loading.h">
       <Filter>01.Level\99.Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Loader.h">
-      <Filter>01.Level\99.Loading\Loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1026,9 +1026,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Level_Loading.h">
       <Filter>01.Level\01.Level\99.Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Loader.h">
-      <Filter>01.Level\01.Level\99.Loading\Loader</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Main_Camera.h">
       <Filter>02.GameObjects\Camera\Main_Camera</Filter>
