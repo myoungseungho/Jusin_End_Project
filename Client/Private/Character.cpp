@@ -3,9 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
 #include "iostream"
-
 #include "AttackObject.h"
 
 

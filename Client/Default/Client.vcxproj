@@ -336,7 +336,6 @@
     <ClCompile Include="..\Private\AnimationNameMap.cpp" />
     <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Character.cpp" />
-    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\private\Effect_Animation.cpp" />
     <ClCompile Include="..\Private\Effect_Blend.cpp" />

@@ -15,8 +15,6 @@ END
 
 BEGIN(Client)
 
-
-
 /*
 vector<CInput> Command_236Attack =
 {
@@ -25,6 +23,7 @@ vector<CInput> Command_236Attack =
 	{MOVEKEY_RIGHT, ATTACK_NONE},
 	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
 };
+
 vector<CInput> Command_236Attack_Extra =
 {
 	{MOVEKEY_DOWN, ATTACK_NONE},
