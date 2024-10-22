@@ -25,9 +25,7 @@ HRESULT CUI_HpPanel::Initialize_Prototype()
 
 HRESULT CUI_HpPanel::Initialize(void* pArg)
 {
-	m_fPosX = 330.f ;
-	m_fPosY = 87.f;
-	m_fSizeX = 464.f;
+	m_fSizeX = 464.f, m_fSizeY = 116.f, m_fPosX = 330.f, m_fPosY = 87.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -35,7 +33,7 @@ HRESULT CUI_HpPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX * 1.5f , 116.f * 1.5f, m_fPosX , 87.f,0.8f);
+	__super::Set_UI_Setting(m_fSizeX , m_fSizeY, m_fPosX , m_fPosY,0.8f);
 
 
 	return S_OK;

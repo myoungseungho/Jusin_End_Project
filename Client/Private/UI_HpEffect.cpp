@@ -41,7 +41,7 @@ void CUI_HpEffect::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 	
-	if (m_pMainPawn != nullptr && m_pMainPawn->Get_PawnDesc().iHp / 100.f <= 0.25f)
+	if (m_pMainPawn != nullptr && m_pMainPawn->Get_PawnDesc().iHp / 10000.f <= 0.25f)
 	{
 		if (m_fAlphaTimer <= 0.f)
 		{

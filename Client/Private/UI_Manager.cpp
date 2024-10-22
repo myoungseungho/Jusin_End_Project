@@ -126,7 +126,7 @@ void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX
 
 	if (m_pGameInstance->Get_DIKeyState(DIK_S))
 	{
-		fPosY++;
+		fPosY++; 
 	}
 }
 

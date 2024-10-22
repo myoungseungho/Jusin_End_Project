@@ -23,15 +23,18 @@ HRESULT CUI_Input_DirPanel::Initialize_Prototype()
 
 HRESULT CUI_Input_DirPanel::Initialize(void* pArg)
 {
+	m_fSizeX = 190; 
+	m_fSizeY = 190;
+	m_fPosX = 228;
+	m_fPosY = 503;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 230.f;
-	m_fPosY = 510.f;
-	__super::Set_UI_Setting(190.f, 190.f, 228, 503, 0.9f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 
 	return S_OK;
 }

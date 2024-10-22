@@ -221,7 +221,7 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	m_tCharacterDesc.bStun = m_bStun;
+	m_tCharacterDesc.bStun = m_bRedHp;
 	m_tCharacterDesc.bHit = m_bHit;
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
 	m_tCharacterDesc.iHp = m_iHP;
@@ -1623,6 +1623,8 @@ _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _fl
 	Set_HitAnimation(eAnimation, Impus);
 	Set_AnimationStop(fStopTime);
 
+	Set_bRedHP(true);
+
 
 	m_iHP -= iDamage;  // ¿©±â¿¡ ÄÞº¸°è¼ö °öÇÒ°Í
 	
@@ -1826,6 +1828,7 @@ void CCharacter::Set_BreakFall_Ground()
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
+	Set_bRedHP(false);
 
 
 	DirectionInput iMoveKey = inputBuffer.back().direction;
@@ -1887,6 +1890,7 @@ void CCharacter::BreakFall_Air()
 			{
 				Set_fImpulse({ 10.f * m_iLookDirection, 1.f });
 			}
+			Set_bRedHP(false);
 
 
 		}
@@ -1988,7 +1992,7 @@ void CCharacter::Guard_Update()
 		m_bGuard = false;
 	}
 
-
+	
 }
 */
 
@@ -2031,6 +2035,19 @@ _bool CCharacter::Guard_Check()
 	{
 		return false;
 	}
+}
+
+void CCharacter::Set_bRedHP(_bool bRedHP)
+{
+	if (bRedHP == true)
+	{
+		//m_pUI_Manager->Set_Hp(m_iHP);
+		m_tCharacterDesc.iHp = m_iHP;
+
+	}
+
+	 m_bRedHp = bRedHP; 
+	 m_tCharacterDesc.bStun = m_bRedHp;
 }
 
 

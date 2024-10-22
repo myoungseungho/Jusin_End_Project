@@ -495,6 +495,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	{
 		m_iAttackStepCount = 0;
 		m_iDebugComoboDamage = 0;
+		m_iHP = 10000;
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{

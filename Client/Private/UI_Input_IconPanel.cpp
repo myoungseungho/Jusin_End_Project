@@ -33,8 +33,9 @@ HRESULT CUI_Input_IconPanel::Initialize(void* pArg)
 	m_iOffsetScaled = pDesc->iNumUI;
 
 	m_fPosX = 20.f;
-
 	m_fPosY = 190;
+	m_fSizeX = 45.f * (m_iOffsetScaled);
+	m_fSizeY = 45.f;
 
 	if (m_iOffsetScaled == 2)
 		m_fPosX += 20;	
@@ -42,7 +43,7 @@ HRESULT CUI_Input_IconPanel::Initialize(void* pArg)
 		m_fPosX += 40;
 	m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
 
-	__super::Set_UI_Setting(45.f * (m_iOffsetScaled), 45.f, m_fPosX, m_fPosY, 1.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 1.f);
 
 	return S_OK;
 }
@@ -55,6 +56,7 @@ void CUI_Input_IconPanel::Priority_Update(_float fTimeDelta)
 void CUI_Input_IconPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
 	_float fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList - m_iNumCommandList));
 
 	if (fOffSetPosY >= 575)

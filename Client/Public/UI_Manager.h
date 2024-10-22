@@ -40,6 +40,8 @@ public:
 	void UsingCreateEndUI();
 
 	void SKillCount();
+	void Set_Hp(_uint iHp) { m_iHp = iHp; }
+
 
 public:
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);

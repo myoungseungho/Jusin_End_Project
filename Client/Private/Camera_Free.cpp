@@ -26,7 +26,7 @@ HRESULT CCamera_Free::Initialize_Prototype()
 HRESULT CCamera_Free::Initialize(void* pArg)
 {
 	m_fMouseSensor = static_cast<CCamera_Free::CAMERA_FREE_DESC*>(pArg)->fSensor;	
-	m_fMouseSensor = 3.f;
+	m_fMouseSensor = 0.5f;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 	CTransform::TRANSFORM_DESC tDesc{};
@@ -101,7 +101,7 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 
 			if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_X))
 			{
-				m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta);
+				m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMove * fTimeDelta );
 			}
 
 			if (MouseMove = m_pGameInstance->Get_DIMouseMove(DIMM_Y))
@@ -183,6 +183,11 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
         // 휠을 아래로 돌려 줌아웃
         m_pTransformCom->Go_Backward(-m_fMouseSensor * MouseWheel * fTimeDelta);
     }
+
+	//최진영
+
+	if (m_pGameInstance->Key_Down(DIK_F5))
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f, 10.f, -15.f  , 1.f });
 
     // 기본 업데이트
     __super::Priority_Update(fTimeDelta);

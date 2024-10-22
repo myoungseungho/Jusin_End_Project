@@ -26,6 +26,7 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 	m_fPosX = 72.f;
 	m_fPosY = 112.f;
 	m_fSizeX = 115.f;
+	m_fSizeY = 115.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -33,7 +34,7 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(-m_fSizeX, 115.f, m_fPosX, m_fPosY, 0.5f);
+	__super::Set_UI_Setting(-m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.5f);
 
 	return S_OK;
 }

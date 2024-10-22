@@ -342,6 +342,12 @@ public:
 	//void Guard_Update();   //서브캐릭터용도로 써야하나?
 	_bool Guard_Check();
 
+
+
+	//UI
+public:
+	void Set_bRedHP(_bool bRedHP);
+
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
@@ -520,7 +526,7 @@ protected:
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
 
-	//_bool					m_bStun = { FALSE };
+	_bool					m_bRedHp = { FALSE };
 	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
 
