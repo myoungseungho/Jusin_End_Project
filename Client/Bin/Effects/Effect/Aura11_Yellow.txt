@@ -1,0 +1,40 @@
+[Layer]
+LayerName: Aura11_Yellow
+Duration: 0.4
+TickPerSecond: 1
+KeyFramesCount: 24
+NumEffec: 1
+
+[Effect]
+EffectName: Aura11_Yellow
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Aura11_YellowAura11_Yellow
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 2
+Position: 0 0 0
+Scale: 0.5 0.5 0.5
+Rotation: 0 0 0
+IsLoop: false
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.5 0.5 0.5
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0 0 0
+Scale: 0.5 0.5 0.5
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 0.4
+IsNotPlaying: true
+

@@ -997,4 +997,9 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair);
 
 	m_TestEffect.clear();
+
+	for (auto& Pair : m_UsingEffect)
+		Safe_Release(Pair);
+
+	m_UsingEffect.clear();
 }
