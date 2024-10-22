@@ -45,7 +45,6 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 	if (m_bIsLevelPrepared)
 		return S_OK;
 
-
 	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))

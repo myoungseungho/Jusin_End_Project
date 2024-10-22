@@ -77,11 +77,11 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
 	//IMGUI ·»´õ´Â ·Îµù¶§´Â ÇÏ¸é ¾ÈµÊ
-	if (m_pGameInstance->Get_CurrentLevel_Index() != LEVEL_LOADING)
-	{
+	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
+	if (isOk_Render)
 		//IMGUI ·»´õ
 		m_pImgui_Manager->Render(fTimeDelta);
-	}
 
 	m_pGameInstance->Present();
 
