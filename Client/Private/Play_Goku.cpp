@@ -110,14 +110,6 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_pModelCom->SetUp_Animation(0, true);
 	m_pModelCom->Play_Animation(0.f);
 
-
-
-	CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
-	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
-	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
-	
-
 	//MoveCommandPatterns.push_back({ hadoukenPattern, ShowInputBuffer});
 
 	MoveCommandPatterns.push_back({ Command_236Attack, 66 });
@@ -203,7 +195,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	
 		for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
 		{
-			CGameObject* pObject = m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
+			CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
 	
 			if (pObject != this)
 			{

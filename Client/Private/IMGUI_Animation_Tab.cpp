@@ -120,7 +120,7 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
             Safe_Release(m_pSelectedModelCom);
 
        
-        m_pSelectedObject = m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), 0);
+        m_pSelectedObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), 0);
         m_pSelectedModelCom = static_cast<CModel*>(m_pSelectedObject->Get_Component(TEXT("Com_Model")));
 
 
@@ -159,7 +159,7 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
          {
 
              // Layer_Camera
-             CGameObject* pObject = m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Camera"));
+             CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Camera"));
              CTransform* pTrasnform = static_cast<CTransform*>(pObject->Get_Component(TEXT("Com_Transform")));
 
              //_vector Debug = pTrasnform->Get_State(CTransform::STATE_POSITION);

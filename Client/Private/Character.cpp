@@ -197,20 +197,8 @@ HRESULT CCharacter::Initialize(void* pArg)
 		FlipDirection(-1);
 	}
 
-
-	//모델 로드를 하위 클래스로 옮겼으니 각자 처리하기 
-	//m_pModelCom->SetUp_Animation(0, false);
-	//m_pModelCom->Play_Animation(0.f);
-
-
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
 
-
-	CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
-	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
-	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
-	
 	return S_OK;
 }
 
@@ -2527,7 +2515,7 @@ HRESULT CCharacter::Ready_Components()
 
 
 	//Com_Collider
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
 		return E_FAIL;
 	

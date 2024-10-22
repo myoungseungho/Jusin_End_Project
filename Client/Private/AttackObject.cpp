@@ -104,7 +104,7 @@ void CAttacKObject::Late_Update(_float fTimeDelta)
 		for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
 		{
 
-			CCharacter* pCharacter = static_cast<CCharacter*>(m_pGameInstance->Get_Object(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i));
+			CCharacter* pCharacter = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i));
 
 			//생성된 공격과 상대방이 다른팀이라면 충돌검사
 			if (pCharacter->Get_iPlayerTeam() != m_iTeam)

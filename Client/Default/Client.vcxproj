@@ -164,17 +164,13 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
-    <ClInclude Include="..\Public\Energy_Effect.h" />
-    <ClInclude Include="..\Public\Energy_Effect_2p.h" />
     <ClInclude Include="..\public\BackGround.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\public\Level_Logo.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\public\Pawn.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\Public\Player.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\public\SubPlayer.h">
@@ -252,16 +248,7 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\MainApp.h" />
-    <ClInclude Include="..\Public\Melee_Effect.h" />
-    <ClInclude Include="..\Public\Melee_Effect_2p.h" />
-    <ClInclude Include="..\Public\Monster_MSH.h" />
-    <ClInclude Include="..\Public\Player_MSH.h" />
-    <ClInclude Include="..\Public\Range_Effect.h" />
-    <ClInclude Include="..\Public\Range_Effect_2p.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
-    <ClInclude Include="..\Public\Model_Preview.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
     <ClInclude Include="..\Public\UI_AttBufMark.h" />
@@ -286,7 +273,6 @@
     <ClInclude Include="..\Public\UI_Timer.h" />
     <ClInclude Include="..\Public\Play_21.h" />
     <ClInclude Include="..\public\UI_TimerPanel.h" />
-    <ClInclude Include="..\Public\Monster.h" />
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h" />
@@ -310,19 +296,15 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
-    <ClCompile Include="..\Private\Energy_Effect.cpp" />
-    <ClCompile Include="..\Private\Energy_Effect_2p.cpp" />
     <ClCompile Include="..\private\BackGround.cpp" />
-    <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\private\Pawn.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\Private\Player.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\private\SubPlayer.cpp">
@@ -394,17 +376,7 @@
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
-    <ClCompile Include="..\Private\Melee_Effect.cpp" />
-    <ClCompile Include="..\Private\Melee_Effect_2p.cpp" />
-    <ClCompile Include="..\Private\Monster_MSH.cpp" />
-    <ClCompile Include="..\Private\Player_MSH.cpp" />
-    <ClCompile Include="..\Private\Range_Effect.cpp" />
-    <ClCompile Include="..\Private\Range_Effect_2p.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
-    <ClCompile Include="..\Private\Model_Preview.cpp" />
-    <ClCompile Include="..\Private\Monster.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />
     <ClCompile Include="..\Private\UI_AttBufMark.cpp" />

@@ -73,7 +73,7 @@ void CImgui_Manager::Priority_Update(_float fTimeDelta)
 
 void CImgui_Manager::Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->MouseDown(DIMK_LBUTTON))
+	if (m_pGameInstance->Mouse_Down(DIMK_LBUTTON))
 	{
 		_int iMeshIndex = Pick_Effect_Mesh();
 
@@ -94,7 +94,6 @@ void CImgui_Manager::Update(_float fTimeDelta)
 			}
 		}
 	}
-
 }
 
 void CImgui_Manager::Late_Update(_float fTimeDelta)

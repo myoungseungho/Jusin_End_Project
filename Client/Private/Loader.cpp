@@ -7,30 +7,18 @@
 //명승호
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
-#include "Monster_MSH.h"
-#include "Player_MSH.h"
-#include "Energy_Effect.h"
-#include "Energy_Effect_2p.h"
-#include "Melee_Effect.h"
-#include "Melee_Effect_2p.h"
-#include "Range_Effect.h"
-#include "Range_Effect_2p.h"
 #include "Line_Draw.h"
 //
 
 
 #include "Model_Preview.h"
 
-#include "Monster.h"
 #include "Effect_Rect.h"
 #include "Shader_Texture.h"
 #include "Effect_MoveTex.h"
 #include "Effect_Multi.h"
 #include "Effect_Single.h"
 #include "SpaceSky.h"
-#include "Player.h"
-#include "Effect.h"
-
 
 #include "SpaceSun.h"
 #include "SpaceRock.h"
@@ -209,18 +197,18 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	/* 컴포넌트를 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("컴포넌트를 로딩 중 입니다."));
 
-	///* For.Prototype_Component_Collider_AABB */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-	//	CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_AABB))))
-	//	return E_FAIL;
-	///* For.Prototype_Component_Collider_OBB */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_OBB"),
-	//	CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_OBB))))
-	//	return E_FAIL;
-	///* For.Prototype_Component_Collider_Sphere */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_Sphere"),
-	//	CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_SPHERE))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Collider_AABB */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+		CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_AABB))))
+		return E_FAIL;
+	/* For.Prototype_Component_Collider_OBB */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_OBB"),
+		CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_OBB))))
+		return E_FAIL;
+	/* For.Prototype_Component_Collider_Sphere */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_Sphere"),
+		CCollider::Create(m_pDevice, m_pContext, CCollider::TYPE_SPHERE))))
+		return E_FAIL;
 
 	/* 모델을 로드한다. */
 	lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));	
@@ -2385,30 +2373,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CVirtual_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Energy_Effect"),
-		CEnergy_Effect::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Energy_Effect_2p"),
-		CEnergy_Effect_2p::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Range_Effect"),
-		CRange_Effect::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Range_Effect_2p"),
-		CRange_Effect_2p::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Melee_Effect"),
-		CMelee_Effect::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Melee_Effect_2p"),
-		CMelee_Effect_2p::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Line_Draw"),
 		CLine_Draw::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -2422,10 +2386,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 HRESULT CLoader::Loading_For_UI()
 {
-	//텍스처 컴포넌트
-
-	//커서
-
 	//Combo
 	/* For.Prototype_Component_Texture_UI_ComboNumber */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),

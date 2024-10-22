@@ -626,7 +626,6 @@ void CFile_Manager::Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& key
 		}
 	}
 }
->>>>>> > ? ê²© / ? „ì‹œë¨¸ì ?
 
 CFile_Manager * CFile_Manager::Create()
 {

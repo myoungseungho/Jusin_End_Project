@@ -6,6 +6,7 @@
 
 #include "imgui.h"
 #include "Effect.h"
+
 BEGIN(Engine)
 class CGameInstance;
 END

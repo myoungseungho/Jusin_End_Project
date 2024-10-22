@@ -36,14 +36,6 @@ public: /* For.Input_Device */
 	_bool Mouse_Down(_uint _iButton);
 	_bool Mouse_Up(_uint _iButton);
 
-	_bool Key_Pressing(_uint _iKey);
-	_bool Key_Down(_uint _iKey);
-	_bool Key_Up(_uint _iKey);
-
-	_bool MouseDown(MOUSEKEYSTATE eMouse);
-	_bool MousePress(MOUSEKEYSTATE eMouse);
-	_bool MouseUp(MOUSEKEYSTATE eMouse);
-
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
 	_uint Get_CurrentLevel_Index();
@@ -72,6 +64,7 @@ public: /* For.Object_Manager */
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < _wstring, list<CGameObject*>>>*);
 	_uint Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag);
+	class CGameObject* Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex = 0);
 
 public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);

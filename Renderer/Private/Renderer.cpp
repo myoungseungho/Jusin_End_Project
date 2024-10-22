@@ -902,7 +902,6 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 
 	return S_OK;
 }
-#endif
 
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

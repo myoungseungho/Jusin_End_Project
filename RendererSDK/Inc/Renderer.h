@@ -33,11 +33,13 @@ public:
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	HRESULT Draw(_float fTimeDelta);
 	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
+	void SetActive_Debug_Component(_bool isOn) { m_bShow_Debug_Component = isOn; };
 
 public:
 	void Show_OutLine() { m_isOutLine = !m_isOutLine; }
 	void Show_Layer_View() { m_isLayerView = !m_isLayerView; }
 	_bool Get_isLayerView() { return m_isLayerView; }
+
 private:
 	_bool m_isOutLine = { false };
 
@@ -65,6 +67,7 @@ private:
 	_float4x4					m_ProjMatrix = {};
 
 	_bool m_bShow_RenderTarget = { false };
+	_bool m_bShow_Debug_Component = { false };
 
 private:
 	HRESULT Render_Priority(_float fTimeDelta);

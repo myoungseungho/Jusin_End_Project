@@ -1,7 +1,6 @@
 #pragma once
 
 #include "UIObject.h"
-#include "Monster.h"
 
 BEGIN(Client)
 

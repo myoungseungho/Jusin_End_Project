@@ -6,7 +6,6 @@
 #include "RenderInstance.h"
 #include "Effect_Manager.h"
 #include "Imgui_Manager.h"
-#include "Monster.h"
 #include "UI_ComboNumber.h"
 
 #include "Pawn.h"
@@ -14,14 +13,6 @@
 #include "UI_GameState.h"
 
 #include "Character.h"
-
-
-CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CLevel{ pDevice, pContext }
-{
-
-}
-
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }

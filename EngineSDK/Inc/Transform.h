@@ -65,15 +65,20 @@ public:
 		XMStoreFloat4((_float4*)&m_WorldMatrix.m[eState][0], vState);
 	}
 
+	void Set_State_Position(_float3 vState) {
+		XMStoreFloat4((_float4*)&m_WorldMatrix.m[CTransform::STATE_POSITION][0], XMVectorSet(vState.x, vState.y, vState.z, 1.f));
+	}
+
 
 	void Add_Move(_float3 fMovement)
-{
-	_vector vPos = Get_State(CTransform::STATE_POSITION);
-	_vector vNewPosition = { XMVectorGetX(vPos) + fMovement.x, XMVectorGetY(vPos) + fMovement.y, XMVectorGetZ(vPos) + fMovement.z, 1 };
+	{
+		_vector vPos = Get_State(CTransform::STATE_POSITION);
+		_vector vNewPosition = { XMVectorGetX(vPos) + fMovement.x, XMVectorGetY(vPos) + fMovement.y, XMVectorGetZ(vPos) + fMovement.z, 1 };
 
-	Set_State(STATE_POSITION, vNewPosition);
-}
-	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix) 
+		Set_State(STATE_POSITION, vNewPosition);
+	}
+
+	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix)
 	{
 		_float3 eulerAngles;
 

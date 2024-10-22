@@ -28,7 +28,9 @@ public:
 	void Late_Update(_float fTimeDelta);
 
 	_uint GetSize()
+	{
 		return m_GameObjects.size();
+	}
 
 private:
 	list<class CGameObject*>			m_GameObjects;

@@ -182,39 +182,6 @@ _bool CGameInstance::Mouse_Up(_uint _iButton)
 	return m_pInput_Device->Mouse_Up(_iButton);
 }
 
-
-_bool CGameInstance::Key_Pressing(_uint _iKey)
-{
-	return m_pInput_Device->Key_Pressing(_iKey);
-}
-
-_bool CGameInstance::Key_Down(_uint _iKey)
-{
-	return m_pInput_Device->Key_Down(_iKey);
-}
-
-_bool CGameInstance::Key_Up(_uint _iKey)
-{
-	return m_pInput_Device->Key_Up(_iKey);
-}
-
-_bool CGameInstance::MouseDown(MOUSEKEYSTATE eMouse)
-{
-	return m_pInput_Device->MouseDown(eMouse);
-}
-
-
-_bool CGameInstance::MousePress(MOUSEKEYSTATE eMouse)
-{
-	return m_pInput_Device->MousePress(eMouse);
-}
-
-_bool CGameInstance::MouseUp(MOUSEKEYSTATE eMouse)
-{
-	return m_pInput_Device->MouseUp(eMouse);
-}
-
-
 HRESULT CGameInstance::Change_Level(CLevel* pNewLevel)
 {
 	if (nullptr == m_pLevel_Manager)
@@ -340,15 +307,6 @@ HRESULT CGameInstance::Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair<_
 	return	m_pObject_Manager->Add_Object_Layers_Vector(iLevelIndex, pVector);
 }
 
-CGameObject* CGameInstance::Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex)
-{
-	if (nullptr == m_pObject_Manager)
-		return nullptr;
-
-	return	m_pObject_Manager->Get_GameObject(iLevelIndex, strLayerTag, iIndex);
-}
-
-
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, CComponent* pPrototype)
 {
 	if (nullptr == m_pComponent_Manager)
@@ -372,6 +330,15 @@ _uint CGameInstance::Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag
 
 	return m_pObject_Manager->GetLayerSize(iLevelIndex, strLayerTag);
 }
+
+CGameObject* CGameInstance::Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Get_GameObject(iLevelIndex, strLayerTag, iIndex);
+}
+
 vector<const _wstring*>* CGameInstance::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
 {
 	return m_pComponent_Manager->Find_Prototype_Include_Key(iLevelIndex, strIncludeTag);
