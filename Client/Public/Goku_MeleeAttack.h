@@ -18,7 +18,7 @@ BEGIN(Client)
 // Input 클래스 정의 (방향 + 버튼을 포함)
 class CGoku_MeleeAttack {
 public:
-
+	
 	void Initalize(class CPlay_Goku* pPlayer);
 
 	void Attack_Light();

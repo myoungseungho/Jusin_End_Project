@@ -135,6 +135,7 @@ public:
 
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
 
+
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };

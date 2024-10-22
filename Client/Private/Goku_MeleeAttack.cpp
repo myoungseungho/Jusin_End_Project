@@ -29,6 +29,9 @@
 //vector<CInput> Command_HeavyAttack ={	{MOVEKEY_NEUTRAL, ATTACK_HEAVY}};
 //vector<CInput> Command_SpecialAttack ={	{MOVEKEY_NEUTRAL, ATTACK_SPECIAL}};
 
+
+
+
 void CGoku_MeleeAttack::Initalize(CPlay_Goku* pPlayer)
 {
 	m_pPlayer = pPlayer;
@@ -49,7 +52,7 @@ void CGoku_MeleeAttack::Attack_Light()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_LIGHT1);
-
+	
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1)
@@ -68,7 +71,6 @@ void CGoku_MeleeAttack::Attack_Light()
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1)
 	{
-
 		
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,0.5f);
 		
@@ -80,7 +82,6 @@ void CGoku_MeleeAttack::Attack_Light()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR3,0.5f);
-
 		if (m_pPlayer->Get_fGravityTime() > 0.135)
 		{
 			//m_pPlayer->Set_ForcedGravityTime_LittleUp();
@@ -101,6 +102,8 @@ void CGoku_MeleeAttack::Attack_Light()
 
 void CGoku_MeleeAttack::Attack_Medium()
 {
+
+
 	if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_MEDIUM);
@@ -122,7 +125,6 @@ void CGoku_MeleeAttack::Attack_Medium()
 		{
 			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_MEDIUM, 0.5f);
 			m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_MEDIUM] = false;
-
 		}
 
 	}
@@ -279,11 +281,13 @@ void CGoku_MeleeAttack::Attack_Special()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR);
+	
 
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR,0.5f);
+
 
 	}
 	
@@ -298,21 +302,17 @@ void CGoku_MeleeAttack::Attack_236()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236);
-
 		m_pPlayer->Set_fImpulse(2.f *m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
-
 	} 
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||  *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2  || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3 ||
-
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236,0.5f);
 		m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
-
 
 	}
 	
@@ -320,16 +320,13 @@ void CGoku_MeleeAttack::Attack_236()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_AIR);
-
 		m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
-
 
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_AIR, 0.5f);
-
 		m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
 
@@ -343,6 +340,9 @@ void CGoku_MeleeAttack::Attack_236()
 
 void CGoku_MeleeAttack::Attack_214()
 {
+	
+
+
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_214);
@@ -366,7 +366,6 @@ void CGoku_MeleeAttack::Attack_214()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_214);
-
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
 		m_pPlayer->Set_CurrentAnimationPositionJump(20.f);
@@ -376,7 +375,6 @@ void CGoku_MeleeAttack::Attack_214()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_214, 0.5f, 20.f);
-
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
 		m_pPlayer->Set_ForcedGravityDown();
@@ -406,9 +404,7 @@ void CGoku_MeleeAttack::Attack_236Special()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL);
-
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
-
 
 	} 
 	
@@ -417,7 +413,6 @@ void CGoku_MeleeAttack::Attack_236Special()
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL,3.5f);
-
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 
 	}
@@ -425,7 +420,6 @@ void CGoku_MeleeAttack::Attack_236Special()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR);
-
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 
 	} 
@@ -433,7 +427,6 @@ void CGoku_MeleeAttack::Attack_236Special()
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
-
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 
 	}
@@ -672,17 +665,13 @@ void CGoku_MeleeAttack::Attack_Crouch_Heavy()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_UPPER_AIR);
-
 		m_pPlayer->Set_fImpulse(1.6f * m_pPlayer->Get_iDirection());
-
 
 	} 
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_UPPER_AIR, 0.5f);
-
 		m_pPlayer->Set_fImpulse(1.6f * m_pPlayer->Get_iDirection());
-
 
 	}
 
@@ -699,12 +688,11 @@ void CGoku_MeleeAttack::BackDash()
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_BACK_DASH);
 	}
 
-
 	else if (m_pPlayer->Get_bAirDashEnable() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP))
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_BACK_DASH);
 		m_pPlayer->Set_CurrentAnimationPositionJump(12.f);
-		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (-10.f));
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() *(-10.f));
 
 		m_pPlayer->Set_bAirDashEnable(false);
 		m_pPlayer->Set_ForcedGravityDown();
@@ -720,7 +708,6 @@ void CGoku_MeleeAttack::ForwardDash()
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
 	}
 
-
 	else if (m_pPlayer->Get_bAirDashEnable()  && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP ))
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
@@ -732,5 +719,7 @@ void CGoku_MeleeAttack::ForwardDash()
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
 	}
+
+
 }
 

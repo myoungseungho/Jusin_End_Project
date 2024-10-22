@@ -54,6 +54,8 @@ HRESULT CUIObject::Initialize(void* pArg)
 		}
 	}
 
+	m_bIsActive = FALSE;
+
 	return S_OK;
 }
 
@@ -80,9 +82,9 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		}
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_Z))
+	if (m_pGameInstance->Key_Down(DIK_F4))
 		m_bIsActive = true;
-	if (m_pGameInstance->Key_Down(DIK_X))
+	if (m_pGameInstance->Key_Down(DIK_F5))
 		m_bIsActive = FALSE;
 }
 

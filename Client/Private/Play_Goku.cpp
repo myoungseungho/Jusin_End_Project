@@ -3,8 +3,6 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "UI_Manager.h"
-
 
 
 #include "AttackObject.h"
@@ -32,6 +30,10 @@
 //#define ANIME_JUMP_UP 6;
 //#define ANIME_JUMP_DOWN 7;
 
+
+
+
+
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -57,7 +59,6 @@ HRESULT CPlay_Goku::Initialize_Prototype()
 
 HRESULT CPlay_Goku::Initialize(void* pArg)
 {
-
 
 
 	m_eCharacterIndex = PLAY_GOKU;
@@ -93,6 +94,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	m_iNextAnimation.first = ANIME_IDLE;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -100,7 +102,6 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 		return E_FAIL;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-
 	m_tAttackMap.Initalize(this);
 
 	
@@ -111,11 +112,9 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 
-
-	//CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
-	//pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
-	//pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
+	CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
+	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
+	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 	
 
@@ -185,27 +184,17 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 		std::ios::sync_with_stdio();
 	}
 
+
 	return S_OK;
 }
 
 void CPlay_Goku::Priority_Update(_float fTimeDelta)
 {
 
-	__super::Priority_Update(fTimeDelta);
-
-
-
 }
 
 void CPlay_Goku::Update(_float fTimeDelta)
 {
-	Action_Hit(DIK_0, 0.25f, fTimeDelta);
-	Action_AttBuf(DIK_F4, m_ePlayerSlot, fTimeDelta);
-
-	if (m_pGameInstance->Key_Down(DIK_F3))
-	{
- 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
-	}
 
 	//합치기 전 임시 코드.  적 탐지코드임
 	if (m_pDebugEnemy == nullptr)
@@ -273,6 +262,9 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 
+	
+
+
 	if (m_bAnimationLock == false)
 	{
 
@@ -309,6 +301,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 		}
 		
+
 		Character_Play_Animation(fTimeDelta);
 
 		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
@@ -356,10 +349,14 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		}
 		else
 		{
+			BreakFall_Air();
 
-			//if(m_pGameInstance->Key_Pressing())
+
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex && Get_fHeight() == 0)
 				m_fImpuse = { 0.f,0.f };
+
+
+
 		}
 		Gravity(fTimeDelta);
 
@@ -393,7 +390,6 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			Reset_AttackCount();
 
 			_short MoveKey = 0;
-
 			if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 			{
 				m_pTransformCom->Add_Move({ 0,0.3f,0 });
@@ -416,12 +412,10 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				}
 
 
-
 			}
 
 			else if (m_pGameInstance->Key_Pressing(DIK_S))
 			{
-
 				if (m_pModelCom->m_iCurrentAnimationIndex != m_iForwardDashAnimationIndex)
 				{
 					m_pModelCom->SetUp_Animation(m_iCrouchAnimationIndex, true);
@@ -442,19 +436,16 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 				if (MoveKey == -1)
-
 				{						
 					m_pModelCom->SetUp_Animation(m_iBackWalkAnimationIndex, false);
 
 					m_iNextAnimation.first = m_iIdleAnimationIndex;
-
 
 					m_iNextAnimation.second = 100.f;
 
 				}
 				else if (MoveKey == 1)
 				{
-
 					if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 					{
 						m_pModelCom->SetUp_Animation(m_iForwardDashAnimationIndex, true);
@@ -467,7 +458,6 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				}
 				else
 				{
-
 					if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 					{
 						m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
@@ -481,6 +471,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			}
 
 			
+			
 		}
 	}
 	*/
@@ -488,7 +479,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 	Move(fTimeDelta);
-	Guard_Update();
+	//Guard_Update();
 
 
 	if (m_pGameInstance->Key_Down(DIK_8))
@@ -502,7 +493,6 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_2))
 	{
-
 		m_iAttackStepCount = 0;
 		m_iDebugComoboDamage = 0;
 	}
@@ -512,6 +502,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 	//Gravity(fTimeDelta);
+	
+
 
 	m_pColliderCom->Update();
 
@@ -527,8 +519,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -545,17 +536,17 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
 		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-
 	
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 	
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
-
+	
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
+
 
 	//corlorChange Test
 	//for (size_t i = 0; i < iNumMeshes; i++)
@@ -630,6 +621,7 @@ void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
 }
 
 */
+
 
 void CPlay_Goku::KeyTest()
 {
@@ -917,7 +909,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 1.f * m_iLookDirection,0.3f };
 		Desc.fhitCharacter_Impus = { 1.5f * m_iLookDirection,0.3f };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
@@ -1121,8 +1113,7 @@ CGameObject* CPlay_Goku::Clone(void* pArg)
 	{
 		MSG_BOX(TEXT("Failed to Cloned : CPlay_Goku"));
 		Safe_Release(pInstance);
-
-	} 
+	}
 
 	return pInstance;
 }
@@ -1132,11 +1123,11 @@ void CPlay_Goku::Free()
 	__super::Free();
 
 
-
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
 
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
+
 
 }

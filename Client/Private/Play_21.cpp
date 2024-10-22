@@ -174,7 +174,7 @@ void CPlay_21::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Action_Hit(DIK_F9, 0.25f, fTimeDelta);
+	//Action_Hit(DIK_F9, 0.25f, fTimeDelta);
 
 	InputedCommandUpdate(fTimeDelta);
 	InputCommand();
