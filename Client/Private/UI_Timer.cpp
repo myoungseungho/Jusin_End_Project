@@ -29,7 +29,9 @@ HRESULT CUI_Timer::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(128.f, 64.f, g_iWinSizeX * 0.5f, 90.f);
+	
+
+	__super::Set_UI_Setting(128.f, 64.f, m_vPrevWinSize.x * 0.5f, 90.f, 0.8f);
 
 	return S_OK;
 }

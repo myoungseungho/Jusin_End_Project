@@ -43,7 +43,7 @@ HRESULT CUI_Input_IconPanel::Initialize(void* pArg)
 		m_fPosX += 40;
 	m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 1.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 
 	return S_OK;
 }
@@ -62,7 +62,7 @@ void CUI_Input_IconPanel::Update(_float fTimeDelta)
 	if (fOffSetPosY >= 575)
 		m_bDead = TRUE;
 
-	__super::Set_UI_Setting(45.f * m_iOffsetScaled, 45.f, m_fPosX, fOffSetPosY, 1.f);
+	__super::Set_UI_Setting(45.f * m_iOffsetScaled, 45.f, m_fPosX, fOffSetPosY, 0.9f);
 
 }
 

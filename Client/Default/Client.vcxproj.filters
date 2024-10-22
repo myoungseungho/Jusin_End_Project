@@ -100,6 +100,9 @@
     <Filter Include="02.GameObjects\Test">
       <UniqueIdentifier>{350ab04e-a43c-483b-81fa-68cfecd0c9e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\BackGround\Logo\Mark">
+      <UniqueIdentifier>{8876c639-c45d-46f0-a5a0-ff513b96fef9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IMGUI">
@@ -328,9 +331,6 @@
     </Filter>
     <Filter Include="02.GameObjects\BackGround\Loading\Mark">
       <UniqueIdentifier>{76269d6c-a433-42bf-8f88-0f428eb5dbaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark">
-      <UniqueIdentifier>{854c2ebf-133c-4941-95aa-fdd59e91e589}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\BackGround\Loading\Font">
       <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
@@ -586,12 +586,6 @@
     <ClInclude Include="..\public\Level_Logo.h">
       <Filter>01.Level\01.Logo</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\BackGround.h">
-      <Filter>02.GameObjects\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_Logo.h">
-      <Filter>02.GameObjects\BackGround\Logo</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h">
       <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
     </ClInclude>
@@ -658,11 +652,8 @@
     <ClInclude Include="..\public\UI_TimerPanel.h">
       <Filter>02.GameObjects\UI\Timer\Panel</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_Loading.h">
+    <ClInclude Include="..\public\UI_Loading_BG.h">
       <Filter>02.GameObjects\BackGround\Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_LoadingMark.h">
-      <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_Loading_Font.h">
       <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
@@ -762,6 +753,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Logo_BG.h">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Logo_Mark.h">
+      <Filter>02.GameObjects\BackGround\Logo\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_LoadingMark.h">
+      <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -963,12 +963,6 @@
     <ClCompile Include="..\private\Level_Logo.cpp">
       <Filter>01.Level\01.Logo</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\BackGround.cpp">
-      <Filter>02.GameObjects\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Logo.cpp">
-      <Filter>02.GameObjects\BackGround\Logo</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp">
       <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
     </ClCompile>
@@ -1029,11 +1023,8 @@
     <ClCompile Include="..\private\UI_TimerPanel.cpp">
       <Filter>02.GameObjects\UI\Timer\Panel</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_Loading.cpp">
+    <ClCompile Include="..\private\UI_Loading_BG.cpp">
       <Filter>02.GameObjects\BackGround\Loading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\BackGround\Loading\Mark\UI_LoadingMark</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_Loading_Font.cpp">
       <Filter>02.GameObjects\BackGround\Loading\Font</Filter>
@@ -1125,6 +1116,15 @@
     <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
       <Filter>02.GameObjects\Test</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Logo_BG.cpp">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Logo_Mark.cpp">
+      <Filter>02.GameObjects\BackGround\Logo\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1149,20 +1149,10 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
       <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>
 </Project>

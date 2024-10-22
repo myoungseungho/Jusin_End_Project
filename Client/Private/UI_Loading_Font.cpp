@@ -25,14 +25,16 @@ HRESULT CUI_Loading_Font::Initialize(void* pArg)
 {
 	m_fSizeX = 200.f;
 	m_fSizeY = 50.f;
-	m_fPosX = g_iWinSizeX - 100;
-	m_fPosY = g_iWinSizeY - 100;
+
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+	m_fPosX = m_vPrevWinSize.x - 100;
+	m_fPosY = m_vPrevWinSize.y - 100;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 

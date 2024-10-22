@@ -12,7 +12,7 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
-#include "UI_Loading.h"
+#include "UI_Loading_BG.h"
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 
@@ -49,7 +49,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(4)))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_LOGO)))
 		return E_FAIL;
 
 	return S_OK;
@@ -121,7 +121,7 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 
 	/* For.Prototype_GameObject_UI_Loading */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
-		CUI_Loading::Create(m_pDevice, m_pContext))))
+		CUI_Loading_BG::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 
