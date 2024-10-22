@@ -164,7 +164,6 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
-    <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\Energy_Effect.h" />
     <ClInclude Include="..\Public\Energy_Effect_2p.h" />
     <ClInclude Include="..\public\BackGround.h" />
