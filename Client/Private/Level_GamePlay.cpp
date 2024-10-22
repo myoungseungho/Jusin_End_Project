@@ -59,38 +59,16 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
 		return E_FAIL;
-=======
-	//Ä«¸Ş¶ó »ı¼º
-	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
-		return E_FAIL;
 
-	if (FAILED(Ready_Effect_Manager()))
-		return E_FAIL;
-	
-		//1P
-		CCharacter::Character_DESC CharacterDesc{};
-		CharacterDesc.iTeam = 1;
-		CharacterDesc.ePlayerSlot = CCharacter::LPLAYER1;
->>>>>>> ?ê²©/ìµœì§„??
 
 #pragma endregion
 
 #pragma region Ä³¸¯ÅÍ »çº» °´Ã¼
 
-<<<<<<< HEAD
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CCharacter::LPLAYER1;
-=======
-
-		CharacterDesc.iTeam = 1;
-		CharacterDesc.ePlayerSlot = CCharacter::LPLAYER2;
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-			return E_FAIL;
-
-		m_pUI_Manager->InitUIObject();
->>>>>>> ?ê²©/ìµœì§„??
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;

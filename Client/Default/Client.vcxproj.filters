@@ -157,9 +157,21 @@
     <ClCompile Include="..\Private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClCompile>
-    <Filter Include="02.GameObjects\BackGround\Logo\Mark">
-      <UniqueIdentifier>{8876c639-c45d-46f0-a5a0-ff513b96fef9}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Private\UI_Loading_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Loading_Font.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Logo_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Logo_Mark.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -333,15 +345,6 @@
     <Filter Include="02.GameObjects\UI\Timer\Panel">
       <UniqueIdentifier>{7fb31d51-0692-4b79-856a-d91b455f2f7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\BackGround\Loading">
-      <UniqueIdentifier>{9df6cb54-4d08-480b-aa7d-8ae74b892a55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\BackGround\Loading\Mark">
-      <UniqueIdentifier>{76269d6c-a433-42bf-8f88-0f428eb5dbaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\BackGround\Loading\Font">
-      <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI\FontName">
       <UniqueIdentifier>{c620642a-0cdc-42e8-bdee-14d918ea5b1f}</UniqueIdentifier>
     </Filter>
@@ -375,29 +378,14 @@
     <Filter Include="02.GameObjects\Character\Model_Preview">
       <UniqueIdentifier>{869eb991-d730-43ca-a5ef-564a4f48f386}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround">
-      <UniqueIdentifier>{0dc4ab17-a9f7-4613-b7cc-2f5c966e1562}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Logo">
-      <UniqueIdentifier>{ff16a923-f66c-48dd-b6a7-539888d9a0b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Loading">
-      <UniqueIdentifier>{9df6cb54-4d08-480b-aa7d-8ae74b892a55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Loading\Mark">
-      <UniqueIdentifier>{76269d6c-a433-42bf-8f88-0f428eb5dbaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Loading\Mark\UI_LoadingMark">
-      <UniqueIdentifier>{854c2ebf-133c-4941-95aa-fdd59e91e589}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Loading\Font">
-      <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
       <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\AttackObject">
       <UniqueIdentifier>{c19be185-f15f-4931-907f-1c4f8f917daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround">
+      <UniqueIdentifier>{9534d408-e911-4397-9ffc-f2c67c65b94a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -560,12 +548,6 @@
     <ClInclude Include="..\public\UI_KOFont.h">
       <Filter>02.GameObjects\UI\GameState\Font\KO</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\BackGround.h">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_Logo.h">
-      <Filter>02.GameObjects\UI\BackGround\Logo</Filter>
-</ClInclude>
     <ClInclude Include="..\Public\Level_GamePlay.h">
       <Filter>01.Level\00.GamePlay</Filter>
     </ClInclude>
@@ -604,18 +586,6 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_TimerPanel.h">
       <Filter>02.GameObjects\UI\Timer\Panel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_Loading.h">
-      <Filter>02.GameObjects\UI\BackGround\Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_LoadingMark.h">
-      <Filter>02.GameObjects\UI\BackGround\Loading\Mark\UI_LoadingMark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_Loading_BG.h">
-      <Filter>02.GameObjects\BackGround\Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_Loading_Font.h">
-      <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_FontName.h">
       <Filter>02.GameObjects\UI\FontName</Filter>
@@ -765,14 +735,23 @@
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\AttackObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_Logo_BG.h">
-      <Filter>02.GameObjects\BackGround\Logo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\UI_Logo_Mark.h">
-      <Filter>02.GameObjects\BackGround\Logo\Mark</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_LoadingMark.h">
-      <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Loading_BG.h">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Loading_Font.h">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_LoadingMark.h">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Logo_BG.h">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Logo_Mark.h">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -935,12 +914,6 @@
     <ClCompile Include="..\private\Level_Logo.cpp">
       <Filter>01.Level\01.Logo</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\BackGround.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Logo.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Logo</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\UI_Sub_Chara_Icon_Panel.cpp">
       <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
     </ClCompile>
@@ -973,18 +946,6 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_TimerPanel.cpp">
       <Filter>02.GameObjects\UI\Timer\Panel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Loading.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Loading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Loading\Mark\UI_LoadingMark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Loading_BG.cpp">
-      <Filter>02.GameObjects\BackGround\Loading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Loading_Font.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_FontName.cpp">
       <Filter>02.GameObjects\UI\FontName</Filter>
@@ -1146,12 +1107,6 @@
     </ClInclude>
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\AttackObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Logo_BG.cpp">
-      <Filter>02.GameObjects\BackGround\Logo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\UI_Logo_Mark.cpp">
-      <Filter>02.GameObjects\BackGround\Logo\Mark</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>

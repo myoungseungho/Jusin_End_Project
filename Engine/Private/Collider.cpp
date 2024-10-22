@@ -142,7 +142,7 @@ void CCollider::OnCollisionExit(CCollider* other)
 	if (!m_isColl)
 		m_isColl != m_isColl;
 
-	if (other->m_bDied || m_bDied)
+	if (other->m_bDead || m_bDead)
 		return;
 
 	m_pMineGameObject->OnCollisionExit(other);

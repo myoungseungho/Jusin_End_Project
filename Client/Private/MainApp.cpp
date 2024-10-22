@@ -12,14 +12,6 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
-<<<<<<< HEAD
-
-=======
-#include "UI_Loading_BG.h"
-#include "UI_LoadingMark.h"
-#include "UI_Loading_Font.h"
->>>>>>> 원격/최진영
-
 #include "thread"
 
 CMainApp::CMainApp()
@@ -112,59 +104,7 @@ HRESULT CMainApp::Create_IMGUI_Manager()
 
 HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 {
-<<<<<<< HEAD
 #pragma region ���̴�
-=======
-	//Component_VIBuffer
-
-	/* For.Prototype_Component_VIBuffer_Rect */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
-		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-
-	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_GameObject_UI_Loading */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
-		CUI_Loading_BG::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-
-	/* For.Prototype_Component_Texture_UI_GameStartCircle */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 8))))
-		return E_FAIL;
-
-
-	/* For.Prototype_GameObject_UI_LoadingMark */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
-		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-
-	/* For.Prototype_Component_Texture_UI_LoadingFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/DB_load_00.png")))))
-		return E_FAIL;
-
-
-	/* For.Prototype_GameObject_UI_LoadingFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingFont"),
-		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	//For  Prototype Collision
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
-	//	CCollider_Test::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
-
-	//Component_Shader
-
->>>>>>> 원격/최진영
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxAnimMesh.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))

@@ -2611,7 +2611,6 @@ void CCharacter::Set_Grab(_bool bAir)
 
 
 
-=======
 void CCharacter::Set_bRedHP(_bool bRedHP)
 {
 	if (bRedHP == true)
@@ -2625,7 +2624,6 @@ void CCharacter::Set_bRedHP(_bool bRedHP)
 	 m_tCharacterDesc.bStun = m_bRedHp;
 }
 
->>>>>>> ?�격/최진??
 
 _uint* CCharacter::Get_pAnimationIndex()
 {

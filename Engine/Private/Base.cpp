@@ -15,7 +15,7 @@ _uint CBase::Release()
 	{
 		Free();		
 
-		m_bDied = true;
+		m_bDead = true;
 
 		delete this;
 

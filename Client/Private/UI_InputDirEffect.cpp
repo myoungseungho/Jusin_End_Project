@@ -71,7 +71,7 @@ void CUI_InputDirEffect::Update(_float fTimeDelta)
 	if (m_fDestroyTimer >= 0.25f)
 	{
 		m_fDestroyTimer = 0.f;
-		m_bDead = TRUE;
+		Destory();
 	}
 }
 

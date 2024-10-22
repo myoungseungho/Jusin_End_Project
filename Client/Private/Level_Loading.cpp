@@ -9,7 +9,7 @@
 
 #include "UIObject.h"
 
-#include "UI_Loading.h"
+#include "UI_Loading_BG.h"
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 
@@ -52,7 +52,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 
 	/* For.Prototype_GameObject_UI_Loading */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
-		CUI_Loading::Create(m_pDevice, m_pContext))))
+		CUI_Loading_BG::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_GameStartCircle */
