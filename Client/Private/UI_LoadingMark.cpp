@@ -23,6 +23,10 @@ HRESULT CUI_LoadingMark::Initialize_Prototype()
 
 HRESULT CUI_LoadingMark::Initialize(void* pArg)
 {
+	m_fSizeX = 200.f;
+	m_fSizeY = 200.f;
+	m_fPosX = g_iWinSizeX - 100;
+	m_fPosY = g_iWinSizeY - 100;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

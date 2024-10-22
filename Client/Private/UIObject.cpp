@@ -86,6 +86,11 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		m_bIsActive = true;
 	if (m_pGameInstance->Key_Down(DIK_F5))
 		m_bIsActive = FALSE;
+
+	_float2 vPrevWinSize = { 1280.f, 720.f };
+
+	m_vOffSetWinSize.x = g_iWinSizeX / vPrevWinSize.x;
+	m_vOffSetWinSize.y = g_iWinSizeY / vPrevWinSize.y;
 }
 
 void CUIObject::Update(_float fTimeDelta)

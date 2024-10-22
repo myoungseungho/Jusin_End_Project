@@ -23,6 +23,10 @@ HRESULT CUI_Loading_Font::Initialize_Prototype()
 
 HRESULT CUI_Loading_Font::Initialize(void* pArg)
 {
+	m_fSizeX = 200.f;
+	m_fSizeY = 50.f;
+	m_fPosX = g_iWinSizeX - 100;
+	m_fPosY = g_iWinSizeY - 100;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -30,7 +34,7 @@ HRESULT CUI_Loading_Font::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(200, 50, g_iWinSizeX - 100, g_iWinSizeY - 100, 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
 }
