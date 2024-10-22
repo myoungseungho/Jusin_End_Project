@@ -19,6 +19,7 @@ BEGIN(Renderer)
 class CRenderer final : public CBase
 {
 public:
+						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
 		RG_NONLIGHT, RG_GLOW, RG_BLEND, RG_UI, RG_NODE, RG_END };
@@ -29,7 +30,7 @@ private:
 
 public:
 	HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
+	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, string strName = "");
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	HRESULT Draw(_float fTimeDelta);
 	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
@@ -47,6 +48,7 @@ private:
 	ID3D11DeviceContext*	m_pContext = { nullptr };
 
 	list<class CGameObject*>			m_RenderObjects[RG_END];
+	vector<string>				m_PlayerStrNames;
 	list<class CComponent*>		m_DebugComponent;
 
 	class CRenderInstance* m_pRenderInstance = { nullptr };
@@ -73,8 +75,10 @@ private:
 	HRESULT Render_Blend_Priority(_float fTimeDelta);
 	HRESULT Render_NonBlend(_float fTimeDelta);
 	HRESULT Render_Player(_float fTimeDelta);
-	HRESULT Render_NonBlend_Test(_float fTimeDelta);
-	HRESULT Render_NonBlend_Layer(_float fTimeDelta);
+	HRESULT Render_PlayerLight(_float fTimeDelta, _int iCount);
+	HRESULT Render_PlayerDeferred(_float fTimeDelta);
+	HRESULT Render_NonBlend_Test(_float fTimeDelta); // 디버깅용 피킹
+	HRESULT Render_NonBlend_Layer(_float fTimeDelta);// 디버깅용 피킹
 	HRESULT Render_Lights(_float fTimeDelta);
 	HRESULT Render_Deferred(_float fTimeDelta);
 	HRESULT Render_NonLight(_float fTimeDelta);

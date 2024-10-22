@@ -349,6 +349,9 @@
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Test</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceMeteo.h">
+      <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -521,6 +524,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
       <Filter>02.GameObjects\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceMeteo.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

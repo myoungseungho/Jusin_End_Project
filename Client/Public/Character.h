@@ -483,7 +483,7 @@ protected:
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 
-
+	string m_strName = "";
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

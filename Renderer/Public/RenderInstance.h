@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer.h"
-
+#include "Light_Manager.h"
 BEGIN(Engine)
 class CGameInstance;
 END
@@ -21,7 +21,7 @@ public:
 	HRESULT Render_Engine(_float fTimeDelta);
 
 public: /* For.Renderer */
-	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
+	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, string strName = "");
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
 	void Show_OutLine();
@@ -37,7 +37,7 @@ public: /* For.Target_Manager */
 	HRESULT Copy_RenderTarget(const _wstring& strTargetTag, ID3D11Texture2D* pTexture2D);
 	ID3D11ShaderResourceView* Copy_RenderTarget_SRV(const _wstring& strTargetTag);
 	HRESULT Bind_RT_ShaderResource(class CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag);
-	HRESULT Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
+	_int Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	HRESULT Add_ClientRenderTargetToMRT(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	
 #ifdef _DEBUG
@@ -47,9 +47,10 @@ public:
 #endif
 
 public:/*For.Light_Manager*/
-	const LIGHT_DESC* Get_LightDesc(_uint iLightIndex) const;
+	const LIGHT_DESC* Get_LightDesc(CLight_Manager::LIGHT_TYPE eLightType, _uint iLightIndex, string strName = "") const;
 	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
-	HRESULT Render_Lights(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
+	HRESULT Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc);
+	HRESULT Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer,const string strName = "");
 
 public:/*For.Picking*/
 	_float4 Picked_Position(_bool* pPicked);

@@ -103,7 +103,24 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	m_tAttackMap.Initalize(this);
+	m_strName = "GOKU" + to_string(m_iPlayerTeam);
 
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	
+	LightDesc.vDirection = _float4(-0.5f, -0.2f, 0.5f, 0.f);
+	LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.7f, 0.7f, 0.7f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.pPlayerDirection = &m_iLookDirection;
+	LightDesc.strName = m_strName;
+
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+		return E_FAIL;
+	/*
+	빛 각자 생성해주기 
+	*/
 	
 
 	//m_pModelCom->SetUp_Animation(16, true);
@@ -513,7 +530,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
