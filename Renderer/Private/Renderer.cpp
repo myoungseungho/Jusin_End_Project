@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "GameInstance.h"
 #include "Component.h"
+#include "Light_Manager.h"
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
