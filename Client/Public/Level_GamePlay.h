@@ -22,15 +22,10 @@ private:
 	HRESULT Ready_Layer_Camera(const _wstring& strLayerTag);
 	HRESULT Ready_Lights();
 	HRESULT Ready_Character();
-
 	HRESULT Ready_UIObjects();
 
 private:
 	class CUI_Manager* m_pUI_Manager = { nullptr };
-
-	HRESULT Ready_Effect_Manager();
-
-public:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 
 public:

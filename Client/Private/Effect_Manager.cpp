@@ -971,4 +971,6 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair);
 
 	m_TestEffect.clear();
+
+	CEffect_Manager::Get_Instance()->Destroy_Instance();
 }

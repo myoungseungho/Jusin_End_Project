@@ -46,7 +46,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(4)))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_LOGO)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
@@ -63,7 +63,6 @@ void CMainApp::Update(_float fTimeDelta)
 // 1/50 -> 0.02√  ∞Ì¡§ Update
 void CMainApp::Fixed_Update(_float fTimeDelta)
 {
-
 }
 
 HRESULT CMainApp::Render(_float fTimeDelta)

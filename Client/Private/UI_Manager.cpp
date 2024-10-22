@@ -147,8 +147,8 @@ void CUI_Manager::InitUIObject()
 
 void CUI_Manager::Free()
 {
-	CUI_Manager::Get_Instance()->Destroy_Instance();
 	Safe_Release(m_pGameInstance);
+	CUI_Manager::Get_Instance()->Destroy_Instance();
 
 	__super::Free();
 }

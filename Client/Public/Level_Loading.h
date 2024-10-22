@@ -27,6 +27,8 @@ private:
 	LEVELID				m_eNextLevelID = {};
 	class CLoader*		m_pLoader = { nullptr };
 
+	static _bool m_bIsLevelPrepared;
+
 public:
 	static CLevel_Loading* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID);
 	virtual void Free() override;

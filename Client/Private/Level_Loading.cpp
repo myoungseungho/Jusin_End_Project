@@ -13,6 +13,8 @@
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 
+_bool CLevel_Loading::m_bIsLevelPrepared = false;
+
 CLevel_Loading::CLevel_Loading(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 {
@@ -22,7 +24,6 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 {
 	m_iLevelIndex = LEVEL_LOADING;
 	m_eNextLevelID = eNextLevelID;
-
 
 	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	if (nullptr == m_pLoader)
@@ -41,6 +42,10 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 
 HRESULT CLevel_Loading::Ready_Prototype_Component()
 {
+	if (m_bIsLevelPrepared)
+		return S_OK;
+
+
 	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
@@ -50,7 +55,6 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
 		CUI_Loading::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
 
 	/* For.Prototype_Component_Texture_UI_GameStartCircle */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
@@ -75,6 +79,8 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		return E_FAIL;
 
 #pragma endregion
+
+	m_bIsLevelPrepared = true;
 
 	return S_OK;
 }

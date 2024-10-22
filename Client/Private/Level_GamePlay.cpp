@@ -17,8 +17,8 @@
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
+	, m_pEffect_Manager{CEffect_Manager::Get_Instance()}
 {
-	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CLevel_GamePlay::Initialize()
@@ -29,11 +29,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Main_Camera"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Effect_Manager()))
-		return E_FAIL;
-
+	//빛 준비
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
+
+#pragma region 맵 사본 객체
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
 		return E_FAIL;
@@ -62,6 +62,10 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
 		return E_FAIL;
 
+#pragma endregion
+
+#pragma region 캐릭터 사본 객체
+
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
 	CharacterDesc.iTeam = 1;
@@ -75,8 +79,9 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
-	m_pUI_Manager->InitUIObject();
+#pragma endregion
 
+	//캐릭터 생성 이후 IMGUI_UIMANAGER 초기화 이후 
 	if (FAILED(Ready_UIObjects()))
 		return E_FAIL;
 
@@ -172,6 +177,8 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 HRESULT CLevel_GamePlay::Ready_UIObjects()
 {
+	m_pUI_Manager->InitUIObject();
+
 	CUIObject::UI_DESC tHpDesc = {};
 
 	for (int i = 0; i < 2; ++i)
@@ -314,22 +321,7 @@ HRESULT CLevel_GamePlay::Ready_Character()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;
 
-
 	m_pUI_Manager->InitUIObject();
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Effect_Manager()
-{
-	m_pEffect_Manager = CEffect_Manager::Get_Instance();
-
-	if (m_pEffect_Manager == nullptr)
-		return E_FAIL;
-
-	Safe_AddRef(m_pEffect_Manager);
-
-	m_pEffect_Manager->Initialize();
 
 	return S_OK;
 }
@@ -349,9 +341,6 @@ CLevel_GamePlay* CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCont
 
 void CLevel_GamePlay::Free()
 {
-	m_pEffect_Manager->Free();
-	Safe_Release(m_pEffect_Manager);
-
 	__super::Free();
 
 }
