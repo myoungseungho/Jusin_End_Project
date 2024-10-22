@@ -278,6 +278,8 @@ void CImgui_Manager::Render_EffectAnimationTabs(_float fTimeDelta)
 
 void CImgui_Manager::Free()
 {
+	__super::Free();
+
 	for (auto& iter : m_vecTabs)
 		Safe_Release(iter);
 
@@ -292,6 +294,4 @@ void CImgui_Manager::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pRenderInstance);
-
-	__super::Free();
 }

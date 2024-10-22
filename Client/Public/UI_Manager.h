@@ -30,6 +30,7 @@ private:
 	virtual ~CUI_Manager() = default;
 
 public:
+	void Update(_float fTimeDelta);
 	void UsingStunCheck(_bool bStun) { m_bStun = bStun; }
 	void UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT eSlotID);
 	void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }

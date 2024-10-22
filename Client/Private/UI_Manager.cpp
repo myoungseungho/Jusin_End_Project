@@ -16,6 +16,21 @@ CUI_Manager::CUI_Manager()
 	Safe_AddRef(m_pGameInstance);
 }
 
+void CUI_Manager::Update(_float fTimeDelta)
+{
+	if (m_pGameInstance->Key_Down(DIK_F1))
+	{
+		m_fTotalDuration = 0.f;
+		UsingCreateStartUI();
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_F2))
+	{
+		m_fTotalDuration = 0.f;
+		UsingCreateEndUI();
+	}
+}
+
 void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT eSlotID)
 {
 	m_fDuration = fAttBufDuration;
@@ -24,11 +39,11 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT
 
 	if (eSlotID == CCharacter::LPLAYER1 || eSlotID == CCharacter::LPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::LEFT;
-	else if(eSlotID == CCharacter::RPLAYER1 || eSlotID == CCharacter::RPLAYER2)
+	else if (eSlotID == CCharacter::RPLAYER1 || eSlotID == CCharacter::RPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::RIGHT;
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"),&tAttBufDesc);
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"),&tAttBufDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
 }
 
 void CUI_Manager::UsingComboCount(_uint iComboCnt)
@@ -73,8 +88,8 @@ void CUI_Manager::UsingCreateStartUI()
 }
 
 void CUI_Manager::UsingCreateEndUI()
-{ 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOPanel"), TEXT("Layer_UI_KOFont"));	
+{
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOPanel"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFont"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFontEffect"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOParticle"), TEXT("Layer_UI_KOFont"));
@@ -95,7 +110,7 @@ void CUI_Manager::SKillCount()
 	}
 }
 
-void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY,  _float fSizeRadio)
+void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {
 	if (m_pGameInstance->Get_DIKeyState(DIK_LEFT))
 	{
@@ -142,13 +157,13 @@ void CUI_Manager::InitUIObject()
 			continue;
 
 		m_pPawnArray[eSlot] = dynamic_cast<CCharacter*>(iter);
-	}	
+	}
 }
 
 void CUI_Manager::Free()
 {
 	Safe_Release(m_pGameInstance);
-	CUI_Manager::Get_Instance()->Destroy_Instance();
+	Destroy_Instance();
 
 	__super::Free();
 }

@@ -972,5 +972,5 @@ void CEffect_Manager::Free()
 
 	m_TestEffect.clear();
 
-	CEffect_Manager::Get_Instance()->Destroy_Instance();
+	Destroy_Instance();
 }

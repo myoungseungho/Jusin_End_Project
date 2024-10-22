@@ -17,7 +17,8 @@
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
-	, m_pEffect_Manager{CEffect_Manager::Get_Instance()}
+	, m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
+	, m_pIMGUI_Manager{ CImgui_Manager::Get_Instance() }
 {
 }
 
@@ -81,9 +82,13 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma endregion
 
+#pragma region UI 사본 객체
 	//캐릭터 생성 이후 IMGUI_UIMANAGER 초기화 이후 
 	if (FAILED(Ready_UIObjects()))
 		return E_FAIL;
+#pragma endregion
+
+#pragma region 카메라 포인트 로드
 
 	// 카메라 포인트 로드
 	_wstring cameraFilePath = L"../Bin/CameraPoints.txt";
@@ -107,24 +112,15 @@ HRESULT CLevel_GamePlay::Initialize()
 		mainCamera->ApplyCameraData(cameraSaveData);
 	}
 
+#pragma endregion
+
 	return S_OK;
 }
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Key_Down(DIK_F1))
-	{
-		m_pUI_Manager->m_fTotalDuration = 0.f;
-		m_pUI_Manager->UsingCreateStartUI();
-	}
-
-	if (m_pGameInstance->Key_Down(DIK_F2))
-	{
-		m_pUI_Manager->m_fTotalDuration = 0.f;
-		m_pUI_Manager->UsingCreateEndUI();
-	}
-
-	CImgui_Manager::Get_Instance()->Update(fTimeDelta);
+	m_pUI_Manager->Update(fTimeDelta);
+	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
 }
@@ -133,7 +129,7 @@ HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
 
-	CImgui_Manager::Get_Instance()->Render(fTimeDelta);
+	m_pIMGUI_Manager->Render(fTimeDelta);
 
 	return S_OK;
 }
@@ -150,18 +146,6 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 {
 	LIGHT_DESC			LightDesc{};
 
-
-	//LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
-	////LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
-	//LightDesc.vDirection = _float4(-0.5f, -0.2f, 0.5f, 0.f);
-	//LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
-	//LightDesc.vAmbient = _float4(0.7f, 0.7f, 0.7f, 1.f);
-	//LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
-
-	//if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
-	//	return E_FAIL;
-
-
 	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
 	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
 	LightDesc.vPosition = _float4(30.f, 50.f, 1800.f, 1.f);
@@ -177,6 +161,7 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 HRESULT CLevel_GamePlay::Ready_UIObjects()
 {
+	//UIMANAGER 초기화
 	m_pUI_Manager->InitUIObject();
 
 	CUIObject::UI_DESC tHpDesc = {};
