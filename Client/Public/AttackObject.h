@@ -2,14 +2,12 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
-#include "Collider_Test.h"
 
 #include "AnimationEvent_Defines.h"
 
 BEGIN(Engine)
 class CShader;
 class CModel;
-class CCollider_Test;
 END
 
 BEGIN(Client)
@@ -21,7 +19,6 @@ public:
 
 	typedef struct ATTACK_DESC
 	{
-		CCollider_Test::COLLIDER_DESC ColliderDesc{};
 		//_ushort ihitCharacter_Motion = { 10 };
 		HitMotion ihitCharacter_Motion = { HIT_LIGHT };
 
@@ -63,7 +60,7 @@ public:
 
 private:
 	
-	CCollider_Test*			m_pColliderCom = { nullptr };
+	//CCollider_Test*			m_pColliderCom = { nullptr };
 
 	HitMotion				m_ihitCharacter_Motion = { HIT_LIGHT };
 	AttackGrade				m_eAttackGrade = { GRADE_NORMAL };

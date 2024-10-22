@@ -22,10 +22,6 @@ namespace Client
 	const static enum AttackType { ATTACKTYPE_LOW ,ATTACKTYPE_MIDDLE, ATTACKTYPE_HIGH , ATTACKTYPE_GRAB_GROUND, ATTACKTYPE_GRAB_AIR, ATTACKTYPE_COMMANDGRAB};
 	const static enum AttackColliderResult { RESULT_HIT, RESULT_GUARD, RESULT_MISS, RESULT_DRAW };
 
-
-	const static enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
-
-
 	using Event = list<string>;
 	using FrameEvent_KeyFrame = map<_float, Event>;
 	using FrameEvent_AnimationIndex = map<_int, FrameEvent_KeyFrame>; //애니메이션 인덱스 구분

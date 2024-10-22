@@ -168,7 +168,6 @@ HRESULT CCharacter::Initialize_Prototype()
 
 HRESULT CCharacter::Initialize(void* pArg)
 {
-
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	//m_strModelName = pDesc->strModelName;
 
@@ -201,13 +200,6 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
-
-
-	CTransform* pCameraTransform = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Camera"), m_strTransformTag, 0));
-	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
-	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
-	
 	return S_OK;
 }
 
@@ -1346,10 +1338,10 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 	//공격판정 테스트
 	{
 		CAttacKObject::ATTACK_DESC Desc{};
-		Desc.ColliderDesc.fSizeX = 2.0;
+	/*	Desc.ColliderDesc.fSizeX = 2.0;
 		Desc.ColliderDesc.fSizeY = 2.0f;
 		Desc.ColliderDesc.Offset = { 0.f,0.6f,0.f };
-		Desc.ColliderDesc.pTransform = m_pTransformCom;
+		Desc.ColliderDesc.pTransform = m_pTransformCom;*/
 		Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
 
 		Desc.fhitCharacter_StunTime = 0.6f;
@@ -3133,7 +3125,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 HRESULT CCharacter::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -3158,10 +3150,10 @@ HRESULT CCharacter::Ready_Components()
 	ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
 
 
-	//Com_Collider
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
-		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
-		return E_FAIL;
+	////Com_Collider
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
+	//	TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
+	//	return E_FAIL;
 	
 	return S_OK;
 }
@@ -3214,6 +3206,6 @@ void CCharacter::Free()
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
 
-	Safe_Release(m_pColliderCom);
+	//Safe_Release(m_pColliderCom);
 
 }
