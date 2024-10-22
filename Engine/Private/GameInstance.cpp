@@ -9,6 +9,9 @@
 #include "Collider_Manager.h"
 #include "File_Manager.h"
 #include "ThreadPool.h"
+#include "Frustum.h"
+#include "Font_Manager.h"
+
 IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()
@@ -58,22 +61,33 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 	if (nullptr == m_pFile_Manager)
 		return E_FAIL;
 
+	m_pFrustum = CFrustum::Create();
+	if (nullptr == m_pFrustum)
+		return E_FAIL;
+
+	m_pFont_Manager = CFont_Manager::Create();
+	if (nullptr == m_pFont_Manager)
+		return E_FAIL;
+
 	return S_OK;
 }
 
 void CGameInstance::Update_Engine(_float fTimeDelta)
 {
-	/* 엔진에서 관리하는 객체들 중, 반복적인 갱신이 필요한 객체들이 있다면. */
-	/* 여기에서 갱신을 수행해준다. */	
 	m_pInput_Device->Update();
+
+	//전 프레임에서 삭제 예약한 오브젝트 삭제
+	m_pObject_Manager->Destory_Update();
 
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
 
-	m_pCollider_Manager->Update(fTimeDelta);
+	m_pFrustum->Update();
 
 	m_pObject_Manager->Update(fTimeDelta);
+
+	m_pCollider_Manager->Update(fTimeDelta);
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
@@ -138,21 +152,35 @@ _long CGameInstance::Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState)
 	return m_pInput_Device->Get_DIMouseMove(eMouseMoveState);
 }
 
-_bool CGameInstance::MouseDown(MOUSEKEYSTATE eMouse)
+_bool CGameInstance::Key_Pressing(_uint _iKey)
 {
-	return m_pInput_Device->MouseDown(eMouse);
+	return m_pInput_Device->Key_Pressing(_iKey);
 }
 
-_bool CGameInstance::MousePress(MOUSEKEYSTATE eMouse)
+_bool CGameInstance::Key_Down(_uint _iKey)
 {
-	return m_pInput_Device->MousePress(eMouse);
+	return m_pInput_Device->Key_Down(_iKey);
 }
 
-_bool CGameInstance::MouseUp(MOUSEKEYSTATE eMouse)
+_bool CGameInstance::Key_Up(_uint _iKey)
 {
-	return m_pInput_Device->MouseUp(eMouse);
+	return m_pInput_Device->Key_Up(_iKey);
 }
 
+_bool CGameInstance::Mouse_Pressing(_uint _iButton)
+{
+	return m_pInput_Device->Mouse_Pressing(_iButton);
+}
+
+_bool CGameInstance::Mouse_Down(_uint _iButton)
+{
+	return m_pInput_Device->Mouse_Down(_iButton);
+}
+
+_bool CGameInstance::Mouse_Up(_uint _iButton)
+{
+	return m_pInput_Device->Mouse_Up(_iButton);
+}
 
 HRESULT CGameInstance::Change_Level(CLevel* pNewLevel)
 {
@@ -239,10 +267,21 @@ CComponent* CGameInstance::Get_Component(_uint iLevelIndex, const _wstring& strL
 	return	m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
 }
 
+list<class CGameObject*> CGameInstance::Get_Layer(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	return m_pObject_Manager->Get_Layer(iLevelIndex, strLayerTag);
+}
+
 CGameObject* CGameInstance::Clone_GameObject(const wstring& strPrototypeTag, void* pArg)
 {
 	return m_pObject_Manager->Clone_GameObject(strPrototypeTag, pArg);
 }
+
+void CGameInstance::Destory_Reserve(CGameObject* gameObject)
+{
+	m_pObject_Manager->Destory_Reserve(gameObject);
+}
+
 
 HRESULT CGameInstance::Get_Prototype_Names(vector<string>* pVector)
 {
@@ -268,7 +307,6 @@ HRESULT CGameInstance::Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair<_
 	return	m_pObject_Manager->Add_Object_Layers_Vector(iLevelIndex, pVector);
 }
 
-
 HRESULT CGameInstance::Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, CComponent* pPrototype)
 {
 	if (nullptr == m_pComponent_Manager)
@@ -283,6 +321,22 @@ CComponent* CGameInstance::Clone_Component(_uint iLevelIndex, const _wstring& st
 		return nullptr;
 
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
+}
+
+_uint CGameInstance::Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	return m_pObject_Manager->GetLayerSize(iLevelIndex, strLayerTag);
+}
+
+CGameObject* CGameInstance::Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Get_GameObject(iLevelIndex, strLayerTag, iIndex);
 }
 
 vector<const _wstring*>* CGameInstance::Find_Prototype_Include_Key(_uint iLevelIndex, const _wstring& strIncludeTag)
@@ -328,7 +382,6 @@ void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix 
 HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
 {
 	return m_pThreadPool->Initialize(ThreadCount);
-
 }
 
 _uint CGameInstance::Get_ThreadNumber()
@@ -336,10 +389,16 @@ _uint CGameInstance::Get_ThreadNumber()
 	return m_pThreadPool->Get_ThreadNumber();
 }
 
+void CGameInstance::Get_ParallelVectorsInPlane(_float3& tangent1, _float3& tangent2, _float fov)
+{
+	m_pFrustum->Get_ParallelVectorsInPlane(tangent1, tangent2, fov);
+}
+
 HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, CCollider* pRenderObject)
 {
 	return m_pCollider_Manager->Add_ColliderObject(eRenderGroup, pRenderObject);
 }
+
 
 HRESULT CGameInstance::SaveObjects(const wstring& filename, void* pArg)
 {
@@ -357,12 +416,35 @@ void* CGameInstance::LoadObjects(const wstring& filename)
 	return m_pFile_Manager->LoadObjects(filename);
 }
 
+HRESULT CGameInstance::Save_All_CameraPoints(const wstring& filename, void* pArg)
+{
+	return m_pFile_Manager->Save_All_CameraPoints(filename, pArg);
+}
+
 HRESULT CGameInstance::Save_Effects(wstring& FilePath, void* pArg)
 {
 	if (nullptr == m_pFile_Manager)
 		return E_FAIL;
 
 	return m_pFile_Manager->Save_Effects(FilePath, pArg);
+}
+
+HRESULT CGameInstance::Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg)
+{
+	if (nullptr == m_pFile_Manager)
+		return E_FAIL;
+
+	return m_pFile_Manager->Load_All_CameraPoints(filename, pArg);
+}
+
+HRESULT CGameInstance::Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath)
+{
+	return m_pFont_Manager->Add_Font(pDevice, pContext, strFontTag, pFontFilePath);
+}
+
+HRESULT CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor, _float fRadian, _float2 vPivotPos, _float fScale)
+{
+	return m_pFont_Manager->Draw_Font(strFontTag, pText, vPosition, vFontColor, fRadian, vPivotPos, fScale);
 }
 
 void* CGameInstance::Load_Effects(wstring& FilePath)
@@ -382,6 +464,8 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pInput_Device);
 	Safe_Release(m_pCollider_Manager);
+	Safe_Release(m_pFrustum);
+	Safe_Release(m_pFont_Manager);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }
@@ -389,6 +473,4 @@ void CGameInstance::Release_Engine()
 void CGameInstance::Free()
 {
 	__super::Free();
-
-
 }

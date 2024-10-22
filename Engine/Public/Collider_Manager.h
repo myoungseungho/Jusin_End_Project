@@ -1,16 +1,28 @@
 #pragma once
 
 #include "Base.h"
-#include "Collider.h"
 
 /* 1. 화면에 그려야할 객체들을 그리는 순서대로 보관한다. */
 /* 2. 보관하고 있는 객체들의 렌더함수를 호출한다.(렌더콜) */
 
 BEGIN(Engine)
+
+class CCollider;
+
 class CCollider_Manager final : public CBase
 {
 public:
-	enum COLLIDERGROUP { CG_1P_BODY, CG_1P_SKILL, CG_2P_BODY, CG_2P_SKILL, CG_END };
+	enum COLLIDERGROUP {
+		CG_1P_BODY,
+		CG_1P_Energy_Attack,
+		CG_1P_Ranged_Attack,   // 1P 원거리 공격
+		CG_1P_Melee_Attack,    // 1P 근접 공격
+		CG_2P_BODY,
+		CG_2P_Energy_Attack,
+		CG_2P_Ranged_Attack,   // 2P 원거리 공격
+		CG_2P_Melee_Attack,    // 2P 근접 공격
+		CG_END
+	};
 
 private:
 	CCollider_Manager();
@@ -25,21 +37,33 @@ public:
 
 	_bool IsColliding(CCollider* a, CCollider* b);
 	HRESULT Release_Collider(const CCollider*);
-	_bool IsRayColliding(const _float3& rayOrigin, const _float3& rayDir, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject);
-	_bool isPointInAABB(const _float3& point, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject);
+	HRESULT Destory_ColliderGroup();
+	void	Destory_Reserve(COLLIDERGROUP eRenderGroup);
 
-public:
-	//콜라이더 그룹에 있는 콜라이더 다 삭제
-	HRESULT Clear_ColliderGroup(COLLIDERGROUP eRenderGroup);
+private:
+	void Process_1P_Body_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Body_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Energy_Skill_2P_Body_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+
+	void Process_1P_Ranged_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Ranged_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Ranged_Skill_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Melee_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Body_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Energy_Skill_2P_Ranged_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 
 private:
 	list<CCollider*>			m_Colliders[CG_END];
+	list<COLLIDERGROUP>			m_Destory_Reserve_Collider_Group;
+
 	//m_CollisionHistory: 이전 프레임에서의 충돌 상태를 저장하는 맵입니다.
 	// 키는 두 콜라이더의 포인터를 담은 쌍(pair)이고, 값은 이 쌍이 충돌 중인지 여부를 나타내는 부울 값입니다.
 	map<pair<CCollider*, CCollider*>, _bool> m_CollisionHistory;
 	class CGameInstance* m_pGameInstance = { nullptr };
 
-	//멀티 스레드
 private:
 	void ProcessCollisionResults(_float fTimeDelta);
 private:

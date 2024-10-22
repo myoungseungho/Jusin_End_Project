@@ -61,7 +61,7 @@ vector<const _wstring*>* CComponent_Manager::Find_Prototype_Include_Key(_uint iL
 	m_pIncludeKeys.clear();
 
 	for (const auto& pair : m_pPrototypes[iLevelIndex]) {
-		if (pair.first.find(strIncludeTag) != wstring::npos) { 
+		if (pair.first.find(strIncludeTag) != wstring::npos) {
 			m_pIncludeKeys.emplace_back(&pair.first);
 		}
 	}
@@ -109,9 +109,6 @@ void CComponent_Manager::Free()
 	}
 
 	Safe_Delete_Array(m_pPrototypes);
-
-	m_pIncludeKeys.clear();
-
 }
 
 

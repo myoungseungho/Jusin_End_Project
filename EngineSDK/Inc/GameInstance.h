@@ -20,18 +20,22 @@ public:
 	HRESULT Render_Engine(_float fTimeDelta);
 	HRESULT Clear_LevelResources(_uint iLevelIndex);
 
-public: /* For.Graphic_Device */		
-	HRESULT Clear_BackBuffer_View(_float4 vClearColor);	
-	HRESULT Clear_DepthStencil_View();	
+public: /* For.Graphic_Device */
+	HRESULT Clear_BackBuffer_View(_float4 vClearColor);
+	HRESULT Clear_DepthStencil_View();
 	HRESULT Present();
 
 public: /* For.Input_Device */
 	_byte	Get_DIKeyState(_ubyte byKeyID);
 	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouseKeyState);
 	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveState);
-	_bool MouseDown(MOUSEKEYSTATE eMouse);
-	_bool MousePress(MOUSEKEYSTATE eMouse);
-	_bool MouseUp(MOUSEKEYSTATE eMouse);
+	_bool Key_Pressing(_uint _iKey);
+	_bool Key_Down(_uint _iKey);
+	_bool Key_Up(_uint _iKey);
+	_bool Mouse_Pressing(_uint _iButton);
+	_bool Mouse_Down(_uint _iButton);
+	_bool Mouse_Up(_uint _iButton);
+
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
 	_uint Get_CurrentLevel_Index();
@@ -50,12 +54,17 @@ public: /* For.Object_Manager */
 	HRESULT Add_Prototype(const wstring& strPrototypeTag, class CGameObject* pPrototype);
 	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg = nullptr);
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
+	class list<class CGameObject*> Get_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+	void Destory_Reserve(class CGameObject* gameObject);
+
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
 
 	HRESULT Get_Prototype_Names(vector<string>* pVector);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < string, list<CGameObject*>>>*);
 	HRESULT Add_Object_Layers_Vector(_uint iLevelIndex, vector<pair < _wstring, list<CGameObject*>>>*);
+	_uint Get_LayerSize(_uint iLevelIndex, const wstring& strLayerTag);
+	class CGameObject* Get_GameObject(_uint iLevelIndex, const _wstring& strLayerTag, _uint iIndex = 0);
 
 public: /* For.Component_Manager */
 	HRESULT Add_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag, class CComponent* pPrototype);
@@ -85,30 +94,42 @@ public: /* For.ThreadPool */
 			throw runtime_error("ThreadPool is not initialized.");
 	}
 
+public:/*For. Frustum*/
+	void Get_ParallelVectorsInPlane(_float3& tangent1, _float3& tangent2, _float fov);
+
+
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
 
 public: /* For.FileManager */
 	HRESULT SaveObjects(const wstring& filename, void* pArg);
 	void* LoadObjects(const wstring& filename);
+	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
+	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
 	HRESULT Save_Effects(wstring& FilePath, void* pArg);
 	void* Load_Effects(wstring& FilePath);
 
+public: /* For.Font_Manager */
+	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);
+	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
+
 private:
-	class CGraphic_Device*				m_pGraphic_Device = { nullptr };
-	class CInput_Device*				m_pInput_Device = { nullptr };
-	class CLevel_Manager*				m_pLevel_Manager = { nullptr };
-	class CTimer_Manager*				m_pTimer_Manager = { nullptr };
-	class CObject_Manager*				m_pObject_Manager = { nullptr };
-	class CComponent_Manager*			m_pComponent_Manager = { nullptr };
-	class CCollider_Manager*			m_pCollider_Manager = { nullptr };
-	class CPipeLine*					m_pPipeLine = { nullptr };
-	class CThreadPool*					m_pThreadPool = { nullptr };
-	class CFile_Manager*				m_pFile_Manager = { nullptr };
-	
+	class CGraphic_Device* m_pGraphic_Device = { nullptr };
+	class CInput_Device* m_pInput_Device = { nullptr };
+	class CLevel_Manager* m_pLevel_Manager = { nullptr };
+	class CTimer_Manager* m_pTimer_Manager = { nullptr };
+	class CObject_Manager* m_pObject_Manager = { nullptr };
+	class CComponent_Manager* m_pComponent_Manager = { nullptr };
+	class CCollider_Manager* m_pCollider_Manager = { nullptr };
+	class CPipeLine* m_pPipeLine = { nullptr };
+	class CThreadPool* m_pThreadPool = { nullptr };
+	class CFile_Manager* m_pFile_Manager = { nullptr };
+	class CFrustum* m_pFrustum = { nullptr };
+	class CFont_Manager* m_pFont_Manager = { nullptr };
+
 public:
 	void Release_Engine();
-	
+
 	virtual void Free() override;
 
 };

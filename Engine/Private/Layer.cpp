@@ -6,7 +6,7 @@ CLayer::CLayer()
 {
 }
 
-CComponent * CLayer::Get_Component(const _wstring & strComponentTag, _uint iIndex)
+CComponent* CLayer::Get_Component(const _wstring& strComponentTag, _uint iIndex)
 {
 	auto	iter = m_GameObjects.begin();
 
@@ -19,7 +19,7 @@ CComponent * CLayer::Get_Component(const _wstring & strComponentTag, _uint iInde
 	return (*iter)->Get_Component(strComponentTag);
 }
 
-HRESULT CLayer::Add_GameObject(CGameObject * pGameObject)
+HRESULT CLayer::Add_GameObject(CGameObject* pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -40,25 +40,81 @@ HRESULT CLayer::Add_List(list<CGameObject*>* pList)
 	return S_OK;
 }
 
+
+CGameObject* CLayer::Get_GameObject(_uint iIndex)
+{
+	auto iter = m_GameObjects.begin();
+
+	// 유효한 오브젝트만 세기 위한 카운터
+	size_t validIndex = 0;
+
+	while (iter != m_GameObjects.end())
+	{
+		// 현재 오브젝트가 유효하지 않다면 건너뛰기
+		if ((*iter)->m_bDied)
+		{
+			++iter;
+			continue;
+		}
+
+		// 유효한 오브젝트를 찾은 경우
+		if (validIndex == iIndex)
+		{
+			return (*iter);  // 유효한 오브젝트 반환
+		}
+
+		// 유효한 오브젝트일 때만 인덱스를 증가시킴
+		++validIndex;
+		++iter;
+	}
+
+	// 유효한 오브젝트를 찾지 못하면 nullptr 반환
+	return nullptr;
+}
+
 void CLayer::Priority_Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Priority_Update(fTimeDelta);
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDied)  // 객체가 사망 상태라면
+			it = m_GameObjects.erase(it);  // 목록에서 삭제 후 iterator 업데이트
+		else
+		{
+			(*it)->Priority_Update(fTimeDelta);  // 업데이트 호출
+			++it;  // 다음 객체로 이동
+		}
+	}
 }
 
 void CLayer::Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Update(fTimeDelta);
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDied)
+			it = m_GameObjects.erase(it);
+		else
+		{
+			(*it)->Update(fTimeDelta);
+			++it;
+		}
+	}
 }
 
 void CLayer::Late_Update(_float fTimeDelta)
 {
-	for (auto& pGameObject : m_GameObjects)
-		pGameObject->Late_Update(fTimeDelta);
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDied)
+			it = m_GameObjects.erase(it);
+		else
+		{
+			(*it)->Late_Update(fTimeDelta);
+			++it;
+		}
+	}
 }
 
-CLayer * CLayer::Create()
+CLayer* CLayer::Create()
 {
 	return new CLayer();
 }

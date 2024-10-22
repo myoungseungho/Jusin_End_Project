@@ -3,17 +3,19 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "Imgui_Manager.h"
-CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CGameObject{ pDevice, pContext }
-{
+#include "UI_Manager.h"
 
+CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CPawn{ pDevice, pContext }
+
+{
+	Safe_AddRef(m_pUI_Manager);
 }
 
 CPlayer::CPlayer(const CPlayer& Prototype)
-	: CGameObject{ Prototype }
+	: CPawn{ Prototype }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CPlayer::Initialize_Prototype()
@@ -29,30 +31,58 @@ HRESULT CPlayer::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(5.f, 0.f, 0.f, 1.f));
+
 	m_pModelCom->SetUp_Animation(16, true);
+	m_iHp = 100;
+
+	m_ePawnID = GOGU;
+
 
 	return S_OK;
 }
 
 void CPlayer::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
+
 
 void CPlayer::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
+	Action_Hit(DIK_U, 0.25f,fTimeDelta);
+	Action_AttBuf(DIK_V, m_ePlayerSlot,fTimeDelta);
+
+	if (m_pGameInstance->Key_Down(DIK_L))
+	{
+		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+	}
+
+	//게임시작 UI 생성
+	if (m_pGameInstance->Key_Down(DIK_Y))
+	{
+		m_pUI_Manager->m_fTotalDuration = 0.f;
+		m_pUI_Manager->UsingCreateStartUI();
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_N))
+	{
+		m_pUI_Manager->m_fTotalDuration = 0.f;
+		m_pUI_Manager->UsingCreateEndUI();
+	}
+
+
 	m_pModelCom->Play_Animation(fTimeDelta);
 
-	m_pColliderCom->Update(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)
 {
-	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	__super::Late_Update(fTimeDelta);
 
-#ifdef _DEBUG
-	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-#endif
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CPlayer::Render(_float fTimeDelta)
@@ -64,13 +94,9 @@ HRESULT CPlayer::Render(_float fTimeDelta)
 
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
-		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
 		if (FAILED(m_pShaderCom->Begin(0)))
@@ -83,44 +109,18 @@ HRESULT CPlayer::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CPlayer::OnCollisionEnter(CCollider* other, _float fTimeDelta)
-{
-	int a = 3;
-}
-
-void CPlayer::OnCollisionStay(CCollider* other, _float fTimeDelta)
-{
-	int a = 3;
-}
-
-void CPlayer::OnCollisionExit(CCollider* other)
-{
-	int a = 3;
-}
-
 HRESULT CPlayer::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
-
-	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
-
-	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
-	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
-	BoundingDesc.pMineGameObject = this;
-
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &BoundingDesc)))
-		return E_FAIL;
-
-	m_pGameInstance->Add_ColliderObject(CCollider_Manager::CG_2P_BODY, m_pColliderCom);
 
 	return S_OK;
 }
@@ -169,8 +169,7 @@ void CPlayer::Free()
 {
 	__super::Free();
 
-
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
-	Safe_Release(m_pColliderCom);
+
 }

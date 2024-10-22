@@ -97,6 +97,7 @@ namespace Engine
 		static const unsigned int					iNumElements = { 6 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
+#pragma region 명승호
 
 	//파일 저장 구조체
 	struct FILEDATA
@@ -112,6 +113,59 @@ namespace Engine
 		_float3 scale;
 	};
 
+#pragma region 카메라
+
+
+	//파일매니저에서 저장을 해야 하는 구조체는 여기 있어야 한다.
+	// 카메라 포인트 구조체
+	struct CameraPoint {
+		//포지션
+		_float3 position = {};
+
+		//회전 쿼터니언
+		_float4 rotation = {};
+
+		_float duration; // 다음 포인트까지 이동 시간
+		_int interpolationType; //보간 타입
+
+		const _float4x4* pWorldFloat4x4;
+		// Damping Mode에서 사용되는 계수
+		_float damping = { 1.f }; // 0.0f ~ 2.0f (조절 가능한 범위)
+		_bool hasWorldFloat4x4 = { true };
+	};
+
+	struct CameraSaveData {
+		// 모델별 스킬, 애니메이션, 포인트를 저장하는 구조체
+
+		struct ModelData 
+		{
+			_int modelID;
+			struct SkillData {
+				string skillName;
+				struct AnimationData {
+					string  animationName;
+					vector<CameraPoint> points;
+				};
+				vector<AnimationData> animations;
+			};
+			vector<SkillData> skills;
+		};
+
+		vector<ModelData> models;
+	};
+
+	//왜 extern이 필요할까?
+	//struct나 enum은 타입을 정의한다. 메모리를 즉시 할당 안하고 형식만 정의한다.
+	//unordered_map은 런타임에 메모리를 할당해야 한다.
+	//C++에서는 전역 객체를 여러 소스 파일에서 공유하려면, 한 곳에만 정의하고 나머지 파일에서는 선언만 해야 합니다.
+	//extern 키워드는 "이 변수의 정의는 다른 소스 파일에 있다"는 의미로 사용됩니다.
+
+	extern unordered_map<_int, _wstring> modelIDToString;
+	extern unordered_map<_wstring, _int> stringToModelID;
+
+#pragma endregion
+
+#pragma region 이펙트
 	struct EFFECT_KEYFRAME_DATA
 	{
 		_uint keyFrameNumber;
@@ -151,7 +205,8 @@ namespace Engine
 		_int iNumEffect;
 		vector<EFFECT_DATA> effects;
 	};
-
+#pragma endregion
+	
 
 #pragma region 바이너리
 	struct BoneWeight {
@@ -207,5 +262,5 @@ namespace Engine
 	};
 #pragma endregion
 
-
+#pragma endregion
 }

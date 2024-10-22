@@ -12,6 +12,7 @@ CCollider_Manager::CCollider_Manager()
 
 void CCollider_Manager::Update(_float fTimeDelta)
 {
+	Destory_ColliderGroup();
 	Check_Collision(fTimeDelta);
 }
 
@@ -33,6 +34,14 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	// 이전 프레임의 충돌 결과 초기화
 	m_CollisionResults.clear();
 
+	// 모든 콜라이더의 m_isColl 플래그를 false로 초기화
+	for (auto& group : m_Colliders)
+	{
+		for (auto& collider : group)
+			collider->m_isColl = false;
+	}
+
+
 	// 충돌 쌍 생성
 	vector<pair<CCollider*, CCollider*>> collisionPairs;
 
@@ -49,17 +58,34 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 	AddCollisionPairs(CG_1P_BODY, CG_2P_BODY);
 
 	// 1P_BODY vs 2P_SKILL
-	AddCollisionPairs(CG_1P_BODY, CG_2P_SKILL);
+	AddCollisionPairs(CG_1P_BODY, CG_2P_Energy_Attack);
 
-	// 2P_BODY vs 1P_SKILL
-	AddCollisionPairs(CG_2P_BODY, CG_1P_SKILL);
+	// 1P_SKILL vs 2P_BODY
+	AddCollisionPairs(CG_1P_Energy_Attack, CG_2P_BODY);
 
 	// 1P_SKILL vs 2P_SKILL
-	AddCollisionPairs(CG_1P_SKILL, CG_2P_SKILL);
+	AddCollisionPairs(CG_1P_Energy_Attack, CG_2P_Energy_Attack);
+
+	// 1P_RANGED_Attack vs 2P_Body
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_BODY);
+
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_Energy_Attack);
+
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_Ranged_Attack);
+
+	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_BODY);
+
+	AddCollisionPairs(CG_1P_BODY, CG_2P_Ranged_Attack);
+
+	AddCollisionPairs(CG_1P_Energy_Attack, CG_2P_Ranged_Attack);
+
+	AddCollisionPairs(CG_1P_BODY, CG_2P_Melee_Attack);
+
+	// 1P_MELEE_ATTACK vs 2P_MELL_ATTACK
+	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_Melee_Attack);
 
 	// 시간 측정 시작
 	auto startTime = std::chrono::high_resolution_clock::now();
-
 
 	// 스레드풀을 사용하여 작업 분할 및 충돌 검사 수행
 	size_t numThreads = m_pGameInstance->Get_ThreadNumber();
@@ -71,7 +97,9 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 
 	for (size_t t = 0; t < numThreads; ++t) {
 		size_t startIdx = t * pairsPerThread;
-		if (startIdx >= totalPairs) break;
+		if (startIdx >= totalPairs)
+			break;
+
 		size_t endIdx = min(startIdx + pairsPerThread, totalPairs);
 
 		// 각 스레드가 처리할 충돌 쌍 부분 벡터 생성
@@ -119,31 +147,259 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 }
 
 
+//충돌 결과 처리
 void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 {
-	// 현재 프레임의 충돌 상태 저장
-	map<pair<CCollider*, CCollider*>, bool> currentCollisions;
+	map<pair<CCollider*, CCollider*>, _bool> currentCollisions;
 
+	// 그룹별로 충돌 쌍을 저장하는 컨테이너
+	// 한번만 처리하기 때문에
+	vector<pair<CCollider*, CCollider*>> Energy_1P_Skill_VS_Energy_2P_Skill_Collisions;
+	vector<pair<CCollider*, CCollider*>> Energy_1P_Skill_VS_Body_2P_Collisions;
+	vector<pair<CCollider*, CCollider*>> Body_1P_VS_Energy_2P_Skill_Collisions;
+
+	vector<pair<CCollider*, CCollider*>> Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions;
+	vector<pair<CCollider*, CCollider*>> Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions;
+
+
+	// 각 스레드에서 취합한 충돌 결과가 있다면 m_CollisionResults에 저장
 	for (const auto& pair : m_CollisionResults) {
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
 
-		auto key = make_pair(colliderA, colliderB);
-		currentCollisions[key] = true;
+		//충돌 처리 완료
+		colliderA->m_isColl = true;
+		colliderB->m_isColl = true;
 
-		if (m_CollisionHistory.find(key) == m_CollisionHistory.end() || !m_CollisionHistory[key]) {
-			// 새로운 충돌 시작
-			colliderA->OnCollisionEnter(colliderB, fTimeDelta);
-			colliderB->OnCollisionEnter(colliderA, fTimeDelta);
+		// 조건을 bool 변수로 저장
+		_bool is_1P_Body_Vs_2P_Energy_Skill = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
+		_bool is_1P_Body_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is_1P_Energy_Skill_Vs_2P_Energy_Skill = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
+		_bool is_1P_Energy_Skill_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
+
+		_bool is_1P_Ranged_Attack_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is_1P_Ranged_Attack_Vs_2P_Energy_Skill = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
+		_bool is_1P_Ranged_Attack_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Melee_Attack_Vs_2P_Body = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_BODY);
+		_bool is_1P_Body_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Energy_Skill_Vs_2P_Ranged_Attack = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Body_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
+		_bool is_1P_Melee_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
+
+		// 충돌 그룹에 따른 처리
+		if (is_1P_Body_Vs_2P_Energy_Skill)
+		{
+			//1P_Body VS 2P_Skill
+			Body_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
 		}
-		else {
-			// 충돌 지속
-			colliderA->OnCollisionStay(colliderB, fTimeDelta);
-			colliderB->OnCollisionStay(colliderA, fTimeDelta);
+
+		if (is_1P_Body_Vs_2P_Body)
+		{
+			//1P_Body VS 2P_Body
+			Process_1P_Body_2P_Body(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Energy_Skill_Vs_2P_Energy_Skill)
+		{
+			//1P_Skill VS 2P_Skill
+			Energy_1P_Skill_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
+		if (is_1P_Energy_Skill_Vs_2P_Body)
+		{
+			//1P_Skill VS 2P_Body
+			Energy_1P_Skill_VS_Body_2P_Collisions.push_back(pair);
+		}
+
+		if (is_1P_Ranged_Attack_Vs_2P_Body)
+		{
+			Process_1P_Ranged_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Ranged_Attack_Vs_2P_Energy_Skill)
+		{
+			Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
+		if (is_1P_Ranged_Attack_Vs_2P_Ranged_Attack)
+		{
+			Process_1P_Ranged_Skill_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Attack_Vs_2P_Body)
+		{
+			Process_1P_Melee_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Body_Vs_2P_Ranged_Attack)
+		{
+			Process_1P_Body_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Energy_Skill_Vs_2P_Ranged_Attack)
+		{
+			Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions.push_back(pair);
+		}
+
+		if (is_1P_Body_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Body_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Melee_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
 		}
 	}
 
-	// 이전 프레임에서는 충돌했지만 현재 프레임에서는 충돌하지 않는 경우 처리
+	// 각 그룹별로 한 번만 처리
+	if (!Energy_1P_Skill_VS_Energy_2P_Skill_Collisions.empty())
+	{
+		Process_1P_Energy_Skill_2P_Energy_Skill_Group(Energy_1P_Skill_VS_Energy_2P_Skill_Collisions, fTimeDelta, currentCollisions);
+	}
+
+	// 각 그룹별로 한 번만 처리
+	if (!Body_1P_VS_Energy_2P_Skill_Collisions.empty())
+	{
+		Process_1P_Body_2P_Energy_Skill_Group(Body_1P_VS_Energy_2P_Skill_Collisions, fTimeDelta, currentCollisions);
+	}
+
+	if (!Energy_1P_Skill_VS_Body_2P_Collisions.empty())
+	{
+		Process_1P_Energy_Skill_2P_Body_Group(Energy_1P_Skill_VS_Body_2P_Collisions, fTimeDelta, currentCollisions);
+	}
+
+	if (!Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions.empty())
+	{
+		Process_1P_Ranged_Skill_2P_Energy_Skill_Group(Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions, fTimeDelta, currentCollisions);
+	}
+
+	if (!Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions.empty())
+	{
+		Process_1P_Energy_Skill_2P_Ranged_Skill_Group(Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions, fTimeDelta, currentCollisions);
+	}
+
+	// 충돌 히스토리 업데이트
+	m_CollisionHistory = currentCollisions;
+}
+
+
+void CCollider_Manager::Process_1P_Body_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+}
+
+void CCollider_Manager::Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+
+	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
+	Destory_Reserve(CG_1P_Energy_Attack);
+	Destory_Reserve(CG_2P_Energy_Attack);
+}
+
+void CCollider_Manager::Process_1P_Body_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+
+	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
+	Destory_Reserve(CG_2P_Energy_Attack);
+}
+
+void CCollider_Manager::Process_1P_Energy_Skill_2P_Body_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+
+	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
+	Destory_Reserve(CG_1P_Energy_Attack);
+}
+
+void CCollider_Manager::Process_1P_Ranged_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
 		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
 			pair.first.first->OnCollisionExit(pair.first.second);
@@ -151,17 +407,199 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		}
 	}
 
-	// 충돌 히스토리 업데이트
-	m_CollisionHistory = currentCollisions;
+	Destory_Reserve(CG_1P_Ranged_Attack);
 }
+
+void CCollider_Manager::Process_1P_Ranged_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+
+	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
+	Destory_Reserve(CG_2P_Energy_Attack);
+	Destory_Reserve(CG_1P_Ranged_Attack);
+}
+
+void CCollider_Manager::Process_1P_Ranged_Skill_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+
+	Destory_Reserve(CG_1P_Ranged_Attack);
+	Destory_Reserve(CG_2P_Ranged_Attack);
+}
+
+void CCollider_Manager::Process_1P_Melee_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+
+	Destory_Reserve(CG_1P_Melee_Attack);
+}
+
+void CCollider_Manager::Process_1P_Body_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+
+	Destory_Reserve(CG_2P_Ranged_Attack);
+}
+
+void CCollider_Manager::Process_1P_Energy_Skill_2P_Ranged_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+
+	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
+	Destory_Reserve(CG_1P_Energy_Attack);
+	Destory_Reserve(CG_2P_Ranged_Attack);
+}
+
+void CCollider_Manager::Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+
+	Destory_Reserve(CG_2P_Melee_Attack);
+}
+
+void CCollider_Manager::Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+
+	Destory_Reserve(CG_1P_Melee_Attack);
+	Destory_Reserve(CG_2P_Melee_Attack);
+}
+
 
 _bool CCollider_Manager::IsColliding(CCollider* _pSourCollider, CCollider* _pDestCollider)
 {
-	//SourCollider와 DestCollider가 충돌하면 DestCollider도 충돌하게
 	_bool isCol = _pSourCollider->isCollision(_pDestCollider);
-	_pDestCollider->m_isColl = isCol;
 
-	return _pSourCollider->isCollision(_pDestCollider);
+	return isCol;
 }
 
 HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
@@ -198,48 +636,28 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 	return E_FAIL; // 해당 collider를 찾지 못함
 }
 
-_bool CCollider_Manager::IsRayColliding(const _float3& rayOrigin, const _float3& rayDir, COLLIDERGROUP eColliderGroup, CGameObject** pHitObject)
+HRESULT CCollider_Manager::Destory_ColliderGroup()
 {
-	if (eColliderGroup >= CG_END)
-		return false;
-
-	for (auto& collider : m_Colliders[eColliderGroup])
+	for (auto& iter : m_Destory_Reserve_Collider_Group)
 	{
-		if (collider->isRayCollision(rayOrigin, rayDir))
-		{
-			*pHitObject = collider->GetMineGameObject(); // Assuming the collider has a method to get its owner (the game object)
-			return true;
-		}
+		for (auto& iter : m_Colliders[iter])
+			Safe_Release(iter);
+
+		m_Colliders[iter].clear();
 	}
-	return false;
-}
 
-_bool CCollider_Manager::isPointInAABB(const _float3& point, COLLIDERGROUP eColliderGroup, class CGameObject** pHitObject)
-{
-	if (eColliderGroup >= CG_END)
-		return false;
-
-	for (auto& collider : m_Colliders[eColliderGroup])
-	{
-		if (collider->isPointInAABB(point))
-		{
-			*pHitObject = collider->GetMineGameObject(); // Assuming the collider has a method to get its owner (the game object)
-			return true;
-		}
-	}
-	return false;
-}
-
-
-HRESULT CCollider_Manager::Clear_ColliderGroup(COLLIDERGROUP eRenderGroup)
-{
-	if ( eRenderGroup >= CG_END)
-		return E_FAIL;
-
-	for (auto& iter : m_Colliders[eRenderGroup])
-		Safe_Release(iter);
-
+	m_Destory_Reserve_Collider_Group.clear();
 	return S_OK;
+}
+
+void CCollider_Manager::Destory_Reserve(COLLIDERGROUP eRenderGroup)
+{
+	// 리스트에 이미 존재하는지 확인
+	if (find(m_Destory_Reserve_Collider_Group.begin(), m_Destory_Reserve_Collider_Group.end(), eRenderGroup) == m_Destory_Reserve_Collider_Group.end())
+	{
+		// 존재하지 않으면 추가
+		m_Destory_Reserve_Collider_Group.push_back(eRenderGroup);
+	}
 }
 
 

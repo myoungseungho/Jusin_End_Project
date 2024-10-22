@@ -2,14 +2,12 @@
 
 #include "Texture.h"
 #include "Transform.h"
-#include "VIBuffer_Rect.h"
-//#include "VIBuffer_Cube.h"
-//#include "VIBuffer_Terrain.h"
-// #include "Collider.h"
 #include "Component.h"
 #include "Model.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "Collider_Test.h"
+#include "VIBuffer_Rect.h"
 #include "Bounding_Sphere.h"
 #include "Bounding_AABB.h"
 #include "Bounding_OBB.h"
@@ -36,7 +34,6 @@ private:
 	_uint										m_iNumLevels = { 0 };
 	map<const _wstring, class CComponent*>*		m_pPrototypes = { nullptr };
 	vector<const _wstring*> m_pIncludeKeys;
-
 private:
 	class CComponent* Find_Prototype(_uint iLevelIndex, const _wstring& strPrototypeTag);
 

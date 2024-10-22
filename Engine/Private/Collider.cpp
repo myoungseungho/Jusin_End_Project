@@ -20,6 +20,7 @@ CCollider::CCollider(const CCollider& Prototype)
 	, m_pBatch{ Prototype.m_pBatch }
 	, m_pEffect{ Prototype.m_pEffect }
 	, m_pInputLayout{ Prototype.m_pInputLayout }
+	, m_isColl{ Prototype.m_isColl }
 #endif
 {
 #ifdef _DEBUG
@@ -44,6 +45,7 @@ HRESULT CCollider::Initialize_Prototype(TYPE eColliderType)
 
 	if (FAILED(m_pDevice->CreateInputLayout(VertexPositionColor::InputElements, VertexPositionColor::InputElementCount, pShaderByteCode, iShaderByteCodeLength, &m_pInputLayout)))
 		return E_FAIL;
+
 #endif
 	return S_OK;
 }
@@ -52,6 +54,7 @@ HRESULT CCollider::Initialize(void* pArg)
 {
 	CBounding::BOUNDING_DESC* pDesc = static_cast<CBounding::BOUNDING_DESC*>(pArg);
 	m_pMineGameObject = pDesc->pMineGameObject;
+	m_ColliderGroup = pDesc->colliderGroup;
 
 	if (m_pMineGameObject == nullptr)
 		return E_FAIL;
@@ -61,7 +64,6 @@ HRESULT CCollider::Initialize(void* pArg)
 	{
 	case TYPE_SPHERE:
 		m_pBounding = CBounding_Sphere::Create(m_pDevice, m_pContext, pDesc);
-
 		break;
 	case TYPE_AABB:
 		m_pBounding = CBounding_AABB::Create(m_pDevice, m_pContext, pDesc);
@@ -106,30 +108,11 @@ HRESULT CCollider::Render(_float fTimeDelta)
 
 _bool CCollider::isCollision(CCollider* pTargetCollider)
 {
-	m_isColl = false;
+	_bool isCol = m_pBounding->isCollision(pTargetCollider->m_eColliderType, pTargetCollider->m_pBounding);
 
-	m_isColl = m_pBounding->isCollision(pTargetCollider->m_eColliderType, pTargetCollider->m_pBounding);
-
-	return m_isColl;
+	return isCol;
 }
 
-_bool CCollider::isRayCollision(const _float3& rayOrigin, const _float3& rayDir)
-{
-	m_isColl = false;
-
-	m_isColl = m_pBounding->isRayCollision(rayOrigin, rayDir);
-
-	return m_isColl;
-}
-
-_bool CCollider::isPointInAABB(const _float3& point)
-{
-	m_isColl = false;
-
-	m_isColl = m_pBounding->isPointInAABB(point);
-
-	return m_isColl;
-}
 
 BoundingBox CCollider::AABB_GetDesc()
 {
@@ -140,8 +123,6 @@ void CCollider::AABB_SetDesc(BoundingBox _box)
 {
 	static_cast<CBounding_AABB*>(m_pBounding)->Set_Desc(_box);
 }
-
-
 
 void CCollider::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {

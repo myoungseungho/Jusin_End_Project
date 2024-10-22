@@ -1,5 +1,12 @@
 
 
+sampler DestroySampler = sampler_state
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = clamp;
+    AddressV = clamp;
+};
+
 sampler LinearSampler = sampler_state
 {
 	Filter = MIN_MAG_MIP_LINEAR;

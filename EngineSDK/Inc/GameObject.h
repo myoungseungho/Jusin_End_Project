@@ -56,6 +56,11 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 
+	// 객체 삭제 (최진영)
+	_bool Get_Dead() { return m_bDead; }
+	void Set_Dead() { m_bDead = TRUE; }
+	//
+
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta);
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta);
@@ -63,13 +68,17 @@ public:
 
 public:
 	HRESULT Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, class CComponent** ppOut, void* pArg = nullptr);
-
+	void Clear_Collider_Component();
 	//활성화 비활성화 관련
 	void SetActive(_bool active) { m_bIsActive = active; }
 	_bool IsActive() const { return m_bIsActive; }
 
 	//IMGUI 관련
 	void SetImguiSelect(_bool _bIsImguiClick) { m_bIsImguiClick = _bIsImguiClick; };
+	void Destory();
+
+	//테스트 관련
+	_bool						m_bIsRight = { true };
 
 protected:	
 	ID3D11Device*				m_pDevice = { nullptr };
@@ -81,13 +90,20 @@ protected:
 
 	//활성화 비활성화 관련
 	_bool						m_bIsActive = { true };
+
+	// 객체 삭제 (최진영)
+
+	_bool m_bDead = { FALSE };
+
+	//
+public:
 	//IMGUI 관련
 	_bool						m_bIsImguiClick = { false };
 	//파싱 관련
 	_bool						m_bIsPasingObject = { false };
 	_uint						m_iGameObjectData = { 0 };
 
-protected:
+
 	map<const _wstring, CComponent*>		m_Components;
 
 

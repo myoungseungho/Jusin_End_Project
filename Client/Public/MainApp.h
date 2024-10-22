@@ -40,6 +40,7 @@ private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
 	HRESULT Create_IMGUI_Manager();
 	HRESULT Ready_Prototype_Component_ForStatic();
+	HRESULT Ready_Fonts();
 
 public:
 	static CMainApp* Create();

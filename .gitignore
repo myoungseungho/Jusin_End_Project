@@ -33,13 +33,6 @@ Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
 Client/Bin/ModelData/**/*.bin
-Client/Bin/*.exe
-Engine/Bin/*.exp
-Engine/Bin/*.dll
-Engine/Bin/*.lib
-Renderer/Bin/*.exp
-Renderer/Bin/*.dll
-Renderer/Bin/*.lib
 
 EngineSDK/lib/Engine.lib
 RendererSDK/lib/Renderer.lib
@@ -227,3 +220,4 @@ EngineSDK/lib/DirectXTKd.lib
 Client/Bin/assimp-vc140-mtd.dll
 AssimpSaveAndLoad/assimp-vc140-mtd.dll
 AssimpSaveAndLoad/Bin/assimp-vc140-mtd.dll
+Client/Bin/Resources/Fonts/144ex.spritefont

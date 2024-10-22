@@ -1,0 +1,136 @@
+#include "stdafx.h"
+
+#include "UI_Sub_Chara_Icon_Panel.h"
+#include "RenderInstance.h"
+
+CUI_Sub_Chara_Icon_Panel::CUI_Sub_Chara_Icon_Panel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:CUIObject{ pDevice ,pContext }
+{
+}
+
+CUI_Sub_Chara_Icon_Panel::CUI_Sub_Chara_Icon_Panel(const CUI_Sub_Chara_Icon_Panel& Prototype)
+	:CUIObject{ Prototype }
+{
+}
+
+HRESULT CUI_Sub_Chara_Icon_Panel::Initialize_Prototype()
+{
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
+{
+	m_fPosX = 73.f;
+	m_fPosY = 145.f;
+	m_fSizeX = 184.f;
+
+	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
+
+	if (FAILED(Ready_Components()))
+		return E_FAIL;
+
+	__super::Set_UI_Setting(-m_fSizeX, 46.f, m_fPosX, m_fPosY);
+
+	return S_OK;
+}
+
+void CUI_Sub_Chara_Icon_Panel::Priority_Update(_float fTimeDelta)
+{
+	__super::Priority_Update(fTimeDelta);
+
+}
+
+void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
+{
+	Animation({ 73.f ,88.f ,1.f, 1.f }, { m_fPosX, m_fPosY, 1.f, 1.f }, 100.f, 1.f, fTimeDelta);
+
+	if (m_pSubPawn == nullptr)
+		m_bDead = TRUE;
+}
+
+void CUI_Sub_Chara_Icon_Panel::Late_Update(_float fTimeDelta)
+{
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+}
+
+HRESULT CUI_Sub_Chara_Icon_Panel::Render(_float fTimeDelta)
+{
+	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(0)))
+		return E_FAIL;
+
+	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+		return E_FAIL;
+
+	if (FAILED(m_pVIBufferCom->Render()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CUI_Sub_Chara_Icon_Panel::Ready_Components()
+{
+	if (FAILED(__super::Ready_Components()))
+		return E_FAIL;
+
+	/* For.Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubCharaIconPanel"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+}
+
+HRESULT CUI_Sub_Chara_Icon_Panel::Bind_ShaderResources()
+{
+	if (FAILED(__super::Bind_ShaderResources()))
+		return E_FAIL;
+
+	_uint  iTexIdx = { 0 };
+
+	if (m_eLRPos == LEFT)
+		iTexIdx = 1;
+	else if (m_eLRPos == RIGHT)
+		iTexIdx = 0;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", iTexIdx)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+CUI_Sub_Chara_Icon_Panel* CUI_Sub_Chara_Icon_Panel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+{
+	CUI_Sub_Chara_Icon_Panel* pInstatnce = new CUI_Sub_Chara_Icon_Panel(pDevice, pContext);
+
+	if (FAILED(pInstatnce->Initialize_Prototype()))
+	{
+		MSG_BOX(TEXT("Failed to Created : CUI_Sub_Chara_Icon_Panel"));
+		Safe_Release(pInstatnce);
+	}
+
+	return pInstatnce;
+}
+
+CGameObject* CUI_Sub_Chara_Icon_Panel::Clone(void* pArg)
+{
+	CUI_Sub_Chara_Icon_Panel* pInstatnce = new CUI_Sub_Chara_Icon_Panel(*this);
+
+	if (FAILED(pInstatnce->Initialize(pArg)))
+	{
+		MSG_BOX(TEXT("Failed to Cloend : CUI_Sub_Chara_Icon_Panel"));
+		Safe_Release(pInstatnce);
+	}
+
+	return pInstatnce;
+}
+
+void CUI_Sub_Chara_Icon_Panel::Free()
+{
+
+	__super::Free();
+}

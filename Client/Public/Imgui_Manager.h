@@ -6,6 +6,7 @@
 
 #include "imgui.h"
 #include "Effect.h"
+
 BEGIN(Engine)
 class CGameInstance;
 END
@@ -41,6 +42,8 @@ public:
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
+
+	void Show_Debug_COut(_bool bShow);
 
 	class CIMGUI_Shader_Tab* Access_Shader_Tab(_int iShader_Tab_Index = -1) { 
 		if(iShader_Tab_Index == -1)

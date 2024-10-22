@@ -33,6 +33,14 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
 		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Diffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
+		return E_FAIL;
+
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PickDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
 		return E_FAIL;
 
@@ -40,6 +48,8 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Specular"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
+
+
 
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"),
 		g_iSizeX, g_iSizeY,
@@ -89,6 +99,14 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Normal"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Depth"))))
+		return E_FAIL;
+
+	/* 멀티렌더타겟에 타겟들을 모아놓는다. */
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Normal"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Depth"))))
 		return E_FAIL;
 
 
@@ -397,6 +415,27 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_Player(_float fTimeDelta)
+{
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_NONBLEND].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 {
 	if (m_isLayerView == true)
@@ -644,14 +683,35 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
-	for (auto& pComponent : m_DebugComponent)
+	// Debug Component 관련 처리
+	if (m_bShow_Debug_Component)
 	{
-		pComponent->Render(fTimeDelta);
-		Safe_Release(pComponent);
+		for (auto& pComponent : m_DebugComponent)
+		{
+			pComponent->Render(fTimeDelta);
+			Safe_Release(pComponent);
+		}
+
+		m_DebugComponent.clear();
 	}
 
-	m_DebugComponent.clear();
+	// Render Target 관련 처리
+	if (m_bShow_RenderTarget)
+	{
+		// Matrix 바인딩
+		if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
 
+		// Render Target 디버그 렌더링
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+	}
 	if (!m_bShow_RenderTarget)
 		return S_OK;
 
@@ -870,6 +930,9 @@ void CRenderer::Free()
 		Safe_Release(pRenderObject);
 	m_DebugComponent.clear();
 	
+
+	for (auto& pComponent : m_DebugComponent)
+		Safe_Release(pComponent);
 
 	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);

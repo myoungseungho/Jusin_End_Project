@@ -1,0 +1,11 @@
+
+선택창 
+ready
+	update 0.025,
+	speed 60
+
+stand
+	update 0.025,
+	speed 60
+
+

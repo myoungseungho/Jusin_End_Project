@@ -20,6 +20,8 @@ public:
 	HRESULT SaveObjects(const wstring& filename, void* pArg);
 	void* LoadObjects(const wstring& filename);
 	HRESULT ParseLine(const wstring& line, FILEDATA& obj);
+	HRESULT Save_All_CameraPoints(const wstring& filename, void* pArg);
+	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
 
 	HRESULT Save_Effects(wstring& FilePath, void* pArg);
 	void*		Load_Effects(wstring& FilePath);

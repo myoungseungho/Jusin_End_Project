@@ -24,9 +24,12 @@ public: /* For.Renderer */
 	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
+	void SetActive_Debug_Component(_bool isOn);
+
 	void Show_OutLine();
 	void Show_Layer_View();
 	_bool Get_isLayerView();
+
 public: /* For.Target_Manager */
 	HRESULT Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	HRESULT Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag);

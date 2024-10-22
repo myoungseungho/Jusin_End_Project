@@ -64,6 +64,11 @@ void CRenderInstance::SetActive_RenderTarget(_bool isOn)
 	m_pRenderer->SetActive_RenderTarget(isOn);
 }
 
+void CRenderInstance::SetActive_Debug_Component(_bool isOn)
+{
+	m_pRenderer->SetActive_Debug_Component(isOn);
+}
+
 void CRenderInstance::Show_OutLine()
 {
 	m_pRenderer->Show_OutLine();
@@ -130,6 +135,7 @@ HRESULT CRenderInstance::Add_ClientRenderTargetToMRT(const _wstring& strMRTTag, 
 	return m_pTarget_Manager->Add_ClientRenderTargetToMRT(strMRTTag, strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);
 }
 
+#ifdef _DEBUG
 HRESULT CRenderInstance::Ready_RT_Debug(const _wstring& strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY)
 {
 	return m_pTarget_Manager->Ready_Debug(strTargetTag, fCenterX, fCenterY, fSizeX, fSizeY);
@@ -139,6 +145,7 @@ HRESULT CRenderInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pSh
 {
 	return m_pTarget_Manager->Render_Debug(strMRTTag, pShader, pVIBuffer);
 }
+#endif
 
 const LIGHT_DESC* CRenderInstance::Get_LightDesc(_uint iLightIndex) const
 {

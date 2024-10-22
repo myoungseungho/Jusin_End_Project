@@ -51,7 +51,7 @@ _bool CBounding_AABB::isCollision(CCollider::TYPE eTargetColliderType, CBounding
 	switch (eTargetColliderType)
 	{
 	case CCollider::TYPE_AABB:
-		isColl = m_pDesc->Intersects(static_cast<CBounding_AABB*>(pTargetBounding)->Get_Desc());
+		isColl = Collision_AABB(static_cast<CBounding_AABB*>(pTargetBounding));
 		break;
 	case CCollider::TYPE_OBB:
 		isColl = m_pDesc->Intersects(static_cast<CBounding_OBB*>(pTargetBounding)->Get_Desc());
@@ -63,6 +63,7 @@ _bool CBounding_AABB::isCollision(CCollider::TYPE eTargetColliderType, CBounding
 
 	return isColl;
 }
+
 
 _bool CBounding_AABB::isRayCollision(const _float3& rayOrigin, const _float3& rayDir)
 {
@@ -206,9 +207,6 @@ _bool CBounding_AABB::Collision_AABB(CBounding_AABB * pTargetDesc)
 		return false;
 	/* 높이로 충돌안했냐? */
 	if (max(vSourMin.y, vDestMin.y) > min(vSourMax.y, vDestMax.y))
-		return false;
-	/* 깊이로 충돌안했냐? */
-	if (max(vSourMin.z, vDestMin.z) > min(vSourMax.z, vDestMax.z))
 		return false;
 
 	return true;
