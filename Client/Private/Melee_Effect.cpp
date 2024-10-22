@@ -108,8 +108,8 @@ HRESULT CMelee_Effect::Ready_Components()
 {
 	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
 
-	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
-	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
+	BoundingDesc.vExtents = _float3(4.9f, 9.257f, 1.5f);
+	BoundingDesc.vCenter = _float3(0.f, 8.555f, 0.f);
 	BoundingDesc.pMineGameObject = this;
 	BoundingDesc.colliderGroup = CCollider_Manager::CG_1P_Melee_Attack;
 
