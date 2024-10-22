@@ -25,6 +25,8 @@ public:
 	void Attack_Medium();
 	void Attack_Heavy();
 	void Attack_Special();
+	void Attack_Grab();
+
 
 	void Attack_236();
 	void Attack_214();

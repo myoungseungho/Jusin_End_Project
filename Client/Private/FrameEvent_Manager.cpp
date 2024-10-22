@@ -446,12 +446,12 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     else if (splitText[0] == "PositionChange")
     {
         CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
-
         //_float fCurPosition = pModel->Get_CurrentAnimationPosition();
         //_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
         //pModel->Play_Animation(fDelay);
 
         pModel->CurrentAnimationPositionJump(fValue[0]);
+
 
     }
 
@@ -461,7 +461,6 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     }
     else if (splitText[0] == "AttackEvent")
     {
-
         pCharacter->AttackEvent(fValue[0], fValue[1]);
     }
     else if (splitText[0] == "SetAnimation")
@@ -477,6 +476,10 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     {
         pCharacter->FlipDirection();
     }
+    else if (splitText[0] == "EnemyChase")
+    {
+        pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
+    }
     else if (splitText[0] == "DebugPoint")
     {
         _int iDebug = pCharacter->Get_iDirection();
@@ -484,11 +487,11 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
         _bool bDebug = true;
 
     }
+ 
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()
 {
-
     if(m_bInitalizeCount == false)
         m_AnimationIndex.Initalize();
 }

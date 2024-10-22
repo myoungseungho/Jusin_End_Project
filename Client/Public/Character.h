@@ -129,12 +129,8 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 
 */
 
-class CCharacter : public CGameObject
+class CCharacter  : public CGameObject
 {
-public:
-	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
-	enum PLAYER_ID { GOGU, ANDROID21, BUU, HIT, PAWN_END };
-
 public:
 	static vector<CInput> Command_236Attack;
 	static vector<CInput> Command_236Attack_Extra;
@@ -161,6 +157,9 @@ public:
 	static vector<CInput> Command_SpecialAttack;
 	static vector<CInput> Command_HeavyAttack_Extra;
 
+	static vector<CInput> Command_Grab;
+
+
 	static vector<CInput> Command_Crouch_LightAttack;
 	static vector<CInput> Command_Crouch_MediumAttack;
 	static vector<CInput> Command_Crouch_MediumAttack_Extra;
@@ -177,11 +176,10 @@ public:
 	static const _float fJumpPower;
 	//const enum LOOK{ LOOK_LEFT = -1,  LOOK_RIGHT = 1};
 
-	typedef struct : CGameObject::GAMEOBJECT_DESC
+	typedef struct: CGameObject::GAMEOBJECT_DESC
 	{
 		//_wstring strModelName;
 		_ushort iTeam = 1;
-		PLAYER_SLOT ePlayerSlot = {};
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -209,12 +207,12 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-
+	
 	//커맨드 입력
 	//virtual void InputCommand();
 	virtual _bool InputCommand();
-	virtual void InputedCommandUpdate(_float fTimeDelta);
-	virtual void UpdateInputBuffer(CInput newInput)
+	virtual void InputedCommandUpdate(_float fTimeDelta) ;
+	virtual void UpdateInputBuffer(CInput newInput) 
 	{
 		if (inputBuffer.size() >= BUFFER_SIZE) {
 			inputBuffer.erase(inputBuffer.begin());  // 오래된 입력 삭제
@@ -234,12 +232,15 @@ public:
 	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
 
-	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition = 0);
+	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
+
+
+	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition =0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
 	virtual void AttackNextMoveCheck();
 	virtual void AnimeEndNextMoveCheck();
 	//virtual void Set_Animation(_uint iAnimationIndex) {};
-	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
+	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof =false);
 
 	_bool		CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition = 0);
 
@@ -270,14 +271,14 @@ public:
 	virtual void ShowInputBuffer();
 	virtual void DebugPositionReset();
 
-
+	
 
 	//중력관련
 	//virtual void Gravity(_float fTimeDelta);
 	virtual void Gravity(_float fTimeDelta);
 
 	virtual void Set_fJumpPower(_float fJumpPower) { m_fJumpPower = fJumpPower; };
-	virtual void Set_fGravityTime(_float fGravityTime) { m_fGravityTime = fGravityTime; };
+	virtual void Set_fGravityTime(_float fGravityTime) {	m_fGravityTime = fGravityTime;	};
 	//virtual void Set_fImpulse(_float fImpulse) { m_fImpuse = fImpulse; };
 	virtual void Set_fImpulse(_float2 fImpulse) { m_fImpuse = fImpulse; };
 	virtual void Set_fImpulse(_float fImpulseX) { m_fImpuse.x = fImpulseX; };
@@ -303,9 +304,12 @@ public:
 
 	void AttckCancleJump();
 
-	void Chase(_float fTimeDelta);
+	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
 	void Chase_Ready(_float fTimeDelta);
+
+	void Chase_Grab(_float fTimeDelta);
+
 
 	void Move(_float fTimeDelta);
 	void MoveKey1Team(_float fTimeDelta);
@@ -315,36 +319,46 @@ public:
 
 	//피격 관련
 	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
-	_bool Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	//_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	//_bool Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
 
 	void Check_StunEnd();
-
 	void Stun_Shake();
-
 	void Update_AnimationLock(_float fTimeDelta);
-
 	void Update_StunImpus(_float fTimeDelta);
-
 	void Set_BreakFall_Ground();
 	void BreakFall_Air();
+
+
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
 	_float Get_DamageScale();
 
 
-
-	//1020 추가
 	void Set_GroundSmash(_bool bSmash);
 	//void Guard_Update();   //서브캐릭터용도로 써야하나?
-	_bool Guard_Check();
+	//_bool Guard_Check();
+	//_bool Guard_Check2(AttackType eAttackType);
+	AttackColliderResult Guard_Check3(AttackType eAttackType);
+	_bool CompareGuardType(AttackType eAttackType);
+	AttackColliderResult CompareGuardType3(AttackType eAttackType);
+	AttackColliderResult CompareGrabType3(AttackType eAttackType);
+
+
+	void Teleport_ToEnemy(_float OffsetX, _float OffsetY);
+	
+	//void Set_Grab(_bool bGrab, _bool bAir);
+	void Set_Grab(_bool bAir);
+
 
 protected:
-	CShader* m_pShaderCom = { nullptr };
-	CModel* m_pModelCom = { nullptr };
+	CShader*				m_pShaderCom = { nullptr };	
+	CModel*					m_pModelCom = { nullptr };
 
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
@@ -358,9 +372,9 @@ protected:
 	_float					m_fMaxAnimationLock{};
 	_bool					m_bAnimationLock{};
 
-	CHARACTER_INDEX			m_eCharacterIndex = { PLAY_GOKU };
-
-	FrameEventMap* m_pFrameEvent = { nullptr };
+	CHARACTER_INDEX			m_eCharacterIndex={ PLAY_GOKU };
+	
+	FrameEventMap*			m_pFrameEvent = { nullptr };
 	_bool					m_bMotionPlaying = false;
 
 	vector<CInput> inputBuffer;
@@ -374,22 +388,22 @@ protected:
 
 
 	//_uint					m_iNextAnimationIndex = { 0 };
-
+	
 	//index,시간
-	pair<_uint, _float>		m_iNextAnimation{ 0,0 };
+	pair<_uint, _float>		m_iNextAnimation{0,0 };
 	_float					m_fNextAnimationCurrentPosition = {};
 
 
 
 
 	_ushort m_iJumpAnimationIndex = { 6 };
-	_ushort m_iFallAnimationIndex = { 7 };
+	_ushort m_iFallAnimationIndex = {7};
 
 	_ushort m_iIdleAnimationIndex = { 0 };
-	_ushort m_iCrouchAnimationIndex = { 4 };
+	_ushort m_iCrouchAnimationIndex = {4};
 	_ushort m_iBackWalkAnimationIndex = { 10 };
 	_ushort m_iForwardWalkAnimationIndex = { 9 };
-	_ushort m_iForwardDashAnimationIndex = { 11 };
+	_ushort m_iForwardDashAnimationIndex = {11};
 	_ushort m_iForwardDashEndAnimationIndex = { 14 };
 
 	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
@@ -402,13 +416,13 @@ protected:
 	_ushort m_iHit_Stand_MediumAnimationIndex = { 22 };		//051
 	_ushort m_iHit_Crouch_AnimationIndex = { 23 };			//052
 
-	_ushort m_iHit_Away_LeftAnimationIndex = { 33 };
+	_ushort m_iHit_Away_LeftAnimationIndex = {33};
 	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
 
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
-	_ushort m_iHit_Air_FallAnimationIndex = { 26 };
+	_ushort m_iHit_Air_FallAnimationIndex = { 26 };	
 
-	_ushort m_iHit_Air_Spin_LeftUp = { 31 };
+	_ushort m_iHit_Air_Spin_LeftUp = {31};
 
 
 	//기상
@@ -418,9 +432,9 @@ protected:
 
 
 
-	_ushort m_iAttack_Air1 = { 52 };
-	_ushort m_iAttack_Air2 = { 53 };
-	_ushort m_iAttack_Air3 = { 54 };
+	_ushort m_iAttack_Air1 = { 52 };		
+	_ushort m_iAttack_Air2 = { 53 };		
+	_ushort m_iAttack_Air3 = { 54 };		
 	_ushort m_iAttack_AirUpper = { 55 };
 
 
@@ -430,8 +444,12 @@ protected:
 	_ushort m_iGuard_AirAnimationIndex = { 20 };
 
 
+	//잡기
+	_ushort m_iGrabReadyAnimationIndex = {17};
+	_ushort m_iGrabAnimationIndex = {60};
 
-	_float m_fGravityTime = { 0.f };
+
+	_float m_fGravityTime = {0.f}; 
 	_float m_fJumpPower = 3;// { 0.f };
 
 	//가속도
@@ -444,9 +462,9 @@ protected:
 
 	_bool m_bDoubleJumpEnable = { true };
 	_bool m_bAriDashEnable = { true };
-
+	
 	_bool m_bJumpLock = { false };
-	_float m_fAccJumpLockTime = { 0.f };
+	_float m_fAccJumpLockTime= { 0.f };
 
 	_bool m_bAttackGravity = { true };
 
@@ -464,6 +482,8 @@ protected:
 
 	_bool m_bStunShakeDirection = { false };
 
+	//디버그용 임시 collider
+	CCollider_Test* m_pColliderCom = { nullptr };
 	CCharacter* m_pDebugEnemy = { nullptr };
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
@@ -477,6 +497,15 @@ protected:
 
 
 
+
+	_bool m_bChaseEnable = true;
+	_bool m_bGrab = false;
+	_bool m_bGrab_Air = false;
+
+
+	_float m_fAccGrabTime = {};
+
+
 	//1020추가분량
 
 	//스턴관련
@@ -486,52 +515,12 @@ protected:
 	//_bool m_bGuard = { false };
 
 
+
+
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
-
-public:
-	typedef struct
-	{
-		_bool        bStun = { FALSE };
-		_bool        bHit = { FALSE };
-		_bool        bAttBuf = { FALSE };
-
-		_int        iHp = { 0 };
-		_uint        iComboCount = { 0 };
-
-		_int        iSKillPoint = { 0 };
-		_int        iSKillCount = { 0 };
-
-		PLAYER_SLOT ePlayer_Slot = {};
-		PLAYER_ID        ePlayerID = {};
-
-	}Character_INFO_DESC;
-
-public:
-		Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
-
-
-	//UI에서 써야하는 정보 
-
-protected:
-	_uint					m_iComboCount = { 0 };
-	_int					m_iSKillPoint = { 0 };
-	_int					m_iSKillCount = { 0 };
-
-	//_bool					m_bStun = { FALSE };
-	_bool					m_bHit = { FALSE };
-	_bool					m_bAttBuf = { FALSE };
-
-	_uint					m_iNumAttBuf = { 1 };
-
-	//UI에 보내야할 정보
-	Character_INFO_DESC				 m_tCharacterDesc = {};
-	PLAYER_ID					m_eCharacterID = {};
-
-	PLAYER_SLOT				m_ePlayerSlot = { SLOT_END };
-
-	_float					m_fStunTImer = { 0.f };
-	_float					m_fAttBufTimer = { 0.f };
+	_bool m_bDebugInputLock = {false};
 
 
 private:

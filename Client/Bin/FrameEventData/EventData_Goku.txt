@@ -530,7 +530,7 @@ PLAY_GOKU,GKS436_body,0,AnimSpeedChange,0.023000,25
 PLAY_GOKU,GKS436_body,30,ModelChange,4444444
 PLAY_GOKU,GKS436_body,30,EFFECT,4444444
 //,//,//,//,현재 기능이 없어서 임의 이동으로 만듦
-PLAY_GOKU,GKS436_body,44.000000,EnemyChase,1,0,0
+PLAY_GOKU,GKS436_body,44.000000,EnemyChase,1.3,0,0
 PLAY_GOKU,GKS436_body,44.000000,FlipPlayerDirection,0
 PLAY_GOKU,GKS436_body,44.000000,PositionChange,54
 PLAY_GOKU,GKS436_body,40.000000,SetNextAnimation,72,100
@@ -995,15 +995,28 @@ PLAY_GOKU,GKS101_body,0.000000,AnimSpeedChange,0.018000,120
 PLAY_GOKU,GKS303_body,0,AnimSpeedChange,0.017,70
 PLAY_GOKU,GKS303_body,20,AnimSpeedChange,0.017,46
 
+
+
+//드래곤 러시 준비(공중)
+PLAY_GOKU,GKS038_body,0,AnimSpeedChange,0.008,61.011
+
 //,드래곤러시 (공용모션) 
-PLAY_GOKU,GKS304_body,0,AnimSpeedChange,0.037,180
+//,PLAY_GOKU,GKS304_body,0,AnimSpeedChange,0.008,10
+PLAY_GOKU,GKS304_body,0,PositionChange,5.0
+//,PLAY_GOKU,GKS304_body,5.1,AnimSpeedChange,0.008,40
+PLAY_GOKU,GKS304_body,5.1,AnimSpeedChange,0.008,101
+PLAY_GOKU,GKS304_body,5.1,AttackEvent,0
+
+PLAY_GOKU,GKS304_body,23.1,PositionChange,275.1
+
+PLAY_GOKU,GKS304_body,25.1,AnimSpeedChange,0.037,180
 
 //,드래곤 러시 체이스 (공용모션)
 PLAY_GOKU,GKS306cs_body,0.000000,AnimSpeedChange,0.017000,80
 PLAY_GOKU,GKS306cs_body,20,AnimSpeedChange,0.017000,40
 
 //,앉아 방향전환 (공용모션)
-PLAY_GOKU,GKS013_body,0.000000,AnimSpeedChange,0.023000,120
+PLAY_GOKU,GKS013_body,0,AnimSpeedChange,0.023,120
 
 
 //,앉아 방향전환 (공용모션)

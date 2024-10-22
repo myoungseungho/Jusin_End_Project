@@ -334,6 +334,7 @@
     <ClCompile Include="..\private\UI_SubHpGauge.cpp" />
     <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
     <ClCompile Include="..\Private\AnimationNameMap.cpp" />
+    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />

@@ -51,6 +51,7 @@ public:
 
 private:
 	CAnimationNameMap m_AnimationIndex;
+	_bool m_bInitalizeCount = false;
 
 	_bool m_bInitalizeCount = false;
 

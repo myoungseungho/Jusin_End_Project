@@ -227,6 +227,7 @@ void CS21_MeleeAttack::Attack_Special()
 
 	}
 
+
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL);
@@ -260,11 +261,15 @@ void CS21_MeleeAttack::Attack_236()
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236,0.5f);
 	}
 	
+	
+
+
 }
 
 void CS21_MeleeAttack::Attack_214()
 {
 	
+
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
 	{
@@ -305,6 +310,7 @@ void CS21_MeleeAttack::Attack_236Special()
 
 		//디버그코드 체크
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES, 10.5f);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
@@ -315,6 +321,7 @@ void CS21_MeleeAttack::Attack_236Special()
 	}
 
 }
+
 
 void CS21_MeleeAttack::Attack_236Ultimate()
 {
@@ -393,6 +400,8 @@ void CS21_MeleeAttack::Attack_Crouch_Heavy()
 
 
 
+	
+
 
 	if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_CROUCHING || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END)
 	{
@@ -429,6 +438,7 @@ void CS21_MeleeAttack::Attack_Crouch_Speical()
 	}
 
 }
+
 
 void CS21_MeleeAttack::BackDash()
 {

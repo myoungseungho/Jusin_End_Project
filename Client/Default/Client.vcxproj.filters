@@ -384,6 +384,9 @@
     <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
       <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\AttackObject">
+      <UniqueIdentifier>{c19be185-f15f-4931-907f-1c4f8f917daf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -737,6 +740,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Manager.h">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject.h">
+      <Filter>02.GameObjects\AttackObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1105,6 +1111,9 @@
     <ClInclude Include="..\Public\Line_Draw.h">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
     </ClInclude>
+    <ClCompile Include="..\Private\AttackObject.cpp">
+      <Filter>02.GameObjects\AttackObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

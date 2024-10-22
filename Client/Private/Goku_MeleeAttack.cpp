@@ -294,6 +294,25 @@ void CGoku_MeleeAttack::Attack_Special()
 
 }
 
+void CGoku_MeleeAttack::Attack_Grab()
+{
+	
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Grab(false);
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_GRAB_READY);
+		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_GRAB, 3.f, 5.f);
+	}
+
+	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP)
+	{
+		m_pPlayer->Set_Grab(true);
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_GRAB_READY);
+		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_GRAB, 3.f, 5.f);
+	}
+
+}
+
 void CGoku_MeleeAttack::Attack_236()
 {
 

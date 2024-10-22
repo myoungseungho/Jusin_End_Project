@@ -34,7 +34,7 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 
 
 
-    //m_iTestModelIndex = PLAY_GOKU;
+    m_iTestModelIndex = PLAY_GOKU;
 
     //static FrameEventMap FrameEvent[CHARACTER_INDEX_END][100][2];
   //  FrameEvent[SELECT_HIT][0][5].emplace("TEST");

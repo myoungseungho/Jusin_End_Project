@@ -118,6 +118,9 @@
     <Filter Include="01.Utility\02.GameObjects\Container\PartObject">
       <UniqueIdentifier>{957b596f-c98b-4495-966f-76172c80ba5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\03.Components\Collider_Test\DebugDraw">
+      <UniqueIdentifier>{3a315d68-6ab0-48ab-adb2-c8228e14dbe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -261,6 +264,12 @@
     <ClCompile Include="..\Private\Collider_Test.cpp">
       <Filter>01.Utility\03.Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Collider_Test.cpp">
+      <Filter>01.Utility\03.Components\Collider_Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\DebugDraw.cpp">
+      <Filter>01.Utility\03.Components\Collider_Test\DebugDraw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Timer.h">
@@ -400,6 +409,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Collider_Test.h">
       <Filter>01.Utility\03.Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Collider_Test.h">
+      <Filter>01.Utility\03.Components\Collider_Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\DebugDraw.h">
+      <Filter>01.Utility\03.Components\Collider_Test\DebugDraw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

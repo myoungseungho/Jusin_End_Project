@@ -32,7 +32,6 @@
 
 #include "Animation.h"
 
-
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -65,7 +64,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	m_eCharacterIndex = PLAY_21;
-
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
 	m_iJumpAnimationIndex = ANIME_JUMP_UP;
@@ -73,7 +71,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 
 	m_iNextAnimation.first = ANIME_IDLE;
-
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -87,7 +84,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	
 
 	//m_pModelCom->SetUp_Animation(16, true);
-
 	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
 	m_pModelCom->Play_Animation(0.f);
 
@@ -151,14 +147,10 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CS21_MeleeAttack::BackDash, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CS21_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
-
-	//m_iHp = 100;
-	m_eCharacterID = ANDROID21;
-
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
 
 	
-
+	
 
 	return S_OK;
 }
@@ -166,15 +158,15 @@ HRESULT CPlay_21::Initialize(void* pArg)
 void CPlay_21::Priority_Update(_float fTimeDelta)
 {
 
-	__super::Priority_Update(fTimeDelta);
-
 }
 
 void CPlay_21::Update(_float fTimeDelta)
 {
-	__super::Update(fTimeDelta);
+	
 
-	//Action_Hit(DIK_F9, 0.25f, fTimeDelta);
+
+
+
 
 	InputedCommandUpdate(fTimeDelta);
 	InputCommand();
@@ -358,6 +350,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	
 	Check_Ground();
+	
 }
 
 void CPlay_21::Late_Update(_float fTimeDelta)

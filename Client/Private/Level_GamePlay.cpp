@@ -13,6 +13,8 @@
 
 #include "Character.h"
 
+#include "Character.h"
+
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -327,4 +329,5 @@ void CLevel_GamePlay::Free()
 {
 	__super::Free();
 
+	CFrameEvent_Manager::Destroy_Instance();
 }
