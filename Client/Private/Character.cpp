@@ -7,6 +7,7 @@
 #include "iostream"
 
 #include "AttackObject.h"
+#include "UI_Manager.h"
 
 
 const _float CCharacter::fGroundHeight = 0.f; //0
@@ -145,15 +146,17 @@ vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RI
 
 CCharacter::CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 CCharacter::CCharacter(const CCharacter& Prototype)
 	: CGameObject{ Prototype }
 	, m_pFrameEvent{Prototype.m_pFrameEvent }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CCharacter::Initialize_Prototype()
@@ -505,6 +508,8 @@ _bool CCharacter::InputCommand()
 		//	 iAttackkey = ATTACK_LIGHT;
 		//
 		// }
+
+		 GetUI_Input(DirectionX, DirectionY, iMoveKey, iAttackkey);
 
 	}
 	else  //2ÆÀ
@@ -2548,6 +2553,12 @@ HRESULT CCharacter::Bind_ShaderResources()
 	return S_OK;
 }
 
+void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
+{
+	m_pUI_Manager->m_eDirInput = eDirInput;
+	m_pUI_Manager->m_eBtnInput = eBtnInput;
+}
+
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CCharacter* pInstance = new CCharacter(pDevice, pContext);
@@ -2580,6 +2591,7 @@ void CCharacter::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pUI_Manager);
 
 	Safe_Release(m_pColliderCom);
 }

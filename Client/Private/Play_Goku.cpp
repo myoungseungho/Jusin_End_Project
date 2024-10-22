@@ -190,7 +190,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 void CPlay_Goku::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CPlay_Goku::Update(_float fTimeDelta)

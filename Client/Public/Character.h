@@ -511,7 +511,7 @@ public:
 
 public:
 		Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
-
+		void GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput);
 
 	//UI에서 써야하는 정보 
 
@@ -535,7 +535,7 @@ protected:
 	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };
 
-
+	class CUI_Manager* m_pUI_Manager = { nullptr };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
