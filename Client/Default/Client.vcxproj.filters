@@ -154,6 +154,9 @@
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Effect_Manager.cpp">
+      <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -731,6 +734,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Effect.h">
       <Filter>02.GameObjects\02. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Manager.h">
+      <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
