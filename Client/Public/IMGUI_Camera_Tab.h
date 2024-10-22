@@ -14,10 +14,8 @@ class CIMGUI_Camera_Tab : public CIMGUI_Tab
 		}
 	};
 
-
-
 	//모델은 정해져있음
-	enum CAMERA_MODELID { MODELID_NOT = -1, MODELID_DEFAULT, MODELID_SON, MODELID_HIT, MODELID_MINE, MODELID_21, MODELID_END };
+	enum CAMERA_MODELID { CAMERA_MODELID_NOT = -1, CAMERA_MODELID_FREE, CAMERA_MODELID_DEFAULT, CAMERA_MODELID_SON, CAMERA_MODELID_HIT, CAMERA_MODELID_MINE, CAMERA_MODELID_21, CAMERA_MODELID_END };
 	//스킬은 각 모델마다 enum이 달라서 map
 protected:
 	CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -53,14 +51,14 @@ private:
 	void DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color);
 
 private:
-	CAMERA_MODELID m_iSelected_Model = MODELID_DEFAULT;  // 모델 선택 상태를 저장
+	CAMERA_MODELID m_iSelected_Model = CAMERA_MODELID_FREE;  // 모델 선택 상태를 저장
 	_int  m_iSelected_Skill = -1;
 	_int m_iSelected_Animation = -1; // 애니메이션 선택 상태를 저장 (인덱스 기반)
 
 	// 모델별 스킬 목록
 	unordered_map<CAMERA_MODELID, vector<string>> m_ModelSkills;
 	// 모델 이름 배열 선언
-	const char* MODEL_NAMES[MODELID_END];
+	const char* MODEL_NAMES[CAMERA_MODELID_END];
 
 	// 스킬과 애니메이션 인덱스 쌍을 키로 받고 애니메이션 목록을 값으로 갖는 맵
 	unordered_map<pair<CAMERA_MODELID, int>, vector<string>, pair_hash> m_SkillAnimations;

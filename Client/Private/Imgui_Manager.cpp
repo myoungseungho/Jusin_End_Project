@@ -21,6 +21,7 @@
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiDebug_COut = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
@@ -125,8 +126,32 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	
+
 	return S_OK;
+}
+
+void CImgui_Manager::Show_Debug_COut(_bool bShow)
+{
+	if (bShow) // true일 때 콘솔을 켜기
+	{
+		if (::AllocConsole() == TRUE)
+		{
+			FILE* nfp[3];
+			freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+			freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+			freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+			std::ios::sync_with_stdio();
+		}
+	}
+	else // false일 때 콘솔을 끄기
+	{
+		HWND hwndConsole = GetConsoleWindow(); // 콘솔 창의 핸들을 가져옴
+		if (hwndConsole)
+		{
+			::FreeConsole(); // 콘솔과의 연결 해제
+			PostMessage(hwndConsole, WM_CLOSE, 0, 0); // 콘솔 창에 닫기 메시지 보내기
+		}
+	}
 }
 
 void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
@@ -205,10 +230,17 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			ImGui::EndMenu();
 		}
 
-		if (ImGui::Checkbox("Layer_View",&bShowImGuiLayerView)) {
+		if (ImGui::Checkbox("Layer_View", &bShowImGuiLayerView)) {
 			m_pRenderInstance->Show_Layer_View();
 		}
-		
+
+		if (ImGui::BeginMenu("Debug_COut")) {
+			if (ImGui::MenuItem("Debug_COut", NULL, &bShowImGuiDebug_COut)) {
+				Show_Debug_COut(bShowImGuiDebug_COut);
+			}
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 
@@ -217,9 +249,9 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 		ImGui::Begin("Main Tab", &bShowImGuiWindows); // 메인 창 시작
 		if (ImGui::BeginTabBar("DragonBall_Tool")) { // 탭 바 시작
 
-			for (auto& tab : m_vecTabs) 
+			for (auto& tab : m_vecTabs)
 			{
-				if (ImGui::BeginTabItem(tab->GetTabName())) 
+				if (ImGui::BeginTabItem(tab->GetTabName()))
 				{
 					tab->Render(fTimeDelta);
 					ImGui::EndTabItem();
@@ -239,7 +271,7 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 	for (auto& tab : m_vecShader_Tabs)
 	{
 		ImGui::Begin("Shader Tab");
-	
+
 		if (/*ImGui::BeginTabItem(to_string(tab->m_iNumberId).c_str(), &tab->m_TabPick) || */tab.second->m_TabPick == true)
 		{
 			ImGui::Text("Mesh Index : %d", tab.second->m_iNumberId);

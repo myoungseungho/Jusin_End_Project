@@ -32,10 +32,13 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 	_char* name = "";
 
-	for (size_t i = VIRTUAL_CAMERA_NORMAL; i < VIRTUAL_CAMERA_END; i++)
+	for (size_t i = VIRTUAL_CAMERA_FREE; i < VIRTUAL_CAMERA_END; i++)
 	{
 		switch (i)
 		{
+		case VIRTUAL_CAMERA_FREE:
+			name = "Camera_Free";
+			break;
 		case VIRTUAL_CAMERA_NORMAL:
 			name = "Camera_Normal";
 			break;
@@ -134,7 +137,7 @@ void CMain_Camera::Late_Update(_float fTimeDelta)
 void CMain_Camera::Set_Virtual_Camera(VIRTUAL_CAMERA mode)
 {
 	m_currentVirtualMode = mode;
-	m_vecVirtualCamera[m_currentVirtualMode]->m_currentMode = CVirtual_Camera::CAMERA_FREE_MODE;
+	m_vecVirtualCamera[m_currentVirtualMode]->Set_CameraMode(mode);
 }
 
 void CMain_Camera::Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex)

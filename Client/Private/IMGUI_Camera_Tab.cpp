@@ -5,6 +5,7 @@
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
 #include "Line_Draw.h"
+
 _bool bShowCameraWindow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _wstring filename = L"../Bin/CameraPoints.txt"; //데이터 저장되는 txt
 
@@ -17,23 +18,25 @@ CIMGUI_Camera_Tab::CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 HRESULT CIMGUI_Camera_Tab::Initialize()
 {
 	// 모델 이름 배열 초기화
-	MODEL_NAMES[MODELID_DEFAULT] = "Default";
-	MODEL_NAMES[MODELID_SON] = "Son";
-	MODEL_NAMES[MODELID_HIT] = "Hit";
-	MODEL_NAMES[MODELID_MINE] = "Mine";
-	MODEL_NAMES[MODELID_21] = "21";
+	MODEL_NAMES[CAMERA_MODELID_FREE] = "Free";
+	MODEL_NAMES[CAMERA_MODELID_DEFAULT] = "Default";
+	MODEL_NAMES[CAMERA_MODELID_SON] = "Son";
+	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
+	MODEL_NAMES[CAMERA_MODELID_MINE] = "Mine";
+	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 
 	_int index = 0;
 
 	// 모델별 스킬 목록 초기화
-	m_ModelSkills[MODELID_SON] = { "Son_Skill1", "Son_Skill2" };
-	m_ModelSkills[MODELID_HIT] = { "Hit_Skill1" };
-	m_ModelSkills[MODELID_MINE] = { "Mine_Skill1", "Mine_Skill2" };
-	m_ModelSkills[MODELID_21] = { "21_Skill1", "21_Skill2", "21_Skill3" };
+	m_ModelSkills[CAMERA_MODELID_SON] = { "Son_Skill1", "Son_Skill2" };
+	m_ModelSkills[CAMERA_MODELID_HIT] = { "Hit_Skill1" };
+	m_ModelSkills[CAMERA_MODELID_MINE] = { "Mine_Skill1", "Mine_Skill2" };
+	m_ModelSkills[CAMERA_MODELID_21] = { "21_Skill1", "21_Skill2", "21_Skill3" };
 
 	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
 	// 기본 카메라 매핑
-	m_CameraIndexMap[{MODELID_DEFAULT, -1}] = index++;
+	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
+	m_CameraIndexMap[{CAMERA_MODELID_DEFAULT, -1}] = index++;
 
 	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
 	for (const auto& modelSkillPair : m_ModelSkills)
@@ -46,7 +49,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 			m_CameraIndexMap[{model, skillIdx}] = index++;
 
 			// 스킬별 애니메이션 목록 초기화 (예시 데이터)
-			if (model == MODELID_SON)
+			if (model == CAMERA_MODELID_SON)
 			{
 				if (skillIdx == 0) // Son_Skill1
 				{
@@ -57,7 +60,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 					m_SkillAnimations[{model, skillIdx}] = { "Son_Skill2_Anim1", "Son_Skill2_Anim2" };
 				}
 			}
-			else if (model == MODELID_HIT)
+			else if (model == CAMERA_MODELID_HIT)
 			{
 				if (skillIdx == 0) // Hit_Skill1
 				{
@@ -65,7 +68,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 			}
 			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화
-			else if (model == MODELID_MINE)
+			else if (model == CAMERA_MODELID_MINE)
 			{
 				if (skillIdx == 0) // Mine_Skill1
 				{
@@ -76,7 +79,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 					m_SkillAnimations[{model, skillIdx}] = { "Mine_Skill2_Anim1", "Mine_Skill2_Anim2", "Mine_Skill2_Anim3" };
 				}
 			}
-			else if (model == MODELID_21)
+			else if (model == CAMERA_MODELID_21)
 			{
 				if (skillIdx == 0) // 21_Skill1
 				{
@@ -114,7 +117,7 @@ void CIMGUI_Camera_Tab::Render(_float fTimeDelta)
 	IMGUI_Camera_Select_Model(fTimeDelta);
 
 	// 모델이 선택된 경우에만 스킬 선택 UI를 표시
-	if (m_iSelected_Model >= MODELID_SON) {
+	if (m_iSelected_Model >= CAMERA_MODELID_SON) {
 		ImGui::Spacing();  // 한 줄 띄우기
 		ImGui::Separator();  // 경계선 그리기
 
@@ -158,6 +161,10 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 			m_iSelected_Model = static_cast<CAMERA_MODELID>(iSelected_Model); // 새로운 모델로 업데이트
 			m_iSelected_Skill = -1;  // 스킬 선택 초기화
 			m_iSelected_Animation = -1;
+
+			//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
+			if(m_iSelected_Model==CAMERA_MODELID_DEFAULT || m_iSelected_Model == CAMERA_MODELID_FREE)
+				UpdateCameraSelection();
 		}
 	}
 }
@@ -451,18 +458,18 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 
 	switch (m_iSelected_Model)
 	{
-	case MODELID_DEFAULT:
+	case CAMERA_MODELID_DEFAULT:
 		return nullptr;
-	case MODELID_SON:
+	case CAMERA_MODELID_SON:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
-	case MODELID_HIT:
+	case CAMERA_MODELID_HIT:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
-	case MODELID_MINE:
+	case CAMERA_MODELID_MINE:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
-	case MODELID_21:
+	case CAMERA_MODELID_21:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
 		break;
 	}

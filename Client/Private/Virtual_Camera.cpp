@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Public\Virtual_Camera.h"
 #include "GameInstance.h"
-
+#include "Imgui_Manager.h"
 CVirtual_Camera::CVirtual_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCamera{ pDevice, pContext }
 {
@@ -64,7 +64,7 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 	case CAMERA_FREE_MODE:
 		Free_Camera(fTimeDelta);
 		break;
-	case CAMERA_DEFAULT_MODE:
+	case CAMERA_NORMAL_MODE:
 		Default_Camera(fTimeDelta);
 		break;
 	case CAMERA_CINEMATIC_MODE:
@@ -318,7 +318,7 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 		// Shift 키가 눌렸는지 확인하고, 눌렸다면 이동 속도를 증가
 		if (m_pGameInstance->Key_Pressing(DIK_LSHIFT))
 		{
-			fMoveSpeed *= 50.f;
+			fMoveSpeed *= 10.f;
 		}
 
 		if (m_pGameInstance->Key_Pressing(DIK_A))
@@ -364,6 +364,78 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 		}
 	}
 
+	POINT ptMouse{};
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
+
+	CImgui_Manager::IMGUI_SCREEN tDesc = CImgui_Manager::Get_Instance()->Get_Screen_Desc();
+
+	// 마우스가 ImGui 창 위에 있는지 확인
+	_bool isOverShaderImGui = (ptMouse.x >= tDesc.ShaderImGuiPos.x &&
+		ptMouse.x <= tDesc.ShaderImGuiPos.x + tDesc.ShaderImGuiSize.x &&
+		ptMouse.y >= tDesc.ShaderImGuiPos.y &&
+		ptMouse.y <= tDesc.ShaderImGuiPos.y + tDesc.ShaderImGuiSize.y);
+
+	_bool isOverMainImGui = (ptMouse.x >= tDesc.MainImGuiPos.x &&
+		ptMouse.x <= tDesc.MainImGuiPos.x + tDesc.MainImGuiSize.x &&
+		ptMouse.y >= tDesc.MainImGuiPos.y &&
+		ptMouse.y <= tDesc.MainImGuiPos.y + tDesc.MainImGuiSize.y);
+
+	if (isOverShaderImGui == true || isOverMainImGui == true)
+	{
+		__super::Priority_Update(fTimeDelta);
+
+		return;
+	}
+
+	_long MouseMoveX = {};
+	_long MouseMoveY = {};
+
+	// 시프트 + 가운데 마우스 버튼을 누른 상태에서 카메라 이동
+	if (m_pGameInstance->Key_Pressing(DIK_LSHIFT) && (m_pGameInstance->Get_DIMouseState(DIMK_WHEEL) & 0x80))
+	{
+		MouseMoveX = m_pGameInstance->Get_DIMouseMove(DIMM_X);
+		MouseMoveY = m_pGameInstance->Get_DIMouseMove(DIMM_Y);
+
+		// 좌우 마우스 움직임에 따라 Go_Left와 Go_Right로 카메라 이동
+		if (MouseMoveX < 0)
+			m_pTransformCom->Go_Right(-MouseMoveX * m_fMouseSensor * fTimeDelta);
+		else if (MouseMoveX > 0)
+			m_pTransformCom->Go_Left(MouseMoveX * m_fMouseSensor * fTimeDelta);
+
+		// 상하 마우스 움직임에 따라 Go_Up과 Go_Down로 카메라 이동
+		if (MouseMoveY > 0)
+			m_pTransformCom->Go_Up(MouseMoveY * m_fMouseSensor * fTimeDelta);
+		else if (MouseMoveY < 0)
+			m_pTransformCom->Go_Down(-MouseMoveY * m_fMouseSensor * fTimeDelta);
+	}
+	else if (m_pGameInstance->Get_DIMouseState(DIMK_WHEEL) & 0x80) // 휠만 눌렀을 때 회전
+	{
+		if ((MouseMoveX = m_pGameInstance->Get_DIMouseMove(DIMM_X)))
+		{
+			// Y축 회전
+			m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), m_fMouseSensor * MouseMoveX * fTimeDelta);
+		}
+
+		if ((MouseMoveY = m_pGameInstance->Get_DIMouseMove(DIMM_Y)))
+		{
+			// 상하 회전 (오른쪽 벡터를 축으로)
+			m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMoveY * fTimeDelta);
+		}
+	}
+
+	// 휠 스크롤로 줌인 줌아웃
+	_long MouseWheel = m_pGameInstance->Get_DIMouseMove(DIMM_WHEEL);
+	if (MouseWheel > 0)
+	{
+		// 휠을 위로 돌려 줌인
+		m_pTransformCom->Go_Straight(m_fMouseSensor * MouseWheel * fTimeDelta);
+	}
+	else if (MouseWheel < 0)
+	{
+		// 휠을 아래로 돌려 줌아웃
+		m_pTransformCom->Go_Backward(-m_fMouseSensor * MouseWheel * fTimeDelta);
+	}
 }
 
 void CVirtual_Camera::Default_Camera(_float fTimeDelta)
@@ -717,6 +789,14 @@ void CVirtual_Camera::StopCameraShake()
 	m_fShakeDuration = 0.0f;
 	m_fElapsedShakeTime = 0.0f;
 	m_vShakeOffset = XMVectorZero();
+}
+
+void CVirtual_Camera::Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode)
+{
+	if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_NORMAL)
+		m_currentMode = CAMERA_NORMAL_MODE;
+	else
+		m_currentMode = CAMERA_FREE_MODE;
 }
 
 

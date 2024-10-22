@@ -11,7 +11,7 @@ public:
 	enum CAMERA_MODE
 	{
 		CAMERA_FREE_MODE,
-		CAMERA_DEFAULT_MODE,
+		CAMERA_NORMAL_MODE,
 		CAMERA_CINEMATIC_MODE,
 		CAMERA_MODE_END
 	};
@@ -53,6 +53,7 @@ public:
 	void StartCameraShake(_float fDuration, _float fMagnitude);
 	void StopCameraShake();
 
+	void Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode);
 public:
 	const _char* GetTabName() const { return m_Name; };
 	void SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
@@ -76,7 +77,7 @@ private:
 	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
 public:
-	CAMERA_MODE m_currentMode = { CAMERA_DEFAULT_MODE };
+	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
 	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 
 	_char* m_Name;
