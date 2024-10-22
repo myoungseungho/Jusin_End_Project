@@ -1,27 +1,28 @@
 #pragma once
 #include "stdafx.h"
-#include "Effect_Single.h"
+#include "Effect_Overlap.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
-CEffect_Single::CEffect_Single(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CEffect_Overlap::CEffect_Overlap(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CEffect{ pDevice ,pContext }
 {
 }
 
-CEffect_Single::CEffect_Single(const CGameObject& Prototype)
+CEffect_Overlap::CEffect_Overlap(const CGameObject& Prototype)
 	: CEffect{ Prototype }
 {
 }
 
-HRESULT CEffect_Single::Initialize_Prototype()
+HRESULT CEffect_Overlap::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CEffect_Single::Initialize(void* pArg)
+HRESULT CEffect_Overlap::Initialize(void* pArg)
 {
-	m_eEffect_Type = EFFECT_SINGLE;
+	m_eEffect_Type = EFFECT_OVERLAP;
+	m_iPassIndex = 3;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -44,7 +45,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
 
 		m_iRenderIndex = pEffectDesc->iRenderIndex;
-		m_iPassIndex = pEffectDesc->iPassIndex;
+		//m_iPassIndex = pEffectDesc->iPassIndex;
 		m_iNumWidthImage = pEffectDesc->iNumWidthImage;
 		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 
@@ -55,7 +56,7 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
-			return S_OK;
+		return S_OK;
 	}
 
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
@@ -64,37 +65,41 @@ HRESULT CEffect_Single::Initialize(void* pArg)
 
 }
 
-void CEffect_Single::Priority_Update(_float fTimeDelta)
+void CEffect_Overlap::Priority_Update(_float fTimeDelta)
 {
 }
 
-void CEffect_Single::Update(_float fTimeDelta)
+void CEffect_Overlap::Update(_float fTimeDelta)
 {
-	
+
 }
 
-void CEffect_Single::Late_Update(_float fTimeDelta)
+void CEffect_Overlap::Late_Update(_float fTimeDelta)
 {
-	if (m_pRenderInstance->Get_isLayerView() == true)
+	if (!m_bIsNotPlaying)
 	{
-		if (!m_bIsNotPlaying)
+		if (m_pRenderInstance->Get_isLayerView() == true)
 		{
 			if (m_iRenderIndex == 2) //레이어
-				Add_Render_Object();
-		}
+			{
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+			}
 
-	}
-	else
-	{
-		if (!m_bIsNotPlaying)
+		}
+		else
 		{
 			if (m_iRenderIndex == 1) //테스트
-				Add_Render_Object();
+			{
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+			}
 		}
 	}
 }
 
-HRESULT CEffect_Single::Render(_float fTimeDelta)
+
+HRESULT CEffect_Overlap::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -103,42 +108,28 @@ HRESULT CEffect_Single::Render(_float fTimeDelta)
 
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	/*	if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-			return E_FAIL;*/
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-		
-
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 			return E_FAIL;
 
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
 			return E_FAIL;
-		
-		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) // 2
+
+		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) 
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
 
-
-
 	if (m_iPassIndex == 1)
-		m_iPassIndex = 3; //컬논 + 디폴트
+		m_iPassIndex = 3;
 	else
 		m_iPassIndex = 1;
-
-	//if (m_iPassIndex == 1)
-	//	m_iPassIndex = 0;
-	//else
-	//	m_iPassIndex = 1;
 
 	return S_OK;
 }
 
-HRESULT CEffect_Single::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
+HRESULT CEffect_Overlap::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Single_Eff_VtxMesh"),
@@ -169,76 +160,50 @@ HRESULT CEffect_Single::Ready_Components(_wstring* pModelName, _wstring* pMaskTe
 	return S_OK;
 }
 
-HRESULT CEffect_Single::Bind_ShaderResources()
+HRESULT CEffect_Overlap::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
-	
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_iUnique_Index", &m_iUnique_Index,sizeof(int))))
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_iUnique_Index", &m_iUnique_Index, sizeof(int))))
 		return E_FAIL;
-	
-	return S_OK;
-}
-
-HRESULT CEffect_Single::Add_Render_Object()
-{
-	switch (m_iPassIndex)
-	{
-	case 0:
-		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
-		break;
-	case 1:
-		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
-		break;
-	case 2:
-		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
-		break;
-	case 3:
-		m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
-		break;
-	}
-	
 
 	return S_OK;
 }
 
-CEffect_Single* CEffect_Single::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CEffect_Overlap* CEffect_Overlap::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CEffect_Single* pInstance = new CEffect_Single(pDevice, pContext);
+	CEffect_Overlap* pInstance = new CEffect_Overlap(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CEffect_Single"));
+		MSG_BOX(TEXT("Failed to Created : CEffect_Overlap"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CEffect_Single::Clone(void* pArg)
+CGameObject* CEffect_Overlap::Clone(void* pArg)
 {
-	CEffect_Single* pInstance = new CEffect_Single(*this);
+	CEffect_Overlap* pInstance = new CEffect_Overlap(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CEffect_Single"));
+		MSG_BOX(TEXT("Failed to Cloned : CEffect_Overlap"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CEffect_Single::Free()
+void CEffect_Overlap::Free()
 {
 	__super::Free();
 

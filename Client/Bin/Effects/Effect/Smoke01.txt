@@ -10,7 +10,7 @@ EffectName: aa
 ModelName: Model_Effect_cmn_SmokeModels0102
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01aa
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
@@ -43,7 +43,7 @@ EffectName: Smoke0102
 ModelName: Model_Effect_cmn_SmokeModels0103
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0102
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 1
@@ -85,7 +85,7 @@ EffectName: Smoke0103
 ModelName: Model_Effect_cmn_SmokeModels0104
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0103
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 2
@@ -127,7 +127,7 @@ EffectName: Smoke0104
 ModelName: Model_Effect_cmn_SmokeModels0105
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0104
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 3
@@ -169,7 +169,7 @@ EffectName: Smoke0105
 ModelName: Model_Effect_cmn_SmokeModels0106
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0105
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 4
@@ -211,7 +211,7 @@ EffectName: Smoke0106
 ModelName: Model_Effect_cmn_SmokeModels0107
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0106
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 5
@@ -253,7 +253,7 @@ EffectName: Smoke0107
 ModelName: Model_Effect_cmn_SmokeModels0108
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0107
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 6
@@ -295,7 +295,7 @@ EffectName: Smoke0108
 ModelName: Model_Effect_cmn_SmokeModels0109
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0108
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 7
@@ -337,7 +337,7 @@ EffectName: Smoke0109
 ModelName: Model_Effect_cmn_SmokeModels0110
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0109
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 8
@@ -379,7 +379,7 @@ EffectName: Smoke0110
 ModelName: Model_Effect_cmn_SmokeModels0111
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0110
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 9
@@ -421,7 +421,7 @@ EffectName: Smoke0111
 ModelName: Model_Effect_cmn_SmokeModels0112
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0111
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 10
@@ -463,7 +463,7 @@ EffectName: Smoke0112
 ModelName: Model_Effect_cmn_SmokeModels0101
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0112
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 11

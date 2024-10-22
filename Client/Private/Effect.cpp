@@ -56,16 +56,6 @@ HRESULT CEffect::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CEffect::Effect_Render(_float fTimeDelta, _int iIndex)
-{
-	return E_NOTIMPL;
-}
-
-HRESULT CEffect::Pick_Effect_Render(_float fTimeDelta, _int iIndex)
-{
-	return E_NOTIMPL;
-}
-
 void CEffect::Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame)
 {
 	m_pAnimation->Add_KeyFrame(KeyFrameNumber, NewKeyFrame);

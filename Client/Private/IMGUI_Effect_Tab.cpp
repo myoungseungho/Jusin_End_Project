@@ -11,8 +11,8 @@
 #include <Effect_Layer.h>
 #include "Effect_Animation.h"
 
-const char* Effect[] = { "Each", "Layer", "Layer KeyFrame"};
-const char* EffectType[] = { "Single", "MoveTex", "Multi" };
+const char* Effect[] = { "Test", "Layer", "Layer KeyFrame"};
+const char* EffectType[] = { "NoneLight", "Blend", "ZNone", "Overlap" };
 
 static int CurrentEffect = 0;
 static int CurrentEffectType = 0;
@@ -116,7 +116,7 @@ void CIMGUI_Effect_Tab::Save_To_Effect_Layer(_uint iCurTestEffectIndex, const ws
 
 HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
 {
-    wstring FolderName = L"../Bin/Effects/"; // 파일 경로 설정
+    wstring FolderName = L"../Bin/Effects/Effect/"; // 파일 경로 설정
     wstring FileName = strEffectLayerTag;
     wstring TXT = L".txt";
 

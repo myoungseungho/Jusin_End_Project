@@ -30,16 +30,9 @@ VS_OUT VS_MAIN(VS_IN In)
 {
     VS_OUT Out;
 
-	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
     vector vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
     vPosition = mul(vPosition, g_ViewMatrix);
     vPosition = mul(vPosition, g_ProjMatrix);
-
-	/* 투영행렬까지 곱한 위치벡터 */
-	/* = x : fov적용 */
-	/* = y : fov적용 */
-	/* = z : 0 ~ f */
-	/* = w : n ~ f */
 
     Out.vPosition = vPosition;
     Out.vNormal = normalize(mul(vector(In.vNormal, 0.f), g_WorldMatrix));
@@ -71,22 +64,6 @@ struct PS_OUT_PICK
     float4 vDiffuse : SV_TARGET0;
 };
 
-PS_OUT PS_MAIN(PS_IN In)
-{
-    PS_OUT Out;
-
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-    if (vMtrlDiffuse.a < 0.95f)
-        discard;
-    vMtrlDiffuse.a = vMtrlAlpha.r;
-    Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlAlpha.r;
-    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
-
-    return Out;
-}
-
 PS_OUT_PICK PS_MAIN_PICK(PS_IN In)
 {
     PS_OUT_PICK Out;
@@ -96,7 +73,53 @@ PS_OUT_PICK PS_MAIN_PICK(PS_IN In)
     return Out;
 }
 
-PS_OUT PS_MAIN_DOUBLE(PS_IN In)
+PS_OUT PS_MAIN(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    if (vMtrlDiffuse.a < 0.99f)
+        discard;
+    
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vAlpha = vMtrlAlpha.r;
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_NONELIGHT(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    if (vMtrlDiffuse.a < 0.99f)
+        discard;
+    
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vAlpha = vMtrlAlpha.r;
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_ALPHABLEND_EFFECT(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vAlpha = vMtrlAlpha.r;
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
 {
     PS_OUT Out;
 
@@ -107,15 +130,15 @@ PS_OUT PS_MAIN_DOUBLE(PS_IN In)
     
     vMtrlDiffuse.rgb *= vBrown;
     // 비율에 따라 색상 조정
-    Out.vDiffuse = vMtrlDiffuse;
+   // Out.vDiffuse = vMtrlDiffuse;
 //// 비율에 따라 색상 조정
-//    Out.vDiffuse = vector(
-//    min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
-//    min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
-//    min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
-//    //vMtrlDiffuse.a
-//    0.5f
-//    );
+    Out.vDiffuse = vector(
+    min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
+    min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
+    min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
+    //vMtrlDiffuse.a
+    1.f
+    );
 
     Out.vAlpha = vMtrlAlpha.r;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
@@ -125,7 +148,7 @@ PS_OUT PS_MAIN_DOUBLE(PS_IN In)
 
 technique11 DefaultTechnique
 {
-    pass Default
+    pass Default // 0
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
@@ -140,7 +163,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN();
     }
 
-    pass Pick
+    pass Pick // 1
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_None, 0);
@@ -155,7 +178,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_PICK();
     }
 
-    pass Blend
+    pass Blend // 2
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
@@ -170,10 +193,10 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN();
     }
 
-    pass Double
+    pass ModelAnimation //3
     {
         SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_None, 0);
+        SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 		//SetDepthStencilState();
 		//SetBlendState();
@@ -182,8 +205,52 @@ technique11 DefaultTechnique
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
-        PixelShader = compile ps_5_0 PS_MAIN_DOUBLE();
+        PixelShader = compile ps_5_0 PS_MAIN_MODELANIMATION();
         //모델 두겹용
+    }
+    pass NoneLight //4
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_NONELIGHT();
+    }
+
+    pass AlphaBlendEffect //5
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_ALPHABLEND_EFFECT();
+    }
+
+    pass Alpha_ZNone_Effect //6
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_ALPHABLEND_EFFECT();
     }
 }
 

@@ -5,13 +5,14 @@
 #include "Effect.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
-#include <Effect_Single.h>
 #include <string>
 #include <locale>
 #include <codecvt>
 #include "IMGUI_Shader_Tab.h"
-#include "Effect_Multi.h"
-#include "Effect_MoveTex.h"
+#include "Effect_Nonelight.h"
+#include "Effect_Blend.h"
+#include "Effect_ZNone.h"
+#include "Effect_Overlap.h"
 
 IMPLEMENT_SINGLETON(CEffect_Manager)
 
@@ -96,32 +97,20 @@ HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag)
 
 HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)
 {
-	// pSavedEffect가 nullptr인 경우 실패 반환
-	if (!pSavedEffect) return E_FAIL;
+	if (!pSavedEffect) 
+		return E_FAIL;
 
-	//// 기존에 존재하는 레이어들을 제거
-	//for (auto& layerPair : m_FinalEffects)
-	//{
-	//	Safe_Release(layerPair.second);
-	//}
-	//m_FinalEffects.clear();
-
-	// pSavedEffect에 있는 각 레이어 데이터를 순회
 	for (const auto& layerData : *pSavedEffect)
 	{
-		// 새로운 레이어 생성
 		CEffect_Layer* pLayer = CEffect_Layer::Create();
-		if (!pLayer) continue;  // 레이어 생성에 실패한 경우 건너뜀
+		if (!pLayer) continue; 
 
-		// 레이어에 필요한 설정 값을 할당
 		pLayer->m_fDuration = layerData.duration;
 		pLayer->m_fTickPerSecond = layerData.tickPerSecond;
 		pLayer->m_iNumKeyFrames = layerData.keyFramesCount;
 
-		// 각 이펙트 데이터를 순회하며 레이어에 추가
 		for (const auto& effectData : layerData.effects)
 		{
-			// 이펙트 생성 정보 초기화
 			CEffect::EFFECT_DESC EffectDesc;
 			EffectDesc.ModelName = effectData.modelName;
 			EffectDesc.EffectName = effectData.effectName;
@@ -136,31 +125,30 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
 
-			CEffect_Single* pSingleEffect = { nullptr };
-			CEffect_Multi* pMultiEffect = { nullptr };
-			CEffect_MoveTex* pMoveTexEffect = { nullptr };
+			CEffect_NoneLight* pNonelight = { nullptr };
+			CEffect_Blend* pBlend = { nullptr };
+			CEffect_ZNone* pZNone = { nullptr };
+			CEffect_Overlap* pOverlap = { nullptr };
 
 			wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
 			string sMaskTextureName = converter.to_bytes(EffectDesc.MaskTextureName);
 
-			// 이펙트를 클론하여 레이어에 추가
 			switch (EffectDesc.EffectType)
 			{
-			case EFFECT_SINGLE:
-				pSingleEffect = static_cast<CEffect_Single*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Single"), &EffectDesc));
+			case EFFECT_NONELIGHT:
+				pNonelight = static_cast<CEffect_NoneLight*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_NoneLight"), &EffectDesc));
 
-				if (!pSingleEffect) {
+				if (!pNonelight) 
+				{
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pSingleEffect->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pNonelight->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
 
-				// 이펙트에 기본 설정값 적용
-				pSingleEffect->m_bIsNotPlaying = effectData.isNotPlaying;
-				pSingleEffect->m_bIsLoop = effectData.isLoop;
+				pNonelight->m_bIsNotPlaying = effectData.isNotPlaying;
+				pNonelight->m_bIsLoop = effectData.isLoop;
 
-				// 이펙트의 각 키프레임 설정
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
 					EFFECT_KEYFRAME keyFrame;
@@ -171,33 +159,30 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					keyFrame.fDuration = keyFrameData.duration;
 					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
 
-					// 키프레임 추가
-					pSingleEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+					pNonelight->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
 				}
 
-				// 레이어에 이펙트를 추가
-				if (FAILED(pLayer->Add_Effect(pSingleEffect))) {
-					Safe_Release(pSingleEffect);  // 실패 시 이펙트를 해제
+				if (FAILED(pLayer->Add_Effect(pNonelight))) 
+				{
+					Safe_Release(pNonelight);
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
 				break;
-			case EFFECT_MULTI:
-				pMultiEffect = static_cast<CEffect_Multi*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Multi"), &EffectDesc));
+			case EFFECT_BLEND:
+				pBlend = static_cast<CEffect_Blend*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Blend"), &EffectDesc));
 
-				if (!pMultiEffect) {
+				if (!pBlend)
+				{
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
 
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pBlend->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pMultiEffect->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				pBlend->m_bIsNotPlaying = effectData.isNotPlaying;
+				pBlend->m_bIsLoop = effectData.isLoop;
 
-				// 이펙트에 기본 설정값 적용
-				pMultiEffect->m_bIsNotPlaying = effectData.isNotPlaying;
-				pMultiEffect->m_bIsLoop = effectData.isLoop;
-
-				// 이펙트의 각 키프레임 설정
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
 					EFFECT_KEYFRAME keyFrame;
@@ -208,32 +193,30 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					keyFrame.fDuration = keyFrameData.duration;
 					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
 
-					// 키프레임 추가
-					pMultiEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+					pBlend->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
 				}
 
-				// 레이어에 이펙트를 추가
-				if (FAILED(pLayer->Add_Effect(pMultiEffect))) {
-					Safe_Release(pMultiEffect);  // 실패 시 이펙트를 해제
+				if (FAILED(pLayer->Add_Effect(pBlend)))
+				{
+					Safe_Release(pBlend);
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
 				break;
-			case EFFECT_MOVETEX:
-				pMoveTexEffect = static_cast<CEffect_MoveTex*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_MoveTex"), &EffectDesc));
+			case EFFECT_ZNONE:
+				pZNone = static_cast<CEffect_ZNone*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_ZNone"), &EffectDesc));
 
-				if (!pMoveTexEffect) {
+				if (!pZNone)
+				{
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pMoveTexEffect->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pZNone->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
 
-				// 이펙트에 기본 설정값 적용
-				pMoveTexEffect->m_bIsNotPlaying = effectData.isNotPlaying;
-				pMoveTexEffect->m_bIsLoop = effectData.isLoop;
+				pZNone->m_bIsNotPlaying = effectData.isNotPlaying;
+				pZNone->m_bIsLoop = effectData.isLoop;
 
-				// 이펙트의 각 키프레임 설정
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
 					EFFECT_KEYFRAME keyFrame;
@@ -244,13 +227,46 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					keyFrame.fDuration = keyFrameData.duration;
 					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
 
-					// 키프레임 추가
-					pMoveTexEffect->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+					pZNone->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
 				}
 
-				// 레이어에 이펙트를 추가
-				if (FAILED(pLayer->Add_Effect(pMoveTexEffect))) {
-					Safe_Release(pMoveTexEffect);  // 실패 시 이펙트를 해제
+				if (FAILED(pLayer->Add_Effect(pZNone)))
+				{
+					Safe_Release(pZNone);
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+				break;
+			case EFFECT_OVERLAP:
+				pOverlap = static_cast<CEffect_Overlap*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Overlap"), &EffectDesc));
+
+				if (!pOverlap)
+				{
+					Safe_Release(pLayer);
+					return E_FAIL;
+				}
+
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pOverlap->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+
+				pOverlap->m_bIsNotPlaying = effectData.isNotPlaying;
+				pOverlap->m_bIsLoop = effectData.isLoop;
+
+				for (const auto& keyFrameData : effectData.keyframes)
+				{
+					EFFECT_KEYFRAME keyFrame;
+					keyFrame.vPosition = keyFrameData.position;
+					keyFrame.vScale = keyFrameData.scale;
+					keyFrame.vRotation = keyFrameData.rotation;
+					keyFrame.fCurTime = keyFrameData.curTime;
+					keyFrame.fDuration = keyFrameData.duration;
+					keyFrame.bIsNotPlaying = keyFrameData.bIsNotPlaying;
+
+					pOverlap->Add_KeyFrame(keyFrameData.keyFrameNumber, keyFrame);
+				}
+
+				if (FAILED(pLayer->Add_Effect(pOverlap)))
+				{
+					Safe_Release(pOverlap);
 					Safe_Release(pLayer);
 					return E_FAIL;
 				}
@@ -258,7 +274,6 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			}
 		}
 
-		// 생성된 레이어를 m_FinalEffects에 추가
 		m_FinalEffects.emplace(layerData.layerName, pLayer);
 	}
 
@@ -550,8 +565,8 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 
 	switch (eEffectType)
 	{
-	case EFFECT_SINGLE:
-		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Single"), &EffectDesc);
+	case EFFECT_NONELIGHT:
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_NoneLight"), &EffectDesc);
 		pTestEffect = static_cast<CEffect*>(pEffect);
 
 		if (pTestEffect == nullptr)
@@ -561,8 +576,8 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
-	case EFFECT_MOVETEX:
-		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_MoveTex"), &EffectDesc);
+	case EFFECT_BLEND:
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Blend"), &EffectDesc);
 		pTestEffect = static_cast<CEffect*>(pEffect);
 
 		if (pTestEffect == nullptr)
@@ -572,8 +587,19 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
-	case EFFECT_MULTI:
-		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Multi"), &EffectDesc);
+	case EFFECT_ZNONE:
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_ZNone"), &EffectDesc);
+		pTestEffect = static_cast<CEffect*>(pEffect);
+
+		if (pTestEffect == nullptr)
+			return E_FAIL;
+
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+
+		m_TestEffect.push_back(pTestEffect);
+		break;
+	case EFFECT_OVERLAP:
+		pEffect = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Overlap"), &EffectDesc);
 		pTestEffect = static_cast<CEffect*>(pEffect);
 
 		if (pTestEffect == nullptr)

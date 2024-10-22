@@ -7,9 +7,10 @@
 #include "Monster.h"
 #include "Effect_Rect.h"
 #include "Shader_Texture.h"
-#include "Effect_MoveTex.h"
-#include "Effect_Multi.h"
-#include "Effect_Single.h"
+#include "Effect_NoneLight.h"
+#include "Effect_Blend.h"
+#include "Effect_ZNone.h"
+#include "Effect_Overlap.h"
 #include "SpaceSky.h"
 #include "Player.h"
 #include "Effect.h"
@@ -2031,16 +2032,20 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 #pragma endregion
 
 #pragma region Effect Object
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_MoveTex"),
-		CEffect_MoveTex::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_NoneLight"),
+		CEffect_NoneLight::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Multi"),
-		CEffect_Multi::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Blend"),
+		CEffect_Blend::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Single"),
-		CEffect_Single::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_ZNone"),
+		CEffect_ZNone::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Overlap"),
+		CEffect_Overlap::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 #pragma endregion
 

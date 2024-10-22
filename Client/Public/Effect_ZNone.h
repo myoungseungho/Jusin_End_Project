@@ -1,4 +1,4 @@
-#pragma once
+#pragma once	
 
 #include "Client_Defines.h"
 #include "Effect.h"
@@ -6,12 +6,12 @@
 
 BEGIN(Client)
 
-class CEffect_Multi : public CEffect
+class CEffect_ZNone : public CEffect
 {
 private:
-	CEffect_Multi(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect_Multi(const CGameObject& Prototype);
-	virtual ~CEffect_Multi() = default;
+	CEffect_ZNone(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CEffect_ZNone(const CGameObject& Prototype);
+	virtual ~CEffect_ZNone() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -22,18 +22,11 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	_uint		m_iNumColorTexture = { 0 };
-	_float		m_fChangeColorSpeed = { 0.f };
-
-	_uint		m_iNumMaskTexture = { 0 };
-	_float		m_fChangeMaskSpeed = { 0.f };
-
-private:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
 	virtual HRESULT Bind_ShaderResources() override;
 
 public:
-	static CEffect_Multi* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CEffect_ZNone* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

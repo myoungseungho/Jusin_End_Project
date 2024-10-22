@@ -6,12 +6,12 @@
 
 BEGIN(Client)
 
-class CEffect_Single : public CEffect
+class CEffect_Overlap : public CEffect
 {
 private:
-	CEffect_Single(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect_Single(const CGameObject& Prototype);
-	virtual ~CEffect_Single() = default;
+	CEffect_Overlap(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CEffect_Overlap(const CGameObject& Prototype);
+	virtual ~CEffect_Overlap() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -24,10 +24,9 @@ public:
 private:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName) override;
 	virtual HRESULT Bind_ShaderResources() override;
-	HRESULT Add_Render_Object();
 
 public:
-	static CEffect_Single* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CEffect_Overlap* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

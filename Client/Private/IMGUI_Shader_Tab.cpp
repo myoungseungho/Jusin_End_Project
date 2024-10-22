@@ -8,7 +8,6 @@
 #include <codecvt>
 #include <string>
 #include <iostream>
-#include "Effect_Single.h"
 #include "IMGUI_Shader_Tab.h"
 #include "Effect_Manager.h"
 #include "GameInstance.h"

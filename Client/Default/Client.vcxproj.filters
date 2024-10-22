@@ -31,21 +31,6 @@
     <Filter Include="02.GameObjects\02. Effect\00.Manager">
       <UniqueIdentifier>{c0a93e36-b2ad-4185-8cd3-73a927e1855a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\02. Effect\00.Manager\Layer">
-      <UniqueIdentifier>{683a4001-94e0-4898-ab99-3d12226ca1df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\02. Effect\01.Animation">
-      <UniqueIdentifier>{dd48db30-78d4-4faa-b80e-4631ed797fa5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\02. Effect\02.Single">
-      <UniqueIdentifier>{493f650d-556d-4509-be13-08853e2c3d85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\02. Effect\04.Multi">
-      <UniqueIdentifier>{3a83342c-356f-48e0-b678-b6711abe33d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\02. Effect\03.MoveTex">
-      <UniqueIdentifier>{2510c4b6-8824-429c-b36f-9d69c4fcd82a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Map">
       <UniqueIdentifier>{31d428c7-e810-4b31-bda4-15439cfab1f2}</UniqueIdentifier>
     </Filter>
@@ -93,6 +78,24 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Space\SpaceRock">
       <UniqueIdentifier>{2dd1dd60-338b-4de4-a074-093b811899f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\00.Manager\01.Animation">
+      <UniqueIdentifier>{dd48db30-78d4-4faa-b80e-4631ed797fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\00.Manager\00. Layer">
+      <UniqueIdentifier>{683a4001-94e0-4898-ab99-3d12226ca1df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\01. NoneLight">
+      <UniqueIdentifier>{493f650d-556d-4509-be13-08853e2c3d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\02. Blend">
+      <UniqueIdentifier>{af5dec4e-c9e5-42a3-a6c8-c85a0eed169b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\03. Znone">
+      <UniqueIdentifier>{3a83342c-356f-48e0-b678-b6711abe33d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\02. Effect\04. Overlap">
+      <UniqueIdentifier>{2510c4b6-8824-429c-b36f-9d69c4fcd82a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -236,25 +239,25 @@
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Layer.h">
-      <Filter>02.GameObjects\02. Effect\00.Manager\Layer</Filter>
+      <Filter>02.GameObjects\02. Effect\00.Manager\00. Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Manager.h">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Effect_MoveTex.h">
-      <Filter>02.GameObjects\02. Effect\03.MoveTex</Filter>
+    <ClInclude Include="..\Public\Effect_Overlap.h">
+      <Filter>02.GameObjects\02. Effect\04. Overlap</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Effect_Multi.h">
-      <Filter>02.GameObjects\02. Effect\04.Multi</Filter>
+    <ClInclude Include="..\Public\Effect_ZNone.h">
+      <Filter>02.GameObjects\02. Effect\03. Znone</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Effect_Single.h">
-      <Filter>02.GameObjects\02. Effect\02.Single</Filter>
+    <ClInclude Include="..\Public\Effect_NoneLight.h">
+      <Filter>02.GameObjects\02. Effect\01. NoneLight</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SpaceSky.h">
       <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Effect_Animation.h">
-      <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+      <Filter>02.GameObjects\02. Effect\00.Manager\01.Animation</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
       <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
@@ -309,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\SpaceRock.h">
       <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Blend.h">
+      <Filter>02.GameObjects\02. Effect\02. Blend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -382,19 +388,19 @@
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Effect_Layer.cpp">
-      <Filter>02.GameObjects\02. Effect\00.Manager\Layer</Filter>
+      <Filter>02.GameObjects\02. Effect\00.Manager\00. Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Effect_MoveTex.cpp">
-      <Filter>02.GameObjects\02. Effect\03.MoveTex</Filter>
+    <ClCompile Include="..\Private\Effect_Overlap.cpp">
+      <Filter>02.GameObjects\02. Effect\04. Overlap</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Effect_Multi.cpp">
-      <Filter>02.GameObjects\02. Effect\04.Multi</Filter>
+    <ClCompile Include="..\Private\Effect_ZNone.cpp">
+      <Filter>02.GameObjects\02. Effect\03. Znone</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Effect_Single.cpp">
-      <Filter>02.GameObjects\02. Effect\02.Single</Filter>
+    <ClCompile Include="..\Private\Effect_NoneLight.cpp">
+      <Filter>02.GameObjects\02. Effect\01. NoneLight</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_Shader_Tab</Filter>
@@ -403,7 +409,7 @@
       <Filter>02.GameObjects\Map\Space\SpaceSky</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Effect_Animation.cpp">
-      <Filter>02.GameObjects\02. Effect\01.Animation</Filter>
+      <Filter>02.GameObjects\02. Effect\00.Manager\01.Animation</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
       <Filter>97.IMGUI\Tap\IMGUI_Object_Tab</Filter>
@@ -455,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceRock.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect_Blend.cpp">
+      <Filter>02.GameObjects\02. Effect\02. Blend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
