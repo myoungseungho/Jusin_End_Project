@@ -1,0 +1,136 @@
+[VirtualCamera]
+ModelID: MODELID_HIT
+
+[Skill]
+SkillName: Son_Skill1
+
+[Animation]
+AnimationName: Son_Skill1_Anim1
+PointCount: 3
+
+[CameraPoint]
+Position: 0.114815 2.92496 -5.98594
+Rotation: 0.138204 0.0142467 -0.00198824 0.990299
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -3.16864 2.92496 -3.8621
+Rotation: 0.141058 0.334171 -0.0506571 0.930519
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -4.81023 2.92496 0.194358
+Rotation: 0.153779 0.653208 -0.137893 0.728462
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Skill1_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Son_Skill1_Anim3
+PointCount: 0
+
+[Skill]
+SkillName: Son_Skill2
+
+[Animation]
+AnimationName: Son_Skill2_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Son_Skill2_Anim2
+PointCount: 0
+
+[VirtualCamera]
+ModelID: MODELID_MINE
+
+[Skill]
+SkillName: Hit_Skill1
+
+[Animation]
+AnimationName: Hit_Skill1_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Hit_Skill1_Anim2
+PointCount: 0
+
+[VirtualCamera]
+ModelID: MODELID_21
+
+[Skill]
+SkillName: Mine_Skill1
+
+[Animation]
+AnimationName: Mine_Skill1_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Mine_Skill1_Anim2
+PointCount: 0
+
+[Skill]
+SkillName: Mine_Skill2
+
+[Animation]
+AnimationName: Mine_Skill2_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Mine_Skill2_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Mine_Skill2_Anim3
+PointCount: 0
+
+[VirtualCamera]
+ModelID: Unknown
+
+[Skill]
+SkillName: 21_Skill1
+
+[Animation]
+AnimationName: 21_Skill1_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: 21_Skill2
+
+[Animation]
+AnimationName: 21_Skill2_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill2_Anim2
+PointCount: 0
+
+[Skill]
+SkillName: 21_Skill3
+
+[Animation]
+AnimationName: 21_Skill3_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill3_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill3_Anim3
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Skill3_Anim4
+PointCount: 0
+

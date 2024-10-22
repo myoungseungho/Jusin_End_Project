@@ -163,7 +163,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 			m_iSelected_Animation = -1;
 
 			//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
-			if(m_iSelected_Model==CAMERA_MODELID_DEFAULT || m_iSelected_Model == CAMERA_MODELID_FREE)
+			if (m_iSelected_Model == CAMERA_MODELID_DEFAULT || m_iSelected_Model == CAMERA_MODELID_FREE)
 				UpdateCameraSelection();
 		}
 	}
@@ -461,16 +461,16 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 	case CAMERA_MODELID_DEFAULT:
 		return nullptr;
 	case CAMERA_MODELID_SON:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 		break;
 	case CAMERA_MODELID_HIT:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
 		break;
 	case CAMERA_MODELID_MINE:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
 		break;
 	case CAMERA_MODELID_21:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
 		break;
 	}
 	// 해당모델의 Transform에서 월드매트리스 Ptr이 있어야 한다.
