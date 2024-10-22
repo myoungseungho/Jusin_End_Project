@@ -13,7 +13,6 @@
 
 #include "Model_Preview.h"
 
-#include "Effect_Rect.h"
 #include "Shader_Texture.h"
 #include "Effect_MoveTex.h"
 #include "Effect_Multi.h"
@@ -2362,10 +2361,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CShader_Texture::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Rect"),
-		CEffect_Rect::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera"),
 		CMain_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

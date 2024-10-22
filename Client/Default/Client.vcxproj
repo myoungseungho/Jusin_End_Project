@@ -222,7 +222,6 @@
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Effect_MoveTex.h" />
     <ClInclude Include="..\Public\Effect_Multi.h" />
-    <ClInclude Include="..\public\Effect_Rect.h" />
     <ClInclude Include="..\Public\Effect_Single.h" />
     <ClInclude Include="..\Public\FallingStar.h" />
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
@@ -341,7 +340,6 @@
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Effect_MoveTex.cpp" />
     <ClCompile Include="..\Private\Effect_Multi.cpp" />
-    <ClCompile Include="..\private\Effect_Rect.cpp" />
     <ClCompile Include="..\Private\Effect_Single.cpp" />
     <ClCompile Include="..\Private\FallingStar.cpp" />
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />

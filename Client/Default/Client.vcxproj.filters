@@ -88,9 +88,6 @@
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\Character\AttackObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\AnimationNameMap.cpp">
-      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Character.cpp">
       <Filter>02.GameObjects\Character</Filter>
     </ClCompile>
@@ -126,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,12 +327,6 @@
     <Filter Include="02.GameObjects\Effect_Rect\Shader_Texture">
       <UniqueIdentifier>{36c865a4-6023-4cda-91d1-e5587c16dee6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Object_Tab">
-      <UniqueIdentifier>{47930f86-8285-4090-a54f-9f4c256d5495}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.IMGUI\Tap\IMGUI_Level_Tab">
-      <UniqueIdentifier>{ee0af8d6-1528-4db2-9e7b-3e906fe86406}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Effect">
       <UniqueIdentifier>{a118aae3-8ba7-416e-a709-e00fa2e17ce2}</UniqueIdentifier>
     </Filter>
@@ -496,9 +490,6 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_SubHpGauge.h">
       <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Effect_Rect.h">
-      <Filter>02.GameObjects\Effect_Rect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\imnodes.h">
       <Filter>97.IMGUI\Plugin</Filter>
@@ -690,15 +681,6 @@
     <ClInclude Include="..\Public\Model_Preview.h">
       <Filter>02.GameObjects\Character\Model_Preview</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Level_Loading.h">
-      <Filter>01.Level\99.Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Level\00.GamePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Loader.h">
-      <Filter>01.Level\99.Loading\Loader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Goku_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
     </ClInclude>
@@ -734,6 +716,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Level\99.Loading\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Loading.h">
+      <Filter>01.Level\99.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -844,9 +835,6 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_SubHpGauge.cpp">
       <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\Effect_Rect.cpp">
-      <Filter>02.GameObjects\Effect_Rect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\imnodes.cpp">
       <Filter>97.IMGUI\Plugin</Filter>
@@ -1009,30 +997,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceRock.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\AnimationNameMap.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Character.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Model_Preview.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Play_21.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Play_Goku.cpp">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
-      <Filter>02.GameObjects\Test</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>

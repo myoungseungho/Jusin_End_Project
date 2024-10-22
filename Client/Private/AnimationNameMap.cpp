@@ -22,10 +22,6 @@ void CAnimationNameMap::Initalize()
 {
 	m_MAP_AnimationPedia[SELECT_GOKU]["TEST"] = 0;
 
-
-
-	
-
 	m_MAP_AnimationPedia[PLAY_GOKU]["GKS000_body"] = 0;
 	m_MAP_AnimationPedia[PLAY_GOKU]["GKS001_body"] = 1;
 	m_MAP_AnimationPedia[PLAY_GOKU]["GKS002_body"] = 2;

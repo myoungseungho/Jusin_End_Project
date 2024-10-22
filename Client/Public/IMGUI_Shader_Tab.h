@@ -1,6 +1,5 @@
 #pragma once
 #include "IMGUI_Tab.h"
-#include "Effect_Rect.h"
 #include "Shader_Texture.h"
 #include "Shader_Tab_Defines.h"
 BEGIN(Client)
@@ -46,7 +45,6 @@ public:
 	void Update(_float fTimeDelta);
 	void Render(_float fTimeDelta) override;
 	void TabPos_Init(); 
-	void Set_EffectRect(CEffect_Rect* pEffectRect) { m_Effect_Rect = pEffectRect; }
 	void Create_NodeTexture(string szPath);
 	void Push_ShaderTexture(CShader_Texture* pShaderTexture) {
 		m_NodeTextures.push_back(pShaderTexture);
@@ -83,7 +81,6 @@ private: /* 이 m_PrototypeKeys 로 Load_NodeTextures() 함수호출로 객체들을 다 생�
 	vector<SRV_Texture>			m_NodeTextureSRVs;							// 그 텍스쳐객체가 그리는 렌더타겟의 그려진 결과 ShaderReasouceView*
 	CTexture*					m_TestEffectModel_Texture = { nullptr };	// 누나가 생성한 테스트이펙트객체의 텍스쳐 컴포넌트
 	/*------------------------------------------------------------------------------------------------------------------------------------*/
-	CEffect_Rect*				m_Effect_Rect = { nullptr };	// 임시로 이펙트툴에서 생성한게 아닌 렉트
 
 	_int						m_iNodeTextureCount = 0;		// 노드 텍스쳐의 개수
 	_bool						isStart = false;				// 외부에서 껏다켯다 할때 쓰는 변수
