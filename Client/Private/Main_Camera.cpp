@@ -201,16 +201,16 @@ void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 		switch (modelID)
 		{
 		case 1:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
 			break;
 		case 2:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
 			break;
 		case 3:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
 			break;
 		case 4:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Player")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
+			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
 			break;
 		default:
 			// 알 수 없는 모델 ID 처리

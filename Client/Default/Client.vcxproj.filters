@@ -88,29 +88,29 @@
     <ClCompile Include="..\Private\Level_GamePlay.cpp">
       <Filter>01.Level\00.GamePlay</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
-      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Play_Goku.cpp">
-      <Filter>02.GameObjects\Character\Play_Goku</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Play_21.cpp">
-      <Filter>02.GameObjects\Character\Play_21</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
-      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\Character\AttackObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Character.cpp">
       <Filter>02.GameObjects\Character</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\AnimationNameMap.cpp">
-      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    <ClCompile Include="..\Private\Play_Goku.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Goku_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\S21_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_21.cpp">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp">
       <Filter>90.FrameEvent_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AnimationNameMap.cpp">
+      <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp">
       <Filter>02.GameObjects\Character\Model_Preview</Filter>
@@ -605,9 +605,6 @@
     <ClInclude Include="..\public\UI_Chara_SubIcon.h">
       <Filter>02.GameObjects\UI\Chara_Icon\Icon\Sub</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Player.h">
-      <Filter>02.GameObjects\Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_SkillEffect.h">
       <Filter>02.GameObjects\UI\Skill\Effect</Filter>
     </ClInclude>
@@ -707,45 +704,6 @@
     <ClInclude Include="..\Public\SpaceRock.h">
       <Filter>02.GameObjects\Map\Space\SpaceRock</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\AnimationEvent_Defines.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\AnimationNameMap.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Character.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FrameEvent_Manager.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Goku_MeleeAttack.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Input.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Model_Preview.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Play_21.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Play_Goku.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\S21_MeleeAttack.h">
-      <Filter>02.GameObjects\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Level\00.GamePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Loader.h">
-      <Filter>01.Level\99.Loading\Loader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Level_Loading.h">
-      <Filter>01.Level\99.Loading</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Goku_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Goku\Goku_MeleeAttack</Filter>
     </ClInclude>
@@ -778,6 +736,25 @@
     </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h">
       <Filter>02.GameObjects\Character\Model_Preview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Model_Preview.h" />
+    <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
+    <ClInclude Include="..\Public\AnimationNameMap.h" />
+    <ClInclude Include="..\Public\Character.h" />
+    <ClInclude Include="..\Public\FrameEvent_Manager.h" />
+    <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
+    <ClInclude Include="..\Public\Input.h" />
+    <ClInclude Include="..\Public\Play_21.h" />
+    <ClInclude Include="..\Public\Play_Goku.h" />
+    <ClInclude Include="..\Public\S21_MeleeAttack.h" />
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Loading.h">
+      <Filter>01.Level\99.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Level\99.Loading\Loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

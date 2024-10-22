@@ -80,12 +80,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_UIObjects()))
 		return E_FAIL;
 
-	// 해당 레벨에 맞는 파일 경로를 설정
-	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
-
-	if (FAILED(ParseInitialize(filePath)))
-		return E_FAIL;
-
 	// 카메라 포인트 로드
 	_wstring cameraFilePath = L"../Bin/CameraPoints.txt";
 	CameraSaveData cameraSaveData;

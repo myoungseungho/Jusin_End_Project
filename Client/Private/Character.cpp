@@ -2506,19 +2506,6 @@ HRESULT CCharacter::Ready_Components()
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
-	CCollider_Test::COLLIDER_DESC ColliderDesc{};
-	ColliderDesc.pTransform = m_pTransformCom;
-	ColliderDesc.fSizeX = 1.2f;
-	ColliderDesc.fSizeY = 1.5f;
-	ColliderDesc.fSizeZ = 0.7f;
-	ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
-
-
-	//Com_Collider
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
-		return E_FAIL;
-	
 	return S_OK;
 }
 
@@ -2568,6 +2555,4 @@ void CCharacter::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
-
-	Safe_Release(m_pColliderCom);
 }

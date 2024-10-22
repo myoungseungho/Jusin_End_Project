@@ -493,13 +493,6 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		system("cls");
 	}
 
-	//Gravity(fTimeDelta);
-	
-
-
-	m_pColliderCom->Update();
-
-
 	if (m_iPlayerTeam == 2)
 	{
 		//m_pModelCom->m_iCurrentAnimationIndex;
@@ -538,82 +531,8 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-
-
-	//corlorChange Test
-	//for (size_t i = 0; i < iNumMeshes; i++)
-	//{
-	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	//	if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, (aiTextureType)m_iPlayerTeam, "g_DiffuseTexture", i)))
-	//		return E_FAIL;
-	//	// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-	//
-	//	/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
-	//	m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-	//
-	//	if (FAILED(m_pShaderCom->Begin(0)))
-	//		return E_FAIL;
-	//
-	//	if (FAILED(m_pModelCom->Render(i)))
-	//		return E_FAIL;
-	//}
-
-#ifdef  _DEBUG
-	m_pColliderCom->Render();
-#endif //  _DEBUG
 	return S_OK;
 }
-
-
-
-//공용 처리 가능해서 Character로 이사가고 백업.
-/*
-void CPlay_Goku::AttackNextMoveCheck()
-{
-	
-	if (m_iNextAnimation.first != m_iIdleAnimationIndex)
-	{
-		Set_Animation(m_iNextAnimation.first);
-
-		m_iNextAnimation.first = m_iIdleAnimationIndex;
-		m_iNextAnimation.second = 1000.f;
-
-		if (m_fNextAnimationCurrentPosition != 0)
-		{
-			m_pModelCom->CurrentAnimationPositionJump(m_fNextAnimationCurrentPosition);
-			m_fNextAnimationCurrentPosition = 0.f;
-		}
-	}
-	
-
-}
-
-void CPlay_Goku::AnimeEndNextMoveCheck()
-{
-
-	Set_Animation(m_iNextAnimation.first);
-
-	m_iNextAnimation.first = ANIME_IDLE;
-	m_iNextAnimation.second = 1000.f;
-
-
-}
-
-
-
-void CPlay_Goku::Set_Animation(_uint iAnimationIndex, _bool bloof)
-{
-
-	if (iAnimationIndex == m_iIdleAnimationIndex)
-		m_pModelCom->SetUp_Animation(iAnimationIndex, true);
-	else
-		m_pModelCom->SetUp_Animation(iAnimationIndex, bloof);
-
-}
-
-*/
-
 
 void CPlay_Goku::KeyTest()
 {
@@ -624,16 +543,6 @@ void CPlay_Goku::KeyTest()
 
 HRESULT CPlay_Goku::Ready_Components()
 {
-	/* Com_Shader */
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
-	//	TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
-	//	return E_FAIL;
-	//
-	///* Com_Model */
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
-	//	return E_FAIL;
-
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;

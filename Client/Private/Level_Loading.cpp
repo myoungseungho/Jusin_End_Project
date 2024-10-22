@@ -9,6 +9,10 @@
 
 #include "UIObject.h"
 
+#include "UI_Loading.h"
+#include "UI_LoadingMark.h"
+#include "UI_Loading_Font.h"
+
 CLevel_Loading::CLevel_Loading(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 {
@@ -24,6 +28,59 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (nullptr == m_pLoader)
 		return E_FAIL;
 
+	//Loading 씬에 쓰이는 컴포넌트 준비
+	if (FAILED(Ready_Prototype_Component()))
+		return E_FAIL;
+
+	//사본 객체 생성
+	if (FAILED(Ready_Layer()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_Loading::Ready_Prototype_Component()
+{
+	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Loading */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
+		CUI_Loading::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_GameStartCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 8))))
+		return E_FAIL;
+
+
+	/* For.Prototype_GameObject_UI_LoadingMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
+		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/DB_load_00.png")))))
+		return E_FAIL;
+
+
+	/* For.Prototype_GameObject_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingFont"),
+		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+#pragma endregion
+
+	return S_OK;
+}
+
+HRESULT CLevel_Loading::Ready_Layer()
+{
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading"), TEXT("Layer_UI_LoadingBackGround"));
 
 	CUIObject::UI_DESC Desc = {};
@@ -32,7 +89,7 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	for (int i = 0; i < 8; i++)
 	{
 		Desc.iNumUI = i;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingMark"), TEXT("Layer_UI_LoadingBackGround"),&Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingMark"), TEXT("Layer_UI_LoadingBackGround"), &Desc);
 	}
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingFont"), TEXT("Layer_UI_LoadingBackGround"));

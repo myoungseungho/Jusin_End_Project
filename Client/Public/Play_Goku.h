@@ -21,6 +21,7 @@ public:
 	{
 		_wstring strModelName;
 	}Play_Goku_DESC;
+
 	enum AnimationIndex
 	{
 		ANIME_ATTACK_LIGHT1 = 43, ANIME_ATTACK_LIGHT2 = 44, ANIME_ATTACK_LIGHT3 = 47,
@@ -112,14 +113,6 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	//virtual void NextMoveCheck() override;
-	//virtual void AttackNextMoveCheck() override;
-	//virtual void AnimeEndNextMoveCheck() override;
-
-	//virtual void Test_InputCommand();
-	//virtual void Set_Animation(_uint iAnimationIndex) override;
-	//virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
-
 	void KeyTest();
 
 
@@ -134,7 +127,6 @@ public:
 	virtual void Gravity(_float fTimeDelta) override;
 
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
-
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };

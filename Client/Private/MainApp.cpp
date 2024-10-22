@@ -11,6 +11,9 @@
 #include "RenderInstance.h"
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
+
+
+
 #include "thread"
 
 CMainApp::CMainApp()
@@ -31,7 +34,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pRenderInstance->Initialize_Engine(g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
-	//½¦ÀÌ´õ »ý¼º
+	//¸ÞÀÎ¾Û_Static
 	if (FAILED(Ready_Prototype_Component_ForStatic()))
 		return E_FAIL;
 
@@ -104,45 +107,7 @@ HRESULT CMainApp::Create_IMGUI_Manager()
 
 HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 {
-	/* For.Prototype_Component_VIBuffer_Rect */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
-		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-
-	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_GameObject_UI_Loading */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
-		CUI_Loading::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-
-	/* For.Prototype_Component_Texture_UI_GameStartCircle */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 8))))
-		return E_FAIL;
-
-
-	/* For.Prototype_GameObject_UI_LoadingMark */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
-		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_LoadingFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/DB_load_00.png")))))
-		return E_FAIL;
-
-
-	/* For.Prototype_GameObject_UI_LoadingFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingFont"),
-		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
+#pragma region ½¦ÀÌ´õ
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxAnimMesh.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
@@ -161,6 +126,14 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Single_Eff_VtxMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Single_Eff_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
 		return E_FAIL;
+#pragma endregion
+
+#pragma region VIBuffer
+	/* For.Prototype_Component_VIBuffer_Rect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
+		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+#pragma endregion
 
 	return S_OK;
 }

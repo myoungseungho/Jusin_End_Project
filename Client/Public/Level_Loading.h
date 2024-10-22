@@ -16,6 +16,9 @@ private:
 	virtual ~CLevel_Loading() = default;
 
 public:
+	HRESULT Ready_Prototype_Component();
+	HRESULT Ready_Layer();
+
 	virtual HRESULT Initialize(LEVELID eNextLevelID);
 	virtual void Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
