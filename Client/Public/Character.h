@@ -157,6 +157,9 @@ public:
 	static vector<CInput> Command_SpecialAttack;
 	static vector<CInput> Command_HeavyAttack_Extra;
 
+	static vector<CInput> Command_Grab;
+
+
 	static vector<CInput> Command_Crouch_LightAttack;
 	static vector<CInput> Command_Crouch_MediumAttack;
 	static vector<CInput> Command_Crouch_MediumAttack_Extra;
@@ -229,6 +232,9 @@ public:
 	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
 
+	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
+
+
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition =0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
 	virtual void AttackNextMoveCheck();
@@ -298,9 +304,12 @@ public:
 
 	void AttckCancleJump();
 
-	void Chase(_float fTimeDelta);
+	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
 	void Chase_Ready(_float fTimeDelta);
+
+	void Chase_Grab(_float fTimeDelta);
+
 
 	void Move(_float fTimeDelta);
 	void MoveKey1Team(_float fTimeDelta);
@@ -310,33 +319,43 @@ public:
 
 	//피격 관련
 	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
-	_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	//_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	//_bool Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
 
 	void Check_StunEnd();
-
 	void Stun_Shake();
-
 	void Update_AnimationLock(_float fTimeDelta);
-
 	void Update_StunImpus(_float fTimeDelta);
-
 	void Set_BreakFall_Ground();
 	void BreakFall_Air();
+
+
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
 	_float Get_DamageScale();
 
 
-
-	//1020 추가
 	void Set_GroundSmash(_bool bSmash);
 	//void Guard_Update();   //서브캐릭터용도로 써야하나?
-	_bool Guard_Check();
+	//_bool Guard_Check();
+	//_bool Guard_Check2(AttackType eAttackType);
+	AttackColliderResult Guard_Check3(AttackType eAttackType);
+	_bool CompareGuardType(AttackType eAttackType);
+	AttackColliderResult CompareGuardType3(AttackType eAttackType);
+	AttackColliderResult CompareGrabType3(AttackType eAttackType);
+
+
+	void Teleport_ToEnemy(_float OffsetX, _float OffsetY);
 	
+	//void Set_Grab(_bool bGrab, _bool bAir);
+	void Set_Grab(_bool bAir);
+
+
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
@@ -425,6 +444,10 @@ protected:
 	_ushort m_iGuard_AirAnimationIndex = { 20 };
 
 
+	//잡기
+	_ushort m_iGrabReadyAnimationIndex = {17};
+	_ushort m_iGrabAnimationIndex = {60};
+
 
 	_float m_fGravityTime = {0.f}; 
 	_float m_fJumpPower = 3;// { 0.f };
@@ -474,6 +497,15 @@ protected:
 
 
 
+
+	_bool m_bChaseEnable = true;
+	_bool m_bGrab = false;
+	_bool m_bGrab_Air = false;
+
+
+	_float m_fAccGrabTime = {};
+
+
 	//1020추가분량
 
 	//스턴관련
@@ -483,8 +515,12 @@ protected:
 	//_bool m_bGuard = { false };
 
 
+
+
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
+	_bool m_bDebugInputLock = {false};
 
 
 private:

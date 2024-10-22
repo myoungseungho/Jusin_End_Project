@@ -33,6 +33,9 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 	ATTACK_DESC* pDesc = static_cast<ATTACK_DESC*>(pArg);
 
 	m_ihitCharacter_Motion = pDesc->ihitCharacter_Motion;
+	m_eAttackGrade = pDesc->eAttackGrade;
+	m_eAttackType = pDesc->eAttackType;
+
 	m_fhitCharacter_Impus = pDesc->fhitCharacter_Impus;
 	m_fhitCharacter_StunTime = pDesc->fhitCharacter_StunTime;
 	m_fLifeTime = pDesc->fLifeTime;
@@ -44,10 +47,14 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 
 	//m_bOwnerGravityTimeReset = pDesc->bOwnerGravityTimeReset;
 	m_bGroundSmash = pDesc->bGroundSmash;
-	m_bGain_AttackStep =	pDesc->bGainAttackStep;
+
+	//m_bGain_AttackStep =pDesc->bGainAttackStep;
+	m_iGain_AttackStep = pDesc->iGainAttackStep;
 
 	m_pOwner = pDesc->pOwner;
 
+	m_bOwnerNextAnimation = pDesc->bOwnerNextAnimation;
+	m_iOnwerNextAnimationIndex = pDesc->iOnwerNextAnimationIndex;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -115,21 +122,67 @@ void CAttacKObject::Late_Update(_float fTimeDelta)
 					bisCollsing = true;
 					
 					//공격성공시
-					if(pCharacter->Set_Hit(m_ihitCharacter_Motion, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus))
+					//if(pCharacter->Set_Hit(m_ihitCharacter_Motion, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus))
+					//if (pCharacter->Set_Hit2(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus))
+					//{
+					//	pCharacter->Set_GroundSmash(m_bGroundSmash);
+					//	m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+					//
+					//	if (m_bGain_AttackStep)
+					//	{
+					//		m_pOwner->Gain_AttackStep(1);
+					//	}
+					//
+					//}
+					//else  //가드당했을시 충돌은 했으니
+					//{
+					//	m_pOwner->Set_AnimationStop(0.05f);
+					//	pCharacter->Set_AnimationStop(0.05f);
+					//}
+
+
+					AttackColliderResult eResult =
+						pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
+
+						
+					if (eResult == RESULT_HIT)
 					{
 						pCharacter->Set_GroundSmash(m_bGroundSmash);
 						m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
-						if (m_bGain_AttackStep)
+						//if (m_bGain_AttackStep)
 						{
-							m_pOwner->Gain_AttackStep(1);
+							m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
+						}
+
+						if (m_bOwnerNextAnimation)
+						{
+							m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex,1.f);
 						}
 
 					}
-					else  //가드당했을시 충돌은 했으니
+					else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 					{
-						m_pOwner->Set_AnimationStop(0.05f);
-						pCharacter->Set_AnimationStop(0.05f);
+						m_pOwner->Set_AnimationStop(0.08f);
+						pCharacter->Set_AnimationStop(0.08f);
+					}
+
+					else if (eResult == RESULT_DRAW)
+					{
+						m_pOwner->Set_AnimationStop(0.3f);
+						pCharacter->Set_AnimationStop(0.3f);
+					}
+
+					else if (eResult == RESULT_MISS)
+					{
+						//잡기는 한번 빗나가면 끝
+						if (m_eAttackType == ATTACKTYPE_GRAB_GROUND || m_eAttackType == ATTACKTYPE_GRAB_AIR)
+							bisCollsing = true;
+
+						//그 외에는 공격판정 사라지지 않음
+						else
+							bisCollsing = false;
+
 					}
 
 

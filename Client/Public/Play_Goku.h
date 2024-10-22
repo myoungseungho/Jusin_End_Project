@@ -53,18 +53,18 @@ public:
 
 
 		//땅
-		ANIME_HIT_LIGHT = 21, ANIME_HIT_LIGHT_FRONT =22, ANIME_HIT_CROUCH = 23,			//050   051 052
-		
-		
+		ANIME_HIT_LIGHT = 21, ANIME_HIT_LIGHT_FRONT = 22, ANIME_HIT_CROUCH = 23,			//050   051 052
+
+
 		//공중
 		ANIE_HIT_AIR = 24, ANIME_HIT_FALL = 26,									//060 061
-		
+
 
 		//땅에 닿는 순간
-		ANIME_HIT_BOUND_DOWN = 25, 
+		ANIME_HIT_BOUND_DOWN = 25,
 
 		//피격
-		ANIME_HIT_HEAVY_AWAY_LEFT =33,
+		ANIME_HIT_HEAVY_AWAY_LEFT = 33,
 		ANIME_HIT_HEAVY_AWAY_UP = 35, //077      보통 061(26번) 으로 연계됨 
 		ANIME_HIT_HEAVY_AWAY_LEFTDOWN = 39, //081
 		ANIME_HIT_HEAVY_AWAY_SPIN_UP = 30,
@@ -74,7 +74,7 @@ public:
 		ANIME_HIT_WALLBOUCE = 34,				//076.  이 다음 062(26번 ANIME_HIT_FALL_UPPER)로 연계됨
 
 
-		ANIME_LAYUP = 27,   
+		ANIME_LAYUP = 27,
 		ANIME_BREAK_FALL_GROUND = 41, // 100
 		ANIME_BREAK_FALL_AIR = 42, // 101
 
@@ -88,7 +88,17 @@ public:
 		//가드
 		ANIME_GUARD_GROUND = 18,	//040
 		ANIME_GUARD_CROUCH = 19,	//041
-		ANIME_GUARD_AIR    = 20		//042
+		ANIME_GUARD_AIR = 20,		//042
+
+
+		
+		ANIME_GRAB_READY = 17,  //038 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
+		ANIME_GRAB = 60//304 60 드래곤러시
+
+
+		
+		//301 58 패링
+		//306cs 61  지상 드래곤러시 성공 후 추적
 
 	};
 	enum AnimationCount
