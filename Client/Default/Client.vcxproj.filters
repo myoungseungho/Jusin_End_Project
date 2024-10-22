@@ -717,14 +717,14 @@
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Loader.h">
-      <Filter>01.Level\99.Loading\Loader</Filter>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Level_Loading.h">
       <Filter>01.Level\99.Loading</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Level\00.GamePlay</Filter>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Level\99.Loading\Loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

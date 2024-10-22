@@ -37,15 +37,18 @@ VS_OUT VS_CAMERA_LINE(VS_IN In)
 {
     VS_OUT Out;
 
-    vector vPosition = (In.vPosition, 1.f);
+	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
+    
+    vector vPosition = float4(In.vPosition, 1.0f);
+
     vPosition = mul(vPosition, g_ViewMatrix);
     vPosition = mul(vPosition, g_ProjMatrix);
 
     Out.vPosition = vPosition;
+    Out.vTexcoord = In.vTexcoord;
 
     return Out;
 }
-
 
 struct VS_OUT_EFFECT
 {
