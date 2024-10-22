@@ -26,10 +26,39 @@ HRESULT CMelee_Effect_2p::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_playerID = CMelee_Effect_2p::PLAYERID::PLAYER_2P;
+
+	CGameObject* player = nullptr;
+	CTransform* transform = nullptr;
+
+	switch (m_playerID)
+	{
+	case Client::CMelee_Effect_2p::PLAYERID::PLAYER_1P:
+		player = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Player"));
+		break;
+	case Client::CMelee_Effect_2p::PLAYERID::PLAYER_2P:
+		player = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Monster"));
+		break;
+	}
+
+	transform = static_cast<CTransform*>(player->Get_Component(TEXT("Com_Transform")));
+	_vector position = transform->Get_State(CTransform::STATE_POSITION);
+
+	//각 플레이어의 포지션을 들고 있는데
+	//각 플레이어의 좌우 방향에 따라서 소환되는 위치가 다르겠지
+
+	if (player->m_bIsRight)
+	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + XMVectorSet(-5.f, 0.f, 0.f, 0.f));
+	}
+	else
+	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + XMVectorSet(5.f, 0.f, 0.f, 0.f));
+	}
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_playerID = CMelee_Effect_2p::PLAYERID::PLAYER_2P;
 
 	return S_OK;
 }

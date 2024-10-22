@@ -252,10 +252,6 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		}
 	}
 
-
-	// 충돌 히스토리 업데이트
-	m_CollisionHistory = currentCollisions;
-
 	// 각 그룹별로 한 번만 처리
 	if (!Energy_1P_Skill_VS_Energy_2P_Skill_Collisions.empty())
 	{
@@ -283,6 +279,8 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		Process_1P_Energy_Skill_2P_Ranged_Skill_Group(Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions, fTimeDelta, currentCollisions);
 	}
 
+	// 충돌 히스토리 업데이트
+	m_CollisionHistory = currentCollisions;
 }
 
 

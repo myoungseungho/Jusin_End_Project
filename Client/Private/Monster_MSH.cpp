@@ -37,6 +37,7 @@ HRESULT CMonster_MSH::Initialize(void* pArg)
 	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	mainCamera->SetPlayer(CMain_Camera::PLAYER_2P, this);
 
+	m_bIsRight = true;
 	return S_OK;
 }
 
@@ -194,7 +195,10 @@ void CMonster_MSH::Update(_float fTimeDelta)
 		}
 	}
 
-
+	if (m_pGameInstance->Key_Down(DIK_LSHIFT))
+	{
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Melee_Effect_2p"), TEXT("Layer_Melee_Effect_2p"));
+	}
 }
 
 void CMonster_MSH::Late_Update(_float fTimeDelta)
@@ -263,8 +267,8 @@ HRESULT CMonster_MSH::Ready_Components()
 
 	CBounding_AABB::BOUNDING_AABB_DESC	BoundingDesc{};
 
-	BoundingDesc.vExtents = _float3(1.5f, 1.5f, 1.5f);
-	BoundingDesc.vCenter = _float3(0.f, 0.f, 0.f);
+	BoundingDesc.vExtents = _float3(7.632f, 9.749f, 0.244f);
+	BoundingDesc.vCenter = _float3(0.f, 8.209f, 0.f);
 	BoundingDesc.pMineGameObject = this;
 	BoundingDesc.colliderGroup = CCollider_Manager::CG_2P_BODY;
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),

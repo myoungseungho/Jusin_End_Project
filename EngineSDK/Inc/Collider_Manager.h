@@ -64,7 +64,6 @@ private:
 	map<pair<CCollider*, CCollider*>, _bool> m_CollisionHistory;
 	class CGameInstance* m_pGameInstance = { nullptr };
 
-	//멀티 스레드
 private:
 	void ProcessCollisionResults(_float fTimeDelta);
 private:

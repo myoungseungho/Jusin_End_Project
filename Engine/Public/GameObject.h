@@ -67,6 +67,9 @@ public:
 	void SetImguiSelect(_bool _bIsImguiClick) { m_bIsImguiClick = _bIsImguiClick; };
 	void Destory();
 
+	//테스트 관련
+	_bool						m_bIsRight = { true };
+
 protected:	
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
@@ -82,7 +85,6 @@ protected:
 	//파싱 관련
 	_bool						m_bIsPasingObject = { false };
 
-protected:
 	map<const _wstring, CComponent*>		m_Components;
 
 
