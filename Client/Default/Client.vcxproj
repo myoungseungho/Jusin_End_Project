@@ -223,7 +223,6 @@
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Effect_Overlap.h" />
     <ClInclude Include="..\Public\Effect_ZNone.h" />
-    <ClInclude Include="..\public\Effect_Rect.h" />
     <ClInclude Include="..\Public\Effect_NoneLight.h" />
     <ClInclude Include="..\Public\FallingStar.h" />
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
@@ -341,7 +340,6 @@
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Effect_Overlap.cpp" />
     <ClCompile Include="..\Private\Effect_ZNone.cpp" />
-    <ClCompile Include="..\private\Effect_Rect.cpp" />
     <ClCompile Include="..\Private\Effect_NoneLight.cpp" />
     <ClCompile Include="..\Private\FallingStar.cpp" />
     <ClCompile Include="..\Private\FrameEvent_Manager.cpp" />

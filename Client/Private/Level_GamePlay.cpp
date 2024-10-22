@@ -63,10 +63,10 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	
 	// 해당 레벨에 맞는 파일 경로를 설정
-	wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
+	//wstring filePath = L"../Bin/Level_GamePlay_Objects.txt";
 
-	if (FAILED(ParseInitialize(filePath))) 
-		return E_FAIL;
+	//if (FAILED(ParseInitialize(filePath))) 
+	//	return E_FAIL;
 
 #pragma endregion
 
