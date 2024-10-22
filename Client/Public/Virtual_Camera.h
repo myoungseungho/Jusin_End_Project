@@ -90,9 +90,9 @@ public:
 
 	//쉐이킹
 	_bool				m_bIsShaking = { false };       // 흔들림 활성화 여부
-	_float				m_fShakeDuration = { 0.f };
+	_float				m_fShakeDuration = { 3.f };
 	_float				m_fElapsedShakeTime = 0.0f; // 흔들림 경과 시간
-	_float				m_fShakeMagnitude = { 0.5f };
+	_float				m_fShakeMagnitude = { 0.2f };
 	_vector				m_vShakeOffset = XMVectorZero();
 	_vector				m_vBaseCameraPosition = {};
 

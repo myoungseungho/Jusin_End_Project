@@ -41,7 +41,7 @@ private:
 
 	_float3 m_vStartPoint = {};
 	_float3 m_vEndPoint = {};
-	_float m_fThickness = 0.1f;
+	_float m_fThickness = 0.01f;
 
 public:
 	static CLine_Draw* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

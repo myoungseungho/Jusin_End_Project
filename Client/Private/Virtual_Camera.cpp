@@ -73,6 +73,9 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+		StartCameraShake(5.f, 0.5f);
+
 	if (m_bIsShaking)
 		ApplyCameraShake(fTimeDelta);
 }
@@ -143,8 +146,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		// Skip 보간: 즉시 다음 포인트로 이동
 		t = 1.0f;
 		break;
-	default:
-		break;
 	}
 
 	// **1. 로컬 포지션 보간**
@@ -192,18 +193,18 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
 	NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
 
-	// 월드 매트릭스에서 Right, Up, Look 벡터 추출
+	 //월드 매트릭스에서 Right, Up, Look 벡터 추출
 	_vector right = NewWorldMatrix.r[0];
 	_vector up = NewWorldMatrix.r[1];
 	_vector look = NewWorldMatrix.r[2];
 	_vector position = NewWorldMatrix.r[3];
-	m_vBaseCameraPosition = position;
 
+	m_vBaseCameraPosition = interpolatedPositionWorld;
 	// 방향 벡터 설정
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, up);
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, interpolatedPositionWorld + m_vShakeOffset);
 }
 
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2)
