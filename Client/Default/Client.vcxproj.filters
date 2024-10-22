@@ -139,17 +139,17 @@
     <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
-      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
-      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\AnimationNameMap.cpp">
       <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -673,7 +673,7 @@
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Blend.h">
       <Filter>02.GameObjects\02. Effect\02. Blend</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\Character\AttackObject</Filter>
     </ClInclude>
