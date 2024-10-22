@@ -3,7 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
+#include "UI_Manager.h"
 
 #include "AttackObject.h"
 
@@ -195,6 +195,8 @@ void CPlay_Goku::Priority_Update(_float fTimeDelta)
 
 void CPlay_Goku::Update(_float fTimeDelta)
 {
+	if(m_pGameInstance->Key_Down(DIK_F3))
+		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 
 	//합치기 전 임시 코드.  적 탐지코드임
 	if (m_pDebugEnemy == nullptr)

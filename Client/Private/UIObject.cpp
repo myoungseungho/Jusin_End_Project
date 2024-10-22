@@ -193,7 +193,7 @@ void CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _
 
 	_float fDistance = XMVectorGetX(XMVector3Length(vTargetPos - vOriginPos));
 
-	if (fDistance <= 5.f)
+	if (fDistance <= 15.f)
 	{
 		vTargetPos = XMVectorSetW(vTargetPos, 1.f);
 		vTargetPos = XMVectorSetZ(vTargetPos, fDepth);
@@ -215,6 +215,12 @@ _vector CUIObject::GetOffsetPostion(_vector vPosition)
 
 void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, _float fDepth,_float fTimeDelta)
 {
+	vStartPos = XMVectorSetX(vStartPos, XMVectorGetX(vStartPos) * m_vOffSetWinSize.x);
+	vStartPos = XMVectorSetY(vStartPos, XMVectorGetY(vStartPos) * m_vOffSetWinSize.y);
+
+	vTargetPos = XMVectorSetX(vTargetPos, XMVectorGetX(vTargetPos) * m_vOffSetWinSize.x);
+	vTargetPos = XMVectorSetY(vTargetPos, XMVectorGetY(vTargetPos) * m_vOffSetWinSize.y);
+
 	if (m_bCheck)
 	{
 		m_fAnimDelayTiemr += fTimeDelta;
@@ -249,7 +255,7 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 		}
 		
 		if(m_bStart)
-			MoveAnimUI(vTargetPos, 300.f, fDepth , fTimeDelta);
+			MoveAnimUI(vTargetPos, 500.f, fDepth , fTimeDelta);
 	}
 }
 

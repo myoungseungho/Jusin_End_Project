@@ -183,6 +183,8 @@ HRESULT CCharacter::Initialize(void* pArg)
 	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 
+
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
@@ -213,7 +215,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 	pCameraTransform->Set_State(CTransform::STATE_POSITION, m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ 0.f, 1.f, -5.f });
 	pCameraTransform->LookAt(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
-	
+
 	return S_OK;
 }
 

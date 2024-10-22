@@ -48,7 +48,7 @@ void CUI_Chara_SubIcon::Priority_Update(_float fTimeDelta)
 
 void CUI_Chara_SubIcon::Update(_float fTimeDelta)
 {
-	Animation({ 50.f ,40.f ,0.5f, 1.f }, { m_fPosX, m_fPosY, 0.5f, 1.f }, 100.f, 0.5f, fTimeDelta);
+	Animation({ 60.f ,55.f ,0.5f, 1.f }, { m_fPosX, m_fPosY, 0.5f, 1.f }, 100.f, 0.5f, fTimeDelta);
 }
 
 void CUI_Chara_SubIcon::Late_Update(_float fTimeDelta)

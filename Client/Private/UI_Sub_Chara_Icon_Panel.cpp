@@ -34,7 +34,7 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(-m_fSizeX, m_fSizeY, m_fPosX, m_fPosY);
+	__super::Set_UI_Setting(-m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.65f);
 
 	return S_OK;
 }
@@ -47,7 +47,7 @@ void CUI_Sub_Chara_Icon_Panel::Priority_Update(_float fTimeDelta)
 
 void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 {
-	Animation({ 73.f ,88.f ,1.f, 1.f }, { m_fPosX, m_fPosY, 1.f, 1.f }, 100.f, 1.f, fTimeDelta);
+	Animation({ 73.f ,88.f ,0.65f, 1.f }, { m_fPosX, m_fPosY, 0.65f, 1.f }, 100.f, 0.65f, fTimeDelta);
 
 	if (m_pSubPawn == nullptr)
 		m_bDead = TRUE;
