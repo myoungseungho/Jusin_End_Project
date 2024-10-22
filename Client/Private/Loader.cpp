@@ -41,8 +41,8 @@
 
 
 //LOGO
-#include "BackGround.h"
-#include "UI_Logo.h"
+#include "UI_Logo_BG.h"
+#include "UI_Logo_Mark.h"
 
 //UI Çì´õ
 #include "UI_Cursor.h"
@@ -176,11 +176,11 @@ HRESULT CLoader::Loading_For_Logo()
 
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_BackGround"),
-		CBackGround::Create(m_pDevice, m_pContext))))
+		CUI_Logo_BG::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Logo"),
-		CUI_Logo::Create(m_pDevice, m_pContext))))
+		CUI_Logo_Mark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	m_isFinished = true;

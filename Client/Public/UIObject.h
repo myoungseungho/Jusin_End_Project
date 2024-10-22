@@ -103,6 +103,11 @@ protected:
 
 	_bool m_bCheck = { FALSE };
 
+protected:
+	//해상도 변경ㄴ
+	_float2 m_vOffSetWinSize = { };
+	_float2 m_vPrevWinSize = {};
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

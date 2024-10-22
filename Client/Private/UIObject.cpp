@@ -31,8 +31,12 @@ HRESULT CUIObject::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-
 	pDesc = static_cast<UI_DESC*>(pArg);
+
+	m_vPrevWinSize = { 1280.f, 720.f };
+
+	m_vOffSetWinSize.x = g_iWinSizeX / m_vPrevWinSize.x;
+	m_vOffSetWinSize.y = g_iWinSizeY / m_vPrevWinSize.y;
 
 	if (pDesc != nullptr)
 	{
@@ -46,15 +50,13 @@ HRESULT CUIObject::Initialize(void* pArg)
 			break;
 	
 		case RIGHT:
-			m_fPosX = g_iWinSizeX - m_fPosX;
+			m_fPosX = m_vPrevWinSize.x - m_fPosX;
 			m_fSizeX *= -1;
 			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
 			break;
 		}
 	}
-
-	m_bIsActive = FALSE;
 
 	return S_OK;
 }
@@ -63,8 +65,6 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	if (m_pMainPawn != nullptr)
-		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 
 	if (pDesc != nullptr)
 	{
@@ -82,10 +82,12 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		}
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_F4))
+	if (m_pGameInstance->Key_Down(DIK_F3))
 		m_bIsActive = true;
-	if (m_pGameInstance->Key_Down(DIK_F5))
+	if (m_pGameInstance->Key_Down(DIK_F4))
 		m_bIsActive = FALSE;
+
+
 }
 
 void CUIObject::Update(_float fTimeDelta)
@@ -96,7 +98,8 @@ void CUIObject::Update(_float fTimeDelta)
 
 void CUIObject::Late_Update(_float fTimeDelta)
 {
-
+	if (m_pMainPawn != nullptr)
+		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
 }
 
 HRESULT CUIObject::Render(_float fTimeDelta)
@@ -106,6 +109,11 @@ HRESULT CUIObject::Render(_float fTimeDelta)
 
 void CUIObject::Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _float fPosY,  _float fDepth)
 {
+	fSizeX *= m_vOffSetWinSize.x;
+	fSizeY *= m_vOffSetWinSize.y;
+	fPosX *= m_vOffSetWinSize.x;
+	fPosY *= m_vOffSetWinSize.y;
+
 	m_pTransformCom->Set_Scaled(fSizeX, fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(fPosX - g_iWinSizeX * 0.5f, -fPosY + g_iWinSizeY * 0.5f, fDepth, 1.f));
 
@@ -185,7 +193,7 @@ void CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _
 
 	_float fDistance = XMVectorGetX(XMVector3Length(vTargetPos - vOriginPos));
 
-	if (fDistance <= 5.f)
+	if (fDistance <= 15.f)
 	{
 		vTargetPos = XMVectorSetW(vTargetPos, 1.f);
 		vTargetPos = XMVectorSetZ(vTargetPos, fDepth);
@@ -207,6 +215,12 @@ _vector CUIObject::GetOffsetPostion(_vector vPosition)
 
 void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, _float fDepth,_float fTimeDelta)
 {
+	vStartPos = XMVectorSetX(vStartPos, XMVectorGetX(vStartPos) * m_vOffSetWinSize.x);
+	vStartPos = XMVectorSetY(vStartPos, XMVectorGetY(vStartPos) * m_vOffSetWinSize.y);
+
+	vTargetPos = XMVectorSetX(vTargetPos, XMVectorGetX(vTargetPos) * m_vOffSetWinSize.x);
+	vTargetPos = XMVectorSetY(vTargetPos, XMVectorGetY(vTargetPos) * m_vOffSetWinSize.y);
+
 	if (m_bCheck)
 	{
 		m_fAnimDelayTiemr += fTimeDelta;
@@ -241,7 +255,7 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 		}
 		
 		if(m_bStart)
-			MoveAnimUI(vTargetPos, 300.f, fDepth , fTimeDelta);
+			MoveAnimUI(vTargetPos, 500.f, fDepth , fTimeDelta);
 	}
 }
 

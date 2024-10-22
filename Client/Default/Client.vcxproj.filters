@@ -157,6 +157,9 @@
     <ClCompile Include="..\Private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClCompile>
+    <Filter Include="02.GameObjects\BackGround\Logo\Mark">
+      <UniqueIdentifier>{8876c639-c45d-46f0-a5a0-ff513b96fef9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -329,6 +332,15 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Timer\Panel">
       <UniqueIdentifier>{7fb31d51-0692-4b79-856a-d91b455f2f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading">
+      <UniqueIdentifier>{9df6cb54-4d08-480b-aa7d-8ae74b892a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Mark">
+      <UniqueIdentifier>{76269d6c-a433-42bf-8f88-0f428eb5dbaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround\Loading\Font">
+      <UniqueIdentifier>{87334eb3-1567-4688-9888-19852ced2d01}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\FontName">
       <UniqueIdentifier>{c620642a-0cdc-42e8-bdee-14d918ea5b1f}</UniqueIdentifier>
@@ -553,6 +565,12 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Logo.h">
       <Filter>02.GameObjects\UI\BackGround\Logo</Filter>
+</ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Level\00.GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Level_Logo.h">
+      <Filter>01.Level\01.Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_Sub_Chara_Icon_Panel.h">
       <Filter>02.GameObjects\UI\Chara_Icon\Sub</Filter>
@@ -592,6 +610,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_LoadingMark.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\Mark\UI_LoadingMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_BG.h">
+      <Filter>02.GameObjects\BackGround\Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_Loading_Font.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
@@ -743,6 +764,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\AttackObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Logo_BG.h">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Logo_Mark.h">
+      <Filter>02.GameObjects\BackGround\Logo\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_LoadingMark.h">
+      <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -950,6 +980,9 @@
     <ClCompile Include="..\private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Mark\UI_LoadingMark</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_BG.cpp">
+      <Filter>02.GameObjects\BackGround\Loading</Filter>
+    </ClCompile>
     <ClCompile Include="..\private\UI_Loading_Font.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
     </ClCompile>
@@ -1114,6 +1147,15 @@
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\AttackObject</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Logo_BG.cpp">
+      <Filter>02.GameObjects\BackGround\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Logo_Mark.cpp">
+      <Filter>02.GameObjects\BackGround\Logo\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1218,5 +1260,10 @@
     <ResourceCompile Include="Client.rc">
       <Filter>98.Default</Filter>
     </ResourceCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
+#include "UI_Manager.h"
 
 #include "AttackObject.h"
 
@@ -175,7 +175,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 void CPlay_Goku::Priority_Update(_float fTimeDelta)
 {
-
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CPlay_Goku::Update(_float fTimeDelta)
@@ -186,6 +186,9 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 	if (m_bDebugInputLock)
 		return ;
+
+	if(m_pGameInstance->Key_Down(DIK_F3))
+		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 
 
 	//합치기 전 임시 코드.  적 탐지코드임
@@ -494,6 +497,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	{
 		m_iAttackStepCount = 0;
 		m_iDebugComoboDamage = 0;	
+
 		m_iHP = 10000;
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))

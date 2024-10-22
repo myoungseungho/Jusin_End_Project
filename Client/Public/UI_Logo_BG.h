@@ -11,12 +11,12 @@ END
 
 BEGIN(Client)
 
-class CUI_Loading final : public CGameObject
+class CUI_Logo_BG final : public CGameObject
 {
 private:
-	CUI_Loading(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_Loading(const CUI_Loading& Prototype);
-	virtual ~CUI_Loading() = default;
+	CUI_Logo_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_Logo_BG(const CUI_Logo_BG& Prototype);
+	virtual ~CUI_Logo_BG() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -40,7 +40,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CUI_Loading* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_Logo_BG* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

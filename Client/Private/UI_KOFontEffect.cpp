@@ -25,6 +25,8 @@ HRESULT CUI_KOFontEffect::Initialize(void* pArg)
 {
 	m_fSizeX = 800.f;
 	m_fSizeY = 800.f;
+	m_fPosX = 640;
+	m_fPosY = 360;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -40,7 +42,7 @@ HRESULT CUI_KOFontEffect::Initialize(void* pArg)
 	Set_AnimPosition(350, 0.65f);
 	Set_AnimPosition(700, 0.7f);
 	Set_AnimPosition(1000, 1.f);
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	m_fAlphaTimer = 1.f;
 

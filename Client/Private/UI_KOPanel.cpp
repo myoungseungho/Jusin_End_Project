@@ -25,6 +25,8 @@ HRESULT CUI_KOPanel::Initialize(void* pArg)
 {
 	m_fSizeX = 1000.f;
 	m_fSizeY = 250.f;
+	m_fPosX = 640;
+	m_fPosY = 360;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -36,7 +38,7 @@ HRESULT CUI_KOPanel::Initialize(void* pArg)
 
 	m_pTransformCom->Rotation({ 0,0,1 }, XMConvertToRadians(345.f));
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.0f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY , 0.0f);
 
 	return S_OK;
 }

@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "iostream"
 #include "AttackObject.h"
+#include "UI_Manager.h"
 
 
 const _float CCharacter::fGroundHeight = 0.f; //0
@@ -146,15 +147,17 @@ vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RI
 
 CCharacter::CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 CCharacter::CCharacter(const CCharacter& Prototype)
 	: CGameObject{ Prototype }
 	, m_pFrameEvent{Prototype.m_pFrameEvent }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CCharacter::Initialize_Prototype()
@@ -176,9 +179,12 @@ HRESULT CCharacter::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	Character_DESC* pSlotDesc = static_cast<Character_DESC*>(pArg);
+	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
+	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
-
 
 	if(pDesc->iTeam == 1)
 	{
@@ -200,12 +206,21 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
+
 	return S_OK;
 }
 
 void CCharacter::Priority_Update(_float fTimeDelta)
 {
-
+	m_tCharacterDesc.bStun = m_bRedHp;
+	m_tCharacterDesc.bHit = m_bHit;
+	m_tCharacterDesc.bAttBuf = m_bAttBuf;
+	m_tCharacterDesc.iHp = m_iHP;
+	m_tCharacterDesc.iComboCount = m_iComboCount;
+	m_tCharacterDesc.iSKillCount = m_iSKillCount;
+	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
+	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
+	m_tCharacterDesc.ePlayerID = m_eCharacterID;
 }
 
 void CCharacter::Update(_float fTimeDelta)
@@ -278,10 +293,7 @@ _bool CCharacter::CompareNextAnimation(_uint iAnimationIndex, _float fNextPositi
 	if (iAnimationIndex != m_iNextAnimation.first)
 		bCompare = false;
 
-
-
 	return bCompare;
-
 }
 
 void CCharacter::Set_CurrentAnimationPositionJump(_float fAnimationPosition)
@@ -486,6 +498,8 @@ _bool CCharacter::InputCommand()
 		//	 iAttackkey = ATTACK_LIGHT;
 		//
 		// }
+
+		 GetUI_Input(DirectionX, DirectionY, iMoveKey, iAttackkey);
 
 	}
 	else  //2팀
@@ -1681,6 +1695,8 @@ _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _fl
 	Set_HitAnimation(eAnimation, Impus);
 	Set_AnimationStop(fStopTime);
 
+	Set_bRedHP(true);
+
 
 	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
 	
@@ -2037,6 +2053,7 @@ void CCharacter::Set_BreakFall_Ground()
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
+	Set_bRedHP(false);
 
 
 	DirectionInput iMoveKey = inputBuffer.back().direction;
@@ -2099,6 +2116,7 @@ void CCharacter::BreakFall_Air()
 			{
 				Set_fImpulse({ 10.f * m_iLookDirection, 1.f });
 			}
+			Set_bRedHP(false);
 
 
 		}
@@ -2200,7 +2218,7 @@ void CCharacter::Guard_Update()
 		m_bGuard = false;
 	}
 
-
+	
 }
 */
 
@@ -2247,6 +2265,7 @@ _bool CCharacter::Guard_Check()
 	}
 }
 
+<<<<<<< HEAD
 _bool CCharacter::Guard_Check2(AttackType eAttackType)
 {
 	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
@@ -2592,6 +2611,21 @@ void CCharacter::Set_Grab(_bool bAir)
 
 
 
+=======
+void CCharacter::Set_bRedHP(_bool bRedHP)
+{
+	if (bRedHP == true)
+	{
+		//m_pUI_Manager->Set_Hp(m_iHP);
+		m_tCharacterDesc.iHp = m_iHP;
+
+	}
+
+	 m_bRedHp = bRedHP; 
+	 m_tCharacterDesc.bStun = m_bRedHp;
+}
+
+>>>>>>> ?먭꺽/理쒖쭊??
 
 _uint* CCharacter::Get_pAnimationIndex()
 {
@@ -3172,6 +3206,12 @@ HRESULT CCharacter::Bind_ShaderResources()
 	return S_OK;
 }
 
+void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
+{
+	m_pUI_Manager->m_eDirInput = eDirInput;
+	m_pUI_Manager->m_eBtnInput = eBtnInput;
+}
+
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CCharacter* pInstance = new CCharacter(pDevice, pContext);
@@ -3205,6 +3245,7 @@ void CCharacter::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pUI_Manager);
 
 	//Safe_Release(m_pColliderCom);
 

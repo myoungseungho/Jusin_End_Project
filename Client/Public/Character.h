@@ -360,6 +360,12 @@ public:
 	void Set_Grab(_bool bAir);
 
 
+
+
+	//UI
+public:
+	void Set_bRedHP(_bool bRedHP);
+
 protected:
 	CShader*				m_pShaderCom = { nullptr };	
 	CModel*					m_pModelCom = { nullptr };
@@ -526,27 +532,28 @@ protected:
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = {false};
 
-	public:
-		typedef struct
-		{
-			_bool        bStun = { FALSE };
-			_bool        bHit = { FALSE };
-			_bool        bAttBuf = { FALSE };
+public:
+	typedef struct
+	{
+		_bool        bStun = { FALSE };
+		_bool        bHit = { FALSE };
+		_bool        bAttBuf = { FALSE };
 
-			_int        iHp = { 0 };
-			_uint        iComboCount = { 0 };
+		_int        iHp = { 0 };
+		_uint        iComboCount = { 0 };
 
-			_int        iSKillPoint = { 0 };
-			_int        iSKillCount = { 0 };
+		_int        iSKillPoint = { 0 };
+		_int        iSKillCount = { 0 };
 
-			PLAYER_SLOT ePlayer_Slot = {};
-			PLAYER_ID        ePlayerID = {};
+		PLAYER_SLOT ePlayer_Slot = {};
+		PLAYER_ID        ePlayerID = {};
 
-		}Character_INFO_DESC;
+	}Character_INFO_DESC;
 
 public:
-	Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
-	void GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput);
+		Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
+		void GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput);
+
 
 	//UI에서 써야하는 정보 
 

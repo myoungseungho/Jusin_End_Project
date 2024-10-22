@@ -170,6 +170,7 @@
     <ClInclude Include="..\Public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
+    <ClInclude Include="..\public\UI_Logo_BG.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
@@ -200,10 +201,10 @@
     <ClInclude Include="..\public\UI_KOFontEffect.h" />
     <ClInclude Include="..\public\UI_KOPanel.h" />
     <ClInclude Include="..\public\UI_KOParticle.h" />
-    <ClInclude Include="..\public\UI_Loading.h" />
+    <ClInclude Include="..\public\UI_Loading_BG.h" />
     <ClInclude Include="..\public\UI_LoadingMark.h" />
     <ClInclude Include="..\public\UI_Loading_Font.h" />
-    <ClInclude Include="..\public\UI_Logo.h" />
+    <ClInclude Include="..\public\UI_Logo_Mark.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -292,6 +293,7 @@
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
+    <ClCompile Include="..\private\UI_Logo_BG.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
@@ -322,10 +324,10 @@
     <ClCompile Include="..\private\UI_KOFontEffect.cpp" />
     <ClCompile Include="..\private\UI_KOPanel.cpp" />
     <ClCompile Include="..\private\UI_KOParticle.cpp" />
-    <ClCompile Include="..\private\UI_Loading.cpp" />
+    <ClCompile Include="..\private\UI_Loading_BG.cpp" />
     <ClCompile Include="..\private\UI_LoadingMark.cpp" />
     <ClCompile Include="..\private\UI_Loading_Font.cpp" />
-    <ClCompile Include="..\private\UI_Logo.cpp" />
+    <ClCompile Include="..\private\UI_Logo_Mark.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
