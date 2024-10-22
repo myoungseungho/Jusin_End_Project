@@ -276,6 +276,7 @@
     <ClInclude Include="..\Public\SpaceEarth_Light.h" />
     <ClInclude Include="..\Public\SpaceGround.h" />
     <ClInclude Include="..\Public\SpaceHorizon.h" />
+    <ClInclude Include="..\Public\SpaceMeteo.h" />
     <ClInclude Include="..\Public\SpaceMoon.h" />
     <ClInclude Include="..\Public\SpaceRock.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
@@ -398,6 +399,7 @@
     <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
     <ClCompile Include="..\Private\SpaceGround.cpp" />
     <ClCompile Include="..\Private\SpaceHorizon.cpp" />
+    <ClCompile Include="..\Private\SpaceMeteo.cpp" />
     <ClCompile Include="..\Private\SpaceMoon.cpp" />
     <ClCompile Include="..\Private\SpaceRock.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />

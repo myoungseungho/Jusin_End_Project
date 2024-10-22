@@ -738,6 +738,9 @@
     <ClInclude Include="..\Public\Effect_Manager.h">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\SpaceMeteo.h">
+      <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1024,6 +1027,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Line_Draw.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceMeteo.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

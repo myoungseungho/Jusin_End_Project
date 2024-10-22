@@ -534,6 +534,9 @@ protected:
 	_float					m_fAttBufTimer = { 0.f };
 
 
+
+	string m_strName = "";
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
