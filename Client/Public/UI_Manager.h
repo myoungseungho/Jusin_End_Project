@@ -65,7 +65,8 @@ public:
 	//Combo
 	_uint m_iComboCount = { 0 };
 
-	CCharacter* m_pPawnArray[CCharacter::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
+	//CCharacter* m_pPawnArray[CCharacter::CCharacter::PLAYER_SLOT::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
+	CCharacter* m_pPawnArray[CCharacter::PLAYER_SLOT::SLOT_END] = { nullptr,nullptr ,nullptr ,nullptr };
 
 	//Anim
 	_float m_fTotalDuration = { 0.f };

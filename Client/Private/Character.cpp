@@ -7,6 +7,7 @@
 #include "AttackObject.h"
 #include "UI_Manager.h"
 
+#include "AttackObject.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower	 = 3.f; //0
@@ -183,19 +184,20 @@ HRESULT CCharacter::Initialize(void* pArg)
 	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 
+
+	m_iPlayerTeam = pDesc->iTeam;
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	if(pDesc->iTeam == 1)
+	if(m_iPlayerTeam == 1)
 	{
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-		m_iPlayerTeam = 1;
 		FlipDirection(1);
 	}
 	else
 	{
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, 0.f, 0.f, 1.f));
-		m_iPlayerTeam = 2;
 		FlipDirection(-1);
 	}
 
@@ -1065,6 +1067,11 @@ void CCharacter::Chase2(_float fTimeDelta)
 		return;
 	}
 
+	if (m_bStun)
+	{
+		m_bChase = false;
+		
+	}
 
 	m_fAccChaseTime += fTimeDelta;
 
@@ -1090,6 +1097,11 @@ void CCharacter::Chase2(_float fTimeDelta)
 		if (m_fAccChaseTime > 5.f)
 		{
 			m_bChase = false;
+			//if (m_pChaseAttackObejct != nullptr)
+			//{
+			//	m_pChaseAttackObejct->Set_RemoteDestory();
+			//	m_pChaseAttackObejct = nullptr;
+			//}
 			return;
 		}
 	}
@@ -1111,11 +1123,12 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 
 	_float vLength = GetVectorLength((vTargetPos - vMyPos));
+	//m_pChaseAttackObejct
+
 	if (vLength < 0.5f) //0.3
 	{
 		m_bChase = false;
-
-
+		
 
 		//테스트
 		m_fAccChaseTime = 0.f;
@@ -1361,15 +1374,21 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 	//공격판정 테스트
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
-	/*	Desc.ColliderDesc.fSizeX = 2.0;
-		Desc.ColliderDesc.fSizeY = 2.0f;
-		Desc.ColliderDesc.Offset = { 0.f,0.6f,0.f };
-		Desc.ColliderDesc.pTransform = m_pTransformCom;*/
+
+		CAttackObject::ATTACK_DESC Desc{};
+
+		if (m_iPlayerTeam == 1)
+			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+		else
+			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+		Desc.ColliderDesc.pMineGameObject = this;
+		Desc.ColliderDesc.vCenter = { 0.f,0.5f,0.f };
+		Desc.ColliderDesc.vExtents = { 1.f,1.f,0.2f };
+
+
 		Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
 
 		Desc.fhitCharacter_StunTime = 0.6f;
-
 		Desc.iDamage = 300 * Get_DamageScale();
 		Desc.fLifeTime = 5.f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_CHASE };
@@ -1377,8 +1396,14 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.1f;
 		Desc.pOwner = this;
+		
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc);
 
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		//m_pChaseAttackObejct = static_cast<CAttackObject*>(m_pGameInstance->Add_GameObject_ToLayer_AndGet(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc));
+
+
+		//m_pChaseAttackObejct = { nullptr };
+		//Set_RemoteDestory()
 
 	}
 
@@ -1807,6 +1832,8 @@ _bool CCharacter::Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackTyp
 */
 AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
 {
+
+
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
 		return RESULT_MISS;
 
@@ -1852,6 +1879,7 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 	Set_HitAnimation(eAnimation, Impus);
 	Set_AnimationStop(fStopTime);
 
+	Set_bRedHP(true);
 
 	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
 
@@ -2616,6 +2644,51 @@ void CCharacter::Set_Grab(_bool bAir)
 	m_bGrab_Air = bAir;
 }
 
+void CCharacter::Set_ChaseStop()
+{
+	m_bChase = false;
+	
+	m_fAccChaseTime = 0.f;
+	m_fGravityTime = 0.185f;
+	m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+	
+
+}
+
+_ushort CCharacter::Get_BreakFall_AirAnimationIndex()
+{
+	return m_iBreakFall_Air;
+}
+
+_ushort CCharacter::Get_JumpAirAnimationIndex()
+{
+	return m_iJumpAnimationIndex;
+}
+
+_bool CCharacter::Get_bStun()
+{
+	return m_bStun;
+}
+
+
+
+void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+{
+	_bool debugA = true;
+}
+
+void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
+{
+	_bool debugA = true;
+
+}
+
+void CCharacter::OnCollisionExit(CCollider* other)
+{
+	_bool debugA = true;
+
+}
+
 
 
 
@@ -3212,6 +3285,10 @@ HRESULT CCharacter::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
 		return E_FAIL;
+
+	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
+
+
 	
 	return S_OK;
 }
@@ -3271,6 +3348,6 @@ void CCharacter::Free()
 	Safe_Release(m_pModelCom);
 	Safe_Release(m_pUI_Manager);
 
-	//Safe_Release(m_pColliderCom);
+	Safe_Release(m_pColliderCom);
 
 }

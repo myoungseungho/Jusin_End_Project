@@ -68,7 +68,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
 	CharacterDesc.iTeam = 1;
-	CharacterDesc.ePlayerSlot = CCharacter::LPLAYER1;
+	CharacterDesc.ePlayerSlot = CCharacter::LPLAYER2;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
@@ -297,13 +297,13 @@ HRESULT CLevel_GamePlay::Ready_Character()
 	CCharacter::Character_DESC SlotDesc = {};
 
 	//플레이어 생성
-	SlotDesc.ePlayerSlot = CCharacter::LPLAYER1;
+	SlotDesc.ePlayerSlot = CCharacter::LPLAYER2;
 	SlotDesc.fSpeedPerSec = 5.f;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;
 
-	SlotDesc.ePlayerSlot = CCharacter::LPLAYER2;
+	SlotDesc.ePlayerSlot =CCharacter::LPLAYER2;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &SlotDesc)))
 		return E_FAIL;

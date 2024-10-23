@@ -3,6 +3,7 @@
 #include "UIObject.h"
 #include "RenderInstance.h"
 
+#include "Character.h"
 
 CUIObject::CUIObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CGameObject{ pDevice , pContext }
@@ -45,7 +46,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 		switch (m_eLRPos)
 		{
 		case LEFT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			break;
 	
@@ -71,7 +72,7 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		switch (m_eLRPos)
 		{
 		case LEFT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 			break;
 
@@ -164,7 +165,7 @@ void CUIObject::InitPlayer()
 	switch (pDesc->eLRPos)
 	{
 	case LEFT:
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
+		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
 		break;
 

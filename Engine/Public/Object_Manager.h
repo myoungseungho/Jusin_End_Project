@@ -25,6 +25,8 @@ public:
 	HRESULT Add_Prototype(const _wstring& strPrototypeTag, class CGameObject* pPrototype);
 	HRESULT Add_GameObject_ToLayer(_uint iLevelIndex, const _wstring& strPrototypeTag, const _wstring& strLayerTag, void* pArg = nullptr);
 	class CGameObject* Clone_GameObject(const _wstring& strPrototypeTag, void* pArg = nullptr);
+	CGameObject* Add_GameObject_ToLayer_AndGet(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg = nullptr);
+
 
 	//파일 저장, 로드 관련 함수
 	HRESULT Get_Prototype_Names(vector<string>* pVector);

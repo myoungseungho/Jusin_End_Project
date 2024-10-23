@@ -281,12 +281,20 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 			if (m_bChase == false)
 			{
-				m_fAccChaseTime = 0.f;
-				//m_fGravityTime = 0.365f;
-				//Set_fImpulse( XMVectorGetX(vDir));
-				m_fGravityTime = 0.185f;
-				//m_pModelCom->SetUp_Animation(ANIME_JUMP_DOWN, false);
-				Set_Animation(ANIME_JUMP_DOWN, false);
+				//평범하게 체이스가 끝났으면 이렇게.
+				if(m_bStun == false)
+				{
+					m_fAccChaseTime = 0.f;
+					m_fGravityTime = 0.185f;
+					Set_Animation(ANIME_JUMP_DOWN, false);
+				}
+				else //맞아서 체이스가 끝났으면 
+				{
+					m_fAccChaseTime = 0.f;
+
+					m_fGravityTime = 0.185f;
+				}
+
 			}
 
 		}
@@ -769,19 +777,14 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Goku::ANIME_ATTACK_LIGHT1:
 	{		
 
-		CAttacKObject::ATTACK_DESC Desc{};
-	/*	Desc.ColliderDesc.width = 0.7;
-		Desc.ColliderDesc.height = 0.8;
-		Desc.ColliderDesc.vCenter ={0.9f *m_iLookDirection,0.8f,0.f };
-		Desc.ColliderDesc.pTransform = m_pTransformCom;*/
-
+		CAttackObject::ATTACK_DESC Desc{};
+	
 		if (m_iPlayerTeam == 1)
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
 		else
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 		Desc.ColliderDesc.pMineGameObject = this;
 		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
-		//Desc.ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
 		Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
 
 
@@ -806,7 +809,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_MEDIUM:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 0.7;
 		//Desc.ColliderDesc.height = 0.8;
 		if (m_iPlayerTeam == 1)
@@ -831,7 +834,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_HEAVY:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 	/*	Desc.ColliderDesc.width = 1.0;
 		Desc.ColliderDesc.height = 1.0;
 		Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.8f,0.f };
@@ -861,7 +864,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Goku::ANIME_ATTACK_AIR1:
 	{
 
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 0.7;
 		//Desc.ColliderDesc.height = 0.8;
 		if (m_iPlayerTeam == 1)
@@ -890,7 +893,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Goku::ANIME_ATTACK_AIR2:
 	{
 
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 0.7;
 		//Desc.ColliderDesc.height = 0.8;
 		if (m_iPlayerTeam == 1)
@@ -919,7 +922,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_AIR3:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 1.0;
 		//Desc.ColliderDesc.height = 1.0;
 		if (m_iPlayerTeam == 1)
@@ -959,7 +962,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM:
 	{
 
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 0.7;
 		//Desc.ColliderDesc.height = 0.8;
 		if (m_iPlayerTeam == 1)
@@ -988,7 +991,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_HEAVY:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 2.0;
 		//Desc.ColliderDesc.height = 1.3;
 		//Desc.ColliderDesc.vCenter = { 0.4f * m_iLookDirection,1.2f,0.f };
@@ -1019,7 +1022,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_UPPER_AIR:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 1.0;
 		//Desc.ColliderDesc.height = 1.0;
 		if (m_iPlayerTeam == 1)
@@ -1044,7 +1047,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 1.0;
 		//Desc.ColliderDesc.height = 1.3;
 		if (m_iPlayerTeam == 1)
@@ -1071,7 +1074,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_AIR:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 1.0;
 		//Desc.ColliderDesc.height = 1.3;
 		if (m_iPlayerTeam == 1)
@@ -1100,7 +1103,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		if (iAttackEvent == 0)
 		{
-			CAttacKObject::ATTACK_DESC Desc{};
+			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 0.7;
 			//Desc.ColliderDesc.height = 0.8;
 			if (m_iPlayerTeam == 1)
@@ -1127,7 +1130,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else
 		{
-			CAttacKObject::ATTACK_DESC Desc{};
+			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 0.7;
 			//Desc.ColliderDesc.height = 0.8;
 			if (m_iPlayerTeam == 1)
@@ -1159,7 +1162,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 20.0;
 		//Desc.ColliderDesc.height = 1.3;
 
@@ -1226,7 +1229,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	case Client::CPlay_Goku::ANIME_GRAB:
 	{
-		CAttacKObject::ATTACK_DESC Desc{};
+		CAttackObject::ATTACK_DESC Desc{};
 		//Desc.ColliderDesc.width = 1.4f;
 		//Desc.ColliderDesc.height = 2.2f;
 		if (m_iPlayerTeam == 1)

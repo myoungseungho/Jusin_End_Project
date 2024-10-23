@@ -36,7 +36,7 @@ public:
 	HRESULT Check_Collision(_float);
 
 	_bool IsColliding(CCollider* a, CCollider* b);
-	HRESULT Release_Collider(const CCollider*);
+	HRESULT Release_Collider(const CCollider* Collider);
 	HRESULT Destory_ColliderGroup();
 	void	Destory_Reserve(COLLIDERGROUP eRenderGroup);
 

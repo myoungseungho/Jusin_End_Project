@@ -13,7 +13,7 @@ END
 
 BEGIN(Client)
 
-class CAttacKObject final : public CGameObject
+class CAttackObject  : public CGameObject
 {
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
@@ -48,10 +48,10 @@ public:
 		_ushort		iGainAttackStep = { 1 };
 		class CCharacter* pOwner = { nullptr };
 	};
-private:
-	CAttacKObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CAttacKObject(const CAttacKObject& Prototype);
-	virtual ~CAttacKObject() = default;
+protected:
+	CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CAttackObject(const CAttackObject& Prototype);
+	virtual ~CAttackObject() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -61,8 +61,23 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+
+public:
+	//void Set_RemoteDestory();
+
+public:
+	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionExit(class CCollider* other) override;
+
+
 private:
-	
+	void CollisingAttack();
+	void CollisingPlayer();
+
+
+
+protected:
 	//CCollider_Test*			m_pColliderCom = { nullptr };
 
 	HitMotion				m_ihitCharacter_Motion = { HIT_LIGHT };
@@ -96,11 +111,14 @@ private:
 	_bool		m_bOwnerNextAnimation = { false };
 	_uint		m_iOnwerNextAnimationIndex = {};
 
+
+	_bool		m_bEnableDestory = true;
+
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);
 
 public:
-	static CAttacKObject* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CAttackObject* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

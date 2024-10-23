@@ -109,9 +109,6 @@
     <ClCompile Include="..\Private\Level_GamePlay.cpp">
       <Filter>01.Level\00.GamePlay</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\AttackObject.cpp">
-      <Filter>02.GameObjects\Character\AttackObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Character.cpp">
       <Filter>02.GameObjects\Character</Filter>
     </ClCompile>
@@ -171,6 +168,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\UI_Logo_Mark.cpp">
       <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AttackObject_Chase.cpp">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AttackObject.cpp">
+      <Filter>02.GameObjects\AttackObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,6 +389,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround">
       <UniqueIdentifier>{9534d408-e911-4397-9ffc-f2c67c65b94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Chase">
+      <UniqueIdentifier>{2e373acd-4324-41a5-b47d-c0c6272f12eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -752,6 +758,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\UI_Logo_Mark.h">
       <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject_Chase.h">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Chase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
