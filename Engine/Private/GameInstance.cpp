@@ -195,6 +195,7 @@ _uint CGameInstance::Get_CurrentLevel_Index()
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;
 
+
 	return m_pLevel_Manager->Get_CurrentLevel_Index();
 }
 

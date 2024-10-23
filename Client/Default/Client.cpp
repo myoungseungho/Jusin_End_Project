@@ -116,7 +116,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 			// 이전 프레임의 `deltaTime`을 사용하여 업데이트 및 렌더링
 			pMainApp->Update(deltaTime);
-			pMainApp->Render(deltaTime);
+
+
+  			pMainApp->Render(deltaTime);
 
 			fTimeAcc = 0.f;
 		}

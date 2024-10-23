@@ -12,6 +12,10 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
+#include "UI_Loading_BG.h"
+#include "UI_LoadingMark.h"
+#include "UI_Loading_Font.h"
+
 #include "thread"
 
 CMainApp::CMainApp()
@@ -24,6 +28,7 @@ CMainApp::CMainApp()
 
 HRESULT CMainApp::Initialize()
 {
+
 	//게임인스턴스 엔진 초기화
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hInst, g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
@@ -75,10 +80,11 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
 	//IMGUI 렌더는 로딩때는 하면 안됨
-	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+ 
+       _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+
 	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render)
-		//IMGUI 렌더
 		m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
@@ -131,6 +137,44 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 #pragma endregion
+
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_LoadingBackGround_Mask */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround_Mask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/stage/stage_bg_0.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameStartCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Middle/GameStart/GameStart%d.png"), 8))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/DB_load_00.png")))))
+		return E_FAIL;
+
+
+	/* For.Prototype_GameObject_UI_Loading */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
+		CUI_Loading_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_LoadingMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
+		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingFont"),
+		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	return S_OK;
 }

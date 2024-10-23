@@ -275,11 +275,14 @@ HRESULT CUIObject::Bind_ShaderResources()
 
 HRESULT CUIObject::Ready_Components()
 {
+
+	//MSG_BOX(TEXT("Debug1"));
 	/* For.Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_UI_VtxRect"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
+	//MSG_BOX(TEXT("Debug2"));
 	/* For.Com_VIBuffer */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))

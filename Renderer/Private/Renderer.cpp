@@ -266,6 +266,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_UI(fTimeDelta)))
 		return E_FAIL;
+
+	if (FAILED(Render_Glow_UI(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_Node(fTimeDelta)))
 		return E_FAIL;
 	
@@ -665,6 +669,32 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 	m_RenderObjects[RG_UI].clear();
 
 	return S_OK;
+}
+
+HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_UI_GLOW])
+	{
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+			return E_FAIL;
+
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		if (FAILED(Draw_Glow(fTimeDelta)))
+			return E_FAIL;
+
+	}
+
+	m_RenderObjects[RG_UI_GLOW].clear();
+
+	return S_OK;
+
 }
 
 HRESULT CRenderer::Render_Node(_float fTimeDelta)

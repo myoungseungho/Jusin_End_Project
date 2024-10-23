@@ -21,7 +21,7 @@ class CRenderer final : public CBase
 public:
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
-		RG_NONLIGHT, RG_UI, RG_GLOW, RG_BLEND, RG_NODE, RG_END };
+		RG_NONLIGHT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW , RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -84,12 +84,13 @@ private:
 	HRESULT Render_Glow(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
+	HRESULT Render_Glow_UI(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
-#endif
+//#endif
 
 	HRESULT Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
 
