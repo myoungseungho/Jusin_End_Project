@@ -46,8 +46,6 @@ private:
 
 	const _float4x4* Get_Model_Float4x4();
 	void VisualizeCameraPoints(const vector<CameraPoint>& points, _float fTimeDelta);
-	void DrawDebugSphere(const _float3& position, float radius, const _float4& color);
-	void DrawDebugLine(const _float3& start, const _float3& end, const _float4& color);
 	void DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color);
 
 private:

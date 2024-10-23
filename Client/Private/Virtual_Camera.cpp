@@ -172,35 +172,39 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
 	}
 
-	// **3. 모델의 월드 행렬 로드**
+	// **3. 모델의 월드 행렬 로드 (스케일링 제거)**
 	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 
+	// 모델의 스케일링을 분리
+	_vector modelScale;
+	_vector modelRotationQuat;
+	_vector modelTranslation;
+	XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, modelWorldMatrix);
+
+	// 스케일링을 (1,1,1)로 설정
+	_matrix modelRotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
+	_matrix modelTranslationMatrix = XMMatrixTranslationFromVector(modelTranslation);
+	_matrix modelWorldMatrixNoScale = modelRotationMatrix * modelTranslationMatrix;
+
 	// **4. 로컬 포지션을 월드 포지션으로 변환**
-	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrix);
+	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrixNoScale);
 
-	// **5. 로컬 회전을 월드 회전으로 변환**
-	// 모델의 회전 행렬 추출 (위치 정보 제거)
-	_matrix modelRotationMatrix = modelWorldMatrix;
-	modelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1);
-
+	// **5. 로컬 회전을 월드 회전으로 변환 (스케일링 영향 제거)**
 	// 로컬 회전 행렬 생성
 	_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(interpolatedRotationLocal);
 
-	// 월드 회전 행렬 계산
+	// 월드 회전 행렬 계산 (모델의 스케일링이 제거된 회전 행렬 사용)
 	_matrix interpolatedRotationMatrixWorld = interpolatedRotationMatrixLocal * modelRotationMatrix;
 
 	// **6. 카메라의 월드 행렬 생성**
 	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
-	NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
+	NewWorldMatrix.r[3] = XMVectorSetW(interpolatedPositionWorld, 1.0f); // 위치 설정
 
-	//월드 매트릭스에서 Right, Up, Look 벡터 추출
+	// 방향 벡터 설정
 	_vector right = NewWorldMatrix.r[0];
 	_vector up = NewWorldMatrix.r[1];
 	_vector look = NewWorldMatrix.r[2];
-	_vector position = NewWorldMatrix.r[3];
 
-	m_vBaseCameraPosition = interpolatedPositionWorld;
-	// 방향 벡터 설정
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, up);
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
@@ -584,14 +588,21 @@ void CVirtual_Camera::Move_Point(_int index, _int animationIndex)
 		// **3. 모델의 월드 행렬 로드**
 		_matrix modelWorldMatrix = Float4x4ToMatrix(*targetPoint.pWorldFloat4x4);
 
+		// **스케일링 제거를 위한 행렬 분해**
+		_vector modelScale;
+		_vector modelRotationQuat;
+		_vector modelTranslation;
+		XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, modelWorldMatrix);
+
+		// **스케일링이 제거된 모델의 월드 행렬 재구성**
+		_matrix modelRotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
+		_matrix modelTranslationMatrix = XMMatrixTranslationFromVector(modelTranslation);
+		_matrix modelWorldMatrixNoScale = modelRotationMatrix * modelTranslationMatrix;
+
 		// **4. 로컬 포지션을 월드 포지션으로 변환**
-		_vector interpolatedPositionWorld = XMVector3TransformCoord(XMLoadFloat3(&localPosition), modelWorldMatrix);
+		_vector interpolatedPositionWorld = XMVector3TransformCoord(XMLoadFloat3(&localPosition), modelWorldMatrixNoScale);
 
 		// **5. 로컬 회전을 월드 회전으로 변환**
-		// 모델의 회전 행렬 추출 (위치 정보 제거)
-		_matrix modelRotationMatrix = modelWorldMatrix;
-		modelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1);
-
 		// 로컬 회전 행렬 생성
 		_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(XMLoadFloat4(&localQuaternion));
 
@@ -600,7 +611,7 @@ void CVirtual_Camera::Move_Point(_int index, _int animationIndex)
 
 		// **6. 카메라의 월드 행렬 생성**
 		_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
-		NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
+		NewWorldMatrix.r[3] = XMVectorSetW(interpolatedPositionWorld, 1.0f); // 위치 설정
 
 		// 월드 매트릭스에서 Right, Up, Look 벡터 추출
 		_vector right = NewWorldMatrix.r[0];
@@ -623,16 +634,16 @@ void CVirtual_Camera::Move_Point(_int index, _int animationIndex)
 		// CTransform 컴포넌트에 설정
 		CTransform* cameraTransform = static_cast<CTransform*>(Get_Component(TEXT("Com_Transform")));
 
-		//월드행렬 셋팅
+		// 월드 포지션 로드
 		_float3 worldPosition = targetPoint.position;
 
-		// 2. 월드 회전
+		// 월드 회전 로드
 		_float4 worldQuaternion = targetPoint.rotation;
+
 		// 월드 회전 행렬 생성
 		_matrix interpolatedRotationMatrixWorld = XMMatrixRotationQuaternion(XMLoadFloat4(&worldQuaternion));
 
-
-		// **6. 카메라의 월드 행렬 생성**
+		// 카메라의 월드 행렬 생성
 		_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
 		NewWorldMatrix.r[3] = XMVectorSetW(XMLoadFloat3(&worldPosition), 1.f); // 위치 설정
 

@@ -493,7 +493,6 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 		return;
 	}
 
-
 	for (size_t i = 0; i < points.size() - 1; ++i)
 	{
 		const CameraPoint& point = points[i];
@@ -506,7 +505,20 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 		{
 			_vector localPos = XMLoadFloat3(&point.position);
 			_matrix worldMatrix = XMLoadFloat4x4(point.pWorldFloat4x4);
-			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
+
+			// **스케일링 제거를 위한 행렬 분해**
+			_vector modelScale;
+			_vector modelRotationQuat;
+			_vector modelTranslation;
+			XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, worldMatrix);
+
+			// **스케일링이 제거된 월드 행렬 재구성**
+			_matrix rotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
+			_matrix translationMatrix = XMMatrixTranslationFromVector(modelTranslation);
+			_matrix worldMatrixNoScale = rotationMatrix * translationMatrix;
+
+			// 로컬 포지션을 스케일링이 제거된 월드 행렬로 변환
+			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrixNoScale);
 			XMStoreFloat3(&startPos, worldPosVec);
 		}
 
@@ -514,28 +526,28 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 		{
 			_vector localPos = XMLoadFloat3(&nextPoint.position);
 			_matrix worldMatrix = XMLoadFloat4x4(nextPoint.pWorldFloat4x4);
-			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrix);
+
+			// **스케일링 제거를 위한 행렬 분해**
+			_vector modelScale;
+			_vector modelRotationQuat;
+			_vector modelTranslation;
+			XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, worldMatrix);
+
+			// **스케일링이 제거된 월드 행렬 재구성**
+			_matrix rotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
+			_matrix translationMatrix = XMMatrixTranslationFromVector(modelTranslation);
+			_matrix worldMatrixNoScale = rotationMatrix * translationMatrix;
+
+			// 로컬 포지션을 스케일링이 제거된 월드 행렬로 변환
+			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrixNoScale);
 			XMStoreFloat3(&endPos, worldPosVec);
 		}
-
 
 		m_pLineDraw->Set_LinePoints(points, startPos, endPos);
 		m_pLineDraw->Render(fTimeDelta);
 	}
 
-
 	m_pLineDraw->TextRender(points, fTimeDelta);
-}
-
-void CIMGUI_Camera_Tab::DrawDebugSphere(const _float3& position, float radius, const _float4& color)
-{
-
-}
-
-void CIMGUI_Camera_Tab::DrawDebugLine(const _float3& start, const _float3& end, const _float4& color)
-{
-	//ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-	//draw_list->AddLine(start, end, ImGui::ColorConvertFloat4ToU32(color), 1.0f);
 }
 
 void CIMGUI_Camera_Tab::DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color)
