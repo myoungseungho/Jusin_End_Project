@@ -5,7 +5,7 @@
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
 #include "Line_Draw.h"
-
+#include "Character.h"
 _bool bShowCameraWindow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _wstring filename = L"../Bin/CameraPoints.txt"; //데이터 저장되는 txt
 
@@ -493,6 +493,11 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 		return;
 	}
 
+	// **플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)**
+	CCharacter* character = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0));
+	_int direction = character->Get_iDirection();
+
+	
 	for (size_t i = 0; i < points.size() - 1; ++i)
 	{
 		const CameraPoint& point = points[i];
@@ -501,9 +506,17 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 		_float3 startPos = point.position;
 		_float3 endPos = nextPoint.position;
 
+		// **direction에 따른 포지션 조정**
+		if (direction == -1)
+		{
+			// x축 부호 반전
+			startPos.x = -startPos.x;
+			endPos.x = -endPos.x;
+		}
+
 		if (point.hasWorldFloat4x4 && point.pWorldFloat4x4)
 		{
-			_vector localPos = XMLoadFloat3(&point.position);
+			_vector localPos = XMLoadFloat3(&startPos);
 			_matrix worldMatrix = XMLoadFloat4x4(point.pWorldFloat4x4);
 
 			// **스케일링 제거를 위한 행렬 분해**
@@ -519,12 +532,13 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 
 			// 로컬 포지션을 스케일링이 제거된 월드 행렬로 변환
 			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrixNoScale);
+
 			XMStoreFloat3(&startPos, worldPosVec);
 		}
 
 		if (nextPoint.hasWorldFloat4x4 && nextPoint.pWorldFloat4x4)
 		{
-			_vector localPos = XMLoadFloat3(&nextPoint.position);
+			_vector localPos = XMLoadFloat3(&endPos);
 			_matrix worldMatrix = XMLoadFloat4x4(nextPoint.pWorldFloat4x4);
 
 			// **스케일링 제거를 위한 행렬 분해**
@@ -540,6 +554,7 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 
 			// 로컬 포지션을 스케일링이 제거된 월드 행렬로 변환
 			_vector worldPosVec = XMVector3TransformCoord(localPos, worldMatrixNoScale);
+
 			XMStoreFloat3(&endPos, worldPosVec);
 		}
 

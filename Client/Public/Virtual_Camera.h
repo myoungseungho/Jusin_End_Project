@@ -10,8 +10,8 @@ class CVirtual_Camera final : public CCamera
 public:
 	enum CAMERA_MODE
 	{
-		CAMERA_FREE_MODE,
 		CAMERA_NORMAL_MODE,
+		CAMERA_FREE_MODE,
 		CAMERA_CINEMATIC_MODE,
 		CAMERA_MODE_END
 	};
@@ -77,7 +77,7 @@ private:
 	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
 public:
-	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
+	CAMERA_MODE m_currentMode = { CAMERA_NORMAL_MODE };
 	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 
 	_char* m_Name;
