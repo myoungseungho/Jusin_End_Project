@@ -56,6 +56,7 @@ public: /* For.Object_Manager */
 	class CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
 	class list<class CGameObject*> Get_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 	class CGameObject* Clone_GameObject(const wstring& strPrototypeTag, void* pArg = nullptr);
+
 	void Destory_Reserve(class CGameObject* gameObject);
 
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
@@ -96,7 +97,6 @@ public: /* For.ThreadPool */
 
 public:/*For. Frustum*/
 	void Get_ParallelVectorsInPlane(_float3& tangent1, _float3& tangent2, _float fov);
-
 
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);

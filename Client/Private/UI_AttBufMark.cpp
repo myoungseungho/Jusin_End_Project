@@ -23,7 +23,7 @@ HRESULT CUI_AttBufMark::Initialize_Prototype()
 
 HRESULT CUI_AttBufMark::Initialize(void* pArg)
 {
-	m_fPosX = 437.f;
+	m_fPosX = 437.f, m_fPosY = 146.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -31,7 +31,9 @@ HRESULT CUI_AttBufMark::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(40.f, 40.f, m_fPosX, 146.f,0.f);
+	m_fSizeX = 40.f, m_fSizeY = 40.f;
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY,0.f);
 
 	return S_OK;
 }

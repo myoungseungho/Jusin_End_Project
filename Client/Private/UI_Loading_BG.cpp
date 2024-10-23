@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\UI_Loading.h"
+#include "..\Public\UI_Loading_BG.h"
 
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
-CUI_Loading::CUI_Loading(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_Loading_BG::CUI_Loading_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CUI_Loading::CUI_Loading(const CUI_Loading& Prototype)
+CUI_Loading_BG::CUI_Loading_BG(const CUI_Loading_BG& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CUI_Loading::Initialize_Prototype()
+HRESULT CUI_Loading_BG::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CUI_Loading::Initialize(void* pArg)
+HRESULT CUI_Loading_BG::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -45,20 +45,20 @@ HRESULT CUI_Loading::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Loading::Priority_Update(_float fTimeDelta)
+void CUI_Loading_BG::Priority_Update(_float fTimeDelta)
 {
 }
 
-void CUI_Loading::Update(_float fTimeDelta)
+void CUI_Loading_BG::Update(_float fTimeDelta)
 {
 }
 
-void CUI_Loading::Late_Update(_float fTimeDelta)
+void CUI_Loading_BG::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
 }
 
-HRESULT CUI_Loading::Render(_float fTimeDelta)
+HRESULT CUI_Loading_BG::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -75,7 +75,7 @@ HRESULT CUI_Loading::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CUI_Loading::Ready_Components()
+HRESULT CUI_Loading_BG::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
@@ -96,7 +96,7 @@ HRESULT CUI_Loading::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CUI_Loading::Bind_ShaderResources()
+HRESULT CUI_Loading_BG::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -113,33 +113,33 @@ HRESULT CUI_Loading::Bind_ShaderResources()
 	return S_OK;
 }
 
-CUI_Loading* CUI_Loading::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_Loading_BG* CUI_Loading_BG::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CUI_Loading* pInstance = new CUI_Loading(pDevice, pContext);
+	CUI_Loading_BG* pInstance = new CUI_Loading_BG(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CUI_Loading"));
+		MSG_BOX(TEXT("Failed to Created : CUI_Loading_BG"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CUI_Loading::Clone(void* pArg)
+CGameObject* CUI_Loading_BG::Clone(void* pArg)
 {
-	CUI_Loading* pInstance = new CUI_Loading(*this);
+	CUI_Loading_BG* pInstance = new CUI_Loading_BG(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CUI_Loading"));
+		MSG_BOX(TEXT("Failed to Cloned : CUI_Loading_BG"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CUI_Loading::Free()
+void CUI_Loading_BG::Free()
 {
 	__super::Free();
 

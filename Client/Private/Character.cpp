@@ -3,10 +3,9 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
 #include "iostream"
-
 #include "AttackObject.h"
+#include "UI_Manager.h"
 
 
 const _float CCharacter::fGroundHeight = 0.f; //0
@@ -131,7 +130,10 @@ vector<CInput> CCharacter::Command_HeavyAttack = { {MOVEKEY_NEUTRAL, ATTACK_HEAV
 vector<CInput> CCharacter::Command_SpecialAttack = { {MOVEKEY_NEUTRAL, ATTACK_SPECIAL} };
 			
 vector<CInput> CCharacter::Command_HeavyAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_HEAVY} };
-			 
+		
+vector<CInput> CCharacter::Command_Grab = { {MOVEKEY_NEUTRAL, ATTACK_GRAB} };
+
+
 vector<CInput> CCharacter::Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
 vector<CInput> CCharacter::Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
@@ -145,15 +147,17 @@ vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RI
 
 CCharacter::CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 CCharacter::CCharacter(const CCharacter& Prototype)
 	: CGameObject{ Prototype }
 	, m_pFrameEvent{Prototype.m_pFrameEvent }
+	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 {
-
+	Safe_AddRef(m_pUI_Manager);
 }
 
 HRESULT CCharacter::Initialize_Prototype()
@@ -167,7 +171,6 @@ HRESULT CCharacter::Initialize_Prototype()
 
 HRESULT CCharacter::Initialize(void* pArg)
 {
-
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	//m_strModelName = pDesc->strModelName;
 
@@ -183,7 +186,6 @@ HRESULT CCharacter::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-
 	if(pDesc->iTeam == 1)
 	{
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
@@ -197,6 +199,12 @@ HRESULT CCharacter::Initialize(void* pArg)
 		FlipDirection(-1);
 	}
 
+
+	//모델 로드를 하위 클래스로 옮겼으니 각자 처리하기 
+	//m_pModelCom->SetUp_Animation(0, false);
+	//m_pModelCom->Play_Animation(0.f);
+
+
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
 
 	return S_OK;
@@ -204,9 +212,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 void CCharacter::Priority_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
-
-	m_tCharacterDesc.bStun = m_bStun;
+	m_tCharacterDesc.bStun = m_bRedHp;
 	m_tCharacterDesc.bHit = m_bHit;
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
 	m_tCharacterDesc.iHp = m_iHP;
@@ -287,10 +293,7 @@ _bool CCharacter::CompareNextAnimation(_uint iAnimationIndex, _float fNextPositi
 	if (iAnimationIndex != m_iNextAnimation.first)
 		bCompare = false;
 
-
-
 	return bCompare;
-
 }
 
 void CCharacter::Set_CurrentAnimationPositionJump(_float fAnimationPosition)
@@ -400,6 +403,8 @@ void CCharacter::ProcessEventsBetweenFrames2(int characterIndex, int animationIn
 _bool CCharacter::InputCommand()
 {
 
+	
+
 	ButtonInput iAttackkey = ATTACK_NONE;
 	DirectionInput iMoveKey = MOVEKEY_NEUTRAL;
 
@@ -493,6 +498,8 @@ _bool CCharacter::InputCommand()
 		//	 iAttackkey = ATTACK_LIGHT;
 		//
 		// }
+
+		 GetUI_Input(DirectionX, DirectionY, iMoveKey, iAttackkey);
 
 	}
 	else  //2팀
@@ -985,6 +992,8 @@ void CCharacter::AttckCancleJump()
 
 }
 
+/*
+
 void CCharacter::Chase(_float fTimeDelta)
 {
 
@@ -1036,7 +1045,7 @@ void CCharacter::Chase(_float fTimeDelta)
 	m_pTransformCom->Add_MoveVector(vDir);
 	Set_CurrentAnimationPositionJump(angle);
 }
-
+*/
 void CCharacter::Chase2(_float fTimeDelta)
 {
 
@@ -1144,7 +1153,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	//추적 속도를 점점 빠르게
 	//m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * 0.5f);
-	m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * m_fAccChaseTime);
+	m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * m_fAccChaseTime * 0.7f);
 
 
 
@@ -1332,30 +1341,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 		}
 
 
-		//공격판정 테스트
-		{
-			CAttacKObject::ATTACK_DESC Desc{};
-			Desc.ColliderDesc.fSizeX = 2.0;
-			Desc.ColliderDesc.fSizeY = 2.0f;
-			Desc.ColliderDesc.Offset = { 0.f,0.6f,0.f };
-			Desc.ColliderDesc.pTransform = m_pTransformCom;
-			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0.3f };
-			//Desc.fhitCharacter_StunTime = 0.3f;
-
-			//Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
-			Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
-
-			Desc.fhitCharacter_StunTime = 0.6f;
-
-			Desc.iDamage = 400 * Get_DamageScale();
-			Desc.fLifeTime = 5.f;
-			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
-			Desc.iTeam = m_iPlayerTeam;
-			Desc.fAnimationLockTime = 0.1f;
-			Desc.pOwner = this;
-
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-		}
+		
 	}
 	else
 	{
@@ -1364,11 +1350,114 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 	}
 	
 
+	//공격판정 테스트
+	{
+		CAttacKObject::ATTACK_DESC Desc{};
+	/*	Desc.ColliderDesc.fSizeX = 2.0;
+		Desc.ColliderDesc.fSizeY = 2.0f;
+		Desc.ColliderDesc.Offset = { 0.f,0.6f,0.f };
+		Desc.ColliderDesc.pTransform = m_pTransformCom;*/
+		Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
+
+		Desc.fhitCharacter_StunTime = 0.6f;
+
+		Desc.iDamage = 300 * Get_DamageScale();
+		Desc.fLifeTime = 5.f;
+		Desc.ihitCharacter_Motion = { HitMotion::HIT_CHASE };
+
+		Desc.iTeam = m_iPlayerTeam;
+		Desc.fAnimationLockTime = 0.1f;
+		Desc.pOwner = this;
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+	}
 
 
 
 
 
+
+}
+
+void CCharacter::Chase_Grab(_float fTimeDelta)
+{
+
+	//디버그용 예외처리.  멈춰버리면 지랄남
+	if (fTimeDelta > 1)
+	{
+		return;
+	}
+
+
+	
+
+	//준비자세면 이렇게 한다.
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex)
+	{
+		//이펙트생성 1회?
+		//if (m_fAccGrabTime == fTimeDelta)
+		if(m_fAccGrabTime == 0.f)
+		{
+			;
+		}
+		return;
+	}
+
+	//준비자세도 잡기자세도 아닌데 이 함수에 들어온 경우 초기화 후 종료.
+	else if (m_pModelCom->m_iCurrentAnimationIndex != m_iGrabAnimationIndex)
+	{
+		m_fAccGrabTime = 0.f;
+		m_bGrab = false;
+		return;
+	}
+	else if ( m_fAccChaseTime >1.2) //시간제한으로 푸는게 아니라  1.2초 이상 지속될 수 없으니 강제해제.
+	{
+		m_fAccGrabTime = 0.f;
+		m_bGrab = false;
+		return;
+	}
+	m_fAccGrabTime += fTimeDelta;
+
+
+
+	
+	
+ 
+
+
+	CTransform* pTarget = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+
+	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
+	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+
+	//_float vLength = GetVectorLength((vTargetPos - vMyPos));
+	/*
+	if (vLength < 0.5f) //0.3
+	{
+		m_bChase = false;
+
+
+
+		//테스트
+		m_fAccChaseTime = 0.f;
+		m_fGravityTime = 0.185f;
+		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+
+		return;
+	}
+	*/
+
+	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
+	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
+
+
+
+
+	//m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime*m_fAccChaseTime*3.f) * fTimeDelta);
+	m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
 
 
 
@@ -1568,7 +1657,7 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 
 
 
-
+/*
 _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
 {
 
@@ -1607,6 +1696,8 @@ _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _fl
 	Set_HitAnimation(eAnimation, Impus);
 	Set_AnimationStop(fStopTime);
 
+	Set_bRedHP(true);
+
 
 	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
 	
@@ -1621,6 +1712,153 @@ _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _fl
 	
 	return true;
 }
+*/
+
+/*
+_bool CCharacter::Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
+{
+
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+		return false;
+
+	//스턴상태, 땅바닥에 꽂혔을때 검사
+	else if (m_bHitGroundSmashed && Get_fHeight() == 0)
+	{
+		if (eAttackGrade != GRADE_ULTIMATE)
+			return false;
+	}
+
+	//스턴 상태가 아니면 가드 체크
+	if (m_bStun == false)
+	{
+
+		if (Guard_Check2(eAttackType))
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+				Set_Animation(m_iGuard_CrouchAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
+				Set_Animation(m_iGuard_GroundAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+				Set_Animation(m_iGuard_AirAnimationIndex);
+
+			return false;
+
+		}
+
+		
+
+	
+
+	
+
+		//else if()  smash 상태이고 hit air이고   공격타입이 필살기면 세이프
+		//else if (eAttackGrade == GRADE_ULTIMATE && m_bHitGroundSmashed && m_iHit_Air_LightAnimationIndex)
+		//{
+		//
+		//}
+		//else
+		//	return false;
+
+
+		//거꾸로 체크하자.
+		// 바닥에 질질 끌리고있을때  필살기 아니면 false
+
+		//else if (m_bHitGroundSmashed && m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex )
+		
+
+
+
+	}
+
+	
+
+	m_bStun = true;
+
+	m_fMaxStunTime = fStunTime;
+
+	Set_HitAnimation(eAnimation, Impus);
+	Set_AnimationStop(fStopTime);
+
+
+	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+
+	m_iDebugComoboDamage += iDamage;
+	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+
+
+	if (m_iHP < 0)
+	{
+		m_iHP = 0;
+	}
+
+	return true;
+}
+*/
+AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
+{
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+		return RESULT_MISS;
+
+	//스턴상태, 땅바닥에 꽂혔을때 검사
+	else if (m_bHitGroundSmashed && Get_fHeight() == 0)
+	{
+		if (eAttackGrade != GRADE_ULTIMATE)
+			return RESULT_MISS;
+	}
+
+	//스턴 상태가 아니면 가드 체크
+	if (m_bStun == false)
+	{
+
+		AttackColliderResult eResult = Guard_Check3(eAttackType);
+
+		if (eResult == RESULT_GUARD)
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+				Set_Animation(m_iGuard_CrouchAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
+				Set_Animation(m_iGuard_GroundAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+				Set_Animation(m_iGuard_AirAnimationIndex);
+
+			return RESULT_GUARD;
+
+		}
+		else if (eResult != RESULT_HIT)    //회피나 비긴 경우 아니면 일단 속행.   저 경우는 나중에 따로 처리
+			return eResult;
+
+
+	}
+
+
+
+	m_bStun = true;
+
+	m_fMaxStunTime = fStunTime;
+
+	Set_HitAnimation(eAnimation, Impus);
+	Set_AnimationStop(fStopTime);
+
+
+	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+
+	m_iDebugComoboDamage += iDamage;
+	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+
+
+	if (m_iHP < 0)
+	{
+		m_iHP = 0;
+	}
+
+	return RESULT_HIT;
+}
+
+
 
 void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 {
@@ -1677,6 +1915,12 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	switch (eAnimation)
 	{
+	case Client::HitMotion::HIT_CHASE:  //break 없음. 고의임
+	{
+		if (Get_fHeight() == 0)
+			m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
+	}
+
 	case Client::HitMotion::HIT_LIGHT:
 	{
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
@@ -1810,6 +2054,7 @@ void CCharacter::Set_BreakFall_Ground()
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
+	Set_bRedHP(false);
 
 
 	DirectionInput iMoveKey = inputBuffer.back().direction;
@@ -1842,7 +2087,8 @@ void CCharacter::Set_BreakFall_Ground()
 
 void CCharacter::BreakFall_Air()
 {
-	if (Check_bCurAnimationisAirHit())
+	//땅바닥에서 질질 끌리는 모션도 공중피격이라 조건 추가해야함
+	if (Check_bCurAnimationisAirHit() && m_bHitGroundSmashed == false)
 	{
 		InputCommand();
 
@@ -1871,6 +2117,7 @@ void CCharacter::BreakFall_Air()
 			{
 				Set_fImpulse({ 10.f * m_iLookDirection, 1.f });
 			}
+			Set_bRedHP(false);
 
 
 		}
@@ -1972,10 +2219,12 @@ void CCharacter::Guard_Update()
 		m_bGuard = false;
 	}
 
-
+	
 }
 */
 
+
+/*
 _bool CCharacter::Guard_Check()
 {
 
@@ -2017,6 +2266,365 @@ _bool CCharacter::Guard_Check()
 	}
 }
 
+<<<<<<< HEAD
+_bool CCharacter::Guard_Check2(AttackType eAttackType)
+{
+	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
+	if (Check_bCurAnimationisGuard())
+	{
+		return true;
+	}
+
+
+	// 공격이나 행동을 하지 않고 있을때만 가드 체크.  뭔가 하고있었으면 무조건 가드실패.
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+	{
+		if (m_iPlayerTeam == 1)
+		{
+
+			//보고 있는 방향의 반대를 누르고 있을 시,   상중하단 체크 (잡기 포함)
+			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_A))
+			{
+				return CompareGuardType(eAttackType);
+
+			}
+
+			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_D))
+			{
+				return CompareGuardType(eAttackType);
+			}
+
+			//안눌렀으면 가드실패
+			else   
+				return false;
+		}
+
+		else
+		{
+			//보고 있는 방향의 반대를 누르고 있을 시,   상중하단 체크 (잡기 포함)
+			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_LEFT))
+			{
+				return CompareGuardType(eAttackType);
+			}
+
+			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_RIGHT))
+			{
+				return CompareGuardType(eAttackType);
+			}
+
+			//안눌렀으면 가드실패
+			else
+				return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+*/
+
+AttackColliderResult CCharacter::Guard_Check3(AttackType eAttackType)
+{
+	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
+	if (Check_bCurAnimationisGuard())
+	{
+		return RESULT_GUARD;
+	}
+
+
+	if (eAttackType == ATTACKTYPE_GRAB_GROUND || eAttackType == ATTACKTYPE_GRAB_AIR || eAttackType == ATTACKTYPE_COMMANDGRAB)
+	{
+		return CompareGrabType3(eAttackType);
+	}
+
+	// 공격이나 행동을 하지 않고 있을때만 가드 체크.  뭔가 하고있었으면 무조건 가드실패.
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
+	{
+
+		
+
+
+		if (m_iPlayerTeam == 1)
+		{
+			//보고 있는 방향의 반대를 누르고 있을 시,   상중하단 체크 (잡기 포함)
+			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_A))
+			{
+				return CompareGuardType3(eAttackType);
+
+			}
+
+			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_D))
+			{
+				return CompareGuardType3(eAttackType);
+			}
+
+			//안눌렀으면 가드실패
+			else
+				return RESULT_HIT;
+		}
+
+		else
+		{
+			//보고 있는 방향의 반대를 누르고 있을 시,   상중하단 체크 (잡기 포함)
+			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_LEFT))
+			{
+				return CompareGuardType3(eAttackType);
+			}
+
+			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_RIGHT))
+			{
+				return CompareGuardType3(eAttackType);
+			}
+
+			//안눌렀으면 가드실패
+			else
+				return RESULT_HIT;
+		}
+	}
+	else
+	{
+		return RESULT_HIT;
+	}
+}
+
+_bool CCharacter::CompareGuardType(AttackType eAttackType)
+{
+	//상단은 무조건 가드 가능
+	if (eAttackType == ATTACKTYPE_HIGH)
+		return true;
+
+	//중단은 앉아있으면 가드 실패
+	else if (eAttackType == ATTACKTYPE_MIDDLE)
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+			return false;
+
+		else
+			return true;
+	}
+
+	//하단은 서있으면 가드 실패.  걷는중도 포함되는데  바꿔야한다.      앉아있거나 공중이면 성공?
+	else if (eAttackType == ATTACKTYPE_LOW)
+	{
+		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		//	return false;
+		//
+		//else
+		//	return true;
+
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex || Get_fHeight() > 0 )
+			return true;
+
+		else
+			return false;
+
+
+
+	}
+
+	//잡기는 잡기버튼으로 상쇄 가능
+	else if (eAttackType == ATTACKTYPE_GRAB_GROUND)
+	{
+
+		//피격된 상대의 높이가 0이 아니거나 잡기 버튼으로 상쇄했으면 실패.
+		//if (Get_fHeight != 0 || m_pGameInstance->Key_Pressing(DIK_O))
+		//	return false;
+
+		//상대의 높이가 0이 아니면 실패
+		if (Get_fHeight() != 0)
+			return false;
+
+		//잡기 버튼으로 상쇄했으면 실패.
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O))
+			return false;
+
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+			return false;
+
+		else
+			return true;
+
+
+		//대치상태가 아닌 피격중에는 높이 구분 없이 맞는게 정상임
+
+	}
+
+	//공중에서는  공중에 있는 상대한테만 통함.
+	else if (eAttackType == ATTACKTYPE_GRAB_AIR)
+	{
+		//피격된 상대의 높이가 0이거나 잡기 버튼으로 상쇄했으면 실패.
+		//if (Get_fHeight == 0 || m_pGameInstance->Key_Pressing(DIK_O))
+
+
+		//상대가 공중이 아니면 실패
+		if (Get_fHeight() == 0)
+			return false;
+
+		//상대가 잡기 버튼으로 상쇄했으면 실패.
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O))
+			return false;
+
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+			return false;
+
+		else
+			return true;
+	}
+
+	//기술에 의한 잡기는  점프로만 가능.
+	else if (eAttackType == ATTACKTYPE_COMMANDGRAB)
+	{
+		//높이조건 대신 애니메이션으로 해야하나? 
+		if (Get_fHeight() > 0)
+			return false;
+		else
+			return true;
+	}
+
+	
+
+}
+
+AttackColliderResult CCharacter::CompareGuardType3(AttackType eAttackType)
+{
+	//상단은 무조건 가드 가능
+	if (eAttackType == ATTACKTYPE_HIGH)
+		return RESULT_GUARD;
+
+	//중단은 앉아있으면 가드 실패
+	else if (eAttackType == ATTACKTYPE_MIDDLE)
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+			return RESULT_HIT;
+
+		else
+			return RESULT_GUARD;
+	}
+
+	//하단은 서있으면 가드 실패.  걷는중도 포함되는데  바꿔야한다.      앉아있거나 공중이면 성공?
+	else if (eAttackType == ATTACKTYPE_LOW)
+	{
+		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		//	return false;
+		//
+		//else
+		//	return true;
+
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex || Get_fHeight() > 0)
+			return RESULT_GUARD;
+
+		else
+			return RESULT_HIT;
+
+
+
+	}
+
+	
+
+
+
+}
+
+AttackColliderResult CCharacter::CompareGrabType3(AttackType eAttackType)
+{
+	//잡기는 잡기버튼으로 상쇄 가능
+	if (eAttackType == ATTACKTYPE_GRAB_GROUND)
+	{
+
+		//피격된 상대의 높이가 0이 아니거나 잡기 버튼으로 상쇄했으면 실패.
+		//if (Get_fHeight != 0 || m_pGameInstance->Key_Pressing(DIK_O))
+		//	return false;
+
+		//상대의 높이가 0이 아니면 실패
+		if (Get_fHeight() != 0)
+			return RESULT_MISS;
+
+		//잡기 버튼으로 상쇄했으면 실패.
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O))
+			return RESULT_DRAW;
+
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+			return RESULT_DRAW;
+
+		else
+			return RESULT_HIT;
+
+
+		//대치상태가 아닌 피격중에는 높이 구분 없이 맞는게 정상임
+
+	}
+
+	//공중에서는  공중에 있는 상대한테만 통함.
+	else if (eAttackType == ATTACKTYPE_GRAB_AIR)
+	{
+		//피격된 상대의 높이가 0이거나 잡기 버튼으로 상쇄했으면 실패.
+		//if (Get_fHeight == 0 || m_pGameInstance->Key_Pressing(DIK_O))
+
+
+		//상대가 공중이 아니면 실패
+		if (Get_fHeight() == 0)
+			return RESULT_MISS;
+
+		//상대가 잡기 버튼으로 상쇄했으면 실패.
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O))
+			return RESULT_DRAW;
+
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+			return RESULT_DRAW;
+
+		else
+			return RESULT_HIT;
+	}
+
+	//기술에 의한 잡기는  점프로만 가능.
+	else if (eAttackType == ATTACKTYPE_COMMANDGRAB)
+	{
+		//높이조건 대신 애니메이션으로 해야하나? 
+		if (Get_fHeight() > 0)
+			return RESULT_MISS;
+		else
+			return RESULT_HIT;
+			}
+}
+
+void CCharacter::Teleport_ToEnemy(_float OffsetX, _float OffsetY)
+{
+	
+	_vector vTargetPos = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+
+	vTargetPos += {OffsetX, OffsetY, 0, 0};
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+
+}
+
+void CCharacter::Set_Grab(_bool bAir)
+{
+	m_bGrab = true;
+	m_bGrab_Air = bAir;
+}
+
+
+
+
+
+
+void CCharacter::Set_bRedHP(_bool bRedHP)
+{
+	if (bRedHP == true)
+	{
+		//m_pUI_Manager->Set_Hp(m_iHP);
+		m_tCharacterDesc.iHp = m_iHP;
+
+	}
+
+	 m_bRedHp = bRedHP; 
+	 m_tCharacterDesc.bStun = m_bRedHp;
+}
+
 
 _uint* CCharacter::Get_pAnimationIndex()
 {
@@ -2053,6 +2661,22 @@ _bool CCharacter::Check_bCurAnimationisHitAway(_uint iAnimation)
 
 
 	if (iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex )
+	{
+		return true;
+	}
+
+	return false;
+}
+
+_bool CCharacter::Check_bCurAnimationisGuard(_uint iAnimation)
+{
+	//_uint iModelIndex = iAnimation;
+	//if (iAnimation == 1000)
+
+	_uint iModelIndex = iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+	if (iModelIndex == m_iGuard_AirAnimationIndex || iModelIndex == m_iGuard_CrouchAnimationIndex || iModelIndex == m_iGuard_GroundAnimationIndex)
 	{
 		return true;
 	}
@@ -2338,6 +2962,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 				Set_NextAnimation(m_iBound_Ground, 5.f);
 
 				//m_bHitGroundSmashed = false;
+				//m_pTransformCom->Add_Move({ -1 * fTimeDelta * m_iLookDirection, 0, 0 });
 			}
 			else 
 			{
@@ -2407,16 +3032,46 @@ void CCharacter::Gravity(_float fTimeDelta)
 		{
 			if(m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
 			{
+				//바닥에 꼬라박혔을때 질질 끌림.  보기에 이상하다면 맞았을 시에 FlipDirection 해야한다
+				m_pTransformCom->Add_Move({ -2 * fTimeDelta * m_iLookDirection, 0, 0 });
+
 				if (m_bMotionPlaying == false)
 				{
 					Set_Animation(m_iBound_Ground, 2.f);
-					Set_NextAnimation(m_iBreakFall_Ground, 2.f);
 
-					if (inputBuffer.back() == CInput{ MOVEKEY_UP, ATTACK_LIGHT })
-					{
-						m_fImpuse = { -3.f * m_iLookDirection, 2.f };
-					}
+					//Set_NextAnimation(m_iBreakFall_Ground, 2.f);
+					//
+					//if (inputBuffer.back() == CInput{ MOVEKEY_UP, ATTACK_LIGHT })
+					//{
+					//	m_fImpuse = { -3.f * m_iLookDirection, 2.f };
+					//}
+					//m_bHitGroundSmashed = false;
+
+
+
 					m_bHitGroundSmashed = false;
+					Set_NextAnimation(m_iBreakFall_Ground, 2.f);
+					DirectionInput iMoveKey = inputBuffer.back().direction;
+
+					if (iMoveKey == MOVEKEY_UP || iMoveKey == MOVEKEY_UP_LEFT)
+					{
+						Set_fImpulse({ -3.f * m_iLookDirection,1.f });
+						Set_ForcveGravityTime(0.f);
+					}
+					else if (iMoveKey == MOVEKEY_RIGHT)
+					{
+						//Set_fImpulse({ 0.f , 0.3f });
+						Set_fImpulse({ 0.f , 0.1f });
+
+						Set_ForcedGravityTime_LittleUp();
+					}
+
+
+					else //if (iMoveKey == MOVEKEY_LEFT)
+					{
+						Set_fImpulse({ -5.f * m_iLookDirection, 0.f });
+						Set_ForcedGravityTime_LittleUp();
+					}
 				}
 
 			}
@@ -2507,6 +3162,32 @@ HRESULT CCharacter::Ready_Components()
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
+	/* Com_Model */
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	//	return E_FAIL;
+
+	/* Com_Model */
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, m_strModelName,
+	//	TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	//	return E_FAIL;
+
+
+
+
+	CCollider_Test::COLLIDER_DESC ColliderDesc{};
+	ColliderDesc.pTransform = m_pTransformCom;
+	ColliderDesc.fSizeX = 1.2f;
+	ColliderDesc.fSizeY = 1.5f;
+	ColliderDesc.fSizeZ = 0.7f;
+	ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
+
+
+	////Com_Collider
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
+	//	TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
+	//	return E_FAIL;
+	
 	return S_OK;
 }
 
@@ -2522,6 +3203,12 @@ HRESULT CCharacter::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
+{
+	m_pUI_Manager->m_eDirInput = eDirInput;
+	m_pUI_Manager->m_eBtnInput = eBtnInput;
 }
 
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -2554,6 +3241,11 @@ void CCharacter::Free()
 {
 	__super::Free();
 
+
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pUI_Manager);
+
+	//Safe_Release(m_pColliderCom);
+
 }

@@ -25,6 +25,10 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
+	void InputGrab(_uint iTexIndex);
+	void InputGrabPosition(_float& fPos);
+
+private:
 	_uint m_iNumCommandList = { 0 };
 	_uint m_iTextureIndex = { 0 };
 

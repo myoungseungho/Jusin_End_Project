@@ -25,6 +25,8 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 {
 	m_fSizeX = 1000.f;
 	m_fSizeY = 1000.f;
+	m_fPosX = 640;
+	m_fPosY = 360;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -49,10 +51,7 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 
 	m_iTotalAnimSize = m_QueueAnim.size();
 
-	//if(m_eAnimType == UI_ANIM)
-		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
-	//else if(m_eAnimType == UI_NONANIM)
-	//	__super::Set_UI_Setting(500, 500 , g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.9f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 
 	return S_OK;
 }

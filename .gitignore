@@ -221,3 +221,5 @@ Client/Bin/assimp-vc140-mtd.dll
 AssimpSaveAndLoad/assimp-vc140-mtd.dll
 AssimpSaveAndLoad/Bin/assimp-vc140-mtd.dll
 Client/Bin/Resources/Fonts/144ex.spritefont
+Client/Bin/ModelData/Eff/TextureDDS/cmn_samne00.dds
+Client/Bin/ModelData/Eff/TextureDDS/cmn_smoke06.dds

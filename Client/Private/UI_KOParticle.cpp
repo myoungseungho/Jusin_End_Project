@@ -25,6 +25,8 @@ HRESULT CUI_KOParticle::Initialize(void* pArg)
 {
 	m_fSizeX = 800.f;
 	m_fSizeY = 400.f;
+	m_fPosX = 640;
+	m_fPosY = 360;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -34,7 +36,7 @@ HRESULT CUI_KOParticle::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f, 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
 }

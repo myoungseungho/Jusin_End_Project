@@ -51,7 +51,7 @@ CGameObject* CLayer::Get_GameObject(_uint iIndex)
 	while (iter != m_GameObjects.end())
 	{
 		// 현재 오브젝트가 유효하지 않다면 건너뛰기
-		if ((*iter)->m_bDied)
+		if ((*iter)->m_bDead)
 		{
 			++iter;
 			continue;
@@ -76,7 +76,7 @@ void CLayer::Priority_Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
 	{
-		if ((*it)->m_bDied)  // 객체가 사망 상태라면
+		if ((*it)->m_bDead)  // 객체가 사망 상태라면
 			it = m_GameObjects.erase(it);  // 목록에서 삭제 후 iterator 업데이트
 		else
 		{
@@ -90,7 +90,7 @@ void CLayer::Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
 	{
-		if ((*it)->m_bDied)
+		if ((*it)->m_bDead)
 			it = m_GameObjects.erase(it);
 		else
 		{
@@ -104,7 +104,7 @@ void CLayer::Late_Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
 	{
-		if ((*it)->m_bDied)
+		if ((*it)->m_bDead)
 			it = m_GameObjects.erase(it);
 		else
 		{

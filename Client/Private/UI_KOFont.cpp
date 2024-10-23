@@ -25,6 +25,8 @@ HRESULT CUI_KOFont::Initialize(void* pArg)
 {
 	m_fSizeX = 600.f;
 	m_fSizeY = 600.f;
+	m_fPosX = 640;
+	m_fPosY = 360;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -43,7 +45,7 @@ HRESULT CUI_KOFont::Initialize(void* pArg)
 
 	m_fAlphaValue = 1.f;
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, g_iWinSizeX * 0.5f, g_iWinSizeY * 0.5f , 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY , 0.f);
 
 	return S_OK;
 }

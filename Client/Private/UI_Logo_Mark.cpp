@@ -1,19 +1,19 @@
 #include "stdafx.h"
 
-#include "UI_Logo.h"
+#include "UI_Logo_Mark.h"
 #include "RenderInstance.h"
 
-CUI_Logo::CUI_Logo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_Logo_Mark::CUI_Logo_Mark(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
 {
 }
 
-CUI_Logo::CUI_Logo(const CUI_Logo& Prototype)
+CUI_Logo_Mark::CUI_Logo_Mark(const CUI_Logo_Mark& Prototype)
 	:CUIObject{ Prototype }
 {
 }
 
-HRESULT CUI_Logo::Initialize_Prototype()
+HRESULT CUI_Logo_Mark::Initialize_Prototype()
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
@@ -21,7 +21,7 @@ HRESULT CUI_Logo::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CUI_Logo::Initialize(void* pArg)
+HRESULT CUI_Logo_Mark::Initialize(void* pArg)
 {
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -30,32 +30,36 @@ HRESULT CUI_Logo::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_fSizeX = 1508;
+	m_fSizeY = 754;
+	m_fPosX = 610;
+	m_fPosY = 282;
 
-	__super::Set_UI_Setting(1508, 754 , 610 , 282, 0.0f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.0f);
 
 	return S_OK;
 }
 
-void CUI_Logo::Priority_Update(_float fTimeDelta)
+void CUI_Logo_Mark::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 }
 
-void CUI_Logo::Update(_float fTimeDelta)
+void CUI_Logo_Mark::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
 
 }
 
-void CUI_Logo::Late_Update(_float fTimeDelta)
+void CUI_Logo_Mark::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CUI_Logo::Render(_float fTimeDelta)
+HRESULT CUI_Logo_Mark::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
@@ -75,7 +79,7 @@ HRESULT CUI_Logo::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CUI_Logo::Ready_Components()
+HRESULT CUI_Logo_Mark::Ready_Components()
 {
 	if (FAILED(__super::Ready_Components()))
 		return E_FAIL;
@@ -86,33 +90,33 @@ HRESULT CUI_Logo::Ready_Components()
 		return E_FAIL;
 }
 
-CUI_Logo* CUI_Logo::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_Logo_Mark* CUI_Logo_Mark::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CUI_Logo* pInstatnce = new CUI_Logo(pDevice, pContext);
+	CUI_Logo_Mark* pInstatnce = new CUI_Logo_Mark(pDevice, pContext);
 
 	if (FAILED(pInstatnce->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CUI_Logo"));
+		MSG_BOX(TEXT("Failed to Created : CUI_Logo_Mark"));
 		Safe_Release(pInstatnce);
 	}
 
 	return pInstatnce;
 }
 
-CGameObject* CUI_Logo::Clone(void* pArg)
+CGameObject* CUI_Logo_Mark::Clone(void* pArg)
 {
-	CUI_Logo* pInstatnce = new CUI_Logo(*this);
+	CUI_Logo_Mark* pInstatnce = new CUI_Logo_Mark(*this);
 
 	if (FAILED(pInstatnce->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloend : CUI_Logo"));
+		MSG_BOX(TEXT("Failed to Cloend : CUI_Logo_Mark"));
 		Safe_Release(pInstatnce);
 	}
 
 	return pInstatnce;
 }
 
-void CUI_Logo::Free()
+void CUI_Logo_Mark::Free()
 {
 	__super::Free();
 }

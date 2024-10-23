@@ -132,6 +132,7 @@ public:
 		_vector vNewPosition = { vPos + vMovement };
 		Set_State(STATE_POSITION, vNewPosition);
 	}
+
 public:
 	HRESULT Initialize();
 	void SetUp_TransformDesc(const TRANSFORM_DESC* pTransformDesc);

@@ -18,8 +18,8 @@ CIMGUI_Camera_Tab::CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 HRESULT CIMGUI_Camera_Tab::Initialize()
 {
 	// 모델 이름 배열 초기화
-	MODEL_NAMES[CAMERA_MODELID_FREE] = "Free";
 	MODEL_NAMES[CAMERA_MODELID_DEFAULT] = "Default";
+	MODEL_NAMES[CAMERA_MODELID_FREE] = "Free";
 	MODEL_NAMES[CAMERA_MODELID_SON] = "Son";
 	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
 	MODEL_NAMES[CAMERA_MODELID_MINE] = "Mine";
@@ -35,8 +35,8 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 
 	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
 	// 기본 카메라 매핑
-	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
 	m_CameraIndexMap[{CAMERA_MODELID_DEFAULT, -1}] = index++;
+	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
 
 	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
 	for (const auto& modelSkillPair : m_ModelSkills)
@@ -162,11 +162,12 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 			m_iSelected_Skill = -1;  // 스킬 선택 초기화
 			m_iSelected_Animation = -1;
 
-			//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
-			if (m_iSelected_Model == CAMERA_MODELID_DEFAULT || m_iSelected_Model == CAMERA_MODELID_FREE)
-				UpdateCameraSelection();
 		}
 	}
+
+	//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
+	if (m_iSelected_Model == CAMERA_MODELID_DEFAULT || m_iSelected_Model == CAMERA_MODELID_FREE)
+		UpdateCameraSelection();
 }
 
 void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Skill(_float fTimeDelta)

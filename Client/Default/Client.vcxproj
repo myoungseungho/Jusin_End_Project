@@ -176,7 +176,6 @@
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
-    <ClInclude Include="..\public\BackGround.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
@@ -200,10 +199,11 @@
     <ClInclude Include="..\public\UI_KOFontEffect.h" />
     <ClInclude Include="..\public\UI_KOPanel.h" />
     <ClInclude Include="..\public\UI_KOParticle.h" />
-    <ClInclude Include="..\public\UI_Loading.h" />
-    <ClInclude Include="..\public\UI_LoadingMark.h" />
-    <ClInclude Include="..\public\UI_Loading_Font.h" />
-    <ClInclude Include="..\public\UI_Logo.h" />
+    <ClInclude Include="..\Public\UI_LoadingMark.h" />
+    <ClInclude Include="..\Public\UI_Loading_BG.h" />
+    <ClInclude Include="..\Public\UI_Loading_Font.h" />
+    <ClInclude Include="..\Public\UI_Logo_BG.h" />
+    <ClInclude Include="..\Public\UI_Logo_Mark.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -296,7 +296,6 @@
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
-    <ClCompile Include="..\private\BackGround.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -323,10 +322,11 @@
     <ClCompile Include="..\private\UI_KOFontEffect.cpp" />
     <ClCompile Include="..\private\UI_KOPanel.cpp" />
     <ClCompile Include="..\private\UI_KOParticle.cpp" />
-    <ClCompile Include="..\private\UI_Loading.cpp" />
-    <ClCompile Include="..\private\UI_LoadingMark.cpp" />
-    <ClCompile Include="..\private\UI_Loading_Font.cpp" />
-    <ClCompile Include="..\private\UI_Logo.cpp" />
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp" />
+    <ClCompile Include="..\Private\UI_Loading_BG.cpp" />
+    <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
+    <ClCompile Include="..\Private\UI_Logo_BG.cpp" />
+    <ClCompile Include="..\Private\UI_Logo_Mark.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -335,8 +335,8 @@
     <ClCompile Include="..\private\UI_SubHpGauge.cpp" />
     <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
     <ClCompile Include="..\Private\AnimationNameMap.cpp" />
-    <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\AttackObject.cpp" />
+    <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\private\Effect_Animation.cpp" />
     <ClCompile Include="..\Private\Effect_Blend.cpp" />

@@ -48,18 +48,12 @@ public:
 	static const _wstring		m_strTransformTag;
 
 public:
-	void a();
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
 	virtual void Priority_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
-
-	// 객체 삭제 (최진영)
-	_bool Get_Dead() { return m_bDead; }
-	void Set_Dead() { m_bDead = TRUE; }
-	//
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta);
@@ -91,11 +85,6 @@ protected:
 	//활성화 비활성화 관련
 	_bool						m_bIsActive = { true };
 
-	// 객체 삭제 (최진영)
-
-	_bool m_bDead = { FALSE };
-
-	//
 public:
 	//IMGUI 관련
 	_bool						m_bIsImguiClick = { false };

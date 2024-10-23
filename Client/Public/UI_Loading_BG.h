@@ -11,12 +11,12 @@ END
 
 BEGIN(Client)
 
-class CBackGround final : public CGameObject
+class CUI_Loading_BG final : public CGameObject
 {
 private:
-	CBackGround(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CBackGround(const CBackGround& Prototype);
-	virtual ~CBackGround() = default;
+	CUI_Loading_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_Loading_BG(const CUI_Loading_BG& Prototype);
+	virtual ~CUI_Loading_BG() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -40,7 +40,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CBackGround* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_Loading_BG* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

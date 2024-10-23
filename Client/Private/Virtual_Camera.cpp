@@ -73,6 +73,9 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+		StartCameraShake(5.f, 0.5f);
+
 	if (m_bIsShaking)
 		ApplyCameraShake(fTimeDelta);
 }
@@ -143,8 +146,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		// Skip 보간: 즉시 다음 포인트로 이동
 		t = 1.0f;
 		break;
-	default:
-		break;
 	}
 
 	// **1. 로컬 포지션 보간**
@@ -192,27 +193,27 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
 	NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
 
-	// 월드 매트릭스에서 Right, Up, Look 벡터 추출
+	 //월드 매트릭스에서 Right, Up, Look 벡터 추출
 	_vector right = NewWorldMatrix.r[0];
 	_vector up = NewWorldMatrix.r[1];
 	_vector look = NewWorldMatrix.r[2];
 	_vector position = NewWorldMatrix.r[3];
-	m_vBaseCameraPosition = position;
 
+	m_vBaseCameraPosition = interpolatedPositionWorld;
 	// 방향 벡터 설정
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, right);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, up);
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, look);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position + m_vShakeOffset);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, interpolatedPositionWorld + m_vShakeOffset);
 }
 
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2)
 {
-	const float fixedY = 20.f;
-	const float fixedZ = -50.f;
+	const float fixedY = 1.f;
+	const float fixedZ = -5.f;
 
-	const float thresholdDistance = 40.f;
-	const float maxDistance = 60.f;
+	const float thresholdDistance = 2.f;
+	const float maxDistance = 5.17f;
 
 	float offsetX = 0.f;
 	_float3 targetPosition = _float3(averageX + offsetX, fixedY, fixedZ);
@@ -225,8 +226,8 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gv
 		float t = (distanceX - thresholdDistance) / (maxDistance - thresholdDistance);
 		t = max(0.f, min(t, 1.f)); // [0, 1] 범위로 클램프
 
-		const float maxYOffset = 7.f; // 최대 Y 이동 거리
-		const float maxZOffset = 50.f; // 최대 Z 이동 거리
+		const float maxYOffset = 0.8f; // 최대 Y 이동 거리
+		const float maxZOffset = 9.f; // 최대 Z 이동 거리
 
 		// 평행 벡터 가져오기 (x=0을 만족함)
 		_float3 tangent1, tangent2;
@@ -247,9 +248,9 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gv
 void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2)
 {
 	// 카메라의 Look 방향을 고정된 값으로 설정 (예: Z축을 향하도록)
-	_vector fixedLook = XMVectorSet(-0.05f, -0.14f, 0.98f, 0.f);
-	_vector fixedRight = XMVectorSet(0.9984f, 0.f, 0.054f, 0.f);
-	_vector fixedUp = XMVectorSet(-0.00773f, 0.99f, 0.14f, 0.f);
+	_vector fixedRight = XMVectorSet(0.999f, 0.f, 0.01f, 0.f);
+	_vector fixedUp = XMVectorSet(-0.00773f, 0.99f, -0.04f, 0.f);
+	_vector fixedLook = XMVectorSet(-0.01f, 0.04, 0.99f, 0.f);
 
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, fixedRight);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, fixedUp);

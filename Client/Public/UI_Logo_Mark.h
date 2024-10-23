@@ -4,12 +4,12 @@
 
 BEGIN(Client)
 
-class CUI_Logo final :public CUIObject
+class CUI_Logo_Mark final :public CUIObject
 {
 private:
-	CUI_Logo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_Logo(const CUI_Logo& Prototype);
-	virtual ~CUI_Logo() = default;
+	CUI_Logo_Mark(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_Logo_Mark(const CUI_Logo_Mark& Prototype);
+	virtual ~CUI_Logo_Mark() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -23,7 +23,7 @@ private:
 	virtual HRESULT Ready_Components();
 
 public:
-	static CUI_Logo* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_Logo_Mark* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

@@ -6,6 +6,8 @@ BEGIN(Client)
 
 class CUI_Input_Action final :public CUI_Input
 {
+public:
+	enum ACTION_KEY {KEY_LIGHT , KEY_MEDIUM , KEY_SPECIAL, KEY_HEAVY , KEY_A1,KEY_A2 , KEY_END};
 private:
 	CUI_Input_Action(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CUI_Input_Action(const CUI_Input_Action& Prototype);

@@ -23,7 +23,7 @@ HRESULT CUI_AttBufThunderEffect::Initialize_Prototype()
 
 HRESULT CUI_AttBufThunderEffect::Initialize(void* pArg)
 {
-	m_fPosX = 437.f;
+	m_fSizeX = 65.f, m_fSizeY = 65.f, m_fPosX = 437.f, m_fPosY = 146.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -31,7 +31,7 @@ HRESULT CUI_AttBufThunderEffect::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(65.f, 65.f, m_fPosX, 146.f, 0.05f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.05f);
 
 	return S_OK;
 }

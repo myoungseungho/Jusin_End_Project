@@ -100,7 +100,7 @@ void CLine_Draw::TextRender(const vector<CameraPoint>& points, _float fTimeDelta
 		float distance = XMVectorGetX(XMVector3Length(distanceVec));
 
 		// 거리에 따라 폰트 크기를 조정 (거리가 멀수록 폰트 크기를 작게)
-		float baseFontSize = 3.0f;  // 기본 폰트 크기
+		float baseFontSize = 1.0f;  // 기본 폰트 크기
 		float adjustedFontSize = baseFontSize / (distance * 0.1f);  // 폰트 크기 조정 비율
 
 		// 월드 좌표를 클립 공간으로 변환

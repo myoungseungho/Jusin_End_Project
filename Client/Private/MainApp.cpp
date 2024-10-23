@@ -12,8 +12,6 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
-
-
 #include "thread"
 
 CMainApp::CMainApp()
@@ -46,7 +44,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(4)))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_LOGO)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))

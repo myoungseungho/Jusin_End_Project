@@ -23,6 +23,8 @@ HRESULT CUI_Input_ActionIcon::Initialize_Prototype()
 
 HRESULT CUI_Input_ActionIcon::Initialize(void* pArg)
 {
+	m_fSizeX = 30.f, m_fSizeY = 30.f, m_fPosX = 60.f, m_fPosY = 190.f;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -32,44 +34,23 @@ HRESULT CUI_Input_ActionIcon::Initialize(void* pArg)
 	UI_INPUT_DESC* pDirDesc = static_cast<UI_INPUT_DESC*>(pArg);
 	m_iTextureIndex = pDirDesc->eActionInput;
 
-	if (m_iTextureIndex == ATTACK_GRAB)
+
+
+	InputGrab(m_iTextureIndex);
+
+	if (m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
 	{
-		m_iTextureIndex = ATTACK_LIGHT;
-
-		UI_INPUT_DESC InputDesc = {};
-		InputDesc.isGrab = TRUE;
-		InputDesc.eActionInput = ATTACK_MEDIUM;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ActionInputIcon"), TEXT("Layer_DirInput"), &InputDesc);
-	}
-
-	m_fPosX = 60.f;
-
-	m_fPosY = 190;
-
-	if (m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL && m_pUI_Manager->m_eBtnInput != ATTACK_GRAB)
-	{
-		m_pUI_Manager->m_iNumCommandList++;
-		
-	}
-
-
-	if(m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
 		m_fPosX = 20;
-
-	if (pDirDesc->isGrab)
-	{
-		m_fPosX += 40;
-		if(m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+		if(m_pUI_Manager->m_eBtnInput != ATTACK_GRAB)
 			m_pUI_Manager->m_iNumCommandList++;
 	}
+	
+	if (pDirDesc->isGrab)
+		InputGrabPosition(m_fPosX);
 
 	m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
 
-	
-
-	
-
-	__super::Set_UI_Setting(30.f, 30.f, m_fPosX, m_fPosY, 0.8f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 
 	return S_OK;
 }
@@ -129,6 +110,28 @@ HRESULT CUI_Input_ActionIcon::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+}
+
+void CUI_Input_ActionIcon::InputGrab(_uint iTexIndex)
+{
+	if (m_iTextureIndex == ATTACK_GRAB)
+	{
+		m_iTextureIndex = ATTACK_LIGHT;
+
+		UI_INPUT_DESC InputDesc = {};
+		InputDesc.isGrab = TRUE;
+		InputDesc.eActionInput = ATTACK_MEDIUM;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ActionInputIcon"), TEXT("Layer_DirInput"), &InputDesc);
+	}
+
+
+}
+
+void CUI_Input_ActionIcon::InputGrabPosition(_float& fPos)
+{
+	fPos += 40;
+	if (m_pUI_Manager->m_eDirInput == MOVEKEY_NEUTRAL)
+		m_pUI_Manager->m_iNumCommandList++;
 }
 
 CUI_Input_ActionIcon* CUI_Input_ActionIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

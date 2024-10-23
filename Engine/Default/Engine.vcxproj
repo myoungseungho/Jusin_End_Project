@@ -165,7 +165,6 @@
     <ClInclude Include="..\Public\Channel.h" />
     <ClInclude Include="..\Public\Collider.h" />
     <ClInclude Include="..\Public\Collider_Manager.h" />
-    <ClInclude Include="..\Public\Collider_Test.h" />
     <ClInclude Include="..\Public\Component.h" />
     <ClInclude Include="..\Public\Component_Manager.h" />
     <ClInclude Include="..\Public\ContainerObject.h" />
@@ -213,7 +212,6 @@
     <ClCompile Include="..\Private\Channel.cpp" />
     <ClCompile Include="..\Private\Collider.cpp" />
     <ClCompile Include="..\Private\Collider_Manager.cpp" />
-    <ClCompile Include="..\Private\Collider_Test.cpp" />
     <ClCompile Include="..\Private\Component.cpp" />
     <ClCompile Include="..\Private\Component_Manager.cpp" />
     <ClCompile Include="..\Private\ContainerObject.cpp" />

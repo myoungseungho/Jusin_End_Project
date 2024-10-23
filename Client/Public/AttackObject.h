@@ -2,14 +2,12 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
-#include "Collider_Test.h"
 
 #include "AnimationEvent_Defines.h"
 
 BEGIN(Engine)
 class CShader;
 class CModel;
-class CCollider_Test;
 END
 
 BEGIN(Client)
@@ -21,9 +19,18 @@ public:
 
 	typedef struct ATTACK_DESC
 	{
-		CCollider_Test::COLLIDER_DESC ColliderDesc{};
 		//_ushort ihitCharacter_Motion = { 10 };
 		HitMotion ihitCharacter_Motion = { HIT_LIGHT };
+
+		AttackGrade  eAttackGrade = { GRADE_NORMAL };
+		AttackType   eAttackType = { ATTACKTYPE_HIGH};
+
+
+		//잡기의 경우, 성공시 진행될 모션 
+		_bool		bOwnerNextAnimation = { false };
+		_uint		iOnwerNextAnimationIndex = {};
+
+
 		_float2 fhitCharacter_Impus = {0,0};
 		_float  fhitCharacter_StunTime = { 1.f };
 		_float  fLifeTime = { 0.f };
@@ -34,7 +41,8 @@ public:
 
 		//_bool   bOwnerGravityTimeReset = { false };
 		_bool		bGroundSmash = { false};
-		_bool		bGainAttackStep = { true };
+		//_bool		bGainAttackStep = { true };
+		_ushort		iGainAttackStep = { 1 };
 		class CCharacter* pOwner = { nullptr };
 	};
 private:
@@ -52,9 +60,12 @@ public:
 
 private:
 	
-	CCollider_Test*			m_pColliderCom = { nullptr };
+	//CCollider_Test*			m_pColliderCom = { nullptr };
 
 	HitMotion				m_ihitCharacter_Motion = { HIT_LIGHT };
+	AttackGrade				m_eAttackGrade = { GRADE_NORMAL };
+	AttackType				m_eAttackType = { ATTACKTYPE_HIGH };
+
 	_float2					m_fhitCharacter_Impus{};
 	_float					m_fhitCharacter_StunTime = { 1.f };
 	_float					m_fLifeTime = { 0.f };
@@ -71,12 +82,16 @@ private:
 	
 	//1020추가
 	_bool					m_bGroundSmash = { false };
-	_bool					m_bGain_AttackStep = { true };
+	//_bool					m_bGain_AttackStep = { true };
+	_ushort					m_iGain_AttackStep = { 1 };
 
 	class CCharacter*				m_pOwner = { nullptr };
 
 	CTransform*				m_pOwnerTransform = { nullptr };
 
+
+	_bool		m_bOwnerNextAnimation = { false };
+	_uint		m_iOnwerNextAnimationIndex = {};
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

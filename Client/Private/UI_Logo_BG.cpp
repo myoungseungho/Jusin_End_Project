@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\BackGround.h"
+#include "..\Public\UI_Logo_BG.h"
 
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
-CBackGround::CBackGround(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_Logo_BG::CUI_Logo_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CBackGround::CBackGround(const CBackGround& Prototype)
+CUI_Logo_BG::CUI_Logo_BG(const CUI_Logo_BG& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CBackGround::Initialize_Prototype()
+HRESULT CUI_Logo_BG::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CBackGround::Initialize(void* pArg)
+HRESULT CUI_Logo_BG::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -45,20 +45,20 @@ HRESULT CBackGround::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CBackGround::Priority_Update(_float fTimeDelta)
+void CUI_Logo_BG::Priority_Update(_float fTimeDelta)
 {
 }
 
-void CBackGround::Update(_float fTimeDelta)
+void CUI_Logo_BG::Update(_float fTimeDelta)
 {
 }
 
-void CBackGround::Late_Update(_float fTimeDelta)
+void CUI_Logo_BG::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
 }
 
-HRESULT CBackGround::Render(_float fTimeDelta)
+HRESULT CUI_Logo_BG::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -75,7 +75,7 @@ HRESULT CBackGround::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CBackGround::Ready_Components()
+HRESULT CUI_Logo_BG::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
@@ -96,7 +96,7 @@ HRESULT CBackGround::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CBackGround::Bind_ShaderResources()
+HRESULT CUI_Logo_BG::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -113,33 +113,33 @@ HRESULT CBackGround::Bind_ShaderResources()
 	return S_OK;
 }
 
-CBackGround* CBackGround::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CUI_Logo_BG* CUI_Logo_BG::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CBackGround* pInstance = new CBackGround(pDevice, pContext);
+	CUI_Logo_BG* pInstance = new CUI_Logo_BG(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CBackGround"));
+		MSG_BOX(TEXT("Failed to Created : CUI_Logo_BG"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CBackGround::Clone(void* pArg)
+CGameObject* CUI_Logo_BG::Clone(void* pArg)
 {
-	CBackGround* pInstance = new CBackGround(*this);
+	CUI_Logo_BG* pInstance = new CUI_Logo_BG(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CBackGround"));
+		MSG_BOX(TEXT("Failed to Cloned : CUI_Logo_BG"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CBackGround::Free()
+void CUI_Logo_BG::Free()
 {
 	__super::Free();
 

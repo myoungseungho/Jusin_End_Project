@@ -112,14 +112,15 @@ private:
     FrameEventMap* m_pFrameEvent = { nullptr };
 
 
-    CHARACTER_INDEX m_iTestModelIndex = { PLAY_21 };
+    CHARACTER_INDEX m_iTestModelIndex = { SKILL_GOKU };
     _float m_fAnimationUpdateTime = {0.005f};
     _float m_fTool_TickPerSecond = { 25.f };
     _char m_PostionBuffer[30] = "0.0";
 
 
 
-    _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_21.txt";
+ //   _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_21.txt";
+    _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_Goku.txt";
 
 
  public:

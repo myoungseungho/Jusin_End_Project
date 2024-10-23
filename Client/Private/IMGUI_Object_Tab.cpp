@@ -242,7 +242,7 @@ HRESULT CIMGUI_Object_Tab::IMGUI_Click_Button_Release(unordered_set<CGameObject*
 
 		if (*it == gameObject)
 		{
-			gameObject->m_bDied = true;
+			gameObject->m_bDead = true;
 			it = container.erase(it); // 컨테이너에서 오브젝트 제거
 			return S_OK;
 		}
@@ -405,7 +405,7 @@ void CIMGUI_Object_Tab::ShowObjectListAndControls(const vector<pair<string, list
 
 	ImGui::EndChild();
 
-	if (pSelectGameObject != nullptr && pSelectGameObject->m_bDied)
+	if (pSelectGameObject != nullptr && pSelectGameObject->m_bDead)
 		return;
 
 	// Show Container Object Details window if required
@@ -502,7 +502,7 @@ void CIMGUI_Object_Tab::HandleAABBColliderObject(CGameObject* colliderObject)
 
 void CIMGUI_Object_Tab::HandleObjectPosition(CGameObject* _pSelectedGameObject)
 {
-	if (_pSelectedGameObject == nullptr || _pSelectedGameObject->m_bDied)
+	if (_pSelectedGameObject == nullptr || _pSelectedGameObject->m_bDead)
 		return;
 
 	// 객체의 현재 위치를 가져오기
@@ -734,7 +734,7 @@ void CIMGUI_Object_Tab::HandleColliderTransform(CCollider* _pCollider)
 
 void CIMGUI_Object_Tab::HandleObjectRotation(CGameObject* _pSelectedGameObject)
 {
-	if (_pSelectedGameObject == nullptr || _pSelectedGameObject->m_bDied)
+	if (_pSelectedGameObject == nullptr || _pSelectedGameObject->m_bDead)
 		return;
 
 	// Transform 컴포넌트 가져오기
@@ -842,7 +842,7 @@ void CIMGUI_Object_Tab::HandleObjectRotation(CGameObject* _pSelectedGameObject)
 
 void CIMGUI_Object_Tab::HandleObjectScale(CGameObject* _pSelectedGameObject)
 {
-	if (_pSelectedGameObject == nullptr || _pSelectedGameObject->m_bDied)
+	if (_pSelectedGameObject == nullptr || _pSelectedGameObject->m_bDead)
 		return;
 
 	// 객체의 Transform 컴포넌트 가져오기

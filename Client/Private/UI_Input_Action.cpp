@@ -23,6 +23,10 @@ HRESULT CUI_Input_Action::Initialize_Prototype()
 
 HRESULT CUI_Input_Action::Initialize(void* pArg)
 {
+
+	m_fSizeX = 35.f, m_fSizeY = 35.f, m_fPosX = 60.f, m_fPosY = 190.f;
+
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -31,43 +35,38 @@ HRESULT CUI_Input_Action::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 	m_iTextureIndex  = pUI_Desc->iNumUI;
-
+	
 	switch (m_iTextureIndex)
 	{
-	case 0:
+	case KEY_LIGHT:
 		m_fPosX = 345.f;
 		m_fPosY = 510.f;
 		break;
-	case 1:
+	case KEY_MEDIUM:
 		m_fPosX = 385.f;
 		m_fPosY = 470.f;
 		break;
-	case 2:
+	case KEY_SPECIAL:
 		m_fPosX = 425.f;
 		m_fPosY = 510.f;
 		break;
-	case 3:
+	case KEY_HEAVY:
 		m_fPosX = 345.f;
 		m_fPosY = 550.f;
 		break;
 
-	case 4:
+	case KEY_A1:
 		m_fPosX = 385.f;
 		m_fPosY = 550.f;
 		break;
 
-	case 5:
+	case KEY_A2:
 		m_fPosX = 425.f;
 		m_fPosY = 550.f;
 		break;
-
 	}
 
-
-
-
-
-	__super::Set_UI_Setting(35.f, 35.f, m_fPosX, m_fPosY, 1.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 
 	return S_OK;
 }
@@ -108,7 +107,7 @@ void CUI_Input_Action::Update(_float fTimeDelta)
 		m_bOnBtn = FALSE;
 	}
 
-	m_bOnBtn ? __super::Set_UI_Setting(35.f * 1.25f, 35.f * 1.25f, m_fPosX, m_fPosY, 1.f) : __super::Set_UI_Setting(35.f, 35.f, m_fPosX, m_fPosY, 1.f);;
+	m_bOnBtn ? __super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, 0.9f) : __super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);;
 }
 
 void CUI_Input_Action::Late_Update(_float fTimeDelta)

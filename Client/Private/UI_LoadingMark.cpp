@@ -23,17 +23,22 @@ HRESULT CUI_LoadingMark::Initialize_Prototype()
 
 HRESULT CUI_LoadingMark::Initialize(void* pArg)
 {
-
+	
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_fSizeX = 200.f;
+	m_fSizeY = 200.f;
+	m_fPosX = m_vPrevWinSize.x - 100;
+	m_fPosY = m_vPrevWinSize.y - 100;
+
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	m_iTextureIndex = pDesc->iNumUI;
 
-	__super::Set_UI_Setting(200, 200, g_iWinSizeX - 100, g_iWinSizeY - 100, 0.f);
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
 }

@@ -10,8 +10,8 @@ class CMain_Camera final : public CCamera
 public:
 	enum VIRTUAL_CAMERA
 	{
-		VIRTUAL_CAMERA_FREE,
 		VIRTUAL_CAMERA_NORMAL,
+		VIRTUAL_CAMERA_FREE,
 		VIRTUAL_CAMERA_SON_SKILL_1,
 		VIRTUAL_CAMERA_SON_SKILL_2,
 		VIRTUAL_CAMERA_HIT_SKILL_1,
@@ -75,7 +75,7 @@ public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 
 private:
-	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_FREE };
+	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
 
 	unordered_map<std::string, int> stringToSkillID;
 	unordered_map<std::string, int> stringToAnimID;
