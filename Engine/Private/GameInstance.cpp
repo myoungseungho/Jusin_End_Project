@@ -79,6 +79,9 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	//전 프레임에서 삭제 예약한 오브젝트 삭제
 	m_pObject_Manager->Destory_Update();
 
+	//임시, 테스트
+	m_pObject_Manager->Player_Update(fTimeDelta);
+
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();

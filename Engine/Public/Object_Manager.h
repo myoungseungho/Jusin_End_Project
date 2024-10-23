@@ -32,6 +32,7 @@ public:
 	HRESULT Add_Object_Layers_Vector(_uint, vector<pair < _wstring, list<CGameObject*>>>* pVector);
 
 	//사이클 함수
+	void Player_Update(_float fTimeDelta);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);

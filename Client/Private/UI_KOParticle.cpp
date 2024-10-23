@@ -50,7 +50,7 @@ void CUI_KOParticle::Priority_Update(_float fTimeDelta)
 	if (m_fTexCoord >= 1.f)
 	{
 		m_fTexCoord = 0.f;
-		m_bDead = TRUE;
+		Destory();
 	}
 }
 

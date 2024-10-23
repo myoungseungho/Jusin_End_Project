@@ -63,7 +63,7 @@ HRESULT CUI_Loading_BG::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(18)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -78,7 +78,7 @@ HRESULT CUI_Loading_BG::Render(_float fTimeDelta)
 HRESULT CUI_Loading_BG::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_UI_VtxRect"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -87,6 +87,10 @@ HRESULT CUI_Loading_BG::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
+	/* Com_TextureBG */
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround_Mask"),
+		TEXT("Com_TextureBG"), reinterpret_cast<CComponent**>(&m_pBGTextureCom))))
+		return E_FAIL;
 
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
@@ -107,8 +111,13 @@ HRESULT CUI_Loading_BG::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
+	if (FAILED(m_pBGTextureCom->Bind_ShaderResource(m_pShaderCom, "g_BGTexture", 0)))
+		return E_FAIL;
+
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -141,9 +150,11 @@ CGameObject* CUI_Loading_BG::Clone(void* pArg)
 
 void CUI_Loading_BG::Free()
 {
-	__super::Free();
 
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pBGTextureCom);
+
+	__super::Free();
 }

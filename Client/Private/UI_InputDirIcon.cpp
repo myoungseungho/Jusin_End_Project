@@ -58,7 +58,7 @@ void CUI_InputDirIcon::Update(_float fTimeDelta)
 	_float fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList - m_iNumCommandList));
 
 	if (fOffSetPosY >= 575)
-		m_bDead = TRUE;
+		Destory();;
 
 	__super::Set_UI_Setting(35.f, 35.f, 20 , fOffSetPosY , 0.8f);
 }

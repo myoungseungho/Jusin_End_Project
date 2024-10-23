@@ -236,11 +236,11 @@ _float CUI_InputDir::ScaleValue(_float2 vPrevPos, _float2 vCurrPos)
 	_float fScaled = 1;
 
 	if(fDistance >100.f)
-		fScaled = 2.2f;
+		fScaled = 2.2f ;
 	else if(fDistance >65)
 		fScaled = 1.5f;
 	else 
-		fScaled = 1.f;
+		fScaled = 1.05f;
 
 	return fScaled;
 }

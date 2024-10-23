@@ -50,7 +50,7 @@ void CUI_BaseAttBuf::Update(_float fTimeDelta)
 
 		if (m_fAttBufTimer >= m_pUI_Manager->m_fDuration)
 		{
-			m_bDead = true;
+			Destory();
 		}
 	}
 

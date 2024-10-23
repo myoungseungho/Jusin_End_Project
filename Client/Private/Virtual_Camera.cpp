@@ -193,7 +193,7 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
 	NewWorldMatrix.r[3] = interpolatedPositionWorld; // 위치 설정
 
-	 //월드 매트릭스에서 Right, Up, Look 벡터 추출
+	//월드 매트릭스에서 Right, Up, Look 벡터 추출
 	_vector right = NewWorldMatrix.r[0];
 	_vector up = NewWorldMatrix.r[1];
 	_vector look = NewWorldMatrix.r[2];

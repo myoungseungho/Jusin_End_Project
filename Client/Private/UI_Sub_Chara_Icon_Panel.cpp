@@ -50,7 +50,7 @@ void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 	Animation({ 73.f ,88.f ,0.65f, 1.f }, { m_fPosX, m_fPosY, 0.65f, 1.f }, 100.f, 0.65f, fTimeDelta);
 
 	if (m_pSubPawn == nullptr)
-		m_bDead = TRUE;
+		Destory();
 }
 
 void CUI_Sub_Chara_Icon_Panel::Late_Update(_float fTimeDelta)

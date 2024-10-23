@@ -72,6 +72,20 @@ CGameObject* CLayer::Get_GameObject(_uint iIndex)
 	return nullptr;
 }
 
+void CLayer::Player_Update(_float fTimeDelta)
+{
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if ((*it)->m_bDead)  // 객체가 사망 상태라면
+			it = m_GameObjects.erase(it);  // 목록에서 삭제 후 iterator 업데이트
+		else
+		{
+			(*it)->Player_Update(fTimeDelta);  // 업데이트 호출
+			++it;  // 다음 객체로 이동
+		}
+	}
+}
+
 void CLayer::Priority_Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
@@ -91,7 +105,10 @@ void CLayer::Update(_float fTimeDelta)
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
 	{
 		if ((*it)->m_bDead)
+		{
+			Safe_Release(*it);
 			it = m_GameObjects.erase(it);
+		}
 		else
 		{
 			(*it)->Update(fTimeDelta);

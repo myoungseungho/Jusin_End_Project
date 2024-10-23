@@ -67,7 +67,7 @@ void CUI_KOFontEffect::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 
 	if(m_QueueAnim.empty())
-		m_bDead = TRUE;
+		Destory();
 	
 
 
