@@ -39,6 +39,8 @@ public:
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
 
+
+		_vector vColor;
 	}EFFECT_DESC;
 
 
@@ -69,6 +71,7 @@ public:
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
 	HRESULT Play_Animation(_float CurrentFrame);
+	void		Set_Effect_Color(_vector vColor);
 
 protected:
 
@@ -99,6 +102,8 @@ public:
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };
 	_int			m_iPassIndex = { 1 };
+	_vector		m_vColor = {};
+
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

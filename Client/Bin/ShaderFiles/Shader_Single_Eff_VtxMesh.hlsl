@@ -7,6 +7,8 @@ texture2D g_DiffuseTexture;
 texture2D g_AlphaTexture;
 vector g_vCamPosition;
 
+vector g_vColor;
+
 int g_iUnique_Index = -1;
 
 struct VS_IN
@@ -128,18 +130,18 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
     
-    float3 vBrown = { 166.f / 255.f, 131.f / 255.f, 115.f / 255.f };
+    float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f};
     
-    vMtrlDiffuse.rgb *= vBrown;
-    // 비율에 따라 색상 조정
+    vMtrlDiffuse.rgb *= vAddColor;
+
    // Out.vDiffuse = vMtrlDiffuse;
-//// 비율에 따라 색상 조정
+
     Out.vDiffuse = vector(
     min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
     min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
     min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
     //vMtrlDiffuse.a
-    1.f
+    g_vColor.a
     );
 
     Out.vAlpha = vMtrlAlpha.r;

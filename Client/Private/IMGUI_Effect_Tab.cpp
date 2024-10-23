@@ -311,6 +311,11 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
         }
 
         ImGui::Separator();
+        if (ImGui::Button("Change Color"))
+        {
+
+        }
+        ImGui::Separator();
         ImGui::Text("Select Effect Information");
 
         _int EffectId = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id();
@@ -705,6 +710,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 if (pEffect)
                 {
                     effectChecks[item] = pEffect->m_bIsLoop;
+
+                    ImGui::Separator();
+
                 }
             }
 
@@ -718,6 +726,11 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 ImGui::PushStyleColor(ImGuiCol_CheckMark, IM_COL32(0, 0, 0, 230));
 
                 bool isChecked = effectChecks[item];
+
+                if (ImGui::Button("Change Color"))
+                {
+
+                }
                 if (ImGui::Checkbox("##EffectCheck", &isChecked))
                 {
                     CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);

@@ -51,6 +51,8 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
 
+		m_vColor = pEffectDesc->vColor;
+
 		if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 			return E_FAIL;
 

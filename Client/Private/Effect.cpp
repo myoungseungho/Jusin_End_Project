@@ -147,6 +147,11 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	return S_OK;
 }
 
+void CEffect::Set_Effect_Color(_vector vColor)
+{
+	m_vColor = vColor;
+}
+
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)
 {
 	return S_OK;

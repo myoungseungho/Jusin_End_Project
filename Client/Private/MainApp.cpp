@@ -11,7 +11,7 @@
 #include "RenderInstance.h"
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
-
+#include "Effect_Manager.h"
 #include "thread"
 
 CMainApp::CMainApp()

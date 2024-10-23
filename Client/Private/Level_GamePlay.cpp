@@ -18,7 +18,6 @@
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
-	, m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
 	, m_pIMGUI_Manager{ CImgui_Manager::Get_Instance() }
 {
 }
@@ -26,6 +25,8 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY;
+
+	Create_Effect_Manager();
 
 	//ºû ÁØºñ
 	if (FAILED(Ready_Lights()))
@@ -292,6 +293,12 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 }
 
+void CLevel_GamePlay::Create_Effect_Manager()
+{
+	m_pEffect_Manager = CEffect_Manager::Get_Instance();
+	m_pEffect_Manager->Initialize();
+}
+
 HRESULT CLevel_GamePlay::Ready_Character()
 {
 	CCharacter::Character_DESC SlotDesc = {};
@@ -331,4 +338,5 @@ void CLevel_GamePlay::Free()
 	__super::Free();
 
 	CFrameEvent_Manager::Destroy_Instance();
+	CEffect_Manager::Get_Instance()->Destroy_Instance();
 }

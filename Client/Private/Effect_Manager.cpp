@@ -321,6 +321,31 @@ void CEffect_Manager::Set_Render_Layer(const wstring& strEffectLayerTag)
 	Find_Effect_Layer(strEffectLayerTag)->m_bIsRender = { true };
 }
 
+HRESULT CEffect_Manager::Set_Test_Effect_Color(_int iCurTestEffectIndex, _vector vColor)
+{
+	for (auto& iter : m_TestEffect)
+	{
+		if (iter->m_iUnique_Index == iCurTestEffectIndex)
+		{
+			iter->Set_Effect_Color(vColor);
+		}
+	}
+
+	return S_OK;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _vector vColor)
+{
+	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
+
+	if (pEffect == nullptr)
+		return E_FAIL;
+
+	pEffect->Set_Effect_Color(vColor);
+	
+	return S_OK;
+}
+
 EFFECT_KEYFRAME CEffect_Manager::Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
@@ -559,6 +584,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 	EffectDesc.vScaled = { 1.f, 1.f, 1.f };
 	EffectDesc.vRotation = { 0.f, 0.f, 0.f };
 	EffectDesc.iRenderIndex = 1;
+	EffectDesc.vColor = { 255.f, 255.f, 255.f, 1.f };
 
 	CGameObject* pEffect = nullptr;
 	CEffect* pTestEffect = nullptr;
@@ -976,8 +1002,6 @@ void CEffect_Manager::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pGameInstance);
-
 	for (auto& Pair : m_FinalEffects)
 		Safe_Release(Pair.second);
 
@@ -1002,6 +1026,4 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair);
 
 	m_UsingEffect.clear();
-
-	Destroy_Instance();
 }

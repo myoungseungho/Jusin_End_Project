@@ -23,6 +23,7 @@ private:
 	HRESULT Ready_Lights();
 	HRESULT Ready_Character();
 	HRESULT Ready_UIObjects();
+	void			Create_Effect_Manager();
 
 private:
 	class CUI_Manager* m_pUI_Manager = { nullptr };
