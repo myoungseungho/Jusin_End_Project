@@ -29,6 +29,8 @@ public:
 public:
 	virtual HRESULT Initialize(CBounding::BOUNDING_DESC* pDesc);
 	virtual void Update(_fmatrix TransformMatrix) override;
+	virtual void UpdateVector(_vector vTransform);
+
 	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor) override;
 	virtual _bool isCollision(CCollider::TYPE eTargetColliderType, CBounding* pTargetBounding);
 	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir) override;

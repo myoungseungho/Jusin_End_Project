@@ -494,6 +494,8 @@ protected:
 
 	//디버그용 임시 collider
 	//CCollider_Test* m_pColliderCom = { nullptr };
+	CCollider* m_pColliderCom = { nullptr };
+
 	CCharacter* m_pDebugEnemy = { nullptr };
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 

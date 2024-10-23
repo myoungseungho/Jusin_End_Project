@@ -406,7 +406,6 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     }
 
 
-    _bool bDebugPoint = false;
 
     if (splitText[0] == "ObjectMove")
     {
@@ -419,10 +418,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
         vPos += _vector{ fValue[0] * pCharacter->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
         pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
-        //static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
-
-        _bool bDebug = false;
-
+       
         //최적화하려면 여기서 float값을 return하고 싹다 합친 뒤 한번에 처리하기?
     }
 

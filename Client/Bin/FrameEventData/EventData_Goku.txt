@@ -802,6 +802,9 @@ PLAY_GOKU,GKS032_body,11,ObjectMove, 0.1, 0, 0, 0
 PLAY_GOKU,GKS032_body,12,ObjectMove, 0.1, 0, 0, 0
 PLAY_GOKU,GKS032_body,13,ObjectMove, 0.1, 0, 0, 0
 PLAY_GOKU,GKS032_body,13,PositionChange,0
+
+
+
 //,PLAY_GOKU,GKS032_body,14,ObjectMove, 0.06, 0, 0, 0
 
 

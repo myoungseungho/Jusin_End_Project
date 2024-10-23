@@ -648,6 +648,12 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 	if (fPrePosition == 0)
 	{
+
+		if (m_pGameInstance->Key_Pressing(DIK_D))
+		{
+			_bool bDebug = true;
+		}
+
 		ProcessEventsFramesZero(m_eCharacterIndex, m_pModelCom->m_iCurrentAnimationIndex);
 		fPrePosition += 0.001;
 
@@ -2760,13 +2766,13 @@ void CCharacter::Gravity(_float fTimeDelta)
 	_float fHeight = XMVectorGetY(vPos);
 
 
-	
+
 
 	if (fHeight > 0)
 	{
 
 
-		
+
 
 		// IDLE이면 공중 하강모션으로 변경
 
@@ -2779,8 +2785,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 		else if (Check_bCurAnimationisGroundMove())
 			m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
-		
-		
+
+
 		// if (Check_bCurAnimationisGroundMove())
 		//m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
 
@@ -2805,7 +2811,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 		//Ver4 점프력3.   마지막 값을 *0.1 대신 *0.08해도 자연스러움
 		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.1;
-		_float fGravity = (-0.7f * (2*m_fGravityTime - m_fJumpPower) * (2*m_fGravityTime - m_fJumpPower) + 4) * 0.1;
+		_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 
 
 
@@ -2825,7 +2831,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex)
 		{
 
-			
+
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
 			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper)
@@ -2837,17 +2843,17 @@ void CCharacter::Gravity(_float fTimeDelta)
 			//if (m_fGravityTime < m_fJumpPower)
 
 
-			else if (m_fGravityTime*2.f < m_fJumpPower)
+			else if (m_fGravityTime * 2.f < m_fJumpPower)
 			{
 				m_fGravityTime += fTimeDelta;
 
 				//일시정지해서 여기서 넘어가면 값이 확 높아질 수 있음.  예외처리해서 시간값 한번 더?
 			}
-			else if (m_fGravityTime*2.f > m_fJumpPower)
+			else if (m_fGravityTime * 2.f > m_fJumpPower)
 			{
 				m_fGravityTime = m_fJumpPower * 0.5f;
 			}
-			
+
 
 
 			//m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper ||
@@ -2856,7 +2862,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			//if(Check_bCurAnimationisHitAway() == false )
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground)
 			{
-				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y *fTimeDelta,0 });
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y * fTimeDelta,0 });
 			}
 			else if (Check_bCurAnimationisHitAway() == false && m_pModelCom->m_iCurrentAnimationIndex != m_iAttack_AirUpper)
 				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
@@ -2865,7 +2871,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 		}
 		else
 		{
-		
+
 			//중력Ver2 전용 처리.  올라가다가 공격때문에 멈췄는데  공격 끝나고 다시 올라가는거 이상해서 처리
 			//if (fGravity < 0 && m_fGravityTime < m_fJumpPower)
 
@@ -2876,8 +2882,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 
-			if(m_bAttackGravity == true)
-			{ 
+			if (m_bAttackGravity == true)
+			{
 
 				//if(m_iPlayerTeam ==1)
 				//{
@@ -2963,10 +2969,10 @@ void CCharacter::Gravity(_float fTimeDelta)
 				//m_bHitGroundSmashed = false;
 				//m_pTransformCom->Add_Move({ -1 * fTimeDelta * m_iLookDirection, 0, 0 });
 			}
-			else 
+			else
 			{
 				//m_pModelCom->SetUp_Animation(m_iBound_Ground, false);
-				
+
 				//백업
 				//Set_Animation(m_iBreakFall_Ground, 2.f);
 				//Set_fImpulse({ 5.f,0.f });
@@ -2974,7 +2980,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 			}
-			
+
 
 			if (m_pModelCom->m_iCurrentAnimationIndex != m_iBreakFall_Ground)
 			{
@@ -2991,7 +2997,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_bJumpLock = true;
 			}
 
-			
+
 		}
 		if (m_bHitGroundSmashed == false)
 		{
@@ -3000,7 +3006,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
 
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { XMVectorGetX(vPos),0.f,XMVectorGetZ(vPos),1.f });
-		
+
 	}
 
 	else if (fHeight == 0)
@@ -3015,7 +3021,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);
 		}
-		
+
 		//else if (m_bHitGroundSmashed == true && m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
 		//{
 		//	if (m_bMotionPlaying == false)
@@ -3029,7 +3035,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//else if (m_bHitGroundSmashed == true && m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
 		else if (m_bHitGroundSmashed == true)
 		{
-			if(m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex)
 			{
 				//바닥에 꼬라박혔을때 질질 끌림.  보기에 이상하다면 맞았을 시에 FlipDirection 해야한다
 				m_pTransformCom->Add_Move({ -2 * fTimeDelta * m_iLookDirection, 0, 0 });
@@ -3113,7 +3119,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			if (m_bMotionPlaying == false)
 			{
 				Set_Animation(m_iBreakFall_Ground);
-				
+
 			}
 
 		}
@@ -3145,8 +3151,9 @@ void CCharacter::Gravity(_float fTimeDelta)
 		}
 
 		m_bDoubleJumpEnable = true;
-		
+
 	}
+
 
 
 
@@ -3174,18 +3181,33 @@ HRESULT CCharacter::Ready_Components()
 
 
 
-	CCollider_Test::COLLIDER_DESC ColliderDesc{};
-	ColliderDesc.pTransform = m_pTransformCom;
-	ColliderDesc.fSizeX = 1.2f;
-	ColliderDesc.fSizeY = 1.5f;
-	ColliderDesc.fSizeZ = 0.7f;
-	ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
+	//CCollider_Test::COLLIDER_DESC ColliderDesc{};
+	//ColliderDesc.pTransform = m_pTransformCom;
+	//ColliderDesc.fSizeX = 1.2f;
+	//ColliderDesc.fSizeY = 1.5f;
+	//ColliderDesc.fSizeZ = 0.7f;
+	//ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
 
 
-	////Com_Collider
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
-	//	TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
-	//	return E_FAIL;
+	CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
+	/*	Desc.ColliderDesc.width = 0.7;
+		Desc.ColliderDesc.height = 0.8;
+		Desc.ColliderDesc.vCenter ={0.9f *m_iLookDirection,0.8f,0.f };
+		Desc.ColliderDesc.pTransform = m_pTransformCom;*/
+
+	if (m_iPlayerTeam == 1)
+		ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_BODY;
+	else
+		ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_BODY;
+	ColliderDesc.pMineGameObject = this;
+	ColliderDesc.vCenter = { 0.f,0.8f,0.f };
+	ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
+
+
+	//Com_Collider
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
+		return E_FAIL;
 	
 	return S_OK;
 }

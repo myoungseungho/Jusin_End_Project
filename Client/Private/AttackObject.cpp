@@ -62,6 +62,7 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, pDesc->ColliderDesc.pTransform->Get_State(CTransform::STATE_POSITION));
 
 	//m_pOwnerTransform = pDesc->ColliderDesc.pTransform;
+	m_pOwnerTransform = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")));
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 
@@ -69,6 +70,8 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 		return E_FAIL;
 
 	//m_pColliderCom->Update(m_fOffset);
+
+
 
 
 	return S_OK;
@@ -93,6 +96,9 @@ void CAttacKObject::Update(_float fTimeDelta)
 		{
 			m_bIsActive = false;
 		}
+
+		//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
+		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	}
 	
 }
@@ -200,13 +206,17 @@ void CAttacKObject::Late_Update(_float fTimeDelta)
 		}
 
 
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 	}
 }
 
 HRESULT CAttacKObject::Render(_float fTimeDelta)
 {
-	//m_pColliderCom->Render();
+
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
+
 
 	return S_OK;
 }
@@ -217,19 +227,33 @@ HRESULT CAttacKObject::Render(_float fTimeDelta)
 HRESULT CAttacKObject::Ready_Components(ATTACK_DESC* pDesc)
 {
 
-	CCollider_Test::COLLIDER_DESC ColliderDesc{};
-	ColliderDesc.pTransform = m_pTransformCom; //pDesc->ColliderDesc.pTransform;
-	//ColliderDesc.fSizeX = pDesc->ColliderDesc.fSizeX; 
-	//ColliderDesc.fSizeY = pDesc->ColliderDesc.fSizeY;
-	ColliderDesc.fSizeZ = 1;
+	//CCollider_Test::COLLIDER_DESC ColliderDesc{};
+	//ColliderDesc.pTransform = m_pTransformCom; //pDesc->ColliderDesc.pTransform;
+	////ColliderDesc.fSizeX = pDesc->ColliderDesc.fSizeX; 
+	////ColliderDesc.fSizeY = pDesc->ColliderDesc.fSizeY;
+	//ColliderDesc.fSizeZ = 1;
 
 
 	//ColliderDesc.Offset = pDesc->ColliderDesc.Offset;
 
+	//CCollider::COLLIDER_DESC ColliderDesc{};
+	//ColliderDesc = pDesc->ColliderDesc;
+	//ColliderDesc.MineGameObject = this;
 
-	/*if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider"),
+	CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
+	ColliderDesc = pDesc->ColliderDesc;
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
-		return E_FAIL;*/
+		return E_FAIL;
+
+
+	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
+	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+
+	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
+
+
 
 
 	return S_OK;

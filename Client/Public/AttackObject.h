@@ -5,6 +5,7 @@
 
 #include "AnimationEvent_Defines.h"
 
+
 BEGIN(Engine)
 class CShader;
 class CModel;
@@ -19,7 +20,9 @@ public:
 
 	typedef struct ATTACK_DESC
 	{
-		//_ushort ihitCharacter_Motion = { 10 };
+		//CCollider::COLLIDER_DESC  ColliderDesc{};
+		CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
+
 		HitMotion ihitCharacter_Motion = { HIT_LIGHT };
 
 		AttackGrade  eAttackGrade = { GRADE_NORMAL };
@@ -89,7 +92,7 @@ private:
 
 	CTransform*				m_pOwnerTransform = { nullptr };
 
-
+	CCollider* m_pColliderCom = { nullptr };
 	_bool		m_bOwnerNextAnimation = { false };
 	_uint		m_iOnwerNextAnimationIndex = {};
 

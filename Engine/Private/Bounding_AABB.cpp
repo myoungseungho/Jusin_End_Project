@@ -37,12 +37,24 @@ void CBounding_AABB::Update(_fmatrix TransformMatrix)
 	m_pOriginalDesc->Transform(*m_pDesc, Transform);
 }
 
+void CBounding_AABB::UpdateVector(_vector vTransform)
+{
+    //_vector		vScale, vRotation, vTranslation;
+    //XMMatrixDecompose(&vScale, &vRotation, &vTranslation, TransformMatrix);
+
+
+
+    _matrix		Transform = XMMatrixAffineTransformation({1.f,1.f,1.f}, XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 0.f), vTransform);
+    m_pOriginalDesc->Transform(*m_pDesc, Transform);
+
+}
 HRESULT CBounding_AABB::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor)
 {
 	DX::Draw(pBatch, *m_pDesc, vColor);
 
 	return S_OK;
 }
+
 
 _bool CBounding_AABB::isCollision(CCollider::TYPE eTargetColliderType, CBounding * pTargetBounding)
 {
