@@ -160,13 +160,13 @@
     <ClCompile Include="..\Private\UI_Loading_BG.cpp">
       <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\UI_Loading_Font.cpp">
       <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_Logo_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_Logo_Mark.cpp">

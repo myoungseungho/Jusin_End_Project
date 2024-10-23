@@ -681,6 +681,8 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 	return S_OK;
 }
 
+#ifdef _DEBUG
+
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	// Debug Component 관련 처리
@@ -742,6 +744,8 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 	return S_OK;
 }
+#endif // _DEBUG
+
 
 HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 {
