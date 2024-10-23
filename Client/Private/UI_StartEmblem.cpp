@@ -64,7 +64,7 @@ void CUI_StartEmblem::Update(_float fTimeDelta)
 	Action_Anim(1.f, fTimeDelta);
 
 	if (m_QueueAnim.empty())
-		m_bDead = true;
+		Destory();
 
 }
 

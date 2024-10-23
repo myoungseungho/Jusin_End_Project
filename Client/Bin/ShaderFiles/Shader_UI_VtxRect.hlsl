@@ -410,6 +410,23 @@ PS_OUT PS_PANEL(PS_IN In)
 }
 
 
+PS_OUT PS_BG(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    //vBGMaterial *= 0.62f;
+    
+    if (Out.vColor.a < 0.1f)
+        discard;
+    
+    Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
+    
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -683,4 +700,19 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_PANEL();
     }
+
+//18
+    pass BG
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_BG();
+    }
+
 }

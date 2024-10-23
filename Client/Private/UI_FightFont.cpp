@@ -64,7 +64,7 @@ void CUI_FightFont::Priority_Update(_float fTimeDelta)
 		if (m_fAlphaTimer <= 0.f)
 		{
 			m_fAlphaTimer = 0.f;
-			m_bDead = TRUE;
+			Destory();
 		}
 	}
 	else 

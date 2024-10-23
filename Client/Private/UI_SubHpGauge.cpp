@@ -44,7 +44,7 @@ void CUI_SubHpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	(m_pSubPawn != nullptr) ? m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f : m_bDead = TRUE;
+	(m_pSubPawn != nullptr) ? m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f : Destory();
 }
 
 void CUI_SubHpGauge::Update(_float fTimeDelta)

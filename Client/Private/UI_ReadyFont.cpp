@@ -164,7 +164,7 @@ void CUI_ReadyFont::Action_StartAnim(_float fTimeDelta)
 
 	if (m_fAlphaTimer >= 2.f)
 	{
-		m_bDead = TRUE;
+		Destory();
 		m_fAlphaTimer = 0.f;
 		m_fAlphaTimer = 0.f;
 
