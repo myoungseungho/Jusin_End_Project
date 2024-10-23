@@ -139,6 +139,8 @@ void CMain_Camera::Update(_float fTimeDelta)
 void CMain_Camera::Late_Update(_float fTimeDelta)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Late_Update(fTimeDelta);
+
+
 }
 
 void CMain_Camera::Set_Virtual_Camera(VIRTUAL_CAMERA mode)

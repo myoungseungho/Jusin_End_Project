@@ -73,6 +73,10 @@ HRESULT CGameObject::Initialize(void* pArg)
 	return S_OK;
 }
 
+void CGameObject::Player_Update(_float fTimeDelta)
+{
+}
+
 void CGameObject::Priority_Update(_float fTimeDelta)
 {
 }
