@@ -24,12 +24,15 @@ HRESULT CUI_FontName::Initialize_Prototype()
 HRESULT CUI_FontName::Initialize(void* pArg)
 {
 	m_fPosX = 245;
+
 	
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
 
 	if (m_pMainPawn != nullptr)
 		m_iTexIdx = m_pMainPawn->Get_PawnDesc().ePlayerID;
@@ -39,6 +42,7 @@ HRESULT CUI_FontName::Initialize(void* pArg)
 
 
 	__super::Set_UI_Setting(255.f, 32.f, m_fPosX, 47, 0.f);
+
 
 	return S_OK;
 }

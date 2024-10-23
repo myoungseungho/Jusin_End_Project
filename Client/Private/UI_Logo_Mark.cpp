@@ -76,6 +76,22 @@ HRESULT CUI_Logo_Mark::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+	m_IsAlphaSwich ? (m_fAlphaValue += fTimeDelta * 0.25f) : (m_fAlphaValue -= fTimeDelta * 0.25f);
+
+	if (m_fAlphaValue <= 0.25f)
+		m_IsAlphaSwich = TRUE;
+	else if(m_fAlphaValue >= 1.f)
+		m_IsAlphaSwich = FALSE;
+
+	m_pGameInstance->Draw_Font( TEXT("Font_Nexon"), 
+		TEXT("Space Bar Key Pressing"),        
+		_float2(450 * 1.5f, (600)* 1.5f),              
+		{ 1.f,1.f,1.f,m_fAlphaValue },            
+		0.f,                  
+		{ 0.f, 0.f },         
+		1.f      
+	);
+
 	return S_OK;
 }
 

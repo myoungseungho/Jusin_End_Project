@@ -38,7 +38,6 @@ HRESULT CUI_Logo_BG::Initialize(void* pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 
-
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
 
@@ -55,7 +54,7 @@ void CUI_Logo_BG::Update(_float fTimeDelta)
 
 void CUI_Logo_BG::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_Logo_BG::Render(_float fTimeDelta)
@@ -71,6 +70,8 @@ HRESULT CUI_Logo_BG::Render(_float fTimeDelta)
 
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
+
+	
 
 	return S_OK;
 }

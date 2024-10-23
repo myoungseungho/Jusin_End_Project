@@ -22,6 +22,10 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+private:
+	_float m_fAlphaValue = { 1.f };
+	_bool m_IsAlphaSwich = { FALSE };
+
 public:
 	static CUI_Logo_Mark* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);

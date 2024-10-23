@@ -7,7 +7,6 @@
 
 #include "GameInstance.h"
 #include "RenderInstance.h"
-#include "Character.h"
 
 IMPLEMENT_SINGLETON(CUI_Manager)
 
@@ -38,7 +37,7 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT
 
 	CUIObject::UI_DESC tAttBufDesc = {};
 
-	if (eSlotID == CCharacter::LPLAYER2 || eSlotID ==CCharacter::LPLAYER2)
+	if (eSlotID == CCharacter::LPLAYER1 || eSlotID == CCharacter::LPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::LEFT;
 	else if (eSlotID == CCharacter::RPLAYER1 || eSlotID == CCharacter::RPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::RIGHT;
@@ -54,17 +53,25 @@ void CUI_Manager::UsingComboCount(_uint iComboCnt)
 
 void CUI_Manager::UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID)
 {
+	
+
 	m_iTeam = CUIObject::POS_END;
-	if (eCurrSlotID == CCharacter::LPLAYER2 || eCurrSlotID ==CCharacter::LPLAYER2)
+	if (eCurrSlotID == CCharacter::LPLAYER1 || eCurrSlotID == CCharacter::LPLAYER2)
 	{
-		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::LPLAYER2];
-		m_pPawnArray[CCharacter::LPLAYER2] = m_pPawnArray[CCharacter::LPLAYER2];
+		if (m_pPawnArray[CCharacter::LPLAYER2] == nullptr)
+			return;
+
+		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::LPLAYER1];
+		m_pPawnArray[CCharacter::LPLAYER1] = m_pPawnArray[CCharacter::LPLAYER2];
 		m_pPawnArray[CCharacter::LPLAYER2] = pSwapPanw;
 
 		m_iTeam = CUIObject::LEFT;
 	}
 	else if (eCurrSlotID == CCharacter::RPLAYER1 || eCurrSlotID == CCharacter::RPLAYER2)
 	{
+		if (m_pPawnArray[CCharacter::RPLAYER2] == nullptr)
+			return;
+
 		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::RPLAYER1];
 		m_pPawnArray[CCharacter::RPLAYER1] = m_pPawnArray[CCharacter::RPLAYER2];
 		m_pPawnArray[CCharacter::RPLAYER2] = pSwapPanw;
@@ -154,7 +161,7 @@ void CUI_Manager::InitUIObject()
 	{
 		CCharacter::PLAYER_SLOT eSlot = dynamic_cast<CCharacter*>(iter)->Get_PawnDesc().ePlayer_Slot;
 
-		if (eSlot == CCharacter::PLAYER_SLOT::SLOT_END)
+		if (eSlot == CCharacter::SLOT_END)
 			continue;
 
 		m_pPawnArray[eSlot] = dynamic_cast<CCharacter*>(iter);

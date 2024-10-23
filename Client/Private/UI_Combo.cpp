@@ -2,7 +2,6 @@
 
 #include "UI_Combo.h"
 #include "RenderInstance.h"
-#include "Ch"
 
 CUI_Combo::CUI_Combo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
