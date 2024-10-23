@@ -33,12 +33,6 @@
 #include "FallingStar.h"
 
 #include "SpaceRock.h"
-//#include "Monster.h"
-//#include "Terrain.h"
-//#include "Camera.h"
-//#include "Effect.h"
-//#include "Sky.h"
-
 
 //LOGO
 #include "UI_Logo_BG.h"

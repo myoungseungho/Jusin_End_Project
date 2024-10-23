@@ -5,7 +5,6 @@ float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D		g_Texture;
 float4			g_vColor;
 texture2D		g_DepthTexture;
-
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -24,6 +23,7 @@ VS_OUT VS_MAIN(VS_IN In)
 
 	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
 	vector		vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+	
 	vPosition = mul(vPosition, g_ViewMatrix);
 	vPosition = mul(vPosition, g_ProjMatrix);
 

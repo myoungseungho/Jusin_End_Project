@@ -56,7 +56,7 @@ public:
 	void Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode);
 public:
 	const _char* GetTabName() const { return m_Name; };
-	void SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
+	void Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
 
 	void Start_Play(_int animationIndex);
 	void Pause();
@@ -106,6 +106,8 @@ public:
 
 	unordered_map<_int, vector<CameraPoint>> m_mapPoints;
 	_int m_AnimationIndex = -1;
+
+	class CGameObject* m_pCutsceneCharacter = { nullptr };
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

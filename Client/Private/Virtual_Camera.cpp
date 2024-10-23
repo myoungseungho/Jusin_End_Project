@@ -2,6 +2,7 @@
 #include "..\Public\Virtual_Camera.h"
 #include "GameInstance.h"
 #include "Imgui_Manager.h"
+#include "Character.h"
 CVirtual_Camera::CVirtual_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCamera{ pDevice, pContext }
 {
@@ -97,6 +98,10 @@ HRESULT CVirtual_Camera::Render(_float fTimeDelta)
 
 void CVirtual_Camera::Play(_float fTimeDelta)
 {
+	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
+	CCharacter* character = static_cast<CCharacter*>(m_p1pPlayer);
+	_int direction = character->Get_iDirection();
+
 	if (m_currentPlayMode != CAMERA_PLAY_MODE::Playing || m_AnimationIndex == -1)
 		return; // 현재 상태가 Playing이 아니면 업데이트하지 않음
 
@@ -159,6 +164,13 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedPositionLocal = XMLoadFloat3(&nextPoint.position);
 	}
 
+	//// **direction에 따른 포지션 조정**
+	//if (direction == -1)
+	//{
+	//	// x축 부호 반전
+	//	interpolatedPositionLocal = XMVectorSetX(interpolatedPositionLocal, -XMVectorGetX(interpolatedPositionLocal));
+	//}
+
 	// **2. 로컬 회전 보간 (Quaternion Slerp 사용)**
 	_vector interpolatedRotationLocal;
 	if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
@@ -170,6 +182,16 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	else
 	{
 		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
+	}
+
+	// **direction에 따른 회전 조정**
+	if (direction == -1)
+	{
+		// y축으로 180도 회전하는 쿼터니언 생성
+		_vector rotation180Y = XMQuaternionRotationAxis(XMVectorSet(0, 1, 0, 0), XM_PI);
+
+		// 기존 회전에 180도 회전을 적용 (쿼터니언 곱셈)
+		interpolatedRotationLocal = XMQuaternionMultiply(rotation180Y, interpolatedRotationLocal);
 	}
 
 	// **3. 모델의 월드 행렬 로드 (스케일링 제거)**
@@ -261,7 +283,7 @@ void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvec
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, fixedLook);
 }
 
-void CVirtual_Camera::SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer)
+void CVirtual_Camera::Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer)
 {
 	if (state == CMain_Camera::PLAYER_1P)
 		m_p1pPlayer = pPlayer;
