@@ -53,9 +53,14 @@ void CUI_Manager::UsingComboCount(_uint iComboCnt)
 
 void CUI_Manager::UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID)
 {
+	
+
 	m_iTeam = CUIObject::POS_END;
 	if (eCurrSlotID == CCharacter::LPLAYER1 || eCurrSlotID == CCharacter::LPLAYER2)
 	{
+		if (m_pPawnArray[CCharacter::LPLAYER2] == nullptr)
+			return;
+
 		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::LPLAYER1];
 		m_pPawnArray[CCharacter::LPLAYER1] = m_pPawnArray[CCharacter::LPLAYER2];
 		m_pPawnArray[CCharacter::LPLAYER2] = pSwapPanw;
@@ -64,6 +69,9 @@ void CUI_Manager::UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID)
 	}
 	else if (eCurrSlotID == CCharacter::RPLAYER1 || eCurrSlotID == CCharacter::RPLAYER2)
 	{
+		if (m_pPawnArray[CCharacter::RPLAYER2] == nullptr)
+			return;
+
 		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::RPLAYER1];
 		m_pPawnArray[CCharacter::RPLAYER1] = m_pPawnArray[CCharacter::RPLAYER2];
 		m_pPawnArray[CCharacter::RPLAYER2] = pSwapPanw;

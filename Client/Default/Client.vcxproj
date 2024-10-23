@@ -177,6 +177,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
+    <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_FontName.h" />
@@ -281,7 +282,6 @@
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
     <ClInclude Include="..\Public\SpaceStone.h" />
-    <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -299,6 +299,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp" />
+    <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_FontName.cpp" />
@@ -403,7 +404,6 @@
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
     <ClCompile Include="..\Private\SpaceStone.cpp" />
-    <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

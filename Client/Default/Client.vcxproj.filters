@@ -157,20 +157,23 @@
     <ClCompile Include="..\Private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\UI_Loading_BG.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\UI_Loading_Font.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
+    <ClCompile Include="..\Private\UI_Logo_Mark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Logo\Mark</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_Logo_BG.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
+      <Filter>02.GameObjects\UI\BackGround\Logo\BG</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\UI_Logo_Mark.cpp">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
+    <ClCompile Include="..\Private\UI_Loading_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\BG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Loading_Font.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceSun.cpp">
+      <Filter>02.GameObjects\Map\Space\Sun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,6 +389,30 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround">
       <UniqueIdentifier>{9534d408-e911-4397-9ffc-f2c67c65b94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Logo">
+      <UniqueIdentifier>{9c528352-f670-4be3-951f-08226cf67211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading">
+      <UniqueIdentifier>{5e13664c-54dc-4f2b-bf6e-3c428010ccd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Logo\BG">
+      <UniqueIdentifier>{a599d50d-1b86-4093-87e1-e7de9d31893d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Logo\Mark">
+      <UniqueIdentifier>{0abe2f0c-0ae5-4696-8979-b67369fb93bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\BG">
+      <UniqueIdentifier>{1a5e64c4-f78a-40d1-9b40-31a7fbe4a87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\Font">
+      <UniqueIdentifier>{c1162fc5-01a1-4e22-9c05-e0a7d78c01f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\Mark">
+      <UniqueIdentifier>{3028a2a3-d89a-45d3-8054-3f46014df8f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\Star">
+      <UniqueIdentifier>{6de9d36f-3d08-4d30-8f2d-f8e2ee1563a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -626,9 +653,6 @@
     <ClInclude Include="..\Public\SpaceHorizon.h">
       <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\SpaceSun.h">
-      <Filter>02.GameObjects\Map\Space\Sun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\SpaceMoon.h">
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClInclude>
@@ -735,23 +759,26 @@
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\AttackObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_LoadingMark.h">
-      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\UI_Loading_BG.h">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\UI_Loading_Font.h">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\UI_LoadingMark.h">
       <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\UI_Logo_BG.h">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\UI_Logo_Mark.h">
-      <Filter>02.GameObjects\UI\BackGround</Filter>
+      <Filter>02.GameObjects\UI\BackGround\Logo\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Logo_BG.h">
+      <Filter>02.GameObjects\UI\BackGround\Logo\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Loading_BG.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Loading_Font.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_LoadingMark.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceSun.h">
+      <Filter>02.GameObjects\Map\Space\Sun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -985,9 +1012,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceHorizon.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceHorizon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\SpaceSun.cpp">
-      <Filter>02.GameObjects\Map\Space\Sun</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SpaceMoon.cpp">
       <Filter>02.GameObjects\Map\Space\Moon</Filter>

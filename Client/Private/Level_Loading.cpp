@@ -45,14 +45,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 	if (m_bIsLevelPrepared)
 		return S_OK;
 
-	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Model_SpaceSun"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Sun/Sun.bin", PreTransformMatrix))))
-		return E_FAIL;
-	
+	//¼±
 	
 	/* For.Prototype_Component_Texture_UI_LoadingBackGround */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround"),
@@ -91,9 +84,6 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSun"),
-		CSpaceSun::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
 
 #pragma endregion
 
@@ -117,9 +107,6 @@ HRESULT CLevel_Loading::Ready_Layer()
 	}
 	
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingFont"), TEXT("Layer_UI_LoadingBackGround"));
-
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_SpaceSun"), TEXT("Layer_UI_LoadingBackGround"));
-
 
 	return S_OK;
 }

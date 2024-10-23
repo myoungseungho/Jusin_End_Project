@@ -41,6 +41,10 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
+private:
+	_float m_fBGAlphaValue = { 1.f };
+	_bool m_IsAlphaSwich = { FALSE };
+
 public:
 	static CUI_Loading_BG* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

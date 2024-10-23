@@ -417,13 +417,13 @@ PS_OUT PS_BG(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
-    //vBGMaterial *= 0.62f;
+    vBGMaterial.a *= g_fAlphaTimer;
     
     if (Out.vColor.a < 0.1f)
         discard;
-    
+  
     Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
-    
+      
     return Out;
 }
 
