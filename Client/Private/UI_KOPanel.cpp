@@ -68,7 +68,7 @@ void CUI_KOPanel::Update(_float fTimeDelta)
 	if (m_fLightTimer >= 0.25f)
 	{
 		m_fLightTimer = 0.f;
-		m_bDead = TRUE;
+		Destory();
 	}
 
 }

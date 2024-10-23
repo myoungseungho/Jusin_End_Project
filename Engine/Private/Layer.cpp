@@ -91,7 +91,10 @@ void CLayer::Update(_float fTimeDelta)
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
 	{
 		if ((*it)->m_bDead)
+		{
+			Safe_Release(*it);
 			it = m_GameObjects.erase(it);
+		}
 		else
 		{
 			(*it)->Update(fTimeDelta);
