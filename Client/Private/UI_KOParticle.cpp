@@ -95,7 +95,8 @@ HRESULT CUI_KOParticle::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
-	
+
+	return S_OK;
 }
 
 HRESULT CUI_KOParticle::Bind_ShaderResources()

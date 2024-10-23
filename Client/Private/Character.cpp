@@ -147,7 +147,7 @@ vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RI
 
 CCharacter::CCharacter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
-	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
+	, m_pUI_Manager { CUI_Manager::Get_Instance() }
 {
 	Safe_AddRef(m_pUI_Manager);
 }
@@ -223,7 +223,7 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 	m_tCharacterDesc.ePlayerID = m_eCharacterID;
 }
 
-void CCharacter::Update(_float fTimeDelta)
+ void CCharacter::Update(_float fTimeDelta)
 {
 	
 	if (m_bAnimationLock == false)
@@ -3243,6 +3243,7 @@ void CCharacter::Free()
 
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+
 	Safe_Release(m_pUI_Manager);
 
 	//Safe_Release(m_pColliderCom);

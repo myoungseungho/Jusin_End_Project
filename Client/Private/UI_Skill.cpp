@@ -37,7 +37,7 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	//m_iSkillPoint  = max(m_pMainPawn->Get_PawnDesc().iSKillPoint, m_pSubPawn->Get_PawnDesc().iSKillPoint);
+	//m_iSkillPoint = max(m_pMainPawn->Get_PawnDesc().iSKillPoint , m_pSubPawn->Get_PawnDesc().iSKillPoint);
 	
 	if (m_pMainPawn != nullptr)
 	{

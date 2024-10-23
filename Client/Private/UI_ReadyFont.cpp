@@ -103,6 +103,7 @@ HRESULT CUI_ReadyFont::Ready_Components()
 		TEXT("Com_MaskTexture "), reinterpret_cast<CComponent**>(&m_pMaskTexture))))
 		return E_FAIL;	
 
+	return S_OK;
 }
 
 HRESULT CUI_ReadyFont::Bind_ShaderResources()

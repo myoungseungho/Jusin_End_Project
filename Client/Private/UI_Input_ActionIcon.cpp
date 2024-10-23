@@ -110,6 +110,9 @@ HRESULT CUI_Input_ActionIcon::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 void CUI_Input_ActionIcon::InputGrab(_uint iTexIndex)

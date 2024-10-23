@@ -32,7 +32,7 @@ HRESULT CUI_SkillGaugeBar::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 26.f, m_fPosX, g_iWinSizeY - 100 , 0.5f);
+	__super::Set_UI_Setting(m_fSizeX, 26.f, m_fPosX, 650, 0.5f);
 
 	return S_OK;
 }
@@ -95,6 +95,9 @@ HRESULT CUI_SkillGaugeBar::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillFlowEffect"),
 		TEXT("Com_FlowMaskTexture"), reinterpret_cast<CComponent**>(&m_pSkillFlowEffect))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()

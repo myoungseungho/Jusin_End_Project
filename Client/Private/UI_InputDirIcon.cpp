@@ -100,6 +100,8 @@ HRESULT CUI_InputDirIcon::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 		
+
+	return S_OK;
 }
 
 CUI_InputDirIcon* CUI_InputDirIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

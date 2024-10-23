@@ -55,38 +55,38 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	//if(m_pMainPawn != nullptr)
-	//	m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
-	//
-	//if (m_fHpRadio <= 0.f)
-	//	m_fHpRadio = 0.f;
+	if(m_pMainPawn != nullptr)
+		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
+	
+	if (m_fHpRadio <= 0.f)
+		m_fHpRadio = 0.f;
 
-	//m_fMaskUVTimer += fTimeDelta * 0.25f;
+	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
-	//if (m_bRedAlpha == FALSE )
-	//	m_fRedHpRadio = m_fHpRadio;
+	if (m_bRedAlpha == FALSE )
+		m_fRedHpRadio = m_fHpRadio;
 
-	//if (m_bCharaStun == TRUE)
-	//{
-	//	if (m_bHit == FALSE)
-	//	{
-	//		m_bHit = TRUE;
-	//		m_fRedHpRadio = m_fHpRadio;
-	//	}
-	//}
-	//else
-	//	m_bHit = FALSE;
+	if (m_bCharaStun == TRUE)
+	{
+		if (m_bHit == FALSE)
+		{
+			m_bHit = TRUE;
+			m_fRedHpRadio = m_fHpRadio;
+		}
+	}
+	else
+		m_bHit = FALSE;
 
 
 	////캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
-	//m_bCharaStun ? m_bRedAlpha = TRUE , m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
+	m_bCharaStun ? m_bRedAlpha = TRUE , m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
 
 
-	//if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
-	//{
-	//	m_bRedAlpha = FALSE;
-	//
-	//}
+	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
+	{
+		m_bRedAlpha = FALSE;
+	
+	}
 }
 
 void CUI_HpGauge::Update(_float fTimeDelta)
@@ -169,6 +169,7 @@ HRESULT CUI_HpGauge::Ready_Components()
 		TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pMaskTexture))))
 		return E_FAIL;
 
+	return S_OK;
 }
 
 HRESULT CUI_HpGauge::Bind_ShaderResources()

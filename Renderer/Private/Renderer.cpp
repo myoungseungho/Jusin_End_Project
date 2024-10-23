@@ -711,6 +711,7 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 
 	return S_OK;
 }
+#ifdef _DEBUG
 
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
@@ -773,7 +774,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 	return S_OK;
 }
-
+#endif
 HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 {
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))

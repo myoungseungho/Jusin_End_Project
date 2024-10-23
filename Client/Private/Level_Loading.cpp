@@ -28,11 +28,14 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	m_iLevelIndex = LEVEL_LOADING;
 	m_eNextLevelID = eNextLevelID;
 
-	if (m_bIsLevelPrepared == TRUE)
-	{
-		if (FAILED(Ready_Layer()))
-			return E_FAIL;
-	}
+
+	if (FAILED(Ready_Prototype_Component()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer()))
+		return E_FAIL;
+
+
 	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	if (nullptr == m_pLoader)
 		return E_FAIL;
@@ -68,7 +71,23 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		return E_FAIL;
 
 
+
 #pragma endregion
+
+	/* For.Prototype_GameObject_UI_Loading */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading"),
+		CUI_Loading_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_LoadingMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingMark"),
+		CUI_LoadingMark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingFont"),
+		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	m_bIsLevelPrepared = true;
 

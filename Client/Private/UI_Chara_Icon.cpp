@@ -45,7 +45,7 @@ void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
 
 	if(m_pMainPawn != nullptr)
 		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
-		//m_pMainPawn->Get_PawnDesc().ePlayerID;
+		m_pMainPawn->Get_PawnDesc().ePlayerID;
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)
@@ -88,6 +88,9 @@ HRESULT CUI_Chara_Icon::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 CUI_Chara_Icon* CUI_Chara_Icon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

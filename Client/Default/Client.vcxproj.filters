@@ -169,11 +169,11 @@
     <ClCompile Include="..\Private\UI_Loading_Font.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Font</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\SpaceSun.cpp">
       <Filter>02.GameObjects\Map\Space\Sun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

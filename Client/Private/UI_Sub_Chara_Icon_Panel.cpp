@@ -84,6 +84,9 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubCharaIconPanel"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 HRESULT CUI_Sub_Chara_Icon_Panel::Bind_ShaderResources()

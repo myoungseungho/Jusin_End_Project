@@ -92,6 +92,9 @@ HRESULT CUI_ComboFont::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 CUI_ComboFont* CUI_ComboFont::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
