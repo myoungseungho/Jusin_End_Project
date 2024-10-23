@@ -70,7 +70,7 @@ void CUI_KOFont::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 
 	if (m_QueueAnim.empty())
-		m_bDead = TRUE;
+		Destory();
 
 	Action_Anim(1.f, fTimeDelta);
 }
