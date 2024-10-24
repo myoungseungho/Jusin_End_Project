@@ -85,7 +85,6 @@ void CUI_HpGauge::Priority_Update(_float fTimeDelta)
 	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
 	{
 		m_bRedAlpha = FALSE;
-	
 	}
 }
 
