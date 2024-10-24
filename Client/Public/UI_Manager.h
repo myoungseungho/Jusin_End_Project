@@ -2,8 +2,8 @@
 
 #include "Base.h"
 #include "Client_Defines.h"
-#include "Character.h"
 #include "input.h"
+#include "Character.h"
 
 BEGIN(Engine)
 
@@ -12,6 +12,7 @@ class CGameInstance;
 END
 
 BEGIN(Client)
+
 
 class CUI_Manager final : public CBase
 {
@@ -63,7 +64,7 @@ public:
 	//Combo
 	//_uint m_iComboCount = { 0 };
 
-	CCharacter* m_pPawnArray[CCharacter::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
+	class CCharacter* m_pPawnArray[CCharacter::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
 	//Anim
 	_float m_fTotalDuration = { 0.f };

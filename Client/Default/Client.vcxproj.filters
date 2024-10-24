@@ -414,6 +414,9 @@
     <Filter Include="02.GameObjects\UI\BackGround\Loading\Star">
       <UniqueIdentifier>{6de9d36f-3d08-4d30-8f2d-f8e2ee1563a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Define">
+      <UniqueIdentifier>{d634ba24-7e72-4915-81eb-fde0824546cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -780,6 +783,7 @@
     <ClInclude Include="..\Public\SpaceSun.h">
       <Filter>02.GameObjects\Map\Space\Sun</Filter>
     </ClInclude>
+    <ClInclude Include="UI_Define.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

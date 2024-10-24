@@ -557,7 +557,7 @@ public:
 
 	//UI에서 써야하는 정보 
 
-protected:
+private:
 	_uint					m_iComboCount = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
@@ -570,14 +570,15 @@ protected:
 	
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
-	PLAYER_ID					m_eCharacterID = {};
 	
-	PLAYER_SLOT				m_ePlayerSlot = { SLOT_END };
 	
 	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };
 
-	class CUI_Manager* m_pUI_Manager = { nullptr };
+protected:
+	PLAYER_ID				m_eCharacterID = {};
+	PLAYER_SLOT				m_ePlayerSlot = { SLOT_END };
+	class CUI_Manager*		m_pUI_Manager = { nullptr };
 
 private:
 	HRESULT Ready_Components();
