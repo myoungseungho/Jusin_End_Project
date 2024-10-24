@@ -23,6 +23,14 @@ public:
 	}Play_Goku_DESC;
 	enum AnimationIndex
 	{
+		//Light - 약공격
+		//Meaduim - 중공격
+		//Heavy - 강공격
+		//Special - 기탄 (원거리 공격)
+		//Air - 1,2,3 공중공격
+		//Crouch - 앉은 상태 공격
+		//236 숫자 써있는건 텐키의 방향키를 묘사한 숫자
+		//Final - 최종필살기
 		ANIME_ATTACK_LIGHT1 = 43, ANIME_ATTACK_LIGHT2 = 44, ANIME_ATTACK_LIGHT3 = 47,
 		ANIME_ATTACK_MEDIUM = 46, ANIME_ATTACK_HEAVY = 45,
 		ANIME_ATTACK_SPECIAL = 48,

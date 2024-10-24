@@ -88,6 +88,7 @@ PLAY_GOKU,GKS203_body,30,ObjectMove,0.1,0,0,0
 //,PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.035,60
 //,PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.05,60
 PLAY_GOKU,GKS204_body,0,AnimSpeedChange,0.025,120
+PLAY_GOKU,GKS204_body,0,StartCameraShake,1,0.5
 PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.017,60
 PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.025,60
 
@@ -102,6 +103,7 @@ PLAY_GOKU,GKS204_body,34,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS204_body,38,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS204_body,42,ObjectMove,0.1,0,0,0
 
+PLAY_GOKU,GKS204_body,50,StartShake,5,0.5
 
 
 //,지상특수

@@ -13,44 +13,47 @@
 
 #include "Animation.h"
 #include "Character.h"
-
 #include "Model_Preview.h"
+#include "GameInstance.h"
+#include "Main_Camera.h"
 
 IMPLEMENT_SINGLETON(CFrameEvent_Manager)
 
 
 
 CFrameEvent_Manager::CFrameEvent_Manager()
+	: m_pGameInstance{ CGameInstance::Get_Instance() }
 {
+	Safe_AddRef(m_pGameInstance);
 }
 
 
 /*
 void CFrameEvent_Manager::Add_Event(_wstring strText)
 {
-	
 
 
-    // 분리된 문자열을 저장할 배열
-    string splitText[10];
-    int index = 0;
 
-    // wstringstream을 사용하여 wstring을 처리
+	// 분리된 문자열을 저장할 배열
+	string splitText[10];
+	int index = 0;
+
+	// wstringstream을 사용하여 wstring을 처리
    wstringstream wss(strText);
    wstring temp;
 
-    // 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
-    while (std::getline(wss, temp, L',') && index < 10) 
-    {
-        // wstring을 string으로 변환 후 저장
-        splitText[index] = std::string(temp.begin(), temp.end());
-        index++;
-    }
+	// 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
+	while (std::getline(wss, temp, L',') && index < 10)
+	{
+		// wstring을 string으로 변환 후 저장
+		splitText[index] = std::string(temp.begin(), temp.end());
+		index++;
+	}
 
 
 
-    splitText;
-    _bool DebugPo = true;
+	splitText;
+	_bool DebugPo = true;
 
 }
 */
@@ -58,71 +61,71 @@ void CFrameEvent_Manager::Add_Event(_wstring strText)
 /*
 void CFrameEvent_Manager::Add_Event(CHARACTER_INDEX iCharacterIndex, _int iAnimationIndex, _float fPosition, _wstring strText)
 {
-    // 분리된 문자열을 저장할 배열
-    string splitText[10];
-    int index = 0;
+	// 분리된 문자열을 저장할 배열
+	string splitText[10];
+	int index = 0;
 
-    // wstringstream을 사용하여 wstring을 처리
-    wstringstream wss(strText);
-    wstring temp;
+	// wstringstream을 사용하여 wstring을 처리
+	wstringstream wss(strText);
+	wstring temp;
 
-    // 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
-    while (std::getline(wss, temp, L',') && index < 10)
-    {
-        // wstring을 string으로 변환 후 저장
-        splitText[index] = std::string(temp.begin(), temp.end());
-        index++;
-    }
+	// 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
+	while (std::getline(wss, temp, L',') && index < 10)
+	{
+		// wstring을 string으로 변환 후 저장
+		splitText[index] = std::string(temp.begin(), temp.end());
+		index++;
+	}
 
 
 
-    splitText;
-    _bool DebugPo = true;
+	splitText;
+	_bool DebugPo = true;
 
-    FrameEvent[iCharacterIndex][iAnimationIndex][fPosition].push_back("TEST");
+	FrameEvent[iCharacterIndex][iAnimationIndex][fPosition].push_back("TEST");
 
 }
 */
 
 void CFrameEvent_Manager::Add_Event(CHARACTER_INDEX iCharacterIndex, _int iAnimationIndex, _float fPosition, string strText)
 {
-    string splitText[10];
-    int index = 0;
+	string splitText[10];
+	int index = 0;
 
-    // stringstream을 사용하여 string을 처리
-   stringstream ss(strText);
-   string temp;
+	// stringstream을 사용하여 string을 처리
+	stringstream ss(strText);
+	string temp;
 
-    // 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
-    while (std::getline(ss, temp, ',') && index < 10) {
-        splitText[index] = temp;
-        index++;
-    }
-
-
-    _float fValue[9]{};
-
-    //split[1] 은 fValue[0] , split[2]는 fValue[1]...
-    for (int i = 1; i < 9; i++)
-    {
-        if (splitText[i] == "")
-            break;
-
-        fValue[i - 1] = Convert_strtoFloat(splitText[i]);
-
-    }
+	// 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
+	while (std::getline(ss, temp, ',') && index < 10) {
+		splitText[index] = temp;
+		index++;
+	}
 
 
-    _bool bDebugPoint = false;
+	_float fValue[9]{};
+
+	//split[1] 은 fValue[0] , split[2]는 fValue[1]...
+	for (int i = 1; i < 9; i++)
+	{
+		if (splitText[i] == "")
+			break;
+
+		fValue[i - 1] = Convert_strtoFloat(splitText[i]);
+
+	}
 
 
-    //if (splitText[0] == "FrameMoveTest")
-    //{
-    //
-    //}
+	_bool bDebugPoint = false;
 
-   
-    FrameEvent[iCharacterIndex][iAnimationIndex][fPosition].push_back(strText);
+
+	//if (splitText[0] == "FrameMoveTest")
+	//{
+	//
+	//}
+
+
+	FrameEvent[iCharacterIndex][iAnimationIndex][fPosition].push_back(strText);
 
 }
 
@@ -132,57 +135,57 @@ void CFrameEvent_Manager::LoadFile(const _char* TextFilePath)
 {
 
 
-    ifstream file(TextFilePath);
+	ifstream file(TextFilePath);
 
-    // 파일을 제대로 열었는지 확인
-    if (!file.is_open()) 
-    {
+	// 파일을 제대로 열었는지 확인
+	if (!file.is_open())
+	{
 
-        MSG_BOX(TEXT("FrameEvevnt_Manager:: LoadFile 에서 txt 파일 로드 실패\nPath:")) ;
-        return ;
-    }
+		MSG_BOX(TEXT("FrameEvevnt_Manager:: LoadFile 에서 txt 파일 로드 실패\nPath:")) ;
+		return ;
+	}
 
-    std::string line;
-    // 파일의 각 줄을 처리
-    while (std::getline(file, line)) 
-    {
-
-
-        //모든 쉼표를 분리하는 코드.  폐기예정
-
-       // 분리된 문자열을 저장할 배열
-       std::string splitText[10];
-       int index = 0;
-       
-       // stringstream을 사용하여 줄을 쉼표 기준으로 분리
-       std::stringstream ss(line);
-       std::string temp;
-       
-       while (std::getline(ss, temp, ',') && index < 10) 
-       {
-           splitText[index] = temp;
-           index++;
-       }
-       
-       splitText;
-       _bool bDebugTest = true;
-       
-       Add_Event(Convert_strtoCharacterIndex(splitText[0]),  //캐릭터 이름 변환  
-                 Convert_strtoFloat(splitText[1]),           //애니메이션 이름 변환  (현재는 float)
-                 Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
-                 splitText[3]);
-    
-
-        
+	std::string line;
+	// 파일의 각 줄을 처리
+	while (std::getline(file, line))
+	{
 
 
-    }
+		//모든 쉼표를 분리하는 코드.  폐기예정
 
-    // 파일 닫기
-    file.close();
+	   // 분리된 문자열을 저장할 배열
+	   std::string splitText[10];
+	   int index = 0;
 
-    //return LOAD_SUCCES;
-    return ;
+	   // stringstream을 사용하여 줄을 쉼표 기준으로 분리
+	   std::stringstream ss(line);
+	   std::string temp;
+
+	   while (std::getline(ss, temp, ',') && index < 10)
+	   {
+		   splitText[index] = temp;
+		   index++;
+	   }
+
+	   splitText;
+	   _bool bDebugTest = true;
+
+	   Add_Event(Convert_strtoCharacterIndex(splitText[0]),  //캐릭터 이름 변환
+				 Convert_strtoFloat(splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+				 Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+				 splitText[3]);
+
+
+
+
+
+	}
+
+	// 파일 닫기
+	file.close();
+
+	//return LOAD_SUCCES;
+	return ;
 
 }
 */
@@ -190,383 +193,392 @@ void CFrameEvent_Manager::LoadFile(const _char* TextFilePath)
 void CFrameEvent_Manager::LoadFile2(const _char* TextFilePath)
 {
 
-    ifstream file(TextFilePath);
+	ifstream file(TextFilePath);
 
-    // 파일을 제대로 열었는지 확인
-    if (!file.is_open())
-    {
+	// 파일을 제대로 열었는지 확인
+	if (!file.is_open())
+	{
 
-        MSG_BOX(TEXT("FrameEvevnt_Manager:: LoadFile 에서 txt 파일 로드 실패\nPath:"));
-        return;
-    }
+		MSG_BOX(TEXT("FrameEvevnt_Manager:: LoadFile 에서 txt 파일 로드 실패\nPath:"));
+		return;
+	}
 
-    std::string line;
-    // 파일의 각 줄을 처리
-    while (std::getline(file, line))
-    {
-
-
-       // 분리된 문자열을 저장할 배열
-        std::string splitText[4]; // 최대 4개로 나누기 (3번 쉼표 + 나머지)
-        int index = 0;
-
-        // stringstream을 사용하여 줄을 쉼표 기준으로 분리
-        std::stringstream ss(line);
-        std::string temp;
-
-        // 최대 세 번까지 쉼표로 나누고 나머지는 그대로 저장
-        while (index < 3)
-        {
-            std::getline(ss, temp, ',');
-            splitText[index] = temp;
-            index++;
-        }
-
-        // 스트림의 남은 부분을 한 번에 저장 (남은 모든 텍스트 가져오기)
-        std::getline(ss, temp); // 남은 부분 읽기
-        splitText[3] = temp;
-
-        // 디버깅용 출력
-        _bool bDebugTest = true;
+	std::string line;
+	// 파일의 각 줄을 처리
+	while (std::getline(file, line))
+	{
 
 
-        //1. 애니메이션을 번호로 받는 코드
-        
-      //Add_Event(Convert_strtoCharacterIndex(splitText[0]),  //캐릭터 이름 변환  
-      //    Convert_strtoFloat(splitText[1]),           //애니메이션 이름 변환  (현재는 float)
-      //    Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
-      //    splitText[3]);
+		// 분리된 문자열을 저장할 배열
+		std::string splitText[4]; // 최대 4개로 나누기 (3번 쉼표 + 나머지)
+		int index = 0;
+
+		// stringstream을 사용하여 줄을 쉼표 기준으로 분리
+		std::stringstream ss(line);
+		std::string temp;
+
+		// 최대 세 번까지 쉼표로 나누고 나머지는 그대로 저장
+		while (index < 3)
+		{
+			std::getline(ss, temp, ',');
+			splitText[index] = temp;
+			index++;
+		}
+
+		// 스트림의 남은 부분을 한 번에 저장 (남은 모든 텍스트 가져오기)
+		std::getline(ss, temp); // 남은 부분 읽기
+		splitText[3] = temp;
+
+		// 디버깅용 출력
+		_bool bDebugTest = true;
 
 
-        //2.애니메이션 이름을 번호로 바꾸는 함수 사용.  근데 1줄짜리임
+		//1. 애니메이션을 번호로 받는 코드
 
-        if (splitText[0] == "//")
-        {
-            continue;
-        }
-      CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
-      
-      Add_Event(
-          eCharacterIndex,  //캐릭터 이름 변환  
-          Convert_strtoCharacterAnimationIndex(eCharacterIndex,splitText[1]),           //애니메이션 이름 변환  (현재는 float)
-          Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
-          splitText[3]
-      );
+	  //Add_Event(Convert_strtoCharacterIndex(splitText[0]),  //캐릭터 이름 변환  
+	  //    Convert_strtoFloat(splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+	  //    Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+	  //    splitText[3]);
 
 
-       // CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
-       //
-       // Add_Event(
-       //     eCharacterIndex,  //캐릭터 이름 변환  
-       //     m_AnimationIndex.Get_AnimationIndex(eCharacterIndex, splitText[1]),           //애니메이션 이름 변환  (현재는 float)
-       //     Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
-       //     splitText[3]
-       // );
-       
-    }
+		//2.애니메이션 이름을 번호로 바꾸는 함수 사용.  근데 1줄짜리임
 
-    // 파일 닫기
-    file.close();
+		if (splitText[0] == "//")
+		{
+			continue;
+		}
+		CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
 
-    //return LOAD_SUCCES;
-    return;
+		Add_Event(
+			eCharacterIndex,  //캐릭터 이름 변환  
+			Convert_strtoCharacterAnimationIndex(eCharacterIndex, splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+			Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+			splitText[3]
+		);
+
+
+		// CHARACTER_INDEX eCharacterIndex = Convert_strtoCharacterIndex(splitText[0]);
+		//
+		// Add_Event(
+		//     eCharacterIndex,  //캐릭터 이름 변환  
+		//     m_AnimationIndex.Get_AnimationIndex(eCharacterIndex, splitText[1]),           //애니메이션 이름 변환  (현재는 float)
+		//     Convert_strtoFloat(splitText[2]),           //글자를 float 애니메이션 position으로 변환
+		//     splitText[3]
+		// );
+
+	}
+
+	// 파일 닫기
+	file.close();
+
+	//return LOAD_SUCCES;
+	return;
 
 }
 
 void CFrameEvent_Manager::ReLoadFrameEvent(const _char* TextFilePath)
 {
-    ClearFrameEvent();
-    LoadFile2(TextFilePath);
+	ClearFrameEvent();
+	LoadFile2(TextFilePath);
 
 }
 
 void CFrameEvent_Manager::ClearFrameEvent()
 {
-    FrameEvent.clear();
+	FrameEvent.clear();
 }
 
 
 void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameobject)
 {
-    string splitText[10];
-    int index = 0;
+	string splitText[10];
+	int index = 0;
 
-    // stringstream을 사용하여 string을 처리
-    stringstream ss(strEventText);
-    string temp;
+	// stringstream을 사용하여 string을 처리
+	stringstream ss(strEventText);
+	string temp;
 
-    // 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
-    while (std::getline(ss, temp, ',') && index < 10) {
-        splitText[index] = temp;
-        index++;
-    }
-
-
-    _float fValue[9]{};
-
-    //split[1] 은 fValue[0] , split[2]는 fValue[1]...
-    for (int i = 1; i < 9; i++)
-    {
-        if (splitText[i] == "")
-            break;
-
-        fValue[i - 1] = Convert_strtoFloat(splitText[i]);
-
-    }
+	// 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
+	while (std::getline(ss, temp, ',') && index < 10) {
+		splitText[index] = temp;
+		index++;
+	}
 
 
-    _bool bDebugPoint = false;
+	_float fValue[9]{};
 
-    if (splitText[0] == "ObjectMove")
-    {
+	//split[1] 은 fValue[0] , split[2]는 fValue[1]...
+	for (int i = 1; i < 9; i++)
+	{
+		if (splitText[i] == "")
+			break;
+
+		fValue[i - 1] = Convert_strtoFloat(splitText[i]);
+
+	}
 
 
-        CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
+	_bool bDebugPoint = false;
 
-        CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+	if (splitText[0] == "ObjectMove")
+	{
 
 
-        if (nullptr == pTransform)
-            return;
-        _vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
-        vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3]};
-        pTransform->Set_State(CTransform::STATE_POSITION, vPos);
+		CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
 
-        //static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
+		CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
 
-        _bool bDebug = false;
-    }
 
-    else if (splitText[0] == "TickPerSecondChange")
-    {
+		if (nullptr == pTransform)
+			return;
+		_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+		vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
+		pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
-        CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
-        pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[0];
+		//static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
 
-    }
+		_bool bDebug = false;
+	}
 
-   else if (splitText[0] == "AnimSpeedChange")
-   {
-   
-       CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
-       pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
-       pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
-   
-   }
+	else if (splitText[0] == "TickPerSecondChange")
+	{
 
-   else if (splitText[0] == "PositionChange")
-    {
-        CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
+		CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
+		pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[0];
 
-       //_float fCurPosition = pModel->Get_CurrentAnimationPosition();
-       //_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
-       //pModel->Play_Animation(fDelay);
+	}
 
-        pModel->CurrentAnimationPositionJump(fValue[0]);
+	else if (splitText[0] == "AnimSpeedChange")
+	{
 
-    }
+		CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
+		pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
+		pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
 
-   else if (splitText[0] == "FlipPlayerDirection")
-    {
-        CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
-        pModelPreview->FlipDirection(fValue[0]);
+	}
 
-       
-    }
+	else if (splitText[0] == "PositionChange")
+	{
+		CModel* pModel = static_cast<CModel*>(pGameobject->Get_Component(TEXT("Com_Model")));
+
+		//_float fCurPosition = pModel->Get_CurrentAnimationPosition();
+		//_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+		//pModel->Play_Animation(fDelay);
+
+		pModel->CurrentAnimationPositionJump(fValue[0]);
+
+	}
+
+	else if (splitText[0] == "FlipPlayerDirection")
+	{
+		CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+		pModelPreview->FlipDirection(fValue[0]);
+
+
+	}
 
 }
 
 
 void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 {
-    string splitText[10];
-    int index = 0;
+	string splitText[10];
+	int index = 0;
 
-    // stringstream을 사용하여 string을 처리
-    stringstream ss(strEventText);
-    string temp;
+	// stringstream을 사용하여 string을 처리
+	stringstream ss(strEventText);
+	string temp;
 
-    // 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
-    while (std::getline(ss, temp, ',') && index < 10) {
-        splitText[index] = temp;
-        index++;
-    }
+	// 쉼표를 기준으로 문자열을 분리하여 splitText 배열에 저장
+	while (std::getline(ss, temp, ',') && index < 10) {
+		splitText[index] = temp;
+		index++;
+	}
 
+	_float fValue[9]{};
 
-    _float fValue[9]{};
+	for (int i = 1; i < 9; i++)
+	{
+		if (splitText[i] == "")
+			break;
 
-    //split[1] 은 fValue[0] , split[2]는 fValue[1]...
-    for (int i = 1; i < 9; i++)
-    {
-        if (splitText[i] == "")
-            break;
+		fValue[i - 1] = Convert_strtoFloat(splitText[i]);
+	}
 
-        fValue[i - 1] = Convert_strtoFloat(splitText[i]);
+	_bool bDebugPoint = false;
 
-    }
+	if (splitText[0] == "ObjectMove")
+	{
 
+		CTransform* pTransform = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
 
-    _bool bDebugPoint = false;
+		if (nullptr == pTransform)
+			return;
+		_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+		vPos += _vector{ fValue[0] * pCharacter->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
+		pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
-    if (splitText[0] == "ObjectMove")
-    {
+		//static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
 
-        CTransform* pTransform = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+		_bool bDebug = false;
 
-        if (nullptr == pTransform)
-            return;
-        _vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
-        vPos += _vector{ fValue[0] * pCharacter->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
-        pTransform->Set_State(CTransform::STATE_POSITION, vPos);
+		//최적화하려면 여기서 float값을 return하고 싹다 합친 뒤 한번에 처리하기?
+	}
 
-        //static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
+	else if (splitText[0] == "TickPerSecondChange")
+	{
 
-        _bool bDebug = false;
+		CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
+		pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[0];
 
-        //최적화하려면 여기서 float값을 return하고 싹다 합친 뒤 한번에 처리하기?
-    }
+	}
 
-    else if (splitText[0] == "TickPerSecondChange")
-    {
+	else if (splitText[0] == "AnimSpeedChange")
+	{
 
-        CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
-        pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[0];
+		CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
+		pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
+		pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
 
-    }
+	}
 
-    else if (splitText[0] == "AnimSpeedChange")
-    {
+	else if (splitText[0] == "PositionChange")
+	{
+		CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
+		//_float fCurPosition = pModel->Get_CurrentAnimationPosition();
+		//_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
+		//pModel->Play_Animation(fDelay);
 
-        CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
-        pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
-        pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
+		pModel->CurrentAnimationPositionJump(fValue[0]);
+	}
 
-    }
+	else if (splitText[0] == "NextAnimationCheck")
+	{
+		pCharacter->AttackNextMoveCheck();
+	}
+	else if (splitText[0] == "AttackEvent")
+	{
+		pCharacter->AttackEvent(fValue[0], fValue[1]);
+	}
+	else if (splitText[0] == "SetAnimation")
+	{
+		pCharacter->Set_Animation(fValue[0]);
+	}
+	else if (splitText[0] == "SetNextAnimation")
+	{
+		pCharacter->Set_NextAnimation(fValue[0], fValue[1]);
+		//pCharacter->Set_Animation(fValue[0]);
+	}
+	else if (splitText[0] == "FlipPlayerDirection")
+	{
+		pCharacter->FlipDirection();
+	}
+	else if (splitText[0] == "EnemyChase")
+	{
+		pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
+	}
+	else if (splitText[0] == "DebugPoint")
+	{
+		_int iDebug = pCharacter->Get_iDirection();
+		pCharacter->FlipDirection();
+		_bool bDebug = true;
+	}
 
-    else if (splitText[0] == "PositionChange")
-    {
-        CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model")));
-        //_float fCurPosition = pModel->Get_CurrentAnimationPosition();
-        //_float fDelay = (fValue[0] - fCurPosition) / pModel->Get_CurrentAnimationTickPerSecond();
-        //pModel->Play_Animation(fDelay);
+	// 마지막에 UseEvent_MSH 함수 호출
+	UseEvent_MSH(splitText, fValue, pCharacter);
+}
 
-        pModel->CurrentAnimationPositionJump(fValue[0]);
+void CFrameEvent_Manager::UseEvent_MSH(string splitText[], _float fValue[], CCharacter* pCharacter)
+{
+	// StartCameraShake 조건 처리
+	if (splitText[0] == "StartCameraShake")
+	{
+		CGameObject* cameraObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera"));
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(cameraObject);
+		main_Camera->StartCameraShake(fValue[0], fValue[1]);
+	}
 
-
-    }
-
-    else if (splitText[0] == "NextAnimationCheck")
-    {
-        pCharacter->AttackNextMoveCheck();
-    }
-    else if (splitText[0] == "AttackEvent")
-    {
-        pCharacter->AttackEvent(fValue[0], fValue[1]);
-    }
-    else if (splitText[0] == "SetAnimation")
-    {
-        pCharacter->Set_Animation(fValue[0]);
-    }
-    else if (splitText[0] == "SetNextAnimation")
-    {
-        pCharacter->Set_NextAnimation(fValue[0],fValue[1]);
-        //pCharacter->Set_Animation(fValue[0]);
-    }
-    else if (splitText[0] == "FlipPlayerDirection")
-    {
-        pCharacter->FlipDirection();
-    }
-    else if (splitText[0] == "EnemyChase")
-    {
-        pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
-    }
-    else if (splitText[0] == "DebugPoint")
-    {
-        _int iDebug = pCharacter->Get_iDirection();
-        pCharacter->FlipDirection();
-        _bool bDebug = true;
-
-    }
- 
+	// 추가적으로 다른 MSH 관련 이벤트도 여기서 처리 가능
+	// 다른 이벤트를 추가하고 싶으면 이곳에 추가하면 됩니다.
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()
 {
-    if(m_bInitalizeCount == false)
-        m_AnimationIndex.Initalize();
+	if (m_bInitalizeCount == false)
+		m_AnimationIndex.Initalize();
 }
 
 CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)
 {
-    /*
+	/*
    const static enum CHARACTER_INDEX {
 		SELECT_GOKU, SELECT_BOU, SELECT_21, SELECT_HIT,
 		PLAY_GOKU, PLAY_BOU, PLAY_21, PLAY_HIT, CHARACTER_INDEX_END
 	};
    */
 
-    if (strText == "SELECT_GOKU")
-        return SELECT_GOKU;
+	if (strText == "SELECT_GOKU")
+		return SELECT_GOKU;
 
-    if (strText == "SELECT_BOU")
-        return SELECT_BOU;
+	if (strText == "SELECT_BOU")
+		return SELECT_BOU;
 
-    if (strText == "SELECT_21")
-        return SELECT_21;
+	if (strText == "SELECT_21")
+		return SELECT_21;
 
-    if (strText == "SELECT_HIT")
-        return SELECT_HIT;
-
-
-
-    if (strText == "PLAY_GOKU")
-        return PLAY_GOKU;
-
-    if (strText == "PLAY_BOU")
-        return PLAY_BOU;
-
-    if (strText == "PLAY_21")
-        return PLAY_21;
-
-    if (strText == "PLAY_HIT")
-        return PLAY_HIT;
-
-
-    if (strText == "OPENING_GOKU")
-        return OPENING_GOKU;
-
-
-    if (strText == "OPENIING_21")
-        return OPENIING_21;
-
-
-    if (strText == "SKILL_GOKU")
-        return SKILL_GOKU;
+	if (strText == "SELECT_HIT")
+		return SELECT_HIT;
 
 
 
+	if (strText == "PLAY_GOKU")
+		return PLAY_GOKU;
 
-    return CHARACTER_INDEX_END;
+	if (strText == "PLAY_BOU")
+		return PLAY_BOU;
+
+	if (strText == "PLAY_21")
+		return PLAY_21;
+
+	if (strText == "PLAY_HIT")
+		return PLAY_HIT;
+
+
+	if (strText == "OPENING_GOKU")
+		return OPENING_GOKU;
+
+
+	if (strText == "OPENIING_21")
+		return OPENIING_21;
+
+
+	if (strText == "SKILL_GOKU")
+		return SKILL_GOKU;
+
+
+
+
+	return CHARACTER_INDEX_END;
 }
 
 _float CFrameEvent_Manager::Convert_strtoFloat(string strText)
 {
-    _float floatValue;
+	_float floatValue;
 
-    stringstream ss(strText);
-    ss >> floatValue;
+	stringstream ss(strText);
+	ss >> floatValue;
 
-    return floatValue;
+	return floatValue;
 }
 
 _int CFrameEvent_Manager::Convert_strtoCharacterAnimationIndex(CHARACTER_INDEX eCharacterIndex, string strText)
 {
-    return m_AnimationIndex.Get_AnimationIndex(eCharacterIndex, strText);
+	return m_AnimationIndex.Get_AnimationIndex(eCharacterIndex, strText);
 }
 
 void CFrameEvent_Manager::Free()
 {
 	__super::Free();
 
-
+	Safe_Release(m_pGameInstance);
 }

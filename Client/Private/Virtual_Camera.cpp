@@ -74,10 +74,6 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
-	//테스트용
-	if (m_pGameInstance->Key_Down(DIK_SPACE))
-		StartCameraShake(5.f, 0.5f);
-
 	if (m_bIsShaking)
 		ApplyCameraShake(fTimeDelta);
 }
