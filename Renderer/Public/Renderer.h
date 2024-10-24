@@ -64,6 +64,8 @@ private:
 
 	_float4x4					m_DownWorldMatrix = {};
 	_float4x4					m_DownWorldMatrix_Second = {};
+	_float4x4					m_UI_DownWorldMatrix = {};
+	_float4x4					m_UI_DownWorldMatrix_Second = {};
 	_float4x4					m_WorldMatrix = {};
 	_float4x4					m_ViewMatrix = {};
 	_float4x4					m_ProjMatrix = {};
@@ -97,6 +99,7 @@ private:
 #endif
 
 	HRESULT Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
+	//HRESULT UI_Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
