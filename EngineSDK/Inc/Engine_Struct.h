@@ -58,6 +58,8 @@ namespace Engine
 
 		int*			pPlayerDirection;
 		string			strName;
+		float			fLifeTime;
+		float			fAccTime;
 	};
 
 	/*D3DDECLUSAGE*/

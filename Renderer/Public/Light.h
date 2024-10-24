@@ -17,7 +17,7 @@ private:
 	virtual ~CLight() = default;
 
 public:
-	const LIGHT_DESC* Get_LightDesc() const {
+	LIGHT_DESC* Get_LightDesc()  {
 		return &m_LightDesc;
 	}
 
@@ -36,3 +36,12 @@ public:
 };
 
 END
+
+/*
+
+이펙트 라이트가 들어오면 그 위에 덮어그리는게 맞음
+플레이어의 라이트는 먼저 그리는 대신
+라이프타임을 넣은 이펙트빛을 생성해서 그 위에 한번더 계산해줘야함
+
+
+*/

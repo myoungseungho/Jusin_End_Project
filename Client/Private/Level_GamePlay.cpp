@@ -122,6 +122,26 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_Z))
+	{
+		LIGHT_DESC			LightDesc{};
+
+		ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+		LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+		LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+		LightDesc.fRange = 30.f;
+		LightDesc.vDiffuse = _float4(1.0f, 0.95f, 0.45f, 1.f);
+		//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+		LightDesc.vAmbient = _float4(1.0f, 0.95f, 0.45f, 0.3f);
+		LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+		LightDesc.fAccTime = 0.f;
+		LightDesc.fLifeTime = 3.f;
+		LightDesc.strName = "Explosion";
+		if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+			return;
+	}
+
 	m_pUI_Manager->Update(fTimeDelta);
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);

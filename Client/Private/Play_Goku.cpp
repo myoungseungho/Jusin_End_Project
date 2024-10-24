@@ -282,10 +282,10 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		//추적 관련 코드.
 		if (m_iPlayerTeam == 1)
 		{
-			if (m_pGameInstance->Key_Down(DIK_R))
-			{
-				Chase_Ready(fTimeDelta);
-			}
+			//if (m_pGameInstance->Key_Down(DIK_R))
+			//{
+			//	Chase_Ready(fTimeDelta);
+			//}
 		}
 		else  //Team2
 		{
@@ -540,6 +540,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
+
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
 }

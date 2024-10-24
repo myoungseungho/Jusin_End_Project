@@ -227,6 +227,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
             return;
         }
+
         SRV_Texture SRVDesc{};
         SRVDesc.iID = unique_node_id;
         SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKey.c_str());
@@ -511,6 +512,19 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
         {
         case NODE_BASIC:
         {
+            
+            m_PrototypeKeys.erase(
+                remove_if(m_PrototypeKeys.begin(), m_PrototypeKeys.end(),
+                    [](const Save_Key& key) {
+                        return key.iD == iID; 
+                    }),
+                m_PrototypeKeys.end());
+
+            auto Posit = node_positions.find(iID);
+            if (Posit != node_positions.end()) {
+                node_positions.erase(Posit);
+            }
+
             //Node 부터 지움
             node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID), node_ids.end());
 
@@ -750,7 +764,6 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
     }
 }
 
-
 void CIMGUI_Shader_Tab::Draw_MusicButton(CShader_Texture* pShaderTexture)
 {
     //재생버튼   
@@ -898,7 +911,9 @@ void CIMGUI_Shader_Tab::Click_Load_Shader_Tab(string fileName)
     //node_positions.clear();  // 기존 위치 정보를 초기화
     for (const auto& nodePos : tDesc.nodePositions)
     {
+
         node_positions[nodePos.nodeID] = nodePos.nodePosition;
+
     }
 
     // 3. 무브 텍스처 노드 정보 로드 및 추가
@@ -994,7 +1009,7 @@ void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
     else if (end_attr == -2)
     {
         m_iMain_Input_Diffuse_id = (start_attr) / 3;
-        links.push_back(make_pair(start_attr, end_attr));
+
 
         auto SRVit = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
             [&](SRV_Texture SRV) {
@@ -1003,9 +1018,12 @@ void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
         //wstring abs = L"a";
         //wstring absb = L"b";
         //m_TestEffectModel_Texture = static_cast<CTexture*>(static_cast<CEffect_Single*>(CEffect_Manager::Get_Instance()->Find_In_Layer_Effect(abs, absb))->Get_Component(TEXT("Com_DiffuseTexture")));
-
-        m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
-        m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha, 1);
+        if (SRVit != m_NodeTextureSRVs.end())
+        {
+            links.push_back(make_pair(start_attr, end_attr));
+            m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
+            m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha, 1);
+        }
         //m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
     }
     else if (end_attr % 4 == 2)
