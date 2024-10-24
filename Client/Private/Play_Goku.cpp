@@ -198,6 +198,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
+
 	if (m_bDebugInputLock)
 		return;
 

@@ -16,6 +16,8 @@
 #include "IMGUI_Level_Tab.h"
 #include "IMGUI_Camera_Tab.h"
 
+#include "Character.h"
+
 #include "imnodes.h"
 
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
@@ -23,6 +25,7 @@ _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변�
 _bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiDebug_COut = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
+_bool bShowImGuiPlayerInput = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -237,6 +240,20 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 		if (ImGui::BeginMenu("Debug_COut")) {
 			if (ImGui::MenuItem("Debug_COut", NULL, &bShowImGuiDebug_COut)) {
 				Show_Debug_COut(bShowImGuiDebug_COut);
+			}
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("InputActive")) {
+			if (ImGui::MenuItem("InputActive", NULL, &bShowImGuiPlayerInput)) {
+				CGameObject* player_1P = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
+				CGameObject* player_2P = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
+
+				CCharacter* character_1P = static_cast<CCharacter*>(player_1P);
+				CCharacter* character_2P = static_cast<CCharacter*>(player_2P);
+
+				character_1P->Set_InputActive(!bShowImGuiPlayerInput);
+				character_2P->Set_InputActive(!bShowImGuiPlayerInput);
 			}
 			ImGui::EndMenu();
 		}

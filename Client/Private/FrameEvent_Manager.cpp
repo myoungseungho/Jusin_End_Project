@@ -324,20 +324,20 @@ void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameo
 	{
 
 
-		CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
+		//CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
 
-		CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+		//CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
 
 
-		if (nullptr == pTransform)
-			return;
-		_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
-		vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
-		pTransform->Set_State(CTransform::STATE_POSITION, vPos);
+		//if (nullptr == pTransform)
+		//	return;
+		//_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+		//vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
+		//pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
-		//static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
+		////static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
 
-		_bool bDebug = false;
+		//_bool bDebug = false;
 	}
 
 	else if (splitText[0] == "TickPerSecondChange")
