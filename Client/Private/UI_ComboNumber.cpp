@@ -2,6 +2,7 @@
 
 #include "UI_ComboNumber.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_ComboNumber::CUI_ComboNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUI_Combo{ pDevice ,pContext }

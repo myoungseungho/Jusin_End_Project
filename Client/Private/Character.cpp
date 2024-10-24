@@ -221,6 +221,7 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 	m_tCharacterDesc.ePlayerID = m_eCharacterID;
+
 }
 
  void CCharacter::Update(_float fTimeDelta)

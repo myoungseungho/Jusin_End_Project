@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Base.h"
+#include "UI_Define.h"
 #include "Client_Defines.h"
 #include "input.h"
-#include "Character.h"
 
 BEGIN(Engine)
 
@@ -32,10 +32,10 @@ private:
 
 public:
 	void Update(_float fTimeDelta);
-	void UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT eSlotID);
+	void UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT eSlotID);
 	//void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
-	void UsingSelectCharacher(CCharacter* pPawn, CCharacter::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
-	void UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID);
+	void UsingSelectCharacher(class CCharacter* pPawn, CUI_Define::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
+	void UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID);
 	void UsingCreateStartUI();
 	void UsingCreateEndUI();
 
@@ -64,7 +64,7 @@ public:
 	//Combo
 	//_uint m_iComboCount = { 0 };
 
-	class CCharacter* m_pPawnArray[CCharacter::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
+	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
 	//Anim
 	_float m_fTotalDuration = { 0.f };

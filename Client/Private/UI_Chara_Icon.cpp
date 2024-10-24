@@ -2,6 +2,7 @@
 
 #include "UI_Chara_Icon.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_Chara_Icon::CUI_Chara_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }

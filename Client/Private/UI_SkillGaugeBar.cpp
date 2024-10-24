@@ -2,6 +2,7 @@
 
 #include "UI_SkillGaugeBar.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_SkillGaugeBar::CUI_SkillGaugeBar(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUI_Skill{ pDevice ,pContext }

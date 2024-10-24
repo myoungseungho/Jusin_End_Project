@@ -2,6 +2,7 @@
 
 #include "UI_HpEffect.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_HpEffect::CUI_HpEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }

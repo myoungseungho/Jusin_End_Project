@@ -5,8 +5,10 @@
 
 #include "UIObject.h"
 
+#include "UI_Define.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 IMPLEMENT_SINGLETON(CUI_Manager)
 
@@ -31,45 +33,45 @@ void CUI_Manager::Update(_float fTimeDelta)
 	}
 }
 
-void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CCharacter::PLAYER_SLOT eSlotID)
+void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT eSlotID)
 {
 	m_fDuration = fAttBufDuration;
 
 	CUIObject::UI_DESC tAttBufDesc = {};
 
-	if (eSlotID == CCharacter::LPLAYER1 || eSlotID == CCharacter::LPLAYER2)
+	if (eSlotID == CUI_Define::LPLAYER1 || eSlotID == CUI_Define::LPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::LEFT;
-	else if (eSlotID == CCharacter::RPLAYER1 || eSlotID == CCharacter::RPLAYER2)
+	else if (eSlotID == CUI_Define::RPLAYER1 || eSlotID == CUI_Define::RPLAYER2)
 		tAttBufDesc.eLRPos = CUIObject::RIGHT;
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
 }
 
-void CUI_Manager::UsingChangeCharacher(CCharacter::PLAYER_SLOT eCurrSlotID)
+void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 {
 	
 
 	m_iTeam = CUIObject::POS_END;
-	if (eCurrSlotID == CCharacter::LPLAYER1 || eCurrSlotID == CCharacter::LPLAYER2)
+	if (eCurrSlotID == CUI_Define::LPLAYER1 || eCurrSlotID == CUI_Define::LPLAYER2)
 	{
-		if (m_pPawnArray[CCharacter::LPLAYER2] == nullptr)
+		if (m_pPawnArray[CUI_Define::LPLAYER2] == nullptr)
 			return;
 
-		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::LPLAYER1];
-		m_pPawnArray[CCharacter::LPLAYER1] = m_pPawnArray[CCharacter::LPLAYER2];
-		m_pPawnArray[CCharacter::LPLAYER2] = pSwapPanw;
+		CCharacter* pSwapPanw = m_pPawnArray[CUI_Define::LPLAYER1];
+		m_pPawnArray[CUI_Define::LPLAYER1] = m_pPawnArray[CUI_Define::LPLAYER2];
+		m_pPawnArray[CUI_Define::LPLAYER2] = pSwapPanw;
 
 		m_iTeam = CUIObject::LEFT;
 	}
-	else if (eCurrSlotID == CCharacter::RPLAYER1 || eCurrSlotID == CCharacter::RPLAYER2)
+	else if (eCurrSlotID == CUI_Define::RPLAYER1 || eCurrSlotID == CUI_Define::RPLAYER2)
 	{
-		if (m_pPawnArray[CCharacter::RPLAYER2] == nullptr)
+		if (m_pPawnArray[CUI_Define::RPLAYER2] == nullptr)
 			return;
 
-		CCharacter* pSwapPanw = m_pPawnArray[CCharacter::RPLAYER1];
-		m_pPawnArray[CCharacter::RPLAYER1] = m_pPawnArray[CCharacter::RPLAYER2];
-		m_pPawnArray[CCharacter::RPLAYER2] = pSwapPanw;
+		CCharacter* pSwapPanw = m_pPawnArray[CUI_Define::RPLAYER1];
+		m_pPawnArray[CUI_Define::RPLAYER1] = m_pPawnArray[CUI_Define::RPLAYER2];
+		m_pPawnArray[CUI_Define::RPLAYER2] = pSwapPanw;
 
 		m_iTeam = CUIObject::RIGHT;
 	}
@@ -154,9 +156,9 @@ void CUI_Manager::InitUIObject()
 
 	for (auto& iter : CharacterList)
 	{
-		CCharacter::PLAYER_SLOT eSlot = dynamic_cast<CCharacter*>(iter)->Get_PawnDesc().ePlayer_Slot;
+		CUI_Define::PLAYER_SLOT eSlot = dynamic_cast<CCharacter*>(iter)->Get_PawnDesc().ePlayer_Slot;
 
-		if (eSlot == CCharacter::SLOT_END)
+		if (eSlot == CUI_Define::SLOT_END)
 			continue;
 
 		m_pPawnArray[eSlot] = dynamic_cast<CCharacter*>(iter);

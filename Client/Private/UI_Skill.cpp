@@ -2,6 +2,7 @@
 
 #include "UI_Skill.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_Skill::CUI_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }

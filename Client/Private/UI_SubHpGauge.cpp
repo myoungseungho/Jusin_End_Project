@@ -3,6 +3,7 @@
 
 #include "UI_SubHpGauge.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_SubHpGauge::CUI_SubHpGauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }

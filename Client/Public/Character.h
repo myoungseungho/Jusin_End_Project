@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
+#include "UI_Define.h"
 #include "AnimationEvent_Defines.h"
 #include "FrameEvent_Manager.h"
 
@@ -131,10 +132,6 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 class CCharacter  : public CGameObject
 {
 public:
-	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
-	enum PLAYER_ID { GOGU, ANDROID21, BUU, HIT, PAWN_END };
-
-public:
 	static vector<CInput> Command_236Attack;
 	static vector<CInput> Command_236Attack_Extra;
 	static vector<CInput> Command_214Attack;
@@ -183,7 +180,7 @@ public:
 	{
 		//_wstring strModelName;
 		_ushort iTeam = 1;
-		PLAYER_SLOT ePlayerSlot = {};
+		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -545,8 +542,8 @@ public:
 		_int        iSKillPoint = { 0 };
 		_int        iSKillCount = { 0 };
 	
-		PLAYER_SLOT ePlayer_Slot = {};
-		PLAYER_ID        ePlayerID = {};
+		CUI_Define::PLAYER_SLOT		ePlayer_Slot = {};
+		CUI_Define::PLAYER_ID        ePlayerID = {};
 	
 	}Character_INFO_DESC;
 
@@ -576,8 +573,8 @@ private:
 	_float					m_fAttBufTimer = { 0.f };
 
 protected:
-	PLAYER_ID				m_eCharacterID = {};
-	PLAYER_SLOT				m_ePlayerSlot = { SLOT_END };
+	CUI_Define::PLAYER_ID				m_eCharacterID = {};
+	CUI_Define::PLAYER_SLOT				m_ePlayerSlot = { CUI_Define::SLOT_END };
 	class CUI_Manager*		m_pUI_Manager = { nullptr };
 
 private:
