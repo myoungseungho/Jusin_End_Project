@@ -137,7 +137,8 @@ PS_OUT PS_MAIN(PS_IN In)
 	else
         Out.vColor = float4(1.f, 1.f, 1.f, 1.f);
 	
-    Out.vAlpha = vector(Out.vColor.a, 0.f, 0.f, 1.f);
+    //Out.vAlpha = vector(Out.vColor.a, 0.f, 0.f, 1.f);
+    Out.vAlpha = Out.vColor;
 	return Out;
 }
 

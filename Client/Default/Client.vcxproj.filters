@@ -109,9 +109,6 @@
     <ClCompile Include="..\Private\Level_GamePlay.cpp">
       <Filter>01.Level\00.GamePlay</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\AttackObject.cpp">
-      <Filter>02.GameObjects\Character\AttackObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Character.cpp">
       <Filter>02.GameObjects\Character</Filter>
     </ClCompile>
@@ -174,6 +171,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\AttackObject.cpp">
+      <Filter>02.GameObjects\AttackObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -363,9 +366,6 @@
     <Filter Include="02.GameObjects\UI\GameState\Font\KO\Panel">
       <UniqueIdentifier>{d93acb53-925d-4c57-b49c-88520f4ae2ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="90.FrameEvent_Manager\96.ShaderFiles">
-      <UniqueIdentifier>{c881f2c1-b10f-4b5a-862f-a35ba28adfd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI\GameState\Font\KO\Particle">
       <UniqueIdentifier>{7bb57d8d-8c2b-476a-9132-ae3d5413bcda}</UniqueIdentifier>
     </Filter>
@@ -375,17 +375,11 @@
     <Filter Include="02.GameObjects\Effect_Rect\Shader_Texture">
       <UniqueIdentifier>{36c865a4-6023-4cda-91d1-e5587c16dee6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Character\AttackObject">
-      <UniqueIdentifier>{092bf7be-25b2-4be7-b802-f02c20a81e16}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Character\Model_Preview">
       <UniqueIdentifier>{869eb991-d730-43ca-a5ef-564a4f48f386}</UniqueIdentifier>
     </Filter>
     <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
       <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\AttackObject">
-      <UniqueIdentifier>{c19be185-f15f-4931-907f-1c4f8f917daf}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround">
       <UniqueIdentifier>{9534d408-e911-4397-9ffc-f2c67c65b94a}</UniqueIdentifier>
@@ -674,9 +668,6 @@
     <ClInclude Include="..\Public\Effect_Blend.h">
       <Filter>02.GameObjects\02. Effect\02. Blend</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\AttackObject.h">
-      <Filter>02.GameObjects\Character\AttackObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
     <ClInclude Include="..\Public\AnimationNameMap.h" />
@@ -758,6 +749,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Manager.h">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceMeteo.h">
+      <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\AttackObject</Filter>
@@ -1053,6 +1047,9 @@
     <ClCompile Include="..\Private\Line_Draw.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\SpaceMeteo.cpp">
+      <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\public\MainApp.h">
@@ -1136,9 +1133,6 @@
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\AttackObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\BackGround\Loading\Mark</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1212,30 +1206,24 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
-      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
+      <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl">
-      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
-      <Filter>90.FrameEvent_Manager\96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
-      <Filter>96.ShaderFiles</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
@@ -1243,10 +1231,5 @@
     <ResourceCompile Include="Client.rc">
       <Filter>98.Default</Filter>
     </ResourceCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>
 </Project>

@@ -104,7 +104,24 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	m_tAttackMap.Initalize(this);
+	m_strName = "GOKU" + to_string(m_iPlayerTeam);
 
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	
+	LightDesc.vDirection = _float4(-0.5f, -0.2f, 0.5f, 0.f);
+	LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.7f, 0.7f, 0.7f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.pPlayerDirection = &m_iLookDirection;
+	LightDesc.strName = m_strName;
+
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+		return E_FAIL;
+	/*
+	빛 각자 생성해주기 
+	*/
 	
 
 	//m_pModelCom->SetUp_Animation(16, true);
@@ -173,38 +190,36 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CPlay_Goku::Priority_Update(_float fTimeDelta)
+void CPlay_Goku::Player_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
-}
 
-void CPlay_Goku::Update(_float fTimeDelta)
-{
 	if (m_pGameInstance->Key_Down(DIK_PGUP))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 	if (m_bDebugInputLock)
-		return ;
+		return;
 
-	//if(m_pGameInstance->Key_Down(DIK_F3))
-		//m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+	//if (m_pGameInstance->Key_Down(DIK_F3))
+	//	m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+
 
 
 	//합치기 전 임시 코드.  적 탐지코드임
 	if (m_pDebugEnemy == nullptr)
 	{
 		//_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-	
+
 		for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
 		{
 			CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-	
+
 			if (pObject != this)
 			{
 				m_pDebugEnemy = static_cast<CCharacter*>(pObject);
 			}
-	
+
 		}
 	}
 
@@ -213,15 +228,15 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	{
 		CTransform* pEnemyTransform = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
-	
+
 		//적 방향의 X값 체크
 		_float fX = XMVectorGetX(pEnemyTransform->Get_State(CTransform::STATE_POSITION) - m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-	
-	
+
+
 		//차이가 좁으면 반전 안함. 둘 다 벽에 붙어있을 때 대비.
 		if (fabsf(fX) > 0.1)
 		{
-	
+
 			if (fX > 0)
 			{
 				FlipDirection(1);
@@ -230,7 +245,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			{
 				FlipDirection(-1);
 			}
-	
+
 		}
 	}
 
@@ -255,7 +270,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 
-	
+
 
 
 	if (m_bAnimationLock == false)
@@ -298,14 +313,14 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		{
 			Chase_Grab(fTimeDelta);
 		}
-		
+
 
 		Character_Play_Animation(fTimeDelta);
 
 		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
 		if (m_bMotionPlaying == false)
 		{
-			
+
 			//스턴 추가 전에 있던거
 			//if(m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
 			//	AnimeEndNextMoveCheck();
@@ -314,7 +329,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
 			{
 
-				if(m_bHitGroundSmashed == false)
+				if (m_bHitGroundSmashed == false)
 					Set_Animation(m_iHit_Air_FallAnimationIndex);
 
 			}
@@ -376,13 +391,13 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		//}
 	}
 
-	
+
 	//중력 처리.    ANimation Lock의 영향을 받아야하나? 위로 옮겨봄
 	//Gravity(fTimeDelta);
 
 	//일부 공격 캔슬
 	AttckCancleJump();
-	
+
 
 	/*
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==m_iForwardDashAnimationIndex)
@@ -395,7 +410,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 			if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 			{
 				m_pTransformCom->Add_Move({ 0,0.3f,0 });
-				
+
 				//Set_fJumpPower(4.f); //중력Ver1 기준
 				Set_fJumpPower(3.f); //중력Ver2 기준
 
@@ -404,7 +419,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 				if (m_pGameInstance->Key_Pressing(DIK_A))
-				{					
+				{
 					Set_fImpulse(-5.f);
 				}
 
@@ -438,7 +453,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 
 				if (MoveKey == -1)
-				{						
+				{
 					m_pModelCom->SetUp_Animation(m_iBackWalkAnimationIndex, false);
 
 					m_iNextAnimation.first = m_iIdleAnimationIndex;
@@ -472,8 +487,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 				}
 			}
 
-			
-			
+
+
 		}
 	}
 	*/
@@ -496,7 +511,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_2))
 	{
 		m_iAttackStepCount = 0;
-		m_iDebugComoboDamage = 0;	
+		m_iDebugComoboDamage = 0;
 
 		m_iHP = 10000;
 	}
@@ -506,7 +521,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	}
 
 	//Gravity(fTimeDelta);
-	
+
 
 
 	//m_pColliderCom->Update();
@@ -518,12 +533,22 @@ void CPlay_Goku::Update(_float fTimeDelta)
 		//_bool debuga = true;
 		//cout << "Impus  x : " << m_fImpuse.x << "  ,   y : " << m_fImpuse.y << endl;
 	}
+}
+
+void CPlay_Goku::Priority_Update(_float fTimeDelta)
+{
+}
+
+void CPlay_Goku::Update(_float fTimeDelta)
+{
+	
 	
 }
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -539,6 +564,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
+
 		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 	
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */

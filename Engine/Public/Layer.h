@@ -23,6 +23,7 @@ public:
 	//파일 저장관련
 	HRESULT Add_List(list<CGameObject*>*);
 
+	void Player_Update(_float fTimeDelta);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);

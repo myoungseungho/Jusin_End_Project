@@ -139,6 +139,8 @@ void CMain_Camera::Update(_float fTimeDelta)
 void CMain_Camera::Late_Update(_float fTimeDelta)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Late_Update(fTimeDelta);
+
+
 }
 
 void CMain_Camera::Set_Virtual_Camera(VIRTUAL_CAMERA mode)
@@ -336,7 +338,9 @@ void CMain_Camera::SetPosition(_fvector position)
 
 void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 {
-	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->SetPlayer(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
+	//Test¿ë
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SKILL_1]->Set_Player(state, pPlayer);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()

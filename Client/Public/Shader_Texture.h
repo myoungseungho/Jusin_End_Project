@@ -57,6 +57,8 @@ public:
 	void Push_Shade_Sprite(_float2* fSpriteSizeNumber, _float* pSpeed);
 	void Remove_InputTextures(_int LineIndex);
 	void Remove_InputFunction(_int iFunctionType);
+
+	void Set_PlusKey(_wstring Key) { m_Key = Key; }
 	_int m_iID = { 0 };
 	Shade_Sprite m_Sprite;
 	Shade_MoveTex m_MoveTex;

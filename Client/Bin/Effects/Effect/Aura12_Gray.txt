@@ -1,35 +1,4 @@
 [Layer]
-LayerName: Aura12_Blue
-Duration: 1
-TickPerSecond: 0
-KeyFramesCount: 59
-NumEffec: 1
-
-[Effect]
-EffectName: Aura12_Blue
-ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Aura12_BlueAura12_Blue
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: 0
-Position: 0 0 0
-Scale: 0.5 0.5 0.5
-Rotation: 0 0 0
-IsLoop: false
-NumKeyFrame: 1
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.5 0.5 0.5
-Rotation: 0 0 0
-CurTime: 0
-Duration: 0
-IsNotPlaying: false
-
-[Layer]
 LayerName: Aura12_Gray
 Duration: 1
 TickPerSecond: 0
@@ -59,35 +28,3 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 0
 IsNotPlaying: false
-
-[Layer]
-LayerName: Aura12_Orange
-Duration: 0
-TickPerSecond: 0
-KeyFramesCount: 0
-NumEffec: 1
-
-[Effect]
-EffectName: Aura12_Orange
-ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Aura12_OrangeAura12_Orange
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: 2
-Position: 0 0 0
-Scale: 0.5 0.5 0.5
-Rotation: 0 0 0
-IsLoop: false
-NumKeyFrame: 1
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.5 0.5 0.5
-Rotation: 0 0 0
-CurTime: 0
-Duration: 0
-IsNotPlaying: false
-

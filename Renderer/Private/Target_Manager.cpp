@@ -28,18 +28,67 @@ HRESULT CTarget_Manager::Add_RenderTarget(const _wstring & strTargetTag, _uint i
 	return S_OK;
 }
 
-HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+_int CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
 {
+	_int iCount = 0;
+
 	if (nullptr != Find_RenderTarget(strTargetTag))
-		return E_FAIL;
+	{
+		CRenderTarget* pRenderTarget = nullptr;
+		CRenderTarget* pAlphaRenderTarget = nullptr;
+		iCount++;
+		for (size_t i = 0; i < 30; i++)
+		{
+			if (nullptr != Find_RenderTarget(strTargetTag + to_wstring(iCount)))
+			{
+				iCount++;
+				continue;
+			}
+			else
+			{
+				pRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+				if (nullptr == pRenderTarget)
+					return -1;
+
+				pAlphaRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
+				if (nullptr == pAlphaRenderTarget)
+					return -1;
+
+				m_RenderTargets.emplace(strTargetTag + to_wstring(iCount), pRenderTarget);
+				m_RenderTargets.emplace(strTargetTag + to_wstring(iCount) + L"_Alpha", pAlphaRenderTarget);
+				break;
+			}
+			
+		}
+
+		list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag + to_wstring(iCount));
+
+		if (nullptr == pMRTList)
+		{
+			list<CRenderTarget*>	MRTList;
+			MRTList.push_back(pRenderTarget);
+			MRTList.push_back(pAlphaRenderTarget);
+			m_MRTs.emplace(strMRTTag + to_wstring(iCount), MRTList);
+		}
+		else
+		{
+			pMRTList->push_back(pRenderTarget);
+			pMRTList->push_back(pAlphaRenderTarget);
+		}
+
+		Safe_AddRef(pRenderTarget);
+		Safe_AddRef(pAlphaRenderTarget);
+
+		return iCount;
+	}
 
 	CRenderTarget* pRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
 	if (nullptr == pRenderTarget)
-		return E_FAIL;
+		return -1;
 
 	CRenderTarget* pAlphaRenderTarget = CRenderTarget::Create(m_pDevice, m_pContext, iWidth, iHeight, ePixelFormat, vClearColor);
 	if (nullptr == pAlphaRenderTarget)
-		return E_FAIL;
+		return -1;
 
 	m_RenderTargets.emplace(strTargetTag, pRenderTarget);
 	m_RenderTargets.emplace(strTargetTag + L"_Alpha", pAlphaRenderTarget);
@@ -61,7 +110,7 @@ HRESULT CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const
 
 	Safe_AddRef(pRenderTarget);
 	Safe_AddRef(pAlphaRenderTarget);
-	return S_OK;
+	return -1;
 }
 
 HRESULT CTarget_Manager::Add_ClientRenderTargetToMRT(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)

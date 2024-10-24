@@ -40,16 +40,6 @@ HRESULT CGameObject::Initialize(void* pArg)
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
 
-
-	//if (nullptr != pArg)
-	//{
-	//	GAMEOBJECT_DESC* pDesc = static_cast<GAMEOBJECT_DESC*>(pArg);
-	//	m_iGameObjectData = pDesc->iGameObjectData;
-	//	m_pTransformCom->SetUp_TransformDesc(static_cast<CTransform::TRANSFORM_DESC*>(pArg));
-	//}
-
-
-
 	if (nullptr != pArg)
 	{
 		FILEDATA* pDesc = static_cast<FILEDATA*>(pArg);
@@ -81,6 +71,10 @@ HRESULT CGameObject::Initialize(void* pArg)
 	Safe_AddRef(m_pTransformCom);
 
 	return S_OK;
+}
+
+void CGameObject::Player_Update(_float fTimeDelta)
+{
 }
 
 void CGameObject::Priority_Update(_float fTimeDelta)

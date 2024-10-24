@@ -12,7 +12,6 @@ void CPipeLine::Update()
 		XMStoreFloat4x4(&m_TransformMatrices_Inverse[i], XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_TransformMatrices[i])));	
 
 	XMStoreFloat4(&m_vCamPosition, XMLoadFloat4x4(&m_TransformMatrices_Inverse[D3DTS_VIEW]).r[3]);
-
 }
 
 CPipeLine * CPipeLine::Create()

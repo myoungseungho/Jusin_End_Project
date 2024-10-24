@@ -203,6 +203,7 @@ protected:
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
+	virtual void Player_Update(_float fTimeDelta) override;
 	virtual void Priority_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
@@ -576,6 +577,9 @@ protected:
 	CUI_Define::PLAYER_ID				m_eCharacterID = {};
 	CUI_Define::PLAYER_SLOT				m_ePlayerSlot = { CUI_Define::SLOT_END };
 	class CUI_Manager*		m_pUI_Manager = { nullptr };
+
+
+	string m_strName = "";
 
 private:
 	HRESULT Ready_Components();

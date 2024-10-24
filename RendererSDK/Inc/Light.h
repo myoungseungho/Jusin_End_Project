@@ -23,8 +23,10 @@ public:
 
 public:
 	HRESULT Initialize(const LIGHT_DESC& LightDesc);
-	HRESULT Render(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
-
+	HRESULT Render(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer, _int iPassIndex = 1);
+	HRESULT Render_Map(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
+	HRESULT Render_Player(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
+	HRESULT Render_Effect(class CShader* pShader, class CVIBuffer_Rect* pVIBuffer);
 private:
 	LIGHT_DESC				m_LightDesc{};
 
