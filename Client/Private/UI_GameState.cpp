@@ -83,7 +83,7 @@ void CUI_GameState::Action_Anim(_float fSizeOffSet, _float fTimeDelta)
 			m_QueueAnim.pop_front();
 		}
 
-		m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeX  * fSizeOffSet, 1.f);
+		m_pTransformCom->Set_Scaled(m_fSizeX * m_vOffSetWinSize.x, m_fSizeX  * fSizeOffSet * m_vOffSetWinSize.y, 1.f);
 	}
 }
 

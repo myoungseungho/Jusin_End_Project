@@ -34,7 +34,7 @@ public:
 	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir) override;
 	virtual _bool isPointInAABB(const _float3& point) override;
 	_float Get_Overlap_X(const CBounding_AABB* pOther) const;
-	_float3 CBounding_AABB::Get_Overlap_Center_Position(const CBounding_AABB* pOther) const;
+	_float3 Get_Overlap_Center_Position(const CBounding_AABB* pOther) const;
 
 private:
 	BoundingBox* m_pOriginalDesc = { nullptr };
