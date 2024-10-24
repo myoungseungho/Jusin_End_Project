@@ -22,7 +22,7 @@ static int CurrentEffectType = 0;
 
 static bool openKeyFrameWindow = false;
 static bool openColorWindow = false;
-_float4 color = { 0.0f, 0.0f, 0.0f, 255.0f };
+_float4 color = { 0.0f, 0.0f, 0.0f, 30.f };
 static std::string selectedEffectName;
 static int selectedFrame = -1;
 
@@ -162,6 +162,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
             effectData.position = pEffect->Get_Effect_Position();
             effectData.scale = pEffect->Get_Effect_Scaled();
             effectData.rotation = pEffect->Get_Effect_Rotation();
+            effectData.vColor = pEffect->m_vColor;
             effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
             effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
@@ -735,6 +736,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 {
                     EffectName = effectNames[item];
                     openColorWindow = true;
+                    m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, EffectName)->m_IsColorEffect = true;
                 }
                 if (ImGui::Checkbox("##EffectCheck", &isChecked))
                 {
@@ -1034,6 +1036,8 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Color()
     // RGBA 값을 위한 세로바 슬라이더
     bool valueChanged = false;  // 값이 변경되었는지 확인
 
+    color = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, EffectName)->m_vColor;
+
     ImGui::Dummy(ImVec2(5.0f, 1.0f));
     ImGui::SameLine();
     valueChanged |= ImGui::VSliderFloat("R", ImVec2(20, 160), &color.x, 0.0f, 255.0f, "");
@@ -1048,7 +1052,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Color()
     ImGui::SameLine();
     ImGui::Dummy(ImVec2(1.0f, 1.0f));
     ImGui::SameLine();
-    valueChanged |= ImGui::VSliderFloat("A", ImVec2(20, 160), &color.w, 0.0f, 1.0f, "");
+    valueChanged |= ImGui::VSliderFloat("A", ImVec2(20, 160), &color.w, 0.0f, 30.0f, "");
 
     // 숫자 입력을 위한 필드
     valueChanged |= ImGui::InputFloat4("", reinterpret_cast<float*>(&color));
@@ -1068,7 +1072,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Color()
     ImGui::SameLine();
     if (ImGui::Button("-0.5 B")) { color.z = min(255.0f, max(0.0f, color.z - 0.5f)); valueChanged = true; }
     ImGui::SameLine();
-    if (ImGui::Button("-0.05 A")) { color.w = min(1.0f, max(0.0f, color.w - 0.05f)); valueChanged = true; }
+    if (ImGui::Button("-0.05 A")) { color.w = min(30.0f, max(0.0f, color.w - 0.05f)); valueChanged = true; }
 
 
     if (valueChanged) 

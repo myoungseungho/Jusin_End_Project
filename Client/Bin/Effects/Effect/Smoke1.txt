@@ -1,24 +1,24 @@
 [Layer]
-LayerName: Smoke03
-Duration: 2
+LayerName: Smoke01
+Duration: 1
 TickPerSecond: 1
-KeyFramesCount: 119
+KeyFramesCount: 59
 NumEffec: 12
 
 [Effect]
-EffectName: Smoke0301
-ModelName: Model_Effect_cmn_SmokeModels0302
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0301
+EffectName: aa
+ModelName: Model_Effect_cmn_SmokeModels0102
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01aa
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 0
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 108.924 157.897 196.738 26.5232
 NumKeyFrame: 2
 
 [KeyFrame]
@@ -36,17 +36,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.0666667
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0302
-ModelName: Model_Effect_cmn_SmokeModels0303
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0302
+EffectName: Smoke0102
+ModelName: Model_Effect_cmn_SmokeModels0103
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0102
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 1
 Position: 0 0 0
 Scale: 1 1 1
@@ -61,7 +61,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -79,17 +79,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.133333
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0303
-ModelName: Model_Effect_cmn_SmokeModels0304
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0303
+EffectName: Smoke0103
+ModelName: Model_Effect_cmn_SmokeModels0104
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0103
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 2
 Position: 0 0 0
 Scale: 1 1 1
@@ -104,7 +104,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -122,17 +122,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.2
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0304
-ModelName: Model_Effect_cmn_SmokeModels0305
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0304
+EffectName: Smoke0104
+ModelName: Model_Effect_cmn_SmokeModels0105
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0104
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 3
 Position: 0 0 0
 Scale: 1 1 1
@@ -147,7 +147,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -165,17 +165,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.266667
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0305
-ModelName: Model_Effect_cmn_SmokeModels0306
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0305
+EffectName: Smoke0105
+ModelName: Model_Effect_cmn_SmokeModels0106
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0105
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 4
 Position: 0 0 0
 Scale: 1 1 1
@@ -190,7 +190,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -208,17 +208,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.333333
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0306
-ModelName: Model_Effect_cmn_SmokeModels0307
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0306
+EffectName: Smoke0106
+ModelName: Model_Effect_cmn_SmokeModels0107
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0106
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 5
 Position: 0 0 0
 Scale: 1 1 1
@@ -233,7 +233,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -251,17 +251,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.4
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0307
-ModelName: Model_Effect_cmn_SmokeModels0308
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0307
+EffectName: Smoke0107
+ModelName: Model_Effect_cmn_SmokeModels0108
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0107
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 6
 Position: 0 0 0
 Scale: 1 1 1
@@ -276,7 +276,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -294,17 +294,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.466667
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0308
-ModelName: Model_Effect_cmn_SmokeModels0309
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0308
+EffectName: Smoke0108
+ModelName: Model_Effect_cmn_SmokeModels0109
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0108
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 7
 Position: 0 0 0
 Scale: 1 1 1
@@ -319,7 +319,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -337,17 +337,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.533333
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0309
-ModelName: Model_Effect_cmn_SmokeModels0310
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0309
+EffectName: Smoke0109
+ModelName: Model_Effect_cmn_SmokeModels0110
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0109
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 8
 Position: 0 0 0
 Scale: 1 1 1
@@ -362,7 +362,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -380,17 +380,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.6
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0310
-ModelName: Model_Effect_cmn_SmokeModels0311
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0310
+EffectName: Smoke0110
+ModelName: Model_Effect_cmn_SmokeModels0111
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0110
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 9
 Position: 0 0 0
 Scale: 1 1 1
@@ -405,7 +405,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -423,17 +423,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.666667
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0311
-ModelName: Model_Effect_cmn_SmokeModels0312
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0311
+EffectName: Smoke0111
+ModelName: Model_Effect_cmn_SmokeModels0112
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0111
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 10
 Position: 0 0 0
 Scale: 1 1 1
@@ -448,7 +448,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -466,17 +466,17 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.733333
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Smoke0312
-ModelName: Model_Effect_cmn_SmokeModels0301
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke03Smoke0312
+EffectName: Smoke0112
+ModelName: Model_Effect_cmn_SmokeModels0101
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0112
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 11
 Position: 0 0 0
 Scale: 1 1 1
@@ -491,7 +491,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 
 [KeyFrame]
@@ -509,6 +509,6 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0.8
-Duration: 2
+Duration: 1
 IsNotPlaying: true
 

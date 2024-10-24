@@ -12,12 +12,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01aa
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 0
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 2
 
 [KeyFrame]
@@ -45,12 +46,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0102
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 1
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -87,12 +89,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0103
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 2
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -129,12 +132,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0104
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 3
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -171,12 +175,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0105
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 4
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -213,12 +218,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0106
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 5
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -255,12 +261,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0107
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 6
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -297,12 +304,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0108
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 7
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -339,12 +347,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0109
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 8
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -381,12 +390,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0110
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 9
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -423,12 +433,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0111
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 10
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -465,12 +476,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0112
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 3
 UniqueIndex: 11
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -499,3 +511,4 @@ Rotation: 0 0 0
 CurTime: 0.8
 Duration: 1
 IsNotPlaying: true
+

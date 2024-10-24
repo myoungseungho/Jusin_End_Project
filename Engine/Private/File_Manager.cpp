@@ -241,6 +241,7 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
 			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
 			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n";
+			file << L"Color: " << effectData.vColor.x << L" " << effectData.vColor.y << L" " << effectData.vColor.z << L" " << effectData.vColor.w << L"\n";
 			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
 
 			// 키프레임 데이터를 파일에 저장합니다.
@@ -582,6 +583,10 @@ void CFile_Manager::Read_EffectData(wifstream& file, EFFECT_DATA& effectData)
 		}
 		else if (key == L"IsNotPlaying") effectData.isNotPlaying = (value == L"true");
 		else if (key == L"IsLoop") effectData.isLoop = (value == L"true");
+		else if (key == L"Color") {
+			wistringstream Color(value);
+			Color >> effectData.vColor.x >> effectData.vColor.y >> effectData.vColor.z >> effectData.vColor.w;
+		}
 		else if (key == L"NumKeyFrame") effectData.iNumKeyFrame = stoi(value);
 	}
 

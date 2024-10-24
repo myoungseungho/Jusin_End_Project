@@ -196,6 +196,7 @@ namespace Engine
 		_float3 scale;
 		_float3 rotation;
 		_int iNumKeyFrame;
+		_float4 vColor;
 		vector<EFFECT_KEYFRAME_DATA> keyframes;
 	};
 

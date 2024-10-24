@@ -1066,7 +1066,7 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
         CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
         tDesc.prototypeKey = iter.key.c_str();
         tDesc.iShaderTab_ID = m_iNumberId;
-
+        
         CGameObject* pPrototype = m_pGameInstance->Find_Prototype(TEXT("Prototype_GameObject_Shader_Texture"));
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
 

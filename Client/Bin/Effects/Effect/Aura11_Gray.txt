@@ -18,6 +18,7 @@ Position: 0 0 0
 Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 IsLoop: false
+Color: 0 0 0 1
 NumKeyFrame: 2
 
 [KeyFrame]

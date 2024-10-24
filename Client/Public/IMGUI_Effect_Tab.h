@@ -21,7 +21,6 @@ public:
 	string WStringToUTF8(const std::wstring& wstr);
 	wstring UTF8ToWString(const string& utf8Str);
 	virtual const _char* GetTabName() const { return "Effect"; };
-	float Clamp(float value, float minValue, float maxValue);
 
 	void Render_For_Each_Effect();
 	void Render_For_Effect_Layer();

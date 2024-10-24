@@ -123,6 +123,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.iUnique_Index = m_TestEffect_Count++;
 			EffectDesc.iRenderIndex = effectData.renderIndex;
 			EffectDesc.iPassIndex = effectData.passIndex;
+			EffectDesc.vColor = effectData.vColor;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
 
 			CEffect_NoneLight* pNonelight = { nullptr };

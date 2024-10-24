@@ -40,7 +40,8 @@ public:
 		_int iNumHeightImage = { 1 };
 
 
-		_vector vColor;
+		_float4 vColor;
+
 	}EFFECT_DESC;
 
 
@@ -102,8 +103,8 @@ public:
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };
 	_int			m_iPassIndex = { 1 };
-	_vector		m_vColor = {};
-	_bool			m_IsColorEffect = { true };
+	_float4		m_vColor = { 0.f, 0.f, 0.f, 1.f };
+	_bool			m_IsColorEffect = { false };
 
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);

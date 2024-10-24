@@ -101,8 +101,23 @@ PS_OUT PS_MAIN_NONELIGHT(PS_IN In)
     if (vMtrlDiffuse.a < 0.99f)
         discard;
     
+    float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f };
+    
+    if (g_bColorChange)
+    {
+        vMtrlDiffuse.rgb *= vAddColor;
+        vMtrlDiffuse.a = g_vColor.a;
+    }
+
+    Out.vDiffuse = vector(
+    min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
+    min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
+    min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
+    vMtrlDiffuse.a
+    );
+    
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlAlpha.r;
+    Out.vAlpha = vMtrlDiffuse.a;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
@@ -115,10 +130,24 @@ PS_OUT PS_MAIN_ALPHABLEND_EFFECT(PS_IN In)
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
     
-    float fAlpha = (vMtrlAlpha.r + vMtrlAlpha.g + vMtrlAlpha.b) / 3.f;
-    //fAlpha *= vMtrlAlpha.a;
+    float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f };
+    float fAlpha = vMtrlAlpha.a;
+    
+    if (g_bColorChange)
+    {
+        vMtrlDiffuse.rgb *= vAddColor;
+        vMtrlDiffuse.a = saturate(fAlpha * g_vColor.a);
+    }
+
+    //Out.vDiffuse = vector(
+    //min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
+    //min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
+    //min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
+    //saturate(vMtrlDiffuse.a * fAlpha)
+    //);
+    
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = fAlpha * 2.f;
+    Out.vAlpha = vMtrlDiffuse.a;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
@@ -136,7 +165,7 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     if (g_bColorChange)
     {
         vMtrlDiffuse.rgb *= vAddColor;
-        vMtrlDiffuse.a = g_vColor.a;
+        vMtrlDiffuse.a = saturate(g_vColor.a);
     }
 
 
@@ -149,7 +178,7 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     vMtrlDiffuse.a
     );
 
-    Out.vAlpha = vMtrlAlpha.r;
+    Out.vAlpha = vMtrlAlpha.a;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;

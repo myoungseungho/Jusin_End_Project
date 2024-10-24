@@ -149,7 +149,7 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 
 void CEffect::Set_Effect_Color(_float4 vColor)
 {
-	m_vColor = XMVectorSet(vColor.x, vColor.y, vColor.z, vColor.w);
+	m_vColor = vColor;
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

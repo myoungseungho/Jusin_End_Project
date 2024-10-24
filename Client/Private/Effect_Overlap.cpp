@@ -51,7 +51,12 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
 
-		//m_vColor = pEffectDesc->vColor;
+		m_vColor = pEffectDesc->vColor;
+
+		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
+		{
+			m_IsColorEffect = true;
+		}
 
 		if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 			return E_FAIL;
@@ -176,7 +181,9 @@ HRESULT CEffect_Overlap::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iUnique_Index", &m_iUnique_Index, sizeof(int))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &m_vColor, sizeof(m_vColor))))
+	_vector Color = XMVectorSet(m_vColor.x, m_vColor.y, m_vColor.z, m_vColor.w);
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &Color, sizeof(Color))))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bColorChange", &m_IsColorEffect, sizeof(m_IsColorEffect))))
