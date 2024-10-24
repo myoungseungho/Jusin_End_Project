@@ -272,6 +272,7 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	/*-----------------------------------------------------------------*/
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
+	/*---------------ÇÃ·¹ÀÌ¾îÀÇ °üÇÑ ¸ðµç ºû Ã³¸®´Â µû·Î---------------*/
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Blend(fTimeDelta)))
@@ -495,7 +496,7 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 
 
 
-
+	/* ¹Ù²ã¾ßµÊ ½¦ÀÌµå ·»´õÅ¸°ÙÀ» Á÷Á¢ ²ø¾î¿Í¼­ »öÀ» Ä¥ÇØÁÙ ¿¹Á¤ */
 
 	if (NULL != m_pRenderInstance->Check_EffectLights())
 	{
