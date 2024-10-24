@@ -9,7 +9,7 @@ CLight_Manager::CLight_Manager(ID3D11Device * pDevice, ID3D11DeviceContext * pCo
 	Safe_AddRef(m_pContext);
 }
 
-const LIGHT_DESC * CLight_Manager::Get_LightDesc(LIGHT_TYPE eLightType, _uint iLightIndex, string strName) const
+LIGHT_DESC * CLight_Manager::Get_LightDesc(LIGHT_TYPE eLightType, _uint iLightIndex, string strName)
 {
 	switch (eLightType)
 	{
@@ -42,6 +42,11 @@ const LIGHT_DESC * CLight_Manager::Get_LightDesc(LIGHT_TYPE eLightType, _uint iL
 		return iter->second->Get_LightDesc();
 	}
 	}
+}
+
+_int CLight_Manager::Check_EffectLights()
+{
+	return m_EffectLights.size();
 }
 
 HRESULT CLight_Manager::Initialize()
@@ -83,7 +88,8 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 		m_PlayerLights[strName]->Render(pShader, pVIBuffer, 5);
 		break;
 	case LIGHT_EFFECT:
-		m_EffectLights[strName]->Render(pShader, pVIBuffer, 6);
+		for (auto& pEffectLight : m_EffectLights)
+			pEffectLight.second->Render(pShader, pVIBuffer, 6);
 		break;
 	}
 

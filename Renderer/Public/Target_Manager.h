@@ -29,6 +29,7 @@ public:
 	ID3D11ShaderResourceView* Copy_RenderTarget_SRV(const _wstring& strTargetTag);
 	HRESULT Bind_ShaderResource(class CShader * pShader, const _char * pConstantName, const _wstring& strTargetTag);
 
+
 #ifdef _DEBUG
 public:
 	HRESULT Ready_Debug(const _wstring& strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY);

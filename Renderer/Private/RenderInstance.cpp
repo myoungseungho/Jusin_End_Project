@@ -145,9 +145,14 @@ HRESULT CRenderInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pSh
 }
 #endif
 
-const LIGHT_DESC* CRenderInstance::Get_LightDesc(CLight_Manager::LIGHT_TYPE eLightType, _uint iLightIndex, string strName) const
+LIGHT_DESC* CRenderInstance::Get_LightDesc(CLight_Manager::LIGHT_TYPE eLightType, _uint iLightIndex, string strName)
 {
 	return m_pLight_Manager->Get_LightDesc(eLightType, iLightIndex, strName);
+}
+
+_int CRenderInstance::Check_EffectLights()
+{
+	return m_pLight_Manager->Check_EffectLights();
 }
 
 HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)

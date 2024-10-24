@@ -39,7 +39,7 @@ HRESULT CLight::Render_Map(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 		return E_FAIL;
 	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &m_LightDesc.vSpecular, sizeof(_float4))))
 		return E_FAIL;
-
+	
 	pShader->Begin(iPassIndex);
 
 	pVIBuffer->Render();
@@ -68,6 +68,8 @@ HRESULT CLight::Render_Player(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 		return E_FAIL;
 	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &m_LightDesc.vSpecular, sizeof(_float4))))
 		return E_FAIL;
+	if (FAILED(pShader->Bind_RawValue("g_iPlayerDirection", m_LightDesc.pPlayerDirection, sizeof(_int))))
+		return E_FAIL;
 
 	pShader->Begin(iPassIndex);
 
@@ -95,6 +97,12 @@ HRESULT CLight::Render_Effect(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 		return E_FAIL;
 	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &m_LightDesc.vSpecular, sizeof(_float4))))
 		return E_FAIL;
+	
+	/*
+	이미 먼저 m_fTimeDelta를 더해준 상태 들어온 시간에대한 임계점을 정할지는 판단해봐야됨
+	만약 기준이 있다면 알파를 진행시간 m_fAccTime 및 m_fLifeTime 사이값
+	
+	*/
 
 	pShader->Begin(iPassIndex);
 

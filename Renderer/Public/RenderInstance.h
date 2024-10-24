@@ -50,7 +50,8 @@ public:
 #endif
 
 public:/*For.Light_Manager*/
-	const LIGHT_DESC* Get_LightDesc(CLight_Manager::LIGHT_TYPE eLightType, _uint iLightIndex, string strName = "") const;
+	LIGHT_DESC* Get_LightDesc(CLight_Manager::LIGHT_TYPE eLightType, _uint iLightIndex, string strName = "");
+	_int		Check_EffectLights();
 	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
 	HRESULT Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc);
 	HRESULT Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer,const string strName = "");

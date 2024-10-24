@@ -481,9 +481,14 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 
 	m_pVIBuffer->Bind_Buffers();
 	auto strName = m_PlayerStrNames.begin() + iCount;
-	const LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, *strName);
+	LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, *strName);
 	
 	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName); // 수정
+
+	if (NULL != m_pRenderInstance->Check_EffectLights())
+	{
+		m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_EFFECT, m_pShader, m_pVIBuffer, pLightDesc->strName);
+	}
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
@@ -799,13 +804,13 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 			return E_FAIL;
 
-		// Render Target 디버그 렌더링
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
+		//// Render Target 디버그 렌더링
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
 	}
 	if (!m_bShow_RenderTarget)
 		return S_OK;
@@ -814,16 +819,16 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Down"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_DownSecond"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UpSecond"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_X"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Down"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_DownSecond"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UpSecond"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_X"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))

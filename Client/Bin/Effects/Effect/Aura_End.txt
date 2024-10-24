@@ -1,7 +1,7 @@
 [Layer]
 LayerName: Aura_End
 Duration: 1
-TickPerSecond: 0
+TickPerSecond: 0.01
 KeyFramesCount: 59
 NumEffec: 1
 
