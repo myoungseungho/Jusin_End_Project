@@ -74,6 +74,7 @@ void CVirtual_Camera::Priority_Update(_float fTimeDelta)
 		break;
 	}
 
+	//테스트용
 	if (m_pGameInstance->Key_Down(DIK_SPACE))
 		StartCameraShake(5.f, 0.5f);
 
@@ -268,38 +269,45 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
 }
 
-void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2)
+void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2)
 {
-	const float fixedY = 1.f;
 	const float fixedZ = -5.f;
+	const float baseFixedY = 1.f;  // Y가 0일 때 사용할 고정값
 
 	const float thresholdDistance = 2.f;
 	const float maxDistance = 5.17f;
 
 	float offsetX = 0.f;
-	_float3 targetPosition = _float3(averageX + offsetX, fixedY, fixedZ);
+	float dynamicY = baseFixedY;
 
-	//DistanceX가 20을 넘으면
+	// higherY가 0보다 큰 경우 가변 오프셋을 추가
+	if (higherY > 0.f)
+	{
+		// higherY 값에 따라 baseFixedY보다 낮은 값을 설정
+		const float maxReduction = 0.8f;  // 최대 Y 감소값
+
+		// higherY가 커질수록 dynamicY를 1에서 더 낮게 조정
+		dynamicY = baseFixedY - min(maxReduction, higherY * 0.5f);
+	}
+
+	// 최종 타겟 위치를 설정
+	_float3 targetPosition = _float3(averageX + offsetX, higherY + dynamicY, fixedZ);
+
+	// DistanceX가 thresholdDistance를 넘을 때 카메라의 Z와 Y를 조절하는 기존 로직 유지
 	if (distanceX > thresholdDistance)
 	{
-		// 비율 계산 (distanceX가 thresholdDistance 이상일 때부터 maxDistance까지)
-		// t의 비율을 구한뒤
 		float t = (distanceX - thresholdDistance) / (maxDistance - thresholdDistance);
 		t = max(0.f, min(t, 1.f)); // [0, 1] 범위로 클램프
 
-		const float maxYOffset = 0.8f; // 최대 Y 이동 거리
-		const float maxZOffset = 9.f; // 최대 Z 이동 거리
+		const float maxYOffset = 0.8f;  // 최대 Y 이동 거리
+		const float maxZOffset = 9.f;   // 최대 Z 이동 거리
 
-		// 평행 벡터 가져오기 (x=0을 만족함)
 		_float3 tangent1, tangent2;
 		m_pGameInstance->Get_ParallelVectorsInPlane(tangent1, tangent2, m_fFovy);
 
-		// 두 평행 벡터을 이용하여 Y와 Z 조절
-		// 예를 들어, tangent1을 이용하여 Y를, tangent2를 이용하여 Z를 조절할 수 있습니다.
-		// 여기서는 단순히 두 벡터을 가중합하여 Y와 Z를 조절
+		// Y와 Z 오프셋을 적용
 		targetPosition.y += tangent1.y * maxYOffset * t;
 		targetPosition.z += tangent1.z * maxZOffset * t;
-		// 또는 다른 방식으로 조절할 수 있습니다.
 	}
 
 	// 카메라 위치 설정
@@ -515,8 +523,13 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 	// 평균 X 위치 계산
 	_float averageX = (XMVectorGetX(pos1) + XMVectorGetX(pos2)) * 0.5f;
 
-	// 카메라의 위치 설정
-	Set_Camera_Position(averageX, distanceX, pos1, pos2);
+	_float Player1P_Y = XMVectorGetY(pos1);
+	_float Player2P_Y = XMVectorGetY(pos2);
+	// 두 플레이어의 Y 값 비교 (둘 중 높은 값을 선택)
+	_float higherY = max(Player1P_Y, Player2P_Y);
+
+	// 카메라의 위치 설정, 추가한 higherY를 사용
+	Set_Camera_Position(averageX, distanceX, higherY, pos1, pos2);
 
 	//// 카메라의 방향 벡터 설정
 	Set_Camera_Direction(averageX, pos1, pos2);
