@@ -158,6 +158,7 @@ CGameObject* CGameObject::Clone(void* pArg)
 void CGameObject::Destory()
 {
 	m_pGameInstance->Destory_Reserve(this);
+	SetActive(false);
 }
 
 void CGameObject::Free()
