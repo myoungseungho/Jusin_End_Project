@@ -33,6 +33,7 @@ public:
 	virtual _bool isCollision(CCollider::TYPE eTargetColliderType, CBounding* pTargetBounding);
 	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir) override;
 	virtual _bool isPointInAABB(const _float3& point) override;
+	_float Get_Overlap_X(const CBounding_AABB* pOther) const;
 
 private:
 	BoundingBox*				m_pOriginalDesc = { nullptr };
