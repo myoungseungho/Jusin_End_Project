@@ -55,6 +55,9 @@ namespace Engine
 		XMFLOAT4		vDiffuse;
 		XMFLOAT4		vAmbient;
 		XMFLOAT4		vSpecular;
+
+		int*			pPlayerDirection;
+		string			strName;
 	};
 
 	/*D3DDECLUSAGE*/

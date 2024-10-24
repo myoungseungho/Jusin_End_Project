@@ -101,6 +101,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		_float defaultUnscaledDeltaTime = pGameInstance->Get_UnscaledDeltaTime(TEXT("Timer_Default"));
 		fTimeAcc += defaultUnscaledDeltaTime;
 		fixedTimeAcc += defaultUnscaledDeltaTime;
+		if (fTimeAcc > 1)
+			fTimeAcc = 0.2f;
 
 		while (fixedTimeAcc >= fixedTimeStep)
 		{

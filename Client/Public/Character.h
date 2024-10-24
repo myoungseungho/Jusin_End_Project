@@ -580,6 +580,9 @@ protected:
 
 	class CUI_Manager* m_pUI_Manager = { nullptr };
 
+
+	string m_strName = "";
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

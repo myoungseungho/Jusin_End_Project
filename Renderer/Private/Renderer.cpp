@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "GameInstance.h"
 #include "Component.h"
+#include "Light_Manager.h"
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
@@ -214,7 +215,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	return S_OK;
 }
 
-HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject)
+HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject, string strName)
 {
 	if (eRenderGroup >= RG_END)
 		return E_FAIL;
@@ -222,7 +223,9 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRend
 	m_RenderObjects[eRenderGroup].emplace_back(pRenderObject);
 
 	Safe_AddRef(pRenderObject);
-
+	// 라이트 이름 수정 하고 캐릭터 개별 빛 적용되는지 와서 확인하기ㅜ   
+	if (strName != "")
+		m_PlayerStrNames.push_back(strName);
 	return S_OK;
 }
 
@@ -243,19 +246,23 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Blend_Priority(fTimeDelta)))
 		return E_FAIL;
+	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
 		return E_FAIL;
+	/*-----------------디버깅용------------------*/
 	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
 		return E_FAIL;
-
+	/*-------------------------------------------*/
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Deferred(fTimeDelta)))
+		return E_FAIL;
+	/*-----------------------------------------------------------------*/
+	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
@@ -417,21 +424,109 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Player(_float fTimeDelta)
 {
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player"))))
-		return E_FAIL;
-
-	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
+	_int iCount = 0;
+	for (auto& pRenderObject : m_RenderObjects[RG_PLAYER])
 	{
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player"))))
+			return E_FAIL;
+
 		if (nullptr != pRenderObject)
+		{
 			pRenderObject->Render(fTimeDelta);
+		}
 
 		Safe_Release(pRenderObject);
+
+		if (FAILED(m_pRenderInstance->End_MRT()))
+			return E_FAIL;
+
+		Render_PlayerLight(fTimeDelta, iCount);
+		Render_PlayerDeferred(fTimeDelta);
+
+		iCount++;
 	}
 
-	m_RenderObjects[RG_NONBLEND].clear();
+	m_RenderObjects[RG_PLAYER].clear();
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
+{
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_LightAcc"))))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	_float4x4 viewMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW);
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &viewMatrixInv)))
+		return E_FAIL;
+
+	_float4x4 projMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ);
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &projMatrixInv)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_NormalTexture", TEXT("Target_Player_Normal"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Player_Depth"))))
+		return E_FAIL;
+
+	_float4 camPosition = m_pGameInstance->Get_CamPosition_Float4();
+	if (FAILED(m_pShader->Bind_RawValue("g_vCamPosition", &camPosition, sizeof(_float4))))
+		return E_FAIL;
+
+	m_pVIBuffer->Bind_Buffers();
+	auto strName = m_PlayerStrNames.begin() + iCount;
+	const LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, *strName);
+	
+	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName); // 수정
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
+
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_PlayerDeferred(_float fTimeDelta)
+{
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_Player_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_ShadeTexture", TEXT("Target_Shade"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_SpecularTexture", TEXT("Target_Specular"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_LightDepthTexture", TEXT("Target_LightDepth"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Player_Depth"))))
+		return E_FAIL;
+
+	_float4x4			LightViewMatrix, LightProjMatrix;
+
+	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
+	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)1920.f / 1080.f, 0.1f, 1000.f));
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightProjMatrix", &LightProjMatrix)))
+		return E_FAIL;
+
+	m_pShader->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
 
 	return S_OK;
 }
@@ -544,7 +639,7 @@ HRESULT CRenderer::Render_Lights(_float fTimeDelta)
 
 	m_pVIBuffer->Bind_Buffers();
 
-	m_pRenderInstance->Render_Lights(m_pShader, m_pVIBuffer);
+	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_BACKGROUND, m_pShader, m_pVIBuffer); // 수정
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
@@ -588,7 +683,7 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_LightProjMatrix", &LightProjMatrix)))
 		return E_FAIL;
 
-	m_pShader->Begin(3);
+	m_pShader->Begin(4);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
