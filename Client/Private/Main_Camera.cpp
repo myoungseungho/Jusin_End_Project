@@ -338,7 +338,9 @@ void CMain_Camera::SetPosition(_fvector position)
 
 void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 {
-	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->SetPlayer(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
+	//Test¿ë
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SKILL_1]->Set_Player(state, pPlayer);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()

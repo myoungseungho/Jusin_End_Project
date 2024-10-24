@@ -11,8 +11,88 @@ CTexture::CTexture(const CTexture & Prototype)
 	, m_iNumTextures { Prototype.m_iNumTextures }
 	, m_SRVs { Prototype.m_SRVs }
 {
-	for (auto& pSRV : m_SRVs)
-		Safe_AddRef(pSRV);
+	for (auto& iter : m_SRVs)
+	{
+		Safe_AddRef(iter);
+	}
+	//ID3D11ShaderResourceView* a;
+	
+	//m_SRVs.reserve(Prototype.m_iNumTextures);
+
+	//ID3D11ShaderResourceView* pNewSRV = nullptr;
+	//_tchar			szEXT[MAX_PATH] = {};
+	//_wsplitpath_s(Prototype.m_szFullPath, nullptr, 0, nullptr, 0, nullptr, 0, szEXT, MAX_PATH);
+
+	//HRESULT			hr = { 0 };
+
+	//if (false == lstrcmp(szEXT, TEXT(".dds")))
+	//	hr = CreateDDSTextureFromFile(m_pDevice, Prototype.m_szFullPath, nullptr, &pNewSRV);
+
+	//else if (false == lstrcmp(szEXT, TEXT(".tga")))
+	//{
+
+	//}
+
+	//else
+	//{
+	//	hr = CreateWICTextureFromFile(m_pDevice, Prototype.m_szFullPath, nullptr, &pNewSRV);
+	//}
+
+	//if (FAILED(hr))
+	//{
+	//	// HRESULT 값을 출력하여 원인 파악
+	//	wprintf(L"CreateWICTextureFromFile failed with HRESULT 0x%08X\n", hr);
+
+	//}
+	//wcscpy_s(m_szFullPath, MAX_PATH, Prototype.m_szFullPath);
+
+	//m_SRVs.emplace_back(pNewSRV);
+
+
+	//단순히 SRV를 깊은복사한다고 되지않았음 다른주소여도 가르키고 있는 원본 텍스쳐 SRV는 같았음
+	//for (auto& pSRV : Prototype.m_SRVs)
+	/*{
+		ID3D11Resource* pOriginalResource = nullptr;
+		pSRV->GetResource(&pOriginalResource);
+
+		D3D11_TEXTURE2D_DESC textureDesc;
+		ID3D11Texture2D* pOriginalTexture = nullptr;
+		if (FAILED(pOriginalResource->QueryInterface(__uuidof(ID3D11Texture2D), (void**)&pOriginalTexture)))
+		{
+			Safe_Release(pOriginalResource);
+			continue;
+		}
+
+		pOriginalTexture->GetDesc(&textureDesc);
+
+		ID3D11Texture2D* pNewTexture = nullptr;
+
+		if (FAILED(m_pDevice->CreateTexture2D(&textureDesc, nullptr, &pNewTexture)))
+		{
+			Safe_Release(pOriginalTexture);
+			Safe_Release(pOriginalResource);
+			continue;
+		}
+
+		m_pContext->CopyResource(pNewTexture, pOriginalTexture);
+
+		ID3D11ShaderResourceView* pNewSRV = nullptr;
+
+		if (FAILED(m_pDevice->CreateShaderResourceView(pNewTexture, nullptr, &pNewSRV)))
+		{
+			Safe_Release(pNewTexture);
+			Safe_Release(pOriginalTexture);
+			Safe_Release(pOriginalResource);
+			continue;
+		}
+
+		m_SRVs.emplace_back(pNewSRV);
+
+		Safe_Release(pNewTexture);
+		Safe_Release(pOriginalTexture);
+		Safe_Release(pOriginalResource);
+	}*/
+
 }
 
 HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iNumTextures)
@@ -54,8 +134,8 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 
 			return E_FAIL;
 		}
-			
-
+		wcscpy_s(m_szFullPath, MAX_PATH, szFullPath);
+		
 		m_SRVs.emplace_back(pSRV);		
 	}
 	

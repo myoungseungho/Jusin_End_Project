@@ -17,7 +17,7 @@ CModel::CModel(const CModel& Prototype)
 	: CComponent{ Prototype }
 	, m_PreTransformMatrix{ Prototype.m_PreTransformMatrix }
 	, m_iNumMeshes{ Prototype.m_iNumMeshes }
-	, m_Meshes{ Prototype.m_Meshes }
+	, m_Meshes { Prototype.m_Meshes }
 	, m_iNumMaterials{ Prototype.m_iNumMaterials }
 	, m_Materials{ Prototype.m_Materials }
 	/*, m_Bones { Prototype.m_Bones }*/

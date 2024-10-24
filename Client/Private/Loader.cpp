@@ -33,12 +33,6 @@
 #include "FallingStar.h"
 
 #include "SpaceRock.h"
-//#include "Monster.h"
-//#include "Terrain.h"
-//#include "Camera.h"
-//#include "Effect.h"
-//#include "Sky.h"
-
 
 //LOGO
 #include "UI_Logo_BG.h"
@@ -399,6 +393,8 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 
 #pragma region Effect Model
 
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_cmn_SmokeModels0101"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/cmn_SmokeModels0101.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -530,9 +526,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_acmn_povot_plane00"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/cmn_povot_plane00.bin", PreTransformMatrix)))) // stand
 		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.0001f, 0.0001f, 0.0001f);
-
    
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_bun_cookie"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/Model/bun_cookie.bin", PreTransformMatrix))))

@@ -197,12 +197,44 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
             }
         }
 
-        m_pRenderInstance->Add_ClientRenderTarget(prototypeKey.c_str(), prototypeKey.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
-        
+        _int iRenderTargetCount = m_pRenderInstance->Add_ClientRenderTarget(prototypeKey.c_str(), prototypeKey.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+        /* 이미 렌더타겟이 중복이다 */
+        if (iRenderTargetCount > 0)
+        {
+            SRV_Texture SRVDesc{};
+            SRVDesc.iID = unique_node_id;
+            SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKey.c_str() + to_wstring(iRenderTargetCount));
+            SRVDesc.Alpha = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKey.c_str() + to_wstring(iRenderTargetCount) + L"_Alpha");
+
+            if (SRVDesc.Texture == nullptr || SRVDesc.Alpha == nullptr)
+            {
+                int a = 10;
+            }
+            m_NodeTextureSRVs.push_back(SRVDesc);
+
+            m_NodeTextures.back()->Set_PlusKey(prototypeKey.c_str() + to_wstring(iRenderTargetCount));
+
+            Save_Key tSave_KeyDesc{};
+            tSave_KeyDesc.iD = unique_node_id;
+            tSave_KeyDesc.key = prototypeKey.c_str();
+            m_PrototypeKeys.push_back(tSave_KeyDesc);
+
+            m_NodeTextures.back()->m_iID = unique_node_id;
+            node_ids.push_back(unique_node_id++);
+
+            DragAcceptFiles(g_hWnd, TRUE);
+            m_iNodeTextureCount++;
+
+            return;
+        }
         SRV_Texture SRVDesc{};
         SRVDesc.iID = unique_node_id;
         SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKey.c_str());
         SRVDesc.Alpha = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKeyWithAlpha.c_str());
+        if (SRVDesc.Texture == nullptr || SRVDesc.Alpha == nullptr)
+        {
+            int a = 10;
+        }
         m_NodeTextureSRVs.push_back(SRVDesc);
 
         Save_Key tSave_KeyDesc{};

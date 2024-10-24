@@ -49,7 +49,7 @@ void CSpaceStone::Update(_float fTimeDelta)
 
 void CSpaceStone::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CSpaceStone::Render(_float fTimeDelta)

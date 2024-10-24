@@ -1,7 +1,6 @@
 #include "RenderInstance.h"
 #include "Target_Manager.h"
 #include "GameInstance.h"
-#include "Light_Manager.h"
 #include "Picking.h"
 
 IMPLEMENT_SINGLETON(CRenderInstance)
@@ -43,12 +42,12 @@ HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, CGameObject* pRenderObject)
+HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, CGameObject* pRenderObject, string strName)
 {
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
-	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject);
+	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject, strName);
 }
 
 HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)
@@ -122,10 +121,9 @@ ID3D11ShaderResourceView* CRenderInstance::Copy_RenderTarget_SRV(const _wstring&
 HRESULT CRenderInstance::Bind_RT_ShaderResource(CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag)
 {
 	return m_pTarget_Manager->Bind_ShaderResource(pShader, pConstantName, strTargetTag);
-
 }
 
-HRESULT CRenderInstance::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
+_int CRenderInstance::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
 {
 	return m_pTarget_Manager->Add_ClientRenderTarget(strMRTTag, strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);
 }
@@ -147,9 +145,9 @@ HRESULT CRenderInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pSh
 }
 #endif
 
-const LIGHT_DESC* CRenderInstance::Get_LightDesc(_uint iLightIndex) const
+const LIGHT_DESC* CRenderInstance::Get_LightDesc(CLight_Manager::LIGHT_TYPE eLightType, _uint iLightIndex, string strName) const
 {
-	return m_pLight_Manager->Get_LightDesc(iLightIndex);
+	return m_pLight_Manager->Get_LightDesc(eLightType, iLightIndex, strName);
 }
 
 HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
@@ -157,9 +155,14 @@ HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
 	return m_pLight_Manager->Add_Light(LightDesc);
 }
 
-HRESULT CRenderInstance::Render_Lights(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
+HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc)
 {
-	return m_pLight_Manager->Render_Lights(pShader, pVIBuffer);
+	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc);
+}
+
+HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CShader* pShader, CVIBuffer_Rect* pVIBuffer, const string strName)
+{
+	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName);
 }
 
 _float4 CRenderInstance::Picked_Position(_bool* pPicked)

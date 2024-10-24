@@ -74,11 +74,14 @@ public:
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 
+	class CGameObject* m_pCutsceneCharacter = { nullptr };
+
 private:
 	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
 
 	unordered_map<std::string, int> stringToSkillID;
 	unordered_map<std::string, int> stringToAnimID;
+
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

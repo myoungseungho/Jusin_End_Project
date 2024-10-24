@@ -10,8 +10,8 @@ class CVirtual_Camera final : public CCamera
 public:
 	enum CAMERA_MODE
 	{
-		CAMERA_FREE_MODE,
 		CAMERA_NORMAL_MODE,
+		CAMERA_FREE_MODE,
 		CAMERA_CINEMATIC_MODE,
 		CAMERA_MODE_END
 	};
@@ -56,7 +56,7 @@ public:
 	void Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode);
 public:
 	const _char* GetTabName() const { return m_Name; };
-	void SetPlayer(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
+	void Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
 
 	void Start_Play(_int animationIndex);
 	void Pause();
@@ -73,11 +73,11 @@ private:
 	void Default_Camera(_float fTimeDelta);
 	void Play(_float fTimeDelta);
 	_float ComputeDistanceX(_gvector pos1, _gvector pos2);
-	void Set_Camera_Position(_float averageX, _float distanceX, _gvector pos1, _gvector pos2);
+	void Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2);
 	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
 public:
-	CAMERA_MODE m_currentMode = { CAMERA_FREE_MODE };
+	CAMERA_MODE m_currentMode = { CAMERA_NORMAL_MODE };
 	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 
 	_char* m_Name;
@@ -106,6 +106,8 @@ public:
 
 	unordered_map<_int, vector<CameraPoint>> m_mapPoints;
 	_int m_AnimationIndex = -1;
+
+	class CGameObject* m_pCutsceneCharacter = { nullptr };
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

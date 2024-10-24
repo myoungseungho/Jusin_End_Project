@@ -112,8 +112,10 @@ PS_OUT PS_MAIN_ALPHABLEND_EFFECT(PS_IN In)
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
     
+    float fAlpha = (vMtrlAlpha.r + vMtrlAlpha.g + vMtrlAlpha.b) / 3.f;
+    //fAlpha *= vMtrlAlpha.a;
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlAlpha.r;
+    Out.vAlpha = fAlpha * 2.f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;

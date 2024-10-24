@@ -130,6 +130,18 @@ void CCollider::AABB_SetDesc(BoundingBox _box)
 	static_cast<CBounding_AABB*>(m_pBounding)->Set_Desc(_box);
 }
 
+_float CCollider::Get_Overlap_X(CCollider* other) const
+{
+	CBounding_AABB* AABB = dynamic_cast<CBounding_AABB*>(m_pBounding);
+	CBounding_AABB* other_AABB = dynamic_cast<CBounding_AABB*>(other->m_pBounding);
+
+	if (AABB != nullptr && other_AABB != nullptr)
+		return AABB->Get_Overlap_X(other_AABB);
+
+	//충돌 안났으면
+	return 0;
+}
+
 void CCollider::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	if (!m_isColl)

@@ -37,7 +37,7 @@ public:
 	class CGameObject* GetMineGameObject() { return m_pMineGameObject; };
 	BoundingBox AABB_GetDesc();
 	void AABB_SetDesc(BoundingBox _box);
-
+	_float Get_Overlap_X(CCollider* other) const;
 
 public:
 	void OnCollisionEnter(CCollider*, _float fTimeDelta);

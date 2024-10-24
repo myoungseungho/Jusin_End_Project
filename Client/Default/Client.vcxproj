@@ -163,6 +163,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\AttackObject_Chase.h" />
+    <ClInclude Include="..\Public\AttackObject.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
@@ -214,7 +215,6 @@
     <ClInclude Include="..\public\UI_AttBufEffect.h" />
     <ClInclude Include="..\Public\AnimationEvent_Defines.h" />
     <ClInclude Include="..\Public\AnimationNameMap.h" />
-    <ClInclude Include="..\Public\AttackObject.h" />
     <ClInclude Include="..\Public\Character.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\FrameEvent_Manager.h" />
@@ -277,6 +277,7 @@
     <ClInclude Include="..\Public\SpaceEarth_Light.h" />
     <ClInclude Include="..\Public\SpaceGround.h" />
     <ClInclude Include="..\Public\SpaceHorizon.h" />
+    <ClInclude Include="..\Public\SpaceMeteo.h" />
     <ClInclude Include="..\Public\SpaceMoon.h" />
     <ClInclude Include="..\Public\SpaceRock.h" />
     <ClInclude Include="..\Public\SpaceSky.h" />
@@ -290,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\AttackObject_Chase.cpp" />
+    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
@@ -336,7 +338,6 @@
     <ClCompile Include="..\private\UI_SubHpGauge.cpp" />
     <ClCompile Include="..\private\UI_AttBufEffect.cpp" />
     <ClCompile Include="..\Private\AnimationNameMap.cpp" />
-    <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\Character.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\private\Effect_Animation.cpp" />
@@ -400,6 +401,7 @@
     <ClCompile Include="..\Private\SpaceEarth_Light.cpp" />
     <ClCompile Include="..\Private\SpaceGround.cpp" />
     <ClCompile Include="..\Private\SpaceHorizon.cpp" />
+    <ClCompile Include="..\Private\SpaceMeteo.cpp" />
     <ClCompile Include="..\Private\SpaceMoon.cpp" />
     <ClCompile Include="..\Private\SpaceRock.cpp" />
     <ClCompile Include="..\Private\SpaceSky.cpp" />
@@ -424,7 +426,6 @@
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
