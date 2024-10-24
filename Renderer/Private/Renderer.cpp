@@ -87,6 +87,16 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_Y"), TEXT("Target_Blur_Y"))))
 		return E_FAIL;
 
+	/* UI 블러 처리 */ // 테스트 용도
+	//if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_Blur_X"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_Blur_Y"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_Blur_X"), TEXT("Target_UI_Blur_X"))))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_Blur_Y"), TEXT("Target_UI_Blur_Y"))))
+	//	return E_FAIL;
+
 	/* 업 처리*/
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UpTarget_Second"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
@@ -192,6 +202,10 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
 		return E_FAIL;
+
+	//뺴야 됨
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UI_Top_Blur_X"), g_iSizeX * 0.5f, g_iSizeY * 0.5f, 300.f, 300.f)))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
@@ -768,10 +782,23 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 {
+	D3D11_VIEWPORT			ViewPortDesc;
+	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	ViewPortDesc.TopLeftX = 0;
+	ViewPortDesc.TopLeftY = 0;
+	ViewPortDesc.Width = (_float)1920.f;
+	ViewPortDesc.Height = (_float)1080.0f;
+	ViewPortDesc.MinDepth = 0.f;
+	ViewPortDesc.MaxDepth = 1.f;
+
+	m_pContext->RSSetViewports(1, &ViewPortDesc);
+
 	for (auto& pRenderObject : m_RenderObjects[RG_UI_GLOW])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
 			return E_FAIL;
+
+	
 
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
@@ -787,6 +814,16 @@ HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 	}
 
 	m_RenderObjects[RG_UI_GLOW].clear();
+
+	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	ViewPortDesc.TopLeftX = 0;
+	ViewPortDesc.TopLeftY = 0;
+	ViewPortDesc.Width = 1920.f;
+	ViewPortDesc.Height = 1080.0f;
+	ViewPortDesc.MinDepth = 0.f;
+	ViewPortDesc.MaxDepth = 1.f;
+
+	m_pContext->RSSetViewports(1, &ViewPortDesc);
 
 	return S_OK;
 
@@ -858,6 +895,12 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
 		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_X"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_Y"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+
+
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
