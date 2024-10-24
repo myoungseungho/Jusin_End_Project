@@ -71,7 +71,7 @@ public:
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
 	HRESULT Play_Animation(_float CurrentFrame);
-	void		Set_Effect_Color(_vector vColor);
+	void		Set_Effect_Color(_float4 vColor);
 
 protected:
 

@@ -32,8 +32,8 @@ public:
 	class CEffect* Find_In_Layer_Effect(wstring& layerName, wstring& effectName);
 	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	void		Set_Render_Layer(const wstring& strEffectLayerTag);
-	HRESULT		Set_Test_Effect_Color(_int iCurTestEffectIndex, _vector vColor);
-	HRESULT		Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _vector vColor);
+	HRESULT		Set_Test_Effect_Color(_int iCurTestEffectIndex, _float4 vColor);
+	HRESULT		Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _float4 vColor);
 
 	EFFECT_KEYFRAME Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);

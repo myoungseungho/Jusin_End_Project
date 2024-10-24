@@ -21,11 +21,13 @@ public:
 	string WStringToUTF8(const std::wstring& wstr);
 	wstring UTF8ToWString(const string& utf8Str);
 	virtual const _char* GetTabName() const { return "Effect"; };
+	float Clamp(float value, float minValue, float maxValue);
 
 	void Render_For_Each_Effect();
 	void Render_For_Effect_Layer();
 	void Render_For_Layer_KeyFrame(_float fTimeDelta);
 	void Render_For_Effect_KeyFrame();
+	void Render_For_Effect_Color();
 
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
@@ -33,7 +35,7 @@ private:
 	vector<string> TextureName;
 	vector<EFFECT_LAYER_DATA> m_vecEffectData;
 	string EffectLayerKey;
-
+	wstring EffectName;
 	_bool m_isInitialize = { false };
 
 	_float SelectCurTime = { 0.f };

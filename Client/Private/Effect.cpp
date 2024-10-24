@@ -147,9 +147,9 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	return S_OK;
 }
 
-void CEffect::Set_Effect_Color(_vector vColor)
+void CEffect::Set_Effect_Color(_float4 vColor)
 {
-	m_vColor = vColor;
+	m_vColor = XMVectorSet(vColor.x, vColor.y, vColor.z, vColor.w);
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

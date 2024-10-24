@@ -321,7 +321,7 @@ void CEffect_Manager::Set_Render_Layer(const wstring& strEffectLayerTag)
 	Find_Effect_Layer(strEffectLayerTag)->m_bIsRender = { true };
 }
 
-HRESULT CEffect_Manager::Set_Test_Effect_Color(_int iCurTestEffectIndex, _vector vColor)
+HRESULT CEffect_Manager::Set_Test_Effect_Color(_int iCurTestEffectIndex, _float4 vColor)
 {
 	for (auto& iter : m_TestEffect)
 	{
@@ -334,7 +334,7 @@ HRESULT CEffect_Manager::Set_Test_Effect_Color(_int iCurTestEffectIndex, _vector
 	return S_OK;
 }
 
-HRESULT CEffect_Manager::Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _vector vColor)
+HRESULT CEffect_Manager::Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _float4 vColor)
 {
 	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
 
