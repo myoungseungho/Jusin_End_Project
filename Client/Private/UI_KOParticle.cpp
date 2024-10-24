@@ -47,25 +47,31 @@ void CUI_KOParticle::Priority_Update(_float fTimeDelta)
 
 	m_fTexCoord += fTimeDelta * 0.5f;
 
-	if (m_fTexCoord >= 1.f)
-	{
-		m_fTexCoord = 0.f;
-		Destory();
-	}
+	
 }
 
 void CUI_KOParticle::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	if (m_fTexCoord >= 1.f)
+	{
+		m_fTexCoord = 0.f;
+		Destory();
+	}
+
 	Action_Anim(1.f, fTimeDelta);
+
+
 }
 
 void CUI_KOParticle::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+
+
+
 }
 
 HRESULT CUI_KOParticle::Render(_float fTimeDelta)

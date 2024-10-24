@@ -24,8 +24,8 @@ HRESULT CUI_StartEmblem::Initialize_Prototype()
 HRESULT CUI_StartEmblem::Initialize(void* pArg)
 {
 
-	m_fSizeX = 700.f;
-	m_fSizeY = 700.f;
+	m_fSizeX = 800.f;
+	m_fSizeY = 800.f;
 	m_fPosX = 640;
 	m_fPosY = 360;
 
@@ -55,6 +55,8 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 void CUI_StartEmblem::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+
 }
 
 void CUI_StartEmblem::Update(_float fTimeDelta)
@@ -63,14 +65,15 @@ void CUI_StartEmblem::Update(_float fTimeDelta)
 
 	Action_Anim(1.f, fTimeDelta);
 
-	if (m_QueueAnim.empty())
-		Destory();
 
 }
 
 void CUI_StartEmblem::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
+
+	if (m_QueueAnim.empty())
+		Destory();
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
