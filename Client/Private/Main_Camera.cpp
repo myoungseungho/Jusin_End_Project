@@ -32,15 +32,15 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 	_char* name = "";
 
-	for (size_t i = VIRTUAL_CAMERA_FREE; i < VIRTUAL_CAMERA_END; i++)
+	for (size_t i = VIRTUAL_CAMERA_NORMAL; i < VIRTUAL_CAMERA_END; i++)
 	{
 		switch (i)
 		{
-		case VIRTUAL_CAMERA_FREE:
-			name = "Camera_Free";
-			break;
 		case VIRTUAL_CAMERA_NORMAL:
 			name = "Camera_Normal";
+			break;
+		case VIRTUAL_CAMERA_FREE:
+			name = "Camera_Free";
 			break;
 		case VIRTUAL_CAMERA_SON_SKILL_1:
 			name = "Camera_Son_Skill_1";

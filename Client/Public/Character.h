@@ -329,6 +329,7 @@ public:
 	AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
+	void Set_Camera(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
 
 	void Check_StunEnd();

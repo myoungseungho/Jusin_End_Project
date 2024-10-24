@@ -347,6 +347,8 @@ void CVirtual_Camera::Start_Play(_int animationIndex)
 
 	m_currentMode = CAMERA_CINEMATIC_MODE;
 	m_currentPlayMode = Playing;
+	//플레이를 하면 여기로
+	Move_Point(0, m_AnimationIndex);
 }
 
 void CVirtual_Camera::Pause()
