@@ -124,16 +124,27 @@ void CCollider::AABB_SetDesc(BoundingBox _box)
 	static_cast<CBounding_AABB*>(m_pBounding)->Set_Desc(_box);
 }
 
-_float CCollider::Get_Overlap_X(CCollider* other) const
+_float CCollider::Get_Overlap_X(CCollider* pOther) const
 {
 	CBounding_AABB* AABB = dynamic_cast<CBounding_AABB*>(m_pBounding);
-	CBounding_AABB* other_AABB = dynamic_cast<CBounding_AABB*>(other->m_pBounding);
+	CBounding_AABB* other_AABB = dynamic_cast<CBounding_AABB*>(pOther->m_pBounding);
 
 	if (AABB != nullptr && other_AABB != nullptr)
 		return AABB->Get_Overlap_X(other_AABB);
 
+	return FLT_MAX;
+}
+
+_float3 CCollider::Get_Overlap_Center_Position(const CCollider* pOther) const
+{
+	CBounding_AABB* AABB = dynamic_cast<CBounding_AABB*>(m_pBounding);
+	CBounding_AABB* other_AABB = dynamic_cast<CBounding_AABB*>(pOther->m_pBounding);
+
+	if (AABB != nullptr && other_AABB != nullptr)
+		return AABB->Get_Overlap_Center_Position(other_AABB);
+
 	//충돌 안났으면
-	return 0;
+	return _float3(FLT_MAX, FLT_MAX, FLT_MAX);
 }
 
 void CCollider::OnCollisionEnter(CCollider* other, _float fTimeDelta)

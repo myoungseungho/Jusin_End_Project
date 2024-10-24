@@ -214,6 +214,51 @@ _float CBounding_AABB::Get_Overlap_X(const CBounding_AABB* pOther) const
 		return 0;
 }
 
+_float3 CBounding_AABB::Get_Overlap_Center_Position(const CBounding_AABB* pOther) const
+{
+	// 두 AABB의 최소 및 최대 값을 계산 (X 축)
+	_float minA_x = m_pDesc->Center.x - m_pDesc->Extents.x;
+	_float maxA_x = m_pDesc->Center.x + m_pDesc->Extents.x;
+
+	_float minB_x = pOther->m_pDesc->Center.x - pOther->m_pDesc->Extents.x;
+	_float maxB_x = pOther->m_pDesc->Center.x + pOther->m_pDesc->Extents.x;
+
+	// 두 AABB의 최소 및 최대 값을 계산 (Y 축)
+	_float minA_y = m_pDesc->Center.y - m_pDesc->Extents.y;
+	_float maxA_y = m_pDesc->Center.y + m_pDesc->Extents.y;
+
+	_float minB_y = pOther->m_pDesc->Center.y - pOther->m_pDesc->Extents.y;
+	_float maxB_y = pOther->m_pDesc->Center.y + pOther->m_pDesc->Extents.y;
+
+	// X 축에서의 겹침 계산
+	_float overlapX = min(maxA_x, maxB_x) - max(minA_x, minB_x);
+	// Y 축에서의 겹침 계산
+	_float overlapY = min(maxA_y, maxB_y) - max(minA_y, minB_y);
+
+	// 겹침이 발생했는지 확인
+	if (overlapX > 0 && overlapY > 0)
+	{
+		// 겹침 사각형의 최소 점과 최대 점 계산
+		_float overlapMinX = max(minA_x, minB_x);
+		_float overlapMaxX = min(maxA_x, maxB_x);
+		_float overlapMinY = max(minA_y, minB_y);
+		_float overlapMaxY = min(maxA_y, maxB_y);
+
+		// 겹침 사각형의 중점 계산
+		_float3 center;
+		center.x = (overlapMinX + overlapMaxX) / 2.0f;
+		center.y = (overlapMinY + overlapMaxY) / 2.0f;
+		center.z = m_pDesc->Center.z; // Z축은 무시하거나 필요에 따라 설정
+
+		return { center };
+	}
+	else
+	{
+		// 겹침이 발생하지 않음, 쓰레기값으로 채우기
+		return { _float3(FLT_MAX, FLT_MAX, FLT_MAX) };
+	}
+}
+
 
 _bool CBounding_AABB::Collision_AABB(CBounding_AABB* pTargetDesc)
 {
