@@ -184,6 +184,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
+	Update_PreviousXPosition();
+
 	if (m_pGameInstance->Key_Down(DIK_F3))
 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 
@@ -291,12 +293,19 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				else //맞아서 체이스가 끝났으면 
 				{
 					m_fAccChaseTime = 0.f;
-
 					m_fGravityTime = 0.185f;
 				}
 
 			}
 
+		}
+		else
+		{
+			if (m_bChaseStoping)
+			{
+				m_bChaseStoping = false;
+				Set_Animation(m_iFallAnimationIndex);
+			}
 		}
 
 		if (m_bGrab)
@@ -725,6 +734,8 @@ _bool CPlay_Goku::Check_bCurAnimationisAirAttack(_uint iAnimation)
 void CPlay_Goku::Reset_AttackCount()
 {
 
+	__super::Reset_AttackCount();
+
 	for (size_t i = 0; i < COUNT_END; i++)
 		m_bAttackCount[i] = true;
 
@@ -876,6 +887,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
 
 		Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
+		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
+
 
 		Desc.fhitCharacter_StunTime = 0.3f;
 		Desc.iDamage = 400 * Get_DamageScale();

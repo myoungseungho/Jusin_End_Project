@@ -312,6 +312,8 @@ public:
 	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
 	void Chase_Ready(_float fTimeDelta);
+	void Set_ChaseStoping();
+	void Set_ChaseStop();
 
 	void Chase_Grab(_float fTimeDelta);
 
@@ -319,7 +321,7 @@ public:
 	void Move(_float fTimeDelta);
 	void MoveKey1Team(_float fTimeDelta);
 	void MoveKey2Team(_float fTimeDelta);
-	virtual void Reset_AttackCount() {};
+	virtual void Reset_AttackCount();
 
 
 	//피격 관련
@@ -361,12 +363,15 @@ public:
 	void Set_Grab(_bool bAir);
 
 
-	void Set_ChaseStop();
 	_ushort Get_BreakFall_AirAnimationIndex();
 	_ushort Get_JumpAirAnimationIndex();
 
 
 	_bool Get_bStun();
+	void Update_PreviousXPosition();
+	_float Get_fCalculatePreviousXPosition();
+	_float Get_fAbsCalculatePreviousXPosition();
+
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -521,7 +526,10 @@ protected:
 
 
 
+	_bool m_bChaseStoping = false;
 	_bool m_bChaseEnable = true;
+	//_bool m_bChaseAttackEnable = true;
+
 	_bool m_bGrab = false;
 	_bool m_bGrab_Air = false;
 
@@ -547,6 +555,8 @@ protected:
 
 	//class CAttackObject* m_pChaseAttackObejct = { nullptr };
 	//Set_RemoteDestory()
+
+	_float m_fPreviousX = {};
 
 
 public:

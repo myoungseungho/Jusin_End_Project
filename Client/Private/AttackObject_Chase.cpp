@@ -230,7 +230,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
 
-	if (m_pOwner->Get_bStun() == false)
+	if (m_pOwner->Get_bStun() == true)
 	{
 		
 		return;
@@ -239,21 +239,31 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	//체이스 vs 근접공격
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
-		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+		CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
+		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
+		pCharacter->Set_AnimationStop(0.5f);
 
-		m_pOwner->Set_fImpulse(-1.f);
-		m_pOwner->Set_Animation(m_pOwner->Get_JumpAirAnimationIndex());
+
+		m_pOwner->Set_fImpulse(-1.f * m_pOwner->Get_iDirection());
 		m_pOwner->Set_ForcedGravityTime_LittleUp();
 		m_pOwner->Set_ChaseStop();
-		static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")))->Add_Move({ 0.f,0.3f,0.f });
+		m_pOwner->Set_ChaseStoping();
+		//m_pOwner->Set_AnimationStop(0.1f);
+
+		m_pOwner->Set_AnimationStop(0.5f);
+
+		//m_pOwner->Set_Animation(m_pOwner->Get_JumpAirAnimationIndex());
+		//m_pOwner->
+		
+		//CTransform* pTransform = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")));
+		//pTransform->Add_Move({ 0.f,0.3f,0.f });
 
 
 		//pCharacter->Set_fImpulse(-1.f);
 		//pCharacter->Set_Animation(m_pOwner->Get_BreakFall_AirAnimationIndex());
 		//pCharacter->Set_ForcedGravityTime_LittleUp();
 
-
-
+		
 	}
 
 	//체이스 vs 사람 
@@ -277,7 +287,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 			}
 			m_pOwner->Set_ChaseStop();
-
+			m_pOwner->Set_ChaseStoping();
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
@@ -295,7 +305,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		else if (eResult == RESULT_MISS)
 		{
 			m_pOwner->Set_ChaseStop();
-
+			m_pOwner->Set_ChaseStoping();
 			return;
 
 

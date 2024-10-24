@@ -36,6 +36,7 @@ public:
 	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir) override;
 	virtual _bool isPointInAABB(const _float3& point) override;
 
+	
 private:
 	BoundingBox*				m_pOriginalDesc = { nullptr };
 	BoundingBox*				m_pDesc = { nullptr };

@@ -201,7 +201,6 @@ HRESULT CCharacter::Initialize(void* pArg)
 		FlipDirection(-1);
 	}
 
-
 	//모델 로드를 하위 클래스로 옮겼으니 각자 처리하기 
 	//m_pModelCom->SetUp_Animation(0, false);
 	//m_pModelCom->Play_Animation(0.f);
@@ -1061,6 +1060,8 @@ void CCharacter::Chase2(_float fTimeDelta)
 {
 
 
+
+
 	//디버그용 예외처리.  멈춰버리면 지랄남
 	if (fTimeDelta > 1)
 	{
@@ -1084,6 +1085,45 @@ void CCharacter::Chase2(_float fTimeDelta)
 		{
 			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
 			m_fJumpPower = fJumpPower;
+
+			//if (m_bChaseAttackEnable)
+			{
+				//공격판정 테스트
+				{
+
+					CAttackObject::ATTACK_DESC Desc{};
+
+					if (m_iPlayerTeam == 1)
+						Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+					else
+						Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+					Desc.ColliderDesc.pMineGameObject = this;
+					Desc.ColliderDesc.vCenter = { 0.f,0.5f,0.f };
+					Desc.ColliderDesc.vExtents = { 1.f,1.f,0.2f };
+
+
+					Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
+
+					Desc.fhitCharacter_StunTime = 0.6f;
+					Desc.iDamage = 300 * Get_DamageScale();
+					Desc.fLifeTime = 5.f;
+					Desc.ihitCharacter_Motion = { HitMotion::HIT_CHASE };
+
+					Desc.iTeam = m_iPlayerTeam;
+					Desc.fAnimationLockTime = 0.1f;
+					Desc.pOwner = this;
+
+					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc);
+
+					//m_pChaseAttackObejct = static_cast<CAttackObject*>(m_pGameInstance->Add_GameObject_ToLayer_AndGet(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc));
+
+
+					//m_pChaseAttackObejct = { nullptr };
+					//Set_RemoteDestory()
+
+				}
+				//m_bChaseAttackEnable = false;
+			}
 		}
 		else
 		{
@@ -1295,8 +1335,11 @@ void CCharacter::Chase2(_float fTimeDelta)
 void CCharacter::Chase_Ready(_float fTimeDelta)
 {
 	
-	
+	if (m_bChaseEnable == false)
+		return;
 
+
+	m_bChaseEnable = false;
 
 	/*
 	//반드시 Set에서 Next로 변경하고싶은데
@@ -1352,6 +1395,10 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	{
+
+
+		m_bChaseStoping = false;
+
 		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
 
 		m_bChase = true;
@@ -1372,46 +1419,17 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 	}
 	
 
-	//공격판정 테스트
-	{
-
-		CAttackObject::ATTACK_DESC Desc{};
-
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vCenter = { 0.f,0.5f,0.f };
-		Desc.ColliderDesc.vExtents = { 1.f,1.f,0.2f };
-
-
-		Desc.fhitCharacter_Impus = { 0.7f * m_iLookDirection,0.3f };
-
-		Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.iDamage = 300 * Get_DamageScale();
-		Desc.fLifeTime = 5.f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_CHASE };
-
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
-		Desc.pOwner = this;
-		
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc);
-
-		//m_pChaseAttackObejct = static_cast<CAttackObject*>(m_pGameInstance->Add_GameObject_ToLayer_AndGet(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc));
-
-
-		//m_pChaseAttackObejct = { nullptr };
-		//Set_RemoteDestory()
-
-	}
+	
 
 
 
 
 
+}
 
+void CCharacter::Set_ChaseStoping()
+{
+	m_bChaseStoping = true;
 }
 
 void CCharacter::Chase_Grab(_float fTimeDelta)
@@ -1689,7 +1707,11 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 
 }
 
-
+void CCharacter::Reset_AttackCount()
+{
+	m_bChaseEnable = true;
+	m_bAriDashEnable = true;
+}
 
 /*
 _bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
@@ -2070,10 +2092,18 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 	//땅에서 약하게 맞았을경우 가속도 최대값을 제한함
 	else if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Stand_LightAnimationIndex)
 	{
+		//음수일때 제한이 안됨
 		if (m_fImpuse.x > 0.5f)
 		{
 			m_fImpuse.x = 0.5f;
 		}
+		else if (m_fImpuse.x < -0.5f)
+		{
+			m_fImpuse.x = -0.5f;
+		}
+	
+		
+
 		m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
 
 	}
@@ -2650,7 +2680,8 @@ void CCharacter::Set_ChaseStop()
 	
 	m_fAccChaseTime = 0.f;
 	m_fGravityTime = 0.185f;
-	m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+	//m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
 	
 
 }
@@ -2672,14 +2703,193 @@ _bool CCharacter::Get_bStun()
 
 
 
+void CCharacter::Update_PreviousXPosition()
+{
+	m_fPreviousX = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+_float CCharacter::Get_fCalculatePreviousXPosition()
+{
+	return  m_fPreviousX - XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+_float CCharacter::Get_fAbsCalculatePreviousXPosition()
+{
+	return  abs(m_fPreviousX - XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION)));
+}
+
+
+
 void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	_bool debugA = true;
+	if (m_iPlayerTeam == 1 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	{
+		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
+		//pTransofrm->Add_Move({ 0.1f,0.f,0.f });
+
+
+		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+		//가속도가 높은쪽대로 이동?  공중 vs 땅이면 땅이 우선?
+
+		//1.높이비교.   공중 vs 땅인 경우 땅이 우선.    공중에 있는 캐릭이 밀려남
+		//2. 둘 다 땅인경우 속도높은쪽?  달리기가 속도로 처리하진 않을텐데  진짜 이전 x좌표 필요해?
+
+		if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
+		{
+			//이동량이 적은쪽이 밀려남 .   어느쪽으로? 겹친분량만큼?  양수방향? 음수방향?  보고있는곳의 뒤 겠지 뭐
+			//밀려난쪽은 이 이동량을 기반으로 다시 밀어내지 않게 이동량을 업데이트해줘야함
+
+
+			_float CompareMoveX = pCharacter->Get_fAbsCalculatePreviousXPosition() - Get_fAbsCalculatePreviousXPosition();
+
+			if (CompareMoveX > 0)
+			{
+				m_pTransformCom->Add_Move({ m_iLookDirection * -0.05f,0.f,0.f });
+				Update_PreviousXPosition();
+
+				pCharacter->Update_PreviousXPosition();
+			}
+			else if (CompareMoveX == 0)
+			{
+				//CTransform* pTransofrm = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
+				//pCharacter->Update_PreviousXPosition();
+
+
+
+			}
+
+
+
+		}
+
+
+	}
+	else if (m_iPlayerTeam == 2 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY)
+	{
+		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
+		//pTransofrm->Add_Move({ 0.1f,0.f,0.f });
+
+
+		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+		//가속도가 높은쪽대로 이동?  공중 vs 땅이면 땅이 우선?
+
+		//1.높이비교.   공중 vs 땅인 경우 땅이 우선.    공중에 있는 캐릭이 밀려남
+		//2. 둘 다 땅인경우 속도높은쪽?  달리기가 속도로 처리하진 않을텐데  진짜 이전 x좌표 필요해?
+
+		if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
+		{
+			_float CompareMoveX = pCharacter->Get_fAbsCalculatePreviousXPosition() - Get_fAbsCalculatePreviousXPosition();
+
+			if (CompareMoveX > 0)
+			{
+				m_pTransformCom->Add_Move({ m_iLookDirection * -0.05f,0.f,0.f });
+				Update_PreviousXPosition();
+
+				pCharacter->Update_PreviousXPosition();
+			}
+			else if (CompareMoveX == 0)
+			{
+				//CTransform* pTransofrm = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
+				//pCharacter->Update_PreviousXPosition();
+
+
+
+			}
+
+
+		}
+	}
+
 }
+
 
 void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 	_bool debugA = true;
+
+	if (m_iPlayerTeam == 1 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	{
+		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
+		//pTransofrm->Add_Move({ 0.1f,0.f,0.f });
+
+
+		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+		//가속도가 높은쪽대로 이동?  공중 vs 땅이면 땅이 우선?
+
+		//1.높이비교.   공중 vs 땅인 경우 땅이 우선.    공중에 있는 캐릭이 밀려남
+		//2. 둘 다 땅인경우 속도높은쪽?  달리기가 속도로 처리하진 않을텐데  진짜 이전 x좌표 필요해?
+
+		if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
+		{
+			//이동량이 적은쪽이 밀려남 .   어느쪽으로? 겹친분량만큼?  양수방향? 음수방향?  보고있는곳의 뒤 겠지 뭐
+			//밀려난쪽은 이 이동량을 기반으로 다시 밀어내지 않게 이동량을 업데이트해줘야함
+
+
+			_float CompareMoveX = pCharacter->Get_fAbsCalculatePreviousXPosition() - Get_fAbsCalculatePreviousXPosition();
+
+			if (CompareMoveX>0)
+			{
+				m_pTransformCom->Add_Move({ m_iLookDirection * -0.1f,0.f,0.f });
+				Update_PreviousXPosition();
+
+				pCharacter->Update_PreviousXPosition();
+			}
+			else if (CompareMoveX == 0 )
+			{
+				//CTransform* pTransofrm = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
+				//pCharacter->Update_PreviousXPosition();
+
+				
+
+			}
+
+
+
+		}
+
+	
+	}
+	else if (m_iPlayerTeam == 2 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY)
+	{
+		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
+		//pTransofrm->Add_Move({ 0.1f,0.f,0.f });
+
+
+		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+		//가속도가 높은쪽대로 이동?  공중 vs 땅이면 땅이 우선?
+
+		//1.높이비교.   공중 vs 땅인 경우 땅이 우선.    공중에 있는 캐릭이 밀려남
+		//2. 둘 다 땅인경우 속도높은쪽?  달리기가 속도로 처리하진 않을텐데  진짜 이전 x좌표 필요해?
+
+		if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
+		{
+			_float CompareMoveX = pCharacter->Get_fAbsCalculatePreviousXPosition() - Get_fAbsCalculatePreviousXPosition();
+
+			if (CompareMoveX > 0)
+			{
+				m_pTransformCom->Add_Move({ m_iLookDirection * -0.1f,0.f,0.f });
+				Update_PreviousXPosition();
+
+				pCharacter->Update_PreviousXPosition();
+			}
+			else if (CompareMoveX == 0)
+			{
+				//CTransform* pTransofrm = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
+				//pCharacter->Update_PreviousXPosition();
+
+
+
+			}
+
+
+		}
+	}
+	
 
 }
 
@@ -3025,6 +3235,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 			m_bAriDashEnable = true;
+			m_bChaseEnable = true;
 			Set_bAttackGravity(true);
 
 			if (m_bJumpLock == false)
@@ -3278,7 +3489,7 @@ HRESULT CCharacter::Ready_Components()
 		ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_BODY;
 	ColliderDesc.pMineGameObject = this;
 	ColliderDesc.vCenter = { 0.f,0.8f,0.f };
-	ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
+	ColliderDesc.vExtents = { 0.5f,0.7f,1.f };
 
 
 	//Com_Collider

@@ -205,6 +205,35 @@ _bool CBounding_AABB::isPointInAABB(const _float3& point)
     return true;
 }
 
+/*
+
+_float2 CBounding_AABB::Get_InstancingCenter(CBounding_AABB boxA, CBounding_AABB boxB)
+{
+    _float2 overlapMin = 
+    {
+          max( (boxA.m_pDesc->Center.x - boxA.m_pDesc->Extents.x ), (boxB.m_pDesc->Center.x - boxB.m_pDesc->Extents.x)),
+          max((boxA.m_pDesc->Center.y - boxA.m_pDesc->Extents.y),(boxB.m_pDesc->Center.x - boxB.m_pDesc->Extents.x))
+    };
+    _float2 overlapMax =
+    {
+          max((boxA.m_pDesc->Center.x + boxA.m_pDesc->Extents.x), (boxB.m_pDesc->Center.x + boxB.m_pDesc->Extents.x)),
+          max((boxA.m_pDesc->Center.y + boxA.m_pDesc->Extents.y), (boxB.m_pDesc->Center.x + boxB.m_pDesc->Extents.x))
+    };
+
+    _float2 overlapCenter = 
+    {
+        (overlapMin.x + overlapMax.x) / 2.0f,
+        (overlapMin.y + overlapMax.y) / 2.0f
+    };
+
+    return overlapCenter;
+}
+
+
+*/
+
+
+
 
 _bool CBounding_AABB::Collision_AABB(CBounding_AABB * pTargetDesc)
 {

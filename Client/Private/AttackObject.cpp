@@ -330,6 +330,8 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
 		_bool bDebugA = true;
+		
+
 	}
 	
 }

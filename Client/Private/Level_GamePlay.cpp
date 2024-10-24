@@ -68,7 +68,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
 	CharacterDesc.iTeam = 1;
-	CharacterDesc.ePlayerSlot = CCharacter::LPLAYER2;
+	CharacterDesc.ePlayerSlot = CCharacter::LPLAYER1;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;

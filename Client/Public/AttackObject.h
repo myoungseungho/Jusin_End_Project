@@ -62,6 +62,10 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
+	class CCharacter* Get_pOwner() { return m_pOwner; };
+
+	
+
 public:
 	//void Set_RemoteDestory();
 

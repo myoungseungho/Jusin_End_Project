@@ -393,6 +393,9 @@
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Chase">
       <UniqueIdentifier>{2e373acd-4324-41a5-b47d-c0c6272f12eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Ener">
+      <UniqueIdentifier>{5b19830a-5c89-444c-a2a6-f493c6fbb1ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
