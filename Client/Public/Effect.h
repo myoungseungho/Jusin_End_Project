@@ -103,6 +103,7 @@ public:
 	_int			m_iRenderIndex = { 0 };
 	_int			m_iPassIndex = { 1 };
 	_vector		m_vColor = {};
+	_bool			m_IsColorEffect = { true };
 
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);

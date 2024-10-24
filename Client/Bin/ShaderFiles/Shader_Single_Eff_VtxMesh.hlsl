@@ -8,6 +8,7 @@ texture2D g_AlphaTexture;
 vector g_vCamPosition;
 
 vector g_vColor;
+bool    g_bColorChange;
 
 int g_iUnique_Index = -1;
 
@@ -132,7 +133,12 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     
     float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f};
     
-    vMtrlDiffuse.rgb *= vAddColor;
+    if (g_bColorChange)
+    {
+        vMtrlDiffuse.rgb *= vAddColor;
+        vMtrlDiffuse.a = g_vColor.a;
+    }
+
 
    // Out.vDiffuse = vMtrlDiffuse;
 
@@ -140,8 +146,7 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     min(vMtrlDiffuse.r + (vMtrlDiffuse.r * 0.3f), 1.f),
     min(vMtrlDiffuse.g + (vMtrlDiffuse.g * 0.3f), 1.f),
     min(vMtrlDiffuse.b + (vMtrlDiffuse.b * 0.3f), 1.f),
-    //vMtrlDiffuse.a
-    g_vColor.a
+    vMtrlDiffuse.a
     );
 
     Out.vAlpha = vMtrlAlpha.r;
