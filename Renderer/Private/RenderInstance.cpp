@@ -155,6 +155,11 @@ _int CRenderInstance::Check_EffectLights()
 	return m_pLight_Manager->Check_EffectLights();
 }
 
+void CRenderInstance::Remove_LightDesc(string strName)
+{
+	return m_pLight_Manager->Remove_LightDesc(strName);
+}
+
 HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
 {
 	return m_pLight_Manager->Add_Light(LightDesc);
@@ -165,9 +170,14 @@ HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& Light
 	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc);
 }
 
-HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CShader* pShader, CVIBuffer_Rect* pVIBuffer, const string strName)
+HRESULT CRenderInstance::Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc)
 {
-	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName);
+	return  m_pLight_Manager->Add_Effect_Light(strKey, LightDesc);
+}
+
+HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CShader* pShader, CVIBuffer_Rect* pVIBuffer, const string strName,_float fTimeDelta)
+{
+	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName, fTimeDelta);
 }
 
 _float4 CRenderInstance::Picked_Position(_bool* pPicked)

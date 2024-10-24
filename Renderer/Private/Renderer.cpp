@@ -131,6 +131,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	m_DownWorldMatrix_Second._42 = ((ViewportDesc.Height / 2) / 2) * 1.5;
 
 	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixScaling(ViewportDesc.Width, ViewportDesc.Height, 1.f));
+
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(ViewportDesc.Width, ViewportDesc.Height, 0.f, 1.f));
 
@@ -181,30 +182,37 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	_float offsetY = 18.f;
 #ifdef _DEBUG
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL;
-
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Depth"), 100.f, 500.f, 200.0f, 200.0f)))
-	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL; 
+	/*
+		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Normal"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Depth"))))
+		return E_FAIL;
+	*/
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Depth"), 100.f, 500.f, 200.0f, 200.0f)))
+		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 600.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Shade"), 350.f, 150.f, 300.f, 300.f)))
-	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Shade"), 350.f, 150.f, 300.f, 300.f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
+		return E_FAIL;
 
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 350.f, 450.f, 300.f, 300.f)))
 	//	return E_FAIL;
@@ -483,16 +491,43 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	auto strName = m_PlayerStrNames.begin() + iCount;
 	LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, *strName);
 	
-	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName); // 수정
+	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta); // 수정
+
+
+
+
 
 	if (NULL != m_pRenderInstance->Check_EffectLights())
 	{
-		m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_EFFECT, m_pShader, m_pVIBuffer, pLightDesc->strName);
+		if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
+
+		_float4x4 viewMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW);
+		if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &viewMatrixInv)))
+			return E_FAIL;
+
+		_float4x4 projMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ);
+		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &projMatrixInv)))
+			return E_FAIL;
+
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_NormalTexture", TEXT("Target_Player_Normal"))))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Player_Depth"))))
+			return E_FAIL;
+
+		_float4 camPosition = m_pGameInstance->Get_CamPosition_Float4();
+		if (FAILED(m_pShader->Bind_RawValue("g_vCamPosition", &camPosition, sizeof(_float4))))
+			return E_FAIL;
+
+		m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_EFFECT, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta);
 	}
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
-
 
 	return S_OK;
 }
@@ -644,7 +679,7 @@ HRESULT CRenderer::Render_Lights(_float fTimeDelta)
 
 	m_pVIBuffer->Bind_Buffers();
 
-	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_BACKGROUND, m_pShader, m_pVIBuffer); // 수정
+	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_BACKGROUND, m_pShader, m_pVIBuffer,"", fTimeDelta); // 수정
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
@@ -803,12 +838,12 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 			return E_FAIL;
 		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 			return E_FAIL;
-
+		
 		//// Render Target 디버그 렌더링
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Player"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
 	}

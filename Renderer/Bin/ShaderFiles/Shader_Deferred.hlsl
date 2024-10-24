@@ -16,6 +16,9 @@ float4			g_vLightDiffuse;
 float4			g_vLightAmbient;
 float4			g_vLightSpecular;
 
+float g_fLightAccTime;
+float g_fLightLifeTime;
+
 texture2D		g_Texture;
 texture2D		g_NormalTexture;
 /* 픽셀마다 적용해야하는 재질 정보가 달랐다라면 그 픽셀을 그리는 객체들을 렌더링할 때 렌더 타겟을 추가로 생성하여 받아왔어야한다. */
@@ -245,17 +248,44 @@ PS_OUT_LIGHT PS_MAIN_POINT_PLAYER(PS_IN In)
 	/* 0 ~ 1 -> -1 ~ 1 */
     float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
 
+    	 // 앰비언트 조명
     float4 vAmbient = g_vLightAmbient * g_vMtrlAmbient;
-
     float4 vLightDir = vWorldPos - g_vLightPos;
-
     float fAtt = max(g_fLightRange - length(vLightDir), 0.0f) / g_fLightRange;
+    float shadeIntensity = max(dot(normalize(vLightDir) * -1.f, vNormal), 0.f);
+    shadeIntensity = saturate(shadeIntensity);
 
-    Out.vShade = (g_vLightDiffuse * max(dot(normalize(vLightDir) * -1.f, vNormal), 0.f) + vAmbient) * fAtt;
+    float shadeStep = 2.0f;
+    shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
 
+   // Out.vShade = (g_vLightDiffuse * shadeIntensity); //+ vAmbient; 
+
+    Out.vShade = (g_vLightDiffuse * shadeIntensity) * fAtt;
+    
     float4 vReflect = reflect(normalize(vLightDir), vNormal);
     float4 vLook = vWorldPos - g_vCamPosition;
 
+//    Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f) * fAtt;
+
+	//// 따로 죽이기위해 분리
+ //   float specularIntensity = max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f);
+	
+	////죽이기
+ //   float specularStep = 2.0f;
+ //   specularIntensity = floor(specularIntensity * specularStep) / specularStep;
+
+	//// 최소값
+ //   specularIntensity = max(specularIntensity, 0.1f);
+	
+ //   float specularThreshold = 0.8f; // 0.9 이상의 값만 스펙큘러 적용
+	
+ //   if (specularIntensity >= specularThreshold)
+ //   {
+ //       // 스펙큘러 색상 적용
+ //       Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(specularIntensity, 1.5f);
+
+ //   }
+    
     Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f) * fAtt;
 
     return Out;

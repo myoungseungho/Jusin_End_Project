@@ -44,6 +44,11 @@ LIGHT_DESC * CLight_Manager::Get_LightDesc(LIGHT_TYPE eLightType, _uint iLightIn
 	}
 }
 
+void CLight_Manager::Remove_LightDesc(string strName)
+{
+	m_EffectLights.erase(strName);
+}
+
 _int CLight_Manager::Check_EffectLights()
 {
 	return m_EffectLights.size();
@@ -76,7 +81,17 @@ HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightD
 	return S_OK;
 }
 
-HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, CVIBuffer_Rect * pVIBuffer, string strName)
+HRESULT CLight_Manager::Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc)
+{
+	CLight* pLight = CLight::Create(LightDesc);
+	if (nullptr == pLight)
+		return E_FAIL;
+
+	m_EffectLights[strKey] = pLight;
+	return S_OK;
+}
+
+HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, CVIBuffer_Rect * pVIBuffer, string strName, _float fTimeDelta)
 {
 	switch (eLightType)
 	{
@@ -88,8 +103,19 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 		m_PlayerLights[strName]->Render(pShader, pVIBuffer, 5);
 		break;
 	case LIGHT_EFFECT:
-		for (auto& pEffectLight : m_EffectLights)
-			pEffectLight.second->Render(pShader, pVIBuffer, 6);
+		for (auto it = m_EffectLights.begin(); it != m_EffectLights.end(); )
+		{
+			LIGHT_DESC* pLightDesc = it->second->Get_LightDesc();
+			pLightDesc->fAccTime += fTimeDelta;
+
+			if (pLightDesc->fAccTime > pLightDesc->fLifeTime)
+				it = m_EffectLights.erase(it);
+			else
+			{
+				it->second->Render(pShader, pVIBuffer, 6);
+				++it;
+			}
+		}
 		break;
 	}
 
