@@ -36,8 +36,9 @@ private:
 	string EffectLayerKey;
 	wstring EffectName;
 	_bool m_isInitialize = { false };
-
 	_float SelectCurTime = { 0.f };
+	wstring PreLayer;
+	wstring CurLayer;
 
 public:
 	static CIMGUI_Effect_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

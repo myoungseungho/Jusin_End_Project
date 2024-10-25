@@ -582,6 +582,14 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 {
                     selectedLayerIndex = i;
                     selectedLayerName = LayerList[i]; // 선택된 레이어 이름을 저장
+                    CurLayer = selectedLayerName;
+
+                    if (CurLayer != PreLayer)
+                    {
+                        openColorWindow = false;
+                        PreLayer = CurLayer;
+                    }
+
                     m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
                 }
                 if (isSelected)
