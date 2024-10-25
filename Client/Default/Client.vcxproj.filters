@@ -801,7 +801,9 @@
     <ClInclude Include="..\Public\SpaceSun.h">
       <Filter>02.GameObjects\Map\Space\Sun</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Define.h" />
+    <ClInclude Include="UI_Define.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

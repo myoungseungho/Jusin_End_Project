@@ -4,6 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
+#include "UI_Define.h"
 #include "Character.h"
 #include "Main_Camera.h"
 
@@ -374,19 +375,19 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
 	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
-	CCharacter::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
 
 	switch (PlayerID)
 	{
-	case Client::CCharacter::GOKU:
+	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_HEAVY, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
-	case Client::CCharacter::ANDROID21:
+	case Client::CUI_Define::ANDROID21:
 		break;
-	case Client::CCharacter::BUU:
+	case Client::CUI_Define::BUU:
 		break;
-	case Client::CCharacter::HIT:
+	case Client::CUI_Define::HIT:
 		break;
 	}
 }
@@ -397,19 +398,19 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
 	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
-	CCharacter::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
 
 	switch (PlayerID)
 	{
-	case Client::CCharacter::GOKU:
+	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
-	case Client::CCharacter::ANDROID21:
+	case Client::CUI_Define::ANDROID21:
 		break;
-	case Client::CCharacter::BUU:
+	case Client::CUI_Define::BUU:
 		break;
-	case Client::CCharacter::HIT:
+	case Client::CUI_Define::HIT:
 		break;
 	}
 }
@@ -419,19 +420,19 @@ void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
 	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
-	CCharacter::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
 
 	switch (PlayerID)
 	{
-	case Client::CCharacter::GOKU:
+	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_AIR_SMASH, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
-	case Client::CCharacter::ANDROID21:
+	case Client::CUI_Define::ANDROID21:
 		break;
-	case Client::CCharacter::BUU:
+	case Client::CUI_Define::BUU:
 		break;
-	case Client::CCharacter::HIT:
+	case Client::CUI_Define::HIT:
 		break;
 	}
 }
