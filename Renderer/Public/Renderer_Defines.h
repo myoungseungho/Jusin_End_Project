@@ -10,7 +10,10 @@
 
 namespace Renderer
 {
-	
+	typedef struct
+	{
+		float fBlurValue = {3.2f};
+	}RENDER_EFFECT_DESC;
 }
 
 using namespace Renderer;

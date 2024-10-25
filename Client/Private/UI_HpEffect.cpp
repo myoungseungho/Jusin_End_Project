@@ -68,7 +68,7 @@ void CUI_HpEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this);
 }
 
 HRESULT CUI_HpEffect::Render(_float fTimeDelta)

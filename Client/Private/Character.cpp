@@ -226,6 +226,11 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 	m_tCharacterDesc.ePlayerID = m_eCharacterID;
 
+	if (m_pGameInstance->Key_Pressing(DIK_F6) && m_ePlayerSlot == CUI_Define::LPLAYER1)
+	{
+		m_iHP -= 100;
+	}
+
 }
 
  void CCharacter::Update(_float fTimeDelta)
@@ -3212,6 +3217,35 @@ HRESULT CCharacter::Bind_ShaderResources()
 
 void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
 {
+
+
+	if (m_iLookDirection == -1)
+	{
+		switch (eDirInput)
+		{
+		case Client::MOVEKEY_LEFT:
+			eDirInput = MOVEKEY_RIGHT;
+			break;
+		case Client::MOVEKEY_RIGHT:
+			eDirInput = MOVEKEY_LEFT;
+			break;
+		case Client::MOVEKEY_UP_LEFT:
+			eDirInput = MOVEKEY_UP_RIGHT;
+			break;
+		case Client::MOVEKEY_UP_RIGHT:
+			eDirInput = MOVEKEY_UP_LEFT;
+			break;
+		case Client::MOVEKEY_DOWN_LEFT:
+			eDirInput = MOVEKEY_DOWN_RIGHT;
+			break;
+		case Client::MOVEKEY_DOWN_RIGHT:
+			eDirInput = MOVEKEY_DOWN_LEFT;
+			break;
+		default:
+			break;
+		}
+	}
+
 	m_pUI_Manager->m_eDirInput = eDirInput;
 	m_pUI_Manager->m_eBtnInput = eBtnInput;
 }

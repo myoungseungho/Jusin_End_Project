@@ -185,7 +185,7 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
 
-    Out.vColor = saturate(vResult + vBlur * 3.2f) /*+ vEffect*/;
+    Out.vColor = saturate(vResult + vBlur * 5.2f) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
 
