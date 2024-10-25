@@ -181,6 +181,9 @@
     <ClCompile Include="..\Private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\UI\BackGround</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\AttackObject_Grab.cpp">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Grab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -770,6 +773,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\AttackObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject_Grab.h">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Grab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

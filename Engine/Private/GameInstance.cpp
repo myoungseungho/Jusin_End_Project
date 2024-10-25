@@ -82,7 +82,7 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	//임시, 테스트
 	m_pObject_Manager->Player_Update(fTimeDelta);
 
-	m_pObject_Manager->Priority_Update(fTimeDelta);
+	//m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
 
@@ -93,6 +93,9 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pCollider_Manager->Update(fTimeDelta);
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
+
+	//?
+	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pLevel_Manager->Update(fTimeDelta);
 }

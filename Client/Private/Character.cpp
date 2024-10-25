@@ -793,10 +793,20 @@ void CCharacter::ShowInputBuffer()
    	_bool bDebug = true;
 }
 
-void CCharacter::DebugPositionReset()
+void CCharacter::DebugPositionReset(_short iDirection)
 {
 	_float fHegiht = Get_fHeight();
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (_float)m_iPlayerTeam,fHegiht,0,1 });
+
+	if(iDirection ==0)
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (_float)m_iPlayerTeam,fHegiht,0,1 });
+	else if (iDirection == -1)
+	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -10.5f+(_float)m_iPlayerTeam,fHegiht,0,1 });
+	}
+	else 
+	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 10.f + (_float)m_iPlayerTeam,fHegiht,0,1 });
+	}
 
 }
 
@@ -1415,7 +1425,15 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 		return;
 	}
 
+	//잡기 성공시 적을 추적하지 않음
+	if (m_pModelCom->m_fCurrentAnimPosition > 25)
+	{
 
+		
+
+
+		return;
+	}
 	
 
 	//준비자세면 이렇게 한다.
@@ -1488,6 +1506,40 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 
 
 }
+
+
+void CCharacter::Character_Attack_Grab(_float fTimeDelta)
+{
+	//공격중인경우
+	//if(m_pModelCom->m_fCurrentAnimPosition > 50 || m_pModelCom->m_fCurrentAnimPosition < 270)
+	if (m_pModelCom->m_fCurrentAnimPosition > 120 && m_pModelCom->m_fCurrentAnimPosition < 138)
+	{
+		
+		//우다다 횟수 소모할때까지 공격.   
+		if (m_iGrabLoof > 0)
+		{
+			cout << m_iGrabLoof << endl;
+			m_iGrabLoof--;
+			m_pModelCom->CurrentAnimationPositionJump(26.f);
+		}
+		else //다 썻으면 현재 상태에 따라 마지막 공격
+		{
+			m_bGrab = false;
+
+			//if (m_bGrab_Air)
+			//{
+			//	Set_Animation(m_iAttack_Air3);
+			//}
+			//else
+			{
+				Set_Animation(m_iAttack_Heavy);
+			}
+
+		}
+	}
+
+}
+
 
 void CCharacter::Move(_float fTimeDelta)
 {
@@ -1871,6 +1923,7 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 	m_bStun = true;
 
 	m_fMaxStunTime = fStunTime;
+	m_fAccStunTime = 0.f;
 
 	Set_HitAnimation(eAnimation, Impus);
 	Set_AnimationStop(fStopTime);
@@ -1948,6 +2001,29 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		break;
 	case Client::HitMotion::HIT_HEAVY:
 		break;
+	case Client::HitMotion::HIT_HEAVY_DOWN:
+	{
+	
+		if (Get_fHeight() > 0)
+		{
+			Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
+			Set_ForcveGravityTime(0.3f);
+			//Set_CurrentAnimationPositionJump(17.f);
+
+
+		}
+		else
+		{
+			Add_Move({ 0.f,0.1f });
+			Set_Animation(m_iHit_Air_LightAnimationIndex, false);
+			Set_ForcedGravityDown();
+
+			Set_CurrentAnimationPositionJump(58.f);
+		}
+
+
+	}
+		break;
 	case Client::HitMotion::HIT_CROUCH_MEDIUM:
 	{
 		Set_Animation(m_iHit_Air_FallAnimationIndex);
@@ -1968,6 +2044,13 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_ForcedGravityTime_LittleUp();
 	}
 		break;
+
+	case Client::HitMotion::HIT_KNOCK_AWAY_LEFTDOWN:
+	{
+		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
+		Set_ForcedGravityTime_LittleUp();
+	}
+	break;
 	case Client::HitMotion::HIT_SPIN_AWAY_LEFTUP:
 	{
 		Set_Animation(m_iHit_Air_Spin_LeftUp, false);
@@ -2050,8 +2133,41 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 	//그 외에 맞고서 강하게 날라가는 중에는 전용 가속도를 받음
 	else
+	{
 		m_pTransformCom->Add_Move({ m_fImpuse.x *fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
 
+		//벽에 튕길 수 있는 공격
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
+		{
+			
+			//거리가 멀어져서 생긴 가상의 벽
+			//if ( fabsf(Get_fPositionX() - m_pDebugEnemy->Get_fPositionX()) > 8)
+			if (  Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pDebugEnemy->Get_fPositionX()) > 8 )
+			{
+				Set_Animation(m_iHit_WallBouce);
+				
+				Set_AnimationStop(0.2f);
+				
+				//playingAnimation == false 에서 처리?
+				//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
+
+
+				//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
+				Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+				
+				//Set_ForcedGravityTime_LittleUp();
+				Set_ForcveGravityTime(0.f);
+				
+
+				//새로운 스턴
+				m_fMaxStunTime = 1.f;
+				m_fAccStunTime = 0.f;
+
+
+			}
+
+		}
+	}
 
 
 }
@@ -2094,6 +2210,9 @@ void CCharacter::Set_BreakFall_Ground()
 
 void CCharacter::BreakFall_Air()
 {
+	if (m_bStun)
+		return;
+
 	//땅바닥에서 질질 끌리는 모션도 공중피격이라 조건 추가해야함
 	if (Check_bCurAnimationisAirHit() && m_bHitGroundSmashed == false)
 	{
@@ -2330,6 +2449,11 @@ _bool CCharacter::Guard_Check2(AttackType eAttackType)
 	}
 }
 */
+
+void CCharacter::Set_GrabLoofCount(_ushort iLoofCount)
+{
+	m_iGrabLoof = iLoofCount;
+}
 
 AttackColliderResult CCharacter::Guard_Check3(AttackType eAttackType)
 {
@@ -2663,6 +2787,11 @@ _float CCharacter::Get_fAbsCalculatePreviousXPosition()
 void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
+	//잡기중에는 겹쳐도 됨
+	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed())
+		return;
+
+
 	_bool debugA = true;
 	if (m_iPlayerTeam == 1 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
@@ -2677,19 +2806,39 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//{
 		//	pCharacter->G
 		//}
-		if (m_bStun == true || Check_bCurAnimationisAirHit())
+
+
+
+		_float fMyabsPos = fabsf(Get_fPositionX());
+		_float fCharacterabsPos = fabsf(pCharacter->Get_fPositionX());
+
+		if (fMyabsPos > 11.f || fCharacterabsPos > 11.f)
+		{
+			if (fMyabsPos < fCharacterabsPos)
+			{
+				//얼마나 밀리는가? 겹친만큼? 
+				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+			}
+
+		}
+
+		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
 
-
 		//둘 다 stun상태가 아니고, 땅에있으면
 		else //if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
 		{
+
+
+
+			//누구 하나 벽에있으면 벽 우선, 절대값이 작은 사람이 밀림.
+
+			
+
 			//이동량이 적은쪽이 밀려남 .   어느쪽으로? 겹친분량만큼?  양수방향? 음수방향?  보고있는곳의 뒤 겠지 뭐
 			//밀려난쪽은 이 이동량을 기반으로 다시 밀어내지 않게 이동량을 업데이트해줘야함
-
-
 			_float CompareMoveX = pCharacter->Get_fAbsCalculatePreviousXPosition() - Get_fAbsCalculatePreviousXPosition();
 
 			if (CompareMoveX > 0)
@@ -2726,16 +2875,46 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		//1.높이비교.   공중 vs 땅인 경우 땅이 우선.    공중에 있는 캐릭이 밀려남
 		//2. 둘 다 땅인경우 속도높은쪽?  달리기가 속도로 처리하진 않을텐데  진짜 이전 x좌표 필요해?
+		_float fMyabsPos = fabsf(Get_fPositionX());
+		_float fCharacterabsPos = fabsf(pCharacter->Get_fPositionX());
 
-		if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (fMyabsPos > 11.f || fCharacterabsPos > 11.f)
+		{
+			if (fMyabsPos < fCharacterabsPos)
+			{
+				//얼마나 밀리는가? 겹친만큼? 
+				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+			}
+
+		}
+
+		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
 
+		
 
 		//둘 다 stun상태가 아니고, 땅에있으면
 		else //if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
 		{
+
+
+			//누구 하나 벽에있으면 벽 우선, 절대값이 작은 사람이 밀림.
+
+			_float fMyabsPos = fabsf(Get_fPositionX());
+			_float fCharacterabsPos = fabsf(pCharacter->Get_fPositionX());
+
+			if (fMyabsPos > 11.f || fCharacterabsPos > 11.f)
+			{
+				if (fMyabsPos < fCharacterabsPos)
+				{
+					//얼마나 밀리는가? 겹친만큼? 
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other)  ,0.f,0.f });
+				}
+
+			}
+
 			//이동량이 적은쪽이 밀려남 .   어느쪽으로? 겹친분량만큼?  양수방향? 음수방향?  보고있는곳의 뒤 겠지 뭐
 			//밀려난쪽은 이 이동량을 기반으로 다시 밀어내지 않게 이동량을 업데이트해줘야함
 
@@ -2769,8 +2948,13 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-	_bool debugA = true;
 
+	//잡기중에는 겹쳐도 됨
+	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed())
+		return;
+
+
+	_bool debugA = true;
 	if (m_iPlayerTeam == 1 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
@@ -2784,19 +2968,39 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 		//{
 		//	pCharacter->G
 		//}
-		if (m_bStun == true || Check_bCurAnimationisAirHit())
+
+
+
+		_float fMyabsPos = fabsf(Get_fPositionX());
+		_float fCharacterabsPos = fabsf(pCharacter->Get_fPositionX());
+
+		if (fMyabsPos > 11.f || fCharacterabsPos > 11.f)
+		{
+			if (fMyabsPos < fCharacterabsPos)
+			{
+				//얼마나 밀리는가? 겹친만큼? 
+				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+			}
+
+		}
+
+		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
 
-
 		//둘 다 stun상태가 아니고, 땅에있으면
 		else //if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
 		{
+
+
+
+			//누구 하나 벽에있으면 벽 우선, 절대값이 작은 사람이 밀림.
+
+
+
 			//이동량이 적은쪽이 밀려남 .   어느쪽으로? 겹친분량만큼?  양수방향? 음수방향?  보고있는곳의 뒤 겠지 뭐
 			//밀려난쪽은 이 이동량을 기반으로 다시 밀어내지 않게 이동량을 업데이트해줘야함
-
-
 			_float CompareMoveX = pCharacter->Get_fAbsCalculatePreviousXPosition() - Get_fAbsCalculatePreviousXPosition();
 
 			if (CompareMoveX > 0)
@@ -2833,16 +3037,46 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 
 		//1.높이비교.   공중 vs 땅인 경우 땅이 우선.    공중에 있는 캐릭이 밀려남
 		//2. 둘 다 땅인경우 속도높은쪽?  달리기가 속도로 처리하진 않을텐데  진짜 이전 x좌표 필요해?
+		_float fMyabsPos = fabsf(Get_fPositionX());
+		_float fCharacterabsPos = fabsf(pCharacter->Get_fPositionX());
 
-		if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (fMyabsPos > 11.f || fCharacterabsPos > 11.f)
+		{
+			if (fMyabsPos < fCharacterabsPos)
+			{
+				//얼마나 밀리는가? 겹친만큼? 
+				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+			}
+
+		}
+
+		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
 
 
+
 		//둘 다 stun상태가 아니고, 땅에있으면
 		else //if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
 		{
+
+
+			//누구 하나 벽에있으면 벽 우선, 절대값이 작은 사람이 밀림.
+
+			_float fMyabsPos = fabsf(Get_fPositionX());
+			_float fCharacterabsPos = fabsf(pCharacter->Get_fPositionX());
+
+			if (fMyabsPos > 11.f || fCharacterabsPos > 11.f)
+			{
+				if (fMyabsPos < fCharacterabsPos)
+				{
+					//얼마나 밀리는가? 겹친만큼? 
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other)  ,0.f,0.f });
+				}
+
+			}
+
 			//이동량이 적은쪽이 밀려남 .   어느쪽으로? 겹친분량만큼?  양수방향? 음수방향?  보고있는곳의 뒤 겠지 뭐
 			//밀려난쪽은 이 이동량을 기반으로 다시 밀어내지 않게 이동량을 업데이트해줘야함
 
@@ -2872,14 +3106,28 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 		}
 	}
 
-	
-
 }
 
 void CCharacter::OnCollisionExit(CCollider* other)
 {
 	_bool debugA = true;
 
+}
+
+_float CCharacter::Get_fPositionX()
+{
+	return 	XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+
+void CCharacter::Set_bGrabbed(_bool bGrabbed)
+{
+	m_bGrabbed = bGrabbed;
+}
+
+_bool CCharacter::Get_bGrabbed()
+{
+	return m_bGrabbed;
 }
 
 
@@ -2898,6 +3146,16 @@ void CCharacter::Set_bRedHP(_bool bRedHP)
 
 	 m_bRedHp = bRedHP; 
 	 m_tCharacterDesc.bStun = m_bRedHp;
+}
+
+void CCharacter::Set_GrabAnimation()
+{
+	Set_Animation(m_iGrabAnimationIndex);
+}
+
+void CCharacter::Add_Move(_float2 fMovement)
+{
+	m_pTransformCom->Add_Move({ fMovement.x, fMovement.y,0 });
 }
 
 
@@ -2935,7 +3193,7 @@ _bool CCharacter::Check_bCurAnimationisHitAway(_uint iAnimation)
 
 
 
-	if (iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex )
+	if (iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex || iModelIndex == m_iHit_Away_LeftDownAnimationIndex)
 	{
 		return true;
 	}
@@ -2958,6 +3216,23 @@ _bool CCharacter::Check_bCurAnimationisGuard(_uint iAnimation)
 
 	return false;
 }
+
+_bool CCharacter::Check_bCurAnimationisGrab(_uint iAnimation)
+{
+	//_uint iModelIndex = iAnimation;
+	//if (iAnimation == 1000)
+
+	_uint iModelIndex = iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+	if (iModelIndex == m_iGrabAnimationIndex || iModelIndex == m_iGrabReadyAnimationIndex)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition)
 {
@@ -3100,7 +3375,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground ||
-			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp ||
+			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce||
 			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex)
 		{
 
@@ -3133,7 +3408,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			//HitAway가 아니고, Upper도 아니여야됨
 
 			//if(Check_bCurAnimationisHitAway() == false )
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp)
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce)
 			{
 				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y * fTimeDelta,0 });
 			}
@@ -3276,6 +3551,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 		if (m_bHitGroundSmashed == false)
 		{
 			m_bStun = false;
+			m_fAccStunTime = 0.f;
 		}
 		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
 
