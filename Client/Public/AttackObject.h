@@ -46,6 +46,8 @@ public:
 		_bool		bGroundSmash = { false};
 		//_bool		bGainAttackStep = { true };
 		_ushort		iGainAttackStep = { 1 };
+
+		_bool		bGrabbedEnd = { false };
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -63,7 +65,7 @@ public:
 
 
 	class CCharacter* Get_pOwner() { return m_pOwner; };
-
+	AttackType		Get_AttackType() { return m_eAttackType; };
 	
 
 public:
@@ -121,6 +123,7 @@ protected:
 
 
 	_bool		m_bEnableDestory = true;
+	_bool		m_bGrabbedEnd = { false };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

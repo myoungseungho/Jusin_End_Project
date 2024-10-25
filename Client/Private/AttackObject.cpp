@@ -58,6 +58,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bOwnerNextAnimation = pDesc->bOwnerNextAnimation;
 	m_iOnwerNextAnimationIndex = pDesc->iOnwerNextAnimationIndex;
 
+	m_bGrabbedEnd = pDesc->bGrabbedEnd;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -290,7 +292,32 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//어퍼 맞았을 때
 				Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
+			if (m_bGrabbedEnd)
+				pCharacter->Set_bGrabbed(false);
+			
 
+			//어퍼컷/올려차기의 경우  정지시간이 긴 공격들은 위치조정
+			if(m_ihitCharacter_Motion == HIT_KNOCK_AWAY_UP  && m_fAnimationLockTime >0.3f)
+			{
+
+				_float fCharacterHeight = pCharacter->Get_fHeight();
+				_float fOnwerHeight = m_pOwner->Get_fHeight();
+
+				//공중에서는 어퍼연출 없음
+				if (fCharacterHeight > 2)
+				{
+
+				}
+
+				//피격자의 높이가 공격자보다 낮은경우 좀 위로 조정
+				else if (fCharacterHeight < fOnwerHeight + 1.f)
+				{
+					//둘 사이의 거리가 0.1이라고 할때    0.1+0.2f니까
+					pCharacter->Add_Move({ 0, fOnwerHeight - fCharacterHeight + 1.f });
+
+				}
+
+			}
 
 			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
 

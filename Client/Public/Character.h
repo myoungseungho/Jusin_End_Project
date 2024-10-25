@@ -236,6 +236,7 @@ public:
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
 
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
+	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
 
 
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition = 0);
@@ -272,7 +273,7 @@ public:
 
 	//디버그용 코드 
 	virtual void ShowInputBuffer();
-	virtual void DebugPositionReset();
+	virtual void DebugPositionReset(_short iDirection = 0);
 
 
 
@@ -314,6 +315,8 @@ public:
 	void Set_ChaseStop();
 
 	void Chase_Grab(_float fTimeDelta);
+	void Character_Attack_Grab(_float fTimeDelta);
+
 
 
 	void Move(_float fTimeDelta);
@@ -343,7 +346,7 @@ public:
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
 	_float Get_DamageScale();
-
+	void Set_GrabLoofCount(_ushort iLoofCount);
 
 	void Set_GroundSmash(_bool bSmash);
 	//void Guard_Update();   //서브캐릭터용도로 써야하나?
@@ -369,7 +372,14 @@ public:
 	void Update_PreviousXPosition();
 	_float Get_fCalculatePreviousXPosition();
 	_float Get_fAbsCalculatePreviousXPosition();
+	_float Get_fPositionX();
 
+	void Set_bGrabbed(_bool bGrabbed);
+	_bool Get_bGrabbed();
+	void Set_GrabAnimation();  //외부에서 호출해야하는데 각자 다르므로?
+
+
+	void Add_Move(_float2 fMovement);
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -442,6 +452,9 @@ protected:
 
 	_ushort m_iHit_Away_LeftAnimationIndex = { 33 };
 	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
+	_ushort m_iHit_Away_LeftDownAnimationIndex = { 39 };
+
+	_ushort m_iHit_WallBouce = {34};
 
 	_ushort m_iHit_Air_Spin_LeftUp = {31};
 
@@ -461,6 +474,8 @@ protected:
 	_ushort m_iAttack_Air2 = { 53 };
 	_ushort m_iAttack_Air3 = { 54 };
 	_ushort m_iAttack_AirUpper = { 55 };
+
+	_ushort m_iAttack_Heavy = {45};
 
 	_ushort m_iAttack_LightLast = {47};
 
@@ -546,6 +561,10 @@ protected:
 	//_bool m_bGuard = { false };
 
 
+	_float m_fPreviousX = {};
+
+	_bool	m_bGrabbed = { false };
+	_ushort m_iGrabLoof = 3;
 
 
 
@@ -559,7 +578,6 @@ protected:
 	//class CAttackObject* m_pChaseAttackObejct = { nullptr };
 	//Set_RemoteDestory()
 
-	_float m_fPreviousX = {};
 
 
 public:
@@ -586,6 +604,7 @@ public:
 
 
 	//UI에서 써야하는 정보 
+	
 
 private:
 	_uint					m_iComboCount = { 0 };

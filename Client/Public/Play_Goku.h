@@ -79,7 +79,7 @@ public:
 		ANIME_HIT_HEAVY_AWAY_SPIN_LEFTUP = 31,
 		ANIME_HIT_HEAVY_AWAY_SPIN_LEFT = 32,
 
-		ANIME_HIT_WALLBOUCE = 34,				//076.  이 다음 062(26번 ANIME_HIT_FALL_UPPER)로 연계됨
+		ANIME_HIT_WALLBOUNCE = 34,				//076.  이 다음 062(26번 ANIME_HIT_FALL_UPPER)로 연계됨
 
 
 		ANIME_LAYUP = 27,
@@ -101,8 +101,8 @@ public:
 
 		
 		ANIME_GRAB_READY = 17,  //038 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
-		ANIME_GRAB = 60//304 60 드래곤러시
-
+		ANIME_GRAB = 60, //304 60 드래곤러시    duration 40~130은 공격  23에서 275로 이동함  5~20쯤에서 공격판정하고 성공시 40으로 이동하기
+		//ANIME_GRAB_RUSH = 61 // 306cs
 
 		
 		//301 58 패링
