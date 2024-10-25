@@ -117,7 +117,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	if (m_currentPointIndex + 1 < m_mapPoints[m_AnimationIndex].size())
 		nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
 	else
-		// 다음 포인트가 없으면 currentPoint를 사용
 		nextPoint = currentPoint;
 
 	m_elapsedTime += fTimeDelta;
@@ -130,17 +129,14 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 
 		if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size())
 		{
-			// 모든 포인트의 Duration이 끝나면 Play 모드 종료
 			Stop();
 			return;
 		}
 
-		// 현재 포인트와 다음 포인트 재설정
 		currentPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex];
 		if (m_currentPointIndex + 1 < m_mapPoints[m_AnimationIndex].size())
 			nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
 		else
-			// 다음 포인트가 없으면 currentPoint를 사용
 			nextPoint = currentPoint;
 	}
 
@@ -157,7 +153,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		t = AdjustT_Damping(t, currentPoint.damping);
 		break;
 	case InterpolationType::INTERPOLATION_SKIP_MODE:
-		// Skip 보간: 즉시 다음 포인트로 이동
 		t = 1.0f;
 		break;
 	}
@@ -190,7 +185,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	BOOL decomposeResult = XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, modelWorldMatrix);
 	if (!decomposeResult)
 	{
-		// 분해 실패 시 기본 회전과 위치 설정
 		modelRotationQuat = XMQuaternionIdentity();
 		modelTranslation = XMVectorZero();
 	}
@@ -202,57 +196,32 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 
 	// **4. 로컬 포지션을 월드 포지션으로 변환**
 	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrixNoScale);
-	_vector interpolatedRotationLocal = XMVectorZero();
+
+	// **2. 로컬 회전 보간 (Quaternion Slerp 사용)**
+	_vector interpolatedRotationLocal;
+	if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
+	{
+		_vector q1 = XMLoadFloat4(&currentPoint.rotation);
+		_vector q2 = XMLoadFloat4(&nextPoint.rotation);
+		interpolatedRotationLocal = XMQuaternionSlerp(q1, q2, t);
+	}
+	else
+	{
+		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
+	}
 
 	// **direction에 따른 회전 조정**
 	if (direction == -1)
 	{
-		// **5. 카메라가 동일한 대상을 바라보도록 회전 재계산**
-
-		// 대상의 월드 위치를 currentPoint.pWorldFloat4x4에서 추출
-		_matrix targetWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
-
-		// 대상의 위치는 행렬의 4번째 행
-		_vector targetPositionWorld = targetWorldMatrix.r[3]; // 또는 XMVectorSetW(targetWorldMatrix.r[3], 1.0f);
-
-		// 새로운 바라보는 방향 계산
-		_vector lookDir = XMVector3Normalize(targetPositionWorld - interpolatedPositionWorld);
-
-		// 업 벡터 정의
-		_vector upDir = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-
-		// 오른쪽 벡터 계산
-		_vector rightDir = XMVector3Normalize(XMVector3Cross(upDir, lookDir));
-
-		// 업 벡터 재계산
-		upDir = XMVector3Cross(lookDir, rightDir);
-
-		// 회전 행렬 구성
-		_matrix rotationMatrix;
-		rotationMatrix.r[0] = XMVectorSetW(rightDir, 0.0f);
-		rotationMatrix.r[1] = XMVectorSetW(upDir, 0.0f);
-		rotationMatrix.r[2] = XMVectorSetW(lookDir, 0.0f);
-		rotationMatrix.r[3] = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
-
-		// 회전 quaternion으로 변환
-		interpolatedRotationLocal = XMQuaternionRotationMatrix(rotationMatrix);
-	}
-	else
-	{
-		// **2. 로컬 회전 보간 (Quaternion Slerp 사용)**
-		if (currentPoint.interpolationType != InterpolationType::INTERPOLATION_SKIP_MODE)
-		{
-			_vector q1 = XMLoadFloat4(&currentPoint.rotation);
-			_vector q2 = XMLoadFloat4(&nextPoint.rotation);
-			interpolatedRotationLocal = XMQuaternionSlerp(q1, q2, t);
-		}
-		else
-		{
-			interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
-		}
+		// 회전 쿼터니언의 X 및 Z 성분 부호 반전
+		interpolatedRotationLocal = XMVectorSet(
+			-XMVectorGetX(interpolatedRotationLocal),
+			XMVectorGetY(interpolatedRotationLocal),
+			-XMVectorGetZ(interpolatedRotationLocal),
+			XMVectorGetW(interpolatedRotationLocal));
 	}
 
-	// **6. 로컬 회전을 월드 회전으로 변환 (스케일링 영향 제거)**
+	// **6. 로컬 회전을 월드 회전으로 변환**
 	_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(interpolatedRotationLocal);
 
 	// 월드 회전 행렬 계산
@@ -359,7 +328,7 @@ void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay)
 
 	m_currentMode = CAMERA_CINEMATIC_MODE;
 	m_currentPlayMode = Playing;
-	
+
 	m_bIsImguiPlay = isImguiPlay;
 	//플레이를 하면 여기로
 	Move_Point(0, m_AnimationIndex);
