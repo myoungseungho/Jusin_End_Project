@@ -42,10 +42,10 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_FREE:
 			name = "Camera_Free";
 			break;
-		case VIRTUAL_CAMERA_SON_SKILL_1:
+		case VIRTUAL_CAMERA_SON_Heavy:
 			name = "Camera_Son_Skill_1";
 			break;
-		case VIRTUAL_CAMERA_SON_SKILL_2:
+		case VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP:
 			name = "Camera_Son_Skill_2";
 			break;
 		case VIRTUAL_CAMERA_HIT_SKILL_1:
@@ -72,8 +72,8 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		m_vecVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
 	}
 
-	stringToSkillID["Son_Skill1"] = VIRTUAL_CAMERA_SON_SKILL_1;
-	stringToSkillID["Son_Skill2"] = VIRTUAL_CAMERA_SON_SKILL_2;
+	stringToSkillID["Son_Skill1"] = VIRTUAL_CAMERA_SON_Heavy;
+	stringToSkillID["Son_Skill2"] = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
 	stringToSkillID["Hit_Skill1"] = VIRTUAL_CAMERA_HIT_SKILL_1;
 	stringToSkillID["Mine_Skill1"] = VIRTUAL_CAMERA_MINE_SKILL_1;
 	stringToSkillID["Mine_Skill2"] = VIRTUAL_CAMERA_MINE_SKILL_2;
@@ -306,9 +306,9 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 
 	else if (modelID == 1) { // MODELID_SON
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_SON_SKILL_1;
+			index = VIRTUAL_CAMERA_SON_Heavy;
 		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_SON_SKILL_2;
+			index = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
 	}
 	else if (modelID == 2) { // MODELID_HIT
 		if (skillID == 0)
@@ -347,7 +347,8 @@ void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 {
 	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
 	//Test¿ë
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SKILL_1]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_Heavy]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()

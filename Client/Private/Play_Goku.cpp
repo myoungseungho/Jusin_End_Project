@@ -899,7 +899,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.7f;
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);

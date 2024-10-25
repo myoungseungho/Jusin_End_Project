@@ -29,7 +29,15 @@ SkillName: Son_Skill2
 
 [Animation]
 AnimationName: Son_Skill2_Anim1
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.00682822 0.106377 -2.81669
+Rotation: -0.248677 0.0290834 0.00747053 0.968121
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Son_Skill2_Anim2

@@ -280,12 +280,17 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
 			if (m_ihitCharacter_Motion == HIT_KNOCK_AWAY_LEFT || m_ihitCharacter_Motion == HIT_SPIN_AWAY_LEFTUP)
-			{
 				//강공격 맞았을 때 카메라 셋팅
 				Camera_Hit_Knock_Away_Left(m_pOwner, pCharacter);
-			}
+			else if (m_ihitCharacter_Motion == HIT_KNOCK_AWAY_UP)
+				//어퍼 맞았을 때
+				Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
+			else if (m_bGroundSmash == true)
+				//공중에서 바닥으로 내려찍을 때
+				Camera_GroundSmash(m_pOwner, pCharacter);
 
-			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
+
+				m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
 
 
 			if (m_bOwnerNextAnimation)
@@ -367,16 +372,13 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 {
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
-	//어떤 카메라의 애니메이션에 따라 존재하는 포인트들을 재생한다
-	//모델과 스킬 정보, 몇번째 애니메이션 인지 
-
 	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
 	CCharacter::PLAYER_ID PlayerID = characterDesc.ePlayerID;
 
 	switch (PlayerID)
 	{
 	case Client::CCharacter::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_SKILL_1, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_Heavy, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	case Client::CCharacter::ANDROID21:
@@ -387,6 +389,34 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 	case Client::CCharacter::HIT:
 		break;
 	}
+}
+
+void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CCharacter::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CCharacter::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
+		break;
+	case Client::CCharacter::ANDROID21:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_SKILL_2, 0);
+		break;
+	case Client::CCharacter::BUU:
+		break;
+	case Client::CCharacter::HIT:
+		break;
+	}
+}
+
+void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+
 }
 
 
