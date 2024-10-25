@@ -99,6 +99,9 @@ HRESULT CUI_LoadingMark::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 CUI_LoadingMark* CUI_LoadingMark::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -163,7 +163,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
         size_t lastDotPos = relativePath.find_last_of('.');
 
         std::string fileName = relativePath.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1); // "cmm_fire"
-
+        
         wstring prototypeKey = TEXT("Prototype_Component_Texture_Effect_") + converter.from_bytes(fileName);
         //wstring prototypeKeyWithCount = prototypeKey + to_wstring(m_iNodeTextureCount) + TEXT("_") + to_wstring(m_iNumberId);
         wstring prototypeKeyWithAlpha = prototypeKey + TEXT("_Alpha");
@@ -227,6 +227,7 @@ void CIMGUI_Shader_Tab::Create_NodeTexture(string szPath)
 
             return;
         }
+
         SRV_Texture SRVDesc{};
         SRVDesc.iID = unique_node_id;
         SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(prototypeKey.c_str());
@@ -304,6 +305,10 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
         ImGui::Text("Alpha");
         ImNodes::EndInputAttribute();
 
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.8f, 0.9f, 1.0f));
+        ShowTextWithoutPrefix(m_PrototypeKeys[i].key);
+        ImGui::PopStyleColor();
+
         if (i < m_NodeTextureSRVs.size())
         {
             ImGui::Image(m_NodeTextureSRVs[i].Texture, ImVec2(150, 150));
@@ -312,6 +317,20 @@ void CIMGUI_Shader_Tab::Render_TextureNode()
         ImNodes::BeginInputAttribute(  node_id * m_iAttributeCount + 3);
         ImGui::Text("ShadeFunction");
         ImNodes::EndInputAttribute();
+
+        //m_NodeTextures[i]->m_vMultiple_Texcoord
+        
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+        ImGui::Text("TexCoord");
+        ImGui::SetNextItemWidth(140);
+        _float TexCoordValue[2] = { m_NodeTextures[i]->m_vMultiple_Texcoord.x,m_NodeTextures[i]->m_vMultiple_Texcoord.y };
+        ImGui::InputFloat2("##TexCoordInput", TexCoordValue, "%.1f");
+
+        ImGui::PopStyleColor();
+        if (TexCoordValue[0] == 0.0f) TexCoordValue[0] = 0.01f;
+        if (TexCoordValue[1] == 0.0f) TexCoordValue[1] = 0.01f;
+        m_NodeTextures[i]->m_vMultiple_Texcoord.x = TexCoordValue[0];
+        m_NodeTextures[i]->m_vMultiple_Texcoord.y = TexCoordValue[1];
 
         ImNodes::EndNode();
 
@@ -511,6 +530,19 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
         {
         case NODE_BASIC:
         {
+            
+            m_PrototypeKeys.erase(
+                remove_if(m_PrototypeKeys.begin(), m_PrototypeKeys.end(),
+                    [](const Save_Key& key) {
+                        return key.iD == iID; 
+                    }),
+                m_PrototypeKeys.end());
+
+            auto Posit = node_positions.find(iID);
+            if (Posit != node_positions.end()) {
+                node_positions.erase(Posit);
+            }
+
             //Node 부터 지움
             node_ids.erase(remove(node_ids.begin(), node_ids.end(), iID), node_ids.end());
 
@@ -750,7 +782,6 @@ void CIMGUI_Shader_Tab::Check_Delete_Link()
     }
 }
 
-
 void CIMGUI_Shader_Tab::Draw_MusicButton(CShader_Texture* pShaderTexture)
 {
     //재생버튼   
@@ -826,12 +857,14 @@ void CIMGUI_Shader_Tab::Click_Save_Shader_Tab(string fileName)
     Shader_Tab_Save tDesc{};
     /*------------ 값 채우기------------ */
 
+    _int iCount = 0;
     // 1. Save_Key 채우기 (m_PrototypeKeys에서 값을 가져옴)
     for (const auto& prototypeKey : m_PrototypeKeys)
     {
         Save_Key saveKey;
         saveKey.key = prototypeKey.key;
         saveKey.iD = prototypeKey.iD;
+        saveKey.vTexCoord = m_NodeTextures[iCount]->m_vMultiple_Texcoord;
         tDesc.keys.push_back(saveKey);
     }
 
@@ -874,6 +907,7 @@ void CIMGUI_Shader_Tab::Click_Save_Shader_Tab(string fileName)
         tDesc.links.push_back(linkSave);
     }
 
+
     /*------------------------------------*/
     Save_Shader_Tab(fileName, tDesc);
 }
@@ -898,7 +932,9 @@ void CIMGUI_Shader_Tab::Click_Load_Shader_Tab(string fileName)
     //node_positions.clear();  // 기존 위치 정보를 초기화
     for (const auto& nodePos : tDesc.nodePositions)
     {
+
         node_positions[nodePos.nodeID] = nodePos.nodePosition;
+
     }
 
     // 3. 무브 텍스처 노드 정보 로드 및 추가
@@ -994,7 +1030,7 @@ void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
     else if (end_attr == -2)
     {
         m_iMain_Input_Diffuse_id = (start_attr) / 3;
-        links.push_back(make_pair(start_attr, end_attr));
+
 
         auto SRVit = std::find_if(m_NodeTextureSRVs.begin(), m_NodeTextureSRVs.end(),
             [&](SRV_Texture SRV) {
@@ -1003,9 +1039,12 @@ void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
         //wstring abs = L"a";
         //wstring absb = L"b";
         //m_TestEffectModel_Texture = static_cast<CTexture*>(static_cast<CEffect_Single*>(CEffect_Manager::Get_Instance()->Find_In_Layer_Effect(abs, absb))->Get_Component(TEXT("Com_DiffuseTexture")));
-
-        m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
-        m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha, 1);
+        if (SRVit != m_NodeTextureSRVs.end())
+        {
+            links.push_back(make_pair(start_attr, end_attr));
+            m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Texture);
+            m_TestEffectModel_Texture->Set_SRV((ID3D11ShaderResourceView*)SRVit->Alpha, 1);
+        }
         //m_Effect_Rect->Push_Texture_Diffuse((ID3D11ShaderResourceView*)m_NodeTextureSRVs[m_iMain_Input_Diffuse_id - 1], 0);
     }
     else if (end_attr % 4 == 2)
@@ -1056,6 +1095,7 @@ void CIMGUI_Shader_Tab::Create_Link(_int start_attr, _int end_attr)
 
 void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
 {
+    _int iCount = 0;
     for (auto& iter : PrototypeKeys)
     {
         //size_t lastSlashPos = iter.key.find_last_of('/');
@@ -1066,7 +1106,7 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
         CShader_Texture::SHADER_TEXTURE_DESC tDesc{};
         tDesc.prototypeKey = iter.key.c_str();
         tDesc.iShaderTab_ID = m_iNumberId;
-
+        
         CGameObject* pPrototype = m_pGameInstance->Find_Prototype(TEXT("Prototype_GameObject_Shader_Texture"));
         static_cast<CShader_Texture*>(pPrototype->Clone((void*)&tDesc));
 
@@ -1104,6 +1144,10 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
         //m_PrototypeKeys.push_back(tSaveKey);
 
         m_NodeTextures.back()->m_iID = unique_node_id;
+
+        if(m_PrototypeKeys[iCount].vTexCoord.x != 0.f && m_PrototypeKeys[iCount].vTexCoord.y != 0.f)
+            m_NodeTextures.back()->m_vMultiple_Texcoord = m_PrototypeKeys[iCount].vTexCoord;
+
         node_ids.push_back(unique_node_id++);
 
         
@@ -1244,7 +1288,7 @@ void CIMGUI_Shader_Tab::Save_Shader_Tab(string fileName, const Shader_Tab_Save& 
         // 파일 열기 실패 처리
         return;
     }
-
+    
     // Save_Key 저장
     size_t keyCount = shaderTabSave.keys.size();
     outFile.write(reinterpret_cast<const char*>(&keyCount), sizeof(keyCount));
@@ -1253,10 +1297,11 @@ void CIMGUI_Shader_Tab::Save_Shader_Tab(string fileName, const Shader_Tab_Save& 
         size_t keySize = key.key.size();
         outFile.write(reinterpret_cast<const char*>(&keySize), sizeof(keySize));
 
-        // wchar_t -> char*로 변환하여 저장
         outFile.write(reinterpret_cast<const char*>(key.key.data()), keySize * sizeof(wchar_t));
 
         outFile.write(reinterpret_cast<const char*>(&key.iD), sizeof(key.iD));
+
+        //outFile.write(reinterpret_cast<const char*>(&key.vTexCoord), sizeof(key.vTexCoord));
     }
 
     // 나머지 부분 (Node_Position, MoveTex_Node_Save, Sprite_Node_Save, Link_Save) 저장 부분은 그대로 유지
@@ -1308,6 +1353,8 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(string fileName, Shader_Tab_Save& shader
         inFile.read(reinterpret_cast<char*>(const_cast<wchar_t*>(key.key.data())), keySize * sizeof(wchar_t));
 
         inFile.read(reinterpret_cast<char*>(&key.iD), sizeof(key.iD));
+        /* 기존에 있던 파일은 없어서 읽으면 터짐 */
+        //inFile.read(reinterpret_cast<char*>(&key.vTexCoord), sizeof(key.vTexCoord));
     }
 
     // Node_Position 로드
@@ -1374,3 +1421,27 @@ CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create_Load(ID3D11Device* pDevice, ID3D11D
 
     return pInstance;
 }
+
+void CIMGUI_Shader_Tab::RemoveSubstring(std::wstring& wstr, const std::wstring& toRemove)
+{
+    size_t pos = wstr.find(toRemove);
+    if (pos != std::wstring::npos) {
+        wstr.erase(pos, toRemove.length());
+    }
+}
+
+string CIMGUI_Shader_Tab::WStringToString(const std::wstring& wstr)
+{
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    return converter.to_bytes(wstr);
+}
+
+
+void CIMGUI_Shader_Tab::ShowTextWithoutPrefix(const std::wstring& wstr) 
+{
+    std::wstring modifiedStr = wstr;
+    RemoveSubstring(modifiedStr, L"Prototype_Component_Texture_Effect_");
+    std::string convertedStr = WStringToString(modifiedStr);
+    ImGui::Text("%s", convertedStr.c_str());
+}
+

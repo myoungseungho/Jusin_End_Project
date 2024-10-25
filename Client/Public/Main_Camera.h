@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "Camera.h"
+#include "Character.h"
 
 BEGIN(Client)
 
@@ -12,14 +13,18 @@ public:
 	{
 		VIRTUAL_CAMERA_NORMAL,
 		VIRTUAL_CAMERA_FREE,
-		VIRTUAL_CAMERA_SON_SKILL_1,
-		VIRTUAL_CAMERA_SON_SKILL_2,
-		VIRTUAL_CAMERA_HIT_SKILL_1,
-		VIRTUAL_CAMERA_MINE_SKILL_1,
-		VIRTUAL_CAMERA_MINE_SKILL_2,
-		VIRTUAL_CAMERA_21_SKILL_1,
-		VIRTUAL_CAMERA_21_SKILL_2,
-		VIRTUAL_CAMERA_21_SKILL_3,
+		VIRTUAL_CAMERA_SON_HEAVY,
+		VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP,
+		VIRTUAL_CAMERA_SON_AIR_SMASH,
+		VIRTUAL_CAMERA_21_HEAVY,
+		VIRTUAL_CAMERA_21_KNOCK_AWAY_UP,
+		VIRTUAL_CAMERA_21_AIR_SMASH,
+		VIRTUAL_CAMERA_MINE_HEAVY,
+		VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP,
+		VIRTUAL_CAMERA_MINE_AIR_SMASH,
+		VIRTUAL_CAMERA_HIT_HEAVY,
+		VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP,
+		VIRTUAL_CAMERA_HIT_AIR_SMASH,
 		VIRTUAL_CAMERA_END
 	};
 
@@ -28,7 +33,6 @@ public:
 		PLAYER_1P,
 		PLAYER_2P
 	};
-
 
 	//// 스킬 이름을 모델 ID와 스킬 ID로 매핑
 	//unordered_map<std::pair<_int, _wstring>, _int> stringToSkillID;
@@ -54,7 +58,8 @@ public:
 	void Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
-	void Play(_int animationIndex);
+	void IMGUI_Play(_int animationIndex);
+	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex);
 	void Stop();
 	void Pause();
 	void Button_Stop();
@@ -77,11 +82,10 @@ public:
 	class CGameObject* m_pCutsceneCharacter = { nullptr };
 
 private:
-	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
+	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_FREE };
 
 	unordered_map<std::string, int> stringToSkillID;
 	unordered_map<std::string, int> stringToAnimID;
-
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

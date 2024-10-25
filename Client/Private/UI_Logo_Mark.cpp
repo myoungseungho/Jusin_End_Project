@@ -34,9 +34,7 @@ HRESULT CUI_Logo_Mark::Initialize(void* pArg)
 	m_fSizeY = 754;
 	m_fPosX = 610;
 	m_fPosY = 282;
-
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.0f);
-
 	return S_OK;
 }
 
@@ -104,6 +102,8 @@ HRESULT CUI_Logo_Mark::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_LOGO, TEXT("Prototype_Component_Texture_Logo_Mark"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+	return S_OK;
 }
 
 CUI_Logo_Mark* CUI_Logo_Mark::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

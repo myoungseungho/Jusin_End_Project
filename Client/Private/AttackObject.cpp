@@ -4,7 +4,9 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
+#include "UI_Define.h"
 #include "Character.h"
+#include "Main_Camera.h"
 
 CAttackObject::CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -29,7 +31,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	if (nullptr == pArg)
 		return E_FAIL;
 
-	
+
 	ATTACK_DESC* pDesc = static_cast<ATTACK_DESC*>(pArg);
 
 	m_ihitCharacter_Motion = pDesc->ihitCharacter_Motion;
@@ -92,7 +94,7 @@ void CAttackObject::Update(_float fTimeDelta)
 
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
-		if(m_bEnableDestory)
+		if (m_bEnableDestory)
 		{
 			Destory();
 			m_pGameInstance->Release_Collider(m_pColliderCom);
@@ -118,7 +120,7 @@ void CAttackObject::Update(_float fTimeDelta)
 	//	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
 	//	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	//}
-	
+
 }
 
 void CAttackObject::Late_Update(_float fTimeDelta)
@@ -235,7 +237,7 @@ void CAttackObject::Late_Update(_float fTimeDelta)
 	//	}
 	//
 
-		
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -280,10 +282,18 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
+			if (m_bGroundSmash == true)
+				//공중에서 바닥으로 내려찍을 때
+				Camera_GroundSmash(m_pOwner, pCharacter);
+			else if (m_ihitCharacter_Motion == HIT_KNOCK_AWAY_LEFT || m_ihitCharacter_Motion == HIT_SPIN_AWAY_LEFTUP)
+				//강공격 맞았을 때 카메라 셋팅
+				Camera_Hit_Knock_Away_Left(m_pOwner, pCharacter);
+			else if (m_ihitCharacter_Motion == HIT_KNOCK_AWAY_UP)
+				//어퍼 맞았을 때
+				Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
 			if (m_bGrabbedEnd)
 				pCharacter->Set_bGrabbed(false);
-			
 			
 
 			//어퍼컷/올려차기의 경우  정지시간이 긴 공격들은 위치조정
@@ -310,7 +320,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
-			
+
 
 			if (m_bOwnerNextAnimation)
 			{
@@ -341,13 +351,13 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					m_bEnableDestory = false;
 				}
 			}
-				
+
 			//그 외에는 공격판정 사라지지 않음
 			else
 				return;
 
 		}
-		
+
 		if (m_bEnableDestory)
 		{
 			Destory();
@@ -360,10 +370,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
 		_bool bDebugA = true;
-		
+
 
 	}
-	
+
 }
 
 void CAttackObject::OnCollisionStay(CCollider* other, _float fTimeDelta)
@@ -384,6 +394,74 @@ void CAttackObject::CollisingAttack()
 
 void CAttackObject::CollisingPlayer()
 {
+}
+
+//강공격 시
+void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CUI_Define::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_HEAVY, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
+		break;
+	case Client::CUI_Define::ANDROID21:
+		break;
+	case Client::CUI_Define::BUU:
+		break;
+	case Client::CUI_Define::HIT:
+		break;
+	}
+}
+
+//
+void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CUI_Define::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
+		break;
+	case Client::CUI_Define::ANDROID21:
+		break;
+	case Client::CUI_Define::BUU:
+		break;
+	case Client::CUI_Define::HIT:
+		break;
+	}
+}
+
+void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CUI_Define::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_AIR_SMASH, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
+		break;
+	case Client::CUI_Define::ANDROID21:
+		break;
+	case Client::CUI_Define::BUU:
+		break;
+	case Client::CUI_Define::HIT:
+		break;
+	}
 }
 
 

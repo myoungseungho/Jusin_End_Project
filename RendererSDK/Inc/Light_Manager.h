@@ -19,16 +19,15 @@ private:
 	virtual ~CLight_Manager() = default;
 
 public:
-	const LIGHT_DESC* Get_LightDesc(LIGHT_TYPE eLightType, _uint iLightIndex, string strName = "") const;
-
+	LIGHT_DESC* Get_LightDesc(LIGHT_TYPE eLightType, _uint iLightIndex, string strName = "");
+	void		Remove_LightDesc(string strName);
+	_int		Check_EffectLights();
 public:
 	HRESULT Initialize();
 	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
 	HRESULT Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc);
-	HRESULT Render_Lights(LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer, string strName = "");
-
-
-	//void  
+	HRESULT Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc);
+	HRESULT Render_Lights(LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer, string strName, _float fTimeDelta);
 
 private:
 	list<class CLight*>				m_Lights;

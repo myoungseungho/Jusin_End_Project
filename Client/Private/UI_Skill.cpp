@@ -2,6 +2,7 @@
 
 #include "UI_Skill.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_Skill::CUI_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
@@ -37,7 +38,7 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	//m_iSkillPoint  = max(m_pMainPawn->Get_PawnDesc().iSKillPoint, m_pSubPawn->Get_PawnDesc().iSKillPoint);
+	//m_iSkillPoint = max(m_pMainPawn->Get_PawnDesc().iSKillPoint , m_pSubPawn->Get_PawnDesc().iSKillPoint);
 	
 	if (m_pMainPawn != nullptr)
 	{

@@ -18,7 +18,7 @@ private:
 	virtual ~CEffect_Manager() = default;
 
 public:
-	HRESULT Initialize();
+	HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -32,6 +32,8 @@ public:
 	class CEffect* Find_In_Layer_Effect(wstring& layerName, wstring& effectName);
 	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	void		Set_Render_Layer(const wstring& strEffectLayerTag);
+	HRESULT		Set_Test_Effect_Color(_int iCurTestEffectIndex, _float4 vColor);
+	HRESULT		Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _float4 vColor);
 
 	EFFECT_KEYFRAME Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
@@ -66,6 +68,14 @@ public:
 	_float3 Get_Layer_Effect_Rotation(wstring& layerName, wstring& effectName);
 	_bool Get_Layer_Effect_IsPlaying(wstring& layerName, wstring& effectName);
 
+	HRESULT Set_Layer_Scaled(wstring& layerName, _float3 ChangeScaled);
+	HRESULT Set_Layer_Position(wstring& layerName,  _float3 ChangePosition);
+	HRESULT Set_Layer_Rotation(wstring& layerName, _float3 ChangeRotation);
+
+	_float3 Get_Layer_Scaled(wstring& layerName);
+	_float3 Get_Layer_Position(wstring& layerName);
+	_float3 Get_Layer_Rotation(wstring& layerName);
+
 	void Add_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrame);
 	void Delete_KeyFrame(const wstring& LayerName, const wstring& EffectName, _uint KeyFrameNumber);
 	EFFECT_KEYFRAME Get_Layer_Effect_KeyFrame(wstring& layerName, wstring& effectName, _uint KeyFrameNumber);
@@ -91,8 +101,10 @@ public:
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
+	ID3D11Device* m_pDevice = { nullptr };
+	ID3D11DeviceContext* m_pContext = { nullptr };
+
 public:
-	static CEffect_Manager* Create();
 	virtual void Free() override;
 };
 

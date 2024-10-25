@@ -38,6 +38,7 @@ public:
 
 	void UseEvent_Test(string strEventText, CGameObject* pGameObject);
 	void UseEvent(string strEventText, class CCharacter* pCharacter);
+	void UseEvent_MSH(string splitText[], _float fValue[], CCharacter* pCharacter);
 
 	void Initalize_NameMap();
 
@@ -52,6 +53,9 @@ public:
 private:
 	CAnimationNameMap m_AnimationIndex;
 	_bool m_bInitalizeCount = false;
+
+private:
+	CGameInstance* m_pGameInstance = { nullptr };
 
 public:
 

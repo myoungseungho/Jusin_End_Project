@@ -2,9 +2,16 @@
 #include "stdafx.h"
 #include "Effect_Layer.h"
 #include "Effect.h"
+#include "GameInstance.h"
 
-CEffect_Layer::CEffect_Layer()
+CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	:	m_pContext{ pContext },
+		m_pDevice{ pDevice },
+		m_pGameInstance{CGameInstance::Get_Instance()}
 {
+	Safe_AddRef(m_pContext);
+	Safe_AddRef(m_pDevice);
+	Safe_AddRef(m_pGameInstance);
 }
 
 CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
@@ -12,16 +19,46 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
 	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
 	, m_MixtureEffects {Prototype.m_MixtureEffects }
+	, m_pDevice{ Prototype.m_pDevice }
+	, m_pContext{ Prototype.m_pContext }
+	, m_pTransformCom{ Prototype.m_pTransformCom }
+	, m_pGameInstance{ CGameInstance::Get_Instance() }
 {
+	Safe_AddRef(m_pContext);
+	Safe_AddRef(m_pDevice);
+	Safe_AddRef(m_pGameInstance);
 }
 
-HRESULT CEffect_Layer::Initialize_Prototype()
+HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 {
+	m_pTransformCom = CTransform::Create(m_pDevice, m_pContext);
+	if (nullptr == m_pTransformCom)
+		return E_FAIL;
+
+	if (pArg != nullptr)
+	{
+		LAYER_DESC* pDesc = static_cast<LAYER_DESC*>(pArg);
+
+		_float3 vPos = pDesc->vPosition;
+		_float3 vScaled = pDesc->vScaled;
+		_float3 vRotation = pDesc->vRotation;
+
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(vPos.x, vPos.y, vPos.z, 1.f));
+		m_pTransformCom->Set_Scaled(vScaled.x, vScaled.y, vScaled.z);
+		m_pTransformCom->Rotate(vRotation);
+
+		return S_OK;
+	}
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
+	m_pTransformCom->Rotate(_float3(0.f, 0.f, 0.f));
+
 	return S_OK;
 }
 
 HRESULT CEffect_Layer::Initialize(void* pArg)
 {
+
 	return S_OK;
 }
 
@@ -37,8 +74,14 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)
 {
+	_matrix LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+
 	for (auto& pEffect : m_MixtureEffects)
+	{
+		pEffect->Get_Layer_Matrix(LayerMatrix);
 		pEffect->Late_Update(fTimeDelta);
+	}
+
 }
 
 HRESULT CEffect_Layer::Render(_float fTimeDelta)
@@ -129,9 +172,58 @@ void CEffect_Layer::Set_Animation_Position(_float fNewCurPos)
 	}
 }
 
-CEffect_Layer* CEffect_Layer::Create()
+HRESULT CEffect_Layer::Set_Layer_Scaled(_float3 ChangeScaled)
 {
-	return new CEffect_Layer();
+	m_pTransformCom->Set_Scaled(ChangeScaled.x, ChangeScaled.y, ChangeScaled.z);
+
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_Layer_Position(_float3 ChangePosition)
+{
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_Layer_Rotation(_float3 ChangeRotation)
+{
+	m_pTransformCom->Rotate(ChangeRotation);
+
+	return S_OK;
+}
+
+_float3 CEffect_Layer::Get_Layer_Scaled()
+{
+	return m_pTransformCom->Get_Scaled();
+}
+
+_float3 CEffect_Layer::Get_Layer_Position()
+{
+	_float3 Position;
+
+	Position.x = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	Position.y = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	Position.z = XMVectorGetZ(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	return Position;
+}
+
+_float3 CEffect_Layer::Get_Layer_Rotation()
+{
+	return m_pTransformCom->Get_Rotation();
+}
+
+CEffect_Layer* CEffect_Layer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg)
+{
+	CEffect_Layer* pInstance = new CEffect_Layer(pDevice, pContext);
+
+	if (FAILED(pInstance->Initialize_Prototype(pArg)))
+	{
+		MSG_BOX(TEXT("Failed to Created : CEffect_Layer"));
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
 }
 
 CEffect_Layer* CEffect_Layer::Clone(void* pArg)
@@ -150,6 +242,11 @@ CEffect_Layer* CEffect_Layer::Clone(void* pArg)
 void CEffect_Layer::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pContext);
+	Safe_Release(m_pDevice);
+	Safe_Release(m_pGameInstance);
+	Safe_Release(m_pTransformCom);
 
 	for (auto& pMixtureEffect : m_MixtureEffects)
 		Safe_Release(pMixtureEffect);

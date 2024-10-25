@@ -35,7 +35,7 @@ private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	CRenderInstance*			m_pRenderInstance = { nullptr };
 	CImgui_Manager* m_pImgui_Manager = { nullptr };
-
+	static _bool  m_bIsLevelPrepared;
 private:
 	HRESULT Open_Level(LEVELID eStartLevelID);
 	HRESULT Create_IMGUI_Manager();

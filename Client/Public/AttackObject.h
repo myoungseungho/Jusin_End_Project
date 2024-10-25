@@ -81,8 +81,12 @@ private:
 	void CollisingAttack();
 	void CollisingPlayer();
 
-
-
+	//카메라
+private:
+	//강공격 카메라 함수 호출
+	void Camera_Hit_Knock_Away_Left(class CCharacter* pOwner, class CCharacter* pHitOwner);
+	void Camera_Hit_Knock_Away_Up(class CCharacter* pOwner, class CCharacter* pHitOwner);
+	void Camera_GroundSmash(class CCharacter* pOwner, class CCharacter* pHitOwner);
 protected:
 	//CCollider_Test*			m_pColliderCom = { nullptr };
 

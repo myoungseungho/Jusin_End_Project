@@ -72,8 +72,7 @@ public:
 	void SetImguiSelect(_bool _bIsImguiClick) { m_bIsImguiClick = _bIsImguiClick; };
 	void Destory();
 
-	//테스트 관련
-	_bool						m_bIsRight = { true };
+	_bool						m_bIsActive = { true };
 
 protected:	
 	ID3D11Device*				m_pDevice = { nullptr };
@@ -84,7 +83,6 @@ protected:
 	class CTransform*			m_pTransformCom = { nullptr };
 
 	//활성화 비활성화 관련
-	_bool						m_bIsActive = { true };
 
 public:
 	//IMGUI 관련

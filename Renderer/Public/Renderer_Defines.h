@@ -10,7 +10,7 @@
 
 namespace Renderer
 {
-	
+
 }
 
 using namespace Renderer;

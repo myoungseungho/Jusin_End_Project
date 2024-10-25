@@ -12,6 +12,7 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
+#include "Effect_Manager.h"
 #include "thread"
 
 CMainApp::CMainApp()
@@ -24,6 +25,7 @@ CMainApp::CMainApp()
 
 HRESULT CMainApp::Initialize()
 {
+
 	//게임인스턴스 엔진 초기화
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hInst, g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
@@ -75,10 +77,11 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
 	//IMGUI 렌더는 로딩때는 하면 안됨
-	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+ 
+       _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+
 	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render)
-		//IMGUI 렌더
 		m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
@@ -136,6 +139,10 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 		CVIBuffer_Line_Rect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 #pragma endregion
+
+
+
+
 
 	return S_OK;
 }

@@ -2,6 +2,7 @@
 
 #include "UI_BaseAttBuf.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_BaseAttBuf::CUI_BaseAttBuf(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }

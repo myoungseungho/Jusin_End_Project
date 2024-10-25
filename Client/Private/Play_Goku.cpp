@@ -3,34 +3,12 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "UI_Manager.h"
 
 #include "AttackObject.h"
 #include "AttackObject_Grab.h"
-
-
+#include "UI_Manager.h"
 #include "iostream"
-//#define ANIME_ATTACK_LIGHT1 43
-//#define ANIME_ATTACK_LIGHT2 44
-//#define ANIME_ATTACK_LIGHT3 47
-//
-//#define ANIME_ATTACK_MEDIUM 46
-//
-//#define ANIME_ATTACK_HEAVY 45
-//
-//#define ANIME_IDLE 0
-//#define ANIME_FORWARD_WALK 9
-//#define ANIME_BACK_WALK 10
-//
-//
-//#define ANIME_ATTACK_236 66
-//#define ANIME_ATTACK_236_Air 67
-//
-//#define ANIME_ATTACK_236_Air 67
-//
-//
-//#define ANIME_JUMP_UP 6;
-//#define ANIME_JUMP_DOWN 7;
+
 
 
 
@@ -118,9 +96,9 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	
-	LightDesc.vDirection = _float4(-0.5f, -0.2f, 0.5f, 0.f);
-	LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
-	LightDesc.vAmbient = _float4(0.7f, 0.7f, 0.7f, 1.f);
+	LightDesc.vDirection = _float4(-0.5f, -0.1f, 0.5f, 0.f);
+	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
@@ -195,16 +173,6 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
-
-	//if (::AllocConsole() == TRUE)
-	//{
-	//	FILE* nfp[3];
-	//	freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-	//	freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-	//	freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-	//	std::ios::sync_with_stdio();
-	//}
-
 	return S_OK;
 }
 
@@ -216,8 +184,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
+
 	if (m_bDebugInputLock)
 		return;
+
 
 	Update_PreviousXPosition();
 
@@ -230,7 +200,6 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_F3))
 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
-
 
 	//합치기 전 임시 코드.  적 탐지코드임
 	if (m_pDebugEnemy == nullptr)
@@ -530,6 +499,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
+
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
 }
@@ -855,7 +825,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.7f;
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -908,8 +878,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.5f;
-
+		Desc.fAnimationLockTime = 0.7f;
 		Desc.bGrabbedEnd = true;
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -999,11 +968,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
 
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.7f;
 
 		//높이가 5 이상이면 내려찍히는 판정.  디폴트는 false이므로  else 처리 안함
 		//if(Get_fHeight() > 5)
-		if (Get_fHeight() > 3)
+		if (Get_fHeight() > 0)
 		{
 			Desc.bGroundSmash = true;
 			Desc.fAnimationLockTime = 0.4f;

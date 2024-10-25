@@ -78,6 +78,10 @@ void CLayer::Player_Update(_float fTimeDelta)
 	{
 		if ((*it)->m_bDead)  // 객체가 사망 상태라면
 			it = m_GameObjects.erase(it);  // 목록에서 삭제 후 iterator 업데이트
+		else if (!(*it)->m_bIsActive)
+		{
+			++it;
+		}
 		else
 		{
 			(*it)->Player_Update(fTimeDelta);  // 업데이트 호출
@@ -92,6 +96,10 @@ void CLayer::Priority_Update(_float fTimeDelta)
 	{
 		if ((*it)->m_bDead)  // 객체가 사망 상태라면
 			it = m_GameObjects.erase(it);  // 목록에서 삭제 후 iterator 업데이트
+		else if (!(*it)->m_bIsActive)
+		{
+			++it;
+		}
 		else
 		{
 			(*it)->Priority_Update(fTimeDelta);  // 업데이트 호출
@@ -109,6 +117,10 @@ void CLayer::Update(_float fTimeDelta)
 			Safe_Release(*it);
 			it = m_GameObjects.erase(it);
 		}
+		else if (!(*it)->m_bIsActive)
+		{
+			++it;
+		}
 		else
 		{
 			(*it)->Update(fTimeDelta);
@@ -123,6 +135,10 @@ void CLayer::Late_Update(_float fTimeDelta)
 	{
 		if ((*it)->m_bDead)
 			it = m_GameObjects.erase(it);
+		else if (!(*it)->m_bIsActive)
+		{
+			++it;
+		}
 		else
 		{
 			(*it)->Late_Update(fTimeDelta);

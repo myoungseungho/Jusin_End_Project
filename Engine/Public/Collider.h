@@ -38,6 +38,7 @@ public:
 	BoundingBox AABB_GetDesc();
 	void AABB_SetDesc(BoundingBox _box);
 	_float Get_Overlap_X(CCollider* other) const;
+	_float3 Get_Overlap_Center_Position(const CCollider* pOther) const;
 
 public:
 	void OnCollisionEnter(CCollider*, _float fTimeDelta);

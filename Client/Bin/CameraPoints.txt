@@ -1,136 +1,120 @@
 [VirtualCamera]
+ModelID: MODELID_SON
+
+[Skill]
+SkillName: Camera_Son_Heavy
+
+[Animation]
+AnimationName: Son_Heavy_Anim1
+PointCount: 1
+
+[CameraPoint]
+Position: 0.560064 1.17205 -3.3237
+Rotation: 0 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_Son_Knock_Away_Up
+
+[Animation]
+AnimationName: Son_Knock_Away_Up_Anim1
+PointCount: 1
+
+[CameraPoint]
+Position: 0.243729 0.11623 -2.37281
+Rotation: -0.22716 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_Son_Air_Smash
+
+[Animation]
+AnimationName: Son_Air_Smash_Anim1
+PointCount: 1
+
+[CameraPoint]
+Position: -0.836494 2.14128 -2.69361
+Rotation: 0.154796 0.224273 -0.0361075 0.961476
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[VirtualCamera]
 ModelID: MODELID_HIT
 
 [Skill]
-SkillName: Son_Skill1
+SkillName: Camera_21_Heavy
 
 [Animation]
-AnimationName: Son_Skill1_Anim1
-PointCount: 3
-
-[CameraPoint]
-Position: 0.114815 2.92496 -5.98594
-Rotation: 0.138204 0.0142467 -0.00198824 0.990299
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: -3.16864 2.92496 -3.8621
-Rotation: 0.141058 0.334171 -0.0506571 0.930519
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: -4.81023 2.92496 0.194358
-Rotation: 0.153779 0.653208 -0.137893 0.728462
-Duration: 1
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[Animation]
-AnimationName: Son_Skill1_Anim2
-PointCount: 0
-
-[Animation]
-AnimationName: Son_Skill1_Anim3
+AnimationName: 21_Heavy_Anim1
 PointCount: 0
 
 [Skill]
-SkillName: Son_Skill2
+SkillName: Camera_21_Knock_Away_Up
 
 [Animation]
-AnimationName: Son_Skill2_Anim1
+AnimationName: 21_Knock_Away_Up_Anim1
 PointCount: 0
 
+[Skill]
+SkillName: Camera_21_Air_Smash
+
 [Animation]
-AnimationName: Son_Skill2_Anim2
+AnimationName: 21_Air_Smash_Anim1
 PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_MINE
 
 [Skill]
-SkillName: Hit_Skill1
+SkillName: Camera_Hit_Heavy
 
 [Animation]
-AnimationName: Hit_Skill1_Anim1
+AnimationName: Hit_Heavy_Anim1
 PointCount: 0
 
+[Skill]
+SkillName: Camera_Hit_Knock_Away_Up
+
 [Animation]
-AnimationName: Hit_Skill1_Anim2
+AnimationName: Hit_Knock_Away_Up_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Hit_Air_Smash
+
+[Animation]
+AnimationName: Hit_Air_Smash_Anim1
 PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_21
 
 [Skill]
-SkillName: Mine_Skill1
+SkillName: Camera_Mine_Heavy
 
 [Animation]
-AnimationName: Mine_Skill1_Anim1
-PointCount: 0
-
-[Animation]
-AnimationName: Mine_Skill1_Anim2
+AnimationName: Mine_Heavy_Anim1
 PointCount: 0
 
 [Skill]
-SkillName: Mine_Skill2
+SkillName: Camera_Mine_Knock_Away_Up
 
 [Animation]
-AnimationName: Mine_Skill2_Anim1
-PointCount: 0
-
-[Animation]
-AnimationName: Mine_Skill2_Anim2
-PointCount: 0
-
-[Animation]
-AnimationName: Mine_Skill2_Anim3
-PointCount: 0
-
-[VirtualCamera]
-ModelID: Unknown
-
-[Skill]
-SkillName: 21_Skill1
-
-[Animation]
-AnimationName: 21_Skill1_Anim1
+AnimationName: Mine_Knock_Away_Up_Anim1
 PointCount: 0
 
 [Skill]
-SkillName: 21_Skill2
+SkillName: Camera_Mine_Air_Smash
 
 [Animation]
-AnimationName: 21_Skill2_Anim1
-PointCount: 0
-
-[Animation]
-AnimationName: 21_Skill2_Anim2
-PointCount: 0
-
-[Skill]
-SkillName: 21_Skill3
-
-[Animation]
-AnimationName: 21_Skill3_Anim1
-PointCount: 0
-
-[Animation]
-AnimationName: 21_Skill3_Anim2
-PointCount: 0
-
-[Animation]
-AnimationName: 21_Skill3_Anim3
-PointCount: 0
-
-[Animation]
-AnimationName: 21_Skill3_Anim4
+AnimationName: Mine_Air_Smash_Anim1
 PointCount: 0
 

@@ -33,7 +33,7 @@ HRESULT CUI_SkillGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 52.f, m_fPosX, g_iWinSizeY - 100 );
+	__super::Set_UI_Setting(m_fSizeX, 52.f, m_fPosX, 650);
 
 	return S_OK;
 }
@@ -84,6 +84,8 @@ HRESULT CUI_SkillGauge::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGauge"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+	return S_OK;
 }
 
 CUI_SkillGauge* CUI_SkillGauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -7,6 +7,9 @@ texture2D		g_AlphaTexture;
 texture2D		g_Texture;
 
 texture2D		g_DepthTexture;
+
+float2 g_vMultiple_Texcoord;
+
 bool isBindTexture;
 bool isAlpha;
 bool isDiffuse;
@@ -98,12 +101,13 @@ struct PS_OUT
 PS_OUT PS_MAIN(PS_IN In)
 {
 	PS_OUT			Out;	
-
+    float2 vTexcoord = In.vTexcoord;
+	
     if (isBindTexture == true)
     {
         if (isMoveTex == true)
         {
-            In.vTexcoord += normalize(g_vDirection) * g_Speed * g_Time;
+            vTexcoord += normalize(g_vDirection) * g_Speed * g_Time;
         }
         else if (g_isSprite == true)
         {
@@ -111,13 +115,13 @@ PS_OUT PS_MAIN(PS_IN In)
             float2 texFramePos = g_fSpriteCurPos * g_fSpriteSize;
 
 
-            In.vTexcoord = In.vTexcoord * g_fSpriteSize + texFramePos;
+            vTexcoord = vTexcoord * g_fSpriteSize + texFramePos;
 
 
            // Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
 
         }
-        Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+        Out.vColor = g_Texture.Sample(LinearSampler, vTexcoord * g_vMultiple_Texcoord);
        
 	
         if (isDiffuse == true)
@@ -174,7 +178,7 @@ technique11		DefaultTechnique
 	{
         SetRasterizerState(RS_Cull_None);
 		SetDepthStencilState(DSS_None, 0);
-		SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
 		VertexShader = compile vs_5_0 VS_MAIN();
 		GeometryShader = NULL;
@@ -187,7 +191,7 @@ technique11		DefaultTechnique
 	{
 		SetRasterizerState(RS_Cull_None);
 		SetDepthStencilState(DSS_Default, 0);
-		SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
 		VertexShader = compile vs_5_0 VS_MAIN_EFFECT();
 		GeometryShader = NULL;

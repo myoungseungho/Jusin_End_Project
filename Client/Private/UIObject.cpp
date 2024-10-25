@@ -2,7 +2,7 @@
 
 #include "UIObject.h"
 #include "RenderInstance.h"
-
+#include "Character.h"
 
 CUIObject::CUIObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CGameObject{ pDevice , pContext }
@@ -45,15 +45,15 @@ HRESULT CUIObject::Initialize(void* pArg)
 		switch (m_eLRPos)
 		{
 		case LEFT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
-			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER2];
 			break;
 	
 		case RIGHT:
 			m_fPosX = m_vPrevWinSize.x - m_fPosX;
 			m_fSizeX *= -1;
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
-			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER2];
 			break;
 		}
 	}
@@ -71,13 +71,13 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		switch (m_eLRPos)
 		{
 		case LEFT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
-			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER2];
 			break;
 
 		case RIGHT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
-			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER2];
 			break;
 		}
 	}
@@ -86,13 +86,10 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		m_bIsActive = true;
 	if (m_pGameInstance->Key_Down(DIK_F4))
 		m_bIsActive = FALSE;
-
-
 }
 
 void CUIObject::Update(_float fTimeDelta)
 {
-
 
 }
 
@@ -164,15 +161,15 @@ void CUIObject::InitPlayer()
 	switch (pDesc->eLRPos)
 	{
 	case LEFT:
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER1];
-		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::LPLAYER2];
+		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER1];
+		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER2];
 		break;
 
 	case RIGHT:
 		m_fPosX = g_iWinSizeX - m_fPosX;
 		m_fSizeX *= -1;
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER1];
-		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CCharacter::RPLAYER2];
+		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER1];
+		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER2];
 		break;
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "UI_SubHpGauge.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_SubHpGauge::CUI_SubHpGauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
@@ -87,6 +88,9 @@ HRESULT CUI_SubHpGauge::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpGauge"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 HRESULT CUI_SubHpGauge::Bind_ShaderResources()
