@@ -68,9 +68,6 @@ HRESULT CAttacKObject::Initialize(void* pArg)
 	if (FAILED(Ready_Components(pDesc)))
 		return E_FAIL;
 
-	//m_pColliderCom->Update(m_fOffset);
-
-
 	return S_OK;
 }
 

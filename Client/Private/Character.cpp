@@ -1939,34 +1939,6 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	default:
 		break;
 	}
-
-	//카메라 용
-	Set_Camera(eAnimation, Impus);
-}
-
-void CCharacter::Set_Camera(_uint eAnimation, _float2 Impus)
-{
-	switch (eAnimation)
-	{
-	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT: //강공격 (카메라 테스트용)
-	{
-		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-
-		//1. 모델명과 스킬명으로 카메라 정보
-		//2. 애니메이션 
-
-		//mainCamera->Play();
-	}
-	break;
-	case Client::HitMotion::HIT_KNOCK_AWAY_UP: //어퍼 (카메라 테스트용)
-	{
-
-	}
-	break;
-
-	default:
-		break;
-	}
 }
 
 void CCharacter::Set_AnimationStop(_float fStopTime)
