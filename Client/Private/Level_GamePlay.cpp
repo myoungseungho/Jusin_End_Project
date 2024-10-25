@@ -18,7 +18,6 @@
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
-	, m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
 	, m_pIMGUI_Manager{ CImgui_Manager::Get_Instance() }
 {
 }
@@ -26,6 +25,8 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY;
+
+	Create_Effect_Manager();
 
 	//빛 준비
 	if (FAILED(Ready_Lights()))
@@ -121,6 +122,46 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_Z))
+	{
+		LIGHT_DESC			LightDesc{};
+
+		ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+		LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+		LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+		LightDesc.fRange = 30.f;
+		LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
+		//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+		LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+		LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+		LightDesc.fAccTime = 0.f;
+		LightDesc.fLifeTime = 3.f;
+		LightDesc.strName = "Explosion";
+		if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+			return;
+	}
+	if (m_pGameInstance->Key_Down(DIK_X))
+	{
+		LIGHT_DESC			LightDesc{};
+
+		ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+		LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+		LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+		LightDesc.fRange = 30.f;
+		
+		LightDesc.vDiffuse = _float4(0.9f, 1.1f, 1.7f, 1.0f); // 파란빛 계열로 변경
+
+		LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+		LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+		LightDesc.fAccTime = 0.f;
+		LightDesc.fLifeTime = 3.f;
+		LightDesc.strName = "Ray";
+		if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+			return;
+	}
+
 	m_pUI_Manager->Update(fTimeDelta);
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
@@ -292,6 +333,12 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 }
 
+void CLevel_GamePlay::Create_Effect_Manager()
+{
+	m_pEffect_Manager = CEffect_Manager::Get_Instance();
+	m_pEffect_Manager->Initialize(m_pDevice, m_pContext);
+}
+
 HRESULT CLevel_GamePlay::Ready_Character()
 {
 	CCharacter::Character_DESC SlotDesc = {};
@@ -331,4 +378,5 @@ void CLevel_GamePlay::Free()
 	__super::Free();
 
 	CFrameEvent_Manager::Destroy_Instance();
+	CEffect_Manager::Get_Instance()->Destroy_Instance();
 }

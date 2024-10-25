@@ -39,7 +39,7 @@ HRESULT CLight::Render_Map(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 		return E_FAIL;
 	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &m_LightDesc.vSpecular, sizeof(_float4))))
 		return E_FAIL;
-
+	
 	pShader->Begin(iPassIndex);
 
 	pVIBuffer->Render();
@@ -64,11 +64,16 @@ HRESULT CLight::Render_Player(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 
 	if (FAILED(pShader->Bind_RawValue("g_vLightDiffuse", &m_LightDesc.vDiffuse, sizeof(_float4))))
 		return E_FAIL;
+
 	if (FAILED(pShader->Bind_RawValue("g_vLightAmbient", &m_LightDesc.vAmbient, sizeof(_float4))))
 		return E_FAIL;
+
 	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &m_LightDesc.vSpecular, sizeof(_float4))))
 		return E_FAIL;
 
+	if (FAILED(pShader->Bind_RawValue("g_iPlayerDirection", m_LightDesc.pPlayerDirection, sizeof(_int))))
+		return E_FAIL;
+	
 	pShader->Begin(iPassIndex);
 
 	pVIBuffer->Render();
@@ -76,25 +81,48 @@ HRESULT CLight::Render_Player(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 	return S_OK;
 }
 
-HRESULT CLight::Render_Effect(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
+HRESULT CLight::Render_Effect(CShader* pShader, CVIBuffer_Rect* pVIBuffer, LIGHT_DESC* pLightDesc)
 {
 	_uint		iPassIndex = { 0 };
 	iPassIndex = 6;
 
-	if (FAILED(pShader->Bind_RawValue("g_iPlayerDirection", m_LightDesc.pPlayerDirection, sizeof(_int))))
+	//if (FAILED(pShader->Bind_RawValue("g_iPlayerDirection", m_LightDesc.pPlayerDirection, sizeof(_int))))
+	//	return E_FAIL;
+
+	if (FAILED(pShader->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
 		return E_FAIL;
 
-	if (FAILED(pShader->Bind_RawValue("g_vLightPos", &m_LightDesc.vPosition, sizeof(_float4))))
+	if (FAILED(pShader->Bind_RawValue("g_iPlayerDirection", pLightDesc->pPlayerDirection, sizeof(_int))))
 		return E_FAIL;
-	if (FAILED(pShader->Bind_RawValue("g_fLightRange", &m_LightDesc.fRange, sizeof(_float))))
-		return E_FAIL;
+
 
 	if (FAILED(pShader->Bind_RawValue("g_vLightDiffuse", &m_LightDesc.vDiffuse, sizeof(_float4))))
 		return E_FAIL;
+
 	if (FAILED(pShader->Bind_RawValue("g_vLightAmbient", &m_LightDesc.vAmbient, sizeof(_float4))))
 		return E_FAIL;
-	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &m_LightDesc.vSpecular, sizeof(_float4))))
+
+	if (FAILED(pShader->Bind_RawValue("g_vLightSpecular", &pLightDesc->vSpecular, sizeof(_float4))))
 		return E_FAIL;
+
+	if (FAILED(pShader->Bind_RawValue("g_fLightRange", &m_LightDesc.fRange, sizeof(_float))))
+		return E_FAIL;
+
+
+
+	if (FAILED(pShader->Bind_RawValue("g_fLightAccTime", &m_LightDesc.fAccTime, sizeof(_float))))
+		return E_FAIL;
+	if (FAILED(pShader->Bind_RawValue("g_fLightLifeTime", &m_LightDesc.fLifeTime, sizeof(_float))))
+		return E_FAIL;
+
+	/*
+	* 
+	* float g_fLightAccTime;
+float g_fLightLifeTime;
+	이미 먼저 m_fTimeDelta를 더해준 상태 들어온 시간에대한 임계점을 정할지는 판단해봐야됨
+	만약 기준이 있다면 알파를 진행시간 m_fAccTime 및 m_fLifeTime 사이값
+	
+	*/
 
 	pShader->Begin(iPassIndex);
 
@@ -103,7 +131,7 @@ HRESULT CLight::Render_Effect(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 	return S_OK;
 }
 
-HRESULT CLight::Render(CShader* pShader, CVIBuffer_Rect* pVIBuffer, _int iPassIndex)
+HRESULT CLight::Render(CShader* pShader, CVIBuffer_Rect* pVIBuffer, _int iPassIndex, LIGHT_DESC* pLightDesc)
 {
 	switch (iPassIndex)
 	{
@@ -116,7 +144,7 @@ HRESULT CLight::Render(CShader* pShader, CVIBuffer_Rect* pVIBuffer, _int iPassIn
 		return E_FAIL;
 	break;
 	case 6: /* Effect */
-	if (FAILED(Render_Effect(pShader, pVIBuffer)))
+	if (FAILED(Render_Effect(pShader, pVIBuffer, pLightDesc)))
 		return E_FAIL;
 	break;
 	}

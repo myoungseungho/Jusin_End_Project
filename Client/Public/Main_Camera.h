@@ -82,7 +82,7 @@ public:
 	class CGameObject* m_pCutsceneCharacter = { nullptr };
 
 private:
-	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_NORMAL };
+	VIRTUAL_CAMERA m_currentVirtualMode = { VIRTUAL_CAMERA_FREE };
 
 	unordered_map<std::string, int> stringToSkillID;
 	unordered_map<std::string, int> stringToAnimID;

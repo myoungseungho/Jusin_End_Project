@@ -10,6 +10,7 @@
     {
         _wstring key;
         _int iD;
+        _float2 vTexCoord;
     };
     struct MoveTex_Node_Save
     {
@@ -41,5 +42,6 @@
 		vector<MoveTex_Node_Save> moveTexNodes;       // 무브 텍스 노드 정보
 		vector<Sprite_Node_Save> spriteNodes;         // 스프라이트 노드 정보
 		vector<Link_Save> links;                      // 노드 연결 정보
+        vector<_float2> vTexCoord;
 	}Shader_Tab_Save;
 

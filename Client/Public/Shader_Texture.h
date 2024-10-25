@@ -75,6 +75,8 @@ private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	_wstring m_Key;
 	_float m_fTime = { 0.f };
+public:/* ≈ÿΩ∫ƒÌµÂ ∞ˆ«ÿ¡÷±‚ */
+	_float2 m_vMultiple_Texcoord = { 1.f,1.f };
 private:
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};

@@ -97,10 +97,10 @@ private:
 	HRESULT Render_Glow_UI(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
 
-#ifdef _DEBUG
+
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
-#endif
+
 
 	HRESULT Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
 	HRESULT UI_Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);

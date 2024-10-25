@@ -82,6 +82,14 @@ BlendState BS_AlphaBlend
 	BlendOp = Add;
 };
 
+BlendState BS_MultiplyBlend
+{
+    BlendEnable[0] = true;
+
+    SrcBlend = Dest_Color; 
+    DestBlend = Zero;
+    BlendOp = Add;
+};
 
 BlendState BS_OneBlend
 {

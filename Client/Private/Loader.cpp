@@ -18,6 +18,7 @@
 #include "Effect_Blend.h"
 #include "Effect_ZNone.h"
 #include "Effect_Overlap.h"
+#include "Effect_Layer.h"
 #include "SpaceSky.h"
 
 #include "SpaceSun.h"
@@ -2210,6 +2211,7 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_Overlap"),
 		CEffect_Overlap::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 #pragma endregion
 	PreTransformMatrix = XMMatrixIdentity();
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);

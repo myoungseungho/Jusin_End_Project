@@ -39,6 +39,10 @@ public:
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
 
+
+		_float4 vColor;
+		_matrix LayerMatrix;
+
 	}EFFECT_DESC;
 
 
@@ -69,10 +73,10 @@ public:
 	_float3 Get_Effect_Position();
 	_float3 Get_Effect_Rotation();
 	HRESULT Play_Animation(_float CurrentFrame);
+	void		Set_Effect_Color(_float4 vColor);
+	void		Get_Layer_Matrix(_matrix LayerMatrix);
 
 protected:
-
-
 	CShader* m_pShaderCom = { nullptr };
 	CModel*	 m_pModelCom = { nullptr };
 	CTexture* m_pDiffuseTextureCom = { nullptr };
@@ -99,10 +103,15 @@ public:
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };
 	_int			m_iPassIndex = { 1 };
+	_float4		m_vColor = { 0.f, 0.f, 0.f, 1.f };
+	_bool			m_IsColorEffect = { false };
+
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();
 
+	_matrix				m_LayerMatrix = {};
+	_float4x4				m_WorldMatrix = {};
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

@@ -47,7 +47,6 @@ void CEffect::Update(_float fTimeDelta)
 
 void CEffect::Late_Update(_float fTimeDelta)
 {
-
 }
 
 HRESULT CEffect::Render(_float fTimeDelta)
@@ -144,7 +143,19 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	Set_Effect_Position(ResultKeyFrame.vPosition);
 	Set_Effect_Rotation(ResultKeyFrame.vRotation);
 
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 	return S_OK;
+}
+
+void CEffect::Set_Effect_Color(_float4 vColor)
+{
+	m_vColor = vColor;
+}
+
+void CEffect::Get_Layer_Matrix(_matrix LayerMatrix)
+{
+	m_LayerMatrix= LayerMatrix;
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

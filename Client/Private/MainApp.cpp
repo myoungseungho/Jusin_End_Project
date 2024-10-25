@@ -12,10 +12,7 @@
 #include "Level_Loading.h"
 #include "Imgui_Manager.h"
 
-#include "UI_Loading_BG.h"
-#include "UI_LoadingMark.h"
-#include "UI_Loading_Font.h"
-
+#include "Effect_Manager.h"
 #include "thread"
 
 CMainApp::CMainApp()

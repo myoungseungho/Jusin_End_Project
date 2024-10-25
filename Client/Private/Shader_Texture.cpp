@@ -317,6 +317,9 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 			m_pShaderCom->Bind_ShaderResourceView("g_DiffuseTexture", m_InputTextures["Diffuse"]);
 		
 	}
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vMultiple_Texcoord", &m_vMultiple_Texcoord, sizeof(_float2))))
+		return E_FAIL;
+	
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("isMoveTex", &m_MoveTex.isOn, sizeof(bool))))
 		return E_FAIL;

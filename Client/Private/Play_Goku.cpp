@@ -96,9 +96,9 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	
-	LightDesc.vDirection = _float4(-0.5f, -0.2f, 0.5f, 0.f);
-	LightDesc.vDiffuse = _float4(0.8f, 0.85f, 1.0f, 1.0f);
-	LightDesc.vAmbient = _float4(0.7f, 0.7f, 0.7f, 1.f);
+	LightDesc.vDirection = _float4(-0.5f, -0.1f, 0.5f, 0.f);
+	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
@@ -275,10 +275,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		//추적 관련 코드.
 		if (m_iPlayerTeam == 1)
 		{
-			if (m_pGameInstance->Key_Down(DIK_R))
-			{
-				Chase_Ready(fTimeDelta);
-			}
+			//if (m_pGameInstance->Key_Down(DIK_R))
+			//{
+			//	Chase_Ready(fTimeDelta);
+			//}
 		}
 		else  //Team2
 		{
@@ -499,6 +499,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
+
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
 }

@@ -58,6 +58,8 @@ namespace Engine
 
 		int*			pPlayerDirection;
 		string			strName;
+		float			fLifeTime;
+		float			fAccTime;
 	};
 
 	/*D3DDECLUSAGE*/
@@ -196,6 +198,7 @@ namespace Engine
 		_float3 scale;
 		_float3 rotation;
 		_int iNumKeyFrame;
+		_float4 vColor;
 		vector<EFFECT_KEYFRAME_DATA> keyframes;
 	};
 
@@ -206,6 +209,10 @@ namespace Engine
 		_float tickPerSecond;
 		_uint keyFramesCount;
 		_int iNumEffect;
+
+		_float3 vPosition;
+		_float3 vScaled;
+		_float3 vRotation;
 		vector<EFFECT_DATA> effects;
 	};
 #pragma endregion
