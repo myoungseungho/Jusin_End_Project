@@ -1109,6 +1109,7 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 	return S_OK;
 }
 
+//UI
 HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 {
 
@@ -1247,7 +1248,7 @@ HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 	else
 	{
 
-		m_pGlowShader->Begin(2);
+		m_pGlowShader->Begin(9);
 	}
 
 	m_pVIBuffer->Bind_Buffers();

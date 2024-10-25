@@ -240,6 +240,22 @@ PS_OUT PS_MAIN_DEBUG(PS_IN In)
 	return Out;
 }
 
+//UI
+PS_OUT PS_MAIN_RESULT_UI(PS_IN In)
+{
+
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+   /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
+     
+    Out.vColor = saturate(vResult + vBlur * 5.2f) /*+ vEffect*/;
+    //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
+    return Out;
+
+}
 
 technique11		DefaultTechnique
 {	
@@ -345,6 +361,17 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_RESULT_SUN();
     }
 
+//9 //UI
+    pass Result_UI //9
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_RESULT_UI();
+    }
     
 }
 
