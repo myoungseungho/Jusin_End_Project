@@ -10,7 +10,7 @@ PointCount: 1
 
 [CameraPoint]
 Position: 0.560064 1.17205 -3.3237
-Rotation: 0.0261241 0.0183284 -0.000479046 0.999491
+Rotation: 0 0 0 1
 Duration: 0.7
 InterpolationType: 2
 Damping: 1
@@ -25,7 +25,7 @@ PointCount: 1
 
 [CameraPoint]
 Position: 0.243729 0.11623 -2.37281
-Rotation: -0.22716 -0.000123108 -2.86309e-05 0.973858
+Rotation: -0.22716 0 0 1
 Duration: 0.7
 InterpolationType: 2
 Damping: 1

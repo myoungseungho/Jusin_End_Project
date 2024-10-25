@@ -194,16 +194,16 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
 	}
 
-	//// **direction에 따른 회전 조정**
-	//if (direction == -1)
-	//{
-	//	// 회전 쿼터니언의 X 및 Z 성분 부호 반전
-	//	interpolatedRotationLocal = XMVectorSet(
-	//		-XMVectorGetX(interpolatedRotationLocal),
-	//		XMVectorGetY(interpolatedRotationLocal),
-	//		-XMVectorGetZ(interpolatedRotationLocal),
-	//		XMVectorGetW(interpolatedRotationLocal));
-	//}
+	// **direction에 따른 회전 조정**
+	if (direction == -1)
+	{
+		// 쿼터니언의 Y와 Z 성분 반전
+		interpolatedRotationLocal = XMVectorSet(
+			XMVectorGetX(interpolatedRotationLocal),
+			-XMVectorGetY(interpolatedRotationLocal),
+			XMVectorGetZ(interpolatedRotationLocal),
+			XMVectorGetW(interpolatedRotationLocal));
+	}
 
 	// **6. 로컬 회전을 월드 회전으로 변환**
 	_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(interpolatedRotationLocal);
