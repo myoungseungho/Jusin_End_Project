@@ -2,6 +2,7 @@
 
 #include "UI_ComboNumber.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_ComboNumber::CUI_ComboNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUI_Combo{ pDevice ,pContext }
@@ -92,6 +93,9 @@ HRESULT CUI_ComboNumber::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 HRESULT CUI_ComboNumber::Bind_ShaderResources()

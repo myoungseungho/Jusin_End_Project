@@ -108,6 +108,7 @@ HRESULT CUI_KOPanel::Ready_Components()
 		return E_FAIL;
 
 
+	return S_OK;
 }
 
 HRESULT CUI_KOPanel::Bind_ShaderResources()

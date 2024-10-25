@@ -111,6 +111,7 @@ HRESULT CUI_KOFontEffect::Ready_Components()
 		return E_FAIL;
 
 
+	return S_OK;
 }
 
 HRESULT CUI_KOFontEffect::Bind_ShaderResources()

@@ -2,6 +2,7 @@
 
 #include "UI_Chara_SubIcon.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_Chara_SubIcon::CUI_Chara_SubIcon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
@@ -86,6 +87,9 @@ HRESULT CUI_Chara_SubIcon::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 CUI_Chara_SubIcon* CUI_Chara_SubIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

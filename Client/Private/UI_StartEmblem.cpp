@@ -24,8 +24,8 @@ HRESULT CUI_StartEmblem::Initialize_Prototype()
 HRESULT CUI_StartEmblem::Initialize(void* pArg)
 {
 
-	m_fSizeX = 700.f;
-	m_fSizeY = 700.f;
+	m_fSizeX = 800.f;
+	m_fSizeY = 800.f;
 	m_fPosX = 640;
 	m_fPosY = 360;
 
@@ -36,7 +36,6 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 		return E_FAIL;
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
-
 	Set_AnimPosition(300, 1.5f);
 	Set_AnimPosition(250, 1.6f);
 	Set_AnimPosition(300, 1.7f);
@@ -47,7 +46,8 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 	Set_AnimPosition(200, 2.2f);
 	Set_AnimPosition(500, 2.6f);
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY , 0.9f);
+
+	__super::Set_UI_Setting(m_fSizeX , m_fSizeY, m_fPosX, m_fPosY , 0.9f);
 
 	return S_OK;
 }
@@ -55,6 +55,8 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 void CUI_StartEmblem::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+
 }
 
 void CUI_StartEmblem::Update(_float fTimeDelta)
@@ -63,14 +65,15 @@ void CUI_StartEmblem::Update(_float fTimeDelta)
 
 	Action_Anim(1.f, fTimeDelta);
 
-	if (m_QueueAnim.empty())
-		Destory();
 
 }
 
 void CUI_StartEmblem::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
+
+	if (m_QueueAnim.empty())
+		Destory();
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
@@ -110,6 +113,9 @@ HRESULT CUI_StartEmblem::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartEmblem"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 

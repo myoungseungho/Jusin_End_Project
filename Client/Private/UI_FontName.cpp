@@ -2,6 +2,7 @@
 
 #include "UI_FontName.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_FontName::CUI_FontName(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
@@ -37,7 +38,7 @@ HRESULT CUI_FontName::Initialize(void* pArg)
 	if (m_pMainPawn != nullptr)
 		m_iTexIdx = m_pMainPawn->Get_PawnDesc().ePlayerID;
 
-	if (m_iTexIdx == CCharacter::HIT)
+	if (m_iTexIdx == CUI_Define::HIT)
 		m_fPosX -= 30;
 
 
@@ -97,6 +98,9 @@ HRESULT CUI_FontName::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontName"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 CUI_FontName* CUI_FontName::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

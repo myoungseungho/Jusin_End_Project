@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
+#include "UI_Define.h"
 #include "AnimationEvent_Defines.h"
 #include "FrameEvent_Manager.h"
 
@@ -131,10 +132,7 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 class CCharacter : public CGameObject
 {
 public:
-	enum PLAYER_SLOT { LPLAYER1 ,LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
-	enum PLAYER_ID { GOKU, ANDROID21, BUU, HIT, PAWN_END };
 
-public:
 	static vector<CInput> Command_236Attack;
 	static vector<CInput> Command_236Attack_Extra;
 	static vector<CInput> Command_214Attack;
@@ -183,7 +181,7 @@ public:
 	{
 		//_wstring strModelName;
 		_ushort iTeam = 1;
-		CCharacter::PLAYER_SLOT ePlayerSlot = {};
+		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -570,16 +568,16 @@ public:
 		_bool        bStun = { FALSE };
 		_bool        bHit = { FALSE };
 		_bool        bAttBuf = { FALSE };
-
+	
 		_int        iHp = { 0 };
 		_uint        iComboCount = { 0 };
-
+	
 		_int        iSKillPoint = { 0 };
 		_int        iSKillCount = { 0 };
 
-		CCharacter::PLAYER_SLOT ePlayer_Slot = {};
-		PLAYER_ID        ePlayerID = {};
-
+		CUI_Define::PLAYER_SLOT		ePlayer_Slot = {};
+		CUI_Define::PLAYER_ID        ePlayerID = {};
+	
 	}Character_INFO_DESC;
 
 public:
@@ -589,27 +587,27 @@ public:
 
 	//UI에서 써야하는 정보 
 
-protected:
+private:
 	_uint					m_iComboCount = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
-
+	
 	_bool					m_bRedHp = { FALSE };
 	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
-
+	
 	_uint					m_iNumAttBuf = { 1 };
-
+	
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
-	PLAYER_ID					m_eCharacterID = {};
-
-	CCharacter::PLAYER_SLOT				m_ePlayerSlot = { CCharacter::PLAYER_SLOT::SLOT_END };
 
 	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };
 
-	class CUI_Manager* m_pUI_Manager = { nullptr };
+protected:
+	CUI_Define::PLAYER_ID				m_eCharacterID = {};
+	CUI_Define::PLAYER_SLOT				m_ePlayerSlot = { CUI_Define::SLOT_END };
+	class CUI_Manager*		m_pUI_Manager = { nullptr };
 
 
 	string m_strName = "";

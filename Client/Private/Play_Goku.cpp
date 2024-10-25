@@ -3,7 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "UI_Manager.h"
+//#include "UI_Manager.h"
 
 #include "AttackObject.h"
 
@@ -204,11 +204,6 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	if (m_bDebugInputLock)
 		return;
-
-	Update_PreviousXPosition();
-
-	if (m_pGameInstance->Key_Down(DIK_F3))
-		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 
 
 	//합치기 전 임시 코드.  적 탐지코드임

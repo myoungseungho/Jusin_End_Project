@@ -205,6 +205,9 @@ HRESULT CUI_InputDir::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
 }
 
 _float CUI_InputDir::RotaionValue(_float2 vPrevPos, _float2 vCurrPos)

@@ -22,7 +22,7 @@ public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
-		RG_NONLIGHT, RG_GLOW, RG_BLEND, RG_UI, RG_NODE, RG_END };
+		RG_NONLIGHT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW , RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -64,12 +64,18 @@ private:
 
 	_float4x4					m_DownWorldMatrix = {};
 	_float4x4					m_DownWorldMatrix_Second = {};
+
 	_float4x4					m_WorldMatrix = {};
 	_float4x4					m_ViewMatrix = {};
 	_float4x4					m_ProjMatrix = {};
 
 	_bool m_bShow_RenderTarget = { false };
 	_bool m_bShow_Debug_Component = { false };
+
+private:
+	_float4x4					m_UIWorldMatrix = {};
+	_float4x4					m_UI_DownWorldMatrix = {};
+	_float4x4					m_UI_DownWorldMatrix_Second = {};
 
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
@@ -88,6 +94,7 @@ private:
 	HRESULT Render_Glow(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
+	HRESULT Render_Glow_UI(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
 
 #ifdef _DEBUG
@@ -96,6 +103,7 @@ private:
 #endif
 
 	HRESULT Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
+	HRESULT UI_Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
