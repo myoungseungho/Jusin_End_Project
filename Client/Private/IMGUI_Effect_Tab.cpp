@@ -951,6 +951,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if(ImGui::InputFloat("##Scale X", &CurScale.x, 0.1f))
     {
+        CurScale.x = max(0.01f, CurScale.x);
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     }
 
@@ -964,6 +965,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if(ImGui::InputFloat("##Scale Y", &CurScale.y, 0.1f))
     {
+        CurScale.y = max(0.01f, CurScale.y);
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     }
 
@@ -978,6 +980,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::SameLine();
     if(ImGui::InputFloat("##Scale Z", &CurScale.z, 0.1f))
     {
+        CurScale.x = max(0.01f, CurScale.x);
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     }
 

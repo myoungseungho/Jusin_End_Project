@@ -4,6 +4,9 @@ Duration: 1
 TickPerSecond: 1
 KeyFramesCount: 59
 NumEffec: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
 
 [Effect]
 EffectName: aa

@@ -4,6 +4,9 @@ Duration: 2
 TickPerSecond: 1
 KeyFramesCount: 119
 NumEffec: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
 
 [Effect]
 EffectName: Smoke0301

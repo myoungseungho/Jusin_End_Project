@@ -46,12 +46,12 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(vPos.x, vPos.y, vPos.z, 1.f));
 		m_pTransformCom->Set_Scaled(vScaled.x, vScaled.y, vScaled.z);
 		m_pTransformCom->Rotate(vRotation);
+
+		return S_OK;
 	}
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	m_pTransformCom->Rotate(_float3(0.f, 0.f, 0.f));
-
-	
 
 	return S_OK;
 }
