@@ -9,8 +9,8 @@ AnimationName: Son_Heavy_Anim1
 PointCount: 1
 
 [CameraPoint]
-Position: 0.628759 0.976856 -3.33332
-Rotation: 0 0 0 1
+Position: 0.560064 1.17205 -3.3237
+Rotation: 0.0261241 0.0183284 -0.000479046 0.999491
 Duration: 0.7
 InterpolationType: 2
 Damping: 1
@@ -24,8 +24,8 @@ AnimationName: Son_Knock_Away_Up_Anim1
 PointCount: 1
 
 [CameraPoint]
-Position: 0.390964 0.356368 -2.3535
-Rotation: -0.212945 0.0447352 0.00976045 0.975991
+Position: 0.243729 0.11623 -2.37281
+Rotation: -0.22716 -0.000123108 -2.86309e-05 0.973858
 Duration: 0.7
 InterpolationType: 2
 Damping: 1
@@ -39,8 +39,8 @@ AnimationName: Son_Air_Smash_Anim1
 PointCount: 1
 
 [CameraPoint]
-Position: -0.0461857 1.55982 -2.78979
-Rotation: 0.0778452 0.127514 -0.0100395 0.988726
+Position: -0.836494 2.14128 -2.69361
+Rotation: 0.154796 0.224273 -0.0361075 0.961476
 Duration: 0.7
 InterpolationType: 2
 Damping: 1
