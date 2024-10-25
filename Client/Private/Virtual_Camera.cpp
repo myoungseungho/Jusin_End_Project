@@ -168,34 +168,18 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedPositionLocal = XMLoadFloat3(&nextPoint.position);
 	}
 
-	// **direction에 따른 포지션 조정**
-	if (direction == -1)
-	{
-		// x축 부호 반전
-		interpolatedPositionLocal = XMVectorSetX(interpolatedPositionLocal, -XMVectorGetX(interpolatedPositionLocal));
-	}
+	//// **direction에 따른 포지션 조정**
+	//if (direction == -1)
+	//{
+	//	// x축 부호 반전
+	//	interpolatedPositionLocal = XMVectorSetX(interpolatedPositionLocal, -XMVectorGetX(interpolatedPositionLocal));
+	//}
 
-	// **3. 모델의 월드 행렬 로드 (스케일링 제거)**
+	// **3. 모델의 월드 행렬 로드 (스케일링 포함)**
 	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 
-	// 모델의 스케일링을 분리
-	_vector modelScale;
-	_vector modelRotationQuat;
-	_vector modelTranslation;
-	BOOL decomposeResult = XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, modelWorldMatrix);
-	if (!decomposeResult)
-	{
-		modelRotationQuat = XMQuaternionIdentity();
-		modelTranslation = XMVectorZero();
-	}
-
-	// 스케일링을 제거한 모델의 월드 행렬 재구성
-	_matrix modelRotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
-	_matrix modelTranslationMatrix = XMMatrixTranslationFromVector(modelTranslation);
-	_matrix modelWorldMatrixNoScale = modelRotationMatrix * modelTranslationMatrix;
-
-	// **4. 로컬 포지션을 월드 포지션으로 변환**
-	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrixNoScale);
+	// **4. 로컬 포지션을 월드 포지션으로 변환 (스케일링 포함)**
+	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrix);
 
 	// **2. 로컬 회전 보간 (Quaternion Slerp 사용)**
 	_vector interpolatedRotationLocal;
@@ -210,25 +194,22 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
 	}
 
-	// **direction에 따른 회전 조정**
-	if (direction == -1)
-	{
-		// 회전 쿼터니언의 X 및 Z 성분 부호 반전
-		interpolatedRotationLocal = XMVectorSet(
-			-XMVectorGetX(interpolatedRotationLocal),
-			XMVectorGetY(interpolatedRotationLocal),
-			-XMVectorGetZ(interpolatedRotationLocal),
-			XMVectorGetW(interpolatedRotationLocal));
-	}
+	//// **direction에 따른 회전 조정**
+	//if (direction == -1)
+	//{
+	//	// 회전 쿼터니언의 X 및 Z 성분 부호 반전
+	//	interpolatedRotationLocal = XMVectorSet(
+	//		-XMVectorGetX(interpolatedRotationLocal),
+	//		XMVectorGetY(interpolatedRotationLocal),
+	//		-XMVectorGetZ(interpolatedRotationLocal),
+	//		XMVectorGetW(interpolatedRotationLocal));
+	//}
 
 	// **6. 로컬 회전을 월드 회전으로 변환**
 	_matrix interpolatedRotationMatrixLocal = XMMatrixRotationQuaternion(interpolatedRotationLocal);
 
-	// 월드 회전 행렬 계산
-	_matrix interpolatedRotationMatrixWorld = interpolatedRotationMatrixLocal;
-
-	// **7. 카메라의 월드 행렬 생성**
-	_matrix NewWorldMatrix = interpolatedRotationMatrixWorld;
+	// **7. 카메라의 월드 행렬 생성 (스케일링 포함)**
+	_matrix NewWorldMatrix = interpolatedRotationMatrixLocal;
 	NewWorldMatrix.r[3] = XMVectorSetW(interpolatedPositionWorld, 1.0f); // 위치 설정
 
 	// 방향 벡터 추출
