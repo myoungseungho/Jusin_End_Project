@@ -565,8 +565,8 @@ void CVirtual_Camera::Add_Point(_float duration, _int type, const _float4x4* pMo
 		_matrix inverseModelRotationMatrix = inverseModelMatrix;
 		inverseModelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
 
-		// **카메라의 로컬 회전 행렬 계산**
-		_matrix localRotationMatrix = cameraRotationMatrix * inverseModelRotationMatrix;
+		// 로컬 회전 행렬 계산 (순서 변경)
+		_matrix localRotationMatrix = inverseModelRotationMatrix * cameraRotationMatrix;
 
 		// **로컬 회전 행렬을 쿼터니언으로 변환하여 저장**
 		_vector localQuaternion = XMQuaternionRotationMatrix(localRotationMatrix);
