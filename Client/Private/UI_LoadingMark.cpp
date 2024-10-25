@@ -23,9 +23,10 @@ HRESULT CUI_LoadingMark::Initialize_Prototype()
 
 HRESULT CUI_LoadingMark::Initialize(void* pArg)
 {
-	
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
+
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
@@ -37,6 +38,7 @@ HRESULT CUI_LoadingMark::Initialize(void* pArg)
 
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	m_iTextureIndex = pDesc->iNumUI;
+
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
@@ -70,7 +72,7 @@ void CUI_LoadingMark::Late_Update(_float fTimeDelta)
 HRESULT CUI_LoadingMark::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
+		return E_FAIL;
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
@@ -91,6 +93,7 @@ HRESULT CUI_LoadingMark::Ready_Components()
 {
 	if (FAILED(__super::Ready_Components()))
 		return E_FAIL;
+
 
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingMark"),

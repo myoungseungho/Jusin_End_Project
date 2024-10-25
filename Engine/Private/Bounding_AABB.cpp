@@ -44,6 +44,13 @@ HRESULT CBounding_AABB::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fve
 	return S_OK;
 }
 
+void CBounding_AABB::UpdateVector(_vector vTransform)
+{
+	_matrix		Transform = XMMatrixAffineTransformation({1.f,1.f,1.f}, XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 0.f), vTransform);
+
+	m_pOriginalDesc->Transform(*m_pDesc, Transform);
+}
+
 _bool CBounding_AABB::isCollision(CCollider::TYPE eTargetColliderType, CBounding* pTargetBounding)
 {
 	_bool		isColl = { false };

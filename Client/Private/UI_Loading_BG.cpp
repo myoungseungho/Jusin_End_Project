@@ -47,6 +47,12 @@ HRESULT CUI_Loading_BG::Initialize(void* pArg)
 
 void CUI_Loading_BG::Priority_Update(_float fTimeDelta)
 {
+	m_IsAlphaSwich ? (m_fBGAlphaValue += fTimeDelta * 0.25f) : (m_fBGAlphaValue -= fTimeDelta * 0.25f);
+
+	if (m_fBGAlphaValue <= 0.25f)
+		m_IsAlphaSwich = TRUE;
+	else if (m_fBGAlphaValue >= 1.f)
+		m_IsAlphaSwich = FALSE;
 }
 
 void CUI_Loading_BG::Update(_float fTimeDelta)
@@ -118,6 +124,8 @@ HRESULT CUI_Loading_BG::Bind_ShaderResources()
 		return E_FAIL;
 
 
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fBGAlphaValue, sizeof(_float))))
+		return E_FAIL;
 
 	return S_OK;
 }

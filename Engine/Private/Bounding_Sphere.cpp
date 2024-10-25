@@ -27,6 +27,16 @@ void CBounding_Sphere::Update(_fmatrix TransformMatrix)
 	m_pOriginalDesc->Transform(*m_pDesc, TransformMatrix);
 }
 
+
+
+void CBounding_Sphere::UpdateVector(_vector vTransform)
+{
+
+	_matrix		Transform = XMMatrixAffineTransformation({ 1.f,1.f,1.f }, XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 0.f), vTransform);
+	m_pOriginalDesc->Transform(*m_pDesc, Transform);
+
+}
+
 HRESULT CBounding_Sphere::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor)
 {
 	DX::Draw(pBatch, *m_pDesc, vColor);

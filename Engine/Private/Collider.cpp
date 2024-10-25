@@ -84,6 +84,12 @@ void CCollider::Update(_fmatrix TransformMatrix)
 	m_pBounding->Update(TransformMatrix);
 }
 
+void CCollider::UpdateVector(_vector vPosition)
+{
+	m_pBounding->UpdateVector(vPosition);
+}
+
+
 HRESULT CCollider::Render(_float fTimeDelta)
 {
 #ifdef _DEBUG

@@ -131,7 +131,7 @@ vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_
 class CCharacter : public CGameObject
 {
 public:
-	enum PLAYER_SLOT { LPLAYER1, LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
+	enum PLAYER_SLOT { LPLAYER1 ,LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
 	enum PLAYER_ID { GOGU, ANDROID21, BUU, HIT, PAWN_END };
 
 public:
@@ -183,7 +183,7 @@ public:
 	{
 		//_wstring strModelName;
 		_ushort iTeam = 1;
-		PLAYER_SLOT ePlayerSlot = {};
+		CCharacter::PLAYER_SLOT ePlayerSlot = {};
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -312,6 +312,8 @@ public:
 	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
 	void Chase_Ready(_float fTimeDelta);
+	void Set_ChaseStoping();
+	void Set_ChaseStop();
 
 	void Chase_Grab(_float fTimeDelta);
 
@@ -319,7 +321,7 @@ public:
 	void Move(_float fTimeDelta);
 	void MoveKey1Team(_float fTimeDelta);
 	void MoveKey2Team(_float fTimeDelta);
-	virtual void Reset_AttackCount() {};
+	virtual void Reset_AttackCount();
 
 
 	//피격 관련
@@ -361,7 +363,20 @@ public:
 	void Set_Grab(_bool bAir);
 
 
+	_ushort Get_BreakFall_AirAnimationIndex();
+	_ushort Get_JumpAirAnimationIndex();
 
+
+	_bool Get_bStun();
+	void Update_PreviousXPosition();
+	_float Get_fCalculatePreviousXPosition();
+	_float Get_fAbsCalculatePreviousXPosition();
+
+
+public:
+	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
+	virtual void OnCollisionExit(class CCollider* other) override;
 
 	//UI
 public:
@@ -430,10 +445,11 @@ protected:
 	_ushort m_iHit_Away_LeftAnimationIndex = { 33 };
 	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
 
+	_ushort m_iHit_Air_Spin_LeftUp = {31};
+
+
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
 	_ushort m_iHit_Air_FallAnimationIndex = { 26 };
-
-	_ushort m_iHit_Air_Spin_LeftUp = { 31 };
 
 
 	//기상
@@ -448,6 +464,7 @@ protected:
 	_ushort m_iAttack_Air3 = { 54 };
 	_ushort m_iAttack_AirUpper = { 55 };
 
+	_ushort m_iAttack_LightLast = {47};
 
 	//가드
 	_ushort m_iGuard_GroundAnimationIndex = { 18 };
@@ -495,6 +512,8 @@ protected:
 
 	//디버그용 임시 collider
 	//CCollider_Test* m_pColliderCom = { nullptr };
+	CCollider* m_pColliderCom = { nullptr };
+
 	CCharacter* m_pDebugEnemy = { nullptr };
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
@@ -509,7 +528,10 @@ protected:
 
 
 
+	_bool m_bChaseStoping = false;
 	_bool m_bChaseEnable = true;
+	//_bool m_bChaseAttackEnable = true;
+
 	_bool m_bGrab = false;
 	_bool m_bGrab_Air = false;
 
@@ -536,6 +558,12 @@ protected:
 	public:
 		void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }
 
+	//class CAttackObject* m_pChaseAttackObejct = { nullptr };
+	//Set_RemoteDestory()
+
+	_float m_fPreviousX = {};
+
+
 public:
 	typedef struct
 	{
@@ -549,7 +577,7 @@ public:
 		_int        iSKillPoint = { 0 };
 		_int        iSKillCount = { 0 };
 
-		PLAYER_SLOT ePlayer_Slot = {};
+		CCharacter::PLAYER_SLOT ePlayer_Slot = {};
 		PLAYER_ID        ePlayerID = {};
 
 	}Character_INFO_DESC;
@@ -576,7 +604,7 @@ protected:
 	Character_INFO_DESC				 m_tCharacterDesc = {};
 	PLAYER_ID					m_eCharacterID = {};
 
-	PLAYER_SLOT				m_ePlayerSlot = { SLOT_END };
+	CCharacter::PLAYER_SLOT				m_ePlayerSlot = { CCharacter::PLAYER_SLOT::SLOT_END };
 
 	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };

@@ -262,6 +262,14 @@ HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iLevelIndex, const wstring& 
 	return m_pObject_Manager->Add_GameObject_ToLayer(iLevelIndex, strPrototypeTag, strLayerTag, pArg);
 }
 
+CGameObject* CGameInstance::Add_GameObject_ToLayer_AndGet(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Add_GameObject_ToLayer_AndGet(iLevelIndex, strPrototypeTag, strLayerTag, pArg);
+}
+
 CComponent* CGameInstance::Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex)
 {
 	if (nullptr == m_pObject_Manager)
@@ -400,6 +408,13 @@ void CGameInstance::Get_ParallelVectorsInPlane(_float3& tangent1, _float3& tange
 HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, CCollider* pRenderObject)
 {
 	return m_pCollider_Manager->Add_ColliderObject(eRenderGroup, pRenderObject);
+}
+
+HRESULT CGameInstance::Release_Collider(const CCollider* Collider)
+{
+	return m_pCollider_Manager->Release_Collider(Collider);
+	
+
 }
 
 

@@ -29,6 +29,8 @@ public:
 public:
 	virtual HRESULT Initialize(CBounding::BOUNDING_DESC* pDesc);
 	virtual void Update(_fmatrix TransformMatrix) override;
+	virtual void UpdateVector(_vector vTransform);
+
 	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor) override;
 	virtual _bool isCollision(CCollider::TYPE eTargetColliderType, CBounding* pTargetBounding);
 	_bool isRayCollision(const _float3& rayOrigin, const _float3& rayDir) override;
@@ -36,6 +38,7 @@ public:
 	_float Get_Overlap_X(const CBounding_AABB* pOther) const;
 	_float3 Get_Overlap_Center_Position(const CBounding_AABB* pOther) const;
 
+	
 private:
 	BoundingBox* m_pOriginalDesc = { nullptr };
 	BoundingBox* m_pDesc = { nullptr };

@@ -202,6 +202,35 @@ void CObject_Manager::Update(_float fTimeDelta)
 	}
 }
 
+CGameObject* CObject_Manager::Add_GameObject_ToLayer_AndGet(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strLayerTag, void* pArg)
+{
+	/* 복제할 원형객체를 찾자. */
+	CGameObject* pPrototype = Find_Prototype(strPrototypeTag);
+	if (nullptr == pPrototype)
+		return nullptr;
+
+	/* 찾아낸 원형객체를 복제하여 사본객체를 생성해오자. */
+	CGameObject* pGameObject = pPrototype->Clone(pArg);
+	if (nullptr == pGameObject)
+		return nullptr;
+
+	/* 복제한 사본객체를 레이어에 추가한다.. */
+	CLayer* pLayer = Find_Layer(iLevelIndex, strLayerTag);
+
+	if (nullptr == pLayer)
+	{
+		CLayer* pLayer = CLayer::Create();
+
+		pLayer->Add_GameObject(pGameObject);
+
+		m_pLayers[iLevelIndex].emplace(strLayerTag, pLayer);
+	}
+	else
+		pLayer->Add_GameObject(pGameObject);
+
+	return pGameObject;
+}
+
 void CObject_Manager::Late_Update(_float fTimeDelta)
 {
 	for (size_t i = 0; i < m_iNumLevels; i++)

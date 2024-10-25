@@ -164,6 +164,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 	// 각 스레드에서 취합한 충돌 결과가 있다면 m_CollisionResults에 저장
 	for (const auto& pair : m_CollisionResults) {
+
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
 
