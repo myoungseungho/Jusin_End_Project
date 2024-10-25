@@ -2331,6 +2331,9 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CAttackObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+
+
+
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 
 	m_isFinished = true;

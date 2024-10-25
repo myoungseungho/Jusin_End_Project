@@ -8,14 +8,13 @@
 #include "Texture.h"
 #include "Collider_Test.h"
 #include "VIBuffer_Rect.h"
+#include "VIBuffer_Line_Rect.h"
 #include "Bounding_Sphere.h"
 #include "Bounding_AABB.h"
 #include "Bounding_OBB.h"
 #include "Collider_Manager.h"
 /* 1. 원형객첼르 레벨별로 보관한다. */
 /* 2. 지정한 원형객체를 복제하여 리턴한다. */
-
-//#include "Collider_Test.h"
 
 BEGIN(Engine)
 

@@ -445,10 +445,12 @@ protected:
 	_ushort m_iHit_Away_LeftAnimationIndex = {33};
 	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
 
+	_ushort m_iHit_Air_Spin_LeftUp = {31};
+
+
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
 	_ushort m_iHit_Air_FallAnimationIndex = { 26 };	
 
-	_ushort m_iHit_Air_Spin_LeftUp = {31};
 
 
 	//기상
@@ -463,6 +465,7 @@ protected:
 	_ushort m_iAttack_Air3 = { 54 };		
 	_ushort m_iAttack_AirUpper = { 55 };
 
+	_ushort m_iAttack_LightLast = {47};
 
 	//가드
 	_ushort m_iGuard_GroundAnimationIndex = { 18 };

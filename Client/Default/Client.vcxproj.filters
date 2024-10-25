@@ -390,11 +390,14 @@
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Chase">
       <UniqueIdentifier>{2e373acd-4324-41a5-b47d-c0c6272f12eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\AttackObject\AttackObject_Ener">
-      <UniqueIdentifier>{5b19830a-5c89-444c-a2a6-f493c6fbb1ae}</UniqueIdentifier>
-</Filter>
     <Filter Include="02.GameObjects\AttackObject">
       <UniqueIdentifier>{c19be185-f15f-4931-907f-1c4f8f917daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Energy">
+      <UniqueIdentifier>{5b19830a-5c89-444c-a2a6-f493c6fbb1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Grab">
+      <UniqueIdentifier>{7fb0c2d5-00f9-413d-a9a3-0119f975f203}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -764,7 +767,7 @@
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject_Chase.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Chase</Filter>
- </ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Public\AttackObject.h">
       <Filter>02.GameObjects\AttackObject</Filter>
     </ClInclude>

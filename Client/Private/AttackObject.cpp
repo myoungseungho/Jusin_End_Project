@@ -278,7 +278,14 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
+
+			//if(m_ihitCharacter_Motion == HIT_KNOCK_AWAY_LEFT)
+			//{
+				
+			//}
 			
+
+
 			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
 			
 

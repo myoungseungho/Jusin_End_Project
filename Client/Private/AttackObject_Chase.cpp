@@ -293,6 +293,9 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+
+			m_pOwner->Set_ChaseStop();
+			m_pOwner->Set_ChaseStoping();
 		}
 
 		//사람 상대로 비길 수 없음

@@ -27,7 +27,7 @@ PLAY_GOKU,GKS200_body,20,NextAnimationCheck,333333
 
 PLAY_GOKU,GKS201_body,0,AnimSpeedChange,0.008,120
 PLAY_GOKU,GKS201_body,30,AttackEvent,201
-PLAY_GOKU,GKS201_body,30,NextAnimationCheck,333333
+PLAY_GOKU,GKS201_body,33,NextAnimationCheck,333333
 
 PLAY_GOKU,GKS201_body,0,ObjectMove,0.05,0,0,0
 PLAY_GOKU,GKS201_body,2,ObjectMove,0.05,0,0,0
@@ -87,7 +87,7 @@ PLAY_GOKU,GKS203_body,30,ObjectMove,0.1,0,0,0
 //,PLAY_GOKU,GKS204_body,0,AnimSpeedChange,0.05,120
 //,PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.035,60
 //,PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.05,60
-PLAY_GOKU,GKS204_body,0,AnimSpeedChange,0.025,120
+PLAY_GOKU,GKS204_body,0,AnimSpeedChange,0.025,160
 PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.017,60
 PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.025,60
 
@@ -101,6 +101,8 @@ PLAY_GOKU,GKS204_body,30,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS204_body,34,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS204_body,38,ObjectMove,0.1,0,0,0
 PLAY_GOKU,GKS204_body,42,ObjectMove,0.1,0,0,0
+
+PLAY_GOKU,GKS204_body,50,AttackEvent,204
 
 
 
@@ -138,7 +140,9 @@ PLAY_GOKU,GKS205_body,95,AnimSpeedChange,0.005,90
 //,앉아약
 PLAY_GOKU,GKS230_body,0,AnimSpeedChange,0.028,90
 PLAY_GOKU,GKS230_body,10,AttackEvent,33333     
-PLAY_GOKU,GKS230_body,10,NextAnimationCheck,333 3
+PLAY_GOKU,GKS230_body,12,NextAnimationCheck,333
+PLAY_GOKU,GKS230_body,17,NextAnimationCheck,333
+
 
 //,앉아중 기존 공격프레임은 11~14
 PLAY_GOKU,GKS231_body,0,AnimSpeedChange,0.02,90
@@ -890,6 +894,7 @@ PLAY_GOKU,GKS042_body,0,PositionChange,10
 //,PLAY_GOKU,GKS050_body,0,PositionChange,5
 //,PLAY_GOKU,GKS050_body,10,PositionChange,5
 PLAY_GOKU,GKS050_body,0.000000,AnimSpeedChange,0.064000,86.060997
+PLAY_GOKU,GKS050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,PLAY_GOKU,GKS050_body,0,AnimSpeedChange,0.022000,61.818001
 
