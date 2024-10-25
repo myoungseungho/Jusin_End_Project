@@ -74,6 +74,7 @@ public:
 
 	string m_FileName;
 private: /* 이 m_PrototypeKeys 로 Load_NodeTextures() 함수호출로 객체들을 다 생성한다 */
+	//vector<*>			m_ShaderTexture_TexCoords;
 	vector<Save_Key>			m_PrototypeKeys;							
 	/*----------------------------m_PrototypeKeys-----------------------------------------------------------------------------------------*/
 	CTexture*					m_pDefaultTexture = { nullptr };			// 꼇다 뺏다 할때 필요한 흰색텍스쳐컴
@@ -107,6 +108,10 @@ private: /* ImNodes 와 관련된 멤버 변수 */
 public:
 	void Save_ClientBinary();
 
+public:
+	void RemoveSubstring(std::wstring& wstr, const std::wstring& toRemove);
+	string WStringToString(const std::wstring& wstr);
+	void ShowTextWithoutPrefix(const std::wstring& wstr);
 public:
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture, string strFilename);

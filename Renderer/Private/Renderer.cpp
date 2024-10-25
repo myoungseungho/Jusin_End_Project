@@ -493,10 +493,6 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	
 	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta); // ¼öÁ¤
 
-
-
-
-
 	if (NULL != m_pRenderInstance->Check_EffectLights())
 	{
 		if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))

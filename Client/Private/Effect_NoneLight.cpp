@@ -127,7 +127,7 @@ HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
 	}
 
 	if (m_iPassIndex == 1)
-		m_iPassIndex = 3;
+		m_iPassIndex = 4;
 	else
 		m_iPassIndex = 1;
 
