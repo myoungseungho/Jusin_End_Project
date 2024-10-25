@@ -95,23 +95,30 @@ HRESULT CVirtual_Camera::Render(_float fTimeDelta)
 
 void CVirtual_Camera::Play(_float fTimeDelta)
 {
-	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
-	CCharacter* character = static_cast<CCharacter*>(m_p1pPlayer);
-	_int direction = character->Get_iDirection();
-
 	if (m_currentPlayMode != CAMERA_PLAY_MODE::Playing || m_AnimationIndex == -1)
 		return; // 현재 상태가 Playing이 아니면 업데이트하지 않음
 
 	// 현재 애니메이션의 포인트 수 확인
-	if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size() - 1)
+	if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size())
 	{
-		// 마지막 포인트에 도달했으면 Play 모드 종료
+		// 모든 포인트의 Duration이 끝나면 Play 모드 종료
 		Stop();
 		return;
 	}
 
+	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
+	CCharacter* character = static_cast<CCharacter*>(m_p1pPlayer);
+	_int direction = character->Get_iDirection();
+
+	// 현재 포인트와 다음 포인트 설정
 	CameraPoint currentPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex];
-	CameraPoint nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
+	CameraPoint nextPoint = {};
+
+	if (m_currentPointIndex + 1 < m_mapPoints[m_AnimationIndex].size())
+		nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
+	else
+		// 다음 포인트가 없으면 currentPoint를 사용
+		nextPoint = currentPoint;
 
 	m_elapsedTime += fTimeDelta;
 
@@ -121,15 +128,20 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		m_currentPointIndex++;
 		m_elapsedTime = 0.0f;
 
-		if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size() - 1)
+		if (m_currentPointIndex >= m_mapPoints[m_AnimationIndex].size())
 		{
-			// 마지막 포인트에 도달했으면 Play 모드 종료
+			// 모든 포인트의 Duration이 끝나면 Play 모드 종료
 			Stop();
 			return;
 		}
 
+		// 현재 포인트와 다음 포인트 재설정
 		currentPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex];
-		nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
+		if (m_currentPointIndex + 1 < m_mapPoints[m_AnimationIndex].size())
+			nextPoint = m_mapPoints[m_AnimationIndex][m_currentPointIndex + 1];
+		else
+			// 다음 포인트가 없으면 currentPoint를 사용
+			nextPoint = currentPoint;
 	}
 
 	// 보간 비율 계산
@@ -332,7 +344,7 @@ void CVirtual_Camera::Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* 
 	Safe_AddRef(pPlayer);
 }
 
-void CVirtual_Camera::Start_Play(_int animationIndex)
+void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay)
 {
 	if (m_mapPoints[animationIndex].size() == 0)
 		return;
@@ -347,6 +359,8 @@ void CVirtual_Camera::Start_Play(_int animationIndex)
 
 	m_currentMode = CAMERA_CINEMATIC_MODE;
 	m_currentPlayMode = Playing;
+	
+	m_bIsImguiPlay = isImguiPlay;
 	//플레이를 하면 여기로
 	Move_Point(0, m_AnimationIndex);
 }
@@ -360,7 +374,8 @@ void CVirtual_Camera::Pause()
 
 void CVirtual_Camera::Stop()
 {
-	m_currentMode = CAMERA_FREE_MODE;
+	m_currentMode = m_bIsImguiPlay ? CAMERA_FREE_MODE : CAMERA_NORMAL_MODE;
+
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;

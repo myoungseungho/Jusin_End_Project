@@ -462,7 +462,7 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 	case CAMERA_MODELID_DEFAULT:
 		return nullptr;
 	case CAMERA_MODELID_SON:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), 0);
 		break;
 	case CAMERA_MODELID_HIT:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
@@ -676,7 +676,7 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 {
 	ImVec2 button_size = ImVec2(20, 20);
 	if (ImGui::InvisibleButton("play_button", button_size))
-		m_pMainCamera->Play(m_iSelected_Animation);
+		m_pMainCamera->IMGUI_Play(m_iSelected_Animation);
 
 	ImVec2 p = ImGui::GetItemRectMin();
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();

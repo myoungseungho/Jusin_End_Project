@@ -58,7 +58,7 @@ public:
 	const _char* GetTabName() const { return m_Name; };
 	void Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
 
-	void Start_Play(_int animationIndex);
+	void Start_Play(_int animationIndex, _bool isImguiPlay);
 	void Pause();
 	void Stop();
 	void Button_Stop();
@@ -107,7 +107,8 @@ public:
 	unordered_map<_int, vector<CameraPoint>> m_mapPoints;
 	_int m_AnimationIndex = -1;
 
-	class CGameObject* m_pCutsceneCharacter = { nullptr };
+	//IMGUI
+	_bool m_bIsImguiPlay = { false };
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

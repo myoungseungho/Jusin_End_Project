@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "Camera.h"
+#include "Character.h"
 
 BEGIN(Client)
 
@@ -29,7 +30,6 @@ public:
 		PLAYER_2P
 	};
 
-
 	//// 스킬 이름을 모델 ID와 스킬 ID로 매핑
 	//unordered_map<std::pair<_int, _wstring>, _int> stringToSkillID;
 	//// 애니메이션 이름을 모델 ID, 스킬 ID, 애니메이션 ID로 매핑
@@ -54,7 +54,8 @@ public:
 	void Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
-	void Play(_int animationIndex);
+	void IMGUI_Play(_int animationIndex);
+	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex);
 	void Stop();
 	void Pause();
 	void Button_Stop();
@@ -81,7 +82,6 @@ private:
 
 	unordered_map<std::string, int> stringToSkillID;
 	unordered_map<std::string, int> stringToAnimID;
-
 
 public:
 	static CMain_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

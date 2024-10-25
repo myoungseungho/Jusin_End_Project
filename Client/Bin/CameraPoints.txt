@@ -9,9 +9,9 @@ AnimationName: Son_Skill1_Anim1
 PointCount: 1
 
 [CameraPoint]
-Position: 1.62174 1.34563 -2.87271
-Rotation: 0.0183299 0.0130967 -0.000240103 0.999746
-Duration: 1
+Position: 0.543548 1.12734 -3.60936
+Rotation: -0.001386 0.0208923 2.89626e-05 0.999781
+Duration: 0.7
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1

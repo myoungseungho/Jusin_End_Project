@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 
 #include "Character.h"
+#include "Main_Camera.h"
 
 CAttackObject::CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -29,7 +30,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	if (nullptr == pArg)
 		return E_FAIL;
 
-	
+
 	ATTACK_DESC* pDesc = static_cast<ATTACK_DESC*>(pArg);
 
 	m_ihitCharacter_Motion = pDesc->ihitCharacter_Motion;
@@ -90,7 +91,7 @@ void CAttackObject::Update(_float fTimeDelta)
 
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
-		if(m_bEnableDestory)
+		if (m_bEnableDestory)
 		{
 			Destory();
 			m_pGameInstance->Release_Collider(m_pColliderCom);
@@ -116,7 +117,7 @@ void CAttackObject::Update(_float fTimeDelta)
 	//	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
 	//	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	//}
-	
+
 }
 
 void CAttackObject::Late_Update(_float fTimeDelta)
@@ -233,7 +234,7 @@ void CAttackObject::Late_Update(_float fTimeDelta)
 	//	}
 	//
 
-		
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -278,16 +279,14 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
-
-			//if(m_ihitCharacter_Motion == HIT_KNOCK_AWAY_LEFT)
-			//{
-				
-			//}
-			
-
+			if (m_ihitCharacter_Motion == HIT_KNOCK_AWAY_LEFT || m_ihitCharacter_Motion == HIT_SPIN_AWAY_LEFTUP)
+			{
+				//강공격 맞았을 때 카메라 셋팅
+				Camera_Hit_Knock_Away_Left(m_pOwner, pCharacter);
+			}
 
 			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
-			
+
 
 			if (m_bOwnerNextAnimation)
 			{
@@ -318,13 +317,13 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					m_bEnableDestory = false;
 				}
 			}
-				
+
 			//그 외에는 공격판정 사라지지 않음
 			else
 				return;
 
 		}
-		
+
 		if (m_bEnableDestory)
 		{
 			Destory();
@@ -337,10 +336,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
 		_bool bDebugA = true;
-		
+
 
 	}
-	
+
 }
 
 void CAttackObject::OnCollisionStay(CCollider* other, _float fTimeDelta)
@@ -361,6 +360,33 @@ void CAttackObject::CollisingAttack()
 
 void CAttackObject::CollisingPlayer()
 {
+}
+
+//강공격 시
+void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	//어떤 카메라의 애니메이션에 따라 존재하는 포인트들을 재생한다
+	//모델과 스킬 정보, 몇번째 애니메이션 인지 
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CCharacter::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CCharacter::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_SKILL_1, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
+		break;
+	case Client::CCharacter::ANDROID21:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_SKILL_1, 0);
+		break;
+	case Client::CCharacter::BUU:
+		break;
+	case Client::CCharacter::HIT:
+		break;
+	}
 }
 
 

@@ -132,7 +132,7 @@ class CCharacter : public CGameObject
 {
 public:
 	enum PLAYER_SLOT { LPLAYER1 ,LPLAYER2, RPLAYER1, RPLAYER2, SLOT_END };
-	enum PLAYER_ID { GOGU, ANDROID21, BUU, HIT, PAWN_END };
+	enum PLAYER_ID { GOKU, ANDROID21, BUU, HIT, PAWN_END };
 
 public:
 	static vector<CInput> Command_236Attack;
