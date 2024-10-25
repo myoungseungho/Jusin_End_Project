@@ -86,13 +86,10 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 		m_bIsActive = true;
 	if (m_pGameInstance->Key_Down(DIK_F4))
 		m_bIsActive = FALSE;
-
-
 }
 
 void CUIObject::Update(_float fTimeDelta)
 {
-
 
 }
 

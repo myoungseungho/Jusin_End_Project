@@ -325,9 +325,9 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _fl
 void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2)
 {
 	// 카메라의 Look 방향을 고정된 값으로 설정 (예: Z축을 향하도록)
-	_vector fixedRight = XMVectorSet(0.999f, 0.f, 0.01f, 0.f);
-	_vector fixedUp = XMVectorSet(-0.00773f, 0.99f, -0.04f, 0.f);
-	_vector fixedLook = XMVectorSet(-0.01f, 0.04, 0.99f, 0.f);
+	_vector fixedRight = XMVectorSet(1.f, 0.f, 0.0f, 0.f);
+	_vector fixedUp = XMVectorSet(0.f, 1.f, 0.0f, 0.f);
+	_vector fixedLook = XMVectorSet(0.0f, 0.0, 1.0f, 0.f);
 
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, fixedRight);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, fixedUp);
