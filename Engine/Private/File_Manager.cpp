@@ -206,8 +206,6 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 	return S_OK;
 }
 
-
-
 HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 {
 	wofstream file(FilePath);
@@ -217,16 +215,19 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 
 	vector<EFFECT_LAYER_DATA>* EffectDataList = reinterpret_cast<vector<EFFECT_LAYER_DATA>*>(pArg);
 
-	// 레이어 데이터를 파일에 저장합니다.
+	// 레이어 데이터를 파일에 저장
 	for (const auto& layerData : *EffectDataList) {
 		file << L"[Layer]" << L"\n";
 		file << L"LayerName: " << layerData.layerName << L"\n";
 		file << L"Duration: " << layerData.duration << L"\n";
 		file << L"TickPerSecond: " << layerData.tickPerSecond << L"\n";
 		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n";
-		file << L"NumEffec: " << layerData.iNumEffect << L"\n\n";
+		file << L"NumEffec: " << layerData.iNumEffect << L"\n";
+		file << L"Position: " << layerData.vPosition.x << L" " << layerData.vPosition.y << L" " << layerData.vPosition.z << L"\n";
+		file << L"Scale: " << layerData.vScaled.x << L" " << layerData.vScaled.y << L" " << layerData.vScaled.z << L"\n";
+		file << L"Rotation: " << layerData.vRotation.x << L" " << layerData.vRotation.y << L" " << layerData.vRotation.z << L"\n\n";
 
-		// 이펙트 데이터를 파일에 저장합니다.
+		// 이펙트 데이터를 파일에 저장
 		for (const auto& effectData : layerData.effects) {
 			file << L"[Effect]" << L"\n";
 			file << L"EffectName: " << effectData.effectName << L"\n";
@@ -244,7 +245,7 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 			file << L"Color: " << effectData.vColor.x << L" " << effectData.vColor.y << L" " << effectData.vColor.z << L" " << effectData.vColor.w << L"\n";
 			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
 
-			// 키프레임 데이터를 파일에 저장합니다.
+			// 키프레임 데이터를 파일에 저장
 			for (const auto& keyFrameData : effectData.keyframes) {
 				file << L"[KeyFrame]" << L"\n";
 				file << L"KeyFrameNumber: " << keyFrameData.keyFrameNumber << L"\n";
@@ -261,7 +262,6 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 	file.close();
 	return S_OK;
 }
-
 
 HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg)
 {
@@ -520,6 +520,7 @@ void* CFile_Manager::Load_Effects(wstring& FilePath)
 	file.close();
 	return m_pLoadedEffectData;
 }
+
 void CFile_Manager::Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData)
 {
 	wstring line;
@@ -538,6 +539,18 @@ void CFile_Manager::Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData
 		else if (key == L"TickPerSecond") layerData.tickPerSecond = stof(value);
 		else if (key == L"KeyFramesCount") layerData.keyFramesCount = stoi(value);
 		else if (key == L"NumEffec") layerData.iNumEffect = stoi(value);
+		else if (key == L"Position") {
+			wistringstream vecStream(value);
+			vecStream >> layerData.vPosition.x >> layerData.vPosition.y >> layerData.vPosition.z;
+		}
+		else if (key == L"Scale") {
+			wistringstream vecStream(value);
+			vecStream >> layerData.vScaled.x >> layerData.vScaled.y >> layerData.vScaled.z;
+		}
+		else if (key == L"Rotation") {
+			wistringstream vecStream(value);
+			vecStream >> layerData.vRotation.x >> layerData.vRotation.y >> layerData.vRotation.z;
+		}
 	}
 
 	// 각 이펙트 데이터 읽기

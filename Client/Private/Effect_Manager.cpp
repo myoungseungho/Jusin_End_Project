@@ -22,8 +22,14 @@ CEffect_Manager::CEffect_Manager()
 	Safe_AddRef(m_pGameInstance); 
 }
 
-HRESULT CEffect_Manager::Initialize()
+HRESULT CEffect_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
+	m_pDevice = pDevice;
+	m_pContext = pContext;
+
+	Safe_AddRef(m_pDevice);
+	Safe_AddRef(m_pContext);
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
@@ -102,12 +108,18 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 
 	for (const auto& layerData : *pSavedEffect)
 	{
-		CEffect_Layer* pLayer = CEffect_Layer::Create();
+		CEffect_Layer::LAYER_DESC pLayerDesc;
+		pLayerDesc.vPosition = layerData.vPosition;
+		pLayerDesc.vScaled = layerData.vScaled;
+		pLayerDesc.vRotation = layerData.vRotation;
+
+		CEffect_Layer* pLayer = CEffect_Layer::Create(m_pDevice, m_pContext, &pLayerDesc);
 		if (!pLayer) continue; 
 
 		pLayer->m_fDuration = layerData.duration;
 		pLayer->m_fTickPerSecond = layerData.tickPerSecond;
 		pLayer->m_iNumKeyFrames = layerData.keyFramesCount;
+
 
 		for (const auto& effectData : layerData.effects)
 		{
@@ -125,6 +137,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.vColor = effectData.vColor;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
+			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 
 			CEffect_NoneLight* pNonelight = { nullptr };
 			CEffect_Blend* pBlend = { nullptr };
@@ -172,7 +185,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				break;
 			case EFFECT_BLEND:
 				pBlend = static_cast<CEffect_Blend*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Effect_Blend"), &EffectDesc));
-
+				
 				if (!pBlend)
 				{
 					Safe_Release(pLayer);
@@ -371,7 +384,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 	if (nullptr == pLayer)
 	{
-		CEffect_Layer* pLayer = CEffect_Layer::Create();
+		CEffect_Layer* pLayer = CEffect_Layer::Create(m_pDevice, m_pContext, pArg);
 
 		CEffect::EFFECT_DESC EffectDesc {};
 		for (auto& iter : m_TestEffect)
@@ -388,6 +401,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
+				EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 
 				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
 
@@ -437,6 +451,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
+				EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
 				
 				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
@@ -476,7 +491,7 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 
 	if (nullptr == pLayer)
 	{
-		pLayer = CEffect_Layer::Create();
+		pLayer = CEffect_Layer::Create(m_pDevice, m_pContext, pArg);
 		m_FinalEffects.emplace(strEffectLayerTag, pLayer);
 	}
 
@@ -495,6 +510,7 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 			EffectDesc.iUnique_Index = pEffect->m_iUnique_Index;
 			EffectDesc.SRV_Ptr = static_cast<CTexture*>(pEffect->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 			EffectDesc.iRenderIndex = 2;
+			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 
 			CEffect* pClone = static_cast<CEffect*>(pEffect->Clone(&EffectDesc));
 
@@ -586,6 +602,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 	EffectDesc.vRotation = { 0.f, 0.f, 0.f };
 	EffectDesc.iRenderIndex = 1;
 	EffectDesc.vColor = { 255.f, 255.f, 255.f, 1.f };
+	EffectDesc.LayerMatrix = XMMatrixIdentity();
 
 	CGameObject* pEffect = nullptr;
 	CEffect* pTestEffect = nullptr;
@@ -937,6 +954,87 @@ HRESULT CEffect_Manager::Set_Layer_Animation_Position(const wstring& LayerName, 
 	return S_OK;
 }
 
+HRESULT CEffect_Manager::Set_Layer_Scaled(wstring& layerName, _float3 ChangeScaled)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer)
+	{
+		pLayer->Set_Layer_Scaled(ChangeScaled);
+	}
+	else
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Position(wstring& layerName, _float3 ChangePosition)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer)
+	{
+		pLayer->Set_Layer_Position(ChangePosition);
+	}
+	else
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
+HRESULT CEffect_Manager::Set_Layer_Rotation(wstring& layerName, _float3 ChangeRotation)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer)
+	{
+		pLayer->Set_Layer_Rotation(ChangeRotation);
+	}
+	else
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
+_float3 CEffect_Manager::Get_Layer_Scaled(wstring& layerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer)
+	{
+		return pLayer->Get_Layer_Scaled();
+	}
+
+	return _float3(0.f, 0.f, 0.f);
+}
+
+_float3 CEffect_Manager::Get_Layer_Position(wstring& layerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer)
+	{
+		return pLayer->Get_Layer_Position();
+	}
+
+	return _float3(0.f, 0.f, 0.f);
+}
+
+_float3 CEffect_Manager::Get_Layer_Rotation(wstring& layerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer)
+	{
+		return pLayer->Get_Layer_Rotation();
+	}
+
+	return _float3(0.f, 0.f, 0.f);
+}
+
 HRESULT CEffect_Manager::Ready_Components()
 {
 	vector<const _wstring*>* pModelKeys = m_pGameInstance->Find_Prototype_Include_Key(LEVEL_GAMEPLAY, TEXT("Model_Effect"));
@@ -986,22 +1084,12 @@ HRESULT CEffect_Manager::Ready_Components()
 	return S_OK;
 }
 
-CEffect_Manager* CEffect_Manager::Create()
-{
-	CEffect_Manager* pInstance = new CEffect_Manager();
-
-	if (FAILED(pInstance->Initialize()))
-	{
-		MSG_BOX(TEXT("Failed to Created : CEffect_Manager"));
-		Safe_Release(pInstance);
-	}
-
-	return pInstance;
-}
-
 void CEffect_Manager::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pDevice);
+	Safe_Release(m_pContext);
 
 	for (auto& Pair : m_FinalEffects)
 		Safe_Release(Pair.second);

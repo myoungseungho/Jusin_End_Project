@@ -316,7 +316,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 void CLevel_GamePlay::Create_Effect_Manager()
 {
 	m_pEffect_Manager = CEffect_Manager::Get_Instance();
-	m_pEffect_Manager->Initialize();
+	m_pEffect_Manager->Initialize(m_pDevice, m_pContext);
 }
 
 HRESULT CLevel_GamePlay::Ready_Character()

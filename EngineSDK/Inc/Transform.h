@@ -77,6 +77,8 @@ public:
 
 		Set_State(STATE_POSITION, vNewPosition);
 	}
+	
+	void Set_Matrix(_matrix AddMatrix);
 
 	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix)
 	{

@@ -22,6 +22,7 @@ HRESULT CEffect_NoneLight::Initialize_Prototype()
 HRESULT CEffect_NoneLight::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_NONELIGHT;
+	//m_iPassIndex = 3;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -51,6 +52,7 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
 
 		m_vColor = pEffectDesc->vColor;
+		m_LayerMatrix = pEffectDesc->LayerMatrix;
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
 		{
@@ -127,7 +129,7 @@ HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
 	}
 
 	if (m_iPassIndex == 1)
-		m_iPassIndex = 3;
+		m_iPassIndex = 4;
 	else
 		m_iPassIndex = 1;
 

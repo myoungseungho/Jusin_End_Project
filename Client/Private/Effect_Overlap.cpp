@@ -52,6 +52,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
 
 		m_vColor = pEffectDesc->vColor;
+		m_LayerMatrix = pEffectDesc->LayerMatrix;
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
 		{
@@ -61,10 +62,14 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 			return E_FAIL;
 
+		m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
 		return S_OK;
 	}
+
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
 
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
@@ -171,6 +176,9 @@ HRESULT CEffect_Overlap::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
+
+	//if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	//	return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;

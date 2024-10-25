@@ -22,6 +22,7 @@ static int CurrentEffectType = 0;
 
 static bool openKeyFrameWindow = false;
 static bool openColorWindow = false;
+static bool openLayerTransformWindow = false;
 _float4 color = { 0.0f, 0.0f, 0.0f, 30.f };
 static std::string selectedEffectName;
 static int selectedFrame = -1;
@@ -98,6 +99,9 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     if (openColorWindow)
        Render_For_Effect_Color();
+
+    if (openLayerTransformWindow)
+        Render_For_Layer_Transform();
 }
 
 void CIMGUI_Effect_Tab::Push_Initialize()
@@ -146,6 +150,10 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
         layerData.tickPerSecond = pLayer->m_fTickPerSecond;
         layerData.keyFramesCount = pLayer->m_iNumKeyFrames;
         layerData.iNumEffect = pLayer->m_MixtureEffects.size();
+        layerData.vPosition = pLayer->Get_Layer_Position();
+        layerData.vScaled = pLayer->Get_Layer_Scaled();
+        layerData.vRotation = pLayer->Get_Layer_Rotation();
+
 
         // 각 레이어 안의 이펙트들 정보를 수집
         for (auto& pEffect : pLayer->Get_Effects())
@@ -671,12 +679,21 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             pLayer->m_iNumKeyFrames = totalKeyframes;
 
             ImGui::SameLine();
-            ImGui::Dummy(ImVec2(100.0f, 0.0f)); // 가로 70px 간격 추가
+            ImGui::Dummy(ImVec2(100.0f, 0.0f));
             if (ImGui::Button("Copy"))
             {
                 m_pEffect_Manager->Copy_Layer(selectedLayerName);
+                // 카피버튼 테스트용
             }
-            // 카피버튼 테스트용
+
+            ImGui::SameLine();
+            ImGui::Dummy(ImVec2(50.0f, 0.0f));
+            if (ImGui::Button("Layer Transform"))
+            {
+                openLayerTransformWindow = true;
+            }
+
+
         }
 
         ImGui::Separator();
@@ -1087,6 +1104,157 @@ void CIMGUI_Effect_Tab::Render_For_Effect_Color()
     {
             m_pEffect_Manager->Set_Layer_Effect_Color(selectedLayerName, EffectName, color);
     }
+
+    ImGui::End();
+}
+
+void CIMGUI_Effect_Tab::Render_For_Layer_Transform()
+{
+
+    ImGui::Begin("Edit Layer Transform", &openLayerTransformWindow, ImGuiWindowFlags_AlwaysAutoResize);
+
+    ImGui::Text("Layer Transform");
+
+    _float3 CurPosition = m_pEffect_Manager->Get_Layer_Position(selectedLayerName);
+    _float3 CurScaled = m_pEffect_Manager->Get_Layer_Scaled(selectedLayerName);
+    _float3 CurRotation = m_pEffect_Manager->Get_Layer_Rotation(selectedLayerName);
+
+    ImGui::Text("Position");
+    ImGui::Text("X"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Position X Slider", &CurPosition.x, -100.0f, 100.0f))
+        m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition);
+    ImGui::SameLine();
+    if (ImGui::Button("-##Position X Dec")) { CurPosition.x -= 0.1f; m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition); }
+    ImGui::SameLine();
+    if (ImGui::Button("+##Position X Inc")) { CurPosition.x += 0.1f; m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition); }
+    ImGui::SameLine();
+    if (ImGui::InputFloat("##Position X", &CurPosition.x, 0.1f))
+        m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition);
+
+    ImGui::Text("Y"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Position Y Slider", &CurPosition.y, -100.0f, 100.0f))
+        m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition);
+    ImGui::SameLine();
+    if (ImGui::Button("-##Position Y Dec")) { CurPosition.y -= 0.1f; m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition); }
+    ImGui::SameLine();
+    if (ImGui::Button("+##Position Y Inc")) { CurPosition.y += 0.1f; m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition); }
+    ImGui::SameLine();
+    if (ImGui::InputFloat("##Position Y", &CurPosition.y, 0.1f))
+        m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition);
+
+    ImGui::Text("Z"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Position Z Slider", &CurPosition.z, -100.0f, 100.0f))
+        m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition);
+    ImGui::SameLine();
+    if (ImGui::Button("-##Position Z Dec")) { CurPosition.z -= 0.1f; m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition); }
+    ImGui::SameLine();
+    if (ImGui::Button("+##Position Z Inc")) { CurPosition.z += 0.1f; m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition); }
+    ImGui::SameLine();
+    if (ImGui::InputFloat("##Position Z", &CurPosition.z, 0.1f))
+        m_pEffect_Manager->Set_Layer_Position(selectedLayerName, CurPosition);
+
+    ImGui::Separator();
+
+    ImGui::Text("Scale");
+    ImGui::Text("X"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Scale X Slider", &CurScaled.x, 0.01f, 100.0f))
+        m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled);
+    ImGui::SameLine();
+    if (ImGui::Button("-##Scale X Dec")) { CurScaled.x = max(0.01f, CurScaled.x - 0.1f); m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled); }
+    ImGui::SameLine();
+    if (ImGui::Button("+##Scale X Inc")) { CurScaled.x += 0.1f; m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled); }
+    ImGui::SameLine();
+    if (ImGui::InputFloat("##Scale X", &CurScaled.x, 0.1f)) {
+        CurScaled.x = max(0.01f, CurScaled.x);
+        m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled);
+    }
+
+    ImGui::Text("Y"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Scale Y Slider", &CurScaled.y, 0.01f, 100.0f))
+        m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled);
+    ImGui::SameLine();
+    if (ImGui::Button("-##Scale Y Dec")) { CurScaled.y = max(0.01f, CurScaled.y - 0.1f); m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled); }
+    ImGui::SameLine();
+    if (ImGui::Button("+##Scale Y Inc")) { CurScaled.y += 0.1f; m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled); }
+    ImGui::SameLine();
+    if (ImGui::InputFloat("##Scale Y", &CurScaled.y, 0.1f)) {
+        CurScaled.y = max(0.01f, CurScaled.y);
+        m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled);
+    }
+
+    ImGui::Text("Z"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Scale Z Slider", &CurScaled.z, 0.01f, 100.0f))
+        m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled);
+    ImGui::SameLine();
+    if (ImGui::Button("-##Scale Z Dec")) { CurScaled.z = max(0.01f, CurScaled.z - 0.1f); m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled); }
+    ImGui::SameLine();
+    if (ImGui::Button("+##Scale Z Inc")) { CurScaled.z += 0.1f; m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled); }
+    ImGui::SameLine();
+    if (ImGui::InputFloat("##Scale Z", &CurScaled.z, 0.1f)) {
+        CurScaled.z = max(0.01f, CurScaled.z);
+        m_pEffect_Manager->Set_Layer_Scaled(selectedLayerName, CurScaled);
+    }
+
+    ImGui::Separator();
+
+    ImGui::Text("Rotation");
+    ImGui::Text("X"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Rotation X Slider", &CurRotation.x, 0.0f, 360.0f)) {
+        CurRotation.x = std::fmod(CurRotation.x, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("-##Rotation X Dec")) {
+        CurRotation.x = std::fmod(CurRotation.x - 1.0f + 360.0f, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    } ImGui::SameLine();
+    if (ImGui::Button("+##Rotation X Inc")) {
+        CurRotation.x = std::fmod(CurRotation.x + 1.0f, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    } ImGui::SameLine();
+    if (ImGui::InputFloat("##Rotation X", &CurRotation.x, 1.0f)) {
+        CurRotation.x = std::fmod(CurRotation.x, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    }
+
+    ImGui::Text("Y"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Rotation Y Slider", &CurRotation.y, 0.0f, 360.0f)) {
+        CurRotation.y = std::fmod(CurRotation.y, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("-##Rotation Y Dec")) {
+        CurRotation.y = std::fmod(CurRotation.y - 1.0f + 360.0f, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    } ImGui::SameLine();
+    if (ImGui::Button("+##Rotation Y Inc")) {
+        CurRotation.y = std::fmod(CurRotation.y + 1.0f, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    } ImGui::SameLine();
+    if (ImGui::InputFloat("##Rotation Y", &CurRotation.y, 1.0f)) {
+        CurRotation.y = std::fmod(CurRotation.y, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    }
+
+    ImGui::Text("Z"); ImGui::SameLine();
+    if (ImGui::SliderFloat("##Rotation Z Slider", &CurRotation.z, 0.0f, 360.0f)) {
+        CurRotation.z = std::fmod(CurRotation.z, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("-##Rotation Z Dec")) {
+        CurRotation.z = std::fmod(CurRotation.z - 1.0f + 360.0f, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    } ImGui::SameLine();
+    if (ImGui::Button("+##Rotation Z Inc")) {
+        CurRotation.z = std::fmod(CurRotation.z + 1.0f, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    } ImGui::SameLine();
+    if (ImGui::InputFloat("##Rotation Z", &CurRotation.z, 1.0f)) {
+        CurRotation.z = std::fmod(CurRotation.z, 360.0f);
+        m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
+    }
+
 
     ImGui::End();
 }

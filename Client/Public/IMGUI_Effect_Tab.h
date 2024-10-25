@@ -27,6 +27,7 @@ public:
 	void Render_For_Layer_KeyFrame(_float fTimeDelta);
 	void Render_For_Effect_KeyFrame();
 	void Render_For_Effect_Color();
+	void Render_For_Layer_Transform();
 
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };

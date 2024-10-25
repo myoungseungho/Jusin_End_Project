@@ -181,6 +181,23 @@ void CTransform::Rotate(_float3 ChangeRotation)
 	Set_State(STATE_LOOK, vLook);
 }
 
+void CTransform::Set_Matrix(_matrix AddMatrix)
+{
+	XMMATRIX float4x4Matrix = XMLoadFloat4x4(&m_WorldMatrix);
+
+	XMMATRIX resultMatrix = XMMatrixMultiply(AddMatrix, float4x4Matrix);
+
+	XMVECTOR vRight = resultMatrix.r[0];
+	XMVECTOR vUp = resultMatrix.r[1];
+	XMVECTOR vLook = resultMatrix.r[2]; 
+	XMVECTOR vPos = resultMatrix.r[3];
+
+	Set_State(STATE_RIGHT, vRight);
+	Set_State(STATE_UP, vUp);
+	Set_State(STATE_LOOK, vLook);
+	Set_State(STATE_POSITION, vPos);
+}
+
 HRESULT CTransform::Bind_ShaderResource(CShader* pShader, const _char* pConstantName)
 {
 	return pShader->Bind_Matrix(pConstantName, &m_WorldMatrix);

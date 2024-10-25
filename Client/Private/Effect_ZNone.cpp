@@ -52,6 +52,7 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
 
 		m_vColor = pEffectDesc->vColor;
+		m_LayerMatrix = pEffectDesc->LayerMatrix;
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
 		{
