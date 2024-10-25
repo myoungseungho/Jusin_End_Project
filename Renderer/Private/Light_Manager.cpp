@@ -97,7 +97,7 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 	{
 	case LIGHT_BACKGROUND:
 		for (auto& pLight : m_Lights)
-			pLight->Render(pShader, pVIBuffer);
+			pLight->Render(pShader, pVIBuffer, 1);
 		break;
 	case LIGHT_PLAYER:
 		m_PlayerLights[strName]->Render(pShader, pVIBuffer, 5);
@@ -112,7 +112,7 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 				it = m_EffectLights.erase(it);
 			else
 			{
-				it->second->Render(pShader, pVIBuffer, 6);
+				it->second->Render(pShader, pVIBuffer, 6, m_PlayerLights[strName]->Get_LightDesc());
 				++it;
 			}
 		}

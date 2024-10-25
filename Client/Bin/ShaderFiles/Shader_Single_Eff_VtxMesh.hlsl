@@ -98,7 +98,7 @@ PS_OUT PS_MAIN_NONELIGHT(PS_IN In)
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-    if (vMtrlDiffuse.a < 0.99f)
+    if (vMtrlAlpha.a < 0.99f)
         discard;
     
     float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f };
