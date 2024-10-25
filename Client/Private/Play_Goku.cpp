@@ -1039,11 +1039,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.7f;
 
 		//높이가 5 이상이면 내려찍히는 판정.  디폴트는 false이므로  else 처리 안함
 		//if(Get_fHeight() > 5)
-		if (Get_fHeight() > 3)
+		if (Get_fHeight() > 0)
 		{
 			Desc.bGroundSmash = true;
 			Desc.fAnimationLockTime = 0.4f;

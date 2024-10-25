@@ -42,29 +42,41 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_FREE:
 			name = "Camera_Free";
 			break;
-		case VIRTUAL_CAMERA_SON_Heavy:
-			name = "Camera_Son_Skill_1";
+		case VIRTUAL_CAMERA_SON_HEAVY:
+			name = "Camera_Son_Heavy";
 			break;
 		case VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP:
-			name = "Camera_Son_Skill_2";
+			name = "Camera_Son_Knock_Away_Up";
 			break;
-		case VIRTUAL_CAMERA_HIT_SKILL_1:
-			name = "Camera_Hit_Skill_1";
+		case VIRTUAL_CAMERA_SON_AIR_SMASH:
+			name = "Camera_Son_Air_Smash";
 			break;
-		case VIRTUAL_CAMERA_MINE_SKILL_1:
-			name = "Camera_Mine_Skill_1";
+		case VIRTUAL_CAMERA_21_HEAVY:
+			name = "Camera_21_Heavy";
 			break;
-		case VIRTUAL_CAMERA_MINE_SKILL_2:
-			name = "Camera_Mine_Skill_2";
+		case VIRTUAL_CAMERA_21_KNOCK_AWAY_UP:
+			name = "Camera_21_Knock_Away_Up";
 			break;
-		case VIRTUAL_CAMERA_21_SKILL_1:
-			name = "Camera_21_Skill_1";
+		case VIRTUAL_CAMERA_21_AIR_SMASH:
+			name = "Camera_21_Air_Smash";
 			break;
-		case VIRTUAL_CAMERA_21_SKILL_2:
-			name = "Camera_21_Skill_2";
+		case VIRTUAL_CAMERA_MINE_HEAVY:
+			name = "Camera_Mine_Heavy";
 			break;
-		case VIRTUAL_CAMERA_21_SKILL_3:
-			name = "Camera_21_Skill_3";
+		case VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP:
+			name = "Camera_Mine_Knock_Away_Up";
+			break;
+		case VIRTUAL_CAMERA_MINE_AIR_SMASH:
+			name = "Camera_Mine_Air_Smash";
+			break;
+		case VIRTUAL_CAMERA_HIT_HEAVY:
+			name = "Camera_Hit_Heavy";
+			break;
+		case VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP:
+			name = "Camera_Hit_Knock_Away_Up";
+			break;
+		case VIRTUAL_CAMERA_HIT_AIR_SMASH:
+			name = "Camera_Hit_Air_Smash";
 			break;
 		}
 
@@ -72,41 +84,13 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		m_vecVirtualCamera.push_back(static_cast<CVirtual_Camera*>(virtualCamera_Skill));
 	}
 
-	stringToSkillID["Son_Skill1"] = VIRTUAL_CAMERA_SON_Heavy;
-	stringToSkillID["Son_Skill2"] = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
-	stringToSkillID["Hit_Skill1"] = VIRTUAL_CAMERA_HIT_SKILL_1;
-	stringToSkillID["Mine_Skill1"] = VIRTUAL_CAMERA_MINE_SKILL_1;
-	stringToSkillID["Mine_Skill2"] = VIRTUAL_CAMERA_MINE_SKILL_2;
-	stringToSkillID["21_Skill1"] = VIRTUAL_CAMERA_21_SKILL_1;
-	stringToSkillID["21_Skill2"] = VIRTUAL_CAMERA_21_SKILL_2;
-	stringToSkillID["21_Skill3"] = VIRTUAL_CAMERA_21_SKILL_3;
-
-	stringToAnimID["Son_Skill1_Anim1"] = 0;
-	stringToAnimID["Son_Skill1_Anim2"] = 1;
-	stringToAnimID["Son_Skill1_Anim3"] = 2;
-
-	stringToAnimID["Son_Skill2_Anim1"] = 0;
-	stringToAnimID["Son_Skill2_Anim2"] = 1;
-
-	stringToAnimID["Hit_Skill1_Anim1"] = 0;
-	stringToAnimID["Hit_Skill1_Anim2"] = 1;
-
-	stringToAnimID["Mine_Skill1_Anim1"] = 0;
-	stringToAnimID["Mine_Skill1_Anim2"] = 1;
-
-	stringToAnimID["Mine_Skill2_Anim1"] = 0;
-	stringToAnimID["Mine_Skill2_Anim2"] = 1;
-	stringToAnimID["Mine_Skill2_Anim3"] = 2;
-
-	stringToAnimID["21_Skill1_Anim1"] = 0;
-
-	stringToAnimID["21_Skill2_Anim1"] = 0;
-	stringToAnimID["21_Skill2_Anim2"] = 1;
-
-	stringToAnimID["21_Skill3_Anim1"] = 0;
-	stringToAnimID["21_Skill3_Anim2"] = 1;
-	stringToAnimID["21_Skill3_Anim3"] = 2;
-	stringToAnimID["21_Skill3_Anim4"] = 3;
+	stringToSkillID["Camera_Son_Heavy"] = VIRTUAL_CAMERA_SON_HEAVY;
+	stringToSkillID["Camera_Son_Knock_Away_Up"] = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
+	stringToSkillID["Camera_Son_Air_Smash"] = VIRTUAL_CAMERA_SON_AIR_SMASH;
+	
+	stringToAnimID["Son_Heavy_Anim1"] = 0;
+	stringToAnimID["Son_Knock_Away_Up_Anim1"] = 0;
+	stringToAnimID["Son_Air_Smash_Anim1"] = 0;
 
 
 	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
@@ -306,27 +290,35 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 
 	else if (modelID == 1) { // MODELID_SON
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_SON_Heavy;
+			index = VIRTUAL_CAMERA_SON_HEAVY;
 		else if (skillID == 1)
 			index = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_SON_AIR_SMASH;
 	}
 	else if (modelID == 2) { // MODELID_HIT
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_HIT_SKILL_1;
+			index = VIRTUAL_CAMERA_21_HEAVY;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_21_KNOCK_AWAY_UP;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_21_AIR_SMASH;
 	}
 	else if (modelID == 3) { // MODELID_HIT
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_MINE_SKILL_1;
+			index = VIRTUAL_CAMERA_MINE_HEAVY;
 		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_MINE_SKILL_2;
+			index = VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_MINE_AIR_SMASH;
 	}
 	else if (modelID == 4) { // MODELID_HIT
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_21_SKILL_1;
+			index = VIRTUAL_CAMERA_HIT_HEAVY;
 		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_21_SKILL_2;
+			index = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
 		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_21_SKILL_3;
+			index = VIRTUAL_CAMERA_HIT_AIR_SMASH;
 	}
 
 	return index;
@@ -346,9 +338,12 @@ void CMain_Camera::SetPosition(_fvector position)
 void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 {
 	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
+
 	//Test¿ë
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_Heavy]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_HEAVY]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
+
 }
 
 const char* CMain_Camera::Get_Current_CameraName()

@@ -18,24 +18,24 @@ CIMGUI_Camera_Tab::CIMGUI_Camera_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
 HRESULT CIMGUI_Camera_Tab::Initialize()
 {
 	// 모델 이름 배열 초기화
-	MODEL_NAMES[CAMERA_MODELID_DEFAULT] = "Default";
+	MODEL_NAMES[CAMERA_MODELID_NORMAL] = "Normal";
 	MODEL_NAMES[CAMERA_MODELID_FREE] = "Free";
 	MODEL_NAMES[CAMERA_MODELID_SON] = "Son";
+	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
 	MODEL_NAMES[CAMERA_MODELID_MINE] = "Mine";
-	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 
 	_int index = 0;
 
 	// 모델별 스킬 목록 초기화
-	m_ModelSkills[CAMERA_MODELID_SON] = { "Son_Skill1", "Son_Skill2" };
-	m_ModelSkills[CAMERA_MODELID_HIT] = { "Hit_Skill1" };
-	m_ModelSkills[CAMERA_MODELID_MINE] = { "Mine_Skill1", "Mine_Skill2" };
-	m_ModelSkills[CAMERA_MODELID_21] = { "21_Skill1", "21_Skill2", "21_Skill3" };
+	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash" };
+	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash" };
+	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Air_Smash" };
+	m_ModelSkills[CAMERA_MODELID_MINE] = { "Camera_Mine_Heavy", "Camera_Mine_Knock_Away_Up","Camera_Mine_Air_Smash" };
 
 	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
 	// 기본 카메라 매핑
-	m_CameraIndexMap[{CAMERA_MODELID_DEFAULT, -1}] = index++;
+	m_CameraIndexMap[{CAMERA_MODELID_NORMAL, -1}] = index++;
 	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
 
 	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
@@ -53,45 +53,61 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 			{
 				if (skillIdx == 0) // Son_Skill1
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Skill1_Anim1", "Son_Skill1_Anim2", "Son_Skill1_Anim3" };
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Heavy_Anim1" };
 				}
 				else if (skillIdx == 1) // Son_Skill2
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Skill2_Anim1", "Son_Skill2_Anim2" };
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Knock_Away_Up_Anim1" };
 				}
-			}
-			else if (model == CAMERA_MODELID_HIT)
-			{
-				if (skillIdx == 0) // Hit_Skill1
+				else if (skillIdx == 2) // Son_Skill2
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Hit_Skill1_Anim1", "Hit_Skill1_Anim2" };
-				}
-			}
-			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화
-			else if (model == CAMERA_MODELID_MINE)
-			{
-				if (skillIdx == 0) // Mine_Skill1
-				{
-					m_SkillAnimations[{model, skillIdx}] = { "Mine_Skill1_Anim1", "Mine_Skill1_Anim2" };
-				}
-				else if (skillIdx == 1) // Mine_Skill2
-				{
-					m_SkillAnimations[{model, skillIdx}] = { "Mine_Skill2_Anim1", "Mine_Skill2_Anim2", "Mine_Skill2_Anim3" };
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Air_Smash_Anim1" };
 				}
 			}
 			else if (model == CAMERA_MODELID_21)
 			{
 				if (skillIdx == 0) // 21_Skill1
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Skill1_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Heavy_Anim1" };
 				}
 				else if (skillIdx == 1) // 21_Skill2
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Skill2_Anim1", "21_Skill2_Anim2" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Knock_Away_Up_Anim1" };
 				}
 				else if (skillIdx == 2) // 21_Skill3
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Skill3_Anim1", "21_Skill3_Anim2", "21_Skill3_Anim3", "21_Skill3_Anim4" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Air_Smash_Anim1" };
+				}
+			}
+			else if (model == CAMERA_MODELID_HIT)
+			{
+				if (skillIdx == 0) // 21_Skill1
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_Heavy_Anim1" };
+				}
+				else if (skillIdx == 1) // 21_Skill2
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_Knock_Away_Up_Anim1" };
+				}
+				else if (skillIdx == 2) // 21_Skill3
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_Air_Smash_Anim1" };
+				}
+			}
+			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화
+			else if (model == CAMERA_MODELID_MINE)
+			{
+				if (skillIdx == 0) // 21_Skill1
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Mine_Heavy_Anim1" };
+				}
+				else if (skillIdx == 1) // 21_Skill2
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Mine_Knock_Away_Up_Anim1" };
+				}
+				else if (skillIdx == 2) // 21_Skill3
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Mine_Air_Smash_Anim1" };
 				}
 			}
 		}
@@ -166,7 +182,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	}
 
 	//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
-	if (m_iSelected_Model == CAMERA_MODELID_DEFAULT || m_iSelected_Model == CAMERA_MODELID_FREE)
+	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE)
 		UpdateCameraSelection();
 }
 
@@ -459,13 +475,13 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 
 	switch (m_iSelected_Model)
 	{
-	case CAMERA_MODELID_DEFAULT:
+	case CAMERA_MODELID_NORMAL:
 		return nullptr;
 	case CAMERA_MODELID_SON:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), 0);
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 		break;
 	case CAMERA_MODELID_HIT:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 		break;
 	case CAMERA_MODELID_MINE:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
@@ -497,7 +513,7 @@ void CIMGUI_Camera_Tab::VisualizeCameraPoints(const vector<CameraPoint>& points,
 	CCharacter* character = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0));
 	_int direction = character->Get_iDirection();
 
-	
+
 	for (size_t i = 0; i < points.size() - 1; ++i)
 	{
 		const CameraPoint& point = points[i];
