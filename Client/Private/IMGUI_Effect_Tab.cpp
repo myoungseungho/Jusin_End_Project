@@ -687,7 +687,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             }
 
             ImGui::SameLine();
-            ImGui::Dummy(ImVec2(50.0f, 0.0f));
+            ImGui::Dummy(ImVec2(30.0f, 0.0f));
+            ImGui::SameLine();
             if (ImGui::Button("Layer Transform"))
             {
                 openLayerTransformWindow = true;
