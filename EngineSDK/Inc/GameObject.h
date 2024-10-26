@@ -93,7 +93,7 @@ public:
 
 
 	map<const _wstring, CComponent*>		m_Components;
-
+	RENDER_OBJECT m_RendererDesc;
 
 
 public:

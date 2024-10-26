@@ -11,22 +11,23 @@
 
 namespace Renderer
 {
-
+    enum GLOW_TYPE { GLOW_PRI, GLOW_STAR, GLOW_MAIN, GLOW_UI, GLOW_UI_HP, GLOW_END };
 }
 
 using namespace Renderer;
 
-struct GLOW_DESC
+struct RENDERER_DLL GLOW_DESC
 {
-    XMFLOAT4 vGlowColor;
-    float fGlowFactor;
+    string          strTagName; 
+    XMFLOAT4        vGlowColor;
+    float           fGlowFactor;
+    unsigned int    iPassIndex;
 
-    // 기본 생성자
-    GLOW_DESC() : vGlowColor{ 0.0f, 0.0f, 0.0f, 1.0f }, fGlowFactor(1.0f) {}
+    GLOW_DESC()
+        : strTagName(""), vGlowColor{ 0.0f, 0.0f, 0.0f, 1.0f }, fGlowFactor(1.0f), iPassIndex(0) {}
 
-    // 매개변수 있는 생성자
-    GLOW_DESC(const XMFLOAT4& glowColor, float glowFactor)
-        : vGlowColor(glowColor), fGlowFactor(glowFactor) {}
+    GLOW_DESC(const string& tagName, const XMFLOAT4& glowColor, float glowFactor, unsigned int passIndex)
+        : strTagName(tagName), vGlowColor(glowColor), fGlowFactor(glowFactor), iPassIndex(passIndex) {}
 };
 
 struct RENDERER_DLL RENDER_OBJECT
@@ -39,24 +40,26 @@ public: /* For.GlowFilter_Color */
 
 public: /* For.Constructor */
 
-    /* For.Default */
     RENDER_OBJECT()
         : strName(""), tGlowDesc() {}
 
-    /* For.Player */
     RENDER_OBJECT(const string& name)
         : strName(name), tGlowDesc() {}
 
-    /* For.GlowObject */
     RENDER_OBJECT(const XMFLOAT4& glowColor)
-        : strName(""), tGlowDesc(glowColor, 1.0f) {}
+        : strName(""), tGlowDesc("", glowColor, 1.0f, 0) {} 
 
-    /* For.... 임시 */
     RENDER_OBJECT(const string& name, const XMFLOAT4& glowColor)
-        : strName(name), tGlowDesc(glowColor, 1.0f) {} 
+        : strName(name), tGlowDesc("", glowColor, 1.0f, 0) {}
 
-    /* For.... 임시 */
     RENDER_OBJECT(const string& name, const XMFLOAT4& glowColor, float glowFactor)
-        : strName(name), tGlowDesc(glowColor, glowFactor) {}
+        : strName(name), tGlowDesc("", glowColor, glowFactor, 0) {}
+
+    RENDER_OBJECT(const string& name, const XMFLOAT4& glowColor, float glowFactor, unsigned int passIndex)
+        : strName(name), tGlowDesc("", glowColor, glowFactor, passIndex) {}
+
+    RENDER_OBJECT(const string& name, const XMFLOAT4& glowColor, float glowFactor, unsigned int passIndex, const string& tagName)
+        : strName(name), tGlowDesc(tagName, glowColor, glowFactor, passIndex) {}
 };
+
 
