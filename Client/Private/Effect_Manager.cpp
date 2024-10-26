@@ -64,17 +64,21 @@ void CEffect_Manager::Update(_float fTimeDelta)
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
-	for (auto& Pair : m_FinalEffects)
-		if (Pair.second->m_bIsRender)
-		{
-			Pair.second->Late_Update(fTimeDelta);
-		}
+	//for (auto& Pair : m_FinalEffects)
+	//	if (Pair.second->m_bIsRender)
+	//	{
+	//		Pair.second->Late_Update(fTimeDelta);
+	//	}
 
-	for (auto& Pair : m_TestEffect)
-		Pair->Late_Update(fTimeDelta);
+	//for (auto& Pair : m_TestEffect)
+	//	Pair->Late_Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
-		Pair->Late_Update(fTimeDelta);
+		if (Pair->m_bIsRender)
+		{
+			Pair->Late_Update(fTimeDelta);
+		}
+
 }
 
 void CEffect_Manager::Render(_float fTimeDelta)
@@ -82,8 +86,8 @@ void CEffect_Manager::Render(_float fTimeDelta)
 	for (auto& Pair : m_FinalEffects)
 		Pair.second->Render(fTimeDelta);
 		
-	for (auto& Pair : m_TestEffect)
-		Pair->Render(fTimeDelta);
+	//for (auto& Pair : m_TestEffect)
+	//	Pair->Render(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
 		Pair->Render(fTimeDelta);

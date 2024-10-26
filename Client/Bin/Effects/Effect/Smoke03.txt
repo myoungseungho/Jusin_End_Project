@@ -21,7 +21,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 2
 
 [KeyFrame]
@@ -55,7 +55,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -98,7 +98,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -141,7 +141,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -184,7 +184,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -227,7 +227,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -270,7 +270,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -313,7 +313,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -356,7 +356,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -399,7 +399,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -442,7 +442,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]
@@ -485,7 +485,7 @@ Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 3
 
 [KeyFrame]

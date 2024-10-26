@@ -104,6 +104,7 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 			}
 		}
 	}
+
 }
 
 HRESULT CEffect_NoneLight::Render(_float fTimeDelta)

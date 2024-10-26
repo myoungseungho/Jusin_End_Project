@@ -6,6 +6,7 @@
 BEGIN(Engine)
 class CTransform;
 class CGameInstance;
+class CCollider;
 END
 
 BEGIN(Client)
@@ -63,6 +64,7 @@ private:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
 	CGameInstance*			m_pGameInstance = { nullptr };
+	CCollider*					m_pColliderCom = { nullptr };
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
 	CEffect_Layer* Clone(void* pArg = nullptr);

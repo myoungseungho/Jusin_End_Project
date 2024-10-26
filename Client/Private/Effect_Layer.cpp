@@ -3,6 +3,7 @@
 #include "Effect_Layer.h"
 #include "Effect.h"
 #include "GameInstance.h"
+#include "RenderInstance.h"
 
 CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:	m_pContext{ pContext },
@@ -19,9 +20,11 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
 	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
 	, m_MixtureEffects {Prototype.m_MixtureEffects }
+	, m_bIsRender{ Prototype.m_bIsRender }
 	, m_pDevice{ Prototype.m_pDevice }
 	, m_pContext{ Prototype.m_pContext }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
+	, m_pColliderCom{ Prototype.m_pColliderCom }
 	, m_pGameInstance{ CGameInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pContext);
@@ -47,12 +50,29 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 		m_pTransformCom->Set_Scaled(vScaled.x, vScaled.y, vScaled.z);
 		m_pTransformCom->Rotate(vRotation);
 
+		CBounding_Sphere::BOUNDING_SPHERE_DESC ColliderDesc{};
+		ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_EFFECT_LAYER;
+		ColliderDesc.vCenter = _float3(vPos.x, vPos.y, vPos.z);
+		ColliderDesc.fRadius = 0.1f;
+
+		m_pColliderCom = reinterpret_cast<CCollider*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_Sphere"), &ColliderDesc));
+
+		m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
+
 		return S_OK;
 	}
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	m_pTransformCom->Rotate(_float3(0.f, 0.f, 0.f));
 
+	CBounding_Sphere::BOUNDING_SPHERE_DESC ColliderDesc{};
+	ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_EFFECT_LAYER;
+	ColliderDesc.vCenter = _float3(0.f, 0.f, 0.f);
+	ColliderDesc.fRadius = 0.1f;
+
+	m_pColliderCom = reinterpret_cast<CCollider*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_Sphere"), &ColliderDesc));
+	
+	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 	return S_OK;
 }
 
@@ -70,6 +90,8 @@ void CEffect_Layer::Update(_float fTimeDelta)
 {
 	for (auto& pEffect : m_MixtureEffects)
 		pEffect->Update(fTimeDelta);
+
+	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 }
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)
@@ -82,10 +104,13 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 		pEffect->Late_Update(fTimeDelta);
 	}
 
+	CRenderInstance::Get_Instance()->Add_DebugComponent(m_pColliderCom);
 }
 
 HRESULT CEffect_Layer::Render(_float fTimeDelta)
 {
+	m_pColliderCom->Render(fTimeDelta);
+
 	return S_OK;
 }
 
@@ -247,6 +272,7 @@ void CEffect_Layer::Free()
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pTransformCom);
+	Safe_Release(m_pColliderCom);
 
 	for (auto& pMixtureEffect : m_MixtureEffects)
 		Safe_Release(pMixtureEffect);

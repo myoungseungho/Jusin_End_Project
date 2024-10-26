@@ -104,6 +104,7 @@ void CEffect_ZNone::Late_Update(_float fTimeDelta)
 			}
 		}
 	}
+
 }
 
 HRESULT CEffect_ZNone::Render(_float fTimeDelta)

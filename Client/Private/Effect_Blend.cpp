@@ -103,6 +103,7 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 			}
 		}
 	}
+
 }
 
 HRESULT CEffect_Blend::Render(_float fTimeDelta)

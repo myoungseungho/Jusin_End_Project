@@ -501,6 +501,7 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 	RENDER_OBJECT tDesc = RENDER_OBJECT(m_strName);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &tDesc);
+	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -529,9 +530,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 			return E_FAIL;
 	}
 
-#ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+
 
 	//corlorChange Test
 	//for (size_t i = 0; i < iNumMeshes; i++)
