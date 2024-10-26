@@ -233,8 +233,8 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0);
-		main_Camera->StartCameraShake(0.5f, 0.2f);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_GRAB, 0);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::ANDROID21:
 		break;

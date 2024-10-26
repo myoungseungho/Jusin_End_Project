@@ -230,7 +230,7 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2)
 {
 	const float fixedZ = -5.f;
-	const float baseFixedY = 1.f;  // Y가 0일 때 사용할 고정값
+	const float baseFixedY = 1.5f;  // Y가 0일 때 사용할 고정값
 
 	const float thresholdDistance = 2.f;
 	const float maxDistance = 5.17f;

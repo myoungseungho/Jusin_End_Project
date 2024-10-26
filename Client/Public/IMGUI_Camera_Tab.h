@@ -35,6 +35,7 @@ private:
 	void UpdateCameraSelection();
 	void IMGUI_Show_Points(_float fTimeDelta);	   // 현재 가상 카메라의 포인트를 목록으로 보여주기
 	void IMGUI_Button();        // Add_Point 버튼 처리 함수
+	void Add_Point(_float duration, _int selected_interp, _float damping);
 	void IMGUI_Delete_Points();
 	void IMGUI_Play_Button();	   // Play 버튼
 	void IMGUI_Pause_Button();	   // Pause 버튼
@@ -47,6 +48,7 @@ private:
 	const _float4x4* Get_Model_Float4x4();
 	void VisualizeCameraPoints(const vector<CameraPoint>& points, _float fTimeDelta);
 	void DrawDebugText(const _float3& position, const std::wstring& text, const _float4& color);
+	CVirtual_Camera::InterpolationType Get_InterpolationType(int selected_interp);
 
 private:
 	CAMERA_MODELID m_iSelected_Model = CAMERA_MODELID_NORMAL;  // 모델 선택 상태를 저장
