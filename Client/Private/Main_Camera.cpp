@@ -54,6 +54,12 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_SON_GRAB:
 			name = "Camera_Son_Grab";
 			break;
+		case VIRTUAL_CAMERA_SON_ENERGY:
+			name = "Camera_Son_Energy";
+			break;
+		case VIRTUAL_CAMERA_SON_ULTIMATE:
+			name = "Camera_Son_Ultimate";
+			break;
 		case VIRTUAL_CAMERA_21_HEAVY:
 			name = "Camera_21_Heavy";
 			break;
@@ -91,11 +97,21 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Son_Knock_Away_Up"] = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
 	stringToSkillID["Camera_Son_Air_Smash"] = VIRTUAL_CAMERA_SON_AIR_SMASH;
 	stringToSkillID["Camera_Son_Grab"] = VIRTUAL_CAMERA_SON_GRAB;
+	stringToSkillID["Camera_Son_Energy"] = VIRTUAL_CAMERA_SON_ENERGY;
+	stringToSkillID["Camera_Son_Ultimate"] = VIRTUAL_CAMERA_SON_ULTIMATE;
+
 
 	stringToAnimID["Son_Heavy_Anim1"] = 0;
 	stringToAnimID["Son_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["Son_Air_Smash_Anim1"] = 0;
 	stringToAnimID["Son_Grab_Anim1"] = 0;
+	stringToAnimID["Son_Energy_Anim1"] = 0;
+	stringToAnimID["Son_Ultimate_Anim1"] = 0;
+	stringToAnimID["Son_Ultimate_Anim2"] = 1;
+	stringToAnimID["Son_Ultimate_Anim3"] = 2;
+	stringToAnimID["Son_Ultimate_Anim4"] = 3;
+	stringToAnimID["Son_Ultimate_Anim5"] = 4;
+
 
 	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 	SetPlayer(CMain_Camera::PLAYER_1P, player1p);
@@ -305,6 +321,10 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_SON_AIR_SMASH;
 		else if (skillID == 3)
 			index = VIRTUAL_CAMERA_SON_GRAB;
+		else if (skillID == 4)
+			index = VIRTUAL_CAMERA_SON_ENERGY;
+		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_SON_ULTIMATE;
 	}
 	else if (modelID == 2) { // MODELID_HIT
 		if (skillID == 0)
@@ -354,7 +374,8 @@ void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_GRAB]->Set_Player(state, pPlayer);
-
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ENERGY]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ULTIMATE]->Set_Player(state, pPlayer);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()
