@@ -568,6 +568,7 @@ PLAY_GOKU,GKS441_body,45.000000,SetNextAnimation,74,100
 //,3필 모션 - 올려차기
 PLAY_GOKU,GKS443_body,0.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS443_body,30,AttackEvent,33333
+PLAY_GOKU,GKS443_body,30,Camera_Play_Son_Ultimate_2,7,2,0.5,0.2
 //,PLAY_GOKU,GKS443_body,74.000000,SetNextAnimation,73,100
 PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 
@@ -575,9 +576,12 @@ PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 //,3필 모션 - 공중강공
 PLAY_GOKU,GKS442_body,0,ObjectMove,2,3,0,0
 PLAY_GOKU,GKS442_body,0.000000,AnimSpeedChange,0.020000,40.000000
+PLAY_GOKU,GKS442_body,0,Camera_Play_Son_Ultimate_3_Camera,7,3
 PLAY_GOKU,GKS442_body,1,FlipPlayerDirection,0
 PLAY_GOKU,GKS442_body,20.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS442_body,25,AttackEvent,33333
+PLAY_GOKU,GKS442_body,25,Camera_Play_Son_Ultimate_3_Shake,0.5,0.4
+
 //,그냥 정지하는게 맞을지도
 PLAY_GOKU,GKS442_body,25,AnimSpeedChange,0.020000,80.000000
 PLAY_GOKU,GKS442_body,60,SetNextAnimation,70
