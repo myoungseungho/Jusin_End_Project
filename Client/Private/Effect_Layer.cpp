@@ -30,6 +30,8 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	Safe_AddRef(m_pContext);
 	Safe_AddRef(m_pDevice);
 	Safe_AddRef(m_pGameInstance);
+	Safe_AddRef(m_pTransformCom);
+	Safe_AddRef(m_pColliderCom);
 }
 
 HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
