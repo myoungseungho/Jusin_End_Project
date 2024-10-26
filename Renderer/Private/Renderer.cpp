@@ -1328,4 +1328,5 @@ void CRenderer::Free()
 	Safe_Release(m_pShader);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pGlowShader);
+	Safe_Release(m_pUI_GlowShader);
 }
