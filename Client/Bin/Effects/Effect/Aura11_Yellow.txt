@@ -17,11 +17,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 1
-<<<<<<< HEAD
-Position: 0 0 0
-=======
 Position: 0.4 0 0
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 IsLoop: false

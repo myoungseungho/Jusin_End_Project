@@ -16,11 +16,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 11
-=======
-UniqueIndex: 10
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -54,11 +50,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 12
-=======
-UniqueIndex: 11
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -101,11 +93,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 13
-=======
-UniqueIndex: 12
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -148,11 +136,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 14
-=======
-UniqueIndex: 13
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -195,11 +179,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 15
-=======
-UniqueIndex: 14
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -242,11 +222,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 16
-=======
-UniqueIndex: 15
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -289,11 +265,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 17
-=======
-UniqueIndex: 16
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -336,11 +308,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 18
-=======
-UniqueIndex: 17
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -383,11 +351,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 19
-=======
-UniqueIndex: 18
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -430,11 +394,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 20
-=======
-UniqueIndex: 19
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -477,11 +437,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 21
-=======
-UniqueIndex: 20
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -524,11 +480,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-<<<<<<< HEAD
 UniqueIndex: 22
-=======
-UniqueIndex: 21
->>>>>>> f58208ece64ca9ec0b6aa37449f108ea8ef4e327
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0

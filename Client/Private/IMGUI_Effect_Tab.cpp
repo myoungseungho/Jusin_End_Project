@@ -174,7 +174,7 @@ HRESULT CIMGUI_Effect_Tab::Save_All_Effects_File()
             effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
             effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
-
+            CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
             // 키프레임 정보 추가
             for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
             {
@@ -249,6 +249,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
 
         effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
 
+        CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
         // 키프레임 정보 추가
         for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
         {
