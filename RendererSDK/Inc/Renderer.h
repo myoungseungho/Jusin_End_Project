@@ -52,6 +52,7 @@ private:
 
 	list<class CGameObject*>			m_RenderObjects[RG_END];
 	vector<string>				m_PlayerStrNames;
+	vector<_float4>				m_GlowColors;
 	list<class CComponent*>		m_DebugComponent;
 
 	class CRenderInstance* m_pRenderInstance = { nullptr };

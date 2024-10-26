@@ -301,9 +301,16 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRend
 	m_RenderObjects[eRenderGroup].emplace_back(pRenderObject);
 
 	Safe_AddRef(pRenderObject);
-	// 라이트 이름 수정 하고 캐릭터 개별 빛 적용되는지 와서 확인하기ㅜ   
-	if (nullptr != pDesc && pDesc->strName != "")
-		m_PlayerStrNames.push_back(pDesc->strName);
+
+	/* 특수한 효과는 모두 이제 이쪽으로 처리한다 */
+	if (nullptr != pDesc)
+	{
+		if (pDesc->strName != "")
+			m_PlayerStrNames.push_back(pDesc->strName);
+		else
+			m_GlowDescs.push_back(pDesc->tGlowDesc);
+	}
+	
 
 	return S_OK;
 }

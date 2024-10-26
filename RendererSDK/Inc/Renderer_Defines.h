@@ -42,4 +42,5 @@ public: /* For.Constructor*/
     /* For.... юс╫ц */
     RENDER_OBJECT(const string& name, const XMFLOAT4& glowColor)
         : strName(name), vGlowColor(glowColor) {}
+
 };
