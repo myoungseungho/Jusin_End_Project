@@ -28,7 +28,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	_int index = 0;
 
 	// 모델별 스킬 목록 초기화
-	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash" };
+	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash","Camera_Son_Air_Grab" };
 	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash" };
 	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Air_Smash" };
 	m_ModelSkills[CAMERA_MODELID_MINE] = { "Camera_Mine_Heavy", "Camera_Mine_Knock_Away_Up","Camera_Mine_Air_Smash" };
@@ -51,17 +51,21 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 			// 스킬별 애니메이션 목록 초기화 (예시 데이터)
 			if (model == CAMERA_MODELID_SON)
 			{
-				if (skillIdx == 0) // Son_Skill1
+				if (skillIdx == 0)
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "Son_Heavy_Anim1" };
 				}
-				else if (skillIdx == 1) // Son_Skill2
+				else if (skillIdx == 1)
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "Son_Knock_Away_Up_Anim1" };
 				}
-				else if (skillIdx == 2) // Son_Skill2
+				else if (skillIdx == 2) 
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "Son_Air_Smash_Anim1" };
+				}
+				else if (skillIdx == 3)
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Grab_Anim1" };
 				}
 			}
 			else if (model == CAMERA_MODELID_21)
@@ -654,6 +658,37 @@ void CIMGUI_Camera_Tab::IMGUI_Button()
 
 		// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
 		m_pMainCamera->Add_Point(duration, interpType, worldMatrixPtr, (interpType == CVirtual_Camera::InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f, hasWorldFloat4x4, m_iSelected_Animation);
+
+		// 사용자에게 추가됨을 알림
+		ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");
+
+		// 입력 필드 초기화
+		duration = 1.0f;
+		selected_interp = 0;
+		damping = 1.0f;
+	}
+
+	if (ImGui::Button("Add Default_Point")) {
+		// Interpolation Type 설정
+		CVirtual_Camera::InterpolationType interpType = CVirtual_Camera::InterpolationType::INTERPOLATION_LINEAR_MODE;
+		switch (selected_interp) {
+		case 0:
+			interpType = CVirtual_Camera::InterpolationType::INTERPOLATION_LINEAR_MODE;
+			break;
+		case 1:
+			interpType = CVirtual_Camera::InterpolationType::INTERPOLATION_DAMPING_MODE;
+			break;
+		case 2:
+			interpType = CVirtual_Camera::InterpolationType::INTERPOLATION_SKIP_MODE;
+			break;
+		}
+
+		//설정된 모델의 월드행렬 포인트 주소 저장하기
+		const _float4x4* worldMatrixPtr = Get_Model_Float4x4();
+		_bool hasWorldFloat4x4 = worldMatrixPtr == nullptr ? false : true;
+
+		// 메인 카메라의 Add_Point 함수를 호출하여 포인트 추가
+		m_pMainCamera->Add_NormalPoint(duration, interpType, worldMatrixPtr, (interpType == CVirtual_Camera::InterpolationType::INTERPOLATION_DAMPING_MODE) ? damping : 1.0f, hasWorldFloat4x4, m_iSelected_Animation);
 
 		// 사용자에게 추가됨을 알림
 		ImGui::TextColored(ImVec4(0, 1, 0, 1), "Added new camera point.");

@@ -51,6 +51,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_SON_AIR_SMASH:
 			name = "Camera_Son_Air_Smash";
 			break;
+		case VIRTUAL_CAMERA_SON_GRAB:
+			name = "Camera_Son_Grab";
+			break;
 		case VIRTUAL_CAMERA_21_HEAVY:
 			name = "Camera_21_Heavy";
 			break;
@@ -87,11 +90,12 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Son_Heavy"] = VIRTUAL_CAMERA_SON_HEAVY;
 	stringToSkillID["Camera_Son_Knock_Away_Up"] = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
 	stringToSkillID["Camera_Son_Air_Smash"] = VIRTUAL_CAMERA_SON_AIR_SMASH;
-	
+	stringToSkillID["Camera_Son_Grab"] = VIRTUAL_CAMERA_SON_GRAB;
+
 	stringToAnimID["Son_Heavy_Anim1"] = 0;
 	stringToAnimID["Son_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["Son_Air_Smash_Anim1"] = 0;
-
+	stringToAnimID["Son_Grab_Anim1"] = 0;
 
 	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 	SetPlayer(CMain_Camera::PLAYER_1P, player1p);
@@ -134,6 +138,12 @@ void CMain_Camera::Set_Virtual_Camera(VIRTUAL_CAMERA mode)
 void CMain_Camera::Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->Add_Point(duration, type, worldMatrixPtr, damping, hasWorldFloat4x4, animationIndex);
+}
+
+void CMain_Camera::Add_NormalPoint(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex)
+{
+	CTransform* transform = static_cast<CTransform*>(m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Get_Component(TEXT("Com_Transform")));
+	m_vecVirtualCamera[m_currentVirtualMode]->Add_NormalPoint(duration, type, worldMatrixPtr, damping, hasWorldFloat4x4, animationIndex, transform);
 }
 
 void CMain_Camera::Remove_Point(_int currentIndex, _int animationIndex)
@@ -293,6 +303,8 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
 		else if (skillID == 2)
 			index = VIRTUAL_CAMERA_SON_AIR_SMASH;
+		else if (skillID == 3)
+			index = VIRTUAL_CAMERA_SON_GRAB;
 	}
 	else if (modelID == 2) { // MODELID_HIT
 		if (skillID == 0)
@@ -341,6 +353,7 @@ void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_HEAVY]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_GRAB]->Set_Player(state, pPlayer);
 
 }
 

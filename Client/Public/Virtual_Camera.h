@@ -43,6 +43,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Add_Point(_float duration, _int type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
+	void Add_NormalPoint(_float duration, _int type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4, _int animationIndex, CTransform* transform);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	void Move_Point(_int index, _int animationIndex);
 	void Modify_Transform(_int index, _int animationIndex);

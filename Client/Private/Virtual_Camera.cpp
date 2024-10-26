@@ -590,6 +590,61 @@ void CVirtual_Camera::Add_Point(_float duration, _int type, const _float4x4* pMo
 	}
 }
 
+void CVirtual_Camera::Add_NormalPoint(_float duration, _int type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4, _int animationIndex, CTransform* transform)
+{
+	CameraPoint cameraPoint{};
+
+	//해당 모델의 월드행렬 저장
+
+	//디폴트 카메라는 모델의 로컬이 없어서 월드행렬을 저장하고
+	//나머지 카메라는 모델의 로컬을 변환한 월드행렬 저장해야함
+	_matrix matrix = Float4x4ToMatrix(*pModelFloat4x4);
+
+	// 모델의 월드 행렬의 역행렬 계산
+	_vector determinant = XMVectorZero();
+	_matrix inverseModelMatrix = XMMatrixInverse(&determinant, matrix);
+
+	// 현재 가상카메라의 월드 포지션 가져오기
+	_vector worldPosition = transform->Get_State(CTransform::STATE_POSITION);
+
+	// 월드 포지션을 모델의 로컬 좌표로 변환
+	_vector localPosition = XMVector3TransformCoord(worldPosition, inverseModelMatrix);
+
+	// 변환된 로컬 포지션을 CameraPoint 구조체에 저장
+	XMStoreFloat3(&cameraPoint.position, localPosition);
+
+	// **카메라의 월드 회전 행렬 생성**
+	_vector right = XMVector3Normalize(transform->Get_State(CTransform::STATE_RIGHT));
+	_vector up = XMVector3Normalize(transform->Get_State(CTransform::STATE_UP));
+	_vector look = XMVector3Normalize(transform->Get_State(CTransform::STATE_LOOK));
+
+	_matrix cameraRotationMatrix = XMMatrixIdentity();
+	cameraRotationMatrix.r[0] = right;
+	cameraRotationMatrix.r[1] = up;
+	cameraRotationMatrix.r[2] = look;
+	cameraRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
+
+	// **모델 역행렬에서 회전 부분 추출**
+	_matrix inverseModelRotationMatrix = inverseModelMatrix;
+	inverseModelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
+
+	// 로컬 회전 행렬 계산 (순서 변경)
+	_matrix localRotationMatrix = inverseModelRotationMatrix * cameraRotationMatrix;
+
+	// **로컬 회전 행렬을 쿼터니언으로 변환하여 저장**
+	_vector localQuaternion = XMQuaternionRotationMatrix(localRotationMatrix);
+	XMStoreFloat4(&cameraPoint.rotation, localQuaternion);
+
+	cameraPoint.duration = duration;
+	cameraPoint.interpolationType = type;
+	cameraPoint.damping = damping;
+	cameraPoint.pWorldFloat4x4 = pModelFloat4x4;
+	cameraPoint.hasWorldFloat4x4 = hasWorldFloat4x4;
+
+	m_mapPoints[animationIndex].push_back(cameraPoint);
+}
+
+
 void CVirtual_Camera::Remove_Point(_int currentIndex, _int animationIndex)
 {
 	if (currentIndex < 0 || currentIndex >= static_cast<int>(m_mapPoints[animationIndex].size())) {
