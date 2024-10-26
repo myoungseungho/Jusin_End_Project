@@ -175,6 +175,8 @@ void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _in
 	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
 	m_vecShader_Tabs[to_string(iIndex)]->m_iNumberId = iIndex;
 	m_vecShader_Tabs[to_string(iIndex)]->Click_Load_Shader_Tab(strFilename.c_str());
+
+	m_iShaderCount++;
 }
 
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)

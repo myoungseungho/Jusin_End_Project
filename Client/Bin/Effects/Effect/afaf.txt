@@ -1,5 +1,5 @@
 [Layer]
-LayerName: Bomb02
+LayerName: afaf
 Duration: 1
 TickPerSecond: 0
 KeyFramesCount: 59
@@ -9,25 +9,25 @@ Scale: 1 1 1
 Rotation: 0 0 0
 
 [Effect]
-EffectName: Bomb02
+EffectName: afafaf
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Bomb02Bomb02
+MaskTextureName: ../Bin/Effects/Shader_Tab/afafafafaf
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 7
+UniqueIndex: 41
 Position: 0 0 0
-Scale: 0.5 0.5 0.5
+Scale: 2 1 1
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 0 0
-Scale: 0.5 0.5 0.5
+Scale: 1 1 1
 Rotation: 0 0 0
 CurTime: 0
 Duration: 0

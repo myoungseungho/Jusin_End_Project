@@ -957,14 +957,14 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_X"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_Y"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Down"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_DownSecond"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_X"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_Y"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Down"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_DownSecond"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Down"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
@@ -977,8 +977,8 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 
-	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))

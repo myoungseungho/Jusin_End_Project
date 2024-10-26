@@ -16,12 +16,12 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 1
+UniqueIndex: 0
 Position: 0.4 0 0
 Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
+Color: 0 0 0 30
 NumKeyFrame: 2
 
 [KeyFrame]
@@ -30,7 +30,7 @@ Position: 0 0 0
 Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 CurTime: 0
-Duration: 0
+Duration: 0.4
 IsNotPlaying: false
 
 [KeyFrame]
@@ -41,3 +41,4 @@ Rotation: 0 0 0
 CurTime: 0.383333
 Duration: 0.4
 IsNotPlaying: true
+
