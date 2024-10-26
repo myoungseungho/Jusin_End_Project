@@ -254,8 +254,9 @@ PS_OUT PS_MAIN_RESULT_UI(PS_IN In)
     Out.vColor = saturate(vResult + vBlur * 5.2f) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
-
 }
+
+
 
 technique11		DefaultTechnique
 {	
@@ -281,7 +282,7 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_BLUR_Y();
     }
 
-    pass Result
+    pass Result // 2
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);

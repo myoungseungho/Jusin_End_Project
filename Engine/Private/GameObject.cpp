@@ -61,7 +61,7 @@ HRESULT CGameObject::Initialize(void* pArg)
 			m_pTransformCom->SetUp_TransformDesc(static_cast<CTransform::TRANSFORM_DESC*>(pArg));
 	}
 
-
+	m_RendererDesc = RENDER_OBJECT();
 
 	if (nullptr != Get_Component(m_strTransformTag))
 		return E_FAIL;

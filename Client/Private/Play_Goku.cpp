@@ -500,6 +500,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 	RENDER_OBJECT tDesc = RENDER_OBJECT(m_strName);
+	
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &tDesc);
 	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
