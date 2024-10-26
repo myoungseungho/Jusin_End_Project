@@ -590,6 +590,7 @@ PLAY_GOKU,GKS442_body,60,SetNextAnimation,70
 
 //, 3필 모션-마지막
 PLAY_GOKU,GKS436cs,0.000000,AnimSpeedChange,0.043000,60.808998
+PLAY_GOKU,GKS436cs,0,Camera_Play_Son_Ultimate_4,7,4
 PLAY_GOKU,GKS436cs,1,ObjectMove,2,-2,0,0
 PLAY_GOKU,GKS436cs,2,FlipPlayerDirection,0
 //,PLAY_GOKU,GKS436cs,15,AnimSpeedChange,0.043000,20.808998

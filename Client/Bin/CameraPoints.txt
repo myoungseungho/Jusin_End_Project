@@ -145,7 +145,79 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Son_Ultimate_Anim5
-PointCount: 0
+PointCount: 9
+
+[CameraPoint]
+Position: -0.115253 0.966598 -4.39993
+Rotation: 0 0 0 0
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.115253 0.966598 -3.34979
+Rotation: 0 0 0 -0
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.115253 0.966598 -2.36633
+Rotation: 0 0 0 -0
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.115253 0.966598 -1.69957
+Rotation: -0.0573889 -9.31807e-05 0.00323409 0.998347
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.328914 1.01326 -0.910338
+Rotation: -0.0899898 -0.00119355 0.0246216 0.995638
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.555421 1.09459 -0.609122
+Rotation: -0.0892649 -0.00125134 0.0258109 0.995673
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.709852 1.10873 -0.266643
+Rotation: -0.0585224 -0.00107604 0.0293439 0.997854
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.720312 1.10986 -0.109973
+Rotation: -0.109606 -0.010909 0.103797 0.988481
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 3.9451 1.46418 -2.41679
+Rotation: 0 0 0 0
+Duration: 1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
 
 [VirtualCamera]
 ModelID: MODELID_HIT

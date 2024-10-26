@@ -168,13 +168,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedPositionLocal = XMLoadFloat3(&nextPoint.position);
 	}
 
-	//// **direction에 따른 포지션 조정**
-	//if (direction == -1)
-	//{
-	//	// x축 부호 반전
-	//	interpolatedPositionLocal = XMVectorSetX(interpolatedPositionLocal, -XMVectorGetX(interpolatedPositionLocal));
-	//}
-
 	// **3. 모델의 월드 행렬 로드 (스케일링 포함)**
 	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 

@@ -20,7 +20,7 @@
 IMPLEMENT_SINGLETON(CFrameEvent_Manager)
 
 CFrameEvent_Manager::CFrameEvent_Manager()
-	:m_pGameInstance{CGameInstance::Get_Instance()}
+	:m_pGameInstance{ CGameInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pGameInstance);
 }
@@ -513,6 +513,11 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 		main_Camera->StartCameraShake(fValue[0], fValue[1]);
+	}
+	else if (splitText[0] == "Camera_Play_Son_Ultimate_4")
+	{
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
 	}
 }
 
