@@ -4,6 +4,8 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
+#include "UI_Define.h"
+
 CUI_Logo_BG::CUI_Logo_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -40,6 +42,15 @@ HRESULT CUI_Logo_BG::Initialize(void* pArg)
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
+	m_hVideo = MCIWndCreate(g_hWnd,			// 부모의 윈도우 핸들을 전달
+		nullptr,		// MCI 윈도우를 사용하는 인스턴스 핸들
+		WS_CHILD | WS_VISIBLE | MCIWNDF_NOPLAYBAR, // 자식창 | 즉시 출력 | 플레이바 생성하지 않음
+		L"../Bin/Resources/Video/Video_Logo.wmv");
+	
+	MoveWindow(m_hVideo, 0, 0, g_iWinSizeX, g_iWinSizeY, FALSE);
+	
+	MCIWndPlay(m_hVideo);
 
 	return S_OK;
 }
@@ -147,4 +158,6 @@ void CUI_Logo_BG::Free()
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
+
+	MCIWndClose(m_hVideo);
 }

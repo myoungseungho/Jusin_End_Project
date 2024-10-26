@@ -43,6 +43,7 @@
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred_Glow.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred_UI_Glow .hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

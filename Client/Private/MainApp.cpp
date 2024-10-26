@@ -25,7 +25,6 @@ CMainApp::CMainApp()
 
 HRESULT CMainApp::Initialize()
 {
-
 	//게임인스턴스 엔진 초기화
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hInst, g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
