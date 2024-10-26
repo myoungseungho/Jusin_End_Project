@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Client_Defines.h"
-//#include <Vfw.h>
-//#pragma comment(lib, "vfw32.lib")
+#include <Vfw.h>
+#pragma comment(lib, "vfw32.lib")
 
 BEGIN(Client)
 
