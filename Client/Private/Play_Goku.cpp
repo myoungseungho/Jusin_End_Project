@@ -499,9 +499,9 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-
-
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
+	RENDER_OBJECT tDesc = RENDER_OBJECT(m_strName);
+	
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &tDesc);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)

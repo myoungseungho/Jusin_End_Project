@@ -16,10 +16,10 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 0
+UniqueIndex: 11
 Position: 0 0 0
-Scale: 0.599531 0.599999 0.999839
-Rotation: 0 180 0
+Scale: 1 1 1
+Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 1
 NumKeyFrame: 2
@@ -50,7 +50,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 1
+UniqueIndex: 12
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -93,7 +93,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 2
+UniqueIndex: 13
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -136,7 +136,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 3
+UniqueIndex: 14
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -179,7 +179,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 4
+UniqueIndex: 15
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -222,7 +222,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 5
+UniqueIndex: 16
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -265,7 +265,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 6
+UniqueIndex: 17
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -308,7 +308,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 7
+UniqueIndex: 18
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -351,7 +351,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 8
+UniqueIndex: 19
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -394,7 +394,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 9
+UniqueIndex: 20
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -437,7 +437,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 10
+UniqueIndex: 21
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -480,7 +480,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 3
-UniqueIndex: 11
+UniqueIndex: 22
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0

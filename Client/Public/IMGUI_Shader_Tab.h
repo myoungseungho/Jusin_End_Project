@@ -64,7 +64,7 @@ public:
 	void Create_Link(_int start_attr, _int end_attr);
 	void Load_NodeTextures(vector<Save_Key>& PrototypeKeys);
 
-	void Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave);
+	void Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave, _int version = 2);
 	void Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave);
 
 	void Update_TestToLayer_TextureCom(CTexture* pTexture) { m_TestEffectModel_Texture = pTexture; }
@@ -112,6 +112,8 @@ public:
 	void RemoveSubstring(std::wstring& wstr, const std::wstring& toRemove);
 	string WStringToString(const std::wstring& wstr);
 	void ShowTextWithoutPrefix(const std::wstring& wstr);
+	size_t GetRemainingFileSize(ifstream& file);
+	size_t GetFileSize(ifstream& file);
 public:
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture, string strFilename);

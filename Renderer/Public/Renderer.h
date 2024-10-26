@@ -22,7 +22,7 @@ public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
-		RG_NONLIGHT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW , RG_NODE, RG_END };
+		RG_NONLIGHT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW, RG_HP_GLOW, RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -30,7 +30,8 @@ private:
 
 public:
 	HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, string strName = "");
+	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, RENDER_OBJECT* pDesc);
+	HRESULT Add_Render_GlowDesc(RENDERGROUP eRenderGroup, GLOW_DESC* pDesc);
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	HRESULT Draw(_float fTimeDelta);
 	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
@@ -49,8 +50,10 @@ private:
 	ID3D11Device*			m_pDevice = { nullptr };
 	ID3D11DeviceContext*	m_pContext = { nullptr };
 
-	list<class CGameObject*>			m_RenderObjects[RG_END];
-	vector<string>				m_PlayerStrNames;
+	list<class CGameObject*>					m_RenderObjects[RG_END];
+	vector<string>								m_PlayerStrNames;
+	list<GLOW_DESC>			m_GlowDescs[GLOW_END];
+	
 	list<class CComponent*>		m_DebugComponent;
 
 	class CRenderInstance* m_pRenderInstance = { nullptr };
@@ -72,11 +75,6 @@ private:
 
 	_bool m_bShow_RenderTarget = { false };
 	_bool m_bShow_Debug_Component = { false };
-
-private:
-	_float4x4					m_UIWorldMatrix = {};
-	_float4x4					m_UI_DownWorldMatrix = {};
-	_float4x4					m_UI_DownWorldMatrix_Second = {};
 
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
@@ -103,8 +101,7 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
 
-	HRESULT Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
-	HRESULT UI_Draw_Glow(_float fTimeDelta, _int iPassIndex = -1);
+	HRESULT Draw_Glow(GLOW_DESC* pDesc = nullptr);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

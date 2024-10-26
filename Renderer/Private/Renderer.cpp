@@ -50,8 +50,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Specular"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
 
-
-
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"),
 		g_iSizeX, g_iSizeY,
 		DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
@@ -67,17 +65,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowAlpha"))))
 		return E_FAIL;
 
-
-	/* UI_Grow */
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_GlowDiffuse"), ViewportDesc.Width, ViewportDesc.Height , DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_GlowAlpha"), ViewportDesc.Width, ViewportDesc.Height , DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_GlowDiffuse"), TEXT("Target_UI_GlowDiffuse"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_GlowDiffuse"), TEXT("Target_UI_GlowAlpha"))))
-		return E_FAIL;
-
 	/* 다운 처리*/
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget"),ViewportDesc.Width / 2, ViewportDesc.Height /2,DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
@@ -89,16 +76,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 
 
-	/* UI_다운 처리*/
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_DownTarget"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_DownTarget_Second"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_Down"), TEXT("Target_UI_DownTarget"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_DownSecond"), TEXT("Target_UI_DownTarget_Second"))))
-		return E_FAIL;
-
 	/* 블러 처리 */
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Blur_X"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
@@ -107,16 +84,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_X"), TEXT("Target_Blur_X"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_Y"), TEXT("Target_Blur_Y"))))
-		return E_FAIL;
-
-	/* UI 블러 처리 */ // 테스트 용도
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_Blur_X"), ViewportDesc.Width / 4, ViewportDesc.Height  / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UI_Blur_Y"), ViewportDesc.Width / 4, ViewportDesc.Height  / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_Blur_X"), TEXT("Target_UI_Blur_X"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UI_Blur_Y"), TEXT("Target_UI_Blur_Y"))))
 		return E_FAIL;
 
 	/* 업 처리*/
@@ -162,31 +129,14 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	m_DownWorldMatrix_Second._41 = -((ViewportDesc.Width / 2) / 2) * 1.5;
 	m_DownWorldMatrix_Second._42 = ((ViewportDesc.Height / 2) / 2) * 1.5;
 
-
-	//XMStoreFloat4x4(&m_UIWorldMatrix, XMMatrixScaling(ViewportDesc.Width, ViewportDesc.Height * 0.25f, 1.f));
-	//크기가 줄어들음
-	XMStoreFloat4x4(&m_UIWorldMatrix, XMMatrixScaling(ViewportDesc.Width , ViewportDesc.Height , 1.f));
-	//m_UIWorldMatrix._41 = 0.f;
-	//m_UIWorldMatrix._42 = 0.f;
-
 	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixScaling(ViewportDesc.Width, ViewportDesc.Height, 1.f));
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(ViewportDesc.Width, ViewportDesc.Height, 0.f, 1.f));
 
-	//UI
-	XMStoreFloat4x4(&m_UI_DownWorldMatrix, XMMatrixScaling(ViewportDesc.Width * 0.5f, (ViewportDesc.Height ) * 0.5f, 1.f));
-	m_UI_DownWorldMatrix._41 = -((ViewportDesc.Width / 2) / 2);
-	m_UI_DownWorldMatrix._42 = ((ViewportDesc.Height / 2) / 2);
-	 
-	XMStoreFloat4x4(&m_UI_DownWorldMatrix_Second, XMMatrixScaling(ViewportDesc.Width * 0.25f, ViewportDesc.Height *0.25f, 1.f));
-	m_UI_DownWorldMatrix_Second._41 = -((ViewportDesc.Width / 2) / 2) * 1.5;
-	m_UI_DownWorldMatrix_Second._42 = ((ViewportDesc.Height / 2) / 2) * 1.5;
-
 	m_pVIBuffer = CVIBuffer_Rect::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pVIBuffer)
 		return E_FAIL;
-
 
 	m_pShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	if (nullptr == m_pShader)
@@ -194,10 +144,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	m_pGlowShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Glow.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	if (nullptr == m_pGlowShader)
-		return E_FAIL;
-
-	m_pUI_GlowShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_UI_Glow .hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
-	if (nullptr == m_pUI_GlowShader)
 		return E_FAIL;
 
 	ID3D11Texture2D* pDepthStencilTexture = nullptr;
@@ -246,19 +192,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
 		return E_FAIL;
 
-	//뺴야 됨
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UI_Blur_X"), 100.f, 1080 -100 , 200.f, 200.f)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UI_Blur_Y"), 300, 1080 - 100, 200.f, 200.f)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UI_DownTarget"), 500, 1080 - 100, 200.0f, 200.0f)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UI_DownTarget_Second"), 700.f, 1080 - 100, 200.0f, 200.0f)))
-		return E_FAIL;
-
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
@@ -297,7 +230,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	return S_OK;
 }
 
-HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject, string strName)
+HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject, RENDER_OBJECT* pDesc)
 {
 	if (eRenderGroup >= RG_END)
 		return E_FAIL;
@@ -305,10 +238,29 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRend
 	m_RenderObjects[eRenderGroup].emplace_back(pRenderObject);
 
 	Safe_AddRef(pRenderObject);
-	// 라이트 이름 수정 하고 캐릭터 개별 빛 적용되는지 와서 확인하기ㅜ   
-	if (strName != "")
-		m_PlayerStrNames.push_back(strName);
+
+	/* 특수한 효과는 모두 이제 이쪽으로 처리한다 */
+	if (nullptr != pDesc)
+	{
+		if (pDesc->strName != "")
+			m_PlayerStrNames.push_back(pDesc->strName);
+		else
+			Add_Render_GlowDesc(eRenderGroup, &pDesc->tGlowDesc);
+	}
+
 	return S_OK;
+}
+
+HRESULT CRenderer::Add_Render_GlowDesc(RENDERGROUP eRenderGroup, GLOW_DESC* pDesc)
+{
+	switch (eRenderGroup)
+	{
+	case RG_GLOW_PRI:  m_GlowDescs[GLOW_PRI].push_back(*pDesc);		return S_OK;
+	case RG_GLOW_STAR: m_GlowDescs[GLOW_STAR].push_back(*pDesc);	return S_OK;
+	case RG_GLOW:	   m_GlowDescs[GLOW_MAIN].push_back(*pDesc);	return S_OK;
+	case RG_UI_GLOW:   m_GlowDescs[GLOW_UI].push_back(*pDesc);		return S_OK;
+	case GLOW_UI_HP:   m_GlowDescs[GLOW_UI_HP].push_back(*pDesc);	return S_OK;
+	}
 }
 
 HRESULT CRenderer::Add_DebugComponent(CComponent* pDebugComponent)
@@ -432,6 +384,7 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 {
+	size_t iCount = 0;
 	for (auto& pRenderObject : m_RenderObjects[RG_GLOW_PRI])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
@@ -443,12 +396,21 @@ HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
-			return E_FAIL;
+		if (0 != m_GlowDescs[GLOW_PRI].size())
+		{
+			auto iter = m_GlowDescs[GLOW_PRI].begin();
+			advance(iter, iCount);
+			if (FAILED(Draw_Glow(&(*iter))))
+				return E_FAIL;
+		}
+		//if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
+		//	return E_FAIL;
 
 		Safe_Release(pRenderObject);
+		iCount++;
 	}
 
+	m_GlowDescs[GLOW_PRI].clear();
 	m_RenderObjects[RG_GLOW_PRI].clear();
 
 	return S_OK;
@@ -456,6 +418,7 @@ HRESULT CRenderer::Render_Glow_Priority(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
 {
+	size_t iCount = 0;
 	for (auto& pRenderObject : m_RenderObjects[RG_BLEND_PRI])
 	{
 		if (nullptr != pRenderObject)
@@ -477,12 +440,20 @@ HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		if (FAILED(Draw_Glow(-1.f, pRenderObject->Get_GameObjectData())))
-			return E_FAIL;
+		if (0 != m_GlowDescs[GLOW_STAR].size())
+		{
+			auto iter = m_GlowDescs[GLOW_STAR].begin();
+			advance(iter, iCount);
+
+			if (FAILED(Draw_Glow(&(*iter))))
+				return E_FAIL;
+		}
 
 		Safe_Release(pRenderObject);
+		iCount++;
 	}
 
+	m_GlowDescs[GLOW_STAR].clear();
 	m_RenderObjects[RG_GLOW_STAR].clear();
 
 	return S_OK;
@@ -823,6 +794,7 @@ HRESULT CRenderer::Render_NonLight(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 {
+	size_t iCount = 0;
 	for (auto& pRenderObject : m_RenderObjects[RG_GLOW])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
@@ -835,12 +807,16 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
-
-		if (FAILED(Draw_Glow(fTimeDelta)))
+		
+		auto iter = m_GlowDescs[GLOW_UI].begin();
+		advance(iter, iCount);
+		if (FAILED(Draw_Glow(&(*iter))))
 			return E_FAIL;
 
+		iCount++;
 	}
 
+	m_GlowDescs[GLOW_UI].clear();
 	m_RenderObjects[RG_GLOW].clear();
 
 	return S_OK;
@@ -878,30 +854,50 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)   
 {
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_GlowDiffuse"))))
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
 		return E_FAIL;
 
 	for (auto& pRenderObject : m_RenderObjects[RG_UI_GLOW])
 	{
-		//MRT_GlowDiffuse
-		//MRT_UI_GlowDiffuse
-
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
 
-		Safe_Release(pRenderObject);
 
+		Safe_Release(pRenderObject);
 	}
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		if (FAILED(UI_Draw_Glow(fTimeDelta)))
+		if (FAILED(Draw_Glow()))
 			return E_FAIL;
-
+	m_GlowDescs[GLOW_UI].clear();
 	m_RenderObjects[RG_UI_GLOW].clear();
 
-	return S_OK;
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+		return E_FAIL;
 
+	size_t iCount = 0;
+	for (auto& pRenderObject : m_RenderObjects[RG_HP_GLOW])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (0 != m_GlowDescs[GLOW_UI_HP].size())
+	{
+		auto iter = m_GlowDescs[GLOW_UI_HP].begin();
+		if (FAILED(Draw_Glow(&(*iter))))
+			return E_FAIL;
+	}
+
+	m_GlowDescs[GLOW_UI_HP].clear();
+	m_RenderObjects[RG_HP_GLOW].clear();
+
+	return S_OK;
 }
 
 HRESULT CRenderer::Render_Node(_float fTimeDelta)
@@ -921,7 +917,6 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 
 
 #ifdef _DEBUG
-
 HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 {
 	// Debug Component 관련 처리
@@ -961,14 +956,14 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_X"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_Y"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Down"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_DownSecond"), m_pShader, m_pVIBuffer)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_X"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Blur_Y"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_Down"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_UI_DownSecond"), m_pShader, m_pVIBuffer)))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Down"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
@@ -981,8 +976,8 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 
-	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_LightAcc"), m_pShader, m_pVIBuffer)))
@@ -998,7 +993,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 }
 #endif // _DEBUG
 
-HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
+HRESULT CRenderer::Draw_Glow(GLOW_DESC* pDesc)
 {
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
 		return E_FAIL;
@@ -1102,28 +1097,6 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 		return E_FAIL;
 
 	//***************************************************
-	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UpSecond"))))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))
-	//	return E_FAIL;
-	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-	//	return E_FAIL;
-	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_DownTarget_Second"))))
-	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
-	//	return E_FAIL; 
-
-	//m_pGlowShader->Begin(4);
-	//m_pVIBuffer->Bind_Buffers();
-	//m_pVIBuffer->Render();
-
-	//if (FAILED(m_pRenderInstance->End_MRT()))
-	//	return E_FAIL;
-	
 	
 	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
@@ -1139,149 +1112,10 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
 
-	if (fTimeDelta < 0)
-	{
-		if(iPassIndex == 0)
-			m_pGlowShader->Begin(5);
-		else
-			m_pGlowShader->Begin(iPassIndex);
-	}
+	if (nullptr != pDesc)
+		m_pGlowShader->Begin(pDesc->iPassIndex);
 	else
-	{
-
 		m_pGlowShader->Begin(2);
-	}
-
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
-	return S_OK;
-}
-
-//UI
-HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
-{
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_Down"))))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	_float2 fTexSize = { 1920.f, 1080.f};
-	if (FAILED(m_pUI_GlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
-		return E_FAIL;
-
-	_float2 fSamplingSize = { 4.f,4.f };
-	if (FAILED(m_pUI_GlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
-		return E_FAIL;
-
-	// g_DownTexSize, g_DownSamplingSize
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_GlowDiffuse"))))
-		return E_FAIL;
-
-	m_pUI_GlowShader->Begin(3);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
-	if (FAILED(m_pRenderInstance->End_MRT()))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_DownSecond"))))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	fTexSize = { 1920.f * 0.5f, 1080.f * 0.5f };
-	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
-		return E_FAIL;
-
-	fSamplingSize = { 6.f,6.f };
-	if (FAILED(m_pUI_GlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_DownTarget"))))
-		return E_FAIL;
-
-	m_pUI_GlowShader->Begin(3);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
-	if (FAILED(m_pRenderInstance->End_MRT()))
-		return E_FAIL;
-	//-------------------------------------------
-	//return S_OK;
-	//-------------------------------------------
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_Blur_X"))))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
-		return E_FAIL;
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_DownTarget_Second"))))
-		return E_FAIL;
-
-	m_pUI_GlowShader->Begin(0);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
-	if (FAILED(m_pRenderInstance->End_MRT()))
-		return E_FAIL;
-	//****************************************
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_Blur_Y"))))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
-		return E_FAIL;
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_Blur_X"))))
-		return E_FAIL;
-
-	m_pUI_GlowShader->Begin(1);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
-	if (FAILED(m_pRenderInstance->End_MRT()))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UIWorldMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_GlowDiffuse"))))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_BlurTexture", TEXT("Target_UI_Blur_Y"))))
-		return E_FAIL;
-
-	m_pUI_GlowShader->Begin(2);
-	
 
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
@@ -1328,5 +1162,4 @@ void CRenderer::Free()
 	Safe_Release(m_pShader);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pGlowShader);
-	Safe_Release(m_pUI_GlowShader);
 }

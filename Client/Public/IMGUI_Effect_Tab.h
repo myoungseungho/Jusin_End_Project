@@ -16,7 +16,8 @@ public:
 	void Render(_float fTimeDelta) override;
 	void Push_Initialize();
 	void Save_To_Effect_Layer(_uint iCurTestEffectIndex, const wstring& strEffectLayerTag, void* pArg = nullptr);
-	HRESULT Save_Effects_File(const wstring& strEffectLayerTag);
+	HRESULT Save_Selected_Effects_File();
+	HRESULT Save_All_Effects_File();
 
 	string WStringToUTF8(const std::wstring& wstr);
 	wstring UTF8ToWString(const string& utf8Str);

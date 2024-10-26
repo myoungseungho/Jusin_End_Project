@@ -54,7 +54,7 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 
-		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
+		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
 			m_IsColorEffect = true;
 		}
@@ -186,6 +186,13 @@ HRESULT CEffect_ZNone::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &Color, sizeof(Color))))
 		return E_FAIL;
+
+	if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
+	{
+		m_IsColorEffect = true;
+	}
+	else
+		m_IsColorEffect = false;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bColorChange", &m_IsColorEffect, sizeof(m_IsColorEffect))))
 		return E_FAIL;
