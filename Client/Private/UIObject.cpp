@@ -31,6 +31,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	
 	pDesc = static_cast<UI_DESC*>(pArg);
 
 	m_vPrevWinSize = { 1280.f, 720.f };
@@ -58,6 +59,8 @@ HRESULT CUIObject::Initialize(void* pArg)
 		}
 	}
 
+
+
 	return S_OK;
 }
 
@@ -65,7 +68,6 @@ void CUIObject::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 	InitPlayer();
-
 }
 
 void CUIObject::Update(_float fTimeDelta)
@@ -90,6 +92,8 @@ void CUIObject::Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _floa
 	fSizeY *= m_vOffSetWinSize.y;
 	fPosX *= m_vOffSetWinSize.x;
 	fPosY *= m_vOffSetWinSize.y;
+
+	UI_PosArea(fPosY);
 
 	m_pTransformCom->Set_Scaled(fSizeX, fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(fPosX - g_iWinSizeX * 0.5f, -fPosY + g_iWinSizeY * 0.5f, fDepth, 1.f));
@@ -123,19 +127,56 @@ _bool CUIObject::ClickRange()
 
 void CUIObject::InitPlayer()
 {
-	switch (pDesc->eLRPos)
+	if (pDesc != nullptr)
 	{
-	case LEFT:
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER1];
-		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER2];
+		switch (m_eLRPos)
+		{
+		case LEFT:
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER2];
+			break;
+
+		case RIGHT:
+			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER1];
+			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER2];
+			break;
+		}
+	}
+}
+
+void CUIObject::Add_UIList(CUI_Define::UI_LISTPOS ePos)
+{
+	switch (ePos)
+	{
+	case CUI_Define::TOP:
+		m_pUI_Manager->m_ListTopUI.push_back(this);
 		break;
 
-	case RIGHT:
-		m_fPosX = g_iWinSizeX - m_fPosX;
-		m_fSizeX *= -1;
-		m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER1];
-		m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER2];
+	case CUI_Define::MID:
+		m_pUI_Manager->m_ListMidUI.push_back(this);
 		break;
+
+	case CUI_Define::BOT:
+		m_pUI_Manager->m_ListBotUI.push_back(this);
+		break;
+
+	}
+}
+
+void CUIObject::UI_PosArea(_float fAreaPosY)
+{
+	
+	if (fAreaPosY >= 600.f * m_vOffSetWinSize.y)
+	{
+		Add_UIList(CUI_Define::BOT);
+	}
+	else if (fAreaPosY >= 160.f * m_vOffSetWinSize.y)
+	{
+		Add_UIList(CUI_Define::MID);
+	}
+	else
+	{
+		Add_UIList(CUI_Define::TOP);
 	}
 }
 

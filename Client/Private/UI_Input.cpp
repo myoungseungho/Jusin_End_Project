@@ -28,8 +28,6 @@ HRESULT CUI_Input::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	m_pUI_Manager->Add_UIOjbect(CUI_Define::LEFT, this);
-
 	return S_OK;
 }
 

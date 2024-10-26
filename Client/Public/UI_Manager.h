@@ -73,7 +73,7 @@ public:
 
 public:
 	list<class CUIObject*> m_ListTopUI = {};
-	list<class CUIObject*> m_ListLeftUI = {};
+	list<class CUIObject*> m_ListMidUI = {};
 	list<class CUIObject*> m_ListBotUI = {};
 
 

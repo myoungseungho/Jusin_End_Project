@@ -29,7 +29,10 @@ _bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 
 _bool bShowImGuiDebug_COut = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
 _bool bShowImGuiPlayerInput = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
-_bool bShowImGuiUI_Show = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+
+_bool bShowImGuiUI_TopShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiUI_MidShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiUI_BotShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -263,12 +266,30 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 		}
 
 		if (ImGui::BeginMenu("UI_Active")) {
-			if (ImGui::MenuItem("UI_Active", NULL, &bShowImGuiUI_Show)) {
-				for (auto& LeftIter : CUI_Manager::Get_Instance()->m_ListLeftUI)
+
+			if (ImGui::MenuItem("TopUI_Active", NULL, &bShowImGuiUI_TopShow)) {
+				
+				for (auto& TopIter : CUI_Manager::Get_Instance()->m_ListTopUI)
 				{
-					LeftIter->SetActive(bShowImGuiUI_Show);
+					TopIter->SetActive(bShowImGuiUI_TopShow);
 				}
 			}
+
+			if (ImGui::MenuItem("MinUI_Active", NULL, &bShowImGuiUI_MidShow)) {
+				for (auto& MidIter : CUI_Manager::Get_Instance()->m_ListMidUI)
+				{
+					MidIter->SetActive(bShowImGuiUI_MidShow);
+				}
+			}
+
+			if (ImGui::MenuItem("BotUI_Active", NULL, &bShowImGuiUI_BotShow)) {
+				for (auto& BotIter : CUI_Manager::Get_Instance()->m_ListBotUI)
+				{
+					BotIter->SetActive(bShowImGuiUI_BotShow);
+				}
+			}
+
+
 			ImGui::EndMenu();
 		}
 

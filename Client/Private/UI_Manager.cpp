@@ -25,8 +25,8 @@ void CUI_Manager::Add_UIOjbect(CUI_Define::UI_LISTPOS ePos, CUIObject* pObject)
 	case Client::CUI_Define::TOP:
 		m_ListTopUI.push_back(pObject);
 		break;
-	case Client::CUI_Define::LEFT:
-		m_ListLeftUI.push_back(pObject);
+	case Client::CUI_Define::MID:
+		m_ListMidUI.push_back(pObject);
 		break;
 	case Client::CUI_Define::BOT:
 		m_ListBotUI.push_back(pObject);

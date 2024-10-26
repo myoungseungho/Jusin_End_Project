@@ -196,6 +196,10 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pGlowShader)
 		return E_FAIL;
 
+	m_pUI_GlowShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_UI_Glow .hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
+	if (nullptr == m_pUI_GlowShader)
+		return E_FAIL;
+
 	ID3D11Texture2D* pDepthStencilTexture = nullptr;
 
 	D3D11_TEXTURE2D_DESC	TextureDesc;
@@ -1157,32 +1161,32 @@ HRESULT CRenderer::Draw_Glow(_float fTimeDelta, _int iPassIndex)
 //UI
 HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 {
-
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_Down"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
 	
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
 	_float2 fTexSize = { 1920.f, 1080.f};
-	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
+	if (FAILED(m_pUI_GlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
 		return E_FAIL;
 
 	_float2 fSamplingSize = { 4.f,4.f };
-	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
+	if (FAILED(m_pUI_GlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
 		return E_FAIL;
 
 	// g_DownTexSize, g_DownSamplingSize
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_UI_GlowDiffuse"))))
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_GlowDiffuse"))))
 		return E_FAIL;
 
-	m_pGlowShader->Begin(3);
+	m_pUI_GlowShader->Begin(3);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
@@ -1192,13 +1196,13 @@ HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_DownSecond"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
 	fTexSize = { 1920.f * 0.5f, 1080.f * 0.5f };
@@ -1206,13 +1210,13 @@ HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 		return E_FAIL;
 
 	fSamplingSize = { 6.f,6.f };
-	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
+	if (FAILED(m_pUI_GlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_UI_DownTarget"))))
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_DownTarget"))))
 		return E_FAIL;
 
-	m_pGlowShader->Begin(3);
+	m_pUI_GlowShader->Begin(3);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
@@ -1224,17 +1228,17 @@ HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_Blur_X"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
 		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_UI_DownTarget_Second"))))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	m_pGlowShader->Begin(0);
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_DownTarget_Second"))))
+		return E_FAIL;
+
+	m_pUI_GlowShader->Begin(0);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
@@ -1244,57 +1248,40 @@ HRESULT CRenderer::UI_Draw_Glow(_float fTimeDelta, _int iPassIndex)
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_UI_Blur_Y"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UI_DownWorldMatrix_Second)))
 		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_UI_Blur_X"))))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	m_pGlowShader->Begin(1);
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_Texture", TEXT("Target_UI_Blur_X"))))
+		return E_FAIL;
+
+	m_pUI_GlowShader->Begin(1);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	//m_UIWorldMatrix._11 = 0.5;
-	//m_UIWorldMatrix._22 = 0.5;
-
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_UIWorldMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_WorldMatrix", &m_UIWorldMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
 
-
-
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	if (FAILED(m_pUI_GlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_UI_GlowDiffuse"))))
-		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
-	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_UI_Blur_Y"))))
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_GlowDiffuse"))))
 		return E_FAIL;
 
-	if (fTimeDelta < 0)
-	{
-		if (iPassIndex == 0)
-			m_pGlowShader->Begin(5);
-		else
-			m_pGlowShader->Begin(iPassIndex);
-	}
-	else
-	{
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pUI_GlowShader, "g_BlurTexture", TEXT("Target_UI_Blur_Y"))))
+		return E_FAIL;
 
-		m_pGlowShader->Begin(9);
-	}
+	m_pUI_GlowShader->Begin(2);
+	
 
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();

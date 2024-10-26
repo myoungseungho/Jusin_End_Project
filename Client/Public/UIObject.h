@@ -66,6 +66,10 @@ private:
 	//매 프레임마다 MainPlayer와 Sub플레이어 데이터 값 갱신 
 	void InitPlayer();
 
+private:
+	void Add_UIList(CUI_Define::UI_LISTPOS ePos);
+	void UI_PosArea(_float fAreaPosY);
+
 protected:
 	//넣은 수치값을 직교 X,Y값으로 반환
 	_vector GetOffsetPostion(_vector vPosition);
