@@ -477,6 +477,14 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
 
+void* CGameInstance::Load_All_Effects()
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->Load_All_Effects();
+}
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);

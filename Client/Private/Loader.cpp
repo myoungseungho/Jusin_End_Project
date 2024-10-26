@@ -1,4 +1,5 @@
- #include "stdafx.h"
+#pragma once 
+#include "stdafx.h"
 #include "..\Public\Loader.h"
 
 #include "GameInstance.h"
@@ -19,8 +20,9 @@
 #include "Effect_ZNone.h"
 #include "Effect_Overlap.h"
 #include "Effect_Layer.h"
-#include "SpaceSky.h"
+#include "Effect_Manager.h"
 
+#include "SpaceSky.h"
 #include "SpaceSun.h"
 #include "SpaceRock.h"
 #include "SpaceMoon.h"
@@ -2388,6 +2390,7 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 		CAttackObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	Loading_For_Effect();
 
 
 
@@ -2818,10 +2821,17 @@ HRESULT CLoader::Loading_For_UI()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FontName"),
 		CUI_FontName::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	
+
 	//UI_StartFont
 
 	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Effect()
+{
+	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
+
+	return CEffect_Manager::Get_Instance()->Set_Saved_Effects(pLoaded);
 }
 
 CLoader * CLoader::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID)

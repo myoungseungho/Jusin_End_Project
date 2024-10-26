@@ -1,8 +1,11 @@
+#pragma once
+
 #include "..\Public\File_Manager.h"
 #include <sstream>
 #include <stdexcept>
 #include <fstream>
 #include "Camera.h"
+
 CFile_Manager::CFile_Manager()
 {
 }
@@ -490,13 +493,43 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
 	return S_OK;
 }
 
+void* CFile_Manager::Load_All_Effects()
+{
+	const wstring directoryPath = L"../Bin/Effects/Effect/*.txt";
+	WIN32_FIND_DATAW findData;
+	HANDLE hFind = FindFirstFileW(directoryPath.c_str(), &findData);
+
+	m_EffectsData = new vector<EFFECT_LAYER_DATA>;
+
+	if (hFind == INVALID_HANDLE_VALUE)
+		return nullptr;
+	
+	do 
+	{
+		wstring filePath = L"../Bin/Effects/Effect/" + wstring(findData.cFileName);
+
+		vector<EFFECT_LAYER_DATA>* pLoadedData = static_cast<vector<EFFECT_LAYER_DATA>*>(Load_Effects(filePath));
+
+		if (pLoadedData != nullptr) 
+		{
+			m_EffectsData->insert(m_EffectsData->end(), pLoadedData->begin(), pLoadedData->end());
+			delete pLoadedData;
+		}
+
+	} while (FindNextFileW(hFind, &findData) != 0); // 다음 파일로 이동
+
+	FindClose(hFind); // 핸들 닫기
+
+	return m_EffectsData;
+}
+
 void* CFile_Manager::Load_Effects(wstring& FilePath)
 {
 	// 기존에 로드된 데이터가 있으면 해제
-	if (m_pLoadedEffectData != nullptr) {
-		delete m_pLoadedEffectData;
-		m_pLoadedEffectData = nullptr;
-	}
+	//if (m_pLoadedEffectData != nullptr) {
+	//	delete m_pLoadedEffectData;
+	//	m_pLoadedEffectData = nullptr;
+	//}
 
 	m_pLoadedEffectData = new vector<EFFECT_LAYER_DATA>;
 
@@ -665,5 +698,10 @@ void CFile_Manager::Free()
 	if (m_pLoadedEffectData != nullptr)
 	{
 		Safe_Delete(m_pLoadedEffectData);
+	}
+
+	if (m_EffectsData != nullptr)
+	{
+		Safe_Delete(m_EffectsData);
 	}
 }
