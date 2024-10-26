@@ -73,11 +73,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 5)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Ultimate_Anim1" };
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Ultimate_Anim2" };
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Ultimate_Anim3" };
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Ultimate_Anim4" };
-					m_SkillAnimations[{model, skillIdx}] = { "Son_Ultimate_Anim5" };
+					m_SkillAnimations[{model, skillIdx}] = { "Son_Ultimate_Anim1", "Son_Ultimate_Anim2", "Son_Ultimate_Anim3", "Son_Ultimate_Anim4", "Son_Ultimate_Anim5" };
 				}
 			}
 			else if (model == CAMERA_MODELID_21)

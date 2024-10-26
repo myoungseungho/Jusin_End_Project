@@ -117,6 +117,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma endregion
 
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"));
 	return S_OK;
 }
 
@@ -149,7 +150,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 		LightDesc.eType = LIGHT_DESC::TYPE_POINT;
 		LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
 		LightDesc.fRange = 30.f;
-		
+
 		LightDesc.vDiffuse = _float4(0.9f, 1.1f, 1.7f, 1.0f); // 파란빛 계열로 변경
 
 		LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);

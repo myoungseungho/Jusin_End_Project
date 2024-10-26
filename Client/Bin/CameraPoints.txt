@@ -69,6 +69,60 @@ InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
+[Skill]
+SkillName: Camera_Son_Energy
+
+[Animation]
+AnimationName: Son_Energy_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Son_Ultimate
+
+[Animation]
+AnimationName: Son_Ultimate_Anim1
+PointCount: 3
+
+[CameraPoint]
+Position: 0.664998 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1.15
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.344852 0.98607 -2.16085
+Rotation: 0 0 0 1
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.344852 0.932019 -1.4963
+Rotation: 0 0.01 0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Ultimate_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Son_Ultimate_Anim3
+PointCount: 0
+
+[Animation]
+AnimationName: Son_Ultimate_Anim4
+PointCount: 0
+
+[Animation]
+AnimationName: Son_Ultimate_Anim5
+PointCount: 0
+
 [VirtualCamera]
 ModelID: MODELID_HIT
 
