@@ -109,7 +109,15 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Son_Ultimate_Anim2
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.465561 1.03667 -2.48169
+Rotation: 0 0 0 1
+Duration: 0.6
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Son_Ultimate_Anim3
