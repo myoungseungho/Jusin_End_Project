@@ -103,7 +103,7 @@ public:
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };
 	_int			m_iPassIndex = { 1 };
-	_float4		m_vColor = { 0.f, 0.f, 0.f, 1.f };
+	_float4		m_vColor = { 0.f, 0.f, 0.f, 30.f };
 	_bool			m_IsColorEffect = { false };
 
 protected:
