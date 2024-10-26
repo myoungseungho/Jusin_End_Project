@@ -30,7 +30,8 @@ private:
 
 public:
 	HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, string strName = "");
+	HRESULT Add_RenderObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, RENDER_OBJECT* pDesc);
+	//HRESULT Add_GlowObject(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, );
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	HRESULT Draw(_float fTimeDelta);
 	void SetActive_RenderTarget(_bool isOn) { m_bShow_RenderTarget = isOn; };
@@ -51,6 +52,7 @@ private:
 
 	list<class CGameObject*>			m_RenderObjects[RG_END];
 	vector<string>				m_PlayerStrNames;
+	vector<GLOW_DESC>				m_GlowDescs;
 	list<class CComponent*>		m_DebugComponent;
 
 	class CRenderInstance* m_pRenderInstance = { nullptr };

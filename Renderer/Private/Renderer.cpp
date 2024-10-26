@@ -293,7 +293,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	return S_OK;
 }
 
-HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject, string strName)
+HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRenderObject, RENDER_OBJECT* pDesc)
 {
 	if (eRenderGroup >= RG_END)
 		return E_FAIL;
@@ -301,9 +301,17 @@ HRESULT CRenderer::Add_RenderObject(RENDERGROUP eRenderGroup, CGameObject* pRend
 	m_RenderObjects[eRenderGroup].emplace_back(pRenderObject);
 
 	Safe_AddRef(pRenderObject);
-	// 라이트 이름 수정 하고 캐릭터 개별 빛 적용되는지 와서 확인하기ㅜ   
-	if (strName != "")
-		m_PlayerStrNames.push_back(strName);
+
+	/* 특수한 효과는 모두 이제 이쪽으로 처리한다 */
+	if (nullptr != pDesc)
+	{
+		if (pDesc->strName != "")
+			m_PlayerStrNames.push_back(pDesc->strName);
+		else
+			m_GlowDescs.push_back(pDesc->tGlowDesc);
+	}
+	
+
 	return S_OK;
 }
 
@@ -886,7 +894,6 @@ HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
-
 	}
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;

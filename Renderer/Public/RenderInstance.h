@@ -21,7 +21,7 @@ public:
 	HRESULT Render_Engine(_float fTimeDelta);
 
 public: /* For.Renderer */
-	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, string strName = "");
+	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, RENDER_OBJECT* pDesc = nullptr);
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
 	void SetActive_Debug_Component(_bool isOn);
