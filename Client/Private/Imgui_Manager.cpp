@@ -8,6 +8,9 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
+#include "UI_Manager.h"
+#include "UIObject.h"
+
 #include "IMGUI_Shader_Tab.h"
 #include "IMGUI_Animation_Tab.h"
 #include "IMGUI_Effect_Tab.h"
@@ -26,6 +29,7 @@ _bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 
 _bool bShowImGuiDebug_COut = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
 _bool bShowImGuiPlayerInput = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiUI_Show = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -257,6 +261,17 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("UI_Active")) {
+			if (ImGui::MenuItem("UI_Active", NULL, &bShowImGuiUI_Show)) {
+				for (auto& LeftIter : CUI_Manager::Get_Instance()->m_ListLeftUI)
+				{
+					LeftIter->SetActive(bShowImGuiUI_Show);
+				}
+			}
+			ImGui::EndMenu();
+		}
+
 
 		ImGui::EndMainMenuBar();
 	}

@@ -64,28 +64,8 @@ HRESULT CUIObject::Initialize(void* pArg)
 void CUIObject::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+	InitPlayer();
 
-
-	if (pDesc != nullptr)
-	{
-		switch (m_eLRPos)
-		{
-		case LEFT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER1];
-			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::LPLAYER2];
-			break;
-
-		case RIGHT:
-			m_pMainPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER1];
-			m_pSubPawn = m_pUI_Manager->m_pPawnArray[CUI_Define::RPLAYER2];
-			break;
-		}
-	}
-
-	if (m_pGameInstance->Key_Down(DIK_F3))
-		m_bIsActive = true;
-	if (m_pGameInstance->Key_Down(DIK_F4))
-		m_bIsActive = FALSE;
 }
 
 void CUIObject::Update(_float fTimeDelta)
@@ -139,21 +119,6 @@ _bool CUIObject::ClickRange()
 	}
 
 	return false;
-}
-
-_bool CUIObject::HitCheck()
-{
-	if (m_bCharaStun == TRUE)
-	{
-		if (m_bHit == FALSE)
-		{
-			m_bHit = TRUE;
-			return m_bHit;
-		}
-	}
-	else
-		m_bHit = FALSE;
-
 }
 
 void CUIObject::InitPlayer()
