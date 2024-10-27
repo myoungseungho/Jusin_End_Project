@@ -38,7 +38,6 @@ public:
 
 	void UseEvent_Test(string strEventText, CGameObject* pGameObject);
 	void UseEvent(string strEventText, class CCharacter* pCharacter);
-	void UseEvent_MSH(string splitText[], _float fValue[], CCharacter* pCharacter);
 
 	void Initalize_NameMap();
 
