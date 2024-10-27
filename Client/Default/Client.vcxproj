@@ -210,6 +210,7 @@
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
     <ClInclude Include="..\Public\UI_Logo_BG.h" />
     <ClInclude Include="..\Public\UI_Logo_Mark.h" />
+    <ClInclude Include="..\public\UI_PosMark.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -336,6 +337,7 @@
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
     <ClCompile Include="..\Private\UI_Logo_BG.cpp" />
     <ClCompile Include="..\Private\UI_Logo_Mark.cpp" />
+    <ClCompile Include="..\private\UI_PosMark.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

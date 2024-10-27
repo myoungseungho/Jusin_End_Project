@@ -5,13 +5,13 @@
 #include "RenderInstance.h"
 
 CUI_Loading_BG::CUI_Loading_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CGameObject{ pDevice, pContext }
+	: CUIObject{ pDevice, pContext }
 {
 
 }
 
 CUI_Loading_BG::CUI_Loading_BG(const CUI_Loading_BG& Prototype)
-	: CGameObject{ Prototype }
+	: CUIObject{ Prototype }
 {
 
 }
@@ -31,17 +31,17 @@ HRESULT CUI_Loading_BG::Initialize(void* pArg)
 
 	m_fSizeX = g_iWinSizeX;
 	m_fSizeY = g_iWinSizeY;
-	m_fX = g_iWinSizeX >> 1;
-	m_fY = g_iWinSizeY >> 1;
+	m_fPosX = g_iWinSizeX >> 1;
+	m_fPosY = g_iWinSizeY >> 1;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.1f, 1.f));
+		XMVectorSet(m_fPosX - g_iWinSizeX * 0.5f, -m_fPosY + g_iWinSizeY * 0.5f, 0.1f, 1.f));
 
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
-
+	
 	return S_OK;
 }
 

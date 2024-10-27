@@ -225,6 +225,11 @@ HRESULT CLoader::Loading_For_Logo()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/E3_Title/tex/LOC/E3_Title_Logo.png")))))
 		return E_FAIL;
 
+	//VideoTex
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_UI_LogoVideoTex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Video/LogoMultyTexture/Video_LogoTex%d.png"), 145))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_BackGround"),
 		CUI_Logo_BG::Create(m_pDevice, m_pContext))))
@@ -2613,6 +2618,12 @@ HRESULT CLoader::Loading_For_UI()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Chara_Name%d.png"), 4))))
 		return E_FAIL;
 
+	//PosMark
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_PosMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/CS_PlayerCursor_Choice_1P.png")))))
+		return E_FAIL;
+
+	
 
 
 	//게임 오브젝트
