@@ -342,7 +342,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 HRESULT CLevel_GamePlay::Ready_Sound()
 {
 	//배경음
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/013_bat_space.ogg", L"SFX_BGM");
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/013_bat_space.ogg", L"SFX_BGM");
 	m_pGameInstance->Play_Sound(L"SFX_BGM", true, 0.2f);
 
 	////퀘스트 들때
