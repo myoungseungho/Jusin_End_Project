@@ -50,9 +50,14 @@ private:
 	HRESULT Loading_For_Logo();
 	HRESULT Loading_For_GamePlayLevel();
 	HRESULT Load_UI_Resources_Logo();
-	HRESULT Load_UI_Resources_GamePlay();
-	HRESULT Load_Texture_Resources_GamePlay();
-	HRESULT Load_Model_Resources_GamePlay();
+	HRESULT Load_Texture_Resources_GamePlay_0();
+	HRESULT Load_Texture_Resources_GamePlay_1();
+	HRESULT Load_Texture_Resources_GamePlay_2();
+
+
+
+	HRESULT Load_Model_Resources_GamePlay_0();
+	HRESULT Load_Model_Resources_GamePlay_1();
 	HRESULT Load_Prototype_Object_GamePlay();
 	HRESULT Load_Prototype_Component_GamePlay();
 
