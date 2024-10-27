@@ -19,6 +19,7 @@ public:
 	enum class SOUND_KEY_NAME :_int
 	{
 		SPACE_BGM = 0,
+		Heavy_Attack,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -51,15 +52,20 @@ public:
 	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias);
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Sound_Group(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
+	void Play_Group_Sound(SOUND_GROUP_KEY_NAME alias, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);
-	void Stop_Sound(SOUND_GROUP_KEY_NAME alias);
+	void Stop_Group_Sound(SOUND_GROUP_KEY_NAME alias);
 	void Set_Volume(SOUND_KEY_NAME alias, float volume);
-	void Set_Volume(SOUND_GROUP_KEY_NAME alias, float volume);
+	void Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume);
+
 
 private:
 	FMOD_SYSTEM* m_pSoundSystem;
-	map<SOUND_KEY_NAME, FMOD_SOUND*> m_soundMap;
+	map<SOUND_KEY_NAME, FMOD_SOUND*> m_soundMap; // 개별 사운드 맵
+	map<SOUND_GROUP_KEY_NAME, FMOD_SOUND*> m_groupSoundMap; // 그룹 사운드 맵 (새로 추가)
 	map<SOUND_KEY_NAME, FMOD_CHANNEL*> m_channelMap;
+	map<SOUND_GROUP_KEY_NAME, FMOD_CHANNEL*> m_groupChannelMap; // 그룹 사운드 채널 맵 (새로 추가)
+
 	_uint m_iNumLevels;
 	static const _uint MAX_CHANNELS = 64;  // 최대 채널 수 정의
 	class FMOD_CHANNELGROUP* m_pChannelGroup = nullptr;

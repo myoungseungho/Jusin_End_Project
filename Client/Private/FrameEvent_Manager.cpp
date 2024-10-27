@@ -17,6 +17,7 @@
 #include "Model_Preview.h"
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
+#include "Sound_Manager.h"
 IMPLEMENT_SINGLETON(CFrameEvent_Manager)
 
 CFrameEvent_Manager::CFrameEvent_Manager()
@@ -484,9 +485,15 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
 	}
+
 	else if (splitText[0] == "PlaySound")
 	{
-		pCharacter->PlaySound(fValue[0], fValue[1], fValue[2]);
+		pCharacter->Play_Sound(fValue[0], fValue[1], fValue[2]);
+	}
+
+	else if (splitText[0] == "PlayGroupSound")
+	{
+		pCharacter->Play_Sound_Group(fValue[0], fValue[1], fValue[2]);
 	}
 
 #pragma region Ä«¸Þ¶ó

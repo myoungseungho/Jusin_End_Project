@@ -83,8 +83,24 @@ void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::w
 		m_soundGroupMap[groupKey] = std::vector<SOUND_GROUP_KEY_NAME>();
 	}
 
-	// 사운드 등록
-	Register_Sound(filePath, static_cast<SOUND_KEY_NAME>(alias));
+	// 이미 등록된 사운드인지 확인
+	if (m_groupSoundMap.find(alias) == m_groupSoundMap.end())
+	{
+		// 그룹 사운드 등록
+		FMOD_SOUND* sound;
+
+		// wstring을 string으로 변환
+		std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+		std::string filePathStr = converter.to_bytes(filePath);
+
+		if (FMOD_System_CreateSound(m_pSoundSystem, filePathStr.c_str(), FMOD_DEFAULT, nullptr, &sound) != FMOD_OK)
+		{
+			return;
+		}
+
+		// 그룹 사운드 맵에 등록
+		m_groupSoundMap[alias] = sound;
+	}
 
 	// 그룹에 해당 alias를 추가
 	m_soundGroupMap[groupKey].push_back(alias);
@@ -148,8 +164,8 @@ void CSound_Manager::Play_Sound_Group(SOUND_GROUP_KEY groupKey, _bool loop, _flo
 	// 그룹 내에서 재생 중인 사운드가 있는지 확인
 	for (const auto& soundAlias : soundList)
 	{
-		auto it = m_channelMap.find(static_cast<SOUND_KEY_NAME>(soundAlias));
-		if (it != m_channelMap.end())
+		auto it = m_groupChannelMap.find(soundAlias);
+		if (it != m_groupChannelMap.end())
 		{
 			FMOD_BOOL isPlaying = false;
 			if (FMOD_Channel_IsPlaying(it->second, &isPlaying) == FMOD_OK && isPlaying)
@@ -180,10 +196,58 @@ void CSound_Manager::Play_Sound_Group(SOUND_GROUP_KEY groupKey, _bool loop, _flo
 	SOUND_GROUP_KEY_NAME selectedSound = availableSounds[randomIndex];
 
 	// 선택한 사운드 재생
-	Play_Sound(static_cast<SOUND_KEY_NAME>(selectedSound), loop, volume);
+	Play_Group_Sound(selectedSound, loop, volume);
 
 	// 마지막으로 재생한 사운드 저장
 	m_lastPlayedSound[groupKey] = selectedSound;
+}
+
+void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY_NAME alias, _bool loop, _float volume)
+{
+	auto it = m_groupSoundMap.find(alias);
+	if (it == m_groupSoundMap.end()) return;
+
+	FMOD_CHANNEL* channel = nullptr;
+
+	FMOD_MODE mode = loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+	FMOD_Sound_SetMode(it->second, mode);
+
+	// 재생 완료된 채널 정리
+	int playingChannels = 0;
+	FMOD_ChannelGroup_GetNumChannels(m_pChannelGroup, &playingChannels);
+
+	for (int i = 0; i < playingChannels; ++i)
+	{
+		FMOD_CHANNEL* tempChannel = nullptr;
+		if (FMOD_ChannelGroup_GetChannel(m_pChannelGroup, i, &tempChannel) == FMOD_OK)
+		{
+			FMOD_BOOL isPlaying = false;
+			if (FMOD_Channel_IsPlaying(tempChannel, &isPlaying) == FMOD_OK && !isPlaying)
+			{
+				FMOD_Channel_Stop(tempChannel);  // 재생 완료된 채널 정지
+			}
+		}
+	}
+
+	// 재생 중인 채널 수 다시 확인
+	FMOD_ChannelGroup_GetNumChannels(m_pChannelGroup, &playingChannels);
+
+	if (playingChannels < MAX_CHANNELS)
+	{
+		// 새로운 채널을 생성하여 재생
+		if (FMOD_System_PlaySound(m_pSoundSystem, it->second, m_pChannelGroup, false, &channel) == FMOD_OK)
+		{
+			// 볼륨 설정
+			FMOD_Channel_SetVolume(channel, volume);
+
+			m_groupChannelMap[alias] = channel;
+		}
+	}
+	else
+	{
+		// 모든 채널이 사용 중인 경우 처리
+		return;
+	}
 }
 
 void CSound_Manager::Stop_Sound(SOUND_KEY_NAME alias)
@@ -194,11 +258,14 @@ void CSound_Manager::Stop_Sound(SOUND_KEY_NAME alias)
 	FMOD_Channel_Stop(it->second);
 }
 
-// 그룹 사운드에 대한 오버로드
-void CSound_Manager::Stop_Sound(SOUND_GROUP_KEY_NAME alias)
+void CSound_Manager::Stop_Group_Sound(SOUND_GROUP_KEY_NAME alias)
 {
-	Stop_Sound(static_cast<SOUND_KEY_NAME>(alias));
+	auto it = m_groupChannelMap.find(alias);
+	if (it == m_groupChannelMap.end()) return;
+
+	FMOD_Channel_Stop(it->second);
 }
+
 
 void CSound_Manager::Set_Volume(SOUND_KEY_NAME alias, float volume)
 {
@@ -208,9 +275,12 @@ void CSound_Manager::Set_Volume(SOUND_KEY_NAME alias, float volume)
 	FMOD_Channel_SetVolume(it->second, volume);
 }
 
-void CSound_Manager::Set_Volume(SOUND_GROUP_KEY_NAME alias, float volume)
+void CSound_Manager::Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume)
 {
-	Set_Volume(static_cast<SOUND_KEY_NAME>(alias), volume);
+	auto it = m_groupChannelMap.find(alias);
+	if (it == m_groupChannelMap.end()) return;
+
+	FMOD_Channel_SetVolume(it->second, volume);
 }
 
 CSound_Manager* CSound_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -231,12 +301,21 @@ CGameObject* CSound_Manager::Clone(void* pArg)
 
 void CSound_Manager::Free()
 {
+	// 개별 사운드 해제
 	for (auto& pair : m_soundMap)
 	{
 		FMOD_Sound_Release(pair.second);
 	}
 	m_soundMap.clear();
 	m_channelMap.clear();
+
+	// 그룹 사운드 해제
+	for (auto& pair : m_groupSoundMap)
+	{
+		FMOD_Sound_Release(pair.second);
+	}
+	m_groupSoundMap.clear();
+	m_groupChannelMap.clear();
 
 	if (m_pSoundSystem)
 	{

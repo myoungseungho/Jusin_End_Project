@@ -345,9 +345,10 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 HRESULT CLevel_GamePlay::Ready_Sound()
 {
 	//¹è°æÀ½
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/013_bat_space.ogg", CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/013_bat_space.ogg", CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Chara/Goku/Real_Voice/Heavy_Attack.ogg",CSound_Manager::SOUND_KEY_NAME::Heavy_Attack);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::SFX_Goku_Light_Attack_1);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::SFX_Goku_Light_Attack_2);
 	

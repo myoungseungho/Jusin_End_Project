@@ -494,9 +494,19 @@ void CGameInstance::Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop,
 	m_pSoundManager->Play_Sound(alias, loop, volume);
 }
 
-void CGameInstance::Play_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, _bool loop, _float volume)
+void CGameInstance::Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias, _bool loop, _float volume)
 {
-	m_pSoundManager->Play_Sound_Group(groupKey, loop, volume);
+	m_pSoundManager->Play_Group_Sound(alias, loop, volume);
+}
+
+void CGameInstance::Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias)
+{
+	m_pSoundManager->Stop_Group_Sound(alias);
+}
+
+void CGameInstance::Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias, float volume)
+{
+	m_pSoundManager->Set_Group_Volume(alias, volume);
 }
 
 void CGameInstance::Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias)

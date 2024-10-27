@@ -273,7 +273,8 @@ public:
 
 	//virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0) {};
-	virtual void PlaySound(_uint SoundName, _bool bisLoof, _float fvolume) {};
+	virtual void Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume) {};
+	virtual void Play_Sound_Group(_uint groupKey, _bool loop, _float volume) {};
 
 
 
