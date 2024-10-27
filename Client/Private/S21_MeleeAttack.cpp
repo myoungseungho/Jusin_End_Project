@@ -19,7 +19,7 @@ void CS21_MeleeAttack::Initalize(CPlay_21* pPlayer)
 
 
 	m_pbAttackCount = m_pPlayer->Get_pbAttackCount();
-	m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
+	//m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
 }
 
 void CS21_MeleeAttack::Attack_Light()
@@ -32,11 +32,12 @@ void CS21_MeleeAttack::Attack_Light()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_LIGHT1);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_LIGHT2,1.f);
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_LIGHT2, 1.f);
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2)
@@ -50,14 +51,25 @@ void CS21_MeleeAttack::Attack_Light()
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_AIR2,0.5f);
+
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_AIR2, 0.5f);
+
+		if (m_pPlayer->Get_fGravityTime() > 0.135)
+		{
+			m_pPlayer->Set_bNextAnimationGravityEvent();
+		}
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_AIR3,0.5f);
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_AIR3, 0.5f);
+		if (m_pPlayer->Get_fGravityTime() > 0.135)
+		{
+			//m_pPlayer->Set_ForcedGravityTime_LittleUp();
+			m_pPlayer->Set_bNextAnimationGravityEvent();
+		}
 	}
 
-	
+
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_LIGHT1);
@@ -72,29 +84,54 @@ void CS21_MeleeAttack::Attack_Medium()
 {
 
 
-	
+	if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_MEDIUM);
+		m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM] = false;
 
-	//if(m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex) ||
-	//	*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2
-	//	|| *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM)
-	//{
-	//
-	//	//서서 중공격 횟수가 남아있으면 일단 사용
-	//	if (m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM] == true)
-	//	{
-	//		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_MEDIUM);
-	//		m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM] = false;
-	//
-	//		m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM];
-	//		m_pbAttackCount[CPlay_21::COUNT_ATTACK_CROUCH_MEDUIM];
-	//		m_pbAttackCount;
-	//
-	//		_bool bDebug = true;
-	//
-	//
-	//	}
-	//
-	//}
+		m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM];
+		m_pbAttackCount[CPlay_21::COUNT_ATTACK_CROUCH_MEDUIM];
+		m_pbAttackCount;
+
+		_bool bDebug = true;
+	}
+
+	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2
+		|| *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM)
+	{
+
+		//서서 중공격 횟수가 남아있으면 일단 사용
+		if (m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM] == true)
+		{
+			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_MEDIUM, 0.5f);
+			m_pbAttackCount[CPlay_21::COUNT_ATTACK_MEDIUM] = false;
+		}
+
+	}
+
+	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM)
+	{
+		//서서 중공격 중에 또 누를 시 횟수가 있으면  앉아 중공격 자동 사용
+		if (m_pbAttackCount[CPlay_21::COUNT_ATTACK_CROUCH_MEDUIM] == true)
+		{
+			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM, 0.5f);
+			m_pbAttackCount[CPlay_21::COUNT_ATTACK_CROUCH_MEDUIM] = false;
+		}
+	}
+
+
+	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1)
+	{
+		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_AIR2, 0.5f);
+	}
+
+	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_AIR2);
+	}
+
+
+	/*
 
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
@@ -151,23 +188,8 @@ void CS21_MeleeAttack::Attack_Medium()
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_AIR2);
 	}
 
-
-	//다음애니메이션으로 설정하는 방식이지만 약공격이 빨라서 이상함
-	//if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
-	//{
-	//	m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_MEDIUM);
-	//}
-	//else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2
-	//	|| *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_MEDIUM,0.5f);
-	//}
-	//
-	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1)
-	//{
-	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_AIR2, 0.5f);
-	//}
-
+	*/
+	
 	
 	
 }
@@ -244,6 +266,27 @@ void CS21_MeleeAttack::Attack_Special()
 
 }
 
+void CS21_MeleeAttack::Attack_Grab()
+{
+	if (m_pbAttackCount[CPlay_21::COUNT_ATTACK_GRAB])
+	{
+
+		if (m_pPlayer->Check_bCurAnimationisGroundMove())
+		{
+			m_pPlayer->Set_Grab(false);
+			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
+			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
+		}
+
+		else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP)
+		{
+			m_pPlayer->Set_Grab(true);
+			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
+			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
+		}
+	}
+}
+
 void CS21_MeleeAttack::Attack_236()
 {
 
@@ -276,23 +319,32 @@ void CS21_MeleeAttack::Attack_214()
 		CTransform* pTrasnform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
 		pTrasnform->Add_Move({ 0.f,1.f,0.f });
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
-		
+
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 3.f, -15.f });
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f);
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 3.f, -15.f });
+
 	}
 
 
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 3.f, -15.f });
+
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f, 20.f);
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() *3.f, -15.f });
+
+		CTransform* pTrasnform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+		pTrasnform->Add_Move({ 0.f,0.7f,0.f });
 
 	}
 
@@ -447,13 +499,37 @@ void CS21_MeleeAttack::BackDash()
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_BACK_DASH);
 	}
+
+	else if (m_pPlayer->Get_bAirDashEnable() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP))
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_BACK_DASH);
+		m_pPlayer->Set_CurrentAnimationPositionJump(12.f);
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (-10.f));
+
+		m_pPlayer->Set_bAirDashEnable(false);
+		m_pPlayer->Set_ForcedGravityDown();
+		m_pPlayer->Set_ForcveGravityTime(0.135f);
+	}
+
 }
 
 void CS21_MeleeAttack::ForwardDash()
 {
-	if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_21::ANIME_BACK_WALK)
+	if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_21::ANIME_BACK_WALK)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_FORWARD_DASH);
+	}
+
+	else if (m_pPlayer->Get_bAirDashEnable() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP))
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_FORWARD_DASH);
+		//m_pPlayer->Set_CurrentAnimationPositionJump(4.f);
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (10.f));
+		m_pPlayer->Set_bAirDashEnable(false);
+		//m_pPlayer->Set_ForcedGravityDown();
+
+		m_pPlayer->Set_ForcveGravityTime(0.255f);
+
 	}
 }
 

@@ -1503,7 +1503,10 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
 	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
 
-
+	if (m_bGrab_Air == false)
+	{
+		m_vChaseDir = XMVectorSetY(m_vChaseDir, 0.f);
+	}
 
 
 	//m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime*m_fAccChaseTime*3.f) * fTimeDelta);
@@ -2042,6 +2045,11 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
 		//m_pModelCom->CurrentAnimationPositionJump()
 
+		if (Get_fHeight() == 0)
+		{
+			Add_Move({ 0.f,0.2f });
+		}
+
 	}
 		break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP:
@@ -2220,7 +2228,7 @@ void CCharacter::BreakFall_Air()
 		return;
 
 	//땅바닥에서 질질 끌리는 모션도 공중피격이라 조건 추가해야함
-	if (Check_bCurAnimationisAirHit() && m_bHitGroundSmashed == false)
+	if ((m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || Check_bCurAnimationisAirHit()) && m_bHitGroundSmashed == false)
 	{
 		InputCommand();
 
@@ -2229,6 +2237,7 @@ void CCharacter::BreakFall_Air()
 		if (InputKey.button != ATTACK_NONE)
 		{
 			Set_Animation(m_iBreakFall_Air);
+			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 			Set_ForcedGravityDown();
 
 			if (InputKey.direction == MOVEKEY_UP)
@@ -2749,9 +2758,10 @@ void CCharacter::Set_ChaseStop()
 	m_bChase = false;
 	
 	m_fAccChaseTime = 0.f;
-	m_fGravityTime = 0.185f;
 
-	//m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+	m_fGravityTime = 0.185 - m_pModelCom->m_fCurrentAnimPosition * 0.002f;
+
 	
 
 }
@@ -3745,27 +3755,22 @@ HRESULT CCharacter::Ready_Components()
 	//ColliderDesc.Offset = { 0.f, 0.7f, 0.f };
 
 
-	CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
-	/*	Desc.ColliderDesc.width = 0.7;
-		Desc.ColliderDesc.height = 0.8;
-		Desc.ColliderDesc.vCenter ={0.9f *m_iLookDirection,0.8f,0.f };
-		Desc.ColliderDesc.pTransform = m_pTransformCom;*/
-
-	if (m_iPlayerTeam == 1)
-		ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_BODY;
-	else
-		ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_BODY;
-	ColliderDesc.pMineGameObject = this;
-	ColliderDesc.vCenter = { 0.f,0.8f,0.f };
-	ColliderDesc.vExtents = { 0.5f,0.7f,1.f };
-
-
-	//Com_Collider
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
-		return E_FAIL;
-
-	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
+	//CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
+	//if (m_iPlayerTeam == 1)
+	//	ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_BODY;
+	//else
+	//	ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_BODY;
+	//ColliderDesc.pMineGameObject = this;
+	//ColliderDesc.vCenter = { 0.f,0.8f,0.f };
+	//ColliderDesc.vExtents = { 0.5f,0.7f,1.f };
+	//
+	//
+	////Com_Collider
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+	//	TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
+	//	return E_FAIL;
+	//
+	//m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 
 
 	

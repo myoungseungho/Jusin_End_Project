@@ -511,7 +511,7 @@ protected:
 
 
 	_bool m_bChase = { false };
-	_float m_fAccChaseTime = { 0.f };
+	_float m_fAccChaseTime = { 0.f }; 
 	_vector m_vChaseDir{ 0 };
 
 
@@ -620,7 +620,6 @@ private:
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
 
-	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };
 
 protected:
