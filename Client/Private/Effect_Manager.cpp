@@ -108,7 +108,7 @@ void CEffect_Manager::Render(_float fTimeDelta)
 		Pair->Render(fTimeDelta);
 }
 
-HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, void* pArg)
+HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 

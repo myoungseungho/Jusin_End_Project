@@ -21,7 +21,6 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	: m_fDuration{Prototype.m_fDuration}
 	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
 	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
-	, m_bIsRender{ Prototype.m_bIsRender }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
 {
@@ -95,13 +94,13 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 	return S_OK;
 }
 
-HRESULT CEffect_Layer::Initialize(void* pArg)
+HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 {
 	if (pArg != nullptr)
 	{
-		LAYER_DESC* pDesc = static_cast<LAYER_DESC*>(pArg);
+		//LAYER_DESC* pDesc = static_cast<LAYER_DESC*>(pArg);
 
-		m_pPlayerMatrix = pDesc->pPlayertMatrix;
+		m_pPlayerMatrix = pArg;
 
 		return S_OK;
 	}
@@ -302,7 +301,7 @@ CEffect_Layer* CEffect_Layer::Create(ID3D11Device* pDevice, ID3D11DeviceContext*
 	return pInstance;
 }
 
-CEffect_Layer* CEffect_Layer::Clone(void* pArg)
+CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg)
 {
 	CEffect_Layer* pInstance = new CEffect_Layer(*this);
 

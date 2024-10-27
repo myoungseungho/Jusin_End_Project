@@ -30,7 +30,7 @@ private:
 
 public:
 	HRESULT Initialize_Prototype(void* pArg);
-	HRESULT Initialize(void* pArg);
+	HRESULT Initialize(const _float4x4* pArg = nullptr);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -59,7 +59,7 @@ public:
 	_float			m_fDuration = { 0.f };
 	_float			m_fTickPerSecond = {0.f};
 	_float			m_fCurrentAnimPosition = { 0.f };
-	_bool			m_bIsRender = { false };
+	_bool			m_bIsRender = { true };
 	_bool						m_bIsDoneAnim = { false };
 	_bool						m_bIsCopy = { false };
 
@@ -73,7 +73,7 @@ private:
 
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
-	CEffect_Layer* Clone(void* pArg = nullptr);
+	CEffect_Layer* Clone(const _float4x4* pArg = nullptr);
 	virtual void Free() override;
 };
 
