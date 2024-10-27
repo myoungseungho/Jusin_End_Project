@@ -19,6 +19,7 @@ public:
 		_float3 vPosition;
 		_float3 vScaled;
 		_float3 vRotation;
+		const _float4x4* pPlayertMatrix;
 
 	}LAYER_DESC;
 
@@ -68,6 +69,7 @@ private:
 	ID3D11DeviceContext* m_pContext = { nullptr };
 	CGameInstance*			m_pGameInstance = { nullptr };
 	CCollider*					m_pColliderCom = { nullptr };
+	const _float4x4*			 m_pPlayerMatrix = { nullptr };
 
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);

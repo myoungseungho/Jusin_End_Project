@@ -58,29 +58,24 @@ void CEffect_Manager::Update(_float fTimeDelta)
 	for (auto& Pair : m_TestEffect)
 		Pair->Update(fTimeDelta);
 
-	for (auto& Pair : m_UsingEffect)
+	for (auto iter = m_UsingEffect.begin(); iter != m_UsingEffect.end();)
 	{
-		if (!Pair->m_bIsDoneAnim)
-			Pair->Update(fTimeDelta);
+		if (!(*iter)->m_bIsDoneAnim)
+		{
+			(*iter)->Update(fTimeDelta);
+			++iter;
+		}
 		else
 		{
-			for (auto iter = m_UsingEffect.begin(); iter != m_UsingEffect.end(); )
-			{
-				if ((*iter)->m_bIsDoneAnim) 
-				{
-					(*iter)->Free();
-					iter = m_UsingEffect.erase(iter);
-				}
-				else 
-				{
-					++iter;
-				}
-			}
+			(*iter)->Free();
+			iter = m_UsingEffect.erase(iter);
 		}
-
 	}
-
 }
+
+
+
+
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
@@ -113,14 +108,14 @@ void CEffect_Manager::Render(_float fTimeDelta)
 		Pair->Render(fTimeDelta);
 }
 
-HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag)
+HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, void* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
 	if (pLayer == nullptr)
 		return E_FAIL;
 
-	m_UsingEffect.push_back(pLayer->Clone());
+	m_UsingEffect.push_back(pLayer->Clone(pArg));
 
 	return S_OK;
 }
