@@ -60,6 +60,7 @@ HRESULT CFallingStar::Initialize(void * pArg)
 
 	m_fSpriteSize = _float2(1.0f / m_fSpriteAnimCount.x, 1.0f / m_fSpriteAnimCount.y);
 	m_RendererDesc.tGlowDesc.iPassIndex = 2;
+	m_RendererDesc.tGlowDesc.fGlowFactor = 3.2f;
 
 	return S_OK;
 }

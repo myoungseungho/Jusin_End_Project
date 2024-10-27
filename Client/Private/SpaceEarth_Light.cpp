@@ -34,6 +34,8 @@ HRESULT CSpaceEarth_Light::Initialize(void * pArg)
 
 	m_iGameObjectData = 7;
 	m_RendererDesc.tGlowDesc.iPassIndex = 7;
+	m_RendererDesc.tGlowDesc.fGlowFactor = 3.2f;
+	m_RendererDesc.tGlowDesc.vGlowColor = _float4(0, 0, 1, 1);
 	return S_OK;
 }
 

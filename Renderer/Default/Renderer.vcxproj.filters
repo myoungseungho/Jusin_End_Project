@@ -96,5 +96,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred_Glow.hlsl">
       <Filter>98.ShaderFiles</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Deferred_UI_Glow .hlsl">
+      <Filter>98.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

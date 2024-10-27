@@ -29,8 +29,6 @@ HRESULT CUI_GameState::Initialize(void* pArg)
 		return E_FAIL;
 	
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
-	if(pDesc != nullptr)
-		m_eAnimType = pDesc->eType;
 
 	m_fAnimPos = m_fSizeX;
 
@@ -61,8 +59,7 @@ HRESULT CUI_GameState::Render(_float fTimeDelta)
 
 void CUI_GameState::Set_AnimPosition(_int iNextPosX, _float fAnimSpeed)
 {
-	//if(m_eAnimType == UI_ANIM)
-		m_QueueAnim.push_back({ iNextPosX ,fAnimSpeed});
+	m_QueueAnim.push_back({ iNextPosX ,fAnimSpeed});
 }
 
 void CUI_GameState::Action_Anim(_float fSizeOffSet, _float fTimeDelta)

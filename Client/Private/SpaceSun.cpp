@@ -39,8 +39,10 @@ HRESULT CSpaceSun::Initialize(void * pArg)
     unsigned int    iPassIndex;
 	*/
 	m_RendererDesc.tGlowDesc.iPassIndex = 8;
+	m_RendererDesc.tGlowDesc.fGlowFactor = 1.f;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -1.5f, -200.f, 1.f));
 	m_iGameObjectData = 8;
+
 	return S_OK;
 }
 

@@ -4,7 +4,7 @@
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 texture2D		g_DiffuseTexture;
-
+texture2D g_OutLineTexture;
 /* 모델 전체의 뼈(x), 메시에게 영향을 주는 뼈(o)*/
 float4x4		g_BoneMatrices[800];
 
@@ -82,14 +82,13 @@ PS_OUT PS_MAIN(PS_IN In)
 	PS_OUT			Out;	
 
 	vector		vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-	if (vMtrlDiffuse.a < 0.1f)
-		discard;
+    vector vMtrlOutLine = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
 
-	Out.vDiffuse = vMtrlDiffuse;
-
+    vector vColor = saturate(vMtrlDiffuse - (1 - vMtrlOutLine.a));
+    vColor.a = 1.f;
 	/* In.vNormal.xyz -> -1 ~ 1 */
 	/* Out.vNormal.xyz -> 0 ~ 1 */
-
+    Out.vDiffuse = vColor;
 	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
 	Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 

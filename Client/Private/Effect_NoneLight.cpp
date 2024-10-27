@@ -13,6 +13,7 @@ CEffect_NoneLight::CEffect_NoneLight(ID3D11Device* pDevice, ID3D11DeviceContext*
 CEffect_NoneLight::CEffect_NoneLight(const CEffect_NoneLight& Prototype)
 	: CEffect{ Prototype }
 {
+
 }
 
 HRESULT CEffect_NoneLight::Initialize_Prototype()

@@ -190,6 +190,23 @@ void CShader_Texture::Remove_InputFunction(_int iFunctionType)
 	}
 }
 
+void CShader_Texture::Add_CloneValue(CEffect* pEffect)
+{
+	Shade_Sprite Sprite = m_Sprite;
+	Shade_MoveTex MoveTex = m_MoveTex;
+
+	Sprite.fSpriteCurPos.x = 0;
+	Sprite.fSpriteCurPos.y = 0;
+	Sprite.fAccTime = 0.f;
+	m_CloneSprites.emplace(pEffect, Sprite);
+	m_CloneMoveTexs.emplace(pEffect, MoveTex);
+}
+
+void CShader_Texture::Delete_CloneValue(CEffect* pEffect)
+{
+	m_CloneSprites.erase(pEffect);
+}
+
 
 void CShader_Texture::Push_Shade_MoveTex(_float2* pDirection, _float* pSpeed)
 {
@@ -362,6 +379,16 @@ CShader_Texture* CShader_Texture::Create(ID3D11Device* pDevice, ID3D11DeviceCont
 	return pInstance;
 }
 
+
+void CShader_Texture::Free()
+{
+	__super::Free();
+
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pShaderCom);
+	Safe_Release(m_pVIBufferCom);
+}
+
 CGameObject* CShader_Texture::Clone(void* pArg)
 {
 	CShader_Texture* pInstance = new CShader_Texture(*this);
@@ -373,13 +400,4 @@ CGameObject* CShader_Texture::Clone(void* pArg)
 	}
 
 	return pInstance;
-}
-
-void CShader_Texture::Free()
-{
-	__super::Free();
-
-	Safe_Release(m_pTextureCom);
-	Safe_Release(m_pShaderCom);
-	Safe_Release(m_pVIBufferCom);
 }
