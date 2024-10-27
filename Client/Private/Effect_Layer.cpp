@@ -25,23 +25,22 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
 {
-	//EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
-
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
-		//pProtoEffect->m_ForCopyInform.SRV_Ptr = 
-
 		m_MixtureEffects.emplace_back(static_cast<CEffect*>((pProtoEffect->Clone(&(pProtoEffect->m_ForCopyInform)))));
-
 	}
 
 	for (auto& iter : m_MixtureEffects)
 	{
-		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()->Access_Shader_Tab(iter->m_iUnique_Index)
-			)->m_TestEffectModel_Texture->Get_SRV(0));
+		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))
+			->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+			->Access_Shader_Tab(iter->m_iUnique_Index))
+			->m_TestEffectModel_Texture->Get_SRV(0));
 
-		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()->Access_Shader_Tab(iter->m_iUnique_Index)
-			)->m_TestEffectModel_Texture->Get_SRV(1), 1);
+		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))
+			->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+			->Access_Shader_Tab(iter->m_iUnique_Index))
+			->m_TestEffectModel_Texture->Get_SRV(1), 1);
 	}
 
 	Safe_AddRef(m_pTransformCom);
