@@ -24,17 +24,14 @@ CLevel_Loading::CLevel_Loading(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 
 HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 {
-
 	m_iLevelIndex = LEVEL_LOADING;
 	m_eNextLevelID = eNextLevelID;
-
 
 	if (FAILED(Ready_Prototype_Component()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer()))
 		return E_FAIL;
-
 
 	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	if (nullptr == m_pLoader)

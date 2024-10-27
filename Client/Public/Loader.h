@@ -22,9 +22,7 @@ public:
 	HRESULT Loading();
 
 public:
-	_bool isFinished() const {
-		return m_isFinished;
-	}
+	atomic_bool isFinished();
 
 	void Draw_Text() {
 		SetWindowText(g_hWnd, m_szLoadingText);
@@ -34,20 +32,29 @@ private:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
 	LEVELID						m_eLevelID = {};
-	_bool						m_isFinished = { false };
 	_tchar						m_szLoadingText[MAX_PATH] = {};
 
 private:
-	HANDLE						m_hThread = {};
-	CRITICAL_SECTION			m_Critical_Section = {};
 	CGameInstance*				m_pGameInstance = { nullptr };
 
+	//스레드 관련
+
+	atomic_bool m_isFinished;
+	vector<future<HRESULT>> m_futures;
+
+	// 스레드 안전성을 위한 뮤텍스
+	mutex m_TextMutex;
 
 private:
 	HRESULT Loading_For_Loading();
 	HRESULT Loading_For_Logo();
 	HRESULT Loading_For_GamePlayLevel();
-	HRESULT Loading_For_UI();
+	HRESULT Load_UI_Resources_Logo();
+	HRESULT Load_UI_Resources_GamePlay();
+	HRESULT Load_Texture_Resources_GamePlay();
+	HRESULT Load_Model_Resources_GamePlay();
+	HRESULT Load_Prototype_Object_GamePlay();
+	HRESULT Load_Prototype_Component_GamePlay();
 
 public:
 	static CLoader* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID);

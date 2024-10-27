@@ -169,9 +169,6 @@
     <ClCompile Include="..\Private\SpaceSun.cpp">
       <Filter>02.GameObjects\Map\Space\Sun</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\AttackObject_Chase.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Chase</Filter>
     </ClCompile>
@@ -186,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\AttackObject_Grab.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Grab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_LoadingMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
