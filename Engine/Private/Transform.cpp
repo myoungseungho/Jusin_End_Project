@@ -183,41 +183,25 @@ void CTransform::Rotate(_float3 ChangeRotation)
 
 void CTransform::Set_Matrix(_matrix AddMatrix)
 {
-	//XMMATRIX float4x4Matrix = XMLoadFloat4x4(&m_WorldMatrix);
-
-	//XMMATRIX resultMatrix = XMMatrixMultiply(AddMatrix, float4x4Matrix);
-
-	//XMVECTOR vRight = resultMatrix.r[0];
-	//XMVECTOR vUp = resultMatrix.r[1];
-	//XMVECTOR vLook = resultMatrix.r[2]; 
-
-	//XMVECTOR vCurPos = Get_State(STATE_POSITION);
-	//XMVECTOR vAddPos = AddMatrix.r[3];
-
-	//XMVECTOR vPos = XMVectorAdd(vCurPos, vAddPos);
-
-	//Set_State(STATE_RIGHT, vRight);
-	//Set_State(STATE_UP, vUp);
-	//Set_State(STATE_LOOK, vLook);
-	//Set_State(STATE_POSITION, vPos);
-
 	XMMATRIX float4x4Matrix = XMLoadFloat4x4(&m_WorldMatrix);
 
 	XMVECTOR scale, rotation, translation;
 	XMMatrixDecompose(&scale, &rotation, &translation, AddMatrix);
 
-	XMVECTOR vRight = XMVector3TransformNormal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), XMMatrixRotationQuaternion(rotation));
-	XMVECTOR vUp = XMVector3TransformNormal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), XMMatrixRotationQuaternion(rotation));
-	XMVECTOR vLook = XMVector3TransformNormal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vRight = XMVector3TransformNormal(Get_State(STATE_RIGHT), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vUp = XMVector3TransformNormal(Get_State(STATE_UP), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vLook = XMVector3TransformNormal(Get_State(STATE_LOOK), XMMatrixRotationQuaternion(rotation));
 
 	XMVECTOR vCurPos = Get_State(STATE_POSITION);
 	XMVECTOR vPos = XMVectorAdd(vCurPos, translation);
+	vPos = XMVectorSetW(vPos, 1.0f);
 
 	Set_State(STATE_RIGHT, vRight);
 	Set_State(STATE_UP, vUp);
 	Set_State(STATE_LOOK, vLook);
 	Set_State(STATE_POSITION, vPos);
 }
+
 
 HRESULT CTransform::Bind_ShaderResource(CShader* pShader, const _char* pConstantName)
 {
