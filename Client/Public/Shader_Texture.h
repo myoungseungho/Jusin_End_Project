@@ -62,6 +62,7 @@ public:
 	void Set_PlusKey(_wstring Key) { m_Key = Key; }
 
 	void Add_CloneValue(CEffect* pEffect);
+	_int Update_CloneValue(CEffect* pEffect, _float fTimeDelta);
 	void Delete_CloneValue(CEffect* pEffect);
 	_int m_iID = { 0 };
 	Shade_Sprite m_Sprite;
@@ -98,6 +99,8 @@ private: /* 클라로 파싱할때 절대 안넘김*/
 private:
 	HRESULT Ready_Components(void* pArg);
 	HRESULT Bind_ShaderResources();
+
+	HRESULT Bind_CloneShaderResources(CEffect* pEffect);
 
 public:
 	static CShader_Texture* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

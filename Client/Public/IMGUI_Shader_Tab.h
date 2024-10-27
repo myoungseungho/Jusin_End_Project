@@ -43,7 +43,7 @@ protected:
 public:
 	HRESULT Initialize() override;
 	HRESULT Load_Initialize(string strFilename);
-	HRESULT Copy_Initialize();
+
 	
 	void Update(_float fTimeDelta);
 	void Render(_float fTimeDelta) override;
@@ -73,6 +73,7 @@ public:
 	void Update_TestToLayer_TextureCom(CTexture* pTexture) { m_TestEffectModel_Texture = pTexture; }
 
 	void Add_Clone_EffectToShader_Texture(CEffect* pEffect);
+	_int Update_Clone_EffectToShader_Texture(CEffect* pEffect, _float fTimeDelta);
 	void Delete_Clone_EffectToShader_Texture(CEffect* pEffect);
 private:
 	unordered_map<CEffect*, vector<CShader_Texture*>*> m_CopyClones;

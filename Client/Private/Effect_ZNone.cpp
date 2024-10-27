@@ -36,6 +36,8 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
 		m_ForCopyInform = *pEffectDesc;
 
+		m_bIsCopy = pEffectDesc->bIsCopy;
+
 		_float3 vPos = pEffectDesc->vPosition;
 		_float3 vScale = pEffectDesc->vScaled;
 		_float3 vRot = pEffectDesc->vRotation;
@@ -115,6 +117,9 @@ void CEffect_ZNone::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_ZNone::Render(_float fTimeDelta)
 {
+	if (m_iPassIndex != 1)
+		__super::Render(fTimeDelta);
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 

@@ -1451,6 +1451,29 @@ void CIMGUI_Shader_Tab::Delete_Clone_EffectToShader_Texture(CEffect* pEffect)
 void CIMGUI_Shader_Tab::Add_Clone_EffectToShader_Texture(CEffect* pEffect)
 {
     m_CopyClones.emplace(pEffect, &m_NodeTextures);
+
+    for (auto& iter : m_NodeTextures)
+    {
+        iter->Add_CloneValue(pEffect);
+    }
+   
+}
+
+_int CIMGUI_Shader_Tab::Update_Clone_EffectToShader_Texture(CEffect* pEffect, _float fTimeDelta)
+{
+    _int iResult = { 0 };
+    auto& it = m_CopyClones.find(pEffect);
+
+    if (it == m_CopyClones.end())
+        return -1;
+
+    for (auto& Textureiter : (*it->second))
+    {
+        if (Textureiter->Update_CloneValue(pEffect, fTimeDelta) == 1)
+            iResult = 1;
+    }
+
+    return iResult;
 }
 
 // 로드 함수

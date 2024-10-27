@@ -1,7 +1,7 @@
 [Layer]
 LayerName: Aura11_Yellow
-Duration: 0.4
-TickPerSecond: 1
+Duration: 1.4
+TickPerSecond: 0.1
 KeyFramesCount: 24
 NumEffec: 1
 Position: 0 0 0

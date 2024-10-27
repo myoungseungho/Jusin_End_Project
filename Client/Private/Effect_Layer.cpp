@@ -18,15 +18,19 @@ CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContex
 }
 
 CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
-	: m_fDuration{Prototype.m_fDuration}
-	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
-	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
+	: m_fDuration{ Prototype.m_fDuration }
+	, m_iNumKeyFrames{ Prototype.m_iNumKeyFrames }
+	, m_fTickPerSecond{ Prototype.m_fTickPerSecond }
 	, m_bIsRender{ Prototype.m_bIsRender }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
 {
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
+		m_bIsCopy = true;
+
+		pProtoEffect->m_ForCopyInform.bIsCopy = m_bIsCopy;
+
 		m_MixtureEffects.emplace_back(static_cast<CEffect*>((pProtoEffect->Clone(&(pProtoEffect->m_ForCopyInform)))));
 	}
 
@@ -34,13 +38,18 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	{
 		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))
 			->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
-			->Access_Shader_Tab(iter->m_iUnique_Index))
-			->m_TestEffectModel_Texture->Get_SRV(0));
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->m_TestEffectModel_Texture->Get_SRV(0));
 
 		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))
 			->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->m_TestEffectModel_Texture->Get_SRV(1), 1);
+
+		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
 			->Access_Shader_Tab(iter->m_iUnique_Index))
-			->m_TestEffectModel_Texture->Get_SRV(1), 1);
+			->Add_Clone_EffectToShader_Texture(&(*iter));
+
 	}
 
 	Safe_AddRef(m_pTransformCom);
@@ -94,6 +103,7 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 HRESULT CEffect_Layer::Initialize(void* pArg)
 {
 	m_bIsCopy = true;
+
 
 	return S_OK;
 }
@@ -288,6 +298,15 @@ CEffect_Layer* CEffect_Layer::Clone(void* pArg)
 
 void CEffect_Layer::Free()
 {
+	for (auto& iter : m_MixtureEffects)
+	{
+		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+			->Access_Shader_Tab(iter->m_iUnique_Index))
+			->Delete_Clone_EffectToShader_Texture(&(*iter));
+	}
+
+
+
 	__super::Free();
 
 	Safe_Release(m_pContext);
