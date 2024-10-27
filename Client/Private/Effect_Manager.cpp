@@ -160,6 +160,9 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.iRenderIndex = effectData.renderIndex;
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.vColor = effectData.vColor;
+			EffectDesc.vGlowColor = effectData.vGlowColor;
+			EffectDesc.fGlowFactor = effectData.fGlowFactor;
+			EffectDesc.DerredPassIndex = effectData.iDerredPassIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
 			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 

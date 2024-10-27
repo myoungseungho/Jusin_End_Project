@@ -171,6 +171,9 @@ HRESULT CIMGUI_Effect_Tab::Save_All_Effects_File()
             effectData.scale = pEffect->Get_Effect_Scaled();
             effectData.rotation = pEffect->Get_Effect_Rotation();
             effectData.vColor = pEffect->m_vColor;
+            effectData.vGlowColor = pEffect->m_vGlowColor;
+            effectData.fGlowFactor = pEffect->m_fGlowFactor;
+            effectData.iDerredPassIndex = pEffect->m_iDerredPassIndex;
             effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
             effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
@@ -245,6 +248,9 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
         effectData.scale = pEffect->Get_Effect_Scaled();
         effectData.rotation = pEffect->Get_Effect_Rotation();
         effectData.vColor = pEffect->m_vColor;
+        effectData.vGlowColor = pEffect->m_vGlowColor;
+        effectData.fGlowFactor = pEffect->m_fGlowFactor;
+        effectData.iDerredPassIndex = pEffect->m_iDerredPassIndex;
         effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
         effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;

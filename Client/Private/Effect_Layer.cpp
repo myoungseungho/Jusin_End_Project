@@ -27,6 +27,10 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 {
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
+		m_bIsCopy = true;
+
+		pProtoEffect->m_ForCopyInform.bIsCopy = m_bIsCopy;
+
 		m_MixtureEffects.emplace_back(static_cast<CEffect*>((pProtoEffect->Clone(&(pProtoEffect->m_ForCopyInform)))));
 	}
 
@@ -93,7 +97,6 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 
 HRESULT CEffect_Layer::Initialize(void* pArg)
 {
-	m_bIsCopy = true;
 
 	return S_OK;
 }
