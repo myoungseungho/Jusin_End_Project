@@ -479,37 +479,30 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 }
 
 
-void CGameInstance::Register_Sound(const wstring& filePath, const wstring& alias)
+void CGameInstance::Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias)
 {
-	return m_pSoundManager->Register_Sound(filePath, alias);
+	m_pSoundManager->Register_Sound(filePath, alias);
 }
 
-void CGameInstance::Register_Sound_Group(const wstring& groupKey, const std::wstring& filePath, const wstring& alias)
+void CGameInstance::Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias)
 {
-	return m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias);
+	m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias);
 }
 
-void CGameInstance::Play_Sound(const wstring& alias, _bool loop, _float volume)
+void CGameInstance::Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume)
 {
-	return m_pSoundManager->Play_Sound(alias, loop, volume);
+	m_pSoundManager->Play_Sound(alias, loop, volume);
 }
 
-void CGameInstance::Play_Sound_Group(const wstring& groupKey, _bool loop, _float volume)
+void CGameInstance::Play_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, _bool loop, _float volume)
 {
-	return m_pSoundManager->Play_Sound_Group(groupKey, loop, volume);
+	m_pSoundManager->Play_Sound_Group(groupKey, loop, volume);
 }
 
-void CGameInstance::Stop_Sound(const wstring& alias)
+void CGameInstance::Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias)
 {
-	return m_pSoundManager->Stop_Sound(alias);
+	m_pSoundManager->Stop_Sound(alias);
 }
-
-
-void CGameInstance::Stop_All_Sounds()
-{
-	return m_pSoundManager->Stop_All_Sounds();
-}
-
 
 void CGameInstance::Release_Engine()
 {

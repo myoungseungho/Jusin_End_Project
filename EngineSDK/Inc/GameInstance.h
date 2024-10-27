@@ -3,6 +3,7 @@
 #include "Component_Manager.h"
 #include "PipeLine.h"
 #include "ThreadPool.h"
+#include "Sound_Manager.h"
 
 BEGIN(Engine)
 
@@ -118,12 +119,11 @@ public: /* For.Font_Manager */
 	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
 
 public: /* For.Sound*/
-	void Register_Sound(const wstring& filePath, const wstring& alias);
-	void Register_Sound_Group(const wstring& groupKey, const std::wstring& filePath, const wstring& alias);
-	void Play_Sound(const wstring& alias, _bool loop, _float volume = 1.f);
-	void Play_Sound_Group(const wstring& groupKey, _bool loop, _float volume);
-	void Stop_Sound(const wstring& alias);
-	void Stop_All_Sounds();
+	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias);
+	void Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias);
+	void Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume);
+	void Play_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
+	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };

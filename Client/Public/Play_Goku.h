@@ -17,7 +17,7 @@ BEGIN(Client)
 class CPlay_Goku final : public CCharacter
 {
 public:
-	typedef struct: CGameObject::GAMEOBJECT_DESC
+	typedef struct : CGameObject::GAMEOBJECT_DESC
 	{
 		_wstring strModelName;
 	}Play_Goku_DESC;
@@ -99,19 +99,19 @@ public:
 		ANIME_GUARD_AIR = 20,		//042
 
 
-		
+
 		ANIME_GRAB_READY = 17,  //038 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
 		ANIME_GRAB = 60, //304 60 드래곤러시    duration 40~130은 공격  23에서 275로 이동함  5~20쯤에서 공격판정하고 성공시 40으로 이동하기
 		//ANIME_GRAB_RUSH = 61 // 306cs
 
-		
+
 		//301 58 패링
 		//306cs 61  지상 드래곤러시 성공 후 추적
 
 	};
 	enum AnimationCount
 	{
-		COUNT_ATTACK_MEDIUM =0,
+		COUNT_ATTACK_MEDIUM = 0,
 		COUNT_ATTACK_CROUCH_MEDUIM,
 		COUNT_ATTACK_SPECIAL,
 		COUNT_ATTACK_GRAB,
@@ -146,7 +146,7 @@ public:
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000)override;
-	
+
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
 	virtual void Reset_AttackCount() override;
@@ -171,7 +171,7 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	
+
 public:
 	static CPlay_Goku* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

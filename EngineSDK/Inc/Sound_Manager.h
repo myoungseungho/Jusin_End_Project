@@ -15,6 +15,24 @@ BEGIN(Engine)
 
 class CSound_Manager final : public CGameObject
 {
+public:
+	enum class SOUND_KEY_NAME :_int
+	{
+		SPACE_BGM = 0,
+	};
+
+	enum class SOUND_GROUP_KEY_NAME :_int
+	{
+		SFX_Goku_Light_Attack_1 = 100,
+		SFX_Goku_Light_Attack_2,
+	};
+
+	enum class SOUND_GROUP_KEY :_int
+	{
+		LIGHT_ATTACK = 200,
+	};
+
+
 private:
 	CSound_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CSound_Manager(const CSound_Manager& Prototype);
@@ -29,25 +47,26 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	void Register_Sound(const wstring& filePath, const wstring& alias);
-	void Register_Sound_Group(const wstring& groupKey, const std::wstring& filePath, const wstring& alias);
-	void Play_Sound(const wstring& alias, _bool loop, _float volume = 1.f);
-	void Play_Sound_Group(const wstring& groupKey, _bool loop, _float volume);
-	void Stop_Sound(const wstring& alias);
-	void Set_Volume(const wstring& alias, float volume);
-	void Stop_All_Sounds();
+	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias);
+	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias);
+	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
+	void Play_Sound_Group(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
+	void Stop_Sound(SOUND_KEY_NAME alias);
+	void Stop_Sound(SOUND_GROUP_KEY_NAME alias);
+	void Set_Volume(SOUND_KEY_NAME alias, float volume);
+	void Set_Volume(SOUND_GROUP_KEY_NAME alias, float volume);
 
 private:
 	FMOD_SYSTEM* m_pSoundSystem;
-	map<wstring, FMOD_SOUND*> m_soundMap;
-	map<wstring, FMOD_CHANNEL*> m_channelMap;
+	map<SOUND_KEY_NAME, FMOD_SOUND*> m_soundMap;
+	map<SOUND_KEY_NAME, FMOD_CHANNEL*> m_channelMap;
 	_uint m_iNumLevels;
 	static const _uint MAX_CHANNELS = 64;  // 최대 채널 수 정의
 	class FMOD_CHANNELGROUP* m_pChannelGroup = nullptr;
 
 	// 추가된 멤버 변수
-	map<wstring, vector<wstring>> m_soundGroupMap;  // 그룹별로 음원 alias를 저장하는 맵
-	map<wstring, wstring> m_lastPlayedSound;  // 마지막에 재생된 음원을 저장하는 맵
+	map<SOUND_GROUP_KEY, vector<SOUND_GROUP_KEY_NAME>> m_soundGroupMap;  // 그룹별로 음원 alias를 저장하는 맵
+	map<SOUND_GROUP_KEY, SOUND_GROUP_KEY_NAME> m_lastPlayedSound;  // 마지막에 재생된 음원을 저장하는 맵
 
 public:
 

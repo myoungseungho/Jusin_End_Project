@@ -12,8 +12,7 @@
 #include "UI_GameState.h"
 
 #include "Character.h"
-
-#include "Character.h"
+#include "Sound_Manager.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -346,12 +345,11 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 HRESULT CLevel_GamePlay::Ready_Sound()
 {
 	//¹è°æÀ½
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/013_bat_space.ogg", L"SFX_BGM");
-	m_pGameInstance->Play_Sound(L"SFX_BGM", true, 0.2f);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/013_bat_space.ogg", CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 
-	m_pGameInstance->Register_Sound_Group(L"Light_Attack", L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_1.ogg", L"SFX_Goku_Light_Attack_1");
-	m_pGameInstance->Register_Sound_Group(L"Light_Attack", L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_2.ogg", L"SFX_Goku_Light_Attack_2");
-
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::SFX_Goku_Light_Attack_1);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::SFX_Goku_Light_Attack_2);
 	
 
 	return S_OK;

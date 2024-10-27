@@ -52,19 +52,19 @@ HRESULT CSound_Manager::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CSound_Manager::Register_Sound(const std::wstring& filePath, const std::wstring& alias)
+void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias)
 {
-	// 사운드가 이미 등록되어 있는지 확인
+	// 이미 등록된 사운드인지 확인
 	if (m_soundMap.find(alias) != m_soundMap.end())
 	{
-		return; // 이미 존재하므로 등록하지 않고 성공으로 반환
+		return; // 이미 존재하므로 등록하지 않고 반환
 	}
 
 	FMOD_SOUND* sound;
 
 	// wstring을 string으로 변환
-	wstring_convert<codecvt_utf8<wchar_t>> converter;
-	string filePathStr = converter.to_bytes(filePath);
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+	std::string filePathStr = converter.to_bytes(filePath);
 
 	if (FMOD_System_CreateSound(m_pSoundSystem, filePathStr.c_str(), FMOD_DEFAULT, nullptr, &sound) != FMOD_OK)
 	{
@@ -75,22 +75,22 @@ void CSound_Manager::Register_Sound(const std::wstring& filePath, const std::wst
 	m_soundMap[alias] = sound;
 }
 
-void CSound_Manager::Register_Sound_Group(const wstring& groupKey, const std::wstring& filePath, const wstring& alias)
+void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias)
 {
 	// 그룹이 존재하지 않으면 생성
 	if (m_soundGroupMap.find(groupKey) == m_soundGroupMap.end())
 	{
-		m_soundGroupMap[groupKey] = vector<wstring>();
+		m_soundGroupMap[groupKey] = std::vector<SOUND_GROUP_KEY_NAME>();
 	}
 
 	// 사운드 등록
-	Register_Sound(filePath, alias);
+	Register_Sound(filePath, static_cast<SOUND_KEY_NAME>(alias));
 
 	// 그룹에 해당 alias를 추가
 	m_soundGroupMap[groupKey].push_back(alias);
 }
 
-void CSound_Manager::Play_Sound(const wstring& alias, _bool loop, _float volume)
+void CSound_Manager::Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume)
 {
 	auto it = m_soundMap.find(alias);
 	if (it == m_soundMap.end()) return;
@@ -100,11 +100,10 @@ void CSound_Manager::Play_Sound(const wstring& alias, _bool loop, _float volume)
 	FMOD_MODE mode = loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
 	FMOD_Sound_SetMode(it->second, mode);
 
-	// 현재 재생 중인 채널 수를 확인
+	// 재생 완료된 채널 정리
 	int playingChannels = 0;
 	FMOD_ChannelGroup_GetNumChannels(m_pChannelGroup, &playingChannels);
 
-	// 재생이 완료된 채널을 해제하는 코드 추가
 	for (int i = 0; i < playingChannels; ++i)
 	{
 		FMOD_CHANNEL* tempChannel = nullptr;
@@ -113,20 +112,20 @@ void CSound_Manager::Play_Sound(const wstring& alias, _bool loop, _float volume)
 			FMOD_BOOL isPlaying = false;
 			if (FMOD_Channel_IsPlaying(tempChannel, &isPlaying) == FMOD_OK && !isPlaying)
 			{
-				FMOD_Channel_Stop(tempChannel);  // 재생이 완료된 채널을 해제
+				FMOD_Channel_Stop(tempChannel);  // 재생 완료된 채널 정지
 			}
 		}
 	}
 
-	// 재생 중인 채널 수를 다시 확인
+	// 재생 중인 채널 수 다시 확인
 	FMOD_ChannelGroup_GetNumChannels(m_pChannelGroup, &playingChannels);
 
-	if (playingChannels < MAX_CHANNELS) // MAX_CHANNELS는 사용자가 정의한 최대 채널 수
+	if (playingChannels < MAX_CHANNELS) // MAX_CHANNELS는 최대 채널 수
 	{
-		// 채널 그룹에 속한 새로운 채널을 생성하여 재생
+		// 새로운 채널을 생성하여 재생
 		if (FMOD_System_PlaySound(m_pSoundSystem, it->second, m_pChannelGroup, false, &channel) == FMOD_OK)
 		{
-			// 볼륨을 설정
+			// 볼륨 설정
 			FMOD_Channel_SetVolume(channel, volume);
 
 			m_channelMap[alias] = channel;
@@ -134,36 +133,34 @@ void CSound_Manager::Play_Sound(const wstring& alias, _bool loop, _float volume)
 	}
 	else
 	{
-		// 모든 채널이 사용 중인 경우, 재생을 실패하게 함
-		// 또는 기존 채널을 중단하고 새로운 채널로 교체할 수도 있음
-		// 예: FMOD_Channel_Stop(기존채널); FMOD_System_PlaySound(...);
+		// 모든 채널이 사용 중인 경우 처리 (예: 기존 채널 중단 후 재생)
 		return;
 	}
 }
 
-void CSound_Manager::Play_Sound_Group(const wstring& groupKey, _bool loop, _float volume)
+void CSound_Manager::Play_Sound_Group(SOUND_GROUP_KEY groupKey, _bool loop, _float volume)
 {
-	// 그룹이 존재하지 않으면 리턴
+	// 그룹이 존재하지 않으면 반환
 	if (m_soundGroupMap.find(groupKey) == m_soundGroupMap.end()) return;
 
 	auto& soundList = m_soundGroupMap[groupKey];
 
-	// 현재 그룹 내에서 재생 중인 음원이 있는지 확인
+	// 그룹 내에서 재생 중인 사운드가 있는지 확인
 	for (const auto& soundAlias : soundList)
 	{
-		auto it = m_channelMap.find(soundAlias);
+		auto it = m_channelMap.find(static_cast<SOUND_KEY_NAME>(soundAlias));
 		if (it != m_channelMap.end())
 		{
 			FMOD_BOOL isPlaying = false;
 			if (FMOD_Channel_IsPlaying(it->second, &isPlaying) == FMOD_OK && isPlaying)
 			{
-				return; // 재생 중인 음원이 있으면 리턴
+				return; // 재생 중인 사운드가 있으면 반환
 			}
 		}
 	}
 
-	// 직전에 재생된 음원을 제외한 리스트 생성
-	vector<wstring> availableSounds;
+	// 마지막으로 재생된 사운드를 제외한 사운드 목록 생성
+	std::vector<SOUND_GROUP_KEY_NAME> availableSounds;
 	for (const auto& soundAlias : soundList)
 	{
 		if (soundAlias != m_lastPlayedSound[groupKey])
@@ -172,51 +169,48 @@ void CSound_Manager::Play_Sound_Group(const wstring& groupKey, _bool loop, _floa
 		}
 	}
 
-	// 재생 가능한 음원이 없으면 모든 음원을 다시 고려
+	// 재생 가능한 사운드가 없으면 모든 사운드를 다시 고려
 	if (availableSounds.empty())
 	{
 		availableSounds = soundList;
 	}
 
-	// 랜덤으로 하나의 음원을 선택
+	// 랜덤으로 하나의 사운드 선택
 	int randomIndex = rand() % availableSounds.size();
-	wstring selectedSound = availableSounds[randomIndex];
+	SOUND_GROUP_KEY_NAME selectedSound = availableSounds[randomIndex];
 
-	// 선택한 음원을 재생
-	Play_Sound(selectedSound, loop, volume);
+	// 선택한 사운드 재생
+	Play_Sound(static_cast<SOUND_KEY_NAME>(selectedSound), loop, volume);
 
-	// 마지막에 재생한 음원으로 저장
+	// 마지막으로 재생한 사운드 저장
 	m_lastPlayedSound[groupKey] = selectedSound;
 }
 
-void CSound_Manager::Stop_Sound(const std::wstring& alias)
+void CSound_Manager::Stop_Sound(SOUND_KEY_NAME alias)
 {
 	auto it = m_channelMap.find(alias);
 	if (it == m_channelMap.end()) return;
 
-	if (FMOD_Channel_Stop(it->second) != FMOD_OK)
-	{
-		return;
-	}
+	FMOD_Channel_Stop(it->second);
 }
 
-void CSound_Manager::Set_Volume(const std::wstring& alias, float volume)
+// 그룹 사운드에 대한 오버로드
+void CSound_Manager::Stop_Sound(SOUND_GROUP_KEY_NAME alias)
+{
+	Stop_Sound(static_cast<SOUND_KEY_NAME>(alias));
+}
+
+void CSound_Manager::Set_Volume(SOUND_KEY_NAME alias, float volume)
 {
 	auto it = m_channelMap.find(alias);
 	if (it == m_channelMap.end()) return;
 
-	if (FMOD_Channel_SetVolume(it->second, volume) != FMOD_OK)
-	{
-		return;
-	}
+	FMOD_Channel_SetVolume(it->second, volume);
 }
 
-void CSound_Manager::Stop_All_Sounds()
+void CSound_Manager::Set_Volume(SOUND_GROUP_KEY_NAME alias, float volume)
 {
-	for (auto& pair : m_channelMap)
-	{
-		FMOD_Channel_Stop(pair.second);
-	}
+	Set_Volume(static_cast<SOUND_KEY_NAME>(alias), volume);
 }
 
 CSound_Manager* CSound_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
