@@ -2731,7 +2731,7 @@ void CCharacter::Teleport_ToEnemy(_float OffsetX, _float OffsetY)
 	
 	_vector vTargetPos = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 
-	vTargetPos += {OffsetX, OffsetY, 0, 0};
+	vTargetPos += {OffsetX * m_iLookDirection, OffsetY, 0, 0};
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
 
