@@ -862,67 +862,69 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)   
 {
 		size_t iCount = 0;
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
-		return E_FAIL;
 	
 	for (auto& pRenderObject : m_RenderObjects[RG_UI_GLOW])
 	{
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+			return E_FAIL;
+
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
-	
-		Safe_Release(pRenderObject);
 	
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
+
+		if (m_RenderObjects[RG_UI_GLOW].size() != 0)
+		{
+			auto iter = m_GlowDescs[GLOW_UI].begin();
+			advance(iter, iCount);
+
+
+			if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
+				return E_FAIL;
+		}
 	
-		auto iter = m_GlowDescs[GLOW_UI].begin();
-		advance(iter, iCount);
 	
+		Safe_Release(pRenderObject);
 		iCount++;
 	}
 
-	if (FAILED(m_pRenderInstance->End_MRT()))
-		return E_FAIL;
-		
 		//if (FAILED(Draw_Glow(m_pGlowShader)))
 		//	return E_FAIL;
-	if (NULL != m_GlowDescs[GLOW_UI].size())
-	{
-		auto iter = m_GlowDescs[GLOW_UI].begin();
-		
-		if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
-			return E_FAIL;
-	}
-	else
-		if (FAILED(Draw_Glow(m_pUI_GlowShader)))
-			return E_FAIL;
-	
+	//if (NULL != m_GlowDescs[GLOW_UI].size())
+	//{
+	//	auto iter = m_GlowDescs[GLOW_UI].begin();
+	//	
+	//	if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
+	//		return E_FAIL;
+	//}
+
 	m_GlowDescs[GLOW_UI].clear();
 	m_RenderObjects[RG_UI_GLOW].clear();
 	
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
-		return E_FAIL;
-	
-	
-	for (auto& pRenderObject : m_RenderObjects[RG_HP_GLOW])
-	{
-		if (nullptr != pRenderObject)
-			pRenderObject->Render(fTimeDelta);
-	
-		Safe_Release(pRenderObject);
-	}
-	if (FAILED(m_pRenderInstance->End_MRT()))
-		return E_FAIL;
-	
-	if (0 != m_GlowDescs[GLOW_UI_HP].size())
-	{
-		auto iter = m_GlowDescs[GLOW_UI_HP].begin();
-		if (FAILED(m_pUI_GlowShader , Draw_Glow(&(*iter))))
-			return E_FAIL;
-	}
-	
-	m_GlowDescs[GLOW_UI_HP].clear();
-	m_RenderObjects[RG_HP_GLOW].clear();
+	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+	//	return E_FAIL;
+	//
+	//
+	//for (auto& pRenderObject : m_RenderObjects[RG_HP_GLOW])
+	//{
+	//	if (nullptr != pRenderObject)
+	//		pRenderObject->Render(fTimeDelta);
+	//
+	//	Safe_Release(pRenderObject);
+	//}
+	//if (FAILED(m_pRenderInstance->End_MRT()))
+	//	return E_FAIL;
+	//
+	//if (0 != m_GlowDescs[GLOW_UI_HP].size())
+	//{
+	//	auto iter = m_GlowDescs[GLOW_UI_HP].begin();
+	//	if (FAILED(m_pUI_GlowShader , Draw_Glow(&(*iter))))
+	//		return E_FAIL;
+	//}
+	//
+	//m_GlowDescs[GLOW_UI_HP].clear();
+	//m_RenderObjects[RG_HP_GLOW].clear();
 
 	return S_OK;
 }
