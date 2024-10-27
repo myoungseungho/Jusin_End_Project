@@ -114,6 +114,7 @@ public:
 		COUNT_ATTACK_MEDIUM =0,
 		COUNT_ATTACK_CROUCH_MEDUIM,
 		COUNT_ATTACK_SPECIAL,
+		COUNT_ATTACK_GRAB,
 		COUNT_END
 	};
 
@@ -153,6 +154,7 @@ public:
 	virtual void Gravity(_float fTimeDelta) override;
 
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
+	virtual void PlaySound(_uint SoundName, _bool bisLoof, _float fvolume)override;
 
 
 private:

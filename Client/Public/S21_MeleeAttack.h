@@ -25,6 +25,7 @@ public:
 	void Attack_Medium();
 	void Attack_Heavy();
 	void Attack_Special();
+	void Attack_Grab();
 
 	void Attack_236();
 	void Attack_214();
@@ -53,7 +54,7 @@ public:
 	_uint* m_pPlayerAnimationIndex = { nullptr };
 
 	_bool* m_pbAttackCount = { nullptr };
-	_ushort* m_piCountGroundSpecial = { nullptr };
+	//_ushort* m_piCountGroundSpecial = { nullptr };
 
 };
 

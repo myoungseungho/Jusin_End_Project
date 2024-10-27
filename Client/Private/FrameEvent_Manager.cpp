@@ -473,16 +473,20 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		pCharacter->FlipDirection();
 	}
-	else if (splitText[0] == "EnemyChase")
-	{
-		pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
-	}
 	else if (splitText[0] == "DebugPoint")
 	{
 		_int iDebug = pCharacter->Get_iDirection();
 		pCharacter->FlipDirection();
 		_bool bDebug = true;
 
+	}
+	else if (splitText[0] == "EnemyChase")
+	{
+		pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
+	}
+	else if (splitText[0] == "PlaySound")
+	{
+		pCharacter->PlaySound(fValue[0], fValue[1], fValue[2]);
 	}
 
 #pragma region Ä«¸Þ¶ó
@@ -527,7 +531,6 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	}
 #pragma endregion
 
-	
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()

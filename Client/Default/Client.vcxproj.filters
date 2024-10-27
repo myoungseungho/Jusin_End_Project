@@ -187,6 +187,12 @@
     <ClCompile Include="..\Private\UI_LoadingMark.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Mark</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\AttackObject_CommandGrab.cpp">
+      <Filter>02.GameObjects\AttackObject\AttackObject_CommandGrab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BattleInterface.cpp">
+      <Filter>02.GameObjects\BattleInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -431,6 +437,12 @@
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Grab">
       <UniqueIdentifier>{7fb0c2d5-00f9-413d-a9a3-0119f975f203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_CommandGrab">
+      <UniqueIdentifier>{ac406574-4da4-48d6-b3d5-40a19b60f922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BattleInterface">
+      <UniqueIdentifier>{31254c12-21cc-4b7e-b160-43f2877839ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -696,7 +708,6 @@
     <ClInclude Include="..\Public\FrameEvent_Manager.h" />
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
     <ClInclude Include="..\Public\Input.h" />
-    <ClInclude Include="..\Public\Play_21.h" />
     <ClInclude Include="..\Public\Play_Goku.h" />
     <ClInclude Include="..\Public\S21_MeleeAttack.h" />
     <ClInclude Include="..\Public\AnimationNameMap.h">
@@ -809,6 +820,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject_Grab.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Grab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_21.h">
+      <Filter>02.GameObjects\Character\Play_21</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject_CommandGrab.h">
+      <Filter>02.GameObjects\AttackObject\AttackObject_CommandGrab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BattleInterface.h">
+      <Filter>02.GameObjects\BattleInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
