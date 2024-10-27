@@ -101,7 +101,7 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
 
-	HRESULT Draw_Glow(GLOW_DESC* pDesc = nullptr);
+	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
