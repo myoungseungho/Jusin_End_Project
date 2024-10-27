@@ -9,13 +9,18 @@ CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 }
 
-CEffect::CEffect(const CGameObject& Prototype)
+CEffect::CEffect(const CEffect& Prototype)
 	:CGameObject{ Prototype }
 {
+	m_pAnimation = (Prototype.m_pAnimation)->Clone();
 }
 
 HRESULT CEffect::Initialize_Prototype()
 {
+	m_pAnimation = CEffect_Animation::Create();
+	if (nullptr == m_pAnimation)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -27,10 +32,6 @@ HRESULT CEffect::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
-	m_pAnimation = CEffect_Animation::Create();
-
-	if (nullptr == m_pAnimation)
-		return E_FAIL;
 
 	return S_OK;
 }
@@ -226,7 +227,7 @@ void CEffect::Free()
 	Safe_Release(m_pModelCom);
 	Safe_Release(m_pDiffuseTextureCom);
 	Safe_Release(m_pMaskTextureCom);
-	Safe_Release(m_pAnimation);
+	//Safe_Release(m_pAnimation);
 }
 
 

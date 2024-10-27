@@ -3,19 +3,23 @@
 #include "Effect_Blend.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+#include "Effect_Animation.h"
 
 CEffect_Blend::CEffect_Blend(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CEffect{ pDevice ,pContext }
 {
 }
 
-CEffect_Blend::CEffect_Blend(const CGameObject& Prototype)
+CEffect_Blend::CEffect_Blend(const CEffect_Blend& Prototype)
 	: CEffect{ Prototype }
 {
 }
 
 HRESULT CEffect_Blend::Initialize_Prototype()
 {
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -29,6 +33,7 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 	if (pArg != nullptr)
 	{
 		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
+		m_ForCopyInform = *pEffectDesc;
 
 		_float3 vPos = pEffectDesc->vPosition;
 		_float3 vScale = pEffectDesc->vScaled;
@@ -66,10 +71,10 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		return S_OK;
 	}
 
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
-
-
 }
 
 void CEffect_Blend::Priority_Update(_float fTimeDelta)

@@ -48,7 +48,7 @@ public:
 
 protected:
 	CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect(const CGameObject& Prototype);
+	CEffect(const CEffect& Prototype);
 	virtual ~CEffect() = default;
 
 public:
@@ -106,6 +106,7 @@ public:
 	_float4		m_vColor = { 0.f, 0.f, 0.f, 30.f };
 	_bool			m_IsColorEffect = { false };
 
+	EFFECT_DESC			m_ForCopyInform;
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();
@@ -114,7 +115,7 @@ protected:
 	_float4x4				m_WorldMatrix = {};
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual CGameObject* Clone(void* pArg) override;
+	virtual CGameObject* Clone(void* pArg = nullptr) override;
 	virtual void Free() override;
 };
 

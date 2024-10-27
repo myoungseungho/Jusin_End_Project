@@ -2198,6 +2198,10 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 #pragma endregion
 
 #pragma region Effect Object
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect"),
+		CEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Effect_NoneLight"),
 		CEffect_NoneLight::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

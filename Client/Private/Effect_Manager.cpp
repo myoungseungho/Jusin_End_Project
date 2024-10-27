@@ -64,13 +64,18 @@ void CEffect_Manager::Update(_float fTimeDelta)
 			Pair->Update(fTimeDelta);
 		else
 		{
-			m_UsingEffect.erase(
-				remove_if(m_UsingEffect.begin(), m_UsingEffect.end(), [](CEffect_Layer* effect) 
-					{
-					return effect->m_bIsDoneAnim;
-					}),
-				m_UsingEffect.end()
-			);
+			for (auto iter = m_UsingEffect.begin(); iter != m_UsingEffect.end(); )
+			{
+				if ((*iter)->m_bIsDoneAnim) 
+				{
+					(*iter)->Free();
+					iter = m_UsingEffect.erase(iter);
+				}
+				else 
+				{
+					++iter;
+				}
+			}
 		}
 
 	}
@@ -79,14 +84,14 @@ void CEffect_Manager::Update(_float fTimeDelta)
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
-	for (auto& Pair : m_FinalEffects)
-		if (Pair.second->m_bIsRender)
-		{
-			Pair.second->Late_Update(fTimeDelta);
-		}
+	//for (auto& Pair : m_FinalEffects)
+	//	if (Pair.second->m_bIsRender)
+	//	{
+	//		Pair.second->Late_Update(fTimeDelta);
+	//	}
 
-	for (auto& Pair : m_TestEffect)
-		Pair->Late_Update(fTimeDelta);
+	//for (auto& Pair : m_TestEffect)
+	//	Pair->Late_Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
 		if (Pair->m_bIsRender)
@@ -178,7 +183,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				}
 
 				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pNonelight->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
-
+				
 				pNonelight->m_bIsNotPlaying = effectData.isNotPlaying;
 				pNonelight->m_bIsLoop = effectData.isLoop;
 
@@ -1112,6 +1117,7 @@ void CEffect_Manager::Free()
 
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
+	Safe_Release(m_pGameInstance);
 
 	for (auto& Pair : m_FinalEffects)
 		Safe_Release(Pair.second);

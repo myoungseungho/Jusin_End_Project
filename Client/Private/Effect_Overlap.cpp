@@ -9,13 +9,16 @@ CEffect_Overlap::CEffect_Overlap(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 {
 }
 
-CEffect_Overlap::CEffect_Overlap(const CGameObject& Prototype)
+CEffect_Overlap::CEffect_Overlap(const CEffect_Overlap& Prototype)
 	: CEffect{ Prototype }
 {
 }
 
 HRESULT CEffect_Overlap::Initialize_Prototype()
 {
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -30,6 +33,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 	if (pArg != nullptr)
 	{
 		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
+		m_ForCopyInform = *pEffectDesc;
 
 		_float3 vPos = pEffectDesc->vPosition;
 		_float3 vScale = pEffectDesc->vScaled;

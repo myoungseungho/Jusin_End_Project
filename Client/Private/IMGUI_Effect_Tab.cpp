@@ -379,7 +379,7 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
         if (ImGui::Button("Delete Selected Effect"))
         {
             _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
-            CImgui_Manager::Get_Instance()->Delete_Shader_Tab(EffectIndex);
+
             m_pEffect_Manager->Delete_Test_Effect(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id());
         }
 

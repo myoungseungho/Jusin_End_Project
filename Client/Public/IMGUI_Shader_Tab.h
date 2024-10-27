@@ -80,9 +80,10 @@ private: /* 이 m_PrototypeKeys 로 Load_NodeTextures() 함수호출로 객체들을 다 생�
 	CTexture*					m_pDefaultTexture = { nullptr };			// 꼇다 뺏다 할때 필요한 흰색텍스쳐컴
 	vector<CShader_Texture*>	m_NodeTextures;								// 텍스쳐 노드에 텍스쳐객체들
 	vector<SRV_Texture>			m_NodeTextureSRVs;							// 그 텍스쳐객체가 그리는 렌더타겟의 그려진 결과 ShaderReasouceView*
+public:
 	CTexture*					m_TestEffectModel_Texture = { nullptr };	// 누나가 생성한 테스트이펙트객체의 텍스쳐 컴포넌트
 	/*------------------------------------------------------------------------------------------------------------------------------------*/
-
+private:
 	_int						m_iNodeTextureCount = 0;		// 노드 텍스쳐의 개수
 	_bool						isStart = false;				// 외부에서 껏다켯다 할때 쓰는 변수
 

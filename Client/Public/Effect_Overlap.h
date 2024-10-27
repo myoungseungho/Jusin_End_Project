@@ -10,7 +10,7 @@ class CEffect_Overlap : public CEffect
 {
 private:
 	CEffect_Overlap(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect_Overlap(const CGameObject& Prototype);
+	CEffect_Overlap(const CEffect_Overlap& Prototype);
 	virtual ~CEffect_Overlap() = default;
 
 public:
@@ -27,7 +27,7 @@ private:
 
 public:
 	static CEffect_Overlap* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual CGameObject* Clone(void* pArg) override;
+	virtual CGameObject* Clone(void* pArg = nullptr) override;
 	virtual void Free() override;
 };
 

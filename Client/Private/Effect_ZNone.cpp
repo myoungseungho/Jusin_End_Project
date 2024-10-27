@@ -3,19 +3,23 @@
 #include "Effect_ZNone.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+#include "Effect_Animation.h"
 
 CEffect_ZNone::CEffect_ZNone(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CEffect{ pDevice ,pContext }
 {
 }
 
-CEffect_ZNone::CEffect_ZNone(const CGameObject& Prototype)
+CEffect_ZNone::CEffect_ZNone(const CEffect_ZNone& Prototype)
 	: CEffect{ Prototype }
 {
 }
 
 HRESULT CEffect_ZNone::Initialize_Prototype()
 {
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -30,6 +34,7 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 	if (pArg != nullptr)
 	{
 		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
+		m_ForCopyInform = *pEffectDesc;
 
 		_float3 vPos = pEffectDesc->vPosition;
 		_float3 vScale = pEffectDesc->vScaled;
@@ -67,9 +72,10 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 		return S_OK;
 	}
 
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
-
 
 }
 
