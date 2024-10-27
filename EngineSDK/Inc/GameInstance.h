@@ -117,6 +117,14 @@ public: /* For.Font_Manager */
 	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);
 	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
 
+public: /* For.Sound*/
+	void Register_Sound(const wstring& filePath, const wstring& alias);
+	void Register_Sound_Group(const wstring& groupKey, const std::wstring& filePath, const wstring& alias);
+	void Play_Sound(const wstring& alias, _bool loop, _float volume = 1.f);
+	void Play_Sound_Group(const wstring& groupKey, _bool loop, _float volume);
+	void Stop_Sound(const wstring& alias);
+	void Stop_All_Sounds();
+
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };
 	class CInput_Device* m_pInput_Device = { nullptr };
@@ -130,6 +138,7 @@ private:
 	class CFile_Manager* m_pFile_Manager = { nullptr };
 	class CFrustum* m_pFrustum = { nullptr };
 	class CFont_Manager* m_pFont_Manager = { nullptr };
+	class CSound_Manager* m_pSoundManager = { nullptr };
 
 public:
 	void Release_Engine();

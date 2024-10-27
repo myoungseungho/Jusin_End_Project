@@ -23,6 +23,7 @@ private:
 	HRESULT Ready_Lights();
 	HRESULT Ready_Character();
 	HRESULT Ready_UIObjects();
+	HRESULT Ready_Sound();
 	void			Create_Effect_Manager();
 
 private:

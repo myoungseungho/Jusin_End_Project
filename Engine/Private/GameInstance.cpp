@@ -11,6 +11,7 @@
 #include "ThreadPool.h"
 #include "Frustum.h"
 #include "Font_Manager.h"
+#include "Sound_Manager.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -69,6 +70,10 @@ HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWin
 	if (nullptr == m_pFont_Manager)
 		return E_FAIL;
 
+	m_pSoundManager = CSound_Manager::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pSoundManager)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -79,10 +84,7 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	//전 프레임에서 삭제 예약한 오브젝트 삭제
 	m_pObject_Manager->Destory_Update();
 
-	//임시, 테스트
 	m_pObject_Manager->Player_Update(fTimeDelta);
-
-	//m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
 
@@ -94,7 +96,6 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
-	//?
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pLevel_Manager->Update(fTimeDelta);
@@ -477,6 +478,39 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
 
+
+void CGameInstance::Register_Sound(const wstring& filePath, const wstring& alias)
+{
+	return m_pSoundManager->Register_Sound(filePath, alias);
+}
+
+void CGameInstance::Register_Sound_Group(const wstring& groupKey, const std::wstring& filePath, const wstring& alias)
+{
+	return m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias);
+}
+
+void CGameInstance::Play_Sound(const wstring& alias, _bool loop, _float volume)
+{
+	return m_pSoundManager->Play_Sound(alias, loop, volume);
+}
+
+void CGameInstance::Play_Sound_Group(const wstring& groupKey, _bool loop, _float volume)
+{
+	return m_pSoundManager->Play_Sound_Group(groupKey, loop, volume);
+}
+
+void CGameInstance::Stop_Sound(const wstring& alias)
+{
+	return m_pSoundManager->Stop_Sound(alias);
+}
+
+
+void CGameInstance::Stop_All_Sounds()
+{
+	return m_pSoundManager->Stop_All_Sounds();
+}
+
+
 void CGameInstance::Release_Engine()
 {
 	Safe_Release(m_pComponent_Manager);
@@ -488,6 +522,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pCollider_Manager);
 	Safe_Release(m_pFrustum);
 	Safe_Release(m_pFont_Manager);
+	Safe_Release(m_pSoundManager);
 
 	CGameInstance::Get_Instance()->Destroy_Instance();
 }
