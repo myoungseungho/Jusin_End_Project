@@ -29,7 +29,6 @@ AssimpSaveAndLoad/Models/
 *.ini
 *.exp
 
-Client/Bin/SoundSDK/
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
