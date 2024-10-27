@@ -1493,9 +1493,9 @@ void CPlay_Goku::Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)
 	m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)SoundName, bisLoof, fvolume);
 }
 
-void CPlay_Goku::Play_Sound_Group(_uint groupKey, _bool loop, _float volume)
+void CPlay_Goku::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 {
-	m_pGameInstance->Play_Sound_Group((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
+	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
 }
 
 

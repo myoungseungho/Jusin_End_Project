@@ -122,7 +122,7 @@ public: /* For.Sound*/
 	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias);
 	void Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias);
 	void Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume);
-	void Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias, _bool loop, _float volume);
+	void Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY alias, _bool loop, _float volume);
 	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias);
 	void Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias, float volume);
 	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);

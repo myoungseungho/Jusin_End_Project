@@ -494,7 +494,7 @@ void CGameInstance::Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop,
 	m_pSoundManager->Play_Sound(alias, loop, volume);
 }
 
-void CGameInstance::Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias, _bool loop, _float volume)
+void CGameInstance::Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY alias, _bool loop, _float volume)
 {
 	m_pSoundManager->Play_Group_Sound(alias, loop, volume);
 }

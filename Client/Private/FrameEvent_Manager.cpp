@@ -493,7 +493,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 
 	else if (splitText[0] == "PlayGroupSound")
 	{
-		pCharacter->Play_Sound_Group(fValue[0], fValue[1], fValue[2]);
+		pCharacter->Play_Group_Sound(fValue[0], fValue[1], fValue[2]);
 	}
 
 #pragma region Ä«¸Þ¶ó

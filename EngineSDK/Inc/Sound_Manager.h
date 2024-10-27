@@ -51,8 +51,7 @@ public:
 	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias);
 	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias);
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
-	void Play_Sound_Group(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
-	void Play_Group_Sound(SOUND_GROUP_KEY_NAME alias, _bool loop, _float volume);
+	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);
 	void Stop_Group_Sound(SOUND_GROUP_KEY_NAME alias);
 	void Set_Volume(SOUND_KEY_NAME alias, float volume);
