@@ -83,8 +83,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma region UI 사본 객체
 	//캐릭터 생성 이후 IMGUI_UIMANAGER 초기화 이후 
-	//if (FAILED(Ready_UIObjects()))
-	//	return E_FAIL;
+	if (FAILED(Ready_UIObjects()))
+		return E_FAIL;
 #pragma endregion
 
 #pragma region 카메라 포인트 로드

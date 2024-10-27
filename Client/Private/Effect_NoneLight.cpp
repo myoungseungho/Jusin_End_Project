@@ -12,6 +12,7 @@ CEffect_NoneLight::CEffect_NoneLight(ID3D11Device* pDevice, ID3D11DeviceContext*
 CEffect_NoneLight::CEffect_NoneLight(const CGameObject& Prototype)
 	: CEffect{ Prototype }
 {
+
 }
 
 HRESULT CEffect_NoneLight::Initialize_Prototype()
@@ -69,7 +70,6 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
-
 
 }
 

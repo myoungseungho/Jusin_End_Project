@@ -2,6 +2,7 @@
 #include "IMGUI_Tab.h"
 #include "Shader_Texture.h"
 #include "Shader_Tab_Defines.h"
+#include "Effect.h"
 BEGIN(Client)
 
 class CIMGUI_Shader_Tab : public CIMGUI_Tab
@@ -36,11 +37,13 @@ public:
 
 protected:
 	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
+
 	virtual ~CIMGUI_Shader_Tab() = default;
 	
 public:
 	HRESULT Initialize() override;
 	HRESULT Load_Initialize(string strFilename);
+	HRESULT Copy_Initialize();
 	
 	void Update(_float fTimeDelta);
 	void Render(_float fTimeDelta) override;
@@ -68,6 +71,12 @@ public:
 	void Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave);
 
 	void Update_TestToLayer_TextureCom(CTexture* pTexture) { m_TestEffectModel_Texture = pTexture; }
+
+	void Add_Clone_EffectToShader_Texture(CEffect* pEffect);
+	void Delete_Clone_EffectToShader_Texture(CEffect* pEffect);
+private:
+	unordered_map<CEffect*, vector<CShader_Texture*>*> m_CopyClones;
+
 public:
 	_int m_iNumberId = { -1 };
 	_bool m_TabPick = { false };
@@ -117,6 +126,7 @@ public:
 public:
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture, string strFilename);
+
 	virtual void Free() override;
 };
 

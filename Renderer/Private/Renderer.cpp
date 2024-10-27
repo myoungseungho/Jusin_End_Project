@@ -145,7 +145,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	m_pGlowShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Glow.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	if (nullptr == m_pGlowShader)
 		return E_FAIL;
-
 	ID3D11Texture2D* pDepthStencilTexture = nullptr;
 
 	D3D11_TEXTURE2D_DESC	TextureDesc;
@@ -808,15 +807,17 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 		
-		auto iter = m_GlowDescs[GLOW_UI].begin();
-		advance(iter, iCount);
-		if (FAILED(Draw_Glow(&(*iter))))
-			return E_FAIL;
-
+		if (0 != m_GlowDescs[GLOW_MAIN].size())
+		{
+			auto iter = m_GlowDescs[GLOW_MAIN].begin();
+			advance(iter, iCount);
+			if (FAILED(Draw_Glow(&(*iter))))
+				return E_FAIL;
+		}
 		iCount++;
 	}
 
-	m_GlowDescs[GLOW_UI].clear();
+	m_GlowDescs[GLOW_MAIN].clear();
 	m_RenderObjects[RG_GLOW].clear();
 
 	return S_OK;
@@ -865,11 +866,17 @@ HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 
 		Safe_Release(pRenderObject);
 	}
-		if (FAILED(m_pRenderInstance->End_MRT()))
-			return E_FAIL;
 
-		if (FAILED(Draw_Glow()))
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (0 != m_GlowDescs[GLOW_UI].size())
+	{
+		auto iter = m_GlowDescs[GLOW_UI].begin();
+		if (FAILED(Draw_Glow(&(*iter))))
 			return E_FAIL;
+	}
+
 	m_GlowDescs[GLOW_UI].clear();
 	m_RenderObjects[RG_UI_GLOW].clear();
 
@@ -1113,7 +1120,13 @@ HRESULT CRenderer::Draw_Glow(GLOW_DESC* pDesc)
 		return E_FAIL;
 
 	if (nullptr != pDesc)
+	{
+		/*float g_GlowFactor;
+		float4 g_GlowFilterColor;*/
+		m_pGlowShader->Bind_RawValue("g_GlowFactor", &pDesc->fGlowFactor, sizeof(_float));
+		m_pGlowShader->Bind_RawValue("g_GlowFilterColor", &pDesc->vGlowColor, sizeof(_float4));
 		m_pGlowShader->Begin(pDesc->iPassIndex);
+	}
 	else
 		m_pGlowShader->Begin(2);
 

@@ -12,6 +12,7 @@ CEffect_Blend::CEffect_Blend(ID3D11Device* pDevice, ID3D11DeviceContext* pContex
 CEffect_Blend::CEffect_Blend(const CGameObject& Prototype)
 	: CEffect{ Prototype }
 {
+
 }
 
 HRESULT CEffect_Blend::Initialize_Prototype()

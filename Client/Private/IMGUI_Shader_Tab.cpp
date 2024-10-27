@@ -20,6 +20,7 @@ CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
     
 }
 
+
 HRESULT CIMGUI_Shader_Tab::Initialize()
 {
     DragAcceptFiles(g_hWnd, TRUE);
@@ -34,13 +35,13 @@ HRESULT CIMGUI_Shader_Tab::Load_Initialize(string strFilename)
     isStart = true;
     m_PrototypeKeys.clear();
 
-    //if (strFilename.size() != NULL)
-    //{
-    //    
-    //}
-
     return S_OK;
 }
+//
+//HRESULT CIMGUI_Shader_Tab::Copy_Initialize(void* pArg)
+//{
+//    return S_OK;
+//}
 
 void CIMGUI_Shader_Tab::Update(_float fTimeDelta)
 {
@@ -1430,6 +1431,26 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
     }
 
     inFile.close();
+}
+
+void CIMGUI_Shader_Tab::Delete_Clone_EffectToShader_Texture(CEffect* pEffect)
+{
+    auto& it = m_CopyClones.find(pEffect);
+
+    if (it == m_CopyClones.end())
+        return;
+    
+    for (auto& Textureiter : (*it->second))
+    {
+        Textureiter->Delete_CloneValue(pEffect);
+    }
+
+    m_CopyClones.erase(it);
+}
+
+void CIMGUI_Shader_Tab::Add_Clone_EffectToShader_Texture(CEffect* pEffect)
+{
+    m_CopyClones.emplace(pEffect, &m_NodeTextures);
 }
 
 // 로드 함수
