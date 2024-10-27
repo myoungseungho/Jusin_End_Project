@@ -182,7 +182,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.266324 1.21663 -4.86665
 Rotation: -0 0 -0 1
-Duration: 0.5
+Duration: 1.5
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
@@ -190,15 +190,15 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -2.88842 1.21663 -2.42041
 Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
-Duration: 1.0
-InterpolationType: 1
+Duration: 1
+InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 2.7169 1.16663 -5
-Rotation: -0 0 -0 1
-Duration: 1
+Position: -2.88842 1.21663 -2.42041
+Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
+Duration: 0.1
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
