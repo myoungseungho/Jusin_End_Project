@@ -16,34 +16,26 @@ BEGIN(Client)
 
 
 
-class CAttackObject_Grab final : public CAttackObject
+class CAttackObject_CommandGrab final : public CAttackObject
 {
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 
-	typedef struct ATTACK_Grab_DESC : public  CAttackObject::ATTACK_DESC
+	typedef struct ATTACK_COMMANDGRAB_DESC : public  CAttackObject::ATTACK_DESC
 	{
-		//_uint m_iOnwerNextAnimationIndex   는 이미 있음  m_bOwnerNextAnimation 도 있음
-
-		//피격자의 애니메이션? 
-	
-		
-		//공격자 와의 거리 조절
 		_float2 fDistance = {};
 
-		//잡기 애니메이션 index, position
-		//_ushort iGrabAnimationIndex = {};    == //m_iOnwerNextAnimationIndex
 
 		_float fGrabAnimationPosition={};
 
-
-		//Set_Animation인지 Set_NextAnimation인지 bool값?
+		//애니메이션이 끊겼으면 실패니까 체크용
+		_short iGrabAnimationIndex = {};
 
 	};
 private:
-	CAttackObject_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CAttackObject_Grab(const CAttackObject_Grab& Prototype);
-	virtual ~CAttackObject_Grab() = default;
+	CAttackObject_CommandGrab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CAttackObject_CommandGrab(const CAttackObject_CommandGrab& Prototype);
+	virtual ~CAttackObject_CommandGrab() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -70,8 +62,8 @@ private:
 private:
 
 	_float2 m_fDistance = {};
-	//_ushort m_iGrabAnimationIndex = {};
 	_float m_fGrabAnimationPosition = {};
+	_ushort m_iGrabAnimationIndex = {};
 
 
 	
@@ -80,7 +72,7 @@ private:
 
 
 public:
-	static CAttackObject_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CAttackObject_CommandGrab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

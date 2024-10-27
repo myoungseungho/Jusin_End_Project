@@ -284,6 +284,11 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
 
+
+			if (m_bGrabbedEnd)
+				pCharacter->Set_bGrabbed(false);
+
+
 			if(m_bCameraZoom)
 			{
 				if (m_bGroundSmash == true)
@@ -296,8 +301,6 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					//어퍼 맞았을 때
 					Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
-				if (m_bGrabbedEnd)
-					pCharacter->Set_bGrabbed(false);
 
 			
 

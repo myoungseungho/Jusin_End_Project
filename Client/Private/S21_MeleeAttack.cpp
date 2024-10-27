@@ -320,14 +320,14 @@ void CS21_MeleeAttack::Attack_214()
 		pTrasnform->Add_Move({ 0.f,1.f,0.f });
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
 
-		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 3.f, -15.f });
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 5.f, -15.f });
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_LIGHT3 ||
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f);
-		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 3.f, -15.f });
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 5.f, -15.f });
 
 	}
 
@@ -335,13 +335,13 @@ void CS21_MeleeAttack::Attack_214()
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
-		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 3.f, -15.f });
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 5.f, -15.f });
 
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f, 20.f);
-		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() *3.f, -15.f });
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() *5.f, -15.f });
 
 		CTransform* pTrasnform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
 		pTrasnform->Add_Move({ 0.f,0.7f,0.f });
@@ -361,7 +361,7 @@ void CS21_MeleeAttack::Attack_236Special()
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_SPECIAL);
 
 		//디버그코드 체크
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES, 10.5f);
+		//m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES, 10.5f);
 
 	}
 
@@ -372,7 +372,7 @@ void CS21_MeleeAttack::Attack_236Special()
 		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_SPECIAL, 3.5f);
 	}
 
-}
+} 
 
 
 void CS21_MeleeAttack::Attack_236Ultimate()

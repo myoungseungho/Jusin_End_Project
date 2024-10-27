@@ -262,6 +262,8 @@ public:
 	void FlipDirection(_int iDirection = 0);
 	_int Get_iDirection() { return m_iLookDirection; };
 	_uint* Get_pAnimationIndex();
+	_short Get_iAnimationIndex();
+
 
 	_uint Get_iPlayerTeam() { return m_iPlayerTeam; };
 

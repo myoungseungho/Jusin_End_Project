@@ -1482,24 +1482,6 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
 
-	//_float vLength = GetVectorLength((vTargetPos - vMyPos));
-	/*
-	if (vLength < 0.5f) //0.3
-	{
-		m_bChase = false;
-
-
-
-		//Å×½ºÆ®
-		m_fAccChaseTime = 0.f;
-		m_fGravityTime = 0.185f;
-		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
-
-
-		return;
-	}
-	*/
-
 	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
 	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
 
@@ -2073,6 +2055,12 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_ForcveGravityTime(0.f);
 
 	}
+
+	case Client::HitMotion::HIT_WALLBOUNCE:
+	{
+		Set_Animation(m_iHit_WallBouce);
+	}
+		break;
 	default:
 		break;
 	}
@@ -2731,8 +2719,13 @@ AttackColliderResult CCharacter::CompareGrabType3(AttackType eAttackType)
 		if (Get_fHeight() > 0)
 			return RESULT_MISS;
 		else
+		{
+			//¶¥¿¡ ²ø¸®´ÂÁß¸¸ ¾Æ´Ï¸é µÊ
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex && m_pModelCom->m_fCurrentAnimPosition > 55.f && m_bHitGroundSmashed)
+				return RESULT_MISS;
+		}
 			return RESULT_HIT;
-			}
+	}
 }
 
 void CCharacter::Teleport_ToEnemy(_float OffsetX, _float OffsetY)
@@ -2740,7 +2733,7 @@ void CCharacter::Teleport_ToEnemy(_float OffsetX, _float OffsetY)
 	
 	_vector vTargetPos = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 
-	vTargetPos += {OffsetX, OffsetY, 0, 0};
+	vTargetPos += {OffsetX * m_iLookDirection, OffsetY, 0, 0};
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
 
@@ -3178,6 +3171,11 @@ void CCharacter::Add_Move(_float2 fMovement)
 _uint* CCharacter::Get_pAnimationIndex()
 {
 	return &(m_pModelCom->m_iCurrentAnimationIndex);
+}
+
+_short CCharacter::Get_iAnimationIndex()
+{
+	return m_pModelCom->m_iCurrentAnimationIndex;
 }
 
 

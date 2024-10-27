@@ -616,7 +616,8 @@ PLAY_21,TON231_body,40,NextAnimationCheck,3333
 
 
 //,앉아강 51
-PLAY_21,TON232_body,0.000000,AnimSpeedChange,0.005000,100
+//,PLAY_21,TON232_body,0.000000,AnimSpeedChange,0.005000,100
+PLAY_21,TON232_body,0.000000,AnimSpeedChange,0.005000,160
 PLAY_21,TON232_body,20.747000,AnimSpeedChange,0.005000,60
 PLAY_21,TON232_body,34,AttackEvent,232
 PLAY_21,TON232_body,40,AnimSpeedChange,0.005000,100
@@ -737,10 +738,11 @@ PLAY_21,TON400_body,57,NextAnimationCheck,3333
 PLAY_21,TON401_body,0.000000,AnimSpeedChange,0.028000,59.696999
 PLAY_21,TON401_body,0,PositionChange,60
 PLAY_21,TON401_body,60,AnimSpeedChange,0.028000,59.798000
-PLAY_21,TON401_body,70,AttackEvent,401_1
+//,PLAY_21,TON401_body,70,AttackEvent,401_1
 PLAY_21,TON401_body,114.397003,AnimSpeedChange,0.028000,15.020000
-PLAY_21,TON401_body,115,AttackEvent,401_2
+PLAY_21,TON401_body,115,AttackEvent,0
 PLAY_21,TON401_body,119.010010,AnimSpeedChange,0.028000,61.414001
+PLAY_21,TON401_body,120,AttackEvent,1
 PLAY_21,TON401_body,165,PositionChange,274
 
 
@@ -767,13 +769,14 @@ PLAY_21,TON402_body,45,AnimSpeedChange,0.019,80
 PLAY_21,TON402_body,106,AnimSpeedChange,0.019,40
 
 
-PLAY_21,TON402_body,55,AttckEvent_402_1
+PLAY_21,TON402_body,55,AttackEvent,0
+
 PLAY_21,TON402_body,56,PositionChange,90
 PLAY_21,TON402_body,120,PositionChange,144
 
 PLAY_21,TON402_body,10,ObjectMove,0.03,0,0,0
 PLAY_21,TON402_body,11,ObjectMove,0.03,0,0,0
-PLAY_21,TON402_body,12,ObjectMove,0.03,0,0,0
+PLAY_21,TON402_body,12,ObjectMove,0.03,0,0,0	
 PLAY_21,TON402_body,13,ObjectMove,0.04,0,0,0
 PLAY_21,TON402_body,14,ObjectMove,0.04,0,0,0
 PLAY_21,TON402_body,15,ObjectMove,0.04,0,0,0
