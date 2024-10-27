@@ -1823,7 +1823,6 @@ HRESULT CLoader::Load_Model_Resources_GamePlay()
 	{
 		std::lock_guard<std::mutex> lock(m_TextMutex);
 		lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));
-
 	}
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();

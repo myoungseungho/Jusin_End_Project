@@ -29,6 +29,11 @@ private:
 
 	static _bool m_bIsLevelPrepared;
 
+	// 시간 측정을 위한 변수
+	bool m_bStartTiming = false;
+	std::chrono::high_resolution_clock::time_point m_startTime;
+	std::chrono::high_resolution_clock::time_point m_endTime;
+
 public:
 	static CLevel_Loading* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID);
 	virtual void Free() override;

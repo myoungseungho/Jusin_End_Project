@@ -114,8 +114,19 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 void CLevel_Loading::Update(_float fTimeDelta)
 {
+	// 시간 측정 시작
+	if (!m_bStartTiming)
+	{
+		m_startTime = std::chrono::high_resolution_clock::now();
+		m_bStartTiming = true;
+	}
+
 	if (true == m_pLoader->isFinished())
 	{
+		// 시간 측정 종료
+		m_endTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> duration = m_endTime - m_startTime;
+
 		CLevel* pNextLevel = { nullptr };
 
 		switch (m_eNextLevelID)
