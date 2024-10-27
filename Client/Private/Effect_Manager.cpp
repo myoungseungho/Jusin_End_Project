@@ -59,7 +59,22 @@ void CEffect_Manager::Update(_float fTimeDelta)
 		Pair->Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
-		Pair->Update(fTimeDelta);
+	{
+		if (!Pair->m_bIsDoneAnim)
+			Pair->Update(fTimeDelta);
+		else
+		{
+			m_UsingEffect.erase(
+				remove_if(m_UsingEffect.begin(), m_UsingEffect.end(), [](CEffect_Layer* effect) 
+					{
+					return effect->m_bIsDoneAnim;
+					}),
+				m_UsingEffect.end()
+			);
+		}
+
+	}
+
 }
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)

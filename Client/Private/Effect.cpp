@@ -72,7 +72,31 @@ _bool CEffect::Find_KeyFrame(_uint KeyFrameNumber)
 
 EFFECT_KEYFRAME CEffect::Get_KeyFrame(_uint KeyFrameNumber)
 {
-	return m_pAnimation->Get_KeyFrame(KeyFrameNumber);
+	EFFECT_KEYFRAME KeyFrame = m_pAnimation->Get_KeyFrame(KeyFrameNumber);
+
+	Set_Effect_Scaled(KeyFrame.vScale);
+	Set_Effect_Position(KeyFrame.vPosition);
+	Set_Effect_Rotation(KeyFrame.vRotation);
+
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
+	EFFECT_KEYFRAME ResultKeyFrame;
+
+	ResultKeyFrame.vPosition.x = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	ResultKeyFrame.vPosition.y = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	ResultKeyFrame.vPosition.z = XMVectorGetZ(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	ResultKeyFrame.vScale.x = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_RIGHT));
+	ResultKeyFrame.vScale.y = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_UP));
+	ResultKeyFrame.vScale.z = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
+
+	ResultKeyFrame.vRotation = m_pTransformCom->Get_Rotation();
+
+	ResultKeyFrame.bIsNotPlaying = KeyFrame.bIsNotPlaying;
+	ResultKeyFrame.fCurTime = KeyFrame.fCurTime;
+	ResultKeyFrame.fDuration = KeyFrame.fDuration;
+
+	return ResultKeyFrame;
 }
 
 EFFECT_KEYFRAME CEffect::Get_Near_Front_KeyFrame(_uint frameNumber)

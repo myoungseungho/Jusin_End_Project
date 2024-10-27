@@ -26,6 +26,7 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
 	, m_pGameInstance{ CGameInstance::Get_Instance() }
+	, m_bIsDoneAnim{ Prototype.m_bIsDoneAnim }
 {
 	Safe_AddRef(m_pContext);
 	Safe_AddRef(m_pDevice);
@@ -80,6 +81,7 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 
 HRESULT CEffect_Layer::Initialize(void* pArg)
 {
+	m_bIsCopy = true;
 
 	return S_OK;
 }
@@ -94,6 +96,11 @@ void CEffect_Layer::Update(_float fTimeDelta)
 		pEffect->Update(fTimeDelta);
 
 	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	if (m_bIsCopy)
+	{
+		Play_Effect_Animation(fTimeDelta);
+	}
 }
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)
@@ -157,7 +164,8 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 	// 애니메이션 종료 시 위치 초기화
 	if (m_fCurrentAnimPosition > m_fDuration)
 	{
-		m_fCurrentAnimPosition = m_fDuration;
+		//m_fCurrentAnimPosition = 0.f;
+		m_bIsDoneAnim = true;
 	}
 
 	// 현재 키프레임 인덱스 계산

@@ -51,13 +51,16 @@ public:
 	_float3 Get_Layer_Rotation();
 
 public:
+	class CTransform* m_pTransformCom = { nullptr };
+	vector<class CEffect*>			m_MixtureEffects;
+
 	_uint			m_iNumKeyFrames = { 0 };
 	_float			m_fDuration = { 0.f };
 	_float			m_fTickPerSecond = {0.f};
 	_float			m_fCurrentAnimPosition = { 0.f };
-	vector<class CEffect*>			m_MixtureEffects;
 	_bool			m_bIsRender = { false };
-	class CTransform* m_pTransformCom = { nullptr };
+	_bool						m_bIsDoneAnim = { false };
+	_bool						m_bIsCopy = { false };
 
 private:
 	_uint							m_iNumEffects = {0};
@@ -65,6 +68,7 @@ private:
 	ID3D11DeviceContext* m_pContext = { nullptr };
 	CGameInstance*			m_pGameInstance = { nullptr };
 	CCollider*					m_pColliderCom = { nullptr };
+
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
 	CEffect_Layer* Clone(void* pArg = nullptr);
