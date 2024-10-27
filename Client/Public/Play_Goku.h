@@ -154,6 +154,7 @@ public:
 	virtual void Gravity(_float fTimeDelta) override;
 
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
+	virtual void PlaySound(_uint SoundName, _bool bisLoof, _float fvolume)override;
 
 
 private:

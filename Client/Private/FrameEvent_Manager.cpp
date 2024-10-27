@@ -476,12 +476,15 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
     {
         pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
     }
+    else if (splitText[0] == "PlaySound")
+    {
+        pCharacter->PlaySound(fValue[0], fValue[1], fValue[2]);
+    }
     else if (splitText[0] == "DebugPoint")
     {
         _int iDebug = pCharacter->Get_iDirection();
         pCharacter->FlipDirection();
         _bool bDebug = true;
-
     }
  
 }

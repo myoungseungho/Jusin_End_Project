@@ -182,6 +182,8 @@ public:
 		//_wstring strModelName;
 		_ushort iTeam = 1;
 		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
+		
+
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -234,6 +236,8 @@ public:
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
+	virtual _bool Check_bCurAnimationisHitGround(_uint iAnimation = 1000);
+
 
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
@@ -269,6 +273,7 @@ public:
 
 	//virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0) {};
+	virtual void PlaySound(_uint SoundName, _bool bisLoof, _float fvolume) {};
 
 
 
@@ -346,7 +351,7 @@ public:
 
 
 	//공격 관련
-	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
+	void Gain_AttackStep(_ushort iStep);// 
 	_float Get_DamageScale();
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
@@ -382,6 +387,9 @@ public:
 
 
 	void Add_Move(_float2 fMovement);
+
+protected:
+	void Reset_AttackStep();
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;

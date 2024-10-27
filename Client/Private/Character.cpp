@@ -8,6 +8,7 @@
 #include "UI_Manager.h"
 
 #include "AttackObject.h"
+#include "BattleInterface.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower	 = 3.f; //0
@@ -1921,7 +1922,9 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 
 	Set_bRedHP(true);
 
+	//m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
 	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+
 
 	m_iDebugComoboDamage += iDamage;
 	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
@@ -2115,7 +2118,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 	}
 
 	//땅에서 약하게 맞았을경우 가속도 최대값을 제한함
-	else if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Stand_LightAnimationIndex)
+	//else if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Stand_LightAnimationIndex)
+	else if(Check_bCurAnimationisHitGround())
 	{
 		//음수일때 제한이 안됨
 		if (m_fImpuse.x > 0.5f)
@@ -2180,7 +2184,7 @@ void CCharacter::Set_BreakFall_Ground()
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
 	Set_bRedHP(false);
-
+	Reset_AttackStep();
 
 	DirectionInput iMoveKey = inputBuffer.back().direction;
 
@@ -2228,6 +2232,9 @@ void CCharacter::BreakFall_Air()
 			Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 			Set_ForcedGravityDown();
 
+			Reset_AttackStep();
+
+
 			if (InputKey.direction == MOVEKEY_UP)
 			{
 				Set_fImpulse({ 0.f, 5.f });
@@ -2254,6 +2261,17 @@ void CCharacter::BreakFall_Air()
 	}
 }
 
+void CCharacter::Gain_AttackStep(_ushort iStep)
+{
+	//{ m_iAttackStepCount += iStep; };
+
+	if (m_iPlayerTeam == 1)
+		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,2);
+
+	CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,1);
+
+}
+
 _float CCharacter::Get_DamageScale()
 {
 
@@ -2264,25 +2282,31 @@ _float CCharacter::Get_DamageScale()
 	//Next Hit		0%	10%	20% 30% 40% 50% 60% 70% 70% 70% 70% 75% 75% 75% 80% 80% 80% 85%
 	//데미지비율    1.0 0.9 0.8 0              0.3   
 
+	_uint iAttackStepCount;
+	if (m_iPlayerTeam == 1)
+		iAttackStepCount = CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(2);
+	else
+		iAttackStepCount = CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(1);
+
 
 	_float fDamageScale;// = 1.f;
 
-	if (m_iAttackStepCount <= 7) 
+	if (iAttackStepCount <= 7)
 	{
-		fDamageScale = 1.0f - m_iAttackStepCount * 0.1f;  
+		fDamageScale = 1.0f - iAttackStepCount * 0.1f;
 	}
 
-	else if (m_iAttackStepCount <= 10) 
+	else if (iAttackStepCount <= 10)
 	{
 		fDamageScale = 0.3f;  
 	}
 
-	else if (m_iAttackStepCount <= 13) 
+	else if (iAttackStepCount <= 13)
 	{
 		fDamageScale = 0.25f;
 	}
 
-	else if (m_iAttackStepCount <= 16)
+	else if (iAttackStepCount <= 16)
 	{
 		fDamageScale = 0.2f;  
 	}
@@ -2299,7 +2323,8 @@ _float CCharacter::Get_DamageScale()
 	}
 
 
-	return fDamageScale;
+	//return fDamageScale;
+	return fDamageScale * 0.7f;
 }
 
 void CCharacter::Set_GroundSmash(_bool bSmash)
@@ -3167,6 +3192,13 @@ void CCharacter::Add_Move(_float2 fMovement)
 	m_pTransformCom->Add_Move({ fMovement.x, fMovement.y,0 });
 }
 
+void CCharacter::Reset_AttackStep()
+{
+	CBattleInterface_Manager::Get_Instance()->Reset_HitCount(m_iPlayerTeam);
+	CBattleInterface_Manager::Get_Instance()->Reset_HitAttackStep(m_iPlayerTeam);
+	Set_bRedHP(false);
+}
+
 
 _uint* CCharacter::Get_pAnimationIndex()
 {
@@ -3208,6 +3240,23 @@ _bool CCharacter::Check_bCurAnimationisHitAway(_uint iAnimation)
 
 
 	if (iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex || iModelIndex == m_iHit_Away_LeftDownAnimationIndex)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+_bool CCharacter::Check_bCurAnimationisHitGround(_uint iAnimation)
+{
+	_uint iModelIndex = iAnimation;
+
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+
+	if (iModelIndex == m_iHit_Stand_LightAnimationIndex || iModelIndex == m_iHit_Stand_MediumAnimationIndex || iModelIndex == m_iHit_Crouch_AnimationIndex)
 	{
 		return true;
 	}
@@ -3616,31 +3665,31 @@ void CCharacter::Gravity(_float fTimeDelta)
 					//}
 					//m_bHitGroundSmashed = false;
 
-
-
 					m_bHitGroundSmashed = false;
-					Set_NextAnimation(m_iBreakFall_Ground, 2.f);
-					DirectionInput iMoveKey = inputBuffer.back().direction;
+					Set_BreakFall_Ground();
 
-					if (iMoveKey == MOVEKEY_UP || iMoveKey == MOVEKEY_UP_LEFT)
-					{
-						Set_fImpulse({ -3.f * m_iLookDirection,1.f });
-						Set_ForcveGravityTime(0.f);
-					}
-					else if (iMoveKey == MOVEKEY_RIGHT)
-					{
-						//Set_fImpulse({ 0.f , 0.3f });
-						Set_fImpulse({ 0.f , 0.1f });
-
-						Set_ForcedGravityTime_LittleUp();
-					}
-
-
-					else //if (iMoveKey == MOVEKEY_LEFT)
-					{
-						Set_fImpulse({ -5.f * m_iLookDirection, 0.f });
-						Set_ForcedGravityTime_LittleUp();
-					}
+					//Set_NextAnimation(m_iBreakFall_Ground, 2.f);
+					//DirectionInput iMoveKey = inputBuffer.back().direction;
+					//
+					//if (iMoveKey == MOVEKEY_UP || iMoveKey == MOVEKEY_UP_LEFT)
+					//{
+					//	Set_fImpulse({ -3.f * m_iLookDirection,1.f });
+					//	Set_ForcveGravityTime(0.f);
+					//}
+					//else if (iMoveKey == MOVEKEY_RIGHT)
+					//{
+					//	//Set_fImpulse({ 0.f , 0.3f });
+					//	Set_fImpulse({ 0.f , 0.1f });
+					//
+					//	Set_ForcedGravityTime_LittleUp();
+					//}
+					//
+					//
+					//else //if (iMoveKey == MOVEKEY_LEFT)
+					//{
+					//	Set_fImpulse({ -5.f * m_iLookDirection, 0.f });
+					//	Set_ForcedGravityTime_LittleUp();
+					//}
 				}
 
 			}

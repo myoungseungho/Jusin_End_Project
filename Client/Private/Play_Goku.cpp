@@ -10,7 +10,7 @@
 #include "iostream"
 
 
-
+#include "BattleInterface.h"
 
 
 
@@ -184,6 +184,10 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_BackDash, bind(&CGoku_MeleeAttack::BackDash, &m_tAttackMap) });
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
+
+
+
+	m_eCharacterID = CUI_Define::PLAYER_ID::GOKU;
 
 	return S_OK;
 }
@@ -406,6 +410,12 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			{
 				m_bStun = false;
 				m_fAccStunTime = 0.f;
+
+				if (Check_bCurAnimationisHitGround())
+				{
+					Reset_AttackStep();
+				}
+
 			}
 			Update_StunImpus(fTimeDelta);
 		}
@@ -953,7 +963,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
 
 
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.4f;
 		Desc.iDamage = 400 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HIT_LIGHT };
@@ -983,7 +993,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_Impus = { m_fImpuse.x  ,0 };
 
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.4f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
@@ -1148,7 +1158,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.8f,0.f };
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		Desc.fhitCharacter_Impus = { 0.f, 6.f };
-		Desc.fhitCharacter_StunTime = 0.5f;
+		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 1000 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP };
@@ -1476,6 +1486,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	}
 
+}
+
+void CPlay_Goku::PlaySound(_uint SoundName, _bool bisLoof, _float fvolume)
+{
+	;
 }
 
 

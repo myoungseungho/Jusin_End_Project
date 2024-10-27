@@ -227,6 +227,9 @@ HRESULT CPlay_21::Initialize(void* pArg)
 		std::ios::sync_with_stdio();
 	}
 
+	m_eCharacterID = CUI_Define::PLAYER_ID::ANDROID21;
+
+
 	return S_OK;
 }
 
@@ -442,6 +445,9 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			{
 				m_bStun = false;
 				m_fAccStunTime = 0.f;
+
+				if(Check_bCurAnimationisGroundMove())
+					Reset_AttackStep();
 			}
 			Update_StunImpus(fTimeDelta);
 		}
