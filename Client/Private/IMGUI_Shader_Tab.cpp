@@ -12,6 +12,7 @@
 #include "Effect_Manager.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+#include <cstdio>
 
 CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
 	:CIMGUI_Tab{ pDevice,pContext },
@@ -1350,7 +1351,7 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
     // 첫 번째 줄에서 버전 정보 읽기
     if (std::getline(inFile, line)) {
         if (line.find("Version:") != std::string::npos) {
-            std::sscanf(line.c_str(), "Version: %d", &version);
+            sscanf_s(line.c_str(), "Version: %d", &version);
             versionFound = true;
         }
     }
@@ -1382,7 +1383,7 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
             // vTexCoord 읽기 (버전 2 이상일 경우)
             if (version >= 2) {
                 std::getline(inFile, line); // vTexCoord 읽기
-                std::sscanf(line.c_str(), "vTexCoord: %f %f", &key.vTexCoord.x, &key.vTexCoord.y);
+                sscanf_s(line.c_str(), "vTexCoord: %f %f", &key.vTexCoord.x, &key.vTexCoord.y);
             }
         }
     }
@@ -1393,7 +1394,7 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
         shaderTabSave.nodePositions.resize(nodePosCount);
         for (auto& nodePos : shaderTabSave.nodePositions) {
             std::getline(inFile, line);
-            std::sscanf(line.c_str(), "NodeID: %d Position: %f %f", &nodePos.nodeID, &nodePos.nodePosition.x, &nodePos.nodePosition.y);
+            sscanf_s(line.c_str(), "NodeID: %d Position: %f %f", &nodePos.nodeID, &nodePos.nodePosition.x, &nodePos.nodePosition.y);
         }
     }
 
@@ -1403,7 +1404,7 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
         shaderTabSave.moveTexNodes.resize(moveTexNodeCount);
         for (auto& moveTexNode : shaderTabSave.moveTexNodes) {
             std::getline(inFile, line);
-            std::sscanf(line.c_str(), "MoveTexNodeID: %d Direction: %f %f Speed: %f",
+            sscanf_s(line.c_str(), "MoveTexNodeID: %d Direction: %f %f Speed: %f",
                 &moveTexNode.MoveTex_node_id, &moveTexNode.fDirection.x, &moveTexNode.fDirection.y, &moveTexNode.fSpeed);
         }
     }
@@ -1414,7 +1415,7 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
         shaderTabSave.spriteNodes.resize(spriteNodeCount);
         for (auto& spriteNode : shaderTabSave.spriteNodes) {
             std::getline(inFile, line);
-            std::sscanf(line.c_str(), "SpriteNodeID: %d IsLoop: %d SpriteSizeNumber: %f %f Speed: %f",
+            sscanf_s(line.c_str(), "SpriteNodeID: %d IsLoop: %d SpriteSizeNumber: %f %f Speed: %f",
                 &spriteNode.Sprite_node_id, &spriteNode.isLoop, &spriteNode.fSpriteSizeNumber.x, &spriteNode.fSpriteSizeNumber.y, &spriteNode.fSpeed);
         }
     }
@@ -1425,7 +1426,7 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
         shaderTabSave.links.resize(linkCount);
         for (auto& link : shaderTabSave.links) {
             std::getline(inFile, line);
-            std::sscanf(line.c_str(), "LinkSrcNodeID: %d LinkDestNodeID: %d",
+            sscanf_s(line.c_str(), "LinkSrcNodeID: %d LinkDestNodeID: %d",
                 &link.srcNodeID, &link.destNodeID);
         }
     }
@@ -1566,13 +1567,12 @@ CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 
 void CIMGUI_Shader_Tab::Free()
 {
-	__super::Free();
     for (auto& iter : m_NodeTextures)
     {
         Safe_Release(iter);
     }
     
-    Safe_Release(m_TestEffectModel_Texture);
+    __super::Free();
 }
 
 CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, string strFilename)

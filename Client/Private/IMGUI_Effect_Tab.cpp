@@ -1361,11 +1361,10 @@ CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 
 void CIMGUI_Effect_Tab::Free()
 {
-    __super::Free();
-
     Safe_Release(m_pEffect_Manager);
-    m_pEffect_Manager->Destroy_Instance();
 
     ModelName.clear();
     TextureName.clear();
+
+    __super::Free();
 }
