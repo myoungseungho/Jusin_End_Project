@@ -28,11 +28,28 @@ public:
 	{
 		SFX_Goku_Light_Attack_1 = 100,
 		SFX_Goku_Light_Attack_2,
+		Goku_Hit_0,
+		Goku_Hit_1,
+		Goku_Hit_2,
+		Goku_Hit_3,
+		Goku_Hit_4,
+		Goku_Hit_5,
+		Goku_Hit_6,
+		Goku_Hit_7,
+		Goku_Hit_8,
+		Goku_Hit_9,
+		Goku_Hit_10,
+		Goku_Hit_11,
+		Goku_Hit_12,
+		Goku_Hit_13,
+		Goku_Hit_14,
+		Goku_Hit_15,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
 	{
 		LIGHT_ATTACK = 200,
+		Goku_Hit,
 	};
 
 

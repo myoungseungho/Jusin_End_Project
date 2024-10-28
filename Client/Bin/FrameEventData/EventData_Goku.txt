@@ -48,6 +48,7 @@ PLAY_GOKU,GKS201_body,20,ObjectMove,0.05,0,0,0
 //,강공
 //,PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,240,TEST
 PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,120
+PLAY_GOKU,GKS202_body,0.000000,PlaySound,1,0,1
 PLAY_GOKU,GKS202_body,35,AnimSpeedChange,0.02,20
 PLAY_GOKU,GKS202_body,35,AttackEvent,202
 PLAY_GOKU,GKS202_body,38,NextAnimationCheck,33333333
@@ -910,6 +911,7 @@ PLAY_GOKU,GKS042_body,0,PositionChange,10
 //,PLAY_GOKU,GKS050_body,0,PositionChange,5
 //,PLAY_GOKU,GKS050_body,10,PositionChange,5
 PLAY_GOKU,GKS050_body,0.000000,AnimSpeedChange,0.064000,86.060997
+PLAY_GOKU,GKS050_body,0.010000,PlayGroupSound,201,0,1
 PLAY_GOKU,GKS050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,PLAY_GOKU,GKS050_body,0,AnimSpeedChange,0.022000,61.818001
