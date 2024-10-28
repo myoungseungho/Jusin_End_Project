@@ -621,13 +621,12 @@ PLAY_GOKU,GKS436cs,2,FlipPlayerDirection,0
 //,PLAY_GOKU,GKS436cs,15,AnimSpeedChange,0.043000,20.808998
 PLAY_GOKU,GKS436cs,50,AnimSpeedChange,0.043000,40
 PLAY_GOKU,GKS436cs,50.000000,PlaySound,7,0,1
-PLAY_GOKU,GKS436cs,50,Camera_Play_Son_Ultimate_4_Shake,2,0.2
 PLAY_GOKU,GKS436cs,75,AnimSpeedChange,0.017000,60
 PLAY_GOKU,GKS436cs,93,AnimSpeedChange,0.022000,5
 PLAY_GOKU,GKS436cs,96,AnimSpeedChange,0.012000,2
 PLAY_GOKU,GKS436cs,23.4,AttackEvent,0
 PLAY_GOKU,GKS436cs,95,AttackEvent,1
-
+PLAY_GOKU,GKS436cs,95,Camera_Play_Son_Ultimate_4_Shake,2,0.1
 
 
 //,275로시작
