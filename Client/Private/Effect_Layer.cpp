@@ -179,7 +179,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)
 {
-	if (m_bIsCopy)
+	if (m_bIsRender)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
@@ -251,6 +251,19 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 		if (pEffect)
 		{
 			pEffect->Play_Animation(currentFrame);
+		}
+	}
+
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_In_Layer_Effect()
+{
+	for (CEffect* pEffect : m_MixtureEffects)
+	{
+		if (pEffect)
+		{
+			pEffect->Get_Layer_Matrix(m_pTransformCom->Get_WorldMatrix());
 		}
 	}
 

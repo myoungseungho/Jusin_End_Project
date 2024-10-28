@@ -1339,6 +1339,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_Transform()
         m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
     }
 
+    m_pEffect_Manager->Set_In_Layer_Effect_Layer_Transform(selectedLayerName);
+
 
     ImGui::End();
 }
