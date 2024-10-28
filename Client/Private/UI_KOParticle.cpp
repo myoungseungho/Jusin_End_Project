@@ -71,7 +71,7 @@ void CUI_KOParticle::Late_Update(_float fTimeDelta)
 
 	RENDER_OBJECT tDesc{};
 	tDesc.tGlowDesc.iPassIndex = 2;
-	tDesc.tGlowDesc.fGlowFactor = 10.f;
+	tDesc.tGlowDesc.fGlowFactor = 3.2f;
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this, &tDesc);
 }

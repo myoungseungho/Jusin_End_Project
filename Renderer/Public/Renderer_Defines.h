@@ -11,7 +11,7 @@
 
 namespace Renderer
 {
-    enum GLOW_TYPE { GLOW_PRI, GLOW_STAR, GLOW_MAIN, GLOW_UI, GLOW_UI_HP, GLOW_END };
+    enum GLOW_TYPE { GLOW_PRI, GLOW_STAR, GLOW_MAIN, GLOW_UI, GLOW_UI_MULTY, GLOW_END };
 }
 
 using namespace Renderer;

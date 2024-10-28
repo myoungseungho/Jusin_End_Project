@@ -14,6 +14,8 @@ texture2D		g_DepthTexture;
 float2 g_DownSamplingSize;
 float2 g_DownTexSize;
 
+float g_fGlowFactor = 3.2f;
+
 static const float g_fWeight[13] =
 {
     // 0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521, 0.3989, 0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044

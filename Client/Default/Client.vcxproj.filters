@@ -190,6 +190,9 @@
     <ClCompile Include="..\private\UI_PosMark.cpp">
       <Filter>02.GameObjects\UI\PosMark</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_LoadingSpaceLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\SpaceLight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -423,9 +426,6 @@
     <Filter Include="02.GameObjects\UI\BackGround\Loading\Mark">
       <UniqueIdentifier>{3028a2a3-d89a-45d3-8054-3f46014df8f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Loading\Star">
-      <UniqueIdentifier>{6de9d36f-3d08-4d30-8f2d-f8e2ee1563a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Energy">
       <UniqueIdentifier>{5b19830a-5c89-444c-a2a6-f493c6fbb1ae}</UniqueIdentifier>
     </Filter>
@@ -434,6 +434,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\PosMark">
       <UniqueIdentifier>{e87e6b59-3fbf-418e-a0fc-3dd8efb41c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\SpaceLight">
+      <UniqueIdentifier>{6de9d36f-3d08-4d30-8f2d-f8e2ee1563a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -815,6 +818,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_PosMark.h">
       <Filter>02.GameObjects\UI\PosMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_LoadingSpaceLight.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\SpaceLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

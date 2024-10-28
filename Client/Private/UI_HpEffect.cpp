@@ -49,7 +49,7 @@ void CUI_HpEffect::Priority_Update(_float fTimeDelta)
 		{
 			m_bSign = TRUE;
 		}
-		else if (m_fAlphaTimer >= 1.f)
+		else if (m_fAlphaTimer >= 0.5f)
 		{
 			m_bSign = FALSE;
 		}
@@ -69,7 +69,13 @@ void CUI_HpEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 6.7f;
+	//tDesc.tGlowDesc.iPassIndex = 7;
+	//tDesc.tGlowDesc.fGlowFactor = 4.7f;
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
 }
 
 HRESULT CUI_HpEffect::Render(_float fTimeDelta)

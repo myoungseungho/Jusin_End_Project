@@ -263,10 +263,7 @@ HRESULT CRenderer::Add_Render_GlowDesc(RENDERGROUP eRenderGroup, GLOW_DESC* pDes
 	case RG_GLOW_STAR: m_GlowDescs[GLOW_STAR].push_back(*pDesc);	return S_OK;
 	case RG_GLOW:	   m_GlowDescs[GLOW_MAIN].push_back(*pDesc);	return S_OK;
 	case RG_UI_GLOW:   m_GlowDescs[GLOW_UI].push_back(*pDesc);		return S_OK;
-	case GLOW_UI_HP:   m_GlowDescs[GLOW_UI_HP].push_back(*pDesc);	return S_OK;
-	default:
-		int a = 10;
-		break;
+	case RG_MULTY_GLOW:   m_GlowDescs[GLOW_UI_MULTY].push_back(*pDesc);	return S_OK;
 	}
 }
 
@@ -317,6 +314,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Render_Glow_UI(fTimeDelta)))
 		return E_FAIL;
+
+	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
+		return E_FAIL;
+
 
 	if (FAILED(Render_Node(fTimeDelta)))
 		return E_FAIL;
@@ -815,7 +816,7 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 		
-		auto iter = m_GlowDescs[GLOW_UI].begin();
+		auto iter = m_GlowDescs[GLOW_MAIN].begin();
 		advance(iter, iCount);
 		if (FAILED(Draw_Glow( m_pGlowShader, &(*iter))))
 			return E_FAIL;
@@ -823,7 +824,7 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 		iCount++;
 	}
 
-	m_GlowDescs[GLOW_UI].clear();
+	m_GlowDescs[GLOW_MAIN].clear();
 	m_RenderObjects[RG_GLOW].clear();
 
 	return S_OK;
@@ -861,70 +862,67 @@ HRESULT CRenderer::Render_UI(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)   
 {
-		size_t iCount = 0;
-	
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
+		return E_FAIL;
+
 	for (auto& pRenderObject : m_RenderObjects[RG_UI_GLOW])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+	
+		Safe_Release(pRenderObject);
+	}
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (0 != m_GlowDescs[GLOW_UI].size())
+	{
+		auto iter = m_GlowDescs[GLOW_UI].begin();
+
+		if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
+			return E_FAIL;
+	}
+	
+	m_GlowDescs[GLOW_UI].clear();
+	m_RenderObjects[RG_UI_GLOW].clear();
+
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_MultyGlow_UI(_float fTimeDelta)
+{
+	size_t iCount = 0;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_MULTY_GLOW])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
 			return E_FAIL;
 
 		if (nullptr != pRenderObject)
 			pRenderObject->Render(fTimeDelta);
-	
+
+		Safe_Release(pRenderObject);
+
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		if (m_RenderObjects[RG_UI_GLOW].size() != 0)
+		if (0 != m_GlowDescs[GLOW_UI_MULTY].size())
 		{
-			auto iter = m_GlowDescs[GLOW_UI].begin();
+			auto iter = m_GlowDescs[GLOW_UI_MULTY].begin();
 			advance(iter, iCount);
-
 
 			if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
 				return E_FAIL;
 		}
-	
-	
-		Safe_Release(pRenderObject);
+
 		iCount++;
 	}
 
-		//if (FAILED(Draw_Glow(m_pGlowShader)))
-		//	return E_FAIL;
-	//if (NULL != m_GlowDescs[GLOW_UI].size())
-	//{
-	//	auto iter = m_GlowDescs[GLOW_UI].begin();
-	//	
-	//	if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
-	//		return E_FAIL;
-	//}
-
-	m_GlowDescs[GLOW_UI].clear();
-	m_RenderObjects[RG_UI_GLOW].clear();
-	
-	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GlowDiffuse"))))
-	//	return E_FAIL;
-	//
-	//
-	//for (auto& pRenderObject : m_RenderObjects[RG_HP_GLOW])
-	//{
-	//	if (nullptr != pRenderObject)
-	//		pRenderObject->Render(fTimeDelta);
-	//
-	//	Safe_Release(pRenderObject);
-	//}
-	//if (FAILED(m_pRenderInstance->End_MRT()))
-	//	return E_FAIL;
-	//
-	//if (0 != m_GlowDescs[GLOW_UI_HP].size())
-	//{
-	//	auto iter = m_GlowDescs[GLOW_UI_HP].begin();
-	//	if (FAILED(m_pUI_GlowShader , Draw_Glow(&(*iter))))
-	//		return E_FAIL;
-	//}
-	//
-	//m_GlowDescs[GLOW_UI_HP].clear();
-	//m_RenderObjects[RG_HP_GLOW].clear();
+	m_GlowDescs[GLOW_UI_MULTY].clear();
+	m_RenderObjects[RG_MULTY_GLOW].clear();
 
 	return S_OK;
 }
@@ -1143,7 +1141,12 @@ HRESULT CRenderer::Draw_Glow(CShader* pShader ,GLOW_DESC* pDesc)
 		return E_FAIL;
 
 	if (nullptr != pDesc)
+	{
+		if (FAILED(pShader->Bind_RawValue("g_fGlowFactor", &pDesc->fGlowFactor , sizeof(_float))))
+			return E_FAIL;
+
 		pShader->Begin(pDesc->iPassIndex);
+	}
 	else
 		pShader->Begin(2);
 
@@ -1192,4 +1195,5 @@ void CRenderer::Free()
 	Safe_Release(m_pShader);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pGlowShader);
+	Safe_Release(m_pUI_GlowShader);
 }

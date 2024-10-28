@@ -206,6 +206,7 @@
     <ClInclude Include="..\public\UI_KOPanel.h" />
     <ClInclude Include="..\public\UI_KOParticle.h" />
     <ClInclude Include="..\Public\UI_LoadingMark.h" />
+    <ClInclude Include="..\public\UI_LoadingSpaceLight.h" />
     <ClInclude Include="..\Public\UI_Loading_BG.h" />
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
     <ClInclude Include="..\Public\UI_Logo_BG.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="..\private\UI_KOPanel.cpp" />
     <ClCompile Include="..\private\UI_KOParticle.cpp" />
     <ClCompile Include="..\Private\UI_LoadingMark.cpp" />
+    <ClCompile Include="..\private\UI_LoadingSpaceLight.cpp" />
     <ClCompile Include="..\Private\UI_Loading_BG.cpp" />
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
     <ClCompile Include="..\Private\UI_Logo_BG.cpp" />
