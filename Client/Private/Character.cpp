@@ -3452,7 +3452,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
-			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_bAttackGravity==false)
+			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || ( m_bAttackGravity==false && Check_bCurAnimationisHalfGravityStop() ))
 			{
 				;
 			}
@@ -3646,6 +3646,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 					m_bHitGroundSmashed = false;
 					Set_BreakFall_Ground();
+
+					Set_bAttackGravity(true);
 
 					//Set_NextAnimation(m_iBreakFall_Ground, 2.f);
 					//DirectionInput iMoveKey = inputBuffer.back().direction;
