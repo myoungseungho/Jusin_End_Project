@@ -370,11 +370,11 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
 float CalculateEdge(float2 vTexcoord, float fViewZ, float4 vNormal, float fEdgeThreshold, float fEdgeNormalThreshold, float fEdgeDepthThreshold)
 {
 
-    float fNormalDiff = CalculateNormalDiff(vTexcoord, vNormal);
+   // float fNormalDiff = CalculateNormalDiff(vTexcoord, vNormal);
    
     float fDepthDiff = CalculateDepthDiff(vTexcoord, fViewZ);
    
-    float fEdge = step(fEdgeDepthThreshold, fDepthDiff) * step(fEdgeNormalThreshold, fNormalDiff);
+    float fEdge = step(fEdgeDepthThreshold, fDepthDiff); // * step(fEdgeNormalThreshold, fNormalDiff);
 
 
     return fEdge;

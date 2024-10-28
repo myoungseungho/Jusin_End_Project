@@ -5,7 +5,7 @@ TickPerSecond: 1
 KeyFramesCount: 47
 NumEffec: 12
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 
 [Effect]
@@ -19,7 +19,7 @@ PassIndex: 3
 UniqueIndex: 11
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -31,7 +31,7 @@ NumKeyFrame: 3
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 0
 IsNotPlaying: false
@@ -40,7 +40,7 @@ IsNotPlaying: false
 KeyFrameNumber: 4
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.0666667
 Duration: 1
 IsNotPlaying: true
@@ -49,7 +49,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -65,7 +65,7 @@ PassIndex: 3
 UniqueIndex: 12
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -77,7 +77,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -86,7 +86,7 @@ IsNotPlaying: true
 KeyFrameNumber: 4
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.0666667
 Duration: 2
 IsNotPlaying: false
@@ -95,7 +95,7 @@ IsNotPlaying: false
 KeyFrameNumber: 8
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.133333
 Duration: 1
 IsNotPlaying: true
@@ -104,7 +104,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -120,7 +120,7 @@ PassIndex: 3
 UniqueIndex: 13
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -132,7 +132,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -141,7 +141,7 @@ IsNotPlaying: true
 KeyFrameNumber: 8
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.133333
 Duration: 2
 IsNotPlaying: false
@@ -150,7 +150,7 @@ IsNotPlaying: false
 KeyFrameNumber: 12
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.2
 Duration: 1
 IsNotPlaying: true
@@ -159,7 +159,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -175,7 +175,7 @@ PassIndex: 3
 UniqueIndex: 14
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
 GlowFactor: 1
@@ -186,7 +186,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -195,7 +195,7 @@ IsNotPlaying: true
 KeyFrameNumber: 12
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.2
 Duration: 2
 IsNotPlaying: false
@@ -204,7 +204,7 @@ IsNotPlaying: false
 KeyFrameNumber: 16
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.266667
 Duration: 1
 IsNotPlaying: true
@@ -213,7 +213,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -229,7 +229,7 @@ PassIndex: 3
 UniqueIndex: 15
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -241,7 +241,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -250,7 +250,7 @@ IsNotPlaying: true
 KeyFrameNumber: 16
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.266667
 Duration: 2
 IsNotPlaying: false
@@ -259,7 +259,7 @@ IsNotPlaying: false
 KeyFrameNumber: 20
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.333333
 Duration: 1
 IsNotPlaying: true
@@ -268,7 +268,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -284,7 +284,7 @@ PassIndex: 3
 UniqueIndex: 16
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -296,7 +296,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -305,7 +305,7 @@ IsNotPlaying: true
 KeyFrameNumber: 20
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.333333
 Duration: 2
 IsNotPlaying: false
@@ -314,7 +314,7 @@ IsNotPlaying: false
 KeyFrameNumber: 24
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.4
 Duration: 1
 IsNotPlaying: true
@@ -323,7 +323,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -339,7 +339,7 @@ PassIndex: 3
 UniqueIndex: 17
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -351,7 +351,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -360,7 +360,7 @@ IsNotPlaying: true
 KeyFrameNumber: 24
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.4
 Duration: 2
 IsNotPlaying: false
@@ -369,7 +369,7 @@ IsNotPlaying: false
 KeyFrameNumber: 28
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.466667
 Duration: 1
 IsNotPlaying: true
@@ -378,7 +378,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -394,7 +394,7 @@ PassIndex: 3
 UniqueIndex: 18
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -406,7 +406,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -415,7 +415,7 @@ IsNotPlaying: true
 KeyFrameNumber: 28
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.466667
 Duration: 2
 IsNotPlaying: false
@@ -424,7 +424,7 @@ IsNotPlaying: false
 KeyFrameNumber: 32
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.533333
 Duration: 1
 IsNotPlaying: true
@@ -433,7 +433,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -449,7 +449,7 @@ PassIndex: 3
 UniqueIndex: 19
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -461,7 +461,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -470,7 +470,7 @@ IsNotPlaying: true
 KeyFrameNumber: 32
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.533333
 Duration: 2
 IsNotPlaying: false
@@ -479,7 +479,7 @@ IsNotPlaying: false
 KeyFrameNumber: 36
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.6
 Duration: 1
 IsNotPlaying: true
@@ -488,7 +488,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -504,7 +504,7 @@ PassIndex: 3
 UniqueIndex: 20
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -516,7 +516,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -525,7 +525,7 @@ IsNotPlaying: true
 KeyFrameNumber: 36
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.6
 Duration: 2
 IsNotPlaying: false
@@ -534,7 +534,7 @@ IsNotPlaying: false
 KeyFrameNumber: 40
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.666667
 Duration: 1
 IsNotPlaying: true
@@ -543,7 +543,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -559,7 +559,7 @@ PassIndex: 3
 UniqueIndex: 21
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -571,7 +571,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -580,7 +580,7 @@ IsNotPlaying: true
 KeyFrameNumber: 40
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.666667
 Duration: 2
 IsNotPlaying: false
@@ -589,7 +589,7 @@ IsNotPlaying: false
 KeyFrameNumber: 44
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.733333
 Duration: 1
 IsNotPlaying: true
@@ -598,7 +598,7 @@ IsNotPlaying: true
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -614,7 +614,7 @@ PassIndex: 3
 UniqueIndex: 22
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
@@ -626,7 +626,7 @@ NumKeyFrame: 4
 KeyFrameNumber: 0
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: true
@@ -635,7 +635,7 @@ IsNotPlaying: true
 KeyFrameNumber: 44
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.733333
 Duration: 2
 IsNotPlaying: false
@@ -644,7 +644,7 @@ IsNotPlaying: false
 KeyFrameNumber: 46
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.766667
 Duration: 0.8
 IsNotPlaying: true
@@ -653,7 +653,7 @@ IsNotPlaying: true
 KeyFrameNumber: 48
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 180 0
 CurTime: 0.8
 Duration: 1
 IsNotPlaying: true
