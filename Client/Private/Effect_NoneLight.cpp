@@ -27,7 +27,6 @@ HRESULT CEffect_NoneLight::Initialize_Prototype()
 HRESULT CEffect_NoneLight::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_NONELIGHT;
-	//m_iPassIndex = 3;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

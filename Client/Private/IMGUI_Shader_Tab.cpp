@@ -1435,6 +1435,9 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
 
 void CIMGUI_Shader_Tab::Delete_Clone_EffectToShader_Texture(CEffect* pEffect)
 {
+    if (m_CopyClones.empty() == true)
+        return;
+
     auto& it = m_CopyClones.find(pEffect);
 
     if (it == m_CopyClones.end())

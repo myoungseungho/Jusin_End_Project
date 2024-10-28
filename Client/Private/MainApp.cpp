@@ -172,10 +172,17 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-	m_pImgui_Manager->Free();
 
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
+
+	//CEffect_Manager::Get_Instance()->Free();
+
+	int a = 10;
+
+	if (a == 10)
+		a = 1;
+	m_pImgui_Manager->Free();
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);

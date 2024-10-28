@@ -1142,4 +1142,5 @@ void CEffect_Manager::Free()
 		Safe_Release(Pair);
 
 	m_UsingEffect.clear();
+
 }
