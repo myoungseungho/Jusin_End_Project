@@ -48,7 +48,7 @@ PLAY_GOKU,GKS201_body,20,ObjectMove,0.05,0,0,0
 //,강공
 //,PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,240,TEST
 PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,120
-PLAY_GOKU,GKS202_body,0.000000,PlaySound,1,0,1
+PLAY_GOKU,GKS202_body,0.001000,PlaySound,1,0,1
 PLAY_GOKU,GKS202_body,35,AnimSpeedChange,0.02,20
 PLAY_GOKU,GKS202_body,35,AttackEvent,202
 PLAY_GOKU,GKS202_body,38,NextAnimationCheck,33333333
@@ -92,7 +92,7 @@ PLAY_GOKU,GKS203_body,30,ObjectMove,0.1,0,0,0
 //,PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.035,60
 //,PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.05,60
 PLAY_GOKU,GKS204_body,0,AnimSpeedChange,0.025,160
-PLAY_GOKU,GKS204_body,0.000000,PlaySound,1,0,1
+PLAY_GOKU,GKS204_body,0.001000,PlaySound,1,0,1
 PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.017,60
 PLAY_GOKU,GKS204_body,50,AnimSpeedChange,0.025,60
 
@@ -114,7 +114,7 @@ PLAY_GOKU,GKS204_body,50,AttackEvent,204
 //,지상특수
 
 PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,90
-PLAY_GOKU,GKS205_body,0.000000,PlaySound,3,0,1
+PLAY_GOKU,GKS205_body,0.001000,PlaySound,3,0,1
 PLAY_GOKU,GKS205_body,55.11,AnimSpeedChange,0.022,90
 PLAY_GOKU,GKS205_body,10,AnimSpeedChange,0.022,90
 
@@ -129,7 +129,7 @@ PLAY_GOKU,GKS205_body,37,NextAnimationCheck,333333333
 
 PLAY_GOKU,GKS205_body,50,PositionChange,109
 PLAY_GOKU,GKS205_body,50,AnimSpeedChange,0.005,90
-PLAY_GOKU,GKS205_body,55.000000,PlaySound,3,0,1
+PLAY_GOKU,GKS205_body,55.00000,PlaySound,3,0,1
 
 PLAY_GOKU,GKS205_body,80,AttackEvent,205
 PLAY_GOKU,GKS205_body,80.000000,PlaySound,3,0,1
@@ -272,6 +272,7 @@ PLAY_GOKU,GKS265_body,30,NextAnimationCheck,333333
 //,236 에너지파
 //,PLAY_GOKU,GKS400_body,0.000000,AnimSpeedChange,0.023000,240.000000  ,원본속도
 PLAY_GOKU,GKS400_body,0.000000,AnimSpeedChange,0.017000,240.000000
+PLAY_GOKU,GKS400_body,0.001000,PlaySound,4,0,1
 PLAY_GOKU,GKS400_body,55.000000,AnimSpeedChange,0.017000,80.000000
 PLAY_GOKU,GKS400_body,59,AttackEvent,33333
 PLAY_GOKU,GKS400_body,59,AnimSpeedChange,0.013,4.00000
@@ -919,15 +920,17 @@ PLAY_GOKU,GKS050_body,30.1,AnimSpeedChange,0.064000,86.060997
 //,숙이는 피격모션
 PLAY_GOKU,GKS051_body,0.000000,AnimSpeedChange,0.064000,86
 PLAY_GOKU,GKS051_body,0,PositionChange,15
+PLAY_GOKU,GKS051_body,0.010000,PlayGroupSound,201,0,1
 
 //,앉아 피격모션
 PLAY_GOKU,GKS052_body,0,AnimSpeedChange,0.020000,57.374001
 //,PLAY_GOKU,GKS052_body,0,PositionChange,10
-
+PLAY_GOKU,GKS052_body,0.010000,PlayGroupSound,201,0,1
 
 //, 공중피격 약 10   스턴끝날때 40이 되도록 속도를 조정...?  스피드가  스턴시간*4라고?  상대방의 TickPerSecond를 조절하는 기능필요?
 //,PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,49.292999
 PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,30
+PLAY_GOKU,GKS060_body,0.010000,PlayGroupSound,201,0,1
 PLAY_GOKU,GKS060_body,0,PositionChange,14
 PLAY_GOKU,GKS060_body,30,AnimSpeedChange,0.044000,60
 PLAY_GOKU,GKS060_body,40,AnimSpeedChange,0.044000,1
