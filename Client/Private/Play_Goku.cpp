@@ -106,7 +106,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	m_tAttackMap.Initalize(this);
 	m_strName = "GOKU" + to_string(m_iPlayerTeam);
-
+	m_RendererDesc.strName = m_strName;
 	LIGHT_DESC			LightDesc{};
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
@@ -539,9 +539,8 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	RENDER_OBJECT tDesc = RENDER_OBJECT(m_strName);
-	
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &tDesc);
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
 
@@ -676,7 +675,7 @@ HRESULT CPlay_Goku::Ready_Components()
 
 
 	//Com_Collider
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Collider_AABB"),
 		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
 		return E_FAIL;
 
