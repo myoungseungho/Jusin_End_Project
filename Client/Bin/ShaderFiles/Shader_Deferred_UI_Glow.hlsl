@@ -1,4 +1,3 @@
-
 #include "Renderer_Shader_Defines.hlsli"
 
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
@@ -13,6 +12,8 @@ texture2D		g_DepthTexture;
 
 float2 g_DownSamplingSize;
 float2 g_DownTexSize;
+
+float g_fGlowFactor = 3.2f;
 
 static const float g_fWeight[13] =
 {
@@ -155,26 +156,6 @@ PS_OUT PS_MAIN_RESULT_PRI(PS_IN In)
     return Out;
 }
 
-PS_OUT PS_MAIN_RESULT_SUN(PS_IN In)
-{
-    PS_OUT Out = (PS_OUT) 0;
-
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
-
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
-
-    //vBlur *= 1.3f;
-    //Out.vColor = vResult + vBlur;
-    //float fAlpha = (Out.vColor.r + Out.vColor.g + Out.vColor.b) / 3;
-
-    //Out.vColor.a = saturate(fAlpha - 0.15f);
-    
-    Out.vColor = saturate(vResult * 0.3f + vBlur * 1.f) /*+ vEffect*/;
-    Out.vColor.a = saturate(Out.vColor.a - 0.3f);
-
-    return Out;
-}
-
 PS_OUT PS_MAIN_RESULT(PS_IN In)
 {
 
@@ -184,26 +165,12 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
 
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
-     
-    Out.vColor = saturate(vResult + vBlur * 3.2f) /*+ vEffect*/;
+        
+    Out.vColor = saturate(vResult + vBlur * g_fGlowFactor) /*+ vEffect*/;
+    
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
 
-}
-
-PS_OUT PS_MAIN_RESULT_EARTH(PS_IN In)
-{
-
-    PS_OUT Out = (PS_OUT) 0;
-
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
-
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
-   /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
-
-    Out.vColor = saturate(vResult + vBlur * 3.2f) /*+ vEffect*/;
-    Out.vColor.a = saturate(Out.vColor.a - 0.3f);
-    return Out;
 }
 
 PS_OUT PS_MAIN_DOWN(PS_IN In)
@@ -240,21 +207,18 @@ PS_OUT PS_MAIN_DEBUG(PS_IN In)
 	return Out;
 }
 
-//UI
-PS_OUT PS_MAIN_RESULT_UI(PS_IN In)
+PS_OUT PS_MAIN_OnlyBlur(PS_IN In)
 {
-
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    //vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
 
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
-    Out.vColor = saturate(vResult + vBlur * 4.7f) /*+ vEffect*/;
+    Out.vColor = saturate(vBlur * g_fGlowFactor) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
-
 }
 
 technique11		DefaultTechnique
@@ -339,7 +303,7 @@ technique11		DefaultTechnique
 		PixelShader = compile ps_5_0 PS_MAIN_DEBUG();
 	}	
 
-    pass Result_Earth // 7
+    pass Only_BulrResult //7
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
@@ -347,32 +311,9 @@ technique11		DefaultTechnique
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
-        PixelShader = compile ps_5_0 PS_MAIN_RESULT_EARTH();
+        PixelShader = compile ps_5_0 PS_MAIN_OnlyBlur();
     }
 
-    pass Result_Sun // 8
-    {
-        SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
-
-        VertexShader = compile vs_5_0 VS_MAIN();
-        GeometryShader = NULL;
-        PixelShader = compile ps_5_0 PS_MAIN_RESULT_SUN();
-    }
-
-//9 //UI
-    pass Result_UI //9
-    {
-        SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
-
-        VertexShader = compile vs_5_0 VS_MAIN();
-        GeometryShader = NULL;
-        PixelShader = compile ps_5_0 PS_MAIN_RESULT_UI();
-    }
-    
 }
 
 

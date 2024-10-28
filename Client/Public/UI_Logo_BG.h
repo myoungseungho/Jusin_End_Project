@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "GameObject.h"
+#include "UIObject.h"
 
 BEGIN(Engine)
 class CShader;
@@ -11,7 +11,7 @@ END
 
 BEGIN(Client)
 
-class CUI_Logo_BG final : public CGameObject
+class CUI_Logo_BG final : public CUIObject
 {
 private:
 	CUI_Logo_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -27,15 +27,10 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	CShader* m_pShaderCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CTexture* m_pVideoTextureCom = { nullptr };
 
 private:
-	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
-	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
-
-	HWND					m_hVideo = {};
+	_float m_fVideoSprite = { 0 };
 
 private:
 	HRESULT Ready_Components();

@@ -74,7 +74,7 @@ HRESULT CUI_Logo_Mark::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	m_IsAlphaSwich ? (m_fAlphaValue += fTimeDelta * 0.5f) : (m_fAlphaValue -= fTimeDelta * 0.5f);
+	m_IsAlphaSwich ? (m_fAlphaValue += fTimeDelta * 0.75f) : (m_fAlphaValue -= fTimeDelta * 0.75f);
 
 	if (m_fAlphaValue <= 0.25f)
 		m_IsAlphaSwich = TRUE;

@@ -67,14 +67,13 @@ void CUI_KOParticle::Update(_float fTimeDelta)
 
 void CUI_KOParticle::Late_Update(_float fTimeDelta)
 {
-	RENDER_OBJECT tDesc{};
-	tDesc.tGlowDesc.iPassIndex = 1;
-	
 	__super::Late_Update(fTimeDelta);
+
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 3.2f;
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this, &tDesc);
-
-
-
 }
 
 HRESULT CUI_KOParticle::Render(_float fTimeDelta)

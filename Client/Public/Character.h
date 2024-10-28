@@ -611,6 +611,8 @@ public:
 		_int        iSKillPoint = { 0 };
 		_int        iSKillCount = { 0 };
 
+		_uint		iTeam =  {0};
+
 		CUI_Define::PLAYER_SLOT		ePlayer_Slot = {};
 		CUI_Define::PLAYER_ID        ePlayerID = {};
 	

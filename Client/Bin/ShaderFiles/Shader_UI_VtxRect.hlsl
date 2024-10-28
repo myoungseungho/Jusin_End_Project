@@ -417,13 +417,32 @@ PS_OUT PS_BG(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
-    vBGMaterial.a *= g_fAlphaTimer;
     
+    vBGMaterial.a *= g_fAlphaTimer;
     if (Out.vColor.a < 0.1f)
         discard;
   
     Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
       
+    return Out;
+}
+
+PS_OUT PS_VIDEO(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    
+    //vBGMaterial.a = 0.2f;
+     vBGMaterial.rgb = min(vBGMaterial.rgb, 1.f);
+   
+//    Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
+    vector AColor = lerp(Out.vColor, vBGMaterial, 0.5f);
+    AColor += lerp(vBGMaterial, Out.vColor, 0.5f);
+    
+    Out.vColor = AColor;
     return Out;
 }
 
@@ -713,6 +732,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_BG();
+    }
+
+//19
+    pass Video
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VIDEO();
     }
 
 }
