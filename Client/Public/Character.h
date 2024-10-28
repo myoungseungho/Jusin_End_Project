@@ -182,6 +182,8 @@ public:
 		//_wstring strModelName;
 		_ushort iTeam = 1;
 		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
+		
+
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -234,10 +236,14 @@ public:
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
+	virtual _bool Check_bCurAnimationisHitGround(_uint iAnimation = 1000);
+
 
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
 
+	//공중 기탄같이 중간에 중력이 다시 생기는 특수 처리해야하는것들 각자 override
+	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) { return false; };
 
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition = 0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
@@ -262,11 +268,14 @@ public:
 	void FlipDirection(_int iDirection = 0);
 	_int Get_iDirection() { return m_iLookDirection; };
 	_uint* Get_pAnimationIndex();
+	_short Get_iAnimationIndex();
+
 
 	_uint Get_iPlayerTeam() { return m_iPlayerTeam; };
 
 	//virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0) {};
+	virtual void PlaySound(_uint SoundName, _bool bisLoof, _float fvolume) {};
 
 
 
@@ -344,7 +353,9 @@ public:
 
 
 	//공격 관련
-	void Gain_AttackStep(_ushort iStep) { m_iAttackStepCount += iStep; };
+	void Gain_AttackStep(_ushort iStep);// 
+	void Gain_HitCount(_ushort iHit);// 
+
 	_float Get_DamageScale();
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
@@ -380,6 +391,9 @@ public:
 
 
 	void Add_Move(_float2 fMovement);
+
+protected:
+	void Reset_AttackStep();
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -511,7 +525,7 @@ protected:
 
 
 	_bool m_bChase = { false };
-	_float m_fAccChaseTime = { 0.f };
+	_float m_fAccChaseTime = { 0.f }; 
 	_vector m_vChaseDir{ 0 };
 
 
@@ -620,7 +634,6 @@ private:
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
 
-	_float					m_fStunTImer = { 0.f };
 	_float					m_fAttBufTimer = { 0.f };
 
 protected:

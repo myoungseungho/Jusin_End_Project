@@ -47,6 +47,11 @@ public:
 		ANIME_ATTACK_236_SPECIAL_AIR = 64, ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE = 65,
 
 		ANIME_FINAL_START = 69,
+		ANIME_FINAL_ELBO = 72,
+		ANIME_FINAL_UPPER = 74,
+		ANIME_FINAL_SMASH = 73,
+		ANIME_FINAL_KAMEHAMEHA = 70,
+
 
 		ANIME_IDLE = 0,
 		ANIME_FORWARD_WALK = 9, ANIME_BACK_WALK = 10,
@@ -114,6 +119,7 @@ public:
 		COUNT_ATTACK_MEDIUM =0,
 		COUNT_ATTACK_CROUCH_MEDUIM,
 		COUNT_ATTACK_SPECIAL,
+		COUNT_ATTACK_GRAB,
 		COUNT_END
 	};
 
@@ -146,6 +152,9 @@ public:
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000)override;
 	
+
+	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) override;
+
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
 	virtual void Reset_AttackCount() override;
@@ -153,6 +162,7 @@ public:
 	virtual void Gravity(_float fTimeDelta) override;
 
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
+	virtual void PlaySound(_uint SoundName, _bool bisLoof, _float fvolume)override;
 
 
 private:

@@ -251,10 +251,17 @@ PLAY_GOKU,GKS263_body,18,ObjectMove,0.1,0,0,0
 
 
 //,공중 특
-PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,60.202 갱신 딜레이 짧은버전
+//,갱신 딜레이 짧은버전
+//,PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,60.202 
+
+//,더빨리
+PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,80.202 
+
 //,PLAY_GOKU,GKS265_body,0,AnimSpeedChange,0.030000,60.202000
 //,PLAY_GOKU,GKS265_body,6,StopEvent,
+PLAY_GOKU,GKS265_body,0,AttackGravity,0
 PLAY_GOKU,GKS265_body,20,AttackEvent,33333
+PLAY_GOKU,GKS265_body,20,AttackGravity,1
 PLAY_GOKU,GKS265_body,25,NextAnimationCheck,333333
 PLAY_GOKU,GKS265_body,30,NextAnimationCheck,333333
 
@@ -561,7 +568,7 @@ PLAY_GOKU,GKS441_body,24,ObjectMove,0.2,0,0,0
 PLAY_GOKU,GKS441_body,26,ObjectMove,0.2,0,0,0
 PLAY_GOKU,GKS441_body,28,ObjectMove,0.2,0,0,0
 PLAY_GOKU,GKS441_body,30,ObjectMove,0.2,0,0,0
-PLAY_GOKU,GKS441_body,45.000000,SetNextAnimation,74,100
+//,PLAY_GOKU,GKS441_body,45.000000,SetNextAnimation,74,100
 
 //,3필 모션 - 올려차기
 PLAY_GOKU,GKS443_body,0.000000,AnimSpeedChange,0.020000,120.000000
@@ -571,8 +578,11 @@ PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 
 
 //,3필 모션 - 공중강공
-PLAY_GOKU,GKS442_body,0,ObjectMove,2,3,0,0
-PLAY_GOKU,GKS442_body,0.000000,AnimSpeedChange,0.020000,40.000000
+//,PLAY_GOKU,GKS442_body,0,ObjectMove,2,3,0,0
+PLAY_GOKU,GKS442_body,0.1,ObjectMove,3,10,0,0
+//,PLAY_GOKU,GKS442_body,0.1,ObjectMove,3,4.5,0,0
+
+PLAY_GOKU,GKS442_body,0.1,AnimSpeedChange,0.020000,40.000000
 PLAY_GOKU,GKS442_body,1,FlipPlayerDirection,0
 PLAY_GOKU,GKS442_body,20.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS442_body,25,AttackEvent,33333
@@ -954,7 +964,9 @@ PLAY_GOKU,GKS075_body,0,ObjectMove,0, 0.1, 0, 0
 PLAY_GOKU,GKS075_body,5,AnimSpeedChange,0.030000,10.353000
 
 //, 076 벽에 부딪힘. 4duration짜리 정지모션   보통 062로 연계됨
-PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,25
+//,PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,25
+PLAY_GOKU,GKS076_body,0,AnimSpeedChange,0.030000,50
+
 
 //,어퍼맞고 상승
 
