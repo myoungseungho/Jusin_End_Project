@@ -329,14 +329,17 @@ PLAY_21,TON042_body,0,FrameMove,10
 //,PLAY_21,TON050_body,0,FrameMove,5
 //,PLAY_21,TON050_body,10,FrameMove,5
 PLAY_21,TON050_body,0.000000,AnimSpeedChange,0.064000,86.060997
+PLAY_21,TON050_body,0.0010,PlayGroupSound,203,0,1
 PLAY_21,TON050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,숙이는 피격모션
 PLAY_21,TON051_body,0.000000,AnimSpeedChange,0.064000,5
+PLAY_21,TON051_body,0.0010,PlayGroupSound,203,0,1
 PLAY_21,TON051_body,0,FrameMove,15
 
 //,앉아 피격모션
 PLAY_21,TON052_body,0,AnimSpeedChange,0.020000,57.374001
+PLAY_21,TON052_body,0.0010,PlayGroupSound,203,0,1
 //,PLAY_21,TON052_body,0,FrameMove,10
 
 
@@ -344,6 +347,7 @@ PLAY_21,TON052_body,0,AnimSpeedChange,0.020000,57.374001
 //,PLAY_21,TON060_body,0.000000,AnimSpeedChange,0.044000,49.292999
 PLAY_21,TON060_body,0.000000,AnimSpeedChange,0.044000,30
 PLAY_21,TON060_body,0,PositionChange,14
+PLAY_21,TON060_body,0.0010,PlayGroupSound,203,0,1
 PLAY_21,TON060_body,30,AnimSpeedChange,0.044000,60
 PLAY_21,TON060_body,40,AnimSpeedChange,0.044000,1
 PLAY_21,TON060_body,56,AnimSpeedChange,0.01,2
@@ -467,6 +471,7 @@ PLAY_21,TON013_body,0.000000,AnimSpeedChange,0.023000,120
 
 //,약공1,  Duraton 39짜리인데 괜찮은가   43
 PLAY_21,TON200_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_21,TON200_body,0.0010,PlayGroupSound,202,0,1
 PLAY_21,TON200_body,20,AttackEvent,201
 PLAY_21,TON200_body,22,NextAnimationCheck,333333
 PLAY_21,TON200_body,25,NextAnimationCheck,333333
@@ -475,6 +480,7 @@ PLAY_21,TON200_body,30,NextAnimationCheck,333333
 
 //,약공2  44
 PLAY_21,TON201_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_21,TON201_body,0.0010,PlayGroupSound,202,0,1
 PLAY_21,TON201_body,20,AttackEvent,201
 PLAY_21,TON201_body,22,NextAnimationCheck,333333
 PLAY_21,TON201_body,25,NextAnimationCheck,333333
@@ -490,6 +496,7 @@ PLAY_21,TON201_body,36,NextAnimationCheck,333333
 
 //,약공3 느리게 회전 빠르게 차기 45
 PLAY_21,TON202_body,0.000000,AnimSpeedChange,0.015000,61.414001
+PLAY_21,TON202_body,15.0010,PlaySound,8,0,1
 PLAY_21,TON202_body,22.535000,AnimSpeedChange,0.015000,120.000000
 
 PLAY_21,TON202_body,45,NextAnimationCheck,333333
@@ -559,6 +566,7 @@ PLAY_21,TON203_body,10,ObjectMove,0.04,0,0,0
 //,서서 강공  47
 //,PLAY_21,TON204_body,0.000000,AnimSpeedChange,0.021000,120.000000
 PLAY_21,TON204_body,0.000000,AnimSpeedChange,0.008000,80.000000
+PLAY_21,TON204_body,0.0010,PlaySound,8,0,1
 //,PLAY_21,TON204_body,15.000000,AnimSpeedChange,0.008000,100.000000
 //,PLAY_21,TON204_body,15,AnimSpeedChange,0.021000,100.606003
 

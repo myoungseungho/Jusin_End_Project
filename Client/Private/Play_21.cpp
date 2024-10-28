@@ -1869,6 +1869,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 }
 
+void CPlay_21::Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)
+{
+	m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)SoundName, bisLoof, fvolume);
+}
+
+void CPlay_21::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
+{
+	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
+}
 
 
 CPlay_21* CPlay_21::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
