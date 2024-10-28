@@ -298,11 +298,14 @@ CEffect_Layer* CEffect_Layer::Clone(void* pArg)
 
 void CEffect_Layer::Free()
 {
-	for (auto& iter : m_MixtureEffects)
+	if (m_bIsCopy == true)
 	{
-		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
-			->Access_Shader_Tab(iter->m_iUnique_Index))
-			->Delete_Clone_EffectToShader_Texture(&(*iter));
+		for (auto& iter : m_MixtureEffects)
+		{
+			static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->Delete_Clone_EffectToShader_Texture(&(*iter));
+		}
 	}
 
 
