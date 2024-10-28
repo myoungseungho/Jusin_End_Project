@@ -644,7 +644,7 @@ HRESULT CRenderer::Render_NonBlend_Test(_float fTimeDelta)
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_TEST])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render(-1);
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -678,7 +678,7 @@ HRESULT CRenderer::Render_NonBlend_Layer(_float fTimeDelta)
 	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND_LAYER])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render(-1);
+			pRenderObject->Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}

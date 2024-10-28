@@ -202,6 +202,15 @@ void CTransform::Set_Matrix(_matrix AddMatrix)
 	Set_State(STATE_POSITION, vPos);
 }
 
+_matrix CTransform::Multiple_Matrix(_matrix SrcMatrix)
+{
+	_matrix MatWorld = XMLoadFloat4x4(&m_WorldMatrix);
+
+	XMMATRIX MatResult = XMMatrixMultiply(MatWorld, SrcMatrix);
+
+
+	return MatResult;
+}
 
 HRESULT CTransform::Bind_ShaderResource(CShader* pShader, const _char* pConstantName)
 {

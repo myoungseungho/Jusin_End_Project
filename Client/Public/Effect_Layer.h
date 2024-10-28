@@ -70,6 +70,7 @@ private:
 	CGameInstance*			m_pGameInstance = { nullptr };
 	CCollider*					m_pColliderCom = { nullptr };
 	const _float4x4*			 m_pPlayerMatrix = { nullptr };
+	_matrix						LayerMatrix;
 
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);

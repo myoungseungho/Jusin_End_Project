@@ -98,23 +98,18 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 {
 	if (pArg != nullptr)
 	{
-		//LAYER_DESC* pDesc = static_cast<LAYER_DESC*>(pArg);
-
 		m_pPlayerMatrix = pArg;
+		LayerMatrix = m_pTransformCom->Multiple_Matrix(XMLoadFloat4x4(m_pPlayerMatrix));
 
 		return S_OK;
 	}
+	else
+	{
+		_matrix TestMatrix = XMMatrixIdentity();
 
-	//아래는 테스트용
+		LayerMatrix = m_pTransformCom->Multiple_Matrix(TestMatrix);
+	}
 
-	XMFLOAT4X4* Test = new XMFLOAT4X4;
-	XMStoreFloat4x4(Test, XMMatrixIdentity());
-
-	Test->_41 = 0.0f;
-	Test->_42 = 1.0f; 
-	Test->_43 = -1.0f;
-
-	m_pPlayerMatrix = Test;
 
 	return S_OK;
 }
@@ -128,29 +123,28 @@ void CEffect_Layer::Update(_float fTimeDelta)
 	for (auto& pEffect : m_MixtureEffects)
 		pEffect->Update(fTimeDelta);
 
-	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
 	if (m_bIsCopy)
 	{
+		for (auto& pEffect : m_MixtureEffects)
+		{
+			pEffect->Get_Layer_Matrix(LayerMatrix);
+		}
 		Play_Effect_Animation(fTimeDelta);
 	}
+
+
+	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
 }
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)
 {
-	XMFLOAT4X4 LayerMatrix;
-	
-	XMStoreFloat4x4(&LayerMatrix, XMMatrixIdentity());
-
-	if(m_pPlayerMatrix != nullptr)
-		XMStoreFloat4x4(&LayerMatrix, m_pTransformCom->Get_WorldMatrix() * XMLoadFloat4x4(m_pPlayerMatrix));
-
-	_matrix FinalMatrix = XMLoadFloat4x4(&LayerMatrix);
-
-	for (auto& pEffect : m_MixtureEffects)
+	if (m_bIsCopy)
 	{
-		pEffect->Get_Layer_Matrix(FinalMatrix);
-		pEffect->Late_Update(fTimeDelta);
+		for (auto& pEffect : m_MixtureEffects)
+		{
+			pEffect->Late_Update(fTimeDelta);
+		}
 	}
 
 	CRenderInstance::Get_Instance()->Add_DebugComponent(m_pColliderCom);
@@ -158,6 +152,11 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_Layer::Render(_float fTimeDelta)
 {
+	//for (auto& pEffect : m_MixtureEffects)
+	//{
+	//	pEffect->Render(fTimeDelta);
+	//}
+
 	m_pColliderCom->Render(fTimeDelta);
 
 	return S_OK;

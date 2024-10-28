@@ -79,6 +79,7 @@ public:
 	}
 	
 	void Set_Matrix(_matrix AddMatrix);
+	_matrix Multiple_Matrix(_matrix SrcMatrix);
 
 	_float3 GetEulerAnglesFromRotationMatrix(const _matrix& rotationMatrix)
 	{

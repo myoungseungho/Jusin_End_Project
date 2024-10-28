@@ -89,7 +89,7 @@ void CEffect_Manager::Late_Update(_float fTimeDelta)
 	//	Pair->Late_Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
-		if (Pair->m_bIsRender)
+		if (Pair->m_bIsCopy)
 		{
 			Pair->Late_Update(fTimeDelta);
 		}
@@ -98,14 +98,14 @@ void CEffect_Manager::Late_Update(_float fTimeDelta)
 
 void CEffect_Manager::Render(_float fTimeDelta)
 {
-	for (auto& Pair : m_FinalEffects)
-		Pair.second->Render(fTimeDelta);
+	//for (auto& Pair : m_FinalEffects)
+	//	Pair.second->Render(fTimeDelta);
 		
 	//for (auto& Pair : m_TestEffect)
 	//	Pair->Render(fTimeDelta);
 
-	for (auto& Pair : m_UsingEffect)
-		Pair->Render(fTimeDelta);
+	//for (auto& Pair : m_UsingEffect)
+	//	Pair->Render(fTimeDelta);
 }
 
 HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg)
@@ -159,6 +159,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.fGlowFactor = effectData.fGlowFactor;
 			EffectDesc.DerredPassIndex = effectData.iDerredPassIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
+			EffectDesc.bIsCopy = false;
 			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 
 			CEffect_NoneLight* pNonelight = { nullptr };
