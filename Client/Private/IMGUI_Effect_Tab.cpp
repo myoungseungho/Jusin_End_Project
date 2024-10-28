@@ -1364,7 +1364,6 @@ void CIMGUI_Effect_Tab::Free()
     __super::Free();
 
     Safe_Release(m_pEffect_Manager);
-    m_pEffect_Manager->Destroy_Instance();
 
     ModelName.clear();
     TextureName.clear();

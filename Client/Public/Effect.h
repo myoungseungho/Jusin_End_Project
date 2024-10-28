@@ -105,6 +105,7 @@ public:
 	_int				m_iNumWidthImage = { 0 };
 	_int				m_iNumHeighthImage = { 0 };
 	_bool			m_bIsNotPlaying = { false };
+	_bool			m_bIsSpriteEnd = { false };
 	_bool			m_bIsLoop = { false };
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };

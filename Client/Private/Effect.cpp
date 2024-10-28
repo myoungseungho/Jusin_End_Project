@@ -63,7 +63,7 @@ HRESULT CEffect::Render(_float fTimeDelta)
 
 		if (iCheckSpriteEnd == 1)
 		{
-			int a = 10;
+			m_bIsSpriteEnd = true;
 		}
 	}
 	return S_OK;

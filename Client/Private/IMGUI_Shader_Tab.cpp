@@ -1341,7 +1341,8 @@ void CIMGUI_Shader_Tab::Save_Shader_Tab(std::string fileName, const Shader_Tab_S
 
 void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& shaderTabSave) {
     std::ifstream inFile(fileName);
-    if (!inFile.is_open()) return;
+    if (!inFile.is_open())
+        return;
 
     std::string line;
     int version = 1; // 기본 버전

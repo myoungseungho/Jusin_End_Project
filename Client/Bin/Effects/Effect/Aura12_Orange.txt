@@ -1,7 +1,7 @@
 [Layer]
 LayerName: Aura12_Orange
 Duration: 1
-TickPerSecond: 0
+TickPerSecond: 0.1
 KeyFramesCount: 59
 NumEffec: 1
 Position: 0 0 0
@@ -16,7 +16,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 4
+UniqueIndex: 5
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0

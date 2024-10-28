@@ -169,7 +169,6 @@ atomic_bool CLoader::isFinished()
 				}
 			}
 
-			Loading_For_Effect();
 			// 모든 작업이 성공적으로 완료됨
 			m_isFinished = true;
 			m_futures.clear(); // future 객체 정리
@@ -284,18 +283,11 @@ HRESULT CLoader::Load_UI_Resources_Logo()
 	return S_OK;
 }
 
-HRESULT CLoader::Loading_For_Effect()
-{
-	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
-
-	return CEffect_Manager::Get_Instance()->Set_Saved_Effects(pLoaded);
-}
-
 HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 {
 	{
 		std::lock_guard<std::mutex> lock(m_TextMutex);
-		lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다.0"));
+		lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
 	}
 
 	//Combo
@@ -740,9 +732,9 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_BG_star02.dds"), 1))))
 		return E_FAIL;
 
-	
 
-	
+
+
 }
 HRESULT CLoader::Load_Texture_Resources_GamePlay_2()
 {
@@ -2879,6 +2871,7 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FontName"),
 		CUI_FontName::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 
 	return S_OK;
 }
