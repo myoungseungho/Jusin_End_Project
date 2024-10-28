@@ -883,10 +883,10 @@ HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 	if (0 != m_GlowDescs[GLOW_UI].size())
 	{
 		auto iter = m_GlowDescs[GLOW_UI].begin();
-	}
 
-	if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
-		return E_FAIL;
+		if (FAILED(Draw_Glow(m_pUI_GlowShader, &(*iter))))
+			return E_FAIL;
+	}
 
 	m_GlowDescs[GLOW_UI].clear();
 	m_RenderObjects[RG_UI_GLOW].clear();

@@ -70,7 +70,8 @@ void CUI_Combo::Update(_float fTimeDelta)
 	if (m_pMainPawn != nullptr)
 		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
 
-
+	if (m_iComboCount >= 3)
+		int a = 10;
 		
 	//}
 	//	m_bComboEnd = TRUE;

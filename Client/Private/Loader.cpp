@@ -265,6 +265,11 @@ HRESULT CLoader::Load_UI_Resources_Logo()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/E3_Title/tex/LOC/E3_Title_Logo.png")))))
 		return E_FAIL;
 
+	//VideoTex
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_UI_LogoVideoTex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Video/LogoMultyTexture/Video_LogoTex%d.png"), 145))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_BackGround"),
 		CUI_Logo_BG::Create(m_pDevice, m_pContext))))
