@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "..\Public\Effect.h"
 #include "GameInstance.h"
+#include "IMGUI_Shader_Tab.h"
+#include "Imgui_Manager.h"
 #include "Effect_Animation.h"
 
 CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -48,11 +50,22 @@ void CEffect::Update(_float fTimeDelta)
 
 void CEffect::Late_Update(_float fTimeDelta)
 {
+	
 }
 
 HRESULT CEffect::Render(_float fTimeDelta)
 {
-	
+	if (m_bIsCopy == true)
+	{
+		_int iCheckSpriteEnd = static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+			->Access_Shader_Tab(m_iUnique_Index))
+			->Update_Clone_EffectToShader_Texture(this, fTimeDelta);
+
+		if (iCheckSpriteEnd == 1)
+		{
+			int a = 10;
+		}
+	}
 	return S_OK;
 }
 

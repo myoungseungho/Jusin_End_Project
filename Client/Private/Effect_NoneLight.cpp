@@ -118,6 +118,9 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
 {
+	if (m_iPassIndex != 1)
+		__super::Render(fTimeDelta);
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 

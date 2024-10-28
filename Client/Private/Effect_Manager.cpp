@@ -58,17 +58,17 @@ void CEffect_Manager::Update(_float fTimeDelta)
 	for (auto& Pair : m_TestEffect)
 		Pair->Update(fTimeDelta);
 
-	for (auto iter = m_UsingEffect.begin(); iter != m_UsingEffect.end();)
+	for (auto iter = m_UsingEffect.begin(); iter != m_UsingEffect.end(); )
 	{
-		if (!(*iter)->m_bIsDoneAnim)
-		{
-			(*iter)->Update(fTimeDelta);
-			++iter;
-		}
-		else
+		if ((*iter)->m_bIsDoneAnim)
 		{
 			(*iter)->Free();
 			iter = m_UsingEffect.erase(iter);
+		}
+		else
+		{
+			(*iter)->Update(fTimeDelta);
+			++iter;
 		}
 	}
 }

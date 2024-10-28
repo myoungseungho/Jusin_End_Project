@@ -37,13 +37,18 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	{
 		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))
 			->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
-			->Access_Shader_Tab(iter->m_iUnique_Index))
-			->m_TestEffectModel_Texture->Get_SRV(0));
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->m_TestEffectModel_Texture->Get_SRV(0));
 
 		static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))
 			->Set_SRV(static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->m_TestEffectModel_Texture->Get_SRV(1), 1);
+
+		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
 			->Access_Shader_Tab(iter->m_iUnique_Index))
-			->m_TestEffectModel_Texture->Get_SRV(1), 1);
+			->Add_Clone_EffectToShader_Texture(&(*iter));
+
 	}
 
 	Safe_AddRef(m_pTransformCom);
@@ -109,6 +114,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 
 		LayerMatrix = m_pTransformCom->Multiple_Matrix(TestMatrix);
 	}
+
 
 
 	return S_OK;
@@ -315,6 +321,18 @@ CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg)
 
 void CEffect_Layer::Free()
 {
+	if (m_bIsCopy == true)
+	{
+		for (auto& iter : m_MixtureEffects)
+		{
+			static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->Delete_Clone_EffectToShader_Texture(&(*iter));
+		}
+	}
+
+
+
 	__super::Free();
 
 	Safe_Release(m_pContext);
