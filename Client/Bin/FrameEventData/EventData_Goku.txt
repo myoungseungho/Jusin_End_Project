@@ -113,6 +113,7 @@ PLAY_GOKU,GKS204_body,50,AttackEvent,204
 //,지상특수
 
 PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,90
+PLAY_GOKU,GKS205_body,0.000000,PlaySound,3,0,1
 PLAY_GOKU,GKS205_body,55.11,AnimSpeedChange,0.022,90
 PLAY_GOKU,GKS205_body,10,AnimSpeedChange,0.022,90
 
@@ -127,13 +128,15 @@ PLAY_GOKU,GKS205_body,37,NextAnimationCheck,333333333
 
 PLAY_GOKU,GKS205_body,50,PositionChange,109
 PLAY_GOKU,GKS205_body,50,AnimSpeedChange,0.005,90
+PLAY_GOKU,GKS205_body,55.000000,PlaySound,3,0,1
 
 PLAY_GOKU,GKS205_body,80,AttackEvent,205
+PLAY_GOKU,GKS205_body,80.000000,PlaySound,3,0,1
 PLAY_GOKU,GKS205_body,83,NextAnimationCheck,333333333
 PLAY_GOKU,GKS205_body,90,NextAnimationCheck,333333333
 PLAY_GOKU,GKS205_body,95,PositionChange,109
 PLAY_GOKU,GKS205_body,95,AnimSpeedChange,0.005,90
-
+PLAY_GOKU,GKS205_body,95.000000,PlaySound,3,0,1
 
 //,PLAY_GOKU,GKS205_body,109,PositionChange,15
 
@@ -179,6 +182,7 @@ PLAY_GOKU,GKS231_body,21,ObjectMove,0.1,0,0,0
 
 //,앉아강
 PLAY_GOKU,GKS232_body,0,AnimSpeedChange,0.025,80
+PLAY_GOKU,GKS232_body,0.000000,PlaySound,2,0,1
 PLAY_GOKU,GKS232_body,15,AnimSpeedChange,0.025,120
 PLAY_GOKU,GKS232_body,30,AnimSpeedChange,0.025,80
 PLAY_GOKU,GKS232_body,34,AttackEvent,333333

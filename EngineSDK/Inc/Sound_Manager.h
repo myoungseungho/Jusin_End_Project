@@ -19,7 +19,9 @@ public:
 	enum class SOUND_KEY_NAME :_int
 	{
 		SPACE_BGM = 0,
-		Heavy_Attack,
+		Goku_Heavy_Attack,
+		Goku_Upper_Attack,
+		Goku_Range_Attack,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
