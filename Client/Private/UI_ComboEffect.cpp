@@ -3,6 +3,8 @@
 #include "UI_ComboEffect.h"
 #include "RenderInstance.h"
 
+#include "Character.h"
+
 CUI_ComboEffect::CUI_ComboEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUI_Combo{ pDevice ,pContext }
 {
@@ -34,9 +36,9 @@ HRESULT CUI_ComboEffect::Initialize(void* pArg)
 
 	m_fPosX = 181.f;
 
-	if (m_eLRPos == RIGHT)
+	if (m_eLRPos == LEFT)
 	{
-		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
+		m_fPosX += 1280 * 0.5f + 300.f;
 	}
 
 	__super::Set_UI_Setting(384.f, 96.f, m_fPosX, 286.f);
@@ -61,9 +63,25 @@ void CUI_ComboEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	
-	if(m_bCharaStun == FALSE && m_iComboCount >= 2)
+	_bool bStun = FALSE;
+
+	if (m_pMainPawn != nullptr)
+	{
+		bStun = m_pMainPawn->Get_PawnDesc().bStun;
+		int a = 10;
+	}
+
+	if (bStun == FALSE && m_iComboCount >= 2)
+	{
+		if (m_pMainPawn != nullptr)
+		{
+			CCharacter::Character_INFO_DESC Desc = m_pMainPawn->Get_PawnDesc();
+			int iDebug = 10;
+		}
+
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	}
+
 }
 
 HRESULT CUI_ComboEffect::Render(_float fTimeDelta)

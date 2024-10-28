@@ -446,7 +446,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 				m_bStun = false;
 				m_fAccStunTime = 0.f;
 
-				if(Check_bCurAnimationisGroundMove())
+				if(Check_bCurAnimationisHitGround())
 					Reset_AttackStep();
 			}
 			Update_StunImpus(fTimeDelta);
@@ -1170,7 +1170,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 400 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
@@ -1197,7 +1197,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };

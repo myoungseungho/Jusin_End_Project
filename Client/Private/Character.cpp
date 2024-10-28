@@ -184,9 +184,10 @@ HRESULT CCharacter::Initialize(void* pArg)
 	Character_DESC* pSlotDesc = static_cast<Character_DESC*>(pArg);
 	m_ePlayerSlot = pSlotDesc->ePlayerSlot;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
-
+	m_tCharacterDesc.iTeam = pDesc->iTeam;
 
 	m_iPlayerTeam = pDesc->iTeam;
+	
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
@@ -219,20 +220,19 @@ void CCharacter::Player_Update(_float fTimeDelta)
 void CCharacter::Priority_Update(_float fTimeDelta)
 {
 	m_tCharacterDesc.bStun = m_bRedHp;
-	m_tCharacterDesc.bHit = m_bHit;
+
+	//나중에 픽스
+	m_tCharacterDesc.bHit = m_bRedHp;
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
 	m_tCharacterDesc.iHp = m_iHP;
-	m_tCharacterDesc.iComboCount = m_iComboCount;
+
+	
+	m_tCharacterDesc.iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(m_iPlayerTeam);
+
 	m_tCharacterDesc.iSKillCount = m_iSKillCount;
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 	m_tCharacterDesc.ePlayerID = m_eCharacterID;
-
-	if (m_pGameInstance->Key_Pressing(DIK_F6) && m_ePlayerSlot == CUI_Define::LPLAYER1)
-	{
-		m_iHP -= 100;
-	}
-
 }
 
  void CCharacter::Update(_float fTimeDelta)
@@ -2267,8 +2267,8 @@ void CCharacter::Gain_AttackStep(_ushort iStep)
 
 	if (m_iPlayerTeam == 1)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,2);
-
-	CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,1);
+	else
+		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,1);
 
 }
 
@@ -2276,8 +2276,8 @@ void CCharacter::Gain_HitCount(_ushort iHit)
 {
 	if (m_iPlayerTeam == 1)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 2);
-
-	CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 1);
+	else
+		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 1);
 
 }
 

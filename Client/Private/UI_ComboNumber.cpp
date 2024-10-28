@@ -144,9 +144,9 @@ void CUI_ComboNumber::InitPosition()
 		break;
 	}
 
-	if (m_eLRPos == RIGHT)
+	if (m_eLRPos == LEFT)
 	{
-		m_fPosX += g_iWinSizeX * 0.5f + 300.f;
+		m_fPosX += 1280 * 0.5f + 300.f;
 	}
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);

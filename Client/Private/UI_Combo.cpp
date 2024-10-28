@@ -4,6 +4,8 @@
 #include "RenderInstance.h"
 #include "Character.h"
 
+#include"BattleInterface.h"
+
 CUI_Combo::CUI_Combo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
 {
@@ -41,23 +43,52 @@ void CUI_Combo::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if (m_bCharaStun == TRUE)
-	{
-		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
-		m_bComboEnd = TRUE;
-	}
+	//if (m_bCharaStun == TRUE)
+	//{
+		//CBattleInterface_Manager::Get_Instance()->Get_HitCount(1);
 
-	if (m_bComboEnd == TRUE)
+	//if (m_bCharaStun)
+	//{
+		//if (m_pMainPawn->Get_PawnDesc().iTeam == 1)
+		//{
+
+			//_uint iTeam = m_pMainPawn->Get_PawnDesc().iTeam;
+
+	if (m_pMainPawn != nullptr)
+		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
+
+	if (m_iComboCount >= 3)
 	{
-		m_fAlphaTimer += fTimeDelta;
-		if (m_fAlphaTimer >= 1.f)
-		{
-			m_fAlphaTimer = 0.f;
-			m_bComboEnd = FALSE;
-		}
+		int ia = 10;
+		
 	}
-	else
-		m_iComboCount = 0.f;
+			//if(iTeam == 2)
+			//	m_iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(1);
+			//else if(iTeam == 1)
+			//	m_iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(2);
+		//}
+		//else if (m_pMainPawn->Get_PawnDesc().iTeam == 2)
+		//{
+			//m_iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(2);
+		//}
+
+		
+		
+	//}
+	//	m_bComboEnd = TRUE;
+	//}
+
+	//if (m_bComboEnd == TRUE)
+	//{
+	//	m_fAlphaTimer += fTimeDelta;
+	//	if (m_fAlphaTimer >= 1.f)
+	//	{
+	//		m_fAlphaTimer = 0.f;
+	//		m_bComboEnd = FALSE;
+	//	}
+	//}
+	//else
+	//	m_iComboCount = 0.f;
 }
 
 void CUI_Combo::Late_Update(_float fTimeDelta)
