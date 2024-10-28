@@ -201,8 +201,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
 
 	
-
-	m_strName = "GOKU" + to_string(m_iPlayerTeam);
+	m_strName = "ANDROID21" + to_string(m_iPlayerTeam);
+	m_RendererDesc = RENDER_OBJECT(m_strName);
 
 	LIGHT_DESC			LightDesc{};
 
@@ -750,7 +750,7 @@ void CPlay_21::Update(_float fTimeDelta)
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 //#ifdef _DEBUG
 //	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);

@@ -107,7 +107,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_strName = "GOKU" + to_string(m_iPlayerTeam);
 
 	//이름변경
-	m_tRenderDesc = RENDER_OBJECT(m_strName);
+	m_RendererDesc = RENDER_OBJECT(m_strName);
 
 	LIGHT_DESC			LightDesc{};
 
@@ -544,7 +544,7 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 
 	
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &tDesc);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
