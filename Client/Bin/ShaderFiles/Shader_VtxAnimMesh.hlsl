@@ -4,7 +4,7 @@
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 texture2D		g_DiffuseTexture;
-
+texture2D g_OutLineTexture;
 /* 모델 전체의 뼈(x), 메시에게 영향을 주는 뼈(o)*/
 float4x4		g_BoneMatrices[800];
 
@@ -82,14 +82,22 @@ PS_OUT PS_MAIN(PS_IN In)
 	PS_OUT			Out;	
 
 	vector		vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-	if (vMtrlDiffuse.a < 0.1f)
-		discard;
+	
+    vector		vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
 
-	Out.vDiffuse = vMtrlDiffuse;
-
-	/* In.vNormal.xyz -> -1 ~ 1 */
-	/* Out.vNormal.xyz -> 0 ~ 1 */
-
+    vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
+	
+	/* vMtrlShadeDesc 에 알파값으로 일단 아웃라인을 생성 */
+    vResultColor.rgb = saturate(vMtrlDiffuse.rgb - (1 - vMtrlShadeDesc.a));
+    
+	/* g값은 명암? r값이랑 같이 쓰는데 모호함 */
+    vResultColor.rgb = saturate(vResultColor.rgb * (vMtrlShadeDesc.g * 1.5f)); 
+	
+	/* b값은 보니까 스펙큘러인거같음 그 처리 */
+    vResultColor.rgb = saturate(vResultColor.rgb + vResultColor.rgb * (vMtrlShadeDesc.b * 0.3f));
+	
+	
+    Out.vDiffuse = vResultColor;
 	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
 	Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 

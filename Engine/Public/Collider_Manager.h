@@ -21,6 +21,7 @@ public:
 		CG_2P_Energy_Attack,
 		CG_2P_Ranged_Attack,   // 2P 원거리 공격
 		CG_2P_Melee_Attack,    // 2P 근접 공격
+		CG_EFFECT_LAYER,
 		CG_END
 	};
 

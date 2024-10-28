@@ -37,6 +37,7 @@ HRESULT CPlay_Goku::Initialize_Prototype()
 
 HRESULT CPlay_Goku::Initialize(void* pArg)
 {
+
 	m_eCharacterIndex = PLAY_GOKU;
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
@@ -112,7 +113,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	LightDesc.vDirection = _float4(-0.5f, -0.1f, 0.5f, 0.f);
 	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
-	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
@@ -538,12 +539,10 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-
-
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
-	//#ifdef _DEBUG
-	//	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-	//#endif
+	RENDER_OBJECT tDesc = RENDER_OBJECT(m_strName);
+	
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &tDesc);
+	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -572,9 +571,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 			return E_FAIL;
 	}
 
-#ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+
 
 	//corlorChange Test
 	//for (size_t i = 0; i < iNumMeshes; i++)
@@ -690,6 +687,11 @@ HRESULT CPlay_Goku::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
+	/* Com_Model */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -704,6 +706,7 @@ HRESULT CPlay_Goku::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
+	m_pOutLineCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 1);
 	return S_OK;
 }
 
@@ -1725,7 +1728,7 @@ void CPlay_Goku::Free()
 
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
-
+	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 

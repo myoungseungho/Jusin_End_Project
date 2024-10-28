@@ -113,6 +113,7 @@ public: /* For.FileManager */
 	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
 	HRESULT Save_Effects(wstring& FilePath, void* pArg);
 	void* Load_Effects(wstring& FilePath);
+	void* Load_All_Effects();
 
 public: /* For.Font_Manager */
 	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);

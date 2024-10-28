@@ -20,6 +20,7 @@ CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext*
     
 }
 
+
 HRESULT CIMGUI_Shader_Tab::Initialize()
 {
     DragAcceptFiles(g_hWnd, TRUE);
@@ -34,13 +35,13 @@ HRESULT CIMGUI_Shader_Tab::Load_Initialize(string strFilename)
     isStart = true;
     m_PrototypeKeys.clear();
 
-    //if (strFilename.size() != NULL)
-    //{
-    //    
-    //}
-
     return S_OK;
 }
+//
+//HRESULT CIMGUI_Shader_Tab::Copy_Initialize(void* pArg)
+//{
+//    return S_OK;
+//}
 
 void CIMGUI_Shader_Tab::Update(_float fTimeDelta)
 {
@@ -1280,110 +1281,275 @@ void CIMGUI_Shader_Tab::Check_Create_Link()
     }
 }
 
-void CIMGUI_Shader_Tab::Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave)
+void CIMGUI_Shader_Tab::Save_Shader_Tab(std::string fileName, const Shader_Tab_Save& shaderTabSave, _int version) 
 {
-    ofstream outFile(fileName, ios::binary);
-    if (!outFile.is_open())
-    {
-        // 파일 열기 실패 처리
-        return;
-    }
-    
+    std::ofstream outFile(fileName);
+    if (!outFile.is_open()) return;
+
+    // 버전 정보 기록
+    outFile << "Version: " << version << "\n";
+
     // Save_Key 저장
-    size_t keyCount = shaderTabSave.keys.size();
-    outFile.write(reinterpret_cast<const char*>(&keyCount), sizeof(keyCount));
-    for (const auto& key : shaderTabSave.keys)
-    {
-        size_t keySize = key.key.size();
-        outFile.write(reinterpret_cast<const char*>(&keySize), sizeof(keySize));
+    outFile << "KeyCount: " << shaderTabSave.keys.size() << "\n";
+    for (const auto& key : shaderTabSave.keys) {
+        outFile << "KeySize: " << key.key.size() << "\n";
+        // wstring을 string으로 변환하여 저장
+        std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+        std::string keyStr = converter.to_bytes(key.key);
+        outFile << "Key: " << keyStr << "\n";
+        outFile << "ID: " << key.iD << "\n";
 
-        outFile.write(reinterpret_cast<const char*>(key.key.data()), keySize * sizeof(wchar_t));
-
-        outFile.write(reinterpret_cast<const char*>(&key.iD), sizeof(key.iD));
-
-        //outFile.write(reinterpret_cast<const char*>(&key.vTexCoord), sizeof(key.vTexCoord));
+        // 버전 2부터 vTexCoord 저장
+        if (version >= 2) {
+            outFile << "vTexCoord: " << key.vTexCoord.x << " " << key.vTexCoord.y << "\n";
+        }
     }
 
-    // 나머지 부분 (Node_Position, MoveTex_Node_Save, Sprite_Node_Save, Link_Save) 저장 부분은 그대로 유지
     // Node_Position 저장
-    size_t nodePosCount = shaderTabSave.nodePositions.size();
-    outFile.write(reinterpret_cast<const char*>(&nodePosCount), sizeof(nodePosCount));
-    outFile.write(reinterpret_cast<const char*>(shaderTabSave.nodePositions.data()), nodePosCount * sizeof(Node_Position));
+    outFile << "NodePosCount: " << shaderTabSave.nodePositions.size() << "\n";
+    for (const auto& nodePos : shaderTabSave.nodePositions) {
+        outFile << "NodeID: " << nodePos.nodeID << " Position: " << nodePos.nodePosition.x << " " << nodePos.nodePosition.y << "\n";
+    }
 
     // MoveTex_Node 저장
-    size_t moveTexNodeCount = shaderTabSave.moveTexNodes.size();
-    outFile.write(reinterpret_cast<const char*>(&moveTexNodeCount), sizeof(moveTexNodeCount));
-    outFile.write(reinterpret_cast<const char*>(shaderTabSave.moveTexNodes.data()), moveTexNodeCount * sizeof(MoveTex_Node_Save));
+    outFile << "MoveTexNodeCount: " << shaderTabSave.moveTexNodes.size() << "\n";
+    for (const auto& moveTexNode : shaderTabSave.moveTexNodes) {
+        outFile << "MoveTexNodeID: " << moveTexNode.MoveTex_node_id
+            << " Direction: " << moveTexNode.fDirection.x << " " << moveTexNode.fDirection.y
+            << " Speed: " << moveTexNode.fSpeed << "\n";
+
+    }
 
     // Sprite_Node 저장
-    size_t spriteNodeCount = shaderTabSave.spriteNodes.size();
-    outFile.write(reinterpret_cast<const char*>(&spriteNodeCount), sizeof(spriteNodeCount));
-    outFile.write(reinterpret_cast<const char*>(shaderTabSave.spriteNodes.data()), spriteNodeCount * sizeof(Sprite_Node_Save));
+    outFile << "SpriteNodeCount: " << shaderTabSave.spriteNodes.size() << "\n";
+    for (const auto& spriteNode : shaderTabSave.spriteNodes) {
+        outFile << "SpriteNodeID: " << spriteNode.Sprite_node_id
+            << " IsLoop: " << spriteNode.isLoop
+            << " SpriteSizeNumber: " << spriteNode.fSpriteSizeNumber.x << " " << spriteNode.fSpriteSizeNumber.y
+            << " Speed: " << spriteNode.fSpeed << "\n";
+    }
 
     // Link_Save 저장
-    size_t linkCount = shaderTabSave.links.size();
-    outFile.write(reinterpret_cast<const char*>(&linkCount), sizeof(linkCount));
-    outFile.write(reinterpret_cast<const char*>(shaderTabSave.links.data()), linkCount * sizeof(Link_Save));
+    outFile << "LinkCount: " << shaderTabSave.links.size() << "\n";
+    for (const auto& link : shaderTabSave.links) {
+        outFile << "LinkSrcNodeID: " << link.srcNodeID
+            << " LinkDestNodeID: " << link.destNodeID << "\n";
+    }
 
     outFile.close();
 }
 
-void CIMGUI_Shader_Tab::Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave)
-{
-    ifstream inFile(fileName, ios::binary);
-    if (!inFile.is_open())
-    {
-        // 파일 열기 실패 처리
-        return;
+void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& shaderTabSave) {
+    std::ifstream inFile(fileName);
+    if (!inFile.is_open()) return;
+
+    std::string line;
+    int version = 1; // 기본 버전
+    bool versionFound = false;
+
+    // 첫 번째 줄에서 버전 정보 읽기
+    if (std::getline(inFile, line)) {
+        if (line.find("Version:") != std::string::npos) {
+            std::sscanf(line.c_str(), "Version: %d", &version);
+            versionFound = true;
+        }
     }
 
     // Save_Key 로드
-    size_t keyCount;
-    inFile.read(reinterpret_cast<char*>(&keyCount), sizeof(keyCount));
-    shaderTabSave.keys.resize(keyCount);
-    for (auto& key : shaderTabSave.keys)
+    if (std::getline(inFile, line)) 
     {
-        size_t keySize;
-        inFile.read(reinterpret_cast<char*>(&keySize), sizeof(keySize));
+        size_t keyCount = std::stoul(line.substr(line.find(":") + 1));
+        shaderTabSave.keys.resize(keyCount);
 
-        // wchar_t 크기에 맞게 공간 할당
-        key.key.resize(keySize);
+        for (auto& key : shaderTabSave.keys) {
+            // KeySize 읽기
+            std::getline(inFile, line);
+            size_t keySize = std::stoul(line.substr(line.find(":") + 1));
 
-        // const 제거 후 wchar_t 데이터를 읽어옴
-        inFile.read(reinterpret_cast<char*>(const_cast<wchar_t*>(key.key.data())), keySize * sizeof(wchar_t));
+            // Key 읽기
+            std::getline(inFile, line); // Key 읽기
+            std::string keyStr = line.substr(line.find(":") + 1);
+            keyStr.erase(0, keyStr.find_first_not_of(" \n\r\t")); // 여백 제거
 
-        inFile.read(reinterpret_cast<char*>(&key.iD), sizeof(key.iD));
-        /* 기존에 있던 파일은 없어서 읽으면 터짐 */
-        //inFile.read(reinterpret_cast<char*>(&key.vTexCoord), sizeof(key.vTexCoord));
+            // UTF-8 문자열을 wchar_t로 변환
+            std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+            key.key = converter.from_bytes(keyStr); // string을 wstring으로 변환
+
+            // ID 읽기
+            std::getline(inFile, line); // ID 읽기
+            key.iD = std::stoi(line.substr(line.find(":") + 1));
+
+            // vTexCoord 읽기 (버전 2 이상일 경우)
+            if (version >= 2) {
+                std::getline(inFile, line); // vTexCoord 읽기
+                std::sscanf(line.c_str(), "vTexCoord: %f %f", &key.vTexCoord.x, &key.vTexCoord.y);
+            }
+        }
     }
 
     // Node_Position 로드
-    size_t nodePosCount;
-    inFile.read(reinterpret_cast<char*>(&nodePosCount), sizeof(nodePosCount));
-    shaderTabSave.nodePositions.resize(nodePosCount);
-    inFile.read(reinterpret_cast<char*>(shaderTabSave.nodePositions.data()), nodePosCount * sizeof(Node_Position));
+    if (std::getline(inFile, line)) {
+        size_t nodePosCount = std::stoul(line.substr(line.find(":") + 1));
+        shaderTabSave.nodePositions.resize(nodePosCount);
+        for (auto& nodePos : shaderTabSave.nodePositions) {
+            std::getline(inFile, line);
+            std::sscanf(line.c_str(), "NodeID: %d Position: %f %f", &nodePos.nodeID, &nodePos.nodePosition.x, &nodePos.nodePosition.y);
+        }
+    }
 
     // MoveTex_Node 로드
-    size_t moveTexNodeCount;
-    inFile.read(reinterpret_cast<char*>(&moveTexNodeCount), sizeof(moveTexNodeCount));
-    shaderTabSave.moveTexNodes.resize(moveTexNodeCount);
-    inFile.read(reinterpret_cast<char*>(shaderTabSave.moveTexNodes.data()), moveTexNodeCount * sizeof(MoveTex_Node_Save));
+    if (std::getline(inFile, line)) {
+        size_t moveTexNodeCount = std::stoul(line.substr(line.find(":") + 1));
+        shaderTabSave.moveTexNodes.resize(moveTexNodeCount);
+        for (auto& moveTexNode : shaderTabSave.moveTexNodes) {
+            std::getline(inFile, line);
+            std::sscanf(line.c_str(), "MoveTexNodeID: %d Direction: %f %f Speed: %f",
+                &moveTexNode.MoveTex_node_id, &moveTexNode.fDirection.x, &moveTexNode.fDirection.y, &moveTexNode.fSpeed);
+        }
+    }
 
     // Sprite_Node 로드
-    size_t spriteNodeCount;
-    inFile.read(reinterpret_cast<char*>(&spriteNodeCount), sizeof(spriteNodeCount));
-    shaderTabSave.spriteNodes.resize(spriteNodeCount);
-    inFile.read(reinterpret_cast<char*>(shaderTabSave.spriteNodes.data()), spriteNodeCount * sizeof(Sprite_Node_Save));
+    if (std::getline(inFile, line)) {
+        size_t spriteNodeCount = std::stoul(line.substr(line.find(":") + 1));
+        shaderTabSave.spriteNodes.resize(spriteNodeCount);
+        for (auto& spriteNode : shaderTabSave.spriteNodes) {
+            std::getline(inFile, line);
+            std::sscanf(line.c_str(), "SpriteNodeID: %d IsLoop: %d SpriteSizeNumber: %f %f Speed: %f",
+                &spriteNode.Sprite_node_id, &spriteNode.isLoop, &spriteNode.fSpriteSizeNumber.x, &spriteNode.fSpriteSizeNumber.y, &spriteNode.fSpeed);
+        }
+    }
 
     // Link_Save 로드
-    size_t linkCount;
-    inFile.read(reinterpret_cast<char*>(&linkCount), sizeof(linkCount));
-    shaderTabSave.links.resize(linkCount);
-    inFile.read(reinterpret_cast<char*>(shaderTabSave.links.data()), linkCount * sizeof(Link_Save));
+    if (std::getline(inFile, line)) {
+        size_t linkCount = std::stoul(line.substr(line.find(":") + 1));
+        shaderTabSave.links.resize(linkCount);
+        for (auto& link : shaderTabSave.links) {
+            std::getline(inFile, line);
+            std::sscanf(line.c_str(), "LinkSrcNodeID: %d LinkDestNodeID: %d",
+                &link.srcNodeID, &link.destNodeID);
+        }
+    }
 
     inFile.close();
 }
 
+void CIMGUI_Shader_Tab::Delete_Clone_EffectToShader_Texture(CEffect* pEffect)
+{
+    if (m_CopyClones.empty() == true)
+        return;
+
+    auto& it = m_CopyClones.find(pEffect);
+
+    if (it == m_CopyClones.end())
+        return;
+    
+    for (auto& Textureiter : (*it->second))
+    {
+        Textureiter->Delete_CloneValue(pEffect);
+    }
+
+    m_CopyClones.erase(it);
+}
+
+void CIMGUI_Shader_Tab::Add_Clone_EffectToShader_Texture(CEffect* pEffect)
+{
+    m_CopyClones.emplace(pEffect, &m_NodeTextures);
+
+    for (auto& iter : m_NodeTextures)
+    {
+        iter->Add_CloneValue(pEffect);
+    }
+   
+}
+
+_int CIMGUI_Shader_Tab::Update_Clone_EffectToShader_Texture(CEffect* pEffect, _float fTimeDelta)
+{
+    _int iResult = { 0 };
+    auto& it = m_CopyClones.find(pEffect);
+
+    if (it == m_CopyClones.end())
+        return -1;
+
+    for (auto& Textureiter : (*it->second))
+    {
+        if (Textureiter->Update_CloneValue(pEffect, fTimeDelta) == 1)
+            iResult = 1;
+    }
+
+    return iResult;
+}
+
+// 로드 함수
+//void CIMGUI_Shader_Tab::Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave) {
+//    std::ifstream inFile(fileName, std::ios::binary);
+//    if (!inFile.is_open()) return;
+//
+//    size_t fileSize = GetFileSize(inFile);
+//    int version = 1; // 기본 버전
+//
+//    //// 버전 정보가 포함된 새 포맷인지 확인
+//    //if (fileSize >= sizeof(int)) {
+//    //    inFile.read(reinterpret_cast<char*>(&version), sizeof(version));
+//
+//    //    // 버전 번호가 올바르지 않은 경우 기본값으로 설정하여 버전 정보가 없는 파일로 처리
+//    //    if (inFile.fail() || version <= 0 || version > 2) {
+//    //        inFile.clear();
+//    //        inFile.seekg(0, std::ios::beg); // 파일 시작으로 돌아가서 버전 없는 경우로 읽기
+//    //        version = 1;
+//    //    }
+//    //}
+//
+//    // Save_Key 로드
+//    size_t keyCount;
+//    inFile.read(reinterpret_cast<char*>(&keyCount), sizeof(keyCount));
+//    shaderTabSave.keys.resize(keyCount);
+//
+//    for (auto& key : shaderTabSave.keys) {
+//        size_t keySize;
+//        inFile.read(reinterpret_cast<char*>(&keySize), sizeof(keySize));
+//        key.key.resize(keySize);
+//        inFile.read(reinterpret_cast<char*>(const_cast<wchar_t*>(key.key.data())), keySize * sizeof(wchar_t));
+//        inFile.read(reinterpret_cast<char*>(&key.iD), sizeof(key.iD));
+//
+//        //// 버전 2 이상인 경우 vTexCoord 로드, 그렇지 않으면 기본값 설정
+//        //if (version >= 2 && fileSize >= (inFile.tellg() + static_cast<std::streamoff>(sizeof(key.vTexCoord)))) {
+//        //    inFile.read(reinterpret_cast<char*>(&key.vTexCoord), sizeof(key.vTexCoord));
+//        //    if (inFile.fail()) {
+//        //        key.vTexCoord = { 0.0f, 0.0f };
+//        //        inFile.clear();
+//        //    }
+//        //}
+//        //else {
+//            key.vTexCoord = { 1.0f, 1.0f };
+//       // }
+//    }
+//
+//    // Node_Position 로드
+//    size_t nodePosCount;
+//    inFile.read(reinterpret_cast<char*>(&nodePosCount), sizeof(nodePosCount));
+//    shaderTabSave.nodePositions.resize(nodePosCount);
+//    inFile.read(reinterpret_cast<char*>(shaderTabSave.nodePositions.data()), nodePosCount * sizeof(Node_Position));
+//
+//    // MoveTex_Node 로드
+//    size_t moveTexNodeCount;
+//    inFile.read(reinterpret_cast<char*>(&moveTexNodeCount), sizeof(moveTexNodeCount));
+//    shaderTabSave.moveTexNodes.resize(moveTexNodeCount);
+//    inFile.read(reinterpret_cast<char*>(shaderTabSave.moveTexNodes.data()), moveTexNodeCount * sizeof(MoveTex_Node_Save));
+//
+//    // Sprite_Node 로드
+//    size_t spriteNodeCount;
+//    inFile.read(reinterpret_cast<char*>(&spriteNodeCount), sizeof(spriteNodeCount));
+//    shaderTabSave.spriteNodes.resize(spriteNodeCount);
+//    inFile.read(reinterpret_cast<char*>(shaderTabSave.spriteNodes.data()), spriteNodeCount * sizeof(Sprite_Node_Save));
+//
+//    // Link_Save 로드
+//    size_t linkCount;
+//    inFile.read(reinterpret_cast<char*>(&linkCount), sizeof(linkCount));
+//    shaderTabSave.links.resize(linkCount);
+//    inFile.read(reinterpret_cast<char*>(shaderTabSave.links.data()), linkCount * sizeof(Link_Save));
+//
+//    inFile.close();
+//}
 
 CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
 {
@@ -1445,3 +1611,20 @@ void CIMGUI_Shader_Tab::ShowTextWithoutPrefix(const std::wstring& wstr)
     ImGui::Text("%s", convertedStr.c_str());
 }
 
+size_t CIMGUI_Shader_Tab::GetRemainingFileSize(ifstream& file)
+{
+    size_t currentPos = file.tellg();
+    file.seekg(0, ios::end);
+    size_t fileSize = file.tellg();
+    file.seekg(currentPos, ios::beg);
+    return fileSize - currentPos;
+}
+
+size_t CIMGUI_Shader_Tab::GetFileSize(ifstream& file)
+{
+    size_t currentPos = file.tellg();
+    file.seekg(0, ios::end);
+    size_t fileSize = file.tellg();
+    file.seekg(currentPos, ios::beg);
+    return fileSize;
+}

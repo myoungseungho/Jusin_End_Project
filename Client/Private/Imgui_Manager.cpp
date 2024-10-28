@@ -8,6 +8,9 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
+#include "UI_Manager.h"
+#include "UIObject.h"
+
 #include "IMGUI_Shader_Tab.h"
 #include "IMGUI_Animation_Tab.h"
 #include "IMGUI_Effect_Tab.h"
@@ -26,6 +29,10 @@ _bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 
 _bool bShowImGuiDebug_COut = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiLayerView = false;
 _bool bShowImGuiPlayerInput = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+
+_bool bShowImGuiUI_TopShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiUI_MidShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiUI_BotShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
@@ -175,6 +182,8 @@ void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _in
 	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
 	m_vecShader_Tabs[to_string(iIndex)]->m_iNumberId = iIndex;
 	m_vecShader_Tabs[to_string(iIndex)]->Click_Load_Shader_Tab(strFilename.c_str());
+
+	m_iShaderCount++;
 }
 
 void CImgui_Manager::Delete_Shader_Tab(_int iIndex)
@@ -257,6 +266,35 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			}
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu("UI_Active")) {
+
+			if (ImGui::MenuItem("TopUI_Active", NULL, &bShowImGuiUI_TopShow)) {
+				
+				for (auto& TopIter : CUI_Manager::Get_Instance()->m_ListTopUI)
+				{
+					TopIter->SetActive(bShowImGuiUI_TopShow);
+				}
+			}
+
+			if (ImGui::MenuItem("MinUI_Active", NULL, &bShowImGuiUI_MidShow)) {
+				for (auto& MidIter : CUI_Manager::Get_Instance()->m_ListMidUI)
+				{
+					MidIter->SetActive(bShowImGuiUI_MidShow);
+				}
+			}
+
+			if (ImGui::MenuItem("BotUI_Active", NULL, &bShowImGuiUI_BotShow)) {
+				for (auto& BotIter : CUI_Manager::Get_Instance()->m_ListBotUI)
+				{
+					BotIter->SetActive(bShowImGuiUI_BotShow);
+				}
+			}
+
+
+			ImGui::EndMenu();
+		}
+
 
 		ImGui::EndMainMenuBar();
 	}

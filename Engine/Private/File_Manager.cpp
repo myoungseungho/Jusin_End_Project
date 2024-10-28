@@ -1,8 +1,11 @@
+#pragma once
+
 #include "..\Public\File_Manager.h"
 #include <sstream>
 #include <stdexcept>
 #include <fstream>
 #include "Camera.h"
+
 CFile_Manager::CFile_Manager()
 {
 }
@@ -198,63 +201,6 @@ HRESULT CFile_Manager::Save_All_CameraPoints(const wstring& filename, void* pArg
 					file << L"Damping: " << point.damping << L"\n";
 					file << L"HasWorldFloat4x4: " << (point.hasWorldFloat4x4 ? 1 : 0) << L"\n\n";
 				}
-			}
-		}
-	}
-
-	file.close();
-	return S_OK;
-}
-
-HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
-{
-	wofstream file(FilePath);
-	if (!file.is_open()) {
-		return E_FAIL;
-	}
-
-	vector<EFFECT_LAYER_DATA>* EffectDataList = reinterpret_cast<vector<EFFECT_LAYER_DATA>*>(pArg);
-
-	// 레이어 데이터를 파일에 저장
-	for (const auto& layerData : *EffectDataList) {
-		file << L"[Layer]" << L"\n";
-		file << L"LayerName: " << layerData.layerName << L"\n";
-		file << L"Duration: " << layerData.duration << L"\n";
-		file << L"TickPerSecond: " << layerData.tickPerSecond << L"\n";
-		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n";
-		file << L"NumEffec: " << layerData.iNumEffect << L"\n";
-		file << L"Position: " << layerData.vPosition.x << L" " << layerData.vPosition.y << L" " << layerData.vPosition.z << L"\n";
-		file << L"Scale: " << layerData.vScaled.x << L" " << layerData.vScaled.y << L" " << layerData.vScaled.z << L"\n";
-		file << L"Rotation: " << layerData.vRotation.x << L" " << layerData.vRotation.y << L" " << layerData.vRotation.z << L"\n\n";
-
-		// 이펙트 데이터를 파일에 저장
-		for (const auto& effectData : layerData.effects) {
-			file << L"[Effect]" << L"\n";
-			file << L"EffectName: " << effectData.effectName << L"\n";
-			file << L"ModelName: " << effectData.modelName << L"\n";
-			file << L"MaskTextureName: " << effectData.maskTextureName << L"\n";
-			file << L"DiffuseTextureName: " << effectData.diffuseTextureName << L"\n";
-			file << L"EffectType: " << effectData.effectType << L"\n";
-			file << L"RenderIndex: " << effectData.renderIndex << L"\n";
-			file << L"PassIndex: " << effectData.passIndex << L"\n";
-			file << L"UniqueIndex: " << effectData.uniqueIndex << L"\n";
-			file << L"Position: " << effectData.position.x << L" " << effectData.position.y << L" " << effectData.position.z << L"\n";
-			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
-			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
-			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n";
-			file << L"Color: " << effectData.vColor.x << L" " << effectData.vColor.y << L" " << effectData.vColor.z << L" " << effectData.vColor.w << L"\n";
-			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
-
-			// 키프레임 데이터를 파일에 저장
-			for (const auto& keyFrameData : effectData.keyframes) {
-				file << L"[KeyFrame]" << L"\n";
-				file << L"KeyFrameNumber: " << keyFrameData.keyFrameNumber << L"\n";
-				file << L"Position: " << keyFrameData.position.x << L" " << keyFrameData.position.y << L" " << keyFrameData.position.z << L"\n";
-				file << L"Scale: " << keyFrameData.scale.x << L" " << keyFrameData.scale.y << L" " << keyFrameData.scale.z << L"\n";
-				file << L"Rotation: " << keyFrameData.rotation.x << L" " << keyFrameData.rotation.y << L" " << keyFrameData.rotation.z << L"\n";
-				file << L"CurTime: " << keyFrameData.curTime << L"\n";
-				file << L"Duration: " << keyFrameData.duration << L"\n";
-				file << L"IsNotPlaying: " << (keyFrameData.bIsNotPlaying ? L"true" : L"false") << L"\n\n";
 			}
 		}
 	}
@@ -490,14 +436,98 @@ HRESULT CFile_Manager::Load_All_CameraPoints(const std::wstring& filename, Camer
 	return S_OK;
 }
 
-void* CFile_Manager::Load_Effects(wstring& FilePath)
+HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 {
-	// 기존에 로드된 데이터가 있으면 해제
-	if (m_pLoadedEffectData != nullptr) {
-		delete m_pLoadedEffectData;
-		m_pLoadedEffectData = nullptr;
+	wofstream file(FilePath);
+	if (!file.is_open()) {
+		return E_FAIL;
 	}
 
+	vector<EFFECT_LAYER_DATA>* EffectDataList = reinterpret_cast<vector<EFFECT_LAYER_DATA>*>(pArg);
+
+	// 레이어 데이터를 파일에 저장
+	for (const auto& layerData : *EffectDataList) {
+		file << L"[Layer]" << L"\n";
+		file << L"LayerName: " << layerData.layerName << L"\n";
+		file << L"Duration: " << layerData.duration << L"\n";
+		file << L"TickPerSecond: " << layerData.tickPerSecond << L"\n";
+		file << L"KeyFramesCount: " << layerData.keyFramesCount << L"\n";
+		file << L"NumEffec: " << layerData.iNumEffect << L"\n";
+		file << L"Position: " << layerData.vPosition.x << L" " << layerData.vPosition.y << L" " << layerData.vPosition.z << L"\n";
+		file << L"Scale: " << layerData.vScaled.x << L" " << layerData.vScaled.y << L" " << layerData.vScaled.z << L"\n";
+		file << L"Rotation: " << layerData.vRotation.x << L" " << layerData.vRotation.y << L" " << layerData.vRotation.z << L"\n\n";
+
+		// 이펙트 데이터를 파일에 저장
+		for (const auto& effectData : layerData.effects) {
+			file << L"[Effect]" << L"\n";
+			file << L"EffectName: " << effectData.effectName << L"\n";
+			file << L"ModelName: " << effectData.modelName << L"\n";
+			file << L"MaskTextureName: " << effectData.maskTextureName << L"\n";
+			file << L"DiffuseTextureName: " << effectData.diffuseTextureName << L"\n";
+			file << L"EffectType: " << effectData.effectType << L"\n";
+			file << L"RenderIndex: " << effectData.renderIndex << L"\n";
+			file << L"PassIndex: " << effectData.passIndex << L"\n";
+			file << L"UniqueIndex: " << effectData.uniqueIndex << L"\n";
+			file << L"Position: " << effectData.position.x << L" " << effectData.position.y << L" " << effectData.position.z << L"\n";
+			file << L"Scale: " << effectData.scale.x << L" " << effectData.scale.y << L" " << effectData.scale.z << L"\n";
+			file << L"Rotation: " << effectData.rotation.x << L" " << effectData.rotation.y << L" " << effectData.rotation.z << L"\n";
+			file << L"IsLoop: " << (effectData.isLoop ? L"true" : L"false") << L"\n";
+			file << L"Color: " << effectData.vColor.x << L" " << effectData.vColor.y << L" " << effectData.vColor.z << L" " << effectData.vColor.w << L"\n";
+			file << L"GlowColor: " << effectData.vGlowColor.x << L" " << effectData.vGlowColor.y << L" " << effectData.vGlowColor.z << L" " << effectData.vGlowColor.w << L"\n";
+			file << L"GlowFactor: " << effectData.fGlowFactor << L"\n";
+			file << L"DerredPassIndex: " << effectData.iDerredPassIndex << L"\n";
+			file << L"NumKeyFrame: " << effectData.iNumKeyFrame << L"\n\n";
+
+			// 키프레임 데이터를 파일에 저장
+			for (const auto& keyFrameData : effectData.keyframes) {
+				file << L"[KeyFrame]" << L"\n";
+				file << L"KeyFrameNumber: " << keyFrameData.keyFrameNumber << L"\n";
+				file << L"Position: " << keyFrameData.position.x << L" " << keyFrameData.position.y << L" " << keyFrameData.position.z << L"\n";
+				file << L"Scale: " << keyFrameData.scale.x << L" " << keyFrameData.scale.y << L" " << keyFrameData.scale.z << L"\n";
+				file << L"Rotation: " << keyFrameData.rotation.x << L" " << keyFrameData.rotation.y << L" " << keyFrameData.rotation.z << L"\n";
+				file << L"CurTime: " << keyFrameData.curTime << L"\n";
+				file << L"Duration: " << keyFrameData.duration << L"\n";
+				file << L"IsNotPlaying: " << (keyFrameData.bIsNotPlaying ? L"true" : L"false") << L"\n\n";
+			}
+		}
+	}
+
+	file.close();
+	return S_OK;
+}
+
+void* CFile_Manager::Load_All_Effects()
+{
+	const wstring directoryPath = L"../Bin/Effects/Effect/*.txt";
+	WIN32_FIND_DATAW findData;
+	HANDLE hFind = FindFirstFileW(directoryPath.c_str(), &findData);
+
+	m_EffectsData = new vector<EFFECT_LAYER_DATA>;
+
+	if (hFind == INVALID_HANDLE_VALUE)
+		return nullptr;
+	
+	do 
+	{
+		wstring filePath = L"../Bin/Effects/Effect/" + wstring(findData.cFileName);
+
+		vector<EFFECT_LAYER_DATA>* pLoadedData = static_cast<vector<EFFECT_LAYER_DATA>*>(Load_Effects(filePath));
+
+		if (pLoadedData != nullptr) 
+		{
+			m_EffectsData->insert(m_EffectsData->end(), pLoadedData->begin(), pLoadedData->end());
+			delete pLoadedData;
+		}
+
+	} while (FindNextFileW(hFind, &findData) != 0); // 다음 파일로 이동
+
+	FindClose(hFind); // 핸들 닫기
+
+	return m_EffectsData;
+}
+
+void* CFile_Manager::Load_Effects(wstring& FilePath)
+{
 	m_pLoadedEffectData = new vector<EFFECT_LAYER_DATA>;
 
 	wifstream file(FilePath);
@@ -597,19 +627,25 @@ void CFile_Manager::Read_EffectData(wifstream& file, EFFECT_DATA& effectData)
 		else if (key == L"IsNotPlaying") effectData.isNotPlaying = (value == L"true");
 		else if (key == L"IsLoop") effectData.isLoop = (value == L"true");
 		else if (key == L"Color") {
-			wistringstream Color(value);
-			Color >> effectData.vColor.x >> effectData.vColor.y >> effectData.vColor.z >> effectData.vColor.w;
+			wistringstream colorStream(value);
+			colorStream >> effectData.vColor.x >> effectData.vColor.y >> effectData.vColor.z >> effectData.vColor.w;
 		}
+		else if (key == L"GlowColor") {
+			wistringstream glowColorStream(value);
+			glowColorStream >> effectData.vGlowColor.x >> effectData.vGlowColor.y >> effectData.vGlowColor.z >> effectData.vGlowColor.w;
+		}
+		else if (key == L"GlowFactor") effectData.fGlowFactor = stof(value);
+		else if (key == L"DerredPassIndex") effectData.iDerredPassIndex = stoi(value);
 		else if (key == L"NumKeyFrame") effectData.iNumKeyFrame = stoi(value);
 	}
 
-	// 각 키프레임 데이터 읽기
 	for (int i = 0; i < effectData.iNumKeyFrame; ++i) {
 		EFFECT_KEYFRAME_DATA keyFrameData;
 		Read_KeyFrameData(file, keyFrameData);
 		effectData.keyframes.push_back(keyFrameData);
 	}
 }
+
 
 void CFile_Manager::Read_KeyFrameData(wifstream& file, EFFECT_KEYFRAME_DATA& keyFrameData)
 {
@@ -665,5 +701,10 @@ void CFile_Manager::Free()
 	if (m_pLoadedEffectData != nullptr)
 	{
 		Safe_Delete(m_pLoadedEffectData);
+	}
+
+	if (m_EffectsData != nullptr)
+	{
+		Safe_Delete(m_EffectsData);
 	}
 }

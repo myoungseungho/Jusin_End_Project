@@ -42,12 +42,12 @@ HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, CGameObject* pRenderObject, string strName)
+HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, CGameObject* pRenderObject, RENDER_OBJECT* pDesc)
 {
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
-	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject, strName);
+	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject, pDesc);
 }
 
 HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)

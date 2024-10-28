@@ -6,6 +6,7 @@
 #include "iostream"
 #include "AttackObject.h"
 #include "UI_Manager.h"
+#include "Effect_Manager.h"
 
 #include "AttackObject.h"
 #include "BattleInterface.h"
@@ -158,8 +159,10 @@ CCharacter::CCharacter(const CCharacter& Prototype)
 	: CGameObject{ Prototype }
 	, m_pFrameEvent{ Prototype.m_pFrameEvent }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
+	, m_pEffect_Manager {CEffect_Manager::Get_Instance()}
 {
 	Safe_AddRef(m_pUI_Manager);
+	Safe_AddRef(m_pEffect_Manager);
 }
 
 HRESULT CCharacter::Initialize_Prototype()
@@ -3527,6 +3530,9 @@ void CCharacter::Gravity(_float fTimeDelta)
 	if (fHeight < 0)
 	{
 
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		int a = 0;
 		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air)
 		{
@@ -3889,6 +3895,7 @@ void CCharacter::Free()
 	Safe_Release(m_pModelCom);
 
 	Safe_Release(m_pUI_Manager);
+	Safe_Release(m_pEffect_Manager);
 
 	Safe_Release(m_pColliderCom);
 

@@ -170,7 +170,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 			return;
 	}
 
-	m_pUI_Manager->Update(fTimeDelta);
+	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
@@ -180,7 +180,7 @@ HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨"));
 
-	//m_pIMGUI_Manager->Render(fTimeDelta);
+	m_pEffect_Manager->Render(fTimeDelta);
 
 	return S_OK;
 }
@@ -442,5 +442,7 @@ void CLevel_GamePlay::Free()
 	__super::Free();
 
 	CFrameEvent_Manager::Destroy_Instance();
-	CEffect_Manager::Get_Instance()->Destroy_Instance();
+
+	Safe_Release(m_pEffect_Manager);
+	
 }

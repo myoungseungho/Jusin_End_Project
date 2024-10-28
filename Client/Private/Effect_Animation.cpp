@@ -13,11 +13,17 @@ CEffect_Animation::CEffect_Animation()
 
 CEffect_Animation::CEffect_Animation(const CEffect_Animation& Prototype)
 	: m_pGameInstance(CGameInstance::Get_Instance())
+	, m_EffectKeyFrames{ Prototype.m_EffectKeyFrames }
 {
 	Safe_AddRef(m_pGameInstance);
 }
 
-HRESULT CEffect_Animation::Initialize()
+HRESULT CEffect_Animation::Initialize_Prototype()
+{
+	return S_OK;
+}
+
+HRESULT CEffect_Animation::Initialize(void* pArg)
 {
 	return S_OK;
 }
@@ -134,9 +140,22 @@ CEffect_Animation* CEffect_Animation::Create()
 {
 	CEffect_Animation* pInstance = new CEffect_Animation();
 
-	if (FAILED(pInstance->Initialize()))
+	if (FAILED(pInstance->Initialize_Prototype()))
 	{
 		MSG_BOX(TEXT("Failed to Created : CEffect_Animation"));
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
+}
+
+CEffect_Animation* CEffect_Animation::Clone(void* pArg)
+{
+	CEffect_Animation* pInstance = new CEffect_Animation(*this);
+
+	if (FAILED(pInstance->Initialize(pArg)))
+	{
+		MSG_BOX(TEXT("Failed to Cloned : CEffect_Animation"));
 		Safe_Release(pInstance);
 	}
 

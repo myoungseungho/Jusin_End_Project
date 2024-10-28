@@ -19,6 +19,8 @@ class CEffect :	public CGameObject
 public:
 	typedef struct
 	{
+		_bool	bIsCopy = { false };
+
 		_float3 vPosition;
 		_float3 vScaled;
 		_float3 vRotation;
@@ -43,12 +45,16 @@ public:
 		_float4 vColor;
 		_matrix LayerMatrix;
 
+		_float4        vGlowColor;
+		_float           fGlowFactor;
+		_uint    DerredPassIndex;
+
 	}EFFECT_DESC;
 
 
 protected:
 	CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect(const CGameObject& Prototype);
+	CEffect(const CEffect& Prototype);
 	virtual ~CEffect() = default;
 
 public:
@@ -103,9 +109,16 @@ public:
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };
 	_int			m_iPassIndex = { 1 };
-	_float4		m_vColor = { 0.f, 0.f, 0.f, 1.f };
+	_float4		m_vColor = { 0.f, 0.f, 0.f, 30.f };
 	_bool			m_IsColorEffect = { false };
 
+	_float4        m_vGlowColor = {0.f, 0.f, 0.f, 1.f};
+	_float           m_fGlowFactor = { 1.f };
+	_uint			m_iDerredPassIndex = {0};
+
+	_bool			m_bIsCopy = { false };
+
+	EFFECT_DESC			m_ForCopyInform;
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();
@@ -114,7 +127,7 @@ protected:
 	_float4x4				m_WorldMatrix = {};
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual CGameObject* Clone(void* pArg) override;
+	virtual CGameObject* Clone(void* pArg = nullptr) override;
 	virtual void Free() override;
 };
 

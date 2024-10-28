@@ -56,8 +56,11 @@ HRESULT CCollider::Initialize(void* pArg)
 	m_pMineGameObject = pDesc->pMineGameObject;
 	m_ColliderGroup = pDesc->colliderGroup;
 
-	if (m_pMineGameObject == nullptr)
-		return E_FAIL;
+	if (m_ColliderGroup != CCollider_Manager::COLLIDERGROUP::CG_EFFECT_LAYER)
+	{
+		if (m_pMineGameObject == nullptr)
+			return E_FAIL;
+	}
 
 	/* 타입에 맞는 충돌체를 위한 데이터를 생성하낟. */
 	switch (m_eColliderType)

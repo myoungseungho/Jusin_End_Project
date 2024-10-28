@@ -644,7 +644,7 @@ protected:
 	CUI_Define::PLAYER_ID				m_eCharacterID = {};
 	CUI_Define::PLAYER_SLOT				m_ePlayerSlot = { CUI_Define::SLOT_END };
 	class CUI_Manager*		m_pUI_Manager = { nullptr };
-
+	class CEffect_Manager*	m_pEffect_Manager = { nullptr };
 
 	string m_strName = "";
 
