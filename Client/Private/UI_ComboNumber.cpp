@@ -191,7 +191,7 @@ void CUI_ComboNumber::EndAlphaEffect(_float fTimeDelta)
 {
 	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
 	{
-
+		
 		m_fAlphaTimer += fTimeDelta * 5.f;
 
 		if (m_fAlphaTimer >= 1.f)

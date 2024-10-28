@@ -417,8 +417,8 @@ PS_OUT PS_BG(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
-    vBGMaterial.a *= g_fAlphaTimer;
     
+    vBGMaterial.a *= g_fAlphaTimer;
     if (Out.vColor.a < 0.1f)
         discard;
   
@@ -434,15 +434,15 @@ PS_OUT PS_VIDEO(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
- 
-    Out.vColor = lerp(Out.vColor, vBGMaterial, (1 - vBGMaterial.a));
     
-    vBGMaterial.a = 0.4f;
-    vBGMaterial.rgb *= 2.f;
-    vBGMaterial.rgb = min(vBGMaterial.rgb, 1.f);
+    //vBGMaterial.a = 0.2f;
+     vBGMaterial.rgb = min(vBGMaterial.rgb, 1.f);
    
-    Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
-      
+//    Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
+    vector AColor = lerp(Out.vColor, vBGMaterial, 0.5f);
+    AColor += lerp(vBGMaterial, Out.vColor, 0.5f);
+    
+    Out.vColor = AColor;
     return Out;
 }
 

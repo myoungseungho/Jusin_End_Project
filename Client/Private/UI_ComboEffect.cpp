@@ -63,24 +63,9 @@ void CUI_ComboEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	_bool bStun = FALSE;
-
-	if (m_pMainPawn != nullptr)
-	{
-		bStun = m_pMainPawn->Get_PawnDesc().bStun;
-		int a = 10;
-	}
-
-	if (bStun == FALSE && m_iComboCount >= 2)
-	{
-		if (m_pMainPawn != nullptr)
-		{
-			CCharacter::Character_INFO_DESC Desc = m_pMainPawn->Get_PawnDesc();
-			int iDebug = 10;
-		}
-
+	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-	}
+	
 
 }
 

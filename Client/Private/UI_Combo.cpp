@@ -37,42 +37,40 @@ HRESULT CUI_Combo::Initialize(void* pArg)
 void CUI_Combo::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
+
+
+	
+	if (m_bComboEnd == TRUE)
+	{
+		m_bCharaStun = TRUE;
+	}
+	else
+		m_fAlphaTimer = 0.f;
+
+	if ( m_bCharaStun == TRUE)
+	{
+		m_fAlphaTimer += fTimeDelta;
+		if (m_fAlphaTimer >= 1.f)
+		{
+			m_bCharaStun = FALSE;
+		}
+	}
+
+
+
+
 }
 
 void CUI_Combo::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	//if (m_bCharaStun == TRUE)
-	//{
-		//CBattleInterface_Manager::Get_Instance()->Get_HitCount(1);
-
-	//if (m_bCharaStun)
-	//{
-		//if (m_pMainPawn->Get_PawnDesc().iTeam == 1)
-		//{
-
-			//_uint iTeam = m_pMainPawn->Get_PawnDesc().iTeam;
-
 	if (m_pMainPawn != nullptr)
 		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
 
-	if (m_iComboCount >= 3)
-	{
-		int ia = 10;
-		
-	}
-			//if(iTeam == 2)
-			//	m_iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(1);
-			//else if(iTeam == 1)
-			//	m_iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(2);
-		//}
-		//else if (m_pMainPawn->Get_PawnDesc().iTeam == 2)
-		//{
-			//m_iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(2);
-		//}
 
-		
 		
 	//}
 	//	m_bComboEnd = TRUE;
