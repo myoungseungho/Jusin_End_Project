@@ -1387,7 +1387,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.7f;
+		Desc.fAnimationLockTime = 0.05f;
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
