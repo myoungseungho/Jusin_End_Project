@@ -3,7 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
+#include "Main_Camera.h"
 #include "Character.h"
 
 CAttackObject_Grab::CAttackObject_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -30,11 +30,11 @@ HRESULT CAttackObject_Grab::Initialize(void* pArg)
 		return E_FAIL;
 
 	ATTACK_Grab_DESC* pDesc = static_cast<ATTACK_Grab_DESC*>(pArg);
-	
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	
+
 
 	m_fDistance = pDesc->fDistance;
 	//m_iGrabAnimationIndex = pDesc->iGrabAnimationIndex;
@@ -70,8 +70,8 @@ void CAttackObject_Grab::Update(_float fTimeDelta)
 void CAttackObject_Grab::Late_Update(_float fTimeDelta)
 {
 
-	
-		
+
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -140,7 +140,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		if (eResult == RESULT_HIT)
 		{
 
-			
+
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
@@ -154,18 +154,17 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			vPos += _vector{ m_fDistance.x, m_fDistance.y , 0.f, 0.f };
 			static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, vPos);
 
-			
-
 			//if (m_bOwnerNextAnimation)
 			{
 				//m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 
-				m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex,false);
+				m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex, false);
 				m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
 			}
 
-
+			//카메라 그랩
+			Camera_Grab(m_pOwner, pCharacter);
 
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
@@ -204,7 +203,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 
 
-	
+
 }
 
 void CAttackObject_Grab::OnCollisionStay(CCollider* other, _float fTimeDelta)
@@ -225,6 +224,28 @@ void CAttackObject_Grab::CollisingAttack()
 
 void CAttackObject_Grab::CollisingPlayer()
 {
+}
+
+void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CUI_Define::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_GRAB, 0);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
+		break;
+	case Client::CUI_Define::ANDROID21:
+		break;
+	case Client::CUI_Define::BUU:
+		break;
+	case Client::CUI_Define::HIT:
+		break;
+	}
 }
 
 

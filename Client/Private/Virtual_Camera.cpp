@@ -168,13 +168,6 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedPositionLocal = XMLoadFloat3(&nextPoint.position);
 	}
 
-	//// **direction에 따른 포지션 조정**
-	//if (direction == -1)
-	//{
-	//	// x축 부호 반전
-	//	interpolatedPositionLocal = XMVectorSetX(interpolatedPositionLocal, -XMVectorGetX(interpolatedPositionLocal));
-	//}
-
 	// **3. 모델의 월드 행렬 로드 (스케일링 포함)**
 	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 
@@ -194,7 +187,7 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		interpolatedRotationLocal = XMLoadFloat4(&nextPoint.rotation);
 	}
 
-	// **direction에 따른 회전 조정**
+	//**direction에 따른 회전 조정**
 	if (direction == -1)
 	{
 		// 쿼터니언의 Y와 Z 성분 반전
@@ -230,7 +223,7 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2)
 {
 	const float fixedZ = -5.f;
-	const float baseFixedY = 1.f;  // Y가 0일 때 사용할 고정값
+	const float baseFixedY = 1.5f;  // Y가 0일 때 사용할 고정값
 
 	const float thresholdDistance = 2.f;
 	const float maxDistance = 5.17f;
@@ -518,20 +511,20 @@ void CVirtual_Camera::Add_Point(_float duration, _int type, const _float4x4* pMo
 	{
 		_matrix matrix = Float4x4ToMatrix(*pModelFloat4x4);
 
-		// 모델의 월드 행렬의 역행렬 계산
+		// 모델 행렬의 역행렬 계산
 		_vector determinant = XMVectorZero();
 		_matrix inverseModelMatrix = XMMatrixInverse(&determinant, matrix);
 
-		// 현재 가상카메라의 월드 포지션 가져오기
+		// 현재 가상 카메라의 월드 위치 가져오기
 		_vector worldPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
-		// 월드 포지션을 모델의 로컬 좌표로 변환
+		// 월드 위치를 모델의 로컬 좌표로 변환
 		_vector localPosition = XMVector3TransformCoord(worldPosition, inverseModelMatrix);
 
-		// 변환된 로컬 포지션을 CameraPoint 구조체에 저장
+		// 변환된 로컬 위치를 CameraPoint에 저장
 		XMStoreFloat3(&cameraPoint.position, localPosition);
 
-		// **카메라의 월드 회전 행렬 생성**
+		// 카메라의 월드 회전 행렬 생성
 		_vector right = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_RIGHT));
 		_vector up = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_UP));
 		_vector look = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
@@ -540,25 +533,27 @@ void CVirtual_Camera::Add_Point(_float duration, _int type, const _float4x4* pMo
 		cameraRotationMatrix.r[0] = right;
 		cameraRotationMatrix.r[1] = up;
 		cameraRotationMatrix.r[2] = look;
-		cameraRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
+		cameraRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 제거
 
-		// **모델 역행렬에서 회전 부분 추출**
+		// 모델 역행렬에서 회전 부분 추출
 		_matrix inverseModelRotationMatrix = inverseModelMatrix;
-		inverseModelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
+		inverseModelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 제거
 
-		// 로컬 회전 행렬 계산 (순서 변경)
+		// 로컬 회전 행렬 계산
 		_matrix localRotationMatrix = inverseModelRotationMatrix * cameraRotationMatrix;
 
-		// **로컬 회전 행렬을 쿼터니언으로 변환하여 저장**
+		// 로컬 회전 행렬을 쿼터니언으로 변환하여 저장
 		_vector localQuaternion = XMQuaternionRotationMatrix(localRotationMatrix);
 		XMStoreFloat4(&cameraPoint.rotation, localQuaternion);
 
+		// 추가 정보 저장
 		cameraPoint.duration = duration;
 		cameraPoint.interpolationType = type;
 		cameraPoint.damping = damping;
 		cameraPoint.pWorldFloat4x4 = pModelFloat4x4;
 		cameraPoint.hasWorldFloat4x4 = hasWorldFloat4x4;
 
+		// 카메라 포인트를 맵에 추가
 		m_mapPoints[animationIndex].push_back(cameraPoint);
 	}
 	else
@@ -589,6 +584,61 @@ void CVirtual_Camera::Add_Point(_float duration, _int type, const _float4x4* pMo
 		m_mapPoints[animationIndex].push_back(cameraPoint);
 	}
 }
+
+void CVirtual_Camera::Add_NormalPoint(_float duration, _int type, const _float4x4* pModelFloat4x4, _float damping, _bool hasWorldFloat4x4, _int animationIndex, CTransform* transform)
+{
+	CameraPoint cameraPoint{};
+
+	//해당 모델의 월드행렬 저장
+
+	//디폴트 카메라는 모델의 로컬이 없어서 월드행렬을 저장하고
+	//나머지 카메라는 모델의 로컬을 변환한 월드행렬 저장해야함
+	_matrix matrix = Float4x4ToMatrix(*pModelFloat4x4);
+
+	// 모델의 월드 행렬의 역행렬 계산
+	_vector determinant = XMVectorZero();
+	_matrix inverseModelMatrix = XMMatrixInverse(&determinant, matrix);
+
+	// 현재 가상카메라의 월드 포지션 가져오기
+	_vector worldPosition = transform->Get_State(CTransform::STATE_POSITION);
+
+	// 월드 포지션을 모델의 로컬 좌표로 변환
+	_vector localPosition = XMVector3TransformCoord(worldPosition, inverseModelMatrix);
+
+	// 변환된 로컬 포지션을 CameraPoint 구조체에 저장
+	XMStoreFloat3(&cameraPoint.position, localPosition);
+
+	// **카메라의 월드 회전 행렬 생성**
+	_vector right = XMVector3Normalize(transform->Get_State(CTransform::STATE_RIGHT));
+	_vector up = XMVector3Normalize(transform->Get_State(CTransform::STATE_UP));
+	_vector look = XMVector3Normalize(transform->Get_State(CTransform::STATE_LOOK));
+
+	_matrix cameraRotationMatrix = XMMatrixIdentity();
+	cameraRotationMatrix.r[0] = right;
+	cameraRotationMatrix.r[1] = up;
+	cameraRotationMatrix.r[2] = look;
+	cameraRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
+
+	// **모델 역행렬에서 회전 부분 추출**
+	_matrix inverseModelRotationMatrix = inverseModelMatrix;
+	inverseModelRotationMatrix.r[3] = XMVectorSet(0, 0, 0, 1); // 위치 정보 제거
+
+	// 로컬 회전 행렬 계산 (순서 변경)
+	_matrix localRotationMatrix = inverseModelRotationMatrix * cameraRotationMatrix;
+
+	// **로컬 회전 행렬을 쿼터니언으로 변환하여 저장**
+	_vector localQuaternion = XMQuaternionRotationMatrix(localRotationMatrix);
+	XMStoreFloat4(&cameraPoint.rotation, localQuaternion);
+
+	cameraPoint.duration = duration;
+	cameraPoint.interpolationType = type;
+	cameraPoint.damping = damping;
+	cameraPoint.pWorldFloat4x4 = pModelFloat4x4;
+	cameraPoint.hasWorldFloat4x4 = hasWorldFloat4x4;
+
+	m_mapPoints[animationIndex].push_back(cameraPoint);
+}
+
 
 void CVirtual_Camera::Remove_Point(_int currentIndex, _int animationIndex)
 {

@@ -3,6 +3,7 @@
 #include "Component_Manager.h"
 #include "PipeLine.h"
 #include "ThreadPool.h"
+#include "Sound_Manager.h"
 
 BEGIN(Engine)
 
@@ -117,6 +118,15 @@ public: /* For.Font_Manager */
 	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);
 	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
 
+public: /* For.Sound*/
+	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias);
+	void Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias);
+	void Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume);
+	void Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY alias, _bool loop, _float volume);
+	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias);
+	void Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias, float volume);
+	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);
+
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };
 	class CInput_Device* m_pInput_Device = { nullptr };
@@ -130,6 +140,7 @@ private:
 	class CFile_Manager* m_pFile_Manager = { nullptr };
 	class CFrustum* m_pFrustum = { nullptr };
 	class CFont_Manager* m_pFont_Manager = { nullptr };
+	class CSound_Manager* m_pSoundManager = { nullptr };
 
 public:
 	void Release_Engine();

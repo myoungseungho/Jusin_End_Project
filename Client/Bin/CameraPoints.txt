@@ -46,6 +46,171 @@ InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
 
+[Skill]
+SkillName: Camera_Son_Grab
+
+[Animation]
+AnimationName: Son_Grab_Anim1
+PointCount: 2
+
+[CameraPoint]
+Position: 0.72 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.98053 1 -2.2965
+Rotation: -0.00571109 0.488677 0.00319895 0.87244
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_Son_Energy
+
+[Animation]
+AnimationName: Son_Energy_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Son_Ultimate
+
+[Animation]
+AnimationName: Son_Ultimate_Anim1
+PointCount: 3
+
+[CameraPoint]
+Position: 0.664998 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1.15
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.344852 0.98607 -2.16085
+Rotation: 0 0 0 1
+Duration: 0.6
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.344852 0.932019 -1.4963
+Rotation: 0 0.01 0 1
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Ultimate_Anim2
+PointCount: 1
+
+[CameraPoint]
+Position: 0.465561 1.03667 -2.48169
+Rotation: 0 0 0 1
+Duration: 0.6
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Ultimate_Anim3
+PointCount: 1
+
+[CameraPoint]
+Position: 1.69824 1.09667 -1.83636
+Rotation: 0 -0.275058 0.01 0.960731
+Duration: 0.4
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Ultimate_Anim4
+PointCount: 1
+
+[CameraPoint]
+Position: 2.71096 0.848492 -2.89828
+Rotation: -0.0213136 -0.299025 -0.00668074 0.953984
+Duration: 1.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Son_Ultimate_Anim5
+PointCount: 8
+
+[CameraPoint]
+Position: -0.158299 0.916598 -5.66649
+Rotation: -0 0 -0 1
+Duration: 0.6
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.158299 0.916598 -2.39899
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.158299 0.999944 -1.44887
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.108438 1.04995 -0.948828
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.108438 1.04995 -0.948828
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.266324 1.21663 -4.86665
+Rotation: -0 0 -0 1
+Duration: 0.15
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.88842 1.21663 -2.42041
+Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.88842 1.21663 -2.42041
+Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
 [VirtualCamera]
 ModelID: MODELID_HIT
 
@@ -54,20 +219,97 @@ SkillName: Camera_21_Heavy
 
 [Animation]
 AnimationName: 21_Heavy_Anim1
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.560064 1.17205 -3.3237
+Rotation: 0 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_21_Knock_Away_Up
 
 [Animation]
 AnimationName: 21_Knock_Away_Up_Anim1
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.243729 0.11623 -2.37281
+Rotation: -0.22716 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_21_Air_Smash
 
 [Animation]
 AnimationName: 21_Air_Smash_Anim1
+PointCount: 1
+
+[CameraPoint]
+Position: -0.836494 2.14128 -2.69361
+Rotation: 0.154796 0.224273 -0.0361075 0.961476
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_21_Grab
+
+[Animation]
+AnimationName: 21_Grab_Anim1
+PointCount: 2
+
+[CameraPoint]
+Position: 0.72 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.98053 1 -2.2965
+Rotation: -0.00571109 0.488677 0.00319895 0.87244
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_21_Energy
+
+[Animation]
+AnimationName: 21_Energy_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_21_Ultimate
+
+[Animation]
+AnimationName: 21_Ultimate_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Ultimate_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Ultimate_Anim3
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Ultimate_Anim4
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Ultimate_Anim5
 PointCount: 0
 
 [VirtualCamera]

@@ -67,6 +67,9 @@ private:
 	void CollisingAttack();
 	void CollisingPlayer();
 
+	//Ä«¸Þ¶ó
+	void Camera_Grab(class CCharacter* pOwner, class CCharacter* pHitOwner);
+
 private:
 
 	_float2 m_fDistance = {};

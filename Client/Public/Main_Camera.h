@@ -16,9 +16,15 @@ public:
 		VIRTUAL_CAMERA_SON_HEAVY,
 		VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_SON_AIR_SMASH,
+		VIRTUAL_CAMERA_SON_GRAB,
+		VIRTUAL_CAMERA_SON_ENERGY,
+		VIRTUAL_CAMERA_SON_ULTIMATE,
 		VIRTUAL_CAMERA_21_HEAVY,
 		VIRTUAL_CAMERA_21_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_21_AIR_SMASH,
+		VIRTUAL_CAMERA_21_GRAB,
+		VIRTUAL_CAMERA_21_ENERGY,
+		VIRTUAL_CAMERA_21_ULTIMATE,
 		VIRTUAL_CAMERA_MINE_HEAVY,
 		VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_MINE_AIR_SMASH,
@@ -33,11 +39,6 @@ public:
 		PLAYER_1P,
 		PLAYER_2P
 	};
-
-	//// 스킬 이름을 모델 ID와 스킬 ID로 매핑
-	//unordered_map<std::pair<_int, _wstring>, _int> stringToSkillID;
-	//// 애니메이션 이름을 모델 ID, 스킬 ID, 애니메이션 ID로 매핑
-	//unordered_map<std::tuple<_int, _int, _wstring>, _int> stringToAnimID;
 
 private:
 	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -56,6 +57,7 @@ public:
 	void Set_Virtual_Camera(VIRTUAL_CAMERA mode);
 	VIRTUAL_CAMERA Get_Virtual_Camera() { return m_currentVirtualMode; };
 	void Add_Point(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
+	void Add_NormalPoint(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
 	void IMGUI_Play(_int animationIndex);

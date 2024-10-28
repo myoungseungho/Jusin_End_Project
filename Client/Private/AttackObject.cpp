@@ -429,6 +429,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	case Client::CUI_Define::ANDROID21:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_HEAVY, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	case Client::CUI_Define::BUU:
 		break;
@@ -452,6 +454,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	case Client::CUI_Define::ANDROID21:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_KNOCK_AWAY_UP, 0);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	case Client::CUI_Define::BUU:
 		break;

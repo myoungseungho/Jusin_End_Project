@@ -221,14 +221,14 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
 		return E_FAIL;
 
-	if (::AllocConsole() == TRUE)
-	{
-		FILE* nfp[3];
-		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-		std::ios::sync_with_stdio();
-	}
+	//if (::AllocConsole() == TRUE)
+	//{
+	//	FILE* nfp[3];
+	//	freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+	//	freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+	//	freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+	//	std::ios::sync_with_stdio();
+	//}
 
 	m_eCharacterID = CUI_Define::PLAYER_ID::ANDROID21;
 
@@ -1387,7 +1387,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
+		Desc.fAnimationLockTime = 0.05f;
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -1795,9 +1795,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.eAttackType = ATTACKTYPE_GRAB_GROUND;
 
-			//Desc.fDistance = { 1.f * m_iLookDirection,0.f };
 			Desc.fDistance = { 1.2f * m_iLookDirection,0.f };
-
 			//Desc.fGrabAnimationPosition = 40.f;
 			Desc.fGrabAnimationPosition = 25.f;
 
