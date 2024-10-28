@@ -513,6 +513,11 @@ void CGameInstance::Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias)
 	m_pSoundManager->Stop_Sound(alias);
 }
 
+void CGameInstance::Set_ImguiPlay(_bool isPlay)
+{
+	m_pSoundManager->Set_ImguiPlay(isPlay);
+}
+
 void* CGameInstance::Load_All_Effects()
 {
 	if (nullptr == m_pFile_Manager)

@@ -80,6 +80,10 @@ public:
 	void Set_Volume(SOUND_KEY_NAME alias, float volume);
 	void Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume);
 
+	void Set_ImguiPlay(_bool isPlay);
+
+public:
+	_bool m_isImguiPlay = { true };
 
 private:
 	FMOD_SYSTEM* m_pSoundSystem;

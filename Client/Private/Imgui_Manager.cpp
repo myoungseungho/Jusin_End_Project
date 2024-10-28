@@ -34,6 +34,8 @@ _bool bShowImGuiUI_TopShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiUI_MidShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiUI_BotShow = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 
+_bool bShowImGuiSoundIsActive = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+
 IMPLEMENT_SINGLETON(CImgui_Manager)
 
 // IMGUI 창 표시 여부를 제어하는 전역 변수
@@ -295,6 +297,12 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("SoundActive")) {
+			if (ImGui::MenuItem("SoundActive", NULL, &bShowImGuiSoundIsActive)) {
+				m_pGameInstance->Set_ImguiPlay(bShowImGuiSoundIsActive);
+			}
+			ImGui::EndMenu();
+		}
 
 		ImGui::EndMainMenuBar();
 	}

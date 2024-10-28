@@ -127,6 +127,7 @@ public: /* For.Sound*/
 	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias);
 	void Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias, float volume);
 	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);
+	void Set_ImguiPlay(_bool isPlay);
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };
