@@ -400,9 +400,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_2.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_3_SFX);
 
 	//대쉬
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Dash_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Dash_SFX.wav", CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX);
 	//다운 훅 대쉬
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/DownHook_Dash_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_DownHook_Dash_SFX);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/DownHook_Dash_SFX.wav", CSound_Manager::SOUND_KEY_NAME::Goku_DownHook_Dash_SFX);
 	//에네르기파
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Energy_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Energy_SFX);
 	//강공격
