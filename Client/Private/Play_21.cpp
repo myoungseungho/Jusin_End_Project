@@ -130,7 +130,10 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
 	m_tAttackMap.Initalize(this);
 
 	
@@ -446,8 +449,11 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 				m_bStun = false;
 				m_fAccStunTime = 0.f;
 
-				if(Check_bCurAnimationisGroundMove())
+				if (Check_bCurAnimationisHitGround())
+				{
 					Reset_AttackStep();
+				}
+
 			}
 			Update_StunImpus(fTimeDelta);
 		}
@@ -555,6 +561,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 
 
 
+	cout << "Team : " << m_iPlayerTeam << " Direction : " << m_iLookDirection << endl;
 	Check_Ground();
 }
 
@@ -1613,6 +1620,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fGrabAnimationPosition = 40.f;
 		//Desc.fGrabAnimationPosition = 25.f;
 		Desc.iGainAttackStep = 0;
+		Desc.bOwnerNextAnimation = true;
 
 		Desc.iGrabAnimationIndex = ANIME_ATTACK_236_SPECIAL;
 		Desc.iOnwerNextAnimationIndex = ANIME_ATTACK_236_SPECIAL_SUCCES;

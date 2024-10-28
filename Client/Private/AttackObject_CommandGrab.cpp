@@ -40,6 +40,14 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	m_iGrabAnimationIndex = pDesc->iGrabAnimationIndex;
 	m_fGrabAnimationPosition = pDesc->fGrabAnimationPosition;
 	
+	m_bForcedHit = pDesc->bForcedHit;
+	m_iOnwerDirection = pDesc->iOnwerDirection;
+
+	if (m_iOnwerDirection == 231)
+	{
+		m_iOnwerDirection = m_pOwner->Get_iDirection();
+	}
+
 	return S_OK;
 }
 
@@ -103,6 +111,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 {
 
 
+
 	//Àâ±â°¡ ²÷°åÀ¸¸é ½ÇÆÐ
 	if (m_pOwner->Get_iAnimationIndex() != m_iGrabAnimationIndex || m_pOwner->Get_bStun())
 		return;
@@ -113,9 +122,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
 		AttackColliderResult eResult =
-			pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
+			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_iOnwerDirection, m_fhitCharacter_Impus);
+			//pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
 
-		if (eResult == RESULT_HIT)
+		if (eResult == RESULT_HIT || m_bForcedHit)
 		{
 
 
@@ -131,13 +141,17 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			{
 				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
 			}
-			_vector vPos = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
-			vPos += _vector{ m_fDistance.x, m_fDistance.y , 0.f, 0.f };
-			static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, vPos);
 
 
+			if(m_fDistance.x != 100)
+			{
+				_vector vPos = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+				vPos += _vector{ m_fDistance.x, m_fDistance.y , 0.f, 0.f };
+				static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, vPos);
+			}
 
-			//if (m_bOwnerNextAnimation)
+
+			if (m_bOwnerNextAnimation)
 			{
 				//m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 

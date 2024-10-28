@@ -1870,6 +1870,8 @@ _bool CCharacter::Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackTyp
 	return true;
 }
 */
+
+/*
 AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
 {
 
@@ -1921,6 +1923,83 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 	Set_AnimationStop(fStopTime);
 
 	Set_bRedHP(true);
+
+	//m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+
+
+	m_iDebugComoboDamage += iDamage;
+	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+
+
+	if (m_iHP < 0)
+	{
+		m_iHP = 0;
+	}
+
+	return RESULT_HIT;
+}
+*/
+AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+{
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+		return RESULT_MISS;
+
+	//스턴상태, 땅바닥에 꽂혔을때 검사
+	else if (m_bHitGroundSmashed && Get_fHeight() == 0)
+	{
+		if (eAttackGrade != GRADE_ULTIMATE)
+			return RESULT_MISS;
+	}
+
+	//스턴 상태가 아니면 가드 체크
+	if (m_bStun == false)
+	{
+
+		AttackColliderResult eResult = Guard_Check3(eAttackType);
+
+		//공격자의 방향이 iDirection  피격자는 마주봐야하니 그 반대.
+	
+
+		if (eResult == RESULT_GUARD)
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+				Set_Animation(m_iGuard_CrouchAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
+				Set_Animation(m_iGuard_GroundAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+				Set_Animation(m_iGuard_AirAnimationIndex);
+
+			return RESULT_GUARD;
+
+		}
+		else if (eResult != RESULT_HIT)    //회피나 비긴 경우 아니면 일단 속행.   저 경우는 나중에 따로 처리
+			return eResult;
+
+
+	}
+
+
+
+	m_bStun = true;
+
+	m_fMaxStunTime = fStunTime;
+	m_fAccStunTime = 0.f;
+
+	Set_HitAnimation(eAnimation, Impus);
+	Set_AnimationStop(fStopTime);
+
+	Set_bRedHP(true);
+
+	if (iDirection == 1)
+		FlipDirection(-1);
+	else if(iDirection == -1)
+		FlipDirection(1);
+
+	//0인경우는 뒤집지 않음
+
 
 	//m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
 	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
@@ -2064,6 +2143,12 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_Animation(m_iHit_WallBouce);
 	}
 		break;
+	case Client::HitMotion::HIT_NONE:
+	{
+
+	}
+		break;
+
 	default:
 		break;
 	}
@@ -2185,6 +2270,7 @@ void CCharacter::Set_BreakFall_Ground()
 
 	Set_bRedHP(false);
 	Reset_AttackStep();
+
 
 	DirectionInput iMoveKey = inputBuffer.back().direction;
 
@@ -3205,8 +3291,11 @@ void CCharacter::Reset_AttackStep()
 {
 	CBattleInterface_Manager::Get_Instance()->Reset_HitCount(m_iPlayerTeam);
 	CBattleInterface_Manager::Get_Instance()->Reset_HitAttackStep(m_iPlayerTeam);
+
 	Set_bRedHP(false);
 }
+
+
 
 
 _uint* CCharacter::Get_pAnimationIndex()
