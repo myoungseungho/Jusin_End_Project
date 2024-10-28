@@ -444,6 +444,9 @@
     <Filter Include="02.GameObjects\BattleInterface">
       <UniqueIdentifier>{31254c12-21cc-4b7e-b160-43f2877839ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Ranged">
+      <UniqueIdentifier>{5220f611-05c9-4f2b-aa03-08f9b807346f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">

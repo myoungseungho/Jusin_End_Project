@@ -51,7 +51,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bGroundSmash = pDesc->bGroundSmash;
 
 	//m_bGain_AttackStep =pDesc->bGainAttackStep;
-	m_iGain_AttackStep = pDesc->iGainAttackStep;
+	m_iGainAttackStep = pDesc->iGainAttackStep;
+	m_iGainHitCount = pDesc->iGainHitCount;
 
 	m_pOwner = pDesc->pOwner;
 
@@ -334,7 +335,9 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 				}
 			}
-			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
+			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
+			m_pOwner->Gain_HitCount(m_iGainHitCount);
+
 
 
 			if (m_bOwnerNextAnimation)

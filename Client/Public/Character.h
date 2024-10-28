@@ -354,6 +354,8 @@ public:
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep);// 
+	void Gain_HitCount(_ushort iHit);// 
+
 	_float Get_DamageScale();
 	void Set_GrabLoofCount(_ushort iLoofCount);
 

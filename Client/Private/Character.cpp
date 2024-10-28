@@ -2272,6 +2272,15 @@ void CCharacter::Gain_AttackStep(_ushort iStep)
 
 }
 
+void CCharacter::Gain_HitCount(_ushort iHit)
+{
+	if (m_iPlayerTeam == 1)
+		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 2);
+
+	CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 1);
+
+}
+
 _float CCharacter::Get_DamageScale()
 {
 
