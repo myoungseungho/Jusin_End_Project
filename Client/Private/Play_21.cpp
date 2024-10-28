@@ -210,8 +210,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 
-	LightDesc.vDirection = _float4(-0.5f, -0.1f, 0.5f, 0.f);
-	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vDirection = _float4(-0.1f, -0.07f, 0.1f, 0.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
@@ -780,7 +780,7 @@ HRESULT CPlay_21::Render(_float fTimeDelta)
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
-		if (FAILED(m_pShaderCom->Begin(0)))
+		if (FAILED(m_pShaderCom->Begin(1)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -1006,6 +1006,9 @@ HRESULT CPlay_21::Ready_Components()
 
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 
+	/* Com_Model */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -1020,6 +1023,8 @@ HRESULT CPlay_21::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
+
+	m_pOutLineCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 1);
 
 	return S_OK;
 }

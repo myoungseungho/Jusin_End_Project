@@ -290,6 +290,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
 	}
 
+
 	//Combo
 	/* For.Prototype_Component_Texture_UI_ComboNumber */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
@@ -1628,6 +1629,11 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
 		return E_FAIL;
 }
 

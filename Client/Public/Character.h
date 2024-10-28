@@ -411,6 +411,7 @@ public:
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
+	CTexture* m_pOutLineCom = { nullptr };
 
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
