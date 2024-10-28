@@ -41,6 +41,7 @@ public:
 	vector<class CEffect*> Get_Effects();
 	class CEffect* Find_Effect(const std::wstring& effectName);
 	HRESULT Play_Effect_Animation(_float fTimeDelta);
+	HRESULT Set_In_Layer_Effect();
 	void Set_Animation_Position(_float fNewCurPos);
 
 	HRESULT Set_Layer_Scaled(_float3 ChangeScaled);

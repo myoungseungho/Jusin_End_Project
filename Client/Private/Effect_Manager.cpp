@@ -73,20 +73,16 @@ void CEffect_Manager::Update(_float fTimeDelta)
 	}
 }
 
-
-
-
-
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
-	//for (auto& Pair : m_FinalEffects)
-	//	if (Pair.second->m_bIsRender)
-	//	{
-	//		Pair.second->Late_Update(fTimeDelta);
-	//	}
+	for (auto& Pair : m_FinalEffects)
+		if (Pair.second->m_bIsRender)
+		{
+			Pair.second->Late_Update(fTimeDelta);
+		}
 
-	//for (auto& Pair : m_TestEffect)
-	//	Pair->Late_Update(fTimeDelta);
+	for (auto& Pair : m_TestEffect)
+		Pair->Late_Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
 		if (Pair->m_bIsCopy)
@@ -335,6 +331,18 @@ CEffect* CEffect_Manager::Find_In_Layer_Effect(wstring& layerName, wstring& effe
 		return nullptr;
 
 	return pLayer->Find_Effect(effectName);
+}
+
+HRESULT CEffect_Manager::Set_In_Layer_Effect_Layer_Transform(wstring& layerName)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(layerName);
+
+	if (pLayer == nullptr)
+		return E_FAIL;
+
+	pLayer->Set_In_Layer_Effect();
+
+	return S_OK;
 }
 
 _bool CEffect_Manager::Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber)

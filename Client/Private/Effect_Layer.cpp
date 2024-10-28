@@ -106,7 +106,41 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 	if (pArg != nullptr)
 	{
 		m_pPlayerMatrix = pArg;
-		LayerMatrix = m_pTransformCom->Multiple_Matrix(XMLoadFloat4x4(m_pPlayerMatrix));
+		LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+
+		if (0 > m_pPlayerMatrix->_11)
+		{
+			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+
+			XMVECTOR Scale, Rotation, Position;
+
+			XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+
+			_float4x4 fLayerMatrix;
+
+			XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
+
+			//fLayerMatrix._41 *= -1;
+			fLayerMatrix._43 *= -1;
+			fLayerMatrix._41 += XMVectorGetX(Position);
+
+			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+			
+		}
+		else
+		{
+			XMVECTOR Scale, Rotation, Position;
+
+			XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+
+			_float4x4 fLayerMatrix;
+
+			XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
+
+			fLayerMatrix._41 += XMVectorGetX(Position);
+
+			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+		}
 
 		return S_OK;
 	}
@@ -116,8 +150,6 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 
 		LayerMatrix = m_pTransformCom->Multiple_Matrix(TestMatrix);
 	}
-
-
 
 	return S_OK;
 }
@@ -147,7 +179,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 void CEffect_Layer::Late_Update(_float fTimeDelta)
 {
-	if (m_bIsCopy)
+	if (m_bIsRender)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
@@ -160,11 +192,6 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_Layer::Render(_float fTimeDelta)
 {
-	//for (auto& pEffect : m_MixtureEffects)
-	//{
-	//	pEffect->Render(fTimeDelta);
-	//}
-
 	m_pColliderCom->Render(fTimeDelta);
 
 	return S_OK;
@@ -224,6 +251,19 @@ HRESULT CEffect_Layer::Play_Effect_Animation(_float fTimeDelta)
 		if (pEffect)
 		{
 			pEffect->Play_Animation(currentFrame);
+		}
+	}
+
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_In_Layer_Effect()
+{
+	for (CEffect* pEffect : m_MixtureEffects)
+	{
+		if (pEffect)
+		{
+			pEffect->Get_Layer_Matrix(m_pTransformCom->Get_WorldMatrix());
 		}
 	}
 

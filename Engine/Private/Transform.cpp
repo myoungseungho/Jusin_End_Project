@@ -188,10 +188,12 @@ void CTransform::Set_Matrix(_matrix AddMatrix)
 	XMVECTOR scale, rotation, translation;
 	XMMatrixDecompose(&scale, &rotation, &translation, AddMatrix);
 
-	XMVECTOR vRight = XMVector3TransformNormal(Get_State(STATE_RIGHT), XMMatrixRotationQuaternion(rotation));
-	XMVECTOR vUp = XMVector3TransformNormal(Get_State(STATE_UP), XMMatrixRotationQuaternion(rotation));
-	XMVECTOR vLook = XMVector3TransformNormal(Get_State(STATE_LOOK), XMMatrixRotationQuaternion(rotation));
+	// 각 축에 대해 scale을 적용한 후 rotation을 반영합니다.
+	XMVECTOR vRight = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_RIGHT), scale), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vUp = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_UP), scale), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vLook = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_LOOK), scale), XMMatrixRotationQuaternion(rotation));
 
+	// translation을 적용한 위치를 계산하고, w를 1로 설정합니다.
 	XMVECTOR vCurPos = Get_State(STATE_POSITION);
 	XMVECTOR vPos = XMVectorAdd(vCurPos, translation);
 	vPos = XMVectorSetW(vPos, 1.0f);
