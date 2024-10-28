@@ -125,7 +125,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			m_pOwner->Set_GrabLoofCount(2);
 
 			pCharacter->Set_bGrabbed(true);
-
+			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
+			{
+				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
+			}
 			_vector vPos = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 			vPos += _vector{ m_fDistance.x, m_fDistance.y , 0.f, 0.f };
 			static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, vPos);

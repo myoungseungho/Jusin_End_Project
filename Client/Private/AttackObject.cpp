@@ -61,6 +61,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bGrabbedEnd = pDesc->bGrabbedEnd;
 	m_bCameraZoom = pDesc->bCameraZoom;
 
+	m_fForcedGravityTime = pDesc->fForcedGravityTime;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -283,7 +285,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
-
+			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
+			{
+				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
+			}
 
 			if (m_bGrabbedEnd)
 				pCharacter->Set_bGrabbed(false);

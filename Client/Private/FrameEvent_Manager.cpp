@@ -487,6 +487,11 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
         _bool bDebug = true;
     }
  
+    else if (splitText[0] == "AttackGravity")
+    {
+        pCharacter->Set_bAttackGravity(fValue[0]);
+    }
+
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()

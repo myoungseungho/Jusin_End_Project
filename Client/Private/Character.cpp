@@ -3381,7 +3381,12 @@ void CCharacter::Gravity(_float fTimeDelta)
 	if (fHeight > 0)
 	{
 
+		if (m_iPlayerTeam == 2)
+		{
+			_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 
+			_bool bDebug = true;
+		}
 
 
 		// IDLE이면 공중 하강모션으로 변경
@@ -3439,20 +3444,18 @@ void CCharacter::Gravity(_float fTimeDelta)
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce||
-			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex)
+			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex
+			|| Check_bCurAnimationisHalfGravityStop())
 		{
 
 
+			
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
-			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper)
+			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_bAttackGravity==false)
 			{
 				;
 			}
-
-			//중력ver2 용
-			//if (m_fGravityTime < m_fJumpPower)
-
 
 			else if (m_fGravityTime * 2.f < m_fJumpPower)
 			{
@@ -3465,13 +3468,14 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_fGravityTime = m_fJumpPower * 0.5f;
 			}
 
+			
+			//일부 공격의 경우  Gravity 가 false면 중력 정용 안함
+			if (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop() )
+			{
+				;
+			}
 
-
-			//m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper ||
-			//HitAway가 아니고, Upper도 아니여야됨
-
-			//if(Check_bCurAnimationisHitAway() == false )
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce)
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce)
 			{
 				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y * fTimeDelta,0 });
 			}
@@ -3493,40 +3497,15 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 
+			
 			if (m_bAttackGravity == true)
 			{
 
-				//if(m_iPlayerTeam ==1)
-				//{
-				//	if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
-				//	{
-				//		m_fGravityTime += fTimeDelta;
-				//	}
-				//
-				//
-				//	//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-				//
-				//	//if (m_pGameInstance->Key_Pressing(DIK_W))
-				//	//	m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
-				//
-				//}
-				//else
+				if (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)
 				{
-					//if ((m_pGameInstance->Key_Pressing(DIK_UP) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
-					//{
-					//	m_fGravityTime += fTimeDelta;
-					//}
-
-					if (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)
-					{
-						m_fGravityTime += fTimeDelta;
-					}
-					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-
-					//if (m_pGameInstance->Key_Pressing(DIK_UP))
-					//	m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+					m_fGravityTime += fTimeDelta;
 				}
-
+					
 			}
 			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.
 			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,0,0 });

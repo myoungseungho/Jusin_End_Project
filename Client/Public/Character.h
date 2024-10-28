@@ -242,6 +242,8 @@ public:
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
 
+	//공중 기탄같이 중간에 중력이 다시 생기는 특수 처리해야하는것들 각자 override
+	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) { return false; };
 
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition = 0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
