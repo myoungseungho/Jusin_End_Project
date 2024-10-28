@@ -2,6 +2,7 @@
 #include "..\Public\Loader.h"
 
 #include "GameInstance.h"
+#include "Effect_Manager.h"
 #include "IMGUI_Shader_Tab.h"
 
 //명승호
@@ -167,6 +168,8 @@ atomic_bool CLoader::isFinished()
 					return false;
 				}
 			}
+
+			Loading_For_Effect();
 			// 모든 작업이 성공적으로 완료됨
 			m_isFinished = true;
 			m_futures.clear(); // future 객체 정리
@@ -244,7 +247,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_1(); }));
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
-
 	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
 	return S_OK;
 }
@@ -280,6 +282,13 @@ HRESULT CLoader::Load_UI_Resources_Logo()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Effect()
+{
+	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
+
+	return CEffect_Manager::Get_Instance()->Set_Saved_Effects(pLoaded);
 }
 
 HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
