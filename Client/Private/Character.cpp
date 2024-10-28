@@ -1524,7 +1524,7 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 			//}
 			//else
 
-			Add_Move({ -0.2f * m_iLookDirection,0.f });
+			Add_Move({ -0.4f * m_iLookDirection,0.f });
 
 			{
 				Set_Animation(m_iAttack_Heavy);

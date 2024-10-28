@@ -1795,7 +1795,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.eAttackType = ATTACKTYPE_GRAB_GROUND;
 
-			Desc.fDistance = { 1.f * m_iLookDirection,0.f };
+			Desc.fDistance = { 1.2f * m_iLookDirection,0.f };
 			//Desc.fGrabAnimationPosition = 40.f;
 			Desc.fGrabAnimationPosition = 25.f;
 
