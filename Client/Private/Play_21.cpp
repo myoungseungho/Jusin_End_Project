@@ -1765,6 +1765,105 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_21::ANIME_GRAB_READY:
 		break;
 	case Client::CPlay_21::ANIME_GRAB:
+		switch (iAttackEvent)
+		{
+			//잡기 시작
+		case 0:
+		{
+			CAttackObject_Grab::ATTACK_Grab_DESC Desc{};
+			//Desc.ColliderDesc.width = 1.4f;
+			//Desc.ColliderDesc.height = 2.2f;
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
+			Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+			//Desc.ColliderDesc.pTransform = m_pTransformCom;
+			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 1.f;
+			Desc.iDamage = 700 * Get_DamageScale();;
+			Desc.fLifeTime = 0.2f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.pOwner = this;
+
+			if (m_bGrab_Air)
+				Desc.eAttackType = ATTACKTYPE_GRAB_AIR;
+			else
+				Desc.eAttackType = ATTACKTYPE_GRAB_GROUND;
+
+			Desc.fDistance = { 1.f * m_iLookDirection,0.f };
+			//Desc.fGrabAnimationPosition = 40.f;
+			Desc.fGrabAnimationPosition = 25.f;
+
+			Desc.iOnwerNextAnimationIndex = m_iGrabAnimationIndex;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Grab"), TEXT("Layer_AttackObject"), &Desc);
+
+		}
+		break;
+
+		//난타
+		case 1:
+		case 3:
+		{
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+			Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
+
+
+
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 1.f;
+			Desc.iDamage = 80 * Get_DamageScale();
+			Desc.fLifeTime = 0.1f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.f;
+			Desc.iGainAttackStep = 0;
+			Desc.pOwner = this;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+		break;
+		case 2:
+		case 4:
+		{
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+			Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
+
+
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 1.f;
+			Desc.iDamage = 80 * Get_DamageScale();
+			Desc.fLifeTime = 0.1f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.f;
+			Desc.iGainAttackStep = 0;
+			Desc.pOwner = this;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+		break;
+
+		}
 		break;
 	default:
 		break;

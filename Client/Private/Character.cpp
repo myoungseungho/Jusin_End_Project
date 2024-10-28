@@ -1523,6 +1523,9 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 			//	Set_Animation(m_iAttack_Air3);
 			//}
 			//else
+
+			Add_Move({ -0.2f * m_iLookDirection,0.f });
+
 			{
 				Set_Animation(m_iAttack_Heavy);
 			}
@@ -2353,9 +2356,8 @@ void CCharacter::Gain_AttackStep(_ushort iStep)
 
 	if (m_iPlayerTeam == 1)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep, 2);
-
-	CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep, 1);
-
+	else
+		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,1);
 }
 
 void CCharacter::Gain_HitCount(_ushort iHit)
@@ -2363,7 +2365,8 @@ void CCharacter::Gain_HitCount(_ushort iHit)
 	if (m_iPlayerTeam == 1)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 2);
 
-	CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 1);
+	else
+		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 1);
 
 }
 
