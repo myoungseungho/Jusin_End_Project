@@ -51,7 +51,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bGroundSmash = pDesc->bGroundSmash;
 
 	//m_bGain_AttackStep =pDesc->bGainAttackStep;
-	m_iGain_AttackStep = pDesc->iGainAttackStep;
+	m_iGainAttackStep = pDesc->iGainAttackStep;
+	m_iGainHitCount = pDesc->iGainHitCount;
 
 	m_pOwner = pDesc->pOwner;
 
@@ -60,6 +61,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_bGrabbedEnd = pDesc->bGrabbedEnd;
 	m_bCameraZoom = pDesc->bCameraZoom;
+
+	m_fForcedGravityTime = pDesc->fForcedGravityTime;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -276,14 +279,17 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
 		AttackColliderResult eResult =
-			pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
+			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime,m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
 		if (eResult == RESULT_HIT)
 		{
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
-
+			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
+			{
+				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
+			}
 
 			if (m_bGrabbedEnd)
 				pCharacter->Set_bGrabbed(false);
@@ -329,7 +335,9 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 				}
 			}
-			m_pOwner->Gain_AttackStep(m_iGain_AttackStep);
+			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
+			m_pOwner->Gain_HitCount(m_iGainHitCount);
+
 
 
 			if (m_bOwnerNextAnimation)

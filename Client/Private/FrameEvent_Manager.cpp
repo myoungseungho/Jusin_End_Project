@@ -485,7 +485,10 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		pCharacter->Teleport_ToEnemy(fValue[0], fValue[1]);
 	}
-
+	else if (splitText[0] == "AttackGravity")
+	{
+		pCharacter->Set_bAttackGravity(fValue[0]);
+	}
 	else if (splitText[0] == "PlaySound")
 	{
 		pCharacter->Play_Sound(fValue[0], fValue[1], fValue[2]);
@@ -537,7 +540,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 		main_Camera->StartCameraShake(fValue[0], fValue[1]);
 	}
 #pragma endregion
-
+	
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()

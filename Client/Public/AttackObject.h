@@ -46,6 +46,10 @@ public:
 		_bool		bGroundSmash = { false};
 		//_bool		bGainAttackStep = { true };
 		_ushort		iGainAttackStep = { 1 };
+		_ushort		iGainHitCount = { 1 };
+
+
+		_float		fForcedGravityTime = {100}; //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 
 		_bool		bGrabbedEnd = { false };
 		_bool		bCameraZoom = { true };
@@ -112,7 +116,8 @@ protected:
 	//1020추가
 	_bool					m_bGroundSmash = { false };
 	//_bool					m_bGain_AttackStep = { true };
-	_ushort					m_iGain_AttackStep = { 1 };
+	_ushort					m_iGainAttackStep = { 1 };
+	_ushort					m_iGainHitCount = { 1 };
 
 	class CCharacter*				m_pOwner = { nullptr };
 
@@ -122,6 +127,7 @@ protected:
 	_bool		m_bOwnerNextAnimation = { false };
 	_uint		m_iOnwerNextAnimationIndex = {};
 
+	_float		m_fForcedGravityTime = { 100 };  //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 
 	_bool		m_bEnableDestory = true;
 	_bool		m_bGrabbedEnd = { false };

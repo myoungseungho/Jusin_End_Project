@@ -23,13 +23,16 @@ public:
 
 	typedef struct ATTACK_COMMANDGRAB_DESC : public  CAttackObject::ATTACK_DESC
 	{
-		_float2 fDistance = {};
+		_float2 fDistance = {100.f,100.f};
 
 
 		_float fGrabAnimationPosition={};
 
 		//애니메이션이 끊겼으면 실패니까 체크용
 		_short iGrabAnimationIndex = {};
+
+		_bool bForcedHit = false;
+		_short iOnwerDirection = {231};  //보통 보는 방향의 반대가 되도록 조정하지만  0으로 넣으면 뒤통수 때려도 뒤집히지 않음. 기본값(231)이면 자동처리하기
 
 	};
 private:
@@ -65,7 +68,9 @@ private:
 	_float m_fGrabAnimationPosition = {};
 	_ushort m_iGrabAnimationIndex = {};
 
+	_bool m_bForcedHit = { false };
 
+	_short m_iOnwerDirection = {1};
 	
 	//캐릭터가 가지고있어야하는가?
 	//_ushort m_iLoofCycle = 3;

@@ -242,6 +242,8 @@ public:
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
 
+	//공중 기탄같이 중간에 중력이 다시 생기는 특수 처리해야하는것들 각자 override
+	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) { return false; };
 
 	void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition = 0);
 	//void Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime);
@@ -337,7 +339,9 @@ public:
 	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
 	//_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 	//_bool Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
+	AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
+
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
@@ -353,6 +357,8 @@ public:
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep);// 
+	void Gain_HitCount(_ushort iHit);// 
+
 	_float Get_DamageScale();
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
@@ -391,6 +397,7 @@ public:
 
 protected:
 	void Reset_AttackStep();
+
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;

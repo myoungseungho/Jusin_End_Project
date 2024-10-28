@@ -1870,6 +1870,8 @@ _bool CCharacter::Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackTyp
 	return true;
 }
 */
+
+/*
 AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
 {
 
@@ -1921,6 +1923,83 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 	Set_AnimationStop(fStopTime);
 
 	Set_bRedHP(true);
+
+	//m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
+
+
+	m_iDebugComoboDamage += iDamage;
+	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+
+
+	if (m_iHP < 0)
+	{
+		m_iHP = 0;
+	}
+
+	return RESULT_HIT;
+}
+*/
+AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+{
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+		return RESULT_MISS;
+
+	//스턴상태, 땅바닥에 꽂혔을때 검사
+	else if (m_bHitGroundSmashed && Get_fHeight() == 0)
+	{
+		if (eAttackGrade != GRADE_ULTIMATE)
+			return RESULT_MISS;
+	}
+
+	//스턴 상태가 아니면 가드 체크
+	if (m_bStun == false)
+	{
+
+		AttackColliderResult eResult = Guard_Check3(eAttackType);
+
+		//공격자의 방향이 iDirection  피격자는 마주봐야하니 그 반대.
+	
+
+		if (eResult == RESULT_GUARD)
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+				Set_Animation(m_iGuard_CrouchAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
+				Set_Animation(m_iGuard_GroundAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+				Set_Animation(m_iGuard_AirAnimationIndex);
+
+			return RESULT_GUARD;
+
+		}
+		else if (eResult != RESULT_HIT)    //회피나 비긴 경우 아니면 일단 속행.   저 경우는 나중에 따로 처리
+			return eResult;
+
+
+	}
+
+
+
+	m_bStun = true;
+
+	m_fMaxStunTime = fStunTime;
+	m_fAccStunTime = 0.f;
+
+	Set_HitAnimation(eAnimation, Impus);
+	Set_AnimationStop(fStopTime);
+
+	Set_bRedHP(true);
+
+	if (iDirection == 1)
+		FlipDirection(-1);
+	else if(iDirection == -1)
+		FlipDirection(1);
+
+	//0인경우는 뒤집지 않음
+
 
 	//m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
 	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
@@ -2057,12 +2136,19 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_ForcveGravityTime(0.f);
 
 	}
+	break;
 
 	case Client::HitMotion::HIT_WALLBOUNCE:
 	{
 		Set_Animation(m_iHit_WallBouce);
 	}
-	break;
+		break;
+	case Client::HitMotion::HIT_NONE:
+	{
+
+	}
+		break;
+
 	default:
 		break;
 	}
@@ -2185,6 +2271,7 @@ void CCharacter::Set_BreakFall_Ground()
 	Set_bRedHP(false);
 	Reset_AttackStep();
 
+
 	DirectionInput iMoveKey = inputBuffer.back().direction;
 
 	if (iMoveKey == MOVEKEY_UP || iMoveKey == MOVEKEY_UP_LEFT)
@@ -2268,6 +2355,15 @@ void CCharacter::Gain_AttackStep(_ushort iStep)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep, 2);
 
 	CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep, 1);
+
+}
+
+void CCharacter::Gain_HitCount(_ushort iHit)
+{
+	if (m_iPlayerTeam == 1)
+		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 2);
+
+	CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 1);
 
 }
 
@@ -2373,107 +2469,6 @@ void CCharacter::Guard_Update()
 	}
 
 
-}
-*/
-
-
-/*
-_bool CCharacter::Guard_Check()
-{
-
-	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
-	{
-		if (m_iPlayerTeam == 1)
-		{
-			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_A))
-			{
-				return true;
-			}
-
-			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_D))
-			{
-				return true;
-			}
-			else
-				return false;
-		}
-
-		else
-		{
-			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_LEFT))
-			{
-				return true;
-			}
-
-			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_RIGHT))
-			{
-				return true;
-			}
-			else
-				return false;
-		}
-	}
-	else
-	{
-		return false;
-	}
-}
-
-<<<<<<< HEAD
-_bool CCharacter::Guard_Check2(AttackType eAttackType)
-{
-	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
-	if (Check_bCurAnimationisGuard())
-	{
-		return true;
-	}
-
-
-	// 공격이나 행동을 하지 않고 있을때만 가드 체크.  뭔가 하고있었으면 무조건 가드실패.
-	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
-	{
-		if (m_iPlayerTeam == 1)
-		{
-
-			//보고 있는 방향의 반대를 누르고 있을 시,   상중하단 체크 (잡기 포함)
-			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_A))
-			{
-				return CompareGuardType(eAttackType);
-
-			}
-
-			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_D))
-			{
-				return CompareGuardType(eAttackType);
-			}
-
-			//안눌렀으면 가드실패
-			else
-				return false;
-		}
-
-		else
-		{
-			//보고 있는 방향의 반대를 누르고 있을 시,   상중하단 체크 (잡기 포함)
-			if (m_iLookDirection == 1 && m_pGameInstance->Key_Pressing(DIK_LEFT))
-			{
-				return CompareGuardType(eAttackType);
-			}
-
-			else if (m_iLookDirection == -1 && m_pGameInstance->Key_Pressing(DIK_RIGHT))
-			{
-				return CompareGuardType(eAttackType);
-			}
-
-			//안눌렀으면 가드실패
-			else
-				return false;
-		}
-	}
-	else
-	{
-		return false;
-	}
 }
 */
 
@@ -3195,8 +3190,11 @@ void CCharacter::Reset_AttackStep()
 {
 	CBattleInterface_Manager::Get_Instance()->Reset_HitCount(m_iPlayerTeam);
 	CBattleInterface_Manager::Get_Instance()->Reset_HitAttackStep(m_iPlayerTeam);
+
 	Set_bRedHP(false);
 }
+
+
 
 
 _uint* CCharacter::Get_pAnimationIndex()
@@ -3380,7 +3378,12 @@ void CCharacter::Gravity(_float fTimeDelta)
 	if (fHeight > 0)
 	{
 
+		if (m_iPlayerTeam == 2)
+		{
+			_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 
+			_bool bDebug = true;
+		}
 
 
 		// IDLE이면 공중 하강모션으로 변경
@@ -3437,21 +3440,19 @@ void CCharacter::Gravity(_float fTimeDelta)
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground ||
-			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce ||
-			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex)
+			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce||
+			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex
+			|| Check_bCurAnimationisHalfGravityStop())
 		{
 
 
+			
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
-			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper)
+			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || ( m_bAttackGravity==false && Check_bCurAnimationisHalfGravityStop() ))
 			{
 				;
 			}
-
-			//중력ver2 용
-			//if (m_fGravityTime < m_fJumpPower)
-
 
 			else if (m_fGravityTime * 2.f < m_fJumpPower)
 			{
@@ -3464,13 +3465,14 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_fGravityTime = m_fJumpPower * 0.5f;
 			}
 
+			
+			//일부 공격의 경우  Gravity 가 false면 중력 정용 안함
+			if (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop() )
+			{
+				;
+			}
 
-
-			//m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper ||
-			//HitAway가 아니고, Upper도 아니여야됨
-
-			//if(Check_bCurAnimationisHitAway() == false )
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce)
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce)
 			{
 				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity + m_fImpuse.y * fTimeDelta,0 });
 			}
@@ -3492,40 +3494,15 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 
+			
 			if (m_bAttackGravity == true)
 			{
 
-				//if(m_iPlayerTeam ==1)
-				//{
-				//	if ((m_pGameInstance->Key_Pressing(DIK_W) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
-				//	{
-				//		m_fGravityTime += fTimeDelta;
-				//	}
-				//
-				//
-				//	//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-				//
-				//	//if (m_pGameInstance->Key_Pressing(DIK_W))
-				//	//	m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
-				//
-				//}
-				//else
+				if (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)
 				{
-					//if ((m_pGameInstance->Key_Pressing(DIK_UP) || (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)))
-					//{
-					//	m_fGravityTime += fTimeDelta;
-					//}
-
-					if (fGravity < 0 && m_fGravityTime * 2 < m_fJumpPower)
-					{
-						m_fGravityTime += fTimeDelta;
-					}
-					//모든 공격중에 중력적용.  특정 모션만 하려면 각 클래스에서 override 필요
-
-					//if (m_pGameInstance->Key_Pressing(DIK_UP))
-					//	m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+					m_fGravityTime += fTimeDelta;
 				}
-
+					
 			}
 			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.
 			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,0,0 });
@@ -3666,6 +3643,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 					m_bHitGroundSmashed = false;
 					Set_BreakFall_Ground();
+
+					Set_bAttackGravity(true);
 
 					//Set_NextAnimation(m_iBreakFall_Ground, 2.f);
 					//DirectionInput iMoveKey = inputBuffer.back().direction;
