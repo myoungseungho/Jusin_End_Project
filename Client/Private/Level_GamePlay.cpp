@@ -81,7 +81,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
-
 #pragma endregion
 
 #pragma region UI 사본 객체
@@ -389,6 +388,27 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_1.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_1);
 	//필살기_2
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_2);
+
+
+
+
+	//SFX
+
+	//Light_Attack
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_0.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_1_SFX);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_1.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_2_SFX);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_2.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_3_SFX);
+
+	//대쉬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Dash_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX);
+	//다운 훅 대쉬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/DownHook_Dash_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_DownHook_Dash_SFX);
+	//에네르기파
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Energy_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Energy_SFX);
+	//강공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Heavy_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX);
+	//원거리 공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Range_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Range_Attack_SFX);
 
 #pragma endregion
 

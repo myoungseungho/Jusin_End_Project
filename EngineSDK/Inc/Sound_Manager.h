@@ -27,6 +27,11 @@ public:
 		Goku_Ultimate_Attack_1,
 		Goku_Ultimate_Attack_2,
 		Heavy_Attack_21,
+		Goku_Heavy_Attack_SFX,
+		Goku_Energy_SFX,
+		Goku_DownHook_Dash_SFX,
+		Goku_Dash_SFX,
+		Goku_Range_Attack_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -59,6 +64,9 @@ public:
 		Hit_21_3,
 		Hit_21_4,
 		Hit_21_5,
+		Light_Attack_Goku_1_SFX,
+		Light_Attack_Goku_2_SFX,
+		Light_Attack_Goku_3_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
@@ -67,6 +75,7 @@ public:
 		Hit_Goku,
 		LIGHT_ATTACK_21,
 		Hit_21,
+		LIGHT_ATTACK_Goku_SFX
 	};
 
 
