@@ -363,22 +363,32 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Energy_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Attack);
 
 	//오공 히트 총 16개
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_0);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_1);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_2);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_3.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_3);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_4.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_4);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_5.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_5);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_6.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_6);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_7.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_7);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_8.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_8);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_9.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_9);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_10.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_10);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_11.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_11);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_12.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_12);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_13.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_13);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_14.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_14);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_15.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_15);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_0.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_0);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_1.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_1);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_2.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_2);
+#pragma region Hit_긴소리
+	//너무 찡얼대는 소리가 많음
+	/*m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_3.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_3);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_4.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_4);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_5.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_5);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_6.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_6);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_7.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_7);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_8.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_8);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_9.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_9);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_10.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_10);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_11.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_11);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_12.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_12);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_13.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_13);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_14.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_14);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Goku_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Hit_15.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Goku_Hit_15);*/
+#pragma endregion
+
+	//필살기_0
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_0.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_0);
+	//필살기_1
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_1.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_1);
+	//필살기_2
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_2);
 
 #pragma endregion
 

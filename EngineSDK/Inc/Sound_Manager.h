@@ -23,6 +23,9 @@ public:
 		Goku_Upper_Attack,
 		Goku_Range_Attack,
 		Goku_Energy_Attack,
+		Goku_Ultimate_Attack_0,
+		Goku_Ultimate_Attack_1,
+		Goku_Ultimate_Attack_2,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
