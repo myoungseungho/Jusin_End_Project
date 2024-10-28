@@ -1618,6 +1618,11 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_spark00"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_spark00.dds"), 1))))
 		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
+		return E_FAIL;
 }
 
 HRESULT CLoader::Load_Model_Resources_GamePlay_0()
