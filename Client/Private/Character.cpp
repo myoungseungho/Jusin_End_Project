@@ -1552,20 +1552,52 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 		{
 			m_bGrab = false;
 
-			//if (m_bGrab_Air)
+
+			//잡기 공격이 비겼으면
+			if (m_bGrabDraw)  
+			{
+				Add_Move({ -0.4f * m_iLookDirection,0.3f });
+				//BreakFall_Air();
+
+				Set_Animation(m_iBreakFall_Air);
+				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+				Set_ForcedGravityDown();
+
+				Reset_AttackStep();
+				Set_fImpulse({ -5.f * m_iLookDirection, 2.f });
+
+
+			}
+			else //공격 성공시
+			{
+				Add_Move({ -0.4f * m_iLookDirection,0.f });
+				Set_Animation(m_iAttack_Heavy);
+			
+			}
+
+			//else if (m_bGrab_Air)
 			//{
 			//	Set_Animation(m_iAttack_Air3);
 			//}
 			//else
 
-			Add_Move({ -0.4f * m_iLookDirection,0.f });
-
-			{
-				Set_Animation(m_iAttack_Heavy);
-			}
-
 		}
 	}
+
+}
+
+void CCharacter::Grab_LateDraw()
+{
+	//Add_Move({ 0.3f * m_iLookDirection,0.3f });
+	Add_Move({ 0.f,0.2f });
+	Set_GrabLoofCount(1);
+	Set_bGrabDraw(true);
+
+
+
+	Set_Animation(m_iGrabAnimationIndex, false);
+	Set_CurrentAnimationPositionJump(25.f);  	//캐릭터마다 다를수도있음
+
 
 }
 
@@ -2663,6 +2695,7 @@ void CCharacter::Set_Grab(_bool bAir)
 {
 	m_bGrab = true;
 	m_bGrab_Air = bAir;
+	m_bGrabDraw = false;
 }
 
 void CCharacter::Set_ChaseStop()
@@ -3251,6 +3284,11 @@ void CCharacter::Tag_Out(_vector vPosition)
 
 	Chase_Ready(0.f);
 
+}
+
+void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
+{
+	m_bGrabDraw = bGrabDraw;
 }
 
 

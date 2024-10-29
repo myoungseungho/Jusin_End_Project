@@ -1677,7 +1677,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fAnimationLockTime = 0.5f;
 			Desc.pOwner = this;
 			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
-			Desc.bCameraZoom = false;
+			//Desc.bCameraZoom = false;
 			//Desc.bGrabbedEnd = true;
 			//Desc.bCameraZoom = false;
 

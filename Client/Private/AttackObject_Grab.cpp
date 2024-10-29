@@ -122,7 +122,9 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			//pCharacter->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			//pCharacter->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
-
+			m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f});
+			m_pOwner->Set_GrabLoofCount(1);
+			m_pOwner->Set_bGrabDraw(true);
 		}
 
 	}
@@ -175,8 +177,26 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		else if (eResult == RESULT_DRAW)
 		{
-			m_pOwner->Set_AnimationStop(0.3f);
-			pCharacter->Set_AnimationStop(0.3f);
+			//m_pOwner->Set_AnimationStop(0.3f);
+			//pCharacter->Set_AnimationStop(0.3f);
+
+			m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f });
+			m_pOwner->Set_GrabLoofCount(1);
+			m_pOwner->Set_bGrabDraw(true);
+
+
+
+			m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex, false);
+			m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
+
+
+			//°Å¸®Á¶
+			_vector vPos = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			vPos += _vector{ m_fDistance.x * 2.3f,0.f , 0.f, 0.f };
+			static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, vPos);
+
+			pCharacter->Grab_LateDraw();
+
 		}
 
 		else if (eResult == RESULT_MISS)

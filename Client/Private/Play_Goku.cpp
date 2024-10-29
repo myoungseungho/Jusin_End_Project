@@ -551,6 +551,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		//Tag_In(0)
 	}
 
+	cout << "Team : " << m_iPlayerTeam << "Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
 
 }
 

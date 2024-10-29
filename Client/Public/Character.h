@@ -327,7 +327,7 @@ public:
 
 	void Chase_Grab(_float fTimeDelta);
 	void Character_Attack_Grab(_float fTimeDelta);
-
+	void Grab_LateDraw();
 
 
 	void Move(_float fTimeDelta);
@@ -408,6 +408,7 @@ public:
 	void pEnemyCheck();
 	void Tag_Out(_vector vPosition);
 	
+	void Set_bGrabDraw(_bool bGrabDraw);
 
 protected:
 	void Reset_AttackStep();
@@ -585,7 +586,7 @@ protected:
 
 	_bool m_bGrab = false;
 	_bool m_bGrab_Air = false;
-
+	_bool m_bGrabDraw = false;
 
 	_float m_fAccGrabTime = {};
 
