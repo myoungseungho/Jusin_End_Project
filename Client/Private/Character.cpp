@@ -3227,11 +3227,8 @@ void CCharacter::Tag_KeyCheck()
 	if (m_iPlayerTeam == 1)
 	{
 		if (m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
-<<<<<<< HEAD
-=======
 		{
 			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
->>>>>>> 원격/최진영
 			Tag_In(0);
 		}
 	}
