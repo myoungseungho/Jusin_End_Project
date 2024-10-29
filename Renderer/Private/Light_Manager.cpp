@@ -100,7 +100,10 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 			pLight->Render(pShader, pVIBuffer, 1);
 		break;
 	case LIGHT_PLAYER:
+		if (m_PlayerLights.find(strName) == m_PlayerLights.end())
+			return S_OK;
 		m_PlayerLights[strName]->Render(pShader, pVIBuffer, 5);
+
 		break;
 	case LIGHT_EFFECT:
 		for (auto it = m_EffectLights.begin(); it != m_EffectLights.end(); )

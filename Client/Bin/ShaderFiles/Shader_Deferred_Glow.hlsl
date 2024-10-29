@@ -10,9 +10,12 @@ texture2D		g_NormalTexture;
 texture2D		g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
 
 texture2D		g_DepthTexture;
-
+float g_GlowFactor;
+float4 g_GlowFilterColor;
 float2 g_DownSamplingSize;
 float2 g_DownTexSize;
+
+float g_fGlowFactor = 3.2f;
 
 static const float g_fWeight[13] =
 {
@@ -149,7 +152,7 @@ PS_OUT PS_MAIN_RESULT_PRI(PS_IN In)
 
     //Out.vColor.a = saturate(fAlpha - 0.15f);
     
-    Out.vColor = saturate(vResult + vBlur * 2.5f) /*+ vEffect*/;
+    Out.vColor = saturate(vResult + vBlur * g_GlowFactor) /*+ vEffect*/;
     Out.vColor.a = saturate(Out.vColor.a - 0.1f);
 
     return Out;
@@ -169,7 +172,7 @@ PS_OUT PS_MAIN_RESULT_SUN(PS_IN In)
 
     //Out.vColor.a = saturate(fAlpha - 0.15f);
     
-    Out.vColor = saturate(vResult * 0.3f + vBlur * 1.f) /*+ vEffect*/;
+    Out.vColor = saturate(vResult * 0.3f + vBlur * g_GlowFactor) /*+ vEffect*/;
     Out.vColor.a = saturate(Out.vColor.a - 0.3f);
 
     return Out;
@@ -185,7 +188,7 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
-    Out.vColor = saturate(vResult + vBlur * 3.2f) /*+ vEffect*/;
+    Out.vColor = saturate(vResult + vBlur * g_GlowFactor) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
 
@@ -200,9 +203,9 @@ PS_OUT PS_MAIN_RESULT_EARTH(PS_IN In)
 
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
-
-    Out.vColor = saturate(vResult + vBlur * 3.2f) /*+ vEffect*/;
+    Out.vColor = saturate(vResult + vBlur * g_GlowFactor) /*+ vEffect*/;
     Out.vColor.a = saturate(Out.vColor.a - 0.3f);
+    
     return Out;
 }
 
@@ -254,8 +257,9 @@ PS_OUT PS_MAIN_RESULT_UI(PS_IN In)
     Out.vColor = saturate(vResult + vBlur * 5.2f) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
-
 }
+
+
 
 technique11		DefaultTechnique
 {	
@@ -281,7 +285,7 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_BLUR_Y();
     }
 
-    pass Result
+    pass Result // 2
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);

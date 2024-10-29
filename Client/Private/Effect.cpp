@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "..\Public\Effect.h"
 #include "GameInstance.h"
+#include "IMGUI_Shader_Tab.h"
+#include "Imgui_Manager.h"
 #include "Effect_Animation.h"
 
 CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -9,13 +11,18 @@ CEffect::CEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 }
 
-CEffect::CEffect(const CGameObject& Prototype)
+CEffect::CEffect(const CEffect& Prototype)
 	:CGameObject{ Prototype }
 {
+	m_pAnimation = (Prototype.m_pAnimation)->Clone();
 }
 
 HRESULT CEffect::Initialize_Prototype()
 {
+	m_pAnimation = CEffect_Animation::Create();
+	if (nullptr == m_pAnimation)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -27,10 +34,6 @@ HRESULT CEffect::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
-	m_pAnimation = CEffect_Animation::Create();
-
-	if (nullptr == m_pAnimation)
-		return E_FAIL;
 
 	return S_OK;
 }
@@ -47,11 +50,22 @@ void CEffect::Update(_float fTimeDelta)
 
 void CEffect::Late_Update(_float fTimeDelta)
 {
+	
 }
 
 HRESULT CEffect::Render(_float fTimeDelta)
 {
-	
+	if (m_bIsCopy == true)
+	{
+		_int iCheckSpriteEnd = static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+			->Access_Shader_Tab(m_iUnique_Index))
+			->Update_Clone_EffectToShader_Texture(this, fTimeDelta);
+
+		if (iCheckSpriteEnd == 1)
+		{
+			int a = 10;
+		}
+	}
 	return S_OK;
 }
 
@@ -72,7 +86,31 @@ _bool CEffect::Find_KeyFrame(_uint KeyFrameNumber)
 
 EFFECT_KEYFRAME CEffect::Get_KeyFrame(_uint KeyFrameNumber)
 {
-	return m_pAnimation->Get_KeyFrame(KeyFrameNumber);
+	EFFECT_KEYFRAME KeyFrame = m_pAnimation->Get_KeyFrame(KeyFrameNumber);
+
+	Set_Effect_Scaled(KeyFrame.vScale);
+	Set_Effect_Position(KeyFrame.vPosition);
+	Set_Effect_Rotation(KeyFrame.vRotation);
+
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
+	EFFECT_KEYFRAME ResultKeyFrame;
+
+	ResultKeyFrame.vPosition.x = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	ResultKeyFrame.vPosition.y = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	ResultKeyFrame.vPosition.z = XMVectorGetZ(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	ResultKeyFrame.vScale.x = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_RIGHT));
+	ResultKeyFrame.vScale.y = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_UP));
+	ResultKeyFrame.vScale.z = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
+
+	ResultKeyFrame.vRotation = m_pTransformCom->Get_Rotation();
+
+	ResultKeyFrame.bIsNotPlaying = KeyFrame.bIsNotPlaying;
+	ResultKeyFrame.fCurTime = KeyFrame.fCurTime;
+	ResultKeyFrame.fDuration = KeyFrame.fDuration;
+
+	return ResultKeyFrame;
 }
 
 EFFECT_KEYFRAME CEffect::Get_Near_Front_KeyFrame(_uint frameNumber)
@@ -202,7 +240,7 @@ void CEffect::Free()
 	Safe_Release(m_pModelCom);
 	Safe_Release(m_pDiffuseTextureCom);
 	Safe_Release(m_pMaskTextureCom);
-	Safe_Release(m_pAnimation);
+	//Safe_Release(m_pAnimation);
 }
 
 

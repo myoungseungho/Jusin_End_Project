@@ -16,35 +16,31 @@ BEGIN(Client)
 
 class CUI_Manager final : public CBase
 {
-	DECLARE_SINGLETON(CUI_Manager)
-
 public:
-	typedef struct
-	{
-		_bool		bAttBuf = { FALSE };
-		_int		iSKillPoint = { 0 };
-		_int		iSKillCount = { 0 };
-	}TEAM_DESC;
+
+	DECLARE_SINGLETON(CUI_Manager)
 
 private:
 	CUI_Manager();
 	virtual ~CUI_Manager() = default;
 
+	//구조
 public:
-	void Update(_float fTimeDelta);
+	void Add_UIOjbect(CUI_Define::UI_LISTPOS ePos ,class CUIObject* pObject);
+
+	//기능
+public:
+	void GamePlayUpdate(_float fTimeDelta);
 	void UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT eSlotID);
-	//void UsingSkillPoint(_int iSkillPoint) { m_iSkillPoint += iSkillPoint; }
 	void UsingSelectCharacher(class CCharacter* pPawn, CUI_Define::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
 	void UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID);
 	void UsingCreateStartUI();
 	void UsingCreateEndUI();
 
-	//void SKillCount();
-	//void Set_Hp(_uint iHp) { m_iHp = iHp; }
-
-
 public:
+	//디버깅 위치 설정
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
+	//값 초기화
 	void InitUIObject();
 
 public:
@@ -57,12 +53,6 @@ public:
 	//UsingAttckBuff
 	_float m_fDuration = { 0.f };	
 
-	//Skill
-	//_int m_iSkillPoint = { 0 };
-	//_int m_iSkillCount = { 0 };
-
-	//Combo
-	//_uint m_iComboCount = { 0 };
 
 	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
@@ -77,9 +67,15 @@ public:
 
 	//RedBlueTimer
 	_float m_fColorValue = { 0.f };
-
-	//CUIObject::UI_LRPOS m_eTeam = { };
 	 _uint m_iTeam = { 2 };
+
+
+
+public:
+	list<class CUIObject*> m_ListTopUI = {};
+	list<class CUIObject*> m_ListMidUI = {};
+	list<class CUIObject*> m_ListBotUI = {};
+
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

@@ -33,6 +33,9 @@ HRESULT CSpaceEarth_Light::Initialize(void * pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, -100.f, -200.f, 1.f));
 
 	m_iGameObjectData = 7;
+	m_RendererDesc.tGlowDesc.iPassIndex = 7;
+	m_RendererDesc.tGlowDesc.fGlowFactor = 3.2f;
+	m_RendererDesc.tGlowDesc.vGlowColor = _float4(0, 0, 1, 1);
 	return S_OK;
 }
 
@@ -77,7 +80,7 @@ void CSpaceEarth_Light::Late_Update(_float fTimeDelta)
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this, &m_RendererDesc);
 }
 
 HRESULT CSpaceEarth_Light::Render(_float fTimeDelta)

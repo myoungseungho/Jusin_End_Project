@@ -31,8 +31,18 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
+
+	/*
+	    string          strTagName; 
+    XMFLOAT4        vGlowColor;
+    float           fGlowFactor;
+    unsigned int    iPassIndex;
+	*/
+	m_RendererDesc.tGlowDesc.iPassIndex = 8;
+	m_RendererDesc.tGlowDesc.fGlowFactor = 1.f;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -1.5f, -200.f, 1.f));
 	m_iGameObjectData = 8;
+
 	return S_OK;
 }
 
@@ -119,7 +129,7 @@ void CSpaceSun::Update(_float fTimeDelta)
 
 void CSpaceSun::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW_PRI, this, &m_RendererDesc);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND_PRI, this);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND_PRI, this);
 }

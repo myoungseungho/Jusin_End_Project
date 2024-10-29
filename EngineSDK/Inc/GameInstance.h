@@ -113,6 +113,7 @@ public: /* For.FileManager */
 	HRESULT Load_All_CameraPoints(const std::wstring& filename, CameraSaveData* pArg);
 	HRESULT Save_Effects(wstring& FilePath, void* pArg);
 	void* Load_Effects(wstring& FilePath);
+	void* Load_All_Effects();
 
 public: /* For.Font_Manager */
 	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);
@@ -126,6 +127,7 @@ public: /* For.Sound*/
 	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias);
 	void Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias, float volume);
 	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);
+	void Set_ImguiPlay(_bool isPlay);
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };

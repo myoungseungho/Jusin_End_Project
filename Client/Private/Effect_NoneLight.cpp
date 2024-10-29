@@ -3,26 +3,30 @@
 #include "Effect_NoneLight.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+#include "Effect_Animation.h"
 
 CEffect_NoneLight::CEffect_NoneLight(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CEffect{ pDevice ,pContext }
 {
 }
 
-CEffect_NoneLight::CEffect_NoneLight(const CGameObject& Prototype)
+CEffect_NoneLight::CEffect_NoneLight(const CEffect_NoneLight& Prototype)
 	: CEffect{ Prototype }
 {
+
 }
 
 HRESULT CEffect_NoneLight::Initialize_Prototype()
 {
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
 HRESULT CEffect_NoneLight::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_NONELIGHT;
-	//m_iPassIndex = 3;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -30,6 +34,9 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 	if (pArg != nullptr)
 	{
 		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
+		m_ForCopyInform = *pEffectDesc;
+
+		m_bIsCopy = pEffectDesc->bIsCopy;
 
 		_float3 vPos = pEffectDesc->vPosition;
 		_float3 vScale = pEffectDesc->vScaled;
@@ -54,7 +61,7 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 
-		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
+		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
 			m_IsColorEffect = true;
 		}
@@ -67,9 +74,10 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 			return S_OK;
 	}
 
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
-
 
 }
 
@@ -104,10 +112,14 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 			}
 		}
 	}
+
 }
 
 HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
 {
+	if (m_iPassIndex != 1)
+		__super::Render(fTimeDelta);
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -185,6 +197,13 @@ HRESULT CEffect_NoneLight::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &Color, sizeof(Color))))
 		return E_FAIL;
+
+	if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
+	{
+		m_IsColorEffect = true;
+	}
+	else
+		m_IsColorEffect = false;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bColorChange", &m_IsColorEffect, sizeof(m_IsColorEffect))))
 		return E_FAIL;

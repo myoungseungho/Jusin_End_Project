@@ -25,15 +25,17 @@ public:
 	void Render(_float fTimeDelta);
 
 public:
-	HRESULT Copy_Layer(const wstring& strEffectLayerTag);
+	HRESULT Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg = nullptr);
 
 	HRESULT Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect);
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
 	class CEffect* Find_In_Layer_Effect(wstring& layerName, wstring& effectName);
+	HRESULT Set_In_Layer_Effect_Layer_Transform(wstring& layerName);
 	_bool	Find_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	void		Set_Render_Layer(const wstring& strEffectLayerTag);
 	HRESULT		Set_Test_Effect_Color(_int iCurTestEffectIndex, _float4 vColor);
 	HRESULT		Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _float4 vColor);
+
 
 	EFFECT_KEYFRAME Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);

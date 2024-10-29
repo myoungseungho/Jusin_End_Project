@@ -1,12 +1,12 @@
 [Layer]
 LayerName: Smoke01
-Duration: 1
+Duration: 0.8
 TickPerSecond: 1
-KeyFramesCount: 59
+KeyFramesCount: 48
 NumEffec: 12
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
+Position: -0.5 0 -0.5
+Scale: 0.2 0.2 0.2
+Rotation: 0 180 0
 
 [Effect]
 EffectName: aa
@@ -15,14 +15,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01aa
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 0
-Position: 0 0 0
-Scale: 0.599531 0.599999 0.999839
-Rotation: 0 180 0
+PassIndex: 1
+UniqueIndex: 11
+Position: -0.3 0 -0.5
+Scale: 0.5 0.5 0.5
+Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 2
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -42,6 +45,15 @@ CurTime: 0.0666667
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0102
 ModelName: Model_Effect_cmn_SmokeModels0103
@@ -49,14 +61,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0102
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 1
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 12
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -85,6 +100,15 @@ CurTime: 0.133333
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0103
 ModelName: Model_Effect_cmn_SmokeModels0104
@@ -92,14 +116,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0103
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 2
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 13
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -128,6 +155,15 @@ CurTime: 0.2
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0104
 ModelName: Model_Effect_cmn_SmokeModels0105
@@ -135,14 +171,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0104
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 3
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 14
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -171,6 +210,15 @@ CurTime: 0.266667
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0105
 ModelName: Model_Effect_cmn_SmokeModels0106
@@ -178,14 +226,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0105
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 4
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 15
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -214,6 +265,15 @@ CurTime: 0.333333
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0106
 ModelName: Model_Effect_cmn_SmokeModels0107
@@ -221,14 +281,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0106
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 5
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 16
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -257,6 +320,15 @@ CurTime: 0.4
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0107
 ModelName: Model_Effect_cmn_SmokeModels0108
@@ -264,14 +336,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0107
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 6
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 17
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -300,6 +375,15 @@ CurTime: 0.466667
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0108
 ModelName: Model_Effect_cmn_SmokeModels0109
@@ -307,14 +391,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0108
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 7
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 18
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -343,6 +430,15 @@ CurTime: 0.533333
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0109
 ModelName: Model_Effect_cmn_SmokeModels0110
@@ -350,14 +446,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0109
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 8
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 19
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -386,6 +485,15 @@ CurTime: 0.6
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0110
 ModelName: Model_Effect_cmn_SmokeModels0111
@@ -393,14 +501,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0110
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 9
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 20
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -429,6 +540,15 @@ CurTime: 0.666667
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0111
 ModelName: Model_Effect_cmn_SmokeModels0112
@@ -436,14 +556,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0111
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 10
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 21
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -472,6 +595,15 @@ CurTime: 0.733333
 Duration: 1
 IsNotPlaying: true
 
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
 [Effect]
 EffectName: Smoke0112
 ModelName: Model_Effect_cmn_SmokeModels0101
@@ -479,14 +611,17 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke01Smoke0112
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
-PassIndex: 3
-UniqueIndex: 11
-Position: 0 0 0
-Scale: 1 1 1
+PassIndex: 1
+UniqueIndex: 22
+Position: -0.6 0 -1
+Scale: 0.25 0.25 0.25
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 1
-NumKeyFrame: 3
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -505,6 +640,15 @@ Rotation: 0 0 0
 CurTime: 0.733333
 Duration: 2
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 48

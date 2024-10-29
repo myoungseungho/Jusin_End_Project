@@ -18,7 +18,26 @@ CUI_Manager::CUI_Manager()
 	Safe_AddRef(m_pGameInstance);
 }
 
-void CUI_Manager::Update(_float fTimeDelta)
+void CUI_Manager::Add_UIOjbect(CUI_Define::UI_LISTPOS ePos, CUIObject* pObject)
+{
+	switch (ePos)
+	{
+	case Client::CUI_Define::TOP:
+		m_ListTopUI.push_back(pObject);
+		break;
+	case Client::CUI_Define::MID:
+		m_ListMidUI.push_back(pObject);
+		break;
+	case Client::CUI_Define::BOT:
+		m_ListBotUI.push_back(pObject);
+		break;
+
+	default:
+		break;
+	}
+}
+
+void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F1))
 	{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine_Defines.h"
+#include "Renderer_Defines.h"
 
 /* 모든 클래스의 부모가 되기위한 클래스이다. */
 /* 레퍼런스 카운트를 관리(AddRef, Release)한다. */

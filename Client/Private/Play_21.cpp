@@ -138,8 +138,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
 	m_tAttackMap.Initalize(this);
 
-	
-
 	//m_pModelCom->SetUp_Animation(16, true);
 	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
 	m_pModelCom->Play_Animation(0.f);
@@ -208,6 +206,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	
 
 	m_strName = "GOKU" + to_string(m_iPlayerTeam);
+	m_RendererDesc.strName = m_strName;
 
 	LIGHT_DESC			LightDesc{};
 
@@ -760,8 +759,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
-
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, m_strName);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 //#ifdef _DEBUG
 //	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
@@ -1875,6 +1873,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 }
 
+void CPlay_21::Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)
+{
+	m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)SoundName, bisLoof, fvolume);
+}
+
+void CPlay_21::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
+{
+	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
+}
 
 
 CPlay_21* CPlay_21::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -4,14 +4,16 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
+#include "UI_Define.h"
+
 CUI_Logo_BG::CUI_Logo_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CGameObject{ pDevice, pContext }
+	: CUIObject{ pDevice, pContext }
 {
 
 }
 
 CUI_Logo_BG::CUI_Logo_BG(const CUI_Logo_BG& Prototype)
-	: CGameObject{ Prototype }
+	: CUIObject{ Prototype }
 {
 
 }
@@ -31,12 +33,12 @@ HRESULT CUI_Logo_BG::Initialize(void* pArg)
 
 	m_fSizeX = g_iWinSizeX;
 	m_fSizeY = g_iWinSizeY;
-	m_fX = g_iWinSizeX >> 1;
-	m_fY = g_iWinSizeY >> 1;
+	m_fPosX = g_iWinSizeX >> 1;
+	m_fPosY = g_iWinSizeY >> 1;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
+		XMVectorSet(m_fPosX - g_iWinSizeX * 0.5f, -m_fPosY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
@@ -46,6 +48,10 @@ HRESULT CUI_Logo_BG::Initialize(void* pArg)
 
 void CUI_Logo_BG::Priority_Update(_float fTimeDelta)
 {
+	m_fVideoSprite += fTimeDelta * 12.f;
+
+	if (m_fVideoSprite >= 145)
+		m_fVideoSprite == 0;
 }
 
 void CUI_Logo_BG::Update(_float fTimeDelta)
@@ -54,7 +60,7 @@ void CUI_Logo_BG::Update(_float fTimeDelta)
 
 void CUI_Logo_BG::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
 }
 
 HRESULT CUI_Logo_BG::Render(_float fTimeDelta)
@@ -62,12 +68,12 @@ HRESULT CUI_Logo_BG::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(19)))
 		return E_FAIL;
-
+	
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
 		return E_FAIL;
-
+	
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
@@ -78,9 +84,7 @@ HRESULT CUI_Logo_BG::Render(_float fTimeDelta)
 
 HRESULT CUI_Logo_BG::Ready_Components()
 {
-	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxPosTex"),
-		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
+	if (FAILED(__super::Ready_Components()))
 		return E_FAIL;
 
 	/* Com_Texture */
@@ -88,11 +92,11 @@ HRESULT CUI_Logo_BG::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
-
-	/* Com_VIBuffer */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
-		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
+	/* Com_VideoTexture */
+	if (FAILED(__super::Add_Component(LEVEL_LOGO, TEXT("Prototype_Component_Texture_UI_LogoVideoTex"),
+		TEXT("Com_VideoTexture"), reinterpret_cast<CComponent**>(&m_pVideoTextureCom))))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -110,6 +114,10 @@ HRESULT CUI_Logo_BG::Bind_ShaderResources()
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
+
+	if (FAILED(m_pVideoTextureCom->Bind_ShaderResource(m_pShaderCom, "g_BGTexture", m_fVideoSprite)))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -142,9 +150,7 @@ CGameObject* CUI_Logo_BG::Clone(void* pArg)
 
 void CUI_Logo_BG::Free()
 {
-	__super::Free();
+	Safe_Release(m_pVideoTextureCom);
 
-	Safe_Release(m_pTextureCom);
-	Safe_Release(m_pShaderCom);
-	Safe_Release(m_pVIBufferCom);
+	__super::Free();
 }

@@ -10,7 +10,7 @@ class CEffect_NoneLight : public CEffect
 {
 private:
 	CEffect_NoneLight(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect_NoneLight(const CGameObject& Prototype);
+	CEffect_NoneLight(const CEffect_NoneLight& Prototype);
 	virtual ~CEffect_NoneLight() = default;
 
 public:
@@ -27,7 +27,7 @@ private:
 
 public:
 	static CEffect_NoneLight* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual CGameObject* Clone(void* pArg) override;
+	virtual CGameObject* Clone(void* pArg = nullptr) override;
 	virtual void Free() override;
 };
 

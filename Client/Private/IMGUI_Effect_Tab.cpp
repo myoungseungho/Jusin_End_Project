@@ -66,16 +66,22 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
     ImGui::SameLine();
 
     ImGui::SetNextItemWidth(200.0f); // 200 픽셀로 너비 설정
-    static char EffectNameBuffer[128] = "";
-    ImGui::InputText("File Name", EffectNameBuffer, IM_ARRAYSIZE(EffectNameBuffer));
+    //static char EffectNameBuffer[128] = "";
+    //ImGui::InputText("File Name", EffectNameBuffer, IM_ARRAYSIZE(EffectNameBuffer));
 
     ImGui::SameLine();
 
-    if (ImGui::Button("Save"))
+    if (ImGui::Button("Select Layer Save"))
     {
-        Save_Effects_File(UTF8ToWString(EffectNameBuffer));
+        Save_Selected_Effects_File();
     }
 
+    ImGui::SameLine();
+
+    if (ImGui::Button("All Layer Save"))
+    {
+        Save_All_Effects_File();
+    }
     ImGui::Separator();
     ImGui::Separator();
 
@@ -125,25 +131,20 @@ void CIMGUI_Effect_Tab::Save_To_Effect_Layer(_uint iCurTestEffectIndex, const ws
     m_pEffect_Manager->Add_Effect_To_Layer(iCurTestEffectIndex, strEffectLayerTag);
 }
 
-HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
+HRESULT CIMGUI_Effect_Tab::Save_All_Effects_File()
 {
-    wstring FolderName = L"../Bin/Effects/Effect/"; // 파일 경로 설정
-    wstring FileName = strEffectLayerTag;
-    wstring TXT = L".txt";
+    const wstring folderPath = L"../Bin/Effects/Effect/";
 
-    wstring filename = L"";
-
-    filename = FolderName + FileName + TXT;
-
-    // m_vecEffectData에 저장할 데이터를 수집합니다.
-    m_vecEffectData.clear(); // 기존 데이터 초기화
-
-    // FinalEffects 맵에서 각 Layer 정보를 가져와서 m_vecEffectData에 추가
+    // 모든 레이어를 순회하면서 각각의 파일에 저장
     for (const auto& layerPair : m_pEffect_Manager->m_FinalEffects)
     {
         const wstring& layerName = layerPair.first;
         CEffect_Layer* pLayer = layerPair.second;
 
+        // 파일 이름을 레이어 이름으로 설정
+        wstring filePath = folderPath + layerName + L".txt";
+
+        // EFFECT_LAYER_DATA에 현재 레이어 데이터 수집
         EFFECT_LAYER_DATA layerData;
         layerData.layerName = layerName;
         layerData.duration = pLayer->m_fDuration;
@@ -154,8 +155,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
         layerData.vScaled = pLayer->Get_Layer_Scaled();
         layerData.vRotation = pLayer->Get_Layer_Rotation();
 
-
-        // 각 레이어 안의 이펙트들 정보를 수집
+        // 각 레이어 안의 이펙트 정보 추가
         for (auto& pEffect : pLayer->Get_Effects())
         {
             EFFECT_DATA effectData;
@@ -171,12 +171,14 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
             effectData.scale = pEffect->Get_Effect_Scaled();
             effectData.rotation = pEffect->Get_Effect_Rotation();
             effectData.vColor = pEffect->m_vColor;
+            effectData.vGlowColor = pEffect->m_vGlowColor;
+            effectData.fGlowFactor = pEffect->m_fGlowFactor;
+            effectData.iDerredPassIndex = pEffect->m_iDerredPassIndex;
             effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
             effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
-
             CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
-            // 이펙트의 키프레임 정보 추가
+            // 키프레임 정보 추가
             for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
             {
                 EFFECT_KEYFRAME_DATA keyFrameData;
@@ -191,15 +193,93 @@ HRESULT CIMGUI_Effect_Tab::Save_Effects_File(const wstring& strEffectLayerTag)
                 effectData.keyframes.push_back(keyFrameData);
             }
 
-            //effectData.maskTextureName
-            layerData.effects.push_back(effectData); // 레이어에 이펙트 추가
+            layerData.effects.push_back(effectData);
         }
 
-        m_vecEffectData.push_back(layerData); // 레이어 데이터를 최종 벡터에 추가
+        // m_vecEffectData 초기화하고 레이어 데이터 추가
+        m_vecEffectData.clear();
+        m_vecEffectData.push_back(layerData);
+
+        // GameInstance에 있는 Save_Effects 함수로 m_vecEffectData 저장
+        if (FAILED(m_pGameInstance->Save_Effects(filePath, &m_vecEffectData)))
+        {
+            return E_FAIL; // 저장 실패 시 오류 반환
+        }
     }
 
+    return S_OK; // 저장 성공 시 S_OK 반환
+}
+
+HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
+{
+    const wstring folderPath = L"../Bin/Effects/Effect/";
+    const wstring& layerName = selectedLayerName;  // 현재 선택된 레이어 이름
+    CEffect_Layer* pLayer = m_pEffect_Manager->Find_Effect_Layer(layerName);
+
+    if (!pLayer) return E_FAIL;
+
+    // 파일 이름을 현재 선택된 레이어의 이름으로 설정
+    wstring filePath = folderPath + layerName + L".txt";
+
+    // EFFECT_LAYER_DATA에 현재 레이어 데이터 수집
+    EFFECT_LAYER_DATA layerData;
+    layerData.layerName = layerName;
+    layerData.duration = pLayer->m_fDuration;
+    layerData.tickPerSecond = pLayer->m_fTickPerSecond;
+    layerData.keyFramesCount = pLayer->m_iNumKeyFrames;
+    layerData.iNumEffect = pLayer->m_MixtureEffects.size();
+    layerData.vPosition = pLayer->Get_Layer_Position();
+    layerData.vScaled = pLayer->Get_Layer_Scaled();
+    layerData.vRotation = pLayer->Get_Layer_Rotation();
+
+    // 각 레이어 안의 이펙트 정보 추가
+    for (auto& pEffect : pLayer->Get_Effects())
+    {
+        EFFECT_DATA effectData;
+        effectData.effectName = pEffect->m_EffectName;
+        effectData.modelName = pEffect->m_ModelName;
+        effectData.diffuseTextureName = pEffect->m_DiffuseTextureName;
+        effectData.effectType = pEffect->m_eEffect_Type;
+        effectData.renderIndex = pEffect->m_iRenderIndex;
+        effectData.passIndex = pEffect->m_iPassIndex;
+        effectData.uniqueIndex = pEffect->m_iUnique_Index;
+        effectData.isLoop = pEffect->m_bIsLoop;
+        effectData.position = pEffect->Get_Effect_Position();
+        effectData.scale = pEffect->Get_Effect_Scaled();
+        effectData.rotation = pEffect->Get_Effect_Rotation();
+        effectData.vColor = pEffect->m_vColor;
+        effectData.vGlowColor = pEffect->m_vGlowColor;
+        effectData.fGlowFactor = pEffect->m_fGlowFactor;
+        effectData.iDerredPassIndex = pEffect->m_iDerredPassIndex;
+        effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
+
+        effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
+
+        CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
+        // 키프레임 정보 추가
+        for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
+        {
+            EFFECT_KEYFRAME_DATA keyFrameData;
+            keyFrameData.keyFrameNumber = keyFramePair.first;
+            keyFrameData.position = keyFramePair.second.vPosition;
+            keyFrameData.scale = keyFramePair.second.vScale;
+            keyFrameData.rotation = keyFramePair.second.vRotation;
+            keyFrameData.curTime = keyFramePair.second.fCurTime;
+            keyFrameData.duration = keyFramePair.second.fDuration;
+            keyFrameData.bIsNotPlaying = keyFramePair.second.bIsNotPlaying;
+
+            effectData.keyframes.push_back(keyFrameData);
+        }
+
+        layerData.effects.push_back(effectData);
+    }
+
+    // m_vecEffectData 초기화하고 레이어 데이터 추가
+    m_vecEffectData.clear();
+    m_vecEffectData.push_back(layerData);
+
     // GameInstance에 있는 Save_Effects 함수로 m_vecEffectData 저장
-    if (FAILED(m_pGameInstance->Save_Effects(filename, &m_vecEffectData)))
+    if (FAILED(m_pGameInstance->Save_Effects(filePath, &m_vecEffectData)))
     {
         return E_FAIL; // 저장 실패 시 오류 반환
     }
@@ -305,7 +385,7 @@ void CIMGUI_Effect_Tab::Render_For_Each_Effect()
         if (ImGui::Button("Delete Selected Effect"))
         {
             _uint EffectIndex = CImgui_Manager::Get_Instance()->Get_CurShaderTab_Index();
-            CImgui_Manager::Get_Instance()->Delete_Shader_Tab(EffectIndex);
+
             m_pEffect_Manager->Delete_Test_Effect(CImgui_Manager::Get_Instance()->Get_CurShaderTab_Id());
         }
 
@@ -1259,6 +1339,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_Transform()
         m_pEffect_Manager->Set_Layer_Rotation(selectedLayerName, CurRotation);
     }
 
+    m_pEffect_Manager->Set_In_Layer_Effect_Layer_Transform(selectedLayerName);
+
 
     ImGui::End();
 }
@@ -1279,10 +1361,10 @@ CIMGUI_Effect_Tab* CIMGUI_Effect_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 
 void CIMGUI_Effect_Tab::Free()
 {
-    __super::Free();
-
     Safe_Release(m_pEffect_Manager);
 
     ModelName.clear();
     TextureName.clear();
+
+    __super::Free();
 }

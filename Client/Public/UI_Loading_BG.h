@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "GameObject.h"
+#include "UIObject.h"
 
 BEGIN(Engine)
 class CShader;
@@ -11,7 +11,7 @@ END
 
 BEGIN(Client)
 
-class CUI_Loading_BG final : public CGameObject
+class CUI_Loading_BG final : public CUIObject
 {
 private:
 	CUI_Loading_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -31,10 +31,6 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CTexture* m_pBGTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-
-private:
-	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
-	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	
 
 private:

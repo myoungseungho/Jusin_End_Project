@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
+#include "Effect.h"
 
 BEGIN(Engine)
 class CShader;
@@ -59,10 +60,18 @@ public:
 	void Remove_InputFunction(_int iFunctionType);
 
 	void Set_PlusKey(_wstring Key) { m_Key = Key; }
+
+	void Add_CloneValue(CEffect* pEffect);
+	_int Update_CloneValue(CEffect* pEffect, _float fTimeDelta);
+	void Delete_CloneValue(CEffect* pEffect);
 	_int m_iID = { 0 };
 	Shade_Sprite m_Sprite;
 	Shade_MoveTex m_MoveTex;
 	CTexture* m_pTextureCom = { nullptr };
+private:
+	unordered_map<CEffect*, Shade_Sprite> m_CloneSprites;
+	unordered_map<CEffect*, Shade_MoveTex> m_CloneMoveTexs;
+
 private:
 	_bool m_isDiffuse = { false };
 	_bool m_isAlpha = { false };
@@ -91,10 +100,15 @@ private:
 	HRESULT Ready_Components(void* pArg);
 	HRESULT Bind_ShaderResources();
 
+	HRESULT Bind_CloneShaderResources(CEffect* pEffect);
+
 public:
 	static CShader_Texture* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual CGameObject* Clone(void* pArg) override;
+
 	virtual void Free() override;
+
+	// CGameObject을(를) 통해 상속됨
+	CGameObject* Clone(void* pArg) override;
 };
 
 END

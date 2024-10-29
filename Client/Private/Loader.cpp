@@ -2,6 +2,7 @@
 #include "..\Public\Loader.h"
 
 #include "GameInstance.h"
+#include "Effect_Manager.h"
 #include "IMGUI_Shader_Tab.h"
 
 //명승호
@@ -167,6 +168,8 @@ atomic_bool CLoader::isFinished()
 					return false;
 				}
 			}
+
+			Loading_For_Effect();
 			// 모든 작업이 성공적으로 완료됨
 			m_isFinished = true;
 			m_futures.clear(); // future 객체 정리
@@ -244,7 +247,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_1(); }));
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
-
 	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
 	return S_OK;
 }
@@ -265,6 +267,11 @@ HRESULT CLoader::Load_UI_Resources_Logo()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/E3_Title/tex/LOC/E3_Title_Logo.png")))))
 		return E_FAIL;
 
+	//VideoTex
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_UI_LogoVideoTex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Video/LogoMultyTexture/Video_LogoTex%d.png"), 145))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_BackGround"),
 		CUI_Logo_BG::Create(m_pDevice, m_pContext))))
@@ -275,6 +282,13 @@ HRESULT CLoader::Load_UI_Resources_Logo()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Effect()
+{
+	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
+
+	return CEffect_Manager::Get_Instance()->Set_Saved_Effects(pLoaded);
 }
 
 HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
@@ -1617,6 +1631,11 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_spark00"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_spark00.dds"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
 		return E_FAIL;
 }
 

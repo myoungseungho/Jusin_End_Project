@@ -629,6 +629,8 @@ public:
 		_int        iSKillPoint = { 0 };
 		_int        iSKillCount = { 0 };
 
+		_uint		iTeam =  {0};
+
 		CUI_Define::PLAYER_SLOT		ePlayer_Slot = {};
 		CUI_Define::PLAYER_ID        ePlayerID = {};
 	
@@ -662,7 +664,7 @@ protected:
 	CUI_Define::PLAYER_ID				m_eCharacterID = {};
 	CUI_Define::PLAYER_SLOT				m_ePlayerSlot = { CUI_Define::SLOT_END };
 	class CUI_Manager*		m_pUI_Manager = { nullptr };
-
+	class CEffect_Manager*	m_pEffect_Manager = { nullptr };
 
 	string m_strName = "";
 

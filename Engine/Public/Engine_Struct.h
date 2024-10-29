@@ -199,6 +199,9 @@ namespace Engine
 		_float3 rotation;
 		_int iNumKeyFrame;
 		_float4 vColor;
+		_float4        vGlowColor;
+		_float           fGlowFactor;
+		_uint			  iDerredPassIndex;
 		vector<EFFECT_KEYFRAME_DATA> keyframes;
 	};
 

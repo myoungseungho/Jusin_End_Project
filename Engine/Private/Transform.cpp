@@ -185,17 +185,33 @@ void CTransform::Set_Matrix(_matrix AddMatrix)
 {
 	XMMATRIX float4x4Matrix = XMLoadFloat4x4(&m_WorldMatrix);
 
-	XMMATRIX resultMatrix = XMMatrixMultiply(AddMatrix, float4x4Matrix);
+	XMVECTOR scale, rotation, translation;
+	XMMatrixDecompose(&scale, &rotation, &translation, AddMatrix);
 
-	XMVECTOR vRight = resultMatrix.r[0];
-	XMVECTOR vUp = resultMatrix.r[1];
-	XMVECTOR vLook = resultMatrix.r[2]; 
-	XMVECTOR vPos = resultMatrix.r[3];
+	// 각 축에 대해 scale을 적용한 후 rotation을 반영합니다.
+	XMVECTOR vRight = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_RIGHT), scale), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vUp = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_UP), scale), XMMatrixRotationQuaternion(rotation));
+	XMVECTOR vLook = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_LOOK), scale), XMMatrixRotationQuaternion(rotation));
+
+	// translation을 적용한 위치를 계산하고, w를 1로 설정합니다.
+	XMVECTOR vCurPos = Get_State(STATE_POSITION);
+	XMVECTOR vPos = XMVectorAdd(vCurPos, translation);
+	vPos = XMVectorSetW(vPos, 1.0f);
 
 	Set_State(STATE_RIGHT, vRight);
 	Set_State(STATE_UP, vUp);
 	Set_State(STATE_LOOK, vLook);
 	Set_State(STATE_POSITION, vPos);
+}
+
+_matrix CTransform::Multiple_Matrix(_matrix SrcMatrix)
+{
+	_matrix MatWorld = XMLoadFloat4x4(&m_WorldMatrix);
+
+	XMMATRIX MatResult = XMMatrixMultiply(MatWorld, SrcMatrix);
+
+
+	return MatResult;
 }
 
 HRESULT CTransform::Bind_ShaderResource(CShader* pShader, const _char* pConstantName)

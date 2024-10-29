@@ -46,20 +46,35 @@ public:
 
 protected:
 	virtual HRESULT Bind_ShaderResources();
-
 	virtual HRESULT Ready_Components();
 
+	//UI 초기 세팅 값
 	virtual void Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _float fPosY, _float fDepth = 0.9f);
+	
+//UI 크기와 위치를 디버깅해서 찾음
 	void DebugTesting(_float fSizeOffset,  _float fDepth = 1.f);
 
+//클릭한 위치가 해당 UI 위치라면 동작
 	_bool ClickRange();
-	_bool HitCheck();
+
+
+public:
+	//UI 숨김 / 보여줌
+	void IsShow(_bool IsShiw) {m_bIsActive = IsShiw;}
 
 private:
+	//매 프레임마다 MainPlayer와 Sub플레이어 데이터 값 갱신 
 	void InitPlayer();
+
+private:
+	void Add_UIList(CUI_Define::UI_LISTPOS ePos);
+	void UI_PosArea(_float fAreaPosY);
+
 protected:
+	//넣은 수치값을 직교 X,Y값으로 반환
+	_vector GetOffsetPostion(_vector vPosition);
+
 	void MoveAnimUI(_vector vTargetPos, _float fSpeed,  _float fDepth , _float fTimeDelta);
-	_vector GetOffsetPostion(_vector  vPosition);
 	void Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed , _float fDepth, _float fTimeDelta);
 
 protected:
@@ -74,9 +89,8 @@ protected:
 	UI_LRPOS m_eLRPos = { POS_END };
 	UI_DESC* pDesc = {};
 
-	UI_TYPE m_eAnimType = { TYPE_END };
 
-
+//UI 포지션 , 크기 체킹 
 	_float m_fSizeX = { 100.f };
 	_float m_fSizeY = { 100.f };
 	_float m_fPosX = { 0.f };
@@ -90,9 +104,6 @@ protected:
 
 	CUI_Manager* m_pUI_Manager = { nullptr };
 
-	_bool m_bAnimStart = { FALSE };
-
-
 protected:
 //Animation
 	_bool m_bStart = { FALSE };
@@ -104,7 +115,7 @@ protected:
 	_bool m_bCheck = { FALSE };
 
 protected:
-	//해상도 변경ㄴ
+	//해상도 변경
 	_float2 m_vOffSetWinSize = { };
 	_float2 m_vPrevWinSize = {};
 

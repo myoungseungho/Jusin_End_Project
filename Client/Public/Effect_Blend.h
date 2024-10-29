@@ -10,7 +10,7 @@ class CEffect_Blend : public CEffect
 {
 private:
 	CEffect_Blend(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CEffect_Blend(const CGameObject& Prototype);
+	CEffect_Blend(const CEffect_Blend& Prototype);
 	virtual ~CEffect_Blend() = default;
 
 public:
@@ -27,7 +27,7 @@ private:
 
 public:
 	static CEffect_Blend* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual CGameObject* Clone(void* pArg) override;
+	virtual CGameObject* Clone(void* pArg = nullptr) override;
 	virtual void Free() override;
 };
 

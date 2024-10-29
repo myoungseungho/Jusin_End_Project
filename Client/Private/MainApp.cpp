@@ -25,7 +25,6 @@ CMainApp::CMainApp()
 
 HRESULT CMainApp::Initialize()
 {
-
 	//게임인스턴스 엔진 초기화
 	if (FAILED(m_pGameInstance->Initialize_Engine(g_hInst, g_hWnd, true, LEVEL_END, g_iWinSizeX, g_iWinSizeY, &m_pDevice, &m_pContext)))
 		return E_FAIL;
@@ -173,10 +172,17 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-	m_pImgui_Manager->Free();
 
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
+
+	//CEffect_Manager::Get_Instance()->Free();
+
+	int a = 10;
+
+	if (a == 10)
+		a = 1;
+	m_pImgui_Manager->Free();
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);

@@ -9,20 +9,23 @@ CEffect_Overlap::CEffect_Overlap(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 {
 }
 
-CEffect_Overlap::CEffect_Overlap(const CGameObject& Prototype)
+CEffect_Overlap::CEffect_Overlap(const CEffect_Overlap& Prototype)
 	: CEffect{ Prototype }
 {
 }
 
 HRESULT CEffect_Overlap::Initialize_Prototype()
 {
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
 HRESULT CEffect_Overlap::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_OVERLAP;
-	m_iPassIndex = 3;
+	m_iPassIndex = 1;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -30,6 +33,9 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 	if (pArg != nullptr)
 	{
 		EFFECT_DESC* pEffectDesc = static_cast<EFFECT_DESC*>(pArg);
+		m_ForCopyInform = *pEffectDesc;
+
+		m_bIsCopy = pEffectDesc->bIsCopy;
 
 		_float3 vPos = pEffectDesc->vPosition;
 		_float3 vScale = pEffectDesc->vScaled;
@@ -54,7 +60,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 
-		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 1.0f)
+		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
 			m_IsColorEffect = true;
 		}
@@ -95,7 +101,7 @@ void CEffect_Overlap::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 			}
 
 		}
@@ -104,10 +110,11 @@ void CEffect_Overlap::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 			}
 		}
 	}
+
 }
 
 
@@ -177,9 +184,6 @@ HRESULT CEffect_Overlap::Bind_ShaderResources()
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-	//	return E_FAIL;
-
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
 
@@ -193,6 +197,13 @@ HRESULT CEffect_Overlap::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &Color, sizeof(Color))))
 		return E_FAIL;
+
+	if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
+	{
+		m_IsColorEffect = true;
+	}
+	else
+		m_IsColorEffect = false;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bColorChange", &m_IsColorEffect, sizeof(m_IsColorEffect))))
 		return E_FAIL;

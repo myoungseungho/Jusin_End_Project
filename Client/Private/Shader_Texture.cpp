@@ -75,13 +75,18 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 
 void CShader_Texture::Priority_Update(_float fTimeDelta)
 {
+	
+}
+
+void CShader_Texture::Update(_float fTimeDelta)
+{
 	m_fTime += fTimeDelta;
 
 	if (m_Sprite.isOn == true && isSpritePlay == true)
 	{
 		m_Sprite.fAccTime += fTimeDelta;
 
-		if (m_Sprite.fAccTime > (1.0f / (*m_Sprite.fSpeed))) 
+		if (m_Sprite.fAccTime > (1.0f / (*m_Sprite.fSpeed)))
 		{
 			m_Sprite.fAccTime = 0.f;
 			m_Sprite.fSpriteCurPos.x++;
@@ -107,11 +112,6 @@ void CShader_Texture::Priority_Update(_float fTimeDelta)
 			}
 		}
 	}
-
-}
-
-void CShader_Texture::Update(_float fTimeDelta)
-{
 
 }
 
@@ -188,6 +188,91 @@ void CShader_Texture::Remove_InputFunction(_int iFunctionType)
 		m_Sprite.fSpriteCurPos	= {0.f,0.f};
 		m_Sprite.fAccTime = 0.f;
 	}
+}
+
+void CShader_Texture::Add_CloneValue(CEffect* pEffect)
+{
+	Shade_Sprite Sprite = m_Sprite;
+	Shade_MoveTex MoveTex = m_MoveTex;
+
+	Sprite.fSpriteCurPos.x = 0;
+	Sprite.fSpriteCurPos.y = 0;
+	Sprite.fAccTime = 0.f;
+	m_isLoop = true;
+	
+	m_CloneSprites.emplace(pEffect, Sprite);
+	m_CloneMoveTexs.emplace(pEffect, MoveTex);
+}
+
+_int CShader_Texture::Update_CloneValue(CEffect* pEffect, _float fTimeDelta)
+{
+	auto& it = m_CloneSprites.find(pEffect);
+
+	if (it == m_CloneSprites.end())
+		return -1; // Error
+
+	m_fTime += fTimeDelta;
+
+	if (it->second.isOn == true)
+	{
+		it->second.fAccTime += fTimeDelta;
+
+		if (it->second.fAccTime > (1.0f / (*it->second.fSpeed)))
+		{
+			it->second.fAccTime = 0.f;
+			it->second.fSpriteCurPos.x++;
+
+			if (it->second.fSpriteCurPos.x == it->second.fSpriteSizeNumber->x)
+			{
+				it->second.fSpriteCurPos.x = 0.f;
+				it->second.fSpriteCurPos.y++;
+			}
+		}
+
+		if (it->second.fSpriteCurPos.y == it->second.fSpriteSizeNumber->y)
+		{
+			if (m_isLoop == true)
+			{
+				it->second.fSpriteCurPos.y = 0.f;
+				it->second.fSpriteCurPos.x = 0.f;
+			}
+			else
+			{
+
+				it->second.fSpriteCurPos.y = it->second.fSpriteSizeNumber->y - 1;
+				it->second.fSpriteCurPos.x = it->second.fSpriteSizeNumber->x - 1;
+
+				/* Sprite Animation End */
+				return 1; 
+			}
+		}
+	}
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(m_Key)))
+		return E_FAIL;
+
+	if (FAILED(Bind_CloneShaderResources(pEffect)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(0)))
+		return E_FAIL;
+
+	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+		return E_FAIL;
+
+	if (FAILED(m_pVIBufferCom->Render()))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	return 0; //Basic
+}
+
+void CShader_Texture::Delete_CloneValue(CEffect* pEffect)
+{
+	m_CloneMoveTexs.erase(pEffect);
+	m_CloneSprites.erase(pEffect);
 }
 
 
@@ -349,6 +434,79 @@ HRESULT CShader_Texture::Bind_ShaderResources()
 	return S_OK;
 }
 
+HRESULT CShader_Texture::Bind_CloneShaderResources(CEffect* pEffect)
+{
+	auto& Sprite_iter = m_CloneSprites.find(pEffect);
+	auto& Move_iter = m_CloneMoveTexs.find(pEffect);
+
+	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fTime, sizeof(float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("isBindTexture", &m_isTex, sizeof(bool))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("isAlpha", &m_isAlpha, sizeof(bool))))
+		return E_FAIL;
+
+	if (m_isAlpha == true)
+		m_pShaderCom->Bind_ShaderResourceView("g_AlphaTexture", m_InputTextures["Alpha"]);
+
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("isDiffuse", &m_isDiffuse, sizeof(bool))))
+		return E_FAIL;
+
+	if (m_isDiffuse == true)
+		m_pShaderCom->Bind_ShaderResourceView("g_DiffuseTexture", m_InputTextures["Diffuse"]);
+
+	
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vMultiple_Texcoord", &m_vMultiple_Texcoord, sizeof(_float2))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("isMoveTex", &Move_iter->second.isOn, sizeof(bool))))
+		return E_FAIL;
+
+	if (Move_iter->second.isOn == true)
+	{
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_vDirection", Move_iter->second.vDirection, sizeof(_float2))))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_Speed", Move_iter->second.fSpeed, sizeof(float))))
+			return E_FAIL;
+	}
+
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_isSprite", &Sprite_iter->second.isOn, sizeof(bool))))
+		return E_FAIL;
+
+	if (Sprite_iter->second.isOn == true)
+	{
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteSize", &Sprite_iter->second.fSpriteSize, sizeof(_float2))))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteCurPos", &Sprite_iter->second.fSpriteCurPos, sizeof(_float2))))
+			return E_FAIL;
+	}
+
+	return S_OK;
+}
+
 CShader_Texture* CShader_Texture::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CShader_Texture* pInstance = new CShader_Texture(pDevice, pContext);
@@ -362,6 +520,16 @@ CShader_Texture* CShader_Texture::Create(ID3D11Device* pDevice, ID3D11DeviceCont
 	return pInstance;
 }
 
+
+void CShader_Texture::Free()
+{
+	__super::Free();
+
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pShaderCom);
+	Safe_Release(m_pVIBufferCom);
+}
+
 CGameObject* CShader_Texture::Clone(void* pArg)
 {
 	CShader_Texture* pInstance = new CShader_Texture(*this);
@@ -373,13 +541,4 @@ CGameObject* CShader_Texture::Clone(void* pArg)
 	}
 
 	return pInstance;
-}
-
-void CShader_Texture::Free()
-{
-	__super::Free();
-
-	Safe_Release(m_pTextureCom);
-	Safe_Release(m_pShaderCom);
-	Safe_Release(m_pVIBufferCom);
 }

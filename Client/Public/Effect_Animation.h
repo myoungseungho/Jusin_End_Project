@@ -17,7 +17,8 @@ private:
 	virtual ~CEffect_Animation() = default;
 
 public:
-	HRESULT Initialize();
+	HRESULT Initialize_Prototype();
+	HRESULT Initialize(void* pArg = nullptr);
 
 public:
 	void		Add_KeyFrame(_uint KeyFrameNumber, EFFECT_KEYFRAME NewKeyFrameData);
@@ -38,6 +39,7 @@ private:
 
 public:
 	static CEffect_Animation* Create();
+	CEffect_Animation* Clone(void* pArg = nullptr);
 	virtual void Free() override;
 };
 

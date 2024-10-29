@@ -478,7 +478,6 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
 
-
 void CGameInstance::Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias)
 {
 	m_pSoundManager->Register_Sound(filePath, alias);
@@ -512,6 +511,19 @@ void CGameInstance::Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias,
 void CGameInstance::Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias)
 {
 	m_pSoundManager->Stop_Sound(alias);
+}
+
+void CGameInstance::Set_ImguiPlay(_bool isPlay)
+{
+	m_pSoundManager->Set_ImguiPlay(isPlay);
+}
+
+void* CGameInstance::Load_All_Effects()
+{
+	if (nullptr == m_pFile_Manager)
+		return nullptr;
+
+	return m_pFile_Manager->Load_All_Effects();
 }
 
 void CGameInstance::Release_Engine()

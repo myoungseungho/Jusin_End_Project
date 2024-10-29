@@ -108,6 +108,9 @@ void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::w
 
 void CSound_Manager::Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume)
 {
+	if (!m_isImguiPlay)
+		return;
+
 	auto it = m_soundMap.find(alias);
 	if (it == m_soundMap.end()) return;
 
@@ -156,6 +159,9 @@ void CSound_Manager::Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume)
 
 void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume)
 {
+	if (!m_isImguiPlay)
+		return;
+
 	// 그룹이 존재하는지 확인
 	auto groupIt = m_soundGroupMap.find(groupKey);
 	if (groupIt == m_soundGroupMap.end()) return;
@@ -273,6 +279,42 @@ void CSound_Manager::Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume)
 
 	FMOD_Channel_SetVolume(it->second, volume);
 }
+
+void CSound_Manager::Set_ImguiPlay(_bool isPlay)
+{
+	m_isImguiPlay = isPlay;
+
+	// m_isImguiPlay가 false라면 모든 사운드를 중지
+	if (!m_isImguiPlay)
+	{
+		// 개별 사운드 채널 중지
+		for (auto& pair : m_channelMap)
+		{
+			if (pair.second)
+			{
+				FMOD_Channel_Stop(pair.second);
+				// 채널 포인터를 nullptr로 설정하고 싶다면 아래 주석을 해제하세요
+				// pair.second = nullptr;
+			}
+		}
+
+		// 그룹 사운드 채널 중지
+		for (auto& pair : m_groupChannelMap)
+		{
+			if (pair.second)
+			{
+				FMOD_Channel_Stop(pair.second);
+				// 채널 포인터를 nullptr로 설정하고 싶다면 아래 주석을 해제하세요
+				// pair.second = nullptr;
+			}
+		}
+	}
+	else
+	{
+		Play_Sound(SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
+	}
+}
+
 
 CSound_Manager* CSound_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

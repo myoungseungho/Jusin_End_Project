@@ -4,6 +4,8 @@
 #include "RenderInstance.h"
 #include "Character.h"
 
+#include"BattleInterface.h"
+
 CUI_Combo::CUI_Combo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
 {
@@ -35,29 +37,57 @@ HRESULT CUI_Combo::Initialize(void* pArg)
 void CUI_Combo::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
+
+	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
+
+
+	
+	if (m_bComboEnd == TRUE)
+	{
+		m_bCharaStun = TRUE;
+	}
+	else
+		m_fAlphaTimer = 0.f;
+
+	if ( m_bCharaStun == TRUE)
+	{
+		m_fAlphaTimer += fTimeDelta;
+		if (m_fAlphaTimer >= 1.f)
+		{
+			m_bCharaStun = FALSE;
+		}
+	}
+
+
+
+
 }
 
 void CUI_Combo::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if (m_bCharaStun == TRUE)
-	{
+	if (m_pMainPawn != nullptr)
 		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
-		m_bComboEnd = TRUE;
-	}
 
-	if (m_bComboEnd == TRUE)
-	{
-		m_fAlphaTimer += fTimeDelta;
-		if (m_fAlphaTimer >= 1.f)
-		{
-			m_fAlphaTimer = 0.f;
-			m_bComboEnd = FALSE;
-		}
-	}
-	else
-		m_iComboCount = 0.f;
+	if (m_iComboCount >= 3)
+		int a = 10;
+		
+	//}
+	//	m_bComboEnd = TRUE;
+	//}
+
+	//if (m_bComboEnd == TRUE)
+	//{
+	//	m_fAlphaTimer += fTimeDelta;
+	//	if (m_fAlphaTimer >= 1.f)
+	//	{
+	//		m_fAlphaTimer = 0.f;
+	//		m_bComboEnd = FALSE;
+	//	}
+	//}
+	//else
+	//	m_iComboCount = 0.f;
 }
 
 void CUI_Combo::Late_Update(_float fTimeDelta)
