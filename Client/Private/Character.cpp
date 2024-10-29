@@ -3897,7 +3897,7 @@ void CCharacter::Free()
 
 	Safe_Release(m_pUI_Manager);
 	Safe_Release(m_pEffect_Manager);
-
+	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pColliderCom);
 
 }

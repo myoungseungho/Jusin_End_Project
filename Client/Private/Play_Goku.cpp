@@ -1727,7 +1727,7 @@ void CPlay_Goku::Free()
 
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
-	Safe_Release(m_pOutLineCom);
+
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 
