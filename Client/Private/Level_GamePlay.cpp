@@ -410,6 +410,15 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//원거리 공격
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Range_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Range_Attack_SFX, false);
 
+
+	//초필살기 1
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Ultimate_0.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_0_SFX, false);
+	//초필살기 2
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Ultimate_1.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_1_SFX, false);
+	//초필살기 3
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_2_SFX, false);
+	//초필살기 4
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Ultimate_3.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_3_SFX, false);
 #pragma endregion
 
 #pragma region 21_Sound

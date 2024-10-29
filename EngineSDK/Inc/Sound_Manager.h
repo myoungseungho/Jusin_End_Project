@@ -32,6 +32,10 @@ public:
 		Goku_DownHook_Dash_SFX,
 		Goku_Dash_SFX,
 		Goku_Range_Attack_SFX,
+		Goku_Ultimate_0_SFX,
+		Goku_Ultimate_1_SFX,
+		Goku_Ultimate_2_SFX,
+		Goku_Ultimate_3_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
