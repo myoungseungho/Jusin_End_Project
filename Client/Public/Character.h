@@ -232,6 +232,7 @@ public:
 	//애니메이션
 	virtual _bool Character_Play_Animation(_float fTimeDelta);
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
+	virtual _bool Check_bCurAnimationisAirMove(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
@@ -395,6 +396,11 @@ public:
 
 	void Add_Move(_float2 fMovement);
 
+	void Sparking_ON(_float fTimeDelta);
+	void Sparking_TimeCount(_float fTimeDelta);
+
+	_bool Get_bCharacterDead();
+
 protected:
 	void Reset_AttackStep();
 
@@ -507,6 +513,8 @@ protected:
 	_ushort m_iGrabReadyAnimationIndex = { 17 };
 	_ushort m_iGrabAnimationIndex = { 60 };
 
+	_ushort m_iSparkingAnimationIndex = { 59 };  //303
+
 
 	_float m_fGravityTime = { 0.f };
 	_float m_fJumpPower = 3;// { 0.f };
@@ -553,6 +561,8 @@ protected:
 	_ushort		m_iAttackStepCount = { 0 };  //콤보수 아님.
 
 	_bool		m_bSparking = false;
+	_float		m_fAccSparkingTime = {};
+	_float		m_fMaxSparkingTime = {};
 	_bool		m_bNextAnimationGravityEvent = false;
 
 
@@ -586,9 +596,17 @@ protected:
 
 
 
+	_bool m_bCharacterDead = { false };
+
+	_bool m_bTag_In = { false };	//교대하러 들어가는 캐릭터.
+	_bool m_bPlaying = { false };  //이 캐릭터만 조작함
+
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
+
+
 
 	public:
 		void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }
@@ -596,7 +614,7 @@ protected:
 	//class CAttackObject* m_pChaseAttackObejct = { nullptr };
 	//Set_RemoteDestory()
 
-
+	
 
 public:
 	typedef struct

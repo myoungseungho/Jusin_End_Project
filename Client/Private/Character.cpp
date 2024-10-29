@@ -696,6 +696,24 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 	return bAnimationEnd;
 }
 
+_bool CCharacter::Check_bCurAnimationisAirMove(_uint iAnimation)
+{
+	_uint iModelIndex = iAnimation;
+
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+
+	//if (iModelIndex == m_iHit_Air_LightAnimationIndex || iModelIndex == m_iHit_Away_LeftAnimationIndex || iModelIndex == m_iHit_Away_UpAnimationIndex || iModelIndex == m_iHit_Air_FallAnimationIndex)
+	if (iModelIndex == m_iJumpAnimationIndex || iModelIndex == m_iFallAnimationIndex)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool CCharacter::CheckCommandSkippingExtras(const vector<CInput>& pattern, int timeWindow)
 {
 	if (inputBuffer.size() < pattern.size()) return false;
@@ -1367,7 +1385,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 void CCharacter::Chase_Ready(_float fTimeDelta)
 {
 
-	if (m_bChaseEnable == false)
+	if (m_bChaseEnable == false || m_pModelCom->m_iCurrentAnimationIndex == m_iSparkingAnimationIndex)
 		return;
 
 
@@ -1974,6 +1992,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 				Set_Animation(m_iGuard_AirAnimationIndex);
+
+			Set_CurrentAnimationPositionJump(0.f);
 
 			return RESULT_GUARD;
 
@@ -3187,6 +3207,88 @@ void CCharacter::Set_GrabAnimation()
 void CCharacter::Add_Move(_float2 fMovement)
 {
 	m_pTransformCom->Add_Move({ fMovement.x, fMovement.y,0 });
+}
+
+void CCharacter::Sparking_ON(_float fTimeDelta)
+{
+
+	//스파킹이 꺼져있는경우 켜는지 확인
+	if(m_bSparking == false)
+	{
+		if (m_iPlayerTeam == 1)
+		{
+			if (m_pGameInstance->Key_Down(DIK_R) && m_pGameInstance->Key_Pressing(DIK_O) && CBattleInterface_Manager::Get_Instance()->Get_bSparkingEnable(m_iPlayerTeam))
+			{
+				if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex)
+				{
+					Set_Animation(m_iSparkingAnimationIndex);
+					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
+					m_bSparking = true;
+
+					//인원수 조건문
+					m_fMaxSparkingTime = 10.f;
+
+				}
+
+			
+				//Set_NextAnimation(m_iSparkingAnimationIndex, 100.f);
+				//CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
+			}
+
+		}
+		else
+		{
+			if (m_pGameInstance->Key_Pressing(DIK_PGDN) && m_pGameInstance->Key_Down(DIK_NUMPAD9) && CBattleInterface_Manager::Get_Instance()->Get_bSparkingEnable(m_iPlayerTeam))
+			{
+				if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex)
+
+				{
+					Set_Animation(m_iSparkingAnimationIndex);
+					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
+					m_bSparking = true;
+
+					//인원수 조건문
+					m_fMaxSparkingTime = 10.f;
+
+				}
+			}
+		}
+	}
+
+	
+
+	////이미 켜져있는경우 타이머 체크
+	//else
+	//{
+	//	m_fAccSparkingTime += fTimeDelta;
+	//	if (m_fAccSparkingTime > m_fMaxSparkingTime)
+	//	{
+	//		m_bSparking = false;
+	//
+	//	}
+	//
+	//}
+
+
+}
+
+void CCharacter::Sparking_TimeCount(_float fTimeDelta)
+{
+	//이미 켜져있는경우 타이머 체크
+	{
+		m_fAccSparkingTime += fTimeDelta;
+		if (m_fAccSparkingTime > m_fMaxSparkingTime)
+		{
+			m_bSparking = false;
+
+		}
+
+		}
+}
+
+_bool CCharacter::Get_bCharacterDead()
+{
+	return m_bCharacterDead;
 }
 
 void CCharacter::Reset_AttackStep()

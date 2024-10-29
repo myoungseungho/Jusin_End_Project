@@ -113,6 +113,8 @@ public:
 		//301 58 패링
 		//306cs 61  지상 드래곤러시 성공 후 추적
 
+		ANIME_SPARKING = 59
+
 	};
 	enum AnimationCount
 	{

@@ -118,6 +118,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iBreakFall_Air = { ANIME_BREAK_FALL_AIR };   //101
 
 
+	m_iSparkingAnimationIndex = { ANIME_SPARKING };
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -339,6 +341,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	if (m_bAnimationLock == false)
 	{
 
+		Sparking_ON(fTimeDelta);
 
 		//추적 관련 코드.
 		if (m_iPlayerTeam == 1)
@@ -495,6 +498,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	//일부 공격 캔슬
 	AttckCancleJump();
 
+	Sparking_TimeCount(fTimeDelta);
 
 
 
@@ -1316,7 +1320,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
 
 
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 400 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HIT_LIGHT };
@@ -1346,7 +1350,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_Impus = { m_fImpuse.x *0.4f ,0 };
 
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
