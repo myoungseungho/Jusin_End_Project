@@ -80,7 +80,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
 
-
+	return S_OK;
 }
 
 void CEffect_Overlap::Priority_Update(_float fTimeDelta)
