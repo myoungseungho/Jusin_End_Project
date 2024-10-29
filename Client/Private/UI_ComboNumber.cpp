@@ -2,6 +2,7 @@
 
 #include "UI_ComboNumber.h"
 #include "RenderInstance.h"
+#include "UI_Define.h"
 #include "Character.h"
 
 CUI_ComboNumber::CUI_ComboNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -181,7 +182,7 @@ void CUI_ComboNumber::ScaleAnimation()
 
 	if (bHit)
 	{
-		__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, m_fDepth);
+	__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, m_fDepth);
 	}
 	else
 		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
@@ -191,8 +192,9 @@ void CUI_ComboNumber::EndAlphaEffect(_float fTimeDelta)
 {
 	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
 	{
-		
-		m_fAlphaTimer += fTimeDelta * 5.f;
+		CCharacter::Character_INFO_DESC Desc =  m_pMainPawn->Get_PawnDesc();
+
+		m_fAlphaTimer += fTimeDelta *  5.f;
 
 		if (m_fAlphaTimer >= 1.f)
 			m_fAlphaTimer = 1.f;

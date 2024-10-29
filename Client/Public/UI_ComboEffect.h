@@ -22,6 +22,9 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+private:
+	_float m_fAnimDuration = { 0.f };
+
 public:
 	static CUI_ComboEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
