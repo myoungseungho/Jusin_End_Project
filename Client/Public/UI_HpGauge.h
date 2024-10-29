@@ -30,6 +30,11 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
+	void HpRadio_Setting(_float& fHpRadio);
+	void RedAlphaDuration(_float fTimeDelta);
+
+
+private:
 	_char m_iShaderID = { 0 };
 
 	_float m_iCharaCurrHp = { 0.f };

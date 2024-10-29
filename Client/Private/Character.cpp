@@ -231,10 +231,6 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 void CCharacter::Player_Update(_float fTimeDelta)
 {
-}
-
-void CCharacter::Camera_Update(_float fTimeDelta)
-{
 	m_tCharacterDesc.bStun = m_bRedHp;
 
 	m_tCharacterDesc.bHit = m_bHit;
@@ -255,6 +251,11 @@ void CCharacter::Camera_Update(_float fTimeDelta)
 	m_tCharacterDesc.iTeam = m_iPlayerTeam;
 
 	m_iPrevComboCount = m_tCharacterDesc.iComboCount;
+}
+
+void CCharacter::Camera_Update(_float fTimeDelta)
+{
+
 
 }
 
