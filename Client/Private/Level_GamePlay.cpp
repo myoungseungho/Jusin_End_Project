@@ -27,8 +27,6 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	Create_Effect_Manager();
 
-	Loading_For_Effect();
-
 	//ºû ÁØºñ
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
