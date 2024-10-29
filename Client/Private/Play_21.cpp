@@ -135,6 +135,23 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_strName = "S21_" + to_string(m_iPlayerTeam);
+	m_RendererDesc.strName = m_strName;
+
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+
+	LightDesc.vDirection = _float4(-0.06f, -0.07f, 0.1f, 0.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f); 
+	LightDesc.pPlayerDirection = &m_iLookDirection;
+	LightDesc.strName = m_strName;
+
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+		return E_FAIL;
+
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 
@@ -205,8 +222,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CS21_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
-
-
 
 	m_strName = "21" + to_string(m_iPlayerTeam);
 	m_RendererDesc.strName = m_strName;
@@ -1032,16 +1047,8 @@ HRESULT CPlay_21::Ready_Components()
 
 HRESULT CPlay_21::Bind_ShaderResources()
 {
-	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
-		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
-		return E_FAIL;
-
-	m_pOutLineCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 1);
 
 	return S_OK;
 }

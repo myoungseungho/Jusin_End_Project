@@ -24,6 +24,7 @@ private:
 	HRESULT Ready_Character();
 	HRESULT Ready_UIObjects();
 	HRESULT Ready_Sound();
+
 	void			Create_Effect_Manager();
 
 	HRESULT Loading_For_Effect();

@@ -3653,7 +3653,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 		//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		m_pEffect_Manager->Copy_Layer(TEXT("BurstU-2"), m_pTransformCom->Get_WorldMatrixPtr());
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
 
 		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air)
@@ -3947,6 +3947,24 @@ HRESULT CCharacter::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
+	if (FAILED(m_pOutLineCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 1)))
+		return E_FAIL;
+
+	const LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+	if (nullptr == pLightDesc)
+		return E_FAIL;
+
+	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
+	//	return E_FAIL;
+	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDiffuse", &pLightDesc->vDiffuse, sizeof(_float4))))
+	//	return E_FAIL;
+	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightAmbient", &pLightDesc->vDiffuse, sizeof(_float4))))
+	//	return E_FAIL;
+	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightSpecular", &pLightDesc->vSpecular, sizeof(_float4))))
+	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_iPlayerDirection", pLightDesc->pPlayerDirection, sizeof(_int))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -4015,7 +4033,7 @@ void CCharacter::Free()
 {
 	__super::Free();
 
-
+	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
 
