@@ -199,6 +199,11 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
+
+	if (m_bPlaying == false)
+		return;
+
+
 	if (m_pGameInstance->Key_Down(DIK_PGUP))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
@@ -492,6 +497,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		Add_Move({ -12.f - fPosX, 0.f });
 	}
 
+	Tag_KeyCheck();
 
 
 	if (m_pGameInstance->Key_Down(DIK_8))
@@ -527,6 +533,13 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	{
 		system("cls");
 	}
+
+	if (m_pGameInstance->Key_Down(DIK_F3))
+	{
+		//Tag_In(0)
+	}
+
+
 }
 
 void CPlay_Goku::Priority_Update(_float fTimeDelta)

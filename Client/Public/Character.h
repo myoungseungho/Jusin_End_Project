@@ -337,9 +337,6 @@ public:
 
 
 	//피격 관련
-	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
-	//_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	//_bool Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 	AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
 
@@ -396,10 +393,20 @@ public:
 
 	void Add_Move(_float2 fMovement);
 
+
+	//BattleInterface
 	void Sparking_ON(_float fTimeDelta);
 	void Sparking_TimeCount(_float fTimeDelta);
 
+	void Gain_KiAmount(_ushort iKiAmount);
+
 	_bool Get_bCharacterDead();
+
+	void Tag_KeyCheck();
+	void Tag_In(_ubyte iTagSlot);
+	void RegisterEnemy(CCharacter* pEnemy);
+	void Tag_Out(_vector vPosition);
+	
 
 protected:
 	void Reset_AttackStep();
@@ -554,6 +561,8 @@ protected:
 	CCollider* m_pColliderCom = { nullptr };
 
 	CCharacter* m_pDebugEnemy = { nullptr };
+	CCharacter* m_pEnemy = { nullptr };
+
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 

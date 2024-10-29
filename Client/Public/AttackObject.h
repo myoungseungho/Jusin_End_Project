@@ -53,6 +53,8 @@ public:
 
 		_bool		bGrabbedEnd = { false };
 		_bool		bCameraZoom = { true };
+
+		_ushort		iGainKiAmount = { 20 };
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -132,6 +134,8 @@ protected:
 	_bool		m_bEnableDestory = true;
 	_bool		m_bGrabbedEnd = { false };
 	_bool		m_bCameraZoom = { true };
+
+	_ushort		m_iGainKiAmount = { 20 };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

@@ -212,6 +212,17 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
 
+
+	CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
+	if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
+	{
+		m_bPlaying = false;
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(3.f * m_iPlayerTeam, 3.f, 0.f, 1.f));
+
+	}
+	else
+		m_bPlaying = true;
+
 	return S_OK;
 }
 
@@ -1755,145 +1766,6 @@ void CCharacter::Reset_AttackCount()
 	m_bAriDashEnable = true;
 }
 
-/*
-_bool CCharacter::Set_Hit(_uint eAnimation, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
-{
-
-	if (m_bStun == false)
-	{
-
-		//Guard_Update();
-
-		//if (m_bGuard == true)
-		if (Guard_Check())
-		{
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
-				Set_Animation(m_iGuard_CrouchAnimationIndex);
-
-			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
-				Set_Animation(m_iGuard_GroundAnimationIndex);
-
-			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
-				Set_Animation(m_iGuard_AirAnimationIndex);
-
-			return false;
-
-		}
-
-		else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground)
-			return false;
-
-		//else if()  smash 상태이고 hit air이고   공격타입이 필살기면 세이프
-	}
-
-
-	m_bStun = true;
-
-	m_fMaxStunTime = fStunTime;
-
-	Set_HitAnimation(eAnimation, Impus);
-	Set_AnimationStop(fStopTime);
-
-	Set_bRedHP(true);
-
-
-	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
-
-	m_iDebugComoboDamage += iDamage;
-	cout << "Dagage : " << iDamage  <<"  ,  Total : " << m_iDebugComoboDamage << endl;
-
-
-	if (m_iHP < 0)
-	{
-		m_iHP = 0;
-	}
-
-	return true;
-}
-*/
-
-/*
-_bool CCharacter::Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
-{
-
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
-		return false;
-
-	//스턴상태, 땅바닥에 꽂혔을때 검사
-	else if (m_bHitGroundSmashed && Get_fHeight() == 0)
-	{
-		if (eAttackGrade != GRADE_ULTIMATE)
-			return false;
-	}
-
-	//스턴 상태가 아니면 가드 체크
-	if (m_bStun == false)
-	{
-
-		if (Guard_Check2(eAttackType))
-		{
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
-				Set_Animation(m_iGuard_CrouchAnimationIndex);
-
-			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
-				Set_Animation(m_iGuard_GroundAnimationIndex);
-
-			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
-				Set_Animation(m_iGuard_AirAnimationIndex);
-
-			return false;
-
-		}
-
-
-
-
-
-
-
-		//else if()  smash 상태이고 hit air이고   공격타입이 필살기면 세이프
-		//else if (eAttackGrade == GRADE_ULTIMATE && m_bHitGroundSmashed && m_iHit_Air_LightAnimationIndex)
-		//{
-		//
-		//}
-		//else
-		//	return false;
-
-
-		//거꾸로 체크하자.
-		// 바닥에 질질 끌리고있을때  필살기 아니면 false
-
-		//else if (m_bHitGroundSmashed && m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_LightAnimationIndex )
-
-
-
-
-	}
-
-
-
-	m_bStun = true;
-
-	m_fMaxStunTime = fStunTime;
-
-	Set_HitAnimation(eAnimation, Impus);
-	Set_AnimationStop(fStopTime);
-
-
-	m_iHP -= iDamage;  // 여기에 콤보계수 곱할것
-
-	m_iDebugComoboDamage += iDamage;
-	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
-
-
-	if (m_iHP < 0)
-	{
-		m_iHP = 0;
-	}
-
-	return true;
-}
-*/
 
 /*
 AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus)
@@ -3225,6 +3097,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 				if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex)
 				{
 					Set_Animation(m_iSparkingAnimationIndex);
+					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
 
@@ -3241,12 +3114,14 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 		}
 		else
 		{
-			if (m_pGameInstance->Key_Pressing(DIK_PGDN) && m_pGameInstance->Key_Down(DIK_NUMPAD9) && CBattleInterface_Manager::Get_Instance()->Get_bSparkingEnable(m_iPlayerTeam))
+			if (m_pGameInstance->Key_Down(DIK_PGDN) && m_pGameInstance->Key_Pressing(DIK_NUMPAD9) && CBattleInterface_Manager::Get_Instance()->Get_bSparkingEnable(m_iPlayerTeam))
 			{
 				if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex)
 
 				{
 					Set_Animation(m_iSparkingAnimationIndex);
+					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
+
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
 
@@ -3278,6 +3153,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 {
 	//이미 켜져있는경우 타이머 체크
+	if(m_bSparking)
 	{
 		m_fAccSparkingTime += fTimeDelta;
 		if (m_fAccSparkingTime > m_fMaxSparkingTime)
@@ -3286,13 +3162,84 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 
 		}
 
-		}
+	}
+}
+
+void CCharacter::Gain_KiAmount(_ushort iKiAmount)
+{
+	CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(iKiAmount, m_iPlayerTeam);
 }
 
 _bool CCharacter::Get_bCharacterDead()
 {
 	return m_bCharacterDead;
 }
+
+void CCharacter::Tag_KeyCheck()
+{
+	if (m_iPlayerTeam == 1)
+	{
+		if(m_pGameInstance->Key_Down(DIK_F3))
+			Tag_In(0);
+	}
+	else if (m_iPlayerTeam == 2)
+	{
+		if (m_pGameInstance->Key_Down(DIK_F4))
+			Tag_In(0);
+	}
+}
+
+void CCharacter::Tag_In(_ubyte iTagSlot)
+{
+	m_bPlaying = false;
+
+	//순간이동 이펙트
+	m_bTag_In = true;
+
+
+	
+	//상대 캐릭터들의 Enemy를 변경함
+
+
+	//이건 PLAYER_SLOT
+	//0->1   1->0,   2->3, 3->2  
+
+	//interface 전용 slot으로 바꾸려면
+	//0->1 1->0,   2->1   3->0
+
+	//짝수면 +1  홀수면 -1
+	if (m_ePlayerSlot % 2 == 0)
+	{
+		CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 1, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	}
+	else 
+		CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 0, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+
+
+	m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
+
+
+}
+
+void CCharacter::RegisterEnemy(CCharacter* pEnemy)
+{
+	m_pEnemy = pEnemy;
+}
+
+
+void CCharacter::Tag_Out(_vector vPosition)
+{
+	//일단은 임시로
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+	m_bPlaying = true;
+
+	m_bTag_In = false;
+
+
+}
+
+
 
 void CCharacter::Reset_AttackStep()
 {
