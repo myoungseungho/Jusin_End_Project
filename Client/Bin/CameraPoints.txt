@@ -74,7 +74,31 @@ SkillName: Camera_Son_Same_Grab
 
 [Animation]
 AnimationName: Son_Same_Grab_Anim1
-PointCount: 0
+PointCount: 3
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.9
+InterpolationType: 1
+Damping: 2
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.03329 -2.49969
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Son_Energy
@@ -289,7 +313,7 @@ AnimationName: 21_Same_Grab_Anim1
 PointCount: 3
 
 [CameraPoint]
-Position: 0.5 1.5 -5
+Position: 1 1.5 -5
 Rotation: -0 0 -0 1
 Duration: 1
 InterpolationType: 1
@@ -297,17 +321,17 @@ Damping: 2
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 0.5 1.03329 -2.49969
+Position: 1 1.03329 -2.49969
 Rotation: -0 0 -0 1
-Duration: 0.4
+Duration: 0.1
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 0.5 1.5 -5
+Position: 1 1.5 -5
 Rotation: -0 0 -0 1
-Duration: 1
+Duration: 0.1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
