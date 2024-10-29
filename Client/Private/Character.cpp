@@ -1638,6 +1638,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 			{
 				m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
 				//Æ÷¿öµå ´ë½Ã ²÷°åÀ» ¶§
+				m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_DownHook_Dash_SFX);
 			}
 			else
 				m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);

@@ -7,9 +7,6 @@
 
 #include "Play_Goku.h"
 
-
-
-
 //vector<CInput> Command_236Attack =
 //{
 //	{MOVEKEY_DOWN, ATTACK_NONE},
@@ -30,8 +27,6 @@
 //vector<CInput> Command_SpecialAttack ={	{MOVEKEY_NEUTRAL, ATTACK_SPECIAL}};
 
 
-
-
 void CGoku_MeleeAttack::Initalize(CPlay_Goku* pPlayer)
 {
 	m_pPlayer = pPlayer;
@@ -40,6 +35,8 @@ void CGoku_MeleeAttack::Initalize(CPlay_Goku* pPlayer)
 
 	m_pbAttackCount = m_pPlayer->Get_pbAttackCount();
 	m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
+
+	m_pGameInstance = CGameInstance::Get_Instance();
 }
 
 void CGoku_MeleeAttack::Attack_Light()
@@ -730,6 +727,7 @@ void CGoku_MeleeAttack::ForwardDash()
 	if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_BACK_WALK)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_DownHook_Dash_SFX, false, 1.f);
 	}
 
 	else if (m_pPlayer->Get_bAirDashEnable()  && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP ))
@@ -743,7 +741,6 @@ void CGoku_MeleeAttack::ForwardDash()
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
 	}
-
 
 }
 

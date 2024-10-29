@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameObject.h"
 #include "Client_Defines.h"
+#include "GameObject.h"
 //#include "AnimationEvent_Defines.h"
 //#include "FrameEvent_Manager.h"
 
@@ -14,9 +14,8 @@ END
 
 BEGIN(Client)
 
-
 // Input 클래스 정의 (방향 + 버튼을 포함)
-class CGoku_MeleeAttack {
+class CGoku_MeleeAttack{
 public:
 	
 	void Initalize(class CPlay_Goku* pPlayer);
@@ -56,6 +55,8 @@ public:
 
 	_bool* m_pbAttackCount = { nullptr };
 	_ushort* m_piCountGroundSpecial = { nullptr };
+
+	class CGameInstance* m_pGameInstance = { nullptr };
 
 };
 
