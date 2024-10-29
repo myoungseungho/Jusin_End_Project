@@ -395,9 +395,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//SFX
 
 	//Light_Attack
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_0.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_1_SFX);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_1.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_2_SFX);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_2.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_3_SFX);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_1_SFX);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_2_SFX);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Light_Attack_SFX_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_3_SFX);
 
 	//´ë½¬
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Dash_SFX.wav", CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX);

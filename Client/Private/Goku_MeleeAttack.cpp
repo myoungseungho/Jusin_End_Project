@@ -52,7 +52,7 @@ void CGoku_MeleeAttack::Attack_Light()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_LIGHT1);
-	
+		
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1)
@@ -726,6 +726,7 @@ void CGoku_MeleeAttack::BackDash()
 void CGoku_MeleeAttack::ForwardDash()
 {
 	//if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	//지상대쉬
 	if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_BACK_WALK)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);

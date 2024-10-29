@@ -1586,7 +1586,8 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 			Set_fImpulse(5.f);
 		}
 
-
+		//점프 시작
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX, false, 1.f);
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))
@@ -1636,6 +1637,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 			{
 				m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
+				//포워드 대시 끊겼을 때
 			}
 			else
 				m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
@@ -1670,7 +1672,8 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 			Set_fImpulse(5.f);
 		}
 
-
+		//점프 시작
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX, false, 1.f);
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_DOWN))
@@ -1720,6 +1723,7 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 			{
 				m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
+				//포워드 대시 끊겼을 때
 			}
 			else
 				m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
@@ -3552,6 +3556,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_bJumpLock = true;
 			}
 
+			//사뿐히 점프해서 땅 착지
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX, false, 1.f);
 		}
 		else if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
 		{
@@ -3594,7 +3600,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_bJumpLock = true;
 			}
 
-
+			//피격되서 땅에 꼴아박힐때 사운드
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Dash_SFX, false, 1.f);
 		}
 		if (m_bHitGroundSmashed == false)
 		{

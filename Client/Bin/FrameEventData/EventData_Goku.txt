@@ -154,6 +154,7 @@ PLAY_GOKU,GKS205_body,95.000000,PlaySound,13,0,1
 
 //,앉아약
 PLAY_GOKU,GKS230_body,0,AnimSpeedChange,0.028,90
+PLAY_GOKU,GKS230_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS230_body,10,AttackEvent,33333     
 PLAY_GOKU,GKS230_body,12,NextAnimationCheck,333
 PLAY_GOKU,GKS230_body,17,NextAnimationCheck,333
@@ -161,6 +162,7 @@ PLAY_GOKU,GKS230_body,17,NextAnimationCheck,333
 
 //,앉아중 기존 공격프레임은 11~14
 PLAY_GOKU,GKS231_body,0,AnimSpeedChange,0.02,90
+PLAY_GOKU,GKS231_body,0.001000,PlayGroupSound,204,0,1
 //,PLAY_GOKU,GKS231_body,21,AttackEvent,33333
 PLAY_GOKU,GKS231_body,25,AttackEvent,333333
 PLAY_GOKU,GKS231_body,30,NextAnimationCheck,333333333
@@ -201,6 +203,7 @@ PLAY_GOKU,GKS232_body,43,NextAnimationCheck,33333
 
 //,공중약
 PLAY_GOKU,GKS260_body,0,AnimSpeedChange,0.027000,120.000000
+PLAY_GOKU,GKS260_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS260_body,10,AttackEvent,33333333
 PLAY_GOKU,GKS260_body,11,NextAnimationCheck,333333
 PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
@@ -208,6 +211,7 @@ PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
 
 //,공중 중
 PLAY_GOKU,GKS261_body,0,AnimSpeedChange,0.025000,120
+PLAY_GOKU,GKS261_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS261_body,30,AnimSpeedChange,0.027000,80
 PLAY_GOKU,GKS261_body,31,AttackEvent,33333333
 PLAY_GOKU,GKS261_body,35,NextAnimationCheck,333333
@@ -344,6 +348,7 @@ PLAY_GOKU,GKS403_body,70,NextAnimationCheck,333333
 
 //,236약
 PLAY_GOKU,GKS404_body,0.000000,AnimSpeedChange,0.016000,85.656998
+PLAY_GOKU,GKS404_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS404_body,45,AttackEvent,33333
 PLAY_GOKU,GKS404_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS404_body,50,NextAnimationCheck,333333
@@ -409,6 +414,7 @@ PLAY_GOKU,GKS404_body,59,ObjectMove,0.01,0,0,0
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,85.656998
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,120.656998
 PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,180.656998
+PLAY_GOKU,GKS405_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS405_body,45,AttackEvent,33333
 PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS405_body,50,NextAnimationCheck,333333
@@ -471,6 +477,7 @@ PLAY_GOKU,GKS405_body,59,ObjectMove,0.01,0,0,0
 
 //,214약
 PLAY_GOKU,GKS406_body,0.000000,AnimSpeedChange,0.013000,121
+PLAY_GOKU,GKS406_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS406_body,20.1,AnimSpeedChange,0.013000,121
 PLAY_GOKU,GKS406_body,40,AttackEvent,0,0
 PLAY_GOKU,GKS406_body,45,NextAnimationCheck,333333
