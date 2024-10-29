@@ -38,10 +38,19 @@ public:
 
 	void Gain_KiGuage(_ushort iKi, _ushort iTeam);
 	_bool Use_KiGuage(_ushort  irequirementKi, _ushort iTeam);
-	_ushort Get_KiGuage(_ushort iKi, _ushort iTeam);
+	_ushort Get_KiGuage(_ushort iTeam);
+
+	_ushort Get_KiNumber(_ushort iTeam);
 
 
+	//이거 하나만 호출하게
+	//	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot);
+	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos);
 
+	void Regist_Character(_ubyte iTeam, class CCharacter* pCharacter, _ubyte iSlot);
+
+	//캐릭터 변경시 호출해서 상대팀에게 enemy를 바꿔줘야됨
+	class CCharacter* EnemyInitalize(_ubyte iTeam);
 
 private:
 	
@@ -55,8 +64,14 @@ private:
 
 	_bool m_bSparkingEnable[2] = { true };
 	_uint m_iHitCount[2] = {}; //화면에 뜰 히트수
+	
 	_uint m_iKiGuage[2] = {};
+	_uint m_iKiNumber[2] = {};
+
 	_uint m_iHitAttackStep[2] = {};
+
+	_ubyte m_i1TeamPlayingCharacterIndex = {};
+	_ubyte m_i2TeamPlayingCharacterIndex = {};
 
 
 private:

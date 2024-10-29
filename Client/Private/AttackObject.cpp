@@ -64,6 +64,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_fForcedGravityTime = pDesc->fForcedGravityTime;
 
+	m_iGainKiAmount = pDesc->iGainKiAmount;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -285,6 +287,9 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
+
+
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{

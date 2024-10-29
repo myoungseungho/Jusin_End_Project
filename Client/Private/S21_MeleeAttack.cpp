@@ -276,6 +276,8 @@ void CS21_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Grab(false);
 			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
+			m_pPlayer->Set_GrabLoofCount(2);
+			
 		}
 
 		else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP)
@@ -283,6 +285,7 @@ void CS21_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Grab(true);
 			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
+			m_pPlayer->Set_GrabLoofCount(2);
 		}
 	}
 }
