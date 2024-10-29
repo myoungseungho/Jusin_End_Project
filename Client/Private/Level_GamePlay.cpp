@@ -133,7 +133,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 
 	//¸ðµ¨ ÇÁ¸®ºä
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"));
+	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"));
 	return S_OK;
 }
 
