@@ -315,7 +315,7 @@ PointCount: 3
 [CameraPoint]
 Position: 1 1.5 -5
 Rotation: -0 0 -0 1
-Duration: 1
+Duration: 0.9
 InterpolationType: 1
 Damping: 2
 HasWorldFloat4x4: 1
