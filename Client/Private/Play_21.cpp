@@ -223,23 +223,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
 
-	m_strName = "21" + to_string(m_iPlayerTeam);
-	m_RendererDesc.strName = m_strName;
-
-	LIGHT_DESC			LightDesc{};
-
-	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
-
-	LightDesc.vDirection = _float4(-0.1f, -0.07f, 0.1f, 0.f);
-	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
-	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
-	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
-	LightDesc.pPlayerDirection = &m_iLookDirection;
-	LightDesc.strName = m_strName;
-
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
-		return E_FAIL;
-
 	m_eCharacterID = CUI_Define::PLAYER_ID::ANDROID21;
 	CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
 	if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
