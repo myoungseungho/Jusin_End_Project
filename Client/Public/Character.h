@@ -653,6 +653,7 @@ protected:
 
 private:
 	HRESULT Ready_Components();
+public:
 	HRESULT Bind_ShaderResources();
 
 public:

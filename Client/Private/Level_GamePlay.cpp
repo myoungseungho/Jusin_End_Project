@@ -75,12 +75,20 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-	//	return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
+	//CharacterDesc.iTeam = 1;
+	//CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
+	//
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	//	return E_FAIL; 
+
+
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+		//return E_FAIL;
+
+>>>>>>> 4ffd4d1f131a39fbbe52e567528cb20da9ece3ee
 #pragma endregion
 
 #pragma region UI »çº» °´Ã¼
@@ -209,6 +217,8 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
+
+	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_UIObjects()
@@ -340,6 +350,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 	}
 
+	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Sound()
