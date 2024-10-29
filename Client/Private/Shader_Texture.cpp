@@ -198,7 +198,7 @@ void CShader_Texture::Add_CloneValue(CEffect* pEffect)
 	Sprite.fSpriteCurPos.x = 0;
 	Sprite.fSpriteCurPos.y = 0;
 	Sprite.fAccTime = 0.f;
-	m_isLoop = true;
+	m_isLoop = false;
 	
 	m_CloneSprites.emplace(pEffect, Sprite);
 	m_CloneMoveTexs.emplace(pEffect, MoveTex);
@@ -206,6 +206,7 @@ void CShader_Texture::Add_CloneValue(CEffect* pEffect)
 
 _int CShader_Texture::Update_CloneValue(CEffect* pEffect, _float fTimeDelta)
 {
+	_int iReturnCheck = { 0 };
 	auto& it = m_CloneSprites.find(pEffect);
 
 	if (it == m_CloneSprites.end())
@@ -243,7 +244,7 @@ _int CShader_Texture::Update_CloneValue(CEffect* pEffect, _float fTimeDelta)
 				it->second.fSpriteCurPos.x = it->second.fSpriteSizeNumber->x - 1;
 
 				/* Sprite Animation End */
-				return 1; 
+				iReturnCheck = 1;
 			}
 		}
 	}
@@ -266,7 +267,7 @@ _int CShader_Texture::Update_CloneValue(CEffect* pEffect, _float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	return 0; //Basic
+	return iReturnCheck; //Basic
 }
 
 void CShader_Texture::Delete_CloneValue(CEffect* pEffect)

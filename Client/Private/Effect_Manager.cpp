@@ -305,6 +305,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				}
 				break;
 			}
+
 		}
 
 		m_FinalEffects.emplace(layerData.layerName, pLayer);

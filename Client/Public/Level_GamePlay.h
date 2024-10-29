@@ -26,6 +26,8 @@ private:
 	HRESULT Ready_Sound();
 	void			Create_Effect_Manager();
 
+	HRESULT Loading_For_Effect();
+
 private:
 	class CUI_Manager* m_pUI_Manager = { nullptr };
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };

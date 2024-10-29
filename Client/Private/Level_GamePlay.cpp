@@ -121,6 +121,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma endregion
 
+	Loading_For_Effect();
+
 #pragma region 사운드 로드
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
@@ -452,6 +454,13 @@ void CLevel_GamePlay::Create_Effect_Manager()
 {
 	m_pEffect_Manager = CEffect_Manager::Get_Instance();
 	m_pEffect_Manager->Initialize(m_pDevice, m_pContext);
+}
+
+HRESULT CLevel_GamePlay::Loading_For_Effect()
+{
+	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
+
+	return CEffect_Manager::Get_Instance()->Set_Saved_Effects(pLoaded);
 }
 
 HRESULT CLevel_GamePlay::Ready_Character()

@@ -1,8 +1,8 @@
 [Layer]
 LayerName: Aura11_Yellow
-Duration: 1.4
+Duration: 1
 TickPerSecond: 0.1
-KeyFramesCount: 24
+KeyFramesCount: 59
 NumEffec: 1
 Position: 0 0 0
 Scale: 1 1 1
@@ -25,7 +25,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -35,13 +35,4 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 0.4
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 23
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
-CurTime: 0.383333
-Duration: 0.4
-IsNotPlaying: true
 

@@ -168,8 +168,7 @@ public:
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-	CTexture* m_pOutLineCom = { nullptr };
-	
+
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };
