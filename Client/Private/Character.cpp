@@ -213,15 +213,17 @@ HRESULT CCharacter::Initialize(void* pArg)
 	inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
 
 
-	CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
-	if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
-	{
-		m_bPlaying = false;
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(3.f * m_iPlayerTeam, 3.f, 0.f, 1.f));
-
-	}
-	else
-		m_bPlaying = true;
+	//CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
+	//if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
+	//{
+	//	m_bPlaying = false;
+	//	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(5.f * m_iPlayerTeam, 100.f, 0.f, 1.f));
+	//
+	//	//캐릭터 사이즈에 맞게 각자 추가하느라 m_pColliderCom이 없음
+	//	//m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	//}
+	//else
+	//	m_bPlaying = true;
 
 	return S_OK;
 }
@@ -1218,7 +1220,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 
 	//CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
-	CTransform* pTarget = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+	CTransform* pTarget = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
 
 	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
 
@@ -1326,7 +1328,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 
 	//CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
-	CTransform* pTarget = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+	CTransform* pTarget = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
 
 	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
 
@@ -1509,7 +1511,7 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 
 
 
-	CTransform* pTarget = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+	CTransform* pTarget = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
 
 	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
 	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
@@ -2130,8 +2132,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 		{
 
 			//거리가 멀어져서 생긴 가상의 벽
-			//if ( fabsf(Get_fPositionX() - m_pDebugEnemy->Get_fPositionX()) > 8)
-			if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pDebugEnemy->Get_fPositionX()) > 8)
+			//if ( fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+			if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
 			{
 				Set_Animation(m_iHit_WallBouce);
 
@@ -2648,7 +2650,7 @@ AttackColliderResult CCharacter::CompareGrabType3(AttackType eAttackType)
 void CCharacter::Teleport_ToEnemy(_float OffsetX, _float OffsetY)
 {
 
-	_vector vTargetPos = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+	_vector vTargetPos = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 
 	vTargetPos += {OffsetX* m_iLookDirection, OffsetY, 0, 0};
 
@@ -2714,7 +2716,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
 	//잡기중에는 겹쳐도 됨
-	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed())
+	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
 		return;
 
 
@@ -2876,7 +2878,7 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 
 	//잡기중에는 겹쳐도 됨
-	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed())
+	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
 		return;
 
 
@@ -3179,12 +3181,12 @@ void CCharacter::Tag_KeyCheck()
 {
 	if (m_iPlayerTeam == 1)
 	{
-		if(m_pGameInstance->Key_Down(DIK_F3))
+		if(m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
 			Tag_In(0);
 	}
 	else if (m_iPlayerTeam == 2)
 	{
-		if (m_pGameInstance->Key_Down(DIK_F4))
+		if (m_pGameInstance->Key_Down(DIK_F4) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
 			Tag_In(0);
 	}
 }
@@ -3218,6 +3220,7 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 
 
 	m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
+	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
 }
@@ -3225,6 +3228,15 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 void CCharacter::RegisterEnemy(CCharacter* pEnemy)
 {
 	m_pEnemy = pEnemy;
+}
+
+void CCharacter::pEnemyCheck()
+{
+	if (m_pEnemy == nullptr)
+	{
+		m_pEnemy = CBattleInterface_Manager::Get_Instance()->EnemyInitalize(m_iPlayerTeam);
+	}
+
 }
 
 
@@ -3236,6 +3248,8 @@ void CCharacter::Tag_Out(_vector vPosition)
 
 	m_bTag_In = false;
 
+
+	Chase_Ready(0.f);
 
 }
 

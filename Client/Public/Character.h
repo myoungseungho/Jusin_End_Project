@@ -405,6 +405,7 @@ public:
 	void Tag_KeyCheck();
 	void Tag_In(_ubyte iTagSlot);
 	void RegisterEnemy(CCharacter* pEnemy);
+	void pEnemyCheck();
 	void Tag_Out(_vector vPosition);
 	
 

@@ -184,20 +184,20 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//잡기는 한번 빗나가면 끝
 			//if (m_eAttackType == ATTACKTYPE_GRAB_GROUND || m_eAttackType == ATTACKTYPE_GRAB_AIR)
 			{
-				if (m_bEnableDestory)
-				{
-					Destory();
-					m_bEnableDestory = false;
-				}
+				//if (m_bEnableDestory)
+				//{
+				//	Destory();
+				//	m_bEnableDestory = false;
+				//}
 			}
 
 		}
 
-		if (m_bEnableDestory)
-		{
-			Destory();
-			m_bEnableDestory = false;
-		}
+		//if (m_bEnableDestory)
+		//{
+		//	Destory();
+		//	m_bEnableDestory = false;
+		//}
 	}
 
 

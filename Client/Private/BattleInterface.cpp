@@ -17,12 +17,19 @@
 #include "Model_Preview.h"
 #include "BattleInterface.h"
 
+
+#include "Main_Camera.h"
+
+
 IMPLEMENT_SINGLETON(CBattleInterface_Manager)
 
 
 
+
 CBattleInterface_Manager::CBattleInterface_Manager()
+    :m_pGameInstance{ CGameInstance::Get_Instance() }
 {
+    Safe_AddRef(m_pGameInstance);
 }
 
 
@@ -110,6 +117,11 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
 
 void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos)
 {
+
+
+    CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+
     if (iTeam == 1)
     {
         for (auto pCharcter : m_p2TeamCharacter)
@@ -117,8 +129,9 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
             if(pCharcter != nullptr)
                 pCharcter->RegisterEnemy(m_p1TeamCharacter[NewCharacterslot]);
         }
-
+        m_i1TeamPlayingCharacterIndex = NewCharacterslot;
         m_p1TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
+        pMainCamera->SetPlayer(CMain_Camera::PLAYER_1P, m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
     }
     else if (iTeam == 2)
     {
@@ -127,9 +140,13 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
             if (pCharcter != nullptr)
                 pCharcter->RegisterEnemy(m_p2TeamCharacter[NewCharacterslot]);
         }
+        m_i2TeamPlayingCharacterIndex = NewCharacterslot;
         m_p2TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
-
+        pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
     }
+
+
+
 
 }
 
@@ -142,6 +159,18 @@ void CBattleInterface_Manager::Regist_Character(_ubyte iTeam, class CCharacter* 
     else if (iTeam == 2)
     {
         m_p2TeamCharacter[iSlot-2] = pCharacter;
+    }
+}
+
+CCharacter* CBattleInterface_Manager::EnemyInitalize(_ubyte iTeam)
+{
+    if (iTeam == 1)
+    {
+        return m_p2TeamCharacter[0];
+    }
+    else if (iTeam == 2)
+    {
+        return m_p1TeamCharacter[0];
     }
 }
 

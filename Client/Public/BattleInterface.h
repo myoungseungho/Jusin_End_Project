@@ -49,7 +49,7 @@ public:
 	void Regist_Character(_ubyte iTeam, class CCharacter* pCharacter, _ubyte iSlot);
 
 	//캐릭터 변경시 호출해서 상대팀에게 enemy를 바꿔줘야됨
-	class CCharacter* Register_Enemy();
+	class CCharacter* EnemyInitalize(_ubyte iTeam);
 
 private:
 	
@@ -65,6 +65,9 @@ private:
 	_uint m_iHitCount[2] = {}; //화면에 뜰 히트수
 	_uint m_iKiGuage[2] = {};
 	_uint m_iHitAttackStep[2] = {};
+
+	_ubyte m_i1TeamPlayingCharacterIndex = {};
+	_ubyte m_i2TeamPlayingCharacterIndex = {};
 
 
 private:

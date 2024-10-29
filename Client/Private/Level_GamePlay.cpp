@@ -27,10 +27,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	Create_Effect_Manager();
 
+
 	//빛 준비
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
-
+	
 #pragma region 맵 사본 객체
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
@@ -65,6 +66,10 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma region 캐릭터 사본 객체
 
+
+
+	//반드시 1P,2P 순서로 생성해야하는가?
+
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
 	CharacterDesc.iTeam = 1;
@@ -73,12 +78,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
-	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
-
-
-
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
@@ -86,9 +85,17 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
+
+	CharacterDesc.iTeam = 1;
+	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+		return E_FAIL;
+
+	
+	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-	return E_FAIL;
+		return E_FAIL;
 
 
 #pragma endregion
@@ -97,6 +104,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	//캐릭터 생성 이후 IMGUI_UIMANAGER 초기화 이후 
 	if (FAILED(Ready_UIObjects()))
 		return E_FAIL;
+	
 #pragma endregion
 
 #pragma region 카메라 포인트 로드
@@ -104,7 +112,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	//카메라 생성
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Main_Camera"))))
 		return E_FAIL;
-
+	
 	// 카메라 포인트 로드
 	_wstring cameraFilePath = L"../Bin/CameraPoints.txt";
 	CameraSaveData cameraSaveData;
@@ -132,6 +140,7 @@ HRESULT CLevel_GamePlay::Initialize()
 #pragma region 사운드 로드
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
+	
 #pragma endregion
 
 	return S_OK;
@@ -217,6 +226,10 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
+	
+
+	return S_OK;
+
 }
 
 HRESULT CLevel_GamePlay::Ready_UIObjects()
@@ -348,6 +361,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 	}
 
+	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Sound()

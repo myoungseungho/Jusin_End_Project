@@ -36,6 +36,8 @@
 #include "AttackObject_Grab.h"
 #include "AttackObject_CommandGrab.h"
 
+#include "BattleInterface.h"
+
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -205,7 +207,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	
 
-	m_strName = "GOKU" + to_string(m_iPlayerTeam);
+	m_strName = "21" + to_string(m_iPlayerTeam);
 	m_RendererDesc.strName = m_strName;
 
 	LIGHT_DESC			LightDesc{};
@@ -232,7 +234,17 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	}
 
 	m_eCharacterID = CUI_Define::PLAYER_ID::ANDROID21;
+	CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
+	if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
+	{
+		m_bPlaying = false;
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(5.f * m_iPlayerTeam, 100.f, 0.f, 1.f));
 
+		//캐릭터 사이즈에 맞게 각자 추가하느라 m_pColliderCom이 없음
+		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	}
+	else
+		m_bPlaying = true;
 
 	return S_OK;
 }
@@ -276,27 +288,29 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 
 	//합치기 전 임시 코드.  적 탐지코드임
-	if (m_pDebugEnemy == nullptr)
-	{
-		//_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-
-		for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
-		{
-			CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-
-			if (pObject != this)
-			{
-				m_pDebugEnemy = static_cast<CCharacter*>(pObject);
-			}
-
-		}
-	}
+	//if (m_pEnemy == nullptr)
+	//{
+	//	_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+	//
+	//	for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
+	//	{
+	//		CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
+	//	
+	//		if (pObject != this)
+	//		{
+	//			m_pEnemy = static_cast<CCharacter*>(pObject);
+	//		}
+	//	
+	//	}
+	//	
+	//}
+	pEnemyCheck();
 
 
 	//방향전환 코드.  적 탐지가 추가된 이후엔  CCharacter로 옮기기
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	{
-		CTransform* pEnemyTransform = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+		CTransform* pEnemyTransform = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
 
 		//적 방향의 X값 체크
 		_float fX = XMVectorGetX(pEnemyTransform->Get_State(CTransform::STATE_POSITION) - m_pTransformCom->Get_State(CTransform::STATE_POSITION));
