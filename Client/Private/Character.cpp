@@ -10,6 +10,7 @@
 
 #include "AttackObject.h"
 #include "BattleInterface.h"
+#include "Main_Camera.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
@@ -159,7 +160,7 @@ CCharacter::CCharacter(const CCharacter& Prototype)
 	: CGameObject{ Prototype }
 	, m_pFrameEvent{ Prototype.m_pFrameEvent }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
-	, m_pEffect_Manager {CEffect_Manager::Get_Instance()}
+	, m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
 {
 	Safe_AddRef(m_pUI_Manager);
 	Safe_AddRef(m_pEffect_Manager);
@@ -1560,7 +1561,7 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 
 
 			//잡기 공격이 비겼으면
-			if (m_bGrabDraw)  
+			if (m_bGrabDraw)
 			{
 				Add_Move({ -0.4f * m_iLookDirection,0.3f });
 				//BreakFall_Air();
@@ -1578,7 +1579,7 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 			{
 				Add_Move({ -0.4f * m_iLookDirection,0.f });
 				Set_Animation(m_iAttack_Heavy);
-			
+
 			}
 
 			//else if (m_bGrab_Air)
@@ -1900,7 +1901,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 		AttackColliderResult eResult = Guard_Check3(eAttackType);
 
 		//공격자의 방향이 iDirection  피격자는 마주봐야하니 그 반대.
-	
+
 
 		if (eResult == RESULT_GUARD)
 		{
@@ -1938,7 +1939,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 	if (iDirection == 1)
 		FlipDirection(-1);
-	else if(iDirection == -1)
+	else if (iDirection == -1)
 		FlipDirection(1);
 
 	//0인경우는 뒤집지 않음
@@ -2083,12 +2084,12 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		Set_Animation(m_iHit_WallBouce);
 	}
-		break;
+	break;
 	case Client::HitMotion::HIT_NONE:
 	{
 
 	}
-		break;
+	break;
 
 	default:
 		break;
@@ -2177,6 +2178,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 			if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
 			{
 				Set_Animation(m_iHit_WallBouce);
+				CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+				mainCamera->StartCameraShake(0.5f, 0.1f);
 
 				Set_AnimationStop(0.2f);
 
@@ -2295,7 +2298,7 @@ void CCharacter::Gain_AttackStep(_ushort iStep)
 	if (m_iPlayerTeam == 1)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep, 2);
 	else
-		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep,1);
+		CBattleInterface_Manager::Get_Instance()->Gain_HitAttackStep(iStep, 1);
 }
 
 void CCharacter::Gain_HitCount(_ushort iHit)
@@ -3132,7 +3135,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 {
 
 	//스파킹이 꺼져있는경우 켜는지 확인
-	if(m_bSparking == false)
+	if (m_bSparking == false)
 	{
 		if (m_iPlayerTeam == 1)
 		{
@@ -3150,7 +3153,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 				}
 
-			
+
 				//Set_NextAnimation(m_iSparkingAnimationIndex, 100.f);
 				//CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 			}
@@ -3177,7 +3180,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 		}
 	}
 
-	
+
 
 	////이미 켜져있는경우 타이머 체크
 	//else
@@ -3197,7 +3200,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 {
 	//이미 켜져있는경우 타이머 체크
-	if(m_bSparking)
+	if (m_bSparking)
 	{
 		m_fAccSparkingTime += fTimeDelta;
 		if (m_fAccSparkingTime > m_fMaxSparkingTime)
@@ -3223,7 +3226,7 @@ void CCharacter::Tag_KeyCheck()
 {
 	if (m_iPlayerTeam == 1)
 	{
-		if(m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		if (m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
 			Tag_In(0);
 	}
 	else if (m_iPlayerTeam == 2)
@@ -3241,7 +3244,7 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	m_bTag_In = true;
 
 
-	
+
 	//상대 캐릭터들의 Enemy를 변경함
 
 
@@ -3256,7 +3259,7 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	{
 		CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 1, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	}
-	else 
+	else
 		CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 0, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
@@ -3556,16 +3559,16 @@ void CCharacter::Gravity(_float fTimeDelta)
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground ||
-			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce||
+			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce ||
 			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex
 			|| Check_bCurAnimationisHalfGravityStop())
 		{
 
 
-			
+
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
-			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || ( m_bAttackGravity==false && Check_bCurAnimationisHalfGravityStop() ))
+			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop()))
 			{
 				;
 			}
@@ -3581,9 +3584,9 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_fGravityTime = m_fJumpPower * 0.5f;
 			}
 
-			
+
 			//일부 공격의 경우  Gravity 가 false면 중력 정용 안함
-			if (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop() )
+			if (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop())
 			{
 				;
 			}
@@ -3610,7 +3613,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 
-			
+
 			if (m_bAttackGravity == true)
 			{
 
@@ -3618,7 +3621,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 				{
 					m_fGravityTime += fTimeDelta;
 				}
-					
+
 			}
 			//가속만 받고 중력은 냅두는 코드. 모든 모션에 가속도 적용할꺼 아니면 굉장히 이상하게 보임.
 			//m_pTransformCom->Add_Move({ m_fImpuse * fTimeDelta,0,0 });

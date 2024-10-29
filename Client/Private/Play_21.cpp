@@ -225,15 +225,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
 		return E_FAIL;
 
-	if (::AllocConsole() == TRUE)
-	{
-		FILE* nfp[3];
-		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-		std::ios::sync_with_stdio();
-	}
-
 	m_eCharacterID = CUI_Define::PLAYER_ID::ANDROID21;
 	CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
 	if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
