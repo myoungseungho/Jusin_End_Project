@@ -58,7 +58,7 @@ HRESULT CVirtual_Camera::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CVirtual_Camera::Priority_Update(_float fTimeDelta)
+void CVirtual_Camera::Camera_Update(_float fTimeDelta)
 {
 	switch (m_currentMode)
 	{
@@ -413,7 +413,7 @@ void CVirtual_Camera::Free_Camera(_float fTimeDelta)
 
 	if (isOverShaderImGui == true || isOverMainImGui == true)
 	{
-		__super::Priority_Update(fTimeDelta);
+		__super::Camera_Update(fTimeDelta);
 
 		return;
 	}

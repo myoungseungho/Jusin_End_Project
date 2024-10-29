@@ -39,9 +39,9 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Sub_Chara_Icon_Panel::Priority_Update(_float fTimeDelta)
+void CUI_Sub_Chara_Icon_Panel::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 }
 

@@ -35,9 +35,9 @@ HRESULT CUI_Skill::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Skill::Priority_Update(_float fTimeDelta)
+void CUI_Skill::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	//m_iSkillPoint = max(m_pMainPawn->Get_PawnDesc().iSKillPoint , m_pSubPawn->Get_PawnDesc().iSKillPoint);
 	

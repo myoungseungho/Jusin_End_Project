@@ -38,9 +38,9 @@ HRESULT CUI_PosMark::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_PosMark::Priority_Update(_float fTimeDelta)
+void CUI_PosMark::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_PosMark::Update(_float fTimeDelta)

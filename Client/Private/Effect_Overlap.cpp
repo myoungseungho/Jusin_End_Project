@@ -84,7 +84,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CEffect_Overlap::Priority_Update(_float fTimeDelta)
+void CEffect_Overlap::Camera_Update(_float fTimeDelta)
 {
 }
 

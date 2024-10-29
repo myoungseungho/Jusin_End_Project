@@ -46,7 +46,7 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceSun::Priority_Update(_float fTimeDelta)
+void CSpaceSun::Camera_Update(_float fTimeDelta)
 {
 	static bool isOneCheck = false;
 	if (m_isPlus == true && m_isMaintain == false)

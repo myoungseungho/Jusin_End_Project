@@ -38,9 +38,9 @@ HRESULT CUI_SkillEffect::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_SkillEffect::Priority_Update(_float fTimeDelta)
+void CUI_SkillEffect::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_fAnimTimer += fTimeDelta * 10; 
 	m_fRenderTimer += fTimeDelta;

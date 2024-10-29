@@ -32,7 +32,7 @@ HRESULT CSound_Manager::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CSound_Manager::Priority_Update(_float fTimeDelta)
+void CSound_Manager::Camera_Update(_float fTimeDelta)
 {
 
 }

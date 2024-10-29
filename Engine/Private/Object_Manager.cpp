@@ -184,12 +184,12 @@ void CObject_Manager::Player_Update(_float fTimeDelta)
 	}
 }
 
-void CObject_Manager::Priority_Update(_float fTimeDelta)
+void CObject_Manager::Camera_Update(_float fTimeDelta)
 {
 	for (size_t i = 0; i < m_iNumLevels; i++)
 	{
 		for (auto& Pair : m_pLayers[i])
-			Pair.second->Priority_Update(fTimeDelta);
+			Pair.second->Camera_Update(fTimeDelta);
 	}
 }
 

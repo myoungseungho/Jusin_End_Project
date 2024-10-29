@@ -44,7 +44,7 @@ HRESULT CCamera::Initialize(void* pArg)
 }
 
 //Main_Camera에서 호출되는 이 함수
-void CCamera::Priority_Update(_float fTimeDelta)
+void CCamera::Camera_Update(_float fTimeDelta)
 {
 }
 

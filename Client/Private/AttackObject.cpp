@@ -87,7 +87,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CAttackObject::Priority_Update(_float fTimeDelta)
+void CAttackObject::Camera_Update(_float fTimeDelta)
 {
 
 }

@@ -172,10 +172,10 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CMain_Camera::Priority_Update(_float fTimeDelta)
+void CMain_Camera::Camera_Update(_float fTimeDelta)
 {
 	//선택된 가상카메라 업데이트
-	m_vecVirtualCamera[m_currentVirtualMode]->Priority_Update(fTimeDelta);
+	m_vecVirtualCamera[m_currentVirtualMode]->Camera_Update(fTimeDelta);
 
 	//선택된 가상카메라의 정보로 뷰 투영 만들기
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], fTimeDelta);

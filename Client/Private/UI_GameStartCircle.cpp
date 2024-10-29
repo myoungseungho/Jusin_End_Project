@@ -56,9 +56,9 @@ HRESULT CUI_GameStartCircle::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_GameStartCircle::Priority_Update(_float fTimeDelta)
+void CUI_GameStartCircle::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	if(m_iTextureIndex == 0)
 		m_pUI_Manager->m_fTotalDuration += fTimeDelta;

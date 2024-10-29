@@ -35,9 +35,9 @@ HRESULT CUI_GameState::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_GameState::Priority_Update(_float fTimeDelta)
+void CUI_GameState::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_fTotalAnimDuration = m_pUI_Manager->m_fTotalDuration;
 }

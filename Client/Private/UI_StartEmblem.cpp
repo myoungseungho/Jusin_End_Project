@@ -52,9 +52,9 @@ HRESULT CUI_StartEmblem::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_StartEmblem::Priority_Update(_float fTimeDelta)
+void CUI_StartEmblem::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 
 }

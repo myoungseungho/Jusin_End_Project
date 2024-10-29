@@ -35,7 +35,7 @@ HRESULT CSpaceGround::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceGround::Priority_Update(_float fTimeDelta)
+void CSpaceGround::Camera_Update(_float fTimeDelta)
 {
 	//m_fAccTime += fTimeDelta * 5;
 }

@@ -81,7 +81,7 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 
 }
 
-void CEffect_ZNone::Priority_Update(_float fTimeDelta)
+void CEffect_ZNone::Camera_Update(_float fTimeDelta)
 {
 }
 

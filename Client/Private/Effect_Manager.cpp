@@ -37,16 +37,16 @@ HRESULT CEffect_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* 
 	return S_OK;
 }
 
-void CEffect_Manager::Priority_Update(_float fTimeDelta)
+void CEffect_Manager::Camera_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_FinalEffects)
-		Pair.second->Priority_Update(fTimeDelta);
+		Pair.second->Camera_Update(fTimeDelta);
 
 	for (auto& Pair : m_TestEffect)
-		Pair->Priority_Update(fTimeDelta);
+		Pair->Camera_Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
-		Pair->Priority_Update(fTimeDelta);
+		Pair->Camera_Update(fTimeDelta);
 
 }
 

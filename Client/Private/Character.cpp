@@ -233,7 +233,7 @@ void CCharacter::Player_Update(_float fTimeDelta)
 {
 }
 
-void CCharacter::Priority_Update(_float fTimeDelta)
+void CCharacter::Camera_Update(_float fTimeDelta)
 {
 	m_tCharacterDesc.bStun = m_bRedHp;
 

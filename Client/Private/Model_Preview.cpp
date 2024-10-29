@@ -49,7 +49,7 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CModel_Preview::Priority_Update(_float fTimeDelta)
+void CModel_Preview::Camera_Update(_float fTimeDelta)
 {
 
 }

@@ -36,9 +36,9 @@ HRESULT CUI_AttBufNone::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_AttBufNone::Priority_Update(_float fTimeDelta)
+void CUI_AttBufNone::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_AttBufNone::Update(_float fTimeDelta)

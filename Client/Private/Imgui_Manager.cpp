@@ -78,7 +78,7 @@ HRESULT CImgui_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* p
 	return S_OK;
 }
 
-void CImgui_Manager::Priority_Update(_float fTimeDelta)
+void CImgui_Manager::Camera_Update(_float fTimeDelta)
 {
 
 }

@@ -81,7 +81,7 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 
 }
 
-void CEffect_NoneLight::Priority_Update(_float fTimeDelta)
+void CEffect_NoneLight::Camera_Update(_float fTimeDelta)
 {
 }
 

@@ -38,9 +38,9 @@ HRESULT CUI_LoadingSpaceLight::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_LoadingSpaceLight::Priority_Update(_float fTimeDelta)
+void CUI_LoadingSpaceLight::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_LoadingSpaceLight::Update(_float fTimeDelta)

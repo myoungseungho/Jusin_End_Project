@@ -38,9 +38,9 @@ HRESULT CUI_Logo_Mark::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Logo_Mark::Priority_Update(_float fTimeDelta)
+void CUI_Logo_Mark::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_Logo_Mark::Update(_float fTimeDelta)

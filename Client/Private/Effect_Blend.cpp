@@ -80,7 +80,7 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		return S_OK;
 }
 
-void CEffect_Blend::Priority_Update(_float fTimeDelta)
+void CEffect_Blend::Camera_Update(_float fTimeDelta)
 {
 }
 

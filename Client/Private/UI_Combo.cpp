@@ -34,9 +34,9 @@ HRESULT CUI_Combo::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Combo::Priority_Update(_float fTimeDelta)
+void CUI_Combo::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
 	

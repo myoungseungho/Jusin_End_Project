@@ -46,9 +46,9 @@ HRESULT CUI_ComboEffect::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_ComboEffect::Priority_Update(_float fTimeDelta)
+void CUI_ComboEffect::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 }
 

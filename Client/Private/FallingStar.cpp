@@ -65,7 +65,7 @@ HRESULT CFallingStar::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CFallingStar::Priority_Update(_float fTimeDelta)
+void CFallingStar::Camera_Update(_float fTimeDelta)
 {
 	
 }

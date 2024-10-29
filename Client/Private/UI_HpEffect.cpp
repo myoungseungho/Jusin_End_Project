@@ -39,9 +39,9 @@ HRESULT CUI_HpEffect::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_HpEffect::Priority_Update(_float fTimeDelta)
+void CUI_HpEffect::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 	
 	if (m_pMainPawn != nullptr && m_pMainPawn->Get_PawnDesc().iHp / 10000.f <= 0.25f)
 	{

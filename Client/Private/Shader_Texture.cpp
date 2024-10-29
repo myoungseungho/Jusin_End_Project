@@ -73,7 +73,7 @@ HRESULT CShader_Texture::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CShader_Texture::Priority_Update(_float fTimeDelta)
+void CShader_Texture::Camera_Update(_float fTimeDelta)
 {
 	
 }

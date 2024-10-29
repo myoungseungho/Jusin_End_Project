@@ -43,7 +43,7 @@ HRESULT CAttackObject_Grab::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CAttackObject_Grab::Priority_Update(_float fTimeDelta)
+void CAttackObject_Grab::Camera_Update(_float fTimeDelta)
 {
 
 }

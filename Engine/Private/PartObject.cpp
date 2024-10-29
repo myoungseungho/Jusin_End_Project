@@ -29,9 +29,9 @@ HRESULT CPartObject::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CPartObject::Priority_Update(_float fTimeDelta)
+void CPartObject::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CPartObject::Update(_float fTimeDelta)

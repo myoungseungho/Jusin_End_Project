@@ -209,7 +209,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 void CPlay_Goku::Player_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 
 	if (m_bPlaying == false)
@@ -555,7 +555,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 }
 
-void CPlay_Goku::Priority_Update(_float fTimeDelta)
+void CPlay_Goku::Camera_Update(_float fTimeDelta)
 {
 }
 

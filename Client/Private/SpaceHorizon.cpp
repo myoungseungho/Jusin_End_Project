@@ -35,7 +35,7 @@ HRESULT CSpaceHorizon::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceHorizon::Priority_Update(_float fTimeDelta)
+void CSpaceHorizon::Camera_Update(_float fTimeDelta)
 {
 	//m_fAccTime += fTimeDelta * 5;
 }

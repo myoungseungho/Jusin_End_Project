@@ -36,9 +36,9 @@ HRESULT CUI_AttBuf::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_AttBuf::Priority_Update(_float fTimeDelta)
+void CUI_AttBuf::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_fAnimFrame += 6.0f * fTimeDelta;
 

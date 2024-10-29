@@ -31,7 +31,7 @@ private:
 public:
 	HRESULT Initialize_Prototype(void* pArg);
 	HRESULT Initialize(const _float4x4* pArg = nullptr);
-	void Priority_Update(_float fTimeDelta);
+	void Camera_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
 	HRESULT	Render(_float fTimeDelta);

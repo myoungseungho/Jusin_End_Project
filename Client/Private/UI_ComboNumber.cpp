@@ -40,9 +40,9 @@ HRESULT CUI_ComboNumber::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_ComboNumber::Priority_Update(_float fTimeDelta)
+void CUI_ComboNumber::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 	
 
 
