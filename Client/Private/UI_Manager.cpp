@@ -69,9 +69,8 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT
 
 void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 {
-	
-
 	m_iTeam = CUIObject::POS_END;
+
 	if (eCurrSlotID == CUI_Define::LPLAYER1 || eCurrSlotID == CUI_Define::LPLAYER2)
 	{
 		if (m_pPawnArray[CUI_Define::LPLAYER2] == nullptr)

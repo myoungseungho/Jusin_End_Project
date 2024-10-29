@@ -3,6 +3,7 @@
 #include "UI_Skill.h"
 #include "RenderInstance.h"
 #include "Character.h"
+#include "BattleInterface.h"
 
 CUI_Skill::CUI_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
@@ -42,7 +43,11 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 	
 	if (m_pMainPawn != nullptr)
 	{
-		m_iSkillPoint = m_pMainPawn->Get_PawnDesc().iSKillPoint;
+		if(m_eLRPos == LEFT)
+			m_iSkillPoint = CBattleInterface_Manager::Get_Instance()->Get_KiGuage(1);
+		else if(m_eLRPos == RIGHT)
+			m_iSkillPoint = CBattleInterface_Manager::Get_Instance()->Get_KiGuage(2);
+
 		m_iSkillNumber = m_pMainPawn->Get_PawnDesc().iSKillCount;
 	}
 

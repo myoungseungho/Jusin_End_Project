@@ -251,7 +251,7 @@ void CCharacter::Priority_Update(_float fTimeDelta)
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 	m_tCharacterDesc.ePlayerID = m_eCharacterID;
-
+	m_tCharacterDesc.iTeam = m_iPlayerTeam;
 
 	m_iPrevComboCount = m_tCharacterDesc.iComboCount;
 
@@ -3191,13 +3191,19 @@ void CCharacter::Tag_KeyCheck()
 {
 	if (m_iPlayerTeam == 1)
 	{
-		if(m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		if (m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		{
+			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
 			Tag_In(0);
+		}
 	}
 	else if (m_iPlayerTeam == 2)
 	{
 		if (m_pGameInstance->Key_Down(DIK_F4) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		{
+			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
 			Tag_In(0);
+		}
 	}
 }
 

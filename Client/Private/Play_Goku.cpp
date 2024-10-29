@@ -234,8 +234,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		return;
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_F3))
-		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+	//if (m_pGameInstance->Key_Down(DIK_F3))
+	
 
 	//합치기 전 임시 코드.  적 탐지코드임
 	//if (m_pEnemy == nullptr)
@@ -546,10 +546,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		system("cls");
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_F3))
-	{
-		//Tag_In(0)
-	}
+	//if (m_pGameInstance->Key_Down(DIK_F3))
+	//{
+	//	//Tag_In(0)
+	//}
 
 
 }
