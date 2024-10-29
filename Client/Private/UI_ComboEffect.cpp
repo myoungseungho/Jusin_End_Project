@@ -50,7 +50,6 @@ void CUI_ComboEffect::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-
 }
 
 void CUI_ComboEffect::Update(_float fTimeDelta)
@@ -63,10 +62,13 @@ void CUI_ComboEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	if (m_bCharaStun == FALSE && m_iComboCount >= 2)
+	if (m_bComboEnd == FALSE && m_iComboCount >= 2)
+	{
+		m_fAnimDuration += fTimeDelta * 2.f;
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-	
-
+	}
+	else
+		m_fAnimDuration = 0.25f;
 }
 
 HRESULT CUI_ComboEffect::Render(_float fTimeDelta)
@@ -77,7 +79,11 @@ HRESULT CUI_ComboEffect::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fAnimDuration, sizeof(_float))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pShaderCom->Begin(17)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

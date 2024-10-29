@@ -222,19 +222,25 @@ void CCharacter::Player_Update(_float fTimeDelta)
 void CCharacter::Priority_Update(_float fTimeDelta)
 {
 	m_tCharacterDesc.bStun = m_bRedHp;
+
 	m_tCharacterDesc.bHit = m_bHit;
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
 	m_tCharacterDesc.iHp = m_iHP;
-	m_tCharacterDesc.iComboCount = m_iComboCount;
+
+	m_tCharacterDesc.iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(m_iPlayerTeam);
+
+	if (m_iPrevComboCount < m_tCharacterDesc.iComboCount)
+	{
+		m_bHit = false;
+	}
+
 	m_tCharacterDesc.iSKillCount = m_iSKillCount;
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
 	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
 	m_tCharacterDesc.ePlayerID = m_eCharacterID;
 
-	if (m_pGameInstance->Key_Pressing(DIK_F6) && m_ePlayerSlot == CUI_Define::LPLAYER1)
-	{
-		m_iHP -= 100;
-	}
+
+	m_iPrevComboCount = m_tCharacterDesc.iComboCount;
 
 }
 
@@ -1992,7 +1998,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 	}
 
 
-
+	m_bHit = TRUE;
 	m_bStun = true;
 
 	m_fMaxStunTime = fStunTime;

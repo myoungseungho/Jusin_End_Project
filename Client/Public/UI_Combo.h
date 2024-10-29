@@ -25,8 +25,13 @@ protected:
 
 protected:
 	_bool m_bComboEnd = { FALSE };
+	_bool m_bInitHit = { FALSE };
+
 	_uint m_iComboCount = { 0 };
 	_float m_fAlphaTimer = { 0.f };
+
+	_float m_fDestoryTimer = { 0.f };
+	
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
