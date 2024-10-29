@@ -2639,10 +2639,10 @@ AttackColliderResult CCharacter::CompareGrabType3(AttackType eAttackType)
 			return RESULT_MISS;
 
 		//잡기 버튼으로 상쇄했으면 실패.
-		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O))
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O) &&(m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisGroundMove()))
 			return RESULT_DRAW;
 
-		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9) && (m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisGroundMove()))
 			return RESULT_DRAW;
 
 		else
@@ -2665,10 +2665,10 @@ AttackColliderResult CCharacter::CompareGrabType3(AttackType eAttackType)
 			return RESULT_MISS;
 
 		//상대가 잡기 버튼으로 상쇄했으면 실패.
-		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O))
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O) && (m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisAirMove()))
 			return RESULT_DRAW;
 
-		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9))
+		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9) && (m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisAirMove()))
 			return RESULT_DRAW;
 
 		else
