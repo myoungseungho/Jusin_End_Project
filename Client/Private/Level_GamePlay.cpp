@@ -25,6 +25,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY; 
 
+
 	Create_Effect_Manager();
 
 	//ºû ÁØºñ
