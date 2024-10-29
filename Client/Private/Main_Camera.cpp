@@ -72,6 +72,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_21_GRAB:
 			name = "Camera_21_Grab";
 			break;
+		case VIRTUAL_CAMERA_21_GRAB_SPECIAL:
+			name = "Camera_21_Grab_Special";
+			break;
 		case VIRTUAL_CAMERA_21_ENERGY:
 			name = "Camera_21_Energy";
 			break;
@@ -130,6 +133,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_21_Knock_Away_Up"] = VIRTUAL_CAMERA_21_KNOCK_AWAY_UP;
 	stringToSkillID["Camera_21_Air_Smash"] = VIRTUAL_CAMERA_21_AIR_SMASH;
 	stringToSkillID["Camera_21_Grab"] = VIRTUAL_CAMERA_21_GRAB;
+	stringToSkillID["Camera_21_Grab_Special"] = VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 	stringToSkillID["Camera_21_Energy"] = VIRTUAL_CAMERA_21_ENERGY;
 	stringToSkillID["Camera_21_Ultimate"] = VIRTUAL_CAMERA_21_ULTIMATE;
 
@@ -138,6 +142,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["21_Air_Smash_Anim1"] = 0;
 	stringToAnimID["21_Grab_Anim1"] = 0;
+	stringToAnimID["21_Grab_Special_Anim1"] = 0;
 	stringToAnimID["21_Energy_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim2"] = 1;
@@ -371,8 +376,10 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 3)
 			index = VIRTUAL_CAMERA_21_GRAB;
 		else if (skillID == 4)
-			index = VIRTUAL_CAMERA_21_ENERGY;
+			index = VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_21_ENERGY;
+		else if (skillID == 6)
 			index = VIRTUAL_CAMERA_21_ULTIMATE;
 	}
 	else if (modelID == 3) { // MODELID_HIT
@@ -422,6 +429,7 @@ void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_AIR_SMASH]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB_SPECIAL]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_ENERGY]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_ULTIMATE]->Set_Player(state, pPlayer);
 }

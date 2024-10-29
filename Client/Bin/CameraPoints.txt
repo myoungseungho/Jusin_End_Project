@@ -275,6 +275,29 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [Skill]
+SkillName: Camera_21_Grab_Special
+
+[Animation]
+AnimationName: 21_Grab_Special_Anim1
+PointCount: 2
+
+[CameraPoint]
+Position: 0.333318 1.5 -2.14966
+Rotation: -0 0 -0 1
+Duration: 0.3
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.5 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
 SkillName: Camera_21_Energy
 
 [Animation]

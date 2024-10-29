@@ -169,7 +169,6 @@ atomic_bool CLoader::isFinished()
 				}
 			}
 
-			Loading_For_Effect();
 			// 모든 작업이 성공적으로 완료됨
 			m_isFinished = true;
 			m_futures.clear(); // future 객체 정리

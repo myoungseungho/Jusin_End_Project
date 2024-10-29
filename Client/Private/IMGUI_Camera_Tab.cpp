@@ -29,7 +29,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 
 	// 모델별 스킬 목록 초기화
 	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash","Camera_Son_Grab","Camera_Son_Energy","Camera_Son_Ultimate" };
-	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash","Camera_21_Grab","Camera_21_Energy","Camera_21_Ultimate" };
+	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash","Camera_21_Grab","Camera_21_Grab_Special","Camera_21_Energy","Camera_21_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Air_Smash" };
 	m_ModelSkills[CAMERA_MODELID_MINE] = { "Camera_Mine_Heavy", "Camera_Mine_Knock_Away_Up","Camera_Mine_Air_Smash" };
 
@@ -96,9 +96,13 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 4)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Energy_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Grab_Special_Anim1" };
 				}
 				else if (skillIdx == 5)
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "21_Energy_Anim1" };
+				}
+				else if (skillIdx == 6)
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3", "21_Ultimate_Anim4", "21_Ultimate_Anim5" };
 				}
