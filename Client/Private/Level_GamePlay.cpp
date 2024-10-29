@@ -88,7 +88,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		//return E_FAIL;
 
->>>>>>> 4ffd4d1f131a39fbbe52e567528cb20da9ece3ee
 #pragma endregion
 
 #pragma region UI »çº» °´Ã¼
