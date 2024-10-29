@@ -3,7 +3,7 @@ LayerName: Smoke_Run
 Duration: 2
 TickPerSecond: 1
 KeyFramesCount: 119
-NumEffec: 13
+NumEffec: 14
 Position: 0 0 0
 Scale: 0.1 0.1 0.1
 Rotation: 0 0 0
@@ -55,7 +55,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 86
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -101,7 +101,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 87
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -147,7 +147,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 88
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -193,7 +193,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 89
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -239,7 +239,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 90
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -285,7 +285,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 91
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -331,7 +331,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 92
 Position: 0 0 0
-Scale: 0.2 0.2 0.2
+Scale: 0.02 0.02 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -377,7 +377,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 93
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -423,7 +423,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 94
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -469,7 +469,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 95
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -515,7 +515,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 96
 Position: 0 0 0
-Scale: 0.1 0.1 0.2
+Scale: 0.01 0.01 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -575,6 +575,34 @@ KeyFrameNumber: 0
 Position: -1.5 0 0.5
 Scale: 1.49991 1.5 1.5
 Rotation: 0 180 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: Smoke_Run14
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run14
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 98
+Position: -1.6 0.2 -0.5
+Scale: 0.05 0.05 0
+Rotation: 0 0 20
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.6 0.2 -0.5
+Scale: 0.5 0.5 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 2
 IsNotPlaying: false
