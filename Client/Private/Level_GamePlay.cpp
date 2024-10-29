@@ -23,7 +23,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 
 HRESULT CLevel_GamePlay::Initialize()
 {
-	m_iLevelIndex = LEVEL_GAMEPLAY;
+	m_iLevelIndex = LEVEL_GAMEPLAY; 
 
 	Create_Effect_Manager();
 
@@ -326,7 +326,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	for (int i = 0; i < 3; ++i)
 	{
 		ComboDesc.iNumUI = i;
-
+	
 		for (int k = 0; k < 2; k++)
 		{
 			ComboDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(k);
@@ -337,7 +337,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	for (int k = 0; k < 2; k++)
 	{
 		ComboDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(k);
-
+	
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboFont"), TEXT("Layer_UI_Combo_Font"), &ComboDesc);
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboEffect"), TEXT("Layer_UI_Combo_Effect"), &ComboDesc);
 	}
