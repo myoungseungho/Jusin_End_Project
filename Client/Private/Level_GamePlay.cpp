@@ -121,13 +121,19 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma endregion
 
-	Loading_For_Effect();
 
 #pragma region »ç¿îµå ·Îµå
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 #pragma endregion
 
+#pragma region ÀÌÆåÆ® ¼¼ÆÃ
+	Loading_For_Effect();
+#pragma endregion
+
+
+	//¸ðµ¨ ÇÁ¸®ºä
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"));
 	return S_OK;
 }
 

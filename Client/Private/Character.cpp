@@ -2099,8 +2099,6 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 			Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
 			Set_ForcveGravityTime(0.3f);
 			//Set_CurrentAnimationPositionJump(17.f);
-
-
 		}
 		else
 		{

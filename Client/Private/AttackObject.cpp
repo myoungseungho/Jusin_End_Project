@@ -479,7 +479,6 @@ void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner
 	{
 	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_AIR_SMASH, 0);
-		main_Camera->StartCameraShake(0.5f, 0.2f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
@@ -491,6 +490,7 @@ void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner
 		break;
 	}
 
+	main_Camera->StartCameraShake(0.5f, 0.2f);
 }
 
 
