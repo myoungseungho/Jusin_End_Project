@@ -40,6 +40,7 @@ public:
 	_bool Use_KiGuage(_ushort  irequirementKi, _ushort iTeam);
 	_ushort Get_KiGuage(_ushort iTeam);
 
+	_ushort Get_KiNumber(_ushort iTeam);
 
 
 	//이거 하나만 호출하게
@@ -63,7 +64,10 @@ private:
 
 	_bool m_bSparkingEnable[2] = { true };
 	_uint m_iHitCount[2] = {}; //화면에 뜰 히트수
+	
 	_uint m_iKiGuage[2] = {};
+	_uint m_iKiNumber[2] = {};
+
 	_uint m_iHitAttackStep[2] = {};
 
 	_ubyte m_i1TeamPlayingCharacterIndex = {};

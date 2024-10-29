@@ -1,89 +1,89 @@
  
 #include "Renderer_Shader_Defines.hlsli"
 
-float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
+float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-texture2D		g_DiffuseTexture;
+texture2D g_DiffuseTexture;
 texture2D g_OutLineTexture;
 /* 모델 전체의 뼈(x), 메시에게 영향을 주는 뼈(o)*/
-float4x4		g_BoneMatrices[800];
+float4x4 g_BoneMatrices[800];
 
 
 struct VS_IN
 {
-	float3 vPosition : POSITION;
-	float3 vNormal : NORMAL;
-	float2 vTexcoord : TEXCOORD0;
-	float3 vTangent : TANGENT;
+    float3 vPosition : POSITION;
+    float3 vNormal : NORMAL;
+    float2 vTexcoord : TEXCOORD0;
+    float3 vTangent : TANGENT;
 
 	/* 이 정점에게 적용되어야할 네개 뼈의 인덱스들 */
-	uint4  vBlendIndex : BLENDINDEX;
+    uint4 vBlendIndex : BLENDINDEX;
 
 	/* 위에서 이야기한 뼈가 각각 정점에게 몇 퍼센트나 영향(가중치 0 ~ 1)을 주는지 */
-	float4 vBlendWeight : BLENDWEIGHT;
+    float4 vBlendWeight : BLENDWEIGHT;
 	
 };
 
 struct VS_OUT
 {
-	float4 vPosition : SV_POSITION;
-	float4 vNormal : NORMAL;
-	float2 vTexcoord : TEXCOORD0;
-	float4 vWorldPos : TEXCOORD1;
-	float4 vProjPos : TEXCOORD2;
+    float4 vPosition : SV_POSITION;
+    float4 vNormal : NORMAL;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vWorldPos : TEXCOORD1;
+    float4 vProjPos : TEXCOORD2;
 };
 
 VS_OUT VS_MAIN(VS_IN In)
 {
-	VS_OUT			Out;
+    VS_OUT Out;
 
-	float		fWeightW = 1.f - (In.vBlendWeight.x + In.vBlendWeight.y + In.vBlendWeight.z);
+    float fWeightW = 1.f - (In.vBlendWeight.x + In.vBlendWeight.y + In.vBlendWeight.z);
 
-	matrix		BoneMatrix = g_BoneMatrices[In.vBlendIndex.x] * In.vBlendWeight.x +
+    matrix BoneMatrix = g_BoneMatrices[In.vBlendIndex.x] * In.vBlendWeight.x +
 		g_BoneMatrices[In.vBlendIndex.y] * In.vBlendWeight.y +
 		g_BoneMatrices[In.vBlendIndex.z] * In.vBlendWeight.z +
 		g_BoneMatrices[In.vBlendIndex.w] * fWeightW;
 
-	vector		vPosition = mul(vector(In.vPosition, 1.f), BoneMatrix);
-	vector		vNormal = mul(vector(In.vNormal, 0.f), BoneMatrix);
+    vector vPosition = mul(vector(In.vPosition, 1.f), BoneMatrix);
+    vector vNormal = mul(vector(In.vNormal, 0.f), BoneMatrix);
 
 	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
-	vPosition = mul(vPosition, g_WorldMatrix);
-	vPosition = mul(vPosition, g_ViewMatrix);
-	vPosition = mul(vPosition, g_ProjMatrix);
+    vPosition = mul(vPosition, g_WorldMatrix);
+    vPosition = mul(vPosition, g_ViewMatrix);
+    vPosition = mul(vPosition, g_ProjMatrix);
 
-	Out.vPosition = vPosition;
-	Out.vNormal = normalize(mul(vNormal, g_WorldMatrix));
-	Out.vTexcoord = In.vTexcoord;
-	Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
-	Out.vProjPos = vPosition;
+    Out.vPosition = vPosition;
+    Out.vNormal = normalize(mul(vNormal, g_WorldMatrix));
+    Out.vTexcoord = In.vTexcoord;
+    Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+    Out.vProjPos = vPosition;
 
-	return Out;
+    return Out;
 }
 
 struct PS_IN
 {
-	float4 vPosition : SV_POSITION;
-	float4 vNormal : NORMAL;
-	float2 vTexcoord : TEXCOORD0;
-	float4 vWorldPos : TEXCOORD1;
-	float4 vProjPos : TEXCOORD2;
+    float4 vPosition : SV_POSITION;
+    float4 vNormal : NORMAL;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vWorldPos : TEXCOORD1;
+    float4 vProjPos : TEXCOORD2;
 };
 
 struct PS_OUT
 {
-	float4	vDiffuse : SV_TARGET0;
-	float4	vNormal : SV_TARGET1;
-	float4	vDepth : SV_TARGET2;
+    float4 vDiffuse : SV_TARGET0;
+    float4 vNormal : SV_TARGET1;
+    float4 vDepth : SV_TARGET2;
 };
 
 PS_OUT PS_MAIN(PS_IN In)
 {
-	PS_OUT			Out;	
+    PS_OUT Out;
 
-	vector		vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
 	
-    vector		vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
 
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
 	
@@ -91,64 +91,104 @@ PS_OUT PS_MAIN(PS_IN In)
     vResultColor.rgb = saturate(vMtrlDiffuse.rgb - (1 - vMtrlShadeDesc.a));
     
 	/* g값은 명암? r값이랑 같이 쓰는데 모호함 */
-    vResultColor.rgb = saturate(vResultColor.rgb * (vMtrlShadeDesc.g * 1.5f)); 
+    vResultColor.rgb = saturate(vResultColor.rgb * (vMtrlShadeDesc.g * 1.5f));
 	
 	/* b값은 보니까 스펙큘러인거같음 그 처리 */
     vResultColor.rgb = saturate(vResultColor.rgb + vResultColor.rgb * (vMtrlShadeDesc.b * 0.3f));
 	
 	
     Out.vDiffuse = vResultColor;
-	Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
-	Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
-	return Out;
+    return Out;
 }
 
+PS_OUT PS_MAIN_21(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+	
+    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
+
+    vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
+	
+	/* vMtrlShadeDesc 에 알파값으로 일단 아웃라인을 생성 */
+    vResultColor.rgb = saturate(vMtrlDiffuse.rgb - (1 - vMtrlShadeDesc.a));
+    
+	/* g값은 명암? r값이랑 같이 쓰는데 모호함 */
+    vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g));
+	
+	/* b값은 보니까 스펙큘러인거같음 그 처리 */
+    //vResultColor.rgb = saturate(vResultColor.rgb + vResultColor.rgb * (vMtrlShadeDesc.b * 0.3f));
+	
+	
+    Out.vDiffuse = vResultColor;
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
 
 struct PS_OUT_SHADOW
 {
-	float4	vLightDepth : SV_TARGET0;	
+    float4 vLightDepth : SV_TARGET0;
 };
 
 
 PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
 {
-	PS_OUT_SHADOW			Out;
+    PS_OUT_SHADOW Out;
 
-	Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 0.f);
+    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 0.f);
 
-	return Out;
+    return Out;
 }
 
-technique11		DefaultTechnique
-{	
-	pass Default
-	{
-		SetRasterizerState(RS_Cull_None);
-		SetDepthStencilState(DSS_Default, 0);
-		SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+technique11 DefaultTechnique
+{
+    pass Default_Goku
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
 
-		VertexShader = compile vs_5_0 VS_MAIN();
-		GeometryShader = NULL;
-		HullShader = NULL;
-		DomainShader = NULL;
-		PixelShader = compile ps_5_0 PS_MAIN();
-	}
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN();
+    }
 
-	pass Shadow
-	{
-		SetRasterizerState(RS_Default);
-		SetDepthStencilState(DSS_Default, 0);
-		SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+    pass Default_21
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
 
-		VertexShader = compile vs_5_0 VS_MAIN();
-		GeometryShader = NULL;
-		HullShader = NULL;
-		DomainShader = NULL;
-		PixelShader = compile ps_5_0 PS_MAIN_SHADOW();
-	}
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_21();
+    }
+
+    pass Shadow
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SHADOW();
+    }
 
 	
 }

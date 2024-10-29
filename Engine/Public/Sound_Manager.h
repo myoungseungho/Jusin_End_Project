@@ -32,6 +32,10 @@ public:
 		Goku_DownHook_Dash_SFX,
 		Goku_Dash_SFX,
 		Goku_Range_Attack_SFX,
+		Goku_Ultimate_0_SFX,
+		Goku_Ultimate_1_SFX,
+		Goku_Ultimate_2_SFX,
+		Goku_Ultimate_3_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -93,8 +97,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias);
-	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias);
+	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, _bool loop = false);
+	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, _bool loop);
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);

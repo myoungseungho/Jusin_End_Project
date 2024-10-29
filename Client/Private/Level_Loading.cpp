@@ -52,7 +52,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/E3_Title_BG01.png")))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_UI_LoadingBackGround_Mask */
+	/* For.Prototyp_Component_Texture_UI_LoadingBackGround_Mask */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround_Mask"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/stage/stage_bg_0.png")))))
 		return E_FAIL;

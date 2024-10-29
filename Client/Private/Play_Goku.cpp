@@ -111,7 +111,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 
-	LightDesc.vDirection = _float4(-0.5f, -0.1f, 0.5f, 0.f);
+	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
 	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
@@ -551,6 +551,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	//Tag_In(0)
 	//}
 
+	cout << "Team : " << m_iPlayerTeam << "Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
 
 }
 
@@ -1646,7 +1647,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iOnwerNextAnimationIndex = m_iGrabAnimationIndex;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Grab"), TEXT("Layer_AttackObject"), &Desc);
-
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 		}
 		break;
 
@@ -1677,6 +1678,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 		}
 		break;
 		case 2:
@@ -1704,6 +1706,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 		}
 		break;
 
@@ -1762,7 +1765,7 @@ void CPlay_Goku::Free()
 
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
-	Safe_Release(m_pOutLineCom);
+
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 

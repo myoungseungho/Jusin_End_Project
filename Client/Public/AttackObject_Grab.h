@@ -69,6 +69,7 @@ private:
 
 	//Ä«¸Þ¶ó
 	void Camera_Grab(class CCharacter* pOwner, class CCharacter* pHitOwner);
+	void Camera_Same_Grab(class CCharacter* pOwner, class CCharacter* pHitOwner);
 
 private:
 

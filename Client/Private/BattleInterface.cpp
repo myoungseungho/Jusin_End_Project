@@ -63,7 +63,24 @@ void CBattleInterface_Manager::Set_bSparkingEnable(_bool bSparkingEnable, _ushor
 
 void CBattleInterface_Manager::Gain_KiGuage(_ushort iKi, _ushort iTeam)
 {
-    m_iKiGuage[iTeam - 1] += iKi;
+   
+    //기 게이지 꽉찬게 아니면
+    if (m_iKiNumber[iTeam - 1] != 7)
+    {
+        //기 를 회복 
+        m_iKiGuage[iTeam - 1] += iKi;
+
+        //1줄 넘겼으면 다음줄로
+        if (m_iKiGuage[iTeam - 1] > 100)
+        {
+            m_iKiNumber[iTeam - 1]++;
+            m_iKiGuage[iTeam - 1] -= 100;
+        }
+    }
+
+
+   
+
 }
 
 _bool CBattleInterface_Manager::Use_KiGuage(_ushort irequirementKi, _ushort iTeam)
@@ -75,9 +92,9 @@ _bool CBattleInterface_Manager::Use_KiGuage(_ushort irequirementKi, _ushort iTea
         return true;
     }
 
-    if (m_iKiGuage[iTeam - 1] > irequirementKi)
+    if (m_iKiNumber[iTeam - 1] >= irequirementKi)
     {
-        m_iKiGuage[iTeam - 1] -= irequirementKi;
+        m_iKiNumber[iTeam - 1] -= irequirementKi;
         return true;
     }
 
@@ -88,6 +105,12 @@ _ushort CBattleInterface_Manager::Get_KiGuage(_ushort iTeam)
 {
     return  m_iKiGuage[iTeam - 1];
 }
+
+_ushort CBattleInterface_Manager::Get_KiNumber(_ushort iTeam)
+{
+    return  m_iKiNumber[iTeam - 1];
+}
+
 
 /*
 void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot)

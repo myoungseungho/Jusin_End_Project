@@ -1558,20 +1558,52 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 		{
 			m_bGrab = false;
 
-			//if (m_bGrab_Air)
+
+			//잡기 공격이 비겼으면
+			if (m_bGrabDraw)  
+			{
+				Add_Move({ -0.4f * m_iLookDirection,0.3f });
+				//BreakFall_Air();
+
+				Set_Animation(m_iBreakFall_Air);
+				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+				Set_ForcedGravityDown();
+
+				Reset_AttackStep();
+				Set_fImpulse({ -5.f * m_iLookDirection, 2.f });
+
+
+			}
+			else //공격 성공시
+			{
+				Add_Move({ -0.4f * m_iLookDirection,0.f });
+				Set_Animation(m_iAttack_Heavy);
+			
+			}
+
+			//else if (m_bGrab_Air)
 			//{
 			//	Set_Animation(m_iAttack_Air3);
 			//}
 			//else
 
-			Add_Move({ -0.4f * m_iLookDirection,0.f });
-
-			{
-				Set_Animation(m_iAttack_Heavy);
-			}
-
 		}
 	}
+
+}
+
+void CCharacter::Grab_LateDraw()
+{
+	//Add_Move({ 0.3f * m_iLookDirection,0.3f });
+	Add_Move({ 0.f,0.2f });
+	Set_GrabLoofCount(1);
+	Set_bGrabDraw(true);
+
+
+
+	Set_Animation(m_iGrabAnimationIndex, false);
+	Set_CurrentAnimationPositionJump(25.f);  	//캐릭터마다 다를수도있음
+
 
 }
 
@@ -1675,6 +1707,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 			{
 				m_pModelCom->SetUp_Animation(m_iForwardDashEndAnimationIndex, false);
 				//포워드 대시 끊겼을 때
+				m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_DownHook_Dash_SFX);
 			}
 			else
 				m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
@@ -1992,8 +2025,6 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 			Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
 			Set_ForcveGravityTime(0.3f);
 			//Set_CurrentAnimationPositionJump(17.f);
-
-
 		}
 		else
 		{
@@ -2673,6 +2704,7 @@ void CCharacter::Set_Grab(_bool bAir)
 {
 	m_bGrab = true;
 	m_bGrab_Air = bAir;
+	m_bGrabDraw = false;
 }
 
 void CCharacter::Set_ChaseStop()
@@ -3269,6 +3301,11 @@ void CCharacter::Tag_Out(_vector vPosition)
 
 }
 
+void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
+{
+	m_bGrabDraw = bGrabDraw;
+}
+
 
 
 void CCharacter::Reset_AttackStep()
@@ -3608,10 +3645,19 @@ void CCharacter::Gravity(_float fTimeDelta)
 	//if (fHeight <0)
 	if (fHeight < 0)
 	{
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke05"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Aura01"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		int a = 0;
+		//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		m_pEffect_Manager->Copy_Layer(TEXT("BurstU-2"), m_pTransformCom->Get_WorldMatrixPtr());
+
 		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air)
 		{
@@ -3978,7 +4024,7 @@ void CCharacter::Free()
 
 	Safe_Release(m_pUI_Manager);
 	Safe_Release(m_pEffect_Manager);
-
+	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pColliderCom);
 
 }
