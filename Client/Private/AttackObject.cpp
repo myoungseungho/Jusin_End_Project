@@ -279,7 +279,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
 		AttackColliderResult eResult =
-			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime,m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
+			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
 		if (eResult == RESULT_HIT)
 		{
@@ -295,7 +295,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				pCharacter->Set_bGrabbed(false);
 
 
-			if(m_bCameraZoom)
+			if (m_bCameraZoom)
 			{
 				if (m_bGroundSmash == true)
 					//공중에서 바닥으로 내려찍을 때
@@ -308,7 +308,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
 
-			
+
 
 				//아래 위치 조정은 일부러 카메라 안에 넣음
 
@@ -427,6 +427,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_HEAVY, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
 	case Client::CUI_Define::ANDROID21:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_HEAVY, 0);
@@ -452,6 +454,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
 	case Client::CUI_Define::ANDROID21:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_KNOCK_AWAY_UP, 0);
@@ -476,6 +480,8 @@ void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner
 	case Client::CUI_Define::GOKU:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_AIR_SMASH, 0);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
 	case Client::CUI_Define::ANDROID21:
 		break;
@@ -484,6 +490,7 @@ void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner
 	case Client::CUI_Define::HIT:
 		break;
 	}
+
 }
 
 

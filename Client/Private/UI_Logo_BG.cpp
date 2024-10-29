@@ -150,11 +150,7 @@ CGameObject* CUI_Logo_BG::Clone(void* pArg)
 
 void CUI_Logo_BG::Free()
 {
-	__super::Free();
-
-	Safe_Release(m_pTextureCom);
-	Safe_Release(m_pShaderCom);
-	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pVideoTextureCom);
 
+	__super::Free();
 }

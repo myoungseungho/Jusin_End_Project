@@ -26,12 +26,18 @@ public:
 		Goku_Ultimate_Attack_0,
 		Goku_Ultimate_Attack_1,
 		Goku_Ultimate_Attack_2,
+		Heavy_Attack_21,
+		Goku_Heavy_Attack_SFX,
+		Goku_Energy_SFX,
+		Goku_DownHook_Dash_SFX,
+		Goku_Dash_SFX,
+		Goku_Range_Attack_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
 	{
-		SFX_Goku_Light_Attack_1 = 100,
-		SFX_Goku_Light_Attack_2,
+		Light_Attack_Goku_1 = 100,
+		Light_Attack_Goku_2,
 		Goku_Hit_0,
 		Goku_Hit_1,
 		Goku_Hit_2,
@@ -48,12 +54,28 @@ public:
 		Goku_Hit_13,
 		Goku_Hit_14,
 		Goku_Hit_15,
+		Light_Attack_21_1,
+		Light_Attack_21_2,
+		Light_Attack_21_3,
+		Light_Attack_21_4,
+		Hit_21_0,
+		Hit_21_1,
+		Hit_21_2,
+		Hit_21_3,
+		Hit_21_4,
+		Hit_21_5,
+		Light_Attack_Goku_1_SFX,
+		Light_Attack_Goku_2_SFX,
+		Light_Attack_Goku_3_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
 	{
-		LIGHT_ATTACK = 200,
-		Goku_Hit,
+		LIGHT_ATTACK_Goku = 200,
+		Hit_Goku,
+		LIGHT_ATTACK_21,
+		Hit_21,
+		LIGHT_ATTACK_Goku_SFX
 	};
 
 
@@ -80,6 +102,10 @@ public:
 	void Set_Volume(SOUND_KEY_NAME alias, float volume);
 	void Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume);
 
+	void Set_ImguiPlay(_bool isPlay);
+
+public:
+	_bool m_isImguiPlay = { true };
 
 private:
 	FMOD_SYSTEM* m_pSoundSystem;
