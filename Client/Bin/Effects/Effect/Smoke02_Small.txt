@@ -1,24 +1,24 @@
 [Layer]
-LayerName: Smoke02
+LayerName: Smoke02_Small
 Duration: 2
 TickPerSecond: 1.2
 KeyFramesCount: 119
 NumEffec: 6
-Position: -0.3 0.7 1
-Scale: 0.3 0.3 0.3
+Position: 0.5 0.2 0.7
+Scale: 0.2 0.2 0.2
 Rotation: 0 0 0
 
 [Effect]
 EffectName: Smoke0201
 ModelName: Model_Effect_cmn_SmokeModels0202
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0201
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02_SmallSmoke0201
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 33
-Position: -1.9 3.5 5
-Scale: 0.00243 0.00243 0.00243
+UniqueIndex: 39
+Position: -0.4 3.9 6.4
+Scale: 4.86e-05 4.86e-05 4.86e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -57,14 +57,14 @@ IsNotPlaying: true
 [Effect]
 EffectName: Smoke0202
 ModelName: Model_Effect_cmn_SmokeModels0203
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0202
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02_SmallSmoke0202
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 34
-Position: -1.9 3.5 5
-Scale: 0.00243 0.00243 0.00243
+UniqueIndex: 40
+Position: -0.4 3.9 6.4
+Scale: 4.86e-05 4.86e-05 4.86e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -103,14 +103,14 @@ IsNotPlaying: true
 [Effect]
 EffectName: Smoke0203
 ModelName: Model_Effect_cmn_SmokeModels0204
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0203
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02_SmallSmoke0203
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 35
-Position: -1.9 3.5 5
-Scale: 0.00243 0.00243 0.00243
+UniqueIndex: 41
+Position: -0.4 3.9 6.4
+Scale: 4.86e-05 4.86e-05 4.86e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -149,14 +149,14 @@ IsNotPlaying: true
 [Effect]
 EffectName: Smoke0204
 ModelName: Model_Effect_cmn_SmokeModels0205
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0204
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02_SmallSmoke0204
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 36
-Position: -1.9 3.5 5
-Scale: 0.00243 0.00243 0.00243
+UniqueIndex: 42
+Position: -0.4 3.9 6.4
+Scale: 4.86e-05 4.86e-05 4.86e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -195,14 +195,14 @@ IsNotPlaying: true
 [Effect]
 EffectName: Smoke0205
 ModelName: Model_Effect_cmn_SmokeModels0206
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0205
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02_SmallSmoke0205
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 37
-Position: -1.9 3.5 5
-Scale: 0.00243 0.00243 0.00243
+UniqueIndex: 43
+Position: -0.4 3.9 6.4
+Scale: 4.86e-05 4.86e-05 4.86e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -241,14 +241,14 @@ IsNotPlaying: true
 [Effect]
 EffectName: Smoke0206
 ModelName: Model_Effect_cmn_SmokeModels0201
-MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02Smoke0206
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke02_SmallSmoke0206
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 38
-Position: -1.9 3.5 5
-Scale: 0.00243 0.00243 0.00243
+UniqueIndex: 44
+Position: -0.4 3.9 6.4
+Scale: 4.86e-05 4.86e-05 4.86e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30

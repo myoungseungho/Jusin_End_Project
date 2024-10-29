@@ -1,5 +1,5 @@
 [Layer]
-LayerName: Bomb02
+LayerName: BurstU-1
 Duration: 1
 TickPerSecond: 0.1
 KeyFramesCount: 59
@@ -9,19 +9,19 @@ Scale: 1 1 1
 Rotation: 0 0 0
 
 [Effect]
-EffectName: Bomb02
+EffectName: BurstU-1
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Bomb02Bomb02
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-1BurstU-1
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 7
+UniqueIndex: 10
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.08 0.08 0
 Rotation: 0 0 0
 IsLoop: false
-Color: 0 0 0 30
+Color: 254 246 105 30
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
@@ -30,9 +30,9 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.08 0.08 0
 Rotation: 0 0 0
 CurTime: 0
-Duration: 0
+Duration: 1
 IsNotPlaying: false
 

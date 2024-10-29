@@ -1,24 +1,24 @@
 [Layer]
-LayerName: Bomb02
+LayerName: Smoke04
 Duration: 1
 TickPerSecond: 0.1
 KeyFramesCount: 59
 NumEffec: 1
-Position: 0 0 0
+Position: 0 -0.5 0.7
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 0 15
 
 [Effect]
-EffectName: Bomb02
+EffectName: Smoke04
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Bomb02Bomb02
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke04Smoke04
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 7
-Position: 0 0 0
-Scale: 1 1 1
+UniqueIndex: 57
+Position: 0 -0.5 0.7
+Scale: 0.1 0.3 0.5
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -30,9 +30,9 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.1 0.3 0.5
 Rotation: 0 0 0
 CurTime: 0
-Duration: 0
+Duration: 1
 IsNotPlaying: false
 

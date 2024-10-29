@@ -16,7 +16,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 9
+UniqueIndex: 8
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
