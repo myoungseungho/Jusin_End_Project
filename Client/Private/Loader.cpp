@@ -1738,7 +1738,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_3/Meteo_3.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-
+	
 #pragma region Effect Model
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);

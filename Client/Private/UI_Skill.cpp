@@ -43,12 +43,18 @@ void CUI_Skill::Priority_Update(_float fTimeDelta)
 	
 	if (m_pMainPawn != nullptr)
 	{
-		if(m_eLRPos == LEFT)
+		if (m_eLRPos == LEFT)
+		{
+			
 			m_iSkillPoint = CBattleInterface_Manager::Get_Instance()->Get_KiGuage(1);
-		else if(m_eLRPos == RIGHT)
+			m_iSkillNumber = CBattleInterface_Manager::Get_Instance()->Get_KiNumber(1);
+		}
+		else if (m_eLRPos == RIGHT)
+		{
 			m_iSkillPoint = CBattleInterface_Manager::Get_Instance()->Get_KiGuage(2);
-
-		m_iSkillNumber = m_pMainPawn->Get_PawnDesc().iSKillCount;
+			m_iSkillNumber = CBattleInterface_Manager::Get_Instance()->Get_KiNumber(2);
+		}
+	
 	}
 
 	m_fSkillRadio = 1 - m_iSkillPoint / 100.f;

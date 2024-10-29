@@ -23,11 +23,9 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 
 HRESULT CLevel_GamePlay::Initialize()
 {
-	m_iLevelIndex = LEVEL_GAMEPLAY;
+	m_iLevelIndex = LEVEL_GAMEPLAY; 
 
 	Create_Effect_Manager();
-
-	Loading_For_Effect();
 
 	//ºû ÁØºñ
 	if (FAILED(Ready_Lights()))
