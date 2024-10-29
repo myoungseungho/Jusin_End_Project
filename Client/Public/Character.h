@@ -343,6 +343,8 @@ public:
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
+	void Set_UnlockAnimationStop();
+	void Set_AnimationStopWithoutMe(_float fStopTime);
 
 	void Check_StunEnd();
 	void Stun_Shake();

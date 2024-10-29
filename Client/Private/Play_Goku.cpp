@@ -13,6 +13,7 @@
 #include "BattleInterface.h"
 #include "AttackObject_CommandGrab.h"
 
+#include "Main_Camera.h"
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -1430,6 +1431,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		Desc.eAttackType = ATTACKTYPE_HIGH;
+		Desc.eAttackGrade = GRADE_ULTIMATE;
 
 		Desc.fDistance = { 0.8f * m_iLookDirection,0.f };
 		Desc.fForcedGravityTime = 0.f;
@@ -1438,6 +1440,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iGainAttackStep = 0;
 		Desc.iGrabAnimationIndex = ANIME_FINAL_ELBO;
 		Desc.iOnwerNextAnimationIndex = ANIME_FINAL_UPPER;
+		
+	
+		Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_SON_ULTIMATE;
+		Desc.ianimationIndex = 1;
+		Desc.fCameraShakeDuration = 0.5f;
+		Desc.fCameraShakeMagnitude = 0.2f;
+
 
 		Desc.bOwnerNextAnimation = true;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);

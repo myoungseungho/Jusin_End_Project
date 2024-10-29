@@ -578,12 +578,15 @@ PLAY_GOKU,GKS440_body,45.000000,EnemyChase,1,0,0
 PLAY_GOKU,GKS440_body,45.000000,FlipPlayerDirection,0
 PLAY_GOKU,GKS440_body,45.000000,PositionChange,54
 
+
+
 //,PLAY_GOKU,GKS440_body,45.000000,SetNextAnimation,72,100
 
 
 //,3필 모션 - 엘보
 PLAY_GOKU,GKS441_body,0.000000,AnimSpeedChange,0.020000,120.000000
-PLAY_GOKU,GKS441_body,30,Camera_Play_Son_Ultimate_1,7,1,0.5,0.2
+PLAY_GOKU,GKS441_body,0,MoveToGround,0
+//,PLAY_GOKU,GKS441_body,30,Camera_Play_Son_Ultimate_1,7,1,0.5,0.2
 PLAY_GOKU,GKS441_body,40,AttackEvent,33333
 //,맞췄으면 443으로 연계
 

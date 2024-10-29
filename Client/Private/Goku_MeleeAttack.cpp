@@ -603,6 +603,7 @@ void CGoku_MeleeAttack::Attack_214Final()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
+		m_pPlayer->Set_AnimationStopWithoutMe(2.f);
 	}
 }
 
