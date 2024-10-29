@@ -2178,14 +2178,14 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 			if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
 			{
 				Set_Animation(m_iHit_WallBouce);
+
 				CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-				mainCamera->StartCameraShake(0.5f, 0.1f);
+				mainCamera->StartCameraShake(0.5f, 0.2f);
 
 				Set_AnimationStop(0.2f);
 
 				//playingAnimation == false 에서 처리?
 				//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
-
 
 				//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
 				Set_fImpulse({ m_iLookDirection * 2.f,0.5f });

@@ -261,8 +261,12 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _fl
 		targetPosition.z += tangent1.z * maxZOffset * t;
 	}
 
+	_vector targetVector = XMLoadFloat3(&targetPosition);
+	// 위치 설정 (쉐이크 오프셋 포함)
+	_vector position = targetVector + m_vShakeOffset;
+	
 	// 카메라 위치 설정
-	m_pTransformCom->Set_State_Position(targetPosition);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSetW(position, 1.f));
 }
 
 void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2)
@@ -489,6 +493,8 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 
 	//// 카메라의 방향 벡터 설정
 	Set_Camera_Direction(averageX, pos1, pos2);
+
+
 }
 
 _float CVirtual_Camera::ComputeDistanceX(_gvector pos1, _gvector pos2)
