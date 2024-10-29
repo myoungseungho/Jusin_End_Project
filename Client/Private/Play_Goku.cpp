@@ -865,7 +865,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
@@ -924,7 +924,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vExtents = { 0.4f,0.6f,1.f };
 		Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.7f,0.f };
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 700 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
@@ -1087,7 +1087,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 400 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
@@ -1289,7 +1289,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 			Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
 
-			Desc.fhitCharacter_StunTime = 0.3f;
+			Desc.fhitCharacter_StunTime = 0.5f;
 			Desc.iDamage = 500 * Get_DamageScale();
 			Desc.fLifeTime = 0.1f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
