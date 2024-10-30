@@ -151,7 +151,7 @@ PS_OUT PS_MAIN_PLAYER_BLUR_X(PS_IN In)
     PS_OUT Out = (PS_OUT) 0;
 
 
-    Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true) * 0.45f;
+    Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true) ;
     //Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true);
 	/*
     
@@ -173,7 +173,7 @@ PS_OUT PS_MAIN_PLAYER_BLUR_Y(PS_IN In)
     //float gamma = 2.2f;
     //Out.vColor = pow(Blur_Y(In.vTexcoord, 1.f, 1.f, true), 1.0f / gamma);
     
-    Out.vColor = Blur_Y(In.vTexcoord, 1.f, 1.f, true) * 0.45f;
+    Out.vColor = Blur_Y(In.vTexcoord, 1.f, 1.f, true);
 	
     return Out;
 }
