@@ -255,7 +255,7 @@ PS_OUT PS_MAIN_DOWN(PS_IN In)
     PS_OUT Out = (PS_OUT) 0;
 
     float4 vResult = DownsamplePS(g_DownTexSize, In.vTexcoord, g_DownSamplingSize);
-    // 두개 받아서 겁나 줄이기
+
     Out.vColor = vResult;
 
     return Out;
@@ -297,6 +297,22 @@ PS_OUT PS_MAIN_RESULT_PLAYER(PS_IN In)
     Out.vColor = saturate(vResult + vBlur) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
+}
+
+PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
+{
+
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+   /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
+     
+    Out.vColor = saturate(vResult + vBlur * 4.2f) /*+ vEffect*/;
+    //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
+    return Out;
+
 }
 
 
@@ -438,6 +454,16 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_PLAYER_BLUR_Y();
     }
     
+    pass AllEffectResult // 12
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_RESULT_ALLEFFECT();
+    }
 }
 
 

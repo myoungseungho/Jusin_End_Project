@@ -135,7 +135,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_strName = "S21_" + to_string(m_iPlayerTeam);
+	m_strName = "S21_" + to_string(m_iPlayerTeam) + to_string(Get_PawnDesc().ePlayer_Slot);
 	m_RendererDesc.strName = m_strName;
 
 	LIGHT_DESC			LightDesc{};

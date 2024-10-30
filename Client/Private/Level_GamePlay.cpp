@@ -27,9 +27,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	Create_Effect_Manager();
 
-	//ºû ÁØºñ
-	if (FAILED(Ready_Lights()))
-		return E_FAIL;
+
 	
 #pragma region ¸Ê »çº» °´Ã¼
 
@@ -146,6 +144,11 @@ HRESULT CLevel_GamePlay::Initialize()
 #pragma endregion
 
 	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"));
+
+		//ºû ÁØºñ
+	if (FAILED(Ready_Lights()))
+		return E_FAIL;
+
 	return S_OK;
 }
 

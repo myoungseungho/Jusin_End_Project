@@ -60,7 +60,9 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
-
+		m_isGlow = pEffectDesc->isGlow;
+		if (m_isGlow == true)
+			m_iGameObjectData = -1;
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
 			m_IsColorEffect = true;
@@ -114,11 +116,17 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 
 }
 
-HRESULT CEffect_Blend::Render(_float fTimeDelta)
+HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
 {
 	if (m_iPassIndex != 1)
-		__super::Render(fTimeDelta);
+		__super::Priority_Render(fTimeDelta);
 
+	return S_OK;
+}
+
+
+HRESULT CEffect_Blend::Render(_float fTimeDelta)
+{
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 

@@ -54,8 +54,8 @@ public:
 	virtual void Camera_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
+	virtual HRESULT Priority_Render(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
-
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta);
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta);

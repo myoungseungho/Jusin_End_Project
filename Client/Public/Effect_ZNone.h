@@ -19,6 +19,7 @@ public:
 	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Priority_Render(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:

@@ -49,6 +49,7 @@ public:
 		_float           fGlowFactor;
 		_uint    DerredPassIndex;
 
+		_bool isGlow;
 	}EFFECT_DESC;
 
 
@@ -63,6 +64,7 @@ public:
 	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Priority_Render(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 public:
@@ -91,7 +93,7 @@ protected:
 
 	_float			m_fCurrentAnimPos = {};
 
-
+	_bool m_isGlow = { false };
 	/* 툴용 쉐이더 패스 인덱스 */
 
 public:

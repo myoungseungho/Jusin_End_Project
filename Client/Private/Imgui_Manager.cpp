@@ -130,7 +130,7 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-
+	
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
 	//Render_ShaderTabs(fTimeDelta);

@@ -22,7 +22,7 @@ public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
-		RG_NONLIGHT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW, RG_MULTY_GLOW, RG_NODE, RG_END };
+		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW, RG_MULTY_GLOW, RG_NODE, RG_END };
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -76,6 +76,7 @@ private:
 	_bool m_bShow_RenderTarget = { false };
 	_bool m_bShow_Debug_Component = { false };
 
+	_uint m_iEffectRenderCount = { 0 };
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -91,11 +92,13 @@ private:
 	HRESULT Render_Lights(_float fTimeDelta);
 	HRESULT Render_Deferred(_float fTimeDelta);
 	HRESULT Render_NonLight(_float fTimeDelta);
+	HRESULT Render_NonLight_Effect(_float fTimeDelta);
 	HRESULT Render_Glow(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
 	HRESULT Render_Glow_UI(_float fTimeDelta);
 	HRESULT Render_MultyGlow_UI(_float fTimeDelta);
+	HRESULT Render_AllGlow_Effect(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
 
 
@@ -104,6 +107,7 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
 
+	HRESULT Draw_AllGlow_Effect();
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 
 public:

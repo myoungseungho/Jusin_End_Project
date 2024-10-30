@@ -26,7 +26,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_OVERLAP;
 	m_iPassIndex = 1;
-
+	m_iGameObjectData = -1;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -59,7 +59,9 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
-
+		m_isGlow = pEffectDesc->isGlow;
+		if (m_isGlow == true)
+			m_iGameObjectData = -1;
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
 			m_IsColorEffect = true;
@@ -72,6 +74,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
+	
 
 		return S_OK;
 	}
@@ -103,7 +106,7 @@ void CEffect_Overlap::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
 
 		}
@@ -112,16 +115,27 @@ void CEffect_Overlap::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
 		}
 	}
 
 }
 
+HRESULT CEffect_Overlap::Priority_Render(_float fTimeDelta)
+{
+
+
+	return S_OK;
+}
+
+
 
 HRESULT CEffect_Overlap::Render(_float fTimeDelta)
 {
+	if (m_iPassIndex != 1)
+		__super::Priority_Render(fTimeDelta);
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
