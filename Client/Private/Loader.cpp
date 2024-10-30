@@ -91,6 +91,8 @@
 #include "AttackObject_Chase.h"
 #include "AttackObject_Grab.h"
 #include "AttackObject_CommandGrab.h"
+#include "AttackObject_Ranged.h"
+
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -2609,6 +2611,11 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_CommandGrab"),
 		CAttackObject_CommandGrab::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Ranged"),
+		CAttackObject_Ranged::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))

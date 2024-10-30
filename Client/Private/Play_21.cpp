@@ -1214,7 +1214,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };

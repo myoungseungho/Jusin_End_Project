@@ -4,7 +4,7 @@ Duration: 1.3
 TickPerSecond: 2
 KeyFramesCount: 77
 NumEffec: 10
-Position: 0 0 0
+Position: 0 1 -0.5
 Scale: 1 1 1
 Rotation: 0 0 0
 
@@ -17,7 +17,11 @@ EffectType: 2
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 11
+<<<<<<< HEAD
 Position: 0 -0.3 0
+=======
+Position: 0 0.7 -0.5
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: false
@@ -230,12 +234,21 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
+<<<<<<< HEAD
 UniqueIndex: 18
 Position: -0.5 0.5 0
 Scale: 0.05 0.4 1
 Rotation: 0 0 40
 IsLoop: false
 Color: 255 231.358 72.298 0.8
+=======
+UniqueIndex: 82
+Position: -0.5 1.5 -0.5
+Scale: 0.05 0.4 1
+Rotation: 0 0 40
+IsLoop: false
+Color: 255 75 0 0.8
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
@@ -276,12 +289,21 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
+<<<<<<< HEAD
 UniqueIndex: 19
 Position: 0 -0.5 0
 Scale: 0.0199997 0.399235 0.99938
 Rotation: 90 0 180
 IsLoop: false
 Color: 255 255 177 0.8
+=======
+UniqueIndex: 83
+Position: 0 0.5 -0.5
+Scale: 0.0199997 0.399235 0.99938
+Rotation: 0 0 180
+IsLoop: false
+Color: 255 75 0 0.8
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
@@ -291,7 +313,11 @@ NumKeyFrame: 3
 KeyFrameNumber: 0
 Position: 0 -0.5 0
 Scale: 0.0199997 0.399235 0.99938
+<<<<<<< HEAD
 Rotation: 90 0 180
+=======
+Rotation: 0 0 180
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 CurTime: 0
 Duration: 1.3
 IsNotPlaying: false
@@ -300,7 +326,11 @@ IsNotPlaying: false
 KeyFrameNumber: 24
 Position: 0 -0.5 0
 Scale: 0.00999836 0.399134 0.999126
+<<<<<<< HEAD
 Rotation: 90 0 180
+=======
+Rotation: 0 0 180
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 CurTime: 0.4
 Duration: 1.3
 IsNotPlaying: true
@@ -309,7 +339,11 @@ IsNotPlaying: true
 KeyFrameNumber: 25
 Position: 0 -0.5 0
 Scale: 0.0199983 0.39922 0.999343
+<<<<<<< HEAD
 Rotation: 90 0 180
+=======
+Rotation: 0 0 180
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 CurTime: 0.416667
 Duration: 1.3
 IsNotPlaying: true
@@ -322,12 +356,21 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
+<<<<<<< HEAD
 UniqueIndex: 20
 Position: 0.5 0.3 0
 Scale: 0.05 0.4 1
 Rotation: 0 0 300
 IsLoop: false
 Color: 255 255 177 0.8
+=======
+UniqueIndex: 84
+Position: 0.5 1.3 -0.5
+Scale: 0.05 0.4 1
+Rotation: 0 0 300
+IsLoop: false
+Color: 255 75 0 0.8
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0

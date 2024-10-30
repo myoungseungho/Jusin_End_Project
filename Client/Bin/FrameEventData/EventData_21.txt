@@ -621,7 +621,8 @@ PLAY_21,TON230_body,36,NextAnimationCheck,3333
 
 
 //,앉아중 50
-PLAY_21,TON231_body,0,AnimSpeedChange,0.04,90
+//,PLAY_21,TON231_body,0,AnimSpeedChange,0.04,90
+PLAY_21,TON231_body,0,AnimSpeedChange,0.04,110
 PLAY_21,TON231_body,0.0010,PlayGroupSound,204,0,1
 PLAY_21,TON231_body,0.0010,PlayGroupSound,202,0,1
 //,PLAY_21,TON231_body,21,AttackEvent,33333

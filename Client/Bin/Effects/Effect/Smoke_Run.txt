@@ -3,7 +3,7 @@ LayerName: Smoke_Run
 Duration: 2
 TickPerSecond: 1
 KeyFramesCount: 119
-NumEffec: 14
+NumEffec: 16
 Position: 0 0 0
 Scale: 0.1 0.1 0.1
 Rotation: 0 0 0
@@ -55,7 +55,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 86
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -101,7 +105,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 87
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -147,7 +155,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 88
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -193,7 +205,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 89
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -239,7 +255,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 90
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -285,7 +305,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 91
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -331,7 +355,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 92
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.02 0.02 0.02
+=======
+Scale: 0.002 0.002 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -377,7 +405,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 93
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -423,7 +455,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 94
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -469,7 +505,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 95
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -515,7 +555,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 96
 Position: 0 0 0
+<<<<<<< HEAD
 Scale: 0.01 0.01 0.02
+=======
+Scale: 0.001 0.001 0.002
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -607,3 +651,62 @@ CurTime: 0
 Duration: 2
 IsNotPlaying: false
 
+<<<<<<< HEAD
+=======
+[Effect]
+EffectName: Smoke_Run15
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run15
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 99
+Position: -1 0 -0.5
+Scale: 0.2 0.05 0.0001
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1 0 -0.5
+Scale: 2 0.5 0.001
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: Smoke_Run16
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run16
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 100
+Position: -0.932 0.1 -0.5
+Scale: 0.03 0.03 0
+Rotation: 0 0 15
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.932 0.1 -0.5
+Scale: 0.3 0.3 0
+Rotation: 0 0 15
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+>>>>>>> b3afd2b1c4ccdb088eb59e8454ae63b4f42aa0f7

@@ -56,6 +56,8 @@ public:
 	_bool* m_pbAttackCount = { nullptr };
 	//_ushort* m_piCountGroundSpecial = { nullptr };
 	class CGameInstance* m_pGameInstance = { nullptr };
+
+	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 };
 
 END
