@@ -1,0 +1,665 @@
+[Layer]
+LayerName: Smoke_Run
+Duration: 2
+TickPerSecond: 1
+KeyFramesCount: 119
+NumEffec: 16
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: Smoke_Run01
+ModelName: Model_Effect_cmn_SmokeModels0302
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 85
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.0666667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run02
+ModelName: Model_Effect_cmn_SmokeModels0303
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 86
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.0666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run03
+ModelName: Model_Effect_cmn_SmokeModels0304
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 87
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run04
+ModelName: Model_Effect_cmn_SmokeModels0305
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 88
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run05
+ModelName: Model_Effect_cmn_SmokeModels0306
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 89
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.333333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run06
+ModelName: Model_Effect_cmn_SmokeModels0307
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 90
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.333333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.4
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run07
+ModelName: Model_Effect_cmn_SmokeModels0308
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 91
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.4
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run08
+ModelName: Model_Effect_cmn_SmokeModels0309
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 92
+Position: 0 0 0
+Scale: 0.002 0.002 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 32
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.533333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run09
+ModelName: Model_Effect_cmn_SmokeModels0310
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 93
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 32
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.533333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run10
+ModelName: Model_Effect_cmn_SmokeModels0311
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 94
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run11
+ModelName: Model_Effect_cmn_SmokeModels0312
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 95
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 44
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.733333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run12
+ModelName: Model_Effect_cmn_SmokeModels0301
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run12
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 96
+Position: 0 0 0
+Scale: 0.001 0.001 0.002
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 44
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.733333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 48
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.8
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke_Run13
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run13
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 97
+Position: -1.5 0 0.5
+Scale: 0.149991 0.15 0.15
+Rotation: 0 180 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.5 0 0.5
+Scale: 1.49991 1.5 1.5
+Rotation: 0 180 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: Smoke_Run14
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run14
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 98
+Position: -1.6 0.2 -0.5
+Scale: 0.05 0.05 0
+Rotation: 0 0 20
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.6 0.2 -0.5
+Scale: 0.5 0.5 0
+Rotation: 0 0 20
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: Smoke_Run15
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run15
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 99
+Position: -1 0 -0.5
+Scale: 0.2 0.05 0.0001
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1 0 -0.5
+Scale: 2 0.5 0.001
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: Smoke_Run16
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke_RunSmoke_Run16
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 100
+Position: -0.932 0.1 -0.5
+Scale: 0.03 0.03 0
+Rotation: 0 0 15
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.932 0.1 -0.5
+Scale: 0.3 0.3 0
+Rotation: 0 0 15
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
