@@ -3,6 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
+#include "Effect_Manager.h"
 #include "Input.h"
 
 #include "Play_21.h"
@@ -22,6 +23,8 @@ void CS21_MeleeAttack::Initalize(CPlay_21* pPlayer)
 	//m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
 
 	m_pGameInstance = CGameInstance::Get_Instance();
+	m_pEffect_Manager = CEffect_Manager::Get_Instance();
+
 }
 
 void CS21_MeleeAttack::Attack_Light()
@@ -524,6 +527,9 @@ void CS21_MeleeAttack::ForwardDash()
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_FORWARD_DASH);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_DownHook_Dash_SFX, false, 1.f);
+
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke_Run"), static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr());
+
 	}
 
 	else if (m_pPlayer->Get_bAirDashEnable() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP))

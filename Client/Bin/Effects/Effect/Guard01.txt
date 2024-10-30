@@ -1,0 +1,38 @@
+[Layer]
+LayerName: Guard01
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 1
+Position: 0.3 0.5 0
+Scale: 1.5 1.5 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: Guard01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Guard01Guard01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 21
+Position: 0.3 0.5 0
+Scale: 0.03 0.06 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 107.235 211.937 240.646 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.03 0.06 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

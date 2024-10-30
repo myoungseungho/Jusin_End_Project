@@ -101,18 +101,18 @@ void CUI_HpGauge::Update(_float fTimeDelta)
 void CUI_HpGauge::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
-
+	
 	if (m_pMainPawn != nullptr)
 		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
-
+	
 	if (m_fHpRadio <= 0.f)
 		m_fHpRadio = 0.f;
-
+	
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
-
+	
 	if (m_bRedAlpha == FALSE)
 		m_fRedHpRadio = m_fHpRadio;
-
+	
 	if (m_bCharaStun == TRUE)
 	{
 		if (m_bHit == FALSE)
@@ -123,18 +123,18 @@ void CUI_HpGauge::Late_Update(_float fTimeDelta)
 	}
 	else
 		m_bHit = FALSE;
-
-
+	
+	
 	//캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
 	m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
-
-
+	
+	
 	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
 	{
 		m_bRedAlpha = FALSE;
-
+	
 	}
-
+	
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 

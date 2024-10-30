@@ -183,25 +183,25 @@ void CTransform::Rotate(_float3 ChangeRotation)
 
 void CTransform::Set_Matrix(_matrix AddMatrix)
 {
-	XMMATRIX float4x4Matrix = XMLoadFloat4x4(&m_WorldMatrix);
+	XMVECTOR layerScale, layerRotation, layerTranslation;
+	XMMatrixDecompose(&layerScale, &layerRotation, &layerTranslation, AddMatrix);
 
-	XMVECTOR scale, rotation, translation;
-	XMMatrixDecompose(&scale, &rotation, &translation, AddMatrix);
-
-	// 각 축에 대해 scale을 적용한 후 rotation을 반영합니다.
-	XMVECTOR vRight = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_RIGHT), scale), XMMatrixRotationQuaternion(rotation));
-	XMVECTOR vUp = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_UP), scale), XMMatrixRotationQuaternion(rotation));
-	XMVECTOR vLook = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_LOOK), scale), XMMatrixRotationQuaternion(rotation));
-
-	// translation을 적용한 위치를 계산하고, w를 1로 설정합니다.
 	XMVECTOR vCurPos = Get_State(STATE_POSITION);
-	XMVECTOR vPos = XMVectorAdd(vCurPos, translation);
-	vPos = XMVectorSetW(vPos, 1.0f);
+
+	XMMATRIX rotationMatrix = XMMatrixRotationQuaternion(layerRotation);
+	XMVECTOR rotatedPos = XMVector3TransformNormal(vCurPos, rotationMatrix);
+
+	XMVECTOR vRight = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_RIGHT), layerScale), rotationMatrix);
+	XMVECTOR vUp = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_UP), layerScale), rotationMatrix);
+	XMVECTOR vLook = XMVector3TransformNormal(XMVectorMultiply(Get_State(STATE_LOOK), layerScale), rotationMatrix);
+
+	XMVECTOR finalPos = XMVectorAdd(layerTranslation, rotatedPos);
+	finalPos = XMVectorSetW(finalPos, 1.0f);
 
 	Set_State(STATE_RIGHT, vRight);
 	Set_State(STATE_UP, vUp);
 	Set_State(STATE_LOOK, vLook);
-	Set_State(STATE_POSITION, vPos);
+	Set_State(STATE_POSITION, finalPos);
 }
 
 _matrix CTransform::Multiple_Matrix(_matrix SrcMatrix)

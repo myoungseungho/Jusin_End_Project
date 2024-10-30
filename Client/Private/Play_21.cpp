@@ -406,7 +406,13 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		}
 
 
-		Character_Play_Animation(fTimeDelta);
+		if (m_bNoEventLoofAnimation)
+		{
+			Update_NoEventTime(fTimeDelta);
+			Update_NoEventAnimationLoof(fTimeDelta);
+		}
+		else
+			Character_Play_Animation(fTimeDelta);
 
 		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
 		if (m_bMotionPlaying == false)
@@ -770,6 +776,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
+	if(m_bPlaying)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 	//#ifdef _DEBUG
@@ -1214,7 +1221,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
@@ -1670,10 +1677,6 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.bCameraZoom = false;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-
-
-
-		}
 
 		if (iAttackEvent == 1)
 		{

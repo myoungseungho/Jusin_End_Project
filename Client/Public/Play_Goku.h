@@ -166,6 +166,8 @@ public:
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
 
 
+	void Set_UltimateKamehameha(_bool bUltimate);
+
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
@@ -176,6 +178,7 @@ private:
 	_bool m_bAttackCount[COUNT_END] = { true };
 	_ushort m_iCountGroundSpecial = 0;
 
+	_bool m_bUltimateKamehameha = false;
 
 private:
 	HRESULT Ready_Components();

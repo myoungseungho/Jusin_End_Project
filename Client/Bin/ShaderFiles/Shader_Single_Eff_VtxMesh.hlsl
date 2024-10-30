@@ -149,6 +149,7 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     
     float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f};
     float fAlpha = vMtrlAlpha.a;
+    vMtrlDiffuse.a = fAlpha;
     
     if (g_bColorChange)
     {

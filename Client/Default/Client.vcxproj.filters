@@ -199,6 +199,9 @@
     <ClCompile Include="..\Private\BattleInterface.cpp">
       <Filter>02.GameObjects\BattleInterface</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\AttackObject_Ranged.cpp">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Ranged</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -862,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="..\public\MainApp.h">
       <Filter>01.Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject_Ranged.h">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Ranged</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

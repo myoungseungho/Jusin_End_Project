@@ -7,6 +7,9 @@
 
 #include "Play_Goku.h"
 
+#include "Effect_Manager.h"
+
+#include "AttackObject.h"
 //vector<CInput> Command_236Attack =
 //{
 //	{MOVEKEY_DOWN, ATTACK_NONE},
@@ -37,6 +40,10 @@ void CGoku_MeleeAttack::Initalize(CPlay_Goku* pPlayer)
 	m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
 
 	m_pGameInstance = CGameInstance::Get_Instance();
+	m_pEffect_Manager = CEffect_Manager::Get_Instance();
+
+
+	//	Safe_AddRef(m_pEffect_Manager);
 }
 
 void CGoku_MeleeAttack::Attack_Light()
@@ -429,6 +436,8 @@ void CGoku_MeleeAttack::Attack_236Special()
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL);
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
 
+		m_pPlayer->Set_UltimateKamehameha(false);
+
 	} 
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
@@ -437,6 +446,7 @@ void CGoku_MeleeAttack::Attack_236Special()
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL,3.5f);
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
+		m_pPlayer->Set_UltimateKamehameha(false);
 
 	}
 
@@ -444,6 +454,8 @@ void CGoku_MeleeAttack::Attack_236Special()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR);
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
+		m_pPlayer->Set_UltimateKamehameha(false);
+
 
 	} 
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 ||
@@ -451,6 +463,8 @@ void CGoku_MeleeAttack::Attack_236Special()
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
 		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
+		m_pPlayer->Set_UltimateKamehameha(false);
+
 
 	}
 
@@ -463,23 +477,29 @@ void CGoku_MeleeAttack::Attack_236Special_Side()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE);
+		m_pPlayer->Set_UltimateKamehameha(false);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3 ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE, 3.5f);
+		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE, 3.5f);	
+		m_pPlayer->Set_UltimateKamehameha(false);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE);
+		m_pPlayer->Set_UltimateKamehameha(false);
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR )
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE, 3.f);
+		m_pPlayer->Set_UltimateKamehameha(false);
 	}
 	
 
@@ -497,6 +517,11 @@ void CGoku_MeleeAttack::Attack_236Ultimate()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
+		//m_pPl
+		//StopMacro(1.f);
+		//m_pPlayer->Set_AnimationStop(1.f);
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
@@ -506,11 +531,15 @@ void CGoku_MeleeAttack::Attack_236Ultimate()
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL, 3.5f);
 		//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_AIR ||
@@ -518,6 +547,8 @@ void CGoku_MeleeAttack::Attack_236Ultimate()
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
 		//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 
 
@@ -530,12 +561,14 @@ void CGoku_MeleeAttack::Attack_236Ultimate()
 		{
 			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR, 3.5f);
 			//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR);
-			
+			m_pPlayer->Set_UltimateKamehameha(true);
+
 		}
 		else
 		{
 			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL, 3.5f);
 			//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL);
+			m_pPlayer->Set_UltimateKamehameha(true);
 
 		}
 	}
@@ -550,6 +583,8 @@ void CGoku_MeleeAttack::Attack_236Ultimate_Side()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
@@ -559,11 +594,15 @@ void CGoku_MeleeAttack::Attack_236Ultimate_Side()
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE, 3.5f);
 		//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_AIR ||
@@ -571,6 +610,8 @@ void CGoku_MeleeAttack::Attack_236Ultimate_Side()
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE, 3.5f);
 		//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR);
+		m_pPlayer->Set_UltimateKamehameha(true);
+
 	}
 
 
@@ -601,6 +642,13 @@ void CGoku_MeleeAttack::Attack_214Final()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
 		m_pPlayer->Set_AnimationStopWithoutMe(2.f);
+
+		//이전에 만들어진 모든 Attack Object들 2초간 정지.  이거 본인은 이 직후에 만들어질테니 괜찮음
+		for (auto pAttackObject : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_AttackObject")))
+		{
+			static_cast<CAttackObject*>(pAttackObject)->Set_UpdateStop(2.f);
+		}
+
 	}
 }
 
@@ -732,6 +780,11 @@ void CGoku_MeleeAttack::ForwardDash()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_DownHook_Dash_SFX, false, 1.f);
+
+
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke_Run"), static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr());
+
+
 	}
 
 	else if (m_pPlayer->Get_bAirDashEnable()  && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP ))
@@ -746,5 +799,16 @@ void CGoku_MeleeAttack::ForwardDash()
 
 	}
 
+}
+
+void CGoku_MeleeAttack::StopMacro(_float fStopTime)
+{
+	m_pPlayer->Set_AnimationStopWithoutMe(fStopTime);
+
+	//이전에 만들어진 모든 Attack Object들 2초간 정지.  이거 본인은 이 직후에 만들어질테니 괜찮음
+	for (auto pAttackObject : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_AttackObject")))
+	{
+		static_cast<CAttackObject*>(pAttackObject)->Set_UpdateStop(fStopTime);
+	}
 }
 
