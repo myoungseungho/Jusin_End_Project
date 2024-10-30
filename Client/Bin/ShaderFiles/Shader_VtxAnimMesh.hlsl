@@ -97,7 +97,7 @@ PS_OUT PS_MAIN(PS_IN In)
 	
     vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
 //    vector vHairColor = { 255.f / 255.f, 255.f / 255.f, 130.f / 255.f, 1.f };
-    vector vHairColor = { vMtrlDiffuse.rgb * 0.9f, 1.f };
+    vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
     vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
     
