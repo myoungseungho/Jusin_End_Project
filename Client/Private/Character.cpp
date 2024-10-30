@@ -3214,11 +3214,6 @@ _bool CCharacter::Get_bGrabbed()
 	return m_bGrabbed;
 }
 
-
-
-
-
-
 void CCharacter::Set_bRedHP(_bool bRedHP)
 {
 	if (bRedHP == true)

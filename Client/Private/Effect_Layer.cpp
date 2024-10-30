@@ -106,6 +106,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 	if (pArg != nullptr)
 	{
 		m_pPlayerMatrix = pArg;
+		_float a = m_pPlayerMatrix->_42;
 		LayerMatrix = m_pTransformCom->Get_WorldMatrix();
 
 		if (0 > m_pPlayerMatrix->_11)
@@ -123,6 +124,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 			//fLayerMatrix._41 *= -1;
 			fLayerMatrix._43 *= -1;
 			fLayerMatrix._41 += XMVectorGetX(Position);
+			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 			
@@ -138,6 +140,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 			XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
 
 			fLayerMatrix._41 += XMVectorGetX(Position);
+			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 		}
