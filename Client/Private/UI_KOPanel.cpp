@@ -43,9 +43,9 @@ HRESULT CUI_KOPanel::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_KOPanel::Priority_Update(_float fTimeDelta)
+void CUI_KOPanel::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	if (m_bDeadCheck)
 		m_fLightTimer += fTimeDelta * 4.f;

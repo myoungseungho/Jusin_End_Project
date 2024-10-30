@@ -86,8 +86,6 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Player_Update(fTimeDelta);
 
-	m_pPipeLine->Update();
-
 	m_pFrustum->Update();
 
 	m_pObject_Manager->Update(fTimeDelta);
@@ -96,9 +94,13 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
-	m_pObject_Manager->Priority_Update(fTimeDelta);
+	m_pObject_Manager->Camera_Update(fTimeDelta);
+
+	m_pPipeLine->Update();
 
 	m_pLevel_Manager->Update(fTimeDelta);
+
+	m_pSoundManager->Update(fTimeDelta);
 }
 
 HRESULT CGameInstance::Render_Engine(_float fTimeDelta)
@@ -418,7 +420,7 @@ HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRend
 HRESULT CGameInstance::Release_Collider(const CCollider* Collider)
 {
 	return m_pCollider_Manager->Release_Collider(Collider);
-	
+
 
 }
 
@@ -478,14 +480,14 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
 
-void CGameInstance::Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias)
+void CGameInstance::Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, _bool isLoop)
 {
-	m_pSoundManager->Register_Sound(filePath, alias);
+	m_pSoundManager->Register_Sound(filePath, alias, isLoop);
 }
 
-void CGameInstance::Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias)
+void CGameInstance::Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias, _bool isLoop)
 {
-	m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias);
+	m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias, isLoop);
 }
 
 void CGameInstance::Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume)

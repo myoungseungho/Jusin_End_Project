@@ -40,9 +40,9 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Chara_Icon::Priority_Update(_float fTimeDelta)
+void CUI_Chara_Icon::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	if(m_pMainPawn != nullptr)
 		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;

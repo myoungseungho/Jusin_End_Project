@@ -26,12 +26,20 @@ public:
 		Goku_Ultimate_Attack_0,
 		Goku_Ultimate_Attack_1,
 		Goku_Ultimate_Attack_2,
-		Heavy_Attack_21,
 		Goku_Heavy_Attack_SFX,
 		Goku_Energy_SFX,
-		Goku_DownHook_Dash_SFX,
-		Goku_Dash_SFX,
+		Common_DownHook_Dash_SFX,
+		Common_Dash_SFX,
 		Goku_Range_Attack_SFX,
+		Goku_Ultimate_0_SFX,
+		Goku_Ultimate_1_SFX,
+		Goku_Ultimate_2_SFX,
+		Goku_Ultimate_3_SFX,
+		Heavy_Attack_21,
+		Light_Attack_21_SFX,
+		Heavy_Attack_21_SFX,
+		Chase_Attack_21,
+		Grab_Attack_21,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -87,14 +95,14 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
-	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias);
-	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias);
+	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, _bool loop = false);
+	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, _bool loop);
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);

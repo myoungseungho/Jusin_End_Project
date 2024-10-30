@@ -38,7 +38,7 @@ HRESULT CEffect::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CEffect::Priority_Update(_float fTimeDelta)
+void CEffect::Camera_Update(_float fTimeDelta)
 {
 
 }
@@ -63,8 +63,10 @@ HRESULT CEffect::Render(_float fTimeDelta)
 
 		if (iCheckSpriteEnd == 1)
 		{
-			int a = 10;
+			m_bIsSpriteEnd = true;
 		}
+		else
+			int a = 0;
 	}
 	return S_OK;
 }

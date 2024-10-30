@@ -64,9 +64,9 @@ HRESULT CUIObject::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUIObject::Priority_Update(_float fTimeDelta)
+void CUIObject::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	//if (m_pMainPawn != nullptr)
 	//	m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;

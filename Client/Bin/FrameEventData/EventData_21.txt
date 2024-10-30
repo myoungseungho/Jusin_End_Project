@@ -252,7 +252,7 @@ PLAY_21,TON032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 13
 PLAY_21,TON033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-
+PLAY_21,TON033_body,0.001000,PlaySound,12,0,1
 PLAY_21,TON033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_21,TON033_body, 1,ObjectMove, -0.3, 0, 0, 0
 PLAY_21,TON033_body, 2,ObjectMove, -0.2, 0, 0, 0
@@ -271,6 +271,7 @@ PLAY_21,TON033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 15
 PLAY_21,TON035_body,0.000000,AnimSpeedChange,0.010000,90.505997
+PLAY_21,TON035_body,0.001000,PlaySound,12,0,1
 PLAY_21,TON035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_21,TON035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_21,TON035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -472,6 +473,7 @@ PLAY_21,TON013_body,0.000000,AnimSpeedChange,0.023000,120
 
 //,약공1,  Duraton 39짜리인데 괜찮은가   43
 PLAY_21,TON200_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_21,TON200_body,0.0010,PlayGroupSound,204,0,1
 PLAY_21,TON200_body,0.0010,PlayGroupSound,202,0,1
 PLAY_21,TON200_body,20,AttackEvent,201
 PLAY_21,TON200_body,22,NextAnimationCheck,333333
@@ -481,6 +483,7 @@ PLAY_21,TON200_body,30,NextAnimationCheck,333333
 
 //,약공2  44
 PLAY_21,TON201_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_21,TON201_body,0.0010,PlayGroupSound,204,0,1
 PLAY_21,TON201_body,0.0010,PlayGroupSound,202,0,1
 PLAY_21,TON201_body,20,AttackEvent,201
 PLAY_21,TON201_body,22,NextAnimationCheck,333333
@@ -497,7 +500,7 @@ PLAY_21,TON201_body,36,NextAnimationCheck,333333
 
 //,약공3 느리게 회전 빠르게 차기 45
 PLAY_21,TON202_body,0.000000,AnimSpeedChange,0.015000,61.414001
-PLAY_21,TON202_body,15.0010,PlaySound,8,0,1
+PLAY_21,TON202_body,0.0010,PlayGroupSound,204,0,1
 PLAY_21,TON202_body,22.535000,AnimSpeedChange,0.015000,120.000000
 
 PLAY_21,TON202_body,45,NextAnimationCheck,333333
@@ -542,8 +545,10 @@ PLAY_21,TON202_body,25,ObjectMove,0.05,0,0,0
 
 
 
-//,서서 중 46
+//,서서 중공 46
 PLAY_21,TON203_body,0.000000,AnimSpeedChange,0.015000,56.970001
+PLAY_21,TON203_body,0.0010,PlayGroupSound,204,0,1
+PLAY_21,TON203_body,0.0010,PlayGroupSound,202,0,1
 PLAY_21,TON203_body,15.636000,AnimSpeedChange,0.038000,118.788002
 PLAY_21,TON203_body,20,AttackEvent,203
 PLAY_21,TON203_body,25.090998,AnimSpeedChange,0.015000,47.676998
@@ -567,7 +572,6 @@ PLAY_21,TON203_body,10,ObjectMove,0.04,0,0,0
 //,서서 강공  47
 //,PLAY_21,TON204_body,0.000000,AnimSpeedChange,0.021000,120.000000
 PLAY_21,TON204_body,0.000000,AnimSpeedChange,0.008000,80.000000
-PLAY_21,TON204_body,0.0010,PlaySound,8,0,1
 //,PLAY_21,TON204_body,15.000000,AnimSpeedChange,0.008000,100.000000
 //,PLAY_21,TON204_body,15,AnimSpeedChange,0.021000,100.606003
 
@@ -618,6 +622,8 @@ PLAY_21,TON230_body,36,NextAnimationCheck,3333
 
 //,앉아중 50
 PLAY_21,TON231_body,0,AnimSpeedChange,0.04,90
+PLAY_21,TON231_body,0.0010,PlayGroupSound,204,0,1
+PLAY_21,TON231_body,0.0010,PlayGroupSound,202,0,1
 //,PLAY_21,TON231_body,21,AttackEvent,33333
 PLAY_21,TON231_body,25,AttackEvent,333333
 PLAY_21,TON231_body,30,NextAnimationCheck,3333
@@ -674,12 +680,14 @@ PLAY_21,TON233_body,76,NextAnimationCheck,3333
 
 //,공중약 53
 PLAY_21,TON260_body,0,AnimSpeedChange,0.027000,120.000000
+PLAY_21,TON260_body,0.0010,PlayGroupSound,204,0,1
 PLAY_21,TON260_body,20,AttackEvent,33333333
 PLAY_21,TON260_body,21,NextAnimationCheck,53
 //,PLAY_21,TON261_body,30,NextAnimationCheck,3333
 
 //,공중 중 54
 PLAY_21,TON261_body,0,AnimSpeedChange,0.025000,120
+PLAY_21,TON261_body,0.0010,PlayGroupSound,204,0,1
 PLAY_21,TON261_body,20,AnimSpeedChange,0.027000,80
 PLAY_21,TON261_body,25,AttackEvent,33333333
 //,PLAY_21,TON261_body,40,NextAnimationCheck,3333
@@ -746,8 +754,10 @@ PLAY_21,TON400_body,57,NextAnimationCheck,3333
 
 PLAY_21,TON401_body,0.000000,AnimSpeedChange,0.028000,59.696999
 PLAY_21,TON401_body,0,PositionChange,60
+PLAY_21,TON401_body,58,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
 PLAY_21,TON401_body,60,AnimSpeedChange,0.028000,59.798000
 //,PLAY_21,TON401_body,70,AttackEvent,401_1
+PLAY_21,TON401_body,105,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
 PLAY_21,TON401_body,114.397003,AnimSpeedChange,0.028000,15.020000
 PLAY_21,TON401_body,115,AttackEvent,0
 PLAY_21,TON401_body,119.010010,AnimSpeedChange,0.028000,61.414001

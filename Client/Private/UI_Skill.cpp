@@ -3,6 +3,7 @@
 #include "UI_Skill.h"
 #include "RenderInstance.h"
 #include "Character.h"
+#include "BattleInterface.h"
 
 CUI_Skill::CUI_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice , pContext }
@@ -34,16 +35,26 @@ HRESULT CUI_Skill::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Skill::Priority_Update(_float fTimeDelta)
+void CUI_Skill::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	//m_iSkillPoint = max(m_pMainPawn->Get_PawnDesc().iSKillPoint , m_pSubPawn->Get_PawnDesc().iSKillPoint);
 	
 	if (m_pMainPawn != nullptr)
 	{
-		m_iSkillPoint = m_pMainPawn->Get_PawnDesc().iSKillPoint;
-		m_iSkillNumber = m_pMainPawn->Get_PawnDesc().iSKillCount;
+		if (m_eLRPos == LEFT)
+		{
+			
+			m_iSkillPoint = CBattleInterface_Manager::Get_Instance()->Get_KiGuage(1);
+			m_iSkillNumber = CBattleInterface_Manager::Get_Instance()->Get_KiNumber(1);
+		}
+		else if (m_eLRPos == RIGHT)
+		{
+			m_iSkillPoint = CBattleInterface_Manager::Get_Instance()->Get_KiGuage(2);
+			m_iSkillNumber = CBattleInterface_Manager::Get_Instance()->Get_KiNumber(2);
+		}
+	
 	}
 
 	m_fSkillRadio = 1 - m_iSkillPoint / 100.f;

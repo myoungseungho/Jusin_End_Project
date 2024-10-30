@@ -60,7 +60,7 @@ protected:
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
-	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
@@ -105,6 +105,7 @@ public:
 	_int				m_iNumWidthImage = { 0 };
 	_int				m_iNumHeighthImage = { 0 };
 	_bool			m_bIsNotPlaying = { false };
+	_bool			m_bIsSpriteEnd = { false };
 	_bool			m_bIsLoop = { false };
 	_float		m_fAlpha = { 0.f };
 	_int			m_iRenderIndex = { 0 };

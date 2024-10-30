@@ -38,7 +38,7 @@ private:
 
 public:
 	virtual HRESULT Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual void Priority_Update(_float fTimeDelta);
+	virtual void Camera_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);

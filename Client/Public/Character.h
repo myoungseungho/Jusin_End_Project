@@ -207,7 +207,7 @@ public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
 	virtual void Player_Update(_float fTimeDelta) override;
-	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
@@ -428,6 +428,7 @@ public:
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
+	CTexture* m_pOutLineCom = { nullptr };
 
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
@@ -667,6 +668,7 @@ private:
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };
+	_uint					m_iPrevComboCount = { 0 };
 	
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
@@ -683,6 +685,7 @@ protected:
 
 private:
 	HRESULT Ready_Components();
+public:
 	HRESULT Bind_ShaderResources();
 
 public:

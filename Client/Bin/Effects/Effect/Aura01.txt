@@ -1,0 +1,38 @@
+[Layer]
+LayerName: Aura01
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 1
+Position: -1 0 1
+Scale: 1 1 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: Aura01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Aura01Aura01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 59
+Position: -1 0 1
+Scale: 0.0999998 0.1 0.999673
+Rotation: 0 180 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0999871 0.1 0.999862
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

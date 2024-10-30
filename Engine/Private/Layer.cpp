@@ -90,7 +90,7 @@ void CLayer::Player_Update(_float fTimeDelta)
 	}
 }
 
-void CLayer::Priority_Update(_float fTimeDelta)
+void CLayer::Camera_Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
 	{
@@ -102,7 +102,7 @@ void CLayer::Priority_Update(_float fTimeDelta)
 		}
 		else
 		{
-			(*it)->Priority_Update(fTimeDelta);  // 업데이트 호출
+			(*it)->Camera_Update(fTimeDelta);  // 업데이트 호출
 			++it;  // 다음 객체로 이동
 		}
 	}

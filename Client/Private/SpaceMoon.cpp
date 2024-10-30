@@ -37,7 +37,7 @@ HRESULT CSpaceMoon::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceMoon::Priority_Update(_float fTimeDelta)
+void CSpaceMoon::Camera_Update(_float fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
 	//m_pTransformCom->Turn(XMVectorSet(0.5f, 0.5f, 0.f, 0.f),fTimeDelta);

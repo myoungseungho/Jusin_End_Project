@@ -14,13 +14,16 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
-	virtual void Priority_Update(_float fTimeDelta);
+	virtual void Camera_Update(_float fTimeDelta);
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render(_float fTimeDelta);
 
 private:
 	virtual HRESULT Ready_Components();
+
+private:
+	_float m_fAnimDuration = { 0.f };
 
 public:
 	static CUI_ComboEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -154,7 +154,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 	return S_OK;
 }
 
-void CEffect_Layer::Priority_Update(_float fTimeDelta)
+void CEffect_Layer::Camera_Update(_float fTimeDelta)
 {
 }
 

@@ -15,12 +15,18 @@ float4 g_GlowFilterColor;
 float2 g_DownSamplingSize;
 float2 g_DownTexSize;
 
+
 float g_fGlowFactor = 3.2f;
 
 static const float g_fWeight[13] =
 {
     // 0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521, 0.3989, 0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044
     0.0561, 0.1353, 0.278, 0.4868, 0.7261, 0.9231, 1.f, 0.9231, 0.7261, 0.4868, 0.278, 0.1353, 0.0561 // 기존 것보다 더 강한 효과
+};
+
+static const float g_fPlayerWeight[13] =
+{
+    0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521, 0.3989, 0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044
 };
 
 struct VS_IN
@@ -85,17 +91,18 @@ float4 DownsamplePS(float2 inputTexSize, float2 texCoord, float2 sampleSize)
     return colorSample;
 }
 
-float4 Blur_X(float2 vTexCoord)
+float4 Blur_X(float2 vTexCoord, float fFactor, float fRatio, bool bPlayer)
 {
     float4 vOut = (float4) 0;
-
+    float4 vTex = (float4) 0;
     float2 vUV = (float2) 0;
 
     for (int i = -6; i < 7; ++i)
     {
-        vUV = vTexCoord + float2(3.f / (1920.0f * 0.25f) * i, 0.f);
-        vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
-
+        vUV = vTexCoord + float2(fFactor / (1920.0f * fRatio) * i, 0.f);
+        vTex = g_Texture.Sample(LinearSampler, vUV);
+        
+        vOut += bPlayer == false ? g_fWeight[6 + i] * vTex : g_fPlayerWeight[6 + i] * vTex;
     }
 
     vOut /= 6.5f;
@@ -103,16 +110,17 @@ float4 Blur_X(float2 vTexCoord)
     return vOut;
 }
 
-float4 Blur_Y(float2 vTexCoord)
+float4 Blur_Y(float2 vTexCoord, float fFactor, float fRatio, bool bPlayer)
 {
     float4 vOut = (float4) 0;
-
+    float4 vTex = (float4) 0;
     float2 vUV = (float2) 0;
 
     for (int i = -6; i < 7; ++i)
     {
-        vUV = vTexCoord + float2(0, 3.f / (1080.0f * 0.25f) * i);
-        vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
+        vUV = vTexCoord + float2(0, fFactor / (1080.0f * fRatio) * i);
+        vTex = g_Texture.Sample(LinearSampler, vUV);
+        vOut += bPlayer == false ? g_fWeight[6 + i] * vTex : g_fPlayerWeight[6 + i] * vTex;
     }
 
     vOut /= 6.5f;
@@ -123,7 +131,7 @@ PS_OUT PS_MAIN_BLUR_X(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    Out.vColor = Blur_X(In.vTexcoord);
+    Out.vColor = Blur_X(In.vTexcoord, 3.f, 0.25f, false);
 	
     return Out;
 }
@@ -132,11 +140,44 @@ PS_OUT PS_MAIN_BLUR_Y(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    Out.vColor = Blur_Y(In.vTexcoord);
+    Out.vColor = Blur_Y(In.vTexcoord, 3.f, 0.25f, false);
 	
 
     return Out;
 }
+
+PS_OUT PS_MAIN_PLAYER_BLUR_X(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+
+    Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true) * 0.45f;
+    //Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true);
+	/*
+    
+    Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true) * 0.5f; // 밝기를 절반으로 줄임
+    나중에 감마값 수치 조절해서 이쁜 연출 할 수 있을지도?
+    float gamma = 2.2f;
+    Out.vColor = pow(Blur_X(In.vTexcoord, 1.f, 1.f, true), 1.0f / gamma); // 감마 보정
+    
+    Out.vColor = Blur_X(In.vTexcoord, 0.5f, 0.5f, true); // 블러 강도 감소
+    
+    */
+    return Out;
+}
+
+PS_OUT PS_MAIN_PLAYER_BLUR_Y(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    //float gamma = 2.2f;
+    //Out.vColor = pow(Blur_Y(In.vTexcoord, 1.f, 1.f, true), 1.0f / gamma);
+    
+    Out.vColor = Blur_Y(In.vTexcoord, 1.f, 1.f, true) * 0.45f;
+	
+    return Out;
+}
+
 texture2D g_BlurTexture;
 PS_OUT PS_MAIN_RESULT_PRI(PS_IN In)
 {
@@ -243,8 +284,7 @@ PS_OUT PS_MAIN_DEBUG(PS_IN In)
 	return Out;
 }
 
-//UI
-PS_OUT PS_MAIN_RESULT_UI(PS_IN In)
+PS_OUT PS_MAIN_RESULT_PLAYER(PS_IN In)
 {
 
     PS_OUT Out = (PS_OUT) 0;
@@ -254,7 +294,7 @@ PS_OUT PS_MAIN_RESULT_UI(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
-    Out.vColor = saturate(vResult + vBlur * 5.2f) /*+ vEffect*/;
+    Out.vColor = saturate(vResult + vBlur) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
 }
@@ -365,8 +405,7 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_RESULT_SUN();
     }
 
-//9 //UI
-    pass Result_UI //9
+    pass Player_Result //9
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
@@ -374,7 +413,29 @@ technique11		DefaultTechnique
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
-        PixelShader = compile ps_5_0 PS_MAIN_RESULT_UI();
+        PixelShader = compile ps_5_0 PS_MAIN_RESULT_PLAYER();
+    }
+
+    pass Player_Blur_X //10
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_PLAYER_BLUR_X();
+    }
+
+    pass Player_Blur_Y //11
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_PLAYER_BLUR_Y();
     }
     
 }

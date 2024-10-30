@@ -57,9 +57,9 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_InputDirEffect::Priority_Update(_float fTimeDelta)
+void CUI_InputDirEffect::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_fDestroyTimer += fTimeDelta;
 }

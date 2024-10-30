@@ -45,7 +45,7 @@ HRESULT CUI_Loading_BG::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Loading_BG::Priority_Update(_float fTimeDelta)
+void CUI_Loading_BG::Camera_Update(_float fTimeDelta)
 {
 	m_IsAlphaSwich ? (m_fBGAlphaValue += fTimeDelta * 0.25f) : (m_fBGAlphaValue -= fTimeDelta * 0.25f);
 

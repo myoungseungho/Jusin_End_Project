@@ -33,7 +33,7 @@ HRESULT CUI_Cursor::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Cursor::Priority_Update(_float fTimeDelta)
+void CUI_Cursor::Camera_Update(_float fTimeDelta)
 {
 	POINT MousePos;
 	GetCursorPos(&MousePos);

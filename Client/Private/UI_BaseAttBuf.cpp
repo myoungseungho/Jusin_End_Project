@@ -32,9 +32,9 @@ HRESULT CUI_BaseAttBuf::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_BaseAttBuf::Priority_Update(_float fTimeDelta)
+void CUI_BaseAttBuf::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_BaseAttBuf::Update(_float fTimeDelta)

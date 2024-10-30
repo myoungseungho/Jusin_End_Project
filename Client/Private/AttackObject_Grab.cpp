@@ -43,7 +43,7 @@ HRESULT CAttackObject_Grab::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CAttackObject_Grab::Priority_Update(_float fTimeDelta)
+void CAttackObject_Grab::Camera_Update(_float fTimeDelta)
 {
 
 }
@@ -115,16 +115,19 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		AttackType eAttackType = static_cast<CAttackObject*>(other->GetMineGameObject())->Get_AttackType();
 		if (eAttackType == ATTACKTYPE_GRAB_GROUND || eAttackType == ATTACKTYPE_GRAB_AIR)
 		{
-
+			
 			m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
 
 			//pCharacter->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			//pCharacter->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
+
 			m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f});
 			m_pOwner->Set_GrabLoofCount(1);
 			m_pOwner->Set_bGrabDraw(true);
+			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+			Camera_Same_Grab(m_pOwner, pCharacter);
 		}
 
 	}
@@ -177,6 +180,9 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		else if (eResult == RESULT_DRAW)
 		{
+			//둘다 같이 잡기 했을 때 카메라 셋팅,, 그다음에 여기 말고 아래 Draw때 한번
+			//만든 각도는 동일하게
+		
 			//m_pOwner->Set_AnimationStop(0.3f);
 			//pCharacter->Set_AnimationStop(0.3f);
 
@@ -184,11 +190,8 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_GrabLoofCount(1);
 			m_pOwner->Set_bGrabDraw(true);
 
-
-
 			m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
-
 
 			//거리조
 			_vector vPos = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
@@ -197,6 +200,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			pCharacter->Grab_LateDraw();
 
+			Camera_Same_Grab(m_pOwner, pCharacter);
 		}
 
 		else if (eResult == RESULT_MISS)
@@ -260,6 +264,32 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::ANDROID21:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_GRAB, 0);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
+		break;
+	case Client::CUI_Define::BUU:
+		break;
+	case Client::CUI_Define::HIT:
+		break;
+	}
+}
+
+void CAttackObject_Grab::Camera_Same_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
+{
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
+	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
+
+	switch (PlayerID)
+	{
+	case Client::CUI_Define::GOKU:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_SAME_GRAB, 0);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
+		break;
+	case Client::CUI_Define::ANDROID21:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_SAME_GRAB, 0);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::BUU:
 		break;

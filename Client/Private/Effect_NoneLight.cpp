@@ -81,7 +81,7 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 
 }
 
-void CEffect_NoneLight::Priority_Update(_float fTimeDelta)
+void CEffect_NoneLight::Camera_Update(_float fTimeDelta)
 {
 }
 
@@ -92,7 +92,7 @@ void CEffect_NoneLight::Update(_float fTimeDelta)
 
 void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 {
-	if (!m_bIsNotPlaying)
+	if (!m_bIsNotPlaying && m_bIsSpriteEnd == false)
 	{
 		if (m_pRenderInstance->Get_isLayerView() == true)
 		{

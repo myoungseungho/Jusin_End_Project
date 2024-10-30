@@ -71,9 +71,9 @@ HRESULT CUI_Input_Action::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Input_Action::Priority_Update(_float fTimeDelta)
+void CUI_Input_Action::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	if(m_bOnBtn)
 		m_fBtnOffTimer += fTimeDelta;

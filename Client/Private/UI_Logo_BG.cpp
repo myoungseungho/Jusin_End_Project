@@ -46,7 +46,7 @@ HRESULT CUI_Logo_BG::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Logo_BG::Priority_Update(_float fTimeDelta)
+void CUI_Logo_BG::Camera_Update(_float fTimeDelta)
 {
 	m_fVideoSprite += fTimeDelta * 12.f;
 

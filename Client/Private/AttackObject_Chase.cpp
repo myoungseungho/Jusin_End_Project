@@ -42,7 +42,7 @@ HRESULT CAttackObject_Chase::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CAttackObject_Chase::Priority_Update(_float fTimeDelta)
+void CAttackObject_Chase::Camera_Update(_float fTimeDelta)
 {
 
 }

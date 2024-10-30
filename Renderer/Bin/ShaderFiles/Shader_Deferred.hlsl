@@ -18,7 +18,7 @@ float4			g_vLightSpecular;
 
 float g_fLightAccTime;
 float g_fLightLifeTime;
-
+bool g_isUsingEffectLight;
 texture2D		g_Texture;
 texture2D		g_NormalTexture;
 /* 픽셀마다 적용해야하는 재질 정보가 달랐다라면 그 픽셀을 그리는 객체들을 렌더링할 때 렌더 타겟을 추가로 생성하여 받아왔어야한다. */
@@ -107,7 +107,10 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL_PLAYER(PS_IN In)
     float shadeStep = 2.0f;
     shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
 
-    Out.vShade = (g_vLightDiffuse * shadeIntensity * 2.0f) + vAmbient;
+    float4 vResultShade = ((g_vLightDiffuse * shadeIntensity * 1.f) + vAmbient);
+    vResultShade = (vNormalDesc.w ? 1.0 : vResultShade); 
+    Out.vShade = vResultShade;
+    
     float4 vWorldPos;
 
 	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬 / View.z */
@@ -339,10 +342,10 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
     float2 fOffsetLeft = float2(-1.0f / 1920.f, 0.0f);
     float2 fOffsetUp = float2(0.0f, -1.0f / 1080.f);
 
-    //float2 fOffsetRightUp = float2(1.0f / 1920.f, -1.0f / 1080.f);
-    //float2 fOffsetRightDown = float2(1.0f / 1920.f, 1.0f / 1080.f);
-    //float2 fOffsetLeftUp = float2(-1.0f / 1920.f, -1.0f / 1080.f);
-    //float2 fOffsetLeftDown = float2(-1.0f / 1920.f, 1.0f / 1080.f);
+    float2 fOffsetRightUp = float2(1.0f / 1920.f, -1.0f / 1080.f);
+    float2 fOffsetRightDown = float2(1.0f / 1920.f, 1.0f / 1080.f);
+    float2 fOffsetLeftUp = float2(-1.0f / 1920.f, -1.0f / 1080.f);
+    float2 fOffsetLeftDown = float2(-1.0f / 1920.f, 1.0f / 1080.f);
 
 
     float fDepthRight = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRight).x * 1000.f;
@@ -351,17 +354,15 @@ float CalculateDepthDiff(float2 vTexcoord, float fViewZ)
     float fDepthUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetUp).x * 1000.f;
 
 
-    //float fDepthRightUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightUp).x * 1000.f;
-    //float fDepthRightDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightDown).x * 1000.f;
-    //float fDepthLeftUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftUp).x * 1000.f;
-    //float fDepthLeftDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftDown).x * 1000.f;
-
+    float fDepthRightUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightUp).x * 1000.f;
+    float fDepthRightDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetRightDown).x * 1000.f;
+    float fDepthLeftUp = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftUp).x * 1000.f;
+    float fDepthLeftDown = g_DepthTexture.Sample(LinearSampler, vTexcoord + fOffsetLeftDown).x * 1000.f;
 
     float fDepthDiff = abs(fViewZ - fDepthRight) + abs(fViewZ - fDepthDown)
-                     + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp);
-                     //+ abs(fViewZ - fDepthRightUp) + abs(fViewZ - fDepthRightDown)
-                     //+ abs(fViewZ - fDepthLeftUp) + abs(fViewZ - fDepthLeftDown);
-
+                     + abs(fViewZ - fDepthLeft) + abs(fViewZ - fDepthUp)
+                     + abs(fViewZ - fDepthRightUp) + abs(fViewZ - fDepthRightDown)
+                     + abs(fViewZ - fDepthLeftUp) + abs(fViewZ - fDepthLeftDown);
 
     return fDepthDiff;
 }
@@ -391,6 +392,7 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     vector vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
     vector vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
 
+    //Out.vColor = vDiffuse * (g_isUsingEffectLight ? 1.0 : vShade) + vSpecular;
     Out.vColor = vDiffuse * vShade + vSpecular;
 
     vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);

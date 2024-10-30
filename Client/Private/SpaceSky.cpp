@@ -32,7 +32,12 @@ HRESULT CSpaceSky::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceSky::Priority_Update(_float fTimeDelta)
+void CSpaceSky::Camera_Update(_float fTimeDelta)
+{
+	
+}
+
+void CSpaceSky::Update(_float fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
 
@@ -60,10 +65,6 @@ void CSpaceSky::Priority_Update(_float fTimeDelta)
 			m_fMaskStar_Value_2 = 0.3f;
 		}
 	}
-}
-
-void CSpaceSky::Update(_float fTimeDelta)
-{
 }
 
 void CSpaceSky::Late_Update(_float fTimeDelta)

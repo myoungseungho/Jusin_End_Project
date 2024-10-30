@@ -50,9 +50,9 @@ HRESULT CUI_KOFont::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_KOFont::Priority_Update(_float fTimeDelta)
+void CUI_KOFont::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_pUI_Manager->m_fTotalDuration += fTimeDelta;
 

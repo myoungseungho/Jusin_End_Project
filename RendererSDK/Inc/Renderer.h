@@ -85,6 +85,7 @@ private:
 	HRESULT Render_Player(_float fTimeDelta);
 	HRESULT Render_PlayerLight(_float fTimeDelta, _int iCount);
 	HRESULT Render_PlayerDeferred(_float fTimeDelta);
+	HRESULT Render_PlayerBlur(_float fTimeDelta);
 	HRESULT Render_NonBlend_Test(_float fTimeDelta); // 디버깅용 피킹
 	HRESULT Render_NonBlend_Layer(_float fTimeDelta);// 디버깅용 피킹
 	HRESULT Render_Lights(_float fTimeDelta);
@@ -98,6 +99,7 @@ private:
 	HRESULT Render_Node(_float fTimeDelta);
 
 
+	HRESULT Initialize_RenderTarget();
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
