@@ -242,7 +242,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 void CPlay_21::Player_Update(_float fTimeDelta)
 {
 
-	__super::Camera_Update(fTimeDelta);
+	__super::Player_Update(fTimeDelta);
 
 
 	if (m_bPlaying == false)
@@ -593,7 +593,7 @@ void CPlay_21::Camera_Update(_float fTimeDelta)
 void CPlay_21::Update(_float fTimeDelta)
 {
 
-
+	__super::Player_Update(fTimeDelta);
 
 	/*
 

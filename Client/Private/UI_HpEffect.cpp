@@ -53,9 +53,12 @@ void CUI_HpEffect::Camera_Update(_float fTimeDelta)
 		{
 			m_bSign = FALSE;
 		}
-	
+
 		m_bSign ? m_fAlphaTimer += fTimeDelta : m_fAlphaTimer -= fTimeDelta;
 	}
+	else
+		m_fAlphaTimer = 0.f;
+	
 	
 }
 
@@ -71,11 +74,10 @@ void CUI_HpEffect::Late_Update(_float fTimeDelta)
 
 	RENDER_OBJECT tDesc{};
 	tDesc.tGlowDesc.iPassIndex = 2;
-	tDesc.tGlowDesc.fGlowFactor = 6.7f;
-	//tDesc.tGlowDesc.iPassIndex = 7;
-	//tDesc.tGlowDesc.fGlowFactor = 4.7f;
+	tDesc.tGlowDesc.fGlowFactor = 4.7f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this, &tDesc);
 }
 
 HRESULT CUI_HpEffect::Render(_float fTimeDelta)

@@ -46,6 +46,8 @@ void CUI_Chara_Icon_Panel::Camera_Update(_float fTimeDelta)
 
 void CUI_Chara_Icon_Panel::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 100.f, 0.85f, fTimeDelta);
 }
 

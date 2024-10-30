@@ -26,7 +26,6 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 {
 	m_fPosX = 72.f;
 	m_fPosY = 112.f;
-	m_fSizeX = 115.f;
 	m_fSizeY = 115.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -35,20 +34,21 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(-m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.5f);
+	m_fSizeX = 115.f;
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.5f);
 
 	return S_OK;
 }
 
 void CUI_Chara_SubIcon::Camera_Update(_float fTimeDelta)
 {
-	__super::Camera_Update(fTimeDelta);
-
-	(m_pSubPawn != nullptr) ? m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID : Destory();;
+	
 }
 
 void CUI_Chara_SubIcon::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+	(m_pSubPawn != nullptr) ? m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID : Destory();
 	Animation({ 60.f ,55.f ,0.5f, 1.f }, { m_fPosX, m_fPosY, 0.5f, 1.f }, 100.f, 0.5f, fTimeDelta);
 }
 
@@ -59,11 +59,7 @@ void CUI_Chara_SubIcon::Late_Update(_float fTimeDelta)
 
 HRESULT CUI_Chara_SubIcon::Render(_float fTimeDelta)
 {
-	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
-
-	//m_iCharaID → 캐릭터 ID가 만들어주면 0대신에 넣어주는 값 (캐릭터에 따라서 이미지가 바뀌도록)
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iCharaID)))
+	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(9)))
@@ -80,13 +76,38 @@ HRESULT CUI_Chara_SubIcon::Render(_float fTimeDelta)
 
 HRESULT CUI_Chara_SubIcon::Ready_Components()
 {
-	if (FAILED(__super::Ready_Components()))
+	if(FAILED(__super::Ready_Components()))
 		return E_FAIL;
 
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+
+	return S_OK;
+}
+
+HRESULT CUI_Chara_SubIcon::Bind_ShaderResources()
+{
+	if (FAILED(__super::Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iCharaID)))
+		return E_FAIL;
+
+	if (m_pSubPawn != nullptr)
+	{
+		_float fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f;
+		_bool bZeroHpCheck = FALSE;
+
+		(fHpRadio <= 0.f) ? bZeroHpCheck = TRUE : bZeroHpCheck = FALSE;
+	
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &bZeroHpCheck, sizeof(_bool))))
+			return E_FAIL;
+		
+
+	}
 
 
 	return S_OK;

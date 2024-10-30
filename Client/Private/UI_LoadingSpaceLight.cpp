@@ -31,7 +31,7 @@ HRESULT CUI_LoadingSpaceLight::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = 100.f, m_fSizeY = 100.f;
+	m_fSizeX = 30.f, m_fSizeY = 30.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
@@ -53,30 +53,19 @@ void CUI_LoadingSpaceLight::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
+
+	AlphaSwiching(m_fAlphaValue, fTimeDelta);
 	RENDER_OBJECT tDesc{};
-	tDesc.tGlowDesc.iPassIndex = 2;
-	tDesc.tGlowDesc.fGlowFactor = 2.7f;
+	tDesc.tGlowDesc.iPassIndex = 7;
+	tDesc.tGlowDesc.fGlowFactor = 6.3f;
 
-
+	//__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this ,&tDesc);
 }
 
 HRESULT CUI_LoadingSpaceLight::Render(_float fTimeDelta)
 {
-	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
-
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
-		return E_FAIL;
-	
-	m_IsAlphaSwich ? (m_fAlphaValue += fTimeDelta * 0.75f) : (m_fAlphaValue -= fTimeDelta * 0.75f);
-
-	if (m_fAlphaValue <= 0.25f)
-		m_IsAlphaSwich = TRUE;
-	else if (m_fAlphaValue >= 1.f)
-		m_IsAlphaSwich = FALSE;
-
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlphaValue, sizeof(_float))))
+	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(20)))
@@ -103,6 +92,35 @@ HRESULT CUI_LoadingSpaceLight::Ready_Components()
 
 
 	return S_OK;
+}
+
+HRESULT CUI_LoadingSpaceLight::Bind_ShaderResources()
+{
+	if (FAILED(__super::Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlphaValue, sizeof(_float))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+void CUI_LoadingSpaceLight::AlphaSwiching(_float& fAlphaValue , _float fTimeDelta)
+{
+	m_IsAlphaSwich ? (fAlphaValue += fTimeDelta * 0.5f) : (fAlphaValue -= fTimeDelta * 0.5f);
+
+	if (fAlphaValue <= 0.5f)
+		m_IsAlphaSwich = TRUE;
+	else if (fAlphaValue >= 1.f)
+		m_IsAlphaSwich = FALSE;
+}
+
+void CUI_LoadingSpaceLight::ScaleAnim()
+{
+	//m_fAlphaValue
 }
 
 CUI_LoadingSpaceLight* CUI_LoadingSpaceLight::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

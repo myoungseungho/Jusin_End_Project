@@ -21,7 +21,7 @@ public:
 
 public:
 	HRESULT Clear_Resources();
-	_uint GetLevelIndex() { return m_iLevelIndex; };
+ 	_uint GetLevelIndex() { return m_iLevelIndex; };
 	HRESULT ParseInitialize(const wstring& filePath);
 	vector<EFFECT_LAYER_DATA>*  Set_Effect(wstring FilePath);
 

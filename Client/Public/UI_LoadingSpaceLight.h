@@ -21,6 +21,11 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	virtual HRESULT Bind_ShaderResources();
+
+private:
+	void AlphaSwiching(_float& fAlphaValue, _float fTimeDelta);
+	void ScaleAnim();
 
 private:
 	_float m_fAlphaValue = { 0.f };

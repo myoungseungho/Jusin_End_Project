@@ -293,7 +293,6 @@ void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
 	else if (m_iTeam == 2)
 		m_p2pPlayer = pPlayer;
 
-
 	for (auto& iter : m_mapPoints)
 	{
 		vector<CameraPoint> vecPoints = iter.second;
@@ -302,6 +301,7 @@ void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
 			iter.pWorldFloat4x4 = static_cast<CTransform*>(pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
 		}
 	}
+
 }
 
 void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject)

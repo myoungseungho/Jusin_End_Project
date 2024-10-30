@@ -25,6 +25,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY; 
 
+
 	Create_Effect_Manager();
 
 
@@ -154,6 +155,16 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_F9))
+	{
+		m_pUI_Manager->UsingAttckBuff(CUI_Define::LPLAYER1);
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		m_pUI_Manager->UsingAttackDestroy(CUI_Define::LPLAYER1);
+	}
+
 	if (m_pGameInstance->Key_Down(DIK_Z))
 	{
 		LIGHT_DESC			LightDesc{};
@@ -288,10 +299,10 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	{
 		AttBufoDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufMark"), TEXT("Layer_UI_AttBufMark"), &AttBufoDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufMark"), TEXT("Layer_UI_AttBufEffect"), &AttBufoDesc)))
 			return E_FAIL;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBuf"), TEXT("Layer_UI_AttBuf"), &AttBufoDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBuf"), TEXT("Layer_UI_AttBufEffect"), &AttBufoDesc)))
 			return E_FAIL;
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufNone"), TEXT("Layer_UI_AttBuf"), &AttBufoDesc)))
@@ -319,8 +330,13 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	}
 
 	//Å¸ÀÌ¸Ó
+
+	if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_TimerPanel"), TEXT("Layer_UI_Timer"))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Timer"), TEXT("Layer_UI_Timer"))))
 		return E_FAIL;
+
 
 	//ÄÞº¸
 	CUIObject::UI_DESC ComboDesc = {};
@@ -354,7 +370,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
 	}
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_TimerPanel"), TEXT("Layer_UI_Timer"));
+
 
 
 	CUIObject::UI_DESC FontNameDesc = {};

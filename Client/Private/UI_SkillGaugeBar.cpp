@@ -124,6 +124,12 @@ HRESULT CUI_SkillGaugeBar::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
 		return E_FAIL;
 
+	_bool bMaxGauge = FALSE;
+	(m_iSkillNumber == 7) ? bMaxGauge = TRUE : bMaxGauge = FALSE;
+	
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &bMaxGauge, sizeof(_bool))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

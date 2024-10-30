@@ -200,12 +200,12 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 	if (m_iPlayerTeam == 1)
 	{
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -3.f, 0.f, 1.f));
 		FlipDirection(1);
 	}
 	else
 	{
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, 0.f, 0.f, 1.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, -3.f, 0.f, 1.f));
 		FlipDirection(-1);
 	}
 
@@ -234,10 +234,6 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 void CCharacter::Player_Update(_float fTimeDelta)
 {
-}
-
-void CCharacter::Camera_Update(_float fTimeDelta)
-{
 	m_tCharacterDesc.bStun = m_bRedHp;
 
 	m_tCharacterDesc.bHit = m_bHit;
@@ -258,6 +254,11 @@ void CCharacter::Camera_Update(_float fTimeDelta)
 	m_tCharacterDesc.iTeam = m_iPlayerTeam;
 
 	m_iPrevComboCount = m_tCharacterDesc.iComboCount;
+}
+
+void CCharacter::Camera_Update(_float fTimeDelta)
+{
+
 
 }
 
