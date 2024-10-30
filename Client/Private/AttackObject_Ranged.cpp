@@ -56,10 +56,16 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 void CAttackObject_Ranged::Update(_float fTimeDelta)
 {
 
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
+
 
 	m_fAccLifeTime += fTimeDelta;
 
-	if (m_fAccLifeTime > m_fLifeTime)
+
+	//ª˝¡∏Ω√∞£ ¡ˆ≥µ∞≈≥™ ∏ πŸ±˘(∂•∆˜«‘)¿∏∑Œ ≥™∞¨¿∏∏È ªË¡¶
+	if (m_fAccLifeTime > m_fLifeTime  || Check_MapOut())
 	{
 		if (m_bEnableDestory)
 		{
@@ -105,6 +111,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
 	{
 		//¿Ã∆Â∆Æ √≥∏Æ
+		Erase();
+		
+		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
 
 	}
 
@@ -203,6 +212,35 @@ void CAttackObject_Ranged::CollisingAttack()
 
 void CAttackObject_Ranged::CollisingPlayer()
 {
+}
+
+_bool CAttackObject_Ranged::Check_MapOut()
+{
+	//≥Ù¿Ã √º≈©
+	if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) < 0.1)
+	{
+		//¡ˆ∏È ∆¯πﬂ ¿Ã∆Â∆Æ
+		return true;
+	}
+
+	//¡¬øÏ πŸ±˘√º≈©   ¥¬ æÓ∂ª∞‘?
+	else if (false)
+	{
+
+	}
+	else
+		return false;
+
+}
+
+void CAttackObject_Ranged::Erase()
+{
+	if (m_bEnableDestory)
+	{
+		Destory();
+		m_pGameInstance->Release_Collider(m_pColliderCom);
+		m_bEnableDestory = false;
+	}
 }
 
 

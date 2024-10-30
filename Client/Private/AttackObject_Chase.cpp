@@ -50,6 +50,9 @@ void CAttackObject_Chase::Camera_Update(_float fTimeDelta)
 void CAttackObject_Chase::Update(_float fTimeDelta)
 {
 
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
 
 	m_fAccLifeTime += fTimeDelta;
 

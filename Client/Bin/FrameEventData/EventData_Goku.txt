@@ -279,7 +279,10 @@ PLAY_GOKU,GKS263_body,18,ObjectMove,0.1,0,0,0
 //,PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,60.202 
 
 //,더빨리
-PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,80.202 
+//,PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,80.202 
+
+//,더더빨리
+PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,100.202 
 
 //,PLAY_GOKU,GKS265_body,0,AnimSpeedChange,0.030000,60.202000
 //,PLAY_GOKU,GKS265_body,6,StopEvent,
@@ -297,7 +300,7 @@ PLAY_GOKU,GKS400_body,0.000000,AnimSpeedChange,0.017000,240.000000
 PLAY_GOKU,GKS400_body,0.001000,PlaySound,4,0,1
 PLAY_GOKU,GKS400_body,0.000100,PlaySound,10,0,1
 PLAY_GOKU,GKS400_body,55.000000,AnimSpeedChange,0.017000,80.000000
-PLAY_GOKU,GKS400_body,59,AttackEvent,33333
+PLAY_GOKU,GKS400_body,59,AttackEvent,1
 PLAY_GOKU,GKS400_body,59,AnimSpeedChange,0.013,4.00000
 PLAY_GOKU,GKS400_body,63,AnimSpeedChange,0.013,60.000000
 
@@ -305,6 +308,8 @@ PLAY_GOKU,GKS400_body,63,NextAnimationCheck,333333
 PLAY_GOKU,GKS400_body,66,NextAnimationCheck,333333
 PLAY_GOKU,GKS400_body,70,NextAnimationCheck,333333
 
+PLAY_GOKU,GKS400_body,20,AttackEvent,0
+PLAY_GOKU,GKS400_body,15,AnimSpeedChange,0.017000,240.000000
 
 
 //, 236 지대공 에너지파
@@ -318,6 +323,7 @@ PLAY_GOKU,GKS401_body,63,NextAnimationCheck,333333
 PLAY_GOKU,GKS401_body,66,NextAnimationCheck,333333
 PLAY_GOKU,GKS401_body,70,NextAnimationCheck,333333
 
+PLAY_GOKU,GKS401_body,20,AttackEvent,0
 
 //, 236 공대공 에너지파
 PLAY_GOKU,GKS402_body,0.000000,AnimSpeedChange,0.017000,240.000000
@@ -332,6 +338,7 @@ PLAY_GOKU,GKS402_body,66,NextAnimationCheck,333333
 PLAY_GOKU,GKS402_body,70,NextAnimationCheck,333333
 
 
+PLAY_GOKU,GKS402_body,20,AttackEvent,0
 
 //, 236 공대지 에너지파
 PLAY_GOKU,GKS403_body,0.000000,AnimSpeedChange,0.017000,240.000000
@@ -344,6 +351,7 @@ PLAY_GOKU,GKS403_body,63,AnimSpeedChange,0.013,60.000000
 PLAY_GOKU,GKS403_body,63,NextAnimationCheck,333333
 PLAY_GOKU,GKS403_body,66,NextAnimationCheck,333333
 PLAY_GOKU,GKS403_body,70,NextAnimationCheck,333333
+PLAY_GOKU,GKS403_body,20,AttackEvent,0
 
 
 //,236약

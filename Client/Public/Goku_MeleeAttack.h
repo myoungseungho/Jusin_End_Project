@@ -50,6 +50,9 @@ public:
 	void ForwardDash();
 
 
+	void StopMacro(_float fStopTime);
+
+
 	class CPlay_Goku* m_pPlayer = { nullptr };
 	_uint* m_pPlayerAnimationIndex = { nullptr };
 

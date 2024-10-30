@@ -69,6 +69,12 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_iGainKiAmount = pDesc->iGainKiAmount;
 
+	if (pDesc->fCameraShakeDuration != 200)
+	{
+		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
+		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
+	}
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -97,6 +103,10 @@ void CAttackObject::Camera_Update(_float fTimeDelta)
 
 void CAttackObject::Update(_float fTimeDelta)
 {
+
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
 
 
 	m_fAccLifeTime += fTimeDelta;
@@ -261,6 +271,12 @@ HRESULT CAttackObject::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CAttackObject::Set_UpdateStop(_float fStopTime)
+{
+	m_bUpdateStop = true;
+	m_fMaxUpdateStop = fStopTime;
+}
+
 /*
 void CAttacKObject::Set_RemoteDestory()
 {
@@ -316,8 +332,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
 
-
-
+				
 				//아래 위치 조정은 일부러 카메라 안에 넣음
 
 				//어퍼컷/올려차기의 경우  정지시간이 긴 공격들은 위치조정
@@ -342,6 +357,12 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					}
 
 				}
+				if (m_fCameraShakeDuration != 200)
+				{
+					CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
+				}
+
 			}
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
@@ -462,6 +483,24 @@ void CAttackObject::OnCollisionExit(CCollider* other)
 {
 	_bool Debug = true;
 
+}
+
+
+_bool CAttackObject::Check_UpdateStop(_float fTimeDelta)
+{
+	if (m_bUpdateStop)
+	{
+		m_fAccUpdateStop += fTimeDelta;
+
+		if (m_fAccUpdateStop > m_fMaxUpdateStop)
+			m_bUpdateStop = false;
+		
+	}
+
+	if (m_bUpdateStop)
+		return true;
+	else
+		return false;
 }
 
 void CAttackObject::CollisingAttack()

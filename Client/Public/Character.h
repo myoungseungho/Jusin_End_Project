@@ -416,6 +416,11 @@ public:
 protected:
 	void Reset_AttackStep();
 
+	//애니메이션 끝에 대고 사용하지 말것
+	void Update_NoEventAnimationLoof(_float fTimeDelta);
+	void Update_NoEventTime(_float fTimeDelta);
+
+	void Set_NoEventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime);
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -615,6 +620,13 @@ protected:
 
 	_bool m_bTag_In = { false };	//교대하러 들어가는 캐릭터.
 	_bool m_bPlaying = { false };  //이 캐릭터만 조작함
+
+
+	_bool m_bNoEventLoofAnimation = false;
+	_float m_fNoEventLoofMinPosition = {};
+	_float m_fNoEventLoofMaxPosition = {};
+	_float m_fMaxNoEventLoofTime = {};
+	_float m_fAccNoEventLoofTime = {};
 
 
 	//디버그용

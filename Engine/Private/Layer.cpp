@@ -126,6 +126,9 @@ void CLayer::Update(_float fTimeDelta)
 			(*it)->Update(fTimeDelta);
 			++it;
 		}
+
+		//(*it)->Update(fTimeDelta);
+		//++it;
 	}
 }
 
@@ -144,6 +147,11 @@ void CLayer::Late_Update(_float fTimeDelta)
 			(*it)->Late_Update(fTimeDelta);
 			++it;
 		}
+
+		//(*it)->Late_Update(fTimeDelta);
+		//++it;
+
+
 	}
 }
 

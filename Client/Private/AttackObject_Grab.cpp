@@ -50,6 +50,10 @@ void CAttackObject_Grab::Camera_Update(_float fTimeDelta)
 
 void CAttackObject_Grab::Update(_float fTimeDelta)
 {
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
+
 
 	m_fAccLifeTime += fTimeDelta;
 
