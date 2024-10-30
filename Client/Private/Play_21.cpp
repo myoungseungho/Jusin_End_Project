@@ -587,7 +587,7 @@ void CPlay_21::Camera_Update(_float fTimeDelta)
 void CPlay_21::Update(_float fTimeDelta)
 {
 
-
+	__super::Player_Update(fTimeDelta);
 
 	/*
 

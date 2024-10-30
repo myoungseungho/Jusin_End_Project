@@ -32,6 +32,8 @@ public:
 public:
 	void GamePlayUpdate(_float fTimeDelta);
 	void UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT eSlotID);
+	void UsingAttackDestroy(CUI_Define::PLAYER_SLOT eSlotID);
+
 	void UsingSelectCharacher(class CCharacter* pPawn, CUI_Define::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
 	void UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID);
 	void UsingCreateStartUI();

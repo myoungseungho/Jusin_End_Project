@@ -21,6 +21,7 @@ public:
 
 public:
 	_bool UsingAttckBuff();
+	UI_LRPOS Get_UIPos() { return m_eLRPos; }
 
 private:
 	_uint m_iUseCount = { 1 };

@@ -287,8 +287,6 @@ void CVirtual_Camera::Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* 
 		m_p1pPlayer = pPlayer;
 	else if (state == CMain_Camera::PLAYER_2P)
 		m_p2pPlayer = pPlayer;
-
-	Safe_AddRef(pPlayer);
 }
 
 void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay)
@@ -929,9 +927,6 @@ CGameObject* CVirtual_Camera::Clone(void* pArg)
 
 void CVirtual_Camera::Free()
 {
-	Safe_Release(m_p1pPlayer);
-	Safe_Release(m_p2pPlayer);
-
 	__super::Free();
 
 }

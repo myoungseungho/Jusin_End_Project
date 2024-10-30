@@ -9,6 +9,7 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 #include "Character.h"
+#include "UI_BaseAttBuf.h"
 
 IMPLEMENT_SINGLETON(CUI_Manager)
 
@@ -65,6 +66,23 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
+}
+
+void CUI_Manager::UsingAttackDestroy(CUI_Define::PLAYER_SLOT eSlotID)
+{
+	CUIObject::UI_DESC tAttBufDesc = {};
+
+	if (eSlotID == CUI_Define::LPLAYER1 || eSlotID == CUI_Define::LPLAYER2)
+		tAttBufDesc.eLRPos = CUIObject::LEFT;
+	else if (eSlotID == CUI_Define::RPLAYER1 || eSlotID == CUI_Define::RPLAYER2)
+		tAttBufDesc.eLRPos = CUIObject::RIGHT;
+
+	
+	for (auto& iter : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_AttBufEffect")))
+	{
+		if(dynamic_cast<CUI_BaseAttBuf*>(iter)->Get_UIPos() == tAttBufDesc.eLRPos)
+			iter->Destory();
+	}
 }
 
 void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
