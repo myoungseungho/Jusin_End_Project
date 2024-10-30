@@ -80,7 +80,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 		return S_OK;
 
-
+	m_iGameObjectData = -1;
 	return S_OK;
 }
 

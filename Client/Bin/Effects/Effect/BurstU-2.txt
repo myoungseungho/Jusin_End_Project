@@ -3,8 +3,8 @@ LayerName: BurstU-2
 Duration: 1.3
 TickPerSecond: 2
 KeyFramesCount: 77
-NumEffec: 7
-Position: 0 1 -0.5
+NumEffec: 10
+Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
 
@@ -17,8 +17,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 11
-Position: 0 -0.6 0
-Scale: 0.1 0.1 1
+Position: 0 -0.3 0
+Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -63,7 +63,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 12
-Position: 0 1 -0.5
+Position: 0 0 0
 Scale: 0.02 0.1 0
 Rotation: 0 0 0
 IsLoop: false
@@ -91,7 +91,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 13
-Position: 0 1 -0.5
+Position: 0 0 0
 Scale: 0.02 0.06 1
 Rotation: 0 0 120
 IsLoop: false
@@ -119,7 +119,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 14
-Position: 0 1 -0.5
+Position: 0 0 0
 Scale: 0.02 0.11 1
 Rotation: 0 0 240
 IsLoop: false
@@ -147,7 +147,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 15
-Position: 0 1 -0.5
+Position: 0 0 0
 Scale: 0.01 0.0500001 1
 Rotation: 0 0 45
 IsLoop: false
@@ -175,7 +175,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 16
-Position: 0 1 -0.5
+Position: 0 0 0
 Scale: 0.00998856 0.049956 1
 Rotation: 0 0 180
 IsLoop: false
@@ -203,7 +203,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 17
-Position: 0 1 -0.5
+Position: 0 0 0
 Scale: 0.00999896 0.03 1
 Rotation: 0 0 280
 IsLoop: false
@@ -221,4 +221,142 @@ Rotation: 0 0 280
 CurTime: 0
 Duration: 1.3
 IsNotPlaying: false
+
+[Effect]
+EffectName: BurstU-2_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 18
+Position: -0.5 0.5 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 40
+IsLoop: false
+Color: 255 231.358 72.298 0.8
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.5 0.5 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 40
+CurTime: 0
+Duration: 1.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: -0.5 0.5 0
+Scale: 0.01 0.4 1
+Rotation: 0 0 40
+CurTime: 0.4
+Duration: 1.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: -0.5 0.5 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 40
+CurTime: 0.416667
+Duration: 1.3
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstU-2_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 19
+Position: 0 -0.5 0
+Scale: 0.0199997 0.399235 0.99938
+Rotation: 90 0 180
+IsLoop: false
+Color: 255 255 177 0.8
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.5 0
+Scale: 0.0199997 0.399235 0.99938
+Rotation: 90 0 180
+CurTime: 0
+Duration: 1.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 -0.5 0
+Scale: 0.00999836 0.399134 0.999126
+Rotation: 90 0 180
+CurTime: 0.4
+Duration: 1.3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0 -0.5 0
+Scale: 0.0199983 0.39922 0.999343
+Rotation: 90 0 180
+CurTime: 0.416667
+Duration: 1.3
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstU-2_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 20
+Position: 0.5 0.3 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 300
+IsLoop: false
+Color: 255 255 177 0.8
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0.3 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 300
+CurTime: 0
+Duration: 1.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0.5 0.3 0
+Scale: 0.01 0.4 1
+Rotation: 0 0 300
+CurTime: 0.4
+Duration: 1.3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0.5 0.3 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 300
+CurTime: 0.416667
+Duration: 1.3
+IsNotPlaying: true
 

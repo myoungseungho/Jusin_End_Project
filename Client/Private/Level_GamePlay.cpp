@@ -27,9 +27,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	Create_Effect_Manager();
 
-	//ºû ÁØºñ
-	if (FAILED(Ready_Lights()))
-		return E_FAIL;
+
 	
 #pragma region ¸Ê »çº» °´Ã¼
 
@@ -43,8 +41,8 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceCliff"), TEXT("Layer_SpaceSky"))))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStage"), TEXT("Layer_SpaceStage"))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStage"), TEXT("Layer_SpaceStage"))))
+	//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth"), TEXT("Layer_Space_Earth"))))
 		return E_FAIL;
@@ -148,6 +146,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	//¸ðµ¨ ÇÁ¸®ºä
 	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"));
+
+		//ºû ÁØºñ
+	if (FAILED(Ready_Lights()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
