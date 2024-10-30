@@ -39,8 +39,8 @@ public:
 	_bool IsColliding(CCollider* a, CCollider* b);
 	HRESULT Release_Collider(const CCollider* Collider);
 	HRESULT Destory_ColliderGroup();
-	void	Destory_Reserve(COLLIDERGROUP eRenderGroup);
-
+	void	Destroy_Reserve(COLLIDERGROUP eRenderGroup);
+	void	Destroy_Reserve(CCollider* pCollider);       // 개별 콜라이더 삭제 예약 함수
 private:
 	void Process_1P_Body_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
@@ -58,7 +58,8 @@ private:
 
 private:
 	list<CCollider*>			m_Colliders[CG_END];
-	list<COLLIDERGROUP>			m_Destory_Reserve_Collider_Group;
+	list<COLLIDERGROUP>			m_Destroy_Reserve_Collider_Group;
+	list<CCollider*>			m_Destory_Reserve_Collider; // 개별 콜라이더 삭제 예약 리스트
 
 	//m_CollisionHistory: 이전 프레임에서의 충돌 상태를 저장하는 맵입니다.
 	// 키는 두 콜라이더의 포인터를 담은 쌍(pair)이고, 값은 이 쌍이 충돌 중인지 여부를 나타내는 부울 값입니다.
