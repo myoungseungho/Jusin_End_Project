@@ -94,13 +94,9 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Late_Update(fTimeDelta);
 
-<<<<<<< HEAD
 	m_pObject_Manager->Camera_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
-=======
-	m_pObject_Manager->Priority_Update(fTimeDelta); 
->>>>>>> Default
 
 	m_pLevel_Manager->Update(fTimeDelta);
 
