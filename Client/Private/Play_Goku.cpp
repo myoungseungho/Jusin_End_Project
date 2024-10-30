@@ -1444,15 +1444,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				main_Camera->StartCameraShake(2.f, 0.1f);
 
 				Set_AnimationStop(fStopTime);
-
-
-
-
-
 			}
-
-
-
 		}
 		else
 		{

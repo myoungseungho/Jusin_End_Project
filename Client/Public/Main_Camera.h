@@ -57,7 +57,7 @@ public:
 	void Add_NormalPoint(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
-	void IMGUI_Play(_int animationIndex);
+	void IMGUI_Play(_int animationIndex, CGameObject* gameObject = nullptr);
 	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject = nullptr);
 	void Stop();
 	void Pause();

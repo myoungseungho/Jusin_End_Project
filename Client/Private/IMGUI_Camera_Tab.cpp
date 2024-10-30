@@ -759,7 +759,10 @@ void CIMGUI_Camera_Tab::IMGUI_Play_Button()
 {
 	ImVec2 button_size = ImVec2(20, 20);
 	if (ImGui::InvisibleButton("play_button", button_size))
-		m_pMainCamera->IMGUI_Play(m_iSelected_Animation);
+	{
+		CGameObject* gameObject_1P = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+		m_pMainCamera->IMGUI_Play(m_iSelected_Animation, gameObject_1P);
+	}
 
 	ImVec2 p = ImGui::GetItemRectMin();
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();

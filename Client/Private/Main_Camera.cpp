@@ -223,9 +223,9 @@ vector<CameraPoint>& CMain_Camera::Get_VectorPoint(_int index)
 	return m_vecVirtualCamera[m_currentVirtualMode]->m_mapPoints[index];
 }
 
-void CMain_Camera::IMGUI_Play(_int animationIndex)
+void CMain_Camera::IMGUI_Play(_int animationIndex, CGameObject* gameObject)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, true);
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, true, gameObject);
 }
 
 void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject)
