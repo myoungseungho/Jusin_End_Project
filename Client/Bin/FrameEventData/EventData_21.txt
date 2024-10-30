@@ -755,9 +755,11 @@ PLAY_21,TON400_body,57,NextAnimationCheck,3333
 PLAY_21,TON401_body,0.000000,AnimSpeedChange,0.028000,59.696999
 PLAY_21,TON401_body,0,PositionChange,60
 PLAY_21,TON401_body,58,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
+PLAY_21,TON401_body,58.001000,PlaySound,22,0,1
 PLAY_21,TON401_body,60,AnimSpeedChange,0.028000,59.798000
 //,PLAY_21,TON401_body,70,AttackEvent,401_1
 PLAY_21,TON401_body,105,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
+PLAY_21,TON401_body,105.001000,PlaySound,23,0,1
 PLAY_21,TON401_body,114.397003,AnimSpeedChange,0.028000,15.020000
 PLAY_21,TON401_body,115,AttackEvent,0
 PLAY_21,TON401_body,119.010010,AnimSpeedChange,0.028000,61.414001
