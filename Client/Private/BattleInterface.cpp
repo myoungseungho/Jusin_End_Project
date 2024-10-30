@@ -197,8 +197,8 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
         pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
     }
 
-    pMainCamera->SetPlayer(CMain_Camera::PLAYER_1P, m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
-    pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
+    pMainCamera->Set_Player(m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
+    pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
 
 
 }
