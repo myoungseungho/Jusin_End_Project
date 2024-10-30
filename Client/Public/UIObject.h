@@ -57,7 +57,6 @@ protected:
 //클릭한 위치가 해당 UI 위치라면 동작
 	_bool ClickRange();
 
-
 public:
 	//UI 숨김 / 보여줌
 	void IsShow(_bool IsShiw) {m_bIsActive = IsShiw;}
