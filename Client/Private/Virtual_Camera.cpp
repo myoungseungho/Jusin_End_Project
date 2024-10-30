@@ -106,8 +106,11 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		return;
 	}
 
+	CGameObject* player = { nullptr };
+	player = m_iTeam == 1 ? m_p1pPlayer : m_p2pPlayer;
+
 	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
-	CCharacter* character = static_cast<CCharacter*>(m_p1pPlayer);
+	CCharacter* character = static_cast<CCharacter*>(player);
 	_int direction = character->Get_iDirection();
 
 	// 현재 포인트와 다음 포인트 설정
@@ -283,11 +286,11 @@ void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvec
 
 void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
 {
-	_uint team = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
+	m_iTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
 
-	if (team == 1)
+	if (m_iTeam == 1)
 		m_p1pPlayer = pPlayer;
-	else if (team == 2)
+	else if (m_iTeam == 2)
 		m_p2pPlayer = pPlayer;
 
 

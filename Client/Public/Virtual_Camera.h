@@ -99,6 +99,7 @@ public:
 
 	class CGameObject* m_p1pPlayer = { nullptr };
 	class CGameObject* m_p2pPlayer = { nullptr };
+	_uint m_iTeam = {};
 
 	_float m_previousFOV = {};
 
