@@ -42,6 +42,9 @@ public:
 		Grab_Attack_21,
 		Grab_Attack_0_21_SFX,
 		Grab_Attack_1_21_SFX,
+		NARRATION_READY,
+		NARRATION_FIGHT,
+		LOGO_BGM,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

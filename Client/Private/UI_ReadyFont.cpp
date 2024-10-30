@@ -42,6 +42,7 @@ HRESULT CUI_ReadyFont::Initialize(void* pArg)
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY - m_fOffSetPosY, 0.f);
 
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_READY, false, 0.5f);
 	return S_OK;
 }
 
