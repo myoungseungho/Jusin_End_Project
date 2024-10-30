@@ -614,10 +614,6 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 	{
 		if (it->first.first == targetCollider || it->first.second == targetCollider)
 		{
-			// 충돌 종료 이벤트 호출
-			it->first.first->OnCollisionExit(it->first.second);
-			it->first.second->OnCollisionExit(it->first.first);
-
 			// 충돌 정보 제거
 			it = m_CollisionHistory.erase(it);
 		}
