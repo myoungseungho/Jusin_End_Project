@@ -387,7 +387,8 @@ public:
 	_float Get_fCalculatePreviousXPosition();
 	_float Get_fAbsCalculatePreviousXPosition();
 	_float Get_fPositionX();
-
+	_vector Get_vPosition();
+	
 	void Set_bGrabbed(_bool bGrabbed);
 	_bool Get_bGrabbed();
 	void Set_GrabAnimation();  //외부에서 호출해야하는데 각자 다르므로?

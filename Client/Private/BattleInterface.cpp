@@ -71,7 +71,7 @@ void CBattleInterface_Manager::Gain_KiGuage(_ushort iKi, _ushort iTeam)
         m_iKiGuage[iTeam - 1] += iKi;
 
         //1줄 넘겼으면 다음줄로
-        if (m_iKiGuage[iTeam - 1] > 100)
+        if (m_iKiGuage[iTeam - 1] >= 100)
         {
             m_iKiNumber[iTeam - 1]++;
             m_iKiGuage[iTeam - 1] -= 100;
@@ -197,7 +197,8 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
         pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
     }
 
-
+    pMainCamera->SetPlayer(CMain_Camera::PLAYER_1P, m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
+    pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
 
 
 }

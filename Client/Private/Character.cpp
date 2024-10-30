@@ -2322,6 +2322,10 @@ void CCharacter::Gain_AttackStep(_ushort iStep)
 
 void CCharacter::Gain_HitCount(_ushort iHit)
 {
+
+	if (iHit == 0)
+		return;
+
 	if (m_iPlayerTeam == 1)
 		CBattleInterface_Manager::Get_Instance()->Gain_HitCount(iHit, 2);
 
@@ -3109,6 +3113,11 @@ void CCharacter::OnCollisionExit(CCollider* other)
 _float CCharacter::Get_fPositionX()
 {
 	return 	XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+_vector CCharacter::Get_vPosition()
+{
+	return m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 }
 
 

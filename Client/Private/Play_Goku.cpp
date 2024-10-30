@@ -6,12 +6,15 @@
 
 #include "AttackObject.h"
 #include "AttackObject_Grab.h"
+#include "AttackObject_CommandGrab.h"
+#include "AttackObject_Ranged.h"
+
 #include "UI_Manager.h"
 #include "iostream"
 
 
 #include "BattleInterface.h"
-#include "AttackObject_CommandGrab.h"
+
 
 #include "Main_Camera.h"
 
@@ -570,7 +573,8 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
-	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+	
+	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -947,7 +951,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vExtents = { 0.4f,0.6f,1.f };
 		Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.7f,0.f };
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 700 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
@@ -1093,6 +1097,39 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR:
+	{
+		CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
+		//Desc.ColliderDesc.width = 1.0;
+		//Desc.ColliderDesc.height = 1.0;
+		if (m_iPlayerTeam == 1)
+			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+		else
+			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
+		Desc.ColliderDesc.pMineGameObject = this;
+		Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
+		Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
+
+		Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,2.f };
+		Desc.fhitCharacter_StunTime = 1.5f;
+		Desc.iDamage = 600 * Get_DamageScale();;
+		Desc.fLifeTime = 5.f;
+		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+
+		Desc.iTeam = m_iPlayerTeam;
+
+		Desc.bCameraZoom = false;
+		Desc.fAnimationLockTime = 0.05f;
+		
+		Desc.pOwner = this;
+
+		//Desc.eAttackType = { ATTACKTYPE_HIGH };
+		Desc.fStartOffset = { 0.6f * m_iLookDirection, -0.2f };
+		Desc.fRanged_Impus_NoneDirection = { 6.8f,-4.f };  // 1:1.569 비율
+
+		Desc.iDirection = m_iLookDirection;
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+	}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT:
 	{
@@ -1547,6 +1584,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bOwnerNextAnimation = false;
 			Desc.bForcedHit = true;
 			Desc.iOnwerDirection = 0; //맞아도 뒤집지 않음
+
+			Desc.iGainHitCount = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			

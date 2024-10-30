@@ -19,8 +19,14 @@ class CAttackObject_Ranged final : public CAttackObject
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 
-	typedef struct ATTACK_Ranged_DESC : public  CAttackObject::ATTACK_DESC
+	typedef struct ATTACK_RANGED_DESC : public  CAttackObject::ATTACK_DESC
 	{
+		_float2 fStartOffset = {};
+		//_vector vPosition 시작 중점 좌표는 pOnwer로부터 Transform 뜯어와서 알아서 할것
+
+		_float2 fRanged_Impus_NoneDirection = {};  //1초간 이동할 xy거리  //방향값 미리 적용 해야하나?  
+		_short iDirection = {};		//
+
 
 	};
 private:
@@ -31,7 +37,6 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
-	virtual void Priority_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
@@ -51,7 +56,9 @@ private:
 	void CollisingPlayer();
 
 private:
-
+	_float2	m_fStartOffset = {};
+	_float2 m_fRanged_Impus_NoneDirection = {};
+	_short  m_iDirection = {};		
 public:
 	static CAttackObject_Ranged* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
