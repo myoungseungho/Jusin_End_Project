@@ -230,6 +230,8 @@ void CMain_Camera::IMGUI_Play(_int animationIndex)
 
 void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject)
 {
+	//현재 재생중인 Stop
+	Stop();
 	Set_Player(gameObject);
 	//가상카메라를 CameraID에 따라 셋팅
 	Set_Virtual_Camera(cameraID);
