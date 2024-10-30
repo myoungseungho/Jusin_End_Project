@@ -776,7 +776,6 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
-
 	return S_OK;
 }
 
