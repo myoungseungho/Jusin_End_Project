@@ -151,7 +151,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 
 
-			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 200)
+			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)
 			{
 				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 				if (m_iVirtualCameraindex != 200)
@@ -159,7 +159,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 					main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)m_iVirtualCameraindex, m_ianimationIndex);
 
 				}
-				if (m_fCameraShakeDuration != 200)
+				if (m_fCameraShakeDuration != 0)
 				{
 					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
 				}

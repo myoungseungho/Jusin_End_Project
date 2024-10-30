@@ -107,13 +107,25 @@ HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 
 void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
+
+	//디버그용
+	if (m_ihitCharacter_Motion == HIT_KNOCK_AWAY_LEFT)
+	{
+		_bool bDebug = true;
+	}
+
 	//원거리 vs 원거리
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
 	{
-		//이펙트 처리
-		Erase();
-		
-		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+
+		//같은팀꺼면 생략
+		if(m_pColliderCom->m_ColliderGroup != other->m_ColliderGroup)
+		{
+			//이펙트 처리
+			Erase();
+
+			static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+		}
 
 	}
 
@@ -181,6 +193,11 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//else
 				return;
 
+		}
+		else
+		{
+			eResult;
+			_bool bDebug = true;
 		}
 
 		if (m_bEnableDestory)

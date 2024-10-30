@@ -124,7 +124,7 @@ PLAY_GOKU,GKS205_body,10,AnimSpeedChange,0.022,90
 
 //,PLAY_GOKU,GKS205_body,0,AnimSpeedChange,0.022,120
 
-PLAY_GOKU,GKS205_body,20,AttackEvent,205
+PLAY_GOKU,GKS205_body,20,AttackEvent,0
 PLAY_GOKU,GKS205_body,25,NextAnimationCheck,333333333
 //,PLAY_GOKU,GKS205_body,30,AnimSpeedChange,0.022,30
 PLAY_GOKU,GKS205_body,30,NextAnimationCheck,333333333
@@ -136,7 +136,7 @@ PLAY_GOKU,GKS205_body,50,AnimSpeedChange,0.005,90
 PLAY_GOKU,GKS205_body,55.00000,PlaySound,3,0,1
 PLAY_GOKU,GKS205_body,55.00000,PlaySound,13,0,1
 
-PLAY_GOKU,GKS205_body,80,AttackEvent,205
+PLAY_GOKU,GKS205_body,80,AttackEvent,1
 PLAY_GOKU,GKS205_body,80.000000,PlaySound,3,0,1
 PLAY_GOKU,GKS205_body,80.000000,PlaySound,13,0,1
 PLAY_GOKU,GKS205_body,83,NextAnimationCheck,333333333

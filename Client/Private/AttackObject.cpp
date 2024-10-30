@@ -69,7 +69,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_iGainKiAmount = pDesc->iGainKiAmount;
 
-	if (pDesc->fCameraShakeDuration != 200)
+	if (pDesc->fCameraShakeDuration != 0)
 	{
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
 		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
@@ -357,7 +357,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					}
 
 				}
-				if (m_fCameraShakeDuration != 200)
+				if (m_fCameraShakeDuration != 0)
 				{
 					CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
@@ -381,7 +381,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			case Client::HIT_CHASE:
 			{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
 
-				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyzÁÂÇ¥ÀÎµ¥
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyzÁÂÇ¥ÀÎµ¥
 				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 				XMFLOAT4X4 Result4x4;
 				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
