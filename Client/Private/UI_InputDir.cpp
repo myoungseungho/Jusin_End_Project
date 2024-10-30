@@ -56,13 +56,14 @@ void CUI_InputDir::Camera_Update(_float fTimeDelta)
 	if (m_pUI_Manager->m_fColorValue >= 1.f)
 		m_pUI_Manager->m_fColorValue = 1.f;
 
-	if (m_bOnBtn)
-		m_fOnTimer += fTimeDelta;
 }
 
 void CUI_InputDir::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
+	if (m_bOnBtn)
+		m_fOnTimer += fTimeDelta;
 
 	DirectionInput eDirInput = m_pUI_Manager->m_eDirInput;
 	
@@ -70,76 +71,11 @@ void CUI_InputDir::Update(_float fTimeDelta)
 	{
 		 ePrevDirInput = eDirInput;
 		 m_bCheck = TRUE;
-		
 	}
 	
-	switch (eDirInput)
-	{
-	case DirectionInput::MOVEKEY_NEUTRAL:
-		 m_fPosX = 230.f;
-		 m_fPosY = 505.f;
-		 break;
+	MovePos(eDirInput, m_fPosX, m_fPosY);
+	LineEffectCreate();
 	
-	case DirectionInput::MOVEKEY_UP:
-		 m_fPosX = 230.f;
-		 m_fPosY = 450.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_DOWN:
-		 m_fPosX = 225.f;
-		 m_fPosY = 565.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_LEFT:
-		 m_fPosX = 170.f;
-		 m_fPosY = 505.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_RIGHT:
-		 m_fPosX = 285.f;
-		 m_fPosY = 505.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_UP_LEFT:
-		 m_fPosX = 180.f;
-		 m_fPosY = 460.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_UP_RIGHT:
-		 m_fPosX = 275.f;
-		 m_fPosY = 460.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_DOWN_LEFT:
-		 m_fPosX = 180.f;
-		 m_fPosY = 550.f;
-		 break;
-	
-	case DirectionInput::MOVEKEY_DOWN_RIGHT:
-		 m_fPosX = 275.f;
-		 m_fPosY = 550.f;
-		 break;
-	}
-	
-	if (m_bCheck)
-	{
-		 CUI_InputDirEffect::UI_DIREFFECT Desc = {};
-		 _float2 vMovePos = { m_fPosX , m_fPosY };
-	
-		 Desc.vCreatePos =  CreatePostion(m_vPos , vMovePos);
-		 Desc.fAngle	= RotaionValue(m_vPos , vMovePos);
-		 Desc.fScaled = ScaleValue(m_vPos, vMovePos);
-	
-		 m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputEffect"), TEXT("Layer_UI_EffectInput") , &Desc);
-	
-		 m_vPos.x = m_fPosX;
-		 m_vPos.y = m_fPosY;
-	
-		 m_bCheck = FALSE;
-	}
-
-
-	//ButtonInput eActionInput = m_pUI_Manager->m_eBtnInput;
 
 	if (m_pUI_Manager->m_eBtnInput != ATTACK_NONE)
 	{
@@ -147,9 +83,10 @@ void CUI_InputDir::Update(_float fTimeDelta)
 		m_iTextureIndex = m_pUI_Manager->m_eBtnInput - 1;
 
 		m_fOffsetScaled = 1.25f;
-		
-		_bool bDebug = false;	
 	}
+
+	if (m_pUI_Manager->m_eBtnInput == ATTACK_GRAB)
+		m_iTextureIndex = 1;
 
 	if (m_fOnTimer >= 0.1f)
 	{
@@ -255,6 +192,80 @@ _vector CUI_InputDir::CreatePostion(_float2 vPrevPos, _float2 vCurrPos)
 
 	_vector vResultPos = { fCreatePosX  , fCreatePosY , 0, 1.f };
 	return vResultPos;
+}
+
+void CUI_InputDir::MovePos(DirectionInput eInput, _float& fPosX, _float& fPosY)
+{
+	switch (eInput)
+	{
+	case DirectionInput::MOVEKEY_NEUTRAL:
+		fPosX = 230.f;
+		fPosY = 505.f;
+		break;
+
+	case DirectionInput::MOVEKEY_UP:
+		fPosX = 230.f;
+		fPosY = 450.f;
+		break;
+
+	case DirectionInput::MOVEKEY_DOWN:
+		fPosX = 225.f;
+		fPosY = 565.f;
+		break;
+
+	case DirectionInput::MOVEKEY_LEFT:
+		fPosX = 170.f;
+		fPosY = 505.f;
+		break;
+
+	case DirectionInput::MOVEKEY_RIGHT:
+		fPosX = 285.f;
+		fPosY = 505.f;
+		break;
+
+	case DirectionInput::MOVEKEY_UP_LEFT:
+		fPosX = 180.f;
+		fPosY = 460.f;
+		break;
+
+	case DirectionInput::MOVEKEY_UP_RIGHT:
+		fPosX = 275.f;
+		fPosY = 460.f;
+		break;
+
+	case DirectionInput::MOVEKEY_DOWN_LEFT:
+		fPosX = 180.f;
+		fPosY = 550.f;
+		break;
+
+	case DirectionInput::MOVEKEY_DOWN_RIGHT:
+		fPosX = 275.f;
+		fPosY = 550.f;
+		break;
+	}
+
+	m_fPosX = fPosX;
+	m_fPosY = fPosY;
+}
+
+void CUI_InputDir::LineEffectCreate()
+{
+	if (m_bCheck)
+	{
+		CUI_InputDirEffect::UI_DIREFFECT Desc = {};
+		_float2 vMovePos = { m_fPosX , m_fPosY };
+
+		Desc.vCreatePos = CreatePostion(m_vPos, vMovePos);
+		Desc.fAngle = RotaionValue(m_vPos, vMovePos);
+		Desc.fScaled = ScaleValue(m_vPos, vMovePos);
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputEffect"), TEXT("Layer_UI_EffectInput"), &Desc);
+
+		m_vPos.x = m_fPosX;
+		m_vPos.y = m_fPosY;
+
+		m_bCheck = FALSE;
+	}
 }
 
 CUI_InputDir* CUI_InputDir::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -5,7 +5,7 @@
 #include "GameInstance.h"
 
 #include "Character.h"
-
+#include "Main_Camera.h"
 CAttackObject_Chase::CAttackObject_Chase(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
 {
@@ -29,11 +29,11 @@ HRESULT CAttackObject_Chase::Initialize(void* pArg)
 	if (nullptr == pArg)
 		return E_FAIL;
 
-	
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	
+
 
 
 
@@ -50,12 +50,15 @@ void CAttackObject_Chase::Camera_Update(_float fTimeDelta)
 void CAttackObject_Chase::Update(_float fTimeDelta)
 {
 
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
 
 	m_fAccLifeTime += fTimeDelta;
 
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
-		if(m_bEnableDestory)
+		if (m_bEnableDestory)
 		{
 			Destory();
 			m_pGameInstance->Release_Collider(m_pColliderCom);
@@ -81,7 +84,7 @@ void CAttackObject_Chase::Update(_float fTimeDelta)
 	//	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
 	//	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	//}
-	
+
 }
 
 void CAttackObject_Chase::Late_Update(_float fTimeDelta)
@@ -198,7 +201,7 @@ void CAttackObject_Chase::Late_Update(_float fTimeDelta)
 	//	}
 	//
 
-		
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -232,7 +235,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 	if (m_pOwner->Get_bStun() == true)
 	{
-		
+
 		return;
 	}
 
@@ -254,7 +257,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		//m_pOwner->Set_Animation(m_pOwner->Get_JumpAirAnimationIndex());
 		//m_pOwner->
-		
+
 		//CTransform* pTransform = static_cast<CTransform*>(m_pOwner->Get_Component(TEXT("Com_Transform")));
 		//pTransform->Add_Move({ 0.f,0.3f,0.f });
 
@@ -263,7 +266,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//pCharacter->Set_Animation(m_pOwner->Get_BreakFall_AirAnimationIndex());
 		//pCharacter->Set_ForcedGravityTime_LittleUp();
 
-		
+
 	}
 
 	//체이스 vs 사람 
@@ -273,7 +276,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
-			//pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
+		//pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
 
 		if (eResult == RESULT_HIT)
 		{
@@ -289,6 +292,13 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 			m_pOwner->Set_ChaseStop();
 			m_pOwner->Set_ChaseStoping();
+
+			m_pOwner->Set_AnimationStop(0.2f);
+			pCharacter->Set_AnimationStop(0.2f);
+
+			//여기 Chase 피격시 사운드
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->StartCameraShake(0.5f, 0.2f);
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
@@ -315,7 +325,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 
 		}
-		
+
 		//if (m_bEnableDestory)
 		//{
 		//	Destory();
@@ -324,7 +334,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	}
 
 
-	
+
 }
 
 void CAttackObject_Chase::OnCollisionStay(CCollider* other, _float fTimeDelta)

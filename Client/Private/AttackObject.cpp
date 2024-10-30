@@ -8,6 +8,9 @@
 #include "Character.h"
 #include "Main_Camera.h"
 
+
+#include "Effect_Manager.h"
+
 CAttackObject::CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -66,6 +69,12 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_iGainKiAmount = pDesc->iGainKiAmount;
 
+	if (pDesc->fCameraShakeDuration != 0)
+	{
+		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
+		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
+	}
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -94,6 +103,10 @@ void CAttackObject::Camera_Update(_float fTimeDelta)
 
 void CAttackObject::Update(_float fTimeDelta)
 {
+
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
 
 
 	m_fAccLifeTime += fTimeDelta;
@@ -258,6 +271,12 @@ HRESULT CAttackObject::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CAttackObject::Set_UpdateStop(_float fStopTime)
+{
+	m_bUpdateStop = true;
+	m_fMaxUpdateStop = fStopTime;
+}
+
 /*
 void CAttacKObject::Set_RemoteDestory()
 {
@@ -313,8 +332,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
 
-
-
+				
 				//아래 위치 조정은 일부러 카메라 안에 넣음
 
 				//어퍼컷/올려차기의 경우  정지시간이 긴 공격들은 위치조정
@@ -339,6 +357,12 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					}
 
 				}
+				if (m_fCameraShakeDuration != 0)
+				{
+					CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
+				}
+
 			}
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
@@ -348,6 +372,56 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_bOwnerNextAnimation)
 			{
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
+			}
+
+			//히트시 이펙트
+			switch (m_ihitCharacter_Motion)
+			{
+			case Client::HIT_LIGHT:
+			case Client::HIT_CHASE:
+			{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
+
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+				XMFLOAT4X4 Result4x4;
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
+			}
+
+				break;
+
+
+			case Client::HIT_CROUCH_MEDIUM:
+			case Client::HIT_MEDIUM:
+			{
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+				XMFLOAT4X4 Result4x4;
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+			}
+
+				break;
+
+			case Client::HIT_HEAVY:
+			case Client::HIT_HEAVY_DOWN:
+			case Client::HIT_KNOCK_AWAY_LEFT:
+			case Client::HIT_KNOCK_AWAY_UP:
+			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
+			case Client::HIT_SPIN_AWAY_LEFTUP:
+			{
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+				XMFLOAT4X4 Result4x4;
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+				break;
+			}
+			case Client::HIT_WALLBOUNCE:
+			case Client::HIT_NONE:
+			default:
+				break;
 			}
 
 		}
@@ -411,6 +485,24 @@ void CAttackObject::OnCollisionExit(CCollider* other)
 
 }
 
+
+_bool CAttackObject::Check_UpdateStop(_float fTimeDelta)
+{
+	if (m_bUpdateStop)
+	{
+		m_fAccUpdateStop += fTimeDelta;
+
+		if (m_fAccUpdateStop > m_fMaxUpdateStop)
+			m_bUpdateStop = false;
+		
+	}
+
+	if (m_bUpdateStop)
+		return true;
+	else
+		return false;
+}
+
 void CAttackObject::CollisingAttack()
 {
 }
@@ -430,13 +522,13 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_HEAVY, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_HEAVY, 0, pOwner);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
 	case Client::CUI_Define::ANDROID21:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_HEAVY, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_HEAVY, 0, pOwner);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_21, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
@@ -459,13 +551,13 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP, 0, pOwner);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
 	case Client::CUI_Define::ANDROID21:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_KNOCK_AWAY_UP, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_KNOCK_AWAY_UP, 0, pOwner);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_21, false, 1.f);
@@ -487,12 +579,12 @@ void CAttackObject::Camera_GroundSmash(CCharacter* pOwner, CCharacter* pHitOwner
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_AIR_SMASH, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_AIR_SMASH, 0, pOwner);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, false, 1.f);
 		break;
 	case Client::CUI_Define::ANDROID21:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_AIR_SMASH, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_AIR_SMASH, 0, pOwner);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_21, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 		break;

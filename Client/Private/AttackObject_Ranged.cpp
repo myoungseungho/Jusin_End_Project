@@ -56,10 +56,16 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 void CAttackObject_Ranged::Update(_float fTimeDelta)
 {
 
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
+
 
 	m_fAccLifeTime += fTimeDelta;
 
-	if (m_fAccLifeTime > m_fLifeTime)
+
+	//생존시간 지났거나 맵바깥(땅포함)으로 나갔으면 삭제
+	if (m_fAccLifeTime > m_fLifeTime  || Check_MapOut())
 	{
 		if (m_bEnableDestory)
 		{
@@ -101,10 +107,17 @@ HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 
 void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
+
 	//원거리 vs 원거리
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
 	{
+
+		
 		//이펙트 처리
+		Erase();
+
+		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+
 
 	}
 
@@ -173,6 +186,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				return;
 
 		}
+		
 
 		if (m_bEnableDestory)
 		{
@@ -203,6 +217,35 @@ void CAttackObject_Ranged::CollisingAttack()
 
 void CAttackObject_Ranged::CollisingPlayer()
 {
+}
+
+_bool CAttackObject_Ranged::Check_MapOut()
+{
+	//높이 체크
+	if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) < 0.1)
+	{
+		//지면 폭발 이펙트
+		return true;
+	}
+
+	//좌우 바깥체크   는 어떻게?
+	else if (false)
+	{
+
+	}
+	else
+		return false;
+
+}
+
+void CAttackObject_Ranged::Erase()
+{
+	if (m_bEnableDestory)
+	{
+		Destory();
+		m_pGameInstance->Release_Collider(m_pColliderCom);
+		m_bEnableDestory = false;
+	}
 }
 
 

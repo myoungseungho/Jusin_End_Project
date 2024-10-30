@@ -26,7 +26,6 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 {
 	m_fPosX = 50.f;
 	m_fPosY = 40.f;
-	m_fSizeX = 150.f;
 	m_fSizeY = 150.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -35,7 +34,8 @@ HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(-m_fSizeX, m_fSizeY, m_fPosX, m_fPosY ,0.85f);
+	m_fSizeX = 150.f;
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY ,0.85f);
 
 	return S_OK;
 }
@@ -44,13 +44,16 @@ void CUI_Chara_Icon::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
 
-	if(m_pMainPawn != nullptr)
-		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
-		m_pMainPawn->Get_PawnDesc().ePlayerID;
+	
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
+	if (m_pMainPawn != nullptr)
+		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
+	
 	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 100.f, 0.85f, fTimeDelta);
 }
 

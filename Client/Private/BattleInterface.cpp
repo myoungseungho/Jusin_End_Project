@@ -183,7 +183,7 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
         }
         m_i1TeamPlayingCharacterIndex = NewCharacterslot;
         m_p1TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
-        pMainCamera->SetPlayer(CMain_Camera::PLAYER_1P, m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
+        pMainCamera->Set_Player(m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
     }
     else if (iTeam == 2)
     {
@@ -194,11 +194,11 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
         }
         m_i2TeamPlayingCharacterIndex = NewCharacterslot;
         m_p2TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
-        pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
+        pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
     }
 
-    pMainCamera->SetPlayer(CMain_Camera::PLAYER_1P, m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
-    pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
+    pMainCamera->Set_Player(m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
+    pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
 
 
 }

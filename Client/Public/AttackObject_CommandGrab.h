@@ -38,8 +38,9 @@ public:
 		//카메라용
 		_uint iVirtualCameraindex = {200}; //200 : 미사용(기본값)
 		_uint ianimationIndex = {};
-		_float fCameraShakeDuration = {200};
-		_float fCameraShakeMagnitude = {200};
+
+		//_float fCameraShakeDuration = {200};
+		//_float fCameraShakeMagnitude = {200};
 
 	};
 private:
@@ -80,8 +81,7 @@ private:
 	_short m_iOnwerDirection = {1};
 	_uint m_iVirtualCameraindex = { 200 };
 	_uint m_ianimationIndex = {};
-	_float m_fCameraShakeDuration = {};
-	_float m_fCameraShakeMagnitude = {};
+
 
 	//캐릭터가 가지고있어야하는가?
 	//_ushort m_iLoofCycle = 3;

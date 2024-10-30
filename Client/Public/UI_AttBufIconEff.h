@@ -1,15 +1,15 @@
 #pragma once
 
-#include "UIObject.h"
+#include "UI_BaseAttBuf.h"
 
 BEGIN(Client)
 
-class CUI_Chara_SubIcon final :public CUIObject
+class CUI_AttBufIconEff final :public CUI_BaseAttBuf
 {
 private:
-	CUI_Chara_SubIcon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_Chara_SubIcon(const CUI_Chara_SubIcon& Prototype);
-	virtual ~CUI_Chara_SubIcon() = default;
+	CUI_AttBufIconEff(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_AttBufIconEff(const CUI_AttBufIconEff& Prototype);
+	virtual ~CUI_AttBufIconEff() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -21,14 +21,12 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
-	HRESULT Bind_ShaderResources();
 
 private:
-	_uint m_iCharaID = { 0 };
-	_uint  m_iTeamIndex = { 0 };
+	_float m_fAnimFrame = { 0.f };
 
 public:
-	static CUI_Chara_SubIcon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_AttBufIconEff* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

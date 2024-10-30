@@ -48,9 +48,9 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	{
 		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
 		m_ianimationIndex = pDesc->ianimationIndex;
-		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
-		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
+		
 	}
+	
 
 	if (m_iOnwerDirection == 231)
 	{
@@ -67,6 +67,10 @@ void CAttackObject_CommandGrab::Camera_Update(_float fTimeDelta)
 
 void CAttackObject_CommandGrab::Update(_float fTimeDelta)
 {
+	if (Check_UpdateStop(fTimeDelta))
+		return;
+
+
 
 	m_fAccLifeTime += fTimeDelta;
 
@@ -146,13 +150,24 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			m_pOwner->Set_GrabLoofCount(2);
 
 
-			if (m_iVirtualCameraindex != 200)
+
+			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)
 			{
 				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-				main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)m_iVirtualCameraindex, m_ianimationIndex);
-				main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
-				
+
+				if (m_iVirtualCameraindex != 200)
+				{
+					main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)m_iVirtualCameraindex, m_ianimationIndex, m_pOwner);
+
+				}
+				if (m_fCameraShakeDuration != 0)
+				{
+					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
+				}
 			}
+
+			
+
 
 			pCharacter->Set_bGrabbed(true);
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함

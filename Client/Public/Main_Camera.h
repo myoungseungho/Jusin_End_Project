@@ -37,12 +37,6 @@ public:
 		VIRTUAL_CAMERA_END
 	};
 
-	enum PLAYER_STATE
-	{
-		PLAYER_1P,
-		PLAYER_2P
-	};
-
 private:
 	CMain_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CMain_Camera(const CMain_Camera& Prototype);
@@ -63,8 +57,8 @@ public:
 	void Add_NormalPoint(_float duration, _int type, const _float4x4* worldMatrixPtr, _float damping, _bool hasWorldFloat4x4, _int animationIndex);
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
-	void IMGUI_Play(_int animationIndex);
-	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex);
+	void IMGUI_Play(_int animationIndex, CGameObject* gameObject = nullptr);
+	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject = nullptr);
 	void Stop();
 	void Pause();
 	void Button_Stop();
@@ -77,7 +71,7 @@ public:
 	void Delete_Points(_int animationIndex);
 	void SetPosition(_fvector position);
 
-	void SetPlayer(PLAYER_STATE, CGameObject* pPlayer);
+	void Set_Player(CGameObject* pPlayer);
 	const char* Get_Current_CameraName();
 	_bool Get_IsPlay();
 

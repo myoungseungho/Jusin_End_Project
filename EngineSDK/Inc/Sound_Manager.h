@@ -40,6 +40,8 @@ public:
 		Heavy_Attack_21_SFX,
 		Chase_Attack_21,
 		Grab_Attack_21,
+		Grab_Attack_0_21_SFX,
+		Grab_Attack_1_21_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

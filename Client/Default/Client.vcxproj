@@ -186,6 +186,7 @@
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
+    <ClInclude Include="..\public\UI_AttBufIconEff.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_FontName.h" />
@@ -317,6 +318,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
+    <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_FontName.cpp" />

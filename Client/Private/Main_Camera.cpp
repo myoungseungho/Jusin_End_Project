@@ -164,10 +164,10 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 
 	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
-	SetPlayer(CMain_Camera::PLAYER_1P, player1p);
+	Set_Player(player1p);
 
 	CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
-	SetPlayer(CMain_Camera::PLAYER_2P, player2p);
+	Set_Player(player2p);
 
 	return S_OK;
 }
@@ -223,16 +223,19 @@ vector<CameraPoint>& CMain_Camera::Get_VectorPoint(_int index)
 	return m_vecVirtualCamera[m_currentVirtualMode]->m_mapPoints[index];
 }
 
-void CMain_Camera::IMGUI_Play(_int animationIndex)
+void CMain_Camera::IMGUI_Play(_int animationIndex, CGameObject* gameObject)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, true);
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, true, gameObject);
 }
 
-void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex)
+void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject)
 {
+	//현재 재생중인 Stop
+	Stop();
+	Set_Player(gameObject);
 	//가상카메라를 CameraID에 따라 셋팅
 	Set_Virtual_Camera(cameraID);
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false);
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, gameObject);
 }
 
 void CMain_Camera::Stop()
@@ -269,31 +272,6 @@ void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 {
 	for (const auto& modelData : cameraData.models)
 	{
-		// 모델마다 돈다.
-		_int modelID = modelData.modelID;
-
-		// 모델의 월드 행렬 포인터를 가져옵니다.
-		const _float4x4* pWorldMatrix = nullptr;
-
-		switch (modelID)
-		{
-		case 1:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
-			break;
-		case 2:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
-			break;
-		case 3:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
-			break;
-		case 4:
-			pWorldMatrix = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, L"Layer_Character")->Get_Component(L"Com_Transform"))->Get_WorldMatrixPtr();
-			break;
-		default:
-			// 알 수 없는 모델 ID 처리
-			continue;
-		}
-
 		// 모델의 스킬마다 돈다
 		for (const auto& skillData : modelData.skills)
 		{
@@ -341,8 +319,8 @@ void CMain_Camera::ApplyCameraData(CameraSaveData& cameraData)
 				for (const auto& pointData : animData.points)
 				{
 					CameraPoint point = pointData;
-					// pWorldFloat4x4 설정
-					point.pWorldFloat4x4 = pWorldMatrix;
+
+					point.pWorldFloat4x4 = nullptr;
 
 					// 포인트 벡터에 추가
 					points.push_back(point);
@@ -427,27 +405,30 @@ void CMain_Camera::SetPosition(_fvector position)
 	virtual_Transform->Set_State(CTransform::STATE_POSITION, position);
 }
 
-void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
+void CMain_Camera::Set_Player(CGameObject* pPlayer)
 {
-	m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
+	for (auto& iter : m_vecVirtualCamera)
+		iter->Set_Player(pPlayer);
 
-	//Test용
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_HEAVY]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_GRAB]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SAME_GRAB]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ENERGY]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ULTIMATE]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
 
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_HEAVY]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_AIR_SMASH]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_SAME_GRAB]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB_SPECIAL]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_ENERGY]->Set_Player(state, pPlayer);
-	m_vecVirtualCamera[VIRTUAL_CAMERA_21_ULTIMATE]->Set_Player(state, pPlayer);
+	////Test용
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_HEAVY]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_GRAB]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SAME_GRAB]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ENERGY]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ULTIMATE]->Set_Player(state, pPlayer);
+
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_HEAVY]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_AIR_SMASH]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_SAME_GRAB]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB_SPECIAL]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_ENERGY]->Set_Player(state, pPlayer);
+	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_ULTIMATE]->Set_Player(state, pPlayer);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()

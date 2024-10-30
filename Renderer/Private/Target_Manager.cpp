@@ -208,6 +208,8 @@ HRESULT CTarget_Manager::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11D
 
 	for (auto& pRenderTarget : *pMRTList)
 	{
+
+
 		RenderTargets[iNumRTV++] = pRenderTarget->Get_RTV();
 	}
 

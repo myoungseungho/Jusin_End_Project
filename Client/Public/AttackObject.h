@@ -55,6 +55,11 @@ public:
 		_bool		bCameraZoom = { true };
 
 		_ushort		iGainKiAmount = { 20 };
+
+
+		_float fCameraShakeDuration = { 0 };
+		_float fCameraShakeMagnitude = { 0 };
+
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -74,6 +79,7 @@ public:
 	class CCharacter* Get_pOwner() { return m_pOwner; };
 	AttackType		Get_AttackType() { return m_eAttackType; };
 	
+	void Set_UpdateStop(_float fStopTime);
 
 public:
 	//void Set_RemoteDestory();
@@ -83,6 +89,9 @@ public:
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionExit(class CCollider* other) override;
 
+
+protected:
+	_bool Check_UpdateStop(_float fTimeDelta);
 
 private:
 	void CollisingAttack();
@@ -135,7 +144,16 @@ protected:
 	_bool		m_bGrabbedEnd = { false };
 	_bool		m_bCameraZoom = { true };
 
+	_float m_fCameraShakeDuration = {};
+	_float m_fCameraShakeMagnitude = {};
+
 	_ushort		m_iGainKiAmount = { 20 };
+
+
+	_float		m_fAccUpdateStop = {};
+	_float		m_fMaxUpdateStop = {};
+	_bool		m_bUpdateStop = { false };
+
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

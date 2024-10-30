@@ -106,8 +106,11 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 		return;
 	}
 
+	CGameObject* player = { nullptr };
+	player = m_iTeam == 1 ? m_p1pPlayer : m_p2pPlayer;
+
 	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
-	CCharacter* character = static_cast<CCharacter*>(m_p1pPlayer);
+	CCharacter* character = static_cast<CCharacter*>(player);
 	_int direction = character->Get_iDirection();
 
 	// 현재 포인트와 다음 포인트 설정
@@ -264,7 +267,7 @@ void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _fl
 	_vector targetVector = XMLoadFloat3(&targetPosition);
 	// 위치 설정 (쉐이크 오프셋 포함)
 	_vector position = targetVector + m_vShakeOffset;
-	
+
 	// 카메라 위치 설정
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSetW(position, 1.f));
 }
@@ -281,20 +284,38 @@ void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvec
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, fixedLook);
 }
 
-void CVirtual_Camera::Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer)
+void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
 {
-	if (state == CMain_Camera::PLAYER_1P)
+	m_iTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
+
+	if (m_iTeam == 1)
 		m_p1pPlayer = pPlayer;
-	else if (state == CMain_Camera::PLAYER_2P)
+	else if (m_iTeam == 2)
 		m_p2pPlayer = pPlayer;
 
-	Safe_AddRef(pPlayer);
+	for (auto& iter : m_mapPoints)
+	{
+		vector<CameraPoint> vecPoints = iter.second;
+		for (auto& iter : vecPoints)
+		{
+			iter.pWorldFloat4x4 = static_cast<CTransform*>(pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
+		}
+	}
+
 }
 
-void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay)
+void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject)
 {
 	if (m_mapPoints[animationIndex].size() == 0)
 		return;
+
+	//월드행렬이 들어있지 않다면
+	if (m_mapPoints[animationIndex][0].pWorldFloat4x4 == nullptr)
+	{
+		for (auto& iter : m_mapPoints)
+			for (auto& iter2 : iter.second)
+				iter2.pWorldFloat4x4 = static_cast<CTransform*>(gameObject->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
+	}
 
 	m_AnimationIndex = animationIndex;
 
@@ -929,9 +950,6 @@ CGameObject* CVirtual_Camera::Clone(void* pArg)
 
 void CVirtual_Camera::Free()
 {
-	Safe_Release(m_p1pPlayer);
-	Safe_Release(m_p2pPlayer);
-
 	__super::Free();
 
 }

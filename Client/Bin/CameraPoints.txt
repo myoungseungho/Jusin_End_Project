@@ -105,7 +105,39 @@ SkillName: Camera_Son_Energy
 
 [Animation]
 AnimationName: Son_Energy_Anim1
-PointCount: 0
+PointCount: 4
+
+[CameraPoint]
+Position: 0.5 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.6
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.7767 1.03563 -1.28163
+Rotation: 0.00703547 -0.444692 0.00349313 0.895649
+Duration: 1.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.7767 1.03563 -1.28163
+Rotation: 0.00703547 -0.444692 0.00349313 0.895649
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Son_Ultimate

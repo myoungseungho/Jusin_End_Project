@@ -331,8 +331,8 @@ void CCollider_Manager::Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vect
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destory_Reserve(CG_1P_Energy_Attack);
-	Destory_Reserve(CG_2P_Energy_Attack);
+	Destroy_Reserve(CG_1P_Energy_Attack);
+	Destroy_Reserve(CG_2P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Body_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -357,7 +357,7 @@ void CCollider_Manager::Process_1P_Body_2P_Energy_Skill_Group(const vector<pair<
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destory_Reserve(CG_2P_Energy_Attack);
+	Destroy_Reserve(CG_2P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Energy_Skill_2P_Body_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -382,7 +382,7 @@ void CCollider_Manager::Process_1P_Energy_Skill_2P_Body_Group(const vector<pair<
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destory_Reserve(CG_1P_Energy_Attack);
+	Destroy_Reserve(CG_1P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Ranged_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -408,7 +408,7 @@ void CCollider_Manager::Process_1P_Ranged_Skill_2P_Body(pair<CCollider*, CCollid
 		}
 	}
 
-	Destory_Reserve(CG_1P_Ranged_Attack);
+	Destroy_Reserve(pairCollider.first);
 }
 
 void CCollider_Manager::Process_1P_Ranged_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -430,11 +430,13 @@ void CCollider_Manager::Process_1P_Ranged_Skill_2P_Energy_Skill_Group(const vect
 
 		// 현재 충돌 상태 업데이트
 		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+		//Melee_Attack
+		Destroy_Reserve(pairCollider.first);
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destory_Reserve(CG_2P_Energy_Attack);
-	Destory_Reserve(CG_1P_Ranged_Attack);
+	Destroy_Reserve(CG_2P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Ranged_Skill_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -460,8 +462,8 @@ void CCollider_Manager::Process_1P_Ranged_Skill_2P_Ranged_Skill(pair<CCollider*,
 		}
 	}
 
-	Destory_Reserve(CG_1P_Ranged_Attack);
-	Destory_Reserve(CG_2P_Ranged_Attack);
+	Destroy_Reserve(pairCollider.first);
+	Destroy_Reserve(pairCollider.second);
 }
 
 void CCollider_Manager::Process_1P_Melee_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -487,7 +489,7 @@ void CCollider_Manager::Process_1P_Melee_Skill_2P_Body(pair<CCollider*, CCollide
 		}
 	}
 
-	Destory_Reserve(CG_1P_Melee_Attack);
+	Destroy_Reserve(pairCollider.first);
 }
 
 void CCollider_Manager::Process_1P_Body_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -513,7 +515,7 @@ void CCollider_Manager::Process_1P_Body_2P_Ranged_Skill(pair<CCollider*, CCollid
 		}
 	}
 
-	Destory_Reserve(CG_2P_Ranged_Attack);
+	Destroy_Reserve(pairCollider.second);
 }
 
 void CCollider_Manager::Process_1P_Energy_Skill_2P_Ranged_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -535,11 +537,13 @@ void CCollider_Manager::Process_1P_Energy_Skill_2P_Ranged_Skill_Group(const vect
 
 		// 현재 충돌 상태 업데이트
 		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+		//Ranged_Attack
+		Destroy_Reserve(pairCollider.second);
 	}
 
 	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destory_Reserve(CG_1P_Energy_Attack);
-	Destory_Reserve(CG_2P_Ranged_Attack);
+	Destroy_Reserve(CG_1P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -565,7 +569,7 @@ void CCollider_Manager::Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollide
 		}
 	}
 
-	Destory_Reserve(CG_2P_Melee_Attack);
+	Destroy_Reserve(pairCollider.second);
 }
 
 void CCollider_Manager::Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -591,8 +595,8 @@ void CCollider_Manager::Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollid
 		}
 	}
 
-	Destory_Reserve(CG_1P_Melee_Attack);
-	Destory_Reserve(CG_2P_Melee_Attack);
+	Destroy_Reserve(pairCollider.first);
+	Destroy_Reserve(pairCollider.second);
 }
 
 
@@ -610,10 +614,6 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 	{
 		if (it->first.first == targetCollider || it->first.second == targetCollider)
 		{
-			// 충돌 종료 이벤트 호출
-			it->first.first->OnCollisionExit(it->first.second);
-			it->first.second->OnCollisionExit(it->first.first);
-
 			// 충돌 정보 제거
 			it = m_CollisionHistory.erase(it);
 		}
@@ -639,25 +639,41 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 
 HRESULT CCollider_Manager::Destory_ColliderGroup()
 {
-	for (auto& iter : m_Destory_Reserve_Collider_Group)
+	// 먼저 개별 콜라이더 삭제
+	for (auto& pCollider : m_Destory_Reserve_Collider)
 	{
-		for (auto& iter : m_Colliders[iter])
-			Safe_Release(iter);
-
-		m_Colliders[iter].clear();
+		Release_Collider(pCollider);
 	}
 
-	m_Destory_Reserve_Collider_Group.clear();
+	m_Destory_Reserve_Collider.clear();
+
+	// 그룹 전체 삭제
+	for (auto& group : m_Destroy_Reserve_Collider_Group)
+	{
+		for (auto& pCollider : m_Colliders[group])
+			Safe_Release(pCollider);
+		m_Colliders[group].clear();
+	}
+	m_Destroy_Reserve_Collider_Group.clear();
 	return S_OK;
 }
 
-void CCollider_Manager::Destory_Reserve(COLLIDERGROUP eRenderGroup)
+void CCollider_Manager::Destroy_Reserve(COLLIDERGROUP eRenderGroup)
 {
 	// 리스트에 이미 존재하는지 확인
-	if (find(m_Destory_Reserve_Collider_Group.begin(), m_Destory_Reserve_Collider_Group.end(), eRenderGroup) == m_Destory_Reserve_Collider_Group.end())
+	if (find(m_Destroy_Reserve_Collider_Group.begin(), m_Destroy_Reserve_Collider_Group.end(), eRenderGroup) == m_Destroy_Reserve_Collider_Group.end())
 	{
 		// 존재하지 않으면 추가
-		m_Destory_Reserve_Collider_Group.push_back(eRenderGroup);
+		m_Destroy_Reserve_Collider_Group.push_back(eRenderGroup);
+	}
+}
+
+void CCollider_Manager::Destroy_Reserve(CCollider* pCollider)
+{
+	// 이미 리스트에 존재하는지 확인
+	if (find(m_Destory_Reserve_Collider.begin(), m_Destory_Reserve_Collider.end(), pCollider) == m_Destory_Reserve_Collider.end())
+	{
+		m_Destory_Reserve_Collider.push_back(pCollider);
 	}
 }
 

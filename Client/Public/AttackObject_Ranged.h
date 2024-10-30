@@ -50,10 +50,14 @@ public:
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionExit(class CCollider* other) override;
 
+	void Erase();
 
 private:
 	void CollisingAttack();
 	void CollisingPlayer();
+
+
+	_bool Check_MapOut();
 
 private:
 	_float2	m_fStartOffset = {};

@@ -31,7 +31,9 @@ public:
 	//±â´É
 public:
 	void GamePlayUpdate(_float fTimeDelta);
-	void UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT eSlotID);
+	void UsingAttckBuff(CUI_Define::PLAYER_SLOT eSlotID);
+	void UsingAttackDestroy(CUI_Define::PLAYER_SLOT eSlotID);
+
 	void UsingSelectCharacher(class CCharacter* pPawn, CUI_Define::PLAYER_SLOT eSlotID) { m_pPawnArray[eSlotID] = pPawn; }
 	void UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID);
 	void UsingCreateStartUI();
@@ -49,11 +51,6 @@ public:
 	_uint m_iHp = {0};
 	
 public:
-
-	//UsingAttckBuff
-	_float m_fDuration = { 0.f };	
-
-
 	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
 	//Anim
@@ -68,8 +65,13 @@ public:
 	//RedBlueTimer
 	_float m_fColorValue = { 0.f };
 	 _uint m_iTeam = { 2 };
+	 
+private:
+	_float m_fStartTimer = { 0.f };
+	_float m_fEndTimer = { 0.f };
 
-
+	_bool m_bStartFinish = { FALSE };
+	_bool m_bEndFinish = { FALSE };
 
 public:
 	list<class CUIObject*> m_ListTopUI = {};

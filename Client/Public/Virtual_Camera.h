@@ -57,9 +57,9 @@ public:
 	void Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode);
 public:
 	const _char* GetTabName() const { return m_Name; };
-	void Set_Player(CMain_Camera::PLAYER_STATE state, CGameObject* pPlayer);
+	void Set_Player(CGameObject* pPlayer);
 
-	void Start_Play(_int animationIndex, _bool isImguiPlay);
+	void Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject = nullptr);
 	void Pause();
 	void Stop();
 	void Button_Stop();
@@ -99,6 +99,7 @@ public:
 
 	class CGameObject* m_p1pPlayer = { nullptr };
 	class CGameObject* m_p2pPlayer = { nullptr };
+	_uint m_iTeam = {};
 
 	_float m_previousFOV = {};
 
