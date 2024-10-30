@@ -84,6 +84,7 @@
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 #include "UI_AttBufIconEff.h"
+#include "UI_SubHpPanel.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -2722,6 +2723,12 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_HpEffect"),
 		CUI_HpEffect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_SubHpPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_SubHpPanel"),
+		CUI_SubHpPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	/* For.Prototype_GameObject_UI_Chara_Icon */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Chara_Icon_Panel"),

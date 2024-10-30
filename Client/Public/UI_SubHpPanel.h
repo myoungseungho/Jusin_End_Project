@@ -4,12 +4,12 @@
 
 BEGIN(Client)
 
-class CUI_HpEffect final :public CUIObject
+class CUI_SubHpPanel final :public CUIObject
 {
 private:
-	CUI_HpEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_HpEffect(const CUI_HpEffect& Prototype);
-	virtual ~CUI_HpEffect() = default;
+	CUI_SubHpPanel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_SubHpPanel(const CUI_SubHpPanel& Prototype);
+	virtual ~CUI_SubHpPanel() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -27,7 +27,7 @@ private:
 	_bool m_bSign = { TRUE };
 
 public:
-	static CUI_HpEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_SubHpPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

@@ -205,6 +205,9 @@
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp">
       <Filter>02.GameObjects\UI\AttBuf\AttBufIconEff</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_SubHpPanel.cpp">
+      <Filter>02.GameObjects\UI\Hp\SubHpPanel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -461,6 +464,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\AttBuf\AttBufIconEff">
       <UniqueIdentifier>{f988fce4-d046-4da1-9516-1c1d9ef132dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Hp\SubHpPanel">
+      <UniqueIdentifier>{295614e1-9194-4408-9739-21e89781e71f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -877,6 +883,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_AttBufIconEff.h">
       <Filter>02.GameObjects\UI\AttBuf\AttBufIconEff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SubHpPanel.h">
+      <Filter>02.GameObjects\UI\Hp\SubHpPanel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
