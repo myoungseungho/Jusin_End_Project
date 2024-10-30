@@ -820,6 +820,9 @@ HRESULT CRenderer::Render_NonLight_Effect(_float fTimeDelta)
 		else
 		{
 			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
+
+			if (nullptr != pRenderObject)
 				pRenderObject->Render(fTimeDelta);
 
 			Safe_Release(pRenderObject);
@@ -868,20 +871,33 @@ HRESULT CRenderer::Render_Blend(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_BLEND])
 	{
-		if (nullptr != pRenderObject)
-			pRenderObject->Priority_Render(fTimeDelta);
+		if (pRenderObject->Get_GameObjectData() != -1)
+		{
+			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
 
-		m_iEffectRenderCount == 0 ? m_pRenderInstance->Begin_MRT(TEXT("MRT_AllGlowDiffuse")) : m_pRenderInstance->Begin_MRT_DoNotClear(TEXT("MRT_AllGlowDiffuse"));
+			m_iEffectRenderCount == 0 ? m_pRenderInstance->Begin_MRT(TEXT("MRT_AllGlowDiffuse")) : m_pRenderInstance->Begin_MRT_DoNotClear(TEXT("MRT_AllGlowDiffuse"));
 
-		if (nullptr != pRenderObject)
-			pRenderObject->Render(fTimeDelta);
+			if (nullptr != pRenderObject)
+				pRenderObject->Render(fTimeDelta);
 
-		Safe_Release(pRenderObject);
+			Safe_Release(pRenderObject);
 
-		if (FAILED(m_pRenderInstance->End_MRT()))
-			return E_FAIL;
+			if (FAILED(m_pRenderInstance->End_MRT()))
+				return E_FAIL;
 
-		m_iEffectRenderCount++;
+			m_iEffectRenderCount++;
+		}
+		else
+		{
+			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
+
+			if (nullptr != pRenderObject)
+				pRenderObject->Render(fTimeDelta);
+
+			Safe_Release(pRenderObject);
+		}
 	}
 
 	m_RenderObjects[RG_BLEND].clear();
