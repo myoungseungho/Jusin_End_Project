@@ -8,6 +8,9 @@
 #include "Character.h"
 #include "Main_Camera.h"
 
+
+#include "Effect_Manager.h"
+
 CAttackObject::CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -348,6 +351,56 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_bOwnerNextAnimation)
 			{
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
+			}
+
+			//È÷Æ®½Ã ÀÌÆåÆ®
+			switch (m_ihitCharacter_Motion)
+			{
+			case Client::HIT_LIGHT:
+			case Client::HIT_CHASE:
+			{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
+
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyzÁÂÇ¥ÀÎµ¥
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+				XMFLOAT4X4 Result4x4;
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
+			}
+
+				break;
+
+
+			case Client::HIT_CROUCH_MEDIUM:
+			case Client::HIT_MEDIUM:
+			{
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyzÁÂÇ¥ÀÎµ¥
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+				XMFLOAT4X4 Result4x4;
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+			}
+
+				break;
+
+			case Client::HIT_HEAVY:
+			case Client::HIT_HEAVY_DOWN:
+			case Client::HIT_KNOCK_AWAY_LEFT:
+			case Client::HIT_KNOCK_AWAY_UP:
+			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
+			case Client::HIT_SPIN_AWAY_LEFTUP:
+			{
+				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyzÁÂÇ¥ÀÎµ¥
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+				XMFLOAT4X4 Result4x4;
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+				break;
+			}
+			case Client::HIT_WALLBOUNCE:
+			case Client::HIT_NONE:
+			default:
+				break;
 			}
 
 		}

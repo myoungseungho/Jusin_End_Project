@@ -289,6 +289,11 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 			m_pOwner->Set_ChaseStop();
 			m_pOwner->Set_ChaseStoping();
+
+
+			m_pOwner->Set_AnimationStop(0.2f);
+			pCharacter->Set_AnimationStop(0.2f);
+
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
