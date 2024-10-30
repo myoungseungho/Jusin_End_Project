@@ -91,10 +91,10 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	
-	//CharacterDesc.iTeam = 2;
-	//CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-	//	return E_FAIL;
+	CharacterDesc.iTeam = 2;
+	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+		return E_FAIL;
 
 #pragma endregion
 
@@ -156,7 +156,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
-		m_pUI_Manager->UsingAttckBuff(3, CUI_Define::LPLAYER1);
+		m_pUI_Manager->UsingAttckBuff(CUI_Define::LPLAYER1);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_F8))

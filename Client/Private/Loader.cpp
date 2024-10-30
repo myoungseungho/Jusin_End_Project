@@ -83,6 +83,7 @@
 #include "UI_Loading_BG.h"
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
+#include "UI_AttBufIconEff.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -374,6 +375,13 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillEffect"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_tension_eff.png")))))
 		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_SkillGaugeEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillGaugeEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_tensiontex_base00_Eff.png")))))
+		return E_FAIL;
+
+
 
 	//캐릭터 아이콘
 
@@ -2748,6 +2756,11 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	/* For.Prototype_GameObject_UI_AttBufThunderEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_AttBufThunderEffect"),
 		CUI_AttBufThunderEffect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_AttBufIconEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_AttBufIconEff"),
+		CUI_AttBufIconEff::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_UI_SkillGauge */

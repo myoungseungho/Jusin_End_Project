@@ -156,7 +156,7 @@ PS_OUT PS_SKILL(PS_IN In)
         //Out.vColor = vNextTexture + (1 - vMaskTexture - 0.35f);
     }
     
-    if (g_Radio <= 0.5f && In.vTexcoord.x >= 0.5f)
+    if ((g_Radio <= 0.5f || g_bState) && In.vTexcoord.x >= 0.5f)
     {
         //Out.vColor += (1 -vMaskTexture - 0.15f);
         Out.vColor.rgb += Out.vColor.rgb * vMaskTexture.r * 2.f;
@@ -202,9 +202,12 @@ PS_OUT PS_SUB_HP(PS_IN In)
     
     float fLineY = (fPointB.y - fPointA.y) / (fPointB.x - fPointA.x) * (In.vTexcoord.x - fPointA.x) + fPointA.y - In.vTexcoord.y;
      
-    if (fLineY > 0)
+    if (fLineY < 0)
     {
-        Out.vColor.rgb = (1 - vBaseTex) * float4(1.f, 0.831f, 0.f, 0.f);    
+        Out.vColor.rgb = ((1 - vBaseTex.rgb) * float3(1.f, 0.831f, 0.f)) + (vBaseTex.r * 1.25f);
+        
+        Out.vColor.rgb = min(Out.vColor.rgb, 1.f);
+        
     }
   
     if (Out.vColor.a <= 0.1f)
@@ -280,6 +283,11 @@ PS_OUT PS_SubIcon(PS_IN In)
     
     if (Out.vColor.a <= 0.1f)
         discard;
+    
+    if (g_bState)
+    {
+        Out.vColor.rgb *= 0.38f;
+    }
   
     return Out;
 }
@@ -454,14 +462,33 @@ PS_OUT PS_SpaceLight(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     Out.vColor.a = Out.vColor.r;
 
-    if (Out.vColor.a <= 0.1f)
-        discard;
-  
     Out.vColor.a *= g_fAlphaTimer;
+    
+    Out.vColor.rgb = float3(0.678f, 0.847f, 0.902f);
 
+    
     return Out;
 }
 
+
+PS_OUT PS_SkillPanel(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+  // vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+  // 
+  // if (g_bState)
+  // {
+  //     Out.vColor = lerp(Out.vColor, vEffectTexture, In.vTexcoord.y);
+  //     
+  // }
+  //
+  //if (Out.vColor.a <= 0.1f)
+  //    discard;
+   
+    return Out;
+}
 
 technique11 DefaultTechnique
 {
@@ -778,5 +805,20 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_SpaceLight();
     }
+
+//21
+    pass SkillPanel
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SkillPanel();
+    }
+
 
 }

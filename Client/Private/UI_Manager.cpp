@@ -53,9 +53,8 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 	}
 }
 
-void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT eSlotID)
+void CUI_Manager::UsingAttckBuff(CUI_Define::PLAYER_SLOT eSlotID)
 {
-	m_fDuration = fAttBufDuration;
 
 	CUIObject::UI_DESC tAttBufDesc = {};
 
@@ -66,6 +65,8 @@ void CUI_Manager::UsingAttckBuff(_float fAttBufDuration, CUI_Define::PLAYER_SLOT
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufThunderEffect"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_AttBufIconEff"), TEXT("Layer_UI_AttBufEffect"), &tAttBufDesc);
+	
 }
 
 void CUI_Manager::UsingAttackDestroy(CUI_Define::PLAYER_SLOT eSlotID)
@@ -124,7 +125,6 @@ void CUI_Manager::UsingCreateStartUI()
 		StartDesc.iNumUI = i;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_GameStartCircle"), TEXT("Layer_UI_GameStartCircle"), &StartDesc);
 	}
-
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ReadyFont"), TEXT("Layer_UI_GameStartFont"));
 }
 
@@ -136,20 +136,6 @@ void CUI_Manager::UsingCreateEndUI()
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOParticle"), TEXT("Layer_UI_KOFont"));
 
 }
-
-//void CUI_Manager::SKillCount()
-//{
-//	if (m_iSkillPoint >= 100)
-//	{
-//		m_iSkillPoint -= 100;
-//		m_iSkillCount++;
-//	}
-//	else if (m_iSkillPoint < 0)
-//	{
-//		m_iSkillPoint += 100;
-//		m_iSkillCount--;
-//	}
-//}
 
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {

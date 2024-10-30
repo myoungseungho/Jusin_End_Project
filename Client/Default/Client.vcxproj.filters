@@ -199,6 +199,9 @@
     <ClCompile Include="..\Private\BattleInterface.cpp">
       <Filter>02.GameObjects\BattleInterface</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_AttBufIconEff.cpp">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufIconEff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -452,6 +455,9 @@
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Ranged">
       <UniqueIdentifier>{5220f611-05c9-4f2b-aa03-08f9b807346f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\AttBuf\AttBufIconEff">
+      <UniqueIdentifier>{f988fce4-d046-4da1-9516-1c1d9ef132dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -862,6 +868,9 @@
     </ClInclude>
     <ClInclude Include="..\public\MainApp.h">
       <Filter>01.Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_AttBufIconEff.h">
+      <Filter>02.GameObjects\UI\AttBuf\AttBufIconEff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

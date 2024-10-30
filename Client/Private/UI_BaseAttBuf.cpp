@@ -56,18 +56,6 @@ HRESULT CUI_BaseAttBuf::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-_bool CUI_BaseAttBuf::UsingAttckBuff()
-{
-	if (m_pUI_Manager->m_fDuration > 0.f)
-	{
-		m_fAttBufDuration = m_pUI_Manager->m_fDuration;
-		return TRUE;
-	}
-	m_fAttBufDuration = 0.f;
-
-	return FALSE;
-}
-
 HRESULT CUI_BaseAttBuf::Bind_ShaderResources()
 {
 	if (FAILED(__super::Bind_ShaderResources()))

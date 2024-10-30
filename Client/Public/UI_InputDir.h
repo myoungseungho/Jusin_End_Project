@@ -27,6 +27,8 @@ private:
 	_float ScaleValue(_float2 vPrevPos, _float2 vCurrPos);
 	_vector CreatePostion(_float2 vPrevPos, _float2 vCurrPos);
 
+	void MovePos(DirectionInput eInput, _float& fPosX, _float& fPosY);
+	void LineEffectCreate();
 
 private:
 	_bool m_bCheck = { FALSE };

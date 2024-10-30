@@ -155,7 +155,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
 	m_tAttackMap.Initalize(this);
 
 	//m_pModelCom->SetUp_Animation(16, true);
