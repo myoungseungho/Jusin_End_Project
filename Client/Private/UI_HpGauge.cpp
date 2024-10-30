@@ -59,6 +59,8 @@ void CUI_HpGauge::Camera_Update(_float fTimeDelta)
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 	//½ºÀ§Äª Pass Index 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;

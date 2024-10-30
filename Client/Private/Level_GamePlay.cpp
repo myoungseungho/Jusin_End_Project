@@ -91,10 +91,10 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	
-	CharacterDesc.iTeam = 2;
-	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+	//CharacterDesc.iTeam = 2;
+	//CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	//	return E_FAIL;
 
 #pragma endregion
 
@@ -329,8 +329,13 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	}
 
 	//Å¸ÀÌ¸Ó
+
+	if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_TimerPanel"), TEXT("Layer_UI_Timer"))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Timer"), TEXT("Layer_UI_Timer"))))
 		return E_FAIL;
+
 
 	//ÄÞº¸
 	CUIObject::UI_DESC ComboDesc = {};
@@ -364,7 +369,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
 	}
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_TimerPanel"), TEXT("Layer_UI_Timer"));
+
 
 
 	CUIObject::UI_DESC FontNameDesc = {};

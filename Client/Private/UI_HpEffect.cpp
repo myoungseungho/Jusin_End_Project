@@ -75,7 +75,7 @@ void CUI_HpEffect::Late_Update(_float fTimeDelta)
 	//tDesc.tGlowDesc.iPassIndex = 7;
 	//tDesc.tGlowDesc.fGlowFactor = 4.7f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this, &tDesc);
 }
 
 HRESULT CUI_HpEffect::Render(_float fTimeDelta)

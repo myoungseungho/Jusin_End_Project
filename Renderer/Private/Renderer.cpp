@@ -193,6 +193,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend_Priority(fTimeDelta)))
 		return E_FAIL;
 	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
+
+	if (FAILED(Render_Player(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_ShadowObj(fTimeDelta)))
@@ -208,8 +212,7 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Deferred(fTimeDelta)))
 		return E_FAIL;
 	/*-----------------------------------------------------------------*/
-	if (FAILED(Render_Player(fTimeDelta)))
-		return E_FAIL;
+	
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
 
@@ -1255,9 +1258,9 @@ HRESULT CRenderer::Draw_Glow(CShader* pShader, GLOW_DESC* pDesc)
 	{
 		/*float g_GlowFactor;
 		float4 g_GlowFilterColor;*/
-		m_pGlowShader->Bind_RawValue("g_GlowFactor", &pDesc->fGlowFactor, sizeof(_float));
-		m_pGlowShader->Bind_RawValue("g_GlowFilterColor", &pDesc->vGlowColor, sizeof(_float4));
-		m_pGlowShader->Begin(pDesc->iPassIndex);
+		pShader->Bind_RawValue("g_GlowFactor", &pDesc->fGlowFactor, sizeof(_float));
+		pShader->Bind_RawValue("g_GlowFilterColor", &pDesc->vGlowColor, sizeof(_float4));
+		pShader->Begin(pDesc->iPassIndex);
 	}
 	else
 		pShader->Begin(2);

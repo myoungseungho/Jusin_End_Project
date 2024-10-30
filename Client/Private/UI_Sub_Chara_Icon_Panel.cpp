@@ -41,12 +41,13 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 
 void CUI_Sub_Chara_Icon_Panel::Camera_Update(_float fTimeDelta)
 {
-	__super::Camera_Update(fTimeDelta);
 
 }
 
 void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	Animation({ 73.f ,88.f ,0.65f, 1.f }, { m_fPosX, m_fPosY, 0.65f, 1.f }, 100.f, 0.65f, fTimeDelta);
 
 	if (m_pSubPawn == nullptr)

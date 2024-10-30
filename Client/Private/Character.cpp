@@ -197,12 +197,12 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 	if (m_iPlayerTeam == 1)
 	{
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -3.f, 0.f, 1.f));
 		FlipDirection(1);
 	}
 	else
 	{
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, 0.f, 0.f, 1.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, -3.f, 0.f, 1.f));
 		FlipDirection(-1);
 	}
 

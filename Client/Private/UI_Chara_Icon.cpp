@@ -45,14 +45,15 @@ void CUI_Chara_Icon::Camera_Update(_float fTimeDelta)
 	__super::Camera_Update(fTimeDelta);
 
 	
-	
 }
 
 void CUI_Chara_Icon::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	if (m_pMainPawn != nullptr)
 		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
-
+	
 	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 100.f, 0.85f, fTimeDelta);
 }
 

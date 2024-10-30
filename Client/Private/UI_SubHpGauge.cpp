@@ -45,14 +45,15 @@ void CUI_SubHpGauge::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
 
-	(m_pSubPawn != nullptr) ? m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f : Destory();
 }
 
 void CUI_SubHpGauge::Update(_float fTimeDelta)
 {
-	//DebugTesting(14.f, 1.f);
+	__super::Update(fTimeDelta);
+	
+	(m_pSubPawn != nullptr) ? m_fHpRadio = 1.f - m_pSubPawn->Get_PawnDesc().iHp / 10000.f : Destory();
 
-	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 5;
+	(m_fHpRadio <= 0.f) ? m_iShaderID = 11 : m_iShaderID = 5;
 
 	Animation({ 250.f , 87.f ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);
 }

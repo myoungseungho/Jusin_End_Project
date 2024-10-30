@@ -42,13 +42,14 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 
 void CUI_Chara_SubIcon::Camera_Update(_float fTimeDelta)
 {
-	__super::Camera_Update(fTimeDelta);
-
-	(m_pSubPawn != nullptr) ? m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID : Destory();;
+	
 }
 
 void CUI_Chara_SubIcon::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+	(m_pSubPawn != nullptr) ? m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID : Destory();;
+
 	Animation({ 60.f ,55.f ,0.5f, 1.f }, { m_fPosX, m_fPosY, 0.5f, 1.f }, 100.f, 0.5f, fTimeDelta);
 }
 

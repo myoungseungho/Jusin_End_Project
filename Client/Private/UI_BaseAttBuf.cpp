@@ -44,17 +44,6 @@ void CUI_BaseAttBuf::Update(_float fTimeDelta)
 	if(m_pMainPawn != nullptr)
 		bAttBuf = m_pMainPawn->Get_PawnDesc().bAttBuf;
 
-	//if (bAttBuf == TRUE || m_fAttBufTimer > 0.f)
-	//{
-	//
-	//	m_fAttBufTimer += fTimeDelta;
-	//
-	//	if (m_fAttBufTimer >= m_pUI_Manager->m_fDuration)
-	//	{
-	//		Destory();
-	//	}
-	//}
-
 }
 
 void CUI_BaseAttBuf::Late_Update(_float fTimeDelta)
