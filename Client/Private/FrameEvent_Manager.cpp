@@ -545,7 +545,11 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 		main_Camera->StartCameraShake(fValue[0], fValue[1]);
 	}
-
+	else if (splitText[0] == "Camera_Play_Son_214_Shake")
+	{
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		main_Camera->StartCameraShake(fValue[0], fValue[1]);
+	}
 
 
 	//21

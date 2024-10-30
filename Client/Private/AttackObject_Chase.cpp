@@ -5,7 +5,7 @@
 #include "GameInstance.h"
 
 #include "Character.h"
-
+#include "Main_Camera.h"
 CAttackObject_Chase::CAttackObject_Chase(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
 {
@@ -295,6 +295,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			//여기 Chase 피격시 사운드
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->StartCameraShake(0.5f, 0.2f);
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
