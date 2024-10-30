@@ -13,7 +13,7 @@ EffectName: BurstU-2_01
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_01
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 2
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 11

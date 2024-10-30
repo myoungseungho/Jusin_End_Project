@@ -8,7 +8,7 @@ texture2D		g_Texture;
 
 texture2D		g_DepthTexture;
 
-float2 g_vMultiple_Texcoord;
+float2 g_vMultiple_Texcoord = { 1.f, 1.f };
 
 bool isBindTexture;
 bool isAlpha;
