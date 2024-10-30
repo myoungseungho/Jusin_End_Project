@@ -72,6 +72,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
+
 		return S_OK;
 	}
 

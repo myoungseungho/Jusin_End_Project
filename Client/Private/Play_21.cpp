@@ -1661,7 +1661,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_WALLBOUNCE };
 			Desc.iTeam = m_iPlayerTeam;
-			Desc.bGroundSmash = true;
+			//Desc.bGroundSmash = true;
 			Desc.fAnimationLockTime = 0.5f;
 			Desc.pOwner = this;
 			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
