@@ -7,6 +7,8 @@
 
 #include "Play_Goku.h"
 
+#include "Effect_Manager.h"
+
 //vector<CInput> Command_236Attack =
 //{
 //	{MOVEKEY_DOWN, ATTACK_NONE},
@@ -37,6 +39,10 @@ void CGoku_MeleeAttack::Initalize(CPlay_Goku* pPlayer)
 	m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
 
 	m_pGameInstance = CGameInstance::Get_Instance();
+	m_pEffect_Manager = CEffect_Manager::Get_Instance();
+
+
+	//	Safe_AddRef(m_pEffect_Manager);
 }
 
 void CGoku_MeleeAttack::Attack_Light()
@@ -732,6 +738,11 @@ void CGoku_MeleeAttack::ForwardDash()
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_DownHook_Dash_SFX, false, 1.f);
+
+
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke_Run"), static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr());
+
+
 	}
 
 	else if (m_pPlayer->Get_bAirDashEnable()  && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP ))
