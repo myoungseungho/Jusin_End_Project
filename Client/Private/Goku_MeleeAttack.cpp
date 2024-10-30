@@ -249,7 +249,9 @@ void CGoku_MeleeAttack::Attack_Special()
 
 				if (m_pPlayer->CompareNextAnimation(CPlay_Goku::ANIME_IDLE))
 				{
+					//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
 					m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
+
 					(*m_piCountGroundSpecial)++;
 				}
 				

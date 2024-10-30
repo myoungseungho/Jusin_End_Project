@@ -1029,7 +1029,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 		Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 ºñÀ²
-
+		
 		Desc.iDirection = m_iLookDirection;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
