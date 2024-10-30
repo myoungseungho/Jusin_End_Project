@@ -57,8 +57,8 @@ public:
 		_ushort		iGainKiAmount = { 20 };
 
 
-		_float fCameraShakeDuration = { 200 };
-		_float fCameraShakeMagnitude = { 200 };
+		_float fCameraShakeDuration = { 0 };
+		_float fCameraShakeMagnitude = { 0 };
 
 		class CCharacter* pOwner = { nullptr };
 	};

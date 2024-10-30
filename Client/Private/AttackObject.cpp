@@ -69,7 +69,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_iGainKiAmount = pDesc->iGainKiAmount;
 
-	if (pDesc->fCameraShakeDuration != 200)
+	if (pDesc->fCameraShakeDuration != 0)
 	{
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
 		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
@@ -357,7 +357,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					}
 
 				}
-				if (m_fCameraShakeDuration != 200)
+				if (m_fCameraShakeDuration != 0)
 				{
 					CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
