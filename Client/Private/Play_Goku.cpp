@@ -1423,7 +1423,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 10.f;
-		Desc.iDamage = 100 * Get_DamageScale();;
+		Desc.iDamage = 500 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
@@ -1471,7 +1471,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
 	
 		Desc.fhitCharacter_StunTime = 10.0f;
-		Desc.iDamage = 1000 * Get_DamageScale();;
+		Desc.iDamage = 400 * Get_DamageScale();;
 		Desc.fLifeTime = 0.3f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP };
 		Desc.iTeam = m_iPlayerTeam;
@@ -1502,7 +1502,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
 
 		Desc.fhitCharacter_StunTime = 10.0f;
-		Desc.iDamage = 1000 * Get_DamageScale();;
+		Desc.iDamage = 600 * Get_DamageScale();;
 		Desc.fLifeTime = 0.3f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
 		Desc.iTeam = m_iPlayerTeam;

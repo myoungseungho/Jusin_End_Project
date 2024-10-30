@@ -3158,6 +3158,8 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					//인원수 조건문
 					m_fMaxSparkingTime = 10.f;
 
+					//UI한테 켠다고 전해주기
+
 				}
 
 			
@@ -3213,7 +3215,7 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 		if (m_fAccSparkingTime > m_fMaxSparkingTime)
 		{
 			m_bSparking = false;
-
+			//UI한테 끈다고 전해주기
 		}
 
 	}
@@ -3277,6 +3279,7 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	if (m_bSparking)
 	{
 		m_bSparking = false;
+		//UI한테 끈다고 전해주기
 	}
 }
 
