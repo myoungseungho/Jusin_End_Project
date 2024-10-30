@@ -45,7 +45,12 @@ void CUI_SkillNumber::Camera_Update(_float fTimeDelta)
 
 void CUI_SkillNumber::Update(_float fTimeDelta)
 {
-	
+	if (m_fColorValue >= 1.f)
+		m_bSignSwitch = FALSE;
+	else if (m_fColorValue <= 0.5f)
+		m_bSignSwitch = TRUE;
+
+	m_bSignSwitch ? m_fColorValue += fTimeDelta : m_fColorValue -= fTimeDelta;
 }
 
 void CUI_SkillNumber::Late_Update(_float fTimeDelta)
@@ -58,12 +63,19 @@ HRESULT CUI_SkillNumber::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	_int iSkillCount = 0;
-
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iSkillNumber)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	_uint iPass = 0;
+
+	if (m_iSkillNumber == 7)
+	{
+		iPass = 2;
+		_vector vColor = { 1 + m_fColorValue , 1 + m_fColorValue, 1 + m_fColorValue };
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+			return E_FAIL;
+	}
+	if (FAILED(m_pShaderCom->Begin(iPass)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "UI_Skill.h"
+#include "UI_BaseAttBuf.h"
 
 BEGIN(Client)
 
-class CUI_SkillNumber final :public CUI_Skill
+class CUI_HpEffect final :public CUIObject
 {
 private:
-	CUI_SkillNumber(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_SkillNumber(const CUI_SkillNumber& Prototype);
-	virtual ~CUI_SkillNumber() = default;
+	CUI_HpEffect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_HpEffect(const CUI_HpEffect& Prototype);
+	virtual ~CUI_HpEffect() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -23,11 +23,11 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
-	_bool m_bSignSwitch = { FALSE };
-	_float m_fColorValue = { 0.f };
+	_float m_fAlphaTimer = { 0.f };
+	_bool m_bSign = { TRUE };
 
 public:
-	static CUI_SkillNumber* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_HpEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

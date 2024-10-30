@@ -127,6 +127,8 @@ PS_OUT PS_COLOR(PS_IN In)
         discard;
     
     Out.vColor.rgb = (Out.vColor.rgb) * g_vColor;
+    
+    Out.vColor = saturate(Out.vColor);
 
     return Out;
 }
@@ -476,16 +478,17 @@ PS_OUT PS_SkillPanel(PS_IN In)
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-  // vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
-  // 
-  // if (g_bState)
-  // {
-  //     Out.vColor = lerp(Out.vColor, vEffectTexture, In.vTexcoord.y);
-  //     
-  // }
-  //
-  //if (Out.vColor.a <= 0.1f)
-  //    discard;
+    
+   vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+   
+   if (g_bState)
+   {
+        Out.vColor.rgb = lerp(Out.vColor.rgb, vEffectTexture.rgb * (1 - g_Radio), In.vTexcoord.y);
+      
+    }
+  
+  if (Out.vColor.a <= 0.1f)
+      discard;
    
     return Out;
 }

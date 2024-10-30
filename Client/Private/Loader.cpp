@@ -337,6 +337,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/cp_lifegauge_base.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_SubHpPanel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubHpPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/3.InGame/Subphysical_frame.png")))))
+		return E_FAIL;
 
 	//Ω√∞£ √ 
 
