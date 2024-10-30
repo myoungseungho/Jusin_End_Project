@@ -29,7 +29,7 @@ HRESULT CLine_Draw::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CLine_Draw::Priority_Update(_float fTimeDelta)
+void CLine_Draw::Camera_Update(_float fTimeDelta)
 {
 }
 

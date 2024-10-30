@@ -41,9 +41,9 @@ HRESULT CUI_SubHpGauge::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_SubHpGauge::Priority_Update(_float fTimeDelta)
+void CUI_SubHpGauge::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	(m_pSubPawn != nullptr) ? m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f : Destory();
 }

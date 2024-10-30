@@ -35,7 +35,7 @@ HRESULT CSpaceEarth::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceEarth::Priority_Update(_float fTimeDelta)
+void CSpaceEarth::Camera_Update(_float fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
 

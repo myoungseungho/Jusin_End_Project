@@ -31,16 +31,16 @@ HRESULT CUI_LoadingSpaceLight::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = 40.f, m_fSizeY = 40.f;
+	m_fSizeX = 100.f, m_fSizeY = 100.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
 }
 
-void CUI_LoadingSpaceLight::Priority_Update(_float fTimeDelta)
+void CUI_LoadingSpaceLight::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_LoadingSpaceLight::Update(_float fTimeDelta)
@@ -53,7 +53,12 @@ void CUI_LoadingSpaceLight::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 2.7f;
+
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this ,&tDesc);
 }
 
 HRESULT CUI_LoadingSpaceLight::Render(_float fTimeDelta)
@@ -74,7 +79,7 @@ HRESULT CUI_LoadingSpaceLight::Render(_float fTimeDelta)
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fAlphaValue, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(15)))
+	if (FAILED(m_pShaderCom->Begin(20)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

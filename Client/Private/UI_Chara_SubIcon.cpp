@@ -40,9 +40,9 @@ HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Chara_SubIcon::Priority_Update(_float fTimeDelta)
+void CUI_Chara_SubIcon::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	(m_pSubPawn != nullptr) ? m_iCharaID = m_pSubPawn->Get_PawnDesc().ePlayerID : Destory();;
 }

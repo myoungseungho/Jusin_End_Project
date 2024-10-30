@@ -35,6 +35,9 @@
 
 #include "AttackObject_Grab.h"
 #include "AttackObject_CommandGrab.h"
+#include "Main_Camera.h"
+
+#include "BattleInterface.h"
 
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -118,6 +121,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iBreakFall_Air = { ANIME_BREAK_FALL_AIR };   //101
 
 
+	m_iSparkingAnimationIndex = { ANIME_SPARKING };
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -168,7 +173,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatterns.push_back({ Command_LightAttack, ANIME_ATTACK_LIGHT1 });
 	MoveCommandPatterns.push_back({ Command_MediumAttack, ANIME_ATTACK_MEDIUM });
 	MoveCommandPatterns.push_back({ Command_HeavyAttack, ANIME_ATTACK_HEAVY });
-	
+
 
 	MoveCommandPatternsFunction.push_back({ Command_236UltimateAttack, bind(&CS21_MeleeAttack::Attack_236Ultimate, &m_tAttackMap) });
 	//MoveCommandPatternsFunction.push_back({ Command_236UltimateAttack_Side, bind(&CS21_MeleeAttack::Attack_236Ultimate_Side, &m_tAttackMap) });
@@ -184,7 +189,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction.push_back({ Command_236Special,  bind(&CS21_MeleeAttack::Attack_236Special, &m_tAttackMap) });
 	//MoveCommandPatternsFunction.push_back({ Command_236Special_Side,  bind(&CS21_MeleeAttack::Attack_236Special_Side, &m_tAttackMap) });
-	
+
 
 	MoveCommandPatternsFunction.push_back({ Command_214FinalAttack, bind(&CS21_MeleeAttack::Attack_214Final, &m_tAttackMap) });
 
@@ -197,7 +202,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_MediumAttack_Extra, bind(&CS21_MeleeAttack::Attack_Crouch_Medium, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_HeavyAttack_Extra, bind(&CS21_MeleeAttack::Attack_Crouch_Heavy, &m_tAttackMap) });
 
-	
+
 
 	//위에서 부터 확인하므로 간단한 커맨드가 아래로 가야함
 	MoveCommandPatternsFunction.push_back({ Command_LightAttack, bind(&CS21_MeleeAttack::Attack_Light, &m_tAttackMap) });
@@ -218,19 +223,18 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction.push_back({ Command_Crouch_SpecialAttack, bind(&CS21_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
 
-
-
-	//if (::AllocConsole() == TRUE)
-	//{
-	//	FILE* nfp[3];
-	//	freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-	//	freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-	//	freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-	//	std::ios::sync_with_stdio();
-	//}
-
 	m_eCharacterID = CUI_Define::PLAYER_ID::ANDROID21;
+	CBattleInterface_Manager::Get_Instance()->Regist_Character(m_iPlayerTeam, this, m_ePlayerSlot);
+	if (m_ePlayerSlot != CUI_Define::PLAYER_SLOT::LPLAYER1 && m_ePlayerSlot != CUI_Define::PLAYER_SLOT::RPLAYER1)
+	{
+		m_bPlaying = false;
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(5.f * m_iPlayerTeam, 100.f, 0.f, 1.f));
 
+		//캐릭터 사이즈에 맞게 각자 추가하느라 m_pColliderCom이 없음
+		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	}
+	else
+		m_bPlaying = true;
 
 	return S_OK;
 }
@@ -238,7 +242,12 @@ HRESULT CPlay_21::Initialize(void* pArg)
 void CPlay_21::Player_Update(_float fTimeDelta)
 {
 
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
+
+
+	if (m_bPlaying == false)
+		return;
+
 
 	if (m_pGameInstance->Key_Down(DIK_PGUP))
 	{
@@ -249,7 +258,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		return;
 
 
-	
+
 	if (m_pModelCom->m_iCurrentAnimationIndex == 8)
 	{
 		_bool bDebug = true;
@@ -265,31 +274,33 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		return;
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_F3))
-		m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
+	//if (m_pGameInstance->Key_Down(DIK_F3))
+	//	m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
 
 	//합치기 전 임시 코드.  적 탐지코드임
-	if (m_pDebugEnemy == nullptr)
-	{
-		//_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-
-		for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
-		{
-			CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-
-			if (pObject != this)
-			{
-				m_pDebugEnemy = static_cast<CCharacter*>(pObject);
-			}
-
-		}
-	}
+	//if (m_pEnemy == nullptr)
+	//{
+	//	_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+	//
+	//	for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
+	//	{
+	//		CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
+	//	
+	//		if (pObject != this)
+	//		{
+	//			m_pEnemy = static_cast<CCharacter*>(pObject);
+	//		}
+	//	
+	//	}
+	//	
+	//}
+	pEnemyCheck();
 
 
 	//방향전환 코드.  적 탐지가 추가된 이후엔  CCharacter로 옮기기
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	{
-		CTransform* pEnemyTransform = static_cast<CTransform*>(m_pDebugEnemy->Get_Component(TEXT("Com_Transform")));
+		CTransform* pEnemyTransform = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
 
 		//적 방향의 X값 체크
 		_float fX = XMVectorGetX(pEnemyTransform->Get_State(CTransform::STATE_POSITION) - m_pTransformCom->Get_State(CTransform::STATE_POSITION));
@@ -338,6 +349,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	if (m_bAnimationLock == false)
 	{
 
+		Sparking_ON(fTimeDelta);
 
 		//추적 관련 코드.
 		if (m_iPlayerTeam == 1)
@@ -494,6 +506,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	//일부 공격 캔슬
 	AttckCancleJump();
 
+	Sparking_TimeCount(fTimeDelta);
 
 
 
@@ -524,6 +537,8 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	{
 		Add_Move({ -12.f - fPosX, 0.f });
 	}
+
+	Tag_KeyCheck();
 
 
 
@@ -560,18 +575,18 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 
 
 
-	cout << "Team : " << m_iPlayerTeam << " Direction : " << m_iLookDirection << endl;
+	//cout << "Team : " << m_iPlayerTeam << " Direction : " << m_iLookDirection << endl;
 	Check_Ground();
 }
 
-void CPlay_21::Priority_Update(_float fTimeDelta)
+void CPlay_21::Camera_Update(_float fTimeDelta)
 {
 
 }
 
 void CPlay_21::Update(_float fTimeDelta)
 {
-	
+
 
 
 	/*
@@ -581,7 +596,7 @@ void CPlay_21::Update(_float fTimeDelta)
 	InputedCommandUpdate(fTimeDelta);
 	InputCommand();
 
-	
+
 
 	CheckAllCommands();
 
@@ -609,11 +624,11 @@ void CPlay_21::Update(_float fTimeDelta)
 		}
 	}
 
-	
+
 
 	Gravity(fTimeDelta);
 
-	
+
 	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
 	{
 		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
@@ -653,7 +668,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 				if (MoveKey == -1)
 				{
-					
+
 					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
 					//{
 					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
@@ -692,7 +707,7 @@ void CPlay_21::Update(_float fTimeDelta)
 				}
 			}
 
-			
+
 			//앉기 추가 전에는 이거만 있었음
 			//if (m_pGameInstance->Key_Pressing(DIK_A))
 			//{
@@ -725,7 +740,7 @@ void CPlay_21::Update(_float fTimeDelta)
 			//	m_iNextAnimation.second = 100.f;
 			//}
 
-			
+
 		}
 	}
 
@@ -748,7 +763,7 @@ void CPlay_21::Update(_float fTimeDelta)
 		m_pModelCom->SetUp_Animation(0,true);
 	}
 
-	
+
 	Check_Ground();
 	*/
 }
@@ -757,9 +772,9 @@ void CPlay_21::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
-//#ifdef _DEBUG
-//	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-//#endif
+	//#ifdef _DEBUG
+	//	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+	//#endif
 }
 
 HRESULT CPlay_21::Render(_float fTimeDelta)
@@ -810,7 +825,7 @@ void CPlay_21::NextMoveCheck()
 	//
 	//}
 
-	
+
 
 	//공격중인경우  로 바꾸자  *체크*
 	//if (Check_bCurAnimationisGroundMove() == false)
@@ -845,7 +860,7 @@ void CPlay_21::NextMoveCheck()
 /*
 void CPlay_21::AttackNextMoveCheck()
 {
-	
+
 	//if (m_iNextAnimation.first != ANIME_IDLE)
 	//{
 	//	Set_Animation(m_iNextAnimation.first);
@@ -868,7 +883,7 @@ void CPlay_21::AttackNextMoveCheck()
 			m_fNextAnimationCurrentPosition = 0.f;
 		}
 	}
-	
+
 
 }
 
@@ -881,7 +896,7 @@ void CPlay_21::AnimeEndNextMoveCheck()
 	m_iNextAnimation.second = 1000.f;
 
 
-	
+
 
 }
 
@@ -967,7 +982,7 @@ void CPlay_21::Set_Animation(_uint iAnimationIndex)
 
 void CPlay_21::KeyTest()
 {
-	
+
 }
 
 
@@ -1025,34 +1040,34 @@ void CPlay_21::Check_Ground()
 {
 
 	//_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-	 _float fHeight = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	_float fHeight = XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
-	 if (fHeight <= fGroundHeight)
-	 {
-		 if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_214)
-		 {
-			 if(m_pModelCom->Get_CurrentAnimationPosition() < 55)
-			 {
-				 m_pModelCom->CurrentAnimationPositionJump(55.f);
-			 //m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 90.f;
-				 m_fGravityTime = 0.f;
+	if (fHeight <= fGroundHeight)
+	{
+		if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_214)
+		{
+			if (m_pModelCom->Get_CurrentAnimationPosition() < 55)
+			{
+				m_pModelCom->CurrentAnimationPositionJump(55.f);
+				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 90.f;
+				m_fGravityTime = 0.f;
 
-				 Reset_AttackCount();
-			 }
-		 }
+				Reset_AttackCount();
+			}
+		}
 
 
-	 }
+	}
 
 }
 
 _bool CPlay_21::Check_bCurAnimationisGroundMove(_uint iAnimation)
 {
-	_uint iModelIndex= iAnimation;
+	_uint iModelIndex = iAnimation;
 
-	if(iAnimation == 1000)
-		 iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
-	
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
 
 	//if (iModelIndex == ANIME_IDLE || (iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK) )
 	//{
@@ -1068,7 +1083,7 @@ _bool CPlay_21::Check_bCurAnimationisGroundMove(_uint iAnimation)
 
 
 	if (iModelIndex == ANIME_IDLE || iModelIndex == ANIME_FORWARD_WALK || iModelIndex == ANIME_BACK_WALK || iModelIndex == ANIME_CROUCH_START || iModelIndex == ANIME_CROUCHING
-		||iModelIndex == ANIME_FORWARD_DASH )
+		|| iModelIndex == ANIME_FORWARD_DASH)
 	{
 		return true;
 	}
@@ -1124,31 +1139,31 @@ void CPlay_21::Gravity(_float fTimeDelta)
 
 	//_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	//_float fHeight = XMVectorGetY(vPos);
-	
+
 	_ushort iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
-	
-	if (iAnimationIndex == ANIME_ATTACK_214 && m_pModelCom->m_fCurrentAnimPosition >30.f && m_pModelCom->m_fCurrentAnimPosition < 50.f)
+
+	if (iAnimationIndex == ANIME_ATTACK_214 && m_pModelCom->m_fCurrentAnimPosition > 30.f && m_pModelCom->m_fCurrentAnimPosition < 50.f)
 	{
 		Add_Move({ m_fImpuse.x * fTimeDelta , m_fImpuse.y * fTimeDelta });  //땅에 닿았을때 처리는 현재 GroundCheck 에 있음
 	}
 
-	if ( iAnimationIndex == ANIME_ATTACK_AIR1 || iAnimationIndex == ANIME_ATTACK_AIR2 || iAnimationIndex == ANIME_ATTACK_AIR3 )
+	if (iAnimationIndex == ANIME_ATTACK_AIR1 || iAnimationIndex == ANIME_ATTACK_AIR2 || iAnimationIndex == ANIME_ATTACK_AIR3)
 	{
 		//if (fHeight == 0)
-		if(Get_fHeight() == 0)
+		if (Get_fHeight() == 0)
 		{
-	
+
 			//m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);
 			Set_Animation(m_iIdleAnimationIndex);
-	
-	
+
+
 			Set_fGravityTime(0.f);
 			//Set_fJumpPower(0.f);
 			Set_fImpulse(0.f);
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);
 		}
-	
+
 	}
 
 }
@@ -1182,7 +1197,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_LIGHT2:
 	{
 
@@ -1209,7 +1224,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_LIGHT3:
 	{
 
@@ -1237,7 +1252,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_MEDIUM:
 	{
 		CAttackObject::ATTACK_DESC Desc{};
@@ -1262,7 +1277,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_HEAVY:
 	{
 		CAttackObject::ATTACK_DESC Desc{};
@@ -1290,7 +1305,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_SPECIAL:
 		break;
 	case Client::CPlay_21::ANIME_ATTACK_AIR1:
@@ -1311,7 +1326,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
 
 
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.5f;
 		Desc.iDamage = 400 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HIT_LIGHT };
@@ -1323,7 +1338,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_AIR2:
 	{
 
@@ -1339,9 +1354,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_Impus = { m_fImpuse.x *0.4f ,0 };
+		Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.4f ,0 };
 
-		Desc.fhitCharacter_StunTime = 0.3f;
+		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
@@ -1353,7 +1368,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_AIR3:
 	{
 		CAttackObject::ATTACK_DESC Desc{};
@@ -1376,18 +1391,18 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (Get_fHeight() > 0)
 		{
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
-			Desc.bCameraZoom = false;
+			//Desc.bCameraZoom = false;
 		}
 		else
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.05f;
+		Desc.fAnimationLockTime = 0.7f;
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_CROUCH_LIGHT:
 	{
 
@@ -1415,7 +1430,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
 
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_CROUCH_MEDUIM:
 	{
 
@@ -1427,7 +1442,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 		Desc.ColliderDesc.pMineGameObject = this;
-		
+
 		//오공처럼 쓰던것
 		//Desc.ColliderDesc.vCenter = { 0.7f * m_iLookDirection,0.3f,0.f };
 		Desc.ColliderDesc.vCenter = { 2.5f * m_iLookDirection,0.3f,0.f };
@@ -1455,7 +1470,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		break;
+	break;
 
 	case Client::CPlay_21::ANIME_ATTACK_CROUCH_HEAVY:
 	{
@@ -1488,7 +1503,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		if (Get_fHeight() > 2)
-		{			
+		{
 			Desc.bCameraZoom = false;
 			Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 4.f };
 			Desc.fAnimationLockTime = 0.1f;
@@ -1497,19 +1512,19 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
-		//공중 어퍼랑 같은 모션임
+	//공중 어퍼랑 같은 모션임
 
 
-		break;
-		break;
+	break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL:
 		break;
 	case Client::CPlay_21::ANIME_ATTACK_236:
 	{
 
-		
+
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_214:
 	{
 		//내려찍는중
@@ -1582,12 +1597,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 			Desc.eAttackGrade = GRADE_ULTIMATE;
 			Desc.bGroundSmash = false;
-			
+
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_236_SPECIAL:
 	{
 
@@ -1610,7 +1625,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		Desc.eAttackType = ATTACKTYPE_COMMANDGRAB;
-		
+
 		Desc.fDistance = { 0.8f * m_iLookDirection,0.5f };
 		//Desc.fGrabAnimationPosition = 40.f;
 		//Desc.fGrabAnimationPosition = 25.f;
@@ -1621,9 +1636,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iOnwerNextAnimationIndex = ANIME_ATTACK_236_SPECIAL_SUCCES;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
-		
+		//236 잡기 컷신
+		static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->Play(CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL, 0);
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES:
 	{
 		if (iAttackEvent == 0)
@@ -1649,14 +1665,17 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fAnimationLockTime = 0.5f;
 			Desc.pOwner = this;
 			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
-			Desc.bCameraZoom = false;
+			//Desc.bCameraZoom = false;
 			//Desc.bGrabbedEnd = true;
 			//Desc.bCameraZoom = false;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+		
 		}
 
-		if(iAttackEvent == 1 )
+		if (iAttackEvent == 1)
 		{
 			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
@@ -1681,14 +1700,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
 
 			Desc.bGrabbedEnd = true;
-			Desc.bCameraZoom = false;
+			//Desc.bCameraZoom = false;
 			Desc.iGainAttackStep = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
 
 	}
-		break;
+	break;
 	case Client::CPlay_21::ANIME_ATTACK_236_ULTIMATE:
 		break;
 	case Client::CPlay_21::ANIME_FINAL_START:

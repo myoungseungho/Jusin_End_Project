@@ -498,6 +498,12 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		pCharacter->Play_Group_Sound(fValue[0], fValue[1], fValue[2]);
 	}
+	else if (splitText[0] == "MoveToGround")
+	{
+		CTransform* pTransform = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));
+		pTransform->Set_State(CTransform::STATE_POSITION, { pCharacter->Get_fPositionX(),fValue[0],0.f,1.f });
+	}
+
 
 #pragma region Ä«¸Þ¶ó
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_0")
@@ -535,6 +541,16 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
 	}
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_4_Shake")
+	{
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		main_Camera->StartCameraShake(fValue[0], fValue[1]);
+	}
+
+
+
+	//21
+
+	else if (splitText[0] == "Camera_Play_21_Grab_Special_0_Shake")
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 		main_Camera->StartCameraShake(fValue[0], fValue[1]);

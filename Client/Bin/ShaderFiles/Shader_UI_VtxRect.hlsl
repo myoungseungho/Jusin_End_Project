@@ -443,8 +443,25 @@ PS_OUT PS_VIDEO(PS_IN In)
     AColor += lerp(vBGMaterial, Out.vColor, 0.5f);
     
     Out.vColor = AColor;
+    
     return Out;
 }
+
+PS_OUT PS_SpaceLight(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor.a = Out.vColor.r;
+
+    if (Out.vColor.a <= 0.1f)
+        discard;
+  
+    Out.vColor.a *= g_fAlphaTimer;
+
+    return Out;
+}
+
 
 technique11 DefaultTechnique
 {
@@ -746,6 +763,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_VIDEO();
+    }
+
+//20
+    pass SpaceLight
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SpaceLight();
     }
 
 }

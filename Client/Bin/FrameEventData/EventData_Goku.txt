@@ -154,6 +154,7 @@ PLAY_GOKU,GKS205_body,95.000000,PlaySound,13,0,1
 
 //,앉아약
 PLAY_GOKU,GKS230_body,0,AnimSpeedChange,0.028,90
+PLAY_GOKU,GKS230_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS230_body,10,AttackEvent,33333     
 PLAY_GOKU,GKS230_body,12,NextAnimationCheck,333
 PLAY_GOKU,GKS230_body,17,NextAnimationCheck,333
@@ -161,6 +162,7 @@ PLAY_GOKU,GKS230_body,17,NextAnimationCheck,333
 
 //,앉아중 기존 공격프레임은 11~14
 PLAY_GOKU,GKS231_body,0,AnimSpeedChange,0.02,90
+PLAY_GOKU,GKS231_body,0.001000,PlayGroupSound,204,0,1
 //,PLAY_GOKU,GKS231_body,21,AttackEvent,33333
 PLAY_GOKU,GKS231_body,25,AttackEvent,333333
 PLAY_GOKU,GKS231_body,30,NextAnimationCheck,333333333
@@ -201,6 +203,7 @@ PLAY_GOKU,GKS232_body,43,NextAnimationCheck,33333
 
 //,공중약
 PLAY_GOKU,GKS260_body,0,AnimSpeedChange,0.027000,120.000000
+PLAY_GOKU,GKS260_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS260_body,10,AttackEvent,33333333
 PLAY_GOKU,GKS260_body,11,NextAnimationCheck,333333
 PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
@@ -208,6 +211,7 @@ PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
 
 //,공중 중
 PLAY_GOKU,GKS261_body,0,AnimSpeedChange,0.025000,120
+PLAY_GOKU,GKS261_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS261_body,30,AnimSpeedChange,0.027000,80
 PLAY_GOKU,GKS261_body,31,AttackEvent,33333333
 PLAY_GOKU,GKS261_body,35,NextAnimationCheck,333333
@@ -344,6 +348,7 @@ PLAY_GOKU,GKS403_body,70,NextAnimationCheck,333333
 
 //,236약
 PLAY_GOKU,GKS404_body,0.000000,AnimSpeedChange,0.016000,85.656998
+PLAY_GOKU,GKS404_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS404_body,45,AttackEvent,33333
 PLAY_GOKU,GKS404_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS404_body,50,NextAnimationCheck,333333
@@ -409,6 +414,7 @@ PLAY_GOKU,GKS404_body,59,ObjectMove,0.01,0,0,0
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,85.656998
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,120.656998
 PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,180.656998
+PLAY_GOKU,GKS405_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS405_body,45,AttackEvent,33333
 PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS405_body,50,NextAnimationCheck,333333
@@ -471,6 +477,7 @@ PLAY_GOKU,GKS405_body,59,ObjectMove,0.01,0,0,0
 
 //,214약
 PLAY_GOKU,GKS406_body,0.000000,AnimSpeedChange,0.013000,121
+PLAY_GOKU,GKS406_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS406_body,20.1,AnimSpeedChange,0.013000,121
 PLAY_GOKU,GKS406_body,40,AttackEvent,0,0
 PLAY_GOKU,GKS406_body,45,NextAnimationCheck,333333
@@ -560,7 +567,8 @@ PLAY_GOKU,GKS406_body,102,ObjectMove,0.09,0.01,0,0
 
 //,3필 시작 기모으기
 PLAY_GOKU,GKS436_body,0,AnimSpeedChange,0.023000,25
-PLAY_GOKU,GKS436_body,0,Camera_Play_Son_Ultimate_0,7,0,1.2,0.2
+PLAY_GOKU,GKS436_body,0,Camera_Play_Son_Ultimate_0,8,0,1.2,0.2
+PLAY_GOKU,GKS436_body,0.001000,PlaySound,14,0,1
 PLAY_GOKU,GKS436_body,20.001000,PlaySound,5,0,1
 PLAY_GOKU,GKS436_body,30,ModelChange,4444444
 PLAY_GOKU,GKS436_body,30,EFFECT,4444444
@@ -578,12 +586,17 @@ PLAY_GOKU,GKS440_body,45.000000,EnemyChase,1,0,0
 PLAY_GOKU,GKS440_body,45.000000,FlipPlayerDirection,0
 PLAY_GOKU,GKS440_body,45.000000,PositionChange,54
 
+
+
 //,PLAY_GOKU,GKS440_body,45.000000,SetNextAnimation,72,100
 
 
 //,3필 모션 - 엘보
 PLAY_GOKU,GKS441_body,0.000000,AnimSpeedChange,0.020000,120.000000
-PLAY_GOKU,GKS441_body,30,Camera_Play_Son_Ultimate_1,7,1,0.5,0.2
+PLAY_GOKU,GKS441_body,0.001000,PlaySound,15,0,1
+PLAY_GOKU,GKS441_body,20.001000,PlaySound,9,0,1
+PLAY_GOKU,GKS441_body,0,MoveToGround,0
+//,PLAY_GOKU,GKS441_body,30,Camera_Play_Son_Ultimate_1,7,1,0.5,0.2
 PLAY_GOKU,GKS441_body,40,AttackEvent,33333
 //,맞췄으면 443으로 연계
 
@@ -597,16 +610,18 @@ PLAY_GOKU,GKS441_body,30,ObjectMove,0.2,0,0,0
 
 //,3필 모션 - 올려차기
 PLAY_GOKU,GKS443_body,0.000000,AnimSpeedChange,0.020000,120.000000
+PLAY_GOKU,GKS443_body,0.001000,PlaySound,15,0,1
+PLAY_GOKU,GKS443_body,0.001000,PlaySound,9,0,1
 PLAY_GOKU,GKS443_body,30.000000,PlaySound,6,0,1
 PLAY_GOKU,GKS443_body,30,AttackEvent,33333
-PLAY_GOKU,GKS443_body,30,Camera_Play_Son_Ultimate_2,7,2,0.5,0.2
+PLAY_GOKU,GKS443_body,30,Camera_Play_Son_Ultimate_2,8,2,0.2,0.2
 //,PLAY_GOKU,GKS443_body,74.000000,SetNextAnimation,73,100
 PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 
 
 //,3필 모션 - 공중강공
 //,PLAY_GOKU,GKS442_body,0,ObjectMove,2,3,0,0
-PLAY_GOKU,GKS442_body,0,Camera_Play_Son_Ultimate_3_Camera,7,3
+PLAY_GOKU,GKS442_body,0,Camera_Play_Son_Ultimate_3_Camera,8,3
 PLAY_GOKU,GKS442_body,0.1,ObjectMove,3,10,0,0
 //,PLAY_GOKU,GKS442_body,0.1,ObjectMove,3,4.5,0,0
 
@@ -615,6 +630,7 @@ PLAY_GOKU,GKS442_body,1,FlipPlayerDirection,0
 PLAY_GOKU,GKS442_body,20.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS442_body,25,AttackEvent,33333
 PLAY_GOKU,GKS442_body,25,Camera_Play_Son_Ultimate_3_Shake,0.5,0.4
+PLAY_GOKU,GKS442_body,25.001000,PlaySound,9,0,1
 
 //,그냥 정지하는게 맞을지도
 PLAY_GOKU,GKS442_body,25,AnimSpeedChange,0.020000,80.000000
@@ -624,13 +640,15 @@ PLAY_GOKU,GKS442_body,60,SetNextAnimation,70
 
 //, 3필 모션-마지막
 PLAY_GOKU,GKS436cs,0.000000,AnimSpeedChange,0.043000,60.808998
-PLAY_GOKU,GKS436cs,0,Camera_Play_Son_Ultimate_4_Camera,7,4
+PLAY_GOKU,GKS436cs,0,Camera_Play_Son_Ultimate_4_Camera,8,4
+PLAY_GOKU,GKS436cs,0.001000,PlaySound,16,0,1
 //,PLAY_GOKU,GKS436cs,1,ObjectMove,2,-2,0,0
 PLAY_GOKU,GKS436cs,1,ObjectMove,4,-7,0,0
 PLAY_GOKU,GKS436cs,2,FlipPlayerDirection,0
 //,PLAY_GOKU,GKS436cs,15,AnimSpeedChange,0.043000,20.808998
 PLAY_GOKU,GKS436cs,50,AnimSpeedChange,0.043000,40
 PLAY_GOKU,GKS436cs,50.000000,PlaySound,7,0,1
+PLAY_GOKU,GKS436cs,50.001000,PlaySound,17,0,1
 PLAY_GOKU,GKS436cs,75,AnimSpeedChange,0.017000,60
 PLAY_GOKU,GKS436cs,93,AnimSpeedChange,0.022000,5
 PLAY_GOKU,GKS436cs,96,AnimSpeedChange,0.012000,2

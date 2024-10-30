@@ -37,7 +37,7 @@ HRESULT CSpaceMeteo::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceMeteo::Priority_Update(_float fTimeDelta)
+void CSpaceMeteo::Camera_Update(_float fTimeDelta)
 {
 
 }

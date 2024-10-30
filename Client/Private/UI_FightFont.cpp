@@ -54,9 +54,9 @@ HRESULT CUI_FightFont::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_FightFont::Priority_Update(_float fTimeDelta)
+void CUI_FightFont::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	if (m_QueueAnim.size() < 2)
 	{

@@ -54,6 +54,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_SON_GRAB:
 			name = "Camera_Son_Grab";
 			break;
+		case VIRTUAL_CAMERA_SON_SAME_GRAB:
+			name = "Camera_Son_Same_Grab";
+			break;
 		case VIRTUAL_CAMERA_SON_ENERGY:
 			name = "Camera_Son_Energy";
 			break;
@@ -71,6 +74,12 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 			break;
 		case VIRTUAL_CAMERA_21_GRAB:
 			name = "Camera_21_Grab";
+			break;
+		case VIRTUAL_CAMERA_21_SAME_GRAB:
+			name = "Camera_21_Same_Grab";
+			break;
+		case VIRTUAL_CAMERA_21_GRAB_SPECIAL:
+			name = "Camera_21_Grab_Special";
 			break;
 		case VIRTUAL_CAMERA_21_ENERGY:
 			name = "Camera_21_Energy";
@@ -108,6 +117,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Son_Knock_Away_Up"] = VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP;
 	stringToSkillID["Camera_Son_Air_Smash"] = VIRTUAL_CAMERA_SON_AIR_SMASH;
 	stringToSkillID["Camera_Son_Grab"] = VIRTUAL_CAMERA_SON_GRAB;
+	stringToSkillID["Camera_Son_Same_Grab"] = VIRTUAL_CAMERA_SON_SAME_GRAB;
 	stringToSkillID["Camera_Son_Energy"] = VIRTUAL_CAMERA_SON_ENERGY;
 	stringToSkillID["Camera_Son_Ultimate"] = VIRTUAL_CAMERA_SON_ULTIMATE;
 
@@ -116,6 +126,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Son_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["Son_Air_Smash_Anim1"] = 0;
 	stringToAnimID["Son_Grab_Anim1"] = 0;
+	stringToAnimID["Son_Same_Grab_Anim1"] = 0;
 	stringToAnimID["Son_Energy_Anim1"] = 0;
 	stringToAnimID["Son_Ultimate_Anim1"] = 0;
 	stringToAnimID["Son_Ultimate_Anim2"] = 1;
@@ -130,6 +141,8 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_21_Knock_Away_Up"] = VIRTUAL_CAMERA_21_KNOCK_AWAY_UP;
 	stringToSkillID["Camera_21_Air_Smash"] = VIRTUAL_CAMERA_21_AIR_SMASH;
 	stringToSkillID["Camera_21_Grab"] = VIRTUAL_CAMERA_21_GRAB;
+	stringToSkillID["Camera_21_Same_Grab"] = VIRTUAL_CAMERA_21_SAME_GRAB;
+	stringToSkillID["Camera_21_Grab_Special"] = VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 	stringToSkillID["Camera_21_Energy"] = VIRTUAL_CAMERA_21_ENERGY;
 	stringToSkillID["Camera_21_Ultimate"] = VIRTUAL_CAMERA_21_ULTIMATE;
 
@@ -138,6 +151,8 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["21_Air_Smash_Anim1"] = 0;
 	stringToAnimID["21_Grab_Anim1"] = 0;
+	stringToAnimID["21_Same_Grab_Anim1"] = 0;
+	stringToAnimID["21_Grab_Special_Anim1"] = 0;
 	stringToAnimID["21_Energy_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim2"] = 1;
@@ -157,10 +172,10 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CMain_Camera::Priority_Update(_float fTimeDelta)
+void CMain_Camera::Camera_Update(_float fTimeDelta)
 {
 	//선택된 가상카메라 업데이트
-	m_vecVirtualCamera[m_currentVirtualMode]->Priority_Update(fTimeDelta);
+	m_vecVirtualCamera[m_currentVirtualMode]->Camera_Update(fTimeDelta);
 
 	//선택된 가상카메라의 정보로 뷰 투영 만들기
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], fTimeDelta);
@@ -357,8 +372,10 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 3)
 			index = VIRTUAL_CAMERA_SON_GRAB;
 		else if (skillID == 4)
-			index = VIRTUAL_CAMERA_SON_ENERGY;
+			index = VIRTUAL_CAMERA_SON_SAME_GRAB;
 		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_SON_ENERGY;
+		else if (skillID == 6)
 			index = VIRTUAL_CAMERA_SON_ULTIMATE;
 	}
 	else if (modelID == 2) { // MODELID_21
@@ -371,8 +388,12 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 3)
 			index = VIRTUAL_CAMERA_21_GRAB;
 		else if (skillID == 4)
-			index = VIRTUAL_CAMERA_21_ENERGY;
+			index = VIRTUAL_CAMERA_21_SAME_GRAB;
 		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_21_GRAB_SPECIAL;
+		else if (skillID == 6)
+			index = VIRTUAL_CAMERA_21_ENERGY;
+		else if (skillID == 7)
 			index = VIRTUAL_CAMERA_21_ULTIMATE;
 	}
 	else if (modelID == 3) { // MODELID_HIT
@@ -415,6 +436,7 @@ void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_GRAB]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SAME_GRAB]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ENERGY]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ULTIMATE]->Set_Player(state, pPlayer);
 
@@ -422,6 +444,8 @@ void CMain_Camera::SetPlayer(PLAYER_STATE state, CGameObject* pPlayer)
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_AIR_SMASH]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_21_SAME_GRAB]->Set_Player(state, pPlayer);
+	m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB_SPECIAL]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_ENERGY]->Set_Player(state, pPlayer);
 	m_vecVirtualCamera[VIRTUAL_CAMERA_21_ULTIMATE]->Set_Player(state, pPlayer);
 }

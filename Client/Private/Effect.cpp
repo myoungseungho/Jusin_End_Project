@@ -38,7 +38,7 @@ HRESULT CEffect::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CEffect::Priority_Update(_float fTimeDelta)
+void CEffect::Camera_Update(_float fTimeDelta)
 {
 
 }

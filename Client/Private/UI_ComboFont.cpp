@@ -45,9 +45,9 @@ HRESULT CUI_ComboFont::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_ComboFont::Priority_Update(_float fTimeDelta)
+void CUI_ComboFont::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_ComboFont::Update(_float fTimeDelta)

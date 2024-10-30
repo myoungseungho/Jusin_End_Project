@@ -38,14 +38,14 @@ HRESULT CContainerObject::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CContainerObject::Priority_Update(_float fTimeDelta)
+void CContainerObject::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	for (auto& pPartObject : m_Parts)
 	{
 		if (nullptr != pPartObject)
-			pPartObject->Priority_Update(fTimeDelta);
+			pPartObject->Camera_Update(fTimeDelta);
 	}		
 }
 

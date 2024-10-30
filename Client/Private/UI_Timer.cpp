@@ -36,9 +36,9 @@ HRESULT CUI_Timer::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Timer::Priority_Update(_float fTimeDelta)
+void CUI_Timer::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 		
 }
 

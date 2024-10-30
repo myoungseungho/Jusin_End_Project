@@ -20,6 +20,8 @@ void CS21_MeleeAttack::Initalize(CPlay_21* pPlayer)
 
 	m_pbAttackCount = m_pPlayer->Get_pbAttackCount();
 	//m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
+
+	m_pGameInstance = CGameInstance::Get_Instance();
 }
 
 void CS21_MeleeAttack::Attack_Light()
@@ -276,6 +278,8 @@ void CS21_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Grab(false);
 			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
+			m_pPlayer->Set_GrabLoofCount(2);
+			
 		}
 
 		else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP)
@@ -283,6 +287,7 @@ void CS21_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Grab(true);
 			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
+			m_pPlayer->Set_GrabLoofCount(2);
 		}
 	}
 }
@@ -518,6 +523,7 @@ void CS21_MeleeAttack::ForwardDash()
 	if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_21::ANIME_BACK_WALK)
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_FORWARD_DASH);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_DownHook_Dash_SFX, false, 1.f);
 	}
 
 	else if (m_pPlayer->Get_bAirDashEnable() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP))

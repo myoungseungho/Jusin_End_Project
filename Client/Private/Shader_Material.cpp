@@ -71,7 +71,7 @@ HRESULT CShader_Material::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CShader_Material::Priority_Update(_float fTimeDelta)
+void CShader_Material::Camera_Update(_float fTimeDelta)
 {
 	m_fTime += fTimeDelta;
 

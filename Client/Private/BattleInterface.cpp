@@ -17,12 +17,19 @@
 #include "Model_Preview.h"
 #include "BattleInterface.h"
 
+
+#include "Main_Camera.h"
+
+
 IMPLEMENT_SINGLETON(CBattleInterface_Manager)
 
 
 
+
 CBattleInterface_Manager::CBattleInterface_Manager()
+    :m_pGameInstance{ CGameInstance::Get_Instance() }
 {
+    Safe_AddRef(m_pGameInstance);
 }
 
 
@@ -56,23 +63,167 @@ void CBattleInterface_Manager::Set_bSparkingEnable(_bool bSparkingEnable, _ushor
 
 void CBattleInterface_Manager::Gain_KiGuage(_ushort iKi, _ushort iTeam)
 {
-    m_iKiGuage[iTeam - 1] += iKi;
+   
+    //기 게이지 꽉찬게 아니면
+    if (m_iKiNumber[iTeam - 1] != 7)
+    {
+        //기 를 회복 
+        m_iKiGuage[iTeam - 1] += iKi;
+
+        //1줄 넘겼으면 다음줄로
+        if (m_iKiGuage[iTeam - 1] > 100)
+        {
+            m_iKiNumber[iTeam - 1]++;
+            m_iKiGuage[iTeam - 1] -= 100;
+        }
+    }
+
+
+   
+
 }
 
 _bool CBattleInterface_Manager::Use_KiGuage(_ushort irequirementKi, _ushort iTeam)
 {
-    if (m_iKiGuage[iTeam - 1] > irequirementKi)
+
+    //디버그용 코드 반드시 성공
+    if (m_pGameInstance->Key_Pressing(DIK_INSERT))
     {
-        m_iKiGuage[iTeam - 1] -= irequirementKi;
+        return true;
+    }
+
+    if (m_iKiNumber[iTeam - 1] >= irequirementKi)
+    {
+        m_iKiNumber[iTeam - 1] -= irequirementKi;
         return true;
     }
 
     return false;
 }
 
-_ushort CBattleInterface_Manager::Get_KiGuage(_ushort iKi, _ushort iTeam)
+_ushort CBattleInterface_Manager::Get_KiGuage(_ushort iTeam)
 {
     return  m_iKiGuage[iTeam - 1];
+}
+
+_ushort CBattleInterface_Manager::Get_KiNumber(_ushort iTeam)
+{
+    return  m_iKiNumber[iTeam - 1];
+}
+
+void CBattleInterface_Manager::Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSlot, _float fTime)
+{
+
+
+    for (auto pCharacter : m_p1TeamCharacter)
+    {
+        if (pCharacter != nullptr)
+        pCharacter->Set_AnimationStop(fTime);
+    }
+
+    for (auto pCharacter : m_p2TeamCharacter)
+    {
+        if (pCharacter != nullptr)
+        pCharacter->Set_AnimationStop(fTime);
+    }
+
+
+    if (iTeam == 1)
+    {
+        m_p1TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+    }
+    else if (iTeam == 2)
+    {
+        m_p1TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+    }
+
+}
+
+
+
+/*
+void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot)
+{
+
+    if (iTeam == 1)
+    {
+        for (auto pCharcter : m_p2TeamCharacter)
+        {
+            pCharcter->RegisterEnemy(m_p1TeamCharacter[NewCharacterslot]);
+        }
+
+        m_p1TeamCharacter[NewCharacterslot]->Tag_Out()
+    }
+    else if (iTeam == 2)
+    {
+        for (auto pCharcter : m_p1TeamCharacter)
+        {
+            pCharcter->RegisterEnemy(m_p2TeamCharacter[NewCharacterslot]);
+        }
+    }
+
+
+
+}
+*/
+
+void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos)
+{
+
+
+    CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+
+    if (iTeam == 1)
+    {
+        for (auto pCharacter : m_p2TeamCharacter)
+        {
+            if(pCharacter != nullptr)
+                pCharacter->RegisterEnemy(m_p1TeamCharacter[NewCharacterslot]);
+        }
+        m_i1TeamPlayingCharacterIndex = NewCharacterslot;
+        m_p1TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
+        pMainCamera->SetPlayer(CMain_Camera::PLAYER_1P, m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
+    }
+    else if (iTeam == 2)
+    {
+        for (auto pCharacter : m_p1TeamCharacter)
+        {
+            if (pCharacter != nullptr)
+                pCharacter->RegisterEnemy(m_p2TeamCharacter[NewCharacterslot]);
+        }
+        m_i2TeamPlayingCharacterIndex = NewCharacterslot;
+        m_p2TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
+        pMainCamera->SetPlayer(CMain_Camera::PLAYER_2P, m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
+    }
+
+
+
+
+}
+
+void CBattleInterface_Manager::Regist_Character(_ubyte iTeam, class CCharacter* pCharacter, _ubyte iSlot)
+{
+    if (iTeam == 1)
+    {
+        m_p1TeamCharacter[iSlot] = pCharacter;
+    }
+    else if (iTeam == 2)
+    {
+        m_p2TeamCharacter[iSlot-2] = pCharacter;
+    }
+}
+
+CCharacter* CBattleInterface_Manager::EnemyInitalize(_ubyte iTeam)
+{
+    if (iTeam == 1)
+    {
+        return m_p2TeamCharacter[0];
+    }
+    else if (iTeam == 2)
+    {
+        return m_p1TeamCharacter[0];
+    }
 }
 
 

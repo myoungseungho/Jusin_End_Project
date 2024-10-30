@@ -48,9 +48,9 @@ HRESULT CUI_Input_IconPanel::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Input_IconPanel::Priority_Update(_float fTimeDelta)
+void CUI_Input_IconPanel::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 }
 
 void CUI_Input_IconPanel::Update(_float fTimeDelta)

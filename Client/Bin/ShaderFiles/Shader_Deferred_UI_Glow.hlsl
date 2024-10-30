@@ -13,7 +13,7 @@ texture2D		g_DepthTexture;
 float2 g_DownSamplingSize;
 float2 g_DownTexSize;
 
-float g_fGlowFactor = 3.2f;
+float g_GlowFactor;
 
 static const float g_fWeight[13] =
 {
@@ -166,7 +166,7 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
         
-    Out.vColor = saturate(vResult + vBlur * g_fGlowFactor) /*+ vEffect*/;
+    Out.vColor = saturate(vResult + vBlur * g_GlowFactor) /*+ vEffect*/;
     
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
@@ -216,9 +216,11 @@ PS_OUT PS_MAIN_OnlyBlur(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
-    Out.vColor = saturate(vBlur * g_fGlowFactor) /*+ vEffect*/;
+    Out.vColor = saturate(vBlur * g_GlowFactor) /*+ vEffect*/;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
+    
+
 }
 
 technique11		DefaultTechnique

@@ -207,7 +207,7 @@ public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
 	virtual void Player_Update(_float fTimeDelta) override;
-	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
@@ -232,6 +232,7 @@ public:
 	//애니메이션
 	virtual _bool Character_Play_Animation(_float fTimeDelta);
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
+	virtual _bool Check_bCurAnimationisAirMove(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirHit(_uint iAnimation = 1000);
@@ -326,7 +327,7 @@ public:
 
 	void Chase_Grab(_float fTimeDelta);
 	void Character_Attack_Grab(_float fTimeDelta);
-
+	void Grab_LateDraw();
 
 
 	void Move(_float fTimeDelta);
@@ -336,15 +337,14 @@ public:
 
 
 	//피격 관련
-	//void Set_Hit(_uint eAnimation, _float fStunTime, _float fStopTime, _float2 Impus = { 0,0 });
-	//_bool Set_Hit(_uint eAnimation, _float fStunTime,_uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	//_bool Set_Hit2(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 	AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
 
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
 	void Set_AnimationStop(_float fStopTime);
+	void Set_UnlockAnimationStop();
+	void Set_AnimationStopWithoutMe(_float fStopTime);
 
 	void Check_StunEnd();
 	void Stun_Shake();
@@ -394,6 +394,23 @@ public:
 
 
 	void Add_Move(_float2 fMovement);
+
+
+	//BattleInterface
+	void Sparking_ON(_float fTimeDelta);
+	void Sparking_TimeCount(_float fTimeDelta);
+
+	void Gain_KiAmount(_ushort iKiAmount);
+
+	_bool Get_bCharacterDead();
+
+	void Tag_KeyCheck();
+	void Tag_In(_ubyte iTagSlot);
+	void RegisterEnemy(CCharacter* pEnemy);
+	void pEnemyCheck();
+	void Tag_Out(_vector vPosition);
+	
+	void Set_bGrabDraw(_bool bGrabDraw);
 
 protected:
 	void Reset_AttackStep();
@@ -508,6 +525,8 @@ protected:
 	_ushort m_iGrabReadyAnimationIndex = { 17 };
 	_ushort m_iGrabAnimationIndex = { 60 };
 
+	_ushort m_iSparkingAnimationIndex = { 59 };  //303
+
 
 	_float m_fGravityTime = { 0.f };
 	_float m_fJumpPower = 3;// { 0.f };
@@ -547,6 +566,8 @@ protected:
 	CCollider* m_pColliderCom = { nullptr };
 
 	CCharacter* m_pDebugEnemy = { nullptr };
+	CCharacter* m_pEnemy = { nullptr };
+
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 
@@ -554,6 +575,8 @@ protected:
 	_ushort		m_iAttackStepCount = { 0 };  //콤보수 아님.
 
 	_bool		m_bSparking = false;
+	_float		m_fAccSparkingTime = {};
+	_float		m_fMaxSparkingTime = {};
 	_bool		m_bNextAnimationGravityEvent = false;
 
 
@@ -566,7 +589,7 @@ protected:
 
 	_bool m_bGrab = false;
 	_bool m_bGrab_Air = false;
-
+	_bool m_bGrabDraw = false;
 
 	_float m_fAccGrabTime = {};
 
@@ -587,9 +610,17 @@ protected:
 
 
 
+	_bool m_bCharacterDead = { false };
+
+	_bool m_bTag_In = { false };	//교대하러 들어가는 캐릭터.
+	_bool m_bPlaying = { false };  //이 캐릭터만 조작함
+
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
+
+
 
 	public:
 		void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }
@@ -597,7 +628,7 @@ protected:
 	//class CAttackObject* m_pChaseAttackObejct = { nullptr };
 	//Set_RemoteDestory()
 
-
+	
 
 public:
 	typedef struct
@@ -637,6 +668,7 @@ private:
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };
+	_uint					m_iPrevComboCount = { 0 };
 	
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};

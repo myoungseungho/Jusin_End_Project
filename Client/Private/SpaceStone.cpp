@@ -37,7 +37,7 @@ HRESULT CSpaceStone::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceStone::Priority_Update(_float fTimeDelta)
+void CSpaceStone::Camera_Update(_float fTimeDelta)
 {
 
 }

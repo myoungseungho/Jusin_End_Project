@@ -45,7 +45,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_LOGO)))
+	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
@@ -77,7 +77,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 
 	//IMGUI 렌더는 로딩때는 하면 안됨
  
-       _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+    _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
 
 	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render)

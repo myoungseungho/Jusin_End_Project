@@ -34,31 +34,32 @@ HRESULT CUI_Combo::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_Combo::Priority_Update(_float fTimeDelta)
+void CUI_Combo::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
+	
 
-
+	if(m_bCharaStun == FALSE)
+		m_fDestoryTimer += fTimeDelta;
 	
 	if (m_bComboEnd == TRUE)
 	{
+		m_fAlphaTimer = 0.f;
+		m_fDestoryTimer = 0.f;
 		m_bCharaStun = TRUE;
 	}
-	else
-		m_fAlphaTimer = 0.f;
 
-	if ( m_bCharaStun == TRUE)
+	if (m_bComboEnd == FALSE)
 	{
 		m_fAlphaTimer += fTimeDelta;
 		if (m_fAlphaTimer >= 1.f)
 		{
+			m_fAlphaTimer = 0.f;
 			m_bCharaStun = FALSE;
 		}
 	}
-
-
 
 
 }
@@ -67,27 +68,26 @@ void CUI_Combo::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	if (m_bCharaStun == FALSE && m_fDestoryTimer >= 0.25f)
+	{
+		m_iComboCount = 0;
+		m_fDestoryTimer = 0.f;
+	}
+
+	_bool bHit = m_pMainPawn->Get_PawnDesc().bHit;
+
+	if (bHit && m_bCharaStun)
+	{
+		m_iComboCount = 0;
+	}
+
+
 	if (m_pMainPawn != nullptr)
-		m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
+	{
+		if (m_pMainPawn->Get_PawnDesc().iComboCount >= 2)
+			m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
+	}
 
-	if (m_iComboCount >= 3)
-		int a = 10;
-		
-	//}
-	//	m_bComboEnd = TRUE;
-	//}
-
-	//if (m_bComboEnd == TRUE)
-	//{
-	//	m_fAlphaTimer += fTimeDelta;
-	//	if (m_fAlphaTimer >= 1.f)
-	//	{
-	//		m_fAlphaTimer = 0.f;
-	//		m_bComboEnd = FALSE;
-	//	}
-	//}
-	//else
-	//	m_iComboCount = 0.f;
 }
 
 void CUI_Combo::Late_Update(_float fTimeDelta)

@@ -17,12 +17,15 @@ public:
 		VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_SON_AIR_SMASH,
 		VIRTUAL_CAMERA_SON_GRAB,
+		VIRTUAL_CAMERA_SON_SAME_GRAB,
 		VIRTUAL_CAMERA_SON_ENERGY,
 		VIRTUAL_CAMERA_SON_ULTIMATE,
 		VIRTUAL_CAMERA_21_HEAVY,
 		VIRTUAL_CAMERA_21_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_21_AIR_SMASH,
 		VIRTUAL_CAMERA_21_GRAB,
+		VIRTUAL_CAMERA_21_SAME_GRAB,
+		VIRTUAL_CAMERA_21_GRAB_SPECIAL,
 		VIRTUAL_CAMERA_21_ENERGY,
 		VIRTUAL_CAMERA_21_ULTIMATE,
 		VIRTUAL_CAMERA_MINE_HEAVY,
@@ -48,7 +51,7 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
-	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;

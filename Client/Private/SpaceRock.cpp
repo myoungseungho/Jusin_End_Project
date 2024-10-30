@@ -37,7 +37,7 @@ HRESULT CSpaceRock::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceRock::Priority_Update(_float fTimeDelta)
+void CSpaceRock::Camera_Update(_float fTimeDelta)
 {
 
 }

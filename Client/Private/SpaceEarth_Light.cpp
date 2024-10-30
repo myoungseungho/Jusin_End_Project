@@ -39,7 +39,7 @@ HRESULT CSpaceEarth_Light::Initialize(void * pArg)
 	return S_OK;
 }
 
-void CSpaceEarth_Light::Priority_Update(_float fTimeDelta)
+void CSpaceEarth_Light::Camera_Update(_float fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
 

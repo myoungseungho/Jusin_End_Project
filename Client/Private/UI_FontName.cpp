@@ -48,9 +48,9 @@ HRESULT CUI_FontName::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CUI_FontName::Priority_Update(_float fTimeDelta)
+void CUI_FontName::Camera_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	__super::Camera_Update(fTimeDelta);
 
 	if (m_pMainPawn != nullptr)
 		m_iTexIdx = m_pMainPawn->Get_PawnDesc().ePlayerID;
