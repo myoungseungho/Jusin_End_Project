@@ -2107,6 +2107,25 @@ void CCharacter::Set_AnimationStop(_float fStopTime)
 	m_pModelCom->Play_Animation(0.f);
 }
 
+void CCharacter::Set_UnlockAnimationStop()
+{
+	m_bAnimationLock = false;
+	m_fMaxAnimationLock = 0.f;
+	m_fAccAnimationLock = 0.f;
+}
+
+void CCharacter::Set_AnimationStopWithoutMe(_float fStopTime)
+{
+	
+
+	//0->0 1->1   2->0  3->1
+	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot-(m_iPlayerTeam-1)*2, fStopTime);
+
+
+
+}
+
+
 
 
 
@@ -3274,7 +3293,10 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
 	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
-
+	if (m_bSparking)
+	{
+		m_bSparking = false;
+	}
 }
 
 void CCharacter::RegisterEnemy(CCharacter* pEnemy)

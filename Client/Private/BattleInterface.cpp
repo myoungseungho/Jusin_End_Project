@@ -111,6 +111,35 @@ _ushort CBattleInterface_Manager::Get_KiNumber(_ushort iTeam)
     return  m_iKiNumber[iTeam - 1];
 }
 
+void CBattleInterface_Manager::Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSlot, _float fTime)
+{
+
+
+    for (auto pCharacter : m_p1TeamCharacter)
+    {
+        if (pCharacter != nullptr)
+        pCharacter->Set_AnimationStop(fTime);
+    }
+
+    for (auto pCharacter : m_p2TeamCharacter)
+    {
+        if (pCharacter != nullptr)
+        pCharacter->Set_AnimationStop(fTime);
+    }
+
+
+    if (iTeam == 1)
+    {
+        m_p1TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+    }
+    else if (iTeam == 2)
+    {
+        m_p1TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+    }
+
+}
+
+
 
 /*
 void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot)
@@ -147,10 +176,10 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
 
     if (iTeam == 1)
     {
-        for (auto pCharcter : m_p2TeamCharacter)
+        for (auto pCharacter : m_p2TeamCharacter)
         {
-            if(pCharcter != nullptr)
-                pCharcter->RegisterEnemy(m_p1TeamCharacter[NewCharacterslot]);
+            if(pCharacter != nullptr)
+                pCharacter->RegisterEnemy(m_p1TeamCharacter[NewCharacterslot]);
         }
         m_i1TeamPlayingCharacterIndex = NewCharacterslot;
         m_p1TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
@@ -158,10 +187,10 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
     }
     else if (iTeam == 2)
     {
-        for (auto pCharcter : m_p1TeamCharacter)
+        for (auto pCharacter : m_p1TeamCharacter)
         {
-            if (pCharcter != nullptr)
-                pCharcter->RegisterEnemy(m_p2TeamCharacter[NewCharacterslot]);
+            if (pCharacter != nullptr)
+                pCharacter->RegisterEnemy(m_p2TeamCharacter[NewCharacterslot]);
         }
         m_i2TeamPlayingCharacterIndex = NewCharacterslot;
         m_p2TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
