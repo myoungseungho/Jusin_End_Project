@@ -439,6 +439,7 @@ HRESULT CShader_Texture::Bind_CloneShaderResources(CEffect* pEffect)
 {
 	auto& Sprite_iter = m_CloneSprites.find(pEffect);
 	auto& Move_iter = m_CloneMoveTexs.find(pEffect);
+	m_isTex = true;
 
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;

@@ -26,7 +26,7 @@ HRESULT CEffect_ZNone::Initialize_Prototype()
 HRESULT CEffect_ZNone::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_ZNONE;
-	m_iPassIndex = 6;
+	//m_iPassIndex = 6;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -99,27 +99,31 @@ void CEffect_ZNone::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 			}
-
 		}
 		else
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 			}
 		}
 	}
 
 }
 
-HRESULT CEffect_ZNone::Render(_float fTimeDelta)
+HRESULT CEffect_ZNone::Priority_Render(_float fTimeDelta)
 {
 	if (m_iPassIndex != 1)
-		__super::Render(fTimeDelta);
+		__super::Priority_Render(fTimeDelta);
 
+	return S_OK;
+}
+
+HRESULT CEffect_ZNone::Render(_float fTimeDelta)
+{
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 

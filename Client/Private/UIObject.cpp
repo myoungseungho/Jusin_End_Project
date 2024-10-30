@@ -60,7 +60,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 	}
 
 
-
+	//m_bIsActive = false;
 	return S_OK;
 }
 
@@ -100,6 +100,7 @@ void CUIObject::Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _floa
 	UI_PosArea(fPosY);
 
 	m_pTransformCom->Set_Scaled(fSizeX, fSizeY, 1.f);
+	_float fOffSet = -3.f;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(fPosX - g_iWinSizeX * 0.5f, -fPosY + g_iWinSizeY * 0.5f, fDepth, 1.f));
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());

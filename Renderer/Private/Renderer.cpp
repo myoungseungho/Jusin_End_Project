@@ -195,8 +195,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-	if (FAILED(Render_ShadowObj(fTimeDelta)))
-		return E_FAIL;
+	//if (FAILED(Render_ShadowObj(fTimeDelta)))
+	//	return E_FAIL;
 	/*-----------------디버깅용------------------*/
 	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
 		return E_FAIL;
@@ -208,24 +208,25 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Deferred(fTimeDelta)))
 		return E_FAIL;
 	/*-----------------------------------------------------------------*/
-	if (FAILED(Render_Player(fTimeDelta)))
-		return E_FAIL;
+
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
-
+	if (FAILED(Render_Player(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_NonLight_Effect(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_Blend(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_UI(fTimeDelta)))
 		return E_FAIL;
-
 	if (FAILED(Render_Glow_UI(fTimeDelta)))
 		return E_FAIL;
-
 	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
 		return E_FAIL;
-
+	if (FAILED(Render_AllGlow_Effect(fTimeDelta)))
+		return E_FAIL;
 
 	if (FAILED(Render_Node(fTimeDelta)))
 		return E_FAIL;
@@ -428,7 +429,9 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 		{
 			if (FAILED(m_pRenderInstance->Begin_MRT_DoNotClear(TEXT("MRT_PlayerDefferd"))))
 				return E_FAIL;
+
 			Render_PlayerDeferred(fTimeDelta);
+
 			if (FAILED(m_pRenderInstance->End_MRT()))
 				return E_FAIL;
 		}
@@ -800,6 +803,9 @@ HRESULT CRenderer::Render_NonLight_Effect(_float fTimeDelta)
 	{
 		if (pRenderObject->Get_GameObjectData() != -1)
 		{
+			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
+
 			m_iEffectRenderCount == 0 ? m_pRenderInstance->Begin_MRT(TEXT("MRT_AllGlowDiffuse")) : m_pRenderInstance->Begin_MRT_DoNotClear(TEXT("MRT_AllGlowDiffuse"));
 
 			if (nullptr != pRenderObject)
@@ -863,6 +869,9 @@ HRESULT CRenderer::Render_Blend(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_BLEND])
 	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Priority_Render(fTimeDelta);
+
 		m_iEffectRenderCount == 0 ? m_pRenderInstance->Begin_MRT(TEXT("MRT_AllGlowDiffuse")) : m_pRenderInstance->Begin_MRT_DoNotClear(TEXT("MRT_AllGlowDiffuse"));
 
 		if (nullptr != pRenderObject)
@@ -925,9 +934,12 @@ HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 	m_RenderObjects[RG_UI_GLOW].clear();
 
 
+
+
+
+
 	return S_OK;
 }
-
 
 HRESULT CRenderer::Render_MultyGlow_UI(_float fTimeDelta)
 {
@@ -1107,7 +1119,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowDiffuse"))))
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowDiffuse")))) 
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowAlpha"))))
 		return E_FAIL;
@@ -1312,6 +1324,9 @@ HRESULT CRenderer::Draw_AllGlow_Effect()
 	//	return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
+
+	
+	
 	/*if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowDiffuse"))))
 	return E_FAIL;
 if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowAlpha"))))*/
@@ -1449,9 +1464,9 @@ HRESULT CRenderer::Draw_Glow(CShader* pShader, GLOW_DESC* pDesc)
 	{
 		/*float g_GlowFactor;
 		float4 g_GlowFilterColor;*/
-		m_pGlowShader->Bind_RawValue("g_GlowFactor", &pDesc->fGlowFactor, sizeof(_float));
-		m_pGlowShader->Bind_RawValue("g_GlowFilterColor", &pDesc->vGlowColor, sizeof(_float4));
-		m_pGlowShader->Begin(pDesc->iPassIndex);
+		pShader->Bind_RawValue("g_GlowFactor", &pDesc->fGlowFactor, sizeof(_float));
+		pShader->Bind_RawValue("g_GlowFilterColor", &pDesc->vGlowColor, sizeof(_float4));
+		pShader->Begin(pDesc->iPassIndex);
 	}
 	else
 		pShader->Begin(2);

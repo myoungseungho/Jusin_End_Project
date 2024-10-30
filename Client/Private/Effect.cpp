@@ -53,7 +53,7 @@ void CEffect::Late_Update(_float fTimeDelta)
 	
 }
 
-HRESULT CEffect::Render(_float fTimeDelta)
+HRESULT CEffect::Priority_Render(_float fTimeDelta)
 {
 	if (m_bIsCopy == true)
 	{
@@ -68,6 +68,12 @@ HRESULT CEffect::Render(_float fTimeDelta)
 		else
 			int a = 0;
 	}
+	return S_OK;
+}
+
+HRESULT CEffect::Render(_float fTimeDelta)
+{
+
 	return S_OK;
 }
 

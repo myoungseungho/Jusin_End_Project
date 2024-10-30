@@ -45,8 +45,8 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 				->Access_Shader_Tab(iter->m_iUnique_Index))
 				->m_TestEffectModel_Texture->Get_SRV(1), 1);
 
-		if (iter->m_eEffect_Type == EFFECT_OVERLAP)
-			continue;
+		//if (iter->m_eEffect_Type == EFFECT_OVERLAP)
+		//	continue;
 
 		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
 			->Access_Shader_Tab(iter->m_iUnique_Index))

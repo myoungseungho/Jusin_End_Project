@@ -99,7 +99,7 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
 
 		}
@@ -108,18 +108,23 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
 		}
 	}
 
 }
 
-HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
+HRESULT CEffect_NoneLight::Priority_Render(_float fTimeDelta)
 {
 	if (m_iPassIndex != 1)
-		__super::Render(fTimeDelta);
+		__super::Priority_Render(fTimeDelta);
 
+	return S_OK;
+}
+
+HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
+{
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
