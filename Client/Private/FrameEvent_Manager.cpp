@@ -509,26 +509,26 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_0")
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
+		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1], pCharacter);
 		main_Camera->StartCameraShake(fValue[2], fValue[3]);
 	}
 
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_1")
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
+		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1], pCharacter);
 		main_Camera->StartCameraShake(fValue[2], fValue[3]);
 	}
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_2")
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
+		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1], pCharacter);
 		main_Camera->StartCameraShake(fValue[2], fValue[3]);
 	}
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_3_Camera")
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
+		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1], pCharacter);
 	}
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_3_Shake")
 	{
@@ -538,7 +538,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_4_Camera")
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1]);
+		main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)fValue[0], fValue[1], pCharacter);
 	}
 	else if (splitText[0] == "Camera_Play_Son_Ultimate_4_Shake")
 	{

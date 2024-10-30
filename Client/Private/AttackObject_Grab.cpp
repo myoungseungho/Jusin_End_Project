@@ -260,11 +260,11 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_GRAB, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_GRAB, 0, pOwner);
 		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::ANDROID21:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_GRAB, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_GRAB, 0, pOwner);
 		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::BUU:
@@ -284,11 +284,11 @@ void CAttackObject_Grab::Camera_Same_Grab(CCharacter* pOwner, CCharacter* pHitOw
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_SAME_GRAB, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_SAME_GRAB, 0, pOwner);
 		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::ANDROID21:
-		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_SAME_GRAB, 0);
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_SAME_GRAB, 0, pOwner);
 		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::BUU:
