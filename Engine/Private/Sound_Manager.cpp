@@ -24,6 +24,12 @@ HRESULT CSound_Manager::Initialize_Prototype()
 	// 채널 그룹 생성
 	FMOD_System_CreateChannelGroup(m_pSoundSystem, nullptr, &m_pChannelGroup);
 
+	// 카테고리별 초기 볼륨 설정 (기본값: 1.0f)
+	m_categoryVolumes[SOUND_CATEGORY::BGM] = 1.0f;
+	m_categoryVolumes[SOUND_CATEGORY::VOICE] = 1.0f;
+	m_categoryVolumes[SOUND_CATEGORY::SFX] = 1.0f;
+
+
 	return S_OK;
 }
 
@@ -92,6 +98,7 @@ void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME
 
 	// 사운드 등록
 	m_soundMap[alias] = sound;
+	// 카테고리 맵에 추가
 	m_soundCategoryMap[alias] = category;
 }
 
@@ -153,11 +160,21 @@ void CSound_Manager::Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume)
 		}
 	}
 
-	// 새로운 채널을 생성하여 재생
+	// 카테고리 볼륨 가져오기
+	auto categoryIt = m_soundCategoryMap.find(alias);
+	float categoryVolume = 1.0f;
+	if (categoryIt != m_soundCategoryMap.end())
+	{
+		categoryVolume = m_categoryVolumes[categoryIt->second];
+	}
+
+	float actualVolume = volume * categoryVolume;
+
+	// 사운드 재생 및 볼륨 설정
 	if (FMOD_System_PlaySound(m_pSoundSystem, it->second, m_pChannelGroup, false, &channel) == FMOD_OK)
 	{
-		FMOD_Channel_SetVolume(channel, volume);
-		m_channelMap[alias] = channel;
+		FMOD_Channel_SetVolume(channel, actualVolume);
+		m_channelMap[alias] = { channel, volume }; // 초기 볼륨 저장
 	}
 }
 void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume)
@@ -173,20 +190,6 @@ void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _flo
 
 	// 사운드 리스트가 비어있는지 확인
 	if (soundList.empty()) return;
-
-	//// 그룹 내에서 재생 중인 사운드가 있는지 확인
-	//for (const auto& soundAlias : soundList)
-	//{
-	//	auto it = m_groupChannelMap.find(soundAlias);
-	//	if (it != m_groupChannelMap.end())
-	//	{
-	//		FMOD_BOOL isPlaying = false;
-	//		if (FMOD_Channel_IsPlaying(it->second, &isPlaying) == FMOD_OK && isPlaying)
-	//		{
-	//			return; // 재생 중인 사운드가 있으면 반환
-	//		}
-	//	}
-	//}
 
 	// 마지막으로 재생된 사운드를 제외한 사운드 목록 생성
 	std::vector<SOUND_GROUP_KEY_NAME> availableSounds;
@@ -205,8 +208,8 @@ void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _flo
 	}
 
 	// 랜덤으로 하나의 사운드 선택
-	int randomIndex = rand() % soundList.size();
-	SOUND_GROUP_KEY_NAME selectedSoundKey = soundList[randomIndex];
+	int randomIndex = rand() % availableSounds.size();
+	SOUND_GROUP_KEY_NAME selectedSoundKey = availableSounds[randomIndex];
 
 	// 선택한 사운드를 그룹 사운드 맵에서 찾기
 	auto soundIt = m_groupSoundMap.find(selectedSoundKey);
@@ -231,17 +234,24 @@ void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _flo
 		}
 	}
 
-	// 새로운 채널 생성 및 재생
-	if (FMOD_System_PlaySound(m_pSoundSystem, pSound, m_pChannelGroup, false, &channel) == FMOD_OK)
+	// 카테고리 볼륨 가져오기
+	auto categoryIt = m_groupSoundCategoryMap.find(selectedSoundKey);
+	float categoryVolume = 1.0f;
+	if (categoryIt != m_groupSoundCategoryMap.end())
 	{
-		// 볼륨 설정
-		FMOD_Channel_SetVolume(channel, volume);
-
-		// 채널 맵에 저장
-		m_groupChannelMap[selectedSoundKey] = channel;
+		categoryVolume = m_categoryVolumes[categoryIt->second];
 	}
 
-	// 마지막으로 재생한 사운드 저장 (필요 없다면 제거 가능)
+	float actualVolume = volume * categoryVolume;
+
+	// 사운드 재생 및 볼륨 설정
+	if (FMOD_System_PlaySound(m_pSoundSystem, pSound, m_pChannelGroup, false, &channel) == FMOD_OK)
+	{
+		FMOD_Channel_SetVolume(channel, actualVolume);
+		m_groupChannelMap[selectedSoundKey] = { channel, volume }; // 초기 볼륨 저장
+	}
+
+	// 마지막으로 재생한 사운드 저장
 	m_lastPlayedSound[groupKey] = selectedSoundKey;
 }
 
@@ -250,26 +260,23 @@ void CSound_Manager::Stop_Sound(SOUND_KEY_NAME alias)
 	auto it = m_channelMap.find(alias);
 	if (it == m_channelMap.end()) return;
 
-	FMOD_Channel_Stop(it->second);
+	FMOD_Channel_Stop(it->second.channel);
 }
 
 void CSound_Manager::Stop_Group_Sound(SOUND_GROUP_KEY groupKey)
 {
-	// Find the group in the sound group map
+	// 그룹 찾기
 	auto groupIt = m_soundGroupMap.find(groupKey);
 	if (groupIt == m_soundGroupMap.end()) return;
 
-	// Iterate over all sound aliases in the group
+	// 그룹 내 모든 사운드의 채널을 중지
 	const auto& soundList = groupIt->second;
 	for (const auto& alias : soundList)
 	{
 		auto channelIt = m_groupChannelMap.find(alias);
 		if (channelIt != m_groupChannelMap.end())
 		{
-			// Stop the channel
-			FMOD_Channel_Stop(channelIt->second);
-			// Optionally, reset the channel pointer
-			// channelIt->second = nullptr;
+			FMOD_Channel_Stop(channelIt->second.channel);
 		}
 	}
 }
@@ -279,30 +286,56 @@ void CSound_Manager::Set_Volume(SOUND_KEY_NAME alias, float volume)
 	auto it = m_channelMap.find(alias);
 	if (it == m_channelMap.end()) return;
 
-	FMOD_Channel_SetVolume(it->second, volume);
+	// 초기 볼륨 업데이트
+	it->second.baseVolume = volume;
+
+	// 현재 카테고리 볼륨 가져오기
+	auto categoryIt = m_soundCategoryMap.find(alias);
+	float categoryVolume = 1.0f;
+	if (categoryIt != m_soundCategoryMap.end())
+	{
+		categoryVolume = m_categoryVolumes[categoryIt->second];
+	}
+
+	float actualVolume = volume * categoryVolume;
+	FMOD_Channel_SetVolume(it->second.channel, actualVolume);
 }
 
 void CSound_Manager::Set_Group_Volume(SOUND_GROUP_KEY groupKey, float volume)
 {
-	// Find the group in the sound group map
+	// 그룹 찾기
 	auto groupIt = m_soundGroupMap.find(groupKey);
 	if (groupIt == m_soundGroupMap.end()) return;
 
-	// Iterate over all sound aliases in the group
+	// 그룹 내 모든 사운드의 볼륨을 업데이트
 	const auto& soundList = groupIt->second;
 	for (const auto& alias : soundList)
 	{
 		auto channelIt = m_groupChannelMap.find(alias);
 		if (channelIt != m_groupChannelMap.end())
 		{
-			// Set the volume for the channel
-			FMOD_Channel_SetVolume(channelIt->second, volume);
+			// 초기 볼륨 업데이트
+			channelIt->second.baseVolume = volume;
+
+			// 현재 카테고리 볼륨 가져오기
+			auto categoryIt = m_groupSoundCategoryMap.find(alias);
+			float categoryVolume = 1.0f;
+			if (categoryIt != m_groupSoundCategoryMap.end())
+			{
+				categoryVolume = m_categoryVolumes[categoryIt->second];
+			}
+
+			float actualVolume = volume * categoryVolume;
+			FMOD_Channel_SetVolume(channelIt->second.channel, actualVolume);
 		}
 	}
 }
 
 void CSound_Manager::Set_Category_Volume(SOUND_CATEGORY category, float volume)
 {
+	// 카테고리 볼륨 업데이트
+	m_categoryVolumes[category] = volume;
+
 	// 개별 사운드 볼륨 조절
 	for (const auto& pair : m_soundCategoryMap)
 	{
@@ -311,7 +344,8 @@ void CSound_Manager::Set_Category_Volume(SOUND_CATEGORY category, float volume)
 			auto channelIt = m_channelMap.find(pair.first);
 			if (channelIt != m_channelMap.end())
 			{
-				FMOD_Channel_SetVolume(channelIt->second, volume);
+				float newVolume = channelIt->second.baseVolume * volume;
+				FMOD_Channel_SetVolume(channelIt->second.channel, newVolume);
 			}
 		}
 	}
@@ -324,10 +358,21 @@ void CSound_Manager::Set_Category_Volume(SOUND_CATEGORY category, float volume)
 			auto channelIt = m_groupChannelMap.find(pair.first);
 			if (channelIt != m_groupChannelMap.end())
 			{
-				FMOD_Channel_SetVolume(channelIt->second, volume);
+				float newVolume = channelIt->second.baseVolume * volume;
+				FMOD_Channel_SetVolume(channelIt->second.channel, newVolume);
 			}
 		}
 	}
+}
+
+_float CSound_Manager::Get_Category_Volume(SOUND_CATEGORY category)
+{
+	auto it = m_categoryVolumes.find(category);
+	if (it != m_categoryVolumes.end())
+	{
+		return it->second;
+	}
+	return 1.0f; // 기본 볼륨은 1.0
 }
 
 void CSound_Manager::Set_ImguiPlay(_bool isPlay)
@@ -340,27 +385,24 @@ void CSound_Manager::Set_ImguiPlay(_bool isPlay)
 		// 개별 사운드 채널 중지
 		for (auto& pair : m_channelMap)
 		{
-			if (pair.second)
+			if (pair.second.channel)
 			{
-				FMOD_Channel_Stop(pair.second);
-				// 채널 포인터를 nullptr로 설정하고 싶다면 아래 주석을 해제하세요
-				// pair.second = nullptr;
+				FMOD_Channel_Stop(pair.second.channel);
 			}
 		}
 
 		// 그룹 사운드 채널 중지
 		for (auto& pair : m_groupChannelMap)
 		{
-			if (pair.second)
+			if (pair.second.channel)
 			{
-				FMOD_Channel_Stop(pair.second);
-				// 채널 포인터를 nullptr로 설정하고 싶다면 아래 주석을 해제하세요
-				// pair.second = nullptr;
+				FMOD_Channel_Stop(pair.second.channel);
 			}
 		}
 	}
 	else
 	{
+		// 예시로 BGM 재생
 		Play_Sound(SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 	}
 }

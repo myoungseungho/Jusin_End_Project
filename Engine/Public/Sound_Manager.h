@@ -45,6 +45,7 @@ public:
 		NARRATION_READY,
 		NARRATION_FIGHT,
 		LOGO_BGM,
+		Smash_Hit_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -98,6 +99,12 @@ public:
 		SFX
 	};
 
+	struct ChannelInfo
+	{
+		FMOD_CHANNEL* channel;
+		float baseVolume;
+	};
+
 private:
 	CSound_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CSound_Manager(const CSound_Manager& Prototype);
@@ -121,6 +128,7 @@ public:
 	void Set_Volume(SOUND_KEY_NAME alias, float volume);
 	void Set_Group_Volume(SOUND_GROUP_KEY groupKey, float volume);
 	void Set_Category_Volume(SOUND_CATEGORY category, float volume);
+	_float Get_Category_Volume(SOUND_CATEGORY category);
 
 	void Set_ImguiPlay(_bool isPlay);
 
@@ -131,8 +139,8 @@ private:
 	FMOD_SYSTEM* m_pSoundSystem;
 	map<SOUND_KEY_NAME, FMOD_SOUND*> m_soundMap; // 개별 사운드 맵
 	map<SOUND_GROUP_KEY_NAME, FMOD_SOUND*> m_groupSoundMap; // 그룹 사운드 맵 (새로 추가)
-	map<SOUND_KEY_NAME, FMOD_CHANNEL*> m_channelMap;
-	map<SOUND_GROUP_KEY_NAME, FMOD_CHANNEL*> m_groupChannelMap; // 그룹 사운드 채널 맵 (새로 추가)
+	map<SOUND_KEY_NAME, ChannelInfo> m_channelMap;
+	map<SOUND_GROUP_KEY_NAME, ChannelInfo> m_groupChannelMap;
 
 	_uint m_iNumLevels;
 	static const _uint MAX_CHANNELS = 64;  // 최대 채널 수 정의
@@ -146,6 +154,9 @@ private:
 	map<SOUND_KEY_NAME, SOUND_CATEGORY> m_soundCategoryMap;
 	// 그룹 사운드용 맵
 	map<SOUND_GROUP_KEY_NAME, SOUND_CATEGORY> m_groupSoundCategoryMap;
+
+	// 카테고리별 현재 볼륨을 저장하는 맵
+	map<SOUND_CATEGORY, float> m_categoryVolumes;
 public:
 
 	static CSound_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -2136,7 +2136,6 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 	return S_OK;
 }
-
 HRESULT CLoader::Load_Model_Resources_GamePlay_1()
 {
 	_matrix PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -2983,7 +2982,6 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	return S_OK;
 }
-
 HRESULT CLoader::Load_Prototype_Component_GamePlay()
 {
 	{

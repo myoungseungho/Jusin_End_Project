@@ -447,6 +447,10 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_2_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//초필살기 4
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Ultimate_3.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_3_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//스매쉬 Hit
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Smash_Hit.ogg", CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
 #pragma endregion
 
 #pragma region 21_Sound
