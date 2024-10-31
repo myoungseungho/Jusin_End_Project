@@ -198,6 +198,12 @@ _float2 CTexture::Get_TextureSize()
 
 HRESULT CTexture::Set_SRV(ID3D11ShaderResourceView* pSRV, _int iArray)
 {
+	if (pSRV == nullptr)
+	{
+		MSG_BOX(TEXT("Your SRV is nullptr"));
+		return S_OK;
+	}
+
 	if (iArray < m_SRVs.size())
 	{
 		Safe_Release(m_SRVs[iArray]);

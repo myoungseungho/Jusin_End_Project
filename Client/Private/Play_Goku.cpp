@@ -109,7 +109,8 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	m_tAttackMap.Initalize(this);
-	m_strName = "GOKU" + to_string(m_iPlayerTeam) + to_string(Get_PawnDesc().ePlayer_Slot);
+	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
+	m_strName = "GOKU_" + to_string(m_iPlayerTeam)+"_" + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
 	LIGHT_DESC			LightDesc{};
 

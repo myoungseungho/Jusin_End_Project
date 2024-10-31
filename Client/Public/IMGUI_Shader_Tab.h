@@ -36,7 +36,9 @@ public:
 
 
 protected:
+	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, CEffect* pEffect);
 	CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
+
 
 	virtual ~CIMGUI_Shader_Tab() = default;
 	
@@ -70,7 +72,9 @@ public:
 	void Save_Shader_Tab(string fileName, const Shader_Tab_Save& shaderTabSave, _int version = 2);
 	void Load_Shader_Tab(string fileName, Shader_Tab_Save& shaderTabSave);
 
-	void Update_TestToLayer_TextureCom(CTexture* pTexture) { m_TestEffectModel_Texture = pTexture; }
+	void Update_TestToLayer_TextureCom(CTexture* pTexture, CEffect* pEffect) { m_TestEffectModel_Texture = pTexture; 
+	m_pEffect = pEffect;
+	}
 
 	void Add_Clone_EffectToShader_Texture(CEffect* pEffect);
 	_int Update_Clone_EffectToShader_Texture(CEffect* pEffect, _float fTimeDelta);
@@ -126,6 +130,8 @@ public:
 	size_t GetRemainingFileSize(ifstream& file);
 	size_t GetFileSize(ifstream& file);
 public:
+	CEffect* m_pEffect = { nullptr };
+	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, CEffect* pEffect);
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
 	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture, string strFilename);
 

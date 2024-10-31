@@ -166,9 +166,9 @@ void CImgui_Manager::Show_Debug_COut(_bool bShow)
 	}
 }
 
-void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
+void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture, CEffect* pEffect)
 {
-	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture));
+	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture, pEffect));
 	m_vecShader_Tabs[to_string(m_iShaderCount)]->m_iNumberId = m_iShaderCount;
 
 	m_iShaderCount++;
@@ -356,7 +356,19 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 		else
 		{
 			tab.second->m_TabPick = false;
-			tab.second->Update(fTimeDelta);
+
+			if (m_pCurEffectLayer == nullptr)
+			{
+				//tab.second->Update(fTimeDelta);
+			}
+			else
+			{
+				for (auto& iter : m_pCurEffectLayer->m_MixtureEffects)
+				{
+					if(tab.first == to_string(iter->m_iUnique_Index))
+						tab.second->Update(fTimeDelta);
+				}
+			}
 		}
 
 

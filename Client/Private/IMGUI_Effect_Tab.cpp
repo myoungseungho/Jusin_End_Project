@@ -679,8 +679,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     }
 
                     m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
-
-                    //레이어 선택 부분
+                    
+                    CImgui_Manager::Get_Instance()->Set_CurEffectLayer(m_pEffect_Manager->Find_Effect_Layer(selectedLayerName));
                 }
                 if (isSelected)
                 {

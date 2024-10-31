@@ -135,7 +135,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_strName = "S21_" + to_string(m_iPlayerTeam) + to_string(Get_PawnDesc().ePlayer_Slot);
+	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
+	m_strName = "S21_" + to_string(m_iPlayerTeam) + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
 
 	LIGHT_DESC			LightDesc{};
@@ -777,7 +778,7 @@ void CPlay_21::Update(_float fTimeDelta)
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
 	if(m_bPlaying)
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 	//#ifdef _DEBUG
 	//	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);

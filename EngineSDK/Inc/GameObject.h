@@ -40,10 +40,11 @@ public:
 		return iter->second;
 	}
 	/* 항상 쓰지 않았던 m_iGameObjectData 를 렌더타겟 식별번호로서 쓸 수 있게 겟셋을 만듦*/
-	void Set_GameObjectData(_uint iData) {
+	void Set_GameObjectData(_int iData) {
 		m_iGameObjectData = iData;
 	}
-	_uint Get_GameObjectData() { return m_iGameObjectData; }
+	_int Get_GameObjectData() { return m_iGameObjectData; }
+	_int* Get_GameObjectData_Ptr() { return &m_iGameObjectData; }
 public:
 	static const _wstring		m_strTransformTag;
 
@@ -89,7 +90,7 @@ public:
 	_bool						m_bIsImguiClick = { false };
 	//파싱 관련
 	_bool						m_bIsPasingObject = { false };
-	_uint						m_iGameObjectData = { 0 };
+	_int						m_iGameObjectData = { 0 };
 
 
 	map<const _wstring, CComponent*>		m_Components;
