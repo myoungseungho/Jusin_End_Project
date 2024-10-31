@@ -628,8 +628,13 @@ HRESULT CCollider_Manager::Release_Collider(const CCollider* targetCollider)
 		auto it = find(m_Colliders[i].begin(), m_Colliders[i].end(), targetCollider);
 		if (it != m_Colliders[i].end()) {
 			CCollider* collider = *it;
-			Safe_Release(collider);
+			if (!collider->m_bDead)
+			{
+				Safe_Release(collider);
+
+			}
 			m_Colliders[i].erase(it);
+
 			return S_OK; // 성공적으로 해제 및 삭제
 		}
 	}
