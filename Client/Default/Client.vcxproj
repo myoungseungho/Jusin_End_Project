@@ -170,6 +170,7 @@
     <ClInclude Include="..\Public\AttackObject_Grab.h" />
     <ClInclude Include="..\Public\AttackObject_Ranged.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
+    <ClInclude Include="..\Public\BoneEffectObject.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
@@ -306,6 +307,7 @@
     <ClCompile Include="..\Private\AttackObject_Grab.cpp" />
     <ClCompile Include="..\Private\AttackObject_Ranged.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
+    <ClCompile Include="..\Private\BoneEffectObject.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />

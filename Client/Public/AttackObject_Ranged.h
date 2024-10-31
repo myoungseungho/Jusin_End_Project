@@ -19,6 +19,8 @@ class CAttackObject_Ranged final : public CAttackObject
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 
+	enum Ranged_LightColor { RANGED_LIGHT_NONE, RANGED_LIGHT_YELLOW};
+
 	typedef struct ATTACK_RANGED_DESC : public  CAttackObject::ATTACK_DESC
 	{
 		_float2 fStartOffset = {};
@@ -27,7 +29,7 @@ public:
 		_float2 fRanged_Impus_NoneDirection = {};  //1초간 이동할 xy거리  //방향값 미리 적용 해야하나?  
 		_short iDirection = {};		//
 
-
+		Ranged_LightColor eExplosionColor = { RANGED_LIGHT_NONE };
 	};
 private:
 	CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -59,10 +61,16 @@ private:
 
 	_bool Check_MapOut();
 
+	void Add_YellowLight();
+	void Add_YellowLight(_float3 fPosition);
+
 private:
 	_float2	m_fStartOffset = {};
 	_float2 m_fRanged_Impus_NoneDirection = {};
 	_short  m_iDirection = {};		
+
+	Ranged_LightColor m_eExplositionColor = { RANGED_LIGHT_NONE };
+
 public:
 	static CAttackObject_Ranged* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

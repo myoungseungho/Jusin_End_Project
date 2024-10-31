@@ -18,6 +18,8 @@
 
 #include "Main_Camera.h"
 
+#include "BoneEffectObject.h"
+
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -1044,7 +1046,6 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fLifeTime = 5.f;
 
 
-		cout << m_iCountGroundSpecial << endl;
 
 		if (m_iCountGroundSpecial >=5)
 		{
@@ -1070,6 +1071,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
 		Desc.iDirection = m_iLookDirection;
+		Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -1247,7 +1249,27 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iDirection = m_iLookDirection;
 
+		Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		{		
+			CBoneEffectObject::BONE_EFFECT_DESC EffectDesc;
+			EffectDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			EffectDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_R");
+			//EffectDesc.strEffectName = TEXT("Smoke05");
+			EffectDesc.strEffectName = TEXT("BurstU-2");
+
+
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
+			
+
+		}
+
+		
+
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT:
@@ -1275,6 +1297,34 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		{
+			{
+				//CBoneEffectObject::BONE_EFFECT_DESC EffectDesc;
+				//EffectDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				//EffectDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_R");
+				//
+				//EffectDesc.strEffectName = TEXT("BurstU-2");
+				//
+				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
+
+
+				
+
+
+				//Body 기준으로 Offset, 좌우반전 주고 이펙트 생성.  성공
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-2"), { 0.f,-0.5f });
+				
+				
+				
+				//뼈에 이펙트 붙히고 Offset주기. 성공
+				//Character_Make_BoneEffect_Offset("GD_fist_R", TEXT("BurstU-2"), { 0.f,-0.3f });
+				
+				
+				//뼈에 이펙트 붙히고 Offset,좌우반전 테스트.  성공
+				//Character_Make_BoneEffect_Offset("GD_fist_R", TE
+			}
+
+		}
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM:
@@ -1561,6 +1611,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else
 		{
+
+			Add_BlueLight();
+
 			if (m_bUltimateKamehameha)
 			{
 				CAttackObject::ATTACK_DESC Desc{};
@@ -2043,6 +2096,47 @@ void CPlay_Goku::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 void CPlay_Goku::Set_UltimateKamehameha(_bool bUltimate)
 {
 	m_bUltimateKamehameha = bUltimate;
+}
+
+void CPlay_Goku::Add_YellowLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+	LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 1.f;
+	LightDesc.strName = "Explosion";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
+}
+
+void CPlay_Goku::Add_BlueLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+
+	LightDesc.vDiffuse = _float4(0.9f, 1.1f, 1.7f, 1.0f); // 파란빛 계열로 변경
+
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 2.7f;
+	LightDesc.strName = "Ray";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
 }
 
 

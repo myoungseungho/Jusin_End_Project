@@ -415,6 +415,8 @@ public:
 	_bool Check_bWall();
 	void Move_ForWall();
 
+
+
 protected:
 	void Reset_AttackStep();
 
@@ -423,6 +425,17 @@ protected:
 	void Update_NoEventTime(_float fTimeDelta);
 
 	void Set_NoEventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime);
+
+	_float4x4 Make_BoneMatrix(char* BoneName);
+
+	//기본적으로 좌우반전이 되지만 추가로 뒤집는경우 좌표가 좀 뒤틀릴 수 있음
+	_float4x4 Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection = false);
+	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
+
+	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
+
+	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -579,6 +592,8 @@ protected:
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 
+
+	_float		m_fAccSmokeTime = {};
 
 	_ushort		m_iAttackStepCount = { 0 };  //콤보수 아님.
 
