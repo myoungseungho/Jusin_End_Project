@@ -4,9 +4,9 @@ Duration: 1
 TickPerSecond: 3
 KeyFramesCount: 59
 NumEffec: 2
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
+Position: -0.5 0 0
+Scale: 0.7 0.7 0.7
+Rotation: 30 0 350
 
 [Effect]
 EffectName: Kick_Wind
@@ -17,8 +17,8 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 24
-Position: 0 1 0
-Scale: 0.0199987 0.00999857 0.01
+Position: -0.126351 0.852868 0.492404
+Scale: 0.0139991 0.006999 0.007
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 0 0 30
@@ -63,8 +63,8 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 25
-Position: 0 0.5 0
-Scale: 0.00999997 0.00799824 0.008
+Position: -0.204493 0.469078 0.270822
+Scale: 0.000699928 0.00559884 0.0056
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 0 0 30
@@ -75,8 +75,8 @@ NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0.5 0
-Scale: 0.00999997 0.00799824 0.008
+Position: 0 0.55 0
+Scale: 0.000999897 0.00799834 0.008
 Rotation: 0 0 90
 CurTime: 0
 Duration: 1
@@ -85,7 +85,7 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 57
 Position: 0 0.5 0
-Scale: 0.00999856 0.0129998 0.0129998
+Scale: 0.00999788 0.00999979 0.00999983
 Rotation: 0 200 90
 CurTime: 0.95
 Duration: 1

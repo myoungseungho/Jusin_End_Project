@@ -1673,8 +1673,10 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Kick_Wind"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Kick_Wind"), m_pTransformCom->Get_WorldMatrixPtr());
 
+		m_pEffect_Manager->Copy_Layer(TEXT("BurstU-3_01"), m_pModelCom->Get_BoneMatrixPtr(("GD_fist_R")));	
+		
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))
