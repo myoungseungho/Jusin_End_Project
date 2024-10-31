@@ -133,7 +133,7 @@ public:
 	CEffect* m_pEffect = { nullptr };
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, CEffect* pEffect);
 	static CIMGUI_Shader_Tab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture);
-	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext,CTexture* pTexture, string strFilename);
+	static CIMGUI_Shader_Tab* Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, string strFilename, CEffect* pEffect);
 
 	virtual void Free() override;
 };

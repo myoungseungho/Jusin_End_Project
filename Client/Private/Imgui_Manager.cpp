@@ -179,9 +179,9 @@ void CImgui_Manager::Save_Shader_Tab(_int iIndex, string fileName)
 	m_vecShader_Tabs[to_string(iIndex)]->Click_Save_Shader_Tab(fileName);
 }
 
-void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex)
+void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex, CEffect* pEffect)
 {
-	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
+	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename, pEffect));
 	m_vecShader_Tabs[to_string(iIndex)]->m_iNumberId = iIndex;
 	m_vecShader_Tabs[to_string(iIndex)]->Click_Load_Shader_Tab(strFilename.c_str());
 

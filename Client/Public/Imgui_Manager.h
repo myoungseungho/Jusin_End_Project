@@ -54,7 +54,7 @@ public:
 	}
 	void Push_Shader_Tab(CTexture* pTexture, CEffect* pEffect);
 	void Save_Shader_Tab(_int iIndex, string fileName);
-	void Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex);
+	void Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex,CEffect* pEffect);
 	void Delete_Shader_Tab(_int iIndex);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
