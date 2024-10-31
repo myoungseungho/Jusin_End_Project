@@ -67,6 +67,14 @@ HRESULT CUI_Opt_Sound::Ready_Components()
 	return S_OK;
 }
 
+void CUI_Opt_Sound::MenuChange()
+{
+	//if(m_pGameInstance->Key_Down(DIK_UP))
+	//{
+	//	m_eMenuValue++;
+	//}
+}
+
 void CUI_Opt_Sound::Free()
 {
 

@@ -46,7 +46,7 @@ void CUI_Opt_Sound_Arrow::Camera_Update(_float fTimeDelta)
 void CUI_Opt_Sound_Arrow::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-	DebugTesting(1.f, 0.9f);
+	
 
 }
 
@@ -89,6 +89,11 @@ HRESULT CUI_Opt_Sound_Arrow::Ready_Components()
 
 
 	return S_OK;
+}
+
+void CUI_Opt_Sound_Arrow::PostionUpdate()
+{
+	//swtich()
 }
 
 CUI_Opt_Sound_Arrow* CUI_Opt_Sound_Arrow::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
