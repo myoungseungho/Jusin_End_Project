@@ -3,6 +3,12 @@
 #include "Shader_Texture.h"
 #include "Shader_Tab_Defines.h"
 #include "Effect.h"
+#include "Effect_Layer.h"
+
+BEGIN(Engine)
+class CGameObject;
+END
+//#include "GameObject.h"
 BEGIN(Client)
 
 class CIMGUI_Shader_Tab : public CIMGUI_Tab
