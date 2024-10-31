@@ -1635,6 +1635,14 @@ void CCharacter::Move(_float fTimeDelta)
 				MoveKey2Team(fTimeDelta);
 
 
+
+			//그래서 벽이면 어쩔껀데
+			//if (Check_bWall())
+			//{
+			//	//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
+			//	Move_ForWall();
+			//}
+
 		}
 	}
 }
@@ -1648,6 +1656,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 
 		//Set_fJumpPower(4.f); //중력Ver1 기준
 		Set_fJumpPower(3.f); //중력Ver2 기준
+
 
 
 		Set_Animation(m_iJumpAnimationIndex);
@@ -1709,6 +1718,15 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 			{
 				m_pModelCom->SetUp_Animation(m_iForwardDashAnimationIndex, true);
+
+				m_fAccSmokeTime += fTimeDelta;
+				if (m_fAccSmokeTime > 0.2f)
+				{
+					m_fAccSmokeTime = 0.f;
+					Character_Make_Effect(TEXT("Smoke_Run"));
+
+				}
+
 			}
 			else
 				m_pModelCom->SetUp_Animation(m_iForwardWalkAnimationIndex, false);
@@ -1805,6 +1823,13 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iForwardDashAnimationIndex)
 			{
 				m_pModelCom->SetUp_Animation(m_iForwardDashAnimationIndex, true);
+				m_fAccSmokeTime += fTimeDelta;
+				if (m_fAccSmokeTime > 0.2f)
+				{
+					m_fAccSmokeTime = 0.f;
+					Character_Make_Effect(TEXT("Smoke_Run"));
+
+				}
 			}
 			else
 				m_pModelCom->SetUp_Animation(m_iForwardWalkAnimationIndex, false);
@@ -2289,7 +2314,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 			//거리가 멀어져서 생긴 가상의 벽
 			//if ( fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
-			if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+			//if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+			if(Check_bWall())
 			{
 				Set_Animation(m_iHit_WallBouce);
 
@@ -3270,6 +3296,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					m_fMaxSparkingTime = 10.f;
 
 					//UI한테 켠다고 전해주기
+					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
 
 				}
 
@@ -3294,6 +3321,9 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 					//인원수 조건문
 					m_fMaxSparkingTime = 10.f;
+
+					//UI한테 켠다고 전해주기
+					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
 
 				}
 			}
@@ -3327,6 +3357,8 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 		{
 			m_bSparking = false;
 			//UI한테 끈다고 전해주기
+			CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+
 		}
 
 	}
@@ -3396,7 +3428,10 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	if (m_bSparking)
 	{
 		m_bSparking = false;
+
 		//UI한테 끈다고 전해주기
+		CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+
 	}
 }
 
@@ -3418,19 +3453,103 @@ void CCharacter::pEnemyCheck()
 void CCharacter::Tag_Out(_vector vPosition)
 {
 	//일단은 임시로
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+
+
+	//보고있는 방향쪽으로 돌진할 수 있게 보고있는 방향의 - 16정도 땡겨버려도 될듯
+	//근데 이놈이 보고있는방향을 갱신했는가?
+
+	//1. Look값 던져주기
+	
+	pEnemyCheck();
+	 
+	//2. 나오는순간 계산하기
+	CTransform* pEnemyTransform = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
+
+	//적 방향의 X값 체크
+	_float fX = XMVectorGetX(pEnemyTransform->Get_State(CTransform::STATE_POSITION) - vPosition);
+
+
+	//차이가 좁으면 반전 안함. 둘 다 벽에 붙어있을 때 대비.
+	if (fabsf(fX) > 0.05)
+	{
+
+		if (fX > 0)
+		{
+			FlipDirection(1);
+		}
+		else
+		{
+			FlipDirection(-1);
+		}
+
+	}
+	
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition + _vector{-6.f *m_iLookDirection,0.5f,0.f,0.f});
+
 	m_bPlaying = true;
 
 	m_bTag_In = false;
 
 
-	Chase_Ready(0.f);
+	Chase_Ready(0.4f);
+	Chase2(0.2f);
 
 }
 
 void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
 {
 	m_bGrabDraw = bGrabDraw;
+}
+
+_bool CCharacter::Check_bWall()
+{
+	if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+		return true;
+
+	return false;
+
+}
+
+void CCharacter::Move_ForWall()
+{
+	
+	_float fPosX = Get_fPositionX();
+
+	if (fPosX < -12.f)
+	{
+		//-14라면 +2를 해야한다.   14-12
+		Add_Move({ -fPosX -12.f,0.f });
+
+		//그냥 -12로 설정하기엔 y값 구해야함
+		//어차피 GetTransform하는데 문제없지않나?
+
+	}
+	else if (fPosX > 12.f)
+	{
+		//14라면 -2를 해야한다.   -14+12
+
+		Add_Move({ -fPosX + 12.f,0.f });
+	}
+	else  //여기로 들어온 이상 어차피 적과의 거리가 8 이상인거니 그부분은 검사하지 않음
+	{
+		_float fEnemyfPosX = m_pEnemy->Get_fPositionX();
+		
+		//누가 왼쪽? 자신인 경우 더이상 왼쪽으로 못가게
+		if (fPosX < fEnemyfPosX)
+		{
+			Add_Move({ fEnemyfPosX - fPosX - 8.f,0.f });
+		}
+		else
+		{
+			Add_Move({ fEnemyfPosX - fPosX + 8.f,0.f });
+		}
+
+	}
+	
+	
 }
 
 
@@ -3481,6 +3600,114 @@ void CCharacter::Set_NoEventAnmationLoof(_float fMinPosition, _float fMaxPositio
 	m_fMaxNoEventLoofTime = fTime;
 
 }
+
+_float4x4 CCharacter::Make_BoneMatrix(char* BoneName)
+{
+	
+
+	//XMMATRIX matrixBone = XMLoadFloat4x4(m_pModelCom->Get_BoneMatrixPtr("GD_fist_R"));
+	//XMMATRIX matrixBody = XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+	//XMMATRIX resultMatrix = matrixBone * matrixBody;
+
+	_float4x4 tFinalMatrix;
+	//XMStoreFloat4x4(&tFinalMatrix, resultMatrix);
+
+	//XMStoreFloat4x4(&tFinalMatrix, matrixBone * matrixBody);
+
+	XMStoreFloat4x4(&tFinalMatrix, XMLoadFloat4x4(m_pModelCom->Get_BoneMatrixPtr(BoneName)) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+
+
+	return tFinalMatrix;
+
+}
+
+void CCharacter::Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
+{
+
+	_float4x4 Result4x4;
+
+	if (fOffset.x == 0 && fOffset.y == 0 && bFlipDirection == false)
+	{
+		Result4x4 = Make_BoneMatrix(BoneName);
+	}
+	else
+	{
+		Result4x4 = Make_BoneMatrix_Offset(BoneName, fOffset, bFlipDirection);
+	}
+
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+
+
+}
+
+_float4x4 CCharacter::Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection)
+{
+	//XMMATRIX matrixBone = XMLoadFloat4x4(m_pModelCom->Get_BoneMatrixPtr("GD_fist_R"));
+	XMMATRIX matrixBody = XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+	//XMMATRIX resultMatrix = matrixBone * matrixBody;
+
+	//Body의 x좌표
+	matrixBody.r[3].m128_f32[0] += fOffset.x * m_iLookDirection;
+	matrixBody.r[3].m128_f32[1] += fOffset.y;
+
+
+	if (bFlipDirection)
+		matrixBody.r[0].m128_f32[0] *= -1.f;
+
+	_float4x4 tFinalMatrix;
+	XMStoreFloat4x4(&tFinalMatrix, XMLoadFloat4x4(m_pModelCom->Get_BoneMatrixPtr(BoneName)) * matrixBody);
+
+	return tFinalMatrix;
+}
+
+void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectName)
+{	
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
+	
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
+
+
+
+}
+
+_float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection)
+{
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float3 fPos;
+	XMStoreFloat3(&fPos, vPos);
+
+	//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+
+
+	_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1- (2 * bFlipDirection)), 1.f, 1.f)* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+	XMFLOAT4X4 Result4x4;
+	XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+
+	return Result4x4;
+
+
+
+}
+
+void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
+{
+
+
+	_float4x4 Result4x4;
+	
+	if (fOffset.x == 0 && fOffset.y == 0 && bFlipDirection == false)
+	{
+		XMStoreFloat4x4(&Result4x4,m_pTransformCom->Get_WorldMatrix());
+	}
+	else
+		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
+
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+
+}
+
+
 
 
 
@@ -3948,6 +4175,17 @@ void CCharacter::Gravity(_float fTimeDelta)
 			{
 				//바닥에 꼬라박혔을때 질질 끌림.  보기에 이상하다면 맞았을 시에 FlipDirection 해야한다
 				m_pTransformCom->Add_Move({ -2 * fTimeDelta * m_iLookDirection, 0, 0 });
+
+				m_fAccSmokeTime += fTimeDelta;
+				if (m_fAccSmokeTime > 0.2f)
+				{
+					m_fAccSmokeTime = 0.f;
+					
+				
+					Character_Make_Effect(TEXT("Smoke_Run"), { -0.2f,0.f }, true);
+
+				}
+
 
 				if (m_bMotionPlaying == false)
 				{

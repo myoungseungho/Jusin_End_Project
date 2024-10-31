@@ -168,6 +168,9 @@ public:
 
 	void Set_UltimateKamehameha(_bool bUltimate);
 
+	void Add_YellowLight();
+	void Add_BlueLight();
+
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };

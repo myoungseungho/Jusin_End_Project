@@ -41,6 +41,7 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	m_iDirection = pDesc->iDirection;
 
 
+	m_eExplositionColor = pDesc->eExplosionColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
@@ -116,6 +117,18 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//이펙트 처리
 		Erase();
 
+		if (m_eExplositionColor != RANGED_LIGHT_NONE)
+		{
+			
+			if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+			{
+				//Add_YellowLight();
+				
+				Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
+
+			}
+		}
+
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
 
 
@@ -156,11 +169,31 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 			}
 
+			if (m_eExplositionColor != RANGED_LIGHT_NONE)
+			{
+
+				if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+				{
+					//Add_YellowLight();
+					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
+				}
+			}
+
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+
+			if (m_eExplositionColor != RANGED_LIGHT_NONE)
+			{
+
+				if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+				{
+					//Add_YellowLight();
+					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
+				}
+			}
 		}
 
 		//else if (eResult == RESULT_DRAW)
@@ -237,6 +270,48 @@ _bool CAttackObject_Ranged::Check_MapOut()
 		return false;
 
 }
+
+void CAttackObject_Ranged::Add_YellowLight(_float3 fPosition)
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(fPosition.x, fPosition.y, 0.f, 1.f);
+	LightDesc.fRange = 3.f;
+	LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 0.5f;
+	LightDesc.strName = "Explosion";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
+}
+
+
+void CAttackObject_Ranged::Add_YellowLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+	LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 0.5f;
+	LightDesc.strName = "Explosion";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
+}
+
 
 void CAttackObject_Ranged::Erase()
 {

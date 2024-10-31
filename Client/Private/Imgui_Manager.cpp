@@ -154,6 +154,7 @@ void CImgui_Manager::Show_Debug_COut(_bool bShow)
 			freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
 			std::ios::sync_with_stdio();
 		}
+
 	}
 	else // false일 때 콘솔을 끄기
 	{

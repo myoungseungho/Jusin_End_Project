@@ -100,6 +100,7 @@
 #include "AttackObject_CommandGrab.h"
 #include "AttackObject_Ranged.h"
 
+#include "BoneEffectObject.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -2672,6 +2673,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Ranged"),
 		CAttackObject_Ranged::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Bone_Effect_Object"),
+		CBoneEffectObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 

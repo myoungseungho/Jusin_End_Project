@@ -226,6 +226,9 @@
     <ClCompile Include="..\private\UI_Opt_Sound_Volume_Gauge.cpp">
       <Filter>02.GameObjects\UI\Option\Sound\Volume\Gauge</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\BoneEffectObject.cpp">
+      <Filter>02.GameObjects\BoneEffectObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -506,6 +509,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Option\Sound\Volume\Gauge">
       <UniqueIdentifier>{c94b3506-2588-4bb8-9a84-a76cde15bc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BoneEffectObject">
+      <UniqueIdentifier>{dd4a34ad-0510-4319-b711-60c92caa2ef0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -943,6 +949,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Opt_Sound_Volume_Gauge.h">
       <Filter>02.GameObjects\UI\Option\Sound\Volume\Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BoneEffectObject.h">
+      <Filter>02.GameObjects\BoneEffectObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

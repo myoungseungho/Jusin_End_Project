@@ -18,6 +18,8 @@
 
 #include "Main_Camera.h"
 
+#include "BoneEffectObject.h"
+
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -207,6 +209,16 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	}
 	else
 		m_bPlaying = true;
+
+
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
 
 	return S_OK;
 }
@@ -510,14 +522,20 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	_float fPosX = Get_fPositionX();
 
 	//12(벽) 이상 넘어가지 못하게 
-	if (fPosX > 12)
+	//if (fPosX > 12)
+	//{
+	//	Add_Move({ 12.f - fPosX, 0.f });
+	//}
+	//else if (fPosX < -12)
+	//{
+	//	Add_Move({ -12.f - fPosX, 0.f });
+	//}
+	if (Check_bWall())
 	{
-		Add_Move({ 12.f - fPosX, 0.f });
+		//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
+		Move_ForWall();
 	}
-	else if (fPosX < -12)
-	{
-		Add_Move({ -12.f - fPosX, 0.f });
-	}
+
 
 	Tag_KeyCheck();
 
@@ -561,7 +579,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	//Tag_In(0)
 	//}
 
-	cout << "Team : " << m_iPlayerTeam << "Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
+	//cout << "Team : " << m_iPlayerTeam << " Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
+
+
 
 }
 
@@ -580,6 +600,12 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 	if (m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+
+	if (m_iPlayerTeam == 2)
+	{
+		_bool bDebug = true;
+	}
 
 	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
@@ -998,7 +1024,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_SPECIAL:
-	if(iAttackEvent == 0)
+	//if(iAttackEvent == 0)
 	{
 		//CAttackObject::ATTACK_DESC Desc{};
 
@@ -1015,47 +1041,24 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.5f;
+		Desc.fhitCharacter_StunTime = 0.35f;
 		Desc.iDamage = 300 * Get_DamageScale();;
 		Desc.fLifeTime = 5.f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
-
-		Desc.iTeam = m_iPlayerTeam;
-
-		Desc.bCameraZoom = false;
-		Desc.fAnimationLockTime = 0.f;
-
-		Desc.pOwner = this;
-
-		//Desc.eAttackType = { ATTACKTYPE_HIGH };
-		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 비율
-		
-		Desc.iDirection = m_iLookDirection;
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
-	}
-	else if (iAttackEvent == 1)
-	{
-		CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
-		//Desc.ColliderDesc.width = 1.0;
-		//Desc.ColliderDesc.height = 1.0;
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+
+		if (m_iCountGroundSpecial >=5)
+		{
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+			//Desc.fhitCharacter_Impus = { 5.f * m_iLookDirection, 0.3f };
+			Desc.fhitCharacter_Impus = { 8.f * m_iLookDirection, 0.3f };
+			Desc.fhitCharacter_StunTime = 0.1f;
+		}
 		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
-		Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
-
-
-		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.5f;
-		Desc.iDamage = 300 * Get_DamageScale();;
-		Desc.fLifeTime = 5.f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+		{
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+			Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection,0 };
+		}
 
 		Desc.iTeam = m_iPlayerTeam;
 
@@ -1066,12 +1069,49 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 비율
-
+		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
 		Desc.iDirection = m_iLookDirection;
+		Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+
 	}
+	//else if (iAttackEvent == 1)
+	//{
+	//	CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
+	//	//Desc.ColliderDesc.width = 1.0;
+	//	//Desc.ColliderDesc.height = 1.0;
+	//	if (m_iPlayerTeam == 1)
+	//		Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+	//	else
+	//		Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
+	//	Desc.ColliderDesc.pMineGameObject = this;
+	//	Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
+	//	Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
+	//
+	//
+	//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+	//	Desc.fhitCharacter_StunTime = 0.5f;
+	//	Desc.iDamage = 300 * Get_DamageScale();;
+	//	Desc.fLifeTime = 5.f;
+	//	Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+	//
+	//	Desc.iTeam = m_iPlayerTeam;
+	//
+	//	Desc.bCameraZoom = false;
+	//	Desc.fAnimationLockTime = 0.f;
+	//
+	//	Desc.pOwner = this;
+	//
+	//	//Desc.eAttackType = { ATTACKTYPE_HIGH };
+	//	Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
+	//	Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 비율
+	//
+	//	Desc.iDirection = m_iLookDirection;
+	//
+	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+	//}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_AIR1:
 	{
@@ -1209,7 +1249,27 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iDirection = m_iLookDirection;
 
+		Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		{		
+			CBoneEffectObject::BONE_EFFECT_DESC EffectDesc;
+			EffectDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			EffectDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_R");
+			//EffectDesc.strEffectName = TEXT("Smoke05");
+			EffectDesc.strEffectName = TEXT("BurstU-2");
+
+
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
+			
+
+		}
+
+		
+
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT:
@@ -1237,6 +1297,34 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		{
+			{
+				//CBoneEffectObject::BONE_EFFECT_DESC EffectDesc;
+				//EffectDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				//EffectDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_R");
+				//
+				//EffectDesc.strEffectName = TEXT("BurstU-2");
+				//
+				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
+
+
+				
+
+
+				//Body 기준으로 Offset, 좌우반전 주고 이펙트 생성.  성공
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-2"), { 0.f,-0.5f });
+				
+				
+				
+				//뼈에 이펙트 붙히고 Offset주기. 성공
+				//Character_Make_BoneEffect_Offset("GD_fist_R", TEXT("BurstU-2"), { 0.f,-0.3f });
+				
+				
+				//뼈에 이펙트 붙히고 Offset,좌우반전 테스트.  성공
+				//Character_Make_BoneEffect_Offset("GD_fist_R", TE
+			}
+
+		}
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM:
@@ -1523,6 +1611,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else
 		{
+
+			Add_BlueLight();
+
 			if (m_bUltimateKamehameha)
 			{
 				CAttackObject::ATTACK_DESC Desc{};
@@ -2005,6 +2096,47 @@ void CPlay_Goku::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 void CPlay_Goku::Set_UltimateKamehameha(_bool bUltimate)
 {
 	m_bUltimateKamehameha = bUltimate;
+}
+
+void CPlay_Goku::Add_YellowLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+	LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 1.f;
+	LightDesc.strName = "Explosion";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
+}
+
+void CPlay_Goku::Add_BlueLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+
+	LightDesc.vDiffuse = _float4(0.9f, 1.1f, 1.7f, 1.0f); // 파란빛 계열로 변경
+
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 2.7f;
+	LightDesc.strName = "Ray";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
 }
 
 
