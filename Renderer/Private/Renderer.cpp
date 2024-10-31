@@ -1137,7 +1137,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 
 #pragma region All_EffectGlow
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.1f, 0.1f, 0.1f, 0.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
