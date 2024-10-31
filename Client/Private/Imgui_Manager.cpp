@@ -133,7 +133,7 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 	
 	// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
-	//Render_ShaderTabs(fTimeDelta);
+	Render_ShaderTabs(fTimeDelta);
 	Render_EffectAnimationTabs(fTimeDelta);
 
 	ImGui::Render();
@@ -167,9 +167,9 @@ void CImgui_Manager::Show_Debug_COut(_bool bShow)
 	}
 }
 
-void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture)
+void CImgui_Manager::Push_Shader_Tab(CTexture* pTexture, CEffect* pEffect)
 {
-	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture));
+	m_vecShader_Tabs[to_string(m_iShaderCount)] = (CIMGUI_Shader_Tab::Create(m_pDevice, m_pContext, pTexture, pEffect));
 	m_vecShader_Tabs[to_string(m_iShaderCount)]->m_iNumberId = m_iShaderCount;
 
 	m_iShaderCount++;
@@ -180,9 +180,9 @@ void CImgui_Manager::Save_Shader_Tab(_int iIndex, string fileName)
 	m_vecShader_Tabs[to_string(iIndex)]->Click_Save_Shader_Tab(fileName);
 }
 
-void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex)
+void CImgui_Manager::Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex, CEffect* pEffect)
 {
-	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename));
+	m_vecShader_Tabs[to_string(iIndex)] = (CIMGUI_Shader_Tab::Create_Load(m_pDevice, m_pContext, pTexture, strFilename, pEffect));
 	m_vecShader_Tabs[to_string(iIndex)]->m_iNumberId = iIndex;
 	m_vecShader_Tabs[to_string(iIndex)]->Click_Load_Shader_Tab(strFilename.c_str());
 
@@ -357,7 +357,19 @@ void CImgui_Manager::Render_ShaderTabs(_float fTimeDelta)
 		else
 		{
 			tab.second->m_TabPick = false;
-			tab.second->Update(fTimeDelta);
+
+			if (m_pCurEffectLayer == nullptr)
+			{
+				//tab.second->Update(fTimeDelta);
+			}
+			else
+			{
+				for (auto& iter : m_pCurEffectLayer->m_MixtureEffects)
+				{
+					if(tab.first == to_string(iter->m_iUnique_Index))
+						tab.second->Update(fTimeDelta);
+				}
+			}
 		}
 
 

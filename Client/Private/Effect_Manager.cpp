@@ -181,7 +181,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pNonelight->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pNonelight->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index,static_cast<CEffect*>(pNonelight));
 				
 				pNonelight->m_bIsNotPlaying = effectData.isNotPlaying;
 				pNonelight->m_bIsLoop = effectData.isLoop;
@@ -215,7 +215,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pBlend->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pBlend->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index, static_cast<CEffect*>(pBlend));
 
 				pBlend->m_bIsNotPlaying = effectData.isNotPlaying;
 				pBlend->m_bIsLoop = effectData.isLoop;
@@ -249,7 +249,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pZNone->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pZNone->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index, static_cast<CEffect*>(pNonelight));
 
 				pZNone->m_bIsNotPlaying = effectData.isNotPlaying;
 				pZNone->m_bIsLoop = effectData.isLoop;
@@ -283,7 +283,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 					return E_FAIL;
 				}
 
-				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pOverlap->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index);
+				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pOverlap->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index, static_cast<CEffect*>(pOverlap));
 
 				pOverlap->m_bIsNotPlaying = effectData.isNotPlaying;
 				pOverlap->m_bIsLoop = effectData.isLoop;
@@ -442,7 +442,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 
 				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
 
-				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
+				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))), pClone);
 
 				pLayer->Add_Effect(pClone);
 
@@ -492,7 +492,7 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
 				
-				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
+				CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))), pClone);
 					
 				pLayer->Add_Effect(pClone);
 
@@ -553,7 +553,7 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 
 			CEffect* pClone = static_cast<CEffect*>(pEffect->Clone(&EffectDesc));
 
-			CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))));
+			CImgui_Manager::Get_Instance()->Access_Shader_Tab(EffectDesc.iUnique_Index)->Update_TestToLayer_TextureCom(static_cast<CTexture*>(pClone->Get_Component(TEXT("Com_DiffuseTexture"))), pClone);
 
 			pLayer->Add_Effect(pClone);
 
@@ -655,7 +655,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))),pTestEffect);
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
@@ -666,7 +666,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))), pTestEffect);
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
@@ -677,7 +677,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))), pTestEffect);
 
 		m_TestEffect.push_back(pTestEffect);
 		break;
@@ -688,7 +688,7 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 		if (pTestEffect == nullptr)
 			return E_FAIL;
 
-		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))));
+		CImgui_Manager::Get_Instance()->Push_Shader_Tab(static_cast<CTexture*>(pTestEffect->Get_Component(TEXT("Com_DiffuseTexture"))), pTestEffect);
 
 		m_TestEffect.push_back(pTestEffect);
 		break;

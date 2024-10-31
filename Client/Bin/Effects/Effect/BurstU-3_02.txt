@@ -1,0 +1,120 @@
+[Layer]
+LayerName: BurstU-3_02
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 2
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: BurstU-3_02_1
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-3_02BurstU-3_02_1
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.05 0.05 0.1
+Rotation: 0 0 0
+IsLoop: false
+Color: 218.692 174.785 0 0.5
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.05 0.05 0.1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 39
+Position: 0 -0.2 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 0
+CurTime: 0.65
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0 0
+Scale: 0.05 0.05 0.1
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.05 0.05 0.1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstU-3_02_2
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-3_02BurstU-3_02_2
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.2 0.1 0
+Scale: 0.0499945 0.0499945 0.1
+Rotation: 0 0 35
+IsLoop: false
+Color: 218.692 174.785 0 0.5
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0.1 0
+Scale: 0.0499945 0.0499945 0.1
+Rotation: 0 0 35
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 39
+Position: 0.4 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 35
+CurTime: 0.65
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.2 0.1 0
+Scale: 0.0500001 0.05 0.1
+Rotation: 0 0 35
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.0500001 0.05 0.1
+Rotation: 0 0 35
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
