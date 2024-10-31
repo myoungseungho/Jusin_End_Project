@@ -1596,9 +1596,9 @@ void CIMGUI_Shader_Tab::Free()
     __super::Free();
 }
 
-CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, string strFilename)
+CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, string strFilename,CEffect* pEffect)
 {
-    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture);
+    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture, pEffect);
 
     if (FAILED(pInstance->Load_Initialize(strFilename)))
     {
