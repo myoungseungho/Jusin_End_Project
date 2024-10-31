@@ -3270,6 +3270,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					m_fMaxSparkingTime = 10.f;
 
 					//UI한테 켠다고 전해주기
+					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
 
 				}
 
@@ -3294,6 +3295,9 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 					//인원수 조건문
 					m_fMaxSparkingTime = 10.f;
+
+					//UI한테 켠다고 전해주기
+					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
 
 				}
 			}
@@ -3327,6 +3331,8 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 		{
 			m_bSparking = false;
 			//UI한테 끈다고 전해주기
+			CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+
 		}
 
 	}
@@ -3396,7 +3402,10 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	if (m_bSparking)
 	{
 		m_bSparking = false;
+
 		//UI한테 끈다고 전해주기
+		CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+
 	}
 }
 
