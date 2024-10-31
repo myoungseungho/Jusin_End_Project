@@ -36,6 +36,8 @@ HRESULT CUI_Opt_Sound_Volume_Gauge::Initialize(void* pArg)
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	m_iNumUI = pDesc->iNumUI;
 
+	PostionUpdate();
+
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
@@ -50,7 +52,18 @@ void CUI_Opt_Sound_Volume_Gauge::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	PostionUpdate();
+	if(m_bSoundEnable == FALSE)
+		m_fSoundDelay += fTimeDelta;
+
+	if (m_fSoundDelay >= 0.15f)
+	{
+		m_bSoundEnable = TRUE;
+		m_fSoundDelay = 0.f;
+	}
+		
+	if (m_bKeyInput)
+		PostionUpdate();
+
 	SetVolume();
 }
 
@@ -173,10 +186,21 @@ void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound)
 {
 	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 	{
+		if (m_bSoundEnable)
+		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
+			m_bSoundEnable = FALSE;	
+		}
 		m_fVolumeValue[eSound]--;
 	}
 	else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
 	{
+		if (m_bSoundEnable)
+		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
+			m_bSoundEnable = FALSE;
+		}
+
 		m_fVolumeValue[eSound]++;
 	}
 }

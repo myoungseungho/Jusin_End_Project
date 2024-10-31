@@ -46,7 +46,9 @@ void CUI_Opt_Sound_Arrow::Camera_Update(_float fTimeDelta)
 void CUI_Opt_Sound_Arrow::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-	PostionUpdate();
+
+	if(m_bKeyInput)
+		PostionUpdate();
 
 }
 

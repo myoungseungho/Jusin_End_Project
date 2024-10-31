@@ -31,7 +31,7 @@ HRESULT CUI_Opt_Sound_Title::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_fPosX = 640.f, m_fPosY = 277.f;
-	m_fSizeX = 600.f, m_fSizeY = 40.f;
+	m_fSizeX = 600.f, m_fSizeY = 50.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 

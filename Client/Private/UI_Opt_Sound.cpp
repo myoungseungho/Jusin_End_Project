@@ -39,6 +39,16 @@ void CUI_Opt_Sound::Camera_Update(_float fTimeDelta)
 void CUI_Opt_Sound::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
+	if(m_bKeyInput)
+		m_fInputDelay += fTimeDelta;
+
+	if (m_bKeyInput && m_fInputDelay >= 0.15f)
+	{
+		m_bKeyInput = FALSE;
+		m_fInputDelay = 0.f;
+	}
+
 	MenuChange();
 
 }
@@ -71,20 +81,31 @@ HRESULT CUI_Opt_Sound::Ready_Components()
 
 void CUI_Opt_Sound::MenuChange()
 {
+
 	if(m_pGameInstance->Key_Down(DIK_UP))
 	{
+		if(!m_bKeyInput)
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
+
 		m_eMenuValue = (SOUND_MENU)(m_eMenuValue + 1);
 
 		if (m_eMenuValue >= 3)
 			m_eMenuValue = BGM;
+
+		m_bKeyInput = TRUE;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_DOWN))
 	{
+		if (!m_bKeyInput)
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
+
 		m_eMenuValue = (SOUND_MENU)(m_eMenuValue - 1);
 
 		if (m_eMenuValue < 0)
 			m_eMenuValue = SFX;
+
+		m_bKeyInput = TRUE;
 	}
 }
 

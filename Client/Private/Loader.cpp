@@ -538,7 +538,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	/* Prototype_Component_Texture_UI_OptSelectEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSelectEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_titleitem_02.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_01.png")))))
 		return E_FAIL;
 
 	/* Prototype_Component_Texture_UI_OptVolumePanel */

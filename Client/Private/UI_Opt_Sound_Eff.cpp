@@ -30,8 +30,8 @@ HRESULT CUI_Opt_Sound_Eff::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 640.f, m_fPosY = 320.f;
-	m_fSizeX = 635.f, m_fSizeY = 50.f;
+	m_fPosX = 551.f, m_fPosY = 320.f;
+	m_fSizeX = 300.f, m_fSizeY = 50.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
@@ -46,7 +46,9 @@ void CUI_Opt_Sound_Eff::Camera_Update(_float fTimeDelta)
 void CUI_Opt_Sound_Eff::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-	PostionUpdate();
+
+	if (m_bKeyInput)
+		PostionUpdate();
 
 }
 
