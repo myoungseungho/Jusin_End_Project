@@ -31,7 +31,7 @@ HRESULT CUI_LoadingSpaceLight::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = 30.f, m_fSizeY = 30.f;
+	m_fSizeX = 100.f, m_fSizeY = 30.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 

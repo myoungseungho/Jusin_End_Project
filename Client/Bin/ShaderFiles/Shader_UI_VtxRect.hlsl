@@ -127,6 +127,8 @@ PS_OUT PS_COLOR(PS_IN In)
         discard;
     
     Out.vColor.rgb = (Out.vColor.rgb) * g_vColor;
+    
+    Out.vColor = saturate(Out.vColor);
 
     return Out;
 }
@@ -425,13 +427,15 @@ PS_OUT PS_BG(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
-    
     vBGMaterial.a *= g_fAlphaTimer;
+    
     if (Out.vColor.a < 0.1f)
         discard;
   
-    Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
-      
+    vector AColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
+    AColor += lerp(vBGMaterial, Out.vColor, 1 - vBGMaterial.a);
+    Out.vColor = AColor;
+    
     return Out;
 }
 
@@ -476,19 +480,35 @@ PS_OUT PS_SkillPanel(PS_IN In)
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-  // vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
-  // 
-  // if (g_bState)
-  // {
-  //     Out.vColor = lerp(Out.vColor, vEffectTexture, In.vTexcoord.y);
-  //     
-  // }
-  //
-  //if (Out.vColor.a <= 0.1f)
-  //    discard;
+    
+   vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+   
+   if (g_bState)
+   {
+        Out.vColor.rgb = lerp(Out.vColor.rgb, vEffectTexture.rgb * (1 - g_Radio), In.vTexcoord.y);
+      
+    }
+  
+  if (Out.vColor.a <= 0.1f)
+      discard;
    
     return Out;
 }
+
+PS_OUT PS_Volume(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+        
+    if (g_Radio >= In.vTexcoord.x)
+        Out.vColor.rgb = float3(0.043f, 0.952f, 0.945f);
+    else 
+        Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
+    
+       return Out;
+}
+
 
 technique11 DefaultTechnique
 {
@@ -820,5 +840,18 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_SkillPanel();
     }
 
+//22
+    pass Volume
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_Volume();
+    }
 
 }

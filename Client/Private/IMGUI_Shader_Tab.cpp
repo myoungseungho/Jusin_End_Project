@@ -12,13 +12,22 @@
 #include "Effect_Manager.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
+
 #include <cstdio>
 
-CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
+CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, CEffect* pEffect)
 	:CIMGUI_Tab{ pDevice,pContext },
-    m_TestEffectModel_Texture{ pTexture }
+    m_TestEffectModel_Texture{ pTexture },
+    m_pEffect{ pEffect }
 {
     
+}
+
+CIMGUI_Shader_Tab::CIMGUI_Shader_Tab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
+    :CIMGUI_Tab{ pDevice,pContext },
+    m_TestEffectModel_Texture{ pTexture }
+{
+
 }
 
 
@@ -46,6 +55,7 @@ HRESULT CIMGUI_Shader_Tab::Load_Initialize(string strFilename)
 
 void CIMGUI_Shader_Tab::Update(_float fTimeDelta)
 {
+
     for (auto& iter : m_NodeTextures)
     {
         iter->Camera_Update(fTimeDelta);
@@ -57,11 +67,6 @@ void CIMGUI_Shader_Tab::Update(_float fTimeDelta)
 
 void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
 {
-    if (ImGui::Button("Load") && isStart)
-    {
-        
-    }
-
     for (auto& iter : m_NodeTextures)
     {
         iter->Camera_Update(fTimeDelta);
@@ -94,9 +99,12 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         m_Sprite_Node_ids.push_back(nodeDesc);
       //  node_ids.push_back(nodeDesc.Sprite_node_id - 3000);
     }
-    if (ImGui::Button("Save") && isStart)
+    if (ImGui::Button("Glow") && isStart)
     {
-        Click_Save_Shader_Tab("Test000");
+        if (m_pEffect->Get_GameObjectData() >= 0)
+            m_pEffect->Set_GameObjectData(-1);
+        else
+            m_pEffect->Set_GameObjectData(0);
     }
     
 
@@ -1553,9 +1561,9 @@ _int CIMGUI_Shader_Tab::Update_Clone_EffectToShader_Texture(CEffect* pEffect, _f
 //    inFile.close();
 //}
 
-CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
+CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, CEffect* pEffect)
 {
-    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture);
+    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture, pEffect);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -1564,6 +1572,19 @@ CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11Device
 	}
 
 	return pInstance;
+}
+
+CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture)
+{
+    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture);
+
+    if (FAILED(pInstance->Initialize()))
+    {
+        MSG_BOX(TEXT("Failed to Created : CIMGUI_Shader_Tab"));
+        Safe_Release(pInstance);
+    }
+
+    return pInstance;
 }
 
 void CIMGUI_Shader_Tab::Free()
@@ -1576,9 +1597,9 @@ void CIMGUI_Shader_Tab::Free()
     __super::Free();
 }
 
-CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, string strFilename)
+CIMGUI_Shader_Tab* CIMGUI_Shader_Tab::Create_Load(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, CTexture* pTexture, string strFilename,CEffect* pEffect)
 {
-    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture);
+    CIMGUI_Shader_Tab* pInstance = new CIMGUI_Shader_Tab(pDevice, pContext, pTexture, pEffect);
 
     if (FAILED(pInstance->Load_Initialize(strFilename)))
     {

@@ -23,7 +23,7 @@ HRESULT CUI_SkillEffect::Initialize_Prototype()
 
 HRESULT CUI_SkillEffect::Initialize(void* pArg)
 {
-	m_fPosX = 330.f;
+	m_fPosX = 340.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

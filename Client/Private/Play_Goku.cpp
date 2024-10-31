@@ -111,7 +111,8 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	m_tAttackMap.Initalize(this);
-	m_strName = "GOKU" + to_string(m_iPlayerTeam) + to_string(Get_PawnDesc().ePlayer_Slot);
+	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
+	m_strName = "GOKU_" + to_string(m_iPlayerTeam)+"_" + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
 	LIGHT_DESC			LightDesc{};
 
@@ -209,16 +210,6 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	}
 	else
 		m_bPlaying = true;
-
-
-	if (::AllocConsole() == TRUE)
-	{
-		FILE* nfp[3];
-		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-		std::ios::sync_with_stdio();
-	}
 
 	return S_OK;
 }

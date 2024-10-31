@@ -4,6 +4,7 @@
 #include "Client_Defines.h"
 #include "Renderer_Defines.h"
 
+#include "Effect_Layer.h"
 #include "imgui.h"
 #include "Effect.h"
 
@@ -51,9 +52,9 @@ public:
 		else
 			return m_vecShader_Tabs[to_string(iShader_Tab_Index)];
 	}
-	void Push_Shader_Tab(CTexture* pTexture);
+	void Push_Shader_Tab(CTexture* pTexture, CEffect* pEffect);
 	void Save_Shader_Tab(_int iIndex, string fileName);
-	void Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex);
+	void Load_Shader_Tab(CTexture* pTexture, string strFilename, _int iIndex,CEffect* pEffect);
 	void Delete_Shader_Tab(_int iIndex);
 
 	_int Get_CurShaderTab_Index() { return m_iCurShaderTabIndex; }
@@ -64,6 +65,9 @@ public:
 		return m_ImGuiScreen;
 	}
 	
+	void Set_CurEffectLayer(CEffect_Layer* pEffectLayer) { m_pCurEffectLayer = pEffectLayer; }
+private:
+	CEffect_Layer* m_pCurEffectLayer = { nullptr };
 private:
 	void Render_IMGUI(_float fTimeDelta);
 	void Render_ShaderTabs(_float fTimeDelta);

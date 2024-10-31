@@ -242,7 +242,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
         effectData.effectType = pEffect->m_eEffect_Type;
         effectData.renderIndex = pEffect->m_iRenderIndex;
         effectData.passIndex = pEffect->m_iPassIndex;
-        effectData.uniqueIndex = pEffect->m_iUnique_Index;
+        effectData.uniqueIndex = pEffect->m_iGameObjectData;
         effectData.isLoop = pEffect->m_bIsLoop;
         effectData.position = pEffect->Get_Effect_Position();
         effectData.scale = pEffect->Get_Effect_Scaled();
@@ -255,7 +255,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
 
         effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
 
-        CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
+        CImgui_Manager::Get_Instance()->Save_Shader_Tab(pEffect->m_iUnique_Index, WStringToUTF8(effectData.maskTextureName));
         // 키프레임 정보 추가
         for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
         {
@@ -679,6 +679,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     }
 
                     m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
+                    
+                    CImgui_Manager::Get_Instance()->Set_CurEffectLayer(m_pEffect_Manager->Find_Effect_Layer(selectedLayerName));
                 }
                 if (isSelected)
                 {
@@ -1023,45 +1025,45 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     ImGui::Text("Scale");
 
     ImGui::Text("X"); ImGui::SameLine();
-    if (ImGui::SliderFloat("##Scale X Slider", &CurScale.x, 0.01f, 100.0f))
+    if (ImGui::SliderFloat("##Scale X Slider", &CurScale.x, 0.0001f, 100.0f))
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     ImGui::SameLine();
-    if (ImGui::Button("-##Scale X Dec")) { CurScale.x = max(0.01f, CurScale.x - 0.1f); m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
+    if (ImGui::Button("-##Scale X Dec")) { CurScale.x = max(0.0001f, CurScale.x - 0.0001f); m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    if (ImGui::Button("+##Scale X Inc")) { CurScale.x += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
+    if (ImGui::Button("+##Scale X Inc")) { CurScale.x += 0.0001f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    if(ImGui::InputFloat("##Scale X", &CurScale.x, 0.1f))
+    if(ImGui::InputFloat("##Scale X", &CurScale.x, 0.0001f))
     {
-        CurScale.x = max(0.01f, CurScale.x);
+        CurScale.x = max(0.0001f, CurScale.x);
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     }
 
     ImGui::Text("Y"); ImGui::SameLine();
-    if (ImGui::SliderFloat("##Scale Y Slider", &CurScale.y, 0.01f, 100.0f))
+    if (ImGui::SliderFloat("##Scale Y Slider", &CurScale.y, 0.0001f, 100.0f))
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     ImGui::SameLine();
-    if (ImGui::Button("-##Scale Y Dec")) { CurScale.y = max(0.01f, CurScale.y - 0.1f); m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
+    if (ImGui::Button("-##Scale Y Dec")) { CurScale.y = max(0.0001f, CurScale.y - 0.0001f); m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    if (ImGui::Button("+##Scale Y Inc")) { CurScale.y += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
+    if (ImGui::Button("+##Scale Y Inc")) { CurScale.y += 0.0001f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    if(ImGui::InputFloat("##Scale Y", &CurScale.y, 0.1f))
+    if(ImGui::InputFloat("##Scale Y", &CurScale.y, 0.0001f))
     {
-        CurScale.y = max(0.01f, CurScale.y);
+        CurScale.y = max(0.0001f, CurScale.y);
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     }
 
 
     ImGui::Text("Z"); ImGui::SameLine();
-    if (ImGui::SliderFloat("##Scale Z Slider", &CurScale.z, 0.01f, 100.0f))
+    if (ImGui::SliderFloat("##Scale Z Slider", &CurScale.z, 0.0001f, 100.0f))
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     ImGui::SameLine();
-    if (ImGui::Button("-##Scale Z Dec")) { CurScale.z = max(0.01f, CurScale.z - 0.1f); m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
+    if (ImGui::Button("-##Scale Z Dec")) { CurScale.z = max(0.0001f, CurScale.z - 0.0001f); m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    if (ImGui::Button("+##Scale Z Inc")) { CurScale.z += 0.1f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
+    if (ImGui::Button("+##Scale Z Inc")) { CurScale.z += 0.0001f; m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); }
     ImGui::SameLine();
-    if(ImGui::InputFloat("##Scale Z", &CurScale.z, 0.1f))
+    if (ImGui::InputFloat("##Scale Z", &CurScale.z, 0.0001f))
     {
-        CurScale.x = max(0.01f, CurScale.x);
+        CurScale.z = max(0.0001f, CurScale.z);
         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
     }
 

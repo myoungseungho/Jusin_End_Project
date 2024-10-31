@@ -1152,7 +1152,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 	//준비자세면 이렇게 한다.
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	{
-		
+
 		Add_Move({ 0.f,fTimeDelta * 1.2f });
 
 		m_fAccChaseTime += fTimeDelta;
@@ -1210,7 +1210,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 	//돌진중이면 이렇게 한다
 	else if (m_pModelCom->m_iCurrentAnimationIndex == m_iChaseAnimationIndex)
 	{
-		
+
 		m_fAccChaseTime += fTimeDelta;
 
 		if (m_fAccChaseTime > 5.f)
@@ -1673,14 +1673,19 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 
 		//점프 먼지
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		//m_pEffect_Manager->Copy_Layer(TEXT("Kick_Wind"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		m_pEffect_Manager->Copy_Layer(TEXT("BurstU-3_01"), m_pModelCom->Get_BoneMatrixPtr(("GD_fist_R")));	
+		
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))
@@ -1778,7 +1783,7 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 
 		//점프 먼지
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
@@ -1957,7 +1962,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 		{
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 				Set_Animation(m_iGuard_CrouchAnimationIndex);
-			
+
 			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
 				Set_Animation(m_iGuard_GroundAnimationIndex);
 
@@ -2102,7 +2107,7 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		{
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
 			//if 적으려다가 취소 
-			m_fImpuse.y = 0 ;
+			m_fImpuse.y = 0;
 		}
 		else if (Get_fHeight() > 0)
 		{
@@ -2110,7 +2115,7 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 			Set_ForcedGravityTime_LittleUp();
 
 		}
-		else 
+		else
 		{
 			Set_Animation(m_iHit_Stand_LightAnimationIndex, false);
 			m_fImpuse.y = 0;
@@ -2235,10 +2240,10 @@ void CCharacter::Set_UnlockAnimationStop()
 
 void CCharacter::Set_AnimationStopWithoutMe(_float fStopTime)
 {
-	
+
 
 	//0->0 1->1   2->0  3->1
-	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot-(m_iPlayerTeam-1)*2, fStopTime);
+	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot - (m_iPlayerTeam - 1) * 2, fStopTime);
 
 
 
@@ -2783,7 +2788,7 @@ AttackColliderResult CCharacter::CompareGrabType3(AttackType eAttackType)
 			return RESULT_MISS;
 
 		//잡기 버튼으로 상쇄했으면 실패.
-		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O) &&(m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisGroundMove()))
+		else if (m_iPlayerTeam == 1 && m_pGameInstance->Key_Pressing(DIK_O) && (m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisGroundMove()))
 			return RESULT_DRAW;
 
 		else if (m_iPlayerTeam == 2 && m_pGameInstance->Key_Pressing(DIK_NUMPAD9) && (m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex || Check_bCurAnimationisGroundMove()))
@@ -3564,19 +3569,19 @@ void CCharacter::Reset_AttackStep()
 
 void CCharacter::Update_NoEventAnimationLoof(_float fTimeDelta)
 {
-	
+
 	_float fTickPersecond = m_pModelCom->m_Animations[0]->m_fTickPerSecond;
 	_float fAfterAnimationPostion = m_pModelCom->m_fCurrentAnimPosition + fTickPersecond * fTimeDelta;
 
 
-	if (fAfterAnimationPostion >= m_fNoEventLoofMaxPosition) 
+	if (fAfterAnimationPostion >= m_fNoEventLoofMaxPosition)
 	{
 		fAfterAnimationPostion = m_fNoEventLoofMinPosition + fmod(fAfterAnimationPostion - m_fNoEventLoofMaxPosition, m_fNoEventLoofMaxPosition - m_fNoEventLoofMinPosition);
 		Set_CurrentAnimationPositionJump(fAfterAnimationPostion);
 	}
 	else
 		m_pModelCom->Play_Animation_Lick(fTimeDelta);
-		
+
 
 }
 
@@ -4084,7 +4089,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 			//사뿐히 점프해서 땅 착지
-			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 		}
 		else if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
 		{
@@ -4098,6 +4103,9 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 				//m_bHitGroundSmashed = false;
 				//m_pTransformCom->Add_Move({ -1 * fTimeDelta * m_iLookDirection, 0, 0 });
+
+				//쎄게 꼬라박힐 떄
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, false, 1.f);
 			}
 			else
 			{
@@ -4109,6 +4117,9 @@ void CCharacter::Gravity(_float fTimeDelta)
 				Set_BreakFall_Ground();
 
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+
+				//천천히 꼬라박힐 때
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, false, 1.f);
 			}
 
 
@@ -4127,8 +4138,6 @@ void CCharacter::Gravity(_float fTimeDelta)
 				m_bJumpLock = true;
 			}
 
-			//피격되서 땅에 꼴아박힐때 사운드
-			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
 		}
 		if (m_bHitGroundSmashed == false)
 		{

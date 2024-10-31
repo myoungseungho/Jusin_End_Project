@@ -150,8 +150,8 @@ PS_OUT PS_MAIN_PLAYER_BLUR_X(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-
     Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true);
+
     //Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true);
 	/*
     

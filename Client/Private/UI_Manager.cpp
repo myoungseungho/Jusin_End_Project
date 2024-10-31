@@ -51,6 +51,21 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 		m_fTotalDuration = 0.f;
 		UsingCreateEndUI();
 	}
+
+
+	if (m_pGameInstance->Key_Down(DIK_TAB))
+	{
+		if (m_bOnOption == FALSE)
+		{
+			CreateOption();
+			m_bOnOption = TRUE;
+		}
+		else
+		{
+			DestroyOption();
+			m_bOnOption = FALSE;
+		}
+	}
 }
 
 void CUI_Manager::UsingAttckBuff(CUI_Define::PLAYER_SLOT eSlotID)
@@ -185,6 +200,41 @@ void CUI_Manager::InitUIObject()
 
 		m_pPawnArray[eSlot] = dynamic_cast<CCharacter*>(iter);
 	}
+}
+
+void CUI_Manager::CreateOption()
+{
+	/*m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Panel"), TEXT("Layer_UI_Option_Sound"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Arrow"), TEXT("Layer_UI_Option_Sound"));
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		CUIObject::UI_DESC VolumePanelDesc = {};
+		VolumePanelDesc.iNumUI = i;
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Panel"), TEXT("Layer_UI_Option_Sound"),&VolumePanelDesc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Gauge"), TEXT("Layer_UI_Option_Sound"), &VolumePanelDesc);
+	}*/
+
+	list<class CGameObject*> UIOptionList = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
+
+	for (auto& iter : UIOptionList)
+	{
+		iter->SetActive(TRUE);
+	}
+
+}
+
+void CUI_Manager::DestroyOption()
+{
+	list<class CGameObject*> UIOptionList  = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
+
+	for (auto& iter : UIOptionList)
+	{
+		iter->SetActive(FALSE);
+	}
+
 }
 
 void CUI_Manager::Free()
