@@ -2,6 +2,7 @@
 
 #include "UI_Sub_Chara_Icon_Panel.h"
 #include "RenderInstance.h"
+#include "Character.h"
 
 CUI_Sub_Chara_Icon_Panel::CUI_Sub_Chara_Icon_Panel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
@@ -56,7 +57,11 @@ void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 
 void CUI_Sub_Chara_Icon_Panel::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_pSubPawn != nullptr)
+	{
+		if (m_pSubPawn->Get_PawnDesc().iHp > 0.f)
+			m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	}
 }
 
 HRESULT CUI_Sub_Chara_Icon_Panel::Render(_float fTimeDelta)

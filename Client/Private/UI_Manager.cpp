@@ -51,6 +51,12 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 		m_fTotalDuration = 0.f;
 		UsingCreateEndUI();
 	}
+
+
+	if (m_pGameInstance->Key_Down(DIK_TAB))
+	{
+
+	}
 }
 
 void CUI_Manager::UsingAttckBuff(CUI_Define::PLAYER_SLOT eSlotID)
