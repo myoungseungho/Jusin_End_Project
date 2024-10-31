@@ -27,6 +27,7 @@ private:
 private:
 	void PostionUpdate();
 	void SetVolume();
+	void KeyInput(SOUND_MENU eSound);
 	void NumberFont();
 
 private:

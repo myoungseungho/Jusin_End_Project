@@ -121,9 +121,8 @@ void CUI_Opt_Sound_Volume_Panel::CreateNameFont()
 	_wstring strName = TEXT("Empty");
 	_vector vColor = {};
 
-	if (m_iNumUI == m_eMenuValue)
-	{
-		switch (m_eMenuValue)
+
+		switch (m_iNumUI)
 		{
 		case BGM:
 			strName = TEXT("Music Volume");
@@ -138,14 +137,17 @@ void CUI_Opt_Sound_Volume_Panel::CreateNameFont()
 			break;
 
 		}
+
+		if (m_iNumUI == m_eMenuValue)
+		{
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
-	}
-	else 
-		vColor = { 1.f, 1.f, 1.f ,1.f };
+		}
+		else 
+			vColor = { 1.f, 1.f, 1.f ,1.f };
 
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
 		strName.c_str(),
-		_float2((m_fPosX - 250) * 1.5f, (m_fPosY - 25) * 1.5f),
+		_float2((m_fPosX - 350) * 1.5f, (m_fPosY - 10) * 1.5f),
 		vColor,
 		0.f,
 		{ 0.f, 0.f },

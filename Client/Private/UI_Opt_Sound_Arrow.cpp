@@ -107,6 +107,7 @@ void CUI_Opt_Sound_Arrow::PostionUpdate()
 	case VOICE:
 		m_fPosY = 400.f;
 		break;
+	
 	}
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);

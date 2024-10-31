@@ -142,36 +142,15 @@ void CUI_Opt_Sound_Volume_Gauge::SetVolume()
 	switch (m_eMenuValue)
 	{
 	case BGM:
-		if (m_pGameInstance->Key_Down(DIK_LEFT))
-		{
-			m_fVolumeValue[BGM]--;
-		}
-		else if (m_pGameInstance->Key_Down(DIK_RIGHT))
-		{
-			m_fVolumeValue[BGM]++;
-		}
+		KeyInput(BGM);
 		break;
 
 	case SFX:
-		if (m_pGameInstance->Key_Down(DIK_LEFT))
-		{
-			m_fVolumeValue[SFX]--;
-		}
-		else if (m_pGameInstance->Key_Down(DIK_RIGHT))
-		{
-			m_fVolumeValue[SFX]++;
-		}
+		KeyInput(SFX);
 		break;
 
 	case VOICE:
-		if (m_pGameInstance->Key_Down(DIK_LEFT))
-		{
-			m_fVolumeValue[VOICE]--;
-		}
-		else if (m_pGameInstance->Key_Down(DIK_RIGHT))
-		{
-			m_fVolumeValue[VOICE]++;
-		}
+		KeyInput(VOICE);
 		break;
 	}
 
@@ -185,9 +164,21 @@ void CUI_Opt_Sound_Volume_Gauge::SetVolume()
 		if(m_fVolumeValue[i] >= 100)
 			m_fVolumeValue[i] = 100;
 
-	//m_pGameInstance->Set_Group_Volume()
+		m_pGameInstance->Set_Category_Volume(static_cast<CSound_Manager::SOUND_CATEGORY>(i) , m_fVolumeValue[i] * 0.01f);
 	}
 
+}
+
+void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound)
+{
+	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+	{
+		m_fVolumeValue[eSound]--;
+	}
+	else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+	{
+		m_fVolumeValue[eSound]++;
+	}
 }
 
 void CUI_Opt_Sound_Volume_Gauge::NumberFont()
@@ -198,7 +189,7 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 
 		m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
 			strVolume.c_str(),
-			_float2((m_fPosX + 80) * 1.5f, (m_fPosY - 25) * 1.5f),
+			_float2((m_fPosX + 75) * 1.5f, (m_fPosY -10) * 1.5f),
 			{ 0.043f, 0.952f, 0.945f ,1.f },
 			0.f,
 			{ 0.f, 0.f },

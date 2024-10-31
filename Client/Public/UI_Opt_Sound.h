@@ -7,7 +7,7 @@ BEGIN(Client)
 class CUI_Opt_Sound abstract : public CUI_Option
 {
 public:
-	enum SOUND_MENU { BGM, SFX, VOICE, MENU_END };
+	enum SOUND_MENU { BGM,  VOICE, SFX, MENU_END };
 
 protected:
 	CUI_Opt_Sound(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
