@@ -1,7 +1,7 @@
 [Layer]
 LayerName: Kick_Wind
 Duration: 1
-TickPerSecond: 0.1
+TickPerSecond: 3
 KeyFramesCount: 59
 NumEffec: 2
 Position: 0 0 0
@@ -16,25 +16,43 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: -1
+UniqueIndex: 24
 Position: 0 1 0
-Scale: 0.01 0.01 0.01
+Scale: 0.0199987 0.00999857 0.01
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 1
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 1 0
-Scale: 0.01 0.01 0.01
+Scale: 0.0199987 0.00999857 0.01
 Rotation: 0 0 90
 CurTime: 0
-Duration: 0
+Duration: 1
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.5 1 0
+Scale: 0.0199947 0.0149989 0.015
+Rotation: 0 359 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 1 0
+Scale: 0.0199956 0.00999672 0.00999976
+Rotation: 0 359 90
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
 
 [Effect]
 EffectName: Kick_Wind02
@@ -44,23 +62,41 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: -1
-Position: 0 1 0
-Scale: 0.00799916 0.00799923 0.008
+UniqueIndex: 25
+Position: 0 0.5 0
+Scale: 0.00999997 0.00799824 0.008
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 1
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 1 0
-Scale: 0.00799919 0.00799926 0.008
+Position: 0 0.5 0
+Scale: 0.00999997 0.00799824 0.008
 Rotation: 0 0 90
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0.5 0
+Scale: 0.00999856 0.0129998 0.0129998
+Rotation: 0 200 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0.5 0
+Scale: 0.00999953 0.00799795 0.008
+Rotation: 0 300 90
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
 

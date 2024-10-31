@@ -679,6 +679,8 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     }
 
                     m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
+
+                    //레이어 선택 부분
                 }
                 if (isSelected)
                 {
