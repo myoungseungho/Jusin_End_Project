@@ -115,7 +115,6 @@ public:
 
 	_float4		m_vColor = { 0.f, 0.f, 0.f, 30.f };
 	_bool			m_IsColorEffect = { false };
-	_bool			m_bIsAddColor = { true };
 
 
 	_float4        m_vGlowColor = {0.f, 0.f, 0.f, 1.f};

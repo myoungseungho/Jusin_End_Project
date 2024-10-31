@@ -375,8 +375,6 @@ void CEffect_Layer::Free()
 		}
 	}
 
-
-
 	__super::Free();
 
 	Safe_Release(m_pContext);
@@ -384,7 +382,6 @@ void CEffect_Layer::Free()
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pTransformCom);
 	Safe_Release(m_pColliderCom);
-	Safe_Delete(m_pPlayerMatrix);
 
 	for (auto& pMixtureEffect : m_MixtureEffects)
 		Safe_Release(pMixtureEffect);
