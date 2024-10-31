@@ -30,18 +30,13 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
-	void HpRadio_Setting(_float& fHpRadio);
-	void RedAlphaDuration(_float fTimeDelta);
-
-
-private:
 	_char m_iShaderID = { 0 };
 
 	_float m_iCharaCurrHp = { 0.f };
 	_float m_fHpRadio = { 0.f };
 	_float m_fRedHpRadio = { 0.f };
 
-//타이머
+	//타이머
 	_float m_fMaskUVTimer = { 0.f };
 	_float m_fRedGaugeTimer = { 0.f };
 

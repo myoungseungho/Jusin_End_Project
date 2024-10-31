@@ -55,30 +55,86 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 void CUI_HpGauge::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
+
+	if (m_pMainPawn != nullptr)
+	{
+		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
+		int a = 10;
+	}
+	if (m_fHpRadio <= 0.f)
+		m_fHpRadio = 0.f;
+
+	m_fMaskUVTimer += fTimeDelta * 0.25f;
+
+	if (m_bRedAlpha == FALSE)
+		m_fRedHpRadio = m_fHpRadio;
+
+	if (m_bCharaStun == TRUE)
+	{
+		if (m_bHit == FALSE)
+		{
+			m_bHit = TRUE;
+			m_fRedHpRadio = m_fHpRadio;
+		}
+	}
+	else
+		m_bHit = FALSE;
+
+
+	////캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
+	m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
+
+
+	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
+	{
+		m_bRedAlpha = FALSE;
+	}
 }
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
-	__super::Update(fTimeDelta);
-
-	m_fMaskUVTimer += fTimeDelta * 0.25f;
-	//스위칭 Pass Index 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
 
-	if (m_pMainPawn != nullptr)
-		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
-
-	//애니메이션
 	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);
-	//HP 비율 세팅
-	HpRadio_Setting(m_fHpRadio);
-	//레드 알파 지속시간
-	RedAlphaDuration(fTimeDelta);
-
 }
 
 void CUI_HpGauge::Late_Update(_float fTimeDelta)
 {
+	__super::Late_Update(fTimeDelta);
+
+	if (m_pMainPawn != nullptr)
+		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
+
+	if (m_fHpRadio <= 0.f)
+		m_fHpRadio = 0.f;
+
+	m_fMaskUVTimer += fTimeDelta * 0.25f;
+
+	if (m_bRedAlpha == FALSE)
+		m_fRedHpRadio = m_fHpRadio;
+
+	if (m_bCharaStun == TRUE)
+	{
+		if (m_bHit == FALSE)
+		{
+			m_bHit = TRUE;
+			m_fRedHpRadio = m_fHpRadio;
+		}
+	}
+	else
+		m_bHit = FALSE;
+
+
+	//캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
+	m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
+
+
+	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
+	{
+		m_bRedAlpha = FALSE;
+
+	}
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -90,7 +146,7 @@ HRESULT CUI_HpGauge::Render(_float fTimeDelta)
 	//m_iShaderID
 	if (FAILED(m_pShaderCom->Begin(m_iShaderID)))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
 		return E_FAIL;
 
@@ -139,9 +195,10 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskUVTimer, sizeof(_float))))
 		return E_FAIL;
 
- 	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
 		return E_FAIL;
-	
+
+
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bRedAlpha), sizeof(_bool))))
 		return E_FAIL;
 
@@ -151,36 +208,6 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
-}
-
-void CUI_HpGauge::HpRadio_Setting(_float& fHpRadio)
-{
-	(m_pMainPawn != nullptr) ? (fHpRadio = m_pMainPawn->Get_PawnDesc().iHp / 10000.f) : fHpRadio = 0.f;
-
-	if (fHpRadio <= 0.f)
-		fHpRadio = 0.f;
-}
-
-void CUI_HpGauge::RedAlphaDuration(_float fTimeDelta)
-{
-	if (m_bRedAlpha == FALSE)
-		m_fRedHpRadio = m_fHpRadio;
-
-	if (m_bCharaStun == TRUE)
-	{
-		if (m_bHit == FALSE)
-		{
-			m_bHit = TRUE;
-			m_fRedHpRadio = m_fHpRadio;
-		}
-	}
-	else
-		m_bHit = FALSE;
-
-	m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
-
-	if (m_fRedGaugeTimer >= 1.f)
-		m_bRedAlpha = FALSE;
 }
 
 CUI_HpGauge* CUI_HpGauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
