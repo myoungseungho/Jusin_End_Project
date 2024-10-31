@@ -446,6 +446,8 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 	Render_PlayerBlur(fTimeDelta);
 
 	m_RenderObjects[RG_PLAYER].clear();
+	m_PlayerStrNames.clear();
+
 	return S_OK;
 }
 
@@ -516,6 +518,7 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
+	
 	return S_OK;
 }
 
