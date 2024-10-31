@@ -3519,29 +3519,34 @@ void CCharacter::Move_ForWall()
 	else  //여기로 들어온 이상 어차피 적과의 거리가 8 이상인거니 그부분은 검사하지 않음
 	{
 		_float fEnemyfPosX = m_pEnemy->Get_fPositionX();
+		
 
 		//누가 왼쪽? 자신인 경우 더이상 왼쪽으로 못가게
-		//if (fPosX < fEnemyfPosX)
-		//{
-		//	//내가 0 적이 9인경우 내가 1이 되도록 이동.  9-8.
-		//
-		//	//내가 15  적이 40인경우  내가 32가 되도록 17만큼 이동  (20-10-
-		//	Add_Move({ fEnemyfPosX - 8.f,0.f });
-		//}
-		//else
-		//{
-		//	//내가 9 적이 0인 경우 내가 8이 되도록 이동.  8-9
-		//	Add_Move({ 8 - fPosX,0.f });
-		//
-		//}
-
-		Add_Move({ 8 - abs(fPosX - fEnemyfPosX),0.f });
-
-		if (8 - abs(fPosX - fEnemyfPosX) < 0)
+		if (fPosX < fEnemyfPosX)
 		{
-			m_iPlayerTeam;
-			_bool bDebufg = true;
+		
+
+			Add_Move({ fEnemyfPosX - fPosX - 8.f,0.f });
+
 		}
+		else
+		{
+			Add_Move({ fEnemyfPosX - fPosX + 8.f,0.f });
+
+
+		}
+
+		_bool bDebugsi = true;
+
+		//Add_Move({ 8 - abs(fPosX - fEnemyfPosX),0.f });
+		////디버그
+		//if (8 - abs(fPosX - fEnemyfPosX) < 0)
+		//{
+		//	m_iPlayerTeam;
+		//	_bool bDebufg = true;
+		//}
+
+
 	}
 	
 	
