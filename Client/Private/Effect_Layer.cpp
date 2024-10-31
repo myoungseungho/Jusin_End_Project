@@ -106,7 +106,6 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 	if (pArg != nullptr)
 	{
 		m_pPlayerMatrix = pArg;
-		_float a = m_pPlayerMatrix->_42;
 		LayerMatrix = m_pTransformCom->Get_WorldMatrix();
 
 		if (0 > m_pPlayerMatrix->_11)
@@ -385,6 +384,7 @@ void CEffect_Layer::Free()
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pTransformCom);
 	Safe_Release(m_pColliderCom);
+	Safe_Delete(m_pPlayerMatrix);
 
 	for (auto& pMixtureEffect : m_MixtureEffects)
 		Safe_Release(pMixtureEffect);

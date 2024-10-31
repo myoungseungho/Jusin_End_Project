@@ -36,7 +36,7 @@ public:
 		void* SRV_Ptr = { nullptr };
 		_int iRenderIndex;
 
-		_int iUnique_Index = 0;
+		_int iUnique_Index = -1;
 		_int iPassIndex = 1;
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
@@ -115,7 +115,7 @@ public:
 
 	_float4		m_vColor = { 0.f, 0.f, 0.f, 30.f };
 	_bool			m_IsColorEffect = { false };
-
+	_bool			m_bIsAddColor = { true };
 
 
 	_float4        m_vGlowColor = {0.f, 0.f, 0.f, 1.f};
