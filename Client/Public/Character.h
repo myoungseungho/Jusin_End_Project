@@ -646,6 +646,12 @@ protected:
 	_float m_fAccNoEventLoofTime = {};
 
 
+	_bool m_bEffectLoofCreate = false;
+	_float m_fAccEffectLoofCreateTime = { 0.f };
+	_float m_fMaxEffectLoofCreateTime = { 0.f };
+	_wstring m_strEffectLoofCreateName = {};
+
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
