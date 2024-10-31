@@ -500,6 +500,8 @@ PS_OUT PS_Volume(PS_IN In)
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    Out.vColor.a = 1.f;
         
     if (g_Radio >= In.vTexcoord.x)
         Out.vColor.rgb = float3(0.043f, 0.952f, 0.945f);
