@@ -32,6 +32,9 @@ private:
 protected:
 	SOUND_MENU m_eMenuValue = { BGM };
 
+private:
+	_bool m_bPlayAnim = { FALSE};
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

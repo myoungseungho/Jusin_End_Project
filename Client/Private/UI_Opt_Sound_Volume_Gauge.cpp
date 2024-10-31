@@ -31,7 +31,7 @@ HRESULT CUI_Opt_Sound_Volume_Gauge::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_fPosX = 820.f, m_fPosY = 320.f;
-	m_fSizeX = 200.f, m_fSizeY = 33.f;
+	m_fSizeX = 150.f, m_fSizeY = 20.f;
 
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	m_iNumUI = pDesc->iNumUI;
@@ -183,19 +183,32 @@ void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound)
 
 void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 {
-	if (m_iNumUI == m_eMenuValue)
-	{
-		_wstring strVolume =  to_wstring(m_fVolumeValue[m_eMenuValue]);
+	_wstring strVolume =  to_wstring(0);
 
-		m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
-			strVolume.c_str(),
-			_float2((m_fPosX + 75) * 1.5f, (m_fPosY -10) * 1.5f),
-			{ 0.043f, 0.952f, 0.945f ,1.f },
-			0.f,
-			{ 0.f, 0.f },
-			0.8f
-		);
+	switch (m_iNumUI)
+	{
+	case BGM:
+		strVolume = to_wstring(m_fVolumeValue[BGM]);
+		break;
+
+	case SFX:
+		strVolume = to_wstring(m_fVolumeValue[SFX]);
+		break;
+
+	case VOICE:
+		strVolume = to_wstring(m_fVolumeValue[VOICE]);
+		break;
+
 	}
+
+	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
+		strVolume.c_str(),
+		_float2((m_fPosX + 75) * 1.5f, (m_fPosY - 10) * 1.5f),
+		{ 0.043f, 0.952f, 0.945f ,1.f },
+		0.f,
+		{ 0.f, 0.f },
+		0.8f
+	);
 }
 
 
