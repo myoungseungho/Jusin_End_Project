@@ -1,29 +1,29 @@
 #include "stdafx.h"
-#include "..\Public\AttackObject_Ranged.h"
+#include "..\Public\AttackObject_Energy.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
 #include "Character.h"
 
-CAttackObject_Ranged::CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CAttackObject_Energy::CAttackObject_Energy(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
 {
 
 }
 
-CAttackObject_Ranged::CAttackObject_Ranged(const CAttackObject_Ranged& Prototype)
+CAttackObject_Energy::CAttackObject_Energy(const CAttackObject_Energy& Prototype)
 	: CAttackObject{ Prototype }
 {
 
 }
 
-HRESULT CAttackObject_Ranged::Initialize_Prototype()
+HRESULT CAttackObject_Energy::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CAttackObject_Ranged::Initialize(void* pArg)
+HRESULT CAttackObject_Energy::Initialize(void* pArg)
 {
 
 	if (nullptr == pArg)
@@ -37,8 +37,8 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
 
 	m_fStartOffset = pDesc->fStartOffset;
-	m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
-	m_iDirection = pDesc->iDirection;
+	//m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
+	//m_iDirection = pDesc->iDirection;
 
 
 	m_eExplositionColor = pDesc->eExplosionColor;
@@ -54,7 +54,7 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 
 
 
-void CAttackObject_Ranged::Update(_float fTimeDelta)
+void CAttackObject_Energy::Update(_float fTimeDelta)
 {
 
 	if (Check_UpdateStop(fTimeDelta))
@@ -71,20 +71,15 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 		if (m_bEnableDestory)
 		{
 			Destory();
+
 			m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}
-	else
-	{
-		m_pTransformCom->Add_Move({ m_fRanged_Impus_NoneDirection.x * m_iDirection * fTimeDelta , m_fRanged_Impus_NoneDirection.y * fTimeDelta ,0 });
-
-		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-	}
 
 }
 
-void CAttackObject_Ranged::Late_Update(_float fTimeDelta)
+void CAttackObject_Energy::Late_Update(_float fTimeDelta)
 {
 
 	
@@ -93,7 +88,7 @@ void CAttackObject_Ranged::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
+HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 {
 
 #ifdef _DEBUG
@@ -106,7 +101,7 @@ HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 
 
 
-void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
+void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
 	//원거리 vs 원거리
@@ -117,10 +112,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//이펙트 처리
 		Erase();
 
-		if (m_eExplositionColor != RANGED_LIGHT_NONE)
+		if (m_eExplositionColor != ENERGY_LIGHT_NONE)
 		{
 			
-			if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+			if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
 			{
 				//Add_YellowLight();
 				
@@ -129,7 +124,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 		}
 
-		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+		static_cast<CAttackObject_Energy*>(other->GetMineGameObject())->Erase();
 
 
 	}
@@ -169,10 +164,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 			}
 
-			if (m_eExplositionColor != RANGED_LIGHT_NONE)
+			if (m_eExplositionColor != ENERGY_LIGHT_NONE)
 			{
 
-				if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+				if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
@@ -185,10 +180,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
 
-			if (m_eExplositionColor != RANGED_LIGHT_NONE)
+			if (m_eExplositionColor != ENERGY_LIGHT_NONE)
 			{
 
-				if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+				if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
@@ -232,27 +227,27 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	_bool Debug = true;
 }
 
-void CAttackObject_Ranged::OnCollisionStay(CCollider* other, _float fTimeDelta)
+void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 	_bool Debug = true;
 
 }
 
-void CAttackObject_Ranged::OnCollisionExit(CCollider* other)
+void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 {
 	_bool Debug = true;
 
 }
 
-void CAttackObject_Ranged::CollisingAttack()
+void CAttackObject_Energy::CollisingAttack()
 {
 }
 
-void CAttackObject_Ranged::CollisingPlayer()
+void CAttackObject_Energy::CollisingPlayer()
 {
 }
 
-_bool CAttackObject_Ranged::Check_MapOut()
+_bool CAttackObject_Energy::Check_MapOut()
 {
 	//높이 체크
 	if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) < 0.1)
@@ -271,7 +266,7 @@ _bool CAttackObject_Ranged::Check_MapOut()
 
 }
 
-void CAttackObject_Ranged::Add_YellowLight(_float3 fPosition)
+void CAttackObject_Energy::Add_YellowLight(_float3 fPosition)
 {
 	LIGHT_DESC			LightDesc{};
 
@@ -292,7 +287,7 @@ void CAttackObject_Ranged::Add_YellowLight(_float3 fPosition)
 }
 
 
-void CAttackObject_Ranged::Add_YellowLight()
+void CAttackObject_Energy::Add_YellowLight()
 {
 	LIGHT_DESC			LightDesc{};
 
@@ -313,7 +308,7 @@ void CAttackObject_Ranged::Add_YellowLight()
 }
 
 
-void CAttackObject_Ranged::Erase()
+void CAttackObject_Energy::Erase()
 {
 	if (m_bEnableDestory)
 	{
@@ -329,33 +324,33 @@ void CAttackObject_Ranged::Erase()
 
 
 
-CAttackObject_Ranged* CAttackObject_Ranged::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CAttackObject_Energy* CAttackObject_Energy::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CAttackObject_Ranged* pInstance = new CAttackObject_Ranged(pDevice, pContext);
+	CAttackObject_Energy* pInstance = new CAttackObject_Energy(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CAttackObject_Ranged"));
+		MSG_BOX(TEXT("Failed to Created : CAttackObject_Energy"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CAttackObject_Ranged::Clone(void* pArg)
+CGameObject* CAttackObject_Energy::Clone(void* pArg)
 {
-	CAttackObject_Ranged* pInstance = new CAttackObject_Ranged(*this);
+	CAttackObject_Energy* pInstance = new CAttackObject_Energy(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CAttackObject_Ranged"));
+		MSG_BOX(TEXT("Failed to Cloned : CAttackObject_Energy"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CAttackObject_Ranged::Free()
+void CAttackObject_Energy::Free()
 {
 	__super::Free();
 	Safe_Release(m_pColliderCom);

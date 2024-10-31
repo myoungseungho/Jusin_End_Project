@@ -167,6 +167,7 @@
     <ClInclude Include="..\Public\AttackObject_Chase.h" />
     <ClInclude Include="..\Public\AttackObject.h" />
     <ClInclude Include="..\Public\AttackObject_CommandGrab.h" />
+    <ClInclude Include="..\Public\AttackObject_Energy.h" />
     <ClInclude Include="..\Public\AttackObject_Grab.h" />
     <ClInclude Include="..\Public\AttackObject_Ranged.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
@@ -311,6 +312,7 @@
     <ClCompile Include="..\Private\AttackObject_Chase.cpp" />
     <ClCompile Include="..\Private\AttackObject.cpp" />
     <ClCompile Include="..\Private\AttackObject_CommandGrab.cpp" />
+    <ClCompile Include="..\Private\AttackObject_Energy.cpp" />
     <ClCompile Include="..\Private\AttackObject_Grab.cpp" />
     <ClCompile Include="..\Private\AttackObject_Ranged.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />

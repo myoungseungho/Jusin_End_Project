@@ -437,6 +437,11 @@ protected:
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
 	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
 
+
+	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
+	void Update_LoofAnimationCreate(_float fTimeDelta);
+
+
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;
@@ -646,10 +651,17 @@ protected:
 	_float m_fAccNoEventLoofTime = {};
 
 
+	//정지상태에서 애니메이션 연속 생성용 변수
 	_bool m_bEffectLoofCreate = false;
 	_float m_fAccEffectLoofCreateTime = { 0.f };
 	_float m_fMaxEffectLoofCreateTime = { 0.f };
 	_wstring m_strEffectLoofCreateName = {};
+
+	_float m_fAccEffectPeriodTime = {};
+	_float m_fMaxEffectPeriodTime = {};
+
+	_float2 m_fEffectLoofCreateOffset = {};
+	_bool m_bEffectLoofCreateFlip = { false };
 
 
 	//디버그용

@@ -231,6 +231,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
+	Update_LoofAnimationCreate(fTimeDelta);
 
 	Update_PreviousXPosition();
 
@@ -960,6 +961,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Kick_Wind"), m_pTransformCom->Get_WorldMatrixPtr());
+		Character_Make_Effect(TEXT("Kick_Wind"));
+
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_MEDIUM:
@@ -1598,6 +1603,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				main_Camera->StartCameraShake(2.f, 0.1f);
 
 				Set_AnimationStop(fStopTime);
+
+				//Character_Make_Effect(TEXT("Aura11_Yellow"));
+				Set_LoofAnimationCreate(TEXT("Aura11_Yellow"), 2.6f, 0.3f);
 			}
 		}
 		else

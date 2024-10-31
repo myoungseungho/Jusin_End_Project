@@ -19,7 +19,7 @@ class CAttackObject_Energy final : public CAttackObject
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 
-	enum Energy_LightColor { RANGED_LIGHT_NONE, RANGED_LIGHT_YELLOW};
+	enum Energy_LightColor { ENERGY_LIGHT_NONE, ENERGY_LIGHT_YELLOW};
 	enum Energy_Direction { ENERGY_DIRECTION_RIGHT, ENERGY_DIRECTION_RIGHT_UP, ENERGY_DIRECTION_RIGHT_DOWN};
 
 	typedef struct ATTACK_RANGED_DESC : public  CAttackObject::ATTACK_DESC
@@ -30,7 +30,7 @@ public:
 		_short iAttackCount = { 5 };
 		_short iPlayerDirection = {};		//
 		
-		Energy_LightColor eExplosionColor = { RANGED_LIGHT_NONE };
+		Energy_LightColor eExplosionColor = { ENERGY_LIGHT_NONE };
 	};
 private:
 	CAttackObject_Energy(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -72,7 +72,7 @@ private:
 
 	_bool m_bDying = false;
 
-	Energy_LightColor m_eExplositionColor = { RANGED_LIGHT_NONE };
+	Energy_LightColor m_eExplositionColor = { ENERGY_LIGHT_NONE };
 
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

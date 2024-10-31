@@ -135,8 +135,8 @@ PLAY_GOKU,GKS205_body,50,SetAnimation,0,0
 
 
 
-PLAY_GOKU,GKS205_body,55.00000,PlaySound,3,0,1
-PLAY_GOKU,GKS205_body,55.00000,PlaySound,13,0,1
+//,PLAY_GOKU,GKS205_body,55.00000,PlaySound,3,0,1
+//,PLAY_GOKU,GKS205_body,55.00000,PlaySound,13,0,1
 PLAY_GOKU,GKS205_body,55.11,AnimSpeedChange,0.022,210
 
 
