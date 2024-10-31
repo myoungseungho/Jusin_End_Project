@@ -36,7 +36,7 @@ public:
 		void* SRV_Ptr = { nullptr };
 		_int iRenderIndex;
 
-		_int iUnique_Index = -1;
+		_int iUnique_Index = 0;
 		_int iPassIndex = 1;
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };

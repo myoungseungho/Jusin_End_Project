@@ -1,0 +1,66 @@
+[Layer]
+LayerName: Kick_Wind
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 2
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: Kick_Wind
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Kick_WindKick_Wind
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1 0
+Scale: 0.01 0.01 0.01
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.01 0.01 0.01
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+
+[Effect]
+EffectName: Kick_Wind02
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Kick_WindKick_Wind02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1 0
+Scale: 0.00799916 0.00799923 0.008
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.00799919 0.00799926 0.008
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
