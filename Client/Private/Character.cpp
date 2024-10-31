@@ -1664,7 +1664,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 
 		//점프 먼지
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
@@ -1760,7 +1760,7 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 
 		//점프 먼지
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
@@ -3857,7 +3857,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 			}
 
 			//사뿐히 점프해서 땅 착지
-			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 		}
 		else if (Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway())
 		{
