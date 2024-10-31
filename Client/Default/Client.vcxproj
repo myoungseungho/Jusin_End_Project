@@ -215,6 +215,10 @@
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
     <ClInclude Include="..\Public\UI_Logo_BG.h" />
     <ClInclude Include="..\Public\UI_Logo_Mark.h" />
+    <ClInclude Include="..\public\UI_Option.h" />
+    <ClInclude Include="..\Public\UI_Opt_Sound.h" />
+    <ClInclude Include="..\public\UI_Opt_Sound_Arrow.h" />
+    <ClInclude Include="..\public\UI_Opt_Sound_Panel.h" />
     <ClInclude Include="..\public\UI_PosMark.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
@@ -348,6 +352,10 @@
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
     <ClCompile Include="..\Private\UI_Logo_BG.cpp" />
     <ClCompile Include="..\Private\UI_Logo_Mark.cpp" />
+    <ClCompile Include="..\private\UI_Option.cpp" />
+    <ClCompile Include="..\Private\UI_Opt_Sound.cpp" />
+    <ClCompile Include="..\private\UI_Opt_Sound_Arrow.cpp" />
+    <ClCompile Include="..\private\UI_Opt_Sound_Panel.cpp" />
     <ClCompile Include="..\private\UI_PosMark.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">

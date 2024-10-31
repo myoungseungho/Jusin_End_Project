@@ -45,6 +45,10 @@ public:
 	//값 초기화
 	void InitUIObject();
 
+private:
+	void CreateOption();
+	void DestroyOption();
+
 public:
 	_bool m_bStun = { FALSE };
 	_bool m_bHit = { FALSE };
@@ -72,6 +76,7 @@ private:
 
 	_bool m_bStartFinish = { FALSE };
 	_bool m_bEndFinish = { FALSE };
+	_bool m_bOnOption = { FALSE };
 
 public:
 	list<class CUIObject*> m_ListTopUI = {};

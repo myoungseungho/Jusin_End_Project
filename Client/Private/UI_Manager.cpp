@@ -55,7 +55,18 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
+		
 
+		if (m_bOnOption == FALSE)
+		{
+			CreateOption();
+			m_bOnOption = TRUE;
+		}
+		else
+		{
+			DestroyOption();
+			m_bOnOption = FALSE;
+		}
 	}
 }
 
@@ -191,6 +202,23 @@ void CUI_Manager::InitUIObject()
 
 		m_pPawnArray[eSlot] = dynamic_cast<CCharacter*>(iter);
 	}
+}
+
+void CUI_Manager::CreateOption()
+{
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Panel"), TEXT("Layer_UI_Option_Sound"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Arrow"), TEXT("Layer_UI_Option_Sound"));
+}
+
+void CUI_Manager::DestroyOption()
+{
+	list<class CGameObject*> UIOptionList  = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
+
+	for (auto& iter : UIOptionList)
+	{
+		iter->Destory();
+	}
+
 }
 
 void CUI_Manager::Free()

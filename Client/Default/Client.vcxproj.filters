@@ -208,6 +208,18 @@
     <ClCompile Include="..\private\UI_SubHpPanel.cpp">
       <Filter>02.GameObjects\UI\Hp\SubHpPanel</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Panel.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Option.cpp">
+      <Filter>02.GameObjects\UI\Option</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_Opt_Sound.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Arrow.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Arrow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -467,6 +479,18 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Hp\SubHpPanel">
       <UniqueIdentifier>{295614e1-9194-4408-9739-21e89781e71f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option">
+      <UniqueIdentifier>{74672b17-0f83-47c0-a596-b1b2e2d9f26e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound">
+      <UniqueIdentifier>{cf668f2d-198e-431e-bbce-51d88f0751ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Panel">
+      <UniqueIdentifier>{120ea1f0-31b7-4239-bd6a-f9d5330a4c55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Arrow">
+      <UniqueIdentifier>{6eb06b6d-5828-41d2-a94d-8fa6dba8b12a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -886,6 +910,18 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_SubHpPanel.h">
       <Filter>02.GameObjects\UI\Hp\SubHpPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Panel.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Option.h">
+      <Filter>02.GameObjects\UI\Option</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Opt_Sound.h">
+      <Filter>02.GameObjects\UI\Option\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Arrow.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Arrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

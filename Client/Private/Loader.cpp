@@ -85,6 +85,8 @@
 #include "UI_Loading_Font.h"
 #include "UI_AttBufIconEff.h"
 #include "UI_SubHpPanel.h"
+#include "UI_Opt_Sound_Panel.h"
+#include "UI_Opt_Sound_Arrow.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -512,6 +514,18 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	/* Prototype_Component_Texture_UI_FontName */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontName"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Chara_Name%d.png"), 4))))
+		return E_FAIL;
+
+	//可记
+
+	/* Prototype_Component_Texture_UI_OptPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_bg_01.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptArrow */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptArrow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_00.png")))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Terrain */
@@ -2909,6 +2923,17 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	/* Prototype_GameObject_UI_FontName */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_FontName"),
 		CUI_FontName::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	//可记
+
+	/* Prototype_GameObject_UI_Opt_Sound_Panel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Panel"),
+		CUI_Opt_Sound_Panel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_Opt_Sound_Arrow*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Arrow"),
+		CUI_Opt_Sound_Arrow::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 
