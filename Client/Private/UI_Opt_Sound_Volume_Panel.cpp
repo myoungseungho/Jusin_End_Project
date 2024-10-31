@@ -30,7 +30,7 @@ HRESULT CUI_Opt_Sound_Volume_Panel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 840.f, m_fPosY = 320.f;
+	m_fPosX = 790.f, m_fPosY = 320.f;
 	m_fSizeX = 266.f, m_fSizeY = 43.f;
 
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
@@ -147,7 +147,7 @@ void CUI_Opt_Sound_Volume_Panel::CreateNameFont()
 
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
 		strName.c_str(),
-		_float2((m_fPosX - 350) * 1.5f, (m_fPosY - 10) * 1.5f),
+		_float2((m_fPosX - 300) * 1.5f, (m_fPosY - 10) * 1.5f),
 		vColor,
 		0.f,
 		{ 0.f, 0.f },

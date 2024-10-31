@@ -30,7 +30,7 @@ HRESULT CUI_Opt_Sound_Volume_Gauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 820.f, m_fPosY = 320.f;
+	m_fPosX = 770.f, m_fPosY = 320.f;
 	m_fSizeX = 150.f, m_fSizeY = 20.f;
 
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);

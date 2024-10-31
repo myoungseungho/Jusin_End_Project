@@ -60,6 +60,8 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 
+
+
 #pragma endregion
 
 #pragma region 캐릭터 사본 객체
@@ -383,6 +385,8 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 	//사운드 옵션
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Panel"), TEXT("Layer_UI_Option_Sound"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Title"), TEXT("Layer_UI_Option_Sound"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Font"), TEXT("Layer_UI_Option_Sound"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Arrow"), TEXT("Layer_UI_Option_Sound"));
 
 	for (int i = 0; i < 3; i++)
@@ -393,6 +397,10 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Panel"), TEXT("Layer_UI_Option_Sound"), &VolumePanelDesc);
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Gauge"), TEXT("Layer_UI_Option_Sound"), &VolumePanelDesc);
 	}
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Effect"), TEXT("Layer_UI_Option_Sound"));
+	
+
 
 	return S_OK;
 }
