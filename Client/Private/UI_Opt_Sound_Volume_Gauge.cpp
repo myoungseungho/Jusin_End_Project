@@ -53,7 +53,7 @@ void CUI_Opt_Sound_Volume_Gauge::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 
 	if(m_bSoundEnable == FALSE)
-		m_fSoundDelay += fTimeDelta;
+		m_fSoundDelay += fTimeDelta * (1.f + m_fSoundWeight);
 
 	if (m_fSoundDelay >= 0.15f)
 	{
@@ -64,7 +64,7 @@ void CUI_Opt_Sound_Volume_Gauge::Update(_float fTimeDelta)
 	if (m_bKeyInput)
 		PostionUpdate();
 
-	SetVolume();
+	SetVolume(fTimeDelta);
 }
 
 void CUI_Opt_Sound_Volume_Gauge::Late_Update(_float fTimeDelta)
@@ -150,20 +150,20 @@ void CUI_Opt_Sound_Volume_Gauge::PostionUpdate()
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 }
 
-void CUI_Opt_Sound_Volume_Gauge::SetVolume()
+void CUI_Opt_Sound_Volume_Gauge::SetVolume(_float fTimeDelta)
 {
 	switch (m_eMenuValue)
 	{
 	case BGM:
-		KeyInput(BGM);
+		KeyInput(BGM , fTimeDelta);
 		break;
 
 	case SFX:
-		KeyInput(SFX);
+		KeyInput(SFX , fTimeDelta);
 		break;
 
 	case VOICE:
-		KeyInput(VOICE);
+		KeyInput(VOICE , fTimeDelta);
 		break;
 	}
 
@@ -182,16 +182,17 @@ void CUI_Opt_Sound_Volume_Gauge::SetVolume()
 
 }
 
-void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound)
+void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound , _float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 	{
 		if (m_bSoundEnable)
 		{
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
-			m_bSoundEnable = FALSE;	
+			m_bSoundEnable = FALSE;
 		}
 		m_fVolumeValue[eSound]--;
+		m_fSoundWeight += fTimeDelta;
 	}
 	else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
 	{
@@ -202,7 +203,13 @@ void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound)
 		}
 
 		m_fVolumeValue[eSound]++;
+		m_fSoundWeight += fTimeDelta;
 	}
+	else
+		m_fSoundWeight = 0.f;
+
+	if (m_fSoundWeight >= 1.5f)
+		m_fSoundWeight = 1.5f;
 }
 
 void CUI_Opt_Sound_Volume_Gauge::NumberFont()

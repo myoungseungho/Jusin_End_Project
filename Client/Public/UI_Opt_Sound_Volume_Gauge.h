@@ -26,8 +26,8 @@ private:
 
 private:
 	void PostionUpdate();
-	void SetVolume();
-	void KeyInput(SOUND_MENU eSound);
+	void SetVolume(_float fTimeDelta);
+	void KeyInput(SOUND_MENU eSound, _float fTimeDelta);
 	void NumberFont();
 
 private:
@@ -38,6 +38,7 @@ private:
 
 	_float m_fSoundDelay = { 0.f };
 	_bool m_bSoundEnable = { TRUE };
+	_float m_fSoundWeight = { 0.f };
 	
 	
 public:
