@@ -65,6 +65,9 @@ void CUI_HpGauge::Update(_float fTimeDelta)
 	//스위칭 Pass Index 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
 
+	if (m_pMainPawn != nullptr)
+		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
+
 	//애니메이션
 	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);
 	//HP 비율 세팅
@@ -138,7 +141,6 @@ HRESULT CUI_HpGauge::Bind_ShaderResources()
 
  	if (FAILED(m_pShaderCom->Bind_RawValue("g_DestroyTimer", &m_fRedGaugeTimer, sizeof(_float))))
 		return E_FAIL;
-
 	
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &(m_bRedAlpha), sizeof(_bool))))
 		return E_FAIL;
@@ -161,11 +163,19 @@ void CUI_HpGauge::HpRadio_Setting(_float& fHpRadio)
 
 void CUI_HpGauge::RedAlphaDuration(_float fTimeDelta)
 {
-	if (m_pMainPawn != nullptr)
-		m_bCharaStun = m_pMainPawn->Get_PawnDesc().bStun;
-
 	if (m_bRedAlpha == FALSE)
 		m_fRedHpRadio = m_fHpRadio;
+
+	if (m_bCharaStun == TRUE)
+	{
+		if (m_bHit == FALSE)
+		{
+			m_bHit = TRUE;
+			m_fRedHpRadio = m_fHpRadio;
+		}
+	}
+	else
+		m_bHit = FALSE;
 
 	m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
 
