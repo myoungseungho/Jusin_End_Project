@@ -16,7 +16,7 @@ HRESULT CLight::Initialize(const LIGHT_DESC & LightDesc)
 HRESULT CLight::Render_Map(CShader* pShader, CVIBuffer_Rect* pVIBuffer)
 {
 	_uint		iPassIndex = { 0 };
-
+	 
 	if (LIGHT_DESC::TYPE_DIRECTIONAL == m_LightDesc.eType)
 	{
 		iPassIndex = 1;

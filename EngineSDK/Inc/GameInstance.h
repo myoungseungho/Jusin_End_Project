@@ -120,14 +120,16 @@ public: /* For.Font_Manager */
 	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
 
 public: /* For.Sound*/
-	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, _bool isLoop);
-	void Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias, _bool isLoop);
+	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop = false);
+	void Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop);
 	void Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY alias, _bool loop, _float volume);
-	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY_NAME alias);
-	void Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY_NAME alias, float volume);
+	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY groupKey);
+	void Set_Group_Volume(CSound_Manager::SOUND_GROUP_KEY groupKey, float volume);
 	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);
 	void Set_ImguiPlay(_bool isPlay);
+	void Set_Category_Volume(CSound_Manager::SOUND_CATEGORY category, float volume);
+
 
 private:
 	class CGraphic_Device* m_pGraphic_Device = { nullptr };
@@ -143,6 +145,8 @@ private:
 	class CFrustum* m_pFrustum = { nullptr };
 	class CFont_Manager* m_pFont_Manager = { nullptr };
 	class CSound_Manager* m_pSoundManager = { nullptr };
+
+	mutex m_PrototypeMutex; // 프로토타입 추가를 위한 뮤텍스
 
 public:
 	void Release_Engine();

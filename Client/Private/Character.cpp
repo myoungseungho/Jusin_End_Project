@@ -3871,6 +3871,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 				//m_bHitGroundSmashed = false;
 				//m_pTransformCom->Add_Move({ -1 * fTimeDelta * m_iLookDirection, 0, 0 });
+
+				//½ê°Ô ²¿¶ó¹ÚÈú ‹š
 			}
 			else
 			{
@@ -3882,6 +3884,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 				Set_BreakFall_Ground();
 
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+
+				//ÃµÃµÈ÷ ²¿¶ó¹ÚÈú ¶§
 			}
 
 

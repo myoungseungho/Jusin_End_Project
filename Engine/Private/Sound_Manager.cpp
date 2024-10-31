@@ -69,7 +69,7 @@ HRESULT CSound_Manager::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, _bool loop)
+void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop)
 {
 	// 이미 등록된 사운드인지 확인
 	if (m_soundMap.find(alias) != m_soundMap.end())
@@ -92,9 +92,10 @@ void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME
 
 	// 사운드 등록
 	m_soundMap[alias] = sound;
+	m_soundCategoryMap[alias] = category;
 }
 
-void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, _bool loop)
+void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, SOUND_CATEGORY category, _bool loop)
 {
 	// 그룹이 존재하지 않으면 생성
 	if (m_soundGroupMap.find(groupKey) == m_soundGroupMap.end())
@@ -121,6 +122,7 @@ void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::w
 
 		// 그룹 사운드 맵에 등록
 		m_groupSoundMap[alias] = sound;
+		m_groupSoundCategoryMap[alias] = category;
 	}
 
 	// 그룹에 해당 alias를 추가
@@ -251,14 +253,26 @@ void CSound_Manager::Stop_Sound(SOUND_KEY_NAME alias)
 	FMOD_Channel_Stop(it->second);
 }
 
-void CSound_Manager::Stop_Group_Sound(SOUND_GROUP_KEY_NAME alias)
+void CSound_Manager::Stop_Group_Sound(SOUND_GROUP_KEY groupKey)
 {
-	auto it = m_groupChannelMap.find(alias);
-	if (it == m_groupChannelMap.end()) return;
+	// Find the group in the sound group map
+	auto groupIt = m_soundGroupMap.find(groupKey);
+	if (groupIt == m_soundGroupMap.end()) return;
 
-	FMOD_Channel_Stop(it->second);
+	// Iterate over all sound aliases in the group
+	const auto& soundList = groupIt->second;
+	for (const auto& alias : soundList)
+	{
+		auto channelIt = m_groupChannelMap.find(alias);
+		if (channelIt != m_groupChannelMap.end())
+		{
+			// Stop the channel
+			FMOD_Channel_Stop(channelIt->second);
+			// Optionally, reset the channel pointer
+			// channelIt->second = nullptr;
+		}
+	}
 }
-
 
 void CSound_Manager::Set_Volume(SOUND_KEY_NAME alias, float volume)
 {
@@ -268,12 +282,52 @@ void CSound_Manager::Set_Volume(SOUND_KEY_NAME alias, float volume)
 	FMOD_Channel_SetVolume(it->second, volume);
 }
 
-void CSound_Manager::Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume)
+void CSound_Manager::Set_Group_Volume(SOUND_GROUP_KEY groupKey, float volume)
 {
-	auto it = m_groupChannelMap.find(alias);
-	if (it == m_groupChannelMap.end()) return;
+	// Find the group in the sound group map
+	auto groupIt = m_soundGroupMap.find(groupKey);
+	if (groupIt == m_soundGroupMap.end()) return;
 
-	FMOD_Channel_SetVolume(it->second, volume);
+	// Iterate over all sound aliases in the group
+	const auto& soundList = groupIt->second;
+	for (const auto& alias : soundList)
+	{
+		auto channelIt = m_groupChannelMap.find(alias);
+		if (channelIt != m_groupChannelMap.end())
+		{
+			// Set the volume for the channel
+			FMOD_Channel_SetVolume(channelIt->second, volume);
+		}
+	}
+}
+
+void CSound_Manager::Set_Category_Volume(SOUND_CATEGORY category, float volume)
+{
+	// 개별 사운드 볼륨 조절
+	for (const auto& pair : m_soundCategoryMap)
+	{
+		if (pair.second == category)
+		{
+			auto channelIt = m_channelMap.find(pair.first);
+			if (channelIt != m_channelMap.end())
+			{
+				FMOD_Channel_SetVolume(channelIt->second, volume);
+			}
+		}
+	}
+
+	// 그룹 사운드 볼륨 조절
+	for (const auto& pair : m_groupSoundCategoryMap)
+	{
+		if (pair.second == category)
+		{
+			auto channelIt = m_groupChannelMap.find(pair.first);
+			if (channelIt != m_groupChannelMap.end())
+			{
+				FMOD_Channel_SetVolume(channelIt->second, volume);
+			}
+		}
+	}
 }
 
 void CSound_Manager::Set_ImguiPlay(_bool isPlay)

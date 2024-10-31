@@ -91,6 +91,12 @@ public:
 		LIGHT_ATTACK_Goku_SFX
 	};
 
+	enum class SOUND_CATEGORY
+	{
+		BGM,
+		VOICE,
+		SFX
+	};
 
 private:
 	CSound_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -106,14 +112,15 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, _bool loop = false);
-	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, _bool loop);
+	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop = false);
+	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, SOUND_CATEGORY category, _bool loop);
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);
-	void Stop_Group_Sound(SOUND_GROUP_KEY_NAME alias);
+	void Stop_Group_Sound(SOUND_GROUP_KEY groupKey);
 	void Set_Volume(SOUND_KEY_NAME alias, float volume);
-	void Set_Group_Volume(SOUND_GROUP_KEY_NAME alias, float volume);
+	void Set_Group_Volume(SOUND_GROUP_KEY groupKey, float volume);
+	void Set_Category_Volume(SOUND_CATEGORY category, float volume);
 
 	void Set_ImguiPlay(_bool isPlay);
 
@@ -135,6 +142,10 @@ private:
 	map<SOUND_GROUP_KEY, vector<SOUND_GROUP_KEY_NAME>> m_soundGroupMap;  // 그룹별로 음원 alias를 저장하는 맵
 	map<SOUND_GROUP_KEY, SOUND_GROUP_KEY_NAME> m_lastPlayedSound;  // 마지막에 재생된 음원을 저장하는 맵
 
+	// 개별 사운드용 맵
+	map<SOUND_KEY_NAME, SOUND_CATEGORY> m_soundCategoryMap;
+	// 그룹 사운드용 맵
+	map<SOUND_GROUP_KEY_NAME, SOUND_CATEGORY> m_groupSoundCategoryMap;
 public:
 
 	static CSound_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

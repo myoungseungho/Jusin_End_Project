@@ -25,7 +25,7 @@ HRESULT CLevel_Logo::Initialize()
 
 void CLevel_Logo::Update(_float fTimeDelta)
 {
- 	if (m_pGameInstance->Key_Down(DIK_SPACE))
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
 	{
 		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
 			return;
@@ -45,7 +45,7 @@ HRESULT CLevel_Logo::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	/* For.BackGround */
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOGO, TEXT("Prototype_GameObject_BackGround"), strLayerTag)))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOGO, TEXT("Prototype_GameObject_Logo"), strLayerTag)))
 		return E_FAIL;
 
@@ -54,7 +54,7 @@ HRESULT CLevel_Logo::Ready_Layer_BackGround(const _wstring& strLayerTag)
 
 HRESULT CLevel_Logo::Ready_Sound()
 {
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/030_sto_sento1.ogg", CSound_Manager::SOUND_KEY_NAME::LOGO_BGM, true);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/030_sto_sento1.ogg", CSound_Manager::SOUND_KEY_NAME::LOGO_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOGO_BGM, true, 0.2f);
 	return S_OK;
 }
