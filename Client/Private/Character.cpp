@@ -1635,6 +1635,14 @@ void CCharacter::Move(_float fTimeDelta)
 				MoveKey2Team(fTimeDelta);
 
 
+
+			//그래서 벽이면 어쩔껀데
+			//if (Check_bWall())
+			//{
+			//	//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
+			//	Move_ForWall();
+			//}
+
 		}
 	}
 }
@@ -2289,7 +2297,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 			//거리가 멀어져서 생긴 가상의 벽
 			//if ( fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
-			if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+			//if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+			if(Check_bWall())
 			{
 				Set_Animation(m_iHit_WallBouce);
 
@@ -3427,19 +3436,115 @@ void CCharacter::pEnemyCheck()
 void CCharacter::Tag_Out(_vector vPosition)
 {
 	//일단은 임시로
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+
+
+	//보고있는 방향쪽으로 돌진할 수 있게 보고있는 방향의 - 16정도 땡겨버려도 될듯
+	//근데 이놈이 보고있는방향을 갱신했는가?
+
+	//1. Look값 던져주기
+	
+	pEnemyCheck();
+	 
+	//2. 나오는순간 계산하기
+	CTransform* pEnemyTransform = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
+
+	//적 방향의 X값 체크
+	_float fX = XMVectorGetX(pEnemyTransform->Get_State(CTransform::STATE_POSITION) - vPosition);
+
+
+	//차이가 좁으면 반전 안함. 둘 다 벽에 붙어있을 때 대비.
+	if (fabsf(fX) > 0.05)
+	{
+
+		if (fX > 0)
+		{
+			FlipDirection(1);
+		}
+		else
+		{
+			FlipDirection(-1);
+		}
+
+	}
+	
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition + _vector{-6.f *m_iLookDirection,0.5f,0.f,0.f});
+
 	m_bPlaying = true;
 
 	m_bTag_In = false;
 
 
-	Chase_Ready(0.f);
+	Chase_Ready(0.4f);
+	Chase2(0.2f);
 
 }
 
 void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
 {
 	m_bGrabDraw = bGrabDraw;
+}
+
+_bool CCharacter::Check_bWall()
+{
+	if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
+		return true;
+
+	return false;
+
+}
+
+void CCharacter::Move_ForWall()
+{
+	
+	_float fPosX = Get_fPositionX();
+
+	if (fPosX < -12.f)
+	{
+		//-14라면 +2를 해야한다.   14-12
+		Add_Move({ -fPosX -12.f,0.f });
+
+		//그냥 -12로 설정하기엔 y값 구해야함
+		//어차피 GetTransform하는데 문제없지않나?
+
+	}
+	else if (fPosX > 12.f)
+	{
+		//14라면 -2를 해야한다.   -14+12
+
+		Add_Move({ -fPosX + 12.f,0.f });
+	}
+	else  //여기로 들어온 이상 어차피 적과의 거리가 8 이상인거니 그부분은 검사하지 않음
+	{
+		_float fEnemyfPosX = m_pEnemy->Get_fPositionX();
+
+		//누가 왼쪽? 자신인 경우 더이상 왼쪽으로 못가게
+		//if (fPosX < fEnemyfPosX)
+		//{
+		//	//내가 0 적이 9인경우 내가 1이 되도록 이동.  9-8.
+		//
+		//	//내가 15  적이 40인경우  내가 32가 되도록 17만큼 이동  (20-10-
+		//	Add_Move({ fEnemyfPosX - 8.f,0.f });
+		//}
+		//else
+		//{
+		//	//내가 9 적이 0인 경우 내가 8이 되도록 이동.  8-9
+		//	Add_Move({ 8 - fPosX,0.f });
+		//
+		//}
+
+		Add_Move({ 8 - abs(fPosX - fEnemyfPosX),0.f });
+
+		if (8 - abs(fPosX - fEnemyfPosX) < 0)
+		{
+			m_iPlayerTeam;
+			_bool bDebufg = true;
+		}
+	}
+	
+	
 }
 
 

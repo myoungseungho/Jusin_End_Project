@@ -412,6 +412,8 @@ public:
 	void Tag_Out(_vector vPosition);
 	
 	void Set_bGrabDraw(_bool bGrabDraw);
+	_bool Check_bWall();
+	void Move_ForWall();
 
 protected:
 	void Reset_AttackStep();

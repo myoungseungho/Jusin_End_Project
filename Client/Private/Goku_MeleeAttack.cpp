@@ -30,6 +30,8 @@
 //vector<CInput> Command_SpecialAttack ={	{MOVEKEY_NEUTRAL, ATTACK_SPECIAL}};
 
 
+#include <iostream>
+
 void CGoku_MeleeAttack::Initalize(CPlay_Goku* pPlayer)
 {
 	m_pPlayer = pPlayer;
@@ -252,6 +254,7 @@ void CGoku_MeleeAttack::Attack_Special()
 					//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
 					m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
 
+					cout << "TEST1" << endl;
 					(*m_piCountGroundSpecial)++;
 				}
 				
@@ -262,6 +265,8 @@ void CGoku_MeleeAttack::Attack_Special()
 				if (m_pPlayer->CompareNextAnimation(CPlay_Goku::ANIME_IDLE))
 				{
 					m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_SPECIAL, 0.5f, 55);
+					cout << "TEST2" << endl;
+
 					(*m_piCountGroundSpecial)++;
 				}
 
@@ -271,8 +276,7 @@ void CGoku_MeleeAttack::Attack_Special()
 		}
 		else
 		{
-			iCount;
-			_bool bDebugf = true;
+			(*m_piCountGroundSpecial)++;
 		}
 	}
 

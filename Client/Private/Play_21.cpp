@@ -535,13 +535,19 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	_float fPosX = Get_fPositionX();
 
 	//12(벽) 이상 넘어가지 못하게 
-	if (fPosX > 12)
+	//if (fPosX > 12)
+	//{
+	//	Add_Move({ 12.f - fPosX, 0.f });
+	//}
+	//else if (fPosX < -12)
+	//{
+	//	Add_Move({ -12.f - fPosX, 0.f });
+	//}
+
+	if (Check_bWall())
 	{
-		Add_Move({ 12.f - fPosX, 0.f });
-	}
-	else if (fPosX < -12)
-	{
-		Add_Move({ -12.f - fPosX, 0.f });
+		//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
+		Move_ForWall();
 	}
 
 	Tag_KeyCheck();
@@ -782,6 +788,11 @@ void CPlay_21::Late_Update(_float fTimeDelta)
 	//#ifdef _DEBUG
 	//	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 	//#endif
+
+	if (m_iPlayerTeam == 2)
+	{
+		_bool bDebug = true;
+	}
 }
 
 HRESULT CPlay_21::Render(_float fTimeDelta)

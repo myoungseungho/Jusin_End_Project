@@ -208,6 +208,16 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
+
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
+
 	return S_OK;
 }
 
@@ -510,14 +520,20 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	_float fPosX = Get_fPositionX();
 
 	//12(벽) 이상 넘어가지 못하게 
-	if (fPosX > 12)
+	//if (fPosX > 12)
+	//{
+	//	Add_Move({ 12.f - fPosX, 0.f });
+	//}
+	//else if (fPosX < -12)
+	//{
+	//	Add_Move({ -12.f - fPosX, 0.f });
+	//}
+	if (Check_bWall())
 	{
-		Add_Move({ 12.f - fPosX, 0.f });
+		//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
+		Move_ForWall();
 	}
-	else if (fPosX < -12)
-	{
-		Add_Move({ -12.f - fPosX, 0.f });
-	}
+
 
 	Tag_KeyCheck();
 
@@ -561,7 +577,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	//Tag_In(0)
 	//}
 
-	cout << "Team : " << m_iPlayerTeam << "Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
+	//cout << "Team : " << m_iPlayerTeam << " Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
+
+
 
 }
 
@@ -580,6 +598,12 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 	if (m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+
+	if (m_iPlayerTeam == 2)
+	{
+		_bool bDebug = true;
+	}
 
 	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
@@ -998,7 +1022,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_SPECIAL:
-	if(iAttackEvent == 0)
+	//if(iAttackEvent == 0)
 	{
 		//CAttackObject::ATTACK_DESC Desc{};
 
@@ -1015,47 +1039,25 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.5f;
+		Desc.fhitCharacter_StunTime = 0.35f;
 		Desc.iDamage = 300 * Get_DamageScale();;
 		Desc.fLifeTime = 5.f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
-
-		Desc.iTeam = m_iPlayerTeam;
-
-		Desc.bCameraZoom = false;
-		Desc.fAnimationLockTime = 0.f;
-
-		Desc.pOwner = this;
-
-		//Desc.eAttackType = { ATTACKTYPE_HIGH };
-		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 비율
-		
-		Desc.iDirection = m_iLookDirection;
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
-	}
-	else if (iAttackEvent == 1)
-	{
-		CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
-		//Desc.ColliderDesc.width = 1.0;
-		//Desc.ColliderDesc.height = 1.0;
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+		cout << m_iCountGroundSpecial << endl;
+
+		if (m_iCountGroundSpecial >=5)
+		{
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+			//Desc.fhitCharacter_Impus = { 5.f * m_iLookDirection, 0.3f };
+			Desc.fhitCharacter_Impus = { 8.f * m_iLookDirection, 0.3f };
+			Desc.fhitCharacter_StunTime = 0.1f;
+		}
 		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
-		Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
-
-
-		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.5f;
-		Desc.iDamage = 300 * Get_DamageScale();;
-		Desc.fLifeTime = 5.f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+		{
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+			Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection,0 };
+		}
 
 		Desc.iTeam = m_iPlayerTeam;
 
@@ -1066,12 +1068,48 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 비율
-
+		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
 		Desc.iDirection = m_iLookDirection;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+
 	}
+	//else if (iAttackEvent == 1)
+	//{
+	//	CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
+	//	//Desc.ColliderDesc.width = 1.0;
+	//	//Desc.ColliderDesc.height = 1.0;
+	//	if (m_iPlayerTeam == 1)
+	//		Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+	//	else
+	//		Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
+	//	Desc.ColliderDesc.pMineGameObject = this;
+	//	Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
+	//	Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
+	//
+	//
+	//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+	//	Desc.fhitCharacter_StunTime = 0.5f;
+	//	Desc.iDamage = 300 * Get_DamageScale();;
+	//	Desc.fLifeTime = 5.f;
+	//	Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+	//
+	//	Desc.iTeam = m_iPlayerTeam;
+	//
+	//	Desc.bCameraZoom = false;
+	//	Desc.fAnimationLockTime = 0.f;
+	//
+	//	Desc.pOwner = this;
+	//
+	//	//Desc.eAttackType = { ATTACKTYPE_HIGH };
+	//	Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
+	//	Desc.fRanged_Impus_NoneDirection = { 6.f,0.f };  // 1:1.569 비율
+	//
+	//	Desc.iDirection = m_iLookDirection;
+	//
+	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+	//}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_AIR1:
 	{
