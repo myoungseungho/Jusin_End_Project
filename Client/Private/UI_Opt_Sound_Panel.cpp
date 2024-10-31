@@ -91,6 +91,8 @@ HRESULT CUI_Opt_Sound_Panel::Ready_Components()
 	return S_OK;
 }
 
+
+
 CUI_Opt_Sound_Panel* CUI_Opt_Sound_Panel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CUI_Opt_Sound_Panel* pInstatnce = new CUI_Opt_Sound_Panel(pDevice, pContext);

@@ -4,12 +4,13 @@
 
 BEGIN(Client)
 
-class CUI_Opt_Sound_Panel final :public CUI_Opt_Sound
+class CUI_Opt_Sound_Volume_Panel final :public CUI_Opt_Sound
 {
+
 private:
-	CUI_Opt_Sound_Panel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_Opt_Sound_Panel(const CUI_Opt_Sound_Panel& Prototype);
-	virtual ~CUI_Opt_Sound_Panel() = default;
+	CUI_Opt_Sound_Volume_Panel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_Opt_Sound_Volume_Panel(const CUI_Opt_Sound_Volume_Panel& Prototype);
+	virtual ~CUI_Opt_Sound_Volume_Panel() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -22,9 +23,15 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+private:
+	void PostionUpdate();
+	void CreateNameFont();
+
+private:
+	_uint m_iNumUI = { 0 };
 
 public:
-	static CUI_Opt_Sound_Panel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_Opt_Sound_Volume_Panel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

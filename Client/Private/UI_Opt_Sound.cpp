@@ -38,7 +38,7 @@ void CUI_Opt_Sound::Camera_Update(_float fTimeDelta)
 
 void CUI_Opt_Sound::Update(_float fTimeDelta)
 {
-
+	MenuChange();
 }
 
 void CUI_Opt_Sound::Late_Update(_float fTimeDelta)
@@ -69,10 +69,21 @@ HRESULT CUI_Opt_Sound::Ready_Components()
 
 void CUI_Opt_Sound::MenuChange()
 {
-	//if(m_pGameInstance->Key_Down(DIK_UP))
-	//{
-	//	m_eMenuValue++;
-	//}
+	if(m_pGameInstance->Key_Down(DIK_UP))
+	{
+		m_eMenuValue = (SOUND_MENU)(m_eMenuValue - 1);
+
+		if (m_eMenuValue < 0)
+			m_eMenuValue = VOICE;
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_DOWN))
+	{
+		m_eMenuValue = (SOUND_MENU)(m_eMenuValue + 1);
+
+		if (m_eMenuValue >= 3)
+			m_eMenuValue = BGM;
+	}
 }
 
 void CUI_Opt_Sound::Free()

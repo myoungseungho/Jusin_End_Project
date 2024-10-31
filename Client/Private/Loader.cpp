@@ -87,6 +87,9 @@
 #include "UI_SubHpPanel.h"
 #include "UI_Opt_Sound_Panel.h"
 #include "UI_Opt_Sound_Arrow.h"
+#include "UI_Opt_Sound_Volume_Panel.h"
+#include "UI_Opt_Sound_Volume_Gauge.h"
+
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -528,6 +531,35 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptArrow"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_00.png")))))
 		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptSelectEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSelectEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_titleitem_02.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptVolumePanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptVolumePanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_gage_01.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptVolumeGauge */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptVolumeGauge"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_gage_00.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptTitle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptTitle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_title_00.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptSoundFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSoundFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Sound_Font.png")))))
+		return E_FAIL;
+
+
+
+	//-----------------------------------//-----------------------------------//-----------------------------------
 
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Diffuse"),
@@ -2936,6 +2968,16 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	/* Prototype_GameObject_UI_Opt_Sound_Arrow*/
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Arrow"),
 		CUI_Opt_Sound_Arrow::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_Opt_Sound_Volume_Panel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Panel"),
+		CUI_Opt_Sound_Volume_Panel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_Opt_Sound_Volume_Gauge*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Gauge"),
+		CUI_Opt_Sound_Volume_Gauge::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 

@@ -495,6 +495,25 @@ PS_OUT PS_SkillPanel(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_Volume(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    //if (Out.vColor.a <= 1.f)
+    //    discard;
+    
+    if (g_Radio >= In.vTexcoord.x)
+        Out.vColor.rgb = float3(0.043f, 0.952f, 0.945f);
+    else 
+        Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
+    
+
+       return Out;
+}
+
+
 technique11 DefaultTechnique
 {
 	/* PASS¿« ±‚¡ÿ : ºŒ¿Ã¥ı ±‚π˝¿« ƒ∏Ω∂»≠. */
@@ -825,5 +844,18 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_SkillPanel();
     }
 
+//22
+    pass Volume
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_Volume();
+    }
 
 }

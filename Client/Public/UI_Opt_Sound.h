@@ -30,7 +30,7 @@ private:
 	void MenuChange();
 
 protected:
-	SOUND_MENU m_eMenuValue = { MENU_END };
+	SOUND_MENU m_eMenuValue = { BGM };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

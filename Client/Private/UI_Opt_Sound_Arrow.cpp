@@ -30,8 +30,8 @@ HRESULT CUI_Opt_Sound_Arrow::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 100.f, m_fPosY = 100.f;
-	m_fSizeX = 635.f, m_fSizeY = 230.f;
+	m_fPosX = 390.f, m_fPosY = 320.f;
+	m_fSizeX = 50.f, m_fSizeY = 50.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
@@ -46,7 +46,7 @@ void CUI_Opt_Sound_Arrow::Camera_Update(_float fTimeDelta)
 void CUI_Opt_Sound_Arrow::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-	
+	PostionUpdate();
 
 }
 
@@ -93,7 +93,24 @@ HRESULT CUI_Opt_Sound_Arrow::Ready_Components()
 
 void CUI_Opt_Sound_Arrow::PostionUpdate()
 {
-	//swtich()
+
+	switch (m_eMenuValue)
+	{
+	case BGM:
+		 m_fPosY = 320.f;
+		break;
+
+	case SFX:
+		m_fPosY = 360.f;
+		break;
+
+	case VOICE:
+		m_fPosY = 400.f;
+		break;
+	}
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
+
 }
 
 CUI_Opt_Sound_Arrow* CUI_Opt_Sound_Arrow::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

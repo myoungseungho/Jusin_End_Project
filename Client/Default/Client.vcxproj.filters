@@ -220,6 +220,12 @@
     <ClCompile Include="..\private\UI_Opt_Sound_Arrow.cpp">
       <Filter>02.GameObjects\UI\Option\Sound\Arrow</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Volume_Panel.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Volume\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Volume_Gauge.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Volume\Gauge</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -491,6 +497,15 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Option\Sound\Arrow">
       <UniqueIdentifier>{6eb06b6d-5828-41d2-a94d-8fa6dba8b12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Volume">
+      <UniqueIdentifier>{a4a8b006-f062-450a-998b-c915390faba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Volume\Panel">
+      <UniqueIdentifier>{4d32560e-818d-4a95-881b-2949545d1a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Volume\Gauge">
+      <UniqueIdentifier>{c94b3506-2588-4bb8-9a84-a76cde15bc70}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -922,6 +937,12 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Opt_Sound_Arrow.h">
       <Filter>02.GameObjects\UI\Option\Sound\Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Volume_Panel.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Volume\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Volume_Gauge.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Volume\Gauge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
