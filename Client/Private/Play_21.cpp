@@ -265,7 +265,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		_bool bDebug = true;
 	}
 
-
+	Update_LoofAnimationCreate(fTimeDelta);
 	Update_PreviousXPosition();
 
 	if (m_bGrabbed)

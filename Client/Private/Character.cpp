@@ -1681,6 +1681,8 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		
 		
 	}
 
@@ -3705,6 +3707,44 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
 
 	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+
+}
+
+void CCharacter::Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset, _bool bFlipDirection)
+{
+
+	m_bEffectLoofCreate = true;;
+	m_fAccEffectLoofCreateTime = 0.f;
+	m_fMaxEffectLoofCreateTime = fMaxTime;
+	m_strEffectLoofCreateName = strEffectName;
+
+
+	m_fAccEffectPeriodTime = 0.f;
+	m_fMaxEffectPeriodTime = fPeriodTime;
+
+	m_fEffectLoofCreateOffset = fOffset;
+	m_bEffectLoofCreateFlip = bFlipDirection;
+
+}
+
+void CCharacter::Update_LoofAnimationCreate(_float fTimeDelta)
+{
+	if (m_bEffectLoofCreate)
+	{
+		m_fAccEffectLoofCreateTime += fTimeDelta;
+		if (m_fAccEffectLoofCreateTime > m_fMaxEffectLoofCreateTime)
+		{
+			m_bEffectLoofCreate = false;
+			m_fAccEffectLoofCreateTime = 0.f;
+		}
+
+		m_fAccEffectPeriodTime += fTimeDelta;
+		if (m_fAccEffectPeriodTime > m_fMaxEffectPeriodTime)
+		{
+			m_fAccEffectPeriodTime = 0.f;
+			Character_Make_Effect(m_strEffectLoofCreateName, m_fEffectLoofCreateOffset, m_bEffectLoofCreateFlip);
+		}
+	}
 
 }
 
