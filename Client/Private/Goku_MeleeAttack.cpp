@@ -386,6 +386,7 @@ void CGoku_MeleeAttack::Attack_214()
 		m_pPlayer->Set_bAttackGravity(false);
 		m_pPlayer->Set_ForcedGravityDown();
 
+
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3 ||

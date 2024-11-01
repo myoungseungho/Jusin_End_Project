@@ -3719,7 +3719,9 @@ void CCharacter::Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime
 	m_strEffectLoofCreateName = strEffectName;
 
 
-	m_fAccEffectPeriodTime = 0.f;
+	//m_fAccEffectPeriodTime = 0.f;
+	m_fAccEffectPeriodTime = fPeriodTime;
+
 	m_fMaxEffectPeriodTime = fPeriodTime;
 
 	m_fEffectLoofCreateOffset = fOffset;

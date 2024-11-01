@@ -1,7 +1,7 @@
 [Layer]
 LayerName: BurstU-3_02
 Duration: 1
-TickPerSecond: 9
+TickPerSecond: 1
 KeyFramesCount: 59
 NumEffec: 2
 Position: 0 0 0

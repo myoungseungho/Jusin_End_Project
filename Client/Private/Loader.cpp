@@ -102,6 +102,7 @@
 #include "AttackObject_Grab.h"
 #include "AttackObject_CommandGrab.h"
 #include "AttackObject_Ranged.h"
+#include "AttackObject_Energy.h"
 
 #include "BoneEffectObject.h"
 
@@ -2677,6 +2678,11 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Ranged"),
 		CAttackObject_Ranged::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Energy"),
+		CAttackObject_Energy::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Bone_Effect_Object"),
 		CBoneEffectObject::Create(m_pDevice, m_pContext))))

@@ -41,7 +41,7 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	m_iDirection = pDesc->iDirection;
 
 
-	m_eExplositionColor = pDesc->eExplosionColor;
+	m_eExplosionColor = pDesc->eExplosionColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
@@ -78,6 +78,7 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	else
 	{
 		m_pTransformCom->Add_Move({ m_fRanged_Impus_NoneDirection.x * m_iDirection * fTimeDelta , m_fRanged_Impus_NoneDirection.y * fTimeDelta ,0 });
+
 
 		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	}
@@ -117,10 +118,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//ÀÌÆåÆ® Ã³¸®
 		Erase();
 
-		if (m_eExplositionColor != RANGED_LIGHT_NONE)
+		if (m_eExplosionColor != RANGED_LIGHT_NONE)
 		{
 			
-			if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+			if (m_eExplosionColor == RANGED_LIGHT_YELLOW)
 			{
 				//Add_YellowLight();
 				
@@ -169,10 +170,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 			}
 
-			if (m_eExplositionColor != RANGED_LIGHT_NONE)
+			if (m_eExplosionColor != RANGED_LIGHT_NONE)
 			{
 
-				if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+				if (m_eExplosionColor == RANGED_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
@@ -185,10 +186,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
 
-			if (m_eExplositionColor != RANGED_LIGHT_NONE)
+			if (m_eExplosionColor != RANGED_LIGHT_NONE)
 			{
 
-				if (m_eExplositionColor == RANGED_LIGHT_YELLOW)
+				if (m_eExplosionColor == RANGED_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
