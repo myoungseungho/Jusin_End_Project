@@ -76,6 +76,7 @@ private:
 
 	_bool m_bStartFinish = { FALSE };
 	_bool m_bEndFinish = { FALSE };
+public:
 	_bool m_bOnOption = { FALSE };
 
 public:

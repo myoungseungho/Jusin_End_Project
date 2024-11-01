@@ -10,7 +10,7 @@
 #include "RenderInstance.h"
 #include "Character.h"
 #include "UI_BaseAttBuf.h"
-#include "UI_Option.h"
+#include "UI_Opt_Sound.h"
 
 IMPLEMENT_SINGLETON(CUI_Manager)
 
@@ -66,6 +66,8 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 			DestroyOption();
 			m_bOnOption = FALSE;
 		}
+
+
 	}
 }
 
@@ -211,8 +213,9 @@ void CUI_Manager::CreateOption()
 
 	for (auto& iter : UIOptionList)
 	{
-		dynamic_cast<CUI_Option*>(iter)->SetActive(TRUE);
-		dynamic_cast<CUI_Option*>(iter)->OnSwitch(TRUE);
+		dynamic_cast<CUI_Opt_Sound*>(iter)->SetActive(TRUE);
+		dynamic_cast<CUI_Opt_Sound*>(iter)->OnSwitch(TRUE);
+		
 	}
 
 }

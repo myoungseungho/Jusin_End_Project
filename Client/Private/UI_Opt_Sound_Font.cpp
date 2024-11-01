@@ -72,6 +72,19 @@ HRESULT CUI_Opt_Sound_Font::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+	_vector vColor = { 0.996f, 0.729f, 0.f ,1.f };
+	(EXIT == m_eMenuValue) ? vColor = { 1.f, 1.f, 1.f ,1.f } : vColor = { 0.996f, 0.729f, 0.f ,1.f };
+
+
+	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
+		TEXT("Exit"),
+		_float2((790.f - 380.f) * 1.5f, ((m_fPosY + 163.f) - 10.f) * 1.5f),
+		vColor,
+		0.f,
+		{ 0.f, 0.f },
+		0.8f
+	);
+
 	return S_OK;
 }
 
