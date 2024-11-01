@@ -83,8 +83,6 @@ private:
 	vector<CCollider*> m_vecColliderCom;
 
 	_float2 m_fEndPos = {};
-	_float2 m_fStartPos = {};
-
 
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

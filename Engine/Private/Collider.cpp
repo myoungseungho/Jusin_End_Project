@@ -160,7 +160,6 @@ void CCollider::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 	if (!m_isColl)
 		m_isColl != m_isColl;
-
 	m_pMineGameObject->OnCollisionEnter(other, fTimeDelta);
 }
 
