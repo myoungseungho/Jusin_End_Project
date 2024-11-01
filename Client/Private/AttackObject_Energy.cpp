@@ -116,7 +116,6 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-	//Destory();
 	_bool Debug = true;
 }
 
@@ -129,7 +128,6 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 {
 	_bool Debug = true;
-
 }
 
 void CAttackObject_Energy::CollisingAttack()
