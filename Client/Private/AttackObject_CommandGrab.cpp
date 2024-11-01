@@ -98,10 +98,10 @@ void CAttackObject_CommandGrab::Late_Update(_float fTimeDelta)
 
 HRESULT CAttackObject_CommandGrab::Render(_float fTimeDelta)
 {
-
-#ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+//
+//#ifdef _DEBUG
+//	m_pColliderCom->Render(fTimeDelta);
+//#endif // DEBUG
 
 
 	return S_OK;

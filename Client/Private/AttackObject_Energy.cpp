@@ -109,10 +109,10 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 #ifdef _DEBUG
 	//m_pColliderCom->Render(fTimeDelta);
 
-	for (auto pCollider : m_vecColliderCom)
-	{
-		pCollider->Render(fTimeDelta);
-	}
+	//for (auto pCollider : m_vecColliderCom)
+	//{
+	//	pCollider->Render(fTimeDelta);
+	//}
 #endif // DEBUG
 
 	return S_OK;
