@@ -1,0 +1,66 @@
+[Layer]
+LayerName: Wall_Crash
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 2
+Position: 0 2 0
+Scale: 1 1 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: Wall_Crash01
+ModelName: Model_Effect_cmn_puffyplane
+MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 2.5 0
+Scale: 0.05 0.05 0.05
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.5 0
+Scale: 0.05 0.05 0.05
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Wall_Crash02
+ModelName: Model_Effect_cmn_puffyplane
+MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1.5 0
+Scale: 0.05 0.0499933 0.0499933
+Rotation: 180 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.5 0
+Scale: 0.05 0.0499933 0.0499933
+Rotation: 180 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
