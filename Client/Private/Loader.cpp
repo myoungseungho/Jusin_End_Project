@@ -810,6 +810,14 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다.1"));
 	}
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base_2P.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base_2P.png"), 1))))
+		return E_FAIL;
+
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_bomb00"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_bomb00.dds"), 1))))
 		return E_FAIL;

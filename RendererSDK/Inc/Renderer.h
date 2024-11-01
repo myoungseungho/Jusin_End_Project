@@ -107,6 +107,7 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
 
+	HRESULT Draw_OutLine_Effect();
 	HRESULT Draw_AllGlow_Effect();
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 

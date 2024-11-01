@@ -124,7 +124,8 @@ void CEffect_Overlap::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_Overlap::Priority_Render(_float fTimeDelta)
 {
-
+	if (m_iPassIndex != 1)
+		__super::Priority_Render(fTimeDelta);
 
 	return S_OK;
 }
@@ -133,8 +134,7 @@ HRESULT CEffect_Overlap::Priority_Render(_float fTimeDelta)
 
 HRESULT CEffect_Overlap::Render(_float fTimeDelta)
 {
-	if (m_iPassIndex != 1)
-		__super::Priority_Render(fTimeDelta);
+
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;

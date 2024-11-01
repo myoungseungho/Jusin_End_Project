@@ -30,7 +30,7 @@ private:
 
 public:
 	HRESULT Initialize_Prototype(void* pArg);
-	HRESULT Initialize(const _float4x4* pArg = nullptr);
+	HRESULT Initialize(const _float4x4* pArg = nullptr, _bool isBillboading = false);
 	void Camera_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -54,6 +54,7 @@ public:
 
 public:
 	class CTransform* m_pTransformCom = { nullptr };
+	class CTransform* m_pCopyTransformCom = { nullptr };
 	vector<class CEffect*>			m_MixtureEffects;
 
 	_uint			m_iNumKeyFrames = { 0 };
@@ -73,9 +74,10 @@ private:
 	const _float4x4*			 m_pPlayerMatrix = { nullptr };
 	_matrix						LayerMatrix;
 
+	_bool	m_isBillboading = { false };
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
-	CEffect_Layer* Clone(const _float4x4* pArg = nullptr);
+	CEffect_Layer* Clone(const _float4x4* pArg = nullptr, _bool isBillboading = false);
 	virtual void Free() override;
 };
 

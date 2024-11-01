@@ -1,0 +1,346 @@
+[Layer]
+LayerName: BackGround_Dust
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: BackGround_Dust01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -8.658 0 3.8
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -8.658 0 3.8
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.658 0 6
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.658 0 6
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 6.926 0 2.3
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 6.926 0 2.3
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 1.329 0 9.524
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.329 0 9.524
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 10.39 0 13.524
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 10.39 0 13.524
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3.197 0 9.092
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3.197 0 9.092
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.2 19.913
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.2 19.913
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -7.5 -0.2 13.987
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -7.5 -0.2 13.987
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -5.395 0 1.866
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -5.395 0 1.866
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -5.663 -0.2 5.231
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -5.663 -0.2 5.231
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust11
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 5.366 -0.2 23.377
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 5.366 -0.2 23.377
+Scale: 0.1 0.8 1
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BackGround_Dust012
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BackGround_DustBackGround_Dust012
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -4.1 -0.2 5.195
+Scale: 0.1 0.8 0.8
+Rotation: 0 0 330
+IsLoop: false
+Color: 191.672 203.493 210.248 3
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -4.1 -0.2 5.195
+Scale: 0.1 0.8 0.8
+Rotation: 0 0 330
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

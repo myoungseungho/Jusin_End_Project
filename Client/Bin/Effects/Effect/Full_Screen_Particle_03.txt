@@ -1,0 +1,290 @@
+[Layer]
+LayerName: Full_Screen_Particle_03
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 10
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+
+[Effect]
+EffectName: Full_Screen_Paticle01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 1 0
+Scale: 0.01 0.04 0.1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.005 0.02 0.1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.3 0.9 0
+Scale: 0.01 0.04 0.1
+Rotation: 0 0 36
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 0.9 0
+Scale: 0.005 0.02 0.1
+Rotation: 0 0 36
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.5 0.65 0
+Scale: 0.01 0.04 0.1
+Rotation: 0 0 72
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.5 0.65 0
+Scale: 0.005 0.02 0.1
+Rotation: 0 0 72
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.5 0.4 0
+Scale: 0.00999882 0.04 0.1
+Rotation: 0 0 108
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.5 0.4 0
+Scale: 0.00499941 0.02 0.1
+Rotation: 0 0 108
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.3 0.2 0
+Scale: 0.00999794 0.04 0.1
+Rotation: 0 0 144
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 0.2 0
+Scale: 0.00499897 0.02 0.1
+Rotation: 0 0 144
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 1.49012e-08 0
+Scale: 0.00999534 0.04 0.1
+Rotation: 0 0 180
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1.49012e-08 0
+Scale: 0.00499767 0.02 0.1
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.2 0.2 0
+Scale: 0.00999858 0.04 0.1
+Rotation: 0 0 216
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0.2 0
+Scale: 0.00499929 0.02 0.1
+Rotation: 0 0 216
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.4 0.4 0
+Scale: 0.00999982 0.04 0.1
+Rotation: 0 0 252
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.4 0.4 0
+Scale: 0.00499991 0.02 0.1
+Rotation: 0 0 252
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.4 0.6 0
+Scale: 0.01 0.04 0.1
+Rotation: 0 0 288
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.4 0.6 0
+Scale: 0.00500001 0.02 0.1
+Rotation: 0 0 288
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Full_Screen_Paticle10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Full_Screen_Particle_03Full_Screen_Paticle10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.3 0.9 0
+Scale: 0.00999998 0.04 0.1
+Rotation: 0 0 324
+IsLoop: false
+Color: 0 127.5 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 0.9 0
+Scale: 0.00499999 0.02 0.1
+Rotation: 0 0 324
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
