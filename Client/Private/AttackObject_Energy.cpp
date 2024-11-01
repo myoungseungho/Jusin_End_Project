@@ -338,6 +338,9 @@ void CAttackObject_Energy::Free()
 	for (auto& iter : m_vecColliderCom)
 		Safe_Release(iter);
 
+	if (m_pOwner == nullptr)
+		return;
+
 	if (m_pOwner->Get_iPlayerTeam() == 1)
 		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_1P_Energy_Attack);
 	else
