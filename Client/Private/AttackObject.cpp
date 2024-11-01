@@ -69,6 +69,9 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_iGainKiAmount = pDesc->iGainKiAmount;
 
+
+	m_bDrawNoneStop = pDesc->bDrawNoneStop;
+
 	if (pDesc->fCameraShakeDuration != 0)
 	{
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
@@ -431,10 +434,14 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			pCharacter->Set_AnimationStop(0.08f);
 		}
 
-		else if (eResult == RESULT_DRAW)
+		else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
 		{
 			m_pOwner->Set_AnimationStop(0.3f);
 			pCharacter->Set_AnimationStop(0.3f);
+
+
+
+
 		}
 
 		else if (eResult == RESULT_MISS)
@@ -466,9 +473,19 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	//근접공격 vs 근접공격
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
-		_bool bDebugA = true;
 
+		if(m_bDrawNoneStop == false)
+			m_pOwner->Set_AnimationStop(0.3f);
+	
+		//CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+		//pCharacter->Set_AnimationStop(0.3f);
 
+		_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
+		_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+		XMFLOAT4X4 Result4x4;
+		XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Full_Screen_Spark"), &Result4x4);
+		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Full_Screen_Spark_Black"), &Result4x4);
 	}
 
 }

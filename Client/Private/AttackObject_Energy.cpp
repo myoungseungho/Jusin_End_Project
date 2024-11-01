@@ -64,6 +64,7 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 		return;
 
 	m_fAccLifeTime += fTimeDelta;
+	m_fAccAttackDelayTime += fTimeDelta;
 
 	//생존시간 지났거나 맵바깥(땅포함)으로 나갔으면 삭제
 	if (m_fAccLifeTime > m_fLifeTime)
@@ -116,18 +117,31 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
+
 	Destory();
+
 	_bool Debug = true;
 }
 
 void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-	_bool Debug = true;
+	
+	if (m_fAccAttackDelayTime > 0.07f)
+	{
+		m_fAccAttackDelayTime = 0.f;
+		m_iAttackCount--;
+	}
+
+	if (m_iAttackCount == 1)
+	{
+		Destory();
+	}
 
 }
 
 void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 {
+
 	_bool Debug = true;
 
 }
@@ -190,11 +204,14 @@ void CAttackObject_Energy::Make_Collider(CCollider_Manager::COLLIDERGROUP eColli
 	{
 		// 콜라이더의 중점 위치 계산
 		_float currentDistance = unitLength * (i + 0.5f);
+		//_float2 colliderPos = {
+		//   SourcePos.x + direction.x * currentDistance,
+		//   SourcePos.y + direction.y * currentDistance
+		//};
 		_float2 colliderPos = {
-		   SourcePos.x + direction.x * currentDistance,
-		   SourcePos.y + direction.y * currentDistance
+		   SourcePos.x + direction.x * currentDistance + m_fStartOffset.x,
+		   SourcePos.y + direction.y * currentDistance + m_fStartOffset.y
 		};
-
 		// 콜라이더 추가 생성
 		CBounding_AABB::BOUNDING_AABB_DESC BoundingDesc{};
 		//BoundingDesc.vExtents = _float3(m_UnitSize.x / 2.0f, m_UnitSize.y / 2.0f, 0.5f);
