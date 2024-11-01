@@ -85,7 +85,6 @@ _uint CUI_Input::CreateList()
 		tDirInput.eActionInput = m_pUI_Manager->m_eBtnInput;
 
 		m_eDir = m_pUI_Manager->m_eDirInput;
-		//m_eAction = m_pUI_Manager->m_eBtnInput;
 		
 		iNumCreate = 1;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputIcon"), TEXT("Layer_DirInput"), &tDirInput);
