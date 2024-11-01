@@ -1095,6 +1095,7 @@ PLAY_GOKU,GKS100_body,0.000000,AnimSpeedChange,0.032000,70.303001
 
 //,공중낙법
 PLAY_GOKU,GKS101_body,0.000000,AnimSpeedChange,0.018000,120
+PLAY_GOKU,GKS101_body,0.100000,AttackEvent,0
 
 //,스파킹 (공용모션)
 PLAY_GOKU,GKS303_body,0,AnimSpeedChange,0.017,70

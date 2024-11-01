@@ -424,8 +424,11 @@ HRESULT CGameInstance::Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRend
 HRESULT CGameInstance::Release_Collider(const CCollider* Collider)
 {
 	return m_pCollider_Manager->Release_Collider(Collider);
+}
 
-
+void CGameInstance::Destroy_Reserve(CCollider_Manager::COLLIDERGROUP eRenderGroup)
+{
+	return m_pCollider_Manager->Destroy_Reserve(eRenderGroup);
 }
 
 

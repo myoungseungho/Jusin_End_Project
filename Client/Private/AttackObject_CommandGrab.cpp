@@ -147,7 +147,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
-			m_pOwner->Set_GrabLoofCount(2);
+			//m_pOwner->Set_GrabLoofCount(2);
 
 
 

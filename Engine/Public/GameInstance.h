@@ -104,7 +104,7 @@ public:/*For. Frustum*/
 public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
 	HRESULT Release_Collider(const CCollider*);
-
+	void	Destroy_Reserve(CCollider_Manager::COLLIDERGROUP eRenderGroup);
 
 public: /* For.FileManager */
 	HRESULT SaveObjects(const wstring& filename, void* pArg);

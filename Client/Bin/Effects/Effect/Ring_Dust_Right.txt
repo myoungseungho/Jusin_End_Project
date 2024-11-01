@@ -1,24 +1,24 @@
 [Layer]
-LayerName: Ring_Dust
+LayerName: Ring_Dust_Right
 Duration: 1
 TickPerSecond: 6
 KeyFramesCount: 59
 NumEffec: 5
-Position: 0 0 0
+Position: -1 1 0
 Scale: 1 1 1
-Rotation: 0 0 340
+Rotation: 0 0 270
 
 [Effect]
 EffectName: Ring_Dust01
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_DustRing_Dust01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_Dust_RightRing_Dust01
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.513031 1.40954 -1.49012e-08
-Scale: 0.00019793 0.00329124 0.0029972
+Position: 0.5 1 -1.49012e-08
+Scale: 0.00019793 0.00329124 0.00299721
 Rotation: 0 180 90
 IsLoop: false
 Color: 255 255 255 0.6
@@ -57,13 +57,13 @@ IsNotPlaying: true
 [Effect]
 EffectName: Ring_Dust02
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_DustRing_Dust02
+MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_Dust_RightRing_Dust02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.410425 1.12763 0
+Position: 0.2 1 0
 Scale: 0.000199919 0.00549201 0.005
 Rotation: 0 0 90
 IsLoop: false
@@ -103,13 +103,13 @@ IsNotPlaying: true
 [Effect]
 EffectName: Ring_Dust03
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_DustRing_Dust03
+MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_Dust_RightRing_Dust03
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.136808 0.375877 0
+Position: -0.6 1 0
 Scale: 0.000397905 0.00589095 0.00599823
 Rotation: 0 120 90
 IsLoop: false
@@ -149,13 +149,13 @@ IsNotPlaying: true
 [Effect]
 EffectName: Ring_Dust04
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_DustRing_Dust04
+MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_Dust_RightRing_Dust04
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.307818 0.845723 0
+Position: -0.1 1 0
 Scale: 0.000398194 0.00699541 0.0069992
 Rotation: 0 320 90
 IsLoop: false
@@ -195,13 +195,13 @@ IsNotPlaying: true
 [Effect]
 EffectName: Ring_Dust05
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_DustRing_Dust05
+MaskTextureName: ../Bin/Effects/Shader_Tab/Ring_Dust_RightRing_Dust05
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.17101 0.469846 0
+Position: -0.5 1 0
 Scale: 0.000198327 0.004 0.004
 Rotation: 0 330 90
 IsLoop: false

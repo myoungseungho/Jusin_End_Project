@@ -240,14 +240,14 @@ HRESULT CPlay_21::Initialize(void* pArg)
 		m_bPlaying = true;
 
 
-	//if (::AllocConsole() == TRUE)
-	//{
-	//	FILE* nfp[3];
-	//	freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-	//	freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-	//	freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-	//	std::ios::sync_with_stdio();
-	//}
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
 
 	return S_OK;
 }
@@ -642,7 +642,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		Set_AnimationStopWithoutMe(1.f);
 	}
 
-	cout << "iHP : " << m_iHP << endl;
+	//cout << "iHP : " << m_iHP << endl;
 
 
 	Check_Ground();
@@ -842,7 +842,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
-	if(m_bPlaying)
+	//if(m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 	//#ifdef _DEBUG
@@ -1713,10 +1713,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iGrabAnimationIndex = ANIME_ATTACK_236_SPECIAL;
 		Desc.iOnwerNextAnimationIndex = ANIME_ATTACK_236_SPECIAL_SUCCES;
+		
+
+		Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
 		//236 잡기 컷신
-		static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->Play(CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL, 0, this);
+		//static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->Play(CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL, 0, this);
+
+
 	}
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES:
@@ -1842,6 +1847,53 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_21::ANIME_BREAK_FALL_GROUND:
 		break;
 	case Client::CPlay_21::ANIME_BREAK_FALL_AIR:
+	{
+		//위치 고정용 빈거
+		if (iAttackEvent == 0)
+		{
+			if (m_bGrabDraw)
+			{
+				m_bGrabDraw = false;
+
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 4.f,4.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 0.3f;
+				Desc.iDamage = 0;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.pOwner = this;
+
+
+				Desc.eAttackType = ATTACKTYPE_HIGH;
+
+				Desc.bDrawNoneStop = true;
+				Desc.bGrabbedEnd = true;
+
+				Desc.fForcedGravityTime = 0.f;
+				Desc.iGainAttackStep = 0;
+				Desc.bOwnerNextAnimation = false;
+				Desc.bForcedHit = true;
+				Desc.iOnwerDirection = 0; //맞아도 뒤집지 않음
+
+				Desc.iGainHitCount = 0;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			}
+		}
+
+	}
 		break;
 	case Client::CPlay_21::ANIME_DIE_STAND:
 		break;
