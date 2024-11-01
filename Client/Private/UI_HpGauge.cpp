@@ -56,7 +56,7 @@ void CUI_HpGauge::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
 
-	if (m_pMainPawn != nullptr)
+	if (m_pMainPawn != nullptr )
 	{
 		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
 		int a = 10;
@@ -93,6 +93,8 @@ void CUI_HpGauge::Camera_Update(_float fTimeDelta)
 
 void CUI_HpGauge::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
+
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
 
 	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);

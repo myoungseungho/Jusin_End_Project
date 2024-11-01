@@ -55,7 +55,11 @@ void CUI_SubHpPanel::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_pSubPawn != nullptr)
+	{
+		if (m_pSubPawn->Get_PawnDesc().iHp > 0.f)
+			m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	}
 }
 
 HRESULT CUI_SubHpPanel::Render(_float fTimeDelta)

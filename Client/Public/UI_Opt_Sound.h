@@ -32,8 +32,10 @@ private:
 protected:
 	SOUND_MENU m_eMenuValue = { BGM };
 
-private:
+protected:
 	_bool m_bPlayAnim = { FALSE};
+	_bool m_bKeyInput = { FALSE };
+	_float m_fInputDelay = { 0.f };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

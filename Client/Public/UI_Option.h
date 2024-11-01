@@ -23,12 +23,16 @@ protected:
 	virtual HRESULT Bind_ShaderResources();
 	virtual HRESULT Ready_Components();
 
-private:
-	_bool InitAnimation(_float fTimeDelta);
+public:
+	void OnSwitch(_bool bSwitch) { m_bCreateSwitch = bSwitch; }
 
 private:
-	_bool m_bStartAnim = { FALSE };
-	_float m_fAnimDuration = { 0.f };
+	void InitAnimation(_float fTimeDelta);
+
+private:
+	_bool m_bCreateSwitch = { FALSE };
+	_bool m_bInitData = { FALSE };
+	_float m_fOriginPos = { 0.f };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

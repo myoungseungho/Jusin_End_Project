@@ -10,6 +10,7 @@
 #include "RenderInstance.h"
 #include "Character.h"
 #include "UI_BaseAttBuf.h"
+#include "UI_Option.h"
 
 IMPLEMENT_SINGLETON(CUI_Manager)
 
@@ -204,30 +205,22 @@ void CUI_Manager::InitUIObject()
 
 void CUI_Manager::CreateOption()
 {
-	/*m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Panel"), TEXT("Layer_UI_Option_Sound"));
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Arrow"), TEXT("Layer_UI_Option_Sound"));
-
-
-	for (int i = 0; i < 3; i++)
-	{
-		CUIObject::UI_DESC VolumePanelDesc = {};
-		VolumePanelDesc.iNumUI = i;
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Panel"), TEXT("Layer_UI_Option_Sound"),&VolumePanelDesc);
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Gauge"), TEXT("Layer_UI_Option_Sound"), &VolumePanelDesc);
-	}*/
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_OPEN, false, 1.f);
 
 	list<class CGameObject*> UIOptionList = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
 
 	for (auto& iter : UIOptionList)
 	{
-		iter->SetActive(TRUE);
+		dynamic_cast<CUI_Option*>(iter)->SetActive(TRUE);
+		dynamic_cast<CUI_Option*>(iter)->OnSwitch(TRUE);
 	}
 
 }
 
 void CUI_Manager::DestroyOption()
 {
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CLOSE, false, 1.f);
+
 	list<class CGameObject*> UIOptionList  = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
 
 	for (auto& iter : UIOptionList)

@@ -89,6 +89,9 @@
 #include "UI_Opt_Sound_Arrow.h"
 #include "UI_Opt_Sound_Volume_Panel.h"
 #include "UI_Opt_Sound_Volume_Gauge.h"
+#include "UI_Opt_Sound_Eff.h"
+#include "UI_Opt_Sound_Font.h"
+#include "UI_Opt_Sound_Title.h"
 
 
 #include "Character.h"
@@ -536,7 +539,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	/* Prototype_Component_Texture_UI_OptSelectEffect */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSelectEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_titleitem_02.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_01.png")))))
 		return E_FAIL;
 
 	/* Prototype_Component_Texture_UI_OptVolumePanel */
@@ -2989,6 +2992,23 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Gauge"),
 		CUI_Opt_Sound_Volume_Gauge::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* Prototype_GameObject_UI_Opt_Sound_Effect*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Effect"),
+		CUI_Opt_Sound_Eff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_Opt_Sound_Font*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Font"),
+		CUI_Opt_Sound_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_Opt_Sound_Title */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Title"),
+		CUI_Opt_Sound_Title::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	
 
 
 	return S_OK;

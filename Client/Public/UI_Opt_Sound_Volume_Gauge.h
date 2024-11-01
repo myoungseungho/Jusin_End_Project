@@ -26,8 +26,8 @@ private:
 
 private:
 	void PostionUpdate();
-	void SetVolume();
-	void KeyInput(SOUND_MENU eSound);
+	void SetVolume(_float fTimeDelta);
+	void KeyInput(SOUND_MENU eSound, _float fTimeDelta);
 	void NumberFont();
 
 private:
@@ -35,6 +35,11 @@ private:
 	_float m_fVolumeRadio = { 0.f };
 
 	_int m_fVolumeValue[MENU_END] = {100 , 100 , 100};
+
+	_float m_fSoundDelay = { 0.f };
+	_bool m_bSoundEnable = { TRUE };
+	_float m_fSoundWeight = { 0.f };
+	
 	
 public:
 	static CUI_Opt_Sound_Volume_Gauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -40,7 +40,7 @@ void CUI_Option::Camera_Update(_float fTimeDelta)
 
 void CUI_Option::Update(_float fTimeDelta)
 {
-
+	InitAnimation(fTimeDelta);
 }
 
 void CUI_Option::Late_Update(_float fTimeDelta)
@@ -69,19 +69,28 @@ HRESULT CUI_Option::Ready_Components()
 	return S_OK;
 }
 
-_bool CUI_Option::InitAnimation(_float fTimeDelta)
+void CUI_Option::InitAnimation(_float fTimeDelta)
 {
-	_float fStartPosY = m_fPosY - 100.f;
-	m_fAnimDuration += fTimeDelta * 100.f;
-
-	if (m_fAnimDuration >= 100.f)
+	if (m_bCreateSwitch)
 	{
-		m_fAnimDuration = 50.f;
-		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, fStartPosY + m_fAnimDuration);
-		m_fAnimDuration = 0.f;
-		return TRUE;
+		if (m_bInitData == FALSE)
+		{
+			m_fOriginPos = m_fPosY;
+			m_fPosY = m_fPosY - 25.f;
+			m_bInitData = TRUE;
+		}
+
+		m_fPosY += fTimeDelta * 100.f;
+		if (m_fPosY >= m_fOriginPos)
+		{
+			m_bCreateSwitch = FALSE;
+			m_bInitData = FALSE;
+			m_fPosY = m_fOriginPos;
+			return;
+		}
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY);
 	}
-	return FALSE;
+
 }
 
 void CUI_Option::Free()

@@ -232,6 +232,15 @@
     <ClCompile Include="..\Private\AttackObject_Energy.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Energy</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Eff.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Font.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Opt_Sound_Title.cpp">
+      <Filter>02.GameObjects\UI\Option\Sound\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -515,6 +524,15 @@
     </Filter>
     <Filter Include="02.GameObjects\BoneEffectObject">
       <UniqueIdentifier>{dd4a34ad-0510-4319-b711-60c92caa2ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Effect">
+      <UniqueIdentifier>{28d2ba7a-f3f9-4d2e-abc9-30169599e956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Font">
+      <UniqueIdentifier>{d368ea45-ebd3-4c20-ab4e-dab9dfaa3a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Option\Sound\Title">
+      <UniqueIdentifier>{da9be352-896a-4a47-acd3-caf4a4c6f2b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -958,6 +976,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject_Energy.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Energy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Eff.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Font.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Opt_Sound_Title.h">
+      <Filter>02.GameObjects\UI\Option\Sound\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

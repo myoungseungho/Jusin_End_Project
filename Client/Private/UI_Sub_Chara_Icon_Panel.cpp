@@ -57,11 +57,9 @@ void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 
 void CUI_Sub_Chara_Icon_Panel::Late_Update(_float fTimeDelta)
 {
-	if (m_pSubPawn != nullptr)
-	{
-		if (m_pSubPawn->Get_PawnDesc().iHp > 0.f)
-			m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-	}
+	
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	
 }
 
 HRESULT CUI_Sub_Chara_Icon_Panel::Render(_float fTimeDelta)
@@ -69,7 +67,24 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	_uint iPass = 0;
+	_vector vColor = { 0.35f ,0.35f ,0.35f };
+	if (m_pSubPawn != nullptr)
+	{
+		_float fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f;
+		
+		if (fHpRadio > 0.f)
+			iPass = 0;
+		else
+		{
+			iPass = 2;
+
+			if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+				return E_FAIL;
+		}
+	}
+
+	if (FAILED(m_pShaderCom->Begin(iPass)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
