@@ -48,13 +48,10 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 
 	m_eEnegrgyColor = pDesc->eExplosionColor;
 
-
-
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
-	
+
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
-	m_fStartPos = _float2{ XMVectorGetX(vPos) + XMVectorGetX(vStartOffset) , XMVectorGetY(vPos) +XMVectorGetY(vStartOffset) };
 
 	return S_OK;
 }
@@ -63,22 +60,17 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 
 void CAttackObject_Energy::Update(_float fTimeDelta)
 {
-
 	if (Check_UpdateStop(fTimeDelta))
 		return;
 
-
-
 	m_fAccLifeTime += fTimeDelta;
 
-
 	//»ýÁ¸½Ã°£ Áö³µ°Å³ª ¸Ê¹Ù±ù(¶¥Æ÷ÇÔ)À¸·Î ³ª°¬À¸¸é »èÁ¦
-	if (m_fAccLifeTime > m_fLifeTime  )
+	if (m_fAccLifeTime > m_fLifeTime)
 	{
 		if (m_bEnableDestory)
 		{
 			Destory();
-
 			m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
@@ -95,41 +87,27 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 
 		_float speed = 0.1f;
 
-
 		m_fEndPos.x += m_fMoveSpeedNoneDirection.x * fTimeDelta;
 
-
-	
-		//_float2 DefaultFloat2 = _float2(0.f, 0.f);
-	
-
-		Make_Collider(m_pColliderCom->m_ColliderGroup, m_fStartPos, _float2(m_fStartPos.x + m_fEndPos.x, m_fStartPos.y + m_fEndPos.y));
-
+		Make_Collider(m_pColliderCom->m_ColliderGroup, _float2(0.f,0.f), _float2(m_fEndPos.x, m_fEndPos.y));
 	}
-
 }
 
 void CAttackObject_Energy::Late_Update(_float fTimeDelta)
 {
-
-	
-
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 {
-
 #ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
+	//m_pColliderCom->Render(fTimeDelta);
 
 	for (auto pCollider : m_vecColliderCom)
 	{
 		pCollider->Render(fTimeDelta);
 	}
 #endif // DEBUG
-
 
 	return S_OK;
 }
@@ -138,8 +116,7 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-
-	
+	Destory();
 	_bool Debug = true;
 }
 
@@ -232,13 +209,13 @@ void CAttackObject_Energy::Make_Collider(CCollider_Manager::COLLIDERGROUP eColli
 		CCollider* pNewCollider = nullptr;
 		_wstring colliderName = L"Com_Collider_" + to_wstring(i);
 
+
 		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
 			colliderName.c_str(), reinterpret_cast<CComponent**>(&pNewCollider), &BoundingDesc)))
 			return; // ¿¡·¯ Ã³¸®
 
-
 		/*
-		
+
 		CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
 		ColliderDesc = pDesc->ColliderDesc;
 		ColliderDesc.pMineGameObject = this;
@@ -355,6 +332,9 @@ CGameObject* CAttackObject_Energy::Clone(void* pArg)
 void CAttackObject_Energy::Free()
 {
 	__super::Free();
+
 	Safe_Release(m_pColliderCom);
 
+	for (auto& iter : m_vecColliderCom)
+		Safe_Release(iter);
 }

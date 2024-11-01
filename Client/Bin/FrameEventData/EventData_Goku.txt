@@ -641,6 +641,7 @@ PLAY_GOKU,GKS443_body,0.001000,PlaySound,14,0,1
 PLAY_GOKU,GKS443_body,30.000000,PlaySound,6,0,1
 PLAY_GOKU,GKS443_body,30,AttackEvent,33333
 PLAY_GOKU,GKS443_body,30,Camera_Play_Son_Ultimate_2,8,2,0.2,0.2
+PLAY_GOKU,GKS443_body,50.001000,PlaySound,14,0,1
 //,PLAY_GOKU,GKS443_body,74.000000,SetNextAnimation,73,100
 PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 
@@ -648,7 +649,6 @@ PLAY_GOKU,GKS443_body,70.000000,SetNextAnimation,73,100
 //,3필 모션 - 공중강공
 //,PLAY_GOKU,GKS442_body,0,ObjectMove,2,3,0,0
 PLAY_GOKU,GKS442_body,0,Camera_Play_Son_Ultimate_3_Camera,8,3
-PLAY_GOKU,GKS442_body,0.001000,PlaySound,14,0,1
 PLAY_GOKU,GKS442_body,0.1,ObjectMove,3,10,0,0
 //,PLAY_GOKU,GKS442_body,0.1,ObjectMove,3,4.5,0,0
 
@@ -658,9 +658,9 @@ PLAY_GOKU,GKS442_body,20.000000,AnimSpeedChange,0.020000,120.000000
 PLAY_GOKU,GKS442_body,25,AttackEvent,33333
 PLAY_GOKU,GKS442_body,25,Camera_Play_Son_Ultimate_3_Shake,0.5,0.4
 PLAY_GOKU,GKS442_body,25.001000,PlaySound,9,0,1
-
 //,그냥 정지하는게 맞을지도
 PLAY_GOKU,GKS442_body,25,AnimSpeedChange,0.020000,80.000000
+PLAY_GOKU,GKS442_body,40.001000,PlaySound,14,0,1
 PLAY_GOKU,GKS442_body,60,SetNextAnimation,70
 
 

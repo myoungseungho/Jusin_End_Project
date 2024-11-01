@@ -173,6 +173,8 @@ void CObject_Manager::Destory_Update()
 {
 	for (auto& iter : m_DestoryObjects)
 		Safe_Release(iter);
+
+	m_DestoryObjects.clear();
 }
 
 void CObject_Manager::Player_Update(_float fTimeDelta)

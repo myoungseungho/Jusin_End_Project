@@ -102,12 +102,17 @@ void CUI_Opt_Sound_Arrow::PostionUpdate()
 		 m_fPosY = 320.f;
 		break;
 
-	case SFX:
+	case VOICE:
 		m_fPosY = 360.f;
 		break;
 
-	case VOICE:
+	case SFX:
 		m_fPosY = 400.f;
+		break;
+
+
+	case EXIT:
+		m_fPosY = 440.f;
 		break;
 	
 	}

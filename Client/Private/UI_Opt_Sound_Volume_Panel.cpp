@@ -107,13 +107,14 @@ void CUI_Opt_Sound_Volume_Panel::PostionUpdate()
 		m_fPosY = 320.f;
 		break;
 
-	case SFX:
+	case VOICE:
 		m_fPosY = 360.f;
 		break;
 
-	case VOICE:
+	case SFX:
 		m_fPosY = 400.f;
 		break;
+	
 	}
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);

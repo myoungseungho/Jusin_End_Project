@@ -2240,6 +2240,8 @@ void CCharacter::Set_AnimationStopWithoutMe(_float fStopTime)
 {
 
 
+	_float fTest1 = m_ePlayerSlot - (m_iPlayerTeam - 1) * 2;
+
 	//0->0 1->1   2->0  3->1
 	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot - (m_iPlayerTeam - 1) * 2, fStopTime);
 
@@ -3594,8 +3596,8 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 		{
 			m_bDying = true;
 
-			Set_AnimationStopWithoutMe(1.f);
-			Set_AnimationStop(1.f);
+			Set_AnimationStopWithoutMe(2.f);
+			Set_AnimationStop(2.f);
 
 
 			CUI_Manager::Get_Instance()->UsingCreateEndUI();

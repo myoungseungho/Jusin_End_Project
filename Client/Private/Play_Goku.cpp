@@ -244,10 +244,15 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		{
 			Character_Play_Animation(fTimeDelta);
 	
+			if(Get_fHeight()>0)
+				Update_StunImpus(fTimeDelta);
+
 			Gravity(fTimeDelta);
 
-
-
+			if (Check_bWall())
+			{
+				Move_ForWall();
+			}
 			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
 
 			if (m_bMotionPlaying == false)
@@ -934,7 +939,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.iDamage = 700 * Get_DamageScale();
+		//Desc.iDamage = 700 * Get_DamageScale();
+		Desc.iDamage = 4200 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
