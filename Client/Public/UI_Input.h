@@ -36,6 +36,7 @@ protected:
 	_uint CreateList();
 
 	_bool m_bInitCommand = { FALSE };
+	_bool m_bInitCommandAction = { FALSE };
 	DirectionInput m_eDir= { MOVEKEY_NEUTRAL };
 	ButtonInput m_eAction = { ATTACK_NONE };
 
