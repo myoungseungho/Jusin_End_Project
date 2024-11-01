@@ -407,28 +407,8 @@ void CMain_Camera::SetPosition(_fvector position)
 
 void CMain_Camera::Set_Player(CGameObject* pPlayer)
 {
-	for (auto& iter : m_vecVirtualCamera)
-		iter->Set_Player(pPlayer);
-
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_NORMAL]->Set_Player(state, pPlayer);
-
-	////Test¿ë
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_HEAVY]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_AIR_SMASH]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_GRAB]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_SAME_GRAB]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ENERGY]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_SON_ULTIMATE]->Set_Player(state, pPlayer);
-
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_HEAVY]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_KNOCK_AWAY_UP]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_AIR_SMASH]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_SAME_GRAB]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_GRAB_SPECIAL]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_ENERGY]->Set_Player(state, pPlayer);
-	//m_vecVirtualCamera[VIRTUAL_CAMERA_21_ULTIMATE]->Set_Player(state, pPlayer);
+	for (size_t i = VIRTUAL_CAMERA_SON_HEAVY; i < VIRTUAL_CAMERA_END; i++)
+		m_vecVirtualCamera[i]->Set_Player(pPlayer);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()

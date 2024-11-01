@@ -309,13 +309,9 @@ void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameOb
 	if (m_mapPoints[animationIndex].size() == 0)
 		return;
 
-	//월드행렬이 들어있지 않다면
-	if (m_mapPoints[animationIndex][0].pWorldFloat4x4 == nullptr)
-	{
-		for (auto& iter : m_mapPoints)
-			for (auto& iter2 : iter.second)
-				iter2.pWorldFloat4x4 = static_cast<CTransform*>(gameObject->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
-	}
+	for (auto& iter : m_mapPoints)
+		for (auto& iter2 : iter.second)
+			iter2.pWorldFloat4x4 = static_cast<CTransform*>(gameObject->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
 
 	m_AnimationIndex = animationIndex;
 
