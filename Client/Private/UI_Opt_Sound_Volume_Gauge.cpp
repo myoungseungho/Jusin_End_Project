@@ -244,11 +244,11 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
 		strVolume.c_str(),
-		_float2((m_fPosX + 75) * 1.5f, (m_fPosY - 10) * 1.5f),
+		_float2((m_fPosX + 73) * 1.5f, (m_fPosY - 10) * 1.5f),
 		vColor,
 		0.f,
 		{ 0.f, 0.f },
-		0.8f
+		0.7f
 	);
 }
 
