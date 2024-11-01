@@ -83,7 +83,7 @@ float4 DownsamplePS(float2 inputTexSize, float2 texCoord, float2 sampleSize)
     {
         for (int x = -halfSizeX; x < halfSizeX; ++x)
         {
-            colorSample += g_Texture.Sample(LinearSampler, texCoord + float2(x, y) * texelSize);
+            colorSample += g_Texture.Sample(DestroySampler, texCoord + float2(x, y) * texelSize);
         }
     }
     colorSample /= (sampleSize.x * sampleSize.y);
@@ -100,7 +100,7 @@ float4 Blur_X(float2 vTexCoord, float fFactor, float fRatio, bool bPlayer)
     for (int i = -6; i < 7; ++i)
     {
         vUV = vTexCoord + float2(fFactor / (1920.0f * fRatio) * i, 0.f);
-        vTex = g_Texture.Sample(LinearSampler, vUV);
+        vTex = g_Texture.Sample(DestroySampler, vUV);
         
         vOut += bPlayer == false ? g_fWeight[6 + i] * vTex : g_fPlayerWeight[6 + i] * vTex;
     }
@@ -119,7 +119,7 @@ float4 Blur_Y(float2 vTexCoord, float fFactor, float fRatio, bool bPlayer)
     for (int i = -6; i < 7; ++i)
     {
         vUV = vTexCoord + float2(0, fFactor / (1080.0f * fRatio) * i);
-        vTex = g_Texture.Sample(LinearSampler, vUV);
+        vTex = g_Texture.Sample(DestroySampler, vUV);
         vOut += bPlayer == false ? g_fWeight[6 + i] * vTex : g_fPlayerWeight[6 + i] * vTex;
     }
 
@@ -183,9 +183,9 @@ PS_OUT PS_MAIN_RESULT_PRI(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
 
     //vBlur *= 1.3f;
     //Out.vColor = vResult + vBlur;
@@ -203,9 +203,9 @@ PS_OUT PS_MAIN_RESULT_SUN(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
 
     //vBlur *= 1.3f;
     //Out.vColor = vResult + vBlur;
@@ -224,9 +224,9 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
 
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
     Out.vColor = saturate(vResult + vBlur * g_GlowFactor) /*+ vEffect*/;
@@ -240,9 +240,9 @@ PS_OUT PS_MAIN_RESULT_EARTH(PS_IN In)
 
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
     Out.vColor = saturate(vResult + vBlur * g_GlowFactor) /*+ vEffect*/;
     Out.vColor.a = saturate(Out.vColor.a - 0.3f);
@@ -265,9 +265,9 @@ PS_OUT PS_MAIN_UP(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
 	/*vector		vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
     Out.vColor = vResult + vBlur /*+ vEffect*/;
     float fAlpha = (Out.vColor.r + Out.vColor.g + Out.vColor.b) / 3;
@@ -279,7 +279,7 @@ PS_OUT PS_MAIN_DEBUG(PS_IN In)
 {
 	PS_OUT			Out = (PS_OUT)0;	
 
-	Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
 	return Out;
 }
@@ -289,9 +289,9 @@ PS_OUT PS_MAIN_RESULT_PLAYER(PS_IN In)
 
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
     Out.vColor = saturate(vResult + vBlur) /*+ vEffect*/;
@@ -304,9 +304,9 @@ PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
 
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vResult = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
-    vector vBlur = g_BlurTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
      
     Out.vColor = saturate(vResult + vBlur * 4.2f) /*+ vEffect*/;
