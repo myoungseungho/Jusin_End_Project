@@ -134,7 +134,7 @@ void CBattleInterface_Manager::Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSl
     }
     else if (iTeam == 2)
     {
-        m_p1TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+        m_p2TeamCharacter[iSlot]->Set_UnlockAnimationStop();
     }
 
 }
@@ -167,7 +167,7 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
 }
 */
 
-void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos)
+_bool CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos)
 {
 
 
@@ -176,6 +176,11 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
 
     if (iTeam == 1)
     {
+        //나올 캐릭터가 죽어있으면 바로 끝
+        if (m_p1TeamCharacter[NewCharacterslot]->Get_bDying())
+            return false;
+
+
         for (auto pCharacter : m_p2TeamCharacter)
         {
             if(pCharacter != nullptr)
@@ -187,6 +192,11 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
     }
     else if (iTeam == 2)
     {
+
+        //나올 캐릭터가 죽어있으면 바로 끝
+        if (m_p2TeamCharacter[NewCharacterslot]->Get_bDying())
+            return false;
+
         for (auto pCharacter : m_p1TeamCharacter)
         {
             if (pCharacter != nullptr)
@@ -196,6 +206,12 @@ void CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacte
         m_p2TeamCharacter[NewCharacterslot]->Tag_Out(vPos);
         pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
     }
+
+    pMainCamera->Set_Player(m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
+    pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
+
+    return true;
+
 }
 
 void CBattleInterface_Manager::Regist_Character(_ubyte iTeam, class CCharacter* pCharacter, _ubyte iSlot)

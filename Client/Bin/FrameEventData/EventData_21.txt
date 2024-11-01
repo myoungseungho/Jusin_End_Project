@@ -437,6 +437,9 @@ PLAY_21,TON100_body,0.000000,AnimSpeedChange,0.032000,70.303001
 //,공중낙법
 PLAY_21,TON101_body,0.000000,AnimSpeedChange,0.018000,120
 
+PLAY_21,TON101_body,0.100000,AttackEvent,0
+
+
 //,스파킹 (공용모션)
 PLAY_21,TON303_body,0,AnimSpeedChange,0.017,70
 PLAY_21,TON303_body,20,AnimSpeedChange,0.017,46

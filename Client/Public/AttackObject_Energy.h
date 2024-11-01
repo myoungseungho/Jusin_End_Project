@@ -84,6 +84,9 @@ private:
 
 	_float2 m_fEndPos = {};
 
+	_float m_fAccAttackDelayTime = {};
+
+
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

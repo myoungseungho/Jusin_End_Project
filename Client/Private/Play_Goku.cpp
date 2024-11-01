@@ -98,7 +98,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	m_iSparkingAnimationIndex = { ANIME_SPARKING };
-
+	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
 
 
 	m_iNextAnimation.first = ANIME_IDLE;
@@ -233,6 +233,56 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
+
+
+	//사망시 업데이트 처리.  return때문에
+	if (m_bDying)
+	{
+		if(m_bAnimationLock == true)
+			Update_AnimationLock(fTimeDelta);
+		else
+		{
+			Character_Play_Animation(fTimeDelta);
+	
+			if(Get_fHeight()>0)
+				Update_StunImpus(fTimeDelta);
+
+			Gravity(fTimeDelta);
+
+			if (Check_bWall())
+			{
+				Move_ForWall();
+			}
+			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+			if (m_bMotionPlaying == false)
+			{
+				
+				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
+				{
+					m_fAccDyingTime += fTimeDelta;
+					if (m_fAccDyingTime > 2.f)
+					{
+						Tag_In(m_ePlayerSlot);
+					}
+				}
+				 
+			}
+			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
+			{
+				Stun_Shake();
+			}
+		}
+	
+		return;
+	}
+	else
+		Update_Dying(fTimeDelta);
+
+
+
+
+
 	Update_LoofAnimationCreate(fTimeDelta);
 
 	Update_PreviousXPosition();
@@ -244,25 +294,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		return;
 	}
 
-	//if (m_pGameInstance->Key_Down(DIK_F3))
+	
 
-
-	//합치기 전 임시 코드.  적 탐지코드임
-	//if (m_pEnemy == nullptr)
-	//{
-	//	//_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-	//
-	//	for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
-	//	{
-	//		CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-	//
-	//		if (pObject != this)
-	//		{
-	//			m_pEnemy = static_cast<CCharacter*>(pObject);
-	//		}
-	//
-	//	}
-	//}
+	
 	pEnemyCheck();
 
 	//방향전환 코드.  적 탐지가 추가된 이후엔  CCharacter로 옮기기
@@ -515,18 +549,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	_float fPosX = Get_fPositionX();
 
-	//12(벽) 이상 넘어가지 못하게 
-	//if (fPosX > 12)
-	//{
-	//	Add_Move({ 12.f - fPosX, 0.f });
-	//}
-	//else if (fPosX < -12)
-	//{
-	//	Add_Move({ -12.f - fPosX, 0.f });
-	//}
+	
 	if (Check_bWall())
 	{
-		//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
 		Move_ForWall();
 	}
 
@@ -568,13 +593,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		system("cls");
 	}
 
-	//if (m_pGameInstance->Key_Down(DIK_F3))
-	//{
-	//	//Tag_In(0)
-	//}
-
-	//cout << "Team : " << m_iPlayerTeam << " Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
-
+	
 
 
 }
@@ -592,7 +611,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	if (m_bPlaying)
+	//if (m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 
@@ -934,7 +953,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.iDamage = 700 * Get_DamageScale();
+		//Desc.iDamage = 700 * Get_DamageScale();
+		Desc.iDamage = 4200 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
@@ -1038,6 +1058,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.bGrabbedEnd = true;
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+
+		//Ring_Dust
+
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_SPECIAL:
@@ -1431,6 +1456,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fAnimationLockTime = 0.5f;
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+		//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.7f,0.5f });
+		Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.4f,0.9f });
+
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_UPPER_AIR:
@@ -1470,6 +1500,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+
+
+
+		Character_Make_Effect(TEXT("Ring_Dust"),{m_iLookDirection*1.2f,0.7f});
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236:
@@ -1699,17 +1735,17 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				CAttackObject_Energy::ATTACK_RANGED_DESC Desc{};
 				if (m_iPlayerTeam == 1)
-					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack;
 				else
-					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Energy_Attack;
 				Desc.ColliderDesc.pMineGameObject = this;
 				Desc.ColliderDesc.vExtents = { 0.5f,0.8f,1.f };
 				Desc.ColliderDesc.vCenter = { 0.2f * m_iLookDirection,1.2f,0.f };
 				//Desc.ColliderDesc.pTransform = m_pTransformCom;
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 3.0f;
-				Desc.iDamage = 2214 * Get_DamageScale();;
-				Desc.fLifeTime = 0.7f;
+				Desc.iDamage = 220 * Get_DamageScale();;
+				Desc.fLifeTime = 1.2f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 				Desc.iTeam = m_iPlayerTeam;
 				//Desc.bGroundSmash = true;
@@ -1719,17 +1755,16 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bCameraZoom = false;
 
 				Desc.fStartOffset = { 0.5f,0.5f };
-				Desc.fMoveSpeedNoneDirection ={ 5.f,0.f};
+				Desc.fMoveSpeedNoneDirection = { 25.f,0.f };
 
-				Desc.iAttackCount =  5 ;
-				Desc.iPlayerDirection =m_iLookDirection;		//
+				Desc.iAttackCount = 10;
+				Desc.iPlayerDirection = m_iLookDirection;		//
+				Desc.iGainHitCount = 20;
 
 				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 
-				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("CAttackObject_Energy"), TEXT("Layer_AttackObject"), &Desc);
-
-
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
 			}
 			else
@@ -1771,7 +1806,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.ColliderDesc.pTransform = m_pTransformCom;
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 3.0f;
-				Desc.iDamage = 1100 * Get_DamageScale();;
+				Desc.iDamage = 260 * Get_DamageScale();;
 				Desc.fLifeTime = 1.2f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 				Desc.iTeam = m_iPlayerTeam;
@@ -1786,16 +1821,15 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.iAttackCount = 5;
 				Desc.iPlayerDirection = m_iLookDirection;		//
+				Desc.iGainHitCount = 5;
 
 				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 
 				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("CAttackObject_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
-				if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc)))
-				{
-					MSG_BOX(TEXT("생성실패"));
-				}
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
+				
 			}
 		}
 	}
@@ -1826,7 +1860,44 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Set_LoofAnimationCreate(TEXT("Aura11_Yellow"), 2.6f, 0.3f);
 
 			}
+			else
+			{
 
+				CAttackObject_Energy::ATTACK_RANGED_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Energy_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.5f,0.8f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.2f * m_iLookDirection,1.2f,0.f };
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 3.0f;
+				Desc.iDamage = 260 * Get_DamageScale();;
+				Desc.fLifeTime = 1.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+				Desc.iTeam = m_iPlayerTeam;
+				//Desc.bGroundSmash = true;
+				Desc.fAnimationLockTime = 0.0f;
+				Desc.pOwner = this;
+				//Desc.eAttackGrade = { GRADE_ULTIMATE };
+				Desc.bCameraZoom = false;
+
+				Desc.fStartOffset = { 0.5f,0.5f };
+				Desc.fMoveSpeedNoneDirection = { 25.f,10.f };
+
+				Desc.iAttackCount = 5;
+				Desc.iPlayerDirection = m_iLookDirection;		//
+				Desc.iGainHitCount = 5;
+
+				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+
+
+				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("CAttackObject_Energy"), TEXT("Layer_AttackObject"), &Desc);
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
+			}
 
 
 		}
@@ -2179,6 +2250,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 			Desc.pOwner = this;
 
+			Desc.bDrawNoneStop = true;
+
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 		}
@@ -2207,6 +2280,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 			Desc.pOwner = this;
 
+			Desc.bDrawNoneStop = true;
+
+
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 		}
@@ -2216,6 +2292,53 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	}
 
+	case CPlay_Goku::ANIME_BREAK_FALL_AIR:
+	{
+		//위치 고정용 빈거
+		if (iAttackEvent == 0)
+		{
+			if (m_bGrabDraw)
+			{
+				m_bGrabDraw = false;
+
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 4.f,4.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 0.3f;
+				Desc.iDamage = 0;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.pOwner = this;
+
+
+				Desc.eAttackType = ATTACKTYPE_HIGH;
+
+				Desc.bDrawNoneStop = true;
+				Desc.bGrabbedEnd = true;
+
+				Desc.fForcedGravityTime = 0.f;
+				Desc.iGainAttackStep = 0;
+				Desc.bOwnerNextAnimation = false;
+				Desc.bForcedHit = true;
+				Desc.iOnwerDirection = 0; //맞아도 뒤집지 않음
+
+				Desc.iGainHitCount = 0;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			}
+		}
+	}
 	default:
 		break;
 	}
