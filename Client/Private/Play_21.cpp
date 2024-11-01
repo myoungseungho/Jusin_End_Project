@@ -637,7 +637,10 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		system("cls");
 	}
 
-
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		Set_AnimationStopWithoutMe(1.f);
+	}
 
 	cout << "iHP : " << m_iHP << endl;
 
@@ -832,6 +835,9 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	Check_Ground();
 	*/
+
+
+
 }
 
 void CPlay_21::Late_Update(_float fTimeDelta)

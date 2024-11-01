@@ -2231,6 +2231,9 @@ void CCharacter::Set_AnimationStop(_float fStopTime)
 
 void CCharacter::Set_UnlockAnimationStop()
 {
+	this;
+
+
 	m_bAnimationLock = false;
 	m_fMaxAnimationLock = 0.f;
 	m_fAccAnimationLock = 0.f;

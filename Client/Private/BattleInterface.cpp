@@ -134,7 +134,7 @@ void CBattleInterface_Manager::Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSl
     }
     else if (iTeam == 2)
     {
-        m_p1TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+        m_p2TeamCharacter[iSlot]->Set_UnlockAnimationStop();
     }
 
 }
