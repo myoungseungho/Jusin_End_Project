@@ -69,6 +69,21 @@ HRESULT CUI_Option::Ready_Components()
 	return S_OK;
 }
 
+_bool CUI_Option::InitAnimation(_float fTimeDelta)
+{
+	_float fStartPosY = m_fPosY - 100.f;
+	m_fAnimDuration += fTimeDelta * 100.f;
+
+	if (m_fAnimDuration >= 100.f)
+	{
+		m_fAnimDuration = 50.f;
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, fStartPosY + m_fAnimDuration);
+		m_fAnimDuration = 0.f;
+		return TRUE;
+	}
+	return FALSE;
+}
+
 void CUI_Option::Free()
 {
 

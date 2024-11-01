@@ -23,6 +23,13 @@ protected:
 	virtual HRESULT Bind_ShaderResources();
 	virtual HRESULT Ready_Components();
 
+private:
+	_bool InitAnimation(_float fTimeDelta);
+
+private:
+	_bool m_bStartAnim = { FALSE };
+	_float m_fAnimDuration = { 0.f };
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

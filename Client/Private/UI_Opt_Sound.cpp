@@ -38,7 +38,9 @@ void CUI_Opt_Sound::Camera_Update(_float fTimeDelta)
 
 void CUI_Opt_Sound::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
 	MenuChange();
+
 }
 
 void CUI_Opt_Sound::Late_Update(_float fTimeDelta)
