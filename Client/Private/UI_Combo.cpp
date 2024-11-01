@@ -38,12 +38,20 @@ void CUI_Combo::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
 
-	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
-	
 
-	if(m_bCharaStun == FALSE)
+
+}
+
+void CUI_Combo::Update(_float fTimeDelta)
+{
+	__super::Update(fTimeDelta);
+
+	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
+
+
+	if (m_bCharaStun == FALSE)
 		m_fDestoryTimer += fTimeDelta;
-	
+
 	if (m_bComboEnd == TRUE)
 	{
 		m_fAlphaTimer = 0.f;
@@ -61,12 +69,7 @@ void CUI_Combo::Camera_Update(_float fTimeDelta)
 		}
 	}
 
-
-}
-
-void CUI_Combo::Update(_float fTimeDelta)
-{
-	__super::Update(fTimeDelta);
+	
 
 	if (m_bCharaStun == FALSE && m_fDestoryTimer >= 0.25f)
 	{
@@ -74,13 +77,14 @@ void CUI_Combo::Update(_float fTimeDelta)
 		m_fDestoryTimer = 0.f;
 	}
 
-	_bool bHit = m_pMainPawn->Get_PawnDesc().bHit;
+	if (m_bComboEnd)
+		m_bComboHit = TRUE;
 
-	if (bHit && m_bCharaStun)
+	if ( m_bComboHit && m_bCharaStun)
 	{
 		m_iComboCount = 0;
+		m_bComboHit = FALSE;
 	}
-
 
 	if (m_pMainPawn != nullptr)
 	{

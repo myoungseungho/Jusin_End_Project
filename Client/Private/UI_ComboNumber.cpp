@@ -177,15 +177,25 @@ void CUI_ComboNumber::ScaleAnimation()
 {
 	_bool bHit = FALSE;
 
-	if(m_pMainPawn != nullptr)
-		bHit = m_pMainPawn->Get_PawnDesc().bHit;
+	//if(m_pMainPawn != nullptr)
+		//m_bScaleAnim = m_pMainPawn->Get_PawnDesc().bHit;
 
-	if (bHit)
+	if (m_iPrevCombo < m_iComboCount)
+		m_bScaleAnim = TRUE;
+
+	if (m_bScaleAnim)
 	{
-	__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, m_fDepth);
+		__super::Set_UI_Setting(m_fSizeX * 1.25f, m_fSizeY * 1.25f, m_fPosX, m_fPosY, m_fDepth);
+		m_bScaleAnim = FALSE;
 	}
-	else
+	else 
+	{
 		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, m_fDepth);
+	}
+
+	m_iPrevCombo = m_iComboCount;
+
+
 }
 
 void CUI_ComboNumber::EndAlphaEffect(_float fTimeDelta)

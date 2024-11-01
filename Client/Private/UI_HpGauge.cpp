@@ -25,7 +25,7 @@ HRESULT CUI_HpGauge::Initialize_Prototype()
 
 HRESULT CUI_HpGauge::Initialize(void* pArg)
 {
-	m_fSizeX = 417.f;
+	m_fSizeX = 410.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
