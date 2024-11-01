@@ -79,13 +79,14 @@ PS_OUT PS_MAIN(PS_IN In)
 
 PS_OUT PS_HP(PS_IN In)
 {
-        PS_OUT Out;
+    PS_OUT Out;
     
-    float2 fPointA = float2(0.9519f + (g_Radio - 1), 0.f);
-    float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
+    float2 fPointA = saturate(float2(0.9519f + (g_Radio * 0.9519f - 0.9519f), 0.f));
+    float2 fPointB = float2(fPointA.x + 0.0481f , 1.f);
     
-    float2 fRedRointA = float2(0.9519f + (g_fRedRadio - 1), 0.f);
-    float2 fRedPointB = float2(1.f + (g_fRedRadio - 1), 1.f);
+    float2 fRedRointA = float2(0.9519f + (g_fRedRadio * 0.9519f - 0.9519f), 0.f);
+    float2 fRedPointB = float2(fRedRointA.x + 0.0481f, 1.f);
+    //float2(1.f + (g_fRedRadio - 1), 1.f);
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
@@ -110,8 +111,8 @@ PS_OUT PS_HP(PS_IN In)
         discard;
 
     
-    if (Out.vColor.a <= 0.1f)
-        discard;
+    // if (Out.vColor.a <= 0.1f)
+    //     discard;
         
     return Out;
 }
