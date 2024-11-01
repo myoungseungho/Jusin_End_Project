@@ -508,7 +508,16 @@ PS_OUT PS_Volume(PS_IN In)
     else 
         Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
     
-       return Out;
+    if (g_Radio == 0.5f)
+    {
+        if (g_Radio >= In.vTexcoord.x)
+            Out.vColor.rgb = float3(0.996f, 0.729f, 0.f);
+        else 
+            Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
+    }
+        
+    
+      return Out;
 }
 
 

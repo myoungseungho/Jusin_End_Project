@@ -215,19 +215,29 @@ void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound , _float fTimeDelta)
 void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 {
 	_wstring strVolume =  to_wstring(0);
+	_vector vColor = { 0.043f, 0.952f, 0.945f ,1.f };
 
 	switch (m_iNumUI)
 	{
 	case BGM:
 		strVolume = to_wstring(m_fVolumeValue[BGM]);
+
+		if(m_fVolumeValue[BGM] == 50)
+			vColor = { 0.996f, 0.729f, 0.f ,1.f };
 		break;
 
 	case SFX:
 		strVolume = to_wstring(m_fVolumeValue[SFX]);
+
+		if (m_fVolumeValue[SFX] == 50)
+			vColor = { 0.996f, 0.729f, 0.f ,1.f };
 		break;
 
 	case VOICE:
 		strVolume = to_wstring(m_fVolumeValue[VOICE]);
+
+		if (m_fVolumeValue[VOICE] == 50)
+			vColor = { 0.996f, 0.729f, 0.f ,1.f };
 		break;
 
 	}
@@ -235,7 +245,7 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
 		strVolume.c_str(),
 		_float2((m_fPosX + 75) * 1.5f, (m_fPosY - 10) * 1.5f),
-		{ 0.043f, 0.952f, 0.945f ,1.f },
+		vColor,
 		0.f,
 		{ 0.f, 0.f },
 		0.8f
