@@ -244,7 +244,10 @@ PS_OUT_LIGHT PS_MAIN_POINT_PLAYER(PS_IN In)
     float shadeStep = 2.0f;
     shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
 
-    Out.vShade = (g_vLightDiffuse * shadeIntensity * 1.5f) + vAmbient;
+    float4 vResultShade = ((g_vLightDiffuse * shadeIntensity * 1.5f) + vAmbient);
+    vResultShade = saturate(vNormalDesc.w ? g_vLightDiffuse * 0.8f : vResultShade);
+    Out.vShade = vResultShade;
+    //Out.vShade = (g_vLightDiffuse * shadeIntensity * 1.f) + vAmbient;
     
 
     float4 vWorldPos;
