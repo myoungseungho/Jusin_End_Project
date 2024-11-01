@@ -123,6 +123,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	m_iSparkingAnimationIndex = { ANIME_SPARKING };
 
+	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -237,6 +239,16 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
+
+	//if (::AllocConsole() == TRUE)
+	//{
+	//	FILE* nfp[3];
+	//	freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+	//	freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+	//	freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+	//	std::ios::sync_with_stdio();
+	//}
+
 	return S_OK;
 }
 
@@ -259,11 +271,44 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		return;
 
 
-
-	if (m_pModelCom->m_iCurrentAnimationIndex == 8)
+	if (m_bDying)
 	{
-		_bool bDebug = true;
+		if (m_bAnimationLock == true)
+			Update_AnimationLock(fTimeDelta);
+		else
+		{
+			Character_Play_Animation(fTimeDelta);
+
+			Gravity(fTimeDelta);
+
+
+
+			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+			if (m_bMotionPlaying == false)
+			{
+
+				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
+				{
+					m_fAccDyingTime += fTimeDelta;
+					if (m_fAccDyingTime > 2.f)
+					{
+						Tag_In(m_ePlayerSlot);
+					}
+				}
+
+			}
+			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
+			{
+				Stun_Shake();
+			}
+		}
+
+		return;
 	}
+	else
+		Update_Dying(fTimeDelta);
+
 
 	Update_LoofAnimationCreate(fTimeDelta);
 	Update_PreviousXPosition();
@@ -588,7 +633,9 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 
 
 
-	//cout << "Team : " << m_iPlayerTeam << " Direction : " << m_iLookDirection << endl;
+	cout << "iHP : " << m_iHP << endl;
+
+
 	Check_Ground();
 }
 
@@ -1234,7 +1281,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.iDamage = 700 * Get_DamageScale();
+		//Desc.iDamage = 8700 * Get_DamageScale(); //700이었음
+		Desc.iDamage = 700 * Get_DamageScale(); //700이었음
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;

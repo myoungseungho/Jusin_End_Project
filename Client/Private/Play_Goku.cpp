@@ -98,7 +98,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	m_iSparkingAnimationIndex = { ANIME_SPARKING };
-
+	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
 
 
 	m_iNextAnimation.first = ANIME_IDLE;
@@ -233,6 +233,51 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
+
+
+	//사망시 업데이트 처리.  return때문에
+	if (m_bDying)
+	{
+		if(m_bAnimationLock == true)
+			Update_AnimationLock(fTimeDelta);
+		else
+		{
+			Character_Play_Animation(fTimeDelta);
+	
+			Gravity(fTimeDelta);
+
+
+
+			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+			if (m_bMotionPlaying == false)
+			{
+				
+				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
+				{
+					m_fAccDyingTime += fTimeDelta;
+					if (m_fAccDyingTime > 2.f)
+					{
+						Tag_In(m_ePlayerSlot);
+					}
+				}
+				 
+			}
+			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
+			{
+				Stun_Shake();
+			}
+		}
+	
+		return;
+	}
+	else
+		Update_Dying(fTimeDelta);
+
+
+
+
+
 	Update_LoofAnimationCreate(fTimeDelta);
 
 	Update_PreviousXPosition();
@@ -244,25 +289,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		return;
 	}
 
-	//if (m_pGameInstance->Key_Down(DIK_F3))
+	
 
-
-	//합치기 전 임시 코드.  적 탐지코드임
-	//if (m_pEnemy == nullptr)
-	//{
-	//	//_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-	//
-	//	for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
-	//	{
-	//		CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-	//
-	//		if (pObject != this)
-	//		{
-	//			m_pEnemy = static_cast<CCharacter*>(pObject);
-	//		}
-	//
-	//	}
-	//}
+	
 	pEnemyCheck();
 
 	//방향전환 코드.  적 탐지가 추가된 이후엔  CCharacter로 옮기기
@@ -515,18 +544,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	_float fPosX = Get_fPositionX();
 
-	//12(벽) 이상 넘어가지 못하게 
-	//if (fPosX > 12)
-	//{
-	//	Add_Move({ 12.f - fPosX, 0.f });
-	//}
-	//else if (fPosX < -12)
-	//{
-	//	Add_Move({ -12.f - fPosX, 0.f });
-	//}
+	
 	if (Check_bWall())
 	{
-		//(Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8);
 		Move_ForWall();
 	}
 
@@ -568,13 +588,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		system("cls");
 	}
 
-	//if (m_pGameInstance->Key_Down(DIK_F3))
-	//{
-	//	//Tag_In(0)
-	//}
-
-	//cout << "Team : " << m_iPlayerTeam << " Ki Guage : " << CBattleInterface_Manager::Get_Instance()->Get_KiGuage(m_iPlayerTeam) << " Ki Number : " << CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_iPlayerTeam) << endl;
-
+	
 
 
 }

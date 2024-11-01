@@ -3379,11 +3379,15 @@ _bool CCharacter::Get_bCharacterDead()
 
 void CCharacter::Tag_KeyCheck()
 {
+
+	if (m_bAnimationLock)
+		return;
+
 	if (m_iPlayerTeam == 1)
 	{
 		if (m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
 		{
-			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+			//m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
 			Tag_In(0);
 		}
 	}
@@ -3391,7 +3395,7 @@ void CCharacter::Tag_KeyCheck()
 	{
 		if (m_pGameInstance->Key_Down(DIK_F4) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
 		{
-			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+			//m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
 			Tag_In(0);
 		}
 	}
@@ -3399,13 +3403,13 @@ void CCharacter::Tag_KeyCheck()
 
 void CCharacter::Tag_In(_ubyte iTagSlot)
 {
-	m_bPlaying = false;
 
-	//순간이동 이펙트
-	m_bTag_In = true;
-
+	_bool bTag_Succes = false;
+	
 
 
+
+	
 	//상대 캐릭터들의 Enemy를 변경함
 
 
@@ -3418,23 +3422,42 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 	//짝수면 +1  홀수면 -1
 	if (m_ePlayerSlot % 2 == 0)
 	{
-		CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 1, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		bTag_Succes = CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 1, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	}
 	else
-		CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 0, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		bTag_Succes = CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 0, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
-
-	m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
-	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
-	if (m_bSparking)
+	if(bTag_Succes)
 	{
-		m_bSparking = false;
+		m_bPlaying = false;
 
-		//UI한테 끈다고 전해주기
-		CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+		//순간이동 이펙트
+		m_bTag_In = true;
 
+
+		m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
+		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+		if (m_bSparking)
+		{
+			m_bSparking = false;
+
+			//UI한테 끈다고 전해주기
+			CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+
+		}
+
+		if (m_iPlayerTeam == 1)
+		{
+			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+		}
+		else if (m_iPlayerTeam == 2)
+		{
+			m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+		}
+
+		Set_bRedHP(false);
 	}
 }
 
@@ -3497,8 +3520,15 @@ void CCharacter::Tag_Out(_vector vPosition)
 	m_bTag_In = false;
 
 
+	m_bAnimationLock = false;
+	m_fMaxAnimationLock = 0.f;
+	m_fAccAnimationLock = 0.f;
+
+
 	Chase_Ready(0.4f);
 	Chase2(0.2f);
+
+
 
 }
 
@@ -3553,6 +3583,50 @@ void CCharacter::Move_ForWall()
 	}
 	
 	
+}
+
+void CCharacter::Update_Dying(_float fTimeDelta)
+{
+
+	if(m_bDying == false)
+	{
+		if (m_iHP < 1)
+		{
+			m_bDying = true;
+
+			Set_AnimationStopWithoutMe(1.f);
+			Set_AnimationStop(1.f);
+
+
+			CUI_Manager::Get_Instance()->UsingCreateEndUI();
+
+			_uint iModelAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+			//땅에서 맞는모션-> 그냥 주저앉기
+			//공중에서 맞았으면 땅바닥에서 Bound 하고 못일어나기
+
+
+			if (iModelAnimationIndex == m_iHit_Stand_LightAnimationIndex || iModelAnimationIndex == m_iHit_Stand_MediumAnimationIndex || iModelAnimationIndex == m_iHit_Crouch_AnimationIndex)
+			{
+				Set_Animation(m_iDyingStandingAnimationIndex);
+			}
+			else// if (Check_bCurAnimationisAirHit())
+			{
+				Set_NextAnimation(m_iBound_Ground, 200.f);
+			}
+
+			Set_bRedHP(false);
+
+		}
+		
+
+	}
+
+}
+
+_bool CCharacter::Get_bDying()
+{
+	return m_bDying;
 }
 
 
@@ -4184,12 +4258,21 @@ void CCharacter::Gravity(_float fTimeDelta)
 		}
 		//m_pTransformCom->Add_Move({ 0,-fHeight,0 });
 
+		if (m_bDying)
+		{
+			Set_Animation(m_iBound_Ground, false);
+		}
+
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { XMVectorGetX(vPos),0.f,XMVectorGetZ(vPos),1.f });
 
 	}
 
 	else if (fHeight == 0)
 	{
+
+		if (m_bDying)
+			return;
+
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex)
 		{
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);

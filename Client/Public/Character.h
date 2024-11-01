@@ -415,7 +415,8 @@ public:
 	_bool Check_bWall();
 	void Move_ForWall();
 
-
+	void Update_Dying(_float fTimeDelta);
+	_bool Get_bDying();
 
 protected:
 	void Reset_AttackStep();
@@ -553,6 +554,8 @@ protected:
 
 	_ushort m_iSparkingAnimationIndex = { 59 };  //303
 
+	_ushort m_iDyingStandingAnimationIndex = {29};
+
 
 	_float m_fGravityTime = { 0.f };
 	_float m_fJumpPower = 3;// { 0.f };
@@ -663,6 +666,10 @@ protected:
 	_float2 m_fEffectLoofCreateOffset = {};
 	_bool m_bEffectLoofCreateFlip = { false };
 
+
+	_bool m_bDying = { false };
+	_float m_fAccDyingTime = {};
+	//_bool m_bKO = { false };
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
