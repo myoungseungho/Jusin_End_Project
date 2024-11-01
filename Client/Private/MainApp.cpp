@@ -45,7 +45,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_LOGO)))
+	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
@@ -62,6 +62,7 @@ void CMainApp::Update(_float fTimeDelta)
 // 1/50 -> 0.02ÃÊ °íÁ¤ Update
 void CMainApp::Fixed_Update(_float fTimeDelta)
 {
+
 }
 
 HRESULT CMainApp::Render(_float fTimeDelta)
@@ -139,10 +140,6 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 		return E_FAIL;
 #pragma endregion
 
-
-
-
-
 	return S_OK;
 }
 
@@ -176,12 +173,6 @@ void CMainApp::Free()
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
-	//CEffect_Manager::Get_Instance()->Free();
-
-	int a = 10;
-
-	if (a == 10)
-		a = 1;
 	m_pImgui_Manager->Free();
 
 	m_pRenderInstance->Release_Engine();
