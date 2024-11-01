@@ -329,10 +329,6 @@ void CCollider_Manager::Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vect
 		// 현재 충돌 상태 업데이트
 		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
 	}
-
-	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destroy_Reserve(CG_1P_Energy_Attack);
-	Destroy_Reserve(CG_2P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Body_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -355,9 +351,6 @@ void CCollider_Manager::Process_1P_Body_2P_Energy_Skill_Group(const vector<pair<
 		// 현재 충돌 상태 업데이트
 		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
 	}
-
-	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destroy_Reserve(CG_2P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Energy_Skill_2P_Body_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -380,9 +373,6 @@ void CCollider_Manager::Process_1P_Energy_Skill_2P_Body_Group(const vector<pair<
 		// 현재 충돌 상태 업데이트
 		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
 	}
-
-	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destroy_Reserve(CG_1P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Ranged_Skill_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -434,9 +424,6 @@ void CCollider_Manager::Process_1P_Ranged_Skill_2P_Energy_Skill_Group(const vect
 		//Melee_Attack
 		Destroy_Reserve(pairCollider.first);
 	}
-
-	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destroy_Reserve(CG_2P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Ranged_Skill_2P_Ranged_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
@@ -541,9 +528,6 @@ void CCollider_Manager::Process_1P_Energy_Skill_2P_Ranged_Skill_Group(const vect
 		//Ranged_Attack
 		Destroy_Reserve(pairCollider.second);
 	}
-
-	// 나머지 충돌 쌍들은 이미 처리되었으므로 별도로 처리하지 않습니다.
-	Destroy_Reserve(CG_1P_Energy_Attack);
 }
 
 void CCollider_Manager::Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)

@@ -89,7 +89,7 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 
 		m_fEndPos.x += m_fMoveSpeedNoneDirection.x * fTimeDelta;
 
-		Make_Collider(m_pColliderCom->m_ColliderGroup, _float2(0.f,0.f), _float2(m_fEndPos.x, m_fEndPos.y));
+		Make_Collider(m_pColliderCom->m_ColliderGroup, _float2(0.f, 0.f), _float2(m_fEndPos.x, m_fEndPos.y));
 	}
 }
 
@@ -116,7 +116,7 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-	Destory();
+	//Destory();
 	_bool Debug = true;
 }
 
@@ -337,4 +337,9 @@ void CAttackObject_Energy::Free()
 
 	for (auto& iter : m_vecColliderCom)
 		Safe_Release(iter);
+
+	if (m_pOwner->Get_iPlayerTeam() == 1)
+		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_1P_Energy_Attack);
+	else
+		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_2P_Energy_Attack);
 }
