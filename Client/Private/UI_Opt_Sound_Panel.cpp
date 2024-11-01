@@ -74,6 +74,8 @@ HRESULT CUI_Opt_Sound_Panel::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+
+
 	return S_OK;
 }
 

@@ -48,7 +48,6 @@ void CUI_Opt_Sound::Update(_float fTimeDelta)
 		m_bKeyInput = FALSE;
 		m_fInputDelay = 0.f;
 	}
-
 	MenuChange();
 
 }
@@ -87,10 +86,11 @@ void CUI_Opt_Sound::MenuChange()
 		if(!m_bKeyInput)
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
 
-		m_eMenuValue = (SOUND_MENU)(m_eMenuValue + 1);
+		m_eMenuValue = (SOUND_MENU)(m_eMenuValue - 1);
 
-		if (m_eMenuValue >= 3)
-			m_eMenuValue = BGM;
+		if (m_eMenuValue < 0)
+			m_eMenuValue = EXIT;
+
 
 		m_bKeyInput = TRUE;
 	}
@@ -100,13 +100,21 @@ void CUI_Opt_Sound::MenuChange()
 		if (!m_bKeyInput)
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
 
-		m_eMenuValue = (SOUND_MENU)(m_eMenuValue - 1);
+		m_eMenuValue = (SOUND_MENU)(m_eMenuValue + 1);
 
-		if (m_eMenuValue < 0)
-			m_eMenuValue = SFX;
+		if (m_eMenuValue >= MENU_END)
+			m_eMenuValue = BGM;
 
 		m_bKeyInput = TRUE;
 	}
+
+	if (m_eMenuValue == EXIT && m_pGameInstance->Key_Down(DIK_RETURN))
+	{
+		m_bIsActive = FALSE;
+		m_pUI_Manager->m_bOnOption = FALSE;
+	}
+
+
 }
 
 void CUI_Opt_Sound::Free()

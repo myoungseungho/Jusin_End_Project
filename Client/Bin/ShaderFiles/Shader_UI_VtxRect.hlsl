@@ -79,13 +79,13 @@ PS_OUT PS_MAIN(PS_IN In)
 
 PS_OUT PS_HP(PS_IN In)
 {
-        PS_OUT Out;
+    PS_OUT Out;
     
-    float2 fPointA = float2(0.9519f + (g_Radio - 1), 0.f);
-    float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
+    float2 fPointA = saturate(float2(0.9519f + (g_Radio * 0.9519f - 0.9519f), 0.f));
+    float2 fPointB = float2(fPointA.x + 0.0481f , 1.f);
     
-    float2 fRedRointA = float2(0.9519f + (g_fRedRadio - 1), 0.f);
-    float2 fRedPointB = float2(1.f + (g_fRedRadio - 1), 1.f);
+    float2 fRedRointA = float2(0.9519f + (g_fRedRadio * 0.9519f - 0.9519f), 0.f);
+    float2 fRedPointB = float2(fRedRointA.x + 0.0481f, 1.f);
      
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
@@ -108,11 +108,7 @@ PS_OUT PS_HP(PS_IN In)
     }
     else if (fRedLineY > 0)
         discard;
-
     
-    if (Out.vColor.a <= 0.1f)
-        discard;
-        
     return Out;
 }
 
@@ -135,8 +131,6 @@ PS_OUT PS_COLOR(PS_IN In)
 
 PS_OUT PS_SKILL(PS_IN In)
 {
-    
-    //------------------------------------------------------------------------------------
     PS_OUT Out;
     
     float4 vCurrTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
@@ -148,21 +142,17 @@ PS_OUT PS_SKILL(PS_IN In)
     vMaskTexCoord.x *= 2.f;
 
     float4 vMaskTexture = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
-    //vMaskTexture.a = 0.78f;
     
     Out.vColor = vCurrTexture;
     
     if (g_Radio <= In.vTexcoord.x)
     {
         Out.vColor = vNextTexture;
-        //Out.vColor = vNextTexture + (1 - vMaskTexture - 0.35f);
     }
     
     if ((g_Radio <= 0.5f || g_bState) && In.vTexcoord.x >= 0.5f)
     {
-        //Out.vColor += (1 -vMaskTexture - 0.15f);
         Out.vColor.rgb += Out.vColor.rgb * vMaskTexture.r * 2.f;
-
     }
     
     if (Out.vColor.a <= 0.1f)
@@ -189,10 +179,9 @@ PS_OUT PS_SUB_HP(PS_IN In)
 {
     PS_OUT Out;
     
-    float2 fPointA = float2(0.95f + (g_Radio - 1), 0.f);
-    float2 fPointB = float2(1.f + (g_Radio - 1), 1.f);
+    float2 fPointA = float2(0.9519f + (g_Radio * 0.9519f - 0.9519f), 0.f);
+    float2 fPointB = float2(fPointA.x + (1.f -  0.9519f ), 1.f);
 
-     
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
     float2 vMaskOffSet = float2(g_MaskTimer, g_MaskTimer);
