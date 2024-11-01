@@ -23,7 +23,9 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
+	, m_pGameInstance { Prototype.m_pGameInstance }
 {
+	
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
 		m_bIsCopy = true;
@@ -101,10 +103,13 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 	return S_OK;
 }
 
-HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
+HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 {
 	if (pArg != nullptr)
 	{
+		m_isBillboading = isBillboading;
+		m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
+
 		m_pPlayerMatrix = pArg;
 		LayerMatrix = m_pTransformCom->Get_WorldMatrix();
 
@@ -126,7 +131,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
-			
+			m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 		}
 		else
 		{
@@ -142,6 +147,7 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg)
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+			m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 		}
 
 		return S_OK;
@@ -169,6 +175,16 @@ void CEffect_Layer::Update(_float fTimeDelta)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
+			if (m_isBillboading == true && (pEffect->m_ModelName.find(L"povot_plane00") != std::wstring::npos))
+			{
+				_vector camPosition = m_pGameInstance->Get_CamPosition_Vector();
+
+				m_pCopyTransformCom->LookAt(camPosition);
+				LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+				//if (0 > m_pPlayerMatrix->_11)
+				//	LayerMatrix.r[0] = XMVectorSetX(LayerMatrix.r[0], XMVectorGetX(LayerMatrix.r[0]) * -1);
+			}
+
 			pEffect->Get_Layer_Matrix(LayerMatrix);
 		}
 		Play_Effect_Animation(fTimeDelta);
@@ -350,11 +366,11 @@ CEffect_Layer* CEffect_Layer::Create(ID3D11Device* pDevice, ID3D11DeviceContext*
 	return pInstance;
 }
 
-CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg)
+CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg, _bool isBillboading)
 {
 	CEffect_Layer* pInstance = new CEffect_Layer(*this);
 
-	if (FAILED(pInstance->Initialize(pArg)))
+	if (FAILED(pInstance->Initialize(pArg, isBillboading)))
 	{
 		MSG_BOX(TEXT("Failed to Cloned : CEffect_Layer"));
 		Safe_Release(pInstance);
@@ -377,10 +393,12 @@ void CEffect_Layer::Free()
 
 	__super::Free();
 
+
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pTransformCom);
+	Safe_Release(m_pCopyTransformCom);
 	Safe_Release(m_pColliderCom);
 
 	for (auto& pMixtureEffect : m_MixtureEffects)

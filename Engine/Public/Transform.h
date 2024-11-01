@@ -154,6 +154,7 @@ public:
 	void LookAt(_fvector vAt);
 	void Rotate(_float3 ChangeRotation);
 
+	void Set_WorldMatrix(_float4x4 WorldMatrix) { m_WorldMatrix = WorldMatrix; }
 private:
 	_float4x4				m_WorldMatrix = {};
 	_float					m_fSpeedPerSec = {};

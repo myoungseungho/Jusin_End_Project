@@ -95,6 +95,7 @@ void CEffect_NoneLight::Update(_float fTimeDelta)
 
 void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 {
+
 	if (!m_bIsNotPlaying && m_bIsSpriteEnd == false)
 	{
 		if (m_pRenderInstance->Get_isLayerView() == true)

@@ -106,12 +106,25 @@ void CEffect_Manager::Render(_float fTimeDelta)
 
 HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg)
 {
+	/*
+		이름 검사해서 예외처리 하기 그러면 클론에 인자값으로 불값 하나 더 던져주느 ㄴ처리하면 될듯
+	*/
+	
+
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
 	if (pLayer == nullptr)
 		return E_FAIL;
 
-	m_UsingEffect.push_back(pLayer->Clone(pArg));
+	if (strEffectLayerTag.find(L"Smoke") != wstring::npos)
+		m_UsingEffect.push_back(pLayer->Clone(pArg, false));
+	else
+	{
+		if (strEffectLayerTag.find(L"Aura01") != wstring::npos)
+			m_UsingEffect.push_back(pLayer->Clone(pArg, false));
+		else
+			m_UsingEffect.push_back(pLayer->Clone(pArg, true));
+	}
 
 	return S_OK;
 }

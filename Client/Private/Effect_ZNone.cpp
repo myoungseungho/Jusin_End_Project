@@ -94,6 +94,7 @@ void CEffect_ZNone::Update(_float fTimeDelta)
 
 void CEffect_ZNone::Late_Update(_float fTimeDelta)
 {
+	
 	if (!m_bIsNotPlaying)
 	{
 		if (m_pRenderInstance->Get_isLayerView() == true)

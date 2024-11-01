@@ -50,9 +50,8 @@ void CEffect::Update(_float fTimeDelta)
 
 void CEffect::Late_Update(_float fTimeDelta)
 {
-	
-}
 
+}
 HRESULT CEffect::Priority_Render(_float fTimeDelta)
 {
 	if (m_bIsCopy == true)
@@ -190,6 +189,7 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	Set_Effect_Rotation(ResultKeyFrame.vRotation);
 
 	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+	//LookCamObject();
 
 	return S_OK;
 }
