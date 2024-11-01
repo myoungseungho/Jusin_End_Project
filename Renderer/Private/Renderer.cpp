@@ -804,7 +804,7 @@ HRESULT CRenderer::Render_NonLight(_float fTimeDelta)
 HRESULT CRenderer::Render_NonLight_Effect(_float fTimeDelta)
 {
 	m_iEffectRenderCount = 0;
-
+	_int iOutLineCount = 0;
 	for (auto& pRenderObject : m_RenderObjects[RG_NONLIGHT_EFFECT])
 	{
 		if (pRenderObject->Get_GameObjectData() != -1)
@@ -829,15 +829,43 @@ HRESULT CRenderer::Render_NonLight_Effect(_float fTimeDelta)
 			if (nullptr != pRenderObject)
 				pRenderObject->Priority_Render(fTimeDelta);
 
-			if (nullptr != pRenderObject)
-				pRenderObject->Render(fTimeDelta);
+			if (iOutLineCount == 0)
+			{
+				if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
+					return E_FAIL;
+			
+				if (nullptr != pRenderObject)
+					pRenderObject->Render(fTimeDelta);
 
-			Safe_Release(pRenderObject);
+				Safe_Release(pRenderObject);
+
+				if (FAILED(m_pRenderInstance->End_MRT()))
+					return E_FAIL;
+			}
+			else
+			{
+				if (FAILED(m_pRenderInstance->Begin_MRT_DoNotClear(TEXT("MRT_GameObjects"))))
+					return E_FAIL;
+
+				if (nullptr != pRenderObject)
+					pRenderObject->Render(fTimeDelta);
+
+				Safe_Release(pRenderObject);
+
+				if (FAILED(m_pRenderInstance->End_MRT()))
+					return E_FAIL;
+			}
+
+			iOutLineCount++;
 		}
 	}
 
 	m_RenderObjects[RG_NONLIGHT_EFFECT].clear();
 
+	if (iOutLineCount > 0)
+	{
+		Draw_OutLine_Effect();
+	}
 	return S_OK;
 }
 
@@ -1226,6 +1254,28 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 }
 #endif // _DEBUG
+
+HRESULT CRenderer::Draw_OutLine_Effect()
+{
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_Diffuse"))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Depth"))))
+		return E_FAIL;
+
+	m_pShader->Begin(7);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	return S_OK;
+}
 
 HRESULT CRenderer::Draw_AllGlow_Effect()
 {

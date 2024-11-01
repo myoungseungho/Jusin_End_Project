@@ -613,10 +613,17 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	{
 		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-			return E_FAIL;
-
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+		if (m_iPlayerTeam == 1)
+		{
+			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+				return E_FAIL;
+		}
+		else
+		{
+			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+				return E_FAIL;
+		}
+		 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
@@ -747,6 +754,13 @@ HRESULT CPlay_Goku::Ready_Components()
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
+
+
+	/* Com_Model */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		return E_FAIL;
+
+	
 
 
 	return S_OK;
@@ -2176,6 +2190,6 @@ void CPlay_Goku::Free()
 
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
-
+	Safe_Release(m_p2PTextureCom);
 
 }

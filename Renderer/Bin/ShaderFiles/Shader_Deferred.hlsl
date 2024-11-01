@@ -244,7 +244,10 @@ PS_OUT_LIGHT PS_MAIN_POINT_PLAYER(PS_IN In)
     float shadeStep = 2.0f;
     shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
 
-    Out.vShade = (g_vLightDiffuse * shadeIntensity * 1.5f) + vAmbient;
+    float4 vResultShade = ((g_vLightDiffuse * shadeIntensity * 1.5f) + vAmbient);
+    vResultShade = saturate(vNormalDesc.w ? g_vLightDiffuse * 0.8f : vResultShade);
+    Out.vShade = vResultShade;
+    //Out.vShade = (g_vLightDiffuse * shadeIntensity * 1.f) + vAmbient;
     
 
     float4 vWorldPos;
@@ -413,6 +416,33 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_EFFECT_OUTLINE(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    if (0.0f == vDiffuse.a)
+        discard;
+
+    Out.vColor = vDiffuse;
+
+    vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+   
+    float fViewZ = vDepthDesc.x * 1000.f;
+    float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
+
+    float fEdgeNormalThreshold = 0.2f;
+    float fEdgeDepthThreshold = 0.7f;
+	
+    float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
+
+    vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
+    Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
+   
+    return Out;
+}
+
 PS_OUT PS_MAIN_DEFERRED_MAP(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
@@ -526,6 +556,19 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_POINT_PLAYER();
+    }
+
+    pass Effect_OutLine //7
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+//BS_MultiplyBlend 이거 흑백 새상일때 할것
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_EFFECT_OUTLINE();
     }
 }
 
