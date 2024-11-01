@@ -39,9 +39,16 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 	m_fStartOffset = pDesc->fStartOffset;
 	//m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
 	//m_iDirection = pDesc->iDirection;
+	m_fMoveSpeedNoneDirection = pDesc->fMoveSpeedNoneDirection;
+	m_iAttackCount = pDesc->iAttackCount;
+	m_iPlayerDirection = pDesc->iPlayerDirection;
+
+	m_bDying = false;
 
 
-	m_eExplositionColor = pDesc->eExplosionColor;
+	m_eEnegrgyColor = pDesc->eExplosionColor;
+
+
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
@@ -112,10 +119,10 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//ÀÌÆåÆ® Ã³¸®
 		Erase();
 
-		if (m_eExplositionColor != ENERGY_LIGHT_NONE)
+		if (m_eEnegrgyColor != ENERGY_LIGHT_NONE)
 		{
 			
-			if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
+			if (m_eEnegrgyColor == ENERGY_LIGHT_YELLOW)
 			{
 				//Add_YellowLight();
 				
@@ -164,10 +171,10 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 			}
 
-			if (m_eExplositionColor != ENERGY_LIGHT_NONE)
+			if (m_eEnegrgyColor != ENERGY_LIGHT_NONE)
 			{
 
-				if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
+				if (m_eEnegrgyColor == ENERGY_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
@@ -180,10 +187,10 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
 
-			if (m_eExplositionColor != ENERGY_LIGHT_NONE)
+			if (m_eEnegrgyColor != ENERGY_LIGHT_NONE)
 			{
 
-				if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
+				if (m_eEnegrgyColor == ENERGY_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));

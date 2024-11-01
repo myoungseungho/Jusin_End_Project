@@ -25,7 +25,7 @@ public:
 	typedef struct ATTACK_RANGED_DESC : public  CAttackObject::ATTACK_DESC
 	{
 		_float2 fStartOffset = {};
-		_float2 fMoveSpeed = {};
+		_float2 fMoveSpeedNoneDirection = {};
 
 		_short iAttackCount = { 5 };
 		_short iPlayerDirection = {};		//
@@ -67,12 +67,13 @@ private:
 
 private:
 	_float2	m_fStartOffset = {};
-	_float2 m_fRanged_Impus_NoneDirection = {};
+	_float2 m_fMoveSpeedNoneDirection = {};
+	_short m_iAttackCount = { 5 };
 	_short  m_iPlayerDirection = {};		
 
 	_bool m_bDying = false;
 
-	Energy_LightColor m_eExplositionColor = { ENERGY_LIGHT_NONE };
+	Energy_LightColor m_eEnegrgyColor = { ENERGY_LIGHT_NONE };
 
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
