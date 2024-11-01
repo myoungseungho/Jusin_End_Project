@@ -236,9 +236,9 @@ void CCharacter::Player_Update(_float fTimeDelta)
 {
 	m_tCharacterDesc.bStun = m_bRedHp;
 
-	m_tCharacterDesc.bHit = m_bHit;
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
 	m_tCharacterDesc.iHp = m_iHP;
+	m_tCharacterDesc.bHit = m_bHit;
 
 	m_tCharacterDesc.iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(m_iPlayerTeam);
 
@@ -246,6 +246,7 @@ void CCharacter::Player_Update(_float fTimeDelta)
 	{
 		m_bHit = false;
 	}
+	
 
 	m_tCharacterDesc.iSKillCount = m_iSKillCount;
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
@@ -3258,11 +3259,7 @@ _bool CCharacter::Get_bGrabbed()
 void CCharacter::Set_bRedHP(_bool bRedHP)
 {
 	if (bRedHP == true)
-	{
-		//m_pUI_Manager->Set_Hp(m_iHP);
 		m_tCharacterDesc.iHp = m_iHP;
-
-	}
 
 	m_bRedHp = bRedHP;
 	m_tCharacterDesc.bStun = m_bRedHp;
