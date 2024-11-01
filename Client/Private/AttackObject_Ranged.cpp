@@ -79,6 +79,7 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	{
 		m_pTransformCom->Add_Move({ m_fRanged_Impus_NoneDirection.x * m_iDirection * fTimeDelta , m_fRanged_Impus_NoneDirection.y * fTimeDelta ,0 });
 
+
 		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	}
 

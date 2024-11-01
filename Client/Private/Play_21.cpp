@@ -250,7 +250,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		return;
 
 
-	if (m_pGameInstance->Key_Down(DIK_PGUP))
+	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
