@@ -45,7 +45,7 @@ public:
 private:
 	_bool m_isOutLine = { false };
 
-	_bool m_isLayerView = { false };
+	_bool m_isLayerView = { true };
 private:
 	ID3D11Device*			m_pDevice = { nullptr };
 	ID3D11DeviceContext*	m_pContext = { nullptr };

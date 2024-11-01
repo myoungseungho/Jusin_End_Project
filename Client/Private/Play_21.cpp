@@ -237,15 +237,6 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
-	if (::AllocConsole() == TRUE)
-	{
-	   FILE* nfp[3];
-	   freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-	   freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-	   freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-	   std::ios::sync_with_stdio();
-	}
-
 	return S_OK;
 }
 
@@ -840,9 +831,9 @@ HRESULT CPlay_21::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-#ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+//#ifdef _DEBUG
+//	m_pColliderCom->Render(fTimeDelta);
+//#endif // DEBUG
 	return S_OK;
 }
 
