@@ -48,14 +48,11 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 
 	m_eEnegrgyColor = pDesc->eExplosionColor;
 
-
-
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
-	
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
-	m_fStartPos = _float2{ XMVectorGetX(vPos) + XMVectorGetX(vStartOffset) , XMVectorGetY(vPos) +XMVectorGetY(vStartOffset) };
 
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
+	m_fStartPos = _float2{ XMVectorGetX(vPos) + XMVectorGetX(vStartOffset) , XMVectorGetY(vPos) + XMVectorGetY(vStartOffset) };
 	return S_OK;
 }
 
@@ -63,14 +60,10 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 
 void CAttackObject_Energy::Update(_float fTimeDelta)
 {
-
 	if (Check_UpdateStop(fTimeDelta))
 		return;
 
-
-
 	m_fAccLifeTime += fTimeDelta;
-
 
 	//»ýÁ¸½Ã°£ Áö³µ°Å³ª ¸Ê¹Ù±ù(¶¥Æ÷ÇÔ)À¸·Î ³ª°¬À¸¸é »èÁ¦
 	if (m_fAccLifeTime > m_fLifeTime  )
@@ -78,7 +71,6 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 		if (m_bEnableDestory)
 		{
 			Destory();
-
 			m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
@@ -98,29 +90,17 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 
 		m_fEndPos.x += m_fMoveSpeedNoneDirection.x * fTimeDelta;
 
-
-	
-		//_float2 DefaultFloat2 = _float2(0.f, 0.f);
-	
-
 		Make_Collider(m_pColliderCom->m_ColliderGroup, m_fStartPos, _float2(m_fStartPos.x + m_fEndPos.x, m_fStartPos.y + m_fEndPos.y));
-
 	}
-
 }
 
 void CAttackObject_Energy::Late_Update(_float fTimeDelta)
 {
-
-	
-
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 {
-
 #ifdef _DEBUG
 	m_pColliderCom->Render(fTimeDelta);
 
@@ -130,7 +110,6 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 	}
 #endif // DEBUG
 
-
 	return S_OK;
 }
 
@@ -138,6 +117,7 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
+	Destory();
 
 	
 	_bool Debug = true;
@@ -355,6 +335,9 @@ CGameObject* CAttackObject_Energy::Clone(void* pArg)
 void CAttackObject_Energy::Free()
 {
 	__super::Free();
+
 	Safe_Release(m_pColliderCom);
 
+	for (auto& iter : m_vecColliderCom)
+		Safe_Release(iter);
 }
