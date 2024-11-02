@@ -23,7 +23,11 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
+	void SelectIcon(_float fPosX , _float fPosY);
+
+private:
 	_uint m_iTexIndex = { 0 };
+	CTransform* m_pDesc = { nullptr };
 
 public:
 	static CUI_CharaSelectIcon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

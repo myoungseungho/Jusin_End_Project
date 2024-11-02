@@ -37,7 +37,10 @@ HRESULT CUI_CharaSelectIcon::Initialize(void* pArg)
 	m_fPosX = 150.f + (m_iTexIndex * 320), m_fPosY = 620.f;
 	m_fSizeX = 150.f, m_fSizeY = 150.f;
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
+	m_pDesc = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_CHARACTER, TEXT("Layer_MarkArrow"), TEXT("Com_Transform")));
+	Safe_AddRef(m_pDesc);
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 
 	return S_OK;
 }
@@ -51,6 +54,12 @@ void CUI_CharaSelectIcon::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	_vector vArrowPos = m_pDesc->Get_State(CTransform::STATE_POSITION);
+
+	_float fPosX = XMVectorGetX(vArrowPos) + g_iWinSizeX * 0.5f;
+	_float fPosY = g_iWinSizeY * 0.5f - XMVectorGetY(vArrowPos);
+	
+	SelectIcon(fPosX, fPosY);
 }
 
 void CUI_CharaSelectIcon::Late_Update(_float fTimeDelta)
@@ -94,6 +103,33 @@ HRESULT CUI_CharaSelectIcon::Ready_Components()
 	return S_OK;
 }
 
+void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
+{
+	switch (m_iTexIndex)
+	{
+		case CUI_Define::GOKU:
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			break;
+
+		case CUI_Define::ANDROID21:
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			break;
+
+		case CUI_Define::BUU:
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			break;
+
+		case CUI_Define::HIT:
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			break;
+
+		default:
+			break;
+	}
+		
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
+}
+
 CUI_CharaSelectIcon* CUI_CharaSelectIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CUI_CharaSelectIcon* pInstatnce = new CUI_CharaSelectIcon(pDevice, pContext);
@@ -122,5 +158,7 @@ CGameObject* CUI_CharaSelectIcon::Clone(void* pArg)
 
 void CUI_CharaSelectIcon::Free()
 {
+	Safe_Release(m_pDesc);
+
 	__super::Free();
 }

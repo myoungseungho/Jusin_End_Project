@@ -55,7 +55,7 @@ protected:
 	void DebugTesting(_float fSizeOffset,  _float fDepth = 1.f);
 
 //클릭한 위치가 해당 UI 위치라면 동작
-	_bool ClickRange();
+	_bool ClickRange(_float fPickPosX, _float fPickPosY);
 
 public:
 	//UI 숨김 / 보여줌
