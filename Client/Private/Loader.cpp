@@ -385,12 +385,12 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	//Combo
 	/* For.Prototype_Component_Texture_UI_ComboNumber */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Number/cp_combo_count_red_%d.png"), 10))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Number/ComboNumber%d.png"), 30))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_ComboFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_hit_red.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Combo_Hit_Font%d.png"),3))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_ComboEffect */

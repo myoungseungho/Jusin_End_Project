@@ -37,7 +37,6 @@ private:
 private:
 	_char m_iShaderID = { 0 };
 
-	_float m_iCharaCurrHp = { 0.f };
 	_float m_fHpRadio = { 0.f };
 	_float m_fRedHpRadio = { 0.f };
 

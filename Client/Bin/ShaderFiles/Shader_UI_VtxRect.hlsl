@@ -167,7 +167,7 @@ PS_OUT PS_COMBO(PS_IN In)
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-    Out.vColor.rbg += g_vColor * (1.f - g_MaskTimer);
+    Out.vColor.rbg += g_vEndColor * (1.f - g_MaskTimer);
 
     if (Out.vColor.a <= 0.1f)
         discard;

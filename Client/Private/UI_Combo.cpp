@@ -120,6 +120,22 @@ HRESULT CUI_Combo::Ready_Components()
 	return S_OK;
 }
 
+_uint CUI_Combo::SetColor()
+{
+	if (m_iComboCount >= 50)
+	{
+		m_eColorVaule = PURPLE;
+	}
+	else if (m_iComboCount >= 10)
+	{
+		m_eColorVaule = BLUE;
+	}
+	else
+		m_eColorVaule = RED;
+
+	return m_eColorVaule;
+}
+
 void CUI_Combo::Free()
 {
 
