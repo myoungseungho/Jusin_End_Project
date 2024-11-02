@@ -244,6 +244,18 @@
     <ClCompile Include="..\Private\UI_Manager.cpp">
       <Filter>02.GameObjects\UI\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Level_Chara_Select.cpp">
+      <Filter>01.Level\02.CharacterSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Chara_Select_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\BG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectIcon.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\CharacherIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SelectArrow.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -563,6 +575,21 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw">
       <UniqueIdentifier>{e066d276-a58d-42d7-ac0b-53a766307df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\02.CharacterSelect">
+      <UniqueIdentifier>{b3d9441e-408d-4ddd-9b46-cd61e574f9df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character">
+      <UniqueIdentifier>{782ab67b-4afc-4693-9161-f95230a7d37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\BG">
+      <UniqueIdentifier>{ed448ef2-7b7f-4422-9ee4-a84f5add398f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\CharacherIcon">
+      <UniqueIdentifier>{3ab7506f-9a2c-4500-9d6f-84c21e22124a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Arrow">
+      <UniqueIdentifier>{acb79254-4fd3-4ad4-bdb4-de460db34100}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1015,6 +1042,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\UI_Manager.h">
       <Filter>02.GameObjects\UI\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Level_Chara_Select.h">
+      <Filter>01.Level\02.CharacterSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Chara_Select_BG.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectIcon.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\CharacherIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SelectArrow.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
