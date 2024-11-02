@@ -30,6 +30,11 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
+	void InitPosition(UI_LRPOS ePos);
+	void GetHpRadio(_float& iHp);
+	void RedHpSwitch(_bool& bRedHpEnable, _float fTimeDelta);
+
+private:
 	_char m_iShaderID = { 0 };
 
 	_float m_iCharaCurrHp = { 0.f };
@@ -39,7 +44,7 @@ private:
 	//≈∏¿Ã∏”
 	_float m_fMaskUVTimer = { 0.f };
 	_float m_fRedGaugeTimer = { 0.f };
-
+	
 	_bool m_bRedAlpha = { FALSE };
 
 	CTexture* m_pMaskTexture = { nullptr };
