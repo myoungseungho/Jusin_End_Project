@@ -46,6 +46,11 @@ void CUI_Combo::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+
+}
+
+void CUI_Combo::Late_Update(_float fTimeDelta)
+{
 	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
 
 
@@ -69,8 +74,6 @@ void CUI_Combo::Update(_float fTimeDelta)
 		}
 	}
 
-	
-
 	if (m_bCharaStun == FALSE && m_fDestoryTimer >= 0.25f)
 	{
 		m_iComboCount = 0;
@@ -80,7 +83,7 @@ void CUI_Combo::Update(_float fTimeDelta)
 	if (m_bComboEnd)
 		m_bComboHit = TRUE;
 
-	if ( m_bComboHit && m_bCharaStun)
+	if (m_bComboHit && m_bCharaStun)
 	{
 		m_iComboCount = 0;
 		m_bComboHit = FALSE;
@@ -92,11 +95,6 @@ void CUI_Combo::Update(_float fTimeDelta)
 			m_iComboCount = m_pMainPawn->Get_PawnDesc().iComboCount;
 	}
 
-}
-
-void CUI_Combo::Late_Update(_float fTimeDelta)
-{
-	
 }
 
 HRESULT CUI_Combo::Render(_float fTimeDelta)

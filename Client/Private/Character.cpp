@@ -234,27 +234,8 @@ HRESULT CCharacter::Initialize(void* pArg)
 
 void CCharacter::Player_Update(_float fTimeDelta)
 {
-	m_tCharacterDesc.bStun = m_bRedHp;
-
-	m_tCharacterDesc.bAttBuf = m_bAttBuf;
-	m_tCharacterDesc.iHp = m_iHP;
-	m_tCharacterDesc.bHit = m_bHit;
-
-	m_tCharacterDesc.iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(m_iPlayerTeam);
-
-	if (m_iPrevComboCount < m_tCharacterDesc.iComboCount)
-	{
-		m_bHit = false;
-	}
+	CharacterToUI_Info();
 	
-
-	m_tCharacterDesc.iSKillCount = m_iSKillCount;
-	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
-	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
-	m_tCharacterDesc.ePlayerID = m_eCharacterID;
-	m_tCharacterDesc.iTeam = m_iPlayerTeam;
-
-	m_iPrevComboCount = m_tCharacterDesc.iComboCount;
 }
 
 void CCharacter::Camera_Update(_float fTimeDelta)
@@ -3266,6 +3247,23 @@ void CCharacter::Set_bRedHP(_bool bRedHP)
 
 	m_bRedHp = bRedHP;
 	m_tCharacterDesc.bStun = m_bRedHp;
+}
+
+void CCharacter::CharacterToUI_Info()
+{
+	m_tCharacterDesc.bStun = m_bRedHp;
+
+	m_tCharacterDesc.bAttBuf = m_bAttBuf;
+	m_tCharacterDesc.iHp = m_iHP;
+	m_tCharacterDesc.bHit = m_bHit;
+
+	m_tCharacterDesc.iComboCount = CBattleInterface_Manager::Get_Instance()->Get_HitCount(m_iPlayerTeam);
+
+	m_tCharacterDesc.iSKillCount = m_iSKillCount;
+	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
+	m_tCharacterDesc.ePlayer_Slot = m_ePlayerSlot;
+	m_tCharacterDesc.ePlayerID = m_eCharacterID;
+	m_tCharacterDesc.iTeam = m_iPlayerTeam;
 }
 
 void CCharacter::Set_GrabAnimation()
