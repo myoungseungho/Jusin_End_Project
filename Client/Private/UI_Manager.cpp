@@ -44,7 +44,7 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 	if(m_bStartUI == FALSE)
 		m_fStartUITimer += fTimeDelta;
 
-	if (m_fStartUITimer >= 0.5f && m_bStartUI == FALSE)
+	if (m_fStartUITimer >= 4.f && m_bStartUI == FALSE)
 	{
 		UsingCreateStartUI();
 		m_bStartUI = TRUE;
