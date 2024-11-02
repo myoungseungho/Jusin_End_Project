@@ -4,12 +4,12 @@
 
 BEGIN(Client)
 
-class CUI_CharaSelectIcon final :public CUIObject
+class CUI_CharaSelectImage final :public CUIObject
 {
 private:
-	CUI_CharaSelectIcon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_CharaSelectIcon(const CUI_CharaSelectIcon& Prototype);
-	virtual ~CUI_CharaSelectIcon() = default;
+	CUI_CharaSelectImage(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_CharaSelectImage(const CUI_CharaSelectImage& Prototype);
+	virtual ~CUI_CharaSelectImage() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -23,14 +23,14 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
-	void SelectIcon(_float fPosX , _float fPosY);
+	void SelectIcon(_float fPosX, _float fPosY);
 
 private:
 	_uint m_iTexIndex = { 0 };
-	CTransform* m_pArrowTransform = { nullptr };
+	CTransform* m_pDesc = { nullptr };
 
 public:
-	static CUI_CharaSelectIcon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_CharaSelectImage* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };
