@@ -146,10 +146,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-
-
-	CUI_Manager::Get_Instance()->UsingCreateStartUI();
-
 	return S_OK;
 }
 
