@@ -101,6 +101,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	m_iAttack_LightLast = { ANIME_ATTACK_LIGHT3 };
 	m_iAttack_Heavy = { ANIME_ATTACK_HEAVY };
+	m_iAttack_Crouch_Heavy = { ANIME_ATTACK_CROUCH_HEAVY };
 
 	m_iBound_Ground = { ANIME_HIT_BOUND_DOWN };
 
@@ -238,6 +239,15 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	}
 	else
 		m_bPlaying = true;
+
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
 
 	return S_OK;
 }
@@ -504,6 +514,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		{
 			Stun_Shake();
 			m_fAccStunTime += fTimeDelta;
+			cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
 			if (m_fAccStunTime > m_fMaxStunTime)
 			{
 				m_bStun = false;
@@ -649,7 +660,6 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	__super::Player_Update(fTimeDelta);
 
-	cout << m_iHP << " " << endl;
 	/*
 
 
@@ -1320,8 +1330,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 4.f * m_iLookDirection,2.f };
-		Desc.fhitCharacter_StunTime = 0.6f;
-
+		//Desc.fhitCharacter_StunTime = 0.6f;
+		Desc.fhitCharacter_StunTime = 0.8f;
 
 		Desc.iDamage = 1000 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;

@@ -139,6 +139,38 @@ void CBattleInterface_Manager::Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSl
 
 }
 
+_ushort CBattleInterface_Manager::Get_iAliveMemberCount(_ushort iTeam)
+{
+    
+    _ushort iAliveMebberCount = 0;
+
+    if (iTeam == 1)
+    {
+        for (auto pCharacter : m_p1TeamCharacter)
+        {
+            if (pCharacter != nullptr)
+            {
+                if (pCharacter->Get_bDying() == false)
+                    iAliveMebberCount++;
+            }
+        }
+    }
+    else if (iTeam == 2)
+    {
+        for (auto pCharacter : m_p2TeamCharacter)
+        {
+            if (pCharacter != nullptr)
+            {
+                if (pCharacter->Get_bDying() == false)
+                    iAliveMebberCount++;
+            }
+        }
+    }
+
+    return iAliveMebberCount;
+
+}
+
 
 
 /*

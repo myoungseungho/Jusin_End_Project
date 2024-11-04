@@ -260,7 +260,7 @@ void CAttackObject::Late_Update(_float fTimeDelta)
 	//
 
 
-	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CAttackObject::Render(_float fTimeDelta)
@@ -311,6 +311,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
+			m_pOwner->Set_AttackBackEvent(true);
 
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
@@ -432,6 +433,8 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+			m_pOwner->Set_AttackBackEvent(true);
+
 		}
 
 		else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
@@ -633,6 +636,10 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 	//CCollider::COLLIDER_DESC ColliderDesc{};
 	//ColliderDesc = pDesc->ColliderDesc;
 	//ColliderDesc.MineGameObject = this;
+
+
+	//if (pDesc->bNoCreateMainCollider == true)
+	//	return S_OK;
 
 	CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
 	ColliderDesc = pDesc->ColliderDesc;

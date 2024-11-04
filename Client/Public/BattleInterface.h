@@ -44,6 +44,7 @@ public:
 
 	void Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSlot, _float fTime);
 
+	_ushort Get_iAliveMemberCount(_ushort iTeam);
 
 	//이거 하나만 호출하게
 	//	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot);

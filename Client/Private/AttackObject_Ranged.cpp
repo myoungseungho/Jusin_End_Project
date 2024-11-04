@@ -149,7 +149,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
-
+			m_pOwner->Set_AttackBackEvent(true);
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
@@ -185,6 +185,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+			m_pOwner->Set_AttackBackEvent(true);
 
 			if (m_eExplosionColor != RANGED_LIGHT_NONE)
 			{

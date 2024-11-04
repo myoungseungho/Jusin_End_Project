@@ -200,8 +200,7 @@ public:
 
 	void Set_bNextAnimationGravityEvent() { m_bNextAnimationGravityEvent = true; };
 
-	void Set_bAttackGravity(_bool bAttackGravity) { m_bAttackGravity = bAttackGravity; };
-
+	void Set_bAttackGravity(_bool bAttackGravity);
 	_float Get_fGravityTime() { return m_fGravityTime; };
 
 
@@ -248,7 +247,9 @@ public:
 	void Gain_AttackStep(_ushort iStep);// 
 	void Gain_HitCount(_ushort iHit);// 
 
-	_float Get_DamageScale();
+	//_float Get_DamageScale();
+	_float Get_DamageScale(_bool bUltimate = false);
+
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
 	void Set_GroundSmash(_bool bSmash);
@@ -300,12 +301,21 @@ public:
 	void pEnemyCheck();
 	void Tag_Out(_vector vPosition);
 	
+
+	void Set_AttackBackEvent(_bool bEvent);
+	_bool Get_bAttackBackEvent();
+
 	void Set_bGrabDraw(_bool bGrabDraw);
 	_bool Check_bWall();
 	void Move_ForWall();
 
+	void Set_bDynamicMove(_bool bDynamicMove);
+
+
 	void Update_Dying(_float fTimeDelta);
 	_bool Get_bDying();
+
+
 
 protected:
 	void Reset_AttackStep();
@@ -428,6 +438,8 @@ protected:
 	_ushort m_iAttack_AirUpper = { 55 };
 
 	_ushort m_iAttack_Heavy = {45};
+	_ushort m_iAttack_Crouch_Heavy = { 51 };
+
 
 	_ushort m_iAttack_LightLast = {47};
 
@@ -560,11 +572,14 @@ protected:
 	_float m_fAccDyingTime = {};
 	//_bool m_bKO = { false };
 
+	_bool m_bDynamicMove = { false };
+	_bool m_bAttackBackEvent = { false };
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
 
-
+	
 
 	public:
 		void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }

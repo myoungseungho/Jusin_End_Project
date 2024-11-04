@@ -149,6 +149,8 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 			//m_pOwner->Set_GrabLoofCount(2);
 
+			if(m_fForcedGravityTime !=100)
+				pCharacter->Set_fGravityTime(m_fForcedGravityTime);
 
 
 			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)

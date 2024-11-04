@@ -928,6 +928,16 @@ void CCharacter::Set_ForcveGravityTime(_float fGravityTime)
 	m_fGravityTime = fGravityTime;
 }
 
+void CCharacter::Set_bAttackGravity(_bool bAttackGravity)
+{
+	 m_bAttackGravity = bAttackGravity; 
+
+	 if(bAttackGravity)
+	 _bool bDebug = false;
+
+
+}
+
 void CCharacter::AttckCancleJump()
 {
 
@@ -2017,8 +2027,19 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 	m_bStun = true;
 
 	//m_fMaxStunTime = fStunTime;
-	//0.7배까지.
-	m_fMaxStunTime = fStunTime * CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(m_iPlayerTeam);
+
+	//누적  콤보수 비례.7배까지,  땅에서는 또 0.9배? 대신 공중에서 1.2배?
+	  
+	m_fMaxStunTime = fStunTime;// *(30 - CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(m_iPlayerTeam);
+
+	if (Get_fHeight() > 1)
+	{
+		m_fMaxStunTime*=1.1f;
+	}
+	
+	m_fMaxStunTime *= 1.f - 0.01f * CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(m_iPlayerTeam);
+	
+
 
 	m_fAccStunTime = 0.f;
 
@@ -2108,17 +2129,23 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
 			//if 적으려다가 취소 
 			m_fImpuse.y = 0;
+
+
+			Set_CurrentAnimationPositionJump(0.f);
 		}
 		else if (Get_fHeight() > 0)
 		{
 			Set_Animation(m_iHit_Air_LightAnimationIndex, false);
 			Set_ForcedGravityTime_LittleUp();
+			Set_CurrentAnimationPositionJump(0.f);
 
 		}
 		else
 		{
 			Set_Animation(m_iHit_Stand_LightAnimationIndex, false);
 			m_fImpuse.y = 0;
+			Set_CurrentAnimationPositionJump(0.f);
+
 		}
 	}
 	break;
@@ -2139,6 +2166,9 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		}
 		else
 			Set_Animation(m_iHit_Stand_LightAnimationIndex, false);
+
+		Set_CurrentAnimationPositionJump(0.f);
+
 	}
 	break;
 	case Client::HitMotion::HIT_HEAVY:
@@ -2151,6 +2181,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 			Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
 			Set_ForcveGravityTime(0.3f);
 			//Set_CurrentAnimationPositionJump(17.f);
+			Set_CurrentAnimationPositionJump(0.f);
+
 		}
 		else
 		{
@@ -2179,6 +2211,7 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		{
 			Add_Move({ 0.f,0.2f });
 		}
+		//Set_CurrentAnimationPositionJump(0.f);
 
 	}
 	break;
@@ -2192,7 +2225,15 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFTDOWN:
 	{
 		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
-		Set_ForcedGravityTime_LittleUp();
+		
+		//버그 원인같아서 지움
+		//Set_ForcedGravityTime_LittleUp();
+
+		//Set_ForcedGravityDown();
+		Set_ForcveGravityTime(0.3f);
+
+		m_fImpuse;
+		_bool bDebug = true;
 	}
 	break;
 	case Client::HitMotion::HIT_SPIN_AWAY_LEFTUP:
@@ -2465,6 +2506,7 @@ void CCharacter::Gain_HitCount(_ushort iHit)
 
 }
 
+/*
 _float CCharacter::Get_DamageScale()
 {
 
@@ -2519,6 +2561,7 @@ _float CCharacter::Get_DamageScale()
 	//return fDamageScale;
 	return fDamageScale * 0.7f;
 }
+*/
 
 void CCharacter::Set_GroundSmash(_bool bSmash)
 {
@@ -2569,6 +2612,70 @@ void CCharacter::Guard_Update()
 
 }
 */
+
+_float CCharacter::Get_DamageScale(_bool bUltimate)
+{
+
+	//깡으로 더하는건 쉬운데 1히트당 1이 아닌데 따로 더해도 되나  //스파킹도 있는데 받는쪽에서 더하는게 아니라 때리는쪽에 더해야하는거 아님?
+	//뎀감비율
+	//Step Count	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17 +
+	//Next Hit		0%	10%	20% 30% 40% 50% 60% 70% 70% 70% 70% 75% 75% 75% 80% 80% 80% 85%
+	//데미지비율    1.0 0.9 0.8 0              0.3   
+
+	_uint iAttackStepCount;
+	if (m_iPlayerTeam == 1)
+		iAttackStepCount = CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(2);
+	else
+		iAttackStepCount = CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(1);
+
+
+	_float fDamageScale;// = 1.f;
+
+	if (iAttackStepCount <= 7)
+	{
+		fDamageScale = 1.0f - iAttackStepCount * 0.1f;
+	}
+
+	else if (iAttackStepCount <= 10)
+	{
+		fDamageScale = 0.3f;
+	}
+
+	else if (iAttackStepCount <= 13)
+	{
+		fDamageScale = 0.25f;
+	}
+
+	else if (iAttackStepCount <= 16)
+	{
+		fDamageScale = 0.2f;
+	}
+	else
+	{
+		fDamageScale = 0.15f;
+	}
+
+
+
+	//필살기의 경우 최소 35%는 보장
+	if (bUltimate)
+	{
+		if (fDamageScale < 0.35f)
+			fDamageScale = 0.35f;
+
+	}
+
+
+	if (m_bSparking)
+	{
+		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
+		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+	}
+
+
+	//return fDamageScale;
+	return fDamageScale * 0.7f;
+}
 
 void CCharacter::Set_GrabLoofCount(_ushort iLoofCount)
 {
@@ -3076,8 +3183,10 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 
+
+
 	//잡기중에는 겹쳐도 됨
-	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
+	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false || m_bDebugInputLock)
 		return;
 
 
@@ -3299,7 +3408,13 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					m_bSparking = true;
 
 					//인원수 조건문
-					m_fMaxSparkingTime = 10.f;
+					
+					_ushort iAliveMemberCount = CBattleInterface_Manager::Get_Instance()->Get_iAliveMemberCount(m_iPlayerTeam);
+
+					if(iAliveMemberCount == 1)
+						m_fMaxSparkingTime = 30.f;
+					else
+						m_fMaxSparkingTime = 15.f;
 
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
@@ -3317,16 +3432,20 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 			if (m_pGameInstance->Key_Down(DIK_PGDN) && m_pGameInstance->Key_Pressing(DIK_NUMPAD9) && CBattleInterface_Manager::Get_Instance()->Get_bSparkingEnable(m_iPlayerTeam))
 			{
 				if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iGrabReadyAnimationIndex)
-
 				{
 					Set_Animation(m_iSparkingAnimationIndex);
 					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
-
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
 
 					//인원수 조건문
-					m_fMaxSparkingTime = 10.f;
+
+					_ushort iAliveMemberCount = CBattleInterface_Manager::Get_Instance()->Get_iAliveMemberCount(m_iPlayerTeam);
+
+					if (iAliveMemberCount == 1)
+						m_fMaxSparkingTime = 30.f;
+					else
+						m_fMaxSparkingTime = 15.f;
 
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
@@ -3388,16 +3507,32 @@ void CCharacter::Tag_KeyCheck()
 
 	if (m_iPlayerTeam == 1)
 	{
-		if (m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+
+
+		//F3을 눌렀고 << 확정
+		// 서있거나,     특정 모션중에 m_bAttackBack==true일때   
+
+		//if (m_pGameInstance->Key_Down(DIK_F3) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		if (m_pGameInstance->Key_Down(DIK_F3) &&
+			(m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex ||
+				((m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_LightLast ||
+					m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Heavy ||
+					m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Crouch_Heavy) && m_bAttackBackEvent)))
 		{
 			//m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+
+			//앞 누르고있으면 교대 아니면 어시스트?
 			Tag_In(0);
 		}
 	}
 	else if (m_iPlayerTeam == 2)
 	{
-		if (m_pGameInstance->Key_Down(DIK_F4) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
-		{
+		//if (m_pGameInstance->Key_Down(DIK_F4) && m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex)
+		if (m_pGameInstance->Key_Down(DIK_F4) &&
+			(m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex ||
+				((m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_LightLast ||
+					m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Heavy ||
+					m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Crouch_Heavy) && m_bAttackBackEvent))) {
 			//m_pUI_Manager->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
 			Tag_In(0);
 		}
@@ -3441,6 +3576,8 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 
 		m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
 		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+		Set_Animation(m_iJumpAnimationIndex);
 
 		if (m_bSparking)
 		{
@@ -3529,10 +3666,21 @@ void CCharacter::Tag_Out(_vector vPosition)
 
 
 	Chase_Ready(0.4f);
-	Chase2(0.2f);
+	//Chase2(0.2f);
+	Chase2(0.3f);
 
 
 
+}
+
+void CCharacter::Set_AttackBackEvent(_bool bEvent)
+{
+	m_bAttackBackEvent = bEvent;
+}
+
+_bool CCharacter::Get_bAttackBackEvent()
+{
+	return m_bAttackBackEvent;
 }
 
 void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
@@ -3542,6 +3690,10 @@ void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
 
 _bool CCharacter::Check_bWall()
 {
+
+	if (m_bDynamicMove)
+		return false;
+
 	if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
 		return true;
 
@@ -3586,6 +3738,11 @@ void CCharacter::Move_ForWall()
 	}
 	
 	
+}
+
+void CCharacter::Set_bDynamicMove(_bool bDynamicMove)
+{
+	m_bDynamicMove = bDynamicMove;
 }
 
 void CCharacter::Update_Dying(_float fTimeDelta)
@@ -3980,13 +4137,13 @@ void CCharacter::AnimeEndNextMoveCheck()
 void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
 
-
+	m_bAttackBackEvent = false;
 
 	if (iAnimationIndex == m_iIdleAnimationIndex)
 		m_pModelCom->SetUp_Animation(iAnimationIndex, true);
 	else
 		m_pModelCom->SetUp_Animation(iAnimationIndex, bloof);
-
+	
 	if (iAnimationIndex == m_iHit_Air_LightAnimationIndex || iAnimationIndex == m_iHit_Stand_LightAnimationIndex || iAnimationIndex == m_iHit_Stand_MediumAnimationIndex)
 	{
 		m_pModelCom->CurrentAnimationPositionJump(0.f);
@@ -4008,18 +4165,16 @@ void CCharacter::Gravity(_float fTimeDelta)
 	_float fHeight = XMVectorGetY(vPos);
 
 
-
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		if(m_iPlayerTeam==2)
+			_bool bDeb = true;
+	}
 
 	if (fHeight > 0)
 	{
 
-		if (m_iPlayerTeam == 2)
-		{
-			_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
-
-			_bool bDebug = true;
-		}
-
+		
 
 		// IDLE이면 공중 하강모션으로 변경
 
@@ -4059,6 +4214,12 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//Ver4 점프력3.   마지막 값을 *0.1 대신 *0.08해도 자연스러움
 		//_float fGravity = (-0.7f * (m_fGravityTime - m_fJumpPower) * (m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 		_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
+
+		if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftDownAnimationIndex && fGravity < 0)
+		{
+			_bool bDebug = true;
+
+		}
 
 
 

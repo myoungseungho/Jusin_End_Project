@@ -62,6 +62,8 @@ public:
 
 		_bool bDrawNoneStop = { false };
 
+		_bool bNoCreateMainCollider = { false }; //에너지파 전용
+
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
