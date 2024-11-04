@@ -118,8 +118,8 @@ PS_OUT PS_MAIN_SKY(PS_IN In)
 {
 	PS_OUT			Out;	 
 	
-    vector vMtrlMask1 = g_MaskStar1.Sample(LinearSampler, In.vTexcoord * 2);
-    vector vMtrlMask2 = g_MaskStar2.Sample(LinearSampler, In.vTexcoord * 2);
+    vector vMtrlMask1 = g_MaskStar1.Sample(LinearSampler, In.vTexcoord * 3.5);
+    vector vMtrlMask2 = g_MaskStar2.Sample(LinearSampler, In.vTexcoord * 3.5);
 
 	vector		vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord  + g_Time * 0.03f);
 

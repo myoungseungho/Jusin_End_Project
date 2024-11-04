@@ -11,6 +11,7 @@ vector g_vColor;
 bool    g_bColorChange;
 
 int g_iUnique_Index = -1;
+float g_fGlowFactor = 1.f;
 
 struct VS_IN
 {
@@ -86,7 +87,7 @@ PS_OUT PS_MAIN(PS_IN In)
         discard;
     
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlAlpha.a;
+    Out.vAlpha = vector(g_fGlowFactor, 0.f, 0.f, 1.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
@@ -115,7 +116,7 @@ PS_OUT PS_MAIN_NONELIGHT(PS_IN In)
         vMtrlDiffuse.a = fAlpha;
     }
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlDiffuse.a;
+    Out.vAlpha = vector(g_fGlowFactor, 0.f, 0.f, 1.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
@@ -143,7 +144,7 @@ PS_OUT PS_MAIN_ALPHABLEND_EFFECT(PS_IN In)
     }
         
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlDiffuse.a;
+    Out.vAlpha = vector(g_fGlowFactor, 0.f, 0.f, 1.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
@@ -172,7 +173,7 @@ PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
     }
     
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vMtrlDiffuse;
+    Out.vAlpha = vector(g_fGlowFactor, 0.f, 0.f, 1.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;

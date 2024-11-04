@@ -9,61 +9,6 @@ Scale: 1 1 1
 Rotation: 0 0 0
 
 [Effect]
-EffectName: BurstU-3_1
-ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-3_01BurstU-3_1
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: 21
-Position: 0 0 0
-Scale: 0.05 0.05 0.05
-Rotation: 0 0 0
-IsLoop: false
-Color: 255 210.248 0 0.4
-GlowColor: 0 0 0 1
-GlowFactor: 1
-DerredPassIndex: 0
-NumKeyFrame: 4
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.05 0.05 0.05
-Rotation: 0 0 0
-CurTime: 0
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 42
-Position: 0 -0.2 0
-Scale: 0.08 0.08 0.05
-Rotation: 0 0 0
-CurTime: 0.7
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 57
-Position: 0 0 0
-Scale: 0.05 0.05 0.08
-Rotation: 0 0 0
-CurTime: 0.95
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 0 0
-Scale: 0.05 0.05 0.08
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
-[Effect]
 EffectName: BurstU-3_2
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-3_01BurstU-3_2
@@ -168,6 +113,61 @@ IsNotPlaying: false
 KeyFrameNumber: 58
 Position: 0 0.23 -0.01
 Scale: 0.01 0.01 0.05
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstU-3_1
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-3_01BurstU-3_1
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 21
+Position: 0 0 0
+Scale: 0.05 0.05 0.05
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 210.248 0 0.4
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.05 0.05 0.05
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 42
+Position: 0 -0.2 0
+Scale: 0.08 0.08 0.05
+Rotation: 0 0 0
+CurTime: 0.7
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0 0
+Scale: 0.05 0.05 0.08
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.05 0.05 0.08
 Rotation: 0 0 0
 CurTime: 0.966667
 Duration: 1

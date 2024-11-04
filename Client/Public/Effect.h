@@ -49,7 +49,7 @@ public:
 		_float           fGlowFactor;
 		_uint    DerredPassIndex;
 
-		_bool isGlow;
+		_int isGlow;
 	}EFFECT_DESC;
 
 
@@ -92,7 +92,7 @@ protected:
 
 	_float			m_fCurrentAnimPos = {};
 
-	_bool m_isGlow = { false };
+	_int m_isGlow = { false };
 	/* 툴용 쉐이더 패스 인덱스 */
 
 public:

@@ -169,11 +169,14 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.DerredPassIndex = effectData.iDerredPassIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
 			EffectDesc.bIsCopy = false;
+			
 			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 			if (effectData.uniqueIndex == -1)
 				EffectDesc.isGlow = true;
-			else
+			else if(effectData.uniqueIndex > -1)
 				EffectDesc.isGlow = false;
+			else if(effectData.uniqueIndex == -2)
+				EffectDesc.isGlow = -2;
 
 			CEffect_NoneLight* pNonelight = { nullptr };
 			CEffect_Blend* pBlend = { nullptr };

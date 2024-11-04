@@ -221,6 +221,87 @@ HRESULT CTarget_Manager::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11D
 	return S_OK;
 }
 
+HRESULT CTarget_Manager::Begin_EffectMRT(const _wstring& strMRTTag, _uint iArrayIndex, ID3D11DepthStencilView* pDSV)
+{
+	ID3D11ShaderResourceView* pSRV[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = {
+			nullptr
+	};
+
+	m_pContext->PSSetShaderResources(0, D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT, pSRV);
+
+	list<CRenderTarget*>* pMRTList = Find_MRT(strMRTTag + to_wstring(iArrayIndex));
+	if (nullptr == pMRTList)
+		return E_FAIL;
+
+	m_pContext->OMGetRenderTargets(1, &m_pOldRTV, &m_pOldDSV);
+
+	_uint		iNumRTV = { 0 };
+
+	ID3D11RenderTargetView* RenderTargets[8] = { nullptr };
+
+	for (auto& pRenderTarget : *pMRTList)
+	{
+		if (m_iBeginEffectCountArray[iArrayIndex] == 0)
+			pRenderTarget->Clear();
+		
+		RenderTargets[iNumRTV++] = pRenderTarget->Get_RTV();
+	}
+
+	if (nullptr != pDSV)
+		m_pContext->ClearDepthStencilView(m_pOldDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+
+	m_pContext->OMSetRenderTargets(iNumRTV, RenderTargets, nullptr == pDSV ? m_pOldDSV : pDSV);
+	m_iBeginEffectCountArray[iArrayIndex]++;
+	return S_OK;
+}
+
+void CTarget_Manager::Init_ArrayCount()
+{
+	for (size_t i = 0; i < 10; i++)
+		m_iBeginEffectCountArray[i] = 0;
+}
+
+_int CTarget_Manager::Get_FrameGlowCount(_int isPri)
+{
+	_int iCount = { 0 };
+
+	for (size_t i = isPri * 5; i < 5 + isPri * 5; i++)
+	{
+		if (m_iBeginEffectCountArray[i] > 0)		
+			iCount++;
+	}
+	
+	return iCount;
+}
+
+_float CTarget_Manager::Get_CulGlowIndex(_int isPri)
+{
+	_float iCurGlowIndex = { 0.f };
+	for (size_t i = isPri * 5; i < 5 + isPri * 5; i++)
+	{
+		if (m_iBeginEffectCountArray[i] > 0)
+		{
+
+			iCurGlowIndex = (_float)i - (isPri * 5);
+			break;
+		}
+	}
+	return iCurGlowIndex + 1.f;
+}
+
+void CTarget_Manager::Zero_CurGlowIndex(_int isPri)
+{
+	for (size_t i = isPri * 5; i < 5 + isPri * 5; i++)
+	{
+		if (m_iBeginEffectCountArray[i] > 0)
+		{
+			m_iBeginEffectCountArray[i] = 0;
+			break;
+		}
+	}
+	
+}
+
 HRESULT CTarget_Manager::End_MRT()
 {
 	m_pContext->OMSetRenderTargets(1, &m_pOldRTV, m_pOldDSV);
@@ -256,6 +337,25 @@ HRESULT CTarget_Manager::Bind_ShaderResource(CShader * pShader, const _char * pC
 		return E_FAIL;
 
 	return pRenderTarget->Bind_ShaderResource(pShader, pConstantName);	
+}
+
+HRESULT CTarget_Manager::Bind_EffectShaderResource(CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag, _uint isPri)
+{
+	_uint iCurIndex = 0;
+	for (size_t i = isPri * 5; i < 5 + isPri * 5; i++)
+	{
+		if (m_iBeginEffectCountArray[i] > 0)
+		{
+			iCurIndex = i;
+			break;
+		}
+	}
+	/* 끝나면 가장 앞에 있는 0보다 큰 카운트 제거해주기 */
+	CRenderTarget* pRenderTarget = Find_RenderTarget(strTargetTag + to_wstring(iCurIndex));
+	if (nullptr == pRenderTarget)
+		return E_FAIL;
+
+	return pRenderTarget->Bind_ShaderResource(pShader, pConstantName);
 }
 
 #ifdef _DEBUG

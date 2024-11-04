@@ -9,60 +9,14 @@ Scale: 1 1 1
 Rotation: 0 0 0
 
 [Effect]
-EffectName: BurstU-2_01
-ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_01
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: 11
-Position: 0 0.7 -0.5
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-IsLoop: false
-Color: 0 0 0 30
-GlowColor: 0 0 0 1
-GlowFactor: 1
-DerredPassIndex: 0
-NumKeyFrame: 3
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 -0.3 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 0
-Duration: 1.3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 24
-Position: 0 -0.6 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 0.4
-Duration: 1.3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 25
-Position: 0 -0.6 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 0.416667
-Duration: 1.3
-IsNotPlaying: true
-
-[Effect]
 EffectName: BurstU-2_02
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_02
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 12
+UniqueIndex: -2
 Position: 0 1 -0.5
 Scale: 0.02 0.1 0
 Rotation: 0 0 0
@@ -87,10 +41,10 @@ EffectName: BurstU-2_03
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_03
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 13
+UniqueIndex: -2
 Position: 0 1 -0.5
 Scale: 0.02 0.06 1
 Rotation: 0 0 120
@@ -115,10 +69,10 @@ EffectName: BurstU-2_04
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_04
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 14
+UniqueIndex: -2
 Position: 0 1 -0.5
 Scale: 0.02 0.11 1
 Rotation: 0 0 240
@@ -143,10 +97,10 @@ EffectName: BurstU-2_05
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_05
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 15
+UniqueIndex: -2
 Position: 0 1 -0.5
 Scale: 0.01 0.0500001 1
 Rotation: 0 0 45
@@ -171,10 +125,10 @@ EffectName: BurstU-2_06
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_06
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 16
+UniqueIndex: -2
 Position: 0 1 -0.5
 Scale: 0.00998856 0.049956 1
 Rotation: 0 0 180
@@ -199,10 +153,10 @@ EffectName: BurstU-2_07
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_07
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 0
+EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 17
+UniqueIndex: -2
 Position: 0 1 -0.5
 Scale: 0.00999896 0.03 1
 Rotation: 0 0 280
@@ -230,14 +184,14 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 18
+UniqueIndex: -2
 Position: -0.5 1.5 -0.5
 Scale: 0.05 0.4 1
 Rotation: 0 0 40
 IsLoop: false
 Color: 255 75 0 0.8
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 2.2
 DerredPassIndex: 0
 NumKeyFrame: 3
 
@@ -276,14 +230,14 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 19
+UniqueIndex: -2
 Position: 0 0.5 -0.5
 Scale: 0.0199997 0.399235 0.99938
 Rotation: 0 0 180
 IsLoop: false
 Color: 255 75 0 0.8
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 5.2
 DerredPassIndex: 0
 NumKeyFrame: 3
 
@@ -322,14 +276,14 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 20
+UniqueIndex: -2
 Position: 0.5 1.3 -0.5
 Scale: 0.05 0.4 1
 Rotation: 0 0 300
 IsLoop: false
 Color: 255 75 0 0.8
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 4.2
 DerredPassIndex: 0
 NumKeyFrame: 3
 
@@ -356,6 +310,52 @@ KeyFrameNumber: 25
 Position: 0.5 0.3 0
 Scale: 0.05 0.4 1
 Rotation: 0 0 300
+CurTime: 0.416667
+Duration: 1.3
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstU-2_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstU-2BurstU-2_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0.7 -0.5
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1.01
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 -0.6 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.4
+Duration: 1.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0 -0.6 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
 CurTime: 0.416667
 Duration: 1.3
 IsNotPlaying: true
