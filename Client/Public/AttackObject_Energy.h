@@ -19,13 +19,13 @@ class CAttackObject_Energy final : public CAttackObject
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
 
-	enum Energy_LightColor { ENERGY_LIGHT_NONE, ENERGY_LIGHT_YELLOW};
+	enum Energy_LightColor { ENERGY_LIGHT_NONE, ENERGY_LIGHT_YELLOW, ENERGY_LIGHT_BLUE};
 	enum Energy_Direction { ENERGY_DIRECTION_RIGHT, ENERGY_DIRECTION_RIGHT_UP, ENERGY_DIRECTION_RIGHT_DOWN};
 
 	typedef struct ATTACK_RANGED_DESC : public  CAttackObject::ATTACK_DESC
 	{
 		_float2 fStartOffset = {};
-		_float2 fMoveSpeed = {};
+		_float2 fMoveSpeedNoneDirection = {};
 
 		_short iAttackCount = { 5 };
 		_short iPlayerDirection = {};		//
@@ -62,17 +62,30 @@ private:
 
 	_bool Check_MapOut();
 
-	void Add_YellowLight();
-	void Add_YellowLight(_float3 fPosition);
+	//void Add_YellowLight();
+	//void Add_YellowLight(_float3 fPosition);
+	//void Add_BlueLight(_float3 fPosition);
+
+
+	void Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos);
+
 
 private:
 	_float2	m_fStartOffset = {};
-	_float2 m_fRanged_Impus_NoneDirection = {};
+	_float2 m_fMoveSpeedNoneDirection = {};
+	_short m_iAttackCount = { 5 };
 	_short  m_iPlayerDirection = {};		
 
 	_bool m_bDying = false;
 
-	Energy_LightColor m_eExplositionColor = { ENERGY_LIGHT_NONE };
+	Energy_LightColor m_eEnegrgyColor = { ENERGY_LIGHT_NONE };
+
+	vector<CCollider*> m_vecColliderCom;
+
+	_float2 m_fEndPos = {};
+
+	_float m_fAccAttackDelayTime = {};
+
 
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

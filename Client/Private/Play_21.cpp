@@ -123,6 +123,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	m_iSparkingAnimationIndex = { ANIME_SPARKING };
 
+	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -249,8 +251,9 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	if (m_bPlaying == false)
 		return;
 
+	
 
-	if (m_pGameInstance->Key_Down(DIK_PGUP))
+	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
@@ -259,11 +262,50 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		return;
 
 
-
-	if (m_pModelCom->m_iCurrentAnimationIndex == 8)
+	if (m_bDying)
 	{
-		_bool bDebug = true;
+		if (m_bAnimationLock == true)
+			Update_AnimationLock(fTimeDelta);
+		else
+		{
+			Character_Play_Animation(fTimeDelta);
+
+			if (Get_fHeight() > 0)
+				Update_StunImpus(fTimeDelta);
+
+			Gravity(fTimeDelta);
+
+			if (Check_bWall())
+			{
+				Move_ForWall();
+			}
+
+			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+			if (m_bMotionPlaying == false)
+			{
+
+				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
+				{
+					m_fAccDyingTime += fTimeDelta;
+					if (m_fAccDyingTime > 2.f)
+					{
+						Tag_In(m_ePlayerSlot);
+					}
+				}
+
+			}
+			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
+			{
+				Stun_Shake();
+			}
+		}
+
+		return;
 	}
+	else
+		Update_Dying(fTimeDelta);
+
 
 	Update_LoofAnimationCreate(fTimeDelta);
 	Update_PreviousXPosition();
@@ -586,9 +628,14 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		system("cls");
 	}
 
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		Set_AnimationStopWithoutMe(1.f);
+	}
+
+	//cout << "iHP : " << m_iHP << endl;
 
 
-	//cout << "Team : " << m_iPlayerTeam << " Direction : " << m_iLookDirection << endl;
 	Check_Ground();
 }
 
@@ -602,6 +649,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	__super::Player_Update(fTimeDelta);
 
+	cout << m_iHP << " " << endl;
 	/*
 
 
@@ -779,11 +827,14 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	Check_Ground();
 	*/
+
+
+
 }
 
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
-	if(m_bPlaying)
+	//if(m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 	//#ifdef _DEBUG
@@ -829,9 +880,9 @@ HRESULT CPlay_21::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-#ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+//#ifdef _DEBUG
+//	m_pColliderCom->Render(fTimeDelta);
+//#endif // DEBUG
 	return S_OK;
 }
 
@@ -1246,7 +1297,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.iDamage = 700 * Get_DamageScale();
+		Desc.iDamage = 5200 * Get_DamageScale(); //700이었음
+		//Desc.iDamage = 700 * Get_DamageScale(); //700이었음
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
@@ -1665,10 +1717,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iGrabAnimationIndex = ANIME_ATTACK_236_SPECIAL;
 		Desc.iOnwerNextAnimationIndex = ANIME_ATTACK_236_SPECIAL_SUCCES;
+		
+
+		Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
 		//236 잡기 컷신
-		static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->Play(CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL, 0, this);
+		//static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->Play(CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL, 0, this);
+
+
 	}
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES:
@@ -1794,6 +1851,53 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_21::ANIME_BREAK_FALL_GROUND:
 		break;
 	case Client::CPlay_21::ANIME_BREAK_FALL_AIR:
+	{
+		//위치 고정용 빈거
+		if (iAttackEvent == 0)
+		{
+			if (m_bGrabDraw)
+			{
+				m_bGrabDraw = false;
+
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 4.f,4.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 0.3f;
+				Desc.iDamage = 0;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.pOwner = this;
+
+
+				Desc.eAttackType = ATTACKTYPE_HIGH;
+
+				Desc.bDrawNoneStop = true;
+				Desc.bGrabbedEnd = true;
+
+				Desc.fForcedGravityTime = 0.f;
+				Desc.iGainAttackStep = 0;
+				Desc.bOwnerNextAnimation = false;
+				Desc.bForcedHit = true;
+				Desc.iOnwerDirection = 0; //맞아도 뒤집지 않음
+
+				Desc.iGainHitCount = 0;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			}
+		}
+
+	}
 		break;
 	case Client::CPlay_21::ANIME_DIE_STAND:
 		break;
@@ -1873,6 +1977,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fAnimationLockTime = 0.f;
 			Desc.iGainAttackStep = 0;
 			Desc.pOwner = this;
+			Desc.bDrawNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
@@ -1901,6 +2006,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fAnimationLockTime = 0.f;
 			Desc.iGainAttackStep = 0;
 			Desc.pOwner = this;
+			Desc.bDrawNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);

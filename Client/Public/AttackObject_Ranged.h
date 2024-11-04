@@ -69,7 +69,7 @@ private:
 	_float2 m_fRanged_Impus_NoneDirection = {};
 	_short  m_iDirection = {};		
 
-	Ranged_LightColor m_eExplositionColor = { RANGED_LIGHT_NONE };
+	Ranged_LightColor m_eExplosionColor = { RANGED_LIGHT_NONE };
 
 public:
 	static CAttackObject_Ranged* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

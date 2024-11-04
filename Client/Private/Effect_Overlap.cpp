@@ -61,6 +61,7 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 		m_isGlow = pEffectDesc->isGlow;
+		m_fGlowFactor = pEffectDesc->fGlowFactor;
 		if (m_isGlow == true)
 			m_iGameObjectData = -1;
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)

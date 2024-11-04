@@ -5,6 +5,11 @@
 #include "GameInstance.h"
 
 #include "Character.h"
+#include "Effect_Manager.h"
+
+
+#include <iostream>
+
 
 CAttackObject_Energy::CAttackObject_Energy(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
@@ -39,15 +44,19 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 	m_fStartOffset = pDesc->fStartOffset;
 	//m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
 	//m_iDirection = pDesc->iDirection;
+	m_fMoveSpeedNoneDirection = pDesc->fMoveSpeedNoneDirection;
+	m_iAttackCount = pDesc->iAttackCount;
+	m_iPlayerDirection = pDesc->iPlayerDirection;
+
+	m_bDying = false;
 
 
-	m_eExplositionColor = pDesc->eExplosionColor;
+	m_eEnegrgyColor = pDesc->eExplosionColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
-	
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
 
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
 
 	return S_OK;
 }
@@ -56,45 +65,55 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 
 void CAttackObject_Energy::Update(_float fTimeDelta)
 {
-
 	if (Check_UpdateStop(fTimeDelta))
 		return;
 
-
-
 	m_fAccLifeTime += fTimeDelta;
 
-
 	//생존시간 지났거나 맵바깥(땅포함)으로 나갔으면 삭제
-	if (m_fAccLifeTime > m_fLifeTime  || Check_MapOut())
+	if (m_fAccLifeTime > m_fLifeTime)
 	{
 		if (m_bEnableDestory)
 		{
 			Destory();
-
 			m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}
+	else
+	{
+		for (auto& iter : m_vecColliderCom)
+			iter->Update(m_pTransformCom->Get_WorldMatrix());
 
+
+		for (auto& iter : m_vecColliderCom)
+			iter->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+
+		_float speed = 0.1f;
+
+		m_fEndPos.x += m_fMoveSpeedNoneDirection.x * fTimeDelta;
+		m_fEndPos.y += m_fMoveSpeedNoneDirection.y * fTimeDelta;
+
+		Make_Collider(m_pColliderCom->m_ColliderGroup, _float2(0.f, 0.f), _float2(m_fEndPos.x, m_fEndPos.y));
+	}
 }
 
 void CAttackObject_Energy::Late_Update(_float fTimeDelta)
 {
-
-	
-
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 {
-
 #ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+	//m_pColliderCom->Render(fTimeDelta);
 
+	//for (auto pCollider : m_vecColliderCom)
+	//{
+	//	pCollider->Render(fTimeDelta);
+	//}
+#endif // DEBUG
 
 	return S_OK;
 }
@@ -103,140 +122,287 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
+	//Destory();
 
-	//원거리 vs 원거리
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
+	
+
+	//에너지파 vs 사람 
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
-
-		
-		//이펙트 처리
-		Erase();
-
-		if (m_eExplositionColor != ENERGY_LIGHT_NONE)
-		{
-			
-			if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
-			{
-				//Add_YellowLight();
-				
-				Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
-
-			}
-		}
-
-		static_cast<CAttackObject_Energy*>(other->GetMineGameObject())->Erase();
-
-
-	}
-
-	//아니면 무조건 원거리 vs 몸  이지만 혹시모르니 if
-	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
-	{
-		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
-
-		AttackColliderResult eResult =
-			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
-
-		if (eResult == RESULT_HIT)
-		{
-			pCharacter->Set_GroundSmash(m_bGroundSmash);
-			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
-			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
+		m_pOwner->Gain_AttackStep(m_iGainAttackStep);
+		m_pOwner->Gain_HitCount(m_iGainHitCount);
 
 
 
-			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
-			{
-				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
-			}
+			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
-			if (m_bGrabbedEnd)
-				pCharacter->Set_bGrabbed(false);
+			//버그 해결 전 까지임시.  Enter이지만 바로 가속도 적용, 데미지n배
+			AttackColliderResult eResult =
+				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage*m_iAttackCount, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
-
-			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
-			m_pOwner->Gain_HitCount(m_iGainHitCount);
+			//AttackColliderResult eResult =
+			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
 
 
-
-			if (m_bOwnerNextAnimation)
-			{
-				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
-			}
-
-			if (m_eExplositionColor != ENERGY_LIGHT_NONE)
+			if (eResult == RESULT_HIT)
 			{
 
-				if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
+				pCharacter->Set_GroundSmash(m_bGroundSmash);
+				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+				m_pOwner->Gain_KiAmount(m_iGainKiAmount);
+
+				if (m_iAttackCount != 0)
 				{
-					//Add_YellowLight();
-					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
+					m_iAttackCount--;
+					cout << m_iAttackCount << endl;
 				}
+				else
+				{
+					;
+				}
+
+				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
+				{
+					pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
+				}
+
+				if (m_bGrabbedEnd)
+					pCharacter->Set_bGrabbed(false);
+
+
+				//히트시 이펙트
+				switch (m_ihitCharacter_Motion)
+				{
+				case Client::HIT_LIGHT:
+				case Client::HIT_CHASE:
+				{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
+
+					_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
+					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+					XMFLOAT4X4 Result4x4;
+					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+					//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
+				}
+
+				break;
+
+
+				case Client::HIT_CROUCH_MEDIUM:
+				case Client::HIT_MEDIUM:
+				{
+					_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+					XMFLOAT4X4 Result4x4;
+					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+				}
+
+				break;
+
+				case Client::HIT_HEAVY:
+				case Client::HIT_HEAVY_DOWN:
+				case Client::HIT_KNOCK_AWAY_LEFT:
+				case Client::HIT_KNOCK_AWAY_UP:
+				case Client::HIT_KNOCK_AWAY_LEFTDOWN:
+				case Client::HIT_SPIN_AWAY_LEFTUP:
+				{
+					_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+					XMFLOAT4X4 Result4x4;
+					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+					break;
+				}
+				case Client::HIT_WALLBOUNCE:
+				case Client::HIT_NONE:
+				default:
+					break;
+				}
+
+
+				//버그 수정 전까지 임시
+				//Erase();
+				Destory();
+
+			}
+			else if (eResult == RESULT_GUARD) //가드
+			{
+				//m_pOwner->Set_AnimationStop(0.08f);
+				//pCharacter->Set_AnimationStop(0.08f);
+				Destory();
+
 			}
 
-		}
-		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
-		{
-			m_pOwner->Set_AnimationStop(0.08f);
-			pCharacter->Set_AnimationStop(0.08f);
+			else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
+			{
+				//m_pOwner->Set_AnimationStop(0.3f);
+				//pCharacter->Set_AnimationStop(0.3f);
+			}
 
-			if (m_eExplositionColor != ENERGY_LIGHT_NONE)
+			else if (eResult == RESULT_MISS)
 			{
 
-				if (m_eExplositionColor == ENERGY_LIGHT_YELLOW)
-				{
-					//Add_YellowLight();
-					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
-				}
-			}
-		}
-
-		//else if (eResult == RESULT_DRAW)
-		//{
-		//	m_pOwner->Set_AnimationStop(0.3f);
-		//	pCharacter->Set_AnimationStop(0.3f);
-		//}
-
-		else if (eResult == RESULT_MISS)
-		{
-			////잡기는 한번 빗나가면 끝
-			//if (m_eAttackType == ATTACKTYPE_GRAB_GROUND || m_eAttackType == ATTACKTYPE_GRAB_AIR)
-			//{
-			//	if (m_bEnableDestory)
-			//	{
-			//		Destory();
-			//		m_bEnableDestory = false;
-			//	}
-			//}
-			//
-			////그 외에는 공격판정 사라지지 않음
-			//else
 				return;
 
-		}
+			}
+
+
 		
 
-		if (m_bEnableDestory)
-		{
-			Destory();
-			m_bEnableDestory = false;
-		}
 	}
-
-
-	_bool Debug = true;
 }
 
 void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-	_bool Debug = true;
+
+	//버그 수정 전 까지 임시로 닫음
+
+	////에너지파 vs 사람 
+	//if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	//{
+	//
+	//	//0.07초마다 히트판정
+	//	if (m_fAccAttackDelayTime > 0.1)
+	//	{
+	//
+	//		m_fAccAttackDelayTime = 0.f;
+	//
+	//
+	//		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+	//		AttackColliderResult eResult{ RESULT_NONE };
+	//
+	//		if (m_iAttackCount != 0)
+	//		{
+	//			m_iAttackCount--;
+	//			eResult = pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
+	//
+	//		}
+	//		else
+	//		{
+	//			OnCollisionExit(other);
+	//		}
+	//
+	//		
+	//
+	//		if(eResult == RESULT_HIT)
+	//		{
+	//
+	//			pCharacter->Set_GroundSmash(m_bGroundSmash);
+	//			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+	//			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
+	//
+	//			if (m_iAttackCount != 0)
+	//			{
+	//				m_iAttackCount--;
+	//
+	//				cout << m_iAttackCount << endl;
+	//			}
+	//			else
+	//			{
+	//				//OnCollisionExit(other);
+	//
+	//				Destory();
+	//			}
+	//
+	//			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
+	//			{
+	//				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
+	//			}
+	//
+	//			if (m_bGrabbedEnd)
+	//				pCharacter->Set_bGrabbed(false);
+	//
+	//
+	//			//히트시 이펙트
+	//			switch (m_ihitCharacter_Motion)
+	//			{
+	//			case Client::HIT_LIGHT:
+	//			case Client::HIT_CHASE:
+	//			{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
+	//
+	//				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
+	//				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+	//				XMFLOAT4X4 Result4x4;
+	//				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+	//				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+	//				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
+	//			}
+	//
+	//			break;
+	//
+	//
+	//			case Client::HIT_CROUCH_MEDIUM:
+	//			case Client::HIT_MEDIUM:
+	//			{
+	//				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+	//				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+	//				XMFLOAT4X4 Result4x4;
+	//				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+	//				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+	//			}
+	//
+	//			break;
+	//
+	//			case Client::HIT_HEAVY:
+	//			case Client::HIT_HEAVY_DOWN:
+	//			case Client::HIT_KNOCK_AWAY_LEFT:
+	//			case Client::HIT_KNOCK_AWAY_UP:
+	//			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
+	//			case Client::HIT_SPIN_AWAY_LEFTUP:
+	//			{
+	//				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+	//				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+	//				XMFLOAT4X4 Result4x4;
+	//				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+	//				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+	//				break;
+	//			}
+	//			case Client::HIT_WALLBOUNCE:
+	//			case Client::HIT_NONE:
+	//			default:
+	//				break;
+	//			}
+	//
+	//
+	//			
+	//
+	//		}
+	//		else if (eResult == RESULT_GUARD) //가드
+	//		{
+	//			//m_pOwner->Set_AnimationStop(0.08f);
+	//			//pCharacter->Set_AnimationStop(0.08f);
+	//		}
+	//
+	//		else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
+	//		{
+	//			//m_pOwner->Set_AnimationStop(0.3f);
+	//			//pCharacter->Set_AnimationStop(0.3f);
+	//		}
+	//
+	//		else if (eResult == RESULT_MISS)
+	//		{
+	//
+	//				return;
+	//
+	//		}
+	//
+	//		
+	//	}
+	//	
+	//}
 
 }
 
 void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 {
-	_bool Debug = true;
+	CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
+	AttackColliderResult eResult =
+			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
+
+
+	Destory();
 }
 
 void CAttackObject_Energy::CollisingAttack()
@@ -266,26 +432,91 @@ _bool CAttackObject_Energy::Check_MapOut()
 
 }
 
-void CAttackObject_Energy::Add_YellowLight(_float3 fPosition)
+
+
+void CAttackObject_Energy::Make_Collider(CCollider_Manager::COLLIDERGROUP eColliderGroup, _float2 SourcePos, _float2 DestPos)
 {
-	LIGHT_DESC			LightDesc{};
 
-	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
-	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
-	LightDesc.vPosition = _float4(fPosition.x, fPosition.y, 0.f, 1.f);
-	LightDesc.fRange = 3.f;
-	LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
-	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
-	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
-	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+	// 1. 시작점과 끝점 사이의 거리 및 방향 계산
+	_float dx = DestPos.x - SourcePos.x;
+	_float dy = DestPos.y - SourcePos.y;
 
-	LightDesc.fAccTime = 0.f;
-	LightDesc.fLifeTime = 0.5f;
-	LightDesc.strName = "Explosion";
-	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
-		return;
+	// 두 점 사이의 거리 계산
+	_float distance = sqrtf(dx * dx + dy * dy);
+
+	// 방향 벡터 및 정규화
+	_float2 direction = { dx / distance, dy / distance };
+
+	// 2. 필요한 콜라이더의 개수 계산
+	//_float unitLength = m_UnitSize.x; // 단위 콜라이더의 가로 크기
+	_float unitLength = 0.4f; // 단위 콜라이더의 가로 크기
+	_float unitHeight = 0.8f; // 단위 콜라이더의 가로 크기
+
+
+	int requiredColliders = static_cast<int>(ceil(distance / unitLength));
+
+	// 3. 현재 콜라이더 그룹의 콜라이더 수 확인
+	int currentColliders = static_cast<int>(m_vecColliderCom.size());
+
+	// 4. 필요한 경우 콜라이더 추가 생성 및 위치 설정
+	for (int i = currentColliders; i < requiredColliders; ++i)
+	{
+		// 콜라이더의 중점 위치 계산
+		_float currentDistance = unitLength * (i + 0.5f);
+		_float2 colliderPos = {
+		   SourcePos.x + direction.x * currentDistance,
+		   SourcePos.y + direction.y * currentDistance
+		};
+
+		// 콜라이더 추가 생성
+		CBounding_AABB::BOUNDING_AABB_DESC BoundingDesc{};
+		//BoundingDesc.vExtents = _float3(m_UnitSize.x / 2.0f, m_UnitSize.y / 2.0f, 0.5f);
+		BoundingDesc.vExtents = _float3(unitLength / 2.0f, unitHeight / 2.0f, 0.5f);
+		//BoundingDesc.vExtents = _float3(0.5f, 0.5f, 0.5f);
+
+
+		BoundingDesc.vCenter = _float3(colliderPos.x, colliderPos.y, 0.f); // 생성 시 위치 설정
+		BoundingDesc.pMineGameObject = this;
+		BoundingDesc.colliderGroup = eColliderGroup;
+
+		CCollider* pNewCollider = nullptr;
+		_wstring colliderName = L"Com_Collider_" + to_wstring(i);
+
+
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+			colliderName.c_str(), reinterpret_cast<CComponent**>(&pNewCollider), &BoundingDesc)))
+			return; // 에러 처리
+
+		/*
+
+		CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
+		ColliderDesc = pDesc->ColliderDesc;
+		ColliderDesc.pMineGameObject = this;
+
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
+			TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
+			return E_FAIL;
+
+
+		//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
+		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+
+		m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
+
+		*/
+
+		pNewCollider->Update(m_pTransformCom->Get_WorldMatrix());
+
+		// 콜라이더 벡터에 추가
+		m_vecColliderCom.push_back(pNewCollider);
+
+		// 콜라이더 매니저에 추가
+		m_pGameInstance->Add_ColliderObject(eColliderGroup, pNewCollider);
+	}
 }
 
+
+/*
 
 void CAttackObject_Energy::Add_YellowLight()
 {
@@ -306,6 +537,27 @@ void CAttackObject_Energy::Add_YellowLight()
 	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
 		return;
 }
+
+void CAttackObject_Energy::Add_YellowLight(_float3 fPosition)
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(fPosition.x, fPosition.y, 0.f, 1.f);
+	LightDesc.fRange = 3.f;
+	LightDesc.vDiffuse = _float4(1.2f, 1.15f, 0.7f, 1.0f);
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 0.5f;
+	LightDesc.strName = "Explosion";
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
+}
+*/
 
 
 void CAttackObject_Energy::Erase()
@@ -353,6 +605,17 @@ CGameObject* CAttackObject_Energy::Clone(void* pArg)
 void CAttackObject_Energy::Free()
 {
 	__super::Free();
+
 	Safe_Release(m_pColliderCom);
 
+	for (auto& iter : m_vecColliderCom)
+		Safe_Release(iter);
+
+	if (m_pOwner == nullptr)
+		return;
+
+	if (m_pOwner->Get_iPlayerTeam() == 1)
+		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_1P_Energy_Attack);
+	else
+		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_2P_Energy_Attack);
 }

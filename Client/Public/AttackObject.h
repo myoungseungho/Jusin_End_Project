@@ -60,6 +60,8 @@ public:
 		_float fCameraShakeDuration = { 0 };
 		_float fCameraShakeMagnitude = { 0 };
 
+		_bool bDrawNoneStop = { false };
+
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -153,6 +155,8 @@ protected:
 	_float		m_fAccUpdateStop = {};
 	_float		m_fMaxUpdateStop = {};
 	_bool		m_bUpdateStop = { false };
+
+	_bool	m_bDrawNoneStop = { false };
 
 
 private:

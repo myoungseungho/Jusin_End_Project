@@ -98,10 +98,10 @@ void CAttackObject_CommandGrab::Late_Update(_float fTimeDelta)
 
 HRESULT CAttackObject_CommandGrab::Render(_float fTimeDelta)
 {
-
-#ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
-#endif // DEBUG
+//
+//#ifdef _DEBUG
+//	m_pColliderCom->Render(fTimeDelta);
+//#endif // DEBUG
 
 
 	return S_OK;
@@ -147,7 +147,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
-			m_pOwner->Set_GrabLoofCount(2);
+			//m_pOwner->Set_GrabLoofCount(2);
 
 
 

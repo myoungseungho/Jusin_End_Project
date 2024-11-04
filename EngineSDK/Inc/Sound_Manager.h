@@ -45,7 +45,11 @@ public:
 		NARRATION_READY,
 		NARRATION_FIGHT,
 		LOGO_BGM,
+		LOGO_START,
 		Smash_Hit_SFX,
+		UI_MENU_OPEN,
+		UI_MENU_CLOSE,
+		UI_MENU_CURSOR,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

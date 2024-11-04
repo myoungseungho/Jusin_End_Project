@@ -245,7 +245,7 @@ void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 			ImGui::EndMenu();
 		}
 
-		if (ImGui::Checkbox("Layer_View", &bShowImGuiLayerView)) {
+		if (ImGui::Checkbox("Test_View", &bShowImGuiLayerView)) {
 			m_pRenderInstance->Show_Layer_View();
 		}
 

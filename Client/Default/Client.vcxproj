@@ -220,7 +220,10 @@
     <ClInclude Include="..\public\UI_Option.h" />
     <ClInclude Include="..\Public\UI_Opt_Sound.h" />
     <ClInclude Include="..\public\UI_Opt_Sound_Arrow.h" />
+    <ClInclude Include="..\public\UI_Opt_Sound_Eff.h" />
+    <ClInclude Include="..\public\UI_Opt_Sound_Font.h" />
     <ClInclude Include="..\public\UI_Opt_Sound_Panel.h" />
+    <ClInclude Include="..\public\UI_Opt_Sound_Title.h" />
     <ClInclude Include="..\public\UI_Opt_Sound_Volume_Gauge.h" />
     <ClInclude Include="..\public\UI_Opt_Sound_Volume_Panel.h" />
     <ClInclude Include="..\public\UI_PosMark.h" />
@@ -361,7 +364,10 @@
     <ClCompile Include="..\private\UI_Option.cpp" />
     <ClCompile Include="..\Private\UI_Opt_Sound.cpp" />
     <ClCompile Include="..\private\UI_Opt_Sound_Arrow.cpp" />
+    <ClCompile Include="..\private\UI_Opt_Sound_Eff.cpp" />
+    <ClCompile Include="..\private\UI_Opt_Sound_Font.cpp" />
     <ClCompile Include="..\private\UI_Opt_Sound_Panel.cpp" />
+    <ClCompile Include="..\private\UI_Opt_Sound_Title.cpp" />
     <ClCompile Include="..\private\UI_Opt_Sound_Volume_Gauge.cpp" />
     <ClCompile Include="..\private\UI_Opt_Sound_Volume_Panel.cpp" />
     <ClCompile Include="..\private\UI_PosMark.cpp" />

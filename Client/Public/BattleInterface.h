@@ -47,7 +47,7 @@ public:
 
 	//이거 하나만 호출하게
 	//	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot);
-	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos);
+	_bool Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos);
 
 	void Regist_Character(_ubyte iTeam, class CCharacter* pCharacter, _ubyte iSlot);
 

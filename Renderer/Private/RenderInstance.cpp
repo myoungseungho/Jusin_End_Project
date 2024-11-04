@@ -103,6 +103,11 @@ HRESULT CRenderInstance::Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11D
 	return m_pTarget_Manager->Begin_MRT_DoNotClear(strMRTTag, pDSV);
 }
 
+HRESULT CRenderInstance::Begin_EffectMRT(const _wstring& strMRTTag, _uint iArrayIndex, ID3D11DepthStencilView* pDSV)
+{
+	return m_pTarget_Manager->Begin_EffectMRT(strMRTTag, iArrayIndex, pDSV);
+}
+
 HRESULT CRenderInstance::End_MRT()
 {
 	return m_pTarget_Manager->End_MRT();
@@ -121,6 +126,26 @@ ID3D11ShaderResourceView* CRenderInstance::Copy_RenderTarget_SRV(const _wstring&
 HRESULT CRenderInstance::Bind_RT_ShaderResource(CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag)
 {
 	return m_pTarget_Manager->Bind_ShaderResource(pShader, pConstantName, strTargetTag);
+}
+
+HRESULT CRenderInstance::Bind_RT_EffectShaderResource(CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag, _uint isPri)
+{
+	return m_pTarget_Manager->Bind_EffectShaderResource(pShader, pConstantName, strTargetTag, isPri);
+}
+
+_int CRenderInstance::Get_FrameGlowCount(_int isPri)
+{
+	return m_pTarget_Manager->Get_FrameGlowCount(isPri);
+}
+
+_float CRenderInstance::Get_CulGlowIndex(_int isPri)
+{
+	return m_pTarget_Manager->Get_CulGlowIndex(isPri);
+}
+
+void CRenderInstance::Zero_CurGlowIndex(_int isPri)
+{
+	return m_pTarget_Manager->Zero_CurGlowIndex(isPri);
 }
 
 _int CRenderInstance::Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)

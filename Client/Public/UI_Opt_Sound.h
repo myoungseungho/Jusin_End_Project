@@ -7,7 +7,7 @@ BEGIN(Client)
 class CUI_Opt_Sound abstract : public CUI_Option
 {
 public:
-	enum SOUND_MENU { BGM,  VOICE, SFX, MENU_END };
+	enum SOUND_MENU { BGM,  VOICE, SFX,EXIT, MENU_END };
 
 protected:
 	CUI_Opt_Sound(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -26,14 +26,20 @@ protected:
 	virtual HRESULT Bind_ShaderResources();
 	virtual HRESULT Ready_Components();
 
+public:
+	void InitMenuEnum(SOUND_MENU eMenu) { m_eMenuValue = eMenu; }
+
+
 private:
 	void MenuChange();
 
 protected:
 	SOUND_MENU m_eMenuValue = { BGM };
 
-private:
+protected:
 	_bool m_bPlayAnim = { FALSE};
+	_bool m_bKeyInput = { FALSE };
+	_float m_fInputDelay = { 0.f };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

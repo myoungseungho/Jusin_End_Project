@@ -31,6 +31,8 @@ protected:
 	_float m_fAlphaTimer = { 0.f };
 
 	_float m_fDestoryTimer = { 0.f };
+
+	_bool m_bComboHit = { FALSE };
 	
 
 public:

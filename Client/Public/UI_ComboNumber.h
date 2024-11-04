@@ -42,6 +42,8 @@ private:
 	
 	_uint m_iLimitComboCount = { 0 };
 
+	_bool m_bScaleAnim = { FALSE };
+	_uint m_iPrevCombo = { 0 };
 
 public:
 	static CUI_ComboNumber* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
