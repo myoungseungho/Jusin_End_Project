@@ -34,6 +34,10 @@ HRESULT CLevel_Lobby::Initialize()
 	//로비_스토리_빌딩
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Story_Mode_Building"), TEXT("Layer_Lobby_Story_Mode_Building"))))
 		return E_FAIL;
+	
+	//아케이드_스토리_빌딩
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Arcade_Building"), TEXT("Layer_Lobby_Arcade_Building"))))
+		return E_FAIL;
 
 
 	LIGHT_DESC			LightDesc{};

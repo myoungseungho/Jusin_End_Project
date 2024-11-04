@@ -304,6 +304,9 @@
     <ClCompile Include="..\Private\Lobby_Story_Mode_Building.cpp">
       <Filter>02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Arcade_Building</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -656,6 +659,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building">
       <UniqueIdentifier>{f4814ed1-97db-4f33-b535-a3ed52a35e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Arcade_Building">
+      <UniqueIdentifier>{fe5f5a26-942f-42ac-b326-cedfa10e7351}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1117,6 +1123,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Story_Mode_Building.h">
       <Filter>02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Lobby_Arcade_Building.h">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Arcade_Building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
