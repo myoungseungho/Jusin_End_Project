@@ -123,7 +123,10 @@ HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _flo
 		if (strEffectLayerTag.find(L"Aura01") != wstring::npos)
 			m_UsingEffect.push_back(pLayer->Clone(pArg, false));
 		else
+		{
+
 			m_UsingEffect.push_back(pLayer->Clone(pArg, true));
+		}
 	}
 
 	return S_OK;
@@ -162,6 +165,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.vRotation = effectData.rotation;
 			EffectDesc.iUnique_Index = m_TestEffect_Count++;
 			EffectDesc.iRenderIndex = effectData.renderIndex;
+			EffectDesc.bIsBillboarding = effectData.isLoop;
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.vColor = effectData.vColor;
 			EffectDesc.vGlowColor = effectData.vGlowColor;

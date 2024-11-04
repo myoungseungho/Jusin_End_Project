@@ -49,13 +49,14 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		m_ModelName = pEffectDesc->ModelName;
 		m_MaskTextureName = pEffectDesc->MaskTextureName;
 		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
-
+	
 		m_iRenderIndex = pEffectDesc->iRenderIndex;
 		//m_iPassIndex = pEffectDesc->iPassIndex;
 		m_iNumWidthImage = pEffectDesc->iNumWidthImage;
 		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
+		m_bIsBillboarding = pEffectDesc->bIsBillboarding;
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;

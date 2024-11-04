@@ -57,6 +57,7 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
+		m_bIsBillboarding = pEffectDesc->bIsBillboarding;
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
