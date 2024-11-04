@@ -27,7 +27,7 @@ public:
 	virtual HRESULT Initialize_Prototype(TYPE eColliderType);
 	virtual HRESULT Initialize(void* pArg);
 	virtual void Update(_fmatrix TransformMatrix);
-	virtual void UpdateVector(_vector vPosition);
+	virtual void Update(_vector vPosition);
 
 	virtual HRESULT Render(_float fTimeDelta);
 

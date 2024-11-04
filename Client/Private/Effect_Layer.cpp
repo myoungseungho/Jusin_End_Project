@@ -191,7 +191,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 	}
 
 
-	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 }
 

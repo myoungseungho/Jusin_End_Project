@@ -87,9 +87,9 @@ void CCollider::Update(_fmatrix TransformMatrix)
 	m_pBounding->Update(TransformMatrix);
 }
 
-void CCollider::UpdateVector(_vector vPosition)
+void CCollider::Update(_vector vPosition)
 {
-	m_pBounding->UpdateVector(vPosition);
+	m_pBounding->Update(vPosition);
 }
 
 

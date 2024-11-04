@@ -131,13 +131,10 @@
       <Filter>90.FrameEvent_Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\private\IMGUI_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab</Filter>
+      <Filter>97.IMGUI\Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Effect_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\AnimationNameMap.cpp">
       <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
@@ -146,10 +143,10 @@
       <Filter>02.GameObjects\02. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Effect_Manager.cpp">
       <Filter>02.GameObjects\02. Effect\00.Manager</Filter>
@@ -255,6 +252,36 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_SelectArrow.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
+      <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_demo.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_draw.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_impl_dx11.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_impl_win32.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_tables.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imgui_widgets.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\imnodes.cpp">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Imgui_Manager.cpp">
+      <Filter>97.IMGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -540,42 +567,6 @@
     <Filter Include="02.GameObjects\UI\Option\Sound\Title">
       <UniqueIdentifier>{da9be352-896a-4a47-acd3-caf4a4c6f2b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI">
-      <UniqueIdentifier>{871a9861-3ac5-4274-b312-5a263c75354b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Plugin">
-      <UniqueIdentifier>{deafa4fd-162b-4826-aeed-8c1d57afb415}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab">
-      <UniqueIdentifier>{f4b4a581-1401-407e-a8eb-2577c1ad0dc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Animation_Tab">
-      <UniqueIdentifier>{09709b8a-5476-4f20-abe6-eb9d725f69b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Effect_Tab">
-      <UniqueIdentifier>{509e8cc1-38b2-4f38-80b2-7c3eb891a2c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Level_Tab">
-      <UniqueIdentifier>{51ea1b31-5da6-4b7d-a578-c358db999c43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Object_Tab">
-      <UniqueIdentifier>{48c1eba8-3db7-4baf-8936-0a87b47e1f70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab">
-      <UniqueIdentifier>{62ec55bc-6c65-42d7-9cd0-ee15a2ba815f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
-      <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_UI_Tab">
-      <UniqueIdentifier>{267459ec-bf8f-4b50-82d5-5a6b37be652d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab">
-      <UniqueIdentifier>{52d63162-d805-4025-a5e3-ccc5ff9b1dfe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw">
-      <UniqueIdentifier>{e066d276-a58d-42d7-ac0b-53a766307df6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Level\02.CharacterSelect">
       <UniqueIdentifier>{b3d9441e-408d-4ddd-9b46-cd61e574f9df}</UniqueIdentifier>
     </Filter>
@@ -590,6 +581,36 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Character\Arrow">
       <UniqueIdentifier>{acb79254-4fd3-4ad4-bdb4-de460db34100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab">
+      <UniqueIdentifier>{f4b4a581-1401-407e-a8eb-2577c1ad0dc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Animation_Tab">
+      <UniqueIdentifier>{09709b8a-5476-4f20-abe6-eb9d725f69b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Effect_Tab">
+      <UniqueIdentifier>{509e8cc1-38b2-4f38-80b2-7c3eb891a2c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Level_Tab">
+      <UniqueIdentifier>{51ea1b31-5da6-4b7d-a578-c358db999c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Object_Tab">
+      <UniqueIdentifier>{48c1eba8-3db7-4baf-8936-0a87b47e1f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab">
+      <UniqueIdentifier>{62ec55bc-6c65-42d7-9cd0-ee15a2ba815f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad">
+      <UniqueIdentifier>{8b85e108-7881-4e92-9bb4-0576bc57518b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_UI_Tab">
+      <UniqueIdentifier>{267459ec-bf8f-4b50-82d5-5a6b37be652d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab">
+      <UniqueIdentifier>{52d63162-d805-4025-a5e3-ccc5ff9b1dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw">
+      <UniqueIdentifier>{e066d276-a58d-42d7-ac0b-53a766307df6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -607,33 +628,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Client_Defines.h">
       <Filter>99.Defines</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Imgui_Manager.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui_internal.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imconfig.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui_impl_dx11.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui_impl_win32.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imstb_rectpack.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imstb_textedit.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imstb_truetype.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\UI_AttBuf.h">
       <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
@@ -700,12 +694,6 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_SubHpGauge.h">
       <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imnodes.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imnodes_internal.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Shader_Texture.h">
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
@@ -828,7 +816,7 @@
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClInclude>
     <ClInclude Include="..\public\ShaderTool_SaveLoader.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Shader_Material.h">
       <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
@@ -873,28 +861,7 @@
       <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Shader_Tab_Defines.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Shader_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Level_Logo.h">
       <Filter>01.Level\01.Logo</Filter>
@@ -1055,6 +1022,36 @@
     <ClInclude Include="..\public\UI_SelectArrow.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Effect_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Effect_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Level_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Object_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Object_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Shader_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_Tab.h">
+      <Filter>97.IMGUI\Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\IMGUI_UI_Tab.h">
+      <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imnodes.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\imnodes_internal.h">
+      <Filter>97.IMGUI\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Imgui_Manager.h">
+      <Filter>97.IMGUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1069,32 +1066,8 @@
     <ClCompile Include="..\Private\Main_Camera.cpp">
       <Filter>02.GameObjects\Camera\Main_Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\imgui.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\imgui_demo.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\imgui_draw.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\imgui_impl_dx11.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\imgui_impl_win32.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\imgui_tables.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\imgui_widgets.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Imgui_Manager.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Animation_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UIObject.cpp">
       <Filter>02.GameObjects\UI</Filter>
@@ -1162,9 +1135,6 @@
     <ClCompile Include="..\private\UI_SubHpGauge.cpp">
       <Filter>02.GameObjects\UI\Hp\SubHpGauge</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\imnodes.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Plugin</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Shader_Texture.cpp">
       <Filter>02.GameObjects\Effect_Rect\Shader_Texture</Filter>
     </ClCompile>
@@ -1187,7 +1157,7 @@
       <Filter>02.GameObjects\02. Effect\00.Manager\01.Animation</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Level_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Level_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_GameStartCircle.cpp">
       <Filter>02.GameObjects\UI\GameState\Circle</Filter>
@@ -1289,7 +1259,7 @@
       <Filter>02.GameObjects\Map\Space\Moon</Filter>
     </ClCompile>
     <ClCompile Include="..\private\ShaderTool_SaveLoader.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Shader_Tab\ShaderTool_SaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Shader_Material.cpp">
       <Filter>02.GameObjects\Effect_Rect\Shader_Materials</Filter>
@@ -1313,13 +1283,13 @@
       <Filter>98.Default</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\IMGUI_Camera_Tab.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Virtual_Camera.cpp">
       <Filter>02.GameObjects\Camera\Virtual_Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Line_Draw.cpp">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SpaceMeteo.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceMeteo</Filter>
@@ -1396,13 +1366,13 @@
       <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Camera_Tab.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Virtual_Camera.h">
       <Filter>02.GameObjects\Camera\Virtual_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Line_Draw.h">
-      <Filter>02.GameObjects\UI\Manager\97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
+      <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw</Filter>
     </ClInclude>
     <ClCompile Include="..\Private\AttackObject.cpp">
       <Filter>02.GameObjects\AttackObject</Filter>

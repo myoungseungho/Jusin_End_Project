@@ -234,7 +234,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(5.f * m_iPlayerTeam, 100.f, 0.f, 1.f));
 
 		//캐릭터 사이즈에 맞게 각자 추가하느라 m_pColliderCom이 없음
-		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	}
 	else
 		m_bPlaying = true;
@@ -313,7 +313,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	if (m_bGrabbed)
 	{
 		Character_Play_Animation(fTimeDelta);
-		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 		return;
 	}
 
@@ -572,7 +572,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 
 
 
-	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
 	_float fPosX = Get_fPositionX();
@@ -649,7 +649,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 	__super::Player_Update(fTimeDelta);
 
-	cout << m_iHP << " " << endl;
+	//cout << m_iHP << " " << endl;
 	/*
 
 
