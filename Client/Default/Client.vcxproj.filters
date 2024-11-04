@@ -301,6 +301,9 @@
     <ClCompile Include="..\Private\Local_Battle_Building.cpp">
       <Filter>02.GameObjects\Map\Lobby\Local_Battle_Building</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Lobby_Story_Mode_Building.cpp">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -650,6 +653,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Lobby\Local_Battle_Building">
       <UniqueIdentifier>{f66fae1d-52e3-4912-b400-6313a4620c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building">
+      <UniqueIdentifier>{f4814ed1-97db-4f33-b535-a3ed52a35e9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1108,6 +1114,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Local_Battle_Building.h">
       <Filter>02.GameObjects\Map\Lobby\Local_Battle_Building</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Lobby_Story_Mode_Building.h">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

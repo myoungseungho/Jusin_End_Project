@@ -31,6 +31,11 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Local_Battle_Building"), TEXT("Layer_Local_Battle_Building"))))
 		return E_FAIL;
 
+	//로비_스토리_빌딩
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Story_Mode_Building"), TEXT("Layer_Lobby_Story_Mode_Building"))))
+		return E_FAIL;
+
+
 	LIGHT_DESC			LightDesc{};
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
