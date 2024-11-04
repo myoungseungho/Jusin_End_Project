@@ -295,6 +295,9 @@
     <ClCompile Include="..\Private\Main_Camera_Lobby.cpp">
       <Filter>02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Lobby_Battle_Building.cpp">
+      <Filter>02.GameObjects\Map\Lobby</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1087,6 +1090,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Main_Camera_Lobby.h">
       <Filter>02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Lobby_Battle_Building.h">
+      <Filter>02.GameObjects\Map\Lobby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
