@@ -3,6 +3,7 @@
 
 #include "Loader.h"
 #include "Level_Logo.h"
+#include "Level_Chara_Select.h"
 #include "Level_GamePlay.h"
 
 #include "GameInstance.h"
@@ -136,6 +137,10 @@ void CLevel_Loading::Update(_float fTimeDelta)
 
 		case LEVEL_GAMEPLAY:
 			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
+			break;
+
+		case LEVEL_CHARACTER:
+			pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
 			break;
 		}
 

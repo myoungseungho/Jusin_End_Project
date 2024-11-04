@@ -48,6 +48,7 @@ private:
 private:
 	HRESULT Loading_For_Loading();
 	HRESULT Loading_For_Logo();
+	HRESULT Loading_For_CharaSelect();
 	HRESULT Loading_For_GamePlayLevel();
 	HRESULT Load_UI_Resources_Logo();
 	HRESULT Load_Texture_Resources_GamePlay_0();

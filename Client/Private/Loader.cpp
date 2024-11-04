@@ -92,7 +92,9 @@
 #include "UI_Opt_Sound_Eff.h"
 #include "UI_Opt_Sound_Font.h"
 #include "UI_Opt_Sound_Title.h"
-
+#include "UI_Chara_Select_BG.h"
+#include "UI_CharaSelectIcon.h"
+#include "UI_SelectArrow.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -145,6 +147,10 @@ HRESULT CLoader::Loading()
 
 	case LEVEL_GAMEPLAY:
 		hr = Loading_For_GamePlayLevel();
+		break;
+
+	case LEVEL_CHARACTER:
+		hr = Loading_For_CharaSelect();
 		break;
 	}
 
@@ -261,6 +267,43 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
 	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
+	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_CharaSelect()
+{
+	/* For.Prototype_Component_Texture_CharaSelect_BG */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_BG"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Cmn_CharaSelect/tex/SelectBG.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_CharaSelect_Icon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_Icon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CharacterImage/CS_CIcon%d.png"),4))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_CharacterSelectArrow */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterSelectArrow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_PlayerCursor_%d.png"), 6))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharaSelectBG */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectBG"),
+		CUI_Chara_Select_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharaSelectIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectIcon"),
+		CUI_CharaSelectIcon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharaSelectArrow */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectArrow"),
+		CUI_SelectArrow::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -385,12 +428,12 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	//Combo
 	/* For.Prototype_Component_Texture_UI_ComboNumber */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Number/cp_combo_count_red_%d.png"), 10))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Number/ComboNumber%d.png"), 30))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_ComboFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_hit_red.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Combo_Hit_Font%d.png"),3))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_ComboEffect */

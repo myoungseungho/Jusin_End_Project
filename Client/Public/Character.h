@@ -340,6 +340,7 @@ public:
 	//UI
 public:
 	void Set_bRedHP(_bool bRedHP);
+	void CharacterToUI_Info();
 
 protected:
 	CShader* m_pShaderCom = { nullptr };
@@ -612,7 +613,6 @@ private:
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };
-	_uint					m_iPrevComboCount = { 0 };
 	
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
