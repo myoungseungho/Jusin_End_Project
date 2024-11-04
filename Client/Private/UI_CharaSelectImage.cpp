@@ -37,7 +37,7 @@ HRESULT CUI_CharaSelectImage::Initialize(void* pArg)
 
 	InitPosition();
 
-	__super::Set_UI_Setting(460, 460, m_fPosX, 190, 0.8f);
+	__super::Set_UI_Setting(460, 460, m_fPosX, 190, 0.0f);
 
 	return S_OK;
 }

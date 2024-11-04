@@ -60,7 +60,7 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectIcon"), strLayerTag, &SelectIconDesc)))
 			return E_FAIL;
 	}
-	
+
 
 	return S_OK;
 }

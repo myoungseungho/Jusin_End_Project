@@ -521,6 +521,15 @@ PS_OUT PS_SelectIcon(PS_IN In)
     
     Out.vColor *= vMask;
     
+    float2 vTopTexcoord = { 0.5f , 0.f};
+    float2 vBotTexcoord = { 1.f ,1.f};
+    
+    float fLineY = (vBotTexcoord.y - vTopTexcoord.y) / (vBotTexcoord.x - vTopTexcoord.x) * (In.vTexcoord.x - vTopTexcoord.x) + vTopTexcoord.y - In.vTexcoord.y;
+    
+    if (fLineY > 0)
+        discard;
+    
+    
     return Out;
 }
 

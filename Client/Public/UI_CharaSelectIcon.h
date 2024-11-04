@@ -28,6 +28,7 @@ private:
 	void CreateChoiceMark(CUI_Define::PLAYER_ID ePlayerID);
 	void CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID);
 	void CreateCharaImage(CUI_Define::PLAYER_ID ePlayerID);
+	void CreateSelectLine();
 	
 	_bool OverlapCheck(CUI_Define::PLAYER_ID ePlayerID);
 

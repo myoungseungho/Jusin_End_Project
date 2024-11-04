@@ -97,6 +97,7 @@
 #include "UI_SelectArrow.h"
 #include "UI_CharaSelectImage.h"
 #include "UI_ChoiceIcon.h"
+#include "UI_SelectLine.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -276,7 +277,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 {
 	/* For.Prototype_Component_Texture_CharaSelect_BG */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_BG"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Cmn_CharaSelect/tex/SelectBG.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Main_parts01.png")))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_CharaSelect_Icon */
@@ -304,6 +305,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_CharacterBG_Mask%d.png"),2))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_CharacterSelectLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterSelectLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_ChoiceBG_01.png")))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_CharaSelectBG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectBG"),
 		CUI_Chara_Select_BG::Create(m_pDevice, m_pContext))))
@@ -329,8 +335,10 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CUI_ChoiceIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	
-
+	/* Prototype_GameObject_CharacterSelectLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectLine"),
+		CUI_SelectLine::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	return S_OK;
 }

@@ -262,6 +262,9 @@
     <ClCompile Include="..\private\UI_CharaSelectImage.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\ChoiceImage</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_SelectLine.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Line</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -602,6 +605,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Character\ChoiceImage">
       <UniqueIdentifier>{80ae107a-a24b-4d02-9d5d-45a7cc9c9394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Line">
+      <UniqueIdentifier>{318e66d1-4d99-4261-ae82-187e50f5fe6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1072,6 +1078,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_CharaSelectImage.h">
       <Filter>02.GameObjects\UI\BackGround\Character\ChoiceImage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SelectLine.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Line</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
