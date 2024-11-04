@@ -16,9 +16,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 58
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -62,9 +62,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 59
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -117,9 +117,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 60
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -172,9 +172,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 61
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -227,9 +227,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 62
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -282,9 +282,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 63
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -337,9 +337,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 64
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -392,9 +392,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 65
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -447,9 +447,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 66
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -502,9 +502,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 67
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -557,9 +557,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 68
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -612,9 +612,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 69
+UniqueIndex: -1
 Position: 3.9 0 -8.1
-Scale: 0.00390625 0.00390625 0.00390625
+Scale: 6.1035e-05 6.1035e-05 6.1035e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30

@@ -1,26 +1,26 @@
 [Layer]
-LayerName: Wall_Crash
+LayerName: Right_Wall_Crash
 Duration: 1
-TickPerSecond: 3
+TickPerSecond: 2
 KeyFramesCount: 59
 NumEffec: 5
 Position: 0 0 0
 Scale: 1 1 1
-Rotation: 0 0 0
+Rotation: 0 340 0
 
 [Effect]
-EffectName: Wall_Crash01
+EffectName: Right_Wall_Crash01
 ModelName: Model_Effect_cmn_puffyplane_harf
-MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Right_Wall_CrashRight_Wall_Crash01
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 1 0
-Scale: 0.05 0.11937 0.0795799
+Scale: 0.0499989 0.12 0.0799982
 Rotation: 0 0 0
-IsLoop: true
+IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
 GlowFactor: 1
@@ -39,7 +39,7 @@ IsNotPlaying: true
 [KeyFrame]
 KeyFrameNumber: 12
 Position: 0 1 0
-Scale: 0.05 0.09 0.06
+Scale: 0.0499801 0.09 0.0599705
 Rotation: 0 0 0
 CurTime: 0.2
 Duration: 1
@@ -48,7 +48,7 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 57
 Position: 0 1 0
-Scale: 0.05 0.12 0.08
+Scale: 0.0499988 0.12 0.079998
 Rotation: 0 0 0
 CurTime: 0.95
 Duration: 1
@@ -57,23 +57,23 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 1 0
-Scale: 0.05 0.12 0.08
+Scale: 0.0499989 0.12 0.0799982
 Rotation: 0 0 0
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Wall_Crash02
+EffectName: Right_Wall_Crash02
 ModelName: Model_Effect_cmn_puffyplane_harf
-MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash02
+MaskTextureName: ../Bin/Effects/Shader_Tab/Right_Wall_CrashRight_Wall_Crash02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 1 0
-Scale: 0.05 0.06 0.04
+Scale: 0.049999 0.06 0.0399992
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -94,7 +94,7 @@ IsNotPlaying: true
 [KeyFrame]
 KeyFrameNumber: 12
 Position: 0 1 0
-Scale: 0.05 0.06 0.04
+Scale: 0.049994 0.06 0.0399952
 Rotation: 0 0 0
 CurTime: 0.2
 Duration: 1
@@ -103,23 +103,23 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 1 0
-Scale: 0.05 0.06 0.04
+Scale: 0.049999 0.06 0.0399992
 Rotation: 0 0 0
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Wall_Crash03
+EffectName: Right_Wall_Crash03
 ModelName: Model_Effect_cmn_puffyplane_harf
-MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash03
+MaskTextureName: ../Bin/Effects/Shader_Tab/Right_Wall_CrashRight_Wall_Crash03
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 1 0
-Scale: 0.05 0.119361 0.0795776
+Scale: 0.0499954 0.119963 0.0799871
 Rotation: 180 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -140,7 +140,7 @@ IsNotPlaying: true
 [KeyFrame]
 KeyFrameNumber: 12
 Position: 0 1 0
-Scale: 0.05 0.0899718 0.0599936
+Scale: 0.0499882 0.0899327 0.059983
 Rotation: 180 0 0
 CurTime: 0.2
 Duration: 1
@@ -149,7 +149,7 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 57
 Position: 0 1 0
-Scale: 0.05 0.119992 0.0799978
+Scale: 0.0499958 0.119963 0.079987
 Rotation: 180 0 0
 CurTime: 0.95
 Duration: 1
@@ -158,23 +158,23 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 1 0
-Scale: 0.05 0.119987 0.0799948
+Scale: 0.0499954 0.119967 0.0799896
 Rotation: 180 0 0
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Wall_Crash04
+EffectName: Right_Wall_Crash04
 ModelName: Model_Effect_cmn_puffyplane_harf
-MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash04
+MaskTextureName: ../Bin/Effects/Shader_Tab/Right_Wall_CrashRight_Wall_Crash04
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 1 0
-Scale: 0.05 0.0599935 0.0399975
+Scale: 0.0499961 0.0599776 0.0399911
 Rotation: 180 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -195,7 +195,7 @@ IsNotPlaying: true
 [KeyFrame]
 KeyFrameNumber: 12
 Position: 0 1 0
-Scale: 0.05 0.0599912 0.0399961
+Scale: 0.0499905 0.0599691 0.0399898
 Rotation: 180 0 0
 CurTime: 0.2
 Duration: 1
@@ -204,16 +204,16 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 1 0
-Scale: 0.05 0.0599936 0.0399976
+Scale: 0.0499961 0.0599797 0.0399924
 Rotation: 180 0 0
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: Wall_Crash05
+EffectName: Right_Wall_Crash05
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/Wall_CrashWall_Crash05
+MaskTextureName: ../Bin/Effects/Shader_Tab/Right_Wall_CrashRight_Wall_Crash05
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -222,7 +222,7 @@ UniqueIndex: -1
 Position: 0 0 0
 Scale: 0.2 0.2 0.3
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
 GlowFactor: 1

@@ -105,14 +105,15 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 
 HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 {
+
+	//m_isBillboading = isBillboading;
+	m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
+
+	m_pPlayerMatrix = pArg;
+	LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+
 	if (pArg != nullptr)
 	{
-		//m_isBillboading = isBillboading;
-		m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
-
-		m_pPlayerMatrix = pArg;
-		LayerMatrix = m_pTransformCom->Get_WorldMatrix();
-
 		if (0 > m_pPlayerMatrix->_11)
 		{
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
