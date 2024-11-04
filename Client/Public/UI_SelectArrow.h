@@ -28,6 +28,9 @@ private:
 
 public:
 	void SelectChoice() { m_iNumChoice++; m_iTextureIndex++; }
+	_uint Get_TextrueIndex() { return m_iTextureIndex; }
+	_uint Get_NumChoice() { return m_iNumChoice; }
+	
 
 private:
 	CUI_Define::PLAYER_ID m_ePlayerID = { CUI_Define::PAWN_END };

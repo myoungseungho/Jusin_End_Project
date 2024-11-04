@@ -96,6 +96,7 @@
 #include "UI_CharaSelectIcon.h"
 #include "UI_SelectArrow.h"
 #include "UI_CharaSelectImage.h"
+#include "UI_ChoiceIcon.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -316,6 +317,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	/* Prototype_GameObject_CharaSelectImage */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectImage"),
 		CUI_CharaSelectImage::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharaChoiceMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaChoiceMark"),
+		CUI_ChoiceIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	

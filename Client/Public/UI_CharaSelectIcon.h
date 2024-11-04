@@ -24,12 +24,14 @@ private:
 
 private:
 	void SelectIcon(_float fPosX , _float fPosY);
-	void InputEvent(_uint iKey);
+	void InputEvent(_uint iKey , CUI_Define::PLAYER_ID ePlayerID);
 	void CreateChoiceMark();
+	void OverlapCheck(CUI_Define::PLAYER_ID ePlayerID);
 
 private:
 	_uint m_iTexIndex = { 0 };
 	CTransform* m_pArrowTransform = { nullptr };
+	vector<CUI_Define::PLAYER_ID> m_ePlayerID = {};
 
 public:
 	static CUI_CharaSelectIcon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

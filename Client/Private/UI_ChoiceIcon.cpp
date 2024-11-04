@@ -31,7 +31,32 @@ HRESULT CUI_ChoiceIcon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
+	UI_CHOICE_DESC* pDesc = static_cast<UI_CHOICE_DESC*>(pArg);
+	m_iTextrueIndex  = pDesc->iTextrueIndex;
+	_vector vPos = pDesc->vInitPosition;
+	_uint iTeam = pDesc->iTeam;
+
+	_float fOffSetX = { 0 };
+
+	switch (iTeam)
+	{
+	case 0:
+		fOffSetX = -30;
+		break;
+	case 1:
+		fOffSetX = 30;
+		break;
+	default:
+		break;
+	}
+
+
+	_float fPosX = XMVectorGetX(vPos) + fOffSetX;
+
+	m_fSizeX = 50;
+	m_fSizeY = 50;
+
+	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, fPosX, 600, 0.0f);
 
 	return S_OK;
 }
@@ -59,7 +84,7 @@ HRESULT CUI_ChoiceIcon::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextrueIndex)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))
@@ -80,7 +105,7 @@ HRESULT CUI_ChoiceIcon::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_Icon"),
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterChoiceMark"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 

@@ -2,6 +2,7 @@
 
 #include "UI_CharaSelectIcon.h"
 #include "UI_SelectArrow.h"
+#include "UI_ChoiceIcon.h"
 #include "RenderInstance.h"
 
 CUI_CharaSelectIcon::CUI_CharaSelectIcon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -109,38 +110,82 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 	switch (m_iTexIndex)
 	{
 		case CUI_Define::GOKU:
-
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN, CUI_Define::GOKU) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::ANDROID21:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN, CUI_Define::ANDROID21) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::BUU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN, CUI_Define::BUU) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::HIT:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN, CUI_Define::HIT) : m_fPosY = 620.f;
 			break;
 
 		default:
 			break;
 	}
+
+	if (m_pGameInstance->Get_Layer(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")).empty())
+		m_fPosY = 620.f;
 		
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 }
 
-void CUI_CharaSelectIcon::InputEvent(_uint iKey)
+void CUI_CharaSelectIcon::InputEvent(_uint iKey, CUI_Define::PLAYER_ID ePlayerID)
 {
 	if (m_pGameInstance->Key_Down(iKey))
-		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();	
+	{
+		OverlapCheck(ePlayerID);
+
+		CreateChoiceMark();
+		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();
+	}
 }
 
 void CUI_CharaSelectIcon::CreateChoiceMark()
 {
+	_vector vOriginPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	vOriginPos = XMVectorSetX(vOriginPos, (XMVectorGetX(vOriginPos) + g_iWinSizeX * 0.5f )  /  m_vOffSetWinSize.x);
+	vOriginPos = XMVectorSetY(vOriginPos, (g_iWinSizeY * 0.5f - XMVectorGetY(vOriginPos)) / m_vOffSetWinSize.y);
 
+
+	CUI_ChoiceIcon::UI_CHOICE_DESC Desc = {};
+	Desc.vInitPosition = vOriginPos;
+	Desc.iTextrueIndex = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_TextrueIndex();
+	Desc.iTeam = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice() / 2; //¿©±â¿¡¼­ 2´Â ÆÀ °¹¼ö
+	//  0 1 2   3 4 5  2·Î ³ª´³À» ‹š 0ÀÌ¸é ¿ÞÂÊ 1ÀÌ¸é ¿À¸¥ÂÊ
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaChoiceMark"), TEXT("Layer_BackGround") , &Desc);
+}
+
+void CUI_CharaSelectIcon::OverlapCheck(CUI_Define::PLAYER_ID ePlayerID)
+{
+	m_ePlayerID.push_back(ePlayerID);
+
+	for (int i = 0; i < CUI_Define::PAWN_END; ++i)
+	{
+		_uint NumOver = 0;
+		for (int k = 0; k < m_ePlayerID.size(); k++)
+		{
+			if (m_ePlayerID[k] == i)
+			{
+				NumOver++;
+
+				if (NumOver >= 2)
+				{
+					m_ePlayerID.pop_back();
+					return;
+				}
+			}
+		}
+	}
+
+	if (m_ePlayerID.size() == 2)
+		m_ePlayerID.clear();
 }
 
 CUI_CharaSelectIcon* CUI_CharaSelectIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
