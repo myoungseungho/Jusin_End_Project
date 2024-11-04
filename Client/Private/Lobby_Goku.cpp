@@ -29,7 +29,7 @@ HRESULT CLobby_Goku::Initialize(void * pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(0.f, -6.4f, -59.1f));
+	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, -37.1f));
 
 	return S_OK;
 }
