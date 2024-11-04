@@ -283,6 +283,9 @@
     <ClCompile Include="..\Private\Imgui_Manager.cpp">
       <Filter>97.IMGUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Level_Lobby.cpp">
+      <Filter>01.Level\03.Lobby</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -611,6 +614,9 @@
     </Filter>
     <Filter Include="97.IMGUI\Tab\IMGUI_Camera_Tab\Line_Draw">
       <UniqueIdentifier>{e066d276-a58d-42d7-ac0b-53a766307df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\03.Lobby">
+      <UniqueIdentifier>{882f9093-ce0f-4c4a-b8d2-7384729ea4c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1052,6 +1058,9 @@
     <ClInclude Include="..\Public\Imgui_Manager.h">
       <Filter>97.IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Level_Lobby.h">
+      <Filter>01.Level\03.Lobby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1302,27 +1311,6 @@
     <ClInclude Include="..\Public\Main_Camera.h">
       <Filter>02.GameObjects\Camera\Main_Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\imgui.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui_impl_dx11.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui_impl_win32.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imgui_internal.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imstb_rectpack.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imstb_textedit.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imstb_truetype.h">
-      <Filter>97.IMGUI\Plugin</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Imgui_Manager.h">
       <Filter>97.IMGUI</Filter>
     </ClInclude>
@@ -1361,9 +1349,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Client_Defines.h">
       <Filter>99.Defines</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\imconfig.h">
-      <Filter>97.IMGUI\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Camera_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_Camera_Tab</Filter>

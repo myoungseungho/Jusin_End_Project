@@ -149,6 +149,10 @@ HRESULT CLoader::Loading()
 		hr = Loading_For_GamePlayLevel();
 		break;
 
+	case LEVEL_LOBBY:
+		hr = Loading_For_Lobby();
+		break;
+
 	case LEVEL_CHARACTER:
 		hr = Loading_For_CharaSelect();
 		break;
@@ -256,19 +260,11 @@ HRESULT CLoader::Loading_For_Logo()
 	return S_OK;
 }
 
-HRESULT CLoader::Loading_For_GamePlayLevel()
+HRESULT CLoader::Loading_For_Lobby()
 {
-	// 작업을 스레드 풀에 추가하고 future를 저장
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_0(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_1(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_2(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_0(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_1(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
-	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
 	return S_OK;
 }
+
 
 HRESULT CLoader::Loading_For_CharaSelect()
 {
@@ -306,6 +302,21 @@ HRESULT CLoader::Loading_For_CharaSelect()
 
 	return S_OK;
 }
+
+HRESULT CLoader::Loading_For_GamePlayLevel()
+{
+	// 작업을 스레드 풀에 추가하고 future를 저장
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_0(); }));
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_1(); }));
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_2(); }));
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_0(); }));
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_1(); }));
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
+	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
+	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
+	return S_OK;
+}
+
 
 HRESULT CLoader::Load_UI_Resources_Logo()
 {
@@ -845,7 +856,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 
 }
-
 HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 {
 	{
@@ -1308,7 +1318,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
 		return E_FAIL;
 }
-
 HRESULT CLoader::Load_Texture_Resources_GamePlay_2()
 {
 	{
