@@ -89,7 +89,7 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 
 
 		for (auto& iter : m_vecColliderCom)
-			iter->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+			iter->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
 		_float speed = 0.1f;
