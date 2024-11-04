@@ -514,15 +514,18 @@ PS_OUT PS_SelectIcon(PS_IN In)
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    vector vMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord - 0.05f);
     
-    if (Out.vColor.a <= 0.1f)
+    if (vMask.a < 0.1f)
         discard;
     
-    Out.vColor *= vMask;
+    if (Out.vColor.a < 0.1f)
+        discard;
+    
+       Out.vColor *= vMask;
     
     float2 vTopTexcoord = { 0.5f , 0.f};
-    float2 vBotTexcoord = { 1.f ,1.f};
+    float2 vBotTexcoord = { 0.7f ,1.f};
     
     float fLineY = (vBotTexcoord.y - vTopTexcoord.y) / (vBotTexcoord.x - vTopTexcoord.x) * (In.vTexcoord.x - vTopTexcoord.x) + vTopTexcoord.y - In.vTexcoord.y;
     
