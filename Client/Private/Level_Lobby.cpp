@@ -39,6 +39,31 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Arcade_Building"), TEXT("Layer_Lobby_Arcade_Building"))))
 		return E_FAIL;
 
+	_float3 Desc_Position{};
+	Desc_Position = _float3(-34.151f, 0.f, -14.184f);
+
+	//파라솔
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Parasol"), TEXT("Layer_Lobby_Parasol"), &Desc_Position)))
+		return E_FAIL;
+
+	Desc_Position = _float3(-14.803, 0.f, -32.624f);
+
+	//파라솔
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Parasol"), TEXT("Layer_Lobby_Parasol"), &Desc_Position)))
+		return E_FAIL;
+
+	Desc_Position = _float3(13.638f, 0.f, -32.924f);
+
+	//파라솔
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Parasol"), TEXT("Layer_Lobby_Parasol"), &Desc_Position)))
+		return E_FAIL;
+
+	Desc_Position = _float3(33.006f, 0.f, -14.184f);
+
+	//파라솔
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Parasol"), TEXT("Layer_Lobby_Parasol"), &Desc_Position)))
+		return E_FAIL;
+
 
 	LIGHT_DESC			LightDesc{};
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;

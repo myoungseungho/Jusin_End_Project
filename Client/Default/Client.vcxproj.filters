@@ -307,6 +307,9 @@
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp">
       <Filter>02.GameObjects\Map\Lobby\Lobby_Arcade_Building</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Lobby_Parasol.cpp">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Parasol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -662,6 +665,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Lobby\Lobby_Arcade_Building">
       <UniqueIdentifier>{fe5f5a26-942f-42ac-b326-cedfa10e7351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Parasol">
+      <UniqueIdentifier>{77cf818f-94d6-46dd-88f5-cccb8d9e1520}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1126,6 +1132,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h">
       <Filter>02.GameObjects\Map\Lobby\Lobby_Arcade_Building</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Lobby_Parasol.h">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Parasol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
