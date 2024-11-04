@@ -4,6 +4,7 @@
 #include "UI_SelectArrow.h"
 #include "UI_ChoiceIcon.h"
 #include "RenderInstance.h"
+#include "UI_CharaSelectImage.h"
 
 #include "BattleInterface.h"
 
@@ -109,6 +110,9 @@ HRESULT CUI_CharaSelectIcon::Ready_Components()
 
 void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 {
+	if (m_pGameInstance->Get_Layer(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")).empty())
+		return;
+
 	switch (m_iTexIndex)
 	{
 		case CUI_Define::GOKU:
@@ -141,10 +145,12 @@ void CUI_CharaSelectIcon::InputEvent(_uint iKey, CUI_Define::PLAYER_ID ePlayerID
 {
 	if (m_pGameInstance->Key_Down(iKey))
 	{
-		OverlapCheck(ePlayerID);
+		if (OverlapCheck(ePlayerID) == FALSE)
+			return;
 
 		CreateChoiceMark(ePlayerID);
-
+		CharacterCreateDesc(ePlayerID);
+		CreateCharaImage(ePlayerID);
 
 		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();
 	}
@@ -157,20 +163,26 @@ void CUI_CharaSelectIcon::CreateChoiceMark(CUI_Define::PLAYER_ID ePlayerID)
 	vOriginPos = XMVectorSetY(vOriginPos, (g_iWinSizeY * 0.5f - XMVectorGetY(vOriginPos)) / m_vOffSetWinSize.y);
 
 
-	CUI_ChoiceIcon::UI_CHOICE_DESC Desc = {};
-	Desc.vInitPosition = vOriginPos;
-	Desc.iTextrueIndex = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_TextrueIndex();
-	Desc.iTeam = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice() / 2; //¿©±â¿¡¼­ 2´Â ÆÀ °¹¼ö
+	CUI_ChoiceIcon::UI_CHOICE_DESC ChoiceDesc = {};
+	ChoiceDesc.vInitPosition = vOriginPos;
+	ChoiceDesc.iTextrueIndex = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_TextrueIndex();
+	ChoiceDesc.iTeam = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice() / 2; //¿©±â¿¡¼­ 2´Â ÆÀ °¹¼ö
 	//  0 1 2   3 4 5  2·Î ³ª´³À» ‹š 0ÀÌ¸é ¿ÞÂÊ 1ÀÌ¸é ¿À¸¥ÂÊ
 
-	//CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(Desc.iTeam+ 1, CUI_Define::LPLAYER1 ,  )
-	CharacterCreateDesc(ePlayerID);
-
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaChoiceMark"), TEXT("Layer_BackGround") , &Desc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaChoiceMark"), TEXT("Layer_BackGround") , &ChoiceDesc);
 }
 
-void CUI_CharaSelectIcon::OverlapCheck(CUI_Define::PLAYER_ID ePlayerID)
+_bool CUI_CharaSelectIcon::OverlapCheck(CUI_Define::PLAYER_ID ePlayerID)
 {
+	_uint iTeam = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice() / 2;
+
+	if (iTeam == 1 && m_bOverClear == FALSE)
+	{
+		m_ePlayerID.clear();
+		m_bOverClear = TRUE;
+	}
+
+
 	m_ePlayerID.push_back(ePlayerID);
 
 	for (int i = 0; i < CUI_Define::PAWN_END; ++i)
@@ -185,14 +197,13 @@ void CUI_CharaSelectIcon::OverlapCheck(CUI_Define::PLAYER_ID ePlayerID)
 				if (NumOver >= 2)
 				{
 					m_ePlayerID.pop_back();
-					return;
+					return FALSE;
 				}
 			}
 		}
 	}
 
-	if (m_ePlayerID.size() == 2)
-		m_ePlayerID.clear();
+	return TRUE;
 }
 
 void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
@@ -252,6 +263,15 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 	}
 
 	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(SetIndex,iTeam, ePlayerSlot, PrototypeTage);
+}
+
+void CUI_CharaSelectIcon::CreateCharaImage(CUI_Define::PLAYER_ID ePlayerID)
+{
+	CUI_CharaSelectImage::UI_IMAGE_DESC ImageDesc = {};
+	ImageDesc.iTextureIndex = ePlayerID;
+	ImageDesc.iNumChoice = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice();
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectImage"), TEXT("Layer_BackGround"), &ImageDesc);
 }
 
 CUI_CharaSelectIcon* CUI_CharaSelectIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

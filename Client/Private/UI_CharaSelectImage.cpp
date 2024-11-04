@@ -31,16 +31,13 @@ HRESULT CUI_CharaSelectImage::Initialize(void* pArg)
 		return E_FAIL;
 
 
-	UI_DESC* Desc = static_cast<UI_DESC*>(pArg);
+	UI_IMAGE_DESC* Desc = static_cast<UI_IMAGE_DESC*>(pArg);
+	m_iTexIndex = Desc->iTextureIndex;
+	m_iNumChoice = Desc->iNumChoice;
 
-	m_iTexIndex = Desc->iNumUI;
-	m_fPosX = 150.f + (m_iTexIndex * 320), m_fPosY = 620.f;
-	m_fSizeX = 150.f, m_fSizeY = 150.f;
+	InitPosition();
 
-	m_pDesc = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_CHARACTER, TEXT("Layer_MarkArrow"), TEXT("Com_Transform")));
-	Safe_AddRef(m_pDesc);
-
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
+	__super::Set_UI_Setting(460, 460, m_fPosX, 190, 0.8f);
 
 	return S_OK;
 }
@@ -54,12 +51,7 @@ void CUI_CharaSelectImage::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	_vector vArrowPos = m_pDesc->Get_State(CTransform::STATE_POSITION);
 
-	_float fPosX = XMVectorGetX(vArrowPos) + g_iWinSizeX * 0.5f;
-	_float fPosY = g_iWinSizeY * 0.5f - XMVectorGetY(vArrowPos);
-
-	SelectIcon(fPosX, fPosY);
 }
 
 void CUI_CharaSelectImage::Late_Update(_float fTimeDelta)
@@ -77,7 +69,10 @@ HRESULT CUI_CharaSelectImage::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTexIndex)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pMaskTexture->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(23)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -95,39 +90,40 @@ HRESULT CUI_CharaSelectImage::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_Icon"),
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_Image"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+
+	/* For.Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterBGMask"),
+		TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pMaskTexture))))
 		return E_FAIL;
 
 
 	return S_OK;
 }
 
-void CUI_CharaSelectImage::SelectIcon(_float fPosX, _float fPosY)
+void CUI_CharaSelectImage::InitPosition()
 {
-	switch (m_iTexIndex)
+	switch (m_iNumChoice)
 	{
-	case CUI_Define::GOKU:
-		ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+	case 0:
+		m_fPosX = 390;
 		break;
 
-	case CUI_Define::ANDROID21:
-		ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+	case 1:
+		m_fPosX = 250;
 		break;
 
-	case CUI_Define::BUU:
-		ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+	case 2:
+		m_fPosX = 1280 -  390;
 		break;
 
-	case CUI_Define::HIT:
-		ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+	case 3:
+		m_fPosX = 1280 - 250;
 		break;
 
-	default:
-		break;
 	}
-
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 }
 
 CUI_CharaSelectImage* CUI_CharaSelectImage::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -158,7 +154,7 @@ CGameObject* CUI_CharaSelectImage::Clone(void* pArg)
 
 void CUI_CharaSelectImage::Free()
 {
-	Safe_Release(m_pDesc);
-
 	__super::Free();
+
+	Safe_Release(m_pMaskTexture);
 }

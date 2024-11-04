@@ -299,6 +299,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_PlayerCursor_Choice_%d.png"), 6))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_CharacterBGMask */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterBGMask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_CharacterBG_Mask%d.png"),2))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_CharaSelectBG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectBG"),
 		CUI_Chara_Select_BG::Create(m_pDevice, m_pContext))))

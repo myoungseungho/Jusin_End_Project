@@ -61,7 +61,6 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 			return E_FAIL;
 	}
 	
-	
 
 	return S_OK;
 }

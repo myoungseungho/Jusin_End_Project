@@ -26,13 +26,16 @@ private:
 	void SelectIcon(_float fPosX , _float fPosY);
 	void InputEvent(_uint iKey , CUI_Define::PLAYER_ID ePlayerID);
 	void CreateChoiceMark(CUI_Define::PLAYER_ID ePlayerID);
-	void OverlapCheck(CUI_Define::PLAYER_ID ePlayerID);
 	void CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID);
+	void CreateCharaImage(CUI_Define::PLAYER_ID ePlayerID);
+	
+	_bool OverlapCheck(CUI_Define::PLAYER_ID ePlayerID);
 
 private:
 	_uint m_iTexIndex = { 0 };
 	CTransform* m_pArrowTransform = { nullptr };
 	vector<CUI_Define::PLAYER_ID> m_ePlayerID = {};
+	_bool m_bOverClear = { FALSE };
 
 public:
 	static CUI_CharaSelectIcon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
