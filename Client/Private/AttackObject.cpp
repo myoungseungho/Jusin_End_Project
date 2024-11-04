@@ -260,14 +260,14 @@ void CAttackObject::Late_Update(_float fTimeDelta)
 	//
 
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CAttackObject::Render(_float fTimeDelta)
 {
 
 #ifdef _DEBUG
-	m_pColliderCom->Render(fTimeDelta);
+	//m_pColliderCom->Render(fTimeDelta);
 #endif // DEBUG
 
 
@@ -481,6 +481,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//pCharacter->Set_AnimationStop(0.3f);
 
 		_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyzÁÂÇ¥ÀÎµ¥
+		fPos.y -= 1.5f;
 		_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 		XMFLOAT4X4 Result4x4;
 		XMStoreFloat4x4(&Result4x4, ovelapMatrix);

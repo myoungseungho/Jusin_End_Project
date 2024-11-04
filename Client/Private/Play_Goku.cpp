@@ -21,6 +21,7 @@
 #include "Main_Camera.h"
 
 #include "BoneEffectObject.h"
+#include "Effect_Manager.h"	
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -953,8 +954,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 0.6f;
-		//Desc.iDamage = 700 * Get_DamageScale();
-		Desc.iDamage = 4200 * Get_DamageScale();
+		Desc.iDamage = 700 * Get_DamageScale();
+		//Desc.iDamage = 4200 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
@@ -1492,11 +1493,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Desc.bCameraZoom = false;
 			Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.8f,0.f };
+			
 		}
 		else
 		{
 			Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
 			Desc.bCameraZoom = true;
+			Desc.fAnimationLockTime = 0.5f;
 		}
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -1697,6 +1700,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				//Character_Make_Effect(TEXT("Aura11_Yellow"));
 				Set_LoofAnimationCreate(TEXT("Aura11_Yellow"), 2.6f, 0.3f);
+
+
 			}
 		}
 		else
@@ -1766,6 +1771,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
+
+
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BackGround_Dust"));
 			}
 			else
 			{
@@ -1858,6 +1866,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Set_LoofAnimationCreate(TEXT("Aura11_Yellow"), 2.6f, 0.3f);
+
+				//BackGround_Dust
+				//Character_Make_Effect(TEXT("BackGround_Dust"));
 
 			}
 			else
@@ -2093,7 +2104,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 10.f;
-			Desc.iDamage = 100 * Get_DamageScale();;
+			Desc.iDamage = 0;
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
 			Desc.iTeam = m_iPlayerTeam;
@@ -2142,8 +2153,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };;  //원래 가속도.
 			//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
 
+			//원본 56히트, 4259데미지.  1타당 56.  실제로는 116씩 까임.  1타당 +2hit
+			//임시로 4259단일데미지 56히트 집어넣음
+
 			Desc.fhitCharacter_StunTime = 10.0f;
-			Desc.iDamage = 1000 * Get_DamageScale();;
+			//Desc.iDamage = 1000 * Get_DamageScale();;
+			Desc.iDamage = 4500 * Get_DamageScale();
 			Desc.fLifeTime = 0.3f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 			Desc.iTeam = m_iPlayerTeam;
@@ -2151,6 +2166,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 			Desc.bGrabbedEnd = true;
 			Desc.bCameraZoom = false;
+
+			Desc.iGainHitCount = 56;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}

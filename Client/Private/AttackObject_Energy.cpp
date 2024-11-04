@@ -48,6 +48,8 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 	m_iAttackCount = pDesc->iAttackCount;
 	m_iPlayerDirection = pDesc->iPlayerDirection;
 
+	m_fMoveSpeedNoneDirection.x *= m_iPlayerDirection;
+
 	m_bDying = false;
 
 
@@ -107,12 +109,12 @@ void CAttackObject_Energy::Late_Update(_float fTimeDelta)
 HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 {
 #ifdef _DEBUG
-	//m_pColliderCom->Render(fTimeDelta);
+	m_pColliderCom->Render(fTimeDelta);
 
-	//for (auto pCollider : m_vecColliderCom)
-	//{
-	//	pCollider->Render(fTimeDelta);
-	//}
+	for (auto pCollider : m_vecColliderCom)
+	{
+		pCollider->Render(fTimeDelta);
+	}
 #endif // DEBUG
 
 	return S_OK;
@@ -129,9 +131,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	//에너지파 vs 사람 
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
-		m_pOwner->Gain_AttackStep(m_iGainAttackStep);
-		m_pOwner->Gain_HitCount(m_iGainHitCount);
-
+		
 
 
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
@@ -146,6 +146,8 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			if (eResult == RESULT_HIT)
 			{
+				m_pOwner->Gain_AttackStep(m_iGainAttackStep);
+				m_pOwner->Gain_HitCount(m_iGainHitCount);
 
 				pCharacter->Set_GroundSmash(m_bGroundSmash);
 				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);

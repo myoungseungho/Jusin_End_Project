@@ -97,9 +97,9 @@ void CAttackObject_Ranged::Late_Update(_float fTimeDelta)
 HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 {
 
-//#ifdef _DEBUG
-//	m_pColliderCom->Render(fTimeDelta);
-//#endif // DEBUG
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
 
 
 	return S_OK;
