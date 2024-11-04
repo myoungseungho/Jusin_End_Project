@@ -54,15 +54,23 @@ void CUI_SelectArrow::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
+	if (m_iNumChoice >= 4)
+		Destory();
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_SelectArrow::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
+		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (m_iTextureIndex == 2)
+	{
+		m_iTextureIndex += 1;
+	}
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))

@@ -191,8 +191,10 @@
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
+    <ClInclude Include="..\public\UI_CharaSelectImage.h" />
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
+    <ClInclude Include="..\public\UI_ChoiceIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_FontName.h" />
     <ClInclude Include="..\public\UI_HpEffect.h" />
@@ -339,8 +341,10 @@
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
+    <ClCompile Include="..\private\UI_ChoiceIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_FontName.cpp" />
     <ClCompile Include="..\private\UI_HpEffect.cpp" />

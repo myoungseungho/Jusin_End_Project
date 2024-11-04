@@ -288,10 +288,14 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CharacterImage/CS_CharacterImage_%d.png"), 4))))
 		return E_FAIL;
 
-
 	/* For.Prototype_Component_Texture_CharacterSelectArrow */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterSelectArrow"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_PlayerCursor_%d.png"), 6))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_CharacterChoiceMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterChoiceMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_PlayerCursor_Choice_%d.png"), 6))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharaSelectBG */

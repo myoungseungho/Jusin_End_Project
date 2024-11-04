@@ -256,6 +256,12 @@
     <ClCompile Include="..\private\UI_SelectArrow.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_ChoiceIcon.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectImage.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceImage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -590,6 +596,12 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Character\Arrow">
       <UniqueIdentifier>{acb79254-4fd3-4ad4-bdb4-de460db34100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\ChoiceIcon">
+      <UniqueIdentifier>{8481b05b-b50a-47ff-bdd0-e0c81ebdae78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\ChoiceImage">
+      <UniqueIdentifier>{80ae107a-a24b-4d02-9d5d-45a7cc9c9394}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1054,6 +1066,12 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_SelectArrow.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_ChoiceIcon.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectImage.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceImage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

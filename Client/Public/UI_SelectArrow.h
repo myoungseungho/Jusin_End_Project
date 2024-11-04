@@ -26,9 +26,15 @@ private:
 	void PositionUpdate(_float fTimeDelta);
 	void Move(_float fTimeDelta);
 
+public:
+	void SelectChoice() { m_iNumChoice++; m_iTextureIndex++; }
+
 private:
 	CUI_Define::PLAYER_ID m_ePlayerID = { CUI_Define::PAWN_END };
 	_bool m_bMoveStop = { FALSE };
+
+	_uint m_iTextureIndex = { 0 };
+	_uint m_iNumChoice = { 0 };
 
 
 public:

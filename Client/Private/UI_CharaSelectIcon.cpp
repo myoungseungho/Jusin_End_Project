@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "UI_CharaSelectIcon.h"
+#include "UI_SelectArrow.h"
 #include "RenderInstance.h"
 
 CUI_CharaSelectIcon::CUI_CharaSelectIcon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -54,7 +55,7 @@ void CUI_CharaSelectIcon::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	_vector vArrowPos = m_pDesc->Get_State(CTransform::STATE_POSITION);
+	_vector vArrowPos = m_pArrowTransform->Get_State(CTransform::STATE_POSITION);
 
 	_float fPosX = XMVectorGetX(vArrowPos) + g_iWinSizeX * 0.5f;
 	_float fPosY = g_iWinSizeY * 0.5f - XMVectorGetY(vArrowPos);
@@ -108,19 +109,20 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 	switch (m_iTexIndex)
 	{
 		case CUI_Define::GOKU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::ANDROID21:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::BUU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::HIT:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600 : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN) : m_fPosY = 620.f;
 			break;
 
 		default:
@@ -128,6 +130,17 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 	}
 		
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
+}
+
+void CUI_CharaSelectIcon::InputEvent(_uint iKey)
+{
+	if (m_pGameInstance->Key_Down(iKey))
+		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();	
+}
+
+void CUI_CharaSelectIcon::CreateChoiceMark()
+{
+
 }
 
 CUI_CharaSelectIcon* CUI_CharaSelectIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -24,6 +24,8 @@ private:
 
 private:
 	void SelectIcon(_float fPosX , _float fPosY);
+	void InputEvent(_uint iKey);
+	void CreateChoiceMark();
 
 private:
 	_uint m_iTexIndex = { 0 };
