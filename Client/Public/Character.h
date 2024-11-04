@@ -315,7 +315,7 @@ public:
 	void Update_Dying(_float fTimeDelta);
 	_bool Get_bDying();
 
-
+	void Set_StopAllAttackObject(_float fStopTime);
 
 protected:
 	void Reset_AttackStep();

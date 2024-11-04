@@ -43,8 +43,13 @@ public:
 	_ushort Get_KiNumber(_ushort iTeam);
 
 	void Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSlot, _float fTime);
+	void Stop_AllCharacter(_float fStopTime);
+
 
 	_ushort Get_iAliveMemberCount(_ushort iTeam);
+
+	void Stop_AllAttackObject(_float fStopTime);
+
 
 	//이거 하나만 호출하게
 	//	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot);

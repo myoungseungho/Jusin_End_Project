@@ -226,12 +226,18 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bPlaying == false)
 		return;
 
+	cout << "Hegiht : " << Get_fHeight() << endl;
+	cout << "Animation Lock Time " << m_fAccAnimationLock << " / " << m_fMaxAnimationLock << endl;
+
 
 	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
-
+	if (m_pGameInstance->Key_Down(DIK_F8))
+	{
+		_bool bDebug = true;
+	}
 	if (m_bDebugInputLock)
 		return;
 
@@ -509,7 +515,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		}
 		Gravity(fTimeDelta);
 
-
+		//여기로 옮기면 2단점프가 안됨
+		//AttckCancleJump();
+		//Move(fTimeDelta);
 	}
 	else
 	{
@@ -533,8 +541,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	Sparking_TimeCount(fTimeDelta);
 
 
+	//Animation Lock 상태에서도 움직이는 문제 있음
 
-	Move(fTimeDelta);
+	if(m_bAnimationLock == false)
+		Move(fTimeDelta);
 
 
 
@@ -549,7 +559,6 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
-	_float fPosX = Get_fPositionX();
 
 	
 	if (Check_bWall())

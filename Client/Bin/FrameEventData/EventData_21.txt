@@ -855,23 +855,51 @@ PLAY_21,TON402_body,50,ObjectMove,0.09,0,0,0
 
 
 PLAY_21,TON403_body,0.000000,AnimSpeedChange,0.028000,81.009998
-PLAY_21,TON403_body,58.501999,AnimSpeedChange,0.028000,52.929001
+//,PLAY_21,TON403_body,0.000000,AnimSpeedChange,0.028000,110.009998
+
+
+//,괜찮은데 더 찾자
+//,PLAY_21,TON403_body,20.000000,AnimSpeedChange,0.028000,171.009998
+PLAY_21,TON403_body,20.000000,AnimSpeedChange,0.028000,131.009998
+
+
+//,PLAY_21,TON403_body,25.000000,AnimSpeedChange,0.028000,81.009998
+
+
+//,PLAY_21,TON403_body,58.501999,AnimSpeedChange,0.028000,52.929001
+PLAY_21,TON403_body,58.501999,AnimSpeedChange,0.028000,110.929001
+
 PLAY_21,TON403_body,60,AttackEvent,403
 PLAY_21,TON403_body,65,NextAnimationCheck,444444
 PLAY_21,TON403_body,105,PositionChange,139
+
+//,못움직이는 버그 있음
+//,PLAY_21,TON403_body,139,SetAnimation,0,0
+
+//,위로 쏠꺼면 25에서 바로 110
 
 
 
 //,404~411 흡수기술임 생략
 
 //,430 1필  71
-PLAY_21,TON430_body,0.000000,ObjectMoveToEnemy,-1,1,0,0
+//,PLAY_21,TON430_body,0.000000,ObjectMoveToEnemy,-1,1,0,0
 //,PLAY_21,TON430_body,0.000000,ObjectMove,-1,1,0,0
+PLAY_21,TON430_body,0.000000,MoveToGround,2
 PLAY_21,TON430_body,0.000000,AnimSpeedChange,0.012000,67.070999
+PLAY_21,TON430_body,1.1,AttackEvent,0
+PLAY_21,TON430_body,30,AttackEvent,1
+
 PLAY_21,TON430_body,24.815001,AnimSpeedChange,0.012000,16.969999
 PLAY_21,TON430_body,50,AnimSpeedChange,0.012000,90.455002
-PLAY_21,TON403_body,50,AttackEvent,430
+PLAY_21,TON430_body,50,AttackEvent,2
 PLAY_21,TON430_body,90,AnimSpeedChange,0.012000,45.455002
+
+PLAY_21,TON430_body,90,AttackEvent,3
+//,PLAY_21,TON430_body,95,AttackEvent,4
+//,PLAY_21,TON430_body,100,AttackEvent,5
+//,PLAY_21,TON430_body,105,AttackEvent,6
+
 
 
 //,431 디저트 3필  431cs 컷씬

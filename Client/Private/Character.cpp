@@ -940,8 +940,8 @@ void CCharacter::Set_bAttackGravity(_bool bAttackGravity)
 
 void CCharacter::AttckCancleJump()
 {
-
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iStandingMidAttackAnimationIndex)
+	 if (m_pModelCom->m_iCurrentAnimationIndex == m_iStandingMidAttackAnimationIndex && m_bAttackBackEvent)
+	//if (m_pModelCom->m_iCurrentAnimationIndex == m_iStandingMidAttackAnimationIndex)
 	{
 
 		//1팀
@@ -951,13 +951,15 @@ void CCharacter::AttckCancleJump()
 			//Set_fJumpPower(4.f); //중력Ver1 기준
 			Set_fJumpPower(3.f); //중력Ver2 기준
 
+			//Add_Move({ 0.f,0.2f });
 
 			//if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex && m_bDoubleJumpEnable)
 			//{
 			//	//Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
 			//}
-			Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
-
+			
+			//Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+			Set_Animation(m_iJumpAnimationIndex, false);
 
 
 			if (m_pGameInstance->Key_Pressing(DIK_A))
@@ -981,7 +983,9 @@ void CCharacter::AttckCancleJump()
 			//{
 			//	//Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
 			//}
-			Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+			//Set_NextAnimation(m_iJumpAnimationIndex, 0.5f);
+			Set_Animation(m_iJumpAnimationIndex, false);
+
 
 			if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 			{
@@ -1662,6 +1666,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 {
 	_short MoveKey = 0;
 	if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
+	//if (m_pGameInstance->Key_Down(DIK_W) && m_bJumpLock == false)
 	{
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
@@ -2265,6 +2270,13 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 void CCharacter::Set_AnimationStop(_float fStopTime)
 {
+
+	if (m_pGameInstance->Key_Pressing(DIK_F7))
+	{
+		if(m_iPlayerTeam == 1 && m_bPlaying)
+		_bool bDebug = true;
+	}
+
 	m_bAnimationLock = true;
 	m_fMaxAnimationLock = fStopTime;
 	m_fAccAnimationLock = 0.f;
@@ -2320,6 +2332,7 @@ void CCharacter::Update_AnimationLock(_float fTimeDelta)
 	{
 		m_bAnimationLock = false;
 		m_fAccAnimationLock = 0.f;
+		m_fMaxAnimationLock = 0.f;
 	}
 
 }
@@ -3789,6 +3802,11 @@ _bool CCharacter::Get_bDying()
 	return m_bDying;
 }
 
+void CCharacter::Set_StopAllAttackObject(_float fStopTime)
+{
+	CBattleInterface_Manager::Get_Instance()->Stop_AllAttackObject(fStopTime);
+}
+
 
 
 void CCharacter::Reset_AttackStep()
@@ -4338,14 +4356,17 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 		//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack())
 
+		if (m_iPlayerTeam == 1)
+		{
+			_bool bDebug = true;
+		}
 
 
 		//먼지
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke05"), m_pTransformCom->Get_WorldMatrixPtr());
 		m_pEffect_Manager->Copy_Layer(TEXT("Aura01"), m_pTransformCom->Get_WorldMatrixPtr());
 
-
-
+		
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || Check_bCurAnimationisAirAttack() || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air)
 		{
 			m_pModelCom->SetUp_Animation(m_iIdleAnimationIndex, true);

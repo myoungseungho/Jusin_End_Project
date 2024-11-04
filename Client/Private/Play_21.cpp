@@ -1353,7 +1353,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
+		//Desc.ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
+		Desc.ColliderDesc.vExtents = { 1.2f,0.4f,1.f };
+
 		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
@@ -1469,7 +1471,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 		Desc.ColliderDesc.pMineGameObject = this;
 		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
-		Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
+		Desc.ColliderDesc.vExtents = { 0.7f,0.8f,0.2f };
 
 
 		Desc.fhitCharacter_Impus = { 4.f * m_iLookDirection,2.f };
@@ -1642,7 +1644,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_Impus = { m_iLookDirection * -1.f, -15.f };
 
 
-			Desc.fhitCharacter_StunTime = 10.f;	//일단잡기마냥 땅에 닿아야 풀리는 느낌 + 추가타로 풀어버리는 느낌
+			Desc.fhitCharacter_StunTime = 30.f;	//일단잡기마냥 땅에 닿아야 풀리는 느낌 + 추가타로 풀어버리는 느낌
 
 
 			Desc.iDamage = 100 * Get_DamageScale();
@@ -1676,7 +1678,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.fhitCharacter_Impus = { m_iLookDirection * 1.5f, 0.2f };
-			Desc.fhitCharacter_StunTime = 0.1f;	//일단잡기마냥 땅에 닿아야 풀리는 느낌 + 추가타로 풀어버리는 느낌
+			//Desc.fhitCharacter_StunTime = 0.1f;	
+			Desc.fhitCharacter_StunTime = 0.35f;   // 문제없지만 어차피 콤보비례뎀감도 있으니 스턴 더줘도 될지도
+			//Desc.fhitCharacter_StunTime = 0.45f;   // 땅에 닿으면 덜덜거림
+
 
 
 			Desc.iDamage = 800 * Get_DamageScale();
@@ -1800,6 +1805,75 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		
 		break;
 	case Client::CPlay_21::ANIME_ATTACK_236_ULTIMATE:
+	{
+		if (iAttackEvent == 0) //시작, 시간정지연출
+		{
+
+			if (m_pGameInstance->Key_Pressing(DIK_F6))
+			{
+				_int i = 3;
+			}
+			_float fDebug = m_pModelCom->m_fCurrentAnimPosition;
+
+
+			_float fStopTime = 2.f;
+
+			Set_AnimationStopWithoutMe(fStopTime);
+			//Set_AnimationStop(fStopTime);
+			Set_StopAllAttackObject(fStopTime);
+
+
+			//이펙트들
+
+		}
+		else if (iAttackEvent == 1) // 손가락에 차지중. 다시보니 이펙트 말고는 넣을 필요 없을듯
+		{
+			//_float fStopTime = 1.f;
+			//
+			//Set_AnimationStopWithoutMe(fStopTime + 0.3f);
+			//Set_AnimationStop(fStopTime);
+			//Set_StopAllAttackObject(fStopTime);
+
+		}
+		else if (iAttackEvent == 2) //손뻗음. 레이저?
+		{
+			//Set_AnimationStopWithoutMe(0.f);
+		}
+		else if (iAttackEvent == 3)
+		{
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vCenter = { 1.f * m_iLookDirection,-4.f,0.f };
+			Desc.ColliderDesc.vExtents = { 20.f,6.f,0.2f };
+
+
+			Desc.fhitCharacter_Impus = { 4.f * m_iLookDirection,2.f };
+			Desc.fhitCharacter_StunTime = 1.2f;
+
+
+			Desc.iDamage = 2200 * Get_DamageScale();
+			Desc.fLifeTime = 0.1f;
+			
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+
+			Desc.iGainHitCount = 20;
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.0f;
+			Desc.pOwner = this;
+
+			Desc.bCameraZoom = false;
+			
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+
+
+	}
 		break;
 	case Client::CPlay_21::ANIME_FINAL_START:
 		break;
