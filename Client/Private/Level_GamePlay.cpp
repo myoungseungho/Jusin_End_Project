@@ -13,6 +13,7 @@
 
 #include "Character.h"
 #include "Sound_Manager.h"
+#include "BattleInterface.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -70,29 +71,39 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
-	CharacterDesc.iTeam = 1;
-	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
+	//CharacterDesc.iTeam = 1;
+	//CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
+	//
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	//	return E_FAIL;
+	//
+	//CharacterDesc.iTeam = 2;
+	//CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
+	//
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+	//	return E_FAIL;
+	//
+	//
+	//CharacterDesc.iTeam = 1;
+	//CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObjecSt_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+	//	return E_FAIL;
+	//
+	//
+	//CharacterDesc.iTeam = 2;
+	//CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	//	return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+	for (int i = 0; i < 4 ; ++i)
+	{
+			CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
+			CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
+			_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
 
-	CharacterDesc.iTeam = 2;
-	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
-
-
-	CharacterDesc.iTeam = 1;
-	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
-
-
-	CharacterDesc.iTeam = 2;
-	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
+				return E_FAIL;
+	}
 
 #pragma endregion
 
@@ -151,15 +162,6 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Key_Down(DIK_F9))
-	{
-		m_pUI_Manager->UsingAttckBuff(CUI_Define::LPLAYER1);
-	}
-
-	if (m_pGameInstance->Key_Down(DIK_F8))
-	{
-		m_pUI_Manager->UsingAttackDestroy(CUI_Define::LPLAYER1);
-	}
 
 	if (m_pGameInstance->Key_Down(DIK_Z))
 	{

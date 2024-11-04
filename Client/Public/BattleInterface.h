@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Client_Defines.h"
+#include "UI_Define.h"
 
 #include "AnimationEvent_Defines.h"
 #include "AnimationNameMap.h"
@@ -18,6 +19,14 @@ BEGIN(Client)
 class CBattleInterface_Manager final : public CBase
 {
 	DECLARE_SINGLETON(CBattleInterface_Manager)
+
+public:
+	typedef struct
+	{
+		_ushort iTeam = {};
+		CUI_Define::PLAYER_SLOT eSlot = {};
+		wstring	PrototypeTag = {};
+	}CHARACREATE_DESC;
 private:
 	CBattleInterface_Manager();
 	virtual ~CBattleInterface_Manager() = default;
@@ -57,7 +66,8 @@ public:
 private:
 	
 public:
-	
+	void Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag);
+	CHARACREATE_DESC Get_CharaDesc(_uint iIndex){ return m_tCharaCreateDesc[iIndex]; }
 
 private:
 	class CCharacter* m_p1TeamCharacter[3] = { nullptr };
@@ -75,7 +85,7 @@ private:
 	_ubyte m_i1TeamPlayingCharacterIndex = {};
 	_ubyte m_i2TeamPlayingCharacterIndex = {};
 
-
+	CHARACREATE_DESC m_tCharaCreateDesc[4] = {};
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

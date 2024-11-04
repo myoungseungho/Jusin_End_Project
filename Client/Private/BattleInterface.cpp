@@ -238,6 +238,11 @@ CCharacter* CBattleInterface_Manager::EnemyInitalize(_ubyte iTeam)
     }
 }
 
+void CBattleInterface_Manager::Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag)
+{
+    m_tCharaCreateDesc[iIndex] = { iTeam  , eSlot  , PrototypeTag };
+}
+
 
 
 void CBattleInterface_Manager::Gain_HitAttackStep(_ushort iHitCount, _ushort iTeam)

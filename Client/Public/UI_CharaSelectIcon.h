@@ -25,8 +25,9 @@ private:
 private:
 	void SelectIcon(_float fPosX , _float fPosY);
 	void InputEvent(_uint iKey , CUI_Define::PLAYER_ID ePlayerID);
-	void CreateChoiceMark();
+	void CreateChoiceMark(CUI_Define::PLAYER_ID ePlayerID);
 	void OverlapCheck(CUI_Define::PLAYER_ID ePlayerID);
+	void CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID);
 
 private:
 	_uint m_iTexIndex = { 0 };

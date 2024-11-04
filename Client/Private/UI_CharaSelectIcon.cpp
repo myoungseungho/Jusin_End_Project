@@ -5,6 +5,8 @@
 #include "UI_ChoiceIcon.h"
 #include "RenderInstance.h"
 
+#include "BattleInterface.h"
+
 CUI_CharaSelectIcon::CUI_CharaSelectIcon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
 {
@@ -141,12 +143,14 @@ void CUI_CharaSelectIcon::InputEvent(_uint iKey, CUI_Define::PLAYER_ID ePlayerID
 	{
 		OverlapCheck(ePlayerID);
 
-		CreateChoiceMark();
+		CreateChoiceMark(ePlayerID);
+
+
 		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();
 	}
 }
 
-void CUI_CharaSelectIcon::CreateChoiceMark()
+void CUI_CharaSelectIcon::CreateChoiceMark(CUI_Define::PLAYER_ID ePlayerID)
 {
 	_vector vOriginPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	vOriginPos = XMVectorSetX(vOriginPos, (XMVectorGetX(vOriginPos) + g_iWinSizeX * 0.5f )  /  m_vOffSetWinSize.x);
@@ -158,6 +162,9 @@ void CUI_CharaSelectIcon::CreateChoiceMark()
 	Desc.iTextrueIndex = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_TextrueIndex();
 	Desc.iTeam = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice() / 2; //¿©±â¿¡¼­ 2´Â ÆÀ °¹¼ö
 	//  0 1 2   3 4 5  2·Î ³ª´³À» ‹š 0ÀÌ¸é ¿ÞÂÊ 1ÀÌ¸é ¿À¸¥ÂÊ
+
+	//CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(Desc.iTeam+ 1, CUI_Define::LPLAYER1 ,  )
+	CharacterCreateDesc(ePlayerID);
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaChoiceMark"), TEXT("Layer_BackGround") , &Desc);
 }
@@ -186,6 +193,65 @@ void CUI_CharaSelectIcon::OverlapCheck(CUI_Define::PLAYER_ID ePlayerID)
 
 	if (m_ePlayerID.size() == 2)
 		m_ePlayerID.clear();
+}
+
+void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
+{
+	_uint iNumChoice = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice();
+	_ushort iTeam = { 0 };
+	_uint SetIndex = { 0 };
+	CUI_Define::PLAYER_SLOT ePlayerSlot = { CUI_Define::SLOT_END };
+
+	switch (iNumChoice)
+	{
+	case 0:
+		ePlayerSlot = CUI_Define::LPLAYER1;
+		iTeam = 1;
+		SetIndex = 0;
+		break;
+
+	case 1:
+		ePlayerSlot = CUI_Define::LPLAYER2;
+		iTeam = 1;
+		SetIndex = 2;
+		break;
+
+	case 2:
+		ePlayerSlot = CUI_Define::RPLAYER1;
+		iTeam = 2;
+		SetIndex = 1;
+		break;
+
+	case 3:
+		ePlayerSlot = CUI_Define::RPLAYER2;
+		iTeam = 2;
+		SetIndex = 3;
+		break;
+
+	default:
+		break;
+	}
+
+
+	wstring PrototypeTage = {};
+	switch (ePlayerID)
+	{
+	case Client::CUI_Define::GOKU:
+		PrototypeTage = TEXT("Prototype_GameObject_Play_Goku");
+		break;
+	case Client::CUI_Define::ANDROID21:
+		PrototypeTage = TEXT("Prototype_GameObject_Play_21");
+		break;
+	case Client::CUI_Define::BUU:
+		break;
+	case Client::CUI_Define::HIT:
+		break;
+
+	default:
+		break;
+	}
+
+	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(SetIndex,iTeam, ePlayerSlot, PrototypeTage);
 }
 
 CUI_CharaSelectIcon* CUI_CharaSelectIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
