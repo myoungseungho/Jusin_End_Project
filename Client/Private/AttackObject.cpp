@@ -267,7 +267,7 @@ HRESULT CAttackObject::Render(_float fTimeDelta)
 {
 
 #ifdef _DEBUG
-	//m_pColliderCom->Render(fTimeDelta);
+	m_pColliderCom->Render(fTimeDelta);
 #endif // DEBUG
 
 

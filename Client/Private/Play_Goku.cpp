@@ -612,16 +612,14 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	//if (m_bPlaying)
+	if (m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 
-	if (m_iPlayerTeam == 2)
-	{
-		_bool bDebug = true;
-	}
+#ifdef _DEBUG
+	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+#endif
 
-	//m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -677,6 +675,9 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	//	if (FAILED(m_pModelCom->Render(i)))
 	//		return E_FAIL;
 	//}
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
 
 	return S_OK;
 }
@@ -953,7 +954,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.6f;
+		Desc.fhitCharacter_StunTime = 0.4f;
 		Desc.iDamage = 700 * Get_DamageScale();
 		//Desc.iDamage = 4200 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
@@ -1022,7 +1023,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vExtents = { 0.4f,0.6f,1.f };
 		Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.7f,0.f };
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+		//Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.fhitCharacter_StunTime = 0.6f;
+
 		Desc.iDamage = 700 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };

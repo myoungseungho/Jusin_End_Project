@@ -834,17 +834,14 @@ void CPlay_21::Update(_float fTimeDelta)
 
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
-	//if(m_bPlaying)
+	if(m_bPlaying)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
-	//#ifdef _DEBUG
-	//	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-	//#endif
+	#ifdef _DEBUG
+		m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+	#endif
 
-	if (m_iPlayerTeam == 2)
-	{
-		_bool bDebug = true;
-	}
+	
 }
 
 HRESULT CPlay_21::Render(_float fTimeDelta)
@@ -880,9 +877,9 @@ HRESULT CPlay_21::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-//#ifdef _DEBUG
-//	m_pColliderCom->Render(fTimeDelta);
-//#endif // DEBUG
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
 	return S_OK;
 }
 
@@ -1296,7 +1293,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.6f;
+		Desc.fhitCharacter_StunTime = 0.4f;
 		//Desc.iDamage = 5200 * Get_DamageScale(); //700이었음
 		Desc.iDamage = 700 * Get_DamageScale(); //700이었음
 		Desc.fLifeTime = 0.1f;

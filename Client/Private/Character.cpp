@@ -2016,7 +2016,10 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 	m_bHit = TRUE;
 	m_bStun = true;
 
-	m_fMaxStunTime = fStunTime;
+	//m_fMaxStunTime = fStunTime;
+	//0.7¹è±îÁö.
+	m_fMaxStunTime = fStunTime * CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(m_iPlayerTeam);
+
 	m_fAccStunTime = 0.f;
 
 	Set_HitAnimation(eAnimation, Impus);
