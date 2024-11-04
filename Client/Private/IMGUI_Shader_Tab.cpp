@@ -99,19 +99,23 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         m_Sprite_Node_ids.push_back(nodeDesc);
       //  node_ids.push_back(nodeDesc.Sprite_node_id - 3000);
     }
+
+    ImGui::Text("Glow_Pri : Input == -2       Glow : Input > -1       NotGlow : Input == -1");
+    ImGui::SetNextItemWidth(100.0f);
     _int GameObjectData = m_pEffect->Get_GameObjectData();
     if (ImGui::InputInt("Glow", &GameObjectData) && isStart)
     {
-        if(GameObjectData > -3)
+        if (GameObjectData > -3)
             m_pEffect->Set_GameObjectData(GameObjectData);
     }
-    ImGui::Text("Glow_Pri : Input == -2       Glow : Input > -1       NotGlow : Input == -1");
     //m_iObjectRenderData = (_int)m_fGlowFactor + 5 - 1;
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(100.0f);
     _int GlowFactor = m_pEffect->Get_ObjectRenderData() + 1 - (GameObjectData == -2 ? 5 : 0);
     if (ImGui::InputInt("GlowFactor", &GlowFactor) && isStart)
     {
         if (GlowFactor > 0 && GlowFactor < 6)
-            m_pEffect->Set_ObjectRenderData(GameObjectData,GlowFactor);
+            m_pEffect->Set_ObjectRenderData(GameObjectData, GlowFactor);
     }
 
 
