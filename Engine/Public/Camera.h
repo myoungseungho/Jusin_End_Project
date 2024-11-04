@@ -16,11 +16,6 @@ public:
 		_float		fFovy, fNear, fFar;
 	}CAMERA_DESC;
 
-	//struct CameraSaveData {
-	//	vector<CCamera*>& vecVirtualCamera;
-	//	unordered_map<pair<_int, _int>, _uint, pair_hash>& cameraIndexMap;
-	//};
-
 protected:
 	CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CCamera(const CCamera& Prototype);
@@ -39,7 +34,6 @@ public:
 public:
 	_float3					m_vEye{}, m_vAt{};
 	_float					m_fFovy{}, m_fNear{}, m_fFar{};
-
 	_float					m_fViewportWidth{}, m_fViewportHeight{};
 
 public:

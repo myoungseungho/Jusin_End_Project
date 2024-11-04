@@ -80,7 +80,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	//로딩, 로고, 로비는 IMGUI 렌더 안하게
 	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
 	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO
-		&& (_uint)currentLevel_Index != LEVEL_LOBBY;
+	/*	&& (_uint)currentLevel_Index != LEVEL_LOBBY*/;
 
 	if (isOk_Render)
 		m_pImgui_Manager->Render(fTimeDelta);
@@ -128,6 +128,11 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Single_Eff_VtxMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Single_Eff_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Shader_VtxMesh"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
+		return E_FAIL;
+
 #pragma endregion
 
 #pragma region VIBuffer

@@ -108,6 +108,9 @@
 
 #include "BoneEffectObject.h"
 
+//Lobby
+#include "Lobby_Center_Map.h"
+#include "Main_Camera_Lobby.h"
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
 	, m_pContext{ pContext }
@@ -118,6 +121,7 @@ CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	Safe_AddRef(m_pContext);
 }
 
+#pragma region ·Îºñ¾À Á¤¸®ÇÏ·Á°í Àá±ñ ¸¸µë
 
 HRESULT CLoader::Initialize(LEVELID eNextLevelID)
 {
@@ -259,12 +263,6 @@ HRESULT CLoader::Loading_For_Logo()
 
 	return S_OK;
 }
-
-HRESULT CLoader::Loading_For_Lobby()
-{
-	return S_OK;
-}
-
 
 HRESULT CLoader::Loading_For_CharaSelect()
 {
@@ -3107,6 +3105,32 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxShaderRect"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxShaderRect.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+#pragma endregion
+
+HRESULT CLoader::Loading_For_Lobby()
+{
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+
+	//¸ðµ¨
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Center"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Center.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	//°ÔÀÓ¿ÀºêÁ§Æ®
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
+		CLobby_Center_Map::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
+		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
