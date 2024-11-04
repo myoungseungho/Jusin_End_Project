@@ -26,8 +26,6 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 	Create_Effect_Manager();
 
-
-
 #pragma region ¸Ê »çº» °´Ã¼
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))

@@ -189,6 +189,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
+    <ClInclude Include="..\Public\Local_Battle_Building.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\Public\Main_Camera_Lobby.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
+    <ClCompile Include="..\Private\Local_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

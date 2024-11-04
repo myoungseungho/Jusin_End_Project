@@ -286,9 +286,6 @@
     <ClCompile Include="..\Private\Level_Lobby.cpp">
       <Filter>01.Level\03.Lobby</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Lobby_Center_Map.cpp">
-      <Filter>02.GameObjects\Map\Lobby</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Main_Camera.cpp">
       <Filter>02.GameObjects\Camera\Main_Camera\Level_GamePlay_Main_Camera</Filter>
     </ClCompile>
@@ -296,7 +293,13 @@
       <Filter>02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp">
-      <Filter>02.GameObjects\Map\Lobby</Filter>
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Battle_Building</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Lobby_Center_Map.cpp">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Center_Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Local_Battle_Building.cpp">
+      <Filter>02.GameObjects\Map\Lobby\Local_Battle_Building</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -638,6 +641,15 @@
     </Filter>
     <Filter Include="02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera">
       <UniqueIdentifier>{cec4e4a5-8eef-464d-b255-feaa9d3510c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Battle_Building">
+      <UniqueIdentifier>{4e4aae41-27c1-47f7-acf4-3b355dd5dfc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Center_Map">
+      <UniqueIdentifier>{728257a9-1e9d-4939-8a21-5c145f7734c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Lobby\Local_Battle_Building">
+      <UniqueIdentifier>{f66fae1d-52e3-4912-b400-6313a4620c0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1082,9 +1094,6 @@
     <ClInclude Include="..\Public\Level_Lobby.h">
       <Filter>01.Level\03.Lobby</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Lobby_Center_Map.h">
-      <Filter>02.GameObjects\Map\Lobby</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Main_Camera.h">
       <Filter>02.GameObjects\Camera\Main_Camera\Level_GamePlay_Main_Camera</Filter>
     </ClInclude>
@@ -1092,7 +1101,13 @@
       <Filter>02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Battle_Building.h">
-      <Filter>02.GameObjects\Map\Lobby</Filter>
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Battle_Building</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Lobby_Center_Map.h">
+      <Filter>02.GameObjects\Map\Lobby\Lobby_Center_Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Local_Battle_Building.h">
+      <Filter>02.GameObjects\Map\Lobby\Local_Battle_Building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
