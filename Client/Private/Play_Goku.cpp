@@ -1819,7 +1819,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_StunTime = 3.0f;
 				Desc.iDamage = 260 * Get_DamageScale();;
 				Desc.fLifeTime = 1.2f;
-				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
 				Desc.iTeam = m_iPlayerTeam;
 				//Desc.bGroundSmash = true;
 				Desc.fAnimationLockTime = 0.0f;

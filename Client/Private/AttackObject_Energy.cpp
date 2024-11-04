@@ -257,142 +257,141 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-
 	//버그 수정 전 까지 임시로 닫음
 
-	////에너지파 vs 사람 
-	//if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
-	//{
-	//
-	//	//0.07초마다 히트판정
-	//	if (m_fAccAttackDelayTime > 0.1)
-	//	{
-	//
-	//		m_fAccAttackDelayTime = 0.f;
-	//
-	//
-	//		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
-	//		AttackColliderResult eResult{ RESULT_NONE };
-	//
-	//		if (m_iAttackCount != 0)
-	//		{
-	//			m_iAttackCount--;
-	//			eResult = pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
-	//
-	//		}
-	//		else
-	//		{
-	//			OnCollisionExit(other);
-	//		}
-	//
-	//		
-	//
-	//		if(eResult == RESULT_HIT)
-	//		{
-	//
-	//			pCharacter->Set_GroundSmash(m_bGroundSmash);
-	//			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
-	//			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
-	//
-	//			if (m_iAttackCount != 0)
-	//			{
-	//				m_iAttackCount--;
-	//
-	//				cout << m_iAttackCount << endl;
-	//			}
-	//			else
-	//			{
-	//				//OnCollisionExit(other);
-	//
-	//				Destory();
-	//			}
-	//
-	//			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
-	//			{
-	//				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
-	//			}
-	//
-	//			if (m_bGrabbedEnd)
-	//				pCharacter->Set_bGrabbed(false);
-	//
-	//
-	//			//히트시 이펙트
-	//			switch (m_ihitCharacter_Motion)
-	//			{
-	//			case Client::HIT_LIGHT:
-	//			case Client::HIT_CHASE:
-	//			{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
-	//
-	//				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
-	//				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
-	//				XMFLOAT4X4 Result4x4;
-	//				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-	//				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
-	//				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
-	//			}
-	//
-	//			break;
-	//
-	//
-	//			case Client::HIT_CROUCH_MEDIUM:
-	//			case Client::HIT_MEDIUM:
-	//			{
-	//				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
-	//				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
-	//				XMFLOAT4X4 Result4x4;
-	//				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-	//				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
-	//			}
-	//
-	//			break;
-	//
-	//			case Client::HIT_HEAVY:
-	//			case Client::HIT_HEAVY_DOWN:
-	//			case Client::HIT_KNOCK_AWAY_LEFT:
-	//			case Client::HIT_KNOCK_AWAY_UP:
-	//			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
-	//			case Client::HIT_SPIN_AWAY_LEFTUP:
-	//			{
-	//				_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
-	//				_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
-	//				XMFLOAT4X4 Result4x4;
-	//				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-	//				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
-	//				break;
-	//			}
-	//			case Client::HIT_WALLBOUNCE:
-	//			case Client::HIT_NONE:
-	//			default:
-	//				break;
-	//			}
-	//
-	//
-	//			
-	//
-	//		}
-	//		else if (eResult == RESULT_GUARD) //가드
-	//		{
-	//			//m_pOwner->Set_AnimationStop(0.08f);
-	//			//pCharacter->Set_AnimationStop(0.08f);
-	//		}
-	//
-	//		else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
-	//		{
-	//			//m_pOwner->Set_AnimationStop(0.3f);
-	//			//pCharacter->Set_AnimationStop(0.3f);
-	//		}
-	//
-	//		else if (eResult == RESULT_MISS)
-	//		{
-	//
-	//				return;
-	//
-	//		}
-	//
-	//		
-	//	}
-	//	
-	//}
+	//에너지파 vs 사람 
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	{
+	
+		//0.07초마다 히트판정
+		if (m_fAccAttackDelayTime > 0.1)
+		{
+	
+			m_fAccAttackDelayTime = 0.f;
+	
+	
+			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+			AttackColliderResult eResult{ RESULT_NONE };
+	
+			if (m_iAttackCount != 0)
+			{
+				m_iAttackCount--;
+				eResult = pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
+	
+			}
+			else
+			{
+				OnCollisionExit(other);
+			}
+	
+			
+	
+			if(eResult == RESULT_HIT)
+			{
+	
+				pCharacter->Set_GroundSmash(m_bGroundSmash);
+				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+				m_pOwner->Gain_KiAmount(m_iGainKiAmount);
+	
+				if (m_iAttackCount != 0)
+				{
+					m_iAttackCount--;
+	
+					cout << m_iAttackCount << endl;
+				}
+				else
+				{
+					//OnCollisionExit(other);
+	
+					Destory();
+				}
+	
+				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
+				{
+					pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
+				}
+	
+				if (m_bGrabbedEnd)
+					pCharacter->Set_bGrabbed(false);
+	
+	
+				//히트시 이펙트
+				switch (m_ihitCharacter_Motion)
+				{
+				case Client::HIT_LIGHT:
+				case Client::HIT_CHASE:
+				{				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), m_pTransformCom->Get_WorldMatrixPtr());
+	
+					_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
+					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+					XMFLOAT4X4 Result4x4;
+					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+					//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
+				}
+	
+				break;
+	
+	
+				case Client::HIT_CROUCH_MEDIUM:
+				case Client::HIT_MEDIUM:
+				{
+					_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+					XMFLOAT4X4 Result4x4;
+					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+				}
+	
+				break;
+	
+				case Client::HIT_HEAVY:
+				case Client::HIT_HEAVY_DOWN:
+				case Client::HIT_KNOCK_AWAY_LEFT:
+				case Client::HIT_KNOCK_AWAY_UP:
+				case Client::HIT_KNOCK_AWAY_LEFTDOWN:
+				case Client::HIT_SPIN_AWAY_LEFTUP:
+				{
+					_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);  //xyz좌표인데
+					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
+					XMFLOAT4X4 Result4x4;
+					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+					break;
+				}
+				case Client::HIT_WALLBOUNCE:
+				case Client::HIT_NONE:
+				default:
+					break;
+				}
+	
+	
+				
+	
+			}
+			else if (eResult == RESULT_GUARD) //가드
+			{
+				//m_pOwner->Set_AnimationStop(0.08f);
+				//pCharacter->Set_AnimationStop(0.08f);
+			}
+	
+			else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
+			{
+				//m_pOwner->Set_AnimationStop(0.3f);
+				//pCharacter->Set_AnimationStop(0.3f);
+			}
+	
+			else if (eResult == RESULT_MISS)
+			{
+	
+					return;
+	
+			}
+	
+			
+		}
+		
+	}
 
 }
 
