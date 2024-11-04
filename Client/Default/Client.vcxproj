@@ -190,6 +190,7 @@
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
+    <ClInclude Include="..\Public\Lobby_Goku.h" />
     <ClInclude Include="..\Public\Lobby_Parasol.h" />
     <ClInclude Include="..\Public\Lobby_Story_Mode_Building.h" />
     <ClInclude Include="..\Public\Local_Battle_Building.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
+    <ClCompile Include="..\Private\Lobby_Goku.cpp" />
     <ClCompile Include="..\Private\Lobby_Parasol.cpp" />
     <ClCompile Include="..\Private\Lobby_Story_Mode_Building.cpp" />
     <ClCompile Include="..\Private\Local_Battle_Building.cpp" />
