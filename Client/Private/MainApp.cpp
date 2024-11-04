@@ -45,7 +45,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_LOBBY)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
@@ -76,13 +76,15 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	//³ª¸ÓÁö ·»´õ´Â ·»´õÀÎ½ºÅÏ½º
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
-	//IMGUI ·»´õ´Â ·Îµù¶§´Â ÇÏ¸é ¾ÈµÊ
- 
-    _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+#pragma region IMGUI ·»´õ
+	//·Îµù, ·Î°í, ·Îºñ´Â IMGUI ·»´õ ¾ÈÇÏ°Ô
+	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO
+		&& (_uint)currentLevel_Index != LEVEL_LOBBY;
 
-	/*_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render)
-		m_pImgui_Manager->Render(fTimeDelta);*/
+		m_pImgui_Manager->Render(fTimeDelta);
+#pragma endregion
 
 	m_pGameInstance->Present();
 

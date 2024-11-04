@@ -6,15 +6,15 @@ int main() {
 	ModelConverter converter;
 
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/Goku_SS3_Rotate0.fbx", TYPE_ANIM},
+		/*{"Models/Goku_SS3_Rotate0.fbx", TYPE_ANIM},
 		{"Models/Ton_Select.fbx", TYPE_ANIM},
 		{"Models/BRRock_1.fbx", TYPE_NONANIM},
 		{"Models/Meteo_1.fbx", TYPE_NONANIM},
 		{"Models/Meteo_2.fbx", TYPE_NONANIM},
 		{"Models/Meteo_3.fbx", TYPE_NONANIM},
 		{"Models/Rock_1.fbx", TYPE_NONANIM},
-		{"Models/Rock_2.fbx", TYPE_NONANIM},
-		{"Models/Rock_3.fbx", TYPE_NONANIM}
+		{"Models/Rock_2.fbx", TYPE_NONANIM},*/
+		{"Models/Lobby_Center.fbx", TYPE_NONANIM}
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그
