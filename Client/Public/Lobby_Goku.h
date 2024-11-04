@@ -5,7 +5,6 @@
 
 BEGIN(Engine)
 class CShader;
-class CTexture;
 class CModel;
 END
 
@@ -35,6 +34,16 @@ private:
 
 	void RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta);
 	void MoveForward(_float fTimeDelta);
+
+	// 애니메이션 상태 관리
+	_bool m_bDashTriggered = false; // 대쉬 애니메이션이 트리거되었는지 여부
+
+	// 이전 키 상태 저장
+	_bool m_bPrevKeyUp = false;
+	_bool m_bPrevKeyDown = false;
+	_bool m_bPrevKeyLeft = false;
+	_bool m_bPrevKeyRight = false;
+
 public:
 	static CLobby_Goku* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

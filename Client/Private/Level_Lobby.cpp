@@ -17,10 +17,6 @@ HRESULT CLevel_Lobby::Initialize()
 
 #pragma region 사본 객체 만들기
 
-	//로비 카메라
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))
-		return E_FAIL;
-
 	//로비맵
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Center_Map"), TEXT("Layer_Lobby_Center_Map"))))
 		return E_FAIL;
@@ -68,6 +64,10 @@ HRESULT CLevel_Lobby::Initialize()
 
 	//로비 고쿠
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Goku"), TEXT("Layer_Lobby_Goku"))))
+		return E_FAIL;
+
+	//로비 카메라
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))
 		return E_FAIL;
 #pragma endregion
 

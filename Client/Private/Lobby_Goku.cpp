@@ -35,6 +35,9 @@ HRESULT CLobby_Goku::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, -37.1f));
 
+	//아이들
+	m_pModelCom->SetUp_Animation(1, true, 0.1f);
+
 	return S_OK;
 }
 
@@ -50,22 +53,27 @@ void CLobby_Goku::Update(_float fTimeDelta)
 	_bool bInput = false;
 
 	// 여러 방향키 입력을 동시에 처리
-	if (m_pGameInstance->Key_Pressing(DIK_UP))
+	bool bCurrentKeyUp = m_pGameInstance->Key_Pressing(DIK_UP);
+	bool bCurrentKeyDown = m_pGameInstance->Key_Pressing(DIK_DOWN);
+	bool bCurrentKeyLeft = m_pGameInstance->Key_Pressing(DIK_LEFT);
+	bool bCurrentKeyRight = m_pGameInstance->Key_Pressing(DIK_RIGHT);
+
+	if (bCurrentKeyUp)
 	{
 		vTargetDir.z += 1.f;
 		bInput = true;
 	}
-	if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+	if (bCurrentKeyDown)
 	{
 		vTargetDir.z -= 1.f;
 		bInput = true;
 	}
-	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+	if (bCurrentKeyLeft)
 	{
 		vTargetDir.x -= 1.f;
 		bInput = true;
 	}
-	if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+	if (bCurrentKeyRight)
 	{
 		vTargetDir.x += 1.f;
 		bInput = true;
@@ -78,7 +86,30 @@ void CLobby_Goku::Update(_float fTimeDelta)
 
 		// 이동 처리
 		MoveForward(fTimeDelta);
+
+		// 대쉬 애니메이션 트리거 (키가 처음 눌렸을 때만)
+		if ((bCurrentKeyUp && !m_bPrevKeyUp) ||
+			(bCurrentKeyDown && !m_bPrevKeyDown) ||
+			(bCurrentKeyLeft && !m_bPrevKeyLeft) ||
+			(bCurrentKeyRight && !m_bPrevKeyRight))
+		{
+			m_pModelCom->SetUp_Animation(0, true, 0.1f);
+		}
 	}
+	else
+	{
+		//애니메이션 설정: 입력이 없을 때 기본 애니메이션 재생
+		m_pModelCom->SetUp_Animation(1, true, 0.1f);
+	}
+
+	// 현재 프레임의 애니메이션 재생
+	m_pModelCom->Play_Animation(fTimeDelta * 3.f);
+
+	// 이전 키 상태 업데이트
+	m_bPrevKeyUp = bCurrentKeyUp;
+	m_bPrevKeyDown = bCurrentKeyDown;
+	m_bPrevKeyLeft = bCurrentKeyLeft;
+	m_bPrevKeyRight = bCurrentKeyRight;
 }
 
 void CLobby_Goku::Late_Update(_float fTimeDelta)
@@ -99,9 +130,15 @@ HRESULT CLobby_Goku::Render(_float fTimeDelta)
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
-		if (FAILED(m_pShaderCom->Begin(0)))
+		//m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+
+		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
+		if (FAILED(m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i)))
+			return E_FAIL;
+
+
+		if (FAILED(m_pShaderCom->Begin(3)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -114,7 +151,7 @@ HRESULT CLobby_Goku::Render(_float fTimeDelta)
 HRESULT CLobby_Goku::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Shader_VtxMesh"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -143,8 +180,8 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta)
 {
 	// 상수 정의
-	const _float ANGLE_THRESHOLD = 0.1f; // 회전 각도 임계값 (도 단위)
-	const _float ROTATION_SPEED = 5.f;    // 회전 속도 (도/초)
+	const _float ANGLE_THRESHOLD = 0.01f; // 회전 각도 임계값 (도 단위)
+	const _float ROTATION_SPEED = 10.f;    // 회전 속도 (도/초)
 
 	// 목표 방향 벡터를 정규화
 	_vector vTargetLook = XMVector3Normalize(XMLoadFloat3(&vTargetDir));
@@ -184,7 +221,7 @@ void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDel
 void CLobby_Goku::MoveForward(_float fTimeDelta)
 {
 	// 상수 정의
-	const _float MOVE_SPEED = 5.f; // 이동 속도 (유닛/초)
+	const _float MOVE_SPEED = 15.f; // 이동 속도 (유닛/초)
 
 	// 현재 Look 벡터를 가져와서 정규화
 	_vector vLook = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK));

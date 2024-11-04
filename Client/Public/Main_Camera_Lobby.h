@@ -28,6 +28,7 @@ public:
 
 private:
 	_float				m_fMouseSensor = {};
+	CTransform*			m_pLobby_Goku_Transform = { nullptr };
 
 public:
 	static CMain_Camera_Lobby* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

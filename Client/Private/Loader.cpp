@@ -280,7 +280,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 
 	/* For.Prototype_Component_Texture_CharaSelect_Icon */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_Icon"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CharacterImage/CS_CIcon%d.png"),4))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CharacterImage/CS_CIcon%d.png"), 4))))
 		return E_FAIL;
 
 
@@ -449,7 +449,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	/* For.Prototype_Component_Texture_UI_ComboFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Combo_Hit_Font%d.png"),3))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Combo_Hit_Font%d.png"), 3))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_ComboEffect */
@@ -1869,7 +1869,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_3/Meteo_3.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	
+
 #pragma region Effect Model
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -3073,7 +3073,7 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CUI_Opt_Sound_Title::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	
+
 
 
 	return S_OK;
@@ -3150,8 +3150,10 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Parasol.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Lobby.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Goku.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	//게임오브젝트
