@@ -293,25 +293,25 @@
       <Filter>02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Battle_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Battle_Building</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Center_Map</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Center_Map</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Local_Battle_Building.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Local_Battle_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Local_Battle_Building</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Story_Mode_Building.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Story_Mode_Building</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Arcade_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Arcade_Building</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Parasol.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Parasol</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Parasol</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Lobby_Goku.cpp">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Goku</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Goku</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -645,34 +645,34 @@
     <Filter Include="01.Level\03.Lobby">
       <UniqueIdentifier>{882f9093-ce0f-4c4a-b8d2-7384729ea4c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby">
-      <UniqueIdentifier>{6716054a-4935-4379-a371-625fb62dd47d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Camera\Main_Camera\Level_GamePlay_Main_Camera">
       <UniqueIdentifier>{768d4526-9f0c-4ef4-9e47-166a43b40f09}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera">
       <UniqueIdentifier>{cec4e4a5-8eef-464d-b255-feaa9d3510c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Battle_Building">
+    <Filter Include="02.GameObjects\Lobby">
+      <UniqueIdentifier>{18122d99-2b7d-4ef6-ba91-a8571074a3d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Battle_Building">
       <UniqueIdentifier>{4e4aae41-27c1-47f7-acf4-3b355dd5dfc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Center_Map">
+    <Filter Include="02.GameObjects\Lobby\Lobby_Center_Map">
       <UniqueIdentifier>{728257a9-1e9d-4939-8a21-5c145f7734c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Local_Battle_Building">
+    <Filter Include="02.GameObjects\Lobby\Local_Battle_Building">
       <UniqueIdentifier>{f66fae1d-52e3-4912-b400-6313a4620c0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building">
+    <Filter Include="02.GameObjects\Lobby\Lobby_Story_Mode_Building">
       <UniqueIdentifier>{f4814ed1-97db-4f33-b535-a3ed52a35e9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Arcade_Building">
+    <Filter Include="02.GameObjects\Lobby\Lobby_Arcade_Building">
       <UniqueIdentifier>{fe5f5a26-942f-42ac-b326-cedfa10e7351}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Parasol">
+    <Filter Include="02.GameObjects\Lobby\Lobby_Parasol">
       <UniqueIdentifier>{77cf818f-94d6-46dd-88f5-cccb8d9e1520}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Lobby\Lobby_Goku">
+    <Filter Include="02.GameObjects\Lobby\Lobby_Goku">
       <UniqueIdentifier>{afbaeea0-b70c-40de-b19f-47f01a7b681a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1125,25 +1125,25 @@
       <Filter>02.GameObjects\Camera\Main_Camera\Level_Lobby_Main_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Battle_Building.h">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Battle_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Battle_Building</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Center_Map.h">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Center_Map</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Center_Map</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Local_Battle_Building.h">
-      <Filter>02.GameObjects\Map\Lobby\Local_Battle_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Local_Battle_Building</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Story_Mode_Building.h">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Story_Mode_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Story_Mode_Building</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Arcade_Building</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Arcade_Building</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Parasol.h">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Parasol</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Parasol</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Goku.h">
-      <Filter>02.GameObjects\Map\Lobby\Lobby_Goku</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_Goku</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,13 +4,13 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CLobby_Goku::CLobby_Goku(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CGameObject { pDevice, pContext }
+CLobby_Goku::CLobby_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CLobby_Goku::CLobby_Goku(const CLobby_Goku & Prototype)
+CLobby_Goku::CLobby_Goku(const CLobby_Goku& Prototype)
 	: CGameObject{ Prototype }
 {
 
@@ -21,9 +21,13 @@ HRESULT CLobby_Goku::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CLobby_Goku::Initialize(void * pArg)
+HRESULT CLobby_Goku::Initialize(void* pArg)
 {
-	if (FAILED(__super::Initialize(pArg)))
+	CTransform::TRANSFORM_DESC Desc{};
+	Desc.fRotationPerSec = 1.f;
+	Desc.fSpeedPerSec = 1.f;
+
+	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
@@ -36,11 +40,45 @@ HRESULT CLobby_Goku::Initialize(void * pArg)
 
 void CLobby_Goku::Camera_Update(_float fTimeDelta)
 {
-	
+
 }
 
 void CLobby_Goku::Update(_float fTimeDelta)
 {
+	// 입력 처리
+	_float3 vTargetDir = { 0.f, 0.f, 0.f }; // 목표 방향
+	_bool bInput = false;
+
+	// 여러 방향키 입력을 동시에 처리
+	if (m_pGameInstance->Key_Pressing(DIK_UP))
+	{
+		vTargetDir.z += 1.f;
+		bInput = true;
+	}
+	if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+	{
+		vTargetDir.z -= 1.f;
+		bInput = true;
+	}
+	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+	{
+		vTargetDir.x -= 1.f;
+		bInput = true;
+	}
+	if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+	{
+		vTargetDir.x += 1.f;
+		bInput = true;
+	}
+
+	if (bInput)
+	{
+		// 회전 처리
+		RotateTowardsTarget(vTargetDir, fTimeDelta);
+
+		// 이동 처리
+		MoveForward(fTimeDelta);
+	}
 }
 
 void CLobby_Goku::Late_Update(_float fTimeDelta)
@@ -92,19 +130,83 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
-	
+
 	return S_OK;
 }
 
-CLobby_Goku * CLobby_Goku::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta)
 {
-	CLobby_Goku*		pInstance = new CLobby_Goku(pDevice, pContext);
+	// 상수 정의
+	const _float ANGLE_THRESHOLD = 0.1f; // 회전 각도 임계값 (도 단위)
+	const _float ROTATION_SPEED = 5.f;    // 회전 속도 (도/초)
+
+	// 목표 방향 벡터를 정규화
+	_vector vTargetLook = XMVector3Normalize(XMLoadFloat3(&vTargetDir));
+
+	// 현재 Look 벡터를 가져와서 정규화
+	_vector vCurrentLook = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
+
+	// 현재 Look 벡터와 목표 Look 벡터 사이의 각도 계산 (도 단위)
+	_float fAngle = XMConvertToDegrees(XMVectorGetX(XMVector3AngleBetweenNormals(vCurrentLook, vTargetLook)));
+
+	// 회전 축 (Y축 기준)
+	_vector vAxis = XMVectorSet(0.f, 1.f, 0.f, 0.f);
+
+	// 현재 Look 벡터와 목표 Look 벡터의 외적을 계산하여 회전 방향 결정
+	_float fDotUp = XMVectorGetY(XMVector3Cross(vCurrentLook, vTargetLook));
+
+	// 회전 수행
+	if (fAngle > ANGLE_THRESHOLD)
+	{
+		// 회전 방향 결정: 외적의 Y 성분에 따라 시계 방향 또는 반시계 방향으로 회전
+		_vector vRotationAxis = (fDotUp > 0) ? vAxis : XMVectorScale(vAxis, -1.f);
+
+		// 회전 적용 (fTimeDelta * ROTATION_SPEED 만큼 회전)
+		m_pTransformCom->Turn(vRotationAxis, fTimeDelta * ROTATION_SPEED);
+	}
+	else
+	{
+		// 각도가 임계값 이하이면 정확히 목표 방향으로 설정
+		m_pTransformCom->Set_State(CTransform::STATE_LOOK, vTargetLook);
+
+		// 오른쪽 벡터 재계산 및 정규화
+		_vector vRight = XMVector3Normalize(XMVector3Cross(m_pTransformCom->Get_State(CTransform::STATE_UP), vTargetLook));
+		m_pTransformCom->Set_State(CTransform::STATE_RIGHT, vRight);
+	}
+}
+
+void CLobby_Goku::MoveForward(_float fTimeDelta)
+{
+	// 상수 정의
+	const _float MOVE_SPEED = 5.f; // 이동 속도 (유닛/초)
+
+	// 현재 Look 벡터를 가져와서 정규화
+	_vector vLook = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
+
+	// 이동 거리 계산 (속도 * 시간)
+	_float3 vMoveDistance;
+	XMStoreFloat3(&vMoveDistance, vLook * fTimeDelta * MOVE_SPEED);
+
+	// 현재 위치 가져오기
+	_float3 vCurrentPos{};
+	XMStoreFloat3(&vCurrentPos, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	// 새로운 위치 계산
+	_float3 vNewPos = _float3(vCurrentPos.x + vMoveDistance.x, vCurrentPos.y + vMoveDistance.y, vCurrentPos.z + vMoveDistance.z);
+
+	// 새로운 위치 설정
+	m_pTransformCom->Set_State_Position(vNewPos);
+}
+
+CLobby_Goku* CLobby_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+{
+	CLobby_Goku* pInstance = new CLobby_Goku(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -115,9 +217,9 @@ CLobby_Goku * CLobby_Goku::Create(ID3D11Device * pDevice, ID3D11DeviceContext * 
 	return pInstance;
 }
 
-CGameObject * CLobby_Goku::Clone(void * pArg)
+CGameObject* CLobby_Goku::Clone(void* pArg)
 {
-	CLobby_Goku*		pInstance = new CLobby_Goku(*this);
+	CLobby_Goku* pInstance = new CLobby_Goku(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
