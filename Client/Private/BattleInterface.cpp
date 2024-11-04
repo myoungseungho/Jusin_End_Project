@@ -207,9 +207,6 @@ _bool CBattleInterface_Manager::Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharact
         pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
     }
 
-    pMainCamera->Set_Player(m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]);
-    pMainCamera->Set_Player(m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]);
-
     return true;
 
 }
