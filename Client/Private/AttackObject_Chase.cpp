@@ -332,7 +332,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//	m_bEnableDestory = false;
 		//}
 	}
-
+	
 
 
 }

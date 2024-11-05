@@ -825,6 +825,11 @@ void CGoku_MeleeAttack::BackDash()
 		m_pPlayer->Set_bAirDashEnable(false);
 		m_pPlayer->Set_ForcedGravityDown();
 		m_pPlayer->Set_ForcveGravityTime(0.135f);
+
+
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"),{1.f,0.f});
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"), { -0.3f,0.f });
+
 	}
 }
 
@@ -852,6 +857,8 @@ void CGoku_MeleeAttack::ForwardDash()
 		//m_pPlayer->Set_ForcedGravityDown();
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
+
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"),{0,-1.5f});
 
 	}
 

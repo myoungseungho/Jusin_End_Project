@@ -25,6 +25,7 @@ public:
 	void Attack_Medium();
 	void Attack_Heavy();
 	void Attack_Special();
+	void Attack_Crouch_Speical();
 	void Attack_Grab();
 
 	void Attack_236();
@@ -46,7 +47,6 @@ public:
 	void Attack_Crouch_Medium();
 	void Attack_Crouch_Heavy();
 
-	void Attack_Crouch_Speical();
 	void BackDash();
 	void ForwardDash();
 

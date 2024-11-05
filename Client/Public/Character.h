@@ -300,7 +300,8 @@ public:
 	void RegisterEnemy(CCharacter* pEnemy);
 	void pEnemyCheck();
 	void Tag_Out(_vector vPosition);
-	
+
+	_bool Update_Tag_In(_float fTimeDelta);
 
 	void Set_AttackBackEvent(_bool bEvent);
 	_bool Get_bAttackBackEvent();
@@ -330,12 +331,13 @@ protected:
 
 	//기본적으로 좌우반전이 되지만 추가로 뒤집는경우 좌표가 좀 뒤틀릴 수 있음
 	_float4x4 Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection = false);
-	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
-
-	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
-
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+public:
+	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
+	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
 	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+
+
 
 
 	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
@@ -547,6 +549,7 @@ protected:
 	_bool m_bTag_In = { false };	//교대하러 들어가는 캐릭터.
 	_bool m_bPlaying = { false };  //이 캐릭터만 조작함
 
+	_float m_fAccTag_InTime = { 0.f };
 
 	_bool m_bNoEventLoofAnimation = false;
 	_float m_fNoEventLoofMinPosition = {};

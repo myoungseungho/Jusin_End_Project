@@ -223,23 +223,21 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	__super::Player_Update(fTimeDelta);
 
 
+	Update_Tag_In(fTimeDelta);
+
+
 	if (m_bPlaying == false)
 		return;
-
-	cout << "Hegiht : " << Get_fHeight() << endl;
-	cout << "Animation Lock Time " << m_fAccAnimationLock << " / " << m_fMaxAnimationLock << endl;
-
 
 	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
-	if (m_pGameInstance->Key_Down(DIK_F8))
-	{
-		_bool bDebug = true;
-	}
+
+
 	if (m_bDebugInputLock)
 		return;
+
 
 
 
@@ -288,7 +286,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		Update_Dying(fTimeDelta);
 
 
-
+	
 
 
 	Update_LoofAnimationCreate(fTimeDelta);
@@ -622,7 +620,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	if (m_bPlaying)
+	if (m_bPlaying || m_bTag_In)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
 
@@ -1642,7 +1640,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.6f,0.f };
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,-20.f };
-		Desc.fhitCharacter_StunTime = 1.0f;
+		Desc.fhitCharacter_StunTime = 2.5f;
 		Desc.iDamage = 1200 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };

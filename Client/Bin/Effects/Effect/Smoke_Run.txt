@@ -18,7 +18,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.1 0.1 0.1
+Scale: 1e-05 1e-05 1e-05
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -55,7 +55,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -101,7 +101,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -147,7 +147,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -193,7 +193,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -239,7 +239,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -285,7 +285,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -331,7 +331,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 2e-05 2e-05 2e-05
+Scale: 2e-11 2e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -377,7 +377,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -423,7 +423,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -469,7 +469,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -515,7 +515,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1e-05 1e-05 2e-05
+Scale: 1e-11 1e-11 2e-11
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30

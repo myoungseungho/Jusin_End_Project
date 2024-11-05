@@ -2383,6 +2383,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 			{
 				Set_Animation(m_iHit_WallBouce);
 
+				Character_Make_Effect(TEXT("Right_Wall_Crash"));
+
 				CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 				mainCamera->StartCameraShake(0.5f, 0.2f);
 
@@ -2493,6 +2495,32 @@ void CCharacter::BreakFall_Air()
 		}
 
 	}
+}
+
+_bool CCharacter::Update_Tag_In(_float fTimeDelta)
+{
+	if (m_bTag_In == false)
+		return false;
+
+
+
+	m_fAccTag_InTime += fTimeDelta;
+	Add_Move({ 0.f,1.f * m_fAccTag_InTime });
+
+	m_pModelCom->Play_Animation(fTimeDelta);
+
+	if (m_fAccTag_InTime > 0.3f)
+	{
+		m_bTag_In = false;
+
+		Character_Make_Effect(TEXT("Moving_Line_Down"));
+		m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
+		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		
+		return true;
+	}
+
+	return false;
 }
 
 void CCharacter::Gain_AttackStep(_ushort iStep)
@@ -3585,12 +3613,16 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 
 		//순간이동 이펙트
 		m_bTag_In = true;
-
-
-		m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
-		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		m_fAccTag_InTime = 0.f;
 
 		Set_Animation(m_iJumpAnimationIndex);
+		m_pModelCom->Play_Animation(0.f);
+
+		//업데이트끝나면하는걸로?
+		//Character_Make_Effect(TEXT("Moving_Line_Down"));
+		//m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
+		//m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
 
 		if (m_bSparking)
 		{
@@ -3639,7 +3671,10 @@ void CCharacter::Tag_Out(_vector vPosition)
 	//근데 이놈이 보고있는방향을 갱신했는가?
 
 	//1. Look값 던져주기
-	
+
+	//맵 밖에서 튀어나올 수 있게?  그런데 이러다가 처맞으면?
+	//m_bDynamicMove = true;
+
 	pEnemyCheck();
 	 
 	//2. 나오는순간 계산하기
@@ -4183,11 +4218,6 @@ void CCharacter::Gravity(_float fTimeDelta)
 	_float fHeight = XMVectorGetY(vPos);
 
 
-	if (m_pGameInstance->Key_Down(DIK_F8))
-	{
-		if(m_iPlayerTeam==2)
-			_bool bDeb = true;
-	}
 
 	if (fHeight > 0)
 	{
