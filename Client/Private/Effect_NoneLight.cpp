@@ -64,26 +64,22 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 		m_isGlow = pEffectDesc->isGlow;
 		m_fGlowFactor = pEffectDesc->fGlowFactor;
 
-		if (m_isGlow == true)
-			m_iGameObjectData = -1;
-		else if (m_isGlow == -2)
-		{
-			m_iGameObjectData = -2;
+		m_iGameObjectData = m_isGlow;
 
+		if (m_iGameObjectData <= -2)
+		{
 			/* 글로우 강도 */
 			m_iObjectRenderData = (_int)m_fGlowFactor + 5 - 1;
 		}
-		else
+		else if (m_iGameObjectData == -1)
 		{
-			if (m_iRenderIndex != 1)
-			{
-				/* 나중에 그릴 글로우 강도 ( * 5 )*/
-				m_iObjectRenderData = (_int)m_fGlowFactor - 1;
-			}
-			else
-			{
-				m_iObjectRenderData = 1;
-			}
+			/* 글로우 강도 */
+			m_iObjectRenderData = 0;
+		}
+		else if (m_iGameObjectData >= 0)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = (_int)m_fGlowFactor - 1;
 		}
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
