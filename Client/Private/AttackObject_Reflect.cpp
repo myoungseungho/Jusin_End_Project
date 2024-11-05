@@ -62,7 +62,7 @@ void CAttackObject_Reflect::Update(_float fTimeDelta)
 		{
 			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
-
+			Destory();
 			m_bEnableDestory = false;
 
 			

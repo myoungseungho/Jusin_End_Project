@@ -63,6 +63,8 @@ void CAttackObject_Chase::Update(_float fTimeDelta)
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
+
 		}
 	}
 	else
@@ -299,6 +301,10 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//여기 Chase 피격시 사운드
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 			static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->StartCameraShake(0.5f, 0.2f);
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			Destory();
+
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
@@ -307,6 +313,9 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			m_pOwner->Set_ChaseStop();
 			m_pOwner->Set_ChaseStoping();
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			Destory();
 		}
 
 		//사람 상대로 비길 수 없음

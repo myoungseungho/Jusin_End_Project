@@ -299,6 +299,7 @@ void CAttackObject::Set_RemoteDestory()
 		//CGmaeInstance::Destory();
 		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
+		Destory();
 	}
 
 }
@@ -477,6 +478,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 					m_bEnableDestory = false;
+					Destory();
 				}
 			}
 
@@ -491,6 +493,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 

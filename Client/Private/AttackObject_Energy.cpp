@@ -88,6 +88,7 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
@@ -201,6 +202,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				else
 				{
 					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+					Destory();
 				}
 
 				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
@@ -272,6 +274,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//m_pOwner->Set_AnimationStop(0.08f);
 				//pCharacter->Set_AnimationStop(0.08f);
 				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+				Destory();
 
 			}
 
@@ -456,6 +459,7 @@ void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 
 
 	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+	Destory();
 }
 
 void CAttackObject_Energy::CollisingAttack()
@@ -673,4 +677,6 @@ void CAttackObject_Energy::Free()
 		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_1P_Energy_Attack);
 	else
 		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_2P_Energy_Attack);
+
+
 }

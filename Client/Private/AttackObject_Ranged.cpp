@@ -73,6 +73,7 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
@@ -234,6 +235,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 
@@ -349,6 +351,7 @@ void CAttackObject_Ranged::Erase()
 		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 		//m_pGameInstance->Release_Collider(m_pColliderCom);
 		m_bEnableDestory = false;
+		Destory();
 	}
 }
 

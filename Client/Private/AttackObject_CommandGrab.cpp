@@ -81,6 +81,7 @@ void CAttackObject_CommandGrab::Update(_float fTimeDelta)
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
