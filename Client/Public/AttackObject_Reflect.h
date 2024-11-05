@@ -46,6 +46,8 @@ public:
 	virtual void OnCollisionExit(class CCollider* other) override;
 
 
+	void Erase();
+
 private:
 	void CollisingAttack();
 	void CollisingPlayer();

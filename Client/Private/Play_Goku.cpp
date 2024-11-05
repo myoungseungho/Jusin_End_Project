@@ -2533,8 +2533,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_pReflectObject != nullptr)
 			{
-				//static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Set_RemoteDestory();
-				static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Destory();
+				static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Set_RemoteDestory();
+				//static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Erase();
 
 				m_pReflectObject = nullptr;
 			}

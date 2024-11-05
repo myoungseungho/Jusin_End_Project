@@ -149,8 +149,21 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		return;
 	
 
+
+	//에너지파 vs 리플렉트 
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT)
+	{
+		m_iAttackCount--;
+		if (m_iAttackCount <= 0)
+		{
+
+			Erase();
+		}
+	}
+
+
 	//에너지파 vs 사람 
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		
 			m_bEnterEnable = false;
@@ -164,11 +177,11 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			if (pCharacter->Get_bReflect())
 			{
-				m_iAttackCount--;
-				if (m_iAttackCount <= 0)
-				{
-					Erase();
-				}
+				//m_iAttackCount--;
+				//if (m_iAttackCount <= 0)
+				//{
+				//	Erase();
+				//}
 				return;
 			}
 
@@ -197,7 +210,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 				if (m_iAttackCount != 0)
 				{
-					cout << m_iAttackCount << endl;
+					//cout << m_iAttackCount << endl;
 				}
 				else
 				{
@@ -292,21 +305,34 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 
-		
-
 	}
+
+	
 }
 
 void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
 
-	//버그 수정 전 까지 임시로 닫음
+	//에너지파 vs 리플렉트 
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT)
+	{
+		if (m_fAccAttackDelayTime > m_fAttackDelayTime)
+		{
 
+			m_fAccAttackDelayTime = 0.f;
+
+			m_iAttackCount--;
+			if (m_iAttackCount <= 0)
+			{
+
+				Erase();
+			}
+		}
+	}
 	//에너지파 vs 사람 
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 
-	
 		//0.07초마다 히트판정
 		//if (m_fAccAttackDelayTime > 0.07)
 		if (m_fAccAttackDelayTime > m_fAttackDelayTime)
@@ -318,12 +344,12 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 
 			if (pCharacter->Get_bReflect())
 			{
-				m_iAttackCount--;
-				if (m_iAttackCount <= 0)
-				{
-					//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
-					Erase();
-				}
+				//m_iAttackCount--;
+				//if (m_iAttackCount <= 0)
+				//{
+				//	//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+				//	Erase();
+				//}
 				return;
 			}
 
@@ -459,7 +485,10 @@ void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 
 
 	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
-	Destory();
+	m_bEnableDestory = false;
+	//Destory();
+
+	//Erase();
 }
 
 void CAttackObject_Energy::CollisingAttack()

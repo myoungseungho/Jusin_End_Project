@@ -90,6 +90,7 @@ public:
 public:
 	void Set_RemoteDestory();
 
+
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
 	virtual void OnCollisionStay(class CCollider* other, _float fTimeDelta) override;

@@ -122,6 +122,7 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 	{
 
 		CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
+
 		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
 		//pCharacter->Set_AnimationStop(0.1f);
 		//한번에 확 밀려나서 이상할텐데
@@ -131,12 +132,23 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 		m_pOwner->Set_ReflectAttackBackEvent(true);
 
 
+		
+
+
+		
+		pAttackObject->Set_RemoteDestory();
+
+
 	}
 	//리플렉터 vs 에너지파 
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Energy_Attack)
 	{
 		m_pOwner->Set_ReflectAttackBackEvent(true);
 		//없음
+
+		//CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
+		//pAttackObject->Set_RemoteDestory();
+
 	}
 	
 	
@@ -155,6 +167,16 @@ void CAttackObject_Reflect::OnCollisionExit(CCollider* other)
 {
 	_bool Debug = true;
 
+}
+
+void CAttackObject_Reflect::Erase()
+{
+	if (m_bEnableDestory)
+	{
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+		m_bEnableDestory = false;
+		Destory();
+	}
 }
 
 void CAttackObject_Reflect::CollisingAttack()
