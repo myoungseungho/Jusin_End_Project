@@ -3,6 +3,7 @@
 
 float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
+float g_fTime = 0.016f;
 
 struct VS_IN
 {
@@ -74,6 +75,23 @@ PS_OUT PS_MAIN(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MOVE_SKY(PS_IN In)
+{
+    PS_OUT Out;
+
+    // g_fTime을 사용하여 일정 속도로 텍스처 좌표가 이동하도록 설정
+    float2 movingTexcoord = In.vTexcoord;
+    movingTexcoord.x += g_fTime * 0.01f; // g_fTime * 0.1f: x 방향 속도
+    movingTexcoord.y += g_fTime * 0.005f; // g_fTime * 0.1f: y 방향 속도
+
+    // 이동된 텍스처 좌표로 샘플링
+    Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, movingTexcoord);
+    if (Out.vDiffuse.a < 0.1f)
+        discard;
+
+    return Out;
+}
+
 
 technique11 DefaultTechnique
 {
@@ -88,6 +106,19 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN();
+    }
+
+    pass Move_Sky
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MOVE_SKY();
     }
 }
 

@@ -4,13 +4,13 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CLobby_Sky_Of_Sea::CLobby_Sky_Of_Sea(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CGameObject { pDevice, pContext }
+CLobby_Sky_Of_Sea::CLobby_Sky_Of_Sea(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CLobby_Sky_Of_Sea::CLobby_Sky_Of_Sea(const CLobby_Sky_Of_Sea & Prototype)
+CLobby_Sky_Of_Sea::CLobby_Sky_Of_Sea(const CLobby_Sky_Of_Sea& Prototype)
 	: CGameObject{ Prototype }
 {
 
@@ -21,7 +21,7 @@ HRESULT CLobby_Sky_Of_Sea::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CLobby_Sky_Of_Sea::Initialize(void * pArg)
+HRESULT CLobby_Sky_Of_Sea::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -36,11 +36,12 @@ HRESULT CLobby_Sky_Of_Sea::Initialize(void * pArg)
 
 void CLobby_Sky_Of_Sea::Camera_Update(_float fTimeDelta)
 {
-	
+
 }
 
 void CLobby_Sky_Of_Sea::Update(_float fTimeDelta)
 {
+	m_fTime += fTimeDelta;
 }
 
 void CLobby_Sky_Of_Sea::Late_Update(_float fTimeDelta)
@@ -63,7 +64,7 @@ HRESULT CLobby_Sky_Of_Sea::Render(_float fTimeDelta)
 			return E_FAIL;
 		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
-		if (FAILED(m_pShaderCom->Begin(0)))
+		if (FAILED(m_pShaderCom->Begin(1)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -92,19 +93,22 @@ HRESULT CLobby_Sky_Of_Sea::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
-	
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fTime", &m_fTime, sizeof(_float))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
-CLobby_Sky_Of_Sea * CLobby_Sky_Of_Sea::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CLobby_Sky_Of_Sea* CLobby_Sky_Of_Sea::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CLobby_Sky_Of_Sea*		pInstance = new CLobby_Sky_Of_Sea(pDevice, pContext);
+	CLobby_Sky_Of_Sea* pInstance = new CLobby_Sky_Of_Sea(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -115,9 +119,9 @@ CLobby_Sky_Of_Sea * CLobby_Sky_Of_Sea::Create(ID3D11Device * pDevice, ID3D11Devi
 	return pInstance;
 }
 
-CGameObject * CLobby_Sky_Of_Sea::Clone(void * pArg)
+CGameObject* CLobby_Sky_Of_Sea::Clone(void* pArg)
 {
-	CLobby_Sky_Of_Sea*		pInstance = new CLobby_Sky_Of_Sea(*this);
+	CLobby_Sky_Of_Sea* pInstance = new CLobby_Sky_Of_Sea(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{

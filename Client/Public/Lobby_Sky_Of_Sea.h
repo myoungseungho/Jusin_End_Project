@@ -26,9 +26,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	CShader*				m_pShaderCom = { nullptr };
-	CModel*					m_pModelCom = { nullptr };
+	CShader* m_pShaderCom = { nullptr };
+	CModel* m_pModelCom = { nullptr };
 
+	_float m_fTime = { 0.f };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
