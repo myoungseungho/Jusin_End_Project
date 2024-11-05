@@ -431,6 +431,11 @@ void CGameInstance::Destroy_Reserve(CCollider_Manager::COLLIDERGROUP eRenderGrou
 	return m_pCollider_Manager->Destroy_Reserve(eRenderGroup);
 }
 
+void CGameInstance::Destroy_Reserve(CCollider* pCollider)
+{
+	return m_pCollider_Manager->Destroy_Reserve(pCollider);
+}
+
 
 HRESULT CGameInstance::SaveObjects(const wstring& filename, void* pArg)
 {
