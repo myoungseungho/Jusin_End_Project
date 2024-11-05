@@ -3,6 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
+#include "Level_Loading.h"
 CLobby_Goku::CLobby_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -102,6 +103,10 @@ void CLobby_Goku::Update(_float fTimeDelta)
 	m_bPrevKeyDown = bCurrentKeyDown;
 	m_bPrevKeyLeft = bCurrentKeyLeft;
 	m_bPrevKeyRight = bCurrentKeyRight;
+
+
+	//레벨 이동
+	Entry_Level();
 }
 
 void CLobby_Goku::Late_Update(_float fTimeDelta)
@@ -245,6 +250,21 @@ void CLobby_Goku::MoveForward(_float fTimeDelta)
 
 	// 새로운 위치 설정
 	m_pTransformCom->Set_State_Position(vNewPos);
+}
+
+void CLobby_Goku::Entry_Level()
+{
+	_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float x = XMVectorGetX(position);
+	_float z = XMVectorGetZ(position);
+
+	_bool isGameEntry = x<-49.898f && z>-5.4f;
+
+	if (isGameEntry)
+	{
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+			return;
+	}
 }
 
 CLobby_Goku* CLobby_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

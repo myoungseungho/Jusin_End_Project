@@ -34,7 +34,7 @@ private:
 
 	void RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta);
 	void MoveForward(_float fTimeDelta);
-
+	void Entry_Level();
 	// 애니메이션 상태 관리
 	_bool m_bDashTriggered = false; // 대쉬 애니메이션이 트리거되었는지 여부
 
