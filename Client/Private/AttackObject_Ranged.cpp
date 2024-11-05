@@ -109,7 +109,10 @@ HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 
 void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-
+	//Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
+	//m_pGameInstance->Release_Collider(m_pColliderCom); 
+	//Destory();
+	
 	//원거리 vs 원거리
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
 	{
