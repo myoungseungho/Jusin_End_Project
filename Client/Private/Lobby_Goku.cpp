@@ -3,7 +3,6 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
 CLobby_Goku::CLobby_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -81,20 +80,13 @@ void CLobby_Goku::Update(_float fTimeDelta)
 
 	if (bInput)
 	{
+		m_pModelCom->SetUp_Animation(0, true, 0.1f);
+
 		// 회전 처리
 		RotateTowardsTarget(vTargetDir, fTimeDelta);
 
 		// 이동 처리
 		MoveForward(fTimeDelta);
-
-		// 대쉬 애니메이션 트리거 (키가 처음 눌렸을 때만)
-		if ((bCurrentKeyUp && !m_bPrevKeyUp) ||
-			(bCurrentKeyDown && !m_bPrevKeyDown) ||
-			(bCurrentKeyLeft && !m_bPrevKeyLeft) ||
-			(bCurrentKeyRight && !m_bPrevKeyRight))
-		{
-			m_pModelCom->SetUp_Animation(0, true, 0.1f);
-		}
 	}
 	else
 	{
@@ -177,83 +169,59 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 	return S_OK;
 }
 
-
-XMVECTOR CalculateQuaternionBetweenVectors(XMVECTOR vFrom, XMVECTOR vTo)
+inline float Clamp(float value, float minVal, float maxVal)
 {
-	// 정규화된 벡터로 가정
-	XMVECTOR vFromNorm = XMVector3Normalize(vFrom);
-	XMVECTOR vToNorm = XMVector3Normalize(vTo);
-
-	// 두 벡터의 내적 계산
-	float dot = XMVectorGetX(XMVector3Dot(vFromNorm, vToNorm));
-
-	// 만약 두 벡터가 거의 반대 방향이라면, 특별히 회전 축을 정해야 합니다.
-	if (dot < -0.999999f)
-	{
-		// 임의의 회전 축을 선택 (예: X축)
-		XMVECTOR arbitrary = XMVectorSet(1.f, 0.f, 0.f, 0.f);
-		// 벡터가 X축과 평행하면 Y축을 사용
-		if (fabsf(XMVectorGetX(XMVector3Dot(vFromNorm, arbitrary))) > 0.999999f)
-		{
-			arbitrary = XMVectorSet(0.f, 1.f, 0.f, 0.f);
-		}
-		// 회전 축 계산
-		XMVECTOR rotationAxis = XMVector3Normalize(XMVector3Cross(vFromNorm, arbitrary));
-		// 180도 회전을 나타내는 쿼터니언
-		return XMQuaternionRotationAxis(rotationAxis, XM_PI);
-	}
-	else if (dot > 0.999999f)
-	{
-		// 두 벡터가 거의 동일한 경우, 회전이 필요 없음
-		return XMQuaternionIdentity();
-	}
-	else
-	{
-		// 일반적인 경우, 회전 축과 각도를 계산
-		XMVECTOR rotationAxis = XMVector3Normalize(XMVector3Cross(vFromNorm, vToNorm));
-		float rotationAngle = acosf(dot);
-		return XMQuaternionRotationAxis(rotationAxis, rotationAngle);
-	}
+	if (value < minVal)
+		return minVal;
+	if (value > maxVal)
+		return maxVal;
+	return value;
 }
-
 
 void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta)
 {
 	// 회전 속도 (라디안/초)
 	const _float ROTATION_SPEED = XM_PI * 5.f; // 180도/초
 
-	// 목표 방향 벡터를 정규화
-	_vector vTargetLook = XMVector3Normalize(XMLoadFloat3(&vTargetDir));
+	// 목표 방향 벡터를 로드하고 y를 0으로 설정하여 xz 평면에 투영
+	XMVECTOR vTargetLook = XMLoadFloat3(&vTargetDir);
+	vTargetLook = XMVectorSetY(vTargetLook, 0.f);
+	vTargetLook = XMVector3Normalize(vTargetLook);
 
-	// 현재 Look 벡터를 가져와서 정규화
-	_vector vCurrentLook = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
+	// 현재 Look 벡터를 가져와서 y를 0으로 설정하여 xz 평면에 투영
+	XMVECTOR vCurrentLook = m_pTransformCom->Get_State(CTransform::STATE_LOOK);
+	vCurrentLook = XMVectorSetY(vCurrentLook, 0.f);
+	vCurrentLook = XMVector3Normalize(vCurrentLook);
 
-	// 두 벡터 사이의 회전 쿼터니언 계산
-	_vector qRotation = CalculateQuaternionBetweenVectors(vCurrentLook, vTargetLook);
+	// 두 벡터 사이의 각도 계산
+	float fDot = XMVectorGetX(XMVector3Dot(vCurrentLook, vTargetLook));
+	fDot = Clamp(fDot, -1.0f, 1.0f); // acos의 정의역을 벗어나지 않도록 클램핑
+	float fAngle = acosf(fDot);
 
-	// 회전 속도에 따른 보간 인자 계산
-	_float fRotationAmount = ROTATION_SPEED * fTimeDelta;
+	// 회전 방향 결정 (외적의 y 성분 사용)
+	XMVECTOR vCross = XMVector3Cross(vCurrentLook, vTargetLook);
+	float fSign = (XMVectorGetY(vCross) < 0.0f) ? -1.0f : 1.0f;
 
-	// 회전 보간 (최대 1.0을 넘지 않도록)
-	fRotationAmount = min(fRotationAmount, 1.0f);
+	// 회전 각도 제한
+	float fRotationAngle = min(fAngle, ROTATION_SPEED * fTimeDelta);
 
-	// 현재 회전 쿼터니언 가져오기
-	_vector qCurrentRotation = XMQuaternionRotationMatrix(m_pTransformCom->Get_WorldMatrix());
+	// 회전 각도에 회전 방향 적용
+	float fDeltaAngle = fRotationAngle * fSign;
 
-	// 보간된 회전 쿼터니언 계산
-	_vector qNewRotation = XMQuaternionSlerp(qCurrentRotation, XMQuaternionMultiply(qRotation, qCurrentRotation), fRotationAmount);
+	// y축 회전 행렬 생성
+	XMMATRIX mRotation = XMMatrixRotationY(fDeltaAngle);
 
-	// 회전 행렬로 변환
-	_matrix mRotationMatrix = XMMatrixRotationQuaternion(qNewRotation);
+	// 현재 월드 행렬 가져오기
+	XMMATRIX mWorld = m_pTransformCom->Get_WorldMatrix();
 
-	// 월드 행렬의 위치 부분 유지
-	_vector vPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	// 회전 행렬을 현재 월드 행렬에 적용
+	mWorld = mRotation * mWorld;
 
 	_float4x4 matrix{};
-	XMStoreFloat4x4(&matrix, mRotationMatrix);
+	XMStoreFloat4x4(&matrix, mWorld);
+
 	// 새로운 월드 행렬 설정
 	m_pTransformCom->Set_WorldMatrix(matrix);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
 }
 
 void CLobby_Goku::MoveForward(_float fTimeDelta)
