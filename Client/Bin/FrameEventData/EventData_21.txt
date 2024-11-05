@@ -758,7 +758,12 @@ PLAY_21,TON262_body,35,NextAnimationCheck,3333
 PLAY_21,TON262_body,45,NextAnimationCheck,3333
 
 
-//,301 리플렉터. 제외함
+//,301 리플렉터.
+PLAY_21,TON301_body,0,AnimSpeedChange,0.015,35
+PLAY_21,TON301_body,0,AttackEvent,0
+PLAY_21,TON301_body,15,AnimSpeedChange,0.015,70
+
+
 //,310 자폭3필  안씀.
 
 

@@ -58,6 +58,8 @@ public:
 	static vector<CInput> Command_Crouch_SpecialAttack;
 
 
+	static vector<CInput> Command_Reflect;
+
 public:
 	const int BUFFER_SIZE = 30;
 	//enum AttackGrade {Attack_light =0, Attack_Medium, Attack_Heavy=2, Attack_Special=2, Attack_Command, Attack_Skill, Attack_FinalSkill};
@@ -128,6 +130,8 @@ public:
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisHitGround(_uint iAnimation = 1000);
 
+	virtual _bool Check_bCurAnimationisChase(_uint iAnimation = 1000);  //특이한 경우라 애니메이션 뿐 만 아니라 m_bChase까지 끼워넣음
+	virtual _bool Check_bCurAnimationisReflect(_uint iAnimation = 1000);  
 
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
@@ -304,6 +308,8 @@ public:
 	_bool Update_Tag_In(_float fTimeDelta);
 
 	void Set_AttackBackEvent(_bool bEvent);
+	void Set_ReflectAttackBackEvent(_bool bEvent);
+
 	_bool Get_bAttackBackEvent();
 
 	void Set_bGrabDraw(_bool bGrabDraw);
@@ -332,10 +338,13 @@ protected:
 	//기본적으로 좌우반전이 되지만 추가로 뒤집는경우 좌표가 좀 뒤틀릴 수 있음
 	_float4x4 Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection = false);
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale ={1.f,1.f,1.f});
+
 public:
 	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
 	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
 	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale={1.f,1.f,1.f});
 
 
 
@@ -407,6 +416,7 @@ protected:
 	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
 	_ushort m_iChaseAnimationIndex = { 13 };
 
+	_ushort m_iReflectAnimationIndex = { 58 };
 
 	_ushort m_iHit_Stand_LightAnimationIndex = { 21 };		//050
 	//_ushort m_iHit_Stand_LightFrontAnimationIndex = { 21 };		//050
@@ -577,6 +587,9 @@ protected:
 
 	_bool m_bDynamicMove = { false };
 	_bool m_bAttackBackEvent = { false };
+
+	_bool m_bReflect = { false };
+	//_bool m_bReflectAttackBack 
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };

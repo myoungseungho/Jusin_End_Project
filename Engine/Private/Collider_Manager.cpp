@@ -197,11 +197,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 
 		// 충돌 그룹에 따른 처리
-		if (is_1P_Body_Vs_2P_Energy_Skill)
-		{
-			//1P_Body VS 2P_Skill
-			Body_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
-		}
+	
 
 		if (is_1P_Body_Vs_2P_Body)
 		{
@@ -215,30 +211,40 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			Energy_1P_Skill_VS_Energy_2P_Skill_Collisions.push_back(pair);
 		}
 
+		if (is_1P_Ranged_Attack_Vs_2P_Ranged_Attack)
+		{
+			Process_1P_Ranged_Skill_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Melee_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+
+
+
+
+
+		if (is_1P_Body_Vs_2P_Energy_Skill)
+		{
+			//1P_Body VS 2P_Skill
+			Body_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
 		if (is_1P_Energy_Skill_Vs_2P_Body)
 		{
 			//1P_Skill VS 2P_Body
 			Energy_1P_Skill_VS_Body_2P_Collisions.push_back(pair);
 		}
 
+
+
+
+
 		if (is_1P_Ranged_Attack_Vs_2P_Body)
 		{
 			Process_1P_Ranged_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
-		}
-
-		if (is_1P_Ranged_Attack_Vs_2P_Energy_Skill)
-		{
-			Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
-		}
-
-		if (is_1P_Ranged_Attack_Vs_2P_Ranged_Attack)
-		{
-			Process_1P_Ranged_Skill_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
-		}
-
-		if (is_1P_Melee_Attack_Vs_2P_Body)
-		{
-			Process_1P_Melee_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
 		}
 
 		if (is_1P_Body_Vs_2P_Ranged_Attack)
@@ -246,9 +252,13 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			Process_1P_Body_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
 		}
 
-		if (is_1P_Energy_Skill_Vs_2P_Ranged_Attack)
+
+
+		
+
+		if (is_1P_Melee_Attack_Vs_2P_Body)
 		{
-			Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions.push_back(pair);
+			Process_1P_Melee_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
 		}
 
 		if (is_1P_Body_Vs_2P_Melee_Attack)
@@ -256,10 +266,22 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			Process_1P_Body_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
 		}
 
-		if (is_1P_Melee_Vs_2P_Melee_Attack)
+
+
+
+
+		if (is_1P_Energy_Skill_Vs_2P_Ranged_Attack)
 		{
-			Process_1P_Melee_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+			Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions.push_back(pair);
 		}
+
+		if (is_1P_Ranged_Attack_Vs_2P_Energy_Skill)
+		{
+			Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
+
+
 
 		if (is_1P_Range_Vs_2P_Melee_Attack)
 		{
@@ -270,6 +292,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		{
 			Process_1P_Melee_2P_Range_Skill(pair, fTimeDelta, currentCollisions);
 		}
+
 	}
 
 	// 각 그룹별로 한 번만 처리

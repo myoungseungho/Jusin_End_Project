@@ -60,7 +60,7 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 	m_bDying = false;
 
 
-	m_eEnegrgyColor = pDesc->eExplosionColor;
+	m_eEnegrgyColor = pDesc->eEnergyColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };

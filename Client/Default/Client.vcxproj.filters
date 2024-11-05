@@ -241,6 +241,9 @@
     <ClCompile Include="..\private\UI_Opt_Sound_Title.cpp">
       <Filter>02.GameObjects\UI\Option\Sound\Title</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="97.IMGUI">
@@ -533,6 +536,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Option\Sound\Title">
       <UniqueIdentifier>{da9be352-896a-4a47-acd3-caf4a4c6f2b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
+      <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -985,6 +991,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Opt_Sound_Title.h">
       <Filter>02.GameObjects\UI\Option\Sound\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject_Reflect.h">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -49,6 +49,8 @@ public:
 	void BackDash();
 	void ForwardDash();
 
+	void Reflect();
+
 
 	void StopMacro(_float fStopTime);
 

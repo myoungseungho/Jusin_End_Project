@@ -64,6 +64,7 @@ public:
 
 		_bool bNoCreateMainCollider = { false }; //에너지파 전용
 
+		_bool bReflect = { false };
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -83,8 +84,9 @@ public:
 	class CCharacter* Get_pOwner() { return m_pOwner; };
 	AttackType		Get_AttackType() { return m_eAttackType; };
 	
+	void Set_AttackBackEvent();
 	void Set_UpdateStop(_float fStopTime);
-
+	_bool Get_bReflect();
 public:
 	//void Set_RemoteDestory();
 
@@ -159,7 +161,7 @@ protected:
 	_bool		m_bUpdateStop = { false };
 
 	_bool	m_bDrawNoneStop = { false };
-
+	_bool	m_bReflect = { false };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

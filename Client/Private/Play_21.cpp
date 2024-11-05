@@ -127,6 +127,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
 
+	m_iReflectAnimationIndex = { ANIME_REFLECT };
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -1406,6 +1407,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.bGrabbedEnd = true;
 		Desc.pOwner = this;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+		//거리가 멀긴 한데 보기엔 괜찮을지도
+		//Character_Make_Effect(TEXT("Ring_Dust_Right"), { 1.5f,0.f });
+
+		Character_Make_Effect(TEXT("Ring_Dust_Right"), { 1.2f,0.f });
+
 	}
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_SPECIAL:
@@ -1605,7 +1613,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
-		Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
+		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection, 10.f };  //원래 가속도.
 		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
 
 		Desc.fhitCharacter_StunTime = 1.0f;
@@ -1620,12 +1628,16 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (Get_fHeight() > 2)
 		{
 			Desc.bCameraZoom = false;
-			Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 4.f };
+			Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 5.f };
 			Desc.fAnimationLockTime = 0.1f;
 			Desc.fLifeTime = 0.1f;
 		}
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+		Character_Make_Effect(TEXT("Ring_Dust"), {0.4f,0.9f });
+
 	}
 	//공중 어퍼랑 같은 모션임
 
@@ -1685,7 +1697,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
 			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
 			Desc.iDirection = m_iLookDirection;
-			Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 
 

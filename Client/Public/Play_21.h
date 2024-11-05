@@ -104,7 +104,7 @@ public:
 		//ANIME_GRAB_RUSH = 61 // 306cs
 
 		ANIME_SPARKING = 57,
-		//301 58 패링
+		ANIME_REFLECT=56,//301 56 패링
 		//306cs 61  지상 드래곤러시 성공 후 추적
 	};
 	enum AnimationCount

@@ -149,6 +149,9 @@ vector<CInput> CCharacter::Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTAC
 vector<CInput> CCharacter::Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
 
+vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
+
+
 
 
 
@@ -1203,6 +1206,9 @@ void CCharacter::Chase2(_float fTimeDelta)
 					Desc.iTeam = m_iPlayerTeam;
 					Desc.fAnimationLockTime = 0.1f;
 					Desc.pOwner = this;
+
+					Desc.bReflect = true;
+					//Desc.bDrawNoneStop = true;
 
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Chase"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -3726,6 +3732,16 @@ void CCharacter::Set_AttackBackEvent(_bool bEvent)
 	m_bAttackBackEvent = bEvent;
 }
 
+void CCharacter::Set_ReflectAttackBackEvent(_bool bEvent)
+{
+	m_bAttackBackEvent = bEvent;
+
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iReflectAnimationIndex)
+	{
+		Set_CurrentAnimationPositionJump(15.f);
+	}
+}
+
 _bool CCharacter::Get_bAttackBackEvent()
 {
 	return m_bAttackBackEvent;
@@ -3961,6 +3977,7 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 
 }
 
+
 _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection)
 {
 	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
@@ -3980,6 +3997,26 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 
 }
 
+/*
+_float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection, _float3 fScale)
+{
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float3 fPos;
+	XMStoreFloat3(&fPos, vPos);
+
+	//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+
+
+	_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1 - (2 * bFlipDirection))*fScale.x, fScale.y, fScale.z) * XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+	
+
+	XMFLOAT4X4 Result4x4;
+	XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+
+	return Result4x4;
+}
+*/
+
 void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
 {
 
@@ -3996,6 +4033,23 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
 
 }
+
+
+/*
+void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection, _float3 fScale)
+{
+	_float4x4 Result4x4;
+
+	if (fOffset.x == 0 && fOffset.y == 0 && bFlipDirection == false && fScale.x == 1.f && fScale.y == 1.f && fScale.z == 1.f)
+	{
+		XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+	}
+	else
+		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection, fScale);
+
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+}
+*/
 
 void CCharacter::Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset, _bool bFlipDirection)
 {
@@ -4099,6 +4153,34 @@ _bool CCharacter::Check_bCurAnimationisHitGround(_uint iAnimation)
 
 
 	if (iModelIndex == m_iHit_Stand_LightAnimationIndex || iModelIndex == m_iHit_Stand_MediumAnimationIndex || iModelIndex == m_iHit_Crouch_AnimationIndex)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+_bool CCharacter::Check_bCurAnimationisChase(_uint iAnimation)
+{
+	_uint iModelIndex = iAnimation;
+
+	if (iAnimation == 1000)
+		iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+
+	if (iModelIndex == m_iChaseAnimationIndex || m_bChase)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+_bool CCharacter::Check_bCurAnimationisReflect(_uint iAnimation)
+{
+
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iReflectAnimationIndex )
 	{
 		return true;
 	}

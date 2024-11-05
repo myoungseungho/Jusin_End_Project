@@ -30,7 +30,7 @@ public:
 		_short iAttackCount = { 5 };
 		_short iPlayerDirection = {};		//
 		
-		Energy_LightColor eExplosionColor = { ENERGY_LIGHT_NONE };
+		Energy_LightColor eEnergyColor = { ENERGY_LIGHT_NONE };
 
 		_float fColliderfCY = { 0.8f };
 		_float fAttackDelayTime = { 0.07f };

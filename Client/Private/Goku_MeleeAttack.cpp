@@ -864,6 +864,23 @@ void CGoku_MeleeAttack::ForwardDash()
 
 }
 
+void CGoku_MeleeAttack::Reflect()
+{
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_REFLECT);
+
+	}
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && m_pPlayer->Check_bCurAnimationisReflect())
+	{
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_REFLECT);
+		m_pPlayer->Set_CurrentAnimationPositionJump(0.f);
+
+	}
+
+}
+
 void CGoku_MeleeAttack::StopMacro(_float fStopTime)
 {
 	m_pPlayer->Set_AnimationStopWithoutMe(fStopTime);

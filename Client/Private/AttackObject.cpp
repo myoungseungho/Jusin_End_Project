@@ -71,6 +71,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 
 	m_bDrawNoneStop = pDesc->bDrawNoneStop;
+	m_bReflect = pDesc->bReflect;
 
 	if (pDesc->fCameraShakeDuration != 0)
 	{
@@ -274,10 +275,20 @@ HRESULT CAttackObject::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CAttackObject::Set_AttackBackEvent()
+{
+	m_pOwner->Set_AttackBackEvent(true);
+}
+
 void CAttackObject::Set_UpdateStop(_float fStopTime)
 {
 	m_bUpdateStop = true;
 	m_fMaxUpdateStop = fStopTime;
+}
+
+_bool CAttackObject::Get_bReflect()
+{
+	return m_bReflect;
 }
 
 /*
@@ -301,6 +312,11 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+
+		if (pCharacter->Check_bCurAnimationisReflect())
+		{
+			return;
+		}
 
 		AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);

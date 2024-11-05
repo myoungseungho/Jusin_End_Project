@@ -102,6 +102,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iSparkingAnimationIndex = { ANIME_SPARKING };
 	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
 
+	m_iReflectAnimationIndex = { ANIME_REFLECT };
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -200,6 +201,9 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Forward, bind(&CGoku_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
 
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_Reflect, bind(&CGoku_MeleeAttack::Reflect, &m_tAttackMap) });
+
+	
 
 	m_eCharacterID = CUI_Define::PLAYER_ID::GOKU;
 
@@ -1079,6 +1083,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
+		Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.7f,0.f });
+
+		//Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.4f,0.f });
+	
+		
 
 		//Ring_Dust
 
@@ -1132,7 +1141,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
 		Desc.iDirection = m_iLookDirection;
-		Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -1372,7 +1381,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.iDirection = m_iLookDirection;
 
-			Desc.eExplosionColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -1516,7 +1525,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.7f,0.5f });
-		Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.4f,0.9f });
+		//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.4f,0.9f });
+		Character_Make_Effect(TEXT("Ring_Dust"), {0.4f,0.9f });
+
 
 	}
 	break;
@@ -1834,7 +1845,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 2;
 
-				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 				Desc.fColliderfCY = 1.2f;
 
@@ -1903,7 +1914,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 1;
 
-				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 
 				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("CAttackObject_Energy"), TEXT("Layer_AttackObject"), &Desc);
@@ -1978,7 +1989,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 2;
 
-				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 				Desc.fColliderfCY = 1.2f;
 
@@ -2064,7 +2075,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 2;
 
-				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 
 				Desc.fColliderfCY = 1.2f;
@@ -2134,7 +2145,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 5;
 
-				Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 
 				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("CAttackObject_Energy"), TEXT("Layer_AttackObject"), &Desc);
@@ -2415,7 +2426,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainHitCount = 2;
 			Desc.iGainAttackStep = 0;
 
-			Desc.eExplosionColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+			Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 			Desc.fColliderfCY = 1.2f;
 
@@ -2467,6 +2478,49 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 
 	}
+	case Client::CPlay_Goku::ANIME_REFLECT:
+	{
+		if(iAttackEvent == 0)
+		{
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+
+			Desc.ColliderDesc.vCenter = { 0.f,0.8f,0.f };
+			Desc.ColliderDesc.vExtents = { 1.f,1.f,0.2f };
+
+
+			Desc.fhitCharacter_Impus = { 0,0 };
+			Desc.fhitCharacter_StunTime = 0.f;
+			Desc.iDamage = 0;
+			Desc.fLifeTime = 1.f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.f;
+			Desc.pOwner = this;
+			Desc.iGainHitCount = 0;
+			Desc.iGainAttackStep = 0;
+
+			Desc.bReflect = true;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Reflect"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_bReflect = true;
+		}
+		if (iAttackEvent == 1)
+		{
+			if (m_bAttackBackEvent)
+			{
+				Set_Animation(CPlay_Goku::ANIME_IDLE);
+			}
+
+		}
+	}
+		break;
 	case Client::CPlay_Goku::ANIME_IDLE:
 		break;
 	case Client::CPlay_Goku::ANIME_FORWARD_WALK:
