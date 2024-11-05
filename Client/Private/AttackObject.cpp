@@ -117,12 +117,8 @@ void CAttackObject::Update(_float fTimeDelta)
 
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
-		if (m_bEnableDestory)
-		{
-			Destory();
-			//m_pGameInstance->Release_Collider(m_pColliderCom);
-			m_bEnableDestory = false;
-		}
+		Set_RemoteDestory();
+		
 	}
 	else
 		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));

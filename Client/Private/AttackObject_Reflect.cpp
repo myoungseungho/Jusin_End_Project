@@ -133,8 +133,6 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 
 
 		
-
-
 		
 		pAttackObject->Set_RemoteDestory();
 
