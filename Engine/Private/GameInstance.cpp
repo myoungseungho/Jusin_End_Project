@@ -86,6 +86,7 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Player_Update(fTimeDelta);
 
+	m_pCollider_Manager->Destory_ColliderGroup();
 
 	m_pObject_Manager->Update(fTimeDelta);
 
@@ -434,6 +435,11 @@ void CGameInstance::Destroy_Reserve(CCollider_Manager::COLLIDERGROUP eRenderGrou
 void CGameInstance::Destroy_Reserve(CCollider* pCollider)
 {
 	return m_pCollider_Manager->Destroy_Reserve(pCollider);
+}
+
+HRESULT CGameInstance::Destory_ColliderGroup()
+{
+	return m_pCollider_Manager->Destory_ColliderGroup();
 }
 
 

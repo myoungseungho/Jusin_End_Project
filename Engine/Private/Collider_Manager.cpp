@@ -12,7 +12,6 @@ CCollider_Manager::CCollider_Manager()
 
 void CCollider_Manager::Update(_float fTimeDelta)
 {
-	Destory_ColliderGroup();
 	Check_Collision(fTimeDelta);
 }
 
@@ -189,6 +188,9 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
+
+		if (colliderA->GetMineGameObject()->m_bDead || colliderB->GetMineGameObject()->m_bDead)
+			continue;
 
 		//충돌 처리 완료
 		colliderA->m_isColl = true;
