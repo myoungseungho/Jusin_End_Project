@@ -309,9 +309,10 @@ PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
 
     vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
     vector vFactor = g_GlowDescTexture.Sample(LinearSampler, In.vTexcoord);
-
+   // clip(vBlur.a - 0.001f);
     //float fFactor = vFactor.r == 0.f ? 3.2f : vFactor.r;
-    Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor + 0.2f));
+   Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor + 0.2f));
+  //  Out.vColor = saturate(vResult * (1 - vBlur.a) + vBlur * vBlur.a * (g_fAllGlowFactor + 1.2f));
 
     return Out;
 }
@@ -459,7 +460,7 @@ technique11		DefaultTechnique
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_MultiplyBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+        SetBlendState(BS_OneBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;

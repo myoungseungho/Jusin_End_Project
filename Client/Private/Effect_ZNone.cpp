@@ -62,7 +62,6 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 		m_isGlow = pEffectDesc->isGlow;
-
 		if (m_isGlow == true)
 			m_iGameObjectData = -1;
 		else if (m_isGlow == -2)
@@ -75,7 +74,8 @@ HRESULT CEffect_ZNone::Initialize(void* pArg)
 		else
 		{
 			/* 나중에 그릴 글로우 강도 ( * 5 )*/
-			m_iObjectRenderData = (_int)m_fGlowFactor - 1;
+
+			m_iObjectRenderData = 1;//(_int)m_fGlowFactor - 1;
 		}
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)

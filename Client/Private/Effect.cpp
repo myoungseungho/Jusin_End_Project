@@ -30,7 +30,7 @@ HRESULT CEffect::Initialize(void* pArg)
 {
 	CTransform::TRANSFORM_DESC tDesc{};
 	tDesc.fRotationPerSec = XMConvertToRadians(90.f);
-
+	m_iObjectRenderData = 2;
 	if (FAILED(__super::Initialize(&tDesc)))
 		return E_FAIL;
 
