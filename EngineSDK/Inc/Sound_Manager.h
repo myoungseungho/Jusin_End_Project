@@ -50,6 +50,8 @@ public:
 		UI_MENU_OPEN,
 		UI_MENU_CLOSE,
 		UI_MENU_CURSOR,
+		LOBBY_BGM,
+		LOBBY_FOOT_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
