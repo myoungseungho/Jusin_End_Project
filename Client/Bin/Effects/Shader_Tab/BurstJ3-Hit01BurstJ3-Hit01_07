@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 47
+Key: Prototype_Component_Texture_Effect_cmn_smoke04b
+ID: 1
+vTexCoord: 1 7
+NodePosCount: 3
+NodeID: -1 Position: 574 48
+NodeID: 1 Position: 243 19
+NodeID: 1501 Position: 68 58
+MoveTexNodeCount: 1
+MoveTexNodeID: 1501 Direction: 0 1 Speed: 0.1
+SpriteNodeCount: 0
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 1502 LinkDestNodeID: 7
