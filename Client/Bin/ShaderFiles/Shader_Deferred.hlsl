@@ -219,8 +219,8 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL(PS_IN In)
         Out.vSpecular = float4(0.f, 0.f, 0.f, 1.0f); // Ω∫∆Â≈ß∑Ø∏¶ ¡¶∞≈
     }
     return Out;
-
 }
+
 PS_OUT_LIGHT PS_MAIN_POINT_PLAYER(PS_IN In)
 {
     PS_OUT_LIGHT Out = (PS_OUT_LIGHT) 0;
@@ -380,7 +380,6 @@ float CalculateEdge(float2 vTexcoord, float fViewZ, float4 vNormal, float fEdgeT
    
     float fEdge = step(fEdgeDepthThreshold, fDepthDiff); // * step(fEdgeNormalThreshold, fNormalDiff);
 
-
     return fEdge;
 }
 
@@ -412,6 +411,7 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
     Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
    
+    
 
     return Out;
 }

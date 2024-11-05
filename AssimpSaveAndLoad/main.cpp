@@ -1,20 +1,27 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/Resources/Map/Space/"
+#define DATAFILEPATH "../Client/Bin/Resources/Map/Volcano/"
 
 int main() {
 	ModelConverter converter;
-
+	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/Goku_SS3_Rotate0.fbx", TYPE_ANIM},
-		{"Models/Ton_Select.fbx", TYPE_ANIM},
-		{"Models/BRRock_1.fbx", TYPE_NONANIM},
-		{"Models/Meteo_1.fbx", TYPE_NONANIM},
-		{"Models/Meteo_2.fbx", TYPE_NONANIM},
-		{"Models/Meteo_3.fbx", TYPE_NONANIM},
-		{"Models/Rock_1.fbx", TYPE_NONANIM},
-		{"Models/Rock_2.fbx", TYPE_NONANIM},
-		{"Models/Rock_3.fbx", TYPE_NONANIM}
+		{"Models/vo_cliff_back.fbx", TYPE_NONANIM},
+		{"Models/vo_cliff_far.fbx", TYPE_NONANIM},
+		{"Models/vo_cliff01.fbx", TYPE_NONANIM},
+		{"Models/vo_cliff02.fbx", TYPE_NONANIM},
+		{"Models/vo_cliff03.fbx", TYPE_NONANIM},
+		{"Models/vo_cliff04.fbx", TYPE_NONANIM},
+		{"Models/vo_ground00.fbx", TYPE_NONANIM},
+		{"Models/vo_ground01.fbx", TYPE_NONANIM},
+		{"Models/vo_island01.fbx", TYPE_NONANIM},
+		{"Models/vo_island02.fbx", TYPE_NONANIM},
+		{"Models/vo_lava_fall.fbx", TYPE_NONANIM},
+		{"Models/vo_lava_ground.fbx", TYPE_NONANIM},
+		{"Models/vo_lava_pool.fbx", TYPE_NONANIM},
+		{"Models/vo_mountain.fbx", TYPE_NONANIM},
+		{"Models/vo_skycloud.fbx", TYPE_NONANIM},
+		{"Models/vo_smoke03.fbx", TYPE_NONANIM}
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그

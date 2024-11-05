@@ -311,7 +311,7 @@ PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
     vector vFactor = g_GlowDescTexture.Sample(LinearSampler, In.vTexcoord);
    // clip(vBlur.a - 0.001f);
     //float fFactor = vFactor.r == 0.f ? 3.2f : vFactor.r;
-   Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor + 0.2f));
+    Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor));
   //  Out.vColor = saturate(vResult * (1 - vBlur.a) + vBlur * vBlur.a * (g_fAllGlowFactor + 1.2f));
 
     return Out;
