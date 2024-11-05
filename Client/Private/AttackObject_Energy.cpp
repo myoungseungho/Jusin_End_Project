@@ -85,8 +85,8 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}
@@ -200,7 +200,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				}
 				else
 				{
-					Destory();
+					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				}
 
 				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
@@ -264,14 +264,14 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 
 				//버그 수정 전까지 임시
-				//Destory();
+				//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 			}
 			else if (eResult == RESULT_GUARD) //가드
 			{
 				//m_pOwner->Set_AnimationStop(0.08f);
 				//pCharacter->Set_AnimationStop(0.08f);
-				Destory();
+				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 			}
 
@@ -318,7 +318,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				m_iAttackCount--;
 				if (m_iAttackCount <= 0)
 				{
-					//Destory();
+					//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 					Erase();
 				}
 				return;
@@ -354,7 +354,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				if (m_iAttackCount == 0)
 				{
 
-					//Destory();
+					//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				}
 				
 	
@@ -455,7 +455,7 @@ void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
 
-	Destory();
+	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 }
 
 void CAttackObject_Energy::CollisingAttack()
@@ -619,8 +619,8 @@ void CAttackObject_Energy::Erase()
 {
 	if (m_bEnableDestory)
 	{
-		Destory();
-		m_pGameInstance->Release_Collider(m_pColliderCom);
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+		//m_pGameInstance->Release_Collider(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }

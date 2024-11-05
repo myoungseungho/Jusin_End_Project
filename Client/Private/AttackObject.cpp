@@ -120,7 +120,7 @@ void CAttackObject::Update(_float fTimeDelta)
 		if (m_bEnableDestory)
 		{
 			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}
@@ -295,8 +295,9 @@ void CAttackObject::Set_RemoteDestory()
 {
 	if (m_bEnableDestory)
 	{
-		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		//m_pGameInstance->Release_Collider(m_pColliderCom);
+		//CGmaeInstance::Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 
@@ -473,7 +474,8 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			{
 				if (m_bEnableDestory)
 				{
-					Destory();
+
+					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 					m_bEnableDestory = false;
 				}
 			}
@@ -486,7 +488,8 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		if (m_bEnableDestory)
 		{
-			Destory();
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}

@@ -70,8 +70,8 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}
@@ -218,7 +218,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//{
 			//	if (m_bEnableDestory)
 			//	{
-			//		Destory();
+			//		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 			//		m_bEnableDestory = false;
 			//	}
 			//}
@@ -232,7 +232,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		if (m_bEnableDestory)
 		{
-			Destory();
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 			m_bEnableDestory = false;
 		}
 	}
@@ -247,7 +247,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			////Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
 			//m_pGameInstance->Release_Collider(m_pColliderCom); 
-			//Destory();	
+			//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;	
 			//
 			////이펙트, 맵밖으로 이동
 
@@ -346,8 +346,8 @@ void CAttackObject_Ranged::Erase()
 {
 	if (m_bEnableDestory)
 	{
-		Destory();
-		m_pGameInstance->Release_Collider(m_pColliderCom);
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+		//m_pGameInstance->Release_Collider(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }
@@ -356,8 +356,8 @@ _bool CAttackObject_Ranged::BeReflect()
 {
 
 	//Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
-	m_pGameInstance->Release_Collider(m_pColliderCom);
-	Destory();
+	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+	//m_pGameInstance->Release_Collider(m_pColliderCom);
 
 	//이펙트, 맵밖으로 이동
 

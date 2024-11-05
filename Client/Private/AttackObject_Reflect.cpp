@@ -60,8 +60,8 @@ void CAttackObject_Reflect::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			m_pGameInstance->Release_Collider(m_pColliderCom);
-			Destory();
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 			m_bEnableDestory = false;
 
@@ -100,7 +100,7 @@ void CAttacKObject_Reflect::Set_RemoteDestory()
 	if (m_bEnableDestory)
 	{
 		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }

@@ -60,8 +60,8 @@ void CAttackObject_Chase::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 		}
 	}
@@ -197,7 +197,7 @@ void CAttackObject_Chase::Late_Update(_float fTimeDelta)
 	//		//{
 	//		//	m_pOwner->Set_ForcedGravityTime_LittleUp();
 	//		//}
-	//		Destory();
+	//		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 	//	}
 	//
 
@@ -222,7 +222,7 @@ void CAttacKObject_Chase::Set_RemoteDestory()
 	if (m_bEnableDestory)
 	{
 		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }
@@ -328,7 +328,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		//if (m_bEnableDestory)
 		//{
-		//	Destory();
+		//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		//	m_bEnableDestory = false;
 		//}
 	}
