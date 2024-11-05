@@ -52,12 +52,13 @@ void CLobby_Goku::Update(_float fTimeDelta)
 	_float3 vTargetDir = { 0.f, 0.f, 0.f }; // 목표 방향
 	_bool bInput = false;
 
-	// 여러 방향키 입력을 동시에 처리
+	// 현재 키 상태 저장
 	bool bCurrentKeyUp = m_pGameInstance->Key_Pressing(DIK_UP);
 	bool bCurrentKeyDown = m_pGameInstance->Key_Pressing(DIK_DOWN);
 	bool bCurrentKeyLeft = m_pGameInstance->Key_Pressing(DIK_LEFT);
 	bool bCurrentKeyRight = m_pGameInstance->Key_Pressing(DIK_RIGHT);
 
+	// 키 입력에 따른 목표 방향 설정
 	if (bCurrentKeyUp)
 	{
 		vTargetDir.z += 1.f;
@@ -88,11 +89,25 @@ void CLobby_Goku::Update(_float fTimeDelta)
 
 		// 이동 처리
 		MoveForward(fTimeDelta);
+
+		// 발소리 타이머 업데이트
+		m_fFootstepTimer += fTimeDelta;
+		if (m_fFootstepTimer >= m_fFootstepInterval)
+		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOBBY_FOOT_SFX, false, 0.5f);
+			m_fFootstepTimer = 0.f; // 타이머 리셋
+		}
 	}
 	else
 	{
-		//애니메이션 설정: 입력이 없을 때 기본 애니메이션 재생
+		// 애니메이션 설정: 입력이 없을 때 기본 애니메이션 재생 (인덱스 1)
 		m_pModelCom->SetUp_Animation(1, true, 0.1f);
+
+		// 대쉬 애니메이션이 끝났음을 표시
+		m_bDashTriggered = false;
+
+		// 타이머 리셋
+		m_fFootstepTimer = 0.f;
 	}
 
 	// 현재 프레임의 애니메이션 재생
@@ -104,8 +119,7 @@ void CLobby_Goku::Update(_float fTimeDelta)
 	m_bPrevKeyLeft = bCurrentKeyLeft;
 	m_bPrevKeyRight = bCurrentKeyRight;
 
-
-	//레벨 이동
+	// 레벨 이동
 	Entry_Level();
 }
 

@@ -44,6 +44,11 @@ private:
 	_bool m_bPrevKeyLeft = false;
 	_bool m_bPrevKeyRight = false;
 
+	// 발소리 타이머
+	_float m_fFootstepTimer = 0.f;
+	// 발소리 재생 간격 (초)
+	_float m_fFootstepInterval = 0.3f; // 예: 0.5초마다 발소리 재생
+
 public:
 	static CLobby_Goku* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

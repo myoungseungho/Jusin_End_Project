@@ -118,7 +118,7 @@ HRESULT CLevel_Lobby::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGSE/Amb/ARC_BG_Amb_LobbyWind_LP.ogg", CSound_Manager::SOUND_KEY_NAME::LOBBY_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOBBY_BGM, true, 1.f);
 
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_LOB_AVT_Foot_Default.ogg", CSound_Manager::SOUND_KEY_NAME::LOBBY_FOOT_SFX, CSound_Manager::SOUND_CATEGORY::SFX, true);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_LOB_AVT_Foot_Default.ogg", CSound_Manager::SOUND_KEY_NAME::LOBBY_FOOT_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 	return S_OK;
 }
