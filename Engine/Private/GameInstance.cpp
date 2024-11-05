@@ -224,6 +224,14 @@ HRESULT CGameInstance::Set_LoadingLevel_Index(_uint _level)
 	return m_pLevel_Manager->Set_LoadingLevel_Index(_level);
 }
 
+CLevel* CGameInstance::Get_Level()
+{
+	if (nullptr == m_pLevel_Manager)
+		return nullptr;
+
+	return m_pLevel_Manager->Get_Level();
+}
+
 HRESULT CGameInstance::Add_Timer(const _wstring& strTimerTag)
 {
 	return m_pTimer_Manager->Add_Timer(strTimerTag);

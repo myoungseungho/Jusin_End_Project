@@ -102,6 +102,11 @@ HRESULT CLevel_Lobby::Initialize()
 
 void CLevel_Lobby::Update(_float fTimeDelta)
 {
+	if (m_bChangeLevel)
+	{
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+			return;
+	}
 
 }
 
@@ -110,6 +115,11 @@ HRESULT CLevel_Lobby::Render(_float fTimeDelta)
 	SetWindowText(g_hWnd, TEXT("로비레벨"));
 
 	return S_OK;
+}
+
+void CLevel_Lobby::Change_Level()
+{
+	m_bChangeLevel = true;
 }
 
 HRESULT CLevel_Lobby::Ready_Sound()
@@ -138,5 +148,7 @@ CLevel_Lobby* CLevel_Lobby::Create(ID3D11Device* pDevice, ID3D11DeviceContext* p
 
 void CLevel_Lobby::Free()
 {
+	m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::LOBBY_BGM);
+
 	__super::Free();
 }

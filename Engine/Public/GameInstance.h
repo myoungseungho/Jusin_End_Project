@@ -42,6 +42,7 @@ public: /* For.Level_Manager */
 	_uint Get_CurrentLevel_Index();
 	_uint Get_LoadingLevel_Index();
 	HRESULT Set_LoadingLevel_Index(_uint);
+	class CLevel* Get_Level();
 
 public: /* For.Timer_Manager */
 	HRESULT Add_Timer(const _wstring& strTimerTag);

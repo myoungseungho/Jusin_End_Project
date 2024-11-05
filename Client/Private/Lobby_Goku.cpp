@@ -4,6 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Level_Loading.h"
+#include "Level_Lobby.h"
 CLobby_Goku::CLobby_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -276,8 +277,8 @@ void CLobby_Goku::Entry_Level()
 
 	if (isGameEntry)
 	{
-		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
-			return;
+		CLevel_Lobby* level_Lobby= static_cast<CLevel_Lobby*>( m_pGameInstance->Get_Level());
+		level_Lobby->Change_Level();
 	}
 }
 
