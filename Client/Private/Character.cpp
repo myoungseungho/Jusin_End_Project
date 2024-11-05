@@ -3735,10 +3735,11 @@ void CCharacter::Set_AttackBackEvent(_bool bEvent)
 void CCharacter::Set_ReflectAttackBackEvent(_bool bEvent)
 {
 	m_bAttackBackEvent = bEvent;
+	m_bReflect = bEvent;
 
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iReflectAnimationIndex)
 	{
-		Set_CurrentAnimationPositionJump(15.f);
+		Set_CurrentAnimationPositionJump(14.f);
 	}
 }
 
@@ -3856,6 +3857,11 @@ _bool CCharacter::Get_bDying()
 void CCharacter::Set_StopAllAttackObject(_float fStopTime)
 {
 	CBattleInterface_Manager::Get_Instance()->Stop_AllAttackObject(fStopTime);
+}
+
+_bool CCharacter::Get_bReflect()
+{
+	return m_bReflect;
 }
 
 

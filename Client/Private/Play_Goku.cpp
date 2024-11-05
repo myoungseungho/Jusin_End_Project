@@ -11,6 +11,8 @@
 
 #include "AttackObject_Energy.h"
 
+#include "AttackObject_Reflect.h"
+
 #include "UI_Manager.h"
 #include "iostream"
 
@@ -22,6 +24,7 @@
 
 #include "BoneEffectObject.h"
 #include "Effect_Manager.h"	
+
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -2485,9 +2488,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CAttackObject::ATTACK_DESC Desc{};
 
 			if (m_iPlayerTeam == 1)
-				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT;
 			else
-				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT;
 			Desc.ColliderDesc.pMineGameObject = this;
 
 			Desc.ColliderDesc.vCenter = { 0.f,0.8f,0.f };
@@ -2507,7 +2510,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.bReflect = true;
 
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Reflect"), TEXT("Layer_AttackObject"), &Desc);
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Reflect"), TEXT("Layer_AttackObject"), &Desc);
+			m_pReflectObject = m_pGameInstance->Add_GameObject_ToLayer_AndGet(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Reflect"), TEXT("Layer_AttackObject"), &Desc);
+
 
 			m_bReflect = true;
 		}
@@ -2516,8 +2521,25 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent)
 			{
 				Set_Animation(CPlay_Goku::ANIME_IDLE);
+
+				//if (m_pReflectObject != nullptr)
+				//{
+				//	//static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Set_RemoteDestory();
+				//	static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Destory();
+				//
+				//	m_pReflectObject = nullptr;
+				//}
 			}
 
+			if (m_pReflectObject != nullptr)
+			{
+				//static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Set_RemoteDestory();
+				static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Destory();
+
+				m_pReflectObject = nullptr;
+			}
+
+			m_bReflect = false;
 		}
 	}
 		break;

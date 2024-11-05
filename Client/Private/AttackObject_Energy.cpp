@@ -161,6 +161,16 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage*m_iAttackCount, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
 
+			if (pCharacter->Get_bReflect())
+			{
+				m_iAttackCount--;
+				if (m_iAttackCount <= 0)
+				{
+					Erase();
+				}
+				return;
+			}
+
 			AttackColliderResult eResult =
 				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
 
@@ -292,6 +302,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 	//에너지파 vs 사람 
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
+
 	
 		//0.07초마다 히트판정
 		//if (m_fAccAttackDelayTime > 0.07)
@@ -300,8 +311,19 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 	
 			m_fAccAttackDelayTime = 0.f;
 	
-	
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+
+			if (pCharacter->Get_bReflect())
+			{
+				m_iAttackCount--;
+				if (m_iAttackCount <= 0)
+				{
+					//Destory();
+					Erase();
+				}
+				return;
+			}
+
 			AttackColliderResult eResult{ RESULT_NONE };
 	
 			cout << m_iAttackCount << endl;

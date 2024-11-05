@@ -88,7 +88,7 @@ public:
 	void Set_UpdateStop(_float fStopTime);
 	_bool Get_bReflect();
 public:
-	//void Set_RemoteDestory();
+	void Set_RemoteDestory();
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;

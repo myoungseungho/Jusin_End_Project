@@ -291,8 +291,7 @@ _bool CAttackObject::Get_bReflect()
 	return m_bReflect;
 }
 
-/*
-void CAttacKObject::Set_RemoteDestory()
+void CAttackObject::Set_RemoteDestory()
 {
 	if (m_bEnableDestory)
 	{
@@ -300,8 +299,12 @@ void CAttacKObject::Set_RemoteDestory()
 		Destory();
 		m_bEnableDestory = false;
 	}
+
 }
-*/
+
+
+
+
 
 
 void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)

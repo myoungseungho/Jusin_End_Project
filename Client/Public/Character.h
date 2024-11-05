@@ -324,6 +324,8 @@ public:
 
 	void Set_StopAllAttackObject(_float fStopTime);
 
+	_bool Get_bReflect();
+
 protected:
 	void Reset_AttackStep();
 
@@ -590,6 +592,9 @@ protected:
 
 	_bool m_bReflect = { false };
 	//_bool m_bReflectAttackBack 
+
+	_bool m_bBeReflecting = { false };
+	CGameObject* m_pReflectObject = { nullptr };
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
