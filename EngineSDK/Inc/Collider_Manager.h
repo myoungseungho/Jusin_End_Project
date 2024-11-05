@@ -43,6 +43,7 @@ public:
 	HRESULT Destory_ColliderGroup();
 	void	Destroy_Reserve(COLLIDERGROUP eRenderGroup);
 	void	Destroy_Reserve(CCollider* pCollider);       // 개별 콜라이더 삭제 예약 함수
+
 private:
 	void Process_1P_Body_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
