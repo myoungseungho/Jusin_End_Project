@@ -249,7 +249,21 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
         effectData.rotation = pEffect->Get_Effect_Rotation();
         effectData.vColor = pEffect->m_vColor;
         effectData.vGlowColor = pEffect->m_vGlowColor;
-        effectData.fGlowFactor = pEffect->m_fGlowFactor;
+
+        if (effectData.uniqueIndex <= -2) //프리
+        {
+            effectData.fGlowFactor = pEffect->m_iObjectRenderData - 5 + 1;
+
+        }
+        else if (effectData.uniqueIndex == -1) //글로우 x
+        {
+            effectData.fGlowFactor = pEffect->m_iObjectRenderData;
+        }
+        else if (effectData.uniqueIndex >= 0)
+        {
+            effectData.fGlowFactor = pEffect->m_iObjectRenderData + 1;
+        }
+
         effectData.iDerredPassIndex = pEffect->m_iDerredPassIndex;
         effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 

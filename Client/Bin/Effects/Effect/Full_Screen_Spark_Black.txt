@@ -16,14 +16,14 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 0
-Position: 3.363 1.5 0
+UniqueIndex: -1
+Position: 3.463 1.5 0
 Scale: 0.2 0.1 0.3
 Rotation: 0 0 14
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 3
 DerredPassIndex: 0
 NumKeyFrame: 1
 
@@ -46,12 +46,12 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -2.3 2.5 0
-Scale: 0.199989 0.0999968 0.3
+Scale: 0.199984 0.0999943 0.3
 Rotation: 0 0 162.948
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 1
 
@@ -72,14 +72,14 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 0
+UniqueIndex: -1
 Position: -1.666 0.5 -0.5
-Scale: 0.199977 0.0999901 0.299986
+Scale: 0.199969 0.0999863 0.299981
 Rotation: 63.987 0 232.403
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 
@@ -100,14 +100,14 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 0
+UniqueIndex: -1
 Position: 2.063 -0.1 -1.3
 Scale: 0.2 0.1 0.3
 Rotation: 45.403 0 342.312
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 

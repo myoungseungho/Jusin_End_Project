@@ -76,8 +76,15 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		}
 		else
 		{
-			/* 나중에 그릴 글로우 강도 ( * 5 )*/
-			m_iObjectRenderData = 1;//(_int)m_fGlowFactor - 1;
+			if (m_iRenderIndex != 1)
+			{
+				/* 나중에 그릴 글로우 강도 ( * 5 )*/
+				m_iObjectRenderData = (_int)m_fGlowFactor - 1;
+			}
+			else
+			{
+				m_iObjectRenderData = 1;
+			}
 		}
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
