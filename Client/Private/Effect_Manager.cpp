@@ -457,6 +457,8 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
+				EffectDesc.isGlow = iter->m_isGlow;
+				EffectDesc.fGlowFactor =iter->m_fGlowFactor;
 				EffectDesc.vColor = iter->m_vColor;
 				EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 
@@ -661,6 +663,8 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 	EffectDesc.vRotation = { 0.f, 0.f, 0.f };
 	EffectDesc.iRenderIndex = 1;
 	EffectDesc.vColor = { 0.f, 0.f, 0.f, 30.f };
+	EffectDesc.isGlow = -1;
+	EffectDesc.fGlowFactor = 0;
 	EffectDesc.LayerMatrix = XMMatrixIdentity();
 
 	CGameObject* pEffect = nullptr;

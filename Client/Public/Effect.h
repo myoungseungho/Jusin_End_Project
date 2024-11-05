@@ -94,7 +94,7 @@ protected:
 
 	_float			m_fCurrentAnimPos = {};
 
-	_int m_isGlow = { false };
+
 	/* 툴용 쉐이더 패스 인덱스 */
 
 public:
@@ -123,6 +123,7 @@ public:
 	_uint			m_iDerredPassIndex = {0};
 
 	_bool			m_bIsCopy = { false };
+	_int				m_isGlow = { false };
 
 	EFFECT_DESC			m_ForCopyInform;
 protected:
