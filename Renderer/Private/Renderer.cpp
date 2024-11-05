@@ -814,7 +814,7 @@ HRESULT CRenderer::Render_NonLight_Effect(_float fTimeDelta)
 	_int iOutLineCount = 0;
 	for (auto& pRenderObject : m_RenderObjects[RG_NONLIGHT_EFFECT])
 	{
-		if (pRenderObject->Get_GameObjectData() != -1)
+		if (pRenderObject->Get_GameObjectData() > -1)
 		{
 			if (nullptr != pRenderObject)
 				pRenderObject->Priority_Render(fTimeDelta);
@@ -1202,7 +1202,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 #pragma region All_EffectGlow
 	for (size_t i = 0; i < 10; i++)
 	{
-		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowDiffuse_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.1f, 0.1f, 0.1f, 0.f))))
+		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowDiffuse_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 			return E_FAIL;
 		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowAlpha_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 			return E_FAIL;

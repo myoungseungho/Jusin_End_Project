@@ -43,11 +43,8 @@ public:
 	void Set_GameObjectData(_int iData) {
 		m_iGameObjectData = iData;
 	}
-	void Set_ObjectRenderData(_int iPri, _int iData) {
-		if (iPri == -2)
-			m_iObjectRenderData = iData + 4;
-		else if (iPri != -1)
-			m_iObjectRenderData = iData - 1;
+	void Set_ObjectRenderData(_int iData) {
+		m_iObjectRenderData = iData;
 	}
 	_int Get_GameObjectData() { return m_iGameObjectData; }
 	_int* Get_GameObjectData_Ptr() { return &m_iGameObjectData; }

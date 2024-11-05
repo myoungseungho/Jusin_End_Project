@@ -204,6 +204,11 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
+			if (pEffect->m_EffectName.find(L"BurstJ-03") != std::wstring::npos)
+			{
+				int a = 10;
+			}
+
 			pEffect->Late_Update(fTimeDelta);
 		}
 	}
