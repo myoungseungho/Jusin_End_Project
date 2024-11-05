@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UIObject.h"
+#include "UI_Define.h"
 
 BEGIN(Client)
 
@@ -30,6 +31,8 @@ public:
 	void SelectChoice() { m_iNumChoice++; m_iTextureIndex++; }
 	_uint Get_TextrueIndex() { return m_iTextureIndex; }
 	_uint Get_NumChoice() { return m_iNumChoice; }
+	void SetPlayerID(CUI_Define::PLAYER_ID eID) { m_ePlayerID = eID; }
+	CUI_Define::PLAYER_ID  GetPlayerID() { return m_ePlayerID ; }
 	
 
 private:
@@ -38,6 +41,7 @@ private:
 
 	_uint m_iTextureIndex = { 0 };
 	_uint m_iNumChoice = { 0 };
+
 
 
 public:

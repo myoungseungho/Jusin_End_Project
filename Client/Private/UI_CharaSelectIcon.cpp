@@ -36,6 +36,8 @@ HRESULT CUI_CharaSelectIcon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	
+
 
 	UI_DESC* Desc = static_cast<UI_DESC*>(pArg);
 
@@ -46,6 +48,11 @@ HRESULT CUI_CharaSelectIcon::Initialize(void* pArg)
 	m_pArrowTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_CHARACTER, TEXT("Layer_MarkArrow"), TEXT("Com_Transform")));
 	Safe_AddRef(m_pArrowTransform);
 
+	if (m_iTexIndex == 0)
+	{
+		CreateSelectLine();
+		CreateCharaImage();
+	}
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 
 	return S_OK;
@@ -117,19 +124,19 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 	switch (m_iTexIndex)
 	{
 		case CUI_Define::GOKU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN, CUI_Define::GOKU) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::GOKU), InputEvent(DIK_RETURN, CUI_Define::GOKU) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::ANDROID21:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , InputEvent(DIK_RETURN, CUI_Define::ANDROID21) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , ArrowToPlayerID(CUI_Define::ANDROID21), InputEvent(DIK_RETURN, CUI_Define::ANDROID21) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::BUU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN, CUI_Define::BUU) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::BUU), InputEvent(DIK_RETURN, CUI_Define::BUU) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::HIT:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, InputEvent(DIK_RETURN, CUI_Define::HIT) : m_fPosY = 620.f;
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::HIT),InputEvent(DIK_RETURN, CUI_Define::HIT) : m_fPosY = 620.f;
 			break;
 
 		default:
@@ -151,10 +158,10 @@ void CUI_CharaSelectIcon::InputEvent(_uint iKey, CUI_Define::PLAYER_ID ePlayerID
 
 		CreateChoiceMark(ePlayerID);
 		CharacterCreateDesc(ePlayerID);
-		CreateSelectLine();
-		CreateCharaImage(ePlayerID);
 
 		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();
+		CreateSelectLine();
+		CreateCharaImage();
 	}
 }
 
@@ -267,22 +274,27 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(SetIndex,iTeam, ePlayerSlot, PrototypeTage);
 }
 
-void CUI_CharaSelectIcon::CreateCharaImage(CUI_Define::PLAYER_ID ePlayerID)
+void CUI_CharaSelectIcon::CreateCharaImage()
 {
 	CUI_CharaSelectImage::UI_IMAGE_DESC ImageDesc = {};
-	ImageDesc.iTextureIndex = ePlayerID;
 	ImageDesc.iNumChoice = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice();
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectImage"), TEXT("Layer_BackGround"), &ImageDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectImage"), TEXT("Layer_BackGroundImage"), &ImageDesc);
 }
 
 void CUI_CharaSelectIcon::CreateSelectLine()
 {
 	CUI_SelectLine::UI_LINE_DESC LineDesc= {};
 	LineDesc.iNumChoice = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice();
-
+	
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectLine"), TEXT("Layer_BackGround"), &LineDesc);
 }
+
+void CUI_CharaSelectIcon::ArrowToPlayerID(CUI_Define::PLAYER_ID eID)
+{
+	dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SetPlayerID(eID);
+}
+
 
 CUI_CharaSelectIcon* CUI_CharaSelectIcon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

@@ -105,7 +105,7 @@ void CUI_SelectArrow::PositionUpdate(_float fTimeDelta)
 
 	_float fPosX = XMVectorGetX(vPos) + g_iWinSizeX * 0.5f;
 	_float fPosY = g_iWinSizeY * 0.5f - XMVectorGetY(vPos);
-
+	
 	if (fPosX <= 50)
 		m_pTransformCom->Go_Right(fTimeDelta);
 	else if(fPosX >= 1800)

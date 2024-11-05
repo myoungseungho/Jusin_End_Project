@@ -522,7 +522,8 @@ PS_OUT PS_SelectIcon(PS_IN In)
     if (Out.vColor.a < 0.1f)
         discard;
     
-       Out.vColor *= vMask;
+       Out.vColor.rgb *= vMask.rgb;
+        Out.vColor.a = vMask.r;
     
     float2 vTopTexcoord = { 0.5f , 0.f};
     float2 vBotTexcoord = { 0.7f ,1.f};
@@ -531,7 +532,6 @@ PS_OUT PS_SelectIcon(PS_IN In)
     
     if (fLineY > 0)
         discard;
-    
     
     return Out;
 }

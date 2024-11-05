@@ -14,7 +14,7 @@ BEGIN(Client)
 class CUI_SelectLine final : public CUIObject
 {
 public:
-	typedef struct
+	typedef struct :public CUIObject::UI_DESC
 	{
 		_uint iNumChoice = {};
 	}UI_LINE_DESC;
@@ -36,12 +36,12 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-private:
 	void InitPosition();
 
-private:
-	_uint m_iNumChoice = { 0 };
 
+
+private:
+	_uint m_iNumIndex = { 0 };
 
 public:
 	static CUI_SelectLine* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

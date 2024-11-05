@@ -3,6 +3,8 @@
 #include "UI_CharaSelectImage.h"
 #include "RenderInstance.h"
 
+#include "UI_SelectArrow.h"
+
 CUI_CharaSelectImage::CUI_CharaSelectImage(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
 {
@@ -32,7 +34,7 @@ HRESULT CUI_CharaSelectImage::Initialize(void* pArg)
 
 
 	UI_IMAGE_DESC* Desc = static_cast<UI_IMAGE_DESC*>(pArg);
-	m_iTexIndex = Desc->iTextureIndex;
+	//m_iTexIndex = Desc->iTextureIndex;
 	m_iNumChoice = Desc->iNumChoice;
 
 	InitPosition();
@@ -51,6 +53,12 @@ void CUI_CharaSelectImage::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	_int iThieSize = m_pGameInstance->Get_Layer(LEVEL_CHARACTER, TEXT("Layer_BackGroundImage")).size() - 1;
+
+	if(m_iNumChoice == iThieSize && !m_pGameInstance->Get_Layer(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")).empty())
+		m_iTexIndex = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->GetPlayerID();
+	
+	
 
 }
 
@@ -64,7 +72,8 @@ void CUI_CharaSelectImage::Late_Update(_float fTimeDelta)
 HRESULT CUI_CharaSelectImage::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
+		return E_FAIL;
+
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTexIndex)))
 		return E_FAIL;
@@ -121,6 +130,10 @@ void CUI_CharaSelectImage::InitPosition()
 
 	case 3:
 		m_fPosX = 1280 - 250;
+		break;
+
+	default:
+		Destory();
 		break;
 
 	}

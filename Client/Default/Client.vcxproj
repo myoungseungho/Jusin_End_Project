@@ -190,6 +190,7 @@
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
+    <ClInclude Include="..\public\UI_CharaSelectFont.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
     <ClInclude Include="..\public\UI_CharaSelectImage.h" />
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectFont.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />

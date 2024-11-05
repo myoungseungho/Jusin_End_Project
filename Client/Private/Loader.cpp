@@ -98,6 +98,7 @@
 #include "UI_CharaSelectImage.h"
 #include "UI_ChoiceIcon.h"
 #include "UI_SelectLine.h"
+#include "UI_CharaSelectFont.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -310,6 +311,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_ChoiceBG_01.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_CharacterSelectFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharacterSelectFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_Title.png")))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_CharaSelectBG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectBG"),
 		CUI_Chara_Select_BG::Create(m_pDevice, m_pContext))))
@@ -339,6 +345,13 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectLine"),
 		CUI_SelectLine::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectFont"),
+		CUI_CharaSelectFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -421,7 +434,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Timer"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/TimerNumber/TimerNum%d.png"), 11))))
 		return E_FAIL;
-
 
 	/* For.Prototype_Component_Texture_UI_Time_Panel */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_TimerPanel"),

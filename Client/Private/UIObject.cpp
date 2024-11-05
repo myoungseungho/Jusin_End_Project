@@ -109,11 +109,7 @@ void CUIObject::DebugTesting(_float fSizeOffset, _float fDepth)
 }
 
 _bool CUIObject::ClickRange(_float fPickPosX, _float fPickPosY)
-{
-	//POINT pt;
-	//GetCursorPos(&pt);
-	//ScreenToClient(g_hWnd, &pt);
-	
+{	
 	_float MouseX = fPickPosX;
 	_float MouseY = fPickPosY;
 
@@ -129,9 +125,8 @@ _bool CUIObject::ClickRange(_float fPickPosX, _float fPickPosY)
 	_bool bBot = (fPosY + fSizeY * 0.5f > MouseY);
 
 	if (bLeft && bRight && bTop && bBot)
-	{
 		return true;
-	}
+	
 
 	return false;
 }

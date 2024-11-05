@@ -5,6 +5,7 @@
 #include "RenderInstance.h"
 
 #include "UI_Define.h"
+#include "UI_SelectArrow.h";
 
 CUI_SelectLine::CUI_SelectLine(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
@@ -32,9 +33,10 @@ HRESULT CUI_SelectLine::Initialize(void* pArg)
 		return E_FAIL;
 
 	UI_LINE_DESC* Desc = static_cast<UI_LINE_DESC*>(pArg);
-	m_iNumChoice = Desc->iNumChoice;
+	m_iNumIndex = Desc->iNumChoice;
 
 	InitPosition();
+	m_pTransformCom->Rotation({ 0,0,1 }, XMConvertToRadians(10.f));
 
 	__super::Set_UI_Setting(60, 470, m_fPosX, 190, 0.f);
 
@@ -53,7 +55,7 @@ void CUI_SelectLine::Update(_float fTimeDelta)
 
 void CUI_SelectLine::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_SelectLine::Render(_float fTimeDelta)
@@ -101,17 +103,12 @@ HRESULT CUI_SelectLine::Bind_ShaderResources()
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	//_float fAlpha = 1.f;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &fAlpha, sizeof(_float))))
-	//	return E_FAIL;
-
-
 	return S_OK;
 }
 
 void CUI_SelectLine::InitPosition()
 {
-	switch (m_iNumChoice)
+	switch (m_iNumIndex)
 	{
 	case 0:
 		m_fPosX = 405;
@@ -131,6 +128,10 @@ void CUI_SelectLine::InitPosition()
 	case 3:
 		m_fPosX = 1280 - 245;
 		m_pTransformCom->Rotation({ 0,0,1 }, XMConvertToRadians(350.f));
+		break;
+
+	default:
+		Destory();
 		break;
 
 	}
