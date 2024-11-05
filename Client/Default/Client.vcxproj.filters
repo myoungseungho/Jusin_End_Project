@@ -316,6 +316,9 @@
     <ClCompile Include="..\Private\Lobby_Sky.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Sky</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Lobby_Sky_Of_Sea.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Sky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1152,6 +1155,9 @@
       <Filter>02.GameObjects\Lobby\Lobby_Goku</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Sky.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Lobby_Sky_Of_Sea.h">
       <Filter>02.GameObjects\Lobby\Lobby_Sky</Filter>
     </ClInclude>
   </ItemGroup>

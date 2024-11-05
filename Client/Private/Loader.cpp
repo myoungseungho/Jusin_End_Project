@@ -118,7 +118,7 @@
 #include "Lobby_Parasol.h"
 #include "Lobby_Goku.h"
 #include "Lobby_Sky.h"
-
+#include "Lobby_Sky_Of_Sea.h"
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
 	, m_pContext{ pContext }
@@ -3151,8 +3151,14 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Parasol.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	PreTransformMatrix = XMMatrixScaling(0.02f, 0.02f, 0.02f);
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Sky_Sea_Of_Cloud.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
@@ -3193,6 +3199,10 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky"),
 		CLobby_Sky::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"),
+		CLobby_Sky_Of_Sea::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),

@@ -193,6 +193,7 @@
     <ClInclude Include="..\Public\Lobby_Goku.h" />
     <ClInclude Include="..\Public\Lobby_Parasol.h" />
     <ClInclude Include="..\Public\Lobby_Sky.h" />
+    <ClInclude Include="..\Public\Lobby_Sky_Of_Sea.h" />
     <ClInclude Include="..\Public\Lobby_Story_Mode_Building.h" />
     <ClInclude Include="..\Public\Local_Battle_Building.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="..\Private\Lobby_Goku.cpp" />
     <ClCompile Include="..\Private\Lobby_Parasol.cpp" />
     <ClCompile Include="..\Private\Lobby_Sky.cpp" />
+    <ClCompile Include="..\Private\Lobby_Sky_Of_Sea.cpp" />
     <ClCompile Include="..\Private\Lobby_Story_Mode_Building.cpp" />
     <ClCompile Include="..\Private\Local_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
