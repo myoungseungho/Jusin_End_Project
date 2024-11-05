@@ -177,11 +177,50 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 	return S_OK;
 }
 
+
+XMVECTOR CalculateQuaternionBetweenVectors(XMVECTOR vFrom, XMVECTOR vTo)
+{
+	// 정규화된 벡터로 가정
+	XMVECTOR vFromNorm = XMVector3Normalize(vFrom);
+	XMVECTOR vToNorm = XMVector3Normalize(vTo);
+
+	// 두 벡터의 내적 계산
+	float dot = XMVectorGetX(XMVector3Dot(vFromNorm, vToNorm));
+
+	// 만약 두 벡터가 거의 반대 방향이라면, 특별히 회전 축을 정해야 합니다.
+	if (dot < -0.999999f)
+	{
+		// 임의의 회전 축을 선택 (예: X축)
+		XMVECTOR arbitrary = XMVectorSet(1.f, 0.f, 0.f, 0.f);
+		// 벡터가 X축과 평행하면 Y축을 사용
+		if (fabsf(XMVectorGetX(XMVector3Dot(vFromNorm, arbitrary))) > 0.999999f)
+		{
+			arbitrary = XMVectorSet(0.f, 1.f, 0.f, 0.f);
+		}
+		// 회전 축 계산
+		XMVECTOR rotationAxis = XMVector3Normalize(XMVector3Cross(vFromNorm, arbitrary));
+		// 180도 회전을 나타내는 쿼터니언
+		return XMQuaternionRotationAxis(rotationAxis, XM_PI);
+	}
+	else if (dot > 0.999999f)
+	{
+		// 두 벡터가 거의 동일한 경우, 회전이 필요 없음
+		return XMQuaternionIdentity();
+	}
+	else
+	{
+		// 일반적인 경우, 회전 축과 각도를 계산
+		XMVECTOR rotationAxis = XMVector3Normalize(XMVector3Cross(vFromNorm, vToNorm));
+		float rotationAngle = acosf(dot);
+		return XMQuaternionRotationAxis(rotationAxis, rotationAngle);
+	}
+}
+
+
 void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta)
 {
-	// 상수 정의
-	const _float ANGLE_THRESHOLD = 0.01f; // 회전 각도 임계값 (도 단위)
-	const _float ROTATION_SPEED = 10.f;    // 회전 속도 (도/초)
+	// 회전 속도 (라디안/초)
+	const _float ROTATION_SPEED = XM_PI * 5.f; // 180도/초
 
 	// 목표 방향 벡터를 정규화
 	_vector vTargetLook = XMVector3Normalize(XMLoadFloat3(&vTargetDir));
@@ -189,33 +228,32 @@ void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDel
 	// 현재 Look 벡터를 가져와서 정규화
 	_vector vCurrentLook = XMVector3Normalize(m_pTransformCom->Get_State(CTransform::STATE_LOOK));
 
-	// 현재 Look 벡터와 목표 Look 벡터 사이의 각도 계산 (도 단위)
-	_float fAngle = XMConvertToDegrees(XMVectorGetX(XMVector3AngleBetweenNormals(vCurrentLook, vTargetLook)));
+	// 두 벡터 사이의 회전 쿼터니언 계산
+	_vector qRotation = CalculateQuaternionBetweenVectors(vCurrentLook, vTargetLook);
 
-	// 회전 축 (Y축 기준)
-	_vector vAxis = XMVectorSet(0.f, 1.f, 0.f, 0.f);
+	// 회전 속도에 따른 보간 인자 계산
+	_float fRotationAmount = ROTATION_SPEED * fTimeDelta;
 
-	// 현재 Look 벡터와 목표 Look 벡터의 외적을 계산하여 회전 방향 결정
-	_float fDotUp = XMVectorGetY(XMVector3Cross(vCurrentLook, vTargetLook));
+	// 회전 보간 (최대 1.0을 넘지 않도록)
+	fRotationAmount = min(fRotationAmount, 1.0f);
 
-	// 회전 수행
-	if (fAngle > ANGLE_THRESHOLD)
-	{
-		// 회전 방향 결정: 외적의 Y 성분에 따라 시계 방향 또는 반시계 방향으로 회전
-		_vector vRotationAxis = (fDotUp > 0) ? vAxis : XMVectorScale(vAxis, -1.f);
+	// 현재 회전 쿼터니언 가져오기
+	_vector qCurrentRotation = XMQuaternionRotationMatrix(m_pTransformCom->Get_WorldMatrix());
 
-		// 회전 적용 (fTimeDelta * ROTATION_SPEED 만큼 회전)
-		m_pTransformCom->Turn(vRotationAxis, fTimeDelta * ROTATION_SPEED);
-	}
-	else
-	{
-		// 각도가 임계값 이하이면 정확히 목표 방향으로 설정
-		m_pTransformCom->Set_State(CTransform::STATE_LOOK, vTargetLook);
+	// 보간된 회전 쿼터니언 계산
+	_vector qNewRotation = XMQuaternionSlerp(qCurrentRotation, XMQuaternionMultiply(qRotation, qCurrentRotation), fRotationAmount);
 
-		// 오른쪽 벡터 재계산 및 정규화
-		_vector vRight = XMVector3Normalize(XMVector3Cross(m_pTransformCom->Get_State(CTransform::STATE_UP), vTargetLook));
-		m_pTransformCom->Set_State(CTransform::STATE_RIGHT, vRight);
-	}
+	// 회전 행렬로 변환
+	_matrix mRotationMatrix = XMMatrixRotationQuaternion(qNewRotation);
+
+	// 월드 행렬의 위치 부분 유지
+	_vector vPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	_float4x4 matrix{};
+	XMStoreFloat4x4(&matrix, mRotationMatrix);
+	// 새로운 월드 행렬 설정
+	m_pTransformCom->Set_WorldMatrix(matrix);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPosition);
 }
 
 void CLobby_Goku::MoveForward(_float fTimeDelta)
