@@ -29,7 +29,7 @@ HRESULT CLobby_Sky_Of_Sea::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, 0.f));
+	m_pTransformCom->Set_State_Position(_float3(0.f, 300.f, 0.f));
 
 	return S_OK;
 }
