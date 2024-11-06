@@ -17,8 +17,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 1 0 0
-Scale: 0.05 0.05 0.05
+Position: 1 0 -4.76838e-07
+Scale: 3.125e-07 3.125e-07 3.125e-07
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -54,8 +54,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -100,8 +100,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -146,8 +146,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -192,8 +192,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -238,8 +238,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -284,8 +284,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -330,8 +330,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -376,8 +376,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -422,8 +422,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -468,8 +468,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -514,8 +514,8 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 2 0 -7.15256e-07
-Scale: 6.25e-06 6.25e-06 6.25e-06
+Position: 2 0 -2.86103e-06
+Scale: 9.7656e-14 9.7656e-14 9.7656e-14
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30

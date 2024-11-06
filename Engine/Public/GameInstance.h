@@ -106,6 +106,8 @@ public: /* For.Collider_Manager*/
 	HRESULT Add_ColliderObject(CCollider_Manager::COLLIDERGROUP eRenderGroup, class CCollider* pRenderObject);
 	HRESULT Release_Collider(const CCollider*);
 	void	Destroy_Reserve(CCollider_Manager::COLLIDERGROUP eRenderGroup);
+	void	Destroy_Reserve(CCollider* pCollider);       // 개별 콜라이더 삭제 예약 함수
+	HRESULT Destory_ColliderGroup();
 
 public: /* For.FileManager */
 	HRESULT SaveObjects(const wstring& filename, void* pArg);

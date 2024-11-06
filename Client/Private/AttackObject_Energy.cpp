@@ -31,6 +31,10 @@ HRESULT CAttackObject_Energy::Initialize_Prototype()
 HRESULT CAttackObject_Energy::Initialize(void* pArg)
 {
 
+
+	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
+	pDesc->bNoCreateMainCollider = true;
+
 	if (nullptr == pArg)
 		return E_FAIL;
 
@@ -39,7 +43,6 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 		return E_FAIL;
 
 
-	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
 
 	m_fStartOffset = pDesc->fStartOffset;
 	//m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
@@ -50,10 +53,14 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 
 	m_fMoveSpeedNoneDirection.x *= m_iPlayerDirection;
 
+
+	m_fAttackDelayTime = pDesc->fAttackDelayTime;
+	m_fColliderfCY = pDesc->fColliderfCY;
+
 	m_bDying = false;
 
 
-	m_eEnegrgyColor = pDesc->eExplosionColor;
+	m_eEnegrgyColor = pDesc->eEnergyColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
@@ -71,25 +78,24 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 		return;
 
 	m_fAccLifeTime += fTimeDelta;
+	m_fAccAttackDelayTime += fTimeDelta;
 
 	//생존시간 지났거나 맵바깥(땅포함)으로 나갔으면 삭제
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
 	{
-		for (auto& iter : m_vecColliderCom)
-			iter->Update(m_pTransformCom->Get_WorldMatrix());
+		//for (auto& iter : m_vecColliderCom)
+		//	iter->Update(m_pTransformCom->Get_WorldMatrix());
 
-
-		for (auto& iter : m_vecColliderCom)
-			iter->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
 		_float speed = 0.1f;
@@ -97,7 +103,21 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 		m_fEndPos.x += m_fMoveSpeedNoneDirection.x * fTimeDelta;
 		m_fEndPos.y += m_fMoveSpeedNoneDirection.y * fTimeDelta;
 
+
 		Make_Collider(m_pColliderCom->m_ColliderGroup, _float2(0.f, 0.f), _float2(m_fEndPos.x, m_fEndPos.y));
+	
+		
+
+		_vector vPosOffset = m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ m_fStartOffset.x,m_fStartOffset.y,0,0 };
+
+
+		//for (auto& iter : m_vecColliderCom)
+		//	iter->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ m_fStartOffset.x,m_fStartOffset.y,0,0});
+
+
+		for (auto& iter : m_vecColliderCom)
+			iter->UpdateVector(vPosOffset);
+
 	}
 }
 
@@ -124,24 +144,49 @@ HRESULT CAttackObject_Energy::Render(_float fTimeDelta)
 
 void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
-	//Destory();
 
+	if (m_bEnterEnable == false)
+		return;
 	
 
+
+	//에너지파 vs 리플렉트 
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT)
+	{
+		m_iAttackCount--;
+		if (m_iAttackCount <= 0)
+		{
+
+			Erase();
+		}
+	}
+
+
 	//에너지파 vs 사람 
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		
-
+			m_bEnterEnable = false;
 
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
 			//버그 해결 전 까지임시.  Enter이지만 바로 가속도 적용, 데미지n배
-			AttackColliderResult eResult =
-				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage*m_iAttackCount, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
-
 			//AttackColliderResult eResult =
-			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
+			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage*m_iAttackCount, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
+
+
+			if (pCharacter->Get_bReflect())
+			{
+				//m_iAttackCount--;
+				//if (m_iAttackCount <= 0)
+				//{
+				//	Erase();
+				//}
+				return;
+			}
+
+			AttackColliderResult eResult =
+				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
 
 
 			if (eResult == RESULT_HIT)
@@ -153,14 +198,24 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 				m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
+				//pCharacter->Set_fGravityTime(0.f);
+
+				//_float fHeight = pCharacter->Get_fHeight();  //땅에 끌리고있을때 0.2로나옴
+				if (pCharacter->Get_fHeight() <0.3 )
+				{
+					pCharacter->Add_Move({ 0.f,0.15f });
+					pCharacter->Set_HitAnimation(m_ihitCharacter_Motion,{0.f,0.02f});
+				}
+				m_iAttackCount--;
+
 				if (m_iAttackCount != 0)
 				{
-					m_iAttackCount--;
-					cout << m_iAttackCount << endl;
+					//cout << m_iAttackCount << endl;
 				}
 				else
 				{
-					;
+					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+					Destory();
 				}
 
 				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
@@ -224,14 +279,14 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 
 				//버그 수정 전까지 임시
-				//Erase();
-				Destory();
+				//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 			}
 			else if (eResult == RESULT_GUARD) //가드
 			{
 				//m_pOwner->Set_AnimationStop(0.08f);
 				//pCharacter->Set_AnimationStop(0.08f);
+				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				Destory();
 
 			}
@@ -250,36 +305,64 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 
-		
-
 	}
+
+	
 }
 
 void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 {
-	//버그 수정 전 까지 임시로 닫음
 
-	//에너지파 vs 사람 
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	//에너지파 vs 리플렉트 
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT)
 	{
-	
+		if (m_fAccAttackDelayTime > m_fAttackDelayTime)
+		{
+
+			m_fAccAttackDelayTime = 0.f;
+
+			m_iAttackCount--;
+			if (m_iAttackCount <= 0)
+			{
+
+				Erase();
+			}
+		}
+	}
+	//에너지파 vs 사람 
+	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
+	{
+
 		//0.07초마다 히트판정
-		if (m_fAccAttackDelayTime > 0.1)
+		//if (m_fAccAttackDelayTime > 0.07)
+		if (m_fAccAttackDelayTime > m_fAttackDelayTime)
 		{
 	
 			m_fAccAttackDelayTime = 0.f;
 	
-	
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+
+			if (pCharacter->Get_bReflect())
+			{
+				//m_iAttackCount--;
+				//if (m_iAttackCount <= 0)
+				//{
+				//	//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+				//	Erase();
+				//}
+				return;
+			}
+
 			AttackColliderResult eResult{ RESULT_NONE };
 	
+			cout << m_iAttackCount << endl;
 			if (m_iAttackCount != 0)
 			{
 				m_iAttackCount--;
 				eResult = pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
 	
 			}
-			else
+			else if (m_iAttackCount<=0)
 			{
 				OnCollisionExit(other);
 			}
@@ -292,19 +375,17 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				pCharacter->Set_GroundSmash(m_bGroundSmash);
 				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 				m_pOwner->Gain_KiAmount(m_iGainKiAmount);
-	
-				if (m_iAttackCount != 0)
+				m_pOwner->Gain_HitCount(m_iGainHitCount);
+
+
+				cout << m_iAttackCount << endl;
+
+				if (m_iAttackCount == 0)
 				{
-					m_iAttackCount--;
-	
-					cout << m_iAttackCount << endl;
+					//Erase();
+					//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				}
-				else
-				{
-					//OnCollisionExit(other);
-	
-					Destory();
-				}
+				
 	
 				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 				{
@@ -402,8 +483,14 @@ void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 	AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
-
+	Erase();
 	Destory();
+
+	//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+	//m_bEnableDestory = false;
+	//Destory();
+
+	//Erase();
 }
 
 void CAttackObject_Energy::CollisingAttack()
@@ -451,7 +538,9 @@ void CAttackObject_Energy::Make_Collider(CCollider_Manager::COLLIDERGROUP eColli
 	// 2. 필요한 콜라이더의 개수 계산
 	//_float unitLength = m_UnitSize.x; // 단위 콜라이더의 가로 크기
 	_float unitLength = 0.4f; // 단위 콜라이더의 가로 크기
-	_float unitHeight = 0.8f; // 단위 콜라이더의 가로 크기
+	//_float unitHeight = 0.8f; // 단위 콜라이더의 세로 크기
+	_float unitHeight = m_fColliderfCY; // 단위 콜라이더의 세로 크기
+
 
 
 	int requiredColliders = static_cast<int>(ceil(distance / unitLength));
@@ -565,8 +654,8 @@ void CAttackObject_Energy::Erase()
 {
 	if (m_bEnableDestory)
 	{
-		Destory();
-		m_pGameInstance->Release_Collider(m_pColliderCom);
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+		//m_pGameInstance->Release_Collider(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }
@@ -619,4 +708,6 @@ void CAttackObject_Energy::Free()
 		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_1P_Energy_Attack);
 	else
 		m_pGameInstance->Destroy_Reserve(CCollider_Manager::CG_2P_Energy_Attack);
+
+
 }

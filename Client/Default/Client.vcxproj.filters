@@ -328,6 +328,9 @@
     <ClCompile Include="..\Private\QTE_Same_Grab.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -702,6 +705,9 @@
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab">
       <UniqueIdentifier>{4ec23716-9ecc-4934-ac6e-d8718634652a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
+      <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -931,9 +937,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Play_Goku.h">
-      <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h">
       <Filter>02.GameObjects\Character\Model_Preview</Filter>
@@ -1186,6 +1189,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Same_Grab.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\AttackObject_Reflect.h">
+      <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

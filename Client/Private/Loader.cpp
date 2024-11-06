@@ -105,6 +105,7 @@
 #include "AttackObject_CommandGrab.h"
 #include "AttackObject_Ranged.h"
 #include "AttackObject_Energy.h"
+#include "AttackObject_Reflect.h"
 
 #include "BoneEffectObject.h"
 #include "QTE_UI_Icon.h"
@@ -2734,6 +2735,11 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Chase"),
 		CAttackObject_Chase::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Reflect"),
+		CAttackObject_Reflect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack_Grab"),
 		CAttackObject_Grab::Create(m_pDevice, m_pContext))))

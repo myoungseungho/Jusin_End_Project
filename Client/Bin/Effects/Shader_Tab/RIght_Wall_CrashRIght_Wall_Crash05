@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 44
+Key: Prototype_Component_Texture_Effect_cmn_hit00
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 512 63
+NodeID: 1 Position: 277 7
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

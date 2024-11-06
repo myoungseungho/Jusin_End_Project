@@ -170,6 +170,7 @@
     <ClInclude Include="..\Public\AttackObject_Energy.h" />
     <ClInclude Include="..\Public\AttackObject_Grab.h" />
     <ClInclude Include="..\Public\AttackObject_Ranged.h" />
+    <ClInclude Include="..\Public\AttackObject_Reflect.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
@@ -328,6 +329,7 @@
     <ClCompile Include="..\Private\AttackObject_Energy.cpp" />
     <ClCompile Include="..\Private\AttackObject_Grab.cpp" />
     <ClCompile Include="..\Private\AttackObject_Ranged.cpp" />
+    <ClCompile Include="..\Private\AttackObject_Reflect.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />

@@ -359,8 +359,12 @@ void CGoku_MeleeAttack::Attack_236()
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_AIR);
-		m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
+		//m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
+		m_pPlayer->Set_fImpulse({ 2.f * m_pPlayer->Get_iDirection(),-1.f });
 		m_pPlayer->Set_bAttackGravity(false);
+		
+		//m_pPlayer->Set_ForcedGravityDown();
+		//m_pPlayer->Set_fGravityTime(0.305f);
 
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
@@ -368,6 +372,9 @@ void CGoku_MeleeAttack::Attack_236()
 		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_AIR, 0.5f);
 		m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
+		//m_pPlayer->Set_ForcedGravityDown();
+
+		//m_pPlayer->Set_fGravityTime(0.305f);
 
 	}
 
@@ -414,11 +421,22 @@ void CGoku_MeleeAttack::Attack_214()
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_214, 0.5f, 20.f);
-		m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
-		m_pPlayer->Set_bAttackGravity(false);
-		m_pPlayer->Set_ForcedGravityDown();
 
+		if (m_pPlayer->Get_bAttackBackEvent())
+		{
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_214);
+			m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
+			m_pPlayer->Set_bAttackGravity(false);
+			m_pPlayer->Set_CurrentAnimationPositionJump(20.f);
+			m_pPlayer->Set_ForcedGravityDown();
+		}
+		else
+		{
+			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_214, 0.5f, 20.f);
+			m_pPlayer->Set_fImpulse(2.5f * m_pPlayer->Get_iDirection());
+			m_pPlayer->Set_bAttackGravity(false);
+			m_pPlayer->Set_ForcedGravityDown();
+		}
 
 	}
 
@@ -536,10 +554,10 @@ void CGoku_MeleeAttack::Attack_236Ultimate()
 		//m_pPlayer->Set_AnimationStop(1.f);
 	}
 
-	else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
+	else if ((*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3 ||
 		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236  ||
-		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE)
+		*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE) )
 	{
 		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
 		{
@@ -807,6 +825,11 @@ void CGoku_MeleeAttack::BackDash()
 		m_pPlayer->Set_bAirDashEnable(false);
 		m_pPlayer->Set_ForcedGravityDown();
 		m_pPlayer->Set_ForcveGravityTime(0.135f);
+
+
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"),{1.f,0.f});
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"), { -0.3f,0.f });
+
 	}
 }
 
@@ -834,6 +857,41 @@ void CGoku_MeleeAttack::ForwardDash()
 		//m_pPlayer->Set_ForcedGravityDown();
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
+
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"),{0,-1.5f});
+
+	}
+
+	else if (m_pPlayer->Get_bSparking() && m_pPlayer->Get_bAirDashEnable() && m_pPlayer->Get_bAttackBackEvent() && 
+		(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2))
+	{
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
+		//m_pPlayer->Set_CurrentAnimationPositionJump(4.f);
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (10.f));
+		m_pPlayer->Set_bAirDashEnable(false);
+		//m_pPlayer->Set_ForcedGravityDown();
+
+		m_pPlayer->Set_ForcveGravityTime(0.255f);
+
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"), { 0,-1.5f });
+	}
+
+
+
+}
+
+void CGoku_MeleeAttack::Reflect()
+{
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_REFLECT);
+
+	}
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && m_pPlayer->Check_bCurAnimationisReflect())
+	{
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_REFLECT);
+		m_pPlayer->Set_CurrentAnimationPositionJump(0.f);
 
 	}
 

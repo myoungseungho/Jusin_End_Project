@@ -19,7 +19,7 @@
 
 
 #include "Main_Camera.h"
-
+#include "AttackObject.h"
 
 IMPLEMENT_SINGLETON(CBattleInterface_Manager)
 
@@ -135,6 +135,63 @@ void CBattleInterface_Manager::Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSl
     else if (iTeam == 2)
     {
         m_p2TeamCharacter[iSlot]->Set_UnlockAnimationStop();
+    }
+
+}
+
+void CBattleInterface_Manager::Stop_AllCharacter(_float fStopTime)
+{
+    for (auto pCharacter : m_p1TeamCharacter)
+    {
+        if (pCharacter != nullptr)
+            pCharacter->Set_AnimationStop(fStopTime);
+    }
+
+    for (auto pCharacter : m_p2TeamCharacter)
+    {
+        if (pCharacter != nullptr)
+            pCharacter->Set_AnimationStop(fStopTime);
+    }
+}
+
+_ushort CBattleInterface_Manager::Get_iAliveMemberCount(_ushort iTeam)
+{
+    
+    _ushort iAliveMebberCount = 0;
+
+    if (iTeam == 1)
+    {
+        for (auto pCharacter : m_p1TeamCharacter)
+        {
+            if (pCharacter != nullptr)
+            {
+                if (pCharacter->Get_bDying() == false)
+                    iAliveMebberCount++;
+            }
+        }
+    }
+    else if (iTeam == 2)
+    {
+        for (auto pCharacter : m_p2TeamCharacter)
+        {
+            if (pCharacter != nullptr)
+            {
+                if (pCharacter->Get_bDying() == false)
+                    iAliveMebberCount++;
+            }
+        }
+    }
+
+    return iAliveMebberCount;
+
+}
+
+void CBattleInterface_Manager::Stop_AllAttackObject(_float fStopTime)
+{
+
+    for (auto pAttackObject : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_AttackObject")))
+    {
+        static_cast<CAttackObject*>(pAttackObject)->Set_UpdateStop(fStopTime);
     }
 
 }

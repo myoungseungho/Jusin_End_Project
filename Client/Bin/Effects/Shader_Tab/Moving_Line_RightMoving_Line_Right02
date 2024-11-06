@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 49
+Key: Prototype_Component_Texture_Effect_cmn_line04gray
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 480 36
+NodeID: 1 Position: 183 16
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

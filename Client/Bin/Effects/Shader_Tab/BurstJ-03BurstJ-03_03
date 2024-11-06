@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 47
+Key: Prototype_Component_Texture_Effect_bun_402smoke
+ID: 1
+vTexCoord: 0.5 1
+NodePosCount: 2
+NodeID: -1 Position: 507 70
+NodeID: 1 Position: 249 17
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2
