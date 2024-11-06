@@ -108,6 +108,7 @@
 
 #include "BoneEffectObject.h"
 #include "QTE_UI_Icon.h"
+#include "QTE_Same_Grab.h"
 
 //Lobby
 #include "Lobby_Center_Map.h"
@@ -3075,9 +3076,12 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CUI_Opt_Sound_Title::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_UI_Opt_Sound_Title */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_UI_Icon"),
 		CQTE_UI_Icon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Same_Grab"),
+		CQTE_Same_Grab::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

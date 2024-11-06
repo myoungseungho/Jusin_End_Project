@@ -2,9 +2,11 @@
 
 #include "Base.h"
 #include "Client_Defines.h"
+#include "GameObject.h"
 
 BEGIN(Engine)
 class CGameInstance;
+class CGameObject;
 END
 
 BEGIN(Client)
@@ -13,16 +15,12 @@ class CQTE_Manager : public CBase
 {
 	DECLARE_SINGLETON(CQTE_Manager)
 
-public:
-	enum UI_COMMAND
+private:
+	enum QTE_ID
 	{
-		UI_COMMAND_LIGHT, //약공
-		UI_COMMAND_MIDDLE, //중공
-		UI_COMMAND_ULTIMATE, //특수공격
-		UI_COMMAND_HEAVY, //강공
-		UI_COMMAND_END
+		QTE_ID_SAME_GRAB,
+		QTE_ID_END
 	};
-
 private:
 	CQTE_Manager();
 	virtual ~CQTE_Manager() = default;
@@ -36,35 +34,7 @@ public:
 
 	CGameInstance* m_pGameInstance = { nullptr };
 
-private:
-	void StartQTE();
-	void EndQTE();
-	void HandleQTEInput();
-	void ProcessCommand(UI_COMMAND input, _int playerID);
-	void CreateUIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
-	void ClearUIIcons();
-
-private:
-	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
-	_float m_fTimer = { 0.f }; // 타이머
-	_int m_iTotalTime = { 1000 }; // 총 시간 (예: 5초)
-	_int m_iSequenceLength = { 10 }; // 시퀀스 길이 (N)
-
-	// 1P 관련
-	queue<UI_COMMAND> m_CommandQueue_P1;
-	vector<UI_COMMAND> m_CurrentSequence_P1;
-	_int m_iCorrectInputs_P1;
-	_int m_CurrentIndex_P1 = { 0 }; // 현재 선택된 아이콘 인덱스
-
-	// 2P 관련
-	queue<UI_COMMAND> m_CommandQueue_P2;
-	vector<UI_COMMAND> m_CurrentSequence_P2;
-	_int m_iCorrectInputs_P2;
-	_int m_CurrentIndex_P2 = { 0 }; // 현재 선택된 아이콘 인덱스
-
-	// UI 아이콘 객체 저장
-	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
-	vector<class CQTE_UI_Icon*> m_UIIcons_P2;
+	vector<class CGameObject*> m_vecQTE;
 
 public:
 	virtual void Free() override;

@@ -325,6 +325,9 @@
     <ClCompile Include="..\Private\QTE_UI_Icon.cpp">
       <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_Same_Grab.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -695,6 +698,9 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_UI_ICON">
       <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab">
+      <UniqueIdentifier>{4ec23716-9ecc-4934-ac6e-d8718634652a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1177,6 +1183,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_UI_Icon.h">
       <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Same_Grab.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
