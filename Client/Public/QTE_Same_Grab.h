@@ -60,6 +60,13 @@ private:
 	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
 	vector<class CQTE_UI_Icon*> m_UIIcons_P2;
 
+	// 각 플레이어의 쿨다운 타이머
+	_float m_fCooldown_P1 = {};
+	_float m_fCooldown_P2 = {};
+
+	// 쿨다운 지속 시간 (초)
+	const _float COOLDOWN_DURATION = 1.0f; // 필요에 따라 조절 가능
+
 public:
 	static CQTE_Same_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

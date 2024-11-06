@@ -67,6 +67,12 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 		// 사용자 입력 처리
 		Handle_QTEInput();
 
+		// 쿨다운 타이머 감소
+		if (m_fCooldown_P1 > 0.0f)
+			m_fCooldown_P1 -= fTimeDelta;
+		if (m_fCooldown_P2 > 0.0f)
+			m_fCooldown_P2 -= fTimeDelta;
+
 		// UI 아이콘 업데이트
 		for (auto& iter : m_UIIcons_P1)
 			iter->Update(fTimeDelta);
@@ -174,40 +180,45 @@ void CQTE_Same_Grab::End_QTE()
 
 void CQTE_Same_Grab::Handle_QTEInput()
 {
-	// 1P 입력 처리 (예: A, S, D, F 키)
-	if (m_pGameInstance->Key_Down(DIK_U))
+	if (m_fCooldown_P1 <= 0.0f)
 	{
-		Process_Command(UI_COMMAND_LIGHT, 1);
-	}
-	else if (m_pGameInstance->Key_Down(DIK_I))
-	{
-		Process_Command(UI_COMMAND_MIDDLE, 1);
-	}
-	else if (m_pGameInstance->Key_Down(DIK_J))
-	{
-		Process_Command(UI_COMMAND_ULTIMATE, 1);
-	}
-	else if (m_pGameInstance->Key_Down(DIK_K))
-	{
-		Process_Command(UI_COMMAND_HEAVY, 1);
+		if (m_pGameInstance->Key_Down(DIK_U))
+		{
+			Process_Command(UI_COMMAND_LIGHT, 1);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_I))
+		{
+			Process_Command(UI_COMMAND_MIDDLE, 1);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_J))
+		{
+			Process_Command(UI_COMMAND_ULTIMATE, 1);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_K))
+		{
+			Process_Command(UI_COMMAND_HEAVY, 1);
+		}
 	}
 
-	// 2P 입력 처리 (예: J, K, L, ; 키)
-	if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
+	// 2P 입력 처리 (예: NUMPAD7, NUMPAD8, NUMPAD4, NUMPAD5 키)
+	if (m_fCooldown_P2 <= 0.0f)
 	{
-		Process_Command(UI_COMMAND_LIGHT, 2);
-	}
-	else if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
-	{
-		Process_Command(UI_COMMAND_MIDDLE, 2);
-	}
-	else if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
-	{
-		Process_Command(UI_COMMAND_ULTIMATE, 2);
-	}
-	else if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
-	{
-		Process_Command(UI_COMMAND_HEAVY, 2);
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
+		{
+			Process_Command(UI_COMMAND_LIGHT, 2);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
+		{
+			Process_Command(UI_COMMAND_MIDDLE, 2);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
+		{
+			Process_Command(UI_COMMAND_ULTIMATE, 2);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
+		{
+			Process_Command(UI_COMMAND_HEAVY, 2);
+		}
 	}
 }
 
@@ -393,6 +404,9 @@ void CQTE_Same_Grab::Handle_WrongInput(_int playerID)
 		{
 			m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::WRONG_PRESSED);
 		}
+
+		// 1P의 쿨다운 타이머 설정
+		m_fCooldown_P1 = COOLDOWN_DURATION;
 	}
 	else if (playerID == 2)
 	{
@@ -400,6 +414,9 @@ void CQTE_Same_Grab::Handle_WrongInput(_int playerID)
 		{
 			m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::WRONG_PRESSED);
 		}
+
+		// 2P의 쿨다운 타이머 설정
+		m_fCooldown_P2 = COOLDOWN_DURATION;
 	}
 }
 
