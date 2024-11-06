@@ -520,12 +520,12 @@ PS_OUT PS_QTE_UI(PS_IN In)
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
     // CORRECTLY_PRESSED 상태일 때 색상 회색으로 변환
-    if (g_IconState == 2) // CORRECTLY_PRESSED
+    if (g_IconState == 3) // CORRECTLY_PRESSED
     {
         Out.vColor.rgb *= 0.5f; // 회색 효과 (0.5는 조절 가능)
     }
     // WRONG_PRESSED 상태일 때 색상 빨간색으로 변환
-    else if (g_IconState == 3) // WRONG_PRESSED
+    else if (g_IconState == 4) // WRONG_PRESSED
     {
         // 빨간색을 강조하기 위해 빨간 채널을 증가시키고, 녹색과 파란 채널은 감소시킴
         Out.vColor.rgb = Out.vColor.rgb * float3(1.0f, 0.2f, 0.2f);

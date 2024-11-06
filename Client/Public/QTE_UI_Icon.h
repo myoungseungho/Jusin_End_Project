@@ -16,15 +16,18 @@ class CQTE_UI_Icon final : public CGameObject
 public:
 	struct QTE_UI_ICON_DESC
 	{
-		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, iTextureNumber{};
+		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, iTextureNumber{}, fFallDelay{};
+		_bool bSelected = false;
 	};
 
 	enum IconState
 	{
 		NOT_SELECTED,        // 기본 상태
+		FALLING,             // 떨어지는 중인 상태 (새로 추가)
 		SELECTED,            // 현재 선택된 상태
-		ALREADY_PRESSED,    // 올바르게 눌린 상태
-		WRONG_PRESSED        // 잘못 눌린 상태 (새로 추가)
+		ALREADY_PRESSED,     // 올바르게 눌린 상태
+		WRONG_PRESSED,        // 잘못 눌린 상태
+		ASCEND,				 // 올라가기
 	};
 
 private:
@@ -41,9 +44,21 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Set_State(IconState state);
+	void Set_AscendDelay(_float delay) { m_fAscendDelay = delay; };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+
+	void Update_Falling(_float fTimeDelta);
+	void Update_Selected(_float fTimeDelta);
+	void Update_AlreadyPressed(_float fTimeDelta);
+	void Update_WrongPressed(_float fTimeDelta);
+	void Update_Ascend(_float fTimeDelta);
+	void Update_NotSelected(_float fTimeDelta);
+
+private:
+
 
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -71,6 +86,16 @@ private:
 	_float m_fShakeFrequency = { 25.f };   // 흔들림 주파수
 	_bool m_bIsShaking = { false };         // 흔들림 상태
 
+	// 새로운 애니메이션 변수
+	_float m_fStartY = -100.f;          // 초기 Y 위치
+	_float m_fAnimationDuration = 0.7f; // 애니메이션 지속 시간
+	_float m_fElapsedTime = 0.f;        // 경과 시간
+	_bool m_bIsFalling = false;         // 떨어지는 중인지 여부
+	_float m_fFallDelay = 0.f;          // 떨어지기 시작하는 지연 시간
+
+	// ASCEND 상태 관련 변수
+	_bool m_bIsAscending;       // 올라가는 중인지 여부
+	_float m_fAscendDelay;      // 올라가기 시작하는 지연 시간
 
 public:
 	static CQTE_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -4,6 +4,18 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
+_float clamp(_float value, _float min, _float max)
+{
+	if (value < min) return min;
+	if (value > max) return max;
+	return value;
+}
+
+_float lerp(_float start, _float end, _float t)
+{
+	return start + t * (end - start);
+}
+
 CQTE_UI_Icon::CQTE_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -36,15 +48,22 @@ HRESULT CQTE_UI_Icon::Initialize(void* pArg)
 	m_fY = desc->fY;
 	m_fAlpha = desc->fAlpha;
 	m_iTextureNumber = desc->iTextureNumber;
+	m_fFallDelay = desc->fFallDelay; // 추가: 쿨다운 지연 시간 설정
+	m_bIsSelect = desc->bSelected;
 
 	// 초기 Y 위치 설정
-	m_fCurrentY = m_fTargetY = m_fDefault_Y;
+	m_fCurrentY = m_fStartY;    // 초기 위치는 -100
+	m_fTargetY = m_fDefault_Y;  // 최종 위치는 m_fDefault_Y
+
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
+	// 떨어지기 애니메이션 시작
+	Set_State(FALLING);
 
 	return S_OK;
 }
@@ -56,50 +75,32 @@ void CQTE_UI_Icon::Camera_Update(_float fTimeDelta)
 
 void CQTE_UI_Icon::Update(_float fTimeDelta)
 {
-	// Y 위치 업데이트
-	_float omega = 2.0f / m_fSmoothing_Time;
-	_float x = omega * fTimeDelta;
-	_float exp_factor = 1.0f / (1.0f + x + 0.48f * x * x + 0.235f * x * x * x);
-
-	_float change = m_fCurrentY - m_fTargetY;
-	_float temp = (m_fVelocityY + omega * change) * fTimeDelta;
-	m_fVelocityY = (m_fVelocityY - omega * temp) * exp_factor;
-	_float newY = m_fTargetY + (change + temp) * exp_factor;
-
-	m_fCurrentY = newY;
-
-	// 흔들림 애니메이션 처리
-	if (m_bIsShaking)
+	switch (m_State)
 	{
-		m_fShakeTime += fTimeDelta;
+	case FALLING:
+		Update_Falling(fTimeDelta);
+		break;
 
-		if (m_fShakeTime >= m_fShakeDuration)
-		{
-			// 흔들림 종료 후 상태를 SELECTED로 변경
-			m_bIsShaking = false;
-			Set_State(SELECTED);
-		}
-		else
-		{
-			// 흔들림 계산
-			_float shakeOffsetX = m_fShakeAmplitude * sinf(2.0f * XM_PI * m_fShakeFrequency * m_fShakeTime);
-			// 감쇠 적용
-			_float damping = 1.0f - (m_fShakeTime / m_fShakeDuration);
-			shakeOffsetX *= damping;
+	case SELECTED:
+		Update_Selected(fTimeDelta);
+		break;
 
-			// 흔들림이 적용된 X 위치 계산
-			_float shakenX = m_fX + shakeOffsetX;
+	case ALREADY_PRESSED:
+		Update_AlreadyPressed(fTimeDelta);
+		break;
 
-			// 흔들림이 적용된 위치 설정
-			m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-				XMVectorSet(shakenX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
-		}
-	}
-	else
-	{
-		// 흔들림이 아닐 때 기본 위치 설정
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-			XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+	case WRONG_PRESSED:
+		Update_WrongPressed(fTimeDelta);
+		break;
+
+	case ASCEND:
+		Update_Ascend(fTimeDelta);
+		break;
+
+	case NOT_SELECTED:
+	default:
+		Update_NotSelected(fTimeDelta);
+		break;
 	}
 }
 
@@ -129,26 +130,47 @@ void CQTE_UI_Icon::Set_State(IconState state)
 {
 	m_State = state;
 
-	if (m_State == SELECTED)
+	switch (m_State)
 	{
-		m_fTargetY = m_fSelected_Y;
-		m_bIsShaking = false;
-	}
-	else if (m_State == ALREADY_PRESSED)
-	{
+	case NOT_SELECTED:
 		m_fTargetY = m_fDefault_Y;
 		m_bIsShaking = false;
-	}
-	else if (m_State == WRONG_PRESSED)
-	{
+		break;
+
+	case FALLING:
+		//Falling일때, 첫번째 녀석은 TargetY가 달라야함
+		m_fTargetY = m_bIsSelect == true ? m_fSelected_Y : m_fDefault_Y;
+		m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
+		m_bIsShaking = false;
+		break;
+
+	case SELECTED:
+		m_fTargetY = m_fSelected_Y;
+		m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
+		m_bIsShaking = false;
+		break;
+
+	case ALREADY_PRESSED:
+		m_fTargetY = m_fDefault_Y;
+		m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
+		m_bIsShaking = false;
+		break;
+
+	case WRONG_PRESSED:
 		m_fTargetY = m_fSelected_Y;
 		m_fShakeTime = 0.0f;        // 초기 흔들림 시간
 		m_bIsShaking = true;         // 흔들림 시작
-	}
-	else // NOT_SELECTED
-	{
-		m_fTargetY = m_fDefault_Y;
-		m_bIsShaking = false;
+		break;
+
+	case ASCEND:
+		m_fTargetY = m_fStartY;      // 기본 Y 위치로 설정
+		m_fAscendDelay = m_fElapsedTime; // ASCEND 상태 시작 시 지연 시간 설정 (외부에서 설정)
+		m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
+		m_bIsAscending = false; // 올라가기 애니메이션 시작 전
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -192,6 +214,142 @@ HRESULT CQTE_UI_Icon::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CQTE_UI_Icon::Update_Falling(_float fTimeDelta)
+{
+	if (m_bIsFalling)
+	{
+		m_fElapsedTime += fTimeDelta;
+		float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+		// 선형 보간 (linear interpolation)
+		m_fCurrentY = lerp(m_fStartY, m_fTargetY, t);
+
+		// 애니메이션 완료 시 상태 변경
+		if (t >= 1.0f)
+		{
+			m_bIsFalling = false;
+			Set_State(NOT_SELECTED); // 애니메이션 완료 후 기본 상태로 전환
+		}
+
+		// 위치 업데이트
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+			XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+	}
+	else
+	{
+		// 떨어지기 시작 전 지연 시간 처리
+		m_fElapsedTime += fTimeDelta;
+		if (m_fElapsedTime >= m_fFallDelay)
+		{
+			m_bIsFalling = true;
+			m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
+		}
+	}
+}
+
+void CQTE_UI_Icon::Update_Selected(_float fTimeDelta)
+{
+	// 부드러운 이동을 위한 애니메이션 처리
+	m_fElapsedTime += fTimeDelta;
+	float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+
+	// 비선형 애니메이션 커브 적용 (ease-out)
+	t = 1.0f - powf(1.0f - t, 3);
+
+	// 선형 보간 대신 비선형 커브를 적용한 t를 사용하여 Y 위치 업데이트
+	m_fCurrentY = lerp(m_fCurrentY, m_fTargetY, t);
+
+	// 위치 업데이트
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+}
+
+void CQTE_UI_Icon::Update_AlreadyPressed(_float fTimeDelta)
+{
+	// 애니메이션 진행 시간 증가
+	m_fElapsedTime += fTimeDelta;
+
+	// 애니메이션 진행 비율 계산 (0.0f ~ 1.0f)
+	float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+
+	// 비선형 애니메이션 커브 적용 (ease-out)
+	t = 1.0f - powf(1.0f - t, 3);
+
+	// Y 위치 부드럽게 이동 (LERP 사용)
+	m_fCurrentY = lerp(m_fCurrentY, m_fTargetY, t);
+
+	// 위치 업데이트
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+}
+
+void CQTE_UI_Icon::Update_WrongPressed(_float fTimeDelta)
+{
+	// 흔들림 애니메이션 처리
+	if (m_bIsShaking)
+	{
+		m_fShakeTime += fTimeDelta;
+
+		if (m_fShakeTime >= m_fShakeDuration)
+		{
+			// 흔들림 종료 후 상태를 SELECTED로 변경
+			m_bIsShaking = false;
+			Set_State(SELECTED);
+		}
+		else
+		{
+			// 흔들림 계산
+			float shakeOffsetX = m_fShakeAmplitude * sinf(2.0f * XM_PI * m_fShakeFrequency * m_fShakeTime);
+			// 감쇠 적용
+			float damping = 1.0f - (m_fShakeTime / m_fShakeDuration);
+			shakeOffsetX *= damping;
+
+			// 흔들림이 적용된 X 위치 계산
+			float shakenX = m_fX + shakeOffsetX;
+
+			// 흔들림이 적용된 위치 설정
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+				XMVectorSet(shakenX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+		}
+	}
+}
+
+void CQTE_UI_Icon::Update_Ascend(_float fTimeDelta)
+{
+	// 상승 시작 전 지연 시간 처리
+	if (!m_bIsAscending)
+	{
+		m_fElapsedTime += fTimeDelta;
+		if (m_fElapsedTime >= m_fAscendDelay)
+		{
+			m_bIsAscending = true;
+			m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
+		}
+		return;
+	}
+
+	// 상승 애니메이션 처리
+	m_fElapsedTime += fTimeDelta;
+	float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+
+	// 비선형 애니메이션 커브 적용 (ease-out)
+	t = 1.0f - powf(1.0f - t, 3);
+
+	// Y 위치 부드럽게 이동 (LERP 사용)
+	m_fCurrentY = lerp(m_fCurrentY, m_fTargetY, t);
+
+	// 위치 업데이트
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+
+}
+
+void CQTE_UI_Icon::Update_NotSelected(_float fTimeDelta)
+{
+	// 위치 업데이트
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 }
 
 CQTE_UI_Icon* CQTE_UI_Icon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

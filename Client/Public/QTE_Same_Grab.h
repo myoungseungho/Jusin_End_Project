@@ -37,7 +37,9 @@ private:
 	void Create_UIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
 	void Clear_UIIcons();
 	void Handle_WrongInput(_int playerID); // 오답 처리 함수 선언
+	void Ascend_UIIcons(vector<class CQTE_UI_Icon*>& icons);
 
+	void Final_End_QTE();
 private:
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f }; // 타이머
@@ -47,13 +49,13 @@ private:
 	// 1P 관련
 	queue<UI_COMMAND> m_CommandQueue_P1;
 	vector<UI_COMMAND> m_CurrentSequence_P1;
-	_int m_iCorrectInputs_P1;
+	_int m_iCorrectInputs_P1 = {};
 	_int m_CurrentIndex_P1 = { 0 }; // 현재 선택된 아이콘 인덱스
 
 	// 2P 관련
 	queue<UI_COMMAND> m_CommandQueue_P2;
 	vector<UI_COMMAND> m_CurrentSequence_P2;
-	_int m_iCorrectInputs_P2;
+	_int m_iCorrectInputs_P2 = {};
 	_int m_CurrentIndex_P2 = { 0 }; // 현재 선택된 아이콘 인덱스
 
 	// UI 아이콘 객체 저장
@@ -66,6 +68,11 @@ private:
 
 	// 쿨다운 지속 시간 (초)
 	const _float COOLDOWN_DURATION = 1.0f; // 필요에 따라 조절 가능
+
+	// QTE 종료 후 초기화 관리
+	_bool m_bIsEndQTE = { false };           // QTE 종료 프로세스 진행 중인지 여부
+	_float m_fEndQTE_Timer = { 0.f };      // QTE 종료 후 초기화까지의 경과 시간
+	const _float m_fEndQTE_Delay = { 1.5f }; // 초기화까지 기다릴 시간 (초)
 
 public:
 	static CQTE_Same_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -54,15 +54,30 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 		}
 	}
 
-	// QTE가 활성화된 경우 타이머 감소 및 입력 처리
-	if (m_bIsQTEActive)
+	// QTE 종료 프로세스 진행 중인 경우
+	if (m_bIsEndQTE)
 	{
+		m_fEndQTE_Timer += fTimeDelta;
+		if (m_fEndQTE_Timer >= m_fEndQTE_Delay)
+		{
+			Final_End_QTE();
+		}
+
+		// Ascend 애니메이션 업데이트
+		for (auto& iter : m_UIIcons_P1)
+			iter->Update(fTimeDelta);
+		for (auto& iter : m_UIIcons_P2)
+			iter->Update(fTimeDelta);
+	}
+	else if (m_bIsQTEActive)
+	{
+		// QTE가 활성화된 경우 기존 로직 유지
 		// 타이머 감소
 		m_fTimer -= fTimeDelta;
-		if (m_fTimer <= 0.0f)
-		{
+
+		// 시간 조건 확인
+		if (m_fTimer <= 0.0f || m_iCorrectInputs_P1 == m_iSequenceLength || m_iCorrectInputs_P2 == m_iSequenceLength)
 			End_QTE();
-		}
 
 		// 사용자 입력 처리
 		Handle_QTEInput();
@@ -135,47 +150,17 @@ void CQTE_Same_Grab::Start_QTE()
 	// UI 아이콘 생성
 	Create_UIIcons(1, sequence_P1);
 	Create_UIIcons(2, sequence_P2);
-
-	// 첫 번째 아이콘 선택 상태로 설정
-	if (!m_UIIcons_P1.empty())
-		m_UIIcons_P1[0]->Set_State(CQTE_UI_Icon::SELECTED);
-
-	if (!m_UIIcons_P2.empty())
-		m_UIIcons_P2[0]->Set_State(CQTE_UI_Icon::SELECTED);
 }
 
 void CQTE_Same_Grab::End_QTE()
 {
-	m_bIsQTEActive = false;
-	m_fTimer = 0.0f;
+	// Ascend 애니메이션 시작
+	Ascend_UIIcons(m_UIIcons_P1);
+	Ascend_UIIcons(m_UIIcons_P2);
 
-	// 큐와 시퀀스 초기화
-	while (!m_CommandQueue_P1.empty()) m_CommandQueue_P1.pop();
-	m_CurrentSequence_P1.clear();
-	m_iCorrectInputs_P1 = 0;
-	m_CurrentIndex_P1 = 0;
-
-	while (!m_CommandQueue_P2.empty()) m_CommandQueue_P2.pop();
-	m_CurrentSequence_P2.clear();
-	m_iCorrectInputs_P2 = 0;
-	m_CurrentIndex_P2 = 0;
-
-	// UI 아이콘 제거
-	Clear_UIIcons();
-
-	// QTE 종료 후 처리 로직 추가 (우승자 결정)
-	if (m_iCorrectInputs_P1 > m_iCorrectInputs_P2)
-	{
-		// 1P 승리 처리
-	}
-	else if (m_iCorrectInputs_P2 > m_iCorrectInputs_P1)
-	{
-		// 2P 승리 처리
-	}
-	else
-	{
-		// 무승부 처리
-	}
+	// QTE 종료 프로세스 시작 표시
+	m_bIsEndQTE = true;
+	m_fEndQTE_Timer = 0.0f;
 }
 
 void CQTE_Same_Grab::Handle_QTEInput()
@@ -352,6 +337,9 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 		}
 	}
 
+	// 떨어지기 시작하는 지연 시간 간격 설정 (초)
+	const _float FALL_DELAY_INTERVAL = 0.1f; // 필요에 따라 조정 가능
+
 	// 각 아이콘을 생성하고 위치 설정
 	for (_int i = 0; i < numIcons; ++i)
 	{
@@ -362,6 +350,11 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 		Desc.fX = iconPositionsX[i];
 		Desc.fY = centerY;
 		Desc.fAlpha = 1.f;
+		Desc.fFallDelay = i * FALL_DELAY_INTERVAL; // 각 아이콘의 떨어지기 시작하는 지연 시간 설정
+
+		//첫번째 녀석은 떨어지는 위치가 달라야함
+		if (i == 0)
+			Desc.bSelected = true;
 
 		// UI 아이콘 클론
 		CQTE_UI_Icon* pIcon = dynamic_cast<CQTE_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Icon"), &Desc));
@@ -370,6 +363,59 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 			// 벡터에 저장
 			targetIcons.push_back(pIcon);
 		}
+	}
+}
+
+void CQTE_Same_Grab::Ascend_UIIcons(vector<CQTE_UI_Icon*>& icons)
+{
+	// 아이콘을 역순으로 처리하여 마지막 아이콘부터 ASCEND 상태로 전환
+	const float ASCEND_DELAY_INTERVAL = 0.1f; // 각 아이콘 간의 상승 시작 지연 시간 (초)
+	for (int i = static_cast<int>(icons.size()) - 1; i >= 0; --i)
+	{
+		CQTE_UI_Icon* pIcon = icons[i];
+		if (pIcon)
+		{
+			// ASCEND 상태로 전환하면서 지연 시간을 설정
+			float ascendDelay = (icons.size() - 1 - i) * ASCEND_DELAY_INTERVAL;
+			pIcon->Set_State(CQTE_UI_Icon::ASCEND);
+			pIcon->Set_AscendDelay(ascendDelay);
+		}
+	}
+}
+
+void CQTE_Same_Grab::Final_End_QTE()
+{
+	// 초기화 작업 수행
+	m_bIsEndQTE = false;
+	m_bIsQTEActive = false;
+	m_fTimer = 0.0f;
+
+	// 큐와 시퀀스 초기화
+	while (!m_CommandQueue_P1.empty()) m_CommandQueue_P1.pop();
+	m_CurrentSequence_P1.clear();
+	m_iCorrectInputs_P1 = 0;
+	m_CurrentIndex_P1 = 0;
+
+	while (!m_CommandQueue_P2.empty()) m_CommandQueue_P2.pop();
+	m_CurrentSequence_P2.clear();
+	m_iCorrectInputs_P2 = 0;
+	m_CurrentIndex_P2 = 0;
+
+	// UI 아이콘 제거
+	Clear_UIIcons();
+
+	// 승리자 결정 및 처리
+	if (m_iCorrectInputs_P1 > m_iCorrectInputs_P2)
+	{
+		// 1P 승리 처리
+	}
+	else if (m_iCorrectInputs_P2 > m_iCorrectInputs_P1)
+	{
+		// 2P 승리 처리
+	}
+	else
+	{
+		// 무승부 처리
 	}
 }
 
