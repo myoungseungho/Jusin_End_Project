@@ -144,7 +144,7 @@ PS_OUT PS_MAIN_ALPHABLEND_EFFECT(PS_IN In)
     }
         
     Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vector(g_fGlowFactor, 0.f, 0.f, 1.f);
+    Out.vAlpha = vector(0.f, 0.f, 0.f, 1.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
     return Out;
@@ -241,6 +241,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_MODELANIMATION();
         //¸ðµ¨ µÎ°ã¿ë
     }
+
     pass NoneLight //4
     {
         SetRasterizerState(RS_Cull_None);
@@ -259,7 +260,7 @@ technique11 DefaultTechnique
     pass AlphaBlendEffect //5
     {
         SetRasterizerState(RS_Cull_None);
-        SetDepthStencilState(DSS_Default, 0);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 		//SetDepthStencilState();
 		//SetBlendState();
