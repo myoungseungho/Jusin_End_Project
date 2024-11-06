@@ -41,6 +41,8 @@ private:
 	void EndQTE();
 	void HandleQTEInput();
 	void ProcessCommand(UI_COMMAND input, _int playerID);
+	void CreateUIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
+	void ClearUIIcons();
 
 private:
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
@@ -57,6 +59,10 @@ private:
 	queue<UI_COMMAND> m_CommandQueue_P2;
 	vector<UI_COMMAND> m_CurrentSequence_P2;
 	_int m_iCorrectInputs_P2;
+
+	// UI 아이콘 객체 저장
+	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
+	vector<class CQTE_UI_Icon*> m_UIIcons_P2;
 
 public:
 	virtual void Free() override;

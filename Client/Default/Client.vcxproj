@@ -191,6 +191,7 @@
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
     <ClInclude Include="..\Public\Lobby_Goku.h" />
+    <ClInclude Include="..\Public\QTE_UI_Icon.h" />
     <ClInclude Include="..\Public\Lobby_Parasol.h" />
     <ClInclude Include="..\Public\Lobby_Sky.h" />
     <ClInclude Include="..\Public\Lobby_Sky_Of_Sea.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
     <ClCompile Include="..\Private\Lobby_Goku.cpp" />
+    <ClCompile Include="..\Private\QTE_UI_Icon.cpp" />
     <ClCompile Include="..\Private\Lobby_Parasol.cpp" />
     <ClCompile Include="..\Private\Lobby_Sky.cpp" />
     <ClCompile Include="..\Private\Lobby_Sky_Of_Sea.cpp" />
