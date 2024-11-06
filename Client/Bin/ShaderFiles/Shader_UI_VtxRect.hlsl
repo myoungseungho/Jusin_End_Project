@@ -25,7 +25,7 @@ int iSpriteIndex = 0;
 int iNumSprite = 0;
 
 //QTE_UI
-int g_IconStat;
+int g_IconState;
 
 
 struct VS_IN

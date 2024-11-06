@@ -222,7 +222,7 @@ void CQTE_Manager::ProcessCommand(UI_COMMAND input, _int playerID)
 			// 다음 아이콘을 선택 상태로 설정
 			if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
 			{
-				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::SELECTED);
 			}
 
 			//// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
@@ -258,7 +258,7 @@ void CQTE_Manager::ProcessCommand(UI_COMMAND input, _int playerID)
 			// 다음 아이콘을 선택 상태로 설정
 			if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
 			{
-				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::SELECTED);
 			}
 
 			//// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)

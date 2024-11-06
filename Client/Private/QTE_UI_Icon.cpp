@@ -37,9 +37,11 @@ HRESULT CQTE_UI_Icon::Initialize(void* pArg)
 	m_fAlpha = desc->fAlpha;
 	m_iTextureNumber = desc->iTextureNumber;
 
+	// 초기 Y 위치 설정
+	m_fCurrentY = m_fTargetY = m_fDefault_Y;
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
@@ -54,14 +56,22 @@ void CQTE_UI_Icon::Camera_Update(_float fTimeDelta)
 
 void CQTE_UI_Icon::Update(_float fTimeDelta)
 {
-	// 선택된 상태일 때의 업데이트 로직 (예: 깜빡이기, 크기 변화 등)
-	if (m_State == SELECTED)
-	{
-	}
-	// 올바르게 눌린 상태일 때의 업데이트 로직 (예: 색상 유지, 애니메이션 등)
-	else if (m_State == ALREADY_PRESSED)
-	{
-	}
+	// 현재 Y 위치를 목표 Y 위치로 부드럽게 이동
+   // 감쇠 기반 스무딩
+	_float omega = 2.0f / m_fSmoothing_Time;
+	_float x = omega * fTimeDelta;
+	_float exp_factor = 1.0f / (1.0f + x + 0.48f * x * x + 0.235f * x * x * x);
+
+	_float change = m_fCurrentY - m_fTargetY;
+	_float temp = (m_fVelocityY + omega * change) * fTimeDelta;
+	m_fVelocityY = (m_fVelocityY - omega * temp) * exp_factor;
+	_float newY = m_fTargetY + (change + temp) * exp_factor;
+
+	m_fCurrentY = newY;
+
+	// 변환된 Y 위치를 Transform에 적용
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 }
 
 void CQTE_UI_Icon::Late_Update(_float fTimeDelta)
@@ -84,6 +94,25 @@ HRESULT CQTE_UI_Icon::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CQTE_UI_Icon::Set_State(IconState state)
+{
+	m_State = state;
+
+	// 상태에 따라 목표 Y 값 설정
+	if (m_State == SELECTED)
+	{
+		m_fTargetY = m_fSelected_Y;
+	}
+	else if (m_State == ALREADY_PRESSED)
+	{
+		m_fTargetY = m_fDefault_Y;
+	}
+	else // NOT_SELECTED
+	{
+		m_fTargetY = m_fDefault_Y;
+	}
 }
 
 HRESULT CQTE_UI_Icon::Ready_Components()

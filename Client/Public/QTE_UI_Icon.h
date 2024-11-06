@@ -39,7 +39,7 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Set_State(IconState state) { m_State = state; }; // 상태 설정
+	void Set_State(IconState state);
 
 private:
 	HRESULT Ready_Components();
@@ -55,6 +55,14 @@ private:
 
 	_bool m_bIsSelect = { false };
 	IconState m_State = NOT_SELECTED; // 아이콘 상태
+
+	// 애니메이션 관련 변수
+	_float m_fTargetY = {};          // 목표 Y 위치
+	_float m_fCurrentY = {};         // 현재 Y 위치
+	_float m_fVelocityY = {};        // Y 속도 (부드러운 이동을 위한 변수)
+	const _float m_fDefault_Y = 300.f;   // 기본 Y 위치
+	const _float m_fSelected_Y = 250.f;  // 선택된 상태의 Y 위치
+	const _float m_fSmoothing_Time = 0.05f; // 애니메이션 속도 조절 (필요에 따라 조정)
 
 public:
 	static CQTE_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
