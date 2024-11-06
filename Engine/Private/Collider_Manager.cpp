@@ -12,7 +12,6 @@ CCollider_Manager::CCollider_Manager()
 
 void CCollider_Manager::Update(_float fTimeDelta)
 {
-	Destory_ColliderGroup();
 	Check_Collision(fTimeDelta);
 }
 
@@ -81,8 +80,27 @@ HRESULT CCollider_Manager::Check_Collision(_float fTimeDelta)
 
 	AddCollisionPairs(CG_1P_BODY, CG_2P_Melee_Attack);
 
-	// 1P_MELEE_ATTACK vs 2P_MELL_ATTACK
+	// 1P_MELEE_ATTACK vs 2P_MELEE_ATTACK
 	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_Melee_Attack);
+
+	// 1P_RANGE_ATTACK vs 2P_MELEE_ATTACK
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_Melee_Attack);
+	// 1P_MELEE_ATTACK vs 2P_RANGE_ATTACK
+	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_Ranged_Attack);
+
+	// 1P_REFLECT vs 2P_Energy_Attack
+	AddCollisionPairs(CG_1P_REFLECT, CG_2P_Energy_Attack);
+	// 1P_REFLECT vs 2P_Ranged_Attack
+	AddCollisionPairs(CG_1P_REFLECT, CG_2P_Ranged_Attack);
+	// 1P_REFLECT vs 2P_Melee_Attack
+	AddCollisionPairs(CG_1P_REFLECT, CG_2P_Melee_Attack);
+
+	// 1P_Energy_Attack vs 2P_REFLECT
+	AddCollisionPairs(CG_1P_Energy_Attack, CG_2P_REFLECT);
+	// 1P_Ranged_Attack vs 2P_REFLECT
+	AddCollisionPairs(CG_1P_Ranged_Attack, CG_2P_REFLECT);
+	// 1P_Melee_Attack vs 2P_REFLECT
+	AddCollisionPairs(CG_1P_Melee_Attack, CG_2P_REFLECT);
 
 	// 시간 측정 시작
 	auto startTime = std::chrono::high_resolution_clock::now();
@@ -161,12 +179,18 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	vector<pair<CCollider*, CCollider*>> Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions;
 	vector<pair<CCollider*, CCollider*>> Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions;
 
+	vector<pair<CCollider*, CCollider*>> Reflect_1P_VS_Energy_2P_Skill_Collisions;
+	vector<pair<CCollider*, CCollider*>> Energy_Attack_1P_VS_Reflect_2P_Collisions;
+
 
 	// 각 스레드에서 취합한 충돌 결과가 있다면 m_CollisionResults에 저장
 	for (const auto& pair : m_CollisionResults) {
 
 		CCollider* colliderA = pair.first;
 		CCollider* colliderB = pair.second;
+
+		if (colliderA->GetMineGameObject()->m_bDead || colliderB->GetMineGameObject()->m_bDead)
+			continue;
 
 		//충돌 처리 완료
 		colliderA->m_isColl = true;
@@ -187,12 +211,20 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 		_bool is_1P_Body_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
 		_bool is_1P_Melee_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
 
+		_bool is_1P_Range_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
+		_bool is_1P_Melee_Vs_2P_Range_Attack = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+
+		_bool is_1P_Reflect_Vs_2P_Energy_Attack = (colliderA->m_ColliderGroup == CG_1P_REFLECT && colliderB->m_ColliderGroup == CG_2P_Energy_Attack);
+		_bool is_1P_Reflect_Vs_2P_Range_Attack = (colliderA->m_ColliderGroup == CG_1P_REFLECT && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack);
+		_bool is_1P_Reflect_Vs_2P_Melee_Attack = (colliderA->m_ColliderGroup == CG_1P_REFLECT && colliderB->m_ColliderGroup == CG_2P_Melee_Attack);
+
+		_bool is_1P_Energy_Attack_Vs_2P_Reflect = (colliderA->m_ColliderGroup == CG_1P_Energy_Attack && colliderB->m_ColliderGroup == CG_2P_REFLECT);
+		_bool is_1P_Range_Attack_Vs_2P_Reflect = (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_REFLECT);
+		_bool is_1P_Melee_Attack_Vs_2P_Reflect = (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_REFLECT);
+
+
 		// 충돌 그룹에 따른 처리
-		if (is_1P_Body_Vs_2P_Energy_Skill)
-		{
-			//1P_Body VS 2P_Skill
-			Body_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
-		}
+	
 
 		if (is_1P_Body_Vs_2P_Body)
 		{
@@ -206,30 +238,40 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			Energy_1P_Skill_VS_Energy_2P_Skill_Collisions.push_back(pair);
 		}
 
+		if (is_1P_Ranged_Attack_Vs_2P_Ranged_Attack)
+		{
+			Process_1P_Ranged_Skill_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Melee_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+
+
+
+
+
+		if (is_1P_Body_Vs_2P_Energy_Skill)
+		{
+			//1P_Body VS 2P_Skill
+			Body_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
 		if (is_1P_Energy_Skill_Vs_2P_Body)
 		{
 			//1P_Skill VS 2P_Body
 			Energy_1P_Skill_VS_Body_2P_Collisions.push_back(pair);
 		}
 
+
+
+
+
 		if (is_1P_Ranged_Attack_Vs_2P_Body)
 		{
 			Process_1P_Ranged_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
-		}
-
-		if (is_1P_Ranged_Attack_Vs_2P_Energy_Skill)
-		{
-			Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
-		}
-
-		if (is_1P_Ranged_Attack_Vs_2P_Ranged_Attack)
-		{
-			Process_1P_Ranged_Skill_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
-		}
-
-		if (is_1P_Melee_Attack_Vs_2P_Body)
-		{
-			Process_1P_Melee_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
 		}
 
 		if (is_1P_Body_Vs_2P_Ranged_Attack)
@@ -237,9 +279,13 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			Process_1P_Body_2P_Ranged_Skill(pair, fTimeDelta, currentCollisions);
 		}
 
-		if (is_1P_Energy_Skill_Vs_2P_Ranged_Attack)
+
+
+		
+
+		if (is_1P_Melee_Attack_Vs_2P_Body)
 		{
-			Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions.push_back(pair);
+			Process_1P_Melee_Skill_2P_Body(pair, fTimeDelta, currentCollisions);
 		}
 
 		if (is_1P_Body_Vs_2P_Melee_Attack)
@@ -247,10 +293,63 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 			Process_1P_Body_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
 		}
 
-		if (is_1P_Melee_Vs_2P_Melee_Attack)
+
+
+
+
+		if (is_1P_Energy_Skill_Vs_2P_Ranged_Attack)
 		{
-			Process_1P_Melee_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+			Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions.push_back(pair);
 		}
+
+		if (is_1P_Ranged_Attack_Vs_2P_Energy_Skill)
+		{
+			Ranged_Attack_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
+
+
+
+		if (is_1P_Range_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Range_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Vs_2P_Range_Attack)
+		{
+			Process_1P_Melee_2P_Range_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Reflect_Vs_2P_Energy_Attack)
+		{
+			Reflect_1P_VS_Energy_2P_Skill_Collisions.push_back(pair);
+		}
+
+		if (is_1P_Reflect_Vs_2P_Range_Attack)
+		{
+			Process_1P_Reflect_2P_Range_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Reflect_Vs_2P_Melee_Attack)
+		{
+			Process_1P_Reflect_2P_Melee_Skill(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Energy_Attack_Vs_2P_Reflect)
+		{
+			Energy_Attack_1P_VS_Reflect_2P_Collisions.push_back(pair);
+		}
+
+		if (is_1P_Range_Attack_Vs_2P_Reflect)
+		{
+			Process_1P_Range_2P_Reflect(pair, fTimeDelta, currentCollisions);
+		}
+
+		if (is_1P_Melee_Attack_Vs_2P_Reflect)
+		{
+			Process_1P_Melee_2P_Reflect(pair, fTimeDelta, currentCollisions);
+		}
+
 	}
 
 	// 각 그룹별로 한 번만 처리
@@ -279,6 +378,16 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	{
 		Process_1P_Energy_Skill_2P_Ranged_Skill_Group(Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions, fTimeDelta, currentCollisions);
 	}
+	
+	if (!Reflect_1P_VS_Energy_2P_Skill_Collisions.empty())
+	{
+		Process_1P_Reflect_2P_Energy_Skill_Group(Reflect_1P_VS_Energy_2P_Skill_Collisions, fTimeDelta, currentCollisions);
+	}
+	if (!Energy_Attack_1P_VS_Reflect_2P_Collisions.empty())
+	{
+		Process_1P_Energy_2P_Reflect_Group(Energy_Attack_1P_VS_Reflect_2P_Collisions, fTimeDelta, currentCollisions);
+	}
+
 
 	// 충돌 히스토리 업데이트
 	m_CollisionHistory = currentCollisions;
@@ -581,6 +690,195 @@ void CCollider_Manager::Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollid
 
 	Destroy_Reserve(pairCollider.first);
 	Destroy_Reserve(pairCollider.second);
+}
+
+void CCollider_Manager::Process_1P_Range_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+}
+
+void CCollider_Manager::Process_1P_Melee_2P_Range_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+}
+
+void CCollider_Manager::Process_1P_Reflect_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+}
+
+void CCollider_Manager::Process_1P_Reflect_2P_Range_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+}
+
+void CCollider_Manager::Process_1P_Reflect_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+}
+
+void CCollider_Manager::Process_1P_Energy_2P_Reflect_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	// 첫 번째 충돌 쌍만 사용하여 처리
+	if (!collisions.empty())
+	{
+		const auto& pairCollider = collisions.front();
+
+		if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+			pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+		}
+		else {
+			// 충돌 지속
+			pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+			pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+		}
+
+		// 현재 충돌 상태 업데이트
+		currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+	}
+}
+
+
+void CCollider_Manager::Process_1P_Range_2P_Reflect(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
+}
+
+void CCollider_Manager::Process_1P_Melee_2P_Reflect(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions)
+{
+	if (m_CollisionHistory.find(pairCollider) == m_CollisionHistory.end() || !m_CollisionHistory[pairCollider]) {
+		pairCollider.first->OnCollisionEnter(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionEnter(pairCollider.first, fTimeDelta);
+	}
+	else {
+		// 충돌 지속
+		pairCollider.first->OnCollisionStay(pairCollider.second, fTimeDelta);
+		pairCollider.second->OnCollisionStay(pairCollider.first, fTimeDelta);
+	}
+
+	// 현재 충돌 상태 업데이트
+	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
+
+	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	for (auto& pair : m_CollisionHistory) {
+		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+			pair.first.first->OnCollisionExit(pair.first.second);
+			pair.first.second->OnCollisionExit(pair.first.first);
+		}
+	}
 }
 
 

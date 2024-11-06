@@ -170,6 +170,7 @@
     <ClInclude Include="..\Public\AttackObject_Energy.h" />
     <ClInclude Include="..\Public\AttackObject_Grab.h" />
     <ClInclude Include="..\Public\AttackObject_Ranged.h" />
+    <ClInclude Include="..\Public\AttackObject_Reflect.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
@@ -180,15 +181,32 @@
     <ClInclude Include="..\Public\IMGUI_Shader_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_UI_Tab.h" />
+    <ClInclude Include="..\public\Level_Chara_Select.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
+    <ClInclude Include="..\Public\Level_Lobby.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
+    <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
+    <ClInclude Include="..\Public\Lobby_Center_Map.h" />
+    <ClInclude Include="..\Public\Lobby_Goku.h" />
+    <ClInclude Include="..\Public\QTE_Same_Grab.h" />
+    <ClInclude Include="..\Public\QTE_UI_Icon.h" />
+    <ClInclude Include="..\Public\Lobby_Parasol.h" />
+    <ClInclude Include="..\Public\Lobby_Sky.h" />
+    <ClInclude Include="..\Public\Lobby_Sky_Of_Sea.h" />
+    <ClInclude Include="..\Public\Lobby_Story_Mode_Building.h" />
+    <ClInclude Include="..\Public\Local_Battle_Building.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
+    <ClInclude Include="..\Public\Main_Camera_Lobby.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
+    <ClInclude Include="..\Public\QTE_Manager.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
+    <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
+    <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_FontName.h" />
@@ -227,6 +245,7 @@
     <ClInclude Include="..\public\UI_Opt_Sound_Volume_Gauge.h" />
     <ClInclude Include="..\public\UI_Opt_Sound_Volume_Panel.h" />
     <ClInclude Include="..\public\UI_PosMark.h" />
+    <ClInclude Include="..\public\UI_SelectArrow.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -248,18 +267,10 @@
     <ClInclude Include="..\Public\Effect_NoneLight.h" />
     <ClInclude Include="..\Public\FallingStar.h" />
     <ClInclude Include="..\Public\Goku_MeleeAttack.h" />
-    <ClInclude Include="..\Public\imconfig.h" />
-    <ClInclude Include="..\Public\imgui.h" />
     <ClInclude Include="..\Public\IMGUI_Camera_Tab.h" />
-    <ClInclude Include="..\Public\imgui_impl_dx11.h" />
-    <ClInclude Include="..\Public\imgui_impl_win32.h" />
-    <ClInclude Include="..\Public\imgui_internal.h" />
     <ClInclude Include="..\Public\Imgui_Manager.h" />
     <ClInclude Include="..\Public\imnodes.h" />
     <ClInclude Include="..\Public\imnodes_internal.h" />
-    <ClInclude Include="..\Public\imstb_rectpack.h" />
-    <ClInclude Include="..\Public\imstb_textedit.h" />
-    <ClInclude Include="..\Public\imstb_truetype.h" />
     <ClInclude Include="..\Public\Input.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\public\UI_SubHpPanel.h" />
@@ -318,21 +329,39 @@
     <ClCompile Include="..\Private\AttackObject_Energy.cpp" />
     <ClCompile Include="..\Private\AttackObject_Grab.cpp" />
     <ClCompile Include="..\Private\AttackObject_Ranged.cpp" />
+    <ClCompile Include="..\Private\AttackObject_Reflect.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
+    <ClCompile Include="..\private\Level_Chara_Select.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
+    <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
+    <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
+    <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
+    <ClCompile Include="..\Private\Lobby_Goku.cpp" />
+    <ClCompile Include="..\Private\QTE_Same_Grab.cpp" />
+    <ClCompile Include="..\Private\QTE_UI_Icon.cpp" />
+    <ClCompile Include="..\Private\Lobby_Parasol.cpp" />
+    <ClCompile Include="..\Private\Lobby_Sky.cpp" />
+    <ClCompile Include="..\Private\Lobby_Sky_Of_Sea.cpp" />
+    <ClCompile Include="..\Private\Lobby_Story_Mode_Building.cpp" />
+    <ClCompile Include="..\Private\Local_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\Main_Camera_Lobby.cpp" />
     <ClCompile Include="..\Private\Model_Preview.cpp" />
+    <ClCompile Include="..\Private\QTE_Manager.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
+    <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_FontName.cpp" />
@@ -371,6 +400,7 @@
     <ClCompile Include="..\private\UI_Opt_Sound_Volume_Gauge.cpp" />
     <ClCompile Include="..\private\UI_Opt_Sound_Volume_Panel.cpp" />
     <ClCompile Include="..\private\UI_PosMark.cpp" />
+    <ClCompile Include="..\private\UI_SelectArrow.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -470,6 +500,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Single_Eff_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMaterial.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
   </ItemGroup>

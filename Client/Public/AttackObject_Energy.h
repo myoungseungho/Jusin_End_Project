@@ -30,7 +30,11 @@ public:
 		_short iAttackCount = { 5 };
 		_short iPlayerDirection = {};		//
 		
-		Energy_LightColor eExplosionColor = { ENERGY_LIGHT_NONE };
+		Energy_LightColor eEnergyColor = { ENERGY_LIGHT_NONE };
+
+		_float fColliderfCY = { 0.8f };
+		_float fAttackDelayTime = { 0.07f };
+
 	};
 private:
 	CAttackObject_Energy(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -86,6 +90,10 @@ private:
 
 	_float m_fAccAttackDelayTime = {};
 
+
+	_bool m_bEnterEnable = true;
+	_float m_fColliderfCY = {0.8f};
+	_float m_fAttackDelayTime = { 0.07f };
 
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

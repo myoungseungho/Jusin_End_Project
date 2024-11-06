@@ -489,6 +489,10 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		pCharacter->Set_bAttackGravity(fValue[0]);
 	}
+	else if (splitText[0] == "DynamicMove")
+	{
+		pCharacter->Set_bDynamicMove(fValue[0]);
+	}
 	else if (splitText[0] == "PlaySound")
 	{
 		pCharacter->Play_Sound(fValue[0], fValue[1], fValue[2]);

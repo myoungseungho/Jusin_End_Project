@@ -17,10 +17,12 @@ public:
 		CG_1P_Energy_Attack,
 		CG_1P_Ranged_Attack,   // 1P 원거리 공격
 		CG_1P_Melee_Attack,    // 1P 근접 공격
+		CG_1P_REFLECT,
 		CG_2P_BODY,
 		CG_2P_Energy_Attack,
 		CG_2P_Ranged_Attack,   // 2P 원거리 공격
 		CG_2P_Melee_Attack,    // 2P 근접 공격
+		CG_2P_REFLECT,
 		CG_EFFECT_LAYER,
 		CG_END
 	};
@@ -41,6 +43,7 @@ public:
 	HRESULT Destory_ColliderGroup();
 	void	Destroy_Reserve(COLLIDERGROUP eRenderGroup);
 	void	Destroy_Reserve(CCollider* pCollider);       // 개별 콜라이더 삭제 예약 함수
+
 private:
 	void Process_1P_Body_2P_Body(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1P_Energy_Skill_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
@@ -55,6 +58,15 @@ private:
 	void Process_1P_Energy_Skill_2P_Ranged_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
 	void Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Range_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Melee_2P_Range_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Reflect_2P_Energy_Skill_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Reflect_2P_Range_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Reflect_2P_Melee_Skill(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Energy_2P_Reflect_Group(const vector<pair<CCollider*, CCollider*>>& collisions, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Range_2P_Reflect(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+	void Process_1P_Melee_2P_Reflect(pair<CCollider*, CCollider*> pairCollider, _float fTimeDelta, map<pair<CCollider*, CCollider*>, _bool>& currentCollisions);
+
 
 private:
 	list<CCollider*>			m_Colliders[CG_END];

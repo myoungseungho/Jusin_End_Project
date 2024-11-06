@@ -17,7 +17,7 @@ IMPLEMENT_SINGLETON(CUI_Manager)
 CUI_Manager::CUI_Manager()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
 {
-	Safe_AddRef(m_pGameInstance);
+ 	Safe_AddRef(m_pGameInstance);
 }
 
 void CUI_Manager::Add_UIOjbect(CUI_Define::UI_LISTPOS ePos, CUIObject* pObject)
@@ -41,15 +41,17 @@ void CUI_Manager::Add_UIOjbect(CUI_Define::UI_LISTPOS ePos, CUIObject* pObject)
 
 void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 {
-	if (m_pGameInstance->Key_Down(DIK_F1))
+	if(m_bStartUI == FALSE)
+		m_fStartUITimer += fTimeDelta;
+
+	if (m_fStartUITimer >= 4.f && m_bStartUI == FALSE)
 	{
-		m_fTotalDuration = 0.f;
 		UsingCreateStartUI();
+		m_bStartUI = TRUE;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_F2))
 	{
-		m_fTotalDuration = 0.f;
 		UsingCreateEndUI();
 	}
 
@@ -134,6 +136,8 @@ void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 
 void CUI_Manager::UsingCreateStartUI()
 {
+	m_fTotalDuration = 0.f;
+
 	CUIObject::UI_DESC StartDesc = {};
 	StartDesc.fSpeedPerSec = 50.f;
 	StartDesc.fRotationPerSec = XMConvertToRadians(90.f);
@@ -148,6 +152,8 @@ void CUI_Manager::UsingCreateStartUI()
 
 void CUI_Manager::UsingCreateEndUI()
 {
+	m_fTotalDuration = 0.f;
+
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOPanel"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFont"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFontEffect"), TEXT("Layer_UI_KOFont"));

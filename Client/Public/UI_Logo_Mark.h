@@ -21,6 +21,7 @@ public:
 
 private:
 	virtual HRESULT Ready_Components();
+	void PressingCreateFont(_float fTimeDelta);
 
 private:
 	_float m_fAlphaValue = { 1.f };

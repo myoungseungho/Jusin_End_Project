@@ -325,6 +325,9 @@ HRESULT CModel::Bind_MaterialSRV(CShader* pShader, aiTextureType eType, const _c
 	if (iMaterialIndex >= m_iNumMaterials)
 		return E_FAIL;
 
+	if (m_Materials[iMaterialIndex].pMaterials[eType] == nullptr)
+		return S_OK;
+
 	return m_Materials[iMaterialIndex].pMaterials[eType]->Bind_ShaderResource(pShader, pConstantName, 0);
 }
 

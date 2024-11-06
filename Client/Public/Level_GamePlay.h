@@ -26,6 +26,7 @@ private:
 	HRESULT Ready_Sound();
 
 	void			Create_Effect_Manager();
+	void			Create_QTE_Manager();
 
 	HRESULT Loading_For_Effect();
 
@@ -33,6 +34,7 @@ private:
 	class CUI_Manager* m_pUI_Manager = { nullptr };
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 	class CImgui_Manager* m_pIMGUI_Manager = { nullptr };
+	class CQTE_Manager* m_pQTE_Manager = { nullptr };
 
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

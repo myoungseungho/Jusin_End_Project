@@ -24,6 +24,9 @@ vector g_vCamPosition;
 int iSpriteIndex = 0;
 int iNumSprite = 0;
 
+//QTE_UI
+int g_IconState;
+
 
 struct VS_IN
 {
@@ -68,9 +71,16 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
+    // 텍스처 샘플링
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    // CORRECTLY_PRESSED 상태일 때 색상 회색으로 변환
+    if (g_IconState == 2) // CORRECTLY_PRESSED
+    {
+        Out.vColor.rgb *= 0.5f; // 회색 효과 (0.5는 조절 가능)
+    }
 
-	//Out.vColor.gb = Out.vColor.r;
+    // 알파값이 낮은 픽셀은 버림
     if (Out.vColor.a <= 0.1f)
         discard;
     
@@ -167,7 +177,7 @@ PS_OUT PS_COMBO(PS_IN In)
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-    Out.vColor.rbg += g_vColor * (1.f - g_MaskTimer);
+    Out.vColor.rbg += g_vEndColor * (1.f - g_MaskTimer);
 
     if (Out.vColor.a <= 0.1f)
         discard;
@@ -509,6 +519,18 @@ PS_OUT PS_Volume(PS_IN In)
       return Out;
 }
 
+PS_OUT PS_QTE_UI(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+	//Out.vColor.gb = Out.vColor.r;
+    if (Out.vColor.a <= 0.1f)
+        discard;
+    
+    return Out;
+}
 
 technique11 DefaultTechnique
 {
@@ -850,6 +872,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_Volume();
+    }
+
+//23
+    pass QTE_UI
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_QTE_UI();
     }
 
 }

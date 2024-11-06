@@ -43,7 +43,7 @@ void CUI_AttBufNone::Camera_Update(_float fTimeDelta)
 
 void CUI_AttBufNone::Update(_float fTimeDelta)
 {
-	//__super::Update(fTimeDelta);
+
 }
 
 void CUI_AttBufNone::Late_Update(_float fTimeDelta)

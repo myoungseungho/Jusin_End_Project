@@ -6,6 +6,9 @@ BEGIN(Client)
 
 class CUI_Combo abstract : public CUIObject
 {
+public:
+	enum ComboColor { RED, BLUE, PURPLE, COLOR_END };
+
 protected:
 	CUI_Combo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CUI_Combo(const CUI_Combo& Prototype);
@@ -23,6 +26,9 @@ protected:
 	virtual HRESULT Bind_ShaderResources();
 	virtual HRESULT Ready_Components();
 
+public:
+	_uint SetColor();
+
 protected:
 	_bool m_bComboEnd = { FALSE };
 	_bool m_bInitHit = { FALSE };
@@ -33,6 +39,8 @@ protected:
 	_float m_fDestoryTimer = { 0.f };
 
 	_bool m_bComboHit = { FALSE };
+
+	ComboColor m_eColorVaule = { COLOR_END };
 	
 
 public:

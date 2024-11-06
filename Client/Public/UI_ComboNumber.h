@@ -31,7 +31,6 @@ private:
 	void InitPosition();
 	void ScaleAnimation();
 	void EndAlphaEffect(_float fTimeDelta);
-
 	_bool RenderEnable(_uint iLimit);
 	_uint Return_TextureIndex();
 
@@ -44,6 +43,7 @@ private:
 
 	_bool m_bScaleAnim = { FALSE };
 	_uint m_iPrevCombo = { 0 };
+
 
 public:
 	static CUI_ComboNumber* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

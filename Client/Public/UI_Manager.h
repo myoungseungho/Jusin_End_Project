@@ -76,6 +76,10 @@ private:
 
 	_bool m_bStartFinish = { FALSE };
 	_bool m_bEndFinish = { FALSE };
+
+private:
+	_float m_fStartUITimer = { 0.f };
+	_bool m_bStartUI = { FALSE };
 public:
 	_bool m_bOnOption = { FALSE };
 

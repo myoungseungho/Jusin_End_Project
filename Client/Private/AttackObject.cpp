@@ -71,6 +71,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 
 	m_bDrawNoneStop = pDesc->bDrawNoneStop;
+	m_bReflect = pDesc->bReflect;
 
 	if (pDesc->fCameraShakeDuration != 0)
 	{
@@ -116,15 +117,11 @@ void CAttackObject::Update(_float fTimeDelta)
 
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
-		if (m_bEnableDestory)
-		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
-			m_bEnableDestory = false;
-		}
+		Set_RemoteDestory();
+		
 	}
 	else
-		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 
 	//if(m_bIsActive)
@@ -140,7 +137,7 @@ void CAttackObject::Update(_float fTimeDelta)
 	//	}
 	//
 	//	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	//	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	//	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	//}
 
 }
@@ -274,23 +271,38 @@ HRESULT CAttackObject::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CAttackObject::Set_AttackBackEvent()
+{
+	m_pOwner->Set_AttackBackEvent(true);
+}
+
 void CAttackObject::Set_UpdateStop(_float fStopTime)
 {
 	m_bUpdateStop = true;
 	m_fMaxUpdateStop = fStopTime;
 }
 
-/*
-void CAttacKObject::Set_RemoteDestory()
+_bool CAttackObject::Get_bReflect()
+{
+	return m_bReflect;
+}
+
+void CAttackObject::Set_RemoteDestory()
 {
 	if (m_bEnableDestory)
 	{
-		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		//m_pGameInstance->Release_Collider(m_pColliderCom);
+		//CGmaeInstance::Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
+		Destory();
 	}
+
 }
-*/
+
+
+
+
 
 
 void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
@@ -302,6 +314,11 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	{
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
+		if (pCharacter->Check_bCurAnimationisReflect())
+		{
+			return;
+		}
+
 		AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
@@ -311,6 +328,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
+			m_pOwner->Set_AttackBackEvent(true);
 
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
@@ -432,6 +450,8 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+			m_pOwner->Set_AttackBackEvent(true);
+
 		}
 
 		else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?
@@ -451,8 +471,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			{
 				if (m_bEnableDestory)
 				{
-					Destory();
+
+					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 					m_bEnableDestory = false;
+					Destory();
 				}
 			}
 
@@ -464,8 +486,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		if (m_bEnableDestory)
 		{
-			Destory();
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 
@@ -481,6 +505,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		//pCharacter->Set_AnimationStop(0.3f);
 
 		_float3 fPos = m_pColliderCom->Get_Overlap_Center_Position(other);// +_float3{ 0.2 - (rand() % 5 * 0.1), 0.1 - (rand() % 3 * 0.1), 0.f };  //xyz좌표인데
+		fPos.y -= 1.5f;
 		_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 		XMFLOAT4X4 Result4x4;
 		XMStoreFloat4x4(&Result4x4, ovelapMatrix);
@@ -633,6 +658,10 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 	//ColliderDesc = pDesc->ColliderDesc;
 	//ColliderDesc.MineGameObject = this;
 
+
+	//if (pDesc->bNoCreateMainCollider == true)
+	//	return S_OK;
+
 	CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
 	ColliderDesc = pDesc->ColliderDesc;
 	ColliderDesc.pMineGameObject = this;
@@ -643,7 +672,7 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 
 
 	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 

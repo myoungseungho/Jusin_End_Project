@@ -29,7 +29,7 @@ void CLevel_Logo::Update(_float fTimeDelta)
 	{
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOGO_START, false, 0.2f);
 
-		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_CHARACTER))))
 			return;
 	}
 }

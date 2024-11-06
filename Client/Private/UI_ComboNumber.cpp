@@ -63,7 +63,6 @@ void CUI_ComboNumber::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 	
-
 	if(RenderEnable(m_iLimitComboCount))
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
@@ -104,7 +103,7 @@ HRESULT CUI_ComboNumber::Bind_ShaderResources()
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", Return_TextureIndex())))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", Return_TextureIndex()  + SetColor() * 10)))
 		return E_FAIL;
 
 	_vector vColor = { 0.f, 0.f, 0.f, 1.f };
@@ -116,7 +115,7 @@ HRESULT CUI_ComboNumber::Bind_ShaderResources()
 	else
 		vColor = { 0.f, 0.f, 0.f, 1.f };
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vEndColor", &vColor, sizeof(_vector))))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fAlphaTimer, sizeof(_float))))
@@ -170,15 +169,12 @@ _uint CUI_ComboNumber::Return_TextureIndex()
 		break;
 	}
 
-		return 0;
+	return 0;
 }
 
 void CUI_ComboNumber::ScaleAnimation()
 {
 	_bool bHit = FALSE;
-
-	//if(m_pMainPawn != nullptr)
-		//m_bScaleAnim = m_pMainPawn->Get_PawnDesc().bHit;
 
 	if (m_iPrevCombo < m_iComboCount)
 		m_bScaleAnim = TRUE;
