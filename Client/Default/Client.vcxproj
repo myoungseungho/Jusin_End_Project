@@ -199,6 +199,7 @@
     <ClInclude Include="..\Public\Main_Camera.h" />
     <ClInclude Include="..\Public\Main_Camera_Lobby.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
+    <ClInclude Include="..\Public\QTE_Manager.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
@@ -350,6 +351,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Main_Camera_Lobby.cpp" />
     <ClCompile Include="..\Private\Model_Preview.cpp" />
+    <ClCompile Include="..\Private\QTE_Manager.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />

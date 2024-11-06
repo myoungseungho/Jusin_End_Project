@@ -6,6 +6,7 @@
 #include "RenderInstance.h"
 #include "Effect_Manager.h"
 #include "Imgui_Manager.h"
+#include "QTE_Manager.h"
 #include "UI_ComboNumber.h"
 
 #include "UIObject.h"
@@ -18,6 +19,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 	, m_pIMGUI_Manager{ CImgui_Manager::Get_Instance() }
+	, m_pQTE_Manager{ CQTE_Manager::Get_Instance() }
 {
 }
 
@@ -203,6 +205,8 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
+	m_pQTE_Manager->Update(fTimeDelta);
+	m_pQTE_Manager->Late_Update(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -324,7 +328,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SkillEffect"), TEXT("Layer_UI_SkillGauge"), &SkilloDesc);
 
-			
+
 	}
 
 	//Å¸ÀÌ¸Ó
@@ -395,7 +399,7 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_Opt_Sound_Volume_Gauge"), TEXT("Layer_UI_Option_Sound"), &VolumePanelDesc);
 	}
 
-	
+
 
 
 	return S_OK;
@@ -520,6 +524,12 @@ void CLevel_GamePlay::Create_Effect_Manager()
 	m_pEffect_Manager->Initialize(m_pDevice, m_pContext);
 }
 
+void CLevel_GamePlay::Create_QTE_Manager()
+{
+	m_pQTE_Manager = CQTE_Manager::Get_Instance();
+	m_pQTE_Manager->Initialize(m_pDevice, m_pContext);
+}
+
 HRESULT CLevel_GamePlay::Loading_For_Effect()
 {
 	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
@@ -578,5 +588,5 @@ void CLevel_GamePlay::Free()
 	CFrameEvent_Manager::Destroy_Instance();
 
 	Safe_Release(m_pEffect_Manager);
-
+	Safe_Release(m_pQTE_Manager);
 }

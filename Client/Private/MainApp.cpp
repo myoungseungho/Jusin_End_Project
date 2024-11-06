@@ -45,7 +45,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_LOBBY)))
+	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))

@@ -319,6 +319,9 @@
     <ClCompile Include="..\Private\Lobby_Sky_Of_Sea.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Sky</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_Manager.cpp">
+      <Filter>02.GameObjects\QTE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -683,6 +686,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_Sky">
       <UniqueIdentifier>{a1eddcc0-ae6e-4cb2-881b-3c411dc08b70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE">
+      <UniqueIdentifier>{e7f7b9ba-ed2f-4138-ae38-9edc7ca5be99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1159,6 +1165,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Lobby_Sky_Of_Sea.h">
       <Filter>02.GameObjects\Lobby\Lobby_Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Manager.h">
+      <Filter>02.GameObjects\QTE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
