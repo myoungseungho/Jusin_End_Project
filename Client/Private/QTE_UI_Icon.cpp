@@ -54,6 +54,14 @@ void CQTE_UI_Icon::Camera_Update(_float fTimeDelta)
 
 void CQTE_UI_Icon::Update(_float fTimeDelta)
 {
+	// 선택된 상태일 때의 업데이트 로직 (예: 깜빡이기, 크기 변화 등)
+	if (m_State == SELECTED)
+	{
+	}
+	// 올바르게 눌린 상태일 때의 업데이트 로직 (예: 색상 유지, 애니메이션 등)
+	else if (m_State == ALREADY_PRESSED)
+	{
+	}
 }
 
 void CQTE_UI_Icon::Late_Update(_float fTimeDelta)

@@ -26,10 +26,19 @@ void CQTE_Manager::Update(_float fTimeDelta)
 	// F5 키 입력 감지
 	if (m_pGameInstance->Key_Down(DIK_F5))
 	{
-		StartQTE();
+		if (m_bIsQTEActive)
+		{
+			// QTE가 활성화되어 있으면 즉시 종료
+			EndQTE();
+		}
+		else
+		{
+			// QTE가 비활성화되어 있으면 시작
+			StartQTE();
+		}
 	}
 
-	//QTE가 시작되면 그제서야 타이머가 돌아감
+	// QTE가 활성화된 경우 타이머 감소 및 입력 처리
 	if (m_bIsQTEActive)
 	{
 		// 타이머 감소
@@ -42,6 +51,7 @@ void CQTE_Manager::Update(_float fTimeDelta)
 		// 사용자 입력 처리
 		HandleQTEInput();
 
+		// UI 아이콘 업데이트
 		for (auto& iter : m_UIIcons_P1)
 			iter->Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
@@ -107,6 +117,13 @@ void CQTE_Manager::StartQTE()
 	// UI 아이콘 생성
 	CreateUIIcons(1, sequence_P1);
 	CreateUIIcons(2, sequence_P2);
+
+	// 첫 번째 아이콘 선택 상태로 설정
+	if (!m_UIIcons_P1.empty())
+		m_UIIcons_P1[0]->Set_State(CQTE_UI_Icon::SELECTED);
+
+	if (!m_UIIcons_P2.empty())
+		m_UIIcons_P2[0]->Set_State(CQTE_UI_Icon::SELECTED);
 }
 
 void CQTE_Manager::EndQTE()
@@ -118,10 +135,12 @@ void CQTE_Manager::EndQTE()
 	while (!m_CommandQueue_P1.empty()) m_CommandQueue_P1.pop();
 	m_CurrentSequence_P1.clear();
 	m_iCorrectInputs_P1 = 0;
+	m_CurrentIndex_P1 = 0;
 
 	while (!m_CommandQueue_P2.empty()) m_CommandQueue_P2.pop();
 	m_CurrentSequence_P2.clear();
 	m_iCorrectInputs_P2 = 0;
+	m_CurrentIndex_P2 = 0;
 
 	// UI 아이콘 제거
 	ClearUIIcons();
@@ -192,7 +211,25 @@ void CQTE_Manager::ProcessCommand(UI_COMMAND input, _int playerID)
 		{
 			m_CommandQueue_P1.pop();
 			m_iCorrectInputs_P1++;
-			// 1P의 올바른 입력 처리 (예: 피드백 제공)
+
+			// 현재 선택된 아이콘의 선택 상태 해제
+			if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
+			{
+				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+				m_CurrentIndex_P1++;
+			}
+
+			// 다음 아이콘을 선택 상태로 설정
+			if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
+			{
+				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+			}
+
+			//// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
+			//if (m_CommandQueue_P1.empty())
+			//{
+			//	EndQTE();
+			//}
 		}
 		else
 		{
@@ -210,7 +247,25 @@ void CQTE_Manager::ProcessCommand(UI_COMMAND input, _int playerID)
 		{
 			m_CommandQueue_P2.pop();
 			m_iCorrectInputs_P2++;
-			// 2P의 올바른 입력 처리 (예: 피드백 제공)
+
+			// 현재 선택된 아이콘의 선택 상태 해제
+			if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
+			{
+				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+				m_CurrentIndex_P2++;
+			}
+
+			// 다음 아이콘을 선택 상태로 설정
+			if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
+			{
+				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+			}
+
+			//// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
+			//if (m_CommandQueue_P2.empty())
+			//{
+			//	EndQTE();
+			//}
 		}
 		else
 		{

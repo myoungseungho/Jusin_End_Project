@@ -54,11 +54,13 @@ private:
 	queue<UI_COMMAND> m_CommandQueue_P1;
 	vector<UI_COMMAND> m_CurrentSequence_P1;
 	_int m_iCorrectInputs_P1;
+	_int m_CurrentIndex_P1 = { 0 }; // 현재 선택된 아이콘 인덱스
 
 	// 2P 관련
 	queue<UI_COMMAND> m_CommandQueue_P2;
 	vector<UI_COMMAND> m_CurrentSequence_P2;
 	_int m_iCorrectInputs_P2;
+	_int m_CurrentIndex_P2 = { 0 }; // 현재 선택된 아이콘 인덱스
 
 	// UI 아이콘 객체 저장
 	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
