@@ -362,7 +362,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				eResult = pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
 	
 			}
-			else if (m_iAttackCount==0)
+			else if (m_iAttackCount<=0)
 			{
 				OnCollisionExit(other);
 			}
@@ -382,7 +382,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 
 				if (m_iAttackCount == 0)
 				{
-
+					//Erase();
 					//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				}
 				
@@ -483,9 +483,11 @@ void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 	AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
 
+	Erase();
+	Destory();
 
-	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
-	m_bEnableDestory = false;
+	//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+	//m_bEnableDestory = false;
 	//Destory();
 
 	//Erase();

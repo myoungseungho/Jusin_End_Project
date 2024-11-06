@@ -126,7 +126,7 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
 		//pCharacter->Set_AnimationStop(0.1f);
 		//한번에 확 밀려나서 이상할텐데
-		pCharacter->Add_Move({ m_pOwner->Get_iDirection() * 0.5f, 0.f });
+		//pCharacter->Add_Move({ m_pOwner->Get_iDirection() * 0.5f, 0.f });
 		pCharacter->Set_fImpulse(2.f * m_pOwner->Get_iDirection());
 
 		m_pOwner->Set_ReflectAttackBackEvent(true);
@@ -135,7 +135,7 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 		
 		
 		pAttackObject->Set_RemoteDestory();
-
+		pCharacter->Set_bBeReflecting(1);
 
 	}
 	//리플렉터 vs 에너지파 
@@ -151,6 +151,7 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 	
 	
 	//리플렉터 vs 원거리   는 원거리에서 처리중.   원거리 공격 상대로 Reflect 기능 달린 개체가 더 있고 Ragned의 정보가 필요하기 때문
+	//else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Energy_Attack)
 
 
 }

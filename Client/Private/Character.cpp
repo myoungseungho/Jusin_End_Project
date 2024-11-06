@@ -1180,6 +1180,8 @@ void CCharacter::Chase2(_float fTimeDelta)
 			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
 			m_fJumpPower = fJumpPower;
 
+			Character_Make_Effect(TEXT("BurstR-02"));
+	
 			//if (m_bChaseAttackEnable)
 			{
 				//공격판정 테스트
@@ -1438,6 +1440,19 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 	if (m_bChaseEnable == false || m_pModelCom->m_iCurrentAnimationIndex == m_iSparkingAnimationIndex)
 		return;
 
+	//if(Check_bCurAnimationisCanChase())
+
+	_short iCheck = Check_bCurAnimationisCanChase();
+	if (iCheck == 0)
+		return;
+	else
+		m_fAccChaseTime = iCheck * 0.01f;
+
+
+	if (iCheck == 1)
+	{
+		Character_Make_Effect(TEXT("BurstR-01"));
+	}
 
 	m_bChaseEnable = false;
 
@@ -2292,8 +2307,6 @@ void CCharacter::Set_AnimationStop(_float fStopTime)
 
 void CCharacter::Set_UnlockAnimationStop()
 {
-	this;
-
 
 	m_bAnimationLock = false;
 	m_fMaxAnimationLock = 0.f;
@@ -2304,7 +2317,7 @@ void CCharacter::Set_AnimationStopWithoutMe(_float fStopTime)
 {
 
 
-	_float fTest1 = m_ePlayerSlot - (m_iPlayerTeam - 1) * 2;
+	//_float fTest1 = m_ePlayerSlot - (m_iPlayerTeam - 1) * 2;
 
 	//0->0 1->1   2->0  3->1
 	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot - (m_iPlayerTeam - 1) * 2, fStopTime);
@@ -3536,6 +3549,11 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 	}
 }
 
+_bool CCharacter::Get_bSparking()
+{
+	return m_bSparking;
+}
+
 void CCharacter::Gain_KiAmount(_ushort iKiAmount)
 {
 	CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(iKiAmount, m_iPlayerTeam);
@@ -3739,7 +3757,11 @@ void CCharacter::Set_ReflectAttackBackEvent(_bool bEvent)
 
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iReflectAnimationIndex)
 	{
-		Set_CurrentAnimationPositionJump(14.f);
+		//Set_CurrentAnimationPositionJump(14.f);
+		Set_CurrentAnimationPositionJump(25.f);
+		//Set_CurrentAnimationPositionJump(30.f);
+
+
 	}
 }
 
@@ -3866,6 +3888,38 @@ _bool CCharacter::Get_bReflect()
 
 
 
+void CCharacter::Set_bBeReflecting(_short iDirection)
+{
+	m_bBeReflecting = true;
+	//m_fImpuse = { 3.f * iDirection,0.f };
+	m_fAccBeReflectingTime = 0.f;
+
+}
+
+_bool CCharacter::Update_BeReflecting(_float fTimeDelta)
+{
+	if (m_bBeReflecting)
+	{
+		m_fAccBeReflectingTime += fTimeDelta;
+
+
+
+		Add_Move({ (0.3f - m_fAccBeReflectingTime) * m_iLookDirection * -20.f*fTimeDelta, 0.f });
+
+		if (m_fAccBeReflectingTime > 0.3)
+		{
+			m_bBeReflecting = false;
+			m_fAccBeReflectingTime = 0.f;
+		}
+
+	}
+
+	return true;
+}
+
+
+
+
 void CCharacter::Reset_AttackStep()
 {
 	CBattleInterface_Manager::Get_Instance()->Reset_HitCount(m_iPlayerTeam);
@@ -3892,6 +3946,35 @@ void CCharacter::Update_NoEventAnimationLoof(_float fTimeDelta)
 
 }
 
+void CCharacter::Update_ForcedEventAnimationLoof(_float fTimeDelta)
+{
+
+	_float fPrePosition = m_pModelCom->m_fCurrentAnimPosition;
+
+	_float fTickPersecond = m_pModelCom->m_Animations[0]->m_fTickPerSecond;
+	_float fAfterAnimationPostion = m_pModelCom->m_fCurrentAnimPosition + fTickPersecond * fTimeDelta;
+
+
+	if (fAfterAnimationPostion >= m_fNoEventLoofMaxPosition)
+	{
+		fAfterAnimationPostion = m_fNoEventLoofMinPosition + fmod(fAfterAnimationPostion - m_fNoEventLoofMaxPosition, m_fNoEventLoofMaxPosition - m_fNoEventLoofMinPosition);
+		Set_CurrentAnimationPositionJump(fAfterAnimationPostion);
+	}
+	else
+		m_pModelCom->Play_Animation_Lick(fTimeDelta);
+
+
+	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
+
+	//평범하게 진행됐으면 이벤트도 평범하게 사용
+	if(fPrePosition < fCurPosition)
+		ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+	else if (fPrePosition > fCurPosition) //한바퀴 돈 경우 최소부터 현재 사이에 있는 이벤트 사용
+	{
+		ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, m_fNoEventLoofMinPosition, fCurPosition);
+	}
+}
+
 void CCharacter::Update_NoEventTime(_float fTimeDelta)
 {
 	m_fAccNoEventLoofTime += fTimeDelta;
@@ -3900,6 +3983,8 @@ void CCharacter::Update_NoEventTime(_float fTimeDelta)
 		m_bNoEventLoofAnimation = false;
 		m_fAccNoEventLoofTime = 0.f;
 		m_fMaxNoEventLoofTime = 0.f;
+
+		m_bForcedEventLoofAnimation = false;
 	}
 }
 
@@ -3911,6 +3996,17 @@ void CCharacter::Set_NoEventAnmationLoof(_float fMinPosition, _float fMaxPositio
 	m_fAccNoEventLoofTime = 0.f;
 	m_fMaxNoEventLoofTime = fTime;
 
+}
+
+void CCharacter::Set_EventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime)
+{
+	m_bNoEventLoofAnimation = true;
+	m_fNoEventLoofMinPosition = fMinPosition;
+	m_fNoEventLoofMaxPosition = fMaxPosition;
+	m_fAccNoEventLoofTime = 0.f;
+	m_fMaxNoEventLoofTime = fTime;
+
+	m_bForcedEventLoofAnimation = true;
 }
 
 _float4x4 CCharacter::Make_BoneMatrix(char* BoneName)
@@ -4186,10 +4282,12 @@ _bool CCharacter::Check_bCurAnimationisChase(_uint iAnimation)
 _bool CCharacter::Check_bCurAnimationisReflect(_uint iAnimation)
 {
 
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iReflectAnimationIndex )
-	{
-		return true;
-	}
+	//if (m_pModelCom->m_iCurrentAnimationIndex == m_iReflectAnimationIndex )
+	//{
+	//	return true;
+	//}
+
+	return m_bReflect;
 
 	return false;
 }

@@ -806,9 +806,6 @@
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Play_Goku.h">
-      <Filter>02.GameObjects\Character\Play_Goku</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Model_Preview.h">
       <Filter>02.GameObjects\Character\Model_Preview</Filter>
     </ClInclude>
@@ -994,6 +991,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\AttackObject_Reflect.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Goku.h">
+      <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

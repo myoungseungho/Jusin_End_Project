@@ -70,7 +70,7 @@ private:
 	class CCharacter* m_p2TeamCharacter[3] = { nullptr };
 
 
-	_bool m_bSparkingEnable[2] = { true };
+	_bool m_bSparkingEnable[2] = { true ,true};
 	_uint m_iHitCount[2] = {}; //화면에 뜰 히트수
 	
 	_uint m_iKiGuage[2] = {};

@@ -136,6 +136,9 @@ public:
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
 
+	virtual _short Check_bCurAnimationisCanChase() { return 0; };  //현재 모션이 체이스로 연계 가능한지 여부를 체크, 0이면 불가능 그 외의 숫자는 시작속도*10니까 받아서 *0.01f할것
+
+
 	//공중 기탄같이 중간에 중력이 다시 생기는 특수 처리해야하는것들 각자 override
 	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) { return false; };
 
@@ -294,6 +297,7 @@ public:
 	//BattleInterface
 	void Sparking_ON(_float fTimeDelta);
 	void Sparking_TimeCount(_float fTimeDelta);
+	_bool Get_bSparking();
 
 	void Gain_KiAmount(_ushort iKiAmount);
 
@@ -326,14 +330,21 @@ public:
 
 	_bool Get_bReflect();
 
+	void Set_bBeReflecting(_short iDirection);
+	_bool Update_BeReflecting(_float fTimeDelta);
+
 protected:
 	void Reset_AttackStep();
 
 	//애니메이션 끝에 대고 사용하지 말것
 	void Update_NoEventAnimationLoof(_float fTimeDelta);
+	void Update_ForcedEventAnimationLoof(_float fTimeDelta);
+
 	void Update_NoEventTime(_float fTimeDelta);
 
 	void Set_NoEventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime);
+	void Set_EventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime);
+
 
 	_float4x4 Make_BoneMatrix(char* BoneName);
 
@@ -564,6 +575,7 @@ protected:
 	_float m_fAccTag_InTime = { 0.f };
 
 	_bool m_bNoEventLoofAnimation = false;
+	_bool m_bForcedEventLoofAnimation = false;
 	_float m_fNoEventLoofMinPosition = {};
 	_float m_fNoEventLoofMaxPosition = {};
 	_float m_fMaxNoEventLoofTime = {};
@@ -594,6 +606,7 @@ protected:
 	//_bool m_bReflectAttackBack 
 
 	_bool m_bBeReflecting = { false };
+	_float m_fAccBeReflectingTime = { 0.f };
 	CGameObject* m_pReflectObject = { nullptr };
 
 	//디버그용

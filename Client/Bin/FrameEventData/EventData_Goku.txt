@@ -446,6 +446,8 @@ PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS405_body,50,NextAnimationCheck,333333
 PLAY_GOKU,GKS405_body,55,AnimSpeedChange,0.016000,80
 
+PLAY_GOKU,GKS405_body,57,AttackEvent,1
+
 PLAY_GOKU,GKS405_body,60,NextAnimationCheck,333333
 PLAY_GOKU,GKS405_body,70,NextAnimationCheck,333333
 
@@ -698,10 +700,10 @@ PLAY_GOKU,GKS600cs,280,AnimSpeedChange,0.019,60.1
 //,리플렉터
 PLAY_GOKU,GKS301_body,0,AnimSpeedChange,0.015,35
 PLAY_GOKU,GKS301_body,0,AttackEvent,0
-PLAY_GOKU,GKS301_body,14.1,AnimSpeedChange,0.015,70
-
-PLAY_GOKU,GKS301_body,35,AttackEvent,1
-PLAY_GOKU,GKS301_body,36,AnimSpeedChange,0.015,20
+PLAY_GOKU,GKS301_body,14.1,AnimSpeedChange,0.015,90
+PLAY_GOKU,GKS301_body,25.1,AnimSpeedChange,0.015,90 
+PLAY_GOKU,GKS301_body,40,AttackEvent,1
+PLAY_GOKU,GKS301_body,45,AnimSpeedChange,0.015,20
 
 
 //,54까지 있지만 성공하면 중간에 끊기?

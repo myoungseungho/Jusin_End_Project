@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 
 #include "Character.h"
+#include "Effect_Manager.h"
 
 CAttackObject_Ranged::CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
@@ -48,6 +49,12 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
 
+
+	//이름이 있으면
+	if (pDesc->strEffectName.length() != 0)
+	{
+		CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+	}
 
 	return S_OK;
 }
@@ -111,8 +118,29 @@ HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
+	//패링이랑 비교
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT)
+	{
+		BeReflect();
+
+
+		//패링 주인
+		CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
+		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
+	
+		
+		pCharacter->Set_ReflectAttackBackEvent(true);
+
+
+
+
+		//pAttackObject->Set_RemoteDestory();
+
+	}
+		
+
 	//원거리 vs 원거리
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
+	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
 	{
 
 		
@@ -132,7 +160,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
-
+		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
 
 	}
 
@@ -188,6 +216,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				}
 			}
 
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
@@ -204,6 +233,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
 		}
 
 		//else if (eResult == RESULT_DRAW)
@@ -240,25 +271,25 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	}
 
 	//vs 근접공격의 경우 리플렉트가 가능한가 확인
-	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
-	{
-		CAttackObject* pAttackOjbect = static_cast<CAttackObject*>(other->GetMineGameObject());
-		pAttackOjbect->Set_AttackBackEvent();
-
-		if (pAttackOjbect->Get_bReflect() == true)
-		{
-			////Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
-			//m_pGameInstance->Release_Collider(m_pColliderCom); 
-			//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;	
-			//
-			////이펙트, 맵밖으로 이동
-
-			BeReflect();
-
-		}
-		
-	}
-
+	//else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
+	//{
+	//	CAttackObject* pAttackOjbect = static_cast<CAttackObject*>(other->GetMineGameObject());
+	//	pAttackOjbect->Set_AttackBackEvent();
+	//
+	//	if (pAttackOjbect->Get_bReflect() == true)
+	//	{
+	//		////Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
+	//		//m_pGameInstance->Release_Collider(m_pColliderCom); 
+	//		//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;	
+	//		//
+	//		////이펙트, 맵밖으로 이동
+	//
+	//		BeReflect();
+	//
+	//	}
+	//	
+	//}
+	
 
 	_bool Debug = true;
 }
@@ -365,6 +396,7 @@ _bool CAttackObject_Ranged::BeReflect()
 	//이펙트, 맵밖으로 이동
 
 
+	Destory();
 	return true;
 	
 }

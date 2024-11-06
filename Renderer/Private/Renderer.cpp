@@ -193,10 +193,6 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend_Priority(fTimeDelta)))
 		return E_FAIL;
 	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
-
-	if (FAILED(Render_Player(fTimeDelta)))
-		return E_FAIL;
-
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
 	//if (FAILED(Render_ShadowObj(fTimeDelta)))

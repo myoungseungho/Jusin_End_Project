@@ -42,6 +42,7 @@ public:
 		ANIME_ATTACK_236_ULTIMATE = 71,  //ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE = 65,
 
 		ANIME_FINAL_START = 75,
+		ANIME_FINAL_END = 76,
 
 		ANIME_IDLE = 2, 
 		ANIME_FORWARD_WALK = 10, ANIME_BACK_WALK = 11,  
@@ -142,6 +143,10 @@ public:
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000)override;
 
+
+	virtual _short Check_bCurAnimationisCanChase() override;
+
+
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	virtual void Reset_AttackCount() override;
 
@@ -153,6 +158,7 @@ public:
 	virtual void Test_InputCommand();
 
 
+	void Update_FinalSkill(_float fTimeDelta);
 
 
 	
@@ -165,6 +171,10 @@ private:
 	_bool m_bAttackCount[COUNT_END] = { true };
 	//_ushort m_iCountGroundSpecial = 0;
 
+	_float m_fAccFinalSkillTime = {};
+	_bool m_bFinalSkillSucess = { false };
+
+	_ushort m_iFinalLoofCount = { 10 };
 
 private:
 	HRESULT Ready_Components();

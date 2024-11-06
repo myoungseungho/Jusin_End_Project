@@ -30,6 +30,8 @@ public:
 		_short iDirection = {};		//
 
 		Ranged_LightColor eRangeColor = { RANGED_LIGHT_NONE };
+
+		_wstring strEffectName = {};
 	};
 private:
 	CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

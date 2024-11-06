@@ -155,6 +155,10 @@ public:
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000)override;
 	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) override;
 
+
+	virtual _short Check_bCurAnimationisCanChase() override;
+
+
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
 	virtual void Reset_AttackCount() override;

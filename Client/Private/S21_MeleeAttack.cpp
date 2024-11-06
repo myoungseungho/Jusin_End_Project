@@ -380,16 +380,49 @@ void CS21_MeleeAttack::Attack_214()
 		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 5.f, -15.f });
 
 	}
-	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL)
-	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f, 20.f);
-		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() *9.f, -15.f });
 
+
+	//AttackBack을 사용한 버전. 자연스럽지만 커맨드 입력이 빡세짐.      문제있나?
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL))
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_214);
+	
+	
 		CTransform* pTrasnform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
-		pTrasnform->Add_Move({ 0.f,0.7f,0.f });
+		//pTrasnform->Add_Move({ 0.f,0.7f,0.f });
+		pTrasnform->Add_Move({ m_pPlayer->Get_iDirection()*0.5f,0.7f,0.f});
+		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 9.f, -15.f });
+		//테스트
+
+		//너무 안보임
+		//m_pPlayer->Set_CurrentAnimationPositionJump(27.f);
+	
+		m_pPlayer->Set_CurrentAnimationPositionJump(24.f);
+
 
 		m_pPlayer->Set_ForcedGravityDown();
 	}
+
+
+	//AttackBack을 이용하지 않은 NextAnimation 버전.  기탄중에 Impus 때문에 문제가 생길 수 있음
+
+	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL)
+	//{
+	//	//m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f, 20.f);
+	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_214, 0.5f, 26.f);
+	//
+	//	m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() *9.f, -15.f });
+	//
+	//	CTransform* pTrasnform = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+	//	pTrasnform->Add_Move({ 0.f,0.7f,0.f });
+	//	//pTrasnform->Add_Move({ m_pPlayer->Get_iDirection()*0.5f,0.7f,0.f});
+	//
+	//	//테스트
+	//	//m_pPlayer->Set_CurrentAnimationPositionJump(27.f);
+	//
+	//	m_pPlayer->Set_ForcedGravityDown();
+	//}
 
 
 
@@ -555,14 +588,18 @@ void CS21_MeleeAttack::Attack_Crouch_Speical()
 
 		if (m_pPlayer->Get_fHeight() < 1)
 		{
-			m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 0.5f,0.5f });
+			//m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 0.5f,0.5f });
+			m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 0.5f,0.2f });
+
 		}
 		else
 		{
 			m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 0.5f,0.f });
 		}
 
-		m_pPlayer->Set_fGravityTime(0.07f);
+		//m_pPlayer->Set_fGravityTime(0.07f);
+		m_pPlayer->Set_fGravityTime(0.1f);
+
 
 		m_pPlayer->Add_Move({ 0.f,0.05f });
 	}
@@ -618,6 +655,39 @@ void CS21_MeleeAttack::ForwardDash()
 
 		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"), { 0,-1.5f });
 	}
+
+	else if (m_pPlayer->Get_bSparking() && m_pPlayer->Get_bAirDashEnable() && m_pPlayer->Get_bAttackBackEvent() &&
+		(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2))
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_FORWARD_DASH);
+		//m_pPlayer->Set_CurrentAnimationPositionJump(4.f);
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (10.f));
+		m_pPlayer->Set_bAirDashEnable(false);
+		//m_pPlayer->Set_ForcedGravityDown();
+
+		m_pPlayer->Set_ForcveGravityTime(0.255f);
+
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"), { 0,-1.5f });
+	}
+
+
+}
+
+void CS21_MeleeAttack::Reflect()
+{
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_REFLECT);
+
+	}
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && m_pPlayer->Check_bCurAnimationisReflect())
+	{
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_REFLECT);
+		m_pPlayer->Set_CurrentAnimationPositionJump(0.f);
+
+	}
+
 }
 
 
