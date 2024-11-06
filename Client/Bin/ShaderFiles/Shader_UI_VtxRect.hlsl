@@ -71,16 +71,9 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    // 텍스처 샘플링
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    
-    // CORRECTLY_PRESSED 상태일 때 색상 회색으로 변환
-    if (g_IconState == 2) // CORRECTLY_PRESSED
-    {
-        Out.vColor.rgb *= 0.5f; // 회색 효과 (0.5는 조절 가능)
-    }
 
-    // 알파값이 낮은 픽셀은 버림
+	//Out.vColor.gb = Out.vColor.r;
     if (Out.vColor.a <= 0.1f)
         discard;
     
@@ -523,9 +516,22 @@ PS_OUT PS_QTE_UI(PS_IN In)
 {
     PS_OUT Out;
 
+    // 텍스처 샘플링
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    // CORRECTLY_PRESSED 상태일 때 색상 회색으로 변환
+    if (g_IconState == 2) // CORRECTLY_PRESSED
+    {
+        Out.vColor.rgb *= 0.5f; // 회색 효과 (0.5는 조절 가능)
+    }
+    // WRONG_PRESSED 상태일 때 색상 빨간색으로 변환
+    else if (g_IconState == 3) // WRONG_PRESSED
+    {
+        // 빨간색을 강조하기 위해 빨간 채널을 증가시키고, 녹색과 파란 채널은 감소시킴
+        Out.vColor.rgb = Out.vColor.rgb * float3(1.0f, 0.2f, 0.2f);
+    }
 
-	//Out.vColor.gb = Out.vColor.r;
+    // 알파값이 낮은 픽셀은 버림
     if (Out.vColor.a <= 0.1f)
         discard;
     

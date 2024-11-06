@@ -56,8 +56,7 @@ void CQTE_UI_Icon::Camera_Update(_float fTimeDelta)
 
 void CQTE_UI_Icon::Update(_float fTimeDelta)
 {
-	// 현재 Y 위치를 목표 Y 위치로 부드럽게 이동
-   // 감쇠 기반 스무딩
+	// Y 위치 업데이트
 	_float omega = 2.0f / m_fSmoothing_Time;
 	_float x = omega * fTimeDelta;
 	_float exp_factor = 1.0f / (1.0f + x + 0.48f * x * x + 0.235f * x * x * x);
@@ -69,9 +68,39 @@ void CQTE_UI_Icon::Update(_float fTimeDelta)
 
 	m_fCurrentY = newY;
 
-	// 변환된 Y 위치를 Transform에 적용
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
-		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+	// 흔들림 애니메이션 처리
+	if (m_bIsShaking)
+	{
+		m_fShakeTime += fTimeDelta;
+
+		if (m_fShakeTime >= m_fShakeDuration)
+		{
+			// 흔들림 종료 후 상태를 SELECTED로 변경
+			m_bIsShaking = false;
+			Set_State(SELECTED);
+		}
+		else
+		{
+			// 흔들림 계산
+			_float shakeOffsetX = m_fShakeAmplitude * sinf(2.0f * XM_PI * m_fShakeFrequency * m_fShakeTime);
+			// 감쇠 적용
+			_float damping = 1.0f - (m_fShakeTime / m_fShakeDuration);
+			shakeOffsetX *= damping;
+
+			// 흔들림이 적용된 X 위치 계산
+			_float shakenX = m_fX + shakeOffsetX;
+
+			// 흔들림이 적용된 위치 설정
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+				XMVectorSet(shakenX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+		}
+	}
+	else
+	{
+		// 흔들림이 아닐 때 기본 위치 설정
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+			XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+	}
 }
 
 void CQTE_UI_Icon::Late_Update(_float fTimeDelta)
@@ -84,7 +113,7 @@ HRESULT CQTE_UI_Icon::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(23)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -100,18 +129,26 @@ void CQTE_UI_Icon::Set_State(IconState state)
 {
 	m_State = state;
 
-	// 상태에 따라 목표 Y 값 설정
 	if (m_State == SELECTED)
 	{
 		m_fTargetY = m_fSelected_Y;
+		m_bIsShaking = false;
 	}
 	else if (m_State == ALREADY_PRESSED)
 	{
 		m_fTargetY = m_fDefault_Y;
+		m_bIsShaking = false;
+	}
+	else if (m_State == WRONG_PRESSED)
+	{
+		m_fTargetY = m_fSelected_Y;
+		m_fShakeTime = 0.0f;        // 초기 흔들림 시간
+		m_bIsShaking = true;         // 흔들림 시작
 	}
 	else // NOT_SELECTED
 	{
 		m_fTargetY = m_fDefault_Y;
+		m_bIsShaking = false;
 	}
 }
 

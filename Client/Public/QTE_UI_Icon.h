@@ -23,7 +23,8 @@ public:
 	{
 		NOT_SELECTED,        // 기본 상태
 		SELECTED,            // 현재 선택된 상태
-		ALREADY_PRESSED    // 올바르게 눌린 상태
+		ALREADY_PRESSED,    // 올바르게 눌린 상태
+		WRONG_PRESSED        // 잘못 눌린 상태 (새로 추가)
 	};
 
 private:
@@ -40,7 +41,6 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Set_State(IconState state);
-
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
@@ -63,6 +63,14 @@ private:
 	const _float m_fDefault_Y = 300.f;   // 기본 Y 위치
 	const _float m_fSelected_Y = 250.f;  // 선택된 상태의 Y 위치
 	const _float m_fSmoothing_Time = 0.05f; // 애니메이션 속도 조절 (필요에 따라 조정)
+
+	// 흔들림 애니메이션 변수
+	_float m_fShakeDuration = { 0.5f };    // 흔들림 지속 시간
+	_float m_fShakeTime = {};        // 현재 흔들림 시간
+	_float m_fShakeAmplitude = { 20.f };   // 흔들림 진폭
+	_float m_fShakeFrequency = { 25.f };   // 흔들림 주파수
+	_bool m_bIsShaking = { false };         // 흔들림 상태
+
 
 public:
 	static CQTE_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

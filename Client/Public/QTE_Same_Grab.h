@@ -30,12 +30,13 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	void StartQTE();
-	void EndQTE();
-	void HandleQTEInput();
-	void ProcessCommand(UI_COMMAND input, _int playerID);
-	void CreateUIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
-	void ClearUIIcons();
+	void Start_QTE();
+	void End_QTE();
+	void Handle_QTEInput();
+	void Process_Command(UI_COMMAND input, _int playerID);
+	void Create_UIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
+	void Clear_UIIcons();
+	void Handle_WrongInput(_int playerID); // 오답 처리 함수 선언
 
 private:
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부

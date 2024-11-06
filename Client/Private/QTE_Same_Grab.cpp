@@ -5,13 +5,13 @@
 #include "GameInstance.h"
 #include "QTE_UI_Icon.h"
 
-CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CGameObject { pDevice, pContext }
+CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CQTE_Same_Grab::CQTE_Same_Grab(const CQTE_Same_Grab & Prototype)
+CQTE_Same_Grab::CQTE_Same_Grab(const CQTE_Same_Grab& Prototype)
 	: CGameObject{ Prototype }
 {
 
@@ -22,7 +22,7 @@ HRESULT CQTE_Same_Grab::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CQTE_Same_Grab::Initialize(void * pArg)
+HRESULT CQTE_Same_Grab::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -34,7 +34,7 @@ HRESULT CQTE_Same_Grab::Initialize(void * pArg)
 
 void CQTE_Same_Grab::Camera_Update(_float fTimeDelta)
 {
-	
+
 }
 
 void CQTE_Same_Grab::Update(_float fTimeDelta)
@@ -45,12 +45,12 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 		if (m_bIsQTEActive)
 		{
 			// QTE가 활성화되어 있으면 즉시 종료
-			EndQTE();
+			End_QTE();
 		}
 		else
 		{
 			// QTE가 비활성화되어 있으면 시작
-			StartQTE();
+			Start_QTE();
 		}
 	}
 
@@ -61,11 +61,11 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 		m_fTimer -= fTimeDelta;
 		if (m_fTimer <= 0.0f)
 		{
-			EndQTE();
+			End_QTE();
 		}
 
 		// 사용자 입력 처리
-		HandleQTEInput();
+		Handle_QTEInput();
 
 		// UI 아이콘 업데이트
 		for (auto& iter : m_UIIcons_P1)
@@ -87,7 +87,7 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 }
 
 
-void CQTE_Same_Grab::StartQTE()
+void CQTE_Same_Grab::Start_QTE()
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
@@ -127,8 +127,8 @@ void CQTE_Same_Grab::StartQTE()
 	}
 
 	// UI 아이콘 생성
-	CreateUIIcons(1, sequence_P1);
-	CreateUIIcons(2, sequence_P2);
+	Create_UIIcons(1, sequence_P1);
+	Create_UIIcons(2, sequence_P2);
 
 	// 첫 번째 아이콘 선택 상태로 설정
 	if (!m_UIIcons_P1.empty())
@@ -138,7 +138,7 @@ void CQTE_Same_Grab::StartQTE()
 		m_UIIcons_P2[0]->Set_State(CQTE_UI_Icon::SELECTED);
 }
 
-void CQTE_Same_Grab::EndQTE()
+void CQTE_Same_Grab::End_QTE()
 {
 	m_bIsQTEActive = false;
 	m_fTimer = 0.0f;
@@ -155,7 +155,7 @@ void CQTE_Same_Grab::EndQTE()
 	m_CurrentIndex_P2 = 0;
 
 	// UI 아이콘 제거
-	ClearUIIcons();
+	Clear_UIIcons();
 
 	// QTE 종료 후 처리 로직 추가 (우승자 결정)
 	if (m_iCorrectInputs_P1 > m_iCorrectInputs_P2)
@@ -172,46 +172,46 @@ void CQTE_Same_Grab::EndQTE()
 	}
 }
 
-void CQTE_Same_Grab::HandleQTEInput()
+void CQTE_Same_Grab::Handle_QTEInput()
 {
 	// 1P 입력 처리 (예: A, S, D, F 키)
 	if (m_pGameInstance->Key_Down(DIK_U))
 	{
-		ProcessCommand(UI_COMMAND_LIGHT, 1);
+		Process_Command(UI_COMMAND_LIGHT, 1);
 	}
 	else if (m_pGameInstance->Key_Down(DIK_I))
 	{
-		ProcessCommand(UI_COMMAND_MIDDLE, 1);
+		Process_Command(UI_COMMAND_MIDDLE, 1);
 	}
 	else if (m_pGameInstance->Key_Down(DIK_J))
 	{
-		ProcessCommand(UI_COMMAND_ULTIMATE, 1);
+		Process_Command(UI_COMMAND_ULTIMATE, 1);
 	}
 	else if (m_pGameInstance->Key_Down(DIK_K))
 	{
-		ProcessCommand(UI_COMMAND_HEAVY, 1);
+		Process_Command(UI_COMMAND_HEAVY, 1);
 	}
 
 	// 2P 입력 처리 (예: J, K, L, ; 키)
 	if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
 	{
-		ProcessCommand(UI_COMMAND_LIGHT, 2);
+		Process_Command(UI_COMMAND_LIGHT, 2);
 	}
 	else if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
 	{
-		ProcessCommand(UI_COMMAND_MIDDLE, 2);
+		Process_Command(UI_COMMAND_MIDDLE, 2);
 	}
 	else if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
 	{
-		ProcessCommand(UI_COMMAND_ULTIMATE, 2);
+		Process_Command(UI_COMMAND_ULTIMATE, 2);
 	}
 	else if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
 	{
-		ProcessCommand(UI_COMMAND_HEAVY, 2);
+		Process_Command(UI_COMMAND_HEAVY, 2);
 	}
 }
 
-void CQTE_Same_Grab::ProcessCommand(UI_COMMAND input, _int playerID)
+void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 {
 	if (playerID == 1)
 	{
@@ -237,15 +237,16 @@ void CQTE_Same_Grab::ProcessCommand(UI_COMMAND input, _int playerID)
 				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::SELECTED);
 			}
 
-			//// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
-			//if (m_CommandQueue_P1.empty())
-			//{
-			//	EndQTE();
-			//}
+			// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
+			if (m_CommandQueue_P1.empty())
+			{
+				//EndQTE();
+			}
 		}
 		else
 		{
 			// 잘못된 입력 시 QTE 실패 처리
+			Handle_WrongInput(playerID);
 			return;
 		}
 	}
@@ -273,15 +274,16 @@ void CQTE_Same_Grab::ProcessCommand(UI_COMMAND input, _int playerID)
 				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::SELECTED);
 			}
 
-			//// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
-			//if (m_CommandQueue_P2.empty())
-			//{
-			//	EndQTE();
-			//}
+			// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
+			if (m_CommandQueue_P2.empty())
+			{
+				//EndQTE();
+			}
 		}
 		else
 		{
 			// 잘못된 입력 시 QTE 실패 처리
+			Handle_WrongInput(playerID);
 			return;
 		}
 	}
@@ -297,7 +299,7 @@ void CQTE_Same_Grab::ProcessCommand(UI_COMMAND input, _int playerID)
 	}
 }
 
-void CQTE_Same_Grab::CreateUIIcons(_int playerID, const vector<UI_COMMAND>& sequence)
+void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& sequence)
 {
 	// 각 플레이어의 UI 아이콘 벡터에 추가
 	vector<CQTE_UI_Icon*>& targetIcons = (playerID == 1) ? m_UIIcons_P1 : m_UIIcons_P2;
@@ -360,7 +362,7 @@ void CQTE_Same_Grab::CreateUIIcons(_int playerID, const vector<UI_COMMAND>& sequ
 	}
 }
 
-void CQTE_Same_Grab::ClearUIIcons()
+void CQTE_Same_Grab::Clear_UIIcons()
 {
 	// 1P UI 아이콘 제거
 	for (auto& icon : m_UIIcons_P1)
@@ -383,16 +385,33 @@ void CQTE_Same_Grab::ClearUIIcons()
 	m_UIIcons_P2.clear();
 }
 
+void CQTE_Same_Grab::Handle_WrongInput(_int playerID)
+{
+	if (playerID == 1)
+	{
+		if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
+		{
+			m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::WRONG_PRESSED);
+		}
+	}
+	else if (playerID == 2)
+	{
+		if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
+		{
+			m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::WRONG_PRESSED);
+		}
+	}
+}
+
 
 HRESULT CQTE_Same_Grab::Render(_float fTimeDelta)
 {
-
 	return S_OK;
 }
 
-CQTE_Same_Grab * CQTE_Same_Grab::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CQTE_Same_Grab* CQTE_Same_Grab::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CQTE_Same_Grab*		pInstance = new CQTE_Same_Grab(pDevice, pContext);
+	CQTE_Same_Grab* pInstance = new CQTE_Same_Grab(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -403,9 +422,9 @@ CQTE_Same_Grab * CQTE_Same_Grab::Create(ID3D11Device * pDevice, ID3D11DeviceCont
 	return pInstance;
 }
 
-CGameObject * CQTE_Same_Grab::Clone(void * pArg)
+CGameObject* CQTE_Same_Grab::Clone(void* pArg)
 {
-	CQTE_Same_Grab*		pInstance = new CQTE_Same_Grab(*this);
+	CQTE_Same_Grab* pInstance = new CQTE_Same_Grab(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
