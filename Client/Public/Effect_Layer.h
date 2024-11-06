@@ -19,6 +19,7 @@ public:
 		_float3 vPosition;
 		_float3 vScaled;
 		_float3 vRotation;
+
 		const _float4x4* pPlayertMatrix;
 
 	}LAYER_DESC;
@@ -64,6 +65,7 @@ public:
 	_bool			m_bIsRender = { true };
 	_bool						m_bIsDoneAnim = { false };
 	_bool						m_bIsCopy = { false };
+	_bool						m_bIsFollowing = { false };
 
 private:
 	_uint							m_iNumEffects = {0};

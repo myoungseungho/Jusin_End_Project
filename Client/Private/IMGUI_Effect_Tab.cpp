@@ -231,6 +231,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
     layerData.vPosition = pLayer->Get_Layer_Position();
     layerData.vScaled = pLayer->Get_Layer_Scaled();
     layerData.vRotation = pLayer->Get_Layer_Rotation();
+    layerData.bIsFollowing = pLayer->m_bIsFollowing;
 
     // 각 레이어 안의 이펙트 정보 추가
     for (auto& pEffect : pLayer->Get_Effects())
