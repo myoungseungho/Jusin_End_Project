@@ -121,6 +121,10 @@ HRESULT CQTE_UI_Icon::Bind_ShaderResources()
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureNumber)))
 		return E_FAIL;
 
+	// IconState를 셰이더에 바인딩
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_IconState", &m_State, sizeof(_int))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
