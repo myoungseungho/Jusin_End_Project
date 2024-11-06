@@ -220,6 +220,7 @@ public:
 	void Set_ChaseStoping();
 	void Set_ChaseStop();
 
+
 	void Chase_Grab(_float fTimeDelta);
 	void Character_Attack_Grab(_float fTimeDelta);
 	void Grab_LateDraw();
@@ -524,6 +525,7 @@ protected:
 	CCharacter* m_pDebugEnemy = { nullptr };
 	CCharacter* m_pEnemy = { nullptr };
 
+	class CEffect_Layer* m_pChaseEffectLayer = { nullptr };
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 

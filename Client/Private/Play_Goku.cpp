@@ -2580,7 +2580,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_pReflectObject != nullptr)
 			{
-				if (m_pReflectObject->m_iGameObjectData < 0)
+				if (m_pReflectObject->m_iGameObjectData != 0)
 				{
 					m_pReflectObject = nullptr;
 				}

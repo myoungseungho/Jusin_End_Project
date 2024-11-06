@@ -15,6 +15,8 @@
 #include "Animation.h"
 #include <cmath>
 
+#include "Effect_Layer.h"
+
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
 
@@ -1180,8 +1182,12 @@ void CCharacter::Chase2(_float fTimeDelta)
 			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
 			m_fJumpPower = fJumpPower;
 
-			Character_Make_Effect(TEXT("BurstR-02"));
+			//Character_Make_Effect(TEXT("BurstR-02"));
 	
+			m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			//m_pEffect_Manager->Copy_Layer(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+
 			//if (m_bChaseAttackEnable)
 			{
 				//공격판정 테스트
@@ -1502,10 +1508,6 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 }
 
-void CCharacter::Set_ChaseStoping()
-{
-	m_bChaseStoping = true;
-}
 
 void CCharacter::Chase_Grab(_float fTimeDelta)
 {
@@ -3043,6 +3045,17 @@ void CCharacter::Set_ChaseStop()
 
 
 
+}
+
+void CCharacter::Set_ChaseStoping()
+{
+	m_bChaseStoping = true;
+
+	if (m_pChaseEffectLayer != nullptr)
+	{
+		m_pChaseEffectLayer->m_bIsDoneAnim = true;
+		m_pChaseEffectLayer = nullptr;
+	}
 }
 
 _ushort CCharacter::Get_BreakFall_AirAnimationIndex()
