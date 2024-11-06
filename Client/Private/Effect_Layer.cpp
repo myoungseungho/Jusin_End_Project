@@ -105,14 +105,15 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 
 HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 {
+
+	//m_isBillboading = isBillboading;
+	m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
+
+	m_pPlayerMatrix = pArg;
+	LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+
 	if (pArg != nullptr)
 	{
-		m_isBillboading = isBillboading;
-		m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
-
-		m_pPlayerMatrix = pArg;
-		LayerMatrix = m_pTransformCom->Get_WorldMatrix();
-
 		if (0 > m_pPlayerMatrix->_11)
 		{
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
@@ -175,18 +176,20 @@ void CEffect_Layer::Update(_float fTimeDelta)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
-			if (m_isBillboading == true && (pEffect->m_ModelName.find(L"povot_plane00") != std::wstring::npos))
+			_matrix EffectToLayerMatrix = LayerMatrix;
+
+			if (pEffect->m_bIsBillboarding)
 			{
 				_vector camPosition = m_pGameInstance->Get_CamPosition_Vector();
 
 				m_pCopyTransformCom->LookAt(camPosition);
-				LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
-				//if (0 > m_pPlayerMatrix->_11)
-				//	LayerMatrix.r[0] = XMVectorSetX(LayerMatrix.r[0], XMVectorGetX(LayerMatrix.r[0]) * -1);
+				EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+
 			}
 
-			pEffect->Get_Layer_Matrix(LayerMatrix);
+			pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
 		}
+
 		Play_Effect_Animation(fTimeDelta);
 	}
 
@@ -201,6 +204,11 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
+			if (pEffect->m_EffectName.find(L"BurstJ-03") != std::wstring::npos)
+			{
+				int a = 10;
+			}
+
 			pEffect->Late_Update(fTimeDelta);
 		}
 	}

@@ -35,11 +35,17 @@ public: /* For.Target_Manager */
 	HRESULT Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag);
 	HRESULT Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV = nullptr);
 	HRESULT Begin_MRT_DoNotClear(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV = nullptr);
-	
+	HRESULT Begin_EffectMRT(const _wstring& strMRTTag, _uint iArrayIndex = 2, ID3D11DepthStencilView* pDSV = nullptr);
 	HRESULT End_MRT();
 	HRESULT Copy_RenderTarget(const _wstring& strTargetTag, ID3D11Texture2D* pTexture2D);
 	ID3D11ShaderResourceView* Copy_RenderTarget_SRV(const _wstring& strTargetTag);
 	HRESULT Bind_RT_ShaderResource(class CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag);
+	HRESULT Bind_RT_EffectShaderResource(class CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag, _uint isPri);
+	
+	_int	Get_FrameGlowCount(_int isPri);
+	_float	Get_CulGlowIndex(_int isPri);
+	void	Zero_CurGlowIndex(_int isPri);
+
 	_int Add_ClientRenderTarget(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	HRESULT Add_ClientRenderTargetToMRT(const _wstring& strMRTTag, const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor);
 	

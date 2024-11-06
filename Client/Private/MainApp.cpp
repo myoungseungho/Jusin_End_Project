@@ -76,15 +76,13 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 	//³ª¸ÓÁö ·»´õ´Â ·»´õÀÎ½ºÅÏ½º
 	m_pRenderInstance->Render_Engine(fTimeDelta);
 
-#pragma region IMGUI ·»´õ
-	//·Îµù, ·Î°í, ·Îºñ´Â IMGUI ·»´õ ¾ÈÇÏ°Ô
-	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
-	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO
-	/*	&& (_uint)currentLevel_Index != LEVEL_LOBBY*/;
+	//IMGUI ·»´õ´Â ·Îµù¶§´Â ÇÏ¸é ¾ÈµÊ
+ 
+    _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
 
+	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render)
 		m_pImgui_Manager->Render(fTimeDelta);
-#pragma endregion
 
 	m_pGameInstance->Present();
 
@@ -128,11 +126,6 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Single_Eff_VtxMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Single_Eff_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
 		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Shader_VtxMesh"),
-		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
-		return E_FAIL;
-
 #pragma endregion
 
 #pragma region VIBuffer

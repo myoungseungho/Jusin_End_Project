@@ -49,17 +49,19 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		m_ModelName = pEffectDesc->ModelName;
 		m_MaskTextureName = pEffectDesc->MaskTextureName;
 		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
-
+	
 		m_iRenderIndex = pEffectDesc->iRenderIndex;
 		//m_iPassIndex = pEffectDesc->iPassIndex;
 		m_iNumWidthImage = pEffectDesc->iNumWidthImage;
 		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
+		m_bIsBillboarding = pEffectDesc->bIsBillboarding;
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 		m_isGlow = pEffectDesc->isGlow;
+		m_fGlowFactor = pEffectDesc->fGlowFactor;
 		if (m_isGlow == true)
 			m_iGameObjectData = -1;
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)

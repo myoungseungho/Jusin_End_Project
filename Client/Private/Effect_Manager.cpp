@@ -123,7 +123,10 @@ HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _flo
 		if (strEffectLayerTag.find(L"Aura01") != wstring::npos)
 			m_UsingEffect.push_back(pLayer->Clone(pArg, false));
 		else
+		{
+
 			m_UsingEffect.push_back(pLayer->Clone(pArg, true));
+		}
 	}
 
 	return S_OK;
@@ -162,6 +165,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.vRotation = effectData.rotation;
 			EffectDesc.iUnique_Index = m_TestEffect_Count++;
 			EffectDesc.iRenderIndex = effectData.renderIndex;
+			EffectDesc.bIsBillboarding = effectData.isLoop;
 			EffectDesc.iPassIndex = effectData.passIndex;
 			EffectDesc.vColor = effectData.vColor;
 			EffectDesc.vGlowColor = effectData.vGlowColor;
@@ -169,11 +173,10 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 			EffectDesc.DerredPassIndex = effectData.iDerredPassIndex;
 			EffectDesc.SRV_Ptr = nullptr;  // SRV는 nullptr로 초기화; 필요한 경우 적절히 설정
 			EffectDesc.bIsCopy = false;
+			
 			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
-			if (effectData.uniqueIndex == -1)
-				EffectDesc.isGlow = true;
-			else
-				EffectDesc.isGlow = false;
+
+			EffectDesc.isGlow = effectData.uniqueIndex;
 
 			CEffect_NoneLight* pNonelight = { nullptr };
 			CEffect_Blend* pBlend = { nullptr };
@@ -450,6 +453,8 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
+				EffectDesc.isGlow = iter->m_isGlow;
+				EffectDesc.fGlowFactor =iter->m_fGlowFactor;
 				EffectDesc.vColor = iter->m_vColor;
 				EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 
@@ -501,6 +506,8 @@ HRESULT CEffect_Manager::Add_Effect_To_Layer(_int iCurTestEffectIndex, const wst
 				EffectDesc.iUnique_Index =iter->m_iUnique_Index;
 				EffectDesc.SRV_Ptr = static_cast<CTexture*>(iter->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 				EffectDesc.iRenderIndex = 2;
+				EffectDesc.isGlow = iter->m_isGlow;
+				EffectDesc.fGlowFactor = iter->m_fGlowFactor;
 				EffectDesc.vColor = iter->m_vColor;
 				EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 				CEffect* pClone = static_cast<CEffect*>(iter->Clone(&EffectDesc));
@@ -561,6 +568,8 @@ HRESULT CEffect_Manager::Add_All_Effect_To_Layer(const wstring& strEffectLayerTa
 			EffectDesc.iUnique_Index = pEffect->m_iUnique_Index;
 			EffectDesc.SRV_Ptr = static_cast<CTexture*>(pEffect->Get_Component(TEXT("Com_DiffuseTexture")))->Get_SRV(0);
 			EffectDesc.iRenderIndex = 2;
+			EffectDesc.isGlow = pEffect->m_isGlow;
+			EffectDesc.fGlowFactor = pEffect->m_fGlowFactor;
 			EffectDesc.LayerMatrix = pLayer->m_pTransformCom->Get_WorldMatrix();
 			EffectDesc.vColor = pEffect->m_vColor;
 
@@ -654,6 +663,8 @@ HRESULT CEffect_Manager::Add_Test_Effect(EFFECT_TYPE eEffectType, wstring* Effec
 	EffectDesc.vRotation = { 0.f, 0.f, 0.f };
 	EffectDesc.iRenderIndex = 1;
 	EffectDesc.vColor = { 0.f, 0.f, 0.f, 30.f };
+	EffectDesc.isGlow = -1;
+	EffectDesc.fGlowFactor = 0;
 	EffectDesc.LayerMatrix = XMMatrixIdentity();
 
 	CGameObject* pEffect = nullptr;

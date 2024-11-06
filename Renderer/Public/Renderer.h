@@ -77,6 +77,7 @@ private:
 	_bool m_bShow_Debug_Component = { false };
 
 	_uint m_iEffectRenderCount = { 0 };
+	_uint m_iEffectGlowPri_RenderCount = { 0 };
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -94,6 +95,7 @@ private:
 	HRESULT Render_NonLight(_float fTimeDelta);
 	HRESULT Render_NonLight_Effect(_float fTimeDelta);
 	HRESULT Render_Glow(_float fTimeDelta);
+	HRESULT Render_AllGlow_Effect_Pri(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
 	HRESULT Render_Glow_UI(_float fTimeDelta);
@@ -108,7 +110,7 @@ private:
 
 
 	HRESULT Draw_OutLine_Effect();
-	HRESULT Draw_AllGlow_Effect();
+	HRESULT Draw_AllGlow_Effect(_int isPri);
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 
 public:

@@ -10,12 +10,14 @@ texture2D		g_NormalTexture;
 texture2D		g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
 
 texture2D		g_DepthTexture;
+texture2D g_GlowDescTexture;
+
 float g_GlowFactor;
 float4 g_GlowFilterColor;
 float2 g_DownSamplingSize;
 float2 g_DownTexSize;
 
-
+float g_fAllGlowFactor = 1.f;
 float g_fGlowFactor = 3.2f;
 
 static const float g_fWeight[13] =
@@ -101,7 +103,7 @@ float4 Blur_X(float2 vTexCoord, float fFactor, float fRatio, bool bPlayer)
     {
         vUV = vTexCoord + float2(fFactor / (1920.0f * fRatio) * i, 0.f);
         vTex = g_Texture.Sample(DestroySampler, vUV);
-        
+
         vOut += bPlayer == false ? g_fWeight[6 + i] * vTex : g_fPlayerWeight[6 + i] * vTex;
     }
 
@@ -142,7 +144,6 @@ PS_OUT PS_MAIN_BLUR_Y(PS_IN In)
 
     Out.vColor = Blur_Y(In.vTexcoord, 3.f, 0.25f, false);
 	
-
     return Out;
 }
 
@@ -150,7 +151,7 @@ PS_OUT PS_MAIN_PLAYER_BLUR_X(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true);
+    Out.vColor = Blur_X(In.vTexcoord, 1.f, 0.25f, true);
 
     //Out.vColor = Blur_X(In.vTexcoord, 1.f, 1.f, true);
 	/*
@@ -173,7 +174,7 @@ PS_OUT PS_MAIN_PLAYER_BLUR_Y(PS_IN In)
     //float gamma = 2.2f;
     //Out.vColor = pow(Blur_Y(In.vTexcoord, 1.f, 1.f, true), 1.0f / gamma);
     
-    Out.vColor = Blur_Y(In.vTexcoord, 1.f, 1.f, true);
+    Out.vColor = Blur_Y(In.vTexcoord, 1.f, 0.25f, true);
 	
     return Out;
 }
@@ -307,12 +308,13 @@ PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
     vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
 
     vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
-   /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
-     
-    Out.vColor = saturate(vResult + vBlur * 3.2f) /*+ vEffect*/;
-    //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
-    return Out;
+    vector vFactor = g_GlowDescTexture.Sample(LinearSampler, In.vTexcoord);
+   // clip(vBlur.a - 0.001f);
+    //float fFactor = vFactor.r == 0.f ? 3.2f : vFactor.r;
+   Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor + 0.2f));
+  //  Out.vColor = saturate(vResult * (1 - vBlur.a) + vBlur * vBlur.a * (g_fAllGlowFactor + 1.2f));
 
+    return Out;
 }
 
 
@@ -458,7 +460,7 @@ technique11		DefaultTechnique
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+        SetBlendState(BS_OneBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;

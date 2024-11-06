@@ -99,14 +99,33 @@ void CIMGUI_Shader_Tab::Render(_float fTimeDelta)
         m_Sprite_Node_ids.push_back(nodeDesc);
       //  node_ids.push_back(nodeDesc.Sprite_node_id - 3000);
     }
-    if (ImGui::Button("Glow") && isStart)
+
+    ImGui::Text("Glow_Pri : Input == -2       Glow : Input > -1       NotGlow : Input == -1");
+    ImGui::SetNextItemWidth(100.0f);
+    _int GameObjectData = m_pEffect->Get_GameObjectData();
+    _int GlowFactor = m_pEffect->Get_ObjectRenderData(); // - (GameObjectData == -2 ? 5 : 0);
+    if (ImGui::InputInt("Glow", &GameObjectData) && isStart)
     {
-        if (m_pEffect->Get_GameObjectData() >= 0)
-            m_pEffect->Set_GameObjectData(-1);
-        else
-            m_pEffect->Set_GameObjectData(0);
+        m_pEffect->Set_GameObjectData(GameObjectData);
+        if (GlowFactor < 1 || GlowFactor > 4)
+            GlowFactor = 1;
+
+        
+
     }
-    
+    if (GlowFactor > 4)
+        GlowFactor -= 5;
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(100.0f);
+    if (ImGui::InputInt("GlowFactor", &GlowFactor) && isStart)
+    {
+        if (GlowFactor > -1 && GlowFactor < 5)
+        {
+            if (GameObjectData == -2)
+                GlowFactor += 5;
+            m_pEffect->Set_ObjectRenderData(GlowFactor);
+        }
+    }
 
     ImNodes::BeginNodeEditor();  /* 노드 생성시 무조건 호출해야함 */
 

@@ -57,12 +57,30 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
+		m_bIsBillboarding = pEffectDesc->bIsBillboarding;
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 		m_isGlow = pEffectDesc->isGlow;
-		if (m_isGlow == true)
-			m_iGameObjectData = -1;
+		m_fGlowFactor = pEffectDesc->fGlowFactor;
+
+		m_iGameObjectData = m_isGlow;
+
+		if (m_iGameObjectData <= -2)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = (_int)m_fGlowFactor + 5 - 1;
+		}
+		else if (m_iGameObjectData == -1)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = 0;
+		}
+		else if (m_iGameObjectData >= 0)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = (_int)m_fGlowFactor - 1;
+		}
 
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
@@ -215,6 +233,9 @@ HRESULT CEffect_NoneLight::Bind_ShaderResources()
 		m_IsColorEffect = false;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bColorChange", &m_IsColorEffect, sizeof(m_IsColorEffect))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fGlowFactor", &m_fGlowFactor, sizeof(float))))
 		return E_FAIL;
 
 	return S_OK;

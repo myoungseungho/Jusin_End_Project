@@ -165,7 +165,7 @@ HRESULT CIMGUI_Effect_Tab::Save_All_Effects_File()
             effectData.effectType = pEffect->m_eEffect_Type;
             effectData.renderIndex = pEffect->m_iRenderIndex;
             effectData.passIndex = pEffect->m_iPassIndex;
-            effectData.uniqueIndex = pEffect->m_iUnique_Index;
+            effectData.uniqueIndex = pEffect->m_iGameObjectData;
             effectData.isLoop = pEffect->m_bIsLoop;
             effectData.position = pEffect->Get_Effect_Position();
             effectData.scale = pEffect->Get_Effect_Scaled();
@@ -177,7 +177,7 @@ HRESULT CIMGUI_Effect_Tab::Save_All_Effects_File()
             effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
             effectData.maskTextureName = L"../Bin/Effects/Shader_Tab/" + layerData.layerName + pEffect->m_EffectName;
-            CImgui_Manager::Get_Instance()->Save_Shader_Tab(effectData.uniqueIndex, WStringToUTF8(effectData.maskTextureName));
+            CImgui_Manager::Get_Instance()->Save_Shader_Tab(pEffect->m_iUnique_Index, WStringToUTF8(effectData.maskTextureName));
             // 키프레임 정보 추가
             for (const auto& keyFramePair : pEffect->m_pAnimation->m_EffectKeyFrames)
             {
@@ -249,7 +249,21 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
         effectData.rotation = pEffect->Get_Effect_Rotation();
         effectData.vColor = pEffect->m_vColor;
         effectData.vGlowColor = pEffect->m_vGlowColor;
-        effectData.fGlowFactor = pEffect->m_fGlowFactor;
+
+        if (effectData.uniqueIndex <= -2) //프리
+        {
+            effectData.fGlowFactor = pEffect->m_iObjectRenderData - 5 + 1;
+
+        }
+        else if (effectData.uniqueIndex == -1) //글로우 x
+        {
+            effectData.fGlowFactor = pEffect->m_iObjectRenderData;
+        }
+        else if (effectData.uniqueIndex >= 0)
+        {
+            effectData.fGlowFactor = pEffect->m_iObjectRenderData + 1;
+        }
+
         effectData.iDerredPassIndex = pEffect->m_iDerredPassIndex;
         effectData.iNumKeyFrame = pEffect->m_pAnimation->m_EffectKeyFrames.size();
 
