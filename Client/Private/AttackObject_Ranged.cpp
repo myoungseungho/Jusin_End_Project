@@ -35,13 +35,19 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 		return E_FAIL;
 
 
+
 	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
 
 	m_fStartOffset = pDesc->fStartOffset;
 	m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
 	m_iDirection = pDesc->iDirection;
 
-
+	if (m_iDirection == -1)
+	{
+		m_pTransformCom->Set_Scaled(-1, 1, 1);
+	}
+	
+		
 	m_eRangeColor = pDesc->eRangeColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();

@@ -958,9 +958,9 @@ PLAY_21,TON430_body,50,AttackEvent,2
 PLAY_21,TON430_body,90,AnimSpeedChange,0.012000,45.455002
 
 PLAY_21,TON430_body,90,AttackEvent,3
-//,PLAY_21,TON430_body,95,AttackEvent,4
-//,PLAY_21,TON430_body,100,AttackEvent,5
-//,PLAY_21,TON430_body,105,AttackEvent,6
+PLAY_21,TON430_body,95,AttackEvent,4
+PLAY_21,TON430_body,100,AttackEvent,5
+PLAY_21,TON430_body,105,AttackEvent,6
 
 
 

@@ -858,22 +858,28 @@ void CGoku_MeleeAttack::ForwardDash()
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"),{0,-1.5f});
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
 
+
+		m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
+		//m_pPlayer->Character_Make_Effect(TEXT("Right_Wall_Crash"), { 0.6f,0.f });
+
+		
 	}
 
 	else if (m_pPlayer->Get_bSparking() && m_pPlayer->Get_bAirDashEnable() && m_pPlayer->Get_bAttackBackEvent() && 
 		(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2))
 	{
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
-		//m_pPlayer->Set_CurrentAnimationPositionJump(4.f);
 		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (10.f));
 		m_pPlayer->Set_bAirDashEnable(false);
 		//m_pPlayer->Set_ForcedGravityDown();
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"), { 0,-1.5f });
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
+
 	}
 
 

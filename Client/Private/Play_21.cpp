@@ -2166,8 +2166,34 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-		}
 
+
+			//¿”Ω√ ¿Ã∆Â∆Æ
+			
+
+			//for (int i = 0; i < 10; i++)
+			//{
+			//
+			//	Character_Make_Effect(TEXT("BurstJ3-Hit01"), { i*1.f + rand()%5 *0.1f,-2.f});
+			//
+			//}
+
+		}
+		else if (iAttackEvent == 4)
+		{
+			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 2.f ,-2.f });
+
+		}
+		else if (iAttackEvent == 5)
+		{
+			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 4.f ,-2.f });
+
+		}
+		else if (iAttackEvent == 6)
+		{
+			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 6.f ,-2.f });
+
+		}
 
 	}
 		break;
