@@ -227,7 +227,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 	//	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(5.f * m_iPlayerTeam, 100.f, 0.f, 1.f));
 	//
 	//	//캐릭터 사이즈에 맞게 각자 추가하느라 m_pColliderCom이 없음
-	//	//m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	//	//m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	//}
 	//else
 	//	m_bPlaying = true;
@@ -2534,7 +2534,7 @@ _bool CCharacter::Update_Tag_In(_float fTimeDelta)
 
 		Character_Make_Effect(TEXT("Moving_Line_Down"));
 		m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
-		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 		
 		return true;
 	}
@@ -3645,7 +3645,7 @@ void CCharacter::Tag_In(_ubyte iTagSlot)
 		//업데이트끝나면하는걸로?
 		//Character_Make_Effect(TEXT("Moving_Line_Down"));
 		//m_pTransformCom->Set_State_Position({ -100.f,-100.f,0.f });
-		//m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		//m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 
 		if (m_bSparking)

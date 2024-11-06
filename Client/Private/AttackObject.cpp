@@ -137,7 +137,7 @@ void CAttackObject::Update(_float fTimeDelta)
 	//	}
 	//
 	//	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	//	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	//	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	//}
 
 }

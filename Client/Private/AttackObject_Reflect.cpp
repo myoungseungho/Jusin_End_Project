@@ -70,7 +70,7 @@ void CAttackObject_Reflect::Update(_float fTimeDelta)
 		}
 	}
 	else
-		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 
 

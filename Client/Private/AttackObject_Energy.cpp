@@ -116,7 +116,7 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 
 
 		for (auto& iter : m_vecColliderCom)
-			iter->UpdateVector(vPosOffset);
+			iter->Update(vPosOffset);
 
 	}
 }
@@ -589,7 +589,7 @@ void CAttackObject_Energy::Make_Collider(CCollider_Manager::COLLIDERGROUP eColli
 
 
 		//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 		m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 
