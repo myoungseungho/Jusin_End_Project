@@ -29,6 +29,8 @@ public:
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, fTimer;
 		_int iTextureNumber{};
 		KEY_ID key{};
+		_bool bFinal = {false};
+		CGameObject* Hit_Situation = { nullptr };
 	};
 
 private:
@@ -57,12 +59,13 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
-	_float					 m_fAlpha{}, m_fTimer;
+	_float					 m_fAlpha{}, m_fTimer{}, m_fElaspedTime{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
 	KEY_ID m_Key = HIT_KEY_END;
+	_bool m_bIsFinal = { false };
 
-	class CGameObject* m_pSameGrab = { nullptr };
+	class CQTE_Hit_Situation* m_pHit_Situation = { nullptr };
 
 public:
 	static CQTE_Hit_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

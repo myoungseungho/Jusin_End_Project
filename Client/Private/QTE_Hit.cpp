@@ -4,6 +4,8 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Hit_Situation.h"
+
+
 CQTE_Hit::CQTE_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -29,7 +31,7 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 	m_vecHit_Situation.resize(Hit_Situation_ID_END);
 
 	CQTE_Hit_Situation::QTE_HIT_SITUATION_DESC Desc{};
-	Desc.lifeTime = 5.f;
+	Desc.lifeTime = 10.f;
 	Desc.create_Num = 3;
 	Desc.ID = Hit_Situation_ID_A;
 
@@ -52,7 +54,6 @@ void CQTE_Hit::Update(_float fTimeDelta)
 
 	//선택된 시뮬레이션만 Update
 	m_vecHit_Situation[m_current_Situation_ID]->Update(fTimeDelta);
-
 }
 
 void CQTE_Hit::Late_Update(_float fTimeDelta)

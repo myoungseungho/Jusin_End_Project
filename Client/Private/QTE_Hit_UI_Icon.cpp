@@ -3,8 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "QTE_Same_Grab.h"
-
+#include "QTE_Hit_Situation.h"
 CQTE_Hit_UI_Icon::CQTE_Hit_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -38,6 +37,9 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 	m_fY = desc->fY;
 	m_iTextureNumber = desc->iTextureNumber;
 	m_Key = desc->key;
+	m_fTimer = desc->fTimer;
+	m_pHit_Situation = static_cast<CQTE_Hit_Situation*>(desc->Hit_Situation);
+	m_bIsFinal = desc->bFinal;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -45,6 +47,8 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
+	SetActive(true);
 
 	return S_OK;
 }
@@ -58,6 +62,19 @@ void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
+
+	m_fElaspedTime += fTimeDelta;
+
+	//경과시간이 다 지났다면
+	if (m_fElaspedTime >= m_fTimer)
+	{
+		m_fElaspedTime = m_fTimer;
+		SetActive(false);
+
+		//마지막 객체가 경과시간이 다 지났담녀 끝
+		if (m_bIsFinal)
+			m_pHit_Situation->Notify_Last_UI_Final_Complete();
+	}
 }
 
 void CQTE_Hit_UI_Icon::Late_Update(_float fTimeDelta)

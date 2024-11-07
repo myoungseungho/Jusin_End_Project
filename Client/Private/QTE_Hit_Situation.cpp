@@ -90,12 +90,19 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 
 	if (m_bIsQTEActive)
 	{
+		if (m_fTimer <= 0.0f || m_bUI_Final_Complate)
+		{
+			// QTE 종료
+			End_QTE();
+		}
+
 		// 경과 시간 업데이트
 		m_fElapsedTime += fTimeDelta;
 
-		// 다음 아이콘 생성 시간인지 확인
+		// 다음 아이콘 생성할게 남아있는지 체크
 		if (m_iNextIconIndex < m_vecIconCreationTimes.size())
 		{
+			//경과시간이 딜레이 시간보다 늘어났다면 아이콘 생성
 			if (m_fElapsedTime >= m_vecIconCreationTimes[m_iNextIconIndex])
 			{
 				// 아이콘 생성
@@ -104,21 +111,15 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 			}
 		}
 
-		// 각 Hit_UI_Icon 업데이트
-		for (auto& iter : m_vecHitUIIcon)
-			iter->Update(fTimeDelta);
-
 		// 사용자 입력 처리
 		Handle_QTEInput();
 
 		// 타이머 업데이트
 		m_fTimer -= fTimeDelta;
-
-		if (m_fTimer <= 0.0f)
-		{
-			// QTE 종료
-			End_QTE();
-		}
+	
+		// 각 Hit_UI_Icon 업데이트
+		for (auto& iter : m_vecHitUIIcon)
+			iter->Update(fTimeDelta);
 	}
 #pragma endregion
 
@@ -144,10 +145,9 @@ void CQTE_Hit_Situation::Start_QTE()
 		return; // 이미 QTE가 활성화되어 있으면 무시
 
 	m_bIsQTEActive = true;
-
+	m_bUI_Final_Complate = false;
 	// 첫 번째 아이콘 즉시 생성
 	Create_UIIcon();
-	m_iNextIconIndex++;
 }
 
 void CQTE_Hit_Situation::End_QTE()
@@ -155,16 +155,13 @@ void CQTE_Hit_Situation::End_QTE()
 	m_bIsQTEActive = false;
 	m_fElapsedTime = 0.0f;
 	m_iNextIconIndex = 0;
-	m_fTimer = 0.f;
+	m_fTimer = m_fLifeTime;
+	m_bUI_Final_Complate = false;
 
 	for (auto& iter : m_vecHitUIIcon)
 		Safe_Release(iter);
 
 	m_vecHitUIIcon.clear();
-}
-
-void CQTE_Hit_Situation::Handle_QTEInput()
-{
 }
 
 void CQTE_Hit_Situation::Create_UIIcon()
@@ -175,10 +172,10 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	Desc.iTextureNumber = { 0 };
 
 	// 위치 범위 설정
-	_float minX = 100.f;
-	_float maxX = 1920.f - Desc.fSizeX; // 화면 너비 - 아이콘 너비를 고려
-	_float minY = 100.f;
-	_float maxY = 1080.f - Desc.fSizeY; // 화면 높이 - 아이콘 높이를 고려
+	_float minX = 600.f;
+	_float maxX = 1300.f; // 화면 너비 - 아이콘 너비를 고려
+	_float minY = 400.f;
+	_float maxY = 680.f; // 화면 높이 - 아이콘 높이를 고려
 
 	// 겹치지 않는 위치를 찾기 위한 최대 시도 횟수
 	const _int maxAttempts = 100;
@@ -223,17 +220,80 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	}
 
 	// fTimer를 최소 및 최대 값 사이에서 랜덤하게 설정
-	_float minTimer = 0.5f; // 최소 시간
-	_float maxTimer = 2.0f; // 최대 시간
+	_float minTimer = 1.f; // 최소 시간
+	_float maxTimer = 2.5f; // 최대 시간
 	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
 
 	// 랜덤하게 키 하나 생성
 	Desc.key = static_cast<CQTE_Hit_UI_Icon::KEY_ID>(rand() % 4);
+	Desc.Hit_Situation = this;
+	//마지막 객체 생성이라면
+	if (m_vecHitUIIcon.size() == m_iCreate_Num - 1)
+		Desc.bFinal = true;
 
 	// 아이콘 생성
 	CQTE_Hit_UI_Icon* ui_Icon = static_cast<CQTE_Hit_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"), &Desc));
 
 	m_vecHitUIIcon.push_back(ui_Icon);
+}
+
+
+void CQTE_Hit_Situation::Handle_QTEInput()
+{
+	//해당 기술을 시전하는 캐릭터
+	//이건 나중에 가져와야함
+
+	if (m_iCharacterSide == 1)
+	{
+		if (m_pGameInstance->Key_Down(DIK_U))
+		{
+			Process_Command(UI_COMMAND_LIGHT, 1);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_I))
+		{
+			Process_Command(UI_COMMAND_MIDDLE, 1);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_J))
+		{
+			Process_Command(UI_COMMAND_ULTIMATE, 1);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_K))
+		{
+			Process_Command(UI_COMMAND_HEAVY, 1);
+		}
+	}
+	else if (m_iCharacterSide == 2)
+	{
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
+		{
+			Process_Command(UI_COMMAND_LIGHT, 2);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
+		{
+			Process_Command(UI_COMMAND_MIDDLE, 2);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
+		{
+			Process_Command(UI_COMMAND_ULTIMATE, 2);
+		}
+		else if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
+		{
+			Process_Command(UI_COMMAND_HEAVY, 2);
+		}
+	}
+}
+
+
+void CQTE_Hit_Situation::Process_Command(UI_COMMAND input, _int playerID)
+{
+	if (playerID == 1)
+	{
+
+	}
+	else if (playerID == 2)
+	{
+
+	}
 }
 
 CQTE_Hit_Situation* CQTE_Hit_Situation::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

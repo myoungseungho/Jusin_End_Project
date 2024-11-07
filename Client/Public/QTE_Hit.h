@@ -34,7 +34,8 @@ public:
 private:
 	vector<class CQTE_Hit_Situation* >m_vecHit_Situation;
 
-	Hit_Situation_ID m_current_Situation_ID = Hit_Situation_ID_END;
+	Hit_Situation_ID m_current_Situation_ID = Hit_Situation_ID_A;
+	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 
 public:
 	static CQTE_Hit* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

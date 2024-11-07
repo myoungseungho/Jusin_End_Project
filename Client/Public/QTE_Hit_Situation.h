@@ -15,6 +15,15 @@ public:
 		CQTE_Hit::Hit_Situation_ID ID = {};
 	};
 
+	enum UI_COMMAND
+	{
+		UI_COMMAND_LIGHT, //약공
+		UI_COMMAND_MIDDLE, //중공
+		UI_COMMAND_ULTIMATE, //특수공격
+		UI_COMMAND_HEAVY, //강공
+		UI_COMMAND_END
+	};
+
 private:
 	CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CQTE_Hit_Situation(const CQTE_Hit_Situation& Prototype);
@@ -28,12 +37,14 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complate = true; };
+
 private:
 	void Start_QTE();
 	void End_QTE();
 	void Handle_QTEInput();
 	void Create_UIIcon(); // 아이콘 생성 함수 추가
-
+	void Process_Command(UI_COMMAND input, _int playerID);
 private:
 	_float m_fLifeTime = {};
 	_int m_iCreate_Num = {};
@@ -44,10 +55,15 @@ private:
 	_float m_fElapsedTime = { 0.f }; // 경과 시간
 	_int m_iNextIconIndex = { 0 }; // 다음 아이콘 인덱스
 
+	_int m_iCharacterSide = { 1 };
+
 	vector<_float> m_vecIconCreationTimes;
 	vector<class CQTE_Hit_UI_Icon*> m_vecHitUIIcon;
 
 	CQTE_Hit::Hit_Situation_ID m_currentSituationID = {};
+
+	//마지막 UI_Final
+	_bool m_bUI_Final_Complate = { false };
 
 public:
 	static CQTE_Hit_Situation* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
