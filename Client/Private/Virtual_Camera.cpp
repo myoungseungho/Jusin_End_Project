@@ -227,27 +227,30 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 
 void CVirtual_Camera::Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2)
 {
-	const float fixedZ = -5.f;
+
+	const float fixedZ = -5.f; //Z값 고정
 	const float baseFixedY = 1.5f;  // Y가 0일 때 사용할 고정값
 
+	//플레이어 둘이 thresholdDistance 보다 멀어지면 그제서야 카메라가 멀어지고
 	const float thresholdDistance = 2.f;
+	//maxDistance까지는 비례하면서 늘어나다 여기서부터는 더 늘어나지 않음
 	const float maxDistance = 5.17f;
 
-	float offsetX = 0.f;
+	//가변 Y 셋팅
 	float dynamicY = baseFixedY;
 
 	// higherY가 0보다 큰 경우 가변 오프셋을 추가
 	if (higherY > 0.f)
 	{
 		// higherY 값에 따라 baseFixedY보다 낮은 값을 설정
-		const float maxReduction = 0.8f;  // 최대 Y 감소값
+		const float maxReduction = 1.5f;  // 최대 Y 감소값
 
 		// higherY가 커질수록 dynamicY를 1에서 더 낮게 조정
-		dynamicY = baseFixedY - min(maxReduction, higherY * 0.5f);
+		dynamicY = baseFixedY - min(maxReduction, higherY * 0.8f);
 	}
 
 	// 최종 타겟 위치를 설정
-	_float3 targetPosition = _float3(averageX + offsetX, higherY + dynamicY, fixedZ);
+	_float3 targetPosition = _float3(averageX, higherY + dynamicY, fixedZ);
 
 	// DistanceX가 thresholdDistance를 넘을 때 카메라의 Z와 Y를 조절하는 기존 로직 유지
 	if (distanceX > thresholdDistance)
