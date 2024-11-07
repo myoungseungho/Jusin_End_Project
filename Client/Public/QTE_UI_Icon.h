@@ -17,7 +17,9 @@ public:
 	struct QTE_UI_ICON_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, iTextureNumber{}, fFallDelay{};
-		_bool bSelected = false;
+		_bool isFirst = false;
+		_bool isLast = false;
+		CGameObject* SameGrab = { nullptr };
 	};
 
 	enum IconState
@@ -68,7 +70,8 @@ private:
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
 
-	_bool m_bIsSelect = { false };
+	_bool m_bIsFirst = { false };
+	_bool m_bIsLast = { false };
 	IconState m_State = NOT_SELECTED; // 아이콘 상태
 
 	// 애니메이션 관련 변수
@@ -96,6 +99,8 @@ private:
 	// ASCEND 상태 관련 변수
 	_bool m_bIsAscending;       // 올라가는 중인지 여부
 	_float m_fAscendDelay;      // 올라가기 시작하는 지연 시간
+
+	class CGameObject* m_pSameGrab = { nullptr };
 
 public:
 	static CQTE_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

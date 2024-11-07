@@ -27,6 +27,8 @@ int iNumSprite = 0;
 //QTE_UI
 int g_IconState;
 
+float g_Time;
+float g_MaxTime;
 
 struct VS_IN
 {
@@ -85,7 +87,7 @@ PS_OUT PS_HP(PS_IN In)
     PS_OUT Out;
     
     float2 fPointA = saturate(float2(0.9519f + (g_Radio * 0.9519f - 0.9519f), 0.f));
-    float2 fPointB = float2(fPointA.x + 0.0481f , 1.f);
+    float2 fPointB = float2(fPointA.x + 0.0481f, 1.f);
     
     float2 fRedRointA = float2(0.9519f + (g_fRedRadio * 0.9519f - 0.9519f), 0.f);
     float2 fRedPointB = float2(fRedRointA.x + 0.0481f, 1.f);
@@ -93,7 +95,7 @@ PS_OUT PS_HP(PS_IN In)
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
     float2 vMaskOffSet = float2(g_MaskTimer, g_MaskTimer);
-    float2 vMaskTexCoord = ( In.vTexcoord + vMaskOffSet);
+    float2 vMaskTexCoord = (In.vTexcoord + vMaskOffSet);
      
     float4 vMaskTex = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
     
@@ -183,7 +185,7 @@ PS_OUT PS_SUB_HP(PS_IN In)
     PS_OUT Out;
     
     float2 fPointA = float2(0.9519f + (g_Radio * 0.9519f - 0.9519f), 0.f);
-    float2 fPointB = float2(fPointA.x + (1.f -  0.9519f ), 1.f);
+    float2 fPointB = float2(fPointA.x + (1.f - 0.9519f), 1.f);
 
     float4 vBaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
@@ -192,7 +194,7 @@ PS_OUT PS_SUB_HP(PS_IN In)
      
     float4 vMaskTex = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
     
-    Out.vColor = vBaseTex ;
+    Out.vColor = vBaseTex;
     
     float fLineY = (fPointB.y - fPointA.y) / (fPointB.x - fPointA.x) * (In.vTexcoord.x - fPointA.x) + fPointA.y - In.vTexcoord.y;
      
@@ -234,7 +236,7 @@ PS_OUT PS_READY(PS_IN In)
     vector vDiffuseMaterial = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vBGMaterial = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
     
-    vDiffuseMaterial.rgb = 1 - g_MaskTimer; 
+    vDiffuseMaterial.rgb = 1 - g_MaskTimer;
     vBGMaterial = lerp(vBGMaterial, vDiffuseMaterial, vDiffuseMaterial.a * g_MaskTimer);
         
     Out.vColor = vBGMaterial;
@@ -340,7 +342,7 @@ PS_OUT PS_HPALPHA(PS_IN In)
     if (Out.vColor.a <= 0.1f)
         discard;
     
-    Out.vColor.rgb =  g_vColor;
+    Out.vColor.rgb = g_vColor;
     Out.vColor.a = g_fAlphaTimer;
     
     return Out;
@@ -379,7 +381,7 @@ PS_OUT PS_TEX_MOVE(PS_IN In)
     PS_OUT Out;
 
     float2 offset = float2(g_MaskTimer, g_MaskTimer);
-    float2 newTexcoord = In.vTexcoord + offset ;
+    float2 newTexcoord = In.vTexcoord + offset;
     
     float fDistance = abs(In.vTexcoord - float2(0.5f, 0.5f));
         
@@ -440,7 +442,7 @@ PS_OUT PS_VIDEO(PS_IN In)
     
     
     //vBGMaterial.a = 0.2f;
-     vBGMaterial.rgb = min(vBGMaterial.rgb, 1.f);
+    vBGMaterial.rgb = min(vBGMaterial.rgb, 1.f);
    
 //    Out.vColor = lerp(Out.vColor, vBGMaterial, vBGMaterial.a);
     vector AColor = lerp(Out.vColor, vBGMaterial, 0.5f);
@@ -473,16 +475,16 @@ PS_OUT PS_SkillPanel(PS_IN In)
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-   vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vEffectTexture = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
    
-   if (g_bState)
-   {
+    if (g_bState)
+    {
         Out.vColor.rgb = lerp(Out.vColor.rgb, vEffectTexture.rgb * (1 - g_Radio), In.vTexcoord.y);
       
     }
   
-  if (Out.vColor.a <= 0.1f)
-      discard;
+    if (Out.vColor.a <= 0.1f)
+        discard;
    
     return Out;
 }
@@ -497,19 +499,19 @@ PS_OUT PS_Volume(PS_IN In)
         
     if (g_Radio >= In.vTexcoord.x)
         Out.vColor.rgb = float3(0.043f, 0.952f, 0.945f);
-    else 
+    else
         Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
     
     if (g_Radio == 0.5f)
     {
         if (g_Radio >= In.vTexcoord.x)
             Out.vColor.rgb = float3(0.996f, 0.729f, 0.f);
-        else 
+        else
             Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
     }
         
     
-      return Out;
+    return Out;
 }
 
 PS_OUT PS_QTE_UI(PS_IN In)
@@ -538,6 +540,28 @@ PS_OUT PS_QTE_UI(PS_IN In)
     return Out;
 }
 
+
+PS_OUT PS_QTE_UI_GAUGE(PS_IN In)
+{
+    PS_OUT Out;
+
+    // ÅØ½ºÃ³ »ùÇÃ¸µ
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    float ratio = g_Time / g_MaxTime;
+
+    if (In.vTexcoord.x > (1.0 - ratio))
+    {
+        discard;
+    }
+    
+    // ¾ËÆÄ°ªÀÌ ³·Àº ÇÈ¼¿Àº ¹ö¸²
+    if (Out.vColor.a <= 0.1f)
+        discard;
+    
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -559,19 +583,19 @@ technique11 DefaultTechnique
 
 
 //1
-   pass Hp
-  {
+    pass Hp
+    {
 
-      SetRasterizerState(RS_Cull_None);
-      SetDepthStencilState(DSS_Default, 0);
-      SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
-      VertexShader = compile vs_5_0 VS_MAIN();
-      GeometryShader = NULL;
-      HullShader = NULL;
-      DomainShader = NULL;
-      PixelShader = compile ps_5_0 PS_HP();
-  }
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_HP();
+    }
 
 //2
     pass Color
@@ -682,19 +706,19 @@ technique11 DefaultTechnique
 
 
 //9
- pass SubIcon
- {
+    pass SubIcon
+    {
  
-     SetRasterizerState(RS_Cull_None);
-     SetDepthStencilState(DSS_Default, 0);
-     SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
  
-     VertexShader = compile vs_5_0 VS_MAIN();
-     GeometryShader = NULL;
-     HullShader = NULL;
-     DomainShader = NULL;
-     PixelShader = compile ps_5_0 PS_SubIcon();
- }
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SubIcon();
+    }
 
 //10
     pass SkillEff
@@ -885,13 +909,27 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
  
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_QTE_UI();
+    }
+
+//24
+    pass QTE_UI_GAUGE
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_QTE_UI_GAUGE();
     }
 
 }

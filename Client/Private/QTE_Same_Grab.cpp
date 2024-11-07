@@ -39,6 +39,7 @@ void CQTE_Same_Grab::Camera_Update(_float fTimeDelta)
 
 void CQTE_Same_Grab::Update(_float fTimeDelta)
 {
+#pragma region 디버그
 	// F5 키 입력 감지
 	if (m_pGameInstance->Key_Down(DIK_F5))
 	{
@@ -53,6 +54,10 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 			Start_QTE();
 		}
 	}
+#pragma endregion
+
+
+#pragma region QTE 종료 프로세스 진행 중인 경우
 
 	// QTE 종료 프로세스 진행 중인 경우
 	if (m_bIsEndQTE)
@@ -69,34 +74,44 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 		for (auto& iter : m_UIIcons_P2)
 			iter->Update(fTimeDelta);
 	}
+#pragma endregion
+
+#pragma region QTE 활성화
+
 	else if (m_bIsQTEActive)
 	{
-		// QTE가 활성화된 경우 기존 로직 유지
-		// 타이머 감소
-		m_fTimer -= fTimeDelta;
-
-		// 시간 조건 확인
-		if (m_fTimer <= 0.0f || m_iCorrectInputs_P1 == m_iSequenceLength || m_iCorrectInputs_P2 == m_iSequenceLength)
-			End_QTE();
-
-		// 사용자 입력 처리
-		Handle_QTEInput();
-
-		// 쿨다운 타이머 감소
-		if (m_fCooldown_P1 > 0.0f)
-			m_fCooldown_P1 -= fTimeDelta;
-		if (m_fCooldown_P2 > 0.0f)
-			m_fCooldown_P2 -= fTimeDelta;
-
 		// UI 아이콘 업데이트
 		for (auto& iter : m_UIIcons_P1)
 			iter->Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
 			iter->Update(fTimeDelta);
 
-		if (m_UIGauge != nullptr)
-			m_UIGauge->Update(fTimeDelta);
+		//마지막 UI가 떨어져야 그때부터 시작임
+		if (m_bUI_Final_Complate)
+		{
+			if (m_UIGauge != nullptr)
+				m_UIGauge->Update(fTimeDelta);
+
+			// QTE가 활성화된 경우 기존 로직 유지
+			// 타이머 감소
+			m_fTimer -= fTimeDelta;
+
+			// 시간 조건 확인
+			if (m_fTimer <= 0.0f || m_iCorrectInputs_P1 == m_iSequenceLength || m_iCorrectInputs_P2 == m_iSequenceLength)
+				End_QTE();
+
+			// 사용자 입력 처리
+			Handle_QTEInput();
+
+			// 쿨다운 타이머 감소
+			if (m_fCooldown_P1 > 0.0f)
+				m_fCooldown_P1 -= fTimeDelta;
+			if (m_fCooldown_P2 > 0.0f)
+				m_fCooldown_P2 -= fTimeDelta;
+		}
 	}
+#pragma endregion
+
 }
 
 void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
@@ -108,7 +123,7 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 		for (auto& iter : m_UIIcons_P2)
 			iter->Late_Update(fTimeDelta);
 
-		if (m_UIGauge != nullptr)
+		if (m_UIGauge != nullptr && m_bUI_Final_Complate)
 			m_UIGauge->Late_Update(fTimeDelta);
 	}
 }
@@ -358,10 +373,15 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 		Desc.fY = centerY;
 		Desc.fAlpha = 1.f;
 		Desc.fFallDelay = i * FALL_DELAY_INTERVAL; // 각 아이콘의 떨어지기 시작하는 지연 시간 설정
+		Desc.SameGrab = this;
 
 		//첫번째 녀석은 떨어지는 위치가 달라야함
 		if (i == 0)
-			Desc.bSelected = true;
+			Desc.isFirst = true;
+
+		//마지막 녀석이 떨어지고 SameGrab에게 비로소 시작되었다고 알려야함
+		if (i == numIcons - 1)
+			Desc.isLast = true;
 
 		// UI 아이콘 클론
 		CQTE_UI_Icon* pIcon = dynamic_cast<CQTE_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Icon"), &Desc));
@@ -375,11 +395,11 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 
 #pragma region 게이지 객체 생성
 	CQTE_UI_Gauge::QTE_UI_Gauge_DESC Desc{};
-	Desc.fSizeX = 200.f;
+	Desc.fSizeX = 400.f;
 	Desc.fSizeY = 20.f;
 	Desc.fX = 960.f;
 	Desc.fY = 810.f;
-
+	Desc.playTime = m_iTotalTime;
 	m_UIGauge = dynamic_cast<CQTE_UI_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Gauge"), &Desc));
 #pragma endregion
 }
@@ -407,6 +427,7 @@ void CQTE_Same_Grab::Final_End_QTE()
 	m_bIsEndQTE = false;
 	m_bIsQTEActive = false;
 	m_fTimer = 0.0f;
+	m_bUI_Final_Complate = false;
 
 	// 큐와 시퀀스 초기화
 	while (!m_CommandQueue_P1.empty()) m_CommandQueue_P1.pop();
@@ -436,6 +457,7 @@ void CQTE_Same_Grab::Final_End_QTE()
 		// 무승부 처리
 	}
 }
+
 
 void CQTE_Same_Grab::Clear_UIIcons()
 {

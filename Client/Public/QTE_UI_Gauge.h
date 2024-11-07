@@ -16,7 +16,7 @@ class CQTE_UI_Gauge final : public CGameObject
 public:
 	struct QTE_UI_Gauge_DESC
 	{
-		_float	fSizeX{}, fSizeY{}, fX{}, fY{};
+		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, playTime{};
 	};
 
 private:
@@ -44,6 +44,8 @@ private:
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{}, m_fAlpha{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 
+	_float m_fElapsedTime = {};
+	_float m_fPlayTime{};
 public:
 	static CQTE_UI_Gauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

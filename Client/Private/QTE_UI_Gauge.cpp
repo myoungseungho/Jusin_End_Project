@@ -4,13 +4,13 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CQTE_UI_Gauge::CQTE_UI_Gauge(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CGameObject { pDevice, pContext }
+CQTE_UI_Gauge::CQTE_UI_Gauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CQTE_UI_Gauge::CQTE_UI_Gauge(const CQTE_UI_Gauge & Prototype)
+CQTE_UI_Gauge::CQTE_UI_Gauge(const CQTE_UI_Gauge& Prototype)
 	: CGameObject{ Prototype }
 {
 
@@ -21,13 +21,21 @@ HRESULT CQTE_UI_Gauge::Initialize_Prototype()
 	return S_OK;
 }
 
-HRESULT CQTE_UI_Gauge::Initialize(void * pArg)
+HRESULT CQTE_UI_Gauge::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(nullptr)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+	CQTE_UI_Gauge::QTE_UI_Gauge_DESC* desc = static_cast<CQTE_UI_Gauge::QTE_UI_Gauge_DESC*>(pArg);
+
+	m_fSizeX = desc->fSizeX;
+	m_fSizeY = desc->fSizeY;
+	m_fX = desc->fX;
+	m_fY = desc->fY;
+	m_fPlayTime = desc->playTime;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -41,11 +49,19 @@ HRESULT CQTE_UI_Gauge::Initialize(void * pArg)
 
 void CQTE_UI_Gauge::Camera_Update(_float fTimeDelta)
 {
-	
+
 }
 
 void CQTE_UI_Gauge::Update(_float fTimeDelta)
 {
+	//시간이 다 흘렀다면
+	if (m_fElapsedTime >= m_fPlayTime)
+	{
+		m_fElapsedTime = m_fPlayTime;
+		return;
+	}
+
+	m_fElapsedTime += fTimeDelta;
 }
 
 void CQTE_UI_Gauge::Late_Update(_float fTimeDelta)
@@ -58,7 +74,7 @@ HRESULT CQTE_UI_Gauge::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(24)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -100,13 +116,23 @@ HRESULT CQTE_UI_Gauge::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+
+	// 시간 값을 셰이더로 전달
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fElapsedTime, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaxTime", &m_fPlayTime, sizeof(_float))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
-CQTE_UI_Gauge * CQTE_UI_Gauge::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CQTE_UI_Gauge* CQTE_UI_Gauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CQTE_UI_Gauge*		pInstance = new CQTE_UI_Gauge(pDevice, pContext);
+	CQTE_UI_Gauge* pInstance = new CQTE_UI_Gauge(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -117,9 +143,9 @@ CQTE_UI_Gauge * CQTE_UI_Gauge::Create(ID3D11Device * pDevice, ID3D11DeviceContex
 	return pInstance;
 }
 
-CGameObject * CQTE_UI_Gauge::Clone(void * pArg)
+CGameObject* CQTE_UI_Gauge::Clone(void* pArg)
 {
-	CQTE_UI_Gauge*		pInstance = new CQTE_UI_Gauge(*this);
+	CQTE_UI_Gauge* pInstance = new CQTE_UI_Gauge(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{

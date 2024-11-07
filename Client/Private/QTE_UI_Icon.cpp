@@ -3,7 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-
+#include "QTE_Same_Grab.h"
 _float clamp(_float value, _float min, _float max)
 {
 	if (value < min) return min;
@@ -49,7 +49,9 @@ HRESULT CQTE_UI_Icon::Initialize(void* pArg)
 	m_fAlpha = desc->fAlpha;
 	m_iTextureNumber = desc->iTextureNumber;
 	m_fFallDelay = desc->fFallDelay; // 추가: 쿨다운 지연 시간 설정
-	m_bIsSelect = desc->bSelected;
+	m_bIsFirst = desc->isFirst;
+	m_bIsLast = desc->isLast;
+	m_pSameGrab = desc->SameGrab;
 
 	// 초기 Y 위치 설정
 	m_fCurrentY = m_fStartY;    // 초기 위치는 -100
@@ -139,7 +141,7 @@ void CQTE_UI_Icon::Set_State(IconState state)
 
 	case FALLING:
 		//Falling일때, 첫번째 녀석은 TargetY가 달라야함
-		m_fTargetY = m_bIsSelect == true ? m_fSelected_Y : m_fDefault_Y;
+		m_fTargetY = m_bIsFirst == true ? m_fSelected_Y : m_fDefault_Y;
 		m_fElapsedTime = 0.f; // 애니메이션 시간 초기화
 		m_bIsShaking = false;
 		break;
@@ -229,6 +231,11 @@ void CQTE_UI_Icon::Update_Falling(_float fTimeDelta)
 		if (t >= 1.0f)
 		{
 			m_bIsFalling = false;
+
+			//Same_Grab에게 마지막 객체가 Final_UI가 떨어졌다고 알려야함
+			if (m_bIsLast)
+				static_cast<CQTE_Same_Grab*>(m_pSameGrab)->Notify_Last_UI_Final_Complete();
+
 			Set_State(NOT_SELECTED); // 애니메이션 완료 후 기본 상태로 전환
 		}
 

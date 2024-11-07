@@ -29,6 +29,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complate = true; };
+
 private:
 	void Start_QTE();
 	void End_QTE();
@@ -43,7 +45,7 @@ private:
 private:
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f }; // 타이머
-	_int m_iTotalTime = { 1000 }; // 총 시간 (예: 5초)
+	_int m_iTotalTime = { 10 }; // 총 시간 (예: 5초)
 	_int m_iSequenceLength = { 10 }; // 시퀀스 길이 (N)
 
 	// 1P 관련
@@ -75,6 +77,9 @@ private:
 	_float m_fEndQTE_Timer = { 0.f };      // QTE 종료 후 초기화까지의 경과 시간
 	const _float m_fEndQTE_Delay = { 1.5f }; // 초기화까지 기다릴 시간 (초)
 
+
+	//마지막 UI_Final
+	_bool m_bUI_Final_Complate = { false };
 public:
 	static CQTE_Same_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
