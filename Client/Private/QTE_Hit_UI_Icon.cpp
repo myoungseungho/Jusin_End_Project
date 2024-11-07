@@ -30,6 +30,14 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	CQTE_Hit_UI_Icon::QTE_Hit_UI_ICON_DESC* desc = static_cast<CQTE_Hit_UI_Icon::QTE_Hit_UI_ICON_DESC*>(pArg);
+
+	m_fSizeX = desc->fSizeX;
+	m_fSizeY = desc->fSizeY;
+	m_fX = desc->fX;
+	m_fY = desc->fY;
+	m_iTextureNumber = desc->iTextureNumber;
+
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
@@ -47,11 +55,15 @@ void CQTE_Hit_UI_Icon::Camera_Update(_float fTimeDelta)
 
 void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 {
-	
+	if (!m_bIsActive)
+		return;
 }
 
 void CQTE_Hit_UI_Icon::Late_Update(_float fTimeDelta)
 {
+	if (!m_bIsActive)
+		return;
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -80,7 +92,7 @@ HRESULT CQTE_Hit_UI_Icon::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 

@@ -5,20 +5,19 @@
 
 BEGIN(Client)
 
-class CQTE_Hit final : public CGameObject
+class CQTE_Hit_Situation final : public CGameObject
 {
 public:
-	enum Hit_Situation_ID
+	struct QTE_HIT_SITUATION_DESC
 	{
-		Hit_Situation_ID_A,
-		Hit_Situation_ID_B,
-		Hit_Situation_ID_C,
+		_float lifeTime = {};
+		_int create_Num = {};
 	};
 
 private:
-	CQTE_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CQTE_Hit(const CQTE_Hit& Prototype);
-	virtual ~CQTE_Hit() = default;
+	CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CQTE_Hit_Situation(const CQTE_Hit_Situation& Prototype);
+	virtual ~CQTE_Hit_Situation() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -29,17 +28,12 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	void Start_QTE();
-	void End_QTE();
-
-private:
-	vector<class CQTE_Hit_Situation* >m_vecHit_Situation;
-
-	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
-	_float m_fTimer = { 0.f };
+	_float m_fLifeTime = {};
+	_int m_iCreate_Num = {};
+	vector<class CQTE_Hit_UI_Icon*> m_vecHitUIIcon;
 
 public:
-	static CQTE_Hit* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CQTE_Hit_Situation* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

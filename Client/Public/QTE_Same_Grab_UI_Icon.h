@@ -14,7 +14,7 @@ BEGIN(Client)
 class CQTE_Same_Grab_UI_Icon final : public CGameObject
 {
 public:
-	struct QTE_UI_ICON_DESC
+	struct QTE_Same_Grab_UI_ICON_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, iTextureNumber{}, fFallDelay{};
 		_bool isFirst = false;

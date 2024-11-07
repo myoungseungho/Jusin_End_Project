@@ -13,6 +13,13 @@ BEGIN(Client)
 
 class CQTE_Hit_UI_Icon final : public CGameObject
 {
+public:
+	struct QTE_Hit_UI_ICON_DESC
+	{
+		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{};
+		_int iTextureNumber{};
+	};
+
 private:
 	CQTE_Hit_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CQTE_Hit_UI_Icon(const CQTE_Hit_UI_Icon& Prototype);

@@ -112,6 +112,9 @@
 #include "QTE_Same_Grab.h"
 #include "QTE_UI_Gauge.h"
 #include "QTE_Hit.h"
+#include "QTE_Hit_UI_Icon.h"
+#include "QTE_Hit_Situation.h"
+
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -957,7 +960,12 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Gauge"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/GameStart/Emblem2.png"), 1))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/CmnBG_Eff_Lens_%d.png"), 6))))
+		return E_FAIL;
 }
+
 HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 {
 	{
@@ -3189,6 +3197,14 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit"),
 		CQTE_Hit::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"),
+		CQTE_Hit_UI_Icon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_Situation"),
+		CQTE_Hit_Situation::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

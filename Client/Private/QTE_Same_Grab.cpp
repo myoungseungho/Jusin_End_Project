@@ -39,22 +39,22 @@ void CQTE_Same_Grab::Camera_Update(_float fTimeDelta)
 
 void CQTE_Same_Grab::Update(_float fTimeDelta)
 {
-#pragma region 디버그
-	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F5))
-	{
-		if (m_bIsQTEActive)
-		{
-			// QTE가 활성화되어 있으면 즉시 종료
-			End_QTE();
-		}
-		else
-		{
-			// QTE가 비활성화되어 있으면 시작
-			Start_QTE();
-		}
-	}
-#pragma endregion
+//#pragma region 디버그
+//	// F5 키 입력 감지
+//	if (m_pGameInstance->Key_Down(DIK_F5))
+//	{
+//		if (m_bIsQTEActive)
+//		{
+//			// QTE가 활성화되어 있으면 즉시 종료
+//			End_QTE();
+//		}
+//		else
+//		{
+//			// QTE가 비활성화되어 있으면 시작
+//			Start_QTE();
+//		}
+//	}
+//#pragma endregion
 
 
 #pragma region QTE 종료 프로세스 진행 중인 경우
@@ -365,7 +365,7 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 	// 각 아이콘을 생성하고 위치 설정
 	for (_int i = 0; i < numIcons; ++i)
 	{
-		CQTE_Same_Grab_UI_Icon::QTE_UI_ICON_DESC Desc{};
+		CQTE_Same_Grab_UI_Icon::QTE_Same_Grab_UI_ICON_DESC Desc{};
 		Desc.iTextureNumber = static_cast<_int>(sequence[i]);
 		Desc.fSizeX = 50.f; // 필요에 따라 크기 조정
 		Desc.fSizeY = 50.f;

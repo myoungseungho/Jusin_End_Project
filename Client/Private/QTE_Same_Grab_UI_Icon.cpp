@@ -31,7 +31,7 @@ HRESULT CQTE_Same_Grab_UI_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	CQTE_Same_Grab_UI_Icon::QTE_UI_ICON_DESC* desc = reinterpret_cast<CQTE_Same_Grab_UI_Icon::QTE_UI_ICON_DESC*>(pArg);
+	CQTE_Same_Grab_UI_Icon::QTE_Same_Grab_UI_ICON_DESC* desc = static_cast<CQTE_Same_Grab_UI_Icon::QTE_Same_Grab_UI_ICON_DESC*>(pArg);
 	m_fSizeX = desc->fSizeX;
 	m_fSizeY = desc->fSizeY;
 	m_fX = desc->fX;
