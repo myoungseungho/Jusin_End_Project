@@ -189,6 +189,7 @@
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\Public\QTE_UI_Gauge.h" />
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
     <ClInclude Include="..\Public\Lobby_Goku.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp" />
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
     <ClCompile Include="..\Private\Lobby_Goku.cpp" />

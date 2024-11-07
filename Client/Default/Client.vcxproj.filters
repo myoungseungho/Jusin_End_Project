@@ -323,13 +323,16 @@
       <Filter>02.GameObjects\QTE</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_UI_Icon.cpp">
-      <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_ICON</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Same_Grab.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -699,14 +702,17 @@
     <Filter Include="02.GameObjects\QTE">
       <UniqueIdentifier>{e7f7b9ba-ed2f-4138-ae38-9edc7ca5be99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\QTE\QTE_UI_ICON">
-      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab">
       <UniqueIdentifier>{4ec23716-9ecc-4934-ac6e-d8718634652a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
       <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_ICON">
+      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge">
+      <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1185,7 +1191,7 @@
       <Filter>02.GameObjects\QTE</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_UI_Icon.h">
-      <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_ICON</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Same_Grab.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
@@ -1195,6 +1201,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Play_Goku.h">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_UI_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

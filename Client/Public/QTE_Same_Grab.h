@@ -61,6 +61,7 @@ private:
 	// UI 아이콘 객체 저장
 	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
 	vector<class CQTE_UI_Icon*> m_UIIcons_P2;
+	class CQTE_UI_Gauge* m_UIGauge = { nullptr };
 
 	// 각 플레이어의 쿨다운 타이머
 	_float m_fCooldown_P1 = {};

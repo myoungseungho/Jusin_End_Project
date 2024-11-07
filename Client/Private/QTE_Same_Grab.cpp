@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_UI_Icon.h"
-
+#include "QTE_UI_Gauge.h"
 CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -93,6 +93,9 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 			iter->Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
 			iter->Update(fTimeDelta);
+
+		if (m_UIGauge != nullptr)
+			m_UIGauge->Update(fTimeDelta);
 	}
 }
 
@@ -104,6 +107,9 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 			iter->Late_Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
 			iter->Late_Update(fTimeDelta);
+
+		if (m_UIGauge != nullptr)
+			m_UIGauge->Late_Update(fTimeDelta);
 	}
 }
 
@@ -297,6 +303,7 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 
 void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& sequence)
 {
+#pragma region 여러 UI 객체 생성
 	// 각 플레이어의 UI 아이콘 벡터에 추가
 	vector<CQTE_UI_Icon*>& targetIcons = (playerID == 1) ? m_UIIcons_P1 : m_UIIcons_P2;
 
@@ -364,6 +371,17 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 			targetIcons.push_back(pIcon);
 		}
 	}
+#pragma endregion
+
+#pragma region 게이지 객체 생성
+	CQTE_UI_Gauge::QTE_UI_Gauge_DESC Desc{};
+	Desc.fSizeX = 200.f;
+	Desc.fSizeY = 20.f;
+	Desc.fX = 960.f;
+	Desc.fY = 810.f;
+
+	m_UIGauge = dynamic_cast<CQTE_UI_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Gauge"), &Desc));
+#pragma endregion
 }
 
 void CQTE_Same_Grab::Ascend_UIIcons(vector<CQTE_UI_Icon*>& icons)
@@ -440,6 +458,9 @@ void CQTE_Same_Grab::Clear_UIIcons()
 		}
 	}
 	m_UIIcons_P2.clear();
+
+	//Gauge 제거
+	Safe_Release(m_UIGauge);
 }
 
 void CQTE_Same_Grab::Handle_WrongInput(_int playerID)
@@ -505,6 +526,8 @@ void CQTE_Same_Grab::Free()
 
 	for (auto& iter : m_UIIcons_P2)
 		Safe_Release(iter);
+
+	Safe_Release(m_UIGauge);
 
 	__super::Free();
 }
