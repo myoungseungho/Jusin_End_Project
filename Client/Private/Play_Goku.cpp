@@ -43,6 +43,7 @@ HRESULT CPlay_Goku::Initialize_Prototype()
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 	CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
 	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Goku.txt");
+	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Goku_ss3.txt");
 
 	return S_OK;
 }
@@ -72,6 +73,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iHit_Air_FallAnimationIndex = { ANIME_HIT_FALL };
 
 	m_iHit_Air_Spin_LeftUp = { ANIME_HIT_HEAVY_AWAY_SPIN_LEFTUP };
+	m_iHit_Air_Spin_Up = { ANIME_HIT_HEAVY_AWAY_SPIN_UP };
 
 	m_iAttack_Air1 = { ANIME_ATTACK_AIR1 };
 	m_iAttack_Air2 = { ANIME_ATTACK_AIR2 };
@@ -302,6 +304,23 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	if (m_bGrabbed)
 	{
+		if (m_bGrabbedGravity)
+		{
+			if (Get_fHeight() > 0)
+			{
+				_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
+				//Add_Move({ 0,-fGravity });
+				Add_Move({ m_fImpuse.x * fTimeDelta, -fGravity });
+			}
+
+			if (m_fGravityTime * 2.f < m_fJumpPower)
+			{
+				m_fGravityTime += fTimeDelta;
+
+			}
+
+		}
+
 		Character_Play_Animation(fTimeDelta);
 		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 		return;
@@ -451,8 +470,50 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			 }
 		}
 		else
+		 {
 			Character_Play_Animation(fTimeDelta);
 
+			//3필 전용
+			if (m_bFinalss3Kamehameha)
+			{
+				_bool bAnimationEnd = false;
+
+				_float fPrePosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
+
+				//_int iOneFrameTeest = 0;
+
+				if (fPrePosition == 0)
+				{
+
+					ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
+					fPrePosition += 0.001;
+
+					//iOneFrameTeest++;
+				}
+
+				if (m_pModelCom_Skill->Play_Animation_Lick(fTimeDelta))
+				{
+					//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
+					if (m_pModelCom_Skill->m_isLoopAnim)
+					{
+						fPrePosition = 0.001;
+						ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
+						//iOneFrameTeest++;
+					}
+					bAnimationEnd = true;
+					m_bMotionPlaying = false;
+				}
+				else
+					m_bMotionPlaying = true;
+
+
+				_float fCurPosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
+
+
+				ProcessEventsBetweenFrames2(0, m_pModelCom_Skill->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+			}
+
+		 }
 		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
 		if (m_bMotionPlaying == false)
 		{
@@ -649,6 +710,41 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
 {
+
+	////백업
+	//if (FAILED(Bind_ShaderResources()))
+	//	return E_FAIL;
+	//
+	//_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+	//
+	//for (size_t i = 0; i < iNumMeshes; i++)
+	//{
+	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
+	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
+	//	if (m_iPlayerTeam == 1)
+	//	{
+	//		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+	//			return E_FAIL;
+	//	}
+	//	else
+	//	{
+	//		if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+	//			return E_FAIL;
+	//	}
+	//	 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+	//
+	//	/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
+	//	m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
+	//
+	//	if (FAILED(m_pShaderCom->Begin(0)))
+	//		return E_FAIL;
+	//
+	//
+	//	if (FAILED(m_pModelCom->Render(i)))
+	//		return E_FAIL;
+	//}
+
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -668,17 +764,27 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 				return E_FAIL;
 		}
-		 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+		//m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
-		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
+	   /* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
 
-		if (FAILED(m_pModelCom->Render(i)))
-			return E_FAIL;
+
+		if(m_bFinalss3Kamehameha == false)
+		{
+			if (FAILED(m_pModelCom->Render(i)))
+				return E_FAIL;
+		}
+		else
+		{
+			if (FAILED(m_pModelCom_Skill->Render(i)))
+				return E_FAIL;
+		}
 	}
+
 
 
 
@@ -798,6 +904,11 @@ HRESULT CPlay_Goku::Ready_Components()
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
+		return E_FAIL;
+	
+
 
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
@@ -2354,8 +2465,21 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Goku::ANIME_FINAL_KAMEHAMEHA:
 	{
+
+		//모델변경 테스트  Position0
+		if (iAttackEvent == 3)
+		{
+			m_bFinalss3Kamehameha = true;
+
+			if (m_bFinalss3Kamehameha == true)
+			{
+				m_pModelCom_Skill->SetUp_Animation(0,false,0);
+				m_pModelCom_Skill->CurrentAnimationPositionJump(0.1f);
+			}
+		}
+
 		//위치 고정용 빈거
-		if (iAttackEvent == 0)
+		else if (iAttackEvent == 0)
 		{
 
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
@@ -2525,9 +2649,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bCameraZoom = false;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			m_bFinalss3Kamehameha = false;
 		}
 
 	}
+	break;
 	case Client::CPlay_Goku::ANIME_REFLECT:
 	{
 		if(iAttackEvent == 0)

@@ -364,7 +364,7 @@ void CGoku_MeleeAttack::Attack_236()
 		m_pPlayer->Set_bAttackGravity(false);
 		
 		//m_pPlayer->Set_ForcedGravityDown();
-		//m_pPlayer->Set_fGravityTime(0.305f);
+		m_pPlayer->Set_fGravityTime(0.305f);
 
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1  || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR)
@@ -374,7 +374,7 @@ void CGoku_MeleeAttack::Attack_236()
 		m_pPlayer->Set_bAttackGravity(false);
 		//m_pPlayer->Set_ForcedGravityDown();
 
-		//m_pPlayer->Set_fGravityTime(0.305f);
+		m_pPlayer->Set_fGravityTime(0.305f);
 
 	}
 

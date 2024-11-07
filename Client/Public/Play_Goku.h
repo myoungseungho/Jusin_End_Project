@@ -179,13 +179,15 @@ public:
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-
+	
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };
 	_ushort m_iCountGroundSpecial = 0;
 
 	_bool m_bUltimateKamehameha = false;
+
+	_bool m_bFinalss3Kamehameha = false;
 
 private:
 	HRESULT Ready_Components();

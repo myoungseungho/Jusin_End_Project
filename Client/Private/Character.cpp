@@ -1173,7 +1173,13 @@ void CCharacter::Chase2(_float fTimeDelta)
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
 	{
 
-		Add_Move({ 0.f,fTimeDelta * 1.2f });
+		//쓰던것
+		//Add_Move({ 0.f,fTimeDelta * 1.2f });
+
+
+		//원작이랑 가깝긴 한데, 21호, chase 공격충돌 등 이런저런 문제로 취소.   이걸로 할꺼면 준비시간 늘리고 초기속도 빠르게하고 조정해야할게 많음
+		//사전준비자세만으로는 괜찮음 초기속도 어쩌지?
+		Add_Move({ -1.f*fTimeDelta,fTimeDelta * 4.8f });
 
 		m_fAccChaseTime += fTimeDelta;
 
@@ -1440,6 +1446,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 	*/
 }
 
+/*
 void CCharacter::Chase_Ready(_float fTimeDelta)
 {
 
@@ -1507,6 +1514,66 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 
 }
+*/
+void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
+{
+	if (m_bChaseEnable == false || m_pModelCom->m_iCurrentAnimationIndex == m_iSparkingAnimationIndex)
+		return;
+
+	//if(Check_bCurAnimationisCanChase())
+
+	_short iCheck = Check_bCurAnimationisCanChase();
+	if (iCheck == 0)
+		return;
+	else
+		m_fAccChaseTime = iCheck * 0.01f;
+
+
+	if (iCheck == 1 && bNoReady != true)
+	{
+		Character_Make_Effect(TEXT("BurstR-01"));
+	}
+
+	m_bChaseEnable = false;
+
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_LightLast)
+	{
+		m_bChaseStoping = false;
+
+		Set_NextAnimation(m_iFallAnimationIndex, 5.f);
+
+		m_bChase = true;
+
+		m_fAccChaseTime = 0.5f;
+
+	}
+
+
+	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+	{
+
+		m_bChaseStoping = false;
+
+		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
+
+		m_bChase = true;
+
+		if (XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) < 0.5)
+		{
+			//m_pTransformCom->Add_Move({ 0.f,0.6f,0.f });
+
+		}
+
+
+
+	}
+	else
+	{
+		Set_NextAnimation(m_iFallAnimationIndex, 1.f);
+		m_bChase = true;
+	}
+
+}
 
 
 void CCharacter::Chase_Grab(_float fTimeDelta)
@@ -1548,12 +1615,12 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 		m_bGrab = false;
 		return;
 	}
-	else if (m_fAccChaseTime > 1.2) //시간제한으로 푸는게 아니라  1.2초 이상 지속될 수 없으니 강제해제.
-	{
-		m_fAccGrabTime = 0.f;
-		m_bGrab = false;
-		return;
-	}
+	//else if (m_fAccGrabTime > 1.2) //시간제한으로 푸는게 아니라  1.2초 이상 지속될 수 없으니 강제해제.    였는데 1.2초 이상 지속될 일이 많음 10초까지 가기도 하는데 이러면 쓸모없지 않나
+	//{
+	//	m_fAccGrabTime = 0.f;
+	//	m_bGrab = false;
+	//	return;
+	//}
 	m_fAccGrabTime += fTimeDelta;
 
 
@@ -2030,6 +2097,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 			case Client::HIT_KNOCK_AWAY_UP:
 			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
 			case Client::HIT_SPIN_AWAY_LEFTUP:
+			case Client::HIT_SPIN_AWAY_UP:
 				m_pEffect_Manager->Copy_Layer(TEXT("Guard03"), m_pTransformCom->Get_WorldMatrixPtr());
 				break;
 
@@ -2286,6 +2354,11 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	}
 	break;
 
+	case Client::HIT_SPIN_AWAY_UP:
+	{
+		Set_Animation(m_iHit_Air_Spin_Up);
+	}
+	break;
 	default:
 		break;
 	}
@@ -3438,6 +3511,16 @@ _vector CCharacter::Get_vPosition()
 void CCharacter::Set_bGrabbed(_bool bGrabbed)
 {
 	m_bGrabbed = bGrabbed;
+
+	//if (m_bGrabbed == false)
+	//{
+	//	m_bGrabbedGravity = false;
+	//}
+}
+
+void CCharacter::Set_bGrabbedGravity(_bool bGrabbedGravity)
+{
+	m_bGrabbedGravity = bGrabbedGravity;
 }
 
 _bool CCharacter::Get_bGrabbed()
@@ -3751,7 +3834,7 @@ void CCharacter::Tag_Out(_vector vPosition)
 	m_fAccAnimationLock = 0.f;
 
 
-	Chase_Ready(0.4f);
+	Chase_Ready(0.4f,true);
 	//Chase2(0.2f);
 	Chase2(0.3f);
 
@@ -4484,7 +4567,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air1 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air2 || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_Air3 ||
 			m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground ||
-			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce ||
+			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_LeftUp || m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Air_Spin_Up ||
+			m_pModelCom->m_iCurrentAnimationIndex == m_iHit_WallBouce ||
 			Check_bCurAnimationisAirHit() || Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iGuard_AirAnimationIndex
 			|| Check_bCurAnimationisHalfGravityStop())
 		{

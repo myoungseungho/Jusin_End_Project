@@ -96,6 +96,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iHit_Air_FallAnimationIndex = { ANIME_HIT_FALL };
 
 	m_iHit_Air_Spin_LeftUp = { ANIME_HIT_HEAVY_AWAY_SPIN_LEFTUP };
+	m_iHit_Air_Spin_Up = { ANIME_HIT_HEAVY_AWAY_SPIN_UP };
 
 	m_iAttack_Air1 = { ANIME_ATTACK_AIR1 };
 	m_iAttack_Air2 = { ANIME_ATTACK_AIR2 };
@@ -2269,6 +2270,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_iFinalLoofCount = 10;
+			
 
 			_float fStopTime = 1.2f;
 			Set_AnimationStopWithoutMe(fStopTime);
@@ -2301,22 +2303,28 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 		
 
-			//m_bDynamicMove = true;
+			////속도 200버전.
+			//if (m_bAttackBackEvent)
+			//{
+			//	FlipDirection();
+			//	Teleport_ToEnemy(-10.f, -2.f);
+			//	Set_fImpulse({ m_iLookDirection * 60.f, 7.f });
+			//
+			//}
+			//else
+			//	Set_fImpulse({ m_iLookDirection * 60.f, 0.f });
+
+
 
 			if (m_bAttackBackEvent)
 			{
-
-				//상대 위치 추적, 보는방향 변경.  뭐부터?
-				//Teleport_ToEenmy 는 이미 보는방향이 적용되어있음
-
-				//상대를 바라보고 뒤쪽 아래로 이동하자
 				FlipDirection();
-				Teleport_ToEnemy(-10.f, -0.f);
-				
-			}
-			
-			Set_fImpulse({ m_iLookDirection * 60.f, 0.f });
+				Teleport_ToEnemy(-10.f, -2.f);
+				Set_fImpulse({ m_iLookDirection * 80.f, 10.f });
 
+			}
+			else
+				Set_fImpulse({ m_iLookDirection * 60.f, 0.f });
 
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)
@@ -2328,10 +2336,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.vExtents = { 0.8f,0.6f,1.f };
 			Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
-			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_Impus = { 0.f,2.f };
 			Desc.fhitCharacter_StunTime = 2000.f;
 			Desc.fLifeTime = 0.6f;
-			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_UP };
 			Desc.iTeam = m_iPlayerTeam;
 			Desc.fAnimationLockTime = 0.f;
 			Desc.pOwner = this;
@@ -2339,21 +2347,26 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eAttackType = ATTACKTYPE_HIGH;
 			Desc.eAttackGrade = GRADE_ULTIMATE;
 
-			Desc.fDistance = { 0.8f * m_iLookDirection,0.f };
+			//Desc.fDistance = { 0.8f * m_iLookDirection,0.2f };
+			Desc.fDistance = { 0.f,0.2f };
+
 			Desc.fForcedGravityTime = 0.f;
 			//Desc.fGrabAnimationPosition = 40.f;
 			//Desc.fGrabAnimationPosition = 25.f;
 
-			if (m_bAttackBackEvent) //첫공격
+			Desc.bGrabedGravity = true;
+			Desc.fForcedGravityTime = 0.f;
+
+			if (m_bAttackBackEvent == false) //첫공격
 			{
-				Desc.iGainAttackStep = 0;
+				Desc.iGainAttackStep = 1;
 				Desc.iDamage = 700 * Get_DamageScale(true);;
 
 			}
 			else
 			{
-				Desc.iGainAttackStep = 1;
-				Desc.iDamage = 200 * Get_DamageScale(true);;
+				Desc.iGainAttackStep = 0;
+				Desc.iDamage = 100 * Get_DamageScale(true);;
 			}
 			Desc.iGrabAnimationIndex = ANIME_FINAL_START;
 			Desc.bOwnerNextAnimation = false;
@@ -2366,7 +2379,6 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.fForcedGravityTime = 0.f;
-			Desc.bOwnerNextAnimation = false;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 

@@ -216,7 +216,9 @@ public:
 
 	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
-	void Chase_Ready(_float fTimeDelta);
+	//void Chase_Ready(_float fTimeDelta);
+	void Chase_Ready(_float fTimeDelta, _bool bNoReady = false);
+
 	void Set_ChaseStoping();
 	void Set_ChaseStop();
 
@@ -288,6 +290,8 @@ public:
 	_vector Get_vPosition();
 	
 	void Set_bGrabbed(_bool bGrabbed);
+	void Set_bGrabbedGravity(_bool bGrabbedGravity);
+
 	_bool Get_bGrabbed();
 	void Set_GrabAnimation();  //외부에서 호출해야하는데 각자 다르므로?
 
@@ -446,6 +450,7 @@ protected:
 	_ushort m_iHit_WallBouce = {34};
 
 	_ushort m_iHit_Air_Spin_LeftUp = {31};
+	_ushort m_iHit_Air_Spin_Up = { 30 };  //072
 
 
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
@@ -566,6 +571,7 @@ protected:
 	_float m_fPreviousX = {};
 
 	_bool	m_bGrabbed = { false };
+	_bool	m_bGrabbedGravity = { false };
 	_ushort m_iGrabLoof = 3;
 
 

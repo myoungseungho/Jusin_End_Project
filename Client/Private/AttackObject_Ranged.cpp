@@ -172,7 +172,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
 		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+		if (m_pRangedEffect_Layer != nullptr)
+			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 	}
 
@@ -229,7 +231,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
-			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			if(m_pRangedEffect_Layer!=nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
@@ -249,7 +253,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
-			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+
+			if (m_pRangedEffect_Layer != nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 		}
 

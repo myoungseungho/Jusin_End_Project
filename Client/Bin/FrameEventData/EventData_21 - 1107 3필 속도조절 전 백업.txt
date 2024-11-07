@@ -968,7 +968,6 @@ PLAY_21,TON430_body,105,AttackEvent,6
 //,0~60 상시, 명중시 60~80   아몰라 생략
 
 //,432 폭발3필  간단한데 부우 1필과 겹치므로 보류
-//,사용중인 돌진 3필
 
 PLAY_21,TON433_body,0.000000,AnimSpeedChange,0.018000,120.000000
 PLAY_21,TON433_body,0,AttackEvent,0
@@ -980,11 +979,7 @@ PLAY_21,TON433_body,36,AnimSpeedChange,0.018,90
 
 
 //,PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,120
-
-//,200도 좀 느린거같아서 더 늘려보려고 함
-//,PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,200
-
-PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,260
+PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,200
 
 
 PLAY_21,TON433_body,53,AttackEvent,1
@@ -994,7 +989,7 @@ PLAY_21,TON433_body,53,AttackEvent,1
 //,PLAY_21,TON433_body,81.2,PositionChange,210
 
 PLAY_21,TON433_body,115,AttackEvent,3
-PLAY_21,TON433_body,120,AttackEvent,90
+PLAY_21,TON433_body,120,AttackEvent,ㅁㅁㅁ
 PLAY_21,TON433_body,135,AttackEvent,4
 
 //,PLAY_21,TON433_body,230,AnimSpeedChange,0.018,0.1

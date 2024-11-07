@@ -185,8 +185,15 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				return;
 			}
 
+			//AttackColliderResult eResult =
+			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
+
+
+			//AttackColliderResult eResult =
+			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x *0.2f, m_fhitCharacter_Impus .y *0.2f});
+
 			AttackColliderResult eResult =
-				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
+				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { 0,0 });
 
 
 			if (eResult == RESULT_HIT)
@@ -200,8 +207,26 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 				//pCharacter->Set_fGravityTime(0.f);
 
+
+				_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+				_float fEnergyHeight = XMVectorGetY(vPos);
+				_float fpCharacterHeight = pCharacter->Get_fHeight();
+
+				//에너지파가 플레이어보다 많이 높은 경우 캐릭터를 강제로 아래로 끌어내림
+				if (fpCharacterHeight -fEnergyHeight >0.3f)
+				{
+					pCharacter->Add_Move({ 0.f,-0.2f });
+				}
+				//에너지파가 플레이어보다 많이 낮은 경우 캐릭터를 강제로 끌어올림
+				else if (fpCharacterHeight - fEnergyHeight  < -0.3f)
+				{
+					pCharacter->Add_Move({ 0.f,0.2f });
+				}
+
+
+
 				//_float fHeight = pCharacter->Get_fHeight();  //땅에 끌리고있을때 0.2로나옴
-				if (pCharacter->Get_fHeight() <0.3 )
+				if (fpCharacterHeight <0.3 )
 				{
 					pCharacter->Add_Move({ 0.f,0.15f });
 					pCharacter->Set_HitAnimation(m_ihitCharacter_Motion,{0.f,0.02f});
@@ -355,7 +380,8 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 
 			AttackColliderResult eResult{ RESULT_NONE };
 	
-			cout << m_iAttackCount << endl;
+
+			
 			if (m_iAttackCount != 0)
 			{
 				m_iAttackCount--;
@@ -378,7 +404,21 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				m_pOwner->Gain_HitCount(m_iGainHitCount);
 
 
-				cout << m_iAttackCount << endl;
+				_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+				_float fEnergyHeight = XMVectorGetY(vPos);
+				_float fpCharacterHeight = pCharacter->Get_fHeight();
+
+				//에너지파가 플레이어보다 많이 높은 경우 캐릭터를 강제로 아래로 끌어내림
+				if (fpCharacterHeight - fEnergyHeight > 0.3f)
+				{
+					pCharacter->Add_Move({ 0.f,-0.2f });
+				}
+				//에너지파가 플레이어보다 많이 낮은 경우 캐릭터를 강제로 끌어올림
+				else if (fpCharacterHeight - fEnergyHeight < -0.3f)
+				{
+					pCharacter->Add_Move({ 0.f,0.2f });
+				}
+
 
 				if (m_iAttackCount == 0)
 				{
