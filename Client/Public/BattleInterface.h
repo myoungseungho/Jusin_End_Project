@@ -43,6 +43,12 @@ public:
 	_ushort Get_KiNumber(_ushort iTeam);
 
 	void Stop_CharacterWithoutMe(_ushort iTeam, _ubyte iSlot, _float fTime);
+	void Stop_AllCharacter(_float fStopTime);
+
+
+	_ushort Get_iAliveMemberCount(_ushort iTeam);
+
+	void Stop_AllAttackObject(_float fStopTime);
 
 
 	//이거 하나만 호출하게
@@ -64,7 +70,7 @@ private:
 	class CCharacter* m_p2TeamCharacter[3] = { nullptr };
 
 
-	_bool m_bSparkingEnable[2] = { true };
+	_bool m_bSparkingEnable[2] = { true ,true};
 	_uint m_iHitCount[2] = {}; //화면에 뜰 히트수
 	
 	_uint m_iKiGuage[2] = {};

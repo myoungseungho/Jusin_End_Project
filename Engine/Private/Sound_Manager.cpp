@@ -177,6 +177,7 @@ void CSound_Manager::Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume)
 		m_channelMap[alias] = { channel, volume }; // 초기 볼륨 저장
 	}
 }
+
 void CSound_Manager::Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume)
 {
 	if (!m_isImguiPlay)

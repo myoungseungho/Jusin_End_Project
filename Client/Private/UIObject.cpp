@@ -108,16 +108,27 @@ void CUIObject::DebugTesting(_float fSizeOffset, _float fDepth)
 	Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY , fDepth);
 }
 
-_bool CUIObject::ClickRange()
+_bool CUIObject::ClickRange(_float fPickPosX, _float fPickPosY)
 {
-	POINT pt;
-	GetCursorPos(&pt);
-	ScreenToClient(g_hWnd, &pt);
+	//POINT pt;
+	//GetCursorPos(&pt);
+	//ScreenToClient(g_hWnd, &pt);
 	
-	_float MouseX = (_float)(pt.x);
-	_float MouseY = (_float)(pt.y);
+	_float MouseX = fPickPosX;
+	_float MouseY = fPickPosY;
 
-	if (m_fPosX - m_fSizeX * 0.5f < MouseX && m_fPosX + m_fSizeX * 0.5f > MouseX && m_fPosY - m_fSizeY * 0.5f < MouseY && m_fPosY + m_fSizeY * 0.5f > MouseY)
+	_float fPosX = m_fPosX * m_vOffSetWinSize.x;
+	_float fPosY = m_fPosY * m_vOffSetWinSize.y;
+
+	_float fSizeX = m_fSizeX * m_vOffSetWinSize.x;
+	_float fSizeY = m_fSizeY * m_vOffSetWinSize.y;
+
+	_bool bLeft = (fPosX - fSizeX * 0.5f < MouseX);
+	_bool bRight = (fPosX + fSizeX * 0.5f > MouseX);
+	_bool bTop = (fPosY - fSizeY * 0.5f < MouseY);
+	_bool bBot = (fPosY + fSizeY * 0.5f > MouseY);
+
+	if (bLeft && bRight && bTop && bBot)
 	{
 		return true;
 	}

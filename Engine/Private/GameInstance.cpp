@@ -86,6 +86,7 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Player_Update(fTimeDelta);
 
+	m_pCollider_Manager->Destory_ColliderGroup();
 
 	m_pObject_Manager->Update(fTimeDelta);
 
@@ -222,6 +223,14 @@ HRESULT CGameInstance::Set_LoadingLevel_Index(_uint _level)
 		return E_FAIL;
 
 	return m_pLevel_Manager->Set_LoadingLevel_Index(_level);
+}
+
+CLevel* CGameInstance::Get_Level()
+{
+	if (nullptr == m_pLevel_Manager)
+		return nullptr;
+
+	return m_pLevel_Manager->Get_Level();
 }
 
 HRESULT CGameInstance::Add_Timer(const _wstring& strTimerTag)
@@ -429,6 +438,16 @@ HRESULT CGameInstance::Release_Collider(const CCollider* Collider)
 void CGameInstance::Destroy_Reserve(CCollider_Manager::COLLIDERGROUP eRenderGroup)
 {
 	return m_pCollider_Manager->Destroy_Reserve(eRenderGroup);
+}
+
+void CGameInstance::Destroy_Reserve(CCollider* pCollider)
+{
+	return m_pCollider_Manager->Destroy_Reserve(pCollider);
+}
+
+HRESULT CGameInstance::Destory_ColliderGroup()
+{
+	return m_pCollider_Manager->Destory_ColliderGroup();
 }
 
 

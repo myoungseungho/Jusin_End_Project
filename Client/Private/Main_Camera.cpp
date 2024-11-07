@@ -407,7 +407,7 @@ void CMain_Camera::SetPosition(_fvector position)
 
 void CMain_Camera::Set_Player(CGameObject* pPlayer)
 {
-	for (size_t i = VIRTUAL_CAMERA_SON_HEAVY; i < VIRTUAL_CAMERA_END; i++)
+	for (size_t i = VIRTUAL_CAMERA_NORMAL; i < VIRTUAL_CAMERA_END; i++)
 		m_vecVirtualCamera[i]->Set_Player(pPlayer);
 }
 

@@ -1,0 +1,445 @@
+[Layer]
+LayerName: BurstR-02
+Duration: 3
+TickPerSecond: 2
+KeyFramesCount: 179
+NumEffec: 11
+Position: 0.6 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: true
+
+[Effect]
+EffectName: BurstR-02_01
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.6 1 0
+Scale: 0.01 0.02 0.01
+Rotation: 0 0 0
+IsLoop: false
+Color: 220.381 110.613 56.5729 0.29007
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.01 0.02 0.01
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 1 0
+Scale: 0.02 0.02 0.01
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR-02_02
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.5 1 0
+Scale: 0.02 0.02 0.01
+Rotation: 45 0 0
+IsLoop: false
+Color: 90.3477 48.1291 0 3.87417
+GlowColor: 0 0 0 1
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 1 0
+Scale: 0.02 0.02 0.01
+Rotation: 45 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: -0.1 1 0
+Scale: 0.03 0.02 0.01
+Rotation: 45 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR-02_03
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.6 1 0
+Scale: 0.03 0.02 0.01
+Rotation: 0 0 0
+IsLoop: false
+Color: 132.566 80.2152 0 1.88742
+GlowColor: 0 0 0 1
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.03 0.02 0.01
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 1 0
+Scale: 0.04 0.02 0.01
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR-02_04
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.6 1 0
+Scale: 0.02 0.02 0.02
+Rotation: 0 0 0
+IsLoop: false
+Color: 210.248 179.851 80.2152 1.09272
+GlowColor: 0 0 0 1
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.02 0.02 0.02
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 1 0
+Scale: 0.03 0.02 0.02
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR02_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR02_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.2 0.4 -0.2
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 222.07 200.116 146.076 0.542716
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.8 0.4 -0.2
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: -1.3 0.1 0
+Scale: 0.35 0.13 1
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR02_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR02_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.4 1 0
+Scale: 0.149999 0.199971 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 220.381 179.851 198.427 1.5308
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 1 0
+Scale: 0.149999 0.199971 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR02_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR02_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.3 1 0
+Scale: 0.0499751 0.0999503 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 218.692 161.275 86.9702 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 1 0
+Scale: 0.0499751 0.0999503 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: -0.3 1 0
+Scale: 0.0999826 0.299977 1
+Rotation: 0 0 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstR-02_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.1 0.5 0
+Scale: 0.02 0.1 1
+Rotation: 0 0 99.74
+IsLoop: false
+Color: 0 0 0 2.1755
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.7 0.5 0
+Scale: 0.02 0.1 1
+Rotation: 0 0 99.74
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: -0.7 0.5 0
+Scale: 0.01 0.1 1
+Rotation: 0 0 99.74
+CurTime: 0.75
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.7 0.5 0
+Scale: 0.01 0.1 1
+Rotation: 0 0 99.74
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstR-02_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0.8 0
+Scale: 0.0199999 0.1 1
+Rotation: 0 0 92.519
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.6 0.8 0
+Scale: 0.0199999 0.1 1
+Rotation: 0 0 92.519
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: -0.6 0.8 0
+Scale: 0.01 0.1 1
+Rotation: 0 0 92.519
+CurTime: 0.75
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.6 0.8 0
+Scale: 0.00999999 0.1 1
+Rotation: 0 0 92.519
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstR-02_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1.4 0
+Scale: 0.03 0.1 1
+Rotation: 0 0 74.805
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.6 1.4 0
+Scale: 0.03 0.1 1
+Rotation: 0 0 74.805
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: -0.6 1.4 0
+Scale: 0.015 0.1 1
+Rotation: 0 0 74.805
+CurTime: 0.75
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.6 1.4 0
+Scale: 0.015 0.1 1
+Rotation: 0 0 74.805
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstR-02_11
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1.6 0
+Scale: 0.02 0.0999999 1
+Rotation: 0 0 73.818
+IsLoop: false
+Color: 0 0 0 3.5255
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.6 1.6 0
+Scale: 0.02 0.0999999 1
+Rotation: 0 0 73.818
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: -0.6 1.6 0
+Scale: 0.005 0.0999999 1
+Rotation: 0 0 73.818
+CurTime: 0.75
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.6 1.6 0
+Scale: 0.005 0.0999999 1
+Rotation: 0 0 73.818
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: true
+

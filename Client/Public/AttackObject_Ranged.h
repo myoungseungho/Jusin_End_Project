@@ -29,7 +29,9 @@ public:
 		_float2 fRanged_Impus_NoneDirection = {};  //1초간 이동할 xy거리  //방향값 미리 적용 해야하나?  
 		_short iDirection = {};		//
 
-		Ranged_LightColor eExplosionColor = { RANGED_LIGHT_NONE };
+		Ranged_LightColor eRangeColor = { RANGED_LIGHT_NONE };
+
+		_wstring strEffectName = {};
 	};
 private:
 	CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -54,6 +56,8 @@ public:
 
 	void Erase();
 
+	_bool BeReflect();
+
 private:
 	void CollisingAttack();
 	void CollisingPlayer();
@@ -69,7 +73,7 @@ private:
 	_float2 m_fRanged_Impus_NoneDirection = {};
 	_short  m_iDirection = {};		
 
-	Ranged_LightColor m_eExplosionColor = { RANGED_LIGHT_NONE };
+	Ranged_LightColor m_eRangeColor = { RANGED_LIGHT_NONE };
 
 public:
 	static CAttackObject_Ranged* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

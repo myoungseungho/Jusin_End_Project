@@ -50,6 +50,8 @@ PLAY_GOKU,GKS201_body,20,ObjectMove,0.07,0,0,0
 //,강공
 //,PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,240,TEST
 PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,120
+//,PLAY_GOKU,GKS202_body,0,AnimSpeedChange,0.02,240
+//,PLAY_GOKU,GKS202_body,10,AnimSpeedChange,0.02,160
 PLAY_GOKU,GKS202_body,35,AnimSpeedChange,0.02,20
 PLAY_GOKU,GKS202_body,35,AttackEvent,202
 PLAY_GOKU,GKS202_body,38,NextAnimationCheck,33333333
@@ -439,17 +441,19 @@ PLAY_GOKU,GKS404_body,59,ObjectMove,0.01,0,0,0
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,120.656998
 PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,180.656998
 PLAY_GOKU,GKS405_body,0.001000,PlayGroupSound,204,0,1
-PLAY_GOKU,GKS405_body,45,AttackEvent,33333
+PLAY_GOKU,GKS405_body,45,AttackEvent,0
 PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS405_body,50,NextAnimationCheck,333333
 PLAY_GOKU,GKS405_body,55,AnimSpeedChange,0.016000,80
+
+PLAY_GOKU,GKS405_body,57,AttackEvent,1
 
 PLAY_GOKU,GKS405_body,60,NextAnimationCheck,333333
 PLAY_GOKU,GKS405_body,70,NextAnimationCheck,333333
 
 //,빠르게 바꾸니까 전진거리가 너무 길어서 줄여봄
 //,PLAY_GOKU,GKS405_body,15,ObjectMove,0.1,0,0,0
-//,PLAY_GOKU,GKS405_body,16,ObjectMove,0.1,0,0,0
+//,PLAY_GOKU,GKS405_body,16,ObjectMove,0.1,0,0,0a
 //,PLAY_GOKU,GKS405_body,17,ObjectMove,0.1,0,0,0
 //,PLAY_GOKU,GKS405_body,18,ObjectMove,0.1,0,0,0
 //,PLAY_GOKU,GKS405_body,19,ObjectMove,0.1,0,0,0
@@ -516,36 +520,36 @@ PLAY_GOKU,GKS406_body,80,AnimSpeedChange,0.023000,120
 
 //, 2바퀴 회전시 80->105로,   그 이상 회전시  80~100->40  속도 매우 빠르게
 
-//,PLAY_GOKU,GKS406_body,20,ObjectMove,0.09,0.04,0,0
-//,PLAY_GOKU,GKS406_body,22,ObjectMove,0.09,0.04,0,0
-//,PLAY_GOKU,GKS406_body,24,ObjectMove,0.09,0.04,0,0
-//,PLAY_GOKU,GKS406_body,26,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,28,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,30,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,32,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,34,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,36,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,38,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,40,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,42,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,44,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,46,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,48,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,50,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,52,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,54,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,56,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,58,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,60,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,62,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,64,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,66,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,68,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,70,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,72,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,74,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,76,ObjectMove,0.09,0,0,0
-//,PLAY_GOKU,GKS406_body,78,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,20,ObjectMove,0.09,0.04,0,0
+PLAY_GOKU,GKS406_body,22,ObjectMove,0.09,0.04,0,0
+PLAY_GOKU,GKS406_body,24,ObjectMove,0.09,0.04,0,0
+PLAY_GOKU,GKS406_body,26,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,28,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,30,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,32,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,34,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,36,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,38,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,40,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,42,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,44,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,46,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,48,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,50,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,52,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,54,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,56,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,58,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,60,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,62,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,64,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,66,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,68,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,70,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,72,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,74,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,76,ObjectMove,0.09,0,0,0
+PLAY_GOKU,GKS406_body,78,ObjectMove,0.09,0,0,0
 
 
 PLAY_GOKU,GKS406_body,24,ObjectMove,0.09,0.04,0,0
@@ -609,7 +613,7 @@ PLAY_GOKU,GKS436_body,40.000000,SetNextAnimation,72,100
 //,3필 시작 기모으기 다른 애니메이션? 초3전용? 
 PLAY_GOKU,GKS440_body,0.000000,AnimSpeedChange,0.023000,25
 PLAY_GOKU,GKS440_body,50.000000,AnimSpeedChange,0.023000,12
-PLAY_GOKU,GKS440_body,45.000000,EnemyChase,1,0,0
+PLAY_GOKU,GKS440_body,45.000000,EnemyChase,1.5,0,0
 PLAY_GOKU,GKS440_body,45.000000,FlipPlayerDirection,0
 PLAY_GOKU,GKS440_body,45.000000,PositionChange,54
 
@@ -681,6 +685,8 @@ PLAY_GOKU,GKS436cs,96,AnimSpeedChange,0.012000,2
 PLAY_GOKU,GKS436cs,23.4,AttackEvent,0
 PLAY_GOKU,GKS436cs,95,AttackEvent,1
 PLAY_GOKU,GKS436cs,95,Camera_Play_Son_Ultimate_4_Shake,2,0.1
+PLAY_GOKU,GKS436cs,97.8,AttackEvent,2
+
 
 
 //,275로시작
@@ -690,6 +696,17 @@ PLAY_GOKU,GKS600cs,0,PositionChange,275
 PLAY_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
 PLAY_GOKU,GKS600cs,280,AnimSpeedChange,0.019,60.1
 
+
+//,리플렉터
+PLAY_GOKU,GKS301_body,0,AnimSpeedChange,0.015,35
+PLAY_GOKU,GKS301_body,0,AttackEvent,0
+PLAY_GOKU,GKS301_body,14.1,AnimSpeedChange,0.015,90
+PLAY_GOKU,GKS301_body,25.1,AnimSpeedChange,0.015,90 
+PLAY_GOKU,GKS301_body,40,AttackEvent,1
+PLAY_GOKU,GKS301_body,45,AnimSpeedChange,0.015,20
+
+
+//,54까지 있지만 성공하면 중간에 끊기?
 
 //,오프닝 사이드 스탠딩 (공용)
 PLAY_GOKUG,GKS601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000

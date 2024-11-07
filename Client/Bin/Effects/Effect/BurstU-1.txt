@@ -7,6 +7,7 @@ NumEffec: 1
 Position: 0 0 -0.5
 Scale: 1 1 1
 Rotation: 0 0 0
+IsFollowing: true
 
 [Effect]
 EffectName: BurstU-1

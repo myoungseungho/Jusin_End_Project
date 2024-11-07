@@ -16,118 +16,7 @@ END
 
 BEGIN(Client)
 
-/*
-vector<CInput> Command_236Attack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
-};
 
-vector<CInput> Command_236Attack_Extra =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_LIGHT}
-};
-
-
-vector<CInput> Command_214Attack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_NEUTRAL, ATTACK_LIGHT}
-};
-vector<CInput> Command_214Attack_Extra =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_LIGHT}
-};
-
-vector<CInput> Command_236Special =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_SPECIAL}
-};
-
-vector<CInput> Command_236Special_Side =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_DOWN, ATTACK_SPECIAL}
-};
-
-
-vector<CInput> Command_214FinalAttack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_SPECIAL}
-};
-
-
-vector<CInput> Command_236UltimateAttack =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_GRAB}
-};
-
-
-vector<CInput> Command_236UltimateAttack_Side =
-{
-	{MOVEKEY_DOWN, ATTACK_NONE},
-	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_DOWN, ATTACK_GRAB}
-};
-
-
-
-vector<CInput> Command_BackDash =
-{
-	{MOVEKEY_LEFT, ATTACK_NONE},
-	{MOVEKEY_LEFT, ATTACK_NONE}
-};
-
-vector<CInput> Command_Forward =
-{
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{MOVEKEY_RIGHT, ATTACK_NONE},
-	{ MOVEKEY_RIGHT, ATTACK_NONE }
-
-};
-
-vector<CInput> Command_LightAttack = { {MOVEKEY_NEUTRAL, ATTACK_LIGHT} };
-vector<CInput> Command_MediumAttack = { {MOVEKEY_NEUTRAL, ATTACK_MEDIUM} };
-vector<CInput> Command_HeavyAttack = { {MOVEKEY_NEUTRAL, ATTACK_HEAVY} };
-vector<CInput> Command_SpecialAttack = { {MOVEKEY_NEUTRAL, ATTACK_SPECIAL} };
-
-vector<CInput> Command_HeavyAttack_Extra = { {MOVEKEY_RIGHT, ATTACK_HEAVY} };
-
-m_eCharacterID
-
-vector<CInput> Command_Crouch_LightAttack = { {MOVEKEY_DOWN, ATTACK_LIGHT} };
-vector<CInput> Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK_MEDIUM} };
-vector<CInput> Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
-vector<CInput> Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
-
-
-
-vector<CInput> Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
-vector<CInput> Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
-
-*/
 
 class CCharacter : public CGameObject
 {
@@ -168,6 +57,8 @@ public:
 	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
 	static vector<CInput> Command_Crouch_SpecialAttack;
 
+
+	static vector<CInput> Command_Reflect;
 
 public:
 	const int BUFFER_SIZE = 30;
@@ -239,9 +130,14 @@ public:
 	virtual _bool Check_bCurAnimationisHitAway(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisHitGround(_uint iAnimation = 1000);
 
+	virtual _bool Check_bCurAnimationisChase(_uint iAnimation = 1000);  //특이한 경우라 애니메이션 뿐 만 아니라 m_bChase까지 끼워넣음
+	virtual _bool Check_bCurAnimationisReflect(_uint iAnimation = 1000);  
 
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
+
+	virtual _short Check_bCurAnimationisCanChase() { return 0; };  //현재 모션이 체이스로 연계 가능한지 여부를 체크, 0이면 불가능 그 외의 숫자는 시작속도*10니까 받아서 *0.01f할것
+
 
 	//공중 기탄같이 중간에 중력이 다시 생기는 특수 처리해야하는것들 각자 override
 	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) { return false; };
@@ -311,8 +207,7 @@ public:
 
 	void Set_bNextAnimationGravityEvent() { m_bNextAnimationGravityEvent = true; };
 
-	void Set_bAttackGravity(_bool bAttackGravity) { m_bAttackGravity = bAttackGravity; };
-
+	void Set_bAttackGravity(_bool bAttackGravity);
 	_float Get_fGravityTime() { return m_fGravityTime; };
 
 
@@ -359,7 +254,9 @@ public:
 	void Gain_AttackStep(_ushort iStep);// 
 	void Gain_HitCount(_ushort iHit);// 
 
-	_float Get_DamageScale();
+	//_float Get_DamageScale();
+	_float Get_DamageScale(_bool bUltimate = false);
+
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
 	void Set_GroundSmash(_bool bSmash);
@@ -400,6 +297,7 @@ public:
 	//BattleInterface
 	void Sparking_ON(_float fTimeDelta);
 	void Sparking_TimeCount(_float fTimeDelta);
+	_bool Get_bSparking();
 
 	void Gain_KiAmount(_ushort iKiAmount);
 
@@ -410,33 +308,58 @@ public:
 	void RegisterEnemy(CCharacter* pEnemy);
 	void pEnemyCheck();
 	void Tag_Out(_vector vPosition);
-	
+
+	_bool Update_Tag_In(_float fTimeDelta);
+
+	void Set_AttackBackEvent(_bool bEvent);
+	void Set_ReflectAttackBackEvent(_bool bEvent);
+
+	_bool Get_bAttackBackEvent();
+
 	void Set_bGrabDraw(_bool bGrabDraw);
 	_bool Check_bWall();
 	void Move_ForWall();
 
+	void Set_bDynamicMove(_bool bDynamicMove);
+
+
 	void Update_Dying(_float fTimeDelta);
 	_bool Get_bDying();
+
+	void Set_StopAllAttackObject(_float fStopTime);
+
+	_bool Get_bReflect();
+
+	void Set_bBeReflecting(_short iDirection);
+	_bool Update_BeReflecting(_float fTimeDelta);
 
 protected:
 	void Reset_AttackStep();
 
 	//애니메이션 끝에 대고 사용하지 말것
 	void Update_NoEventAnimationLoof(_float fTimeDelta);
+	void Update_ForcedEventAnimationLoof(_float fTimeDelta);
+
 	void Update_NoEventTime(_float fTimeDelta);
 
 	void Set_NoEventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime);
+	void Set_EventAnmationLoof(_float fMinPosition, _float fMaxPosition, _float fTime);
+
 
 	_float4x4 Make_BoneMatrix(char* BoneName);
 
 	//기본적으로 좌우반전이 되지만 추가로 뒤집는경우 좌표가 좀 뒤틀릴 수 있음
 	_float4x4 Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection = false);
-	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
-
-	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
-
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale ={1.f,1.f,1.f});
+
+public:
+	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
+	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
 	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale={1.f,1.f,1.f});
+
+
 
 
 	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
@@ -451,6 +374,7 @@ public:
 	//UI
 public:
 	void Set_bRedHP(_bool bRedHP);
+	void CharacterToUI_Info();
 
 protected:
 	CShader* m_pShaderCom = { nullptr };
@@ -506,6 +430,7 @@ protected:
 	_ushort m_iStandingMidAttackAnimationIndex = { 46 };
 	_ushort m_iChaseAnimationIndex = { 13 };
 
+	_ushort m_iReflectAnimationIndex = { 58 };
 
 	_ushort m_iHit_Stand_LightAnimationIndex = { 21 };		//050
 	//_ushort m_iHit_Stand_LightFrontAnimationIndex = { 21 };		//050
@@ -539,6 +464,8 @@ protected:
 	_ushort m_iAttack_AirUpper = { 55 };
 
 	_ushort m_iAttack_Heavy = {45};
+	_ushort m_iAttack_Crouch_Heavy = { 51 };
+
 
 	_ushort m_iAttack_LightLast = {47};
 
@@ -646,8 +573,10 @@ protected:
 	_bool m_bTag_In = { false };	//교대하러 들어가는 캐릭터.
 	_bool m_bPlaying = { false };  //이 캐릭터만 조작함
 
+	_float m_fAccTag_InTime = { 0.f };
 
 	_bool m_bNoEventLoofAnimation = false;
+	_bool m_bForcedEventLoofAnimation = false;
 	_float m_fNoEventLoofMinPosition = {};
 	_float m_fNoEventLoofMaxPosition = {};
 	_float m_fMaxNoEventLoofTime = {};
@@ -671,11 +600,21 @@ protected:
 	_float m_fAccDyingTime = {};
 	//_bool m_bKO = { false };
 
+	_bool m_bDynamicMove = { false };
+	_bool m_bAttackBackEvent = { false };
+
+	_bool m_bReflect = { false };
+	//_bool m_bReflectAttackBack 
+
+	_bool m_bBeReflecting = { false };
+	_float m_fAccBeReflectingTime = { 0.f };
+	CGameObject* m_pReflectObject = { nullptr };
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
 
-
+	
 
 	public:
 		void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }
@@ -723,8 +662,8 @@ private:
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };
-	_uint					m_iPrevComboCount = { 0 };
-	
+	_uint   m_iPrevComboCount = { 0 };
+
 	//UI에 보내야할 정보
 	Character_INFO_DESC				 m_tCharacterDesc = {};
 

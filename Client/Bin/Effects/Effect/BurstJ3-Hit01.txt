@@ -7,6 +7,135 @@ NumEffec: 10
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: BurstJ3-Hit01_07
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ3-Hit01BurstJ3-Hit01_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1.1 0.5
+Scale: 0.0119582 0.0219995 0.0149998
+Rotation: 30 0 110
+IsLoop: false
+Color: 41.3742 39.6854 17.7318 0.896026
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.5 7.45058e-08
+Scale: 0.00699937 0.005 0.005
+Rotation: 0 0 100
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 7
+Position: 0 1.1 0.5
+Scale: 0.0599998 0.00699803 0.00499917
+Rotation: 30 0 110
+CurTime: 0.116667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 0 1.1 0.5
+Scale: 0.059998 0.0219999 0.0149992
+Rotation: 30 0 110
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 37
+Position: 0 1.1 0.5
+Scale: 0.0099995 0.0219995 0.0149998
+Rotation: 30 0 110
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 38
+Position: 0 1.1 0.5
+Scale: 0.0099995 0.0219995 0.0149998
+Rotation: 30 0 110
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: BurstJ3-Hit01_08
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ3-Hit01BurstJ3-Hit01_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 1.5 0.480412
+Scale: 0.000462339 0.0139999 0.012
+Rotation: 30 0 110
+IsLoop: false
+Color: 112.301 51.5066 10.9768 28.5099
+GlowColor: 0 0 0 1
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0.5
+Scale: 0.00699977 0.005 0.005
+Rotation: 0 0 100
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 7
+Position: 0 1.5 1.49012e-08
+Scale: 0.001997 0.00499841 0.005
+Rotation: 30 0 110
+CurTime: 0.116667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 0 1.5 1.49012e-08
+Scale: 0.0019964 0.0139999 0.012
+Rotation: 30 0 110
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 37
+Position: 0 1.5 0.5
+Scale: 0.00039979 0.0139999 0.012
+Rotation: 30 0 110
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 38
+Position: 0 1.5 0.5
+Scale: 0.00039979 0.0139999 0.012
+Rotation: 30 0 110
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: true
 
 [Effect]
 EffectName: BurstJ3-Hit01_01
@@ -55,7 +184,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 0 0.5 0
-Scale: 0.12 0.15 1
+Scale: 0.17 0.2 1
 Rotation: 0 0 340
 IsLoop: false
 Color: 0 0 0 30
@@ -92,7 +221,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0.5 0
-Scale: 0.12 0.15 1
+Scale: 0.17 0.2 1
 Rotation: 0 0 20
 IsLoop: false
 Color: 0 0 0 9.03973
@@ -129,7 +258,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 0 0.5 0
-Scale: 0.12 0.15 1
+Scale: 0.17 0.2 1
 Rotation: 0 0 20
 IsLoop: false
 Color: 0 0 0 30
@@ -166,7 +295,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0.5 0
-Scale: 0.1 0.1 1
+Scale: 0.15 0.15 1
 Rotation: 0 0 350
 IsLoop: false
 Color: 0 0 0 9.03973
@@ -201,9 +330,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: -2
+UniqueIndex: 0
 Position: 0 0.5 0
-Scale: 0.1 0.1 1
+Scale: 0.15 0.15 1
 Rotation: 0 0 350
 IsLoop: false
 Color: 0 0 0 30
@@ -240,7 +369,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0.2 0.9 0
-Scale: 0.0299904 0.0299904 1
+Scale: 0.0299979 0.0299979 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 0 0 30
@@ -267,8 +396,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.0627368 0
-Scale: 0.139544 0.139544 1
+Position: 0 0.6 0
+Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 108.924 100.48 32.9305 30
@@ -301,134 +430,6 @@ Position: 0 -0.6 0
 Scale: 0.25 0.25 1
 Rotation: 0 0 0
 CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
-[Effect]
-EffectName: BurstJ3-Hit01_07
-ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ3-Hit01BurstJ3-Hit01_07
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: -1
-Position: 0 1.1 0.5
-Scale: 0.0299988 0.00972256 0.00499917
-Rotation: 45 0 110
-IsLoop: false
-Color: 41.3742 39.6854 17.7318 0.896026
-GlowColor: 0 0 0 1
-GlowFactor: 0
-DerredPassIndex: 0
-NumKeyFrame: 5
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 0.5 7.45058e-08
-Scale: 0.00699937 0.005 0.005
-Rotation: 0 0 100
-CurTime: 0
-Duration: 1
-IsNotPlaying: true
-
-[KeyFrame]
-KeyFrameNumber: 7
-Position: 0 1.1 0.5
-Scale: 0.0599998 0.00699803 0.00499917
-Rotation: 30 0 110
-CurTime: 0.116667
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 17
-Position: 0 1.1 0.5
-Scale: 0.059998 0.0219999 0.01499917
-Rotation: 30 0 110
-CurTime: 0.683333
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 37
-Position: 0 1.1 0.5
-Scale: 0.0099995 0.0219995 0.01499983
-Rotation: 30 0 110
-CurTime: 0.95
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 38
-Position: 0 1.1 0.5
-Scale: 0.0099995 0.0219995 0.01499983
-Rotation: 30 0 110
-CurTime: 0.95
-Duration: 1
-IsNotPlaying: true
-
-[Effect]
-EffectName: BurstJ3-Hit01_08
-ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ3-Hit01BurstJ3-Hit01_08
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: 0
-Position: 0 1.5 1.49012e-08
-Scale: 0.0199966 0.00772276 0.005
-Rotation: 40 0 100
-IsLoop: false
-Color: 112.301 51.5066 10.9768 28.5099
-GlowColor: 0 0 0 1
-GlowFactor: 3
-DerredPassIndex: 0
-NumKeyFrame: 5
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 1 0.5
-Scale: 0.00699977 0.005 0.005
-Rotation: 0 0 100
-CurTime: 0
-Duration: 1
-IsNotPlaying: true
-
-[KeyFrame]
-KeyFrameNumber: 7
-Position: 0 1.5 1.49012e-08
-Scale: 0.001997 0.00499841 0.005
-Rotation: 30 0 110
-CurTime: 0.116667
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 17
-Position: 0 1.5 1.49012e-08
-Scale: 0.0019964 0.01399993 0.012
-Rotation: 30 0 110
-CurTime: 0.683333
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 37
-Position: 0 1.5 0.5
-Scale: 0.00039979 0.01399993 0.012
-Rotation: 30 0 110
-CurTime: 0.95
-Duration: 1
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 38
-Position: 0 1.5 0.5
-Scale: 0.00039979 0.01399993 0.012
-Rotation: 30 0 110
-CurTime: 0.95
 Duration: 1
 IsNotPlaying: true
 

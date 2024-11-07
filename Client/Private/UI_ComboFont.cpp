@@ -68,7 +68,7 @@ HRESULT CUI_ComboFont::Render(_float fTimeDelta)
 	if (FAILED(__super::Bind_ShaderResources()))
 		return E_FAIL;;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", SetColor())))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(0)))

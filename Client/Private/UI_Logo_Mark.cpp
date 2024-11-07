@@ -74,21 +74,7 @@ HRESULT CUI_Logo_Mark::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	m_IsAlphaSwich ? (m_fAlphaValue += fTimeDelta * 0.75f) : (m_fAlphaValue -= fTimeDelta * 0.75f);
-
-	if (m_fAlphaValue <= 0.25f)
-		m_IsAlphaSwich = TRUE;
-	else if(m_fAlphaValue >= 1.f)
-		m_IsAlphaSwich = FALSE;
-
-	m_pGameInstance->Draw_Font( TEXT("Font_Nexon"), 
-		TEXT("Space Bar Key Pressing"),        
-		_float2(450 * 1.5f, (600)* 1.5f),              
-		{ 1.f,1.f,1.f,m_fAlphaValue },            
-		0.f,                  
-		{ 0.f, 0.f },         
-		1.f      
-	);
+	PressingCreateFont(fTimeDelta);
 
 	return S_OK;
 }
@@ -104,6 +90,25 @@ HRESULT CUI_Logo_Mark::Ready_Components()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CUI_Logo_Mark::PressingCreateFont(_float fTimeDelta)
+{
+	m_IsAlphaSwich ? (m_fAlphaValue += fTimeDelta * 0.75f) : (m_fAlphaValue -= fTimeDelta * 0.75f);
+
+	if (m_fAlphaValue <= 0.25f)
+		m_IsAlphaSwich = TRUE;
+	else if (m_fAlphaValue >= 1.f)
+		m_IsAlphaSwich = FALSE;
+
+	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
+		TEXT("Space Bar Key Pressing"),
+		_float2(450 * 1.5f, (600) * 1.5f),
+		{ 1.f,1.f,1.f,m_fAlphaValue },
+		0.f,
+		{ 0.f, 0.f },
+		1.f
+	);
 }
 
 CUI_Logo_Mark* CUI_Logo_Mark::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -24,9 +24,9 @@ public:
 	_uint Get_CurrentLevel_Index();
 	_uint Get_LoadingLevel_Index();
 	HRESULT Set_LoadingLevel_Index(_uint);
-
+	CLevel* Get_Level() { return m_pCurrentLevel; };
 private:
-	class CLevel*				m_pCurrentLevel = { nullptr };	
+	class CLevel* m_pCurrentLevel = { nullptr };
 	_uint m_iloadingLevelIndex = { 0 };
 
 public:

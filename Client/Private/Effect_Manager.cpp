@@ -150,7 +150,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 		pLayer->m_fDuration = layerData.duration;
 		pLayer->m_fTickPerSecond = layerData.tickPerSecond;
 		pLayer->m_iNumKeyFrames = layerData.keyFramesCount;
-
+		pLayer->m_bIsFollowing = layerData.bIsFollowing;
 
 		for (const auto& effectData : layerData.effects)
 		{

@@ -24,6 +24,7 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
 	, m_pGameInstance { Prototype.m_pGameInstance }
+	, m_bIsFollowing {Prototype.m_bIsFollowing}
 {
 	
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
@@ -174,10 +175,54 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 	if (m_bIsCopy)
 	{
+
 		for (auto& pEffect : m_MixtureEffects)
 		{
 			_matrix EffectToLayerMatrix = LayerMatrix;
 
+			if (m_bIsFollowing)
+			{
+				LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+
+				if (0 > m_pPlayerMatrix->_11)
+				{
+					LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+
+					XMVECTOR Scale, Rotation, Position;
+
+					XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+
+					_float4x4 fLayerMatrix;
+
+					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
+
+					//fLayerMatrix._41 *= -1;
+					fLayerMatrix._43 *= -1;
+					fLayerMatrix._41 += XMVectorGetX(Position);
+					fLayerMatrix._42 += XMVectorGetY(Position);
+
+					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+				}
+				else
+				{
+					XMVECTOR Scale, Rotation, Position;
+
+					XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+
+					_float4x4 fLayerMatrix;
+
+					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
+
+					fLayerMatrix._41 += XMVectorGetX(Position);
+					fLayerMatrix._42 += XMVectorGetY(Position);
+
+					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+
+				}
+			}
+			
 			if (pEffect->m_bIsBillboarding)
 			{
 				_vector camPosition = m_pGameInstance->Get_CamPosition_Vector();
@@ -194,7 +239,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 	}
 
 
-	m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
 }
 
@@ -204,11 +249,6 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
-			if (pEffect->m_EffectName.find(L"BurstJ-03") != std::wstring::npos)
-			{
-				int a = 10;
-			}
-
 			pEffect->Late_Update(fTimeDelta);
 		}
 	}

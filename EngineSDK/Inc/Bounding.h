@@ -22,7 +22,7 @@ protected:
 
 public:
 	virtual void Update(_fmatrix TransformMatrix) = 0;
-	virtual void UpdateVector(_vector vTransform) = 0;
+	virtual void Update(_vector vTransform) = 0;
 
 	
 	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor) = 0;

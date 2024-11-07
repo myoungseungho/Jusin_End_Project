@@ -1,0 +1,68 @@
+#pragma once
+
+#include "Client_Defines.h"
+#include "GameObject.h"
+
+BEGIN(Client)
+
+class CQTE_Same_Grab final : public CGameObject
+{
+	enum UI_COMMAND
+	{
+		UI_COMMAND_LIGHT, //약공
+		UI_COMMAND_MIDDLE, //중공
+		UI_COMMAND_ULTIMATE, //특수공격
+		UI_COMMAND_HEAVY, //강공
+		UI_COMMAND_END
+	};
+
+private:
+	CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CQTE_Same_Grab(const CQTE_Same_Grab& Prototype);
+	virtual ~CQTE_Same_Grab() = default;
+
+public:
+	virtual HRESULT Initialize_Prototype() override;
+	virtual HRESULT Initialize(void* pArg) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
+	virtual void Update(_float fTimeDelta) override;
+	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Render(_float fTimeDelta) override;
+
+private:
+	void StartQTE();
+	void EndQTE();
+	void HandleQTEInput();
+	void ProcessCommand(UI_COMMAND input, _int playerID);
+	void CreateUIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
+	void ClearUIIcons();
+
+private:
+	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
+	_float m_fTimer = { 0.f }; // 타이머
+	_int m_iTotalTime = { 1000 }; // 총 시간 (예: 5초)
+	_int m_iSequenceLength = { 10 }; // 시퀀스 길이 (N)
+
+	// 1P 관련
+	queue<UI_COMMAND> m_CommandQueue_P1;
+	vector<UI_COMMAND> m_CurrentSequence_P1;
+	_int m_iCorrectInputs_P1;
+	_int m_CurrentIndex_P1 = { 0 }; // 현재 선택된 아이콘 인덱스
+
+	// 2P 관련
+	queue<UI_COMMAND> m_CommandQueue_P2;
+	vector<UI_COMMAND> m_CurrentSequence_P2;
+	_int m_iCorrectInputs_P2;
+	_int m_CurrentIndex_P2 = { 0 }; // 현재 선택된 아이콘 인덱스
+
+	// UI 아이콘 객체 저장
+	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
+	vector<class CQTE_UI_Icon*> m_UIIcons_P2;
+
+public:
+	static CQTE_Same_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	virtual CGameObject* Clone(void* pArg) override;
+	virtual void Free() override;
+};
+
+END

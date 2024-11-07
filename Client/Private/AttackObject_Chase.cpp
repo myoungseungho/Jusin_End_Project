@@ -60,13 +60,15 @@ void CAttackObject_Chase::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
+
 		}
 	}
 	else
-		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 
 	//if(m_bIsActive)
@@ -82,7 +84,7 @@ void CAttackObject_Chase::Update(_float fTimeDelta)
 	//	}
 	//
 	//	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	//	m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	//	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 	//}
 
 }
@@ -197,7 +199,7 @@ void CAttackObject_Chase::Late_Update(_float fTimeDelta)
 	//		//{
 	//		//	m_pOwner->Set_ForcedGravityTime_LittleUp();
 	//		//}
-	//		Destory();
+	//		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 	//	}
 	//
 
@@ -207,11 +209,11 @@ void CAttackObject_Chase::Late_Update(_float fTimeDelta)
 
 HRESULT CAttackObject_Chase::Render(_float fTimeDelta)
 {
-//
-//#ifdef _DEBUG
-//	m_pColliderCom->Render(fTimeDelta);
-//#endif // DEBUG
-//
+
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
+
 
 	return S_OK;
 }
@@ -222,7 +224,7 @@ void CAttacKObject_Chase::Set_RemoteDestory()
 	if (m_bEnableDestory)
 	{
 		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }
@@ -299,6 +301,10 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//여기 Chase 피격시 사운드
 			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
 			static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->StartCameraShake(0.5f, 0.2f);
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			Destory();
+
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
@@ -307,6 +313,9 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			m_pOwner->Set_ChaseStop();
 			m_pOwner->Set_ChaseStoping();
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			Destory();
 		}
 
 		//사람 상대로 비길 수 없음
@@ -328,11 +337,11 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		//if (m_bEnableDestory)
 		//{
-		//	Destory();
+		//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		//	m_bEnableDestory = false;
 		//}
 	}
-
+	
 
 
 }
