@@ -13,6 +13,7 @@ public:
 		Hit_Situation_ID_A,
 		Hit_Situation_ID_B,
 		Hit_Situation_ID_C,
+		Hit_Situation_ID_END
 	};
 
 private:
@@ -29,14 +30,9 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	void Start_QTE();
-	void End_QTE();
-
-private:
 	vector<class CQTE_Hit_Situation* >m_vecHit_Situation;
 
-	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
-	_float m_fTimer = { 0.f };
+	Hit_Situation_ID m_current_Situation_ID = Hit_Situation_ID_END;
 
 public:
 	static CQTE_Hit* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

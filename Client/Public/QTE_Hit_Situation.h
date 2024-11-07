@@ -28,8 +28,17 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
+	void Start_QTE();
+	void End_QTE();
+
+private:
 	_float m_fLifeTime = {};
 	_int m_iCreate_Num = {};
+
+
+	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
+	_float m_fTimer = { 0.f };
+
 	vector<class CQTE_Hit_UI_Icon*> m_vecHitUIIcon;
 
 public:

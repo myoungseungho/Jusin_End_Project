@@ -26,6 +26,8 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_vecHit_Situation.reserve(Hit_Situation_ID_END);
+
 	CQTE_Hit_Situation::QTE_HIT_SITUATION_DESC Desc{};
 	Desc.lifeTime = 5.f;
 	Desc.create_Num = 3;
@@ -47,43 +49,15 @@ void CQTE_Hit::Camera_Update(_float fTimeDelta)
 
 void CQTE_Hit::Update(_float fTimeDelta)
 {
-#pragma region 디버그
-	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F5))
-	{
-		if (m_bIsQTEActive)
-		{
-			// QTE가 활성화되어 있으면 즉시 종료
-			End_QTE();
-		}
-		else
-		{
-			// QTE가 비활성화되어 있으면 시작
-			Start_QTE();
-		}
-	}
-#pragma endregion
-
-#pragma region 활성화
-
-	if (m_bIsQTEActive)
-	{
-		for (auto& iter : m_vecHit_Situation)
-			iter->Update(fTimeDelta);
-
-		m_fTimer -= fTimeDelta;
-
-	}
-
-#pragma endregion
-
+	//선택된 시뮬레이션만 Update
+	m_vecHit_Situation[m_current_Situation_ID]->Update(fTimeDelta);
 
 }
 
 void CQTE_Hit::Late_Update(_float fTimeDelta)
 {
-	for (auto& iter : m_vecHit_Situation)
-		iter->Late_Update(fTimeDelta);
+	//선택된 시뮬레이션만 Late_Update
+	m_vecHit_Situation[m_current_Situation_ID]->Late_Update(fTimeDelta);
 }
 
 HRESULT CQTE_Hit::Render(_float fTimeDelta)
@@ -91,19 +65,6 @@ HRESULT CQTE_Hit::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_Hit::Start_QTE()
-{
-	if (m_bIsQTEActive)
-		return; // 이미 QTE가 활성화되어 있으면 무시
-
-	m_bIsQTEActive = true;
-
-}
-
-void CQTE_Hit::End_QTE()
-{
-	m_bIsQTEActive = false;
-}
 
 CQTE_Hit* CQTE_Hit::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

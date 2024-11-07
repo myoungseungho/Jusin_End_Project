@@ -55,19 +55,59 @@ void CQTE_Hit_Situation::Camera_Update(_float fTimeDelta)
 
 void CQTE_Hit_Situation::Update(_float fTimeDelta)
 {
-	for (auto& iter : m_vecHitUIIcon)
-		iter->Update(fTimeDelta);
+#pragma region 디버그
+	// F5 키 입력 감지
+	if (m_pGameInstance->Key_Down(DIK_F5))
+	{
+		if (m_bIsQTEActive)
+		{
+			// QTE가 활성화되어 있으면 즉시 종료
+			End_QTE();
+		}
+		else
+		{
+			// QTE가 비활성화되어 있으면 시작
+			Start_QTE();
+		}
+	}
+#pragma endregion
+
+#pragma region 활성화
+
+	if (m_bIsQTEActive)
+	{
+		for (auto& iter : m_vecHitUIIcon)
+			iter->Update(fTimeDelta);
+
+		m_fTimer -= fTimeDelta;
+	}
 }
 
 void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
 {
-	for (auto& iter : m_vecHitUIIcon)
-		iter->Late_Update(fTimeDelta);
+	if (m_bIsQTEActive)
+	{
+		for (auto& iter : m_vecHitUIIcon)
+			iter->Late_Update(fTimeDelta);
+	}
 }
 
 HRESULT CQTE_Hit_Situation::Render(_float fTimeDelta)
 {
 	return S_OK;
+}
+
+void CQTE_Hit_Situation::Start_QTE()
+{
+	if (m_bIsQTEActive)
+		return; // 이미 QTE가 활성화되어 있으면 무시
+
+	m_bIsQTEActive = true;
+}
+
+void CQTE_Hit_Situation::End_QTE()
+{
+	m_bIsQTEActive = false;
 }
 
 CQTE_Hit_Situation* CQTE_Hit_Situation::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
