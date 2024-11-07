@@ -1,0 +1,242 @@
+[Layer]
+LayerName: Dash
+Duration: 1
+TickPerSecond: 3
+KeyFramesCount: 59
+NumEffec: 6
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Dash_01
+ModelName: Model_Effect_cmn_halfsphere00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DashDash_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.1 1.2 0
+Scale: 0.0999169 0.1 0.0999169
+Rotation: 0 130 0
+IsLoop: false
+Color: 255 255 255 0.634769
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 1.2 0
+Scale: 0.0999169 0.1 0.0999169
+Rotation: 0 130 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Dash_02
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/DashDash_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.2 1 0
+Scale: 0.04 0.05 0.03
+Rotation: 0 50 0
+IsLoop: false
+Color: 255 255 255 0.634769
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 1 0
+Scale: 0.04 0.05 0.03
+Rotation: 0 50 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0.2 1 0
+Scale: 0.04 0.05 0.03
+Rotation: 0 50 0
+CurTime: 0.333333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Dash_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DashDash_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.1 1.8 0
+Scale: 0.0499969 0.199993 0.999999
+Rotation: 0 0 80
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 1.8 0
+Scale: 0.0499969 0.199993 0.999999
+Rotation: 0 0 80
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: -0.1 1.8 0
+Scale: 0.0499969 0.199993 0.999999
+Rotation: 0 0 80
+CurTime: 0.333333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Dash_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DashDash_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.4 0.7 0
+Scale: 0.0399984 0.149998 1
+Rotation: 0 0 111.429
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.4 0.7 0
+Scale: 0.0399994 0.149999 1
+Rotation: 0 0 111.429
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: -0.4 0.7 0
+Scale: 0.0399986 0.149998 1
+Rotation: 0 0 111.429
+CurTime: 0.333333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Dash_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DashDash_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1.7 0
+Scale: 0.0299976 0.199981 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1.7 0
+Scale: 0.0299976 0.199981 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: 0 1.7 0
+Scale: 0.0299972 0.199978 1
+Rotation: 0 0 90
+CurTime: 0.5
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 1.7 0
+Scale: 0.0299971 0.199977 1
+Rotation: 0 0 90
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Dash_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DashDash_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.7 0.8 0
+Scale: 0.0299981 0.129991 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.7 0.8 0
+Scale: 0.0299981 0.129991 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: -0.7 0.8 0
+Scale: 0.0299978 0.12999 1
+Rotation: 0 0 90
+CurTime: 0.5
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -0.7 0.8 0
+Scale: 0.0299976 0.129989 1
+Rotation: 0 0 90
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+

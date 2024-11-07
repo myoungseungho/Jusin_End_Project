@@ -102,7 +102,7 @@ EFFECT_KEYFRAME CEffect_Animation::Play_Animation(_float CurAnimPos, _bool bIsLo
 			return std::prev(it1)->second;
 		}
 	}
-
+	//¿©±â ¿Ö ÅÍÁü
 	if (it1 == it2 || it1->first == CurAnimPos)
 		return it1->second;
 

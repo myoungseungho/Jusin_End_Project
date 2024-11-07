@@ -1,0 +1,104 @@
+[Layer]
+LayerName: Parrying_Ball
+Duration: 1
+TickPerSecond: 5
+KeyFramesCount: 59
+NumEffec: 3
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Parrying_Ball_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Parrying_BallParrying_Ball_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0.04 0
+Scale: 0.00998164 0.00998164 0.01
+Rotation: 0 0 180
+IsLoop: false
+Color: 237.268 210.248 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.04 0
+Scale: 0.00998164 0.00998164 0.01
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0.14 0
+Scale: 0.00998981 0.0599453 0.01
+Rotation: 0 0 180
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Parrying_Ball_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Parrying_BallParrying_Ball_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.02 0.02 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 228.825 68.394 0 0.794703
+GlowColor: 0 0 0 1
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.02 0.02 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Parring_Ball_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Parrying_BallParring_Ball_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.02 0.02 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.02 0.02 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

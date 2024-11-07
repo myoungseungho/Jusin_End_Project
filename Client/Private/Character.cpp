@@ -1719,7 +1719,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		m_pEffect_Manager->Copy_Layer(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+		m_pEffect_Manager->Copy_Layer(TEXT("Dash"), m_pTransformCom->Get_WorldMatrixPtr());
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))

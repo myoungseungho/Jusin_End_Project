@@ -106,11 +106,6 @@ void CEffect_Manager::Render(_float fTimeDelta)
 
 HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg)
 {
-	/*
-		이름 검사해서 예외처리 하기 그러면 클론에 인자값으로 불값 하나 더 던져주느 ㄴ처리하면 될듯
-	*/
-	
-
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
 	if (pLayer == nullptr)
@@ -124,7 +119,6 @@ HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _flo
 			m_UsingEffect.push_back(pLayer->Clone(pArg, false));
 		else
 		{
-
 			m_UsingEffect.push_back(pLayer->Clone(pArg, true));
 		}
 	}
@@ -200,7 +194,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pNonelight->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index,static_cast<CEffect*>(pNonelight));
 				
 				pNonelight->m_bIsNotPlaying = effectData.isNotPlaying;
-				pNonelight->m_bIsLoop = effectData.isLoop;
+				//pNonelight->m_bIsLoop = effectData.isLoop;
 
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
@@ -234,7 +228,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pBlend->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index, static_cast<CEffect*>(pBlend));
 
 				pBlend->m_bIsNotPlaying = effectData.isNotPlaying;
-				pBlend->m_bIsLoop = effectData.isLoop;
+				//pBlend->m_bIsLoop = effectData.isLoop;
 
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
@@ -268,7 +262,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pZNone->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index, static_cast<CEffect*>(pNonelight));
 
 				pZNone->m_bIsNotPlaying = effectData.isNotPlaying;
-				pZNone->m_bIsLoop = effectData.isLoop;
+				//pZNone->m_bIsLoop = effectData.isLoop;
 
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
@@ -302,7 +296,7 @@ HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffe
 				CImgui_Manager::Get_Instance()->Load_Shader_Tab(static_cast<CTexture*>(pOverlap->Get_Component(TEXT("Com_DiffuseTexture"))), sMaskTextureName, EffectDesc.iUnique_Index, static_cast<CEffect*>(pOverlap));
 
 				pOverlap->m_bIsNotPlaying = effectData.isNotPlaying;
-				pOverlap->m_bIsLoop = effectData.isLoop;
+				//pOverlap->m_bIsLoop = effectData.isLoop;
 
 				for (const auto& keyFrameData : effectData.keyframes)
 				{
