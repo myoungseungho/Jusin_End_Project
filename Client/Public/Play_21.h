@@ -174,7 +174,9 @@ private:
 	_float m_fAccFinalSkillTime = {};
 	_bool m_bFinalSkillSucess = { false };
 
+
 	_ushort m_iFinalLoofCount = { 10 };
+	_bool m_bFinalSkillAdd = { false };
 
 private:
 	HRESULT Ready_Components();

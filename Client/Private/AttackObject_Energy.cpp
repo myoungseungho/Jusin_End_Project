@@ -176,11 +176,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
-			//버그 해결 전 까지임시.  Enter이지만 바로 가속도 적용, 데미지n배
-			//AttackColliderResult eResult =
-			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage*m_iAttackCount, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
-
-
+		
 			if (pCharacter->Get_bReflect())
 			{
 				//m_iAttackCount--;
@@ -309,20 +305,20 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				}
 
 
-				//버그 수정 전까지 임시
-				//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 			}
 			else if (eResult == RESULT_GUARD) //가드
 			{
-				//m_pOwner->Set_AnimationStop(0.08f);
-				//pCharacter->Set_AnimationStop(0.08f);
-			
-
-				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				
-
-				Destory();
+				//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+				//Destory();
+				
+				m_iAttackCount--;
+				if (m_iAttackCount <= 0)
+				{
+					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+					Destory();
+				}
 
 			}
 
@@ -368,8 +364,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 
-		//0.07초마다 히트판정
-		//if (m_fAccAttackDelayTime > 0.07)
+		//따로 설정 안해두면 0.07초마다 히트판정
 		if (m_fAccAttackDelayTime > m_fAttackDelayTime)
 		{
 	
@@ -398,10 +393,10 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				eResult = pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), {});
 	
 			}
-			else if (m_iAttackCount<=0)
-			{
-				OnCollisionExit(other);
-			}
+			//else if (m_iAttackCount<=0)
+			//{
+			//	OnCollisionExit(other);
+			//}
 	
 			
 	
@@ -429,12 +424,16 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 					pCharacter->Add_Move({ 0.f,0.2f });
 				}
 
-				if (m_iAttackCount == 0)
+				//if (m_iAttackCount == 0)
+				//{
+				//	//Erase();
+				//	//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+				//}
+				if (m_iAttackCount <= 0)
 				{
-					//Erase();
-					//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+					OnCollisionExit(other);
 				}
-				
+
 	
 				if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 				{
@@ -501,8 +500,11 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 			}
 			else if (eResult == RESULT_GUARD) //가드
 			{
-				//m_pOwner->Set_AnimationStop(0.08f);
-				//pCharacter->Set_AnimationStop(0.08f);
+				if (m_iAttackCount <= 0)
+				{
+					CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+					Destory();
+				}
 			}
 	
 			else if (eResult == RESULT_DRAW) //근접공격 vs 사람인데 DRAW가 어떻게?

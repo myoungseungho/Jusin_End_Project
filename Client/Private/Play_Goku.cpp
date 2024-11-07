@@ -304,13 +304,19 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	if (m_bGrabbed)
 	{
-		if (m_bGrabbedGravity)
+
+		if (m_bAnimationLock && m_fMaxAnimationLock == 0.f)
+		{
+			m_bAnimationLock = false;
+		}
+
+		if (m_bGrabbedGravity && m_bAnimationLock == false)
 		{
 			if (Get_fHeight() > 0)
 			{
 				_float fGravity = (-0.7f * (2 * m_fGravityTime - m_fJumpPower) * (2 * m_fGravityTime - m_fJumpPower) + 4) * 0.1;
 				//Add_Move({ 0,-fGravity });
-				Add_Move({ m_fImpuse.x * fTimeDelta, -fGravity });
+				Add_Move({ m_fImpuse.x * fTimeDelta, -fGravity + m_fImpuse.y * fTimeDelta });
 			}
 
 			if (m_fGravityTime * 2.f < m_fJumpPower)
@@ -320,8 +326,14 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			}
 
 		}
-
-		Character_Play_Animation(fTimeDelta);
+		if (m_bAnimationLock == false)
+		{
+			Character_Play_Animation(fTimeDelta);
+		}
+		else
+		{
+			Update_AnimationLock(fTimeDelta);
+		}
 		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 		return;
 	}

@@ -2379,7 +2379,10 @@ void CCharacter::Set_AnimationStop(_float fStopTime)
 		_bool bDebug = true;
 	}
 
-	m_bAnimationLock = true;
+	if(fStopTime != 0)
+	{
+		m_bAnimationLock = true;
+	}
 	m_fMaxAnimationLock = fStopTime;
 	m_fAccAnimationLock = 0.f;
 

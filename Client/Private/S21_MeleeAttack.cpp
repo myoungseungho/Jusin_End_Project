@@ -500,7 +500,7 @@ void CS21_MeleeAttack::Attack_236Ultimate()
 }
 void CS21_MeleeAttack::Attack_214Final()
 {
-	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_21::ANIME_FINAL_START);
 	}
