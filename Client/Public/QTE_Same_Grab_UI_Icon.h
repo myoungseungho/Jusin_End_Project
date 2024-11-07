@@ -11,7 +11,7 @@ END
 
 BEGIN(Client)
 
-class CQTE_UI_Icon final : public CGameObject
+class CQTE_Same_Grab_UI_Icon final : public CGameObject
 {
 public:
 	struct QTE_UI_ICON_DESC
@@ -33,9 +33,9 @@ public:
 	};
 
 private:
-	CQTE_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CQTE_UI_Icon(const CQTE_UI_Icon& Prototype);
-	virtual ~CQTE_UI_Icon() = default;
+	CQTE_Same_Grab_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CQTE_Same_Grab_UI_Icon(const CQTE_Same_Grab_UI_Icon& Prototype);
+	virtual ~CQTE_Same_Grab_UI_Icon() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -103,7 +103,7 @@ private:
 	class CGameObject* m_pSameGrab = { nullptr };
 
 public:
-	static CQTE_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CQTE_Same_Grab_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

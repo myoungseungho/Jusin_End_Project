@@ -16,6 +16,10 @@ HRESULT CQTE_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	CGameObject* SameGrab= m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab"));
 	m_vecQTE.push_back(SameGrab);
 
+	//Hit
+	CGameObject* Hit = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit"));
+	m_vecQTE.push_back(Hit);
+
 	return S_OK;
 }
 

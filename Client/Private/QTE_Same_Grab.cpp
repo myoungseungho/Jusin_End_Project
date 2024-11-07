@@ -3,7 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "QTE_UI_Icon.h"
+#include "QTE_Same_Grab_UI_Icon.h"
 #include "QTE_UI_Gauge.h"
 CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -244,14 +244,14 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			// 현재 선택된 아이콘의 선택 상태 해제
 			if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
 			{
-				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_Same_Grab_UI_Icon::ALREADY_PRESSED);
 				m_CurrentIndex_P1++;
 			}
 
 			// 다음 아이콘을 선택 상태로 설정
 			if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
 			{
-				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::SELECTED);
+				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_Same_Grab_UI_Icon::SELECTED);
 			}
 
 			// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
@@ -281,14 +281,14 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			// 현재 선택된 아이콘의 선택 상태 해제
 			if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
 			{
-				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::ALREADY_PRESSED);
+				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_Same_Grab_UI_Icon::ALREADY_PRESSED);
 				m_CurrentIndex_P2++;
 			}
 
 			// 다음 아이콘을 선택 상태로 설정
 			if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
 			{
-				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::SELECTED);
+				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_Same_Grab_UI_Icon::SELECTED);
 			}
 
 			// 모든 명령을 완료한 경우 QTE 종료 (선택 사항)
@@ -320,7 +320,7 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 {
 #pragma region 여러 UI 객체 생성
 	// 각 플레이어의 UI 아이콘 벡터에 추가
-	vector<CQTE_UI_Icon*>& targetIcons = (playerID == 1) ? m_UIIcons_P1 : m_UIIcons_P2;
+	vector<CQTE_Same_Grab_UI_Icon*>& targetIcons = (playerID == 1) ? m_UIIcons_P1 : m_UIIcons_P2;
 
 	// 플레이어별 중앙 x 위치 설정
 	_float centerX = (playerID == 1) ? 480.f : 1440.f;
@@ -365,7 +365,7 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 	// 각 아이콘을 생성하고 위치 설정
 	for (_int i = 0; i < numIcons; ++i)
 	{
-		CQTE_UI_Icon::QTE_UI_ICON_DESC Desc{};
+		CQTE_Same_Grab_UI_Icon::QTE_UI_ICON_DESC Desc{};
 		Desc.iTextureNumber = static_cast<_int>(sequence[i]);
 		Desc.fSizeX = 50.f; // 필요에 따라 크기 조정
 		Desc.fSizeY = 50.f;
@@ -384,7 +384,7 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 			Desc.isLast = true;
 
 		// UI 아이콘 클론
-		CQTE_UI_Icon* pIcon = dynamic_cast<CQTE_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Icon"), &Desc));
+		CQTE_Same_Grab_UI_Icon* pIcon = dynamic_cast<CQTE_Same_Grab_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Icon"), &Desc));
 		if (pIcon)
 		{
 			// 벡터에 저장
@@ -404,18 +404,18 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 #pragma endregion
 }
 
-void CQTE_Same_Grab::Ascend_UIIcons(vector<CQTE_UI_Icon*>& icons)
+void CQTE_Same_Grab::Ascend_UIIcons(vector<CQTE_Same_Grab_UI_Icon*>& icons)
 {
 	// 아이콘을 역순으로 처리하여 마지막 아이콘부터 ASCEND 상태로 전환
 	const float ASCEND_DELAY_INTERVAL = 0.1f; // 각 아이콘 간의 상승 시작 지연 시간 (초)
 	for (int i = static_cast<int>(icons.size()) - 1; i >= 0; --i)
 	{
-		CQTE_UI_Icon* pIcon = icons[i];
+		CQTE_Same_Grab_UI_Icon* pIcon = icons[i];
 		if (pIcon)
 		{
 			// ASCEND 상태로 전환하면서 지연 시간을 설정
 			float ascendDelay = (icons.size() - 1 - i) * ASCEND_DELAY_INTERVAL;
-			pIcon->Set_State(CQTE_UI_Icon::ASCEND);
+			pIcon->Set_State(CQTE_Same_Grab_UI_Icon::ASCEND);
 			pIcon->Set_AscendDelay(ascendDelay);
 		}
 	}
@@ -491,7 +491,7 @@ void CQTE_Same_Grab::Handle_WrongInput(_int playerID)
 	{
 		if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
 		{
-			m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_UI_Icon::WRONG_PRESSED);
+			m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_Same_Grab_UI_Icon::WRONG_PRESSED);
 		}
 
 		// 1P의 쿨다운 타이머 설정
@@ -501,7 +501,7 @@ void CQTE_Same_Grab::Handle_WrongInput(_int playerID)
 	{
 		if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
 		{
-			m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_UI_Icon::WRONG_PRESSED);
+			m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_Same_Grab_UI_Icon::WRONG_PRESSED);
 		}
 
 		// 2P의 쿨다운 타이머 설정

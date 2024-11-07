@@ -19,6 +19,7 @@ private:
 	enum QTE_ID
 	{
 		QTE_ID_SAME_GRAB,
+		QTE_ID_HIT,
 		QTE_ID_END
 	};
 private:

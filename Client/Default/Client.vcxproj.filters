@@ -322,8 +322,8 @@
     <ClCompile Include="..\Private\QTE_Manager.cpp">
       <Filter>02.GameObjects\QTE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\QTE_UI_Icon.cpp">
-      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_ICON</Filter>
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Same_Grab.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
@@ -333,6 +333,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\QTE_UI_Gauge.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -708,11 +714,17 @@
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
       <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_ICON">
-      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge">
       <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit">
+      <UniqueIdentifier>{f107e39d-5d21-4bb0-bb46-3c509f791381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon">
+      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon">
+      <UniqueIdentifier>{efca7a0e-a04c-4cb2-a112-95f455bffeaa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1190,8 +1202,8 @@
     <ClInclude Include="..\Public\QTE_Manager.h">
       <Filter>02.GameObjects\QTE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\QTE_UI_Icon.h">
-      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_ICON</Filter>
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Same_Grab.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
@@ -1204,6 +1216,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_UI_Gauge.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,39 +1,29 @@
 #include "stdafx.h"
-#include "..\Public\QTE_UI_Icon.h"
+#include "..\Public\QTE_Same_Grab_UI_Icon.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Same_Grab.h"
-_float clamp(_float value, _float min, _float max)
-{
-	if (value < min) return min;
-	if (value > max) return max;
-	return value;
-}
 
-_float lerp(_float start, _float end, _float t)
-{
-	return start + t * (end - start);
-}
 
-CQTE_UI_Icon::CQTE_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CQTE_Same_Grab_UI_Icon::CQTE_Same_Grab_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CQTE_UI_Icon::CQTE_UI_Icon(const CQTE_UI_Icon& Prototype)
+CQTE_Same_Grab_UI_Icon::CQTE_Same_Grab_UI_Icon(const CQTE_Same_Grab_UI_Icon& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CQTE_UI_Icon::Initialize_Prototype()
+HRESULT CQTE_Same_Grab_UI_Icon::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CQTE_UI_Icon::Initialize(void* pArg)
+HRESULT CQTE_Same_Grab_UI_Icon::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(nullptr)))
 		return E_FAIL;
@@ -41,7 +31,7 @@ HRESULT CQTE_UI_Icon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	CQTE_UI_Icon::QTE_UI_ICON_DESC* desc = reinterpret_cast<CQTE_UI_Icon::QTE_UI_ICON_DESC*>(pArg);
+	CQTE_Same_Grab_UI_Icon::QTE_UI_ICON_DESC* desc = reinterpret_cast<CQTE_Same_Grab_UI_Icon::QTE_UI_ICON_DESC*>(pArg);
 	m_fSizeX = desc->fSizeX;
 	m_fSizeY = desc->fSizeY;
 	m_fX = desc->fX;
@@ -70,12 +60,12 @@ HRESULT CQTE_UI_Icon::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CQTE_UI_Icon::Camera_Update(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Camera_Update(_float fTimeDelta)
 {
 
 }
 
-void CQTE_UI_Icon::Update(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update(_float fTimeDelta)
 {
 	switch (m_State)
 	{
@@ -106,12 +96,12 @@ void CQTE_UI_Icon::Update(_float fTimeDelta)
 	}
 }
 
-void CQTE_UI_Icon::Late_Update(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CQTE_UI_Icon::Render(_float fTimeDelta)
+HRESULT CQTE_Same_Grab_UI_Icon::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -128,7 +118,7 @@ HRESULT CQTE_UI_Icon::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_UI_Icon::Set_State(IconState state)
+void CQTE_Same_Grab_UI_Icon::Set_State(IconState state)
 {
 	m_State = state;
 
@@ -176,7 +166,7 @@ void CQTE_UI_Icon::Set_State(IconState state)
 	}
 }
 
-HRESULT CQTE_UI_Icon::Ready_Components()
+HRESULT CQTE_Same_Grab_UI_Icon::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_UI_VtxRect"),
@@ -197,7 +187,7 @@ HRESULT CQTE_UI_Icon::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CQTE_UI_Icon::Bind_ShaderResources()
+HRESULT CQTE_Same_Grab_UI_Icon::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -218,14 +208,14 @@ HRESULT CQTE_UI_Icon::Bind_ShaderResources()
 	return S_OK;
 }
 
-void CQTE_UI_Icon::Update_Falling(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update_Falling(_float fTimeDelta)
 {
 	if (m_bIsFalling)
 	{
 		m_fElapsedTime += fTimeDelta;
-		float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+		float t = Clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
 		// 선형 보간 (linear interpolation)
-		m_fCurrentY = lerp(m_fStartY, m_fTargetY, t);
+		m_fCurrentY = Lerp(m_fStartY, m_fTargetY, t);
 
 		// 애니메이션 완료 시 상태 변경
 		if (t >= 1.0f)
@@ -255,43 +245,43 @@ void CQTE_UI_Icon::Update_Falling(_float fTimeDelta)
 	}
 }
 
-void CQTE_UI_Icon::Update_Selected(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update_Selected(_float fTimeDelta)
 {
 	// 부드러운 이동을 위한 애니메이션 처리
 	m_fElapsedTime += fTimeDelta;
-	float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+	float t = Clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
 
 	// 비선형 애니메이션 커브 적용 (ease-out)
 	t = 1.0f - powf(1.0f - t, 3);
 
 	// 선형 보간 대신 비선형 커브를 적용한 t를 사용하여 Y 위치 업데이트
-	m_fCurrentY = lerp(m_fCurrentY, m_fTargetY, t);
+	m_fCurrentY = Lerp(m_fCurrentY, m_fTargetY, t);
 
 	// 위치 업데이트
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 }
 
-void CQTE_UI_Icon::Update_AlreadyPressed(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update_AlreadyPressed(_float fTimeDelta)
 {
 	// 애니메이션 진행 시간 증가
 	m_fElapsedTime += fTimeDelta;
 
 	// 애니메이션 진행 비율 계산 (0.0f ~ 1.0f)
-	float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+	float t = Clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
 
 	// 비선형 애니메이션 커브 적용 (ease-out)
 	t = 1.0f - powf(1.0f - t, 3);
 
 	// Y 위치 부드럽게 이동 (LERP 사용)
-	m_fCurrentY = lerp(m_fCurrentY, m_fTargetY, t);
+	m_fCurrentY = Lerp(m_fCurrentY, m_fTargetY, t);
 
 	// 위치 업데이트
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 }
 
-void CQTE_UI_Icon::Update_WrongPressed(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update_WrongPressed(_float fTimeDelta)
 {
 	// 흔들림 애니메이션 처리
 	if (m_bIsShaking)
@@ -322,7 +312,7 @@ void CQTE_UI_Icon::Update_WrongPressed(_float fTimeDelta)
 	}
 }
 
-void CQTE_UI_Icon::Update_Ascend(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update_Ascend(_float fTimeDelta)
 {
 	// 상승 시작 전 지연 시간 처리
 	if (!m_bIsAscending)
@@ -338,13 +328,13 @@ void CQTE_UI_Icon::Update_Ascend(_float fTimeDelta)
 
 	// 상승 애니메이션 처리
 	m_fElapsedTime += fTimeDelta;
-	float t = clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
+	float t = Clamp(m_fElapsedTime / m_fAnimationDuration, 0.f, 1.f);
 
 	// 비선형 애니메이션 커브 적용 (ease-out)
 	t = 1.0f - powf(1.0f - t, 3);
 
 	// Y 위치 부드럽게 이동 (LERP 사용)
-	m_fCurrentY = lerp(m_fCurrentY, m_fTargetY, t);
+	m_fCurrentY = Lerp(m_fCurrentY, m_fTargetY, t);
 
 	// 위치 업데이트
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -352,40 +342,40 @@ void CQTE_UI_Icon::Update_Ascend(_float fTimeDelta)
 
 }
 
-void CQTE_UI_Icon::Update_NotSelected(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Icon::Update_NotSelected(_float fTimeDelta)
 {
 	// 위치 업데이트
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fCurrentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 }
 
-CQTE_UI_Icon* CQTE_UI_Icon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CQTE_Same_Grab_UI_Icon* CQTE_Same_Grab_UI_Icon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CQTE_UI_Icon* pInstance = new CQTE_UI_Icon(pDevice, pContext);
+	CQTE_Same_Grab_UI_Icon* pInstance = new CQTE_Same_Grab_UI_Icon(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CQTE_UI_Icon"));
+		MSG_BOX(TEXT("Failed to Created : CQTE_Same_Grab_UI_Icon"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CQTE_UI_Icon::Clone(void* pArg)
+CGameObject* CQTE_Same_Grab_UI_Icon::Clone(void* pArg)
 {
-	CQTE_UI_Icon* pInstance = new CQTE_UI_Icon(*this);
+	CQTE_Same_Grab_UI_Icon* pInstance = new CQTE_Same_Grab_UI_Icon(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CQTE_UI_Icon"));
+		MSG_BOX(TEXT("Failed to Cloned : CQTE_Same_Grab_UI_Icon"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CQTE_UI_Icon::Free()
+void CQTE_Same_Grab_UI_Icon::Free()
 {
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);

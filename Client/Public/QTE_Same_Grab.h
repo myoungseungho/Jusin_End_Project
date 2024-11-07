@@ -39,7 +39,7 @@ private:
 	void Create_UIIcons(_int playerID, const vector<UI_COMMAND>& sequence);
 	void Clear_UIIcons();
 	void Handle_WrongInput(_int playerID); // 오답 처리 함수 선언
-	void Ascend_UIIcons(vector<class CQTE_UI_Icon*>& icons);
+	void Ascend_UIIcons(vector<class CQTE_Same_Grab_UI_Icon*>& icons);
 
 	void Final_End_QTE();
 private:
@@ -61,8 +61,8 @@ private:
 	_int m_CurrentIndex_P2 = { 0 }; // 현재 선택된 아이콘 인덱스
 
 	// UI 아이콘 객체 저장
-	vector<class CQTE_UI_Icon*> m_UIIcons_P1;
-	vector<class CQTE_UI_Icon*> m_UIIcons_P2;
+	vector<class CQTE_Same_Grab_UI_Icon*> m_UIIcons_P1;
+	vector<class CQTE_Same_Grab_UI_Icon*> m_UIIcons_P2;
 	class CQTE_UI_Gauge* m_UIGauge = { nullptr };
 
 	// 각 플레이어의 쿨다운 타이머
