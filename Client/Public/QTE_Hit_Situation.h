@@ -3,6 +3,7 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 #include "QTE_Hit.h"
+#include "QTE_Hit_UI_Icon.h"
 BEGIN(Client)
 
 class CQTE_Hit_Situation final : public CGameObject
@@ -13,15 +14,6 @@ public:
 		_float lifeTime = {};
 		_int create_Num = {};
 		CQTE_Hit::Hit_Situation_ID ID = {};
-	};
-
-	enum UI_COMMAND
-	{
-		UI_COMMAND_LIGHT, //약공
-		UI_COMMAND_MIDDLE, //중공
-		UI_COMMAND_ULTIMATE, //특수공격
-		UI_COMMAND_HEAVY, //강공
-		UI_COMMAND_END
 	};
 
 private:
@@ -44,7 +36,7 @@ private:
 	void End_QTE();
 	void Handle_QTEInput();
 	void Create_UIIcon(); // 아이콘 생성 함수 추가
-	void Process_Command(UI_COMMAND input, _int playerID);
+	void Process_Command(CQTE_Hit_UI_Icon::KEY_ID input);
 private:
 	_float m_fLifeTime = {};
 	_int m_iCreate_Num = {};

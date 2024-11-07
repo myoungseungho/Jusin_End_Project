@@ -29,11 +29,11 @@ public:
 	{
 		HIT_RESULT_NOT_YET_DECIDED,
 		HIT_RESULT_GOOD,
-		HIT_RESULT_EXCLENT,
+		HIT_RESULT_EXCELLENT,
 		HIT_RESULT_PERFECT,
 		HIT_RESULT_FAILED
 	};
-
+	
 	struct QTE_Hit_UI_ICON_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, fTimer;
@@ -57,6 +57,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
+	CQTE_Hit_UI_Icon::RESULT_ID Send_Input(KEY_ID _Input);
 public:
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
 
@@ -66,6 +67,8 @@ public:
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+	void Finalize_Icon();
+	void Calculate_Result();
 
 private:
 	CShader* m_pShaderCom = { nullptr };

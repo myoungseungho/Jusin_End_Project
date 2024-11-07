@@ -245,13 +245,11 @@ void CQTE_Hit_Situation::Create_UIIcon()
 		auto it = std::find(possibleKeys.begin(), possibleKeys.end(), key);
 		if (it != possibleKeys.end())
 			possibleKeys.erase(it);
-
 	}
+
 	// 가능한 키 목록이 비어있는지 확인
 	if (possibleKeys.empty())
-	{
 		return;
-	}
 
 	// 남은 키 중에서 랜덤하게 선택
 	int randomIndex = rand() % possibleKeys.size();
@@ -279,52 +277,59 @@ void CQTE_Hit_Situation::Handle_QTEInput()
 	{
 		if (m_pGameInstance->Key_Down(DIK_U))
 		{
-			Process_Command(UI_COMMAND_LIGHT, 1);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_LIGHT);
 		}
 		else if (m_pGameInstance->Key_Down(DIK_I))
 		{
-			Process_Command(UI_COMMAND_MIDDLE, 1);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_MEDIUM);
 		}
 		else if (m_pGameInstance->Key_Down(DIK_J))
 		{
-			Process_Command(UI_COMMAND_ULTIMATE, 1);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_ULTIMATE);
 		}
 		else if (m_pGameInstance->Key_Down(DIK_K))
 		{
-			Process_Command(UI_COMMAND_HEAVY, 1);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_HEAVY);
 		}
 	}
 	else if (m_iCharacterSide == 2)
 	{
 		if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
 		{
-			Process_Command(UI_COMMAND_LIGHT, 2);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_LIGHT);
 		}
 		else if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
 		{
-			Process_Command(UI_COMMAND_MIDDLE, 2);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_MEDIUM);
 		}
 		else if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
 		{
-			Process_Command(UI_COMMAND_ULTIMATE, 2);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_ULTIMATE);
 		}
 		else if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
 		{
-			Process_Command(UI_COMMAND_HEAVY, 2);
+			Process_Command(CQTE_Hit_UI_Icon::HIT_KEY_HEAVY);
 		}
 	}
 }
 
 
-void CQTE_Hit_Situation::Process_Command(UI_COMMAND input, _int playerID)
+void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 {
-	if (playerID == 1)
+	for (auto& iter : m_vecHitUIIcon)
 	{
+		_bool isActive = iter->IsActive();
+		if (!isActive)
+			continue;
 
-	}
-	else if (playerID == 2)
-	{
+		CQTE_Hit_UI_Icon::KEY_ID key = iter->m_Key;
 
+		//for문을 돌리면서 Input과 안맞으면 패스
+		if (input != key)
+			continue;
+		//Input을 보내서 결과 판단하라고 함
+		else
+			CQTE_Hit_UI_Icon::RESULT_ID resultID = iter->Send_Input(input);
 	}
 }
 

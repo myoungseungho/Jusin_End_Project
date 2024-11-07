@@ -70,11 +70,9 @@ void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 	{
 		m_fElaspedTime = m_fTimer;
 		m_currentResult_ID = HIT_RESULT_FAILED;
-		SetActive(false);
 
-		//마지막 객체가 경과시간이 다 지났담녀 끝
-		if (m_bIsFinal)
-			m_pHit_Situation->Notify_Last_UI_Final_Complete();
+		// 아이콘 종료 처리
+		Finalize_Icon();
 	}
 }
 
@@ -101,6 +99,52 @@ HRESULT CQTE_Hit_UI_Icon::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+CQTE_Hit_UI_Icon::RESULT_ID CQTE_Hit_UI_Icon::Send_Input(KEY_ID _Input)
+{
+	// 등급 계산
+	Calculate_Result();
+
+	// 아이콘 종료 처리
+	Finalize_Icon();
+
+	return m_currentResult_ID;
+}
+
+void CQTE_Hit_UI_Icon::Calculate_Result()
+{
+	// 입력 타이밍에 따른 비율 계산
+	_float ratio = m_fElaspedTime / m_fTimer;
+
+	// 등급 결정
+	if (ratio >= 0.95f && ratio <= 1.0f)
+	{
+		m_currentResult_ID = HIT_RESULT_PERFECT;
+	}
+	else if (ratio >= 0.90f && ratio < 0.95f)
+	{
+		m_currentResult_ID = HIT_RESULT_EXCELLENT;
+	}
+	else if (ratio >= 0.85f && ratio < 0.90f)
+	{
+		m_currentResult_ID = HIT_RESULT_GOOD;
+	}
+	else
+	{
+		m_currentResult_ID = HIT_RESULT_FAILED;
+	}
+}
+
+void CQTE_Hit_UI_Icon::Finalize_Icon()
+{
+	SetActive(false);
+
+	// 마지막 아이콘인 경우 상황 객체에 알림
+	if (m_bIsFinal)
+	{
+		m_pHit_Situation->Notify_Last_UI_Final_Complete();
+	}
 }
 
 HRESULT CQTE_Hit_UI_Icon::Ready_Components()
