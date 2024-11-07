@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Public\Volcano_Cliff03.h"
-
+#include "Volcano_Defines.h"
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
@@ -62,7 +62,7 @@ HRESULT CVolcano_Cliff03::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
 		
-		if (FAILED(m_pShaderCom->Begin(0)))
+		if (FAILED(m_pShaderCom->Begin(VO_CLIFF)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))

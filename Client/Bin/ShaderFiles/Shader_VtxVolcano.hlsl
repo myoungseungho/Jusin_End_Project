@@ -129,7 +129,7 @@ PS_OUT PS_MAIN_ISLAND(PS_IN In)
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     Out.vDiffuse.rgb *= float3(0.76f, 0.32247f, 0.0f);
     Out.vNormal = vector(Out.vDiffuse.rgb * Out.vDiffuse.a, 0.f);
-    Out.vDiffuse.a *= 0.109f;
+    Out.vDiffuse.a *= 0.509f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
@@ -141,7 +141,7 @@ PS_OUT PS_MAIN_ISLAND2(PS_IN In)
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     Out.vDiffuse.rgb *= float3(1.0f, 0.288649f, 0.0f);
     Out.vNormal = vector(Out.vDiffuse.rgb * Out.vDiffuse.a, 0.f);
-    Out.vDiffuse.a *= 0.1f;
+    Out.vDiffuse.a *= 0.5f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
@@ -308,6 +308,29 @@ PS_OUT PS_MAIN_LAVAFALL7(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_CLIFF1(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+   // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    //if (vMtrlDiffuse.a < 0.99f)
+    //    discard;
+	
+    vector vLavaColor = { 255.f / 255.f, 68.f / 255.f, 0.f / 255.f, 1.f };
+    //vector vLavaColor = { 234.f / 255.f, 0.5f / 255.f, 0.f / 255.f, 1.f };
+    //vLavaColor *= 0.7f;
+    vector vResultColor;
+    vResultColor.rgb = vMtrlDiffuse.rgb + vLavaColor.rgb * (1 - vMtrlDiffuse.a);
+    vResultColor.a = 1.f;
+    //vMtrlDiffuse.a
+    Out.vDiffuse = vResultColor;
+    
+    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
+    //Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    return Out;
+}
+
 technique11		DefaultTechnique
 {	
     pass Default // 0
@@ -380,8 +403,6 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -395,9 +416,7 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
-
+		
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         HullShader = NULL;
@@ -410,8 +429,6 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -425,8 +442,6 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -440,8 +455,6 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -455,8 +468,6 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -470,8 +481,6 @@ technique11		DefaultTechnique
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -479,13 +488,12 @@ technique11		DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_LAVAFALL7();
     }
+
     pass LavaFallGround // 12
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-		//SetDepthStencilState();
-		//SetBlendState();
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
@@ -494,6 +502,18 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_LAVAGROUND();
     }
 
+    pass Cliff1 // 13
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_CLIFF1();
+    }
 }
 
 vector TexScalar_ToSampling(float2 vScale, float2 vScroll, float2 vTexcoord)
