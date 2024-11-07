@@ -26,7 +26,7 @@ public:
 
 	struct QTE_Hit_UI_ICON_DESC
 	{
-		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{};
+		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, fTimer;
 		_int iTextureNumber{};
 		KEY_ID key{};
 	};
@@ -45,18 +45,19 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
+public:
+	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
 private:
-
-
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
-	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{}, m_fAlpha{};
+	_float					 m_fAlpha{}, m_fTimer;
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
 	KEY_ID m_Key = HIT_KEY_END;

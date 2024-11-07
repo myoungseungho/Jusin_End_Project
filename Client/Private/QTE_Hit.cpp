@@ -26,11 +26,12 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
-	m_vecHit_Situation.reserve(Hit_Situation_ID_END);
+	m_vecHit_Situation.resize(Hit_Situation_ID_END);
 
 	CQTE_Hit_Situation::QTE_HIT_SITUATION_DESC Desc{};
 	Desc.lifeTime = 5.f;
 	Desc.create_Num = 3;
+	Desc.ID = Hit_Situation_ID_A;
 
 	CQTE_Hit_Situation* situation = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
 	//A 상황 셋팅 넣어두기

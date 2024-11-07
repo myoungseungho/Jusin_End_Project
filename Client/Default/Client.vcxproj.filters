@@ -340,6 +340,9 @@
     <ClCompile Include="..\Private\QTE_Hit_UI_Icon.cpp">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_Situation.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -725,6 +728,9 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon">
       <UniqueIdentifier>{efca7a0e-a04c-4cb2-a112-95f455bffeaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation">
+      <UniqueIdentifier>{31e25037-8d1e-40db-9f9d-35e27b666a90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1222,6 +1228,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Hit_UI_Icon.h">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_Situation.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -37,7 +37,7 @@ public:
 
 	vector<class CGameObject*> m_vecQTE;
 
-	void Start_Hit();
+	void Start_Hit(CQTE_Hit::Hit_Situation_ID _ID);
 
 public:
 	virtual void Free() override;

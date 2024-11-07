@@ -30,29 +30,35 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 	srand(static_cast<unsigned>(std::time(0)));
 
 	QTE_HIT_SITUATION_DESC* Desc = static_cast<QTE_HIT_SITUATION_DESC*>(pArg);
+	//해당 상황의 전체 라이프타임
 	m_fLifeTime = Desc->lifeTime;
-	m_iCreate_Num = Desc->create_Num;
-
-	//LifeTime 초기화
 	m_fTimer = m_fLifeTime;
 
-	for (size_t i = 0; i < m_iCreate_Num; i++)
+	//해당 상황의 만들어낼 숫자
+	m_iCreate_Num = Desc->create_Num;
+	//해당 상황 ID
+	m_currentSituationID = Desc->ID;
+
+	//초기화
+	m_fElapsedTime = 0.0f;
+	m_iNextIconIndex = 0;
+
+	switch (m_currentSituationID)
 	{
-		CQTE_Hit_UI_Icon::QTE_Hit_UI_ICON_DESC Desc{};
-		Desc.fX = {};
-		Desc.fY = {};
-		Desc.fSizeX = {};
-		Desc.fSizeY = {};
-		Desc.iTextureNumber = {};
-		//랜덤하게 키 하나 생성
-		Desc.key = static_cast<CQTE_Hit_UI_Icon::KEY_ID>(rand() % 4);
-
-		CQTE_Hit_UI_Icon* ui_Icon = static_cast<CQTE_Hit_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"), &Desc));
-		//일단 만들고 비활성화
-		ui_Icon->SetActive(false);
-
-		m_vecHitUIIcon.push_back(ui_Icon);
+	case Client::CQTE_Hit::Hit_Situation_ID_A:
+		//3개라서 2개요소가 있음
+		m_vecIconCreationTimes = { 1.f, 2.f };
+		break;
+	case Client::CQTE_Hit::Hit_Situation_ID_B:
+		break;
+	case Client::CQTE_Hit::Hit_Situation_ID_C:
+		break;
+	case Client::CQTE_Hit::Hit_Situation_ID_END:
+		break;
+	default:
+		break;
 	}
+
 	return S_OK;
 }
 
@@ -84,16 +90,35 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 
 	if (m_bIsQTEActive)
 	{
-		//타이머는 가고 있음
-		m_fTimer -= fTimeDelta;
+		// 경과 시간 업데이트
+		m_fElapsedTime += fTimeDelta;
 
-		//각 Hit_UI_Icon 업데이트
+		// 다음 아이콘 생성 시간인지 확인
+		if (m_iNextIconIndex < m_vecIconCreationTimes.size())
+		{
+			if (m_fElapsedTime >= m_vecIconCreationTimes[m_iNextIconIndex])
+			{
+				// 아이콘 생성
+				Create_UIIcon();
+				m_iNextIconIndex++;
+			}
+		}
+
+		// 각 Hit_UI_Icon 업데이트
 		for (auto& iter : m_vecHitUIIcon)
 			iter->Update(fTimeDelta);
 
 		// 사용자 입력 처리
 		Handle_QTEInput();
 
+		// 타이머 업데이트
+		m_fTimer -= fTimeDelta;
+
+		if (m_fTimer <= 0.0f)
+		{
+			// QTE 종료
+			End_QTE();
+		}
 	}
 #pragma endregion
 
@@ -119,15 +144,96 @@ void CQTE_Hit_Situation::Start_QTE()
 		return; // 이미 QTE가 활성화되어 있으면 무시
 
 	m_bIsQTEActive = true;
+
+	// 첫 번째 아이콘 즉시 생성
+	Create_UIIcon();
+	m_iNextIconIndex++;
 }
 
 void CQTE_Hit_Situation::End_QTE()
 {
 	m_bIsQTEActive = false;
+	m_fElapsedTime = 0.0f;
+	m_iNextIconIndex = 0;
+	m_fTimer = 0.f;
+
+	for (auto& iter : m_vecHitUIIcon)
+		Safe_Release(iter);
+
+	m_vecHitUIIcon.clear();
 }
 
 void CQTE_Hit_Situation::Handle_QTEInput()
 {
+}
+
+void CQTE_Hit_Situation::Create_UIIcon()
+{
+	CQTE_Hit_UI_Icon::QTE_Hit_UI_ICON_DESC Desc{};
+	Desc.fSizeX = { 100.f };
+	Desc.fSizeY = { 100.f };
+	Desc.iTextureNumber = { 0 };
+
+	// 위치 범위 설정
+	_float minX = 100.f;
+	_float maxX = 1920.f - Desc.fSizeX; // 화면 너비 - 아이콘 너비를 고려
+	_float minY = 100.f;
+	_float maxY = 1080.f - Desc.fSizeY; // 화면 높이 - 아이콘 높이를 고려
+
+	// 겹치지 않는 위치를 찾기 위한 최대 시도 횟수
+	const _int maxAttempts = 100;
+	_int attempts = 0;
+	_bool positionFound = false;
+
+	while (!positionFound && attempts < maxAttempts)
+	{
+		// 랜덤 위치 생성
+		Desc.fX = minX + static_cast<_float>(rand()) / RAND_MAX * (maxX - minX);
+		Desc.fY = minY + static_cast<_float>(rand()) / RAND_MAX * (maxY - minY);
+
+		// 아이콘이 겹치는지 검사
+		positionFound = true;
+		for (auto& existingIcon : m_vecHitUIIcon)
+		{
+			// 기존 아이콘의 위치와 크기 가져오기
+			_float existingX = existingIcon->m_fX;
+			_float existingY = existingIcon->m_fY;
+			_float existingSizeX = existingIcon->m_fSizeX;
+			_float existingSizeY = existingIcon->m_fSizeY;
+
+			// AABB 충돌 검사
+			if (Desc.fX < existingX + existingSizeX &&
+				Desc.fX + Desc.fSizeX > existingX &&
+				Desc.fY < existingY + existingSizeY &&
+				Desc.fY + Desc.fSizeY > existingY)
+			{
+				// 겹침 발생
+				positionFound = false;
+				break;
+			}
+		}
+		attempts++;
+	}
+
+	if (!positionFound)
+	{
+		// 위치를 찾지 못한 경우 기본 위치 설정 또는 처리
+		Desc.fX = 960.f - Desc.fSizeX / 2; // 화면 중앙 등
+		Desc.fY = 540.f - Desc.fSizeY / 2;
+	}
+
+	// fTimer를 최소 및 최대 값 사이에서 랜덤하게 설정
+	_float minTimer = 0.5f; // 최소 시간
+	_float maxTimer = 2.0f; // 최대 시간
+	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
+
+	// 랜덤하게 키 하나 생성
+	Desc.key = static_cast<CQTE_Hit_UI_Icon::KEY_ID>(rand() % 4);
+
+	// 아이콘 생성
+	CQTE_Hit_UI_Icon* ui_Icon = static_cast<CQTE_Hit_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"), &Desc));
+
+	m_vecHitUIIcon.push_back(ui_Icon);
 }
 
 CQTE_Hit_Situation* CQTE_Hit_Situation::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -160,6 +266,8 @@ void CQTE_Hit_Situation::Free()
 {
 	for (auto& iter : m_vecHitUIIcon)
 		Safe_Release(iter);
+
+	m_vecHitUIIcon.clear();
 
 	__super::Free();
 }

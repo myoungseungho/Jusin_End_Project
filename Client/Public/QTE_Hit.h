@@ -29,7 +29,6 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-private:
 	void Start_Hit(Hit_Situation_ID _ID);
 
 private:
