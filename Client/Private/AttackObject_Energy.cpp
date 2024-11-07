@@ -35,6 +35,8 @@ HRESULT CAttackObject_Energy::Initialize(void* pArg)
 	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
 	pDesc->bNoCreateMainCollider = true;
 
+	m_ecolliderGroup = pDesc->ColliderDesc.colliderGroup;
+
 	if (nullptr == pArg)
 		return E_FAIL;
 
@@ -86,6 +88,9 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 		if (m_bEnableDestory)
 		{
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			
+		
+
 			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
 			Destory();
@@ -105,7 +110,8 @@ void CAttackObject_Energy::Update(_float fTimeDelta)
 
 
 		Make_Collider(m_pColliderCom->m_ColliderGroup, _float2(0.f, 0.f), _float2(m_fEndPos.x, m_fEndPos.y));
-	
+		//Make_Collider(m_ecolliderGroup, _float2(0.f, 0.f), _float2(m_fEndPos.x, m_fEndPos.y));
+
 		
 
 		_vector vPosOffset = m_pTransformCom->Get_State(CTransform::STATE_POSITION) + _vector{ m_fStartOffset.x,m_fStartOffset.y,0,0 };
@@ -193,7 +199,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x *0.2f, m_fhitCharacter_Impus .y *0.2f});
 
 			AttackColliderResult eResult =
-				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { 0,0 });
+				pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 });
 
 
 			if (eResult == RESULT_HIT)
@@ -311,7 +317,11 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			{
 				//m_pOwner->Set_AnimationStop(0.08f);
 				//pCharacter->Set_AnimationStop(0.08f);
+			
+
 				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+				
+
 				Destory();
 
 			}
@@ -409,16 +419,15 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				_float fpCharacterHeight = pCharacter->Get_fHeight();
 
 				//에너지파가 플레이어보다 많이 높은 경우 캐릭터를 강제로 아래로 끌어내림
-				if (fpCharacterHeight - fEnergyHeight > 0.3f)
+				if (fpCharacterHeight - fEnergyHeight > 0.2f)
 				{
 					pCharacter->Add_Move({ 0.f,-0.2f });
 				}
 				//에너지파가 플레이어보다 많이 낮은 경우 캐릭터를 강제로 끌어올림
-				else if (fpCharacterHeight - fEnergyHeight < -0.3f)
+				else if (fpCharacterHeight - fEnergyHeight < -0.2f)
 				{
 					pCharacter->Add_Move({ 0.f,0.2f });
 				}
-
 
 				if (m_iAttackCount == 0)
 				{
@@ -695,7 +704,9 @@ void CAttackObject_Energy::Erase()
 	if (m_bEnableDestory)
 	{
 		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
-		//m_pGameInstance->Release_Collider(m_pColliderCom);
+
+	
+
 		m_bEnableDestory = false;
 	}
 }

@@ -2267,7 +2267,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	case Client::CPlay_21::ANIME_FINAL_START:
 	{
-		if (iAttackEvent == 0)
+		if (iAttackEvent == 0)  // Position 0
 		{
 			m_iFinalLoofCount = 10;
 			
@@ -2383,15 +2383,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
 		}
-		else if (iAttackEvent == 2) //61이었는데 53으로 옮기면서 폐기예정
+		else if (iAttackEvent == 2) // Position 61   여기에 넣으려했던것들이 53으로 옮기면서 폐기예정
 		{
 			
 		}
-		else if (iAttackEvent == 3)
+		else if (iAttackEvent == 3) //Position  115 돌진 후 정지모션.
 		{
 
 			//명중했으면 루프돌기
-			//if (m_bAttackBackEvent && m_bFinalSkillSucess==false)
 			if (m_bAttackBackEvent && m_iFinalLoofCount != 0)
 			{
 				//m_bFinalSkillSucess = true;
@@ -2399,19 +2398,19 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Set_CurrentAnimationPositionJump(52.9);
 				m_iFinalLoofCount--;
 			}
-			else if (m_iFinalLoofCount == 0)
+			else if (m_bAttackBackEvent && m_iFinalLoofCount == 0) //루프 다 돌았으면 
 			{
+				//일단 이동 정지?
+				//Set_fImpulse({ 0.f,0.f });
+
+				//QTE 추가타로 miLoof, 올려차기 할지 고민
 
 			}
-			//아니면 AttackEvnet 3  에서 끝내기
-			
 
 
-
-
-			
+			//명중하지 않았으면 AttackEvnet 4 에서 끝내기
 		}
-		else if (iAttackEvent == 4)
+		else if (iAttackEvent == 4) //Position 135   돌진 막히거나 빗나갔을 시 Jump로 연결하고 끝. 
 		{
 			//원래라면 가드해도 AttackBack이 뜨지만 잡기는 아님. 버그 터지면 확인
 			if (m_bAttackBackEvent == false)

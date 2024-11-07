@@ -187,7 +187,7 @@ private:
 
 	_bool m_bUltimateKamehameha = false;
 
-	_bool m_bFinalss3Kamehameha = false;
+	_bool m_bFinalSkillss3 = { false };
 
 private:
 	HRESULT Ready_Components();

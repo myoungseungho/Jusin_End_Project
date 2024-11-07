@@ -717,9 +717,14 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
-
+	
 
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+
+	if (m_bAttackGravity && m_pModelCom->m_iCurrentAnimationIndex == 67)
+	{
+		_bool bDebug = true;
+	}
 
 	return bAnimationEnd;
 }
@@ -4012,6 +4017,11 @@ _bool CCharacter::Update_BeReflecting(_float fTimeDelta)
 	}
 
 	return true;
+}
+
+void CCharacter::Set_bFinalSkillQTE(_bool bFinalSkillQTE)
+{
+	m_bFinalSkillQTESucces = bFinalSkillQTE;
 }
 
 

@@ -338,6 +338,8 @@ public:
 	void Set_bBeReflecting(_short iDirection);
 	_bool Update_BeReflecting(_float fTimeDelta);
 
+	void Set_bFinalSkillQTE(_bool bFinalSkillQTE);
+
 protected:
 	void Reset_AttackStep();
 
@@ -617,6 +619,8 @@ protected:
 	_bool m_bBeReflecting = { false };
 	_float m_fAccBeReflectingTime = { 0.f };
 	CGameObject* m_pReflectObject = { nullptr };
+
+	_bool m_bFinalSkillQTESucces = { false };
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
