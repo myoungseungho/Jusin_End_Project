@@ -24,6 +24,16 @@ public:
 		HIT_KEY_END
 	};
 
+	//QTE_Hit에서 입력처리를 해서 결정
+	enum RESULT_ID
+	{
+		HIT_RESULT_NOT_YET_DECIDED,
+		HIT_RESULT_GOOD,
+		HIT_RESULT_EXCLENT,
+		HIT_RESULT_PERFECT,
+		HIT_RESULT_FAILED
+	};
+
 	struct QTE_Hit_UI_ICON_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, fTimer;
@@ -50,6 +60,9 @@ public:
 public:
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
 
+	KEY_ID m_Key = HIT_KEY_END;
+	RESULT_ID m_currentResult_ID = HIT_RESULT_NOT_YET_DECIDED;
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
@@ -62,7 +75,6 @@ private:
 	_float					 m_fAlpha{}, m_fTimer{}, m_fElaspedTime{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
-	KEY_ID m_Key = HIT_KEY_END;
 	_bool m_bIsFinal = { false };
 
 	class CQTE_Hit_Situation* m_pHit_Situation = { nullptr };

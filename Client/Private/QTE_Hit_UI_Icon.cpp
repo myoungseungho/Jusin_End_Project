@@ -69,6 +69,7 @@ void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 	if (m_fElaspedTime >= m_fTimer)
 	{
 		m_fElaspedTime = m_fTimer;
+		m_currentResult_ID = HIT_RESULT_FAILED;
 		SetActive(false);
 
 		//마지막 객체가 경과시간이 다 지났담녀 끝

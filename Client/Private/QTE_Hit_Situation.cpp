@@ -116,7 +116,7 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 
 		// 타이머 업데이트
 		m_fTimer -= fTimeDelta;
-	
+
 		// 각 Hit_UI_Icon 업데이트
 		for (auto& iter : m_vecHitUIIcon)
 			iter->Update(fTimeDelta);
@@ -224,9 +224,41 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	_float maxTimer = 2.5f; // 최대 시간
 	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
 
+
+	vector<CQTE_Hit_UI_Icon::KEY_ID> possibleKeys = {
+		CQTE_Hit_UI_Icon::KEY_ID::HIT_KEY_LIGHT,
+		CQTE_Hit_UI_Icon::KEY_ID::HIT_KEY_MEDIUM,
+		CQTE_Hit_UI_Icon::KEY_ID::HIT_KEY_ULTIMATE,
+		CQTE_Hit_UI_Icon::KEY_ID::HIT_KEY_HEAVY
+	};
+
+
 	// 랜덤하게 키 하나 생성
-	Desc.key = static_cast<CQTE_Hit_UI_Icon::KEY_ID>(rand() % 4);
+	for (auto& iter : m_vecHitUIIcon)
+	{
+		_bool isActive = iter->IsActive();
+		if (!isActive)
+			continue;
+
+		CQTE_Hit_UI_Icon::KEY_ID key = iter->m_Key;
+
+		auto it = std::find(possibleKeys.begin(), possibleKeys.end(), key);
+		if (it != possibleKeys.end())
+			possibleKeys.erase(it);
+
+	}
+	// 가능한 키 목록이 비어있는지 확인
+	if (possibleKeys.empty())
+	{
+		return;
+	}
+
+	// 남은 키 중에서 랜덤하게 선택
+	int randomIndex = rand() % possibleKeys.size();
+	Desc.key = possibleKeys[randomIndex];
+
 	Desc.Hit_Situation = this;
+
 	//마지막 객체 생성이라면
 	if (m_vecHitUIIcon.size() == m_iCreate_Num - 1)
 		Desc.bFinal = true;
