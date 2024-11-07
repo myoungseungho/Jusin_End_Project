@@ -322,6 +322,7 @@
     <ClInclude Include="..\Public\Volcano_Cliff04.h" />
     <ClInclude Include="..\Public\Volcano_Cliff_Back.h" />
     <ClInclude Include="..\Public\Volcano_Cliff_Far.h" />
+    <ClInclude Include="..\Public\Volcano_Defines.h" />
     <ClInclude Include="..\Public\Volcano_Ground.h" />
     <ClInclude Include="..\Public\Volcano_GroundRock.h" />
     <ClInclude Include="..\Public\Volcano_Island01.h" />

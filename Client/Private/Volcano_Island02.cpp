@@ -62,7 +62,7 @@ HRESULT CVolcano_Island02::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
 		
-		if (FAILED(m_pShaderCom->Begin(1)))
+		if (FAILED(m_pShaderCom->Begin(4)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))

@@ -327,7 +327,7 @@ PS_OUT PS_MAIN_RESULT_MAP(PS_IN In)
     vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
    
    
-    Out.vColor = saturate(vResult + vBlur);
+    Out.vColor = saturate(vResult + vBlur * 1.5f);
   //  Out.vColor = saturate(vResult * (1 - vBlur.a) + vBlur * vBlur.a * (g_fAllGlowFactor + 1.2f));
 
     return Out;

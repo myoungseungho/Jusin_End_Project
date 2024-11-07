@@ -62,7 +62,7 @@ HRESULT CVolcano_Lava_Ground::Render(_float fTimeDelta)
 		//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
 		//	return E_FAIL;
 		
-		if (FAILED(m_pShaderCom->Begin(2)))
+		if (FAILED(m_pShaderCom->Begin(12)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))

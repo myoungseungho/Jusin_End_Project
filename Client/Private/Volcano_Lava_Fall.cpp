@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Public\Volcano_Lava_Fall.h"
-
+#include "Volcano_Defines.h"
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
@@ -61,8 +61,11 @@ HRESULT CVolcano_Lava_Fall::Render(_float fTimeDelta)
 	{
 		//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
 		//	return E_FAIL;
-		
-		if (FAILED(m_pShaderCom->Begin(2)))
+		//_int iLavaFallIndex = i;
+		//if (FAILED(m_pShaderCom->Bind_RawValue("g_LavaFallIndex", &iLavaFallIndex, sizeof(_int))))
+		//	return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(VO_LAVAFALL + i)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -114,7 +117,10 @@ HRESULT CVolcano_Lava_Fall::Bind_ShaderResources()
 
 	if (FAILED(m_pTextureCom[0]->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 		return E_FAIL;
-
+	//if (FAILED(m_pTextureCom[1]->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
+	//	return E_FAIL;
+	//if (FAILED(m_pTextureCom[2]->Bind_ShaderResource(m_pShaderCom, "g_TMaskTexture", 0)))
+	//	return E_FAIL;
 	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteSize", &m_fSpriteSize, sizeof(_float2))))
 	//	return E_FAIL;
 

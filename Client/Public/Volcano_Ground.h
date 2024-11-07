@@ -13,9 +13,6 @@ BEGIN(Client)
 
 class CVolcano_Ground final : public CGameObject
 {
-public:
-	enum Space_TextureType { SPACE_DIFFUSE,SPACE_STAR_1, SPACE_STAR_2, SPACE_END};
-
 private:
 	CVolcano_Ground(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVolcano_Ground(const CVolcano_Ground& Prototype);

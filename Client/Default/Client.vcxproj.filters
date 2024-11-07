@@ -1358,6 +1358,9 @@
     <ClInclude Include="..\Public\Play_Goku.h">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
