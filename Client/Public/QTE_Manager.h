@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Client_Defines.h"
 #include "GameObject.h"
-
+#include "QTE_Hit.h"
 BEGIN(Engine)
 class CGameInstance;
 class CGameObject;
@@ -36,6 +36,8 @@ public:
 	CGameInstance* m_pGameInstance = { nullptr };
 
 	vector<class CGameObject*> m_vecQTE;
+
+	void Start_Hit();
 
 public:
 	virtual void Free() override;

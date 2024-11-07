@@ -30,6 +30,7 @@ public:
 private:
 	void Start_QTE();
 	void End_QTE();
+	void Handle_QTEInput();
 
 private:
 	_float m_fLifeTime = {};

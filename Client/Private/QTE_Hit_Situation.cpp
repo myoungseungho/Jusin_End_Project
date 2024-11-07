@@ -26,9 +26,15 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	//랜덤시드 발생
+	srand(static_cast<unsigned>(std::time(0)));
+
 	QTE_HIT_SITUATION_DESC* Desc = static_cast<QTE_HIT_SITUATION_DESC*>(pArg);
 	m_fLifeTime = Desc->lifeTime;
 	m_iCreate_Num = Desc->create_Num;
+
+	//LifeTime 초기화
+	m_fTimer = m_fLifeTime;
 
 	for (size_t i = 0; i < m_iCreate_Num; i++)
 	{
@@ -38,6 +44,8 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 		Desc.fSizeX = {};
 		Desc.fSizeY = {};
 		Desc.iTextureNumber = {};
+		//랜덤하게 키 하나 생성
+		Desc.key = static_cast<CQTE_Hit_UI_Icon::KEY_ID>(rand() % 4);
 
 		CQTE_Hit_UI_Icon* ui_Icon = static_cast<CQTE_Hit_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"), &Desc));
 		//일단 만들고 비활성화
@@ -76,11 +84,19 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 
 	if (m_bIsQTEActive)
 	{
+		//타이머는 가고 있음
+		m_fTimer -= fTimeDelta;
+
+		//각 Hit_UI_Icon 업데이트
 		for (auto& iter : m_vecHitUIIcon)
 			iter->Update(fTimeDelta);
 
-		m_fTimer -= fTimeDelta;
+		// 사용자 입력 처리
+		Handle_QTEInput();
+
 	}
+#pragma endregion
+
 }
 
 void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
@@ -108,6 +124,10 @@ void CQTE_Hit_Situation::Start_QTE()
 void CQTE_Hit_Situation::End_QTE()
 {
 	m_bIsQTEActive = false;
+}
+
+void CQTE_Hit_Situation::Handle_QTEInput()
+{
 }
 
 CQTE_Hit_Situation* CQTE_Hit_Situation::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

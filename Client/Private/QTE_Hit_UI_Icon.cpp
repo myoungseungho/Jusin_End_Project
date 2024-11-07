@@ -37,6 +37,7 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 	m_fX = desc->fX;
 	m_fY = desc->fY;
 	m_iTextureNumber = desc->iTextureNumber;
+	m_Key = desc->key;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,

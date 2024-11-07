@@ -36,9 +36,6 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 	//A 상황 셋팅 넣어두기
 	m_vecHit_Situation[Hit_Situation_ID_A] = situation;
 
-#pragma endregion
-
-
 	return S_OK;
 }
 
@@ -49,6 +46,9 @@ void CQTE_Hit::Camera_Update(_float fTimeDelta)
 
 void CQTE_Hit::Update(_float fTimeDelta)
 {
+	if (m_current_Situation_ID == Hit_Situation_ID_END)
+		return;
+
 	//선택된 시뮬레이션만 Update
 	m_vecHit_Situation[m_current_Situation_ID]->Update(fTimeDelta);
 
@@ -56,6 +56,9 @@ void CQTE_Hit::Update(_float fTimeDelta)
 
 void CQTE_Hit::Late_Update(_float fTimeDelta)
 {
+	if (m_current_Situation_ID == Hit_Situation_ID_END)
+		return;
+
 	//선택된 시뮬레이션만 Late_Update
 	m_vecHit_Situation[m_current_Situation_ID]->Late_Update(fTimeDelta);
 }
@@ -63,6 +66,11 @@ void CQTE_Hit::Late_Update(_float fTimeDelta)
 HRESULT CQTE_Hit::Render(_float fTimeDelta)
 {
 	return S_OK;
+}
+
+void CQTE_Hit::Start_Hit(Hit_Situation_ID _ID)
+{
+	m_current_Situation_ID = _ID;
 }
 
 

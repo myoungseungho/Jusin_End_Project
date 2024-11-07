@@ -30,6 +30,9 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
+	void Start_Hit(Hit_Situation_ID _ID);
+
+private:
 	vector<class CQTE_Hit_Situation* >m_vecHit_Situation;
 
 	Hit_Situation_ID m_current_Situation_ID = Hit_Situation_ID_END;

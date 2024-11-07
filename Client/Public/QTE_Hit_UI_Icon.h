@@ -14,10 +14,21 @@ BEGIN(Client)
 class CQTE_Hit_UI_Icon final : public CGameObject
 {
 public:
+
+	enum KEY_ID
+	{
+		HIT_KEY_LIGHT,
+		HIT_KEY_MEDIUM,
+		HIT_KEY_ULTIMATE,
+		HIT_KEY_HEAVY,
+		HIT_KEY_END
+	};
+
 	struct QTE_Hit_UI_ICON_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{};
 		_int iTextureNumber{};
+		KEY_ID key{};
 	};
 
 private:
@@ -48,6 +59,7 @@ private:
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{}, m_fAlpha{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
+	KEY_ID m_Key = HIT_KEY_END;
 
 	class CGameObject* m_pSameGrab = { nullptr };
 
