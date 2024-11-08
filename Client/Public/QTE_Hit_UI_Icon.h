@@ -39,7 +39,6 @@ public:
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, fTimer;
 		_int iTextureNumber{};
 		KEY_ID key{};
-		_bool bFinal = { false };
 		CGameObject* Hit_Situation = { nullptr };
 	};
 
@@ -57,7 +56,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	CQTE_Hit_UI_Icon::RESULT_ID Send_Input(KEY_ID _Input);
+	CQTE_Hit_UI_Icon::RESULT_ID Send_Input(KEY_ID _Input, _bool isFinal);
 public:
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
 
@@ -67,7 +66,7 @@ public:
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
-	void Finalize_Icon();
+	void Finalize_Icon(_bool isFinal = false);
 	void Calculate_Result();
 
 private:
@@ -78,11 +77,9 @@ private:
 	_float					 m_fAlpha{}, m_fTimer{}, m_fElaspedTime{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
-	_bool m_bIsFinal = { false };
 
 	class CQTE_Hit_Situation* m_pHit_Situation = { nullptr };
 	class CQTE_Hit_UI_MovingRing_Icon* m_pHit_MovingRing_Icon = { nullptr };
-	class CQTE_Hit_UI_StaticRing_Icon* m_pHit_StaticRing_Icon = { nullptr };
 
 public:
 	static CQTE_Hit_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

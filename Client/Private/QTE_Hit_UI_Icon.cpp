@@ -5,7 +5,6 @@
 #include "GameInstance.h"
 #include "QTE_Hit_Situation.h"
 #include "QTE_Hit_UI_MovingRing_Icon.h"
-#include "QTE_Hit_UI_StaticRing_Icon.h"
 
 CQTE_Hit_UI_Icon::CQTE_Hit_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -42,7 +41,6 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 	m_Key = desc->key;
 	m_fTimer = desc->fTimer;
 	m_pHit_Situation = static_cast<CQTE_Hit_Situation*>(desc->Hit_Situation);
-	m_bIsFinal = desc->bFinal;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -67,14 +65,6 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 
 	m_pHit_MovingRing_Icon = static_cast<CQTE_Hit_UI_MovingRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_MovingRing_Icon"), &Desc));
 
-	/*CQTE_Hit_UI_StaticRing_Icon::Hit_StaticRing_DESC Static_Desc{};
-	Static_Desc.fX = m_fX;
-	Static_Desc.fY = m_fY;
-	Static_Desc.fSizeX = m_fSizeX * 2.f;
-	Static_Desc.fSizeY = m_fSizeY * 2.f;
-
-	m_pHit_StaticRing_Icon = static_cast<CQTE_Hit_UI_StaticRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_StaticRing_Icon"), &Static_Desc));*/
-
 	return S_OK;
 }
 
@@ -90,7 +80,6 @@ void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 
 	//소속된 링들
 	m_pHit_MovingRing_Icon->Update(fTimeDelta);
-	//m_pHit_StaticRing_Icon->Update(fTimeDelta);
 
 	m_fElaspedTime += fTimeDelta;
 
@@ -111,7 +100,6 @@ void CQTE_Hit_UI_Icon::Late_Update(_float fTimeDelta)
 		return;
 
 	m_pHit_MovingRing_Icon->Late_Update(fTimeDelta);
-	//m_pHit_StaticRing_Icon->Late_Update(fTimeDelta);
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
@@ -133,13 +121,13 @@ HRESULT CQTE_Hit_UI_Icon::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-CQTE_Hit_UI_Icon::RESULT_ID CQTE_Hit_UI_Icon::Send_Input(KEY_ID _Input)
+CQTE_Hit_UI_Icon::RESULT_ID CQTE_Hit_UI_Icon::Send_Input(KEY_ID _Input, _bool isFinal)
 {
 	// 등급 계산
 	Calculate_Result();
 
 	// 아이콘 종료 처리
-	Finalize_Icon();
+	Finalize_Icon(isFinal);
 
 	return m_currentResult_ID;
 }
@@ -168,10 +156,10 @@ void CQTE_Hit_UI_Icon::Calculate_Result()
 	}
 }
 
-void CQTE_Hit_UI_Icon::Finalize_Icon()
+void CQTE_Hit_UI_Icon::Finalize_Icon(_bool isFinal)
 {
 	// 마지막 아이콘인 경우 상황 객체에 알림
-	if (m_bIsFinal)
+	if (isFinal)
 		m_pHit_Situation->Notify_Last_UI_Final_Complete();
 
 	SetActive(false);
@@ -247,7 +235,6 @@ void CQTE_Hit_UI_Icon::Free()
 	Safe_Release(m_pVIBufferCom);
 
 	Safe_Release(m_pHit_MovingRing_Icon);
-	//Safe_Release(m_pHit_StaticRing_Icon);
 
 	__super::Free();
 }

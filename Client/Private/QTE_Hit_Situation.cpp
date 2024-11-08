@@ -157,6 +157,23 @@ void CQTE_Hit_Situation::Start_QTE()
 
 void CQTE_Hit_Situation::End_QTE()
 {
+#pragma region 점수 산정
+	_bool isSuccess = true;
+
+	for (auto& iter : m_vecHitUIIcon)
+	{
+		//FAIL이거나 결정되지 않았거나(예외처리) 하나라도 있으면 성공 실패
+		if (iter->m_currentResult_ID == CQTE_Hit_UI_Icon::RESULT_ID::HIT_RESULT_FAILED ||
+			iter->m_currentResult_ID == CQTE_Hit_UI_Icon::RESULT_ID::HIT_RESULT_NOT_YET_DECIDED)
+		{
+			isSuccess = false;
+			break;
+		}
+	}
+
+	//이제 여기에 결과를 전달해줄 객체에 isSuccess 전달
+#pragma endregion
+
 #pragma region 초기화
 	//활성화 여부 초기화
 	m_bIsQTEActive = false;
@@ -176,22 +193,6 @@ void CQTE_Hit_Situation::End_QTE()
 	m_vecHitUIIcon.clear();
 #pragma endregion
 
-#pragma region 점수 산정
-	_bool isSuccess = true;
-
-	for (auto& iter : m_vecHitUIIcon)
-	{
-		//FAIL이거나 결정되지 않았거나(예외처리) 하나라도 있으면 성공 실패
-		if (iter->m_currentResult_ID == CQTE_Hit_UI_Icon::RESULT_ID::HIT_RESULT_FAILED ||
-			iter->m_currentResult_ID == CQTE_Hit_UI_Icon::RESULT_ID::HIT_RESULT_NOT_YET_DECIDED)
-		{
-			isSuccess = false;
-			break;
-		}
-	}
-
-	//이제 여기에 결과를 전달해줄 객체에 isSuccess 전달
-#pragma endregion
 
 }
 
@@ -297,10 +298,6 @@ void CQTE_Hit_Situation::Create_UIIcon()
 
 	Desc.Hit_Situation = this;
 
-	//마지막 객체 생성이라면
-	if (m_vecHitUIIcon.size() == m_iCreate_Num - 1)
-		Desc.bFinal = true;
-
 	// 아이콘 생성
 	CQTE_Hit_UI_Icon* ui_Icon = static_cast<CQTE_Hit_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"), &Desc));
 
@@ -371,7 +368,32 @@ void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 			continue;
 		//Input을 보내서 결과 판단하라고 함
 		else
-			iter->Send_Input(input);
+		{
+			_bool isFinal = false;
+
+			//이미 나와야할 객체가 전부 나와있고
+			if (m_vecHitUIIcon.size() == m_iCreate_Num)
+			{
+				isFinal = true;
+
+				for (auto& iter : m_vecHitUIIcon)
+				{
+					if (iter->m_Key != input)
+					{
+						_bool isActive = iter->IsActive();
+
+						//Braek는 루프를 빠져나가며 if문은 루프가 아니다.
+						if (isActive)
+						{
+							isFinal = false;
+							break;
+						}
+					}
+				}
+			}
+
+			iter->Send_Input(input, isFinal);
+		}
 	}
 }
 

@@ -346,9 +346,6 @@
     <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\QTE_Hit_UI_StaticRing_Icon.cpp">
-      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_StaticRing_Icon</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -737,9 +734,6 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation">
       <UniqueIdentifier>{31e25037-8d1e-40db-9f9d-35e27b666a90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_StaticRing_Icon">
-      <UniqueIdentifier>{25f1c57f-6472-418f-8db5-2c91fa987a66}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon">
       <UniqueIdentifier>{d8900946-436d-4160-96b3-821a7e2bb506}</UniqueIdentifier>
@@ -1246,9 +1240,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\QTE_Hit_UI_StaticRing_Icon.h">
-      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_StaticRing_Icon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
