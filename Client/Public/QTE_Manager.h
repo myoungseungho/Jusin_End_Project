@@ -20,6 +20,7 @@ private:
 	{
 		QTE_ID_SAME_GRAB,
 		QTE_ID_HIT,
+		QTE_ID_CONTINUOUS_ATTACK,
 		QTE_ID_END
 	};
 private:

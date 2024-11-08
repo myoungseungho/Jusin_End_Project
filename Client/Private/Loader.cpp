@@ -116,6 +116,7 @@
 #include "QTE_Hit_Situation.h"
 #include "QTE_Hit_UI_MovingRing_Icon.h"
 #include "QTE_Hit_UI_Result.h"
+#include "QTE_Continuous_Attack.h"
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -3218,6 +3219,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_Result"),
 		CQTE_Hit_UI_Result::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack"),
+		CQTE_Continuous_Attack::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

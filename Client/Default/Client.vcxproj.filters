@@ -349,6 +349,9 @@
     <ClCompile Include="..\Private\QTE_Hit_UI_Result.cpp">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -743,6 +746,9 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result">
       <UniqueIdentifier>{abf39edf-0e0e-4cf0-9a28-3cd3c2715a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack">
+      <UniqueIdentifier>{796c94e6-b4de-4bcd-8f7b-542923268867}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1249,6 +1255,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Hit_UI_Result.h">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

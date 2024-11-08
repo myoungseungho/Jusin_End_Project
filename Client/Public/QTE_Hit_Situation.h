@@ -46,6 +46,7 @@ private:
 
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f };
+	
 	//객체들이 사라지는 여유 시간을 줘야 함
 	_float m_fOffsetTimer = { 2.f };
 	_bool m_bOffsetActive = { false };

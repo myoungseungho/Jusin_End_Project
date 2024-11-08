@@ -20,6 +20,10 @@ HRESULT CQTE_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	CGameObject* Hit = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit"));
 	m_vecQTE.push_back(Hit);
 
+	//Continuous_Attack
+	CGameObject* ConAttack = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack"));
+	m_vecQTE.push_back(ConAttack);
+
 	return S_OK;
 }
 
