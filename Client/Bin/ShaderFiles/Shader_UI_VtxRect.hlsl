@@ -565,7 +565,33 @@ PS_OUT PS_QTE_UI_GAUGE(PS_IN In)
 PS_OUT PS_QTE_Hit_UI(PS_IN In)
 {
     PS_OUT Out;
+
+    // ratio 계산 (0에서 1까지)
+    float ratio = g_Time / g_MaxTime;
+
+    // 중심 좌표 설정 (텍스처 좌표 기준 0~1)
+    float2 center = float2(0.5f, 0.5f);
+
+    // 링의 초기 반지름과 최소 반지름 설정
+    float originalRadius = 0.5f; // 초기 링의 반지름 (텍스처 기준)
+    float minRadius = 0.166666f; // ratio가 1일 때의 최소 반지름, 0.5/3 한 결과 (현재 딱 3배 큼 기존 링)
+
+    // ratio에 따라 현재 반지름을 보간 (0: originalRadius, 1: minRadius)
+    float currentRadius = lerp(originalRadius, minRadius, ratio);
+
+    // 스케일 팩터 계산 (반지름을 줄이기 위해 originalRadius / currentRadius)
+    float scaleFactor = originalRadius / currentRadius;
+
+    // 텍스처 좌표를 중심을 기준으로 스케일링
+    float2 scaledTexcoord = (In.vTexcoord - center) * scaleFactor + center;
+
+    // 텍스처 샘플링
+    Out.vColor = g_Texture.Sample(DestroySampler, scaledTexcoord);
     
+    // 알파값이 낮은 픽셀은 버림
+    if (Out.vColor.a <= 0.1f)
+        discard;
+
     return Out;
 }
 

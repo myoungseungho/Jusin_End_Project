@@ -227,14 +227,14 @@ void CQTE_Hit_Situation::Create_UIIcon()
 			// 기존 아이콘의 위치와 크기 가져오기
 			_float existingX = existingIcon->m_fX;
 			_float existingY = existingIcon->m_fY;
-			_float existingSizeX = existingIcon->m_fSizeX * 4.f;
-			_float existingSizeY = existingIcon->m_fSizeY * 4.f;
+			_float existingSizeX = existingIcon->m_fSizeX * 3.f;
+			_float existingSizeY = existingIcon->m_fSizeY * 3.f;
 
 			// AABB 충돌 검사
 			if (Desc.fX < existingX + existingSizeX &&
-				Desc.fX + Desc.fSizeX * 4.f > existingX &&
+				Desc.fX + Desc.fSizeX * 3.f > existingX &&
 				Desc.fY < existingY + existingSizeY &&
-				Desc.fY + Desc.fSizeY * 4.f > existingY)
+				Desc.fY + Desc.fSizeY * 3.f > existingY)
 			{
 				// 겹침 발생
 				positionFound = false;

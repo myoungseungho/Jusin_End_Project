@@ -73,7 +73,7 @@ HRESULT CQTE_Hit_UI_MovingRing_Icon::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(23)))
+	if (FAILED(m_pShaderCom->Begin(25)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -117,9 +117,16 @@ HRESULT CQTE_Hit_UI_MovingRing_Icon::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 7)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 6)))
 		return E_FAIL;
 
+	// 시간 값을 셰이더로 전달
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", m_pfElaspedTime, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaxTime", m_pfTimer, sizeof(_float))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 

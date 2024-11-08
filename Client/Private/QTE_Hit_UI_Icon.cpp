@@ -62,18 +62,18 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 	Desc.pfTimer = &m_fTimer;
 	Desc.fX = m_fX;
 	Desc.fY = m_fY;
-	Desc.fSizeX = m_fSizeX * 4.f;
-	Desc.fSizeY = m_fSizeY * 4.f;
+	Desc.fSizeX = m_fSizeX * 3.f;
+	Desc.fSizeY = m_fSizeY * 3.f;
 
 	m_pHit_MovingRing_Icon = static_cast<CQTE_Hit_UI_MovingRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_MovingRing_Icon"), &Desc));
 
-	CQTE_Hit_UI_StaticRing_Icon::Hit_StaticRing_DESC Static_Desc{};
+	/*CQTE_Hit_UI_StaticRing_Icon::Hit_StaticRing_DESC Static_Desc{};
 	Static_Desc.fX = m_fX;
 	Static_Desc.fY = m_fY;
 	Static_Desc.fSizeX = m_fSizeX * 2.f;
 	Static_Desc.fSizeY = m_fSizeY * 2.f;
 
-	m_pHit_StaticRing_Icon = static_cast<CQTE_Hit_UI_StaticRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_StaticRing_Icon"), &Static_Desc));
+	m_pHit_StaticRing_Icon = static_cast<CQTE_Hit_UI_StaticRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_StaticRing_Icon"), &Static_Desc));*/
 
 	return S_OK;
 }
@@ -90,7 +90,7 @@ void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 
 	//소속된 링들
 	m_pHit_MovingRing_Icon->Update(fTimeDelta);
-	m_pHit_StaticRing_Icon->Update(fTimeDelta);
+	//m_pHit_StaticRing_Icon->Update(fTimeDelta);
 
 	m_fElaspedTime += fTimeDelta;
 
@@ -111,7 +111,8 @@ void CQTE_Hit_UI_Icon::Late_Update(_float fTimeDelta)
 		return;
 
 	m_pHit_MovingRing_Icon->Late_Update(fTimeDelta);
-	m_pHit_StaticRing_Icon->Late_Update(fTimeDelta);
+	//m_pHit_StaticRing_Icon->Late_Update(fTimeDelta);
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -246,7 +247,7 @@ void CQTE_Hit_UI_Icon::Free()
 	Safe_Release(m_pVIBufferCom);
 
 	Safe_Release(m_pHit_MovingRing_Icon);
-	Safe_Release(m_pHit_StaticRing_Icon);
+	//Safe_Release(m_pHit_StaticRing_Icon);
 
 	__super::Free();
 }
