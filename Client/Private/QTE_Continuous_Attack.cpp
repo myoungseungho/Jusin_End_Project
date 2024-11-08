@@ -28,6 +28,32 @@ HRESULT CQTE_Continuous_Attack::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	if (FAILED(Ready_Components()))
+		return E_FAIL;
+
+	m_fSizeX = 50.f;
+	m_fSizeY = 50.f;
+	m_fX = 960.f;
+	m_fY = 700.f;
+
+	m_fSizeX = 50.f;
+	m_fSizeY = 50.f;
+
+	// 기본 위치 설정
+	m_fDefaultY = 700.f;
+	// 타겟 위치 설정 (예시로 Y 좌표를 100만큼 아래로 이동)
+	m_fTargetY = m_fDefaultY + 30.f;
+	// 초기 위치를 기본 위치로 설정
+	m_fY = m_fDefaultY;
+
+
+	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+
+	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
+	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
 	return S_OK;
 }
 
@@ -40,7 +66,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 {
 #pragma region 디버그
 	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F4))
+	if (m_pGameInstance->Key_Down(DIK_F1))
 	{
 		if (m_bIsQTEActive)
 		{
@@ -86,6 +112,12 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 	}
 
 #pragma endregion
+
+	// 애니메이션 업데이트
+	if (m_bIsMoving)
+	{
+		Update_Animation(fTimeDelta);
+	}
 }
 
 void CQTE_Continuous_Attack::Start_QTE()
@@ -148,7 +180,74 @@ void CQTE_Continuous_Attack::Handle_QTEInput()
 
 void CQTE_Continuous_Attack::Process_Command()
 {
+	// 애니메이션 상태 초기화
+	m_bIsMoving = true;
+	m_bIsMovingDown = true;   // 먼저 내려가기 시작
+	m_fCurrentTime = 0.0f;    // 진행 시간 초기화
 
+	// 위치를 기본 위치로 초기화
+	m_fY = m_fDefaultY;
+
+	// Transform에 위치 적용
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+}
+
+void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
+{
+	// 현재 진행 시간 업데이트
+	m_fCurrentTime += fTimeDelta;
+
+	if (m_bIsMovingDown)
+	{
+		// 내려가는 애니메이션 진행
+		_float fProgress = m_fCurrentTime / m_fMoveDownTime;
+
+		if (fProgress >= 1.0f)
+		{
+			// 내려가기 완료, 올라가기 시작
+			fProgress = 1.0f;
+			m_bIsMovingDown = false;
+			m_fCurrentTime = 0.0f;
+		}
+
+		// 이징 함수 적용 (Ease-In-Out)
+		_float fEaseProgress = EaseInOut(fProgress);
+
+		// 위치 계산
+		m_fY = Lerp(m_fDefaultY, m_fTargetY, fEaseProgress);
+	}
+	else
+	{
+		// 올라가는 애니메이션 진행
+		_float fProgress = m_fCurrentTime / m_fMoveUpTime;
+
+		if (fProgress >= 1.0f)
+		{
+			// 애니메이션 종료
+			fProgress = 1.0f;
+			m_bIsMoving = false;
+		}
+
+		// 이징 함수 적용 (Ease-In-Out)
+		_float fEaseProgress = EaseInOut(fProgress);
+
+		// 위치 계산
+		m_fY = Lerp(m_fTargetY, m_fDefaultY, fEaseProgress);
+	}
+
+	// 실제 Transform에 위치 적용
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+}
+
+_float CQTE_Continuous_Attack::EaseInOut(_float t)
+{
+	// 이징 함수: Ease-In-Out Quad
+	if (t < 0.5f)
+		return 2.0f * t * t;
+	else
+		return -1.0f + (4.0f - 2.0f * t) * t;
 }
 
 void CQTE_Continuous_Attack::Late_Update(_float fTimeDelta)
@@ -160,6 +259,18 @@ void CQTE_Continuous_Attack::Late_Update(_float fTimeDelta)
 
 HRESULT CQTE_Continuous_Attack::Render(_float fTimeDelta)
 {
+	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(23)))
+		return E_FAIL;
+
+	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+		return E_FAIL;
+
+	if (FAILED(m_pVIBufferCom->Render()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -171,10 +282,9 @@ HRESULT CQTE_Continuous_Attack::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Arrow"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
-
 
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
@@ -195,7 +305,7 @@ HRESULT CQTE_Continuous_Attack::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureNumber)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
 	return S_OK;

@@ -42,6 +42,9 @@ private:
 	void Handle_QTEInput();
 	void Process_Command();
 
+	void Update_Animation(_float fTimeDelta);
+	_float EaseInOut(_float t);
+
 private:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -56,12 +59,24 @@ private:
 	_float m_fTimer = { 0.f };
 
 	//총 플레이 시간
-	const _float m_fLifeTime = { 10.f };
+	const _float m_fLifeTime = { 100.f };
 
 	_int m_iCurrentKeyPressCount = 0; // 현재 연타한 횟수
-	const _int m_iTargetKeyPressCount = 20; // 목표 연타 횟수
+	const _int m_iTargetKeyPressCount = 1000; // 목표 연타 횟수
 
 	MISSION_STATE m_eMissionState = MISSION_NOT_DECIDED;
+
+	// 위치 관련 변수
+	_float m_fDefaultY = {  };  // 기본 위치
+	_float m_fTargetY = {  };    // 타겟 위치
+
+	// 애니메이션 제어 변수
+	_float m_fMoveDownTime = 0.1f;    // 내려가는 데 걸리는 시간
+	_float m_fMoveUpTime = 0.1f;      // 올라가는 데 걸리는 시간
+	_float m_fCurrentTime = 0.0f;     // 현재 애니메이션 진행 시간
+
+	_bool m_bIsMoving = false;        // 애니메이션 진행 여부
+	_bool m_bIsMovingDown = false;    // 내려가는 중인지 여부
 
 public:
 	static CQTE_Continuous_Attack* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

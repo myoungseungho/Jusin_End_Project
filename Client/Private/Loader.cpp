@@ -970,6 +970,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Result"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/QTE_RESULT_%d.png"), 4))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Arrow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/DebugIcon.png"), 1))))
+		return E_FAIL;
 }
 
 HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
@@ -1434,6 +1438,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
 		return E_FAIL;
 }
+
 HRESULT CLoader::Load_Texture_Resources_GamePlay_2()
 {
 	{
@@ -2317,6 +2322,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 	return S_OK;
 }
+
 HRESULT CLoader::Load_Model_Resources_GamePlay_1()
 {
 	_matrix PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
