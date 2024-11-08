@@ -29,20 +29,25 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complate = true; };
-
+	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complete = true; };
+	void Notify_Faild_Result(class CQTE_Hit_UI_Icon* icon);
 private:
 	void Start_QTE();
 	void End_QTE();
 	void Handle_QTEInput();
 	void Create_UIIcon(); // 아이콘 생성 함수 추가
 	void Process_Command(CQTE_Hit_UI_Icon::KEY_ID input);
+
+	void Create_ResultObject(class CQTE_Hit_UI_Icon* pIcon);
 private:
 	_float m_fLifeTime = {};
 	_int m_iCreate_Num = {};
 
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f };
+	//객체들이 사라지는 여유 시간을 줘야 함
+	_float m_fOffsetTimer = { 2.f };
+	_bool m_bOffsetActive = { false };
 
 	_float m_fElapsedTime = { 0.f }; // 경과 시간
 	_int m_iNextIconIndex = { 0 }; // 다음 아이콘 인덱스
@@ -56,7 +61,7 @@ private:
 	CQTE_Hit::Hit_Situation_ID m_currentSituationID = {};
 
 	//마지막 UI_Final
-	_bool m_bUI_Final_Complate = { false };
+	_bool m_bUI_Final_Complete = { false };
 
 public:
 	static CQTE_Hit_Situation* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

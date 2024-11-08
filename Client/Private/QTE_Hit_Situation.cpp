@@ -93,7 +93,7 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 	{
 		//전체 타이머가 전부 시간 소요되거나
 		//마지막 UI 객체 처리가 완료됬거나
-		if (m_fTimer <= 0.0f || m_bUI_Final_Complate)
+		if (m_fTimer <= 0.0f || m_bUI_Final_Complete)
 		{
 			// QTE 종료
 			End_QTE();
@@ -129,12 +129,46 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 	}
 #pragma endregion
 
+#pragma region Offset 기간 활성화
+
+	//offSet 기간 처리
+	else if (m_bOffsetActive)
+	{
+		// 오프셋 기간 처리
+		m_fOffsetTimer -= fTimeDelta;
+
+		// 페이드 아웃 효과를 위한 UI 객체 업데이트
+		for (auto& iter : m_vecHitUIIcon)
+			iter->Update(fTimeDelta);
+
+		for (auto& iter : m_vecHitResult)
+			iter->Update(fTimeDelta);
+
+		if (m_fOffsetTimer <= 0.0f)
+		{
+			// UI 객체 삭제 시간
+			for (auto& iter : m_vecHitUIIcon)
+				Safe_Release(iter);
+
+			for (auto& iter : m_vecHitResult)
+				Safe_Release(iter);
+
+			m_vecHitUIIcon.clear();
+			m_vecHitResult.clear();
+
+			m_fOffsetTimer = 0.f;
+			m_bOffsetActive = false; // 오프셋 기간 종료
+		}
+	}
+#pragma endregion
+
+
 }
 
 void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
 {
 	//QTE가 활성화되었다면
-	if (m_bIsQTEActive)
+	if (m_bIsQTEActive || m_bOffsetActive)
 	{
 		for (auto& iter : m_vecHitUIIcon)
 			iter->Late_Update(fTimeDelta);
@@ -149,6 +183,11 @@ HRESULT CQTE_Hit_Situation::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CQTE_Hit_Situation::Notify_Faild_Result(CQTE_Hit_UI_Icon* icon)
+{
+	Create_ResultObject(icon);
+}
+
 void CQTE_Hit_Situation::Start_QTE()
 {
 	if (m_bIsQTEActive)
@@ -157,7 +196,7 @@ void CQTE_Hit_Situation::Start_QTE()
 	//활성화
 	m_bIsQTEActive = true;
 	//마지막 객체 완료 처리 여부 초기화
-	m_bUI_Final_Complate = false;
+	m_bUI_Final_Complete = false;
 	// 첫 번째 아이콘 즉시 생성
 	Create_UIIcon();
 }
@@ -184,6 +223,11 @@ void CQTE_Hit_Situation::End_QTE()
 #pragma region 초기화
 	//활성화 여부 초기화
 	m_bIsQTEActive = false;
+
+	// 오프셋 타이머 시작
+	m_bOffsetActive = true;
+	m_fOffsetTimer = 2.f; // 원하는 오프셋 지속 시간 설정
+
 	//경과시간 초기화
 	m_fElapsedTime = 0.0f;
 	//다음 객체를 만드는데 필요한 변수 초기화
@@ -191,17 +235,8 @@ void CQTE_Hit_Situation::End_QTE()
 	//타이머는 원래 LifeTime으로 초기화
 	m_fTimer = m_fLifeTime;
 	//마지막 객체 완료 처리 여부 초기화
-	m_bUI_Final_Complate = false;
+	m_bUI_Final_Complete = false;
 
-	//모든 아이콘 싹다 삭제
-	for (auto& iter : m_vecHitUIIcon)
-		Safe_Release(iter);
-
-	for (auto& iter : m_vecHitResult)
-		Safe_Release(iter);
-
-	m_vecHitUIIcon.clear();
-	m_vecHitResult.clear();
 #pragma endregion
 
 }
@@ -404,42 +439,59 @@ void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 
 			iter->Send_Input(input, isFinal);
 
+
+			//입력을 눌렀을 때는 Situation에서 Result 객체를 처리
+			//그러나 입력을 안눌러서 시간이 다 지난거면 해당 아이콘 객체가 Situation 에게 Notify한다.
 #pragma region Result 객체 생성
 
-			int iTextureNum = -1;
-			switch (iter->m_currentResult_ID)
-			{
-			case CQTE_Hit_UI_Icon::HIT_RESULT_FAILED:
-				iTextureNum = 0;
-				break;
-			case CQTE_Hit_UI_Icon::HIT_RESULT_GOOD:
-				iTextureNum = 1;
-				break;
-			case CQTE_Hit_UI_Icon::HIT_RESULT_EXCELLENT:
-				iTextureNum = 2;
-				break;
-			case CQTE_Hit_UI_Icon::HIT_RESULT_PERFECT:
-				iTextureNum = 3;
-				break;
-			default:
-				iTextureNum = 0;
-				break;
-			}
-
-			CQTE_Hit_UI_Result::Hit_RESULT_DESC Desc{};
-			_float OffsetY = -70.f;
-
-			Desc.fX = iter->m_fX;
-			Desc.fY = iter->m_fY + OffsetY;
-			Desc.fSizeX = 300.f;
-			Desc.fSizeY = 200.f;
-			Desc.iTextureNum = iTextureNum;
-			Desc.fTimer = 1.5f;
-
-			CQTE_Hit_UI_Result* Result = static_cast<CQTE_Hit_UI_Result*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Result"), &Desc));
-			m_vecHitResult.push_back(Result);
+			// Result 객체 생성 함수 호출
+			Create_ResultObject(iter);
 #pragma endregion
 		}
+	}
+}
+
+void CQTE_Hit_Situation::Create_ResultObject(CQTE_Hit_UI_Icon* pIcon)
+{
+	int iTextureNum = -1;
+	switch (pIcon->m_currentResult_ID)
+	{
+	case CQTE_Hit_UI_Icon::HIT_RESULT_FAILED:
+		iTextureNum = 0;
+		break;
+	case CQTE_Hit_UI_Icon::HIT_RESULT_GOOD:
+		iTextureNum = 1;
+		break;
+	case CQTE_Hit_UI_Icon::HIT_RESULT_EXCELLENT:
+		iTextureNum = 2;
+		break;
+	case CQTE_Hit_UI_Icon::HIT_RESULT_PERFECT:
+		iTextureNum = 3;
+		break;
+	default:
+		iTextureNum = 0;
+		break;
+	}
+
+	CQTE_Hit_UI_Result::Hit_RESULT_DESC Desc{};
+	_float OffsetY = -70.f;
+
+	Desc.fX = pIcon->m_fX;
+	Desc.fY = pIcon->m_fY + OffsetY;
+	Desc.fSizeX = 300.f;
+	Desc.fSizeY = 200.f;
+	Desc.iTextureNum = iTextureNum;
+	Desc.fTimer = 1.5f;
+
+	CQTE_Hit_UI_Result* Result = static_cast<CQTE_Hit_UI_Result*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Result"), &Desc));
+	if (Result != nullptr)
+	{
+		m_vecHitResult.push_back(Result);
+	}
+	else
+	{
+		// 에러 처리: Result 객체 생성 실패
+		MSG_BOX(TEXT("Failed to create CQTE_Hit_UI_Result object."));
 	}
 }
 
