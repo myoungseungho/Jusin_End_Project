@@ -34,6 +34,7 @@ public:
 private:
 	void Start_QTE();
 	void End_QTE();
+	void End_Offset_QTE(_float fTimeDelta);
 	void Handle_QTEInput();
 	void Create_UIIcon(); // 아이콘 생성 함수 추가
 	void Process_Command(CQTE_Hit_UI_Icon::KEY_ID input);

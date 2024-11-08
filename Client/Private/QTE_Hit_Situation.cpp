@@ -78,6 +78,20 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 		{
 			// QTE가 활성화되어 있으면 즉시 종료
 			End_QTE();
+
+			// UI 객체 삭제 시간
+			for (auto& iter : m_vecHitUIIcon)
+				Safe_Release(iter);
+
+			for (auto& iter : m_vecHitResult)
+				Safe_Release(iter);
+
+			m_vecHitUIIcon.clear();
+			m_vecHitResult.clear();
+
+			m_fOffsetTimer = 0.f;
+			m_bOffsetActive = false; // 오프셋 기간 종료
+
 		}
 		else
 		{
@@ -134,31 +148,7 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 	//offSet 기간 처리
 	else if (m_bOffsetActive)
 	{
-		// 오프셋 기간 처리
-		m_fOffsetTimer -= fTimeDelta;
-
-		// 페이드 아웃 효과를 위한 UI 객체 업데이트
-		for (auto& iter : m_vecHitUIIcon)
-			iter->Update(fTimeDelta);
-
-		for (auto& iter : m_vecHitResult)
-			iter->Update(fTimeDelta);
-
-		if (m_fOffsetTimer <= 0.0f)
-		{
-			// UI 객체 삭제 시간
-			for (auto& iter : m_vecHitUIIcon)
-				Safe_Release(iter);
-
-			for (auto& iter : m_vecHitResult)
-				Safe_Release(iter);
-
-			m_vecHitUIIcon.clear();
-			m_vecHitResult.clear();
-
-			m_fOffsetTimer = 0.f;
-			m_bOffsetActive = false; // 오프셋 기간 종료
-		}
+		End_Offset_QTE(fTimeDelta);
 	}
 #pragma endregion
 
@@ -239,6 +229,35 @@ void CQTE_Hit_Situation::End_QTE()
 
 #pragma endregion
 
+}
+
+void CQTE_Hit_Situation::End_Offset_QTE(_float fTimeDelta)
+{
+	// 오프셋 기간 처리
+	m_fOffsetTimer -= fTimeDelta;
+
+	// 페이드 아웃 효과를 위한 UI 객체 업데이트
+	for (auto& iter : m_vecHitUIIcon)
+		iter->Update(fTimeDelta);
+
+	for (auto& iter : m_vecHitResult)
+		iter->Update(fTimeDelta);
+
+	if (m_fOffsetTimer <= 0.0f)
+	{
+		// UI 객체 삭제 시간
+		for (auto& iter : m_vecHitUIIcon)
+			Safe_Release(iter);
+
+		for (auto& iter : m_vecHitResult)
+			Safe_Release(iter);
+
+		m_vecHitUIIcon.clear();
+		m_vecHitResult.clear();
+
+		m_fOffsetTimer = 0.f;
+		m_bOffsetActive = false; // 오프셋 기간 종료
+	}
 }
 
 void CQTE_Hit_Situation::Create_UIIcon()
