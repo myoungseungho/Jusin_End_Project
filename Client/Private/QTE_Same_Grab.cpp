@@ -39,22 +39,22 @@ void CQTE_Same_Grab::Camera_Update(_float fTimeDelta)
 
 void CQTE_Same_Grab::Update(_float fTimeDelta)
 {
-//#pragma region 디버그
-//	// F5 키 입력 감지
-//	if (m_pGameInstance->Key_Down(DIK_F5))
-//	{
-//		if (m_bIsQTEActive)
-//		{
-//			// QTE가 활성화되어 있으면 즉시 종료
-//			End_QTE();
-//		}
-//		else
-//		{
-//			// QTE가 비활성화되어 있으면 시작
-//			Start_QTE();
-//		}
-//	}
-//#pragma endregion
+#pragma region 디버그
+	// F5 키 입력 감지
+	if (m_pGameInstance->Key_Down(DIK_F6))
+	{
+		if (m_bIsQTEActive)
+		{
+			// QTE가 활성화되어 있으면 즉시 종료
+			End_QTE();
+		}
+		else
+		{
+			// QTE가 비활성화되어 있으면 시작
+			Start_QTE();
+		}
+	}
+#pragma endregion
 
 
 #pragma region QTE 종료 프로세스 진행 중인 경우
@@ -133,6 +133,9 @@ void CQTE_Same_Grab::Start_QTE()
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
+
+	//기존 객체들 전부 삭제
+	Clear_UIIcons();
 
 	m_bIsQTEActive = true;
 	m_fTimer = static_cast<_float>(m_iTotalTime);
@@ -384,7 +387,7 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 			Desc.isLast = true;
 
 		// UI 아이콘 클론
-		CQTE_Same_Grab_UI_Icon* pIcon = dynamic_cast<CQTE_Same_Grab_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Icon"), &Desc));
+		CQTE_Same_Grab_UI_Icon* pIcon = dynamic_cast<CQTE_Same_Grab_UI_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Icon"), &Desc));
 		if (pIcon)
 		{
 			// 벡터에 저장
@@ -392,6 +395,13 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 		}
 	}
 #pragma endregion
+
+	// 기존의 게이지 객체 해제
+	if (m_UIGauge != nullptr)
+	{
+		Safe_Release(m_UIGauge);
+		m_UIGauge = nullptr;
+	}
 
 #pragma region 게이지 객체 생성
 	CQTE_UI_Gauge::QTE_UI_Gauge_DESC Desc{};
@@ -543,13 +553,7 @@ CGameObject* CQTE_Same_Grab::Clone(void* pArg)
 
 void CQTE_Same_Grab::Free()
 {
-	for (auto& iter : m_UIIcons_P1)
-		Safe_Release(iter);
-
-	for (auto& iter : m_UIIcons_P2)
-		Safe_Release(iter);
-
-	Safe_Release(m_UIGauge);
+	Clear_UIIcons();
 
 	__super::Free();
 }
