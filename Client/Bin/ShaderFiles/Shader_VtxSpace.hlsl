@@ -271,7 +271,7 @@ PS_OUT PS_MAIN_MOON(PS_IN In)
 {
     PS_OUT Out;
 
-    In.vTexcoord.x += g_Time* 0.003f;
+    In.vTexcoord.x += g_Time* 0.03f;
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
     
     if (vMtrlDiffuse.a < 0.1f)

@@ -388,6 +388,8 @@ protected:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pOutLineCom = { nullptr };
 	CTexture* m_p2PTextureCom = { nullptr };
+	CTexture* m_pDecalTextureCom = { nullptr };
+
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
 

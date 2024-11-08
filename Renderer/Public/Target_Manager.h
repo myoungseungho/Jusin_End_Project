@@ -49,7 +49,6 @@ private:
 
 	map<const _wstring, class CRenderTarget*>		m_RenderTargets;
 	map<const _wstring, list<class CRenderTarget*>>	m_MRTs;
-	map<const _wstring, list<class CRenderTarget*>>	m_EffectMRTs;
 
 	_uint m_iBeginEffectCountArray[10] = { 0,0,0,0,0,0,0,0,0,0 };
 private:

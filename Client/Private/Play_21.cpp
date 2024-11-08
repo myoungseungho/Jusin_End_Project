@@ -924,32 +924,55 @@ HRESULT CPlay_21::Render(_float fTimeDelta)
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 
+	/* Main MeshIndex : 0 */
+	/* DramaticCamera MeshIndex : 1 */
+	/* Shadow MeshIndex : 2 */
+	/* Decal MeshIndex : 3 */
+	/* Detail?? MeshIndex : 4 */
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
+		/*if (i == 1 || i == 2 || i == 4)
+			continue;*/
+		/*if (i > 1 && i != 4)
+			continue;*/
+		if (i > 1)
+			continue;
+
 		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
+		_uint iPassIndex = { 1 };
+		if (i == 4)
+			iPassIndex = 4;
 
-		if (m_iPlayerTeam == 1)
-		{
-			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-				return E_FAIL;
-		}
-		else
+		if (i < 1)
 		{
 			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 				return E_FAIL;
 		}
-		// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
+		else
+		{
+
+			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+				return E_FAIL;
+			if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+				return E_FAIL;
+
+		}
+
+		//
+
+		 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
-		if (FAILED(m_pShaderCom->Begin(1)))
+		if (FAILED(m_pShaderCom->Begin(iPassIndex)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
+
 #ifdef _DEBUG
 	m_pColliderCom->Render(fTimeDelta);
 #endif // DEBUG
@@ -1253,9 +1276,23 @@ HRESULT CPlay_21::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
 
-	/* Com_Model */
+	if (m_iPlayerTeam == 1)
+	{
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_base"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+			return E_FAIL;
+		
+	}
+	else
+	{
+
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 		return E_FAIL;
+	}
+	/* Com_Model */
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_decal"), TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 
@@ -3098,4 +3135,5 @@ void CPlay_21::Free()
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_p2PTextureCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pDecalTextureCom);
 }

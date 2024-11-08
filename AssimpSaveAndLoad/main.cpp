@@ -1,10 +1,10 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/ModelData/"
+#define DATAFILEPATH "../Client/Bin/Resources/Map/Volcano/"
 
 int main() {
 	ModelConverter converter;
-
+	
 	vector<pair<string, ModelType>> modelPaths = {
 		{"Models/Ton_AllMesh.fbx", TYPE_ANIM},
 	};

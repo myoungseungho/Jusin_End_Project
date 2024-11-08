@@ -311,13 +311,27 @@ PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
     vector vFactor = g_GlowDescTexture.Sample(LinearSampler, In.vTexcoord);
    // clip(vBlur.a - 0.001f);
     //float fFactor = vFactor.r == 0.f ? 3.2f : vFactor.r;
-   Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor + 0.2f));
+    Out.vColor = saturate(vResult + vBlur * (g_fAllGlowFactor));
   //  Out.vColor = saturate(vResult * (1 - vBlur.a) + vBlur * vBlur.a * (g_fAllGlowFactor + 1.2f));
 
     return Out;
 }
 
+PS_OUT PS_MAIN_RESULT_MAP(PS_IN In)
+{
 
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vResult = g_Texture.Sample(DestroySampler, In.vTexcoord);
+
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
+   
+   
+    Out.vColor = saturate(vResult + vBlur * 1.5f);
+  //  Out.vColor = saturate(vResult * (1 - vBlur.a) + vBlur * vBlur.a * (g_fAllGlowFactor + 1.2f));
+
+    return Out;
+}
 
 technique11		DefaultTechnique
 {	
@@ -465,6 +479,17 @@ technique11		DefaultTechnique
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_RESULT_ALLEFFECT();
+    }
+
+    pass AllMapBloomResult // 13
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_RESULT_MAP();
     }
 }
 
