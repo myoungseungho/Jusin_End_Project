@@ -1276,7 +1276,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.fhitCharacter_StunTime = 0.55f;
 
 		Desc.iDamage = 700 * Get_DamageScale();;
-		Desc.fLifeTime = 0.2f;
+		Desc.fLifeTime = 0.15f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.1f;

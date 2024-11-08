@@ -3581,6 +3581,9 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					else
 						m_fMaxSparkingTime = 15.f;
 
+					
+					//m_fMaxSparkingTime = 2005.f;
+				
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
 
