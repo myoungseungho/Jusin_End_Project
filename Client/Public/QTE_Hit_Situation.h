@@ -51,6 +51,7 @@ private:
 
 	vector<_float> m_vecIconCreationTimes;
 	vector<class CQTE_Hit_UI_Icon*> m_vecHitUIIcon;
+	vector<class CQTE_Hit_UI_Result*> m_vecHitResult;
 
 	CQTE_Hit::Hit_Situation_ID m_currentSituationID = {};
 

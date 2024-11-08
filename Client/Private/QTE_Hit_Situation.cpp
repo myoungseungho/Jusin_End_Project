@@ -4,6 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Hit_UI_Icon.h"
+#include "QTE_Hit_UI_Result.h"
 CQTE_Hit_Situation::CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -102,6 +103,9 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 		for (auto& iter : m_vecHitUIIcon)
 			iter->Update(fTimeDelta);
 
+		for (auto& iter : m_vecHitResult)
+			iter->Update(fTimeDelta);
+
 		// 다음 아이콘 생성할게 남아있는지 체크
 		if (m_iNextIconIndex < m_vecIconCreationTimes.size())
 		{
@@ -133,6 +137,9 @@ void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
 	if (m_bIsQTEActive)
 	{
 		for (auto& iter : m_vecHitUIIcon)
+			iter->Late_Update(fTimeDelta);
+
+		for (auto& iter : m_vecHitResult)
 			iter->Late_Update(fTimeDelta);
 	}
 }
@@ -190,9 +197,12 @@ void CQTE_Hit_Situation::End_QTE()
 	for (auto& iter : m_vecHitUIIcon)
 		Safe_Release(iter);
 
-	m_vecHitUIIcon.clear();
-#pragma endregion
+	for (auto& iter : m_vecHitResult)
+		Safe_Release(iter);
 
+	m_vecHitUIIcon.clear();
+	m_vecHitResult.clear();
+#pragma endregion
 
 }
 
@@ -393,6 +403,42 @@ void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 			}
 
 			iter->Send_Input(input, isFinal);
+
+#pragma region Result 객체 생성
+
+			int iTextureNum = -1;
+			switch (iter->m_currentResult_ID)
+			{
+			case CQTE_Hit_UI_Icon::HIT_RESULT_FAILED:
+				iTextureNum = 0;
+				break;
+			case CQTE_Hit_UI_Icon::HIT_RESULT_GOOD:
+				iTextureNum = 1;
+				break;
+			case CQTE_Hit_UI_Icon::HIT_RESULT_EXCELLENT:
+				iTextureNum = 2;
+				break;
+			case CQTE_Hit_UI_Icon::HIT_RESULT_PERFECT:
+				iTextureNum = 3;
+				break;
+			default:
+				iTextureNum = 0;
+				break;
+			}
+
+			CQTE_Hit_UI_Result::Hit_RESULT_DESC Desc{};
+			_float OffsetY = -70.f;
+
+			Desc.fX = iter->m_fX;
+			Desc.fY = iter->m_fY + OffsetY;
+			Desc.fSizeX = 300.f;
+			Desc.fSizeY = 200.f;
+			Desc.iTextureNum = iTextureNum;
+			Desc.fTimer = 1.5f;
+
+			CQTE_Hit_UI_Result* Result = static_cast<CQTE_Hit_UI_Result*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Result"), &Desc));
+			m_vecHitResult.push_back(Result);
+#pragma endregion
 		}
 	}
 }
@@ -426,6 +472,9 @@ CGameObject* CQTE_Hit_Situation::Clone(void* pArg)
 void CQTE_Hit_Situation::Free()
 {
 	for (auto& iter : m_vecHitUIIcon)
+		Safe_Release(iter);
+
+	for (auto& iter : m_vecHitResult)
 		Safe_Release(iter);
 
 	m_vecHitUIIcon.clear();

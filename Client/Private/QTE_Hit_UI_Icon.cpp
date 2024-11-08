@@ -118,6 +118,13 @@ HRESULT CQTE_Hit_UI_Icon::Render(_float fTimeDelta)
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+
+	////결정되면 Render
+	//if (m_currentResult_ID != HIT_RESULT_NOT_YET_DECIDED)
+	//{
+	//	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"), TEXT("상자"), _float2(530.f, 392.f), XMVectorSet(1.f, 1.f, 1.f, 1.f), 0.f, { 0.f,0.f }, 0.5f);
+	//}
+
 	return S_OK;
 }
 
