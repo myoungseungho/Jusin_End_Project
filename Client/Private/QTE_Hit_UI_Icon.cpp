@@ -89,7 +89,7 @@ HRESULT CQTE_Hit_UI_Icon::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(23)))
+	if (FAILED(m_pShaderCom->Begin(25)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -153,10 +153,19 @@ HRESULT CQTE_Hit_UI_Icon::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
-		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
+		TEXT("Com_Input_Texture"), reinterpret_cast<CComponent**>(&m_pTexture_Key_InputButtonCom))))
 		return E_FAIL;
 
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
+		TEXT("Com_Moving_Circle_Texture"), reinterpret_cast<CComponent**>(&m_pTexture_Moving_CircleCom))))
+		return E_FAIL;
+
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
+		TEXT("Com_Static_Circle_Texture"), reinterpret_cast<CComponent**>(&m_pTexture_Static_CircleCom))))
+		return E_FAIL;
 
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
@@ -177,7 +186,13 @@ HRESULT CQTE_Hit_UI_Icon::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureNumber)))
+	if (FAILED(m_pTexture_Key_InputButtonCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureNumber)))
+		return E_FAIL;
+
+	if (FAILED(m_pTexture_Moving_CircleCom->Bind_ShaderResource(m_pShaderCom, "g_QTE_Moving_Texture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pTexture_Static_CircleCom->Bind_ShaderResource(m_pShaderCom, "g_QTE_Static_Texture", 6)))
 		return E_FAIL;
 
 	return S_OK;
@@ -211,7 +226,7 @@ CGameObject* CQTE_Hit_UI_Icon::Clone(void* pArg)
 
 void CQTE_Hit_UI_Icon::Free()
 {
-	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pTexture_Key_InputButtonCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
 

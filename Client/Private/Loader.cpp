@@ -962,7 +962,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/CmnBG_Eff_Lens_%d.png"), 6))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/CmnBG_Eff_Lens_%d.png"), 8))))
 		return E_FAIL;
 }
 

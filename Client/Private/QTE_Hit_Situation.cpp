@@ -200,7 +200,6 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	CQTE_Hit_UI_Icon::QTE_Hit_UI_ICON_DESC Desc{};
 	Desc.fSizeX = { 100.f };
 	Desc.fSizeY = { 100.f };
-	Desc.iTextureNumber = { 0 };
 
 	// 위치 범위 설정
 	// 이 범위 내에서 확률적으로 뜰 것
@@ -261,7 +260,7 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
 
 
-#pragma region 키설정, 현재 '나와있는' 객체의 키와 중복되서는 안된다
+#pragma region 키설정
 
 	vector<CQTE_Hit_UI_Icon::KEY_ID> possibleKeys = {
 		CQTE_Hit_UI_Icon::KEY_ID::HIT_KEY_LIGHT,
@@ -279,7 +278,7 @@ void CQTE_Hit_Situation::Create_UIIcon()
 			continue;
 
 		CQTE_Hit_UI_Icon::KEY_ID key = iter->m_Key;
-
+		\
 		auto it = std::find(possibleKeys.begin(), possibleKeys.end(), key);
 		if (it != possibleKeys.end())
 			possibleKeys.erase(it);
@@ -290,8 +289,10 @@ void CQTE_Hit_Situation::Create_UIIcon()
 		return;
 
 	// 남은 키 중에서 랜덤하게 선택
-	int randomIndex = rand() % possibleKeys.size();
+	_int randomIndex = rand() % possibleKeys.size();
 	Desc.key = possibleKeys[randomIndex];
+	Desc.iTextureNumber = (_int)possibleKeys[randomIndex];
+
 #pragma endregion
 
 	Desc.Hit_Situation = this;

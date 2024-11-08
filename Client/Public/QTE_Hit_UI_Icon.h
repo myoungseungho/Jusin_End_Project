@@ -33,13 +33,13 @@ public:
 		HIT_RESULT_PERFECT,
 		HIT_RESULT_FAILED
 	};
-	
+
 	struct QTE_Hit_UI_ICON_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fAlpha{}, fTimer;
 		_int iTextureNumber{};
 		KEY_ID key{};
-		_bool bFinal = {false};
+		_bool bFinal = { false };
 		CGameObject* Hit_Situation = { nullptr };
 	};
 
@@ -72,7 +72,10 @@ private:
 
 private:
 	CShader* m_pShaderCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pTexture_Key_InputButtonCom = { nullptr };
+	CTexture* m_pTexture_Moving_CircleCom = { nullptr };
+	CTexture* m_pTexture_Static_CircleCom = { nullptr };
+
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 	_float					 m_fAlpha{}, m_fTimer{}, m_fElaspedTime{};

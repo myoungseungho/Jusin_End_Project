@@ -24,11 +24,13 @@ vector g_vCamPosition;
 int iSpriteIndex = 0;
 int iNumSprite = 0;
 
+
 //QTE_UI
 int g_IconState;
-
 float g_Time;
 float g_MaxTime;
+texture2D g_QTE_Moving_Texture;
+texture2D g_QTE_Static_Texture;
 
 struct VS_IN
 {
@@ -562,6 +564,11 @@ PS_OUT PS_QTE_UI_GAUGE(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_QTE_Hit_UI(PS_IN In)
+{
+    
+}
+
 technique11 DefaultTechnique
 {
 	/* PASS¿« ±‚¡ÿ : ºŒ¿Ã¥ı ±‚π˝¿« ƒ∏Ω∂»≠. */
@@ -930,6 +937,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_QTE_UI_GAUGE();
+    }
+
+//25
+    pass QTE_Hit_UI
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_QTE_Hit_UI();
     }
 
 }
