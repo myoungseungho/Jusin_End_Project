@@ -127,7 +127,7 @@ PS_OUT PS_MAIN_ISLAND(PS_IN In)
     PS_OUT Out;
     
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    Out.vDiffuse.rgb *= float3(0.76f, 0.32247f, 0.0f);
+    Out.vDiffuse.rgb *= float3(0.66f, 0.32247f, 0.0f);
     Out.vNormal = vector(Out.vDiffuse.rgb * Out.vDiffuse.a, 0.f);
     Out.vDiffuse.a *= 0.509f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
@@ -139,7 +139,7 @@ PS_OUT PS_MAIN_ISLAND2(PS_IN In)
     PS_OUT Out;
 
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    Out.vDiffuse.rgb *= float3(1.0f, 0.288649f, 0.0f);
+    Out.vDiffuse.rgb *= float3(0.75f, 0.288649f, 0.0f);
     Out.vNormal = vector(Out.vDiffuse.rgb * Out.vDiffuse.a, 0.f);
     Out.vDiffuse.a *= 0.5f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
@@ -178,8 +178,8 @@ PS_OUT PS_MAIN_SKY(PS_IN In)
     PS_OUT Out;
     
     float2 vTexcoord = In.vTexcoord;
-    vTexcoord.y += g_Time * 0.01f;
-    
+    vTexcoord.y += g_Time * 0.03f;
+    //Tex < 0.039 && Tex > 0.961 --- 0.074 > Tex && 0.932 > Tex
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
     vector vMtrlMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
     Out.vDiffuse = vMtrlDiffuse;
@@ -197,7 +197,7 @@ PS_OUT PS_MAIN_LAVAFALL1(PS_IN In)
     
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(1.0f, 0.125939f, 0.0f, 0.399f);
+    vector vLerpParam = vector(0.6f, 0.125939f, 0.0f, 0.399f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -214,7 +214,7 @@ PS_OUT PS_MAIN_LAVAFALL2(PS_IN In)
     
     vMtrlDiffuseSrc.rgb *= float3(0.53f, 0.269837f, 0.135193f);
     
-    vector vLerpParam = vector(1.0f, 0.125939f, 0.0f, 0.399f);
+    vector vLerpParam = vector(0.6f, 0.125939f, 0.0f, 0.399f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -248,7 +248,7 @@ PS_OUT PS_MAIN_LAVAFALL4(PS_IN In)
     
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(1.f, 0.196243f, 0.086535f, 0.487f);
+    vector vLerpParam = vector(0.6f, 0.196243f, 0.086535f, 0.487f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -265,7 +265,7 @@ PS_OUT PS_MAIN_LAVAFALL5(PS_IN In)
     
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.76f, 0.126768f, 0.f, 0.685f);
+    vector vLerpParam = vector(0.66f, 0.126768f, 0.f, 0.685f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -282,7 +282,7 @@ PS_OUT PS_MAIN_LAVAFALL6(PS_IN In)
     
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.76f, 0.126768f, 0.f, 0.685f);
+    vector vLerpParam = vector(0.66f, 0.126768f, 0.f, 0.685f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
 
@@ -300,7 +300,7 @@ PS_OUT PS_MAIN_LAVAFALL7(PS_IN In)
     
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.76f, 0.126768f, 0.f, 0.685f);
+    vector vLerpParam = vector(0.66f, 0.126768f, 0.f, 0.685f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -375,21 +375,27 @@ PS_OUT PS_MAIN_CLIFF4(PS_IN In)
 PS_OUT PS_MAIN_SMOKE(PS_IN In)
 {
     PS_OUT Out;
-
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    
     float2 vTexcoord = In.vTexcoord;
-    vTexcoord.xy += g_Time * 0.03f;
-    vMtrlDiffuse.g = g_DiffuseTexture.Sample(LinearSampler, vTexcoord).g;
-    vector vLavaColor = { 1.5f, 0.2564f, 0.021219f, 1.f };
+    vTexcoord.y += g_Time * 0.03f;
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
+    vTexcoord.y *= 1.5f;
+    vector vMtrlMask = g_MaskTexture.Sample(LinearSampler, vTexcoord);
+    vector vLavaColor = { 1.2f, 0.2564f, 0.001f, 1.f };
+    vector vYellowColor = { 1.0f, 0.60f, 0.0f, 1.0f };
     vector vResultColor;
     
-    vResultColor.rgb = vMtrlDiffuse.rgb;
-    vResultColor.a = 1.f;
+    float yellowFactor = saturate(1.0 - saturate(vTexcoord.y));
     
+    vMtrlDiffuse = lerp(vMtrlDiffuse, vMtrlMask, 0.3f) * 1.5f;
+    vResultColor.rgb = lerp(vLavaColor.rgb, vYellowColor.rgb, yellowFactor) * vMtrlDiffuse.g;
+    vResultColor.a = ((1.0 - abs(In.vTexcoord.x - 0.5) * 2.0) * (In.vTexcoord.y * vResultColor.r)) * 1.2f;
+
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
     return Out;
 }
+
 
 
 technique11		DefaultTechnique

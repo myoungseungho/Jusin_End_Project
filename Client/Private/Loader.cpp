@@ -3050,6 +3050,11 @@ HRESULT CLoader::Load_Map()
 
 	/*---------------------------------- -//-----------------TEXTURE------------------//-----------------------------------*/
 
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_smoke02"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke02.png"), 1))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_BRground01"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground01.png"), 1))))
 		return E_FAIL;
