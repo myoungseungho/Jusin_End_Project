@@ -62,16 +62,16 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 	Desc.pfTimer = &m_fTimer;
 	Desc.fX = m_fX;
 	Desc.fY = m_fY;
-	Desc.fSizeX = m_fSizeX * 2.f;
-	Desc.fSizeY = m_fSizeY * 2.f;
+	Desc.fSizeX = m_fSizeX * 4.f;
+	Desc.fSizeY = m_fSizeY * 4.f;
 
 	m_pHit_MovingRing_Icon = static_cast<CQTE_Hit_UI_MovingRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_MovingRing_Icon"), &Desc));
 
 	CQTE_Hit_UI_StaticRing_Icon::Hit_StaticRing_DESC Static_Desc{};
 	Static_Desc.fX = m_fX;
 	Static_Desc.fY = m_fY;
-	Static_Desc.fSizeX = m_fSizeX * 1.5f;
-	Static_Desc.fSizeY = m_fSizeY * 1.5f;
+	Static_Desc.fSizeX = m_fSizeX * 2.f;
+	Static_Desc.fSizeY = m_fSizeY * 2.f;
 
 	m_pHit_StaticRing_Icon = static_cast<CQTE_Hit_UI_StaticRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_StaticRing_Icon"), &Static_Desc));
 

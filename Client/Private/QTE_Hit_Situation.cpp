@@ -203,10 +203,10 @@ void CQTE_Hit_Situation::Create_UIIcon()
 
 	// 위치 범위 설정
 	// 이 범위 내에서 확률적으로 뜰 것
-	_float minX = 600.f;
-	_float maxX = 1300.f; // 화면 너비 - 아이콘 너비를 고려
-	_float minY = 400.f;
-	_float maxY = 680.f; // 화면 높이 - 아이콘 높이를 고려
+	_float minX = 480.f;
+	_float maxX = 1440.f; // 화면 너비 - 아이콘 너비를 고려
+	_float minY = 300.f;
+	_float maxY = 780.f; // 화면 높이 - 아이콘 높이를 고려
 
 #pragma region 겹치지 않는 위치를 찾기 위한 최대 시도 횟수
 
@@ -227,14 +227,14 @@ void CQTE_Hit_Situation::Create_UIIcon()
 			// 기존 아이콘의 위치와 크기 가져오기
 			_float existingX = existingIcon->m_fX;
 			_float existingY = existingIcon->m_fY;
-			_float existingSizeX = existingIcon->m_fSizeX * 2.f;
-			_float existingSizeY = existingIcon->m_fSizeY * 2.f;
+			_float existingSizeX = existingIcon->m_fSizeX * 4.f;
+			_float existingSizeY = existingIcon->m_fSizeY * 4.f;
 
 			// AABB 충돌 검사
 			if (Desc.fX < existingX + existingSizeX &&
-				Desc.fX + Desc.fSizeX * 2.f > existingX &&
+				Desc.fX + Desc.fSizeX * 4.f > existingX &&
 				Desc.fY < existingY + existingSizeY &&
-				Desc.fY + Desc.fSizeY * 2.f > existingY)
+				Desc.fY + Desc.fSizeY * 4.f > existingY)
 			{
 				// 겹침 발생
 				positionFound = false;
