@@ -789,7 +789,26 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 			return E_FAIL;
 
 
-		if(m_bFinalSkillss3 == false)
+		//if(m_bFinalSkillss3 == false)
+		//{
+		//	if (FAILED(m_pModelCom->Render(i)))
+		//		return E_FAIL;
+		//}
+		//else
+		//{
+		//	if (FAILED(m_pModelCom_Skill->Render(i)))
+		//		return E_FAIL;
+		//}
+
+
+
+		//이게 왜 됨?
+		if (m_bAlwaysss3Test)
+		{
+			if (FAILED(m_pModelCom_Skill->Render(i)))
+				return E_FAIL;
+		}
+		else if (m_bFinalSkillss3 == false)
 		{
 			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
@@ -2502,6 +2521,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_bFinalSkillQTESucces = false;
 				m_pModelCom_Skill->SetUp_Animation(0,false,0);
 				m_pModelCom_Skill->CurrentAnimationPositionJump(0.1f);
+
+				m_bAlwaysss3Test = true;
 			}
 		}
 
@@ -2611,7 +2632,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.iDamage = 120 * Get_DamageScale();
 
 			if(m_bFinalSkillss3)
-				Desc.iDamage = 220 * Get_DamageScale(true);
+				Desc.iDamage = 240 * Get_DamageScale(true);
 			else
 				Desc.iDamage = 200 * Get_DamageScale(true);
 			Desc.fLifeTime = 6.f;
@@ -2998,6 +3019,73 @@ void CPlay_Goku::Add_BlueLight()
 	LightDesc.strName = "Ray";
 	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
 		return;
+}
+
+_float CPlay_Goku::Get_DamageScale(_bool bUltimate)
+{
+	//깡으로 더하는건 쉬운데 1히트당 1이 아닌데 따로 더해도 되나  //스파킹도 있는데 받는쪽에서 더하는게 아니라 때리는쪽에 더해야하는거 아님?
+	//뎀감비율
+	//Step Count	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17 +
+	//Next Hit		0%	10%	20% 30% 40% 50% 60% 70% 70% 70% 70% 75% 75% 75% 80% 80% 80% 85%
+	//데미지비율    1.0 0.9 0.8 0              0.3   
+
+	_uint iAttackStepCount;
+	if (m_iPlayerTeam == 1)
+		iAttackStepCount = CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(2);
+	else
+		iAttackStepCount = CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(1);
+
+
+	_float fDamageScale;// = 1.f;
+
+	if (iAttackStepCount <= 7)
+	{
+		fDamageScale = 1.0f - iAttackStepCount * 0.1f;
+	}
+
+	else if (iAttackStepCount <= 10)
+	{
+		fDamageScale = 0.3f;
+	}
+
+	else if (iAttackStepCount <= 13)
+	{
+		fDamageScale = 0.25f;
+	}
+
+	else if (iAttackStepCount <= 16)
+	{
+		fDamageScale = 0.2f;
+	}
+	else
+	{
+		fDamageScale = 0.15f;
+	}
+
+
+
+	//필살기의 경우 최소 35%는 보장
+	if (bUltimate)
+	{
+		if (fDamageScale < 0.35f)
+			fDamageScale = 0.35f;
+
+	}
+
+
+	if (m_bSparking)
+	{
+		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
+		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+	}
+
+	if (m_bAlwaysss3Test)
+	{
+		fDamageScale *= 1.05f;
+	}
+
+	//return fDamageScale;
+	return fDamageScale * 0.7f;
 }
 
 

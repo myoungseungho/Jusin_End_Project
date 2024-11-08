@@ -331,6 +331,12 @@
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Play_Hit.cpp">
+      <Filter>02.GameObjects\Character\Play_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Hit_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -707,6 +713,12 @@
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
       <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Hit">
+      <UniqueIdentifier>{9979946a-150e-4d0b-bfb6-70530269ec1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Hit\Hit_MeleeAttack">
+      <UniqueIdentifier>{9aab07f7-0732-4afd-b888-6fabf74e8680}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1195,6 +1207,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Play_Goku.h">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Hit.h">
+      <Filter>02.GameObjects\Character\Play_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Hit_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

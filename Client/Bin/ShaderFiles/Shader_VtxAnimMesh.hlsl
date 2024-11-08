@@ -134,7 +134,7 @@ PS_OUT PS_MAIN(PS_IN In)
     vResultColor.rgb = saturate(vResultColor.rgb + vMtrlShadeDesc.b * 0.1f);
 
     Out.vDiffuse = vResultColor;
-    Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask));
+    Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask /*+fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     
     //float2 vTexcoordFloor = In.vTexcoord - vTexcoordFraction;

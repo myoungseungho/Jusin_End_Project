@@ -258,7 +258,7 @@ public:
 	void Gain_HitCount(_ushort iHit);// 
 
 	//_float Get_DamageScale();
-	_float Get_DamageScale(_bool bUltimate = false);
+	virtual _float Get_DamageScale(_bool bUltimate = false);
 
 	void Set_GrabLoofCount(_ushort iLoofCount);
 

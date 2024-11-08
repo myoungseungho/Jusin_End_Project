@@ -22,7 +22,7 @@ PLAY_21,TON600cs_body,300,PositionChange,395
 
 
 //,오프닝 사이드 스탠딩 (공용)  78
-PLAY_21G,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+PLAY_21,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_21,TON602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
 //,라운드 넘어갈때 맞대기1 (공용) 81

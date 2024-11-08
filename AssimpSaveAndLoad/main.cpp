@@ -6,11 +6,7 @@ int main() {
 	ModelConverter converter;
 
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/Lobby_Cloud_0.fbx", TYPE_NONANIM},
-		{"Models/Lobby_Cloud_1.fbx", TYPE_NONANIM},
-		{"Models/Lobby_Cloud_2.fbx", TYPE_NONANIM},
-		{"Models/Lobby_Cloud_3.fbx", TYPE_NONANIM},
-		{"Models/Lobby_Cloud_4.fbx", TYPE_NONANIM},
+		{"Models/Ton_AllMesh.fbx", TYPE_ANIM},
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그
