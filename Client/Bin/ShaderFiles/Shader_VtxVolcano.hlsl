@@ -313,23 +313,84 @@ PS_OUT PS_MAIN_CLIFF1(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-   // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
-    //if (vMtrlDiffuse.a < 0.99f)
-    //    discard;
-	
-    vector vLavaColor = { 255.f / 255.f, 68.f / 255.f, 0.f / 255.f, 1.f };
-    //vector vLavaColor = { 234.f / 255.f, 0.5f / 255.f, 0.f / 255.f, 1.f };
-    //vLavaColor *= 0.7f;
+    vector vLavaColor = { 1.44f, 0.422265f, 0.131311f, 1.f };
     vector vResultColor;
+    
     vResultColor.rgb = vMtrlDiffuse.rgb + vLavaColor.rgb * (1 - vMtrlDiffuse.a);
     vResultColor.a = 1.f;
-    //vMtrlDiffuse.a
-    Out.vDiffuse = vResultColor;
     
+    Out.vDiffuse = vResultColor;
     Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
-    //Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
+
+PS_OUT PS_MAIN_CLIFF2(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vLavaColor = { 1.44f, 0.422265f, 0.131311f, 1.f };
+    vector vResultColor;
+    
+    vResultColor.rgb = vMtrlDiffuse.rgb + vLavaColor.rgb * (1 - vMtrlDiffuse.a);
+    vResultColor.a = 1.f;
+    
+    Out.vDiffuse = vResultColor;
+    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
+    return Out;
+}
+
+PS_OUT PS_MAIN_CLIFF3(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vLavaColor = { 1.6f, 0.3f, 0.02121901f, 1.f };
+    vector vResultColor;
+    
+    vResultColor.rgb = vMtrlDiffuse.rgb + vLavaColor.rgb * (1 - vMtrlDiffuse.a);
+    vResultColor.a = 1.f;
+    
+    Out.vDiffuse = vResultColor;
+    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
+    return Out;
+}
+
+PS_OUT PS_MAIN_CLIFF4(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vLavaColor = { 1.5f, 0.2564f, 0.021219f, 1.f };
+    vector vResultColor;
+    
+    vResultColor.rgb = vMtrlDiffuse.rgb + vLavaColor.rgb * (1 - vMtrlDiffuse.a);
+    vResultColor.a = 1.f;
+    
+    Out.vDiffuse = vResultColor;
+    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
+    return Out;
+}
+
+PS_OUT PS_MAIN_SMOKE(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    float2 vTexcoord = In.vTexcoord;
+    vTexcoord.xy += g_Time * 0.03f;
+    vMtrlDiffuse.g = g_DiffuseTexture.Sample(LinearSampler, vTexcoord).g;
+    vector vLavaColor = { 1.5f, 0.2564f, 0.021219f, 1.f };
+    vector vResultColor;
+    
+    vResultColor.rgb = vMtrlDiffuse.rgb;
+    vResultColor.a = 1.f;
+    
+    Out.vDiffuse = vResultColor;
+    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
+    return Out;
+}
+
 
 technique11		DefaultTechnique
 {	
@@ -513,6 +574,58 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_CLIFF1();
+    }
+
+    pass Cliff2 // 14
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_CLIFF2();
+    }
+
+    pass Cliff3 // 15
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_CLIFF3();
+    }
+
+    pass Cliff4 // 16
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_CLIFF4();
+    }
+
+    pass SMOKE // 17
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SMOKE();
     }
 }
 

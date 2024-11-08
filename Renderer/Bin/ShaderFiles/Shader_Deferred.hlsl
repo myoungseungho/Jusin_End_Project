@@ -105,10 +105,15 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL_PLAYER(PS_IN In)
     shadeIntensity = saturate(shadeIntensity);
 
     float shadeStep = 2.0f;
-    shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
+    shadeIntensity = (floor(shadeIntensity * shadeStep) / shadeStep);
+    float4 vResultShade = ((g_vLightDiffuse * (vNormalDesc.w ? 1.f : shadeIntensity) * 1.f) + vAmbient);
 
-    float4 vResultShade = ((g_vLightDiffuse * shadeIntensity * 1.f) + vAmbient);
-    vResultShade = (vNormalDesc.w ? 1.0 : vResultShade); 
+    
+    
+    //vNormalDesc.w 가 마스크용
+    //vResultShade = (vNormalDesc.w ? 1.f : vResultShade);
+    //vResultShade = (vNormalDesc.w ? g_vLightDiffuse * 2 * vAmbient : vResultShade);
+    vResultShade.a = vNormalDesc.w ? 1.f : 0;
     Out.vShade = vResultShade;
     
     float4 vWorldPos;
@@ -143,18 +148,18 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL_PLAYER(PS_IN In)
 	
     float specularThreshold = 0.8f; // 0.9 이상의 값만 스펙큘러 적용
 	
-    if (specularIntensity >= specularThreshold)
-    {
-        // 스펙큘러 색상 적용
-        Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(specularIntensity, 1.5f);
+    //if (specularIntensity >= specularThreshold)
+    //{
+    //    // 스펙큘러 색상 적용
+    //    Out.vSpecular = (g_vLightSpecular * g_vMtrlSpecular) * pow(specularIntensity, 1.5f);
 
-    }
-    else
-    {
-        // 스펙큘러 미적용 (혹은 매우 약하게 적용)
-        Out.vSpecular = float4(0.f, 0.f, 0.f, 1.0f); // 스펙큘러를 제거
-    }
-    
+    //}
+    //else
+    //{
+    //    // 스펙큘러 미적용 (혹은 매우 약하게 적용)
+       
+    //}
+    Out.vSpecular = float4(0.f, 0.f, 0.f, 1.0f); // 스펙큘러를 제거
     return Out;
 }
 
@@ -388,10 +393,10 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     PS_OUT Out = (PS_OUT) 0;
 
     vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    if (0.0f == vDiffuse.a)
-        discard;
+    clip(vDiffuse.a - 0.98f);
 
     vector vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
+    //clip(vShade.a - 0.98f);
     vector vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
 
     //Out.vColor = vDiffuse * (g_isUsingEffectLight ? 1.0 : vShade) + vSpecular;
@@ -536,7 +541,7 @@ technique11		DefaultTechnique
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
-        SetBlendState(BS_OneBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;

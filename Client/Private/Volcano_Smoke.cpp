@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Public\Volcano_Smoke.h"
 
+#include "Volcano_Defines.h"
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
@@ -37,7 +38,7 @@ HRESULT CVolcano_Smoke::Initialize(void * pArg)
 
 void CVolcano_Smoke::Camera_Update(_float fTimeDelta)
 {
-	//m_fAccTime += fTimeDelta * 5;
+	m_fAccTime += fTimeDelta;
 }
 
 void CVolcano_Smoke::Update(_float fTimeDelta)
@@ -62,7 +63,7 @@ HRESULT CVolcano_Smoke::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 			return E_FAIL;
 		
-		if (FAILED(m_pShaderCom->Begin(0)))
+		if (FAILED(m_pShaderCom->Begin(VO_SMOKE)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -111,8 +112,8 @@ HRESULT CVolcano_Smoke::Bind_ShaderResources()
 	//if (FAILED(m_pShaderCom->Bind_RawValue("g_fSpriteCurPos", &m_fSpriteCurPos, sizeof(_float2))))
 	//	return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
-	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
+		return E_FAIL;
 	
 	return S_OK;
 }
