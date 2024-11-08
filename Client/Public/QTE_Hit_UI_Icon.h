@@ -73,9 +73,6 @@ private:
 private:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTexture_Key_InputButtonCom = { nullptr };
-	CTexture* m_pTexture_Moving_CircleCom = { nullptr };
-	CTexture* m_pTexture_Static_CircleCom = { nullptr };
-
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 	_float					 m_fAlpha{}, m_fTimer{}, m_fElaspedTime{};

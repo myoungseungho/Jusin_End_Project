@@ -29,8 +29,6 @@ int iNumSprite = 0;
 int g_IconState;
 float g_Time;
 float g_MaxTime;
-texture2D g_QTE_Moving_Texture;
-texture2D g_QTE_Static_Texture;
 
 struct VS_IN
 {
@@ -566,7 +564,9 @@ PS_OUT PS_QTE_UI_GAUGE(PS_IN In)
 
 PS_OUT PS_QTE_Hit_UI(PS_IN In)
 {
+    PS_OUT Out;
     
+    return Out;
 }
 
 technique11 DefaultTechnique
