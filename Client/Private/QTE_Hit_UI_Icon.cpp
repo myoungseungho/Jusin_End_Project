@@ -138,13 +138,11 @@ void CQTE_Hit_UI_Icon::Calculate_Result()
 
 void CQTE_Hit_UI_Icon::Finalize_Icon()
 {
-	SetActive(false);
-
 	// 마지막 아이콘인 경우 상황 객체에 알림
 	if (m_bIsFinal)
-	{
 		m_pHit_Situation->Notify_Last_UI_Final_Complete();
-	}
+
+	SetActive(false);
 }
 
 HRESULT CQTE_Hit_UI_Icon::Ready_Components()

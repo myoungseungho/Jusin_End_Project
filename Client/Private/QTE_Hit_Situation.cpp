@@ -81,23 +81,26 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 		else
 		{
 			// QTE가 비활성화되어 있으면 시작
+			// 첫번째 아이콘을 즉각 만들어버림
 			Start_QTE();
 		}
 	}
 #pragma endregion
 
 #pragma region 활성화
-
 	if (m_bIsQTEActive)
 	{
+		//전체 타이머가 전부 시간 소요되거나
+		//마지막 UI 객체 처리가 완료됬거나
 		if (m_fTimer <= 0.0f || m_bUI_Final_Complate)
 		{
 			// QTE 종료
 			End_QTE();
 		}
 
-		// 경과 시간 업데이트
-		m_fElapsedTime += fTimeDelta;
+		// 각 Hit_UI_Icon 업데이트
+		for (auto& iter : m_vecHitUIIcon)
+			iter->Update(fTimeDelta);
 
 		// 다음 아이콘 생성할게 남아있는지 체크
 		if (m_iNextIconIndex < m_vecIconCreationTimes.size())
@@ -114,12 +117,11 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 		// 사용자 입력 처리
 		Handle_QTEInput();
 
+		// 경과 시간 업데이트
+		m_fElapsedTime += fTimeDelta;
+
 		// 타이머 업데이트
 		m_fTimer -= fTimeDelta;
-
-		// 각 Hit_UI_Icon 업데이트
-		for (auto& iter : m_vecHitUIIcon)
-			iter->Update(fTimeDelta);
 	}
 #pragma endregion
 
@@ -127,6 +129,7 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 
 void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
 {
+	//QTE가 활성화되었다면
 	if (m_bIsQTEActive)
 	{
 		for (auto& iter : m_vecHitUIIcon)
@@ -144,7 +147,9 @@ void CQTE_Hit_Situation::Start_QTE()
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
 
+	//활성화
 	m_bIsQTEActive = true;
+	//마지막 객체 완료 처리 여부 초기화
 	m_bUI_Final_Complate = false;
 	// 첫 번째 아이콘 즉시 생성
 	Create_UIIcon();
@@ -152,16 +157,42 @@ void CQTE_Hit_Situation::Start_QTE()
 
 void CQTE_Hit_Situation::End_QTE()
 {
+#pragma region 초기화
+	//활성화 여부 초기화
 	m_bIsQTEActive = false;
+	//경과시간 초기화
 	m_fElapsedTime = 0.0f;
+	//다음 객체를 만드는데 필요한 변수 초기화
 	m_iNextIconIndex = 0;
+	//타이머는 원래 LifeTime으로 초기화
 	m_fTimer = m_fLifeTime;
+	//마지막 객체 완료 처리 여부 초기화
 	m_bUI_Final_Complate = false;
 
+	//모든 아이콘 싹다 삭제
 	for (auto& iter : m_vecHitUIIcon)
 		Safe_Release(iter);
 
 	m_vecHitUIIcon.clear();
+#pragma endregion
+
+#pragma region 점수 산정
+	_bool isSuccess = true;
+
+	for (auto& iter : m_vecHitUIIcon)
+	{
+		//FAIL이거나 결정되지 않았거나(예외처리) 하나라도 있으면 성공 실패
+		if (iter->m_currentResult_ID == CQTE_Hit_UI_Icon::RESULT_ID::HIT_RESULT_FAILED ||
+			iter->m_currentResult_ID == CQTE_Hit_UI_Icon::RESULT_ID::HIT_RESULT_NOT_YET_DECIDED)
+		{
+			isSuccess = false;
+			break;
+		}
+	}
+
+	//이제 여기에 결과를 전달해줄 객체에 isSuccess 전달
+#pragma endregion
+
 }
 
 void CQTE_Hit_Situation::Create_UIIcon()
@@ -172,12 +203,14 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	Desc.iTextureNumber = { 0 };
 
 	// 위치 범위 설정
+	// 이 범위 내에서 확률적으로 뜰 것
 	_float minX = 600.f;
 	_float maxX = 1300.f; // 화면 너비 - 아이콘 너비를 고려
 	_float minY = 400.f;
 	_float maxY = 680.f; // 화면 높이 - 아이콘 높이를 고려
 
-	// 겹치지 않는 위치를 찾기 위한 최대 시도 횟수
+#pragma region 겹치지 않는 위치를 찾기 위한 최대 시도 횟수
+
 	const _int maxAttempts = 100;
 	_int attempts = 0;
 	_bool positionFound = false;
@@ -219,11 +252,16 @@ void CQTE_Hit_Situation::Create_UIIcon()
 		Desc.fY = 540.f - Desc.fSizeY / 2;
 	}
 
+#pragma endregion
+
+
 	// fTimer를 최소 및 최대 값 사이에서 랜덤하게 설정
 	_float minTimer = 1.f; // 최소 시간
 	_float maxTimer = 2.5f; // 최대 시간
 	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
 
+
+#pragma region 키설정, 현재 '나와있는' 객체의 키와 중복되서는 안된다
 
 	vector<CQTE_Hit_UI_Icon::KEY_ID> possibleKeys = {
 		CQTE_Hit_UI_Icon::KEY_ID::HIT_KEY_LIGHT,
@@ -254,6 +292,7 @@ void CQTE_Hit_Situation::Create_UIIcon()
 	// 남은 키 중에서 랜덤하게 선택
 	int randomIndex = rand() % possibleKeys.size();
 	Desc.key = possibleKeys[randomIndex];
+#pragma endregion
 
 	Desc.Hit_Situation = this;
 
@@ -316,12 +355,14 @@ void CQTE_Hit_Situation::Handle_QTEInput()
 
 void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 {
+	//키를 입력할 때, 현재 살아있는 QTE에 한해 작동해야 한다
 	for (auto& iter : m_vecHitUIIcon)
 	{
 		_bool isActive = iter->IsActive();
 		if (!isActive)
 			continue;
 
+		//살아있는 객체의 키
 		CQTE_Hit_UI_Icon::KEY_ID key = iter->m_Key;
 
 		//for문을 돌리면서 Input과 안맞으면 패스
@@ -329,7 +370,7 @@ void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 			continue;
 		//Input을 보내서 결과 판단하라고 함
 		else
-			CQTE_Hit_UI_Icon::RESULT_ID resultID = iter->Send_Input(input);
+			iter->Send_Input(input);
 	}
 }
 
