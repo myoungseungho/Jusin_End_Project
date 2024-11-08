@@ -81,6 +81,8 @@ private:
 	_bool m_bIsFinal = { false };
 
 	class CQTE_Hit_Situation* m_pHit_Situation = { nullptr };
+	class CQTE_Hit_UI_MovingRing_Icon* m_pHit_MovingRing_Icon = { nullptr };
+	class CQTE_Hit_UI_StaticRing_Icon* m_pHit_StaticRing_Icon = { nullptr };
 
 public:
 	static CQTE_Hit_UI_Icon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

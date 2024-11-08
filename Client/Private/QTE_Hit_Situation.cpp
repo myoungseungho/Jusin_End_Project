@@ -227,14 +227,14 @@ void CQTE_Hit_Situation::Create_UIIcon()
 			// 기존 아이콘의 위치와 크기 가져오기
 			_float existingX = existingIcon->m_fX;
 			_float existingY = existingIcon->m_fY;
-			_float existingSizeX = existingIcon->m_fSizeX;
-			_float existingSizeY = existingIcon->m_fSizeY;
+			_float existingSizeX = existingIcon->m_fSizeX * 2.f;
+			_float existingSizeY = existingIcon->m_fSizeY * 2.f;
 
 			// AABB 충돌 검사
 			if (Desc.fX < existingX + existingSizeX &&
-				Desc.fX + Desc.fSizeX > existingX &&
+				Desc.fX + Desc.fSizeX * 2.f > existingX &&
 				Desc.fY < existingY + existingSizeY &&
-				Desc.fY + Desc.fSizeY > existingY)
+				Desc.fY + Desc.fSizeY * 2.f > existingY)
 			{
 				// 겹침 발생
 				positionFound = false;
@@ -279,7 +279,7 @@ void CQTE_Hit_Situation::Create_UIIcon()
 
 		CQTE_Hit_UI_Icon::KEY_ID key = iter->m_Key;
 		\
-		auto it = std::find(possibleKeys.begin(), possibleKeys.end(), key);
+			auto it = std::find(possibleKeys.begin(), possibleKeys.end(), key);
 		if (it != possibleKeys.end())
 			possibleKeys.erase(it);
 	}

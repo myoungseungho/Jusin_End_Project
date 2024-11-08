@@ -4,6 +4,9 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Hit_Situation.h"
+#include "QTE_Hit_UI_MovingRing_Icon.h"
+#include "QTE_Hit_UI_StaticRing_Icon.h"
+
 CQTE_Hit_UI_Icon::CQTE_Hit_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -50,6 +53,28 @@ HRESULT CQTE_Hit_UI_Icon::Initialize(void* pArg)
 
 	SetActive(true);
 
+	//this는 키 텍스쳐를 가지고 있고
+	//나머지 둘은 Moving과 Static Ring을 가지고 있다
+
+	//경과시간과 Timer를 알아야 하니
+	CQTE_Hit_UI_MovingRing_Icon::Hit_MovingRing_DESC Desc{};
+	Desc.pfElaspedTime = &m_fElaspedTime;
+	Desc.pfTimer = &m_fTimer;
+	Desc.fX = m_fX;
+	Desc.fY = m_fY;
+	Desc.fSizeX = m_fSizeX * 2.f;
+	Desc.fSizeY = m_fSizeY * 2.f;
+
+	m_pHit_MovingRing_Icon = static_cast<CQTE_Hit_UI_MovingRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_MovingRing_Icon"), &Desc));
+
+	CQTE_Hit_UI_StaticRing_Icon::Hit_StaticRing_DESC Static_Desc{};
+	Static_Desc.fX = m_fX;
+	Static_Desc.fY = m_fY;
+	Static_Desc.fSizeX = m_fSizeX * 1.5f;
+	Static_Desc.fSizeY = m_fSizeY * 1.5f;
+
+	m_pHit_StaticRing_Icon = static_cast<CQTE_Hit_UI_StaticRing_Icon*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_StaticRing_Icon"), &Static_Desc));
+
 	return S_OK;
 }
 
@@ -62,6 +87,10 @@ void CQTE_Hit_UI_Icon::Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
+
+	//소속된 링들
+	m_pHit_MovingRing_Icon->Update(fTimeDelta);
+	m_pHit_StaticRing_Icon->Update(fTimeDelta);
 
 	m_fElaspedTime += fTimeDelta;
 
@@ -81,6 +110,8 @@ void CQTE_Hit_UI_Icon::Late_Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
+	m_pHit_MovingRing_Icon->Late_Update(fTimeDelta);
+	m_pHit_StaticRing_Icon->Late_Update(fTimeDelta);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
@@ -213,6 +244,9 @@ void CQTE_Hit_UI_Icon::Free()
 	Safe_Release(m_pTexture_Key_InputButtonCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
+
+	Safe_Release(m_pHit_MovingRing_Icon);
+	Safe_Release(m_pHit_StaticRing_Icon);
 
 	__super::Free();
 }

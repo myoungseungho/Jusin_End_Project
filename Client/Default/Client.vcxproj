@@ -191,6 +191,8 @@
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
     <ClInclude Include="..\Public\QTE_Hit_Situation.h" />
     <ClInclude Include="..\Public\QTE_Hit.h" />
+    <ClInclude Include="..\Public\QTE_Hit_UI_StaticRing_Icon.h" />
+    <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h" />
     <ClInclude Include="..\Public\QTE_UI_Gauge.h" />
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
@@ -347,6 +349,8 @@
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_Situation.cpp" />
     <ClCompile Include="..\Private\QTE_Hit.cpp" />
+    <ClCompile Include="..\Private\QTE_Hit_UI_StaticRing_Icon.cpp" />
+    <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp" />
     <ClCompile Include="..\Private\QTE_UI_Gauge.cpp" />
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />

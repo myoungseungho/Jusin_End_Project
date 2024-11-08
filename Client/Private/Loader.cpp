@@ -114,7 +114,8 @@
 #include "QTE_Hit.h"
 #include "QTE_Hit_UI_Icon.h"
 #include "QTE_Hit_Situation.h"
-
+#include "QTE_Hit_UI_MovingRing_Icon.h"
+#include "QTE_Hit_UI_StaticRing_Icon.h"
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -3205,6 +3206,14 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_Situation"),
 		CQTE_Hit_Situation::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_MovingRing_Icon"),
+		CQTE_Hit_UI_MovingRing_Icon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_StaticRing_Icon"),
+		CQTE_Hit_UI_StaticRing_Icon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
