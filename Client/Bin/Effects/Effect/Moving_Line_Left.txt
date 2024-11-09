@@ -1,7 +1,7 @@
 [Layer]
 LayerName: Moving_Line_Left
 Duration: 1
-TickPerSecond: 3
+TickPerSecond: 6
 KeyFramesCount: 59
 NumEffec: 8
 Position: 0 0 0
@@ -98,7 +98,7 @@ Rotation: 0 0 270
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
-GlowFactor: 2
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 2
 
@@ -135,7 +135,7 @@ Rotation: 0 0 270
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
-GlowFactor: 2
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 2
 
@@ -172,7 +172,7 @@ Rotation: 0 0 270
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 0 0 0 1
-GlowFactor: 2
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 2
 
