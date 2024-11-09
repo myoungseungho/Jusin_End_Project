@@ -46,7 +46,7 @@ private:
 
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f };
-	
+
 	//객체들이 사라지는 여유 시간을 줘야 함
 	_float m_fOffsetTimer = { 2.f };
 	_bool m_bOffsetActive = { false };
@@ -64,6 +64,8 @@ private:
 
 	//마지막 UI_Final
 	_bool m_bUI_Final_Complete = { false };
+	//카메라
+	class CMain_Camera* m_pMain_Camera = { nullptr };
 
 public:
 	static CQTE_Hit_Situation* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

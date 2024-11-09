@@ -80,6 +80,9 @@ private:
 
 	//마지막 UI_Final
 	_bool m_bUI_Final_Complate = { false };
+	//카메라
+	class CMain_Camera* m_pMain_Camera = { nullptr };
+
 public:
 	static CQTE_Same_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

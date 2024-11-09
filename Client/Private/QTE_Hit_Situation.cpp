@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "QTE_Hit_UI_Icon.h"
 #include "QTE_Hit_UI_Result.h"
+#include "Main_Camera.h"
 CQTE_Hit_Situation::CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -182,6 +183,9 @@ void CQTE_Hit_Situation::Start_QTE()
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
+
+	//카메라 쉐이킹용으로 필요함
+	m_pMain_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
 	//활성화
 	m_bIsQTEActive = true;
@@ -480,12 +484,15 @@ void CQTE_Hit_Situation::Create_ResultObject(CQTE_Hit_UI_Icon* pIcon)
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_GOOD:
 		iTextureNum = 1;
+		m_pMain_Camera->StartCameraShake(0.1, 0.1);
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_EXCELLENT:
 		iTextureNum = 2;
+		m_pMain_Camera->StartCameraShake(0.1, 0.1);
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_PERFECT:
 		iTextureNum = 3;
+		m_pMain_Camera->StartCameraShake(0.1, 0.1);
 		break;
 	default:
 		iTextureNum = 0;

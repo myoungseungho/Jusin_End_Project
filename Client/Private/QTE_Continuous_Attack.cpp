@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Continuous_Attack_Space.h"
-
+#include "Main_Camera.h"
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -124,6 +124,9 @@ void CQTE_Continuous_Attack::Start_QTE()
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
 
+	//카메라 쉐이킹용으로 필요함
+	m_pMain_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
 	//활성화
 	m_bIsQTEActive = true;
 	m_fTimer = m_fLifeTime;
@@ -205,6 +208,8 @@ void CQTE_Continuous_Attack::Process_Command()
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 
 	m_pContinuous_Space->Process_Command();
+
+	m_pMain_Camera->StartCameraShake(0.05f, 0.01f);
 }
 
 void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)

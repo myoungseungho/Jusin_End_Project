@@ -78,7 +78,8 @@ private:
 	_bool m_bIsMovingDown = false;    // 내려가는 중인지 여부
 
 	class CQTE_Continuous_Attack_Space* m_pContinuous_Space = { nullptr };
-
+	//카메라
+	class CMain_Camera* m_pMain_Camera = { nullptr };
 public:
 	static CQTE_Continuous_Attack* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

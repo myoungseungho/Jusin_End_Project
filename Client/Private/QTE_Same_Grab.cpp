@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "QTE_Same_Grab_UI_Icon.h"
 #include "QTE_UI_Gauge.h"
+#include "Main_Camera.h"
 CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -134,6 +135,9 @@ void CQTE_Same_Grab::Start_QTE()
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
 
+	//카메라 쉐이킹용으로 필요함
+	m_pMain_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
 	//기존 객체들 전부 삭제
 	Clear_UIIcons();
 
@@ -262,6 +266,8 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			{
 				//EndQTE();
 			}
+
+			m_pMain_Camera->StartCameraShake(0.1, 0.1);
 		}
 		else
 		{
@@ -299,6 +305,8 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			{
 				//EndQTE();
 			}
+
+			m_pMain_Camera->StartCameraShake(0.1, 0.1);
 		}
 		else
 		{
