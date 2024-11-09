@@ -242,7 +242,6 @@ void CUI_Manager::DestroyOption()
 void CUI_Manager::Free()
 {
 	Safe_Release(m_pGameInstance);
-	Destroy_Instance();
 
 	__super::Free();
 }
