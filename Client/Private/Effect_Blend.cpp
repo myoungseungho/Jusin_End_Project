@@ -131,7 +131,7 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				m_pRenderInstance->Add_RenderObject(m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND, this);
 			}
 		}
 		else
@@ -139,7 +139,7 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				m_pRenderInstance->Add_RenderObject(m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND, this);
 			}
 		}
 	}
