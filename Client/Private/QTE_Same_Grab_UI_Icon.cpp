@@ -201,6 +201,9 @@ HRESULT CQTE_Same_Grab_UI_Icon::Bind_ShaderResources()
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureNumber)))
 		return E_FAIL;
 
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_IconState", &m_State, sizeof(_int))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
