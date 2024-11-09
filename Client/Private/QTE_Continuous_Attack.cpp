@@ -4,6 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Continuous_Attack_Space.h"
+#include "QTE_Continuous_Attack_Gauge.h"
 #include "Main_Camera.h"
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -51,9 +52,6 @@ HRESULT CQTE_Continuous_Attack::Initialize(void* pArg)
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
 
-
-	
-
 	return S_OK;
 }
 
@@ -94,12 +92,14 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		{
 			m_eMissionState = MISSION_SUCCESS;
 			End_QTE();
+			return;
 		}
 		// 타이머 확인
 		else if (m_fTimer <= 0.0f)
 		{
 			m_eMissionState = MISSION_FAILED;
 			End_QTE();
+			return;
 		}
 		else
 		{
@@ -108,6 +108,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		}
 
 		m_pContinuous_Space->Update(fTimeDelta);
+		m_pContinuous_Gauge->Update(fTimeDelta);
 	}
 
 #pragma endregion
@@ -140,6 +141,17 @@ void CQTE_Continuous_Attack::Start_QTE()
 	Desc.fSizeY = 200.f;
 	m_pContinuous_Space = static_cast<CQTE_Continuous_Attack_Space*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space"), &Desc));
 	m_pContinuous_Space->SetActive(true);
+
+	//게이지 객체 생성
+	CQTE_Continuous_Attack_Gauge::CONTINUOUS_ATTACK_GAUGE_DESC Gauge_Desc{};
+	Gauge_Desc.fX = 960.f;
+	Gauge_Desc.fY = 810.f;
+	Gauge_Desc.fSizeX = 300.f;
+	Gauge_Desc.fSizeY = 20.f;
+	Gauge_Desc.iGoalNumber = m_iTargetKeyPressCount;
+
+	m_pContinuous_Gauge = static_cast<CQTE_Continuous_Attack_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Gauge"), &Gauge_Desc));
+	m_pContinuous_Gauge->SetActive(true);
 }
 
 void CQTE_Continuous_Attack::End_QTE()
@@ -148,6 +160,10 @@ void CQTE_Continuous_Attack::End_QTE()
 
 	//Space 객체는 삭제
 	Safe_Release(m_pContinuous_Space);
+	m_pContinuous_Space = nullptr;
+	//게이지 객체는 삭제
+	Safe_Release(m_pContinuous_Gauge);
+	m_pContinuous_Gauge = nullptr;
 
 	//활성화 여부 초기화
 	m_bIsQTEActive = false;
@@ -210,6 +226,9 @@ void CQTE_Continuous_Attack::Process_Command()
 	m_pContinuous_Space->Process_Command();
 
 	m_pMain_Camera->StartCameraShake(0.05f, 0.01f);
+
+	//Gauge에 신호를 보내서 연타를 해야함
+	m_pContinuous_Gauge->Process_Command();
 }
 
 void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
@@ -267,6 +286,7 @@ void CQTE_Continuous_Attack::Late_Update(_float fTimeDelta)
 	{
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 		m_pContinuous_Space->Late_Update(fTimeDelta);
+		m_pContinuous_Gauge->Late_Update(fTimeDelta);
 	}
 }
 
@@ -358,6 +378,7 @@ void CQTE_Continuous_Attack::Free()
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pContinuous_Space);
+	Safe_Release(m_pContinuous_Gauge);
 
 	__super::Free();
 }

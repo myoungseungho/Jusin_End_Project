@@ -61,7 +61,7 @@ void CQTE_Continuous_Attack_Space::Camera_Update(_float fTimeDelta)
 
 void CQTE_Continuous_Attack_Space::Update(_float fTimeDelta)
 {
-	if (!m_bIsActive)
+   	if (!m_bIsActive)
 		return;
 
 	Update_Animation(fTimeDelta);

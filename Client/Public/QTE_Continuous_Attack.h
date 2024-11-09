@@ -61,7 +61,7 @@ private:
 	const _float m_fLifeTime = { 100.f };
 
 	_int m_iCurrentKeyPressCount = 0; // 현재 연타한 횟수
-	const _int m_iTargetKeyPressCount = 1000; // 목표 연타 횟수
+	const _int m_iTargetKeyPressCount = 30; // 목표 연타 횟수
 
 	MISSION_STATE m_eMissionState = MISSION_NOT_DECIDED;
 
@@ -78,6 +78,8 @@ private:
 	_bool m_bIsMovingDown = false;    // 내려가는 중인지 여부
 
 	class CQTE_Continuous_Attack_Space* m_pContinuous_Space = { nullptr };
+	class CQTE_Continuous_Attack_Gauge* m_pContinuous_Gauge = { nullptr };
+
 	//카메라
 	class CMain_Camera* m_pMain_Camera = { nullptr };
 public:

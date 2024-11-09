@@ -29,6 +29,7 @@ int iNumSprite = 0;
 int g_IconState;
 float g_Time;
 float g_MaxTime;
+float g_Ratio;
 
 struct VS_IN
 {
@@ -595,6 +596,39 @@ PS_OUT PS_QTE_Hit_UI(PS_IN In)
     return Out;
 }
 
+
+PS_OUT PS_QTE_CONTINUOUS_GAUGE(PS_IN In)
+{
+    PS_OUT Out;
+
+    // First_Texture 샘플링
+    float4 firstColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+    // Second_Texture 샘플링을 위한 UV 좌표 조절
+    float2 uv = In.vTexcoord;
+
+    // 게이지가 왼쪽에서 오른쪽으로 차오르는 효과를 위해 x 좌표 비교
+    if (uv.x <= g_Ratio)
+    {
+        // Second_Texture 샘플링
+        float4 secondColor = g_NextTexture.Sample(LinearSampler, uv);
+        // 두 텍스처를 합성 (필요에 따라 블렌딩 방식 조절)
+        Out.vColor = secondColor;
+    }
+    else
+    {
+        // Second_Texture가 보이지 않도록 첫 번째 텍스처 사용
+        Out.vColor = firstColor;
+    }
+
+    // 알파값이 낮은 픽셀은 버림
+    if (Out.vColor.a <= 0.1f)
+        discard;
+
+    return Out;
+}
+
+
 technique11 DefaultTechnique
 {
 	/* PASS의 기준 : 셰이더 기법의 캡슐화. */
@@ -977,6 +1011,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_QTE_Hit_UI();
+    }
+
+//26
+    pass QTE_CONTINUOUS_GAUGE
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_QTE_CONTINUOUS_GAUGE();
     }
 
 }

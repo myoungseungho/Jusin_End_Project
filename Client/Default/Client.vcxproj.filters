@@ -353,7 +353,10 @@
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space.cpp">
-      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,6 +755,12 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack">
       <UniqueIdentifier>{796c94e6-b4de-4bcd-8f7b-542923268867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space">
+      <UniqueIdentifier>{9e7e2f64-d81c-4111-8fd5-a8d69a4970b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge">
+      <UniqueIdentifier>{33d8cbad-e662-4d78-b92e-b15c85290876}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1263,7 +1272,10 @@
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space.h">
-      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

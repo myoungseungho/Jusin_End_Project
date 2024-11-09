@@ -190,6 +190,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack.h" />
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h" />
     <ClInclude Include="..\Public\QTE_Hit_Situation.h" />
     <ClInclude Include="..\Public\QTE_Hit.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp" />
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_Situation.cpp" />
     <ClCompile Include="..\Private\QTE_Hit.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space.cpp" />
