@@ -117,6 +117,8 @@
 #include "QTE_Hit_UI_MovingRing_Icon.h"
 #include "QTE_Hit_UI_Result.h"
 #include "QTE_Continuous_Attack.h"
+#include "QTE_Continuous_Attack_Space.h"
+
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -973,6 +975,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Arrow"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/DebugIcon.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Space"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/QTE_SPACE.png"), 1))))
 		return E_FAIL;
 }
 
@@ -3229,6 +3235,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack"),
 		CQTE_Continuous_Attack::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space"),
+		CQTE_Continuous_Attack_Space::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

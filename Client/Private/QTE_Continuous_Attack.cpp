@@ -3,8 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
-#include "QTE_Hit_Situation.h"
-
+#include "QTE_Continuous_Attack_Space.h"
 
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -40,11 +39,9 @@ HRESULT CQTE_Continuous_Attack::Initialize(void* pArg)
 	m_fSizeY = 50.f;
 
 	// 기본 위치 설정
-	m_fDefaultY = 700.f;
+	m_fDefaultY = m_fY;
 	// 타겟 위치 설정 (예시로 Y 좌표를 100만큼 아래로 이동)
 	m_fTargetY = m_fDefaultY + 30.f;
-	// 초기 위치를 기본 위치로 설정
-	m_fY = m_fDefaultY;
 
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
@@ -53,6 +50,9 @@ HRESULT CQTE_Continuous_Attack::Initialize(void* pArg)
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
+
+	
 
 	return S_OK;
 }
@@ -107,8 +107,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 			m_fTimer -= fTimeDelta;
 		}
 
-		//인풋
-
+		m_pContinuous_Space->Update(fTimeDelta);
 	}
 
 #pragma endregion
@@ -128,11 +127,24 @@ void CQTE_Continuous_Attack::Start_QTE()
 	//활성화
 	m_bIsQTEActive = true;
 	m_fTimer = m_fLifeTime;
+
+
+	//스페이스 객체 생성
+	CQTE_Continuous_Attack_Space::CONTINUOUS_ATTACK_DESC Desc{};
+	Desc.fX = 960.f;
+	Desc.fY = 750.f;
+	Desc.fSizeX = 300.f;
+	Desc.fSizeY = 200.f;
+	m_pContinuous_Space = static_cast<CQTE_Continuous_Attack_Space*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space"), &Desc));
+	m_pContinuous_Space->SetActive(true);
 }
 
 void CQTE_Continuous_Attack::End_QTE()
 {
 #pragma region 초기화
+
+	//Space 객체는 삭제
+	Safe_Release(m_pContinuous_Space);
 
 	//활성화 여부 초기화
 	m_bIsQTEActive = false;
@@ -191,6 +203,8 @@ void CQTE_Continuous_Attack::Process_Command()
 	// Transform에 위치 적용
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+
+	m_pContinuous_Space->Process_Command();
 }
 
 void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
@@ -241,20 +255,14 @@ void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
 		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
 }
 
-_float CQTE_Continuous_Attack::EaseInOut(_float t)
-{
-	// 이징 함수: Ease-In-Out Quad
-	if (t < 0.5f)
-		return 2.0f * t * t;
-	else
-		return -1.0f + (4.0f - 2.0f * t) * t;
-}
-
 void CQTE_Continuous_Attack::Late_Update(_float fTimeDelta)
 {
 	//활성화
 	if (m_bIsQTEActive)
+	{
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+		m_pContinuous_Space->Late_Update(fTimeDelta);
+	}
 }
 
 HRESULT CQTE_Continuous_Attack::Render(_float fTimeDelta)
@@ -344,6 +352,7 @@ void CQTE_Continuous_Attack::Free()
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pContinuous_Space);
 
 	__super::Free();
 }

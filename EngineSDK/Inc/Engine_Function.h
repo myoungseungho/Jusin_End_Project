@@ -282,5 +282,14 @@ namespace Engine
 	{
 		return start + t * (end - start);
 	}
+
+	inline _float EaseInOut(_float t)
+	{
+		// ÀÌÂ¡ ÇÔ¼ö: Ease-In-Out Quad
+		if (t < 0.5f)
+			return 2.0f * t * t;
+		else
+			return -1.0f + (4.0f - 2.0f * t) * t;
+	}
 #pragma endregion
 }

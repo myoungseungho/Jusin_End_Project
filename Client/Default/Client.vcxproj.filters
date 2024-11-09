@@ -352,6 +352,9 @@
     <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Space.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1257,6 +1260,9 @@
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Space.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
     </ClInclude>
   </ItemGroup>
