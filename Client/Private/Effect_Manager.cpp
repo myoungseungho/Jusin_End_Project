@@ -126,6 +126,30 @@ HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _flo
 	return S_OK;
 }
 
+
+CEffect_Layer* CEffect_Manager::Copy_Layer_AndGet(const wstring& strEffectLayerTag, const _float4x4* pArg)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
+
+	if (pLayer == nullptr)
+		return nullptr;
+
+	if (strEffectLayerTag.find(L"Smoke") != wstring::npos)
+		m_UsingEffect.push_back(pLayer->Clone(pArg, false));
+	else
+	{
+		if (strEffectLayerTag.find(L"Aura01") != wstring::npos)
+			m_UsingEffect.push_back(pLayer->Clone(pArg, false));
+		else
+		{
+
+			m_UsingEffect.push_back(pLayer->Clone(pArg, true));
+		}
+	}
+
+	return m_UsingEffect.back();
+}
+
 HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)
 {
 	if (!pSavedEffect) 

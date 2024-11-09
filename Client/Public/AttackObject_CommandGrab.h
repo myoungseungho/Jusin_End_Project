@@ -42,6 +42,8 @@ public:
 		//_float fCameraShakeDuration = {200};
 		//_float fCameraShakeMagnitude = {200};
 
+		_bool bGrabedGravity = { false };
+
 	};
 private:
 	CAttackObject_CommandGrab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -82,6 +84,7 @@ private:
 	_uint m_iVirtualCameraindex = { 200 };
 	_uint m_ianimationIndex = {};
 
+	_bool m_bGrabedGravity = { false };
 
 	//캐릭터가 가지고있어야하는가?
 	//_ushort m_iLoofCycle = 3;

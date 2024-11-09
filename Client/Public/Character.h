@@ -216,9 +216,12 @@ public:
 
 	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
-	void Chase_Ready(_float fTimeDelta);
+	//void Chase_Ready(_float fTimeDelta);
+	void Chase_Ready(_float fTimeDelta, _bool bNoReady = false);
+
 	void Set_ChaseStoping();
 	void Set_ChaseStop();
+
 
 	void Chase_Grab(_float fTimeDelta);
 	void Character_Attack_Grab(_float fTimeDelta);
@@ -255,7 +258,7 @@ public:
 	void Gain_HitCount(_ushort iHit);// 
 
 	//_float Get_DamageScale();
-	_float Get_DamageScale(_bool bUltimate = false);
+	virtual _float Get_DamageScale(_bool bUltimate = false);
 
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
@@ -287,6 +290,8 @@ public:
 	_vector Get_vPosition();
 	
 	void Set_bGrabbed(_bool bGrabbed);
+	void Set_bGrabbedGravity(_bool bGrabbedGravity);
+
 	_bool Get_bGrabbed();
 	void Set_GrabAnimation();  //외부에서 호출해야하는데 각자 다르므로?
 
@@ -332,6 +337,8 @@ public:
 
 	void Set_bBeReflecting(_short iDirection);
 	_bool Update_BeReflecting(_float fTimeDelta);
+
+	void Set_bFinalSkillQTE(_bool bFinalSkillQTE);
 
 protected:
 	void Reset_AttackStep();
@@ -381,6 +388,8 @@ protected:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pOutLineCom = { nullptr };
 	CTexture* m_p2PTextureCom = { nullptr };
+	CTexture* m_pDecalTextureCom = { nullptr };
+
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
 
@@ -445,6 +454,7 @@ protected:
 	_ushort m_iHit_WallBouce = {34};
 
 	_ushort m_iHit_Air_Spin_LeftUp = {31};
+	_ushort m_iHit_Air_Spin_Up = { 30 };  //072
 
 
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
@@ -524,6 +534,7 @@ protected:
 	CCharacter* m_pDebugEnemy = { nullptr };
 	CCharacter* m_pEnemy = { nullptr };
 
+	class CEffect_Layer* m_pChaseEffectLayer = { nullptr };
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 
@@ -564,6 +575,7 @@ protected:
 	_float m_fPreviousX = {};
 
 	_bool	m_bGrabbed = { false };
+	_bool	m_bGrabbedGravity = { false };
 	_ushort m_iGrabLoof = 3;
 
 
@@ -609,6 +621,8 @@ protected:
 	_bool m_bBeReflecting = { false };
 	_float m_fAccBeReflectingTime = { 0.f };
 	CGameObject* m_pReflectObject = { nullptr };
+
+	_bool m_bFinalSkillQTESucces = { false };
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };

@@ -44,6 +44,8 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	m_bForcedHit = pDesc->bForcedHit;
 	m_iOnwerDirection = pDesc->iOnwerDirection;
 
+	m_bGrabedGravity = pDesc->bGrabedGravity;
+
 	if (pDesc->iVirtualCameraindex != 200)
 	{
 		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
@@ -149,7 +151,6 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
 			m_pOwner->Set_AttackBackEvent(true);	
-
 			//m_pOwner->Set_GrabLoofCount(2);
 
 			if(m_fForcedGravityTime !=100)
@@ -175,6 +176,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 
 			pCharacter->Set_bGrabbed(true);
+			pCharacter->Set_bGrabbedGravity(m_bGrabedGravity);
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
 				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);

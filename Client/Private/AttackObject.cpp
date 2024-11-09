@@ -674,6 +674,8 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
 	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
+	
+
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 
 
