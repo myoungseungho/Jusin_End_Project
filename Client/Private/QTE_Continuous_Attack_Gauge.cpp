@@ -99,7 +99,7 @@ HRESULT CQTE_Continuous_Attack_Gauge::Ready_Components()
 		return E_FAIL;
 
 	/* For.Com_NextTexture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGauge"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
 		TEXT("Com_NextTexture"), reinterpret_cast<CComponent**>(&m_pTextureCom[1]))))
 		return E_FAIL;
 
@@ -122,12 +122,12 @@ HRESULT CQTE_Continuous_Attack_Gauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	_float ratio = m_iCountNumber / m_iGoalNumber;
+	_float ratio = (_float)m_iCountNumber / (_float)m_iGoalNumber;
 
 	if (FAILED(m_pTextureCom[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", 0)))
+	if (FAILED(m_pTextureCom[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", 7)))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_Ratio", &ratio, sizeof(_float))))

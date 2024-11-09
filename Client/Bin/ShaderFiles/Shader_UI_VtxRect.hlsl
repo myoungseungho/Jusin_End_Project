@@ -601,27 +601,26 @@ PS_OUT PS_QTE_CONTINUOUS_GAUGE(PS_IN In)
 {
     PS_OUT Out;
 
-    // First_Texture 샘플링
-    float4 firstColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-
-    // Second_Texture 샘플링을 위한 UV 좌표 조절
+    // UV 좌표 가져오기
     float2 uv = In.vTexcoord;
 
-    // 게이지가 왼쪽에서 오른쪽으로 차오르는 효과를 위해 x 좌표 비교
-    if (uv.x <= g_Ratio)
-    {
-        // Second_Texture 샘플링
-        float4 secondColor = g_NextTexture.Sample(LinearSampler, uv);
-        // 두 텍스처를 합성 (필요에 따라 블렌딩 방식 조절)
-        Out.vColor = secondColor;
-    }
-    else
-    {
-        // Second_Texture가 보이지 않도록 첫 번째 텍스처 사용
-        Out.vColor = firstColor;
-    }
+    // g_Ratio가 0에서 1 사이로 클램프
+    float ratio = saturate(g_Ratio);
 
-    // 알파값이 낮은 픽셀은 버림
+    // 마스크 생성: uv.x <= ratio인 경우 1, 그렇지 않으면 0
+    float mask = (uv.x <= ratio) ? 1.0f : 0.0f;
+
+    // Second_Texture 샘플링
+    float4 secondColor = g_NextTexture.Sample(LinearSampler, uv);
+
+    // First_Texture 샘플링
+    float4 firstColor = g_Texture.Sample(LinearSampler, uv);
+
+    // 마스크를 이용해 두 텍스처를 구분하여 합성
+    // mask가 1인 영역은 secondColor, 0인 영역은 firstColor
+    Out.vColor = mask * secondColor + (1.0f - mask) * firstColor;
+
+    // 알파값이 낮은 픽셀은 버림 (필요 시)
     if (Out.vColor.a <= 0.1f)
         discard;
 
