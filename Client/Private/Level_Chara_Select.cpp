@@ -32,8 +32,6 @@ HRESULT CLevel_Chara_Select::Initialize()
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 
-	
-
 	return S_OK;
 }
 
@@ -64,7 +62,7 @@ HRESULT CLevel_Chara_Select::Ready_Layer_Camera(const _wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
 	CameraDesc.fSensor = 0.1f;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_CharacterSlectCamera"), strLayerTag, &CameraDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_CharacterSelectCamera"), strLayerTag, &CameraDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -72,7 +70,6 @@ HRESULT CLevel_Chara_Select::Ready_Layer_Camera(const _wstring& strLayerTag)
 
 HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 {
-	/* For.BackGround */
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectBG"), strLayerTag)))
 		return E_FAIL;
 	
@@ -80,7 +77,7 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	for (int i = 0; i < 2; ++i)
 	{
 		FudeDesc.iNumUI = i;
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSlectFude"), strLayerTag, &FudeDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectFude"), strLayerTag, &FudeDesc)))
 			return E_FAIL;
 	}
 	
@@ -98,20 +95,11 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 			return E_FAIL;
 	}
 	
-	
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSlectMark"), strLayerTag)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectMark"), strLayerTag)))
 		return E_FAIL;
 	
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSlectFont"), strLayerTag)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectFont"), strLayerTag)))
 		return E_FAIL;
-
-	//CGameObject::GAMEOBJECT_DESC  ModelDesc = {};
-	//ModelDesc.fSpeedPerSec = 5.f;
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSlectModel"), strLayerTag,&ModelDesc)))
-	//	return E_FAIL;
-
-
-
 
 	return S_OK;
 }

@@ -379,28 +379,28 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharacterSlectFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectFont"),
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectFont"),
 		CUI_CharaSelectFont::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharacterSlectFude */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectFude"),
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectFude"),
 		CUI_CharaSelectFude::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 
 	/* Prototype_GameObject_CharacterSlectMark */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectMark"),
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectMark"),
 		CUI_CharaSelectMark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharacterSlectModel*/
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectModel"),
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectModel"),
 		CUI_CharaSelectModel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharacterSlectModel*/
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectCamera"),
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCamera"),
 		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 

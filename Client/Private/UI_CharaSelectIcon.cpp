@@ -36,9 +36,6 @@ HRESULT CUI_CharaSelectIcon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	
-
-
 	UI_DESC* Desc = static_cast<UI_DESC*>(pArg);
 
 	m_iTexIndex = Desc->iNumUI;
