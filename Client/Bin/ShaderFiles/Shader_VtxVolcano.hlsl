@@ -179,7 +179,14 @@ PS_OUT PS_MAIN_SKY(PS_IN In)
     
     float2 vTexcoord = In.vTexcoord;
     vTexcoord.y += g_Time * 0.03f;
+        /* ¸¶½ºÅ© x */
+    //float fHairMask = step(In.vTexcoord.x, 0.039f) * step(0.961f, In.vTexcoord.x);
+    
+    //float fFaceMask = (step(0.095, In.vTexcoord.x) * step(In.vTexcoord.x, 0.2832)) * (step(0.0, In.vTexcoord.y) * step(In.vTexcoord.y, 0.316));
+    //float fFaceDetailMask = (step(0.013, In.vTexcoord.x) * step(In.vTexcoord.x, 0.016)) * (step(0.015, In.vTexcoord.y) * step(In.vTexcoord.y, 0.017));
+    //float fFaceDetailMask2 = step(0.3f, In.vTexcoord.x) * step(In.vTexcoord.x, 0.427f) * step(0.031f, In.vTexcoord.y) * step(In.vTexcoord.y, 0.158f);
     //Tex < 0.039 && Tex > 0.961 --- 0.074 > Tex && 0.932 > Tex
+    
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
     vector vMtrlMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
     Out.vDiffuse = vMtrlDiffuse;
