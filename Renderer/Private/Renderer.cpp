@@ -97,8 +97,8 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
 
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_AllGlowDiffuse"), 100.f, 500.f, 200.0f, 200.0f)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
+		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomAlpha"), 600.f, 100.f, 200.0f, 200.0f)))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomDiffuse"), 350.f, 150.f, 300.f, 300.f)))
@@ -952,6 +952,8 @@ HRESULT CRenderer::Render_AllGlow_Effect_Pri(_float fTimeDelta)
 			if (FAILED(m_pRenderInstance->End_MRT()))
 				return E_FAIL;
 
+			Safe_Release(pRenderObject);
+
 			m_iEffectGlowPri_RenderCount++;
 		}
 	}
@@ -1277,8 +1279,9 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_DownSecond"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_X"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))

@@ -1612,6 +1612,17 @@ void CIMGUI_Shader_Tab::Free()
     {
         Safe_Release(iter);
     }
+
+    //for (auto& iter : m_NodeTextureSRVs)
+    //{
+    //    Safe_Release(static_cast<ID3D11ShaderResourceView*>(iter.Texture));
+    //}
+
+    //Safe_Release(m_pDefaultTexture);
+
+    //Safe_Release(m_TestEffectModel_Texture);
+    //Safe_Release(m_pEffect);
+
     
     __super::Free();
 }
