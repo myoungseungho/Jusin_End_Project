@@ -119,7 +119,11 @@ HRESULT CUI_CharaSelectIcon::Ready_Components()
 void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 {
 	if (m_pGameInstance->Get_Layer(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")).empty())
+	{
+		m_fPosY = 620.f;
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 		return;
+	}
 
 	switch (m_iTexIndex)
 	{
@@ -143,8 +147,7 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 			break;
 	}
 
-	if (m_pGameInstance->Get_Layer(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")).empty())
-		m_fPosY = 620.f;
+
 		
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 }

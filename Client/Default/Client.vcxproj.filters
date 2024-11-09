@@ -265,9 +265,19 @@
     <ClCompile Include="..\private\UI_SelectLine.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Line</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_CharaSelectFont.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Character\Font\CharaSelect</Filter>
+    <ClCompile Include="..\private\UI_CharaSelectFude.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Fude</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectFont.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\CharaSelectCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -615,8 +625,17 @@
     <Filter Include="02.GameObjects\UI\BackGround\Character\Font">
       <UniqueIdentifier>{c0111337-7f13-42d6-952c-c955bc871098}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\BackGround\Character\Font\CharaSelect">
-      <UniqueIdentifier>{562ddb0e-2771-4236-8de6-5aed8c278847}</UniqueIdentifier>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Fude">
+      <UniqueIdentifier>{a8cba14f-b60e-4a6e-9fea-78a781ec16a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Mark">
+      <UniqueIdentifier>{4931c660-e905-4176-9eb4-31f7d2fe780f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Model">
+      <UniqueIdentifier>{ef0f8f86-d6e2-4d4e-b74c-ba43f6680c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Camera">
+      <UniqueIdentifier>{5be9da0f-7882-41ad-bdad-614c2547f4c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1091,9 +1110,19 @@
     <ClInclude Include="..\public\UI_SelectLine.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Line</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_CharaSelectFont.h">
-      <Filter>02.GameObjects\UI\BackGround\Character\Font\CharaSelect</Filter>
+    <ClInclude Include="..\public\UI_CharaSelectFude.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Fude</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectMark.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectFont.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\CharaSelectCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

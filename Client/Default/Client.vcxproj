@@ -172,6 +172,7 @@
     <ClInclude Include="..\Public\AttackObject_Ranged.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
+    <ClInclude Include="..\public\CharaSelectCamera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
@@ -191,8 +192,13 @@
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
     <ClInclude Include="..\public\UI_CharaSelectFont.h" />
+    <ClInclude Include="..\public\UI_CharaSelectFude.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
     <ClInclude Include="..\public\UI_CharaSelectImage.h" />
+    <ClInclude Include="..\public\UI_CharaSelectMark.h" />
+    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
     <ClInclude Include="..\public\UI_ChoiceIcon.h" />
@@ -328,6 +334,7 @@
     <ClCompile Include="..\Private\AttackObject_Ranged.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
+    <ClCompile Include="..\private\CharaSelectCamera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
@@ -343,8 +350,13 @@
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectFont.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectFude.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectMark.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
     <ClCompile Include="..\private\UI_ChoiceIcon.cpp" />

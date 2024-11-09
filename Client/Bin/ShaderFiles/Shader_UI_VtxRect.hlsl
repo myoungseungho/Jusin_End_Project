@@ -536,6 +536,28 @@ PS_OUT PS_SelectIcon(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_CHARA_BG(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector LineTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vBGTexutre = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 fMaskTexcoord = float2(g_MaskTimer , 0.f);
+    float2 vMaskTexCoord = (In.vTexcoord + fMaskTexcoord);
+   
+    vector vDustTexture = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
+    
+    LineTexture.rgb *= vBGTexutre.rgb;
+    vDustTexture.rgb *= vBGTexutre.rgb;
+    
+    vBGTexutre.rgb += LineTexture.rgb;
+    vBGTexutre.rgb += vDustTexture.rgb;
+    Out.vColor = vBGTexutre;
+   
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASS¿« ±‚¡ÿ : ºŒ¿Ã¥ı ±‚π˝¿« ƒ∏Ω∂»≠. */
@@ -892,6 +914,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_SelectIcon();
+    }
+
+//24
+    pass CHARA_BG
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_CHARA_BG();
     }
 
 }

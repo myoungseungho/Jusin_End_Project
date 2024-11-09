@@ -99,6 +99,10 @@
 #include "UI_ChoiceIcon.h"
 #include "UI_SelectLine.h"
 #include "UI_CharaSelectFont.h"
+#include "UI_CharaSelectFude.h"
+#include "UI_CharaSelectMark.h"
+#include "UI_CharaSelectModel.h"
+#include "CharaSelectCamera.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -312,8 +316,36 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_CharacterSelectFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharacterSelectFont"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectFont"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_Title.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectFude */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectFude"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_BigFude%d.png"),2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectLineFrame*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectLineFrame"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_LineFrame.png")))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectDustEffect*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectDustEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_bg_08.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectMark*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Bu.png")))))
+		return E_FAIL;
+
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+		PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharaSelectBG */
@@ -349,6 +381,27 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	/* Prototype_GameObject_CharacterSlectFont */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectFont"),
 		CUI_CharaSelectFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectFude */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectFude"),
+		CUI_CharaSelectFude::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	/* Prototype_GameObject_CharacterSlectMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectMark"),
+		CUI_CharaSelectMark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectModel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectModel"),
+		CUI_CharaSelectModel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectModel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSlectCamera"),
+		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 
