@@ -1536,7 +1536,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 
 	if (iCheck == 1 && bNoReady != true)
 	{
-		Character_Make_Effect(TEXT("BurstR-01"));
+		Character_Make_BoneEffect("GD_fist_R", TEXT("BurstR-01"));
 	}
 
 	m_bChaseEnable = false;
@@ -4183,9 +4183,9 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 {	
 	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
 	
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
+	//static XMFLOAT4X4 s = Make_BoneMatrix(BoneName);
 
-
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
 
 }
 
