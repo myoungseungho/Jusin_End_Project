@@ -423,6 +423,7 @@ void CTarget_Manager::Free()
 			Safe_Release(pRenderTarget);
 		Pair.second.clear();		
 	}
+
 	m_MRTs.clear();
 
 	for (auto& Pair : m_RenderTargets)

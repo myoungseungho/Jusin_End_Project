@@ -19,6 +19,8 @@ CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContex
 
 CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	: m_fDuration{Prototype.m_fDuration}
+	, m_pDevice { Prototype.m_pDevice }
+	, m_pContext{ Prototype.m_pContext }
 	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
 	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
@@ -26,7 +28,8 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_pGameInstance { Prototype.m_pGameInstance }
 	, m_bIsFollowing {Prototype.m_bIsFollowing}
 {
-	
+	//Safe_AddRef(m_pContext);
+	//Safe_AddRef(m_pDevice);
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
 		m_bIsCopy = true;
@@ -429,17 +432,18 @@ CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg, _bool isBillboading)
 
 void CEffect_Layer::Free()
 {
-	if (m_bIsCopy == true)
-	{
-		for (auto& iter : m_MixtureEffects)
-		{
-			static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
-				->Access_Shader_Tab(iter->m_iUnique_Index))
-				->Delete_Clone_EffectToShader_Texture(&(*iter));
-		}
-	}
-
 	__super::Free();
+
+	//if (m_bIsCopy == true)
+	//{
+	for (auto& iter : m_MixtureEffects)
+	{
+		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+			->Access_Shader_Tab(iter->m_iUnique_Index))
+			->Delete_Clone_EffectToShader_Texture(&(*iter));
+	}
+	//}
+
 
 
 	Safe_Release(m_pContext);

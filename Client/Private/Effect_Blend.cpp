@@ -121,7 +121,7 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 2) //·¹ÀÌ¾î
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				//m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
 			}
 
@@ -153,7 +153,7 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
+	m_iPassIndex = 5;
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
@@ -169,10 +169,10 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 			return E_FAIL;
 	}
 
-	if (m_iPassIndex == 1)
-		m_iPassIndex = 5;
-	else
-		m_iPassIndex = 1;
+	//if (m_iPassIndex == 1)
+	//	m_iPassIndex = 5;
+	//else
+	//	m_iPassIndex = 1;
 
 	return S_OK;
 }
