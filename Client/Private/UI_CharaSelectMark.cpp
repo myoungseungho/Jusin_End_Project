@@ -23,8 +23,6 @@ HRESULT CUI_CharaSelectMark::Initialize_Prototype()
 
 HRESULT CUI_CharaSelectMark::Initialize(void* pArg)
 {
-	m_fPosX = 437.f, m_fPosY = 146.f;
-
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -47,7 +45,6 @@ void CUI_CharaSelectMark::Camera_Update(_float fTimeDelta)
 void CUI_CharaSelectMark::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-
 }
 
 void CUI_CharaSelectMark::Late_Update(_float fTimeDelta)

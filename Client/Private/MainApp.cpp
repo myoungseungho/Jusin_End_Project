@@ -4,6 +4,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
+#include "UI_Manager.h"
 
 #include "..\Public\MainApp.h"
 
@@ -45,7 +46,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_CHARACTER)))
+	if (FAILED(Open_Level(LEVEL_LOGO)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
@@ -169,7 +170,6 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
@@ -177,5 +177,6 @@ void CMainApp::Free()
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
+
 }
 

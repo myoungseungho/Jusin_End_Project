@@ -102,6 +102,9 @@
 #include "UI_CharaSelectFude.h"
 #include "UI_CharaSelectMark.h"
 #include "UI_CharaSelectModel.h"
+#include "UI_CharaSelectLight.h"
+#include "UI_CharaSelectCircle.h"
+
 #include "CharaSelectCamera.h"
 
 #include "Character.h"
@@ -341,6 +344,17 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Bu.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_CharacterSelectLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Eff_Flare0%d.png"),2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectCircle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_effect_00.png")))))
+		return E_FAIL;
+
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 		PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
 
@@ -395,15 +409,24 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharacterSlectModel*/
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectModel"),
-		CUI_CharaSelectModel::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectModel"),
+	//	CUI_CharaSelectModel::Create(m_pDevice, m_pContext))))
+	//	return E_FAIL;
 
-	/* Prototype_GameObject_CharacterSlectModel*/
+	/* Prototype_GameObject_CharacterSlectModel */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCamera"),
 		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* Prototype_GameObject_CharacterSelectLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectLight"),
+		CUI_CharaSelectLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSelectCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCircle"),
+		CUI_CharaSelectCircle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 
 	return S_OK;

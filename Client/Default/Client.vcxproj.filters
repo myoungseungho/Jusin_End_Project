@@ -277,7 +277,15 @@
     <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\CharaSelectCamera.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\CharaSelectCamera.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectCircle.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -636,6 +644,12 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Character\Camera">
       <UniqueIdentifier>{5be9da0f-7882-41ad-bdad-614c2547f4c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Light">
+      <UniqueIdentifier>{00ec77e1-233f-42fa-8f7e-5def52dc9b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Circle">
+      <UniqueIdentifier>{f216e0dd-b45f-4eba-b460-74fb4df3a08d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1122,7 +1136,15 @@
     <ClInclude Include="..\public\UI_CharaSelectModel.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\CharaSelectCamera.h" />
+    <ClInclude Include="..\public\UI_CharaSelectLight.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\CharaSelectCamera.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectCircle.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

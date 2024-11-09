@@ -558,6 +558,36 @@ PS_OUT PS_CHARA_BG(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_Default_NoneAlpha(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+
+    Out.vColor.a = Out.vColor.r;
+    
+    Out.vColor.a *= g_fAlphaTimer;
+    
+    if (Out.vColor.a <= 0.1f)
+        discard;
+    
+    return Out;
+}
+
+PS_OUT PS_LightCircle(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(DestroySampler, In.vTexcoord);
+        
+    float fDistance = abs(In.vTexcoord - float2(0.5f, 0.5f));
+            
+    Out.vColor.a -= (fDistance * 2.f);
+    Out.vColor.a = max(0.f, Out.vColor.a);
+  
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -930,4 +960,31 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_CHARA_BG();
     }
 
+//25
+    pass Default_NoneAlpha
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_Default_NoneAlpha();
+    }
+
+//26
+    pass LightCircle
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_LightCircle();
+    }
 }

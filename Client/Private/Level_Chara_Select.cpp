@@ -95,11 +95,20 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 			return E_FAIL;
 	}
 	
+	CUIObject::UI_DESC SelectLightDesc = {};
+	for (size_t i = 0; i < 2; i++)
+	{
+		SelectLightDesc.iNumUI = i;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectLight"), strLayerTag, &SelectLightDesc)))
+			return E_FAIL;
+	}
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectMark"), strLayerTag)))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectFont"), strLayerTag)))
 		return E_FAIL;
+	
 
 	return S_OK;
 }

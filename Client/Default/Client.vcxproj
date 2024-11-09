@@ -191,10 +191,12 @@
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
+    <ClInclude Include="..\public\UI_CharaSelectCircle.h" />
     <ClInclude Include="..\public\UI_CharaSelectFont.h" />
     <ClInclude Include="..\public\UI_CharaSelectFude.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
     <ClInclude Include="..\public\UI_CharaSelectImage.h" />
+    <ClInclude Include="..\public\UI_CharaSelectLight.h" />
     <ClInclude Include="..\public\UI_CharaSelectMark.h" />
     <ClInclude Include="..\public\UI_CharaSelectModel.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -349,10 +351,12 @@
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectCircle.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectFont.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectFude.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectLight.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectMark.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

@@ -39,12 +39,13 @@ void CUI_GameState::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
 
-	m_fTotalAnimDuration = m_pUI_Manager->m_fTotalDuration;
 }
 
 void CUI_GameState::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
+	m_fTotalAnimDuration = m_pUI_Manager->m_fTotalDuration;
 }
 
 void CUI_GameState::Late_Update(_float fTimeDelta)
