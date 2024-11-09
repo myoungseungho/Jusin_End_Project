@@ -28,8 +28,8 @@ CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	, m_pGameInstance { Prototype.m_pGameInstance }
 	, m_bIsFollowing {Prototype.m_bIsFollowing}
 {
-	//Safe_AddRef(m_pContext);
-	//Safe_AddRef(m_pDevice);
+	Safe_AddRef(m_pContext);
+	Safe_AddRef(m_pDevice);
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
 		m_bIsCopy = true;
@@ -434,16 +434,15 @@ void CEffect_Layer::Free()
 {
 	__super::Free();
 
-	//if (m_bIsCopy == true)
-	//{
-	for (auto& iter : m_MixtureEffects)
+	if (m_bIsCopy == true)
 	{
-		static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
-			->Access_Shader_Tab(iter->m_iUnique_Index))
-			->Delete_Clone_EffectToShader_Texture(&(*iter));
+		for (auto& iter : m_MixtureEffects)
+		{
+			static_cast<CIMGUI_Shader_Tab*>(CImgui_Manager::Get_Instance()
+				->Access_Shader_Tab(iter->m_iUnique_Index))
+				->Delete_Clone_EffectToShader_Texture(&(*iter));
+		}
 	}
-	//}
-
 
 
 	Safe_Release(m_pContext);

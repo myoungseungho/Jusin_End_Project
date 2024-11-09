@@ -952,6 +952,8 @@ HRESULT CRenderer::Render_AllGlow_Effect_Pri(_float fTimeDelta)
 			if (FAILED(m_pRenderInstance->End_MRT()))
 				return E_FAIL;
 
+			Safe_Release(pRenderObject);
+
 			m_iEffectGlowPri_RenderCount++;
 		}
 	}
