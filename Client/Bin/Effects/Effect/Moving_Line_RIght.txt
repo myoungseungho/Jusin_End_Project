@@ -16,13 +16,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right01
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: 0
 Position: 1.81794e-07 1 0
 Scale: 0.0199983 0.19997 0.1
 Rotation: 0 0 270
 IsLoop: false
-Color: 255 255 255 1.5
+Color: 255 255 255 0.988743
 GlowColor: 0 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
@@ -53,7 +53,7 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: -1
 Position: 1 1.2 0
 Scale: 0.0199991 0.149974 1
@@ -90,7 +90,7 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right03
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: -1
 Position: 0.4 1.4 0
 Scale: 0.0299981 0.149985 1
@@ -127,7 +127,7 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right04
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: -1
 Position: 0.6 0.7 0
 Scale: 0.0299983 0.149986 1
@@ -164,7 +164,7 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right05
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: -2
 Position: 1.5 0.9 -0.1
 Scale: 0.0299974 0.149982 1
@@ -201,7 +201,7 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right06
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: -2
 Position: 1 1.5 -0.2
 Scale: 0.0299938 0.0999749 1
@@ -238,13 +238,13 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right07
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: 0
 Position: 1.7 0.5 0
 Scale: 0.029997 0.149976 1
 Rotation: 0 0 270
 IsLoop: false
-Color: 255 255 255 1.09272
+Color: 255 255 255 0.69272
 GlowColor: 0 0 0 1
 GlowFactor: 2
 DerredPassIndex: 0
@@ -275,7 +275,7 @@ MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_RightMoving_Line_Right08
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
-PassIndex: 1
+PassIndex: 5
 UniqueIndex: -2
 Position: 1.5 0.3 -0.3
 Scale: 0.0299936 0.249975 1

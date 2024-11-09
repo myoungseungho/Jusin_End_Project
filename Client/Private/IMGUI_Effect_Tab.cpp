@@ -249,7 +249,15 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
         effectData.scale = pEffect->Get_Effect_Scaled();
         effectData.rotation = pEffect->Get_Effect_Rotation();
         effectData.vColor = pEffect->m_vColor;
-        effectData.vGlowColor = pEffect->m_vGlowColor;
+
+        if (pEffect->m_bIsBackSideEffect)
+        {
+            effectData.vGlowColor = { 1.f, 0.f, 0.f, 1.f };
+        }
+        else
+        {
+            effectData.vGlowColor = { 0.f, 0.f, 0.f, 1.f };
+        }
 
         if (effectData.uniqueIndex <= -2) //ÇÁ¸®
         {
@@ -834,6 +842,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             }
 
             std::vector<bool> effectChecks(effectNames.size(), false);
+            std::vector<bool> effectBacksideChecks(effectNames.size(), false);
 
             for (int item = 0; item < effectNames.size(); item++)
             {
@@ -841,6 +850,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 if (pEffect)
                 {
                     effectChecks[item] = pEffect->m_bIsLoop;
+                    effectBacksideChecks[item] = pEffect->m_bIsBackSideEffect;
                 }
             }
 
@@ -854,6 +864,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 ImGui::PushStyleColor(ImGuiCol_CheckMark, IM_COL32(0, 0, 0, 230));
 
                 bool isChecked = effectChecks[item];
+                bool isBackSide = effectBacksideChecks[item];
 
                 if (ImGui::Button("Change Color"))
                 {
@@ -861,7 +872,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     openColorWindow = true;
                     m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, EffectName)->m_IsColorEffect = true;
                 }
-                if (ImGui::Checkbox("##EffectCheck", &isChecked))
+                if (ImGui::Checkbox("##Bilboarding", &isChecked))
                 {
                     CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                     if (pEffect)
@@ -869,6 +880,18 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                         pEffect->m_bIsLoop = isChecked;
                     }
                     effectChecks[item] = isChecked;
+                }
+
+                ImGui::SameLine();
+
+                if (ImGui::Checkbox("##BacksideEffect", &isBackSide))
+                {
+                    CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
+                    if (pEffect)
+                    {
+                        pEffect->m_bIsBackSideEffect = isBackSide;
+                    }
+                    effectBacksideChecks[item] = isBackSide;
                 }
 
                 ImGui::PopStyleColor(2);

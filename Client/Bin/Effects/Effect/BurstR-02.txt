@@ -23,7 +23,7 @@ Scale: 0.01 0.02 0.01
 Rotation: 0 0 0
 IsLoop: false
 Color: 220.381 110.613 56.5729 0.29007
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -60,7 +60,7 @@ Scale: 0.02 0.02 0.01
 Rotation: 45 0 0
 IsLoop: false
 Color: 90.3477 48.1291 0 3.87417
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 4
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -97,7 +97,7 @@ Scale: 0.03 0.02 0.01
 Rotation: 0 0 0
 IsLoop: false
 Color: 132.566 80.2152 0 1.88742
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 3
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -134,7 +134,7 @@ Scale: 0.02 0.02 0.02
 Rotation: 0 0 0
 IsLoop: false
 Color: 210.248 179.851 80.2152 1.09272
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -171,7 +171,7 @@ Scale: 0.1 0.1 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 222.07 200.116 146.076 0.542716
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -208,7 +208,7 @@ Scale: 0.149999 0.199971 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 220.381 179.851 198.427 1.5308
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
@@ -236,7 +236,7 @@ Scale: 0.0499751 0.0999503 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 218.692 161.275 86.9702 30
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -273,7 +273,7 @@ Scale: 0.02 0.1 1
 Rotation: 0 0 99.74
 IsLoop: false
 Color: 0 0 0 2.1755
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 3
@@ -319,7 +319,7 @@ Scale: 0.0199999 0.1 1
 Rotation: 0 0 92.519
 IsLoop: false
 Color: 0 0 0 30
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 3
@@ -365,7 +365,7 @@ Scale: 0.03 0.1 1
 Rotation: 0 0 74.805
 IsLoop: false
 Color: 0 0 0 30
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 3
@@ -411,7 +411,7 @@ Scale: 0.02 0.0999999 1
 Rotation: 0 0 73.818
 IsLoop: false
 Color: 0 0 0 3.5255
-GlowColor: 0 0 0 1
+GlowColor: 1 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 3

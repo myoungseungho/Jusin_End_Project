@@ -622,7 +622,7 @@ _bool CCharacter::InputCommand()
 		}
 
 
-		if (m_pGameInstance->Key_Down(DIK_NUMPAD9))
+		if (m_pGameInstance->Key_Down(DIK_9))
 		{
 			iAttackkey = ATTACK_GRAB;
 
