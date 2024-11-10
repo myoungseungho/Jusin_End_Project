@@ -59,14 +59,14 @@ private:
 	void Update_Ascend(_float fTimeDelta);
 	void Update_NotSelected(_float fTimeDelta);
 
+public:
+	_float m_fX{}, m_fY{};
 private:
-
-
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
-	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{}, m_fAlpha{};
+	_float					m_fSizeX{}, m_fSizeY{},  m_fAlpha{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 	_int m_iTextureNumber = {};
 

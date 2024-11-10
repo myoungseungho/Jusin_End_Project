@@ -189,6 +189,7 @@
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Effect.h" />
@@ -352,6 +353,7 @@
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Effect.cpp" />

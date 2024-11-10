@@ -6,6 +6,7 @@
 #include "QTE_Same_Grab_UI_Icon.h"
 #include "QTE_UI_Gauge.h"
 #include "Main_Camera.h"
+#include "QTE_Same_Grab_UI_Particle.h"
 CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -74,6 +75,8 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 			iter->Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
 			iter->Update(fTimeDelta);
+		for (auto& iter : m_UIParticles)
+			iter->Update(fTimeDelta);
 	}
 #pragma endregion
 
@@ -85,6 +88,8 @@ void CQTE_Same_Grab::Update(_float fTimeDelta)
 		for (auto& iter : m_UIIcons_P1)
 			iter->Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
+			iter->Update(fTimeDelta);
+		for (auto& iter : m_UIParticles)
 			iter->Update(fTimeDelta);
 
 		//마지막 UI가 떨어져야 그때부터 시작임
@@ -122,6 +127,8 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 		for (auto& iter : m_UIIcons_P1)
 			iter->Late_Update(fTimeDelta);
 		for (auto& iter : m_UIIcons_P2)
+			iter->Late_Update(fTimeDelta);
+		for (auto& iter : m_UIParticles)
 			iter->Late_Update(fTimeDelta);
 
 		if (m_UIGauge != nullptr && m_bUI_Final_Complate)
@@ -243,6 +250,7 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			return; // 모든 명령을 이미 처리한 경우
 
 		UI_COMMAND expected = m_CommandQueue_P1.front();
+		//정확한 Input을 던졌을 때
 		if (input == expected)
 		{
 			m_CommandQueue_P1.pop();
@@ -251,6 +259,17 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			// 현재 선택된 아이콘의 선택 상태 해제
 			if (m_CurrentIndex_P1 < m_UIIcons_P1.size())
 			{
+				CQTE_Same_Grab_UI_Particle::QTE_Same_Grab_UI_Particle_DESC Desc{};
+				_float offsetY = -50.f;
+				Desc.fX = m_UIIcons_P1[m_CurrentIndex_P1]->m_fX;
+				Desc.fY = m_UIIcons_P1[m_CurrentIndex_P1]->m_fY + offsetY;
+				Desc.fSizeX = 50.f;
+				Desc.fSizeY = 50.f;
+				Desc.fTimer = 1.f;
+
+				CQTE_Same_Grab_UI_Particle* particle = static_cast<CQTE_Same_Grab_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Particle"), &Desc));
+				m_UIParticles.push_back(particle);
+
 				m_UIIcons_P1[m_CurrentIndex_P1]->Set_State(CQTE_Same_Grab_UI_Icon::ALREADY_PRESSED);
 				m_CurrentIndex_P1++;
 			}
@@ -282,6 +301,7 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			return; // 모든 명령을 이미 처리한 경우
 
 		UI_COMMAND expected = m_CommandQueue_P2.front();
+		//정확한 Input을 던졌을 때
 		if (input == expected)
 		{
 			m_CommandQueue_P2.pop();
@@ -290,6 +310,17 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			// 현재 선택된 아이콘의 선택 상태 해제
 			if (m_CurrentIndex_P2 < m_UIIcons_P2.size())
 			{
+				CQTE_Same_Grab_UI_Particle::QTE_Same_Grab_UI_Particle_DESC Desc{};
+				_float offsetY = -50.f;
+				Desc.fX = m_UIIcons_P2[m_CurrentIndex_P2]->m_fX;
+				Desc.fY = m_UIIcons_P2[m_CurrentIndex_P2]->m_fY + offsetY;
+				Desc.fSizeX = 50.f;
+				Desc.fSizeY = 50.f;
+				Desc.fTimer = 1.f;
+
+				CQTE_Same_Grab_UI_Particle* particle = static_cast<CQTE_Same_Grab_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Particle"), &Desc));
+				m_UIParticles.push_back(particle);
+
 				m_UIIcons_P2[m_CurrentIndex_P2]->Set_State(CQTE_Same_Grab_UI_Icon::ALREADY_PRESSED);
 				m_CurrentIndex_P2++;
 			}
@@ -498,6 +529,15 @@ void CQTE_Same_Grab::Clear_UIIcons()
 		}
 	}
 	m_UIIcons_P2.clear();
+
+	for (auto& icon : m_UIParticles)
+	{
+		if (icon)
+		{
+			Safe_Release(icon);
+		}
+	}
+	m_UIParticles.clear();
 
 	//Gauge 제거
 	Safe_Release(m_UIGauge);
