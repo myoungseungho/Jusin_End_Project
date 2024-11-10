@@ -388,6 +388,9 @@
     <ClCompile Include="..\Private\Hit_MeleeAttack.cpp">
       <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\SpaceMeteoBreak.cpp">
+      <Filter>02.GameObjects\Map\Space\MeteoBreak</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -830,6 +833,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Character\Play_Hit\Hit_MeleeAttack">
       <UniqueIdentifier>{9aab07f7-0732-4afd-b888-6fabf74e8680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\MeteoBreak">
+      <UniqueIdentifier>{75ba9574-6da0-4042-a2f5-9a5e90d9c39a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1375,9 +1381,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Hit_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
-   </ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Public\Volcano_Defines.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceMeteoBreak.h">
+      <Filter>02.GameObjects\Map\Space\MeteoBreak</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

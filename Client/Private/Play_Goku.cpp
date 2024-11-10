@@ -388,9 +388,6 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		InputCommand();
 	}
 
-
-
-
 	if (m_bAnimationLock == false)
 	{
 
@@ -1216,7 +1213,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
 		Character_Make_Effect(TEXT("Smoke03_Stop"), {}, true);
-
+		
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_LIGHT3:

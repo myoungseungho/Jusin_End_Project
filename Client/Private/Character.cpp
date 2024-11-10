@@ -4245,7 +4245,6 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
 
 	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
-
 }
 
 

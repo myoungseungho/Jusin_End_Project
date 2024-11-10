@@ -32,6 +32,7 @@
 #include "SpaceGround.h"
 #include "SpaceHorizon.h"
 #include "SpaceEarth_Light.h"
+#include "SpaceMeteoBreak.h"
 #include "FallingStar.h"
 #include "SpaceRock.h"
 #include "Volcano_Stage.h"
@@ -2713,6 +2714,9 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Mountain"),
 		CVolcano_Mountain::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceMeteoBreak"),
+		CSpaceMeteoBreak::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))
@@ -3148,6 +3152,23 @@ HRESULT CLoader::Load_Map()
 		return E_FAIL;
 
 #pragma region SpaceResources
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_MeteoBreak"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/MeteoBreak/MeteoBreak.bin", PreTransformMatrix))))
+		return E_FAIL;
+	for (size_t i = 0; i < 11; i++)
+	{
+		wstring strTagName = TEXT("Prototype_Component_Model_MeteoBrake_") + to_wstring(i + 1);
+		string strModelName = "../Bin/Resources/Map/Space/MeteoBreak/MeteoBrake_" + to_string(i + 1) + ".bin";
+		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, strTagName.c_str(),
+			CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
+			return E_FAIL;
+	}
+	
+		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_sp_meteobrake01"),
+			CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/MeteoBreak/sp_meteobrake01.png"), 1))))
+			return E_FAIL;
+
+
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Diffuse"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_Space.png"), 1))))
