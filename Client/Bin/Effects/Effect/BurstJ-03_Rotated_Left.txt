@@ -4,7 +4,7 @@ Duration: 5
 TickPerSecond: 2
 KeyFramesCount: 299
 NumEffec: 5
-Position: 0 1 0
+Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 340
 IsFollowing: true

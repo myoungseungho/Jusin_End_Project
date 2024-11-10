@@ -232,20 +232,20 @@ _int CShader_Texture::Update_CloneValue(CEffect* pEffect, _float fTimeDelta)
 
 		if (it->second.fSpriteCurPos.y == it->second.fSpriteSizeNumber->y)
 		{
-			if (m_isLoop == true)
-			{
+			//if (m_isLoop == true)
+			//{
 				it->second.fSpriteCurPos.y = 0.f;
 				it->second.fSpriteCurPos.x = 0.f;
-			}
-			else
-			{
+			//}
+			//else
+			//{
 
-				it->second.fSpriteCurPos.y = it->second.fSpriteSizeNumber->y - 1;
-				it->second.fSpriteCurPos.x = it->second.fSpriteSizeNumber->x - 1;
+			//	it->second.fSpriteCurPos.y = it->second.fSpriteSizeNumber->y - 1;
+			//	it->second.fSpriteCurPos.x = it->second.fSpriteSizeNumber->x - 1;
 
 				/* Sprite Animation End */
 				iReturnCheck = 1;
-			}
+		//	}
 		}
 	}
 

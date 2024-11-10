@@ -1794,7 +1794,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Dash"), m_pTransformCom->Get_WorldMatrixPtr());
+		m_pEffect_Manager->Copy_Layer(TEXT("Energie-02"), m_pTransformCom->Get_WorldMatrixPtr());
 
 	}
 

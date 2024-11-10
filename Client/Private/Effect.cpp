@@ -62,7 +62,8 @@ HRESULT CEffect::Priority_Render(_float fTimeDelta)
 
 		if (iCheckSpriteEnd == 1)
 		{
-			m_bIsSpriteEnd = true;
+			if(!m_bIsShaderLoop)
+				m_bIsSpriteEnd = true;
 		}
 		else
 			int a = 0;
