@@ -14,6 +14,7 @@ BEGIN(Client)
 
 class CQTE_Continuous_Attack final : public CGameObject
 {
+public:
 	enum MISSION_STATE
 	{
 		MISSION_NOT_DECIDED,
@@ -32,6 +33,8 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
+
+	void Notify_Result(MISSION_STATE isResult) { m_eMissionState = isResult; };
 
 private:
 	HRESULT Ready_Components();
@@ -55,13 +58,8 @@ private:
 
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_int m_iCharacterSide = { 1 };
-	_float m_fTimer = { 0.f };
 
-	//총 플레이 시간
-	const _float m_fLifeTime = { 100.f };
-
-	_int m_iCurrentKeyPressCount = 0; // 현재 연타한 횟수
-	const _int m_iTargetKeyPressCount = 30; // 목표 연타 횟수
+	_bool m_bIsSuccess = { false };
 
 	MISSION_STATE m_eMissionState = MISSION_NOT_DECIDED;
 

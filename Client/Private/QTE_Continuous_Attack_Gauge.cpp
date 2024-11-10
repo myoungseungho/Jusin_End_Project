@@ -3,6 +3,7 @@
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
+#include "QTE_Continuous_Attack.h"
 
 CQTE_Continuous_Attack_Gauge::CQTE_Continuous_Attack_Gauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -35,7 +36,7 @@ HRESULT CQTE_Continuous_Attack_Gauge::Initialize(void* pArg)
 	m_fY = Desc->fY;
 	m_fSizeX = Desc->fSizeX;
 	m_fSizeY = Desc->fSizeY;
-	m_iGoalNumber = Desc->iGoalNumber;
+	m_pContinuous_Attack = Desc->pContinuous_Attack;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -58,6 +59,17 @@ void CQTE_Continuous_Attack_Gauge::Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
+
+	// 시간에 따라 게이지 감소
+	m_fGaugeProgress -= m_fGaugeDecreaseRate * fTimeDelta;
+	m_fGaugeProgress = max(m_fGaugeProgress, 0.0f); // 0으로 클램프
+
+	// 실패 조건 확인
+	if (m_fGaugeProgress <= 0.0f)
+	{
+		m_pContinuous_Attack->Notify_Result(CQTE_Continuous_Attack::MISSION_STATE::MISSION_FAILED);
+		SetActive(false);
+	}
 
 }
 
@@ -122,15 +134,14 @@ HRESULT CQTE_Continuous_Attack_Gauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	_float ratio = (_float)m_iCountNumber / (_float)m_iGoalNumber;
-
 	if (FAILED(m_pTextureCom[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
 	if (FAILED(m_pTextureCom[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", 7)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_Ratio", &ratio, sizeof(_float))))
+	// m_fGaugeProgress를 셰이더의 g_Ratio에 바인딩
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Ratio", &m_fGaugeProgress, sizeof(_float))))
 		return E_FAIL;
 
 	return S_OK;
@@ -138,8 +149,16 @@ HRESULT CQTE_Continuous_Attack_Gauge::Bind_ShaderResources()
 
 void CQTE_Continuous_Attack_Gauge::Process_Command()
 {
-	//Count 숫자 추가
-	m_iCountNumber++;
+	// 키 입력 시 게이지 증가
+	m_fGaugeProgress += m_fGaugeIncreaseAmount;
+	m_fGaugeProgress = min(m_fGaugeProgress, 1.0f); // 1로 클램프
+
+	// 성공 조건 확인
+	if (m_fGaugeProgress >= 1.0f)
+	{
+		m_pContinuous_Attack->Notify_Result(CQTE_Continuous_Attack::MISSION_STATE::MISSION_SUCCESS);
+		SetActive(false);
+	}
 }
 
 

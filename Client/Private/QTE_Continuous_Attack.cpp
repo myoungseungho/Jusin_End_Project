@@ -69,7 +69,6 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		if (m_bIsQTEActive)
 		{
 			// QTE가 활성화되어 있으면 즉시 종료
-			m_eMissionState = MISSION_FAILED;
 			End_QTE();
 		}
 		else
@@ -88,23 +87,16 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		Handle_QTEInput();
 
 		// 목표 연타 수 달성 확인
-		if (m_iCurrentKeyPressCount >= m_iTargetKeyPressCount)
+		if (m_eMissionState == MISSION_SUCCESS)
 		{
-			m_eMissionState = MISSION_SUCCESS;
 			End_QTE();
 			return;
 		}
 		// 타이머 확인
-		else if (m_fTimer <= 0.0f)
+		else if (m_eMissionState == MISSION_FAILED)
 		{
-			m_eMissionState = MISSION_FAILED;
 			End_QTE();
 			return;
-		}
-		else
-		{
-			// 타이머 업데이트
-			m_fTimer -= fTimeDelta;
 		}
 
 		m_pContinuous_Space->Update(fTimeDelta);
@@ -130,8 +122,6 @@ void CQTE_Continuous_Attack::Start_QTE()
 
 	//활성화
 	m_bIsQTEActive = true;
-	m_fTimer = m_fLifeTime;
-
 
 	//스페이스 객체 생성
 	CQTE_Continuous_Attack_Space::CONTINUOUS_ATTACK_DESC Desc{};
@@ -148,7 +138,7 @@ void CQTE_Continuous_Attack::Start_QTE()
 	Gauge_Desc.fY = 810.f;
 	Gauge_Desc.fSizeX = 300.f;
 	Gauge_Desc.fSizeY = 20.f;
-	Gauge_Desc.iGoalNumber = m_iTargetKeyPressCount;
+	Gauge_Desc.pContinuous_Attack = this;
 
 	m_pContinuous_Gauge = static_cast<CQTE_Continuous_Attack_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Gauge"), &Gauge_Desc));
 	m_pContinuous_Gauge->SetActive(true);
@@ -167,10 +157,6 @@ void CQTE_Continuous_Attack::End_QTE()
 
 	//활성화 여부 초기화
 	m_bIsQTEActive = false;
-	//타이머 초기화
-	m_fTimer = m_fLifeTime;
-	//연타수 초기화
-	m_iCurrentKeyPressCount = 0;
 
 	// 미션 상태에 따른 처리
 	if (m_eMissionState == MISSION_SUCCESS)
@@ -180,6 +166,10 @@ void CQTE_Continuous_Attack::End_QTE()
 	else if (m_eMissionState == MISSION_FAILED)
 	{
 		// 실패 시 로직 처리
+	}
+	else if (m_eMissionState == MISSION_NOT_DECIDED)
+	{
+		//디버깅 용 로직 처리
 	}
 
 	// 미션 상태 초기화
@@ -195,7 +185,6 @@ void CQTE_Continuous_Attack::Handle_QTEInput()
 	{
 		if (m_pGameInstance->Key_Down(DIK_SPACE))
 		{
-			m_iCurrentKeyPressCount++;
 			Process_Command();
 		}
 	}
@@ -203,7 +192,6 @@ void CQTE_Continuous_Attack::Handle_QTEInput()
 	{
 		if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
 		{
-			m_iCurrentKeyPressCount++;
 			Process_Command();
 		}
 	}
