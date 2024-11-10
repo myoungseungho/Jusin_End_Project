@@ -1,24 +1,24 @@
 [Layer]
-LayerName: BurstR-02
+LayerName: BurstR-02_Rotated_Left
 Duration: 3
 TickPerSecond: 2
 KeyFramesCount: 179
 NumEffec: 11
-Position: 0.6 0 0
+Position: 0.6 -0.3 0
 Scale: 1.5 1.5 1.5
-Rotation: 0 0 0
+Rotation: 0 0 340
 IsFollowing: true
 
 [Effect]
-EffectName: BurstR-02_01
+EffectName: BurstR-02_Rotated_Left_01
 ModelName: Model_Effect_cmn_BeamCore
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_01
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_01
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.6 1 0
+Position: 0.942021 0.939692 0
 Scale: 0.015 0.03 0.015
 Rotation: 0 0 0
 IsLoop: false
@@ -47,15 +47,15 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR-02_02
+EffectName: BurstR-02_Rotated_Left_02
 ModelName: Model_Effect_cmn_BeamCore
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_02
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.5 1 0
+Position: 0.848051 0.973895 0
 Scale: 0.03 0.03 0.015
 Rotation: 45 0 0
 IsLoop: false
@@ -84,16 +84,16 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR-02_03
+EffectName: BurstR-02_Rotated_Left_03
 ModelName: Model_Effect_cmn_BeamCore
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_03
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_03
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.6 1 0
-Scale: 0.045 0.03 0.015
+Position: 0.942021 0.939692 0
+Scale: 0.0449999 0.03 0.015
 Rotation: 0 0 0
 IsLoop: false
 Color: 132.566 80.2152 0 1.88742
@@ -121,15 +121,15 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR-02_04
+EffectName: BurstR-02_Rotated_Left_04
 ModelName: Model_Effect_cmn_BeamCore
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_04
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_04
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.6 1 0
+Position: 0.942021 0.939692 0
 Scale: 0.03 0.03 0.03
 Rotation: 0 0 0
 IsLoop: false
@@ -158,15 +158,15 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR02_05
+EffectName: BurstR-02_Rotated_Left_05
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR02_05
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_05
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.2 0.4 -0.2
+Position: -0.0149457 0.649493 -0.2
 Scale: 0.15 0.15 1.5
 Rotation: 0 0 0
 IsLoop: false
@@ -195,16 +195,16 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR02_06
+EffectName: BurstR-02_Rotated_Left_06
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR02_06
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_06
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0.4 1 0
-Scale: 0.224998 0.299957 1.5
+Position: 0.754082 1.0081 0
+Scale: 0.224998 0.299956 1.5
 Rotation: 0 0 90
 IsLoop: false
 Color: 220.381 179.851 198.427 1.5308
@@ -223,15 +223,15 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR02_07
+EffectName: BurstR-02_Rotated_Left_07
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR02_07
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_07
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.3 1 0
+Position: 0.660113 1.0423 0
 Scale: 0.0749626 0.149925 1.5
 Rotation: 0 0 90
 IsLoop: false
@@ -260,15 +260,15 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: BurstR-02_08
+EffectName: BurstR-02_Rotated_Left_08
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_08
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_08
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.1 0.5 0
+Position: 0.113226 0.709261 0
 Scale: 0.03 0.15 1.5
 Rotation: 0 0 99.74
 IsLoop: false
@@ -306,15 +306,15 @@ Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: BurstR-02_10
+EffectName: BurstR-02_Rotated_Left_10
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_10
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_10
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0.8 0
+Position: 0.309801 0.956966 0
 Scale: 0.0299998 0.15 1.5
 Rotation: 0 0 92.519
 IsLoop: false
@@ -352,16 +352,16 @@ Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: BurstR-02_09
+EffectName: BurstR-02_Rotated_Left_09
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_09
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_09
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 1.4 0
-Scale: 0.045 0.15 1.5
+Position: 0.515013 1.52078 0
+Scale: 0.0449999 0.15 1.5
 Rotation: 0 0 74.805
 IsLoop: false
 Color: 0 0 0 30
@@ -398,15 +398,15 @@ Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: BurstR-02_11
+EffectName: BurstR-02_Rotated_Left_11
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02BurstR-02_11
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstR-02_Rotated_LeftBurstR-02_Rotated_Left_11
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 1.6 0
+Position: 0.583417 1.70872 0
 Scale: 0.03 0.15 1.5
 Rotation: 0 0 73.818
 IsLoop: false
