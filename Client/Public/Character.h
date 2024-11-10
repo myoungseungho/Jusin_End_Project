@@ -57,6 +57,8 @@ public:
 	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
 	static vector<CInput> Command_Crouch_SpecialAttack;
 
+	static vector<CInput> Command_Up_SpecialAttack;
+
 
 	static vector<CInput> Command_Reflect;
 

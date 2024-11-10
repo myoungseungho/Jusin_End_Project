@@ -153,6 +153,8 @@ vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RI
 
 vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
 
+vector<CInput> CCharacter::Command_Up_SpecialAttack = { {MOVEKEY_UP, ATTACK_SPECIAL} };
+
 
 
 
@@ -1536,7 +1538,8 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 
 	if (iCheck == 1 && bNoReady != true)
 	{
-		Character_Make_Effect(TEXT("BurstR-01"));
+		//Character_Make_Effect(TEXT("BurstR-01"));
+		m_pEffect_Manager->Copy_Layer(TEXT("BurstR-01"), m_pTransformCom->Get_WorldMatrixPtr());
 	}
 
 	m_bChaseEnable = false;

@@ -2041,6 +2041,40 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		if (iAttackEvent == 1) //공격
 		{
+			//CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
+			////Desc.ColliderDesc.width = 1.0;
+			////Desc.ColliderDesc.height = 1.0;
+			//if (m_iPlayerTeam == 1)
+			//	Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+			//else
+			//	Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
+			//Desc.ColliderDesc.pMineGameObject = this;
+			//Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
+			//Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
+			//
+			//Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
+			//Desc.fhitCharacter_StunTime = 0.6f;
+			//Desc.iDamage = 900 * Get_DamageScale();;
+			//Desc.fLifeTime = 7.f;
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+			//
+			//Desc.iTeam = m_iPlayerTeam;
+			//
+			//Desc.bCameraZoom = false;
+			//Desc.fAnimationLockTime = 0.05f;
+			//
+			//Desc.pOwner = this;
+			//
+			////Desc.eAttackType = { ATTACKTYPE_HIGH };
+			//Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
+			//Desc.fRanged_Impus_NoneDirection = { 8.f,0.f };  // 1:1.569 비율
+			//
+			//Desc.iDirection = m_iLookDirection;
+			//
+			//Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			//
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
 			CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
 			//Desc.ColliderDesc.height = 1.0;
@@ -2049,31 +2083,36 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
+			Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
 			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
 
-			Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
-			Desc.fhitCharacter_StunTime = 0.6f;
+
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 0.35f;
 			Desc.iDamage = 900 * Get_DamageScale();;
-			Desc.fLifeTime = 7.f;
-			Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+			Desc.fLifeTime = 5.f;
+
+
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+			Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,1.f };
+
 
 			Desc.iTeam = m_iPlayerTeam;
 
 			Desc.bCameraZoom = false;
-			Desc.fAnimationLockTime = 0.05f;
+			Desc.fAnimationLockTime = 0.f;
 
 			Desc.pOwner = this;
 
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
-			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
-			Desc.fRanged_Impus_NoneDirection = { 8.f,0.f };  // 1:1.569 비율
-
+			Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
+			Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
 			Desc.iDirection = m_iLookDirection;
-
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.strEffectName = TEXT("BurstJ-03");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
 		}
 
 	}
