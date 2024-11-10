@@ -34,8 +34,8 @@ Position: 0 1 0
 Scale: 0.03 0.03 0.03
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
-IsNotPlaying: false
+Duration: 2
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 178
@@ -71,8 +71,8 @@ Position: 0 1 0
 Scale: 0.03 0.03 0.03
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
-IsNotPlaying: false
+Duration: 2
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 178
@@ -108,8 +108,8 @@ Position: 0.1 1 0
 Scale: 0.02 0.035 0.02
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
-IsNotPlaying: false
+Duration: 2
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 178
@@ -145,8 +145,8 @@ Position: -1.5 0.2 0
 Scale: 0.16 0.12 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
-IsNotPlaying: false
+Duration: 2
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 178
@@ -166,8 +166,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -2.5 0 0
-Scale: 0.3 0.15 1
+Position: 0.3 0 0
+Scale: 0.05 0.15 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 27.8642 86.9702 255 30
@@ -178,11 +178,11 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -2.5 0 0
-Scale: 0.3 0.15 1
+Position: 0.3 0 0
+Scale: 0.05 0.15 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
+Duration: 2
 IsNotPlaying: false
 
 [KeyFrame]
@@ -203,8 +203,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -2.5 -1.49012e-08 0
-Scale: 0.3 0.15 1
+Position: 0.3 -1.49012e-08 0
+Scale: 0.05 0.15 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 255 255 255 0.242716
@@ -215,11 +215,11 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -2.5 -1.49012e-08 0
-Scale: 0.3 0.15 1
+Position: 0.3 -1.49012e-08 0
+Scale: 0.05 0.15 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
+Duration: 2
 IsNotPlaying: false
 
 [KeyFrame]
@@ -240,8 +240,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -2.5 1.49012e-08 0
-Scale: 0.3 0.13 1
+Position: 0.3 1.49012e-08 0
+Scale: 0.05 0.13 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 66.7057 211.937 240.646 0.241391
@@ -252,11 +252,11 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -2.5 1.49012e-08 0
-Scale: 0.3 0.13 1
+Position: 0.3 1.49012e-08 0
+Scale: 0.05 0.13 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
+Duration: 2
 IsNotPlaying: false
 
 [KeyFrame]
@@ -278,7 +278,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 0.2 1 0
-Scale: 0.249929 0.29988 1
+Scale: 0.249923 0.299874 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 58.2616 81.904 255 0.796688
@@ -290,11 +290,11 @@ NumKeyFrame: 2
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0.2 1 0
-Scale: 0.249929 0.29988 1
+Scale: 0.249925 0.299876 1
 Rotation: 0 0 90
 CurTime: 0
-Duration: 3
-IsNotPlaying: false
+Duration: 2
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 178
@@ -315,7 +315,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: -0.1 0.8 0
-Scale: 0.199894 0.299904 1
+Scale: 0.199886 0.299896 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 93.7252 255 17.3841
@@ -327,11 +327,11 @@ NumKeyFrame: 2
 [KeyFrame]
 KeyFrameNumber: 0
 Position: -0.1 0.8 0
-Scale: 0.199894 0.299904 1
+Scale: 0.199891 0.299901 1
 Rotation: 0 0 90
 CurTime: 0
-Duration: 3
-IsNotPlaying: false
+Duration: 2
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 178
@@ -351,8 +351,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -2.5 -0.9 0
-Scale: 0.3 0.3 1
+Position: 0.3 -0.9 0
+Scale: 0.05 0.3 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 39.6854 44.7517 232.202 0.894039
@@ -363,11 +363,11 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -2.5 -0.9 0
-Scale: 0.3 0.3 1
+Position: 0.3 -0.9 0
+Scale: 0.05 0.3 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 3
+Duration: 2
 IsNotPlaying: false
 
 [KeyFrame]

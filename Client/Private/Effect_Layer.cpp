@@ -383,6 +383,26 @@ HRESULT CEffect_Layer::Set_Layer_Rotation(_float3 ChangeRotation)
 	return S_OK;
 }
 
+HRESULT CEffect_Layer::Set_Copy_Layer_Scaled(_float3 ChangeScaled)
+{
+	m_pCopyTransformCom->Set_Scaled(ChangeScaled.x, ChangeScaled.y, ChangeScaled.z);
+
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_Copy_Layer_Position(_float3 ChangePosition)
+{
+	m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_Copy_Layer_Rotation(_float3 ChangeRotation)
+{
+	m_pCopyTransformCom->Rotate(ChangeRotation);
+
+	return S_OK;
+}
+
 _float3 CEffect_Layer::Get_Layer_Scaled()
 {
 	return m_pTransformCom->Get_Scaled();
