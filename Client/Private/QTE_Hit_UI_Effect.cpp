@@ -65,8 +65,7 @@ void CQTE_Hit_UI_Effect::Update(_float fTimeDelta)
 	m_fElapsedTime += fTimeDelta;
 
 	// 로그 함수를 통한 크기 비율 계산
-	_float maxTime = 1.0f; // 총 시간을 1초로 가정, 필요 시 조정 가능
-	_float ratio = Clamp(m_fElapsedTime / maxTime, 0.f, 1.f);
+	_float ratio = Clamp(m_fElapsedTime / m_fLifeTime, 0.f, 1.f);
 
 	// 비율을 로그 함수로 조정 (0.1을 더해줘서 초기 상태에서 무한대 방지)
 	_float growthFactor = log(1.0f + 9.0f * ratio) / log(10.0f); // 0에서 1로 점진적 증가

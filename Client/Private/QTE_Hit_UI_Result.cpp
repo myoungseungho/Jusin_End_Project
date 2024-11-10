@@ -35,7 +35,11 @@ HRESULT CQTE_Hit_UI_Result::Initialize(void* pArg)
 	m_fSizeX = Desc->fSizeX;
 	m_fSizeY = Desc->fSizeY;
 	m_iTextureNumber = Desc->iTextureNum;
-	m_fTimer = Desc->fTimer;
+	m_fLifeTime = Desc->fTimer;
+	m_fTimer = m_fLifeTime;
+
+	m_fDefaultY = m_fY;         // 초기 Y 위치
+	m_fTargetY = m_fY - 30.0f; // 목표 Y 위치 (예: 100.0f 추가하여 높이 설정)
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -59,13 +63,29 @@ void CQTE_Hit_UI_Result::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
+	// 남은 시간을 감소시키고 경과 시간을 누적
+	m_fTimer -= fTimeDelta;
+	m_fElapsedTime += fTimeDelta;
+
+	// Ratio 계산 (0에서 1까지)
+	_float ratio = Clamp(m_fElapsedTime / m_fLifeTime, 0.f, 1.f);
+
+	// 로그 함수를 통해 비율 조정 (처음에는 급격히 증가, 점점 완만해짐)
+	_float growthFactor = log(1.0f + 9.0f * ratio) / log(10.0f); // 0에서 1로 점진적 증가
+
+	// Y 위치 계산 (기본 Y에서 목표 Y까지)
+	_float currentY = m_fDefaultY + (m_fTargetY - m_fDefaultY) * growthFactor;
+
+	// 변환 컴포넌트에 Y 위치 적용
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -currentY + g_iWinSizeY * 0.5f, 0.9f, 1.f));
+
+	// 타이머가 끝나면 이펙트를 비활성화
 	if (m_fTimer <= 0)
 	{
 		m_fTimer = 0;
 		SetActive(false);
 	}
-
-	m_fTimer -= fTimeDelta;
 }
 
 void CQTE_Hit_UI_Result::Late_Update(_float fTimeDelta)

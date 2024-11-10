@@ -47,6 +47,12 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
+	_float m_fElapsedTime = 0.f; // 경과 시간을 저장하는 변수
+	_float m_fLifeTime = 0.f;
+
+	_float m_fDefaultY = 0.f; // 초기 Y 위치
+	_float m_fTargetY = 0.f;  // 목표 Y 위치
+
 public:
 	static CQTE_Hit_UI_Result* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
