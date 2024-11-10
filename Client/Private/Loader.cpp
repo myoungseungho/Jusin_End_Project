@@ -104,6 +104,7 @@
 #include "UI_CharaSelectModel.h"
 #include "UI_CharaSelectLight.h"
 #include "UI_CharaSelectCircle.h"
+#include "UI_VS_BG.h"
 
 #include "CharaSelectCamera.h"
 
@@ -163,6 +164,12 @@ HRESULT CLoader::Loading()
 	case LEVEL_CHARACTER:
 		hr = Loading_For_CharaSelect();
 		break;
+
+	case LEVEL_VS:
+		hr = Loading_For_VS();
+		break;
+
+
 	}
 
 	if (FAILED(hr))
@@ -278,6 +285,36 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
 	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
 	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
+	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_VS()
+{
+	/* For.Prototype_Component_Texture_UI_VS_BG */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/BackGround.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Color */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Color"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg_00.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Line */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Line"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg_07.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_Mark */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_Mark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/LOC/vs_object_%d.png"),3))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_bG */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_bG"),
+		CUI_VS_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

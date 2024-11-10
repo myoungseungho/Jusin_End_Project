@@ -5,6 +5,7 @@
 #include "Level_Logo.h"
 #include "Level_Chara_Select.h"
 #include "Level_GamePlay.h"
+#include "Level_VS.h"
 
 #include "GameInstance.h"
 #include "SpaceSun.h"
@@ -142,6 +143,12 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		case LEVEL_CHARACTER:
 			pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
 			break;
+
+		case LEVEL_VS:
+			pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
+			break;
+
+
 		}
 
 		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))

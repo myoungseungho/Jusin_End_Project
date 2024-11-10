@@ -50,6 +50,7 @@ private:
 	HRESULT Loading_For_Logo();
 	HRESULT Loading_For_CharaSelect();
 	HRESULT Loading_For_GamePlayLevel();
+	HRESULT Loading_For_VS();
 	HRESULT Load_UI_Resources_Logo();
 	HRESULT Load_Texture_Resources_GamePlay_0();
 	HRESULT Load_Texture_Resources_GamePlay_1();

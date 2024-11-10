@@ -286,6 +286,12 @@
     <ClCompile Include="..\private\UI_CharaSelectCircle.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Level_VS.cpp">
+      <Filter>01.Level\VS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\BG</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -650,6 +656,15 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Character\Circle">
       <UniqueIdentifier>{f216e0dd-b45f-4eba-b460-74fb4df3a08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\VS">
+      <UniqueIdentifier>{af7cdd80-b775-4e0d-9567-1866610dfbe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS">
+      <UniqueIdentifier>{65f894c1-0062-42e3-9112-2395c0a7f4fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\BG">
+      <UniqueIdentifier>{426f86e8-43df-462a-9b43-974684d4eb17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1144,6 +1159,12 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_CharaSelectCircle.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Level_VS.h">
+      <Filter>01.Level\VS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_BG.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\BG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

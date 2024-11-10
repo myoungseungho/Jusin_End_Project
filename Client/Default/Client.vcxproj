@@ -185,6 +185,7 @@
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
+    <ClInclude Include="..\public\Level_VS.h" />
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Main_Camera.h" />
@@ -279,6 +280,7 @@
     <ClInclude Include="..\Public\Input.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\public\UI_SubHpPanel.h" />
+    <ClInclude Include="..\public\UI_VS_BG.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
@@ -343,6 +345,7 @@
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\private\Level_Chara_Select.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
+    <ClCompile Include="..\private\Level_VS.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Main_Camera.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp">
@@ -439,6 +442,7 @@
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\private\UI_SubHpPanel.cpp" />
+    <ClCompile Include="..\private\UI_VS_BG.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />
