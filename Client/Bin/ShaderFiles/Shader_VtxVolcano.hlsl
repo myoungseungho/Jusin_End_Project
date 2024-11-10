@@ -180,16 +180,14 @@ PS_OUT PS_MAIN_SKY(PS_IN In)
     float2 vTexcoord = In.vTexcoord;
     vTexcoord.y += g_Time * 0.03f;
         /* ¸¶½ºÅ© x */
-    //float fHairMask = step(In.vTexcoord.x, 0.039f) * step(0.961f, In.vTexcoord.x);
-    
-    //float fFaceMask = (step(0.095, In.vTexcoord.x) * step(In.vTexcoord.x, 0.2832)) * (step(0.0, In.vTexcoord.y) * step(In.vTexcoord.y, 0.316));
-    //float fFaceDetailMask = (step(0.013, In.vTexcoord.x) * step(In.vTexcoord.x, 0.016)) * (step(0.015, In.vTexcoord.y) * step(In.vTexcoord.y, 0.017));
-    //float fFaceDetailMask2 = step(0.3f, In.vTexcoord.x) * step(In.vTexcoord.x, 0.427f) * step(0.031f, In.vTexcoord.y) * step(In.vTexcoord.y, 0.158f);
-    //Tex < 0.039 && Tex > 0.961 --- 0.074 > Tex && 0.932 > Tex
-    
+    float fSideMask = (step(-0.79f, In.vTexcoord.x) * step(In.vTexcoord.x, 1.924f)
+                            * step(-0.821f, In.vTexcoord.y) * step(In.vTexcoord.y, 1.843f));
+    //Tex.x < 0.039 || Tex.x > 0.961 --- 0.074 > Tex.y || 0.932 > Tex.y
+    //170 34 68
+    vector vSideColor = { 0.6666f, 0.1333f, 0.2666f, 1.f };
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
     vector vMtrlMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
-    Out.vDiffuse = vMtrlDiffuse;
+    Out.vDiffuse = (vMtrlDiffuse * fSideMask) + (vSideColor * (1 - fSideMask));
     Out.vNormal = vector(0.f, 0.f, 0.f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
@@ -392,11 +390,11 @@ PS_OUT PS_MAIN_SMOKE(PS_IN In)
     vector vYellowColor = { 1.0f, 0.60f, 0.0f, 1.0f };
     vector vResultColor;
     
-    float yellowFactor = saturate(1.0 - saturate(vTexcoord.y));
+    float yellowFactor = saturate(1.373 - saturate(vTexcoord.y));
     
     vMtrlDiffuse = lerp(vMtrlDiffuse, vMtrlMask, 0.3f) * 1.5f;
     vResultColor.rgb = lerp(vLavaColor.rgb, vYellowColor.rgb, yellowFactor) * vMtrlDiffuse.g;
-    vResultColor.a = ((1.0 - abs(In.vTexcoord.x - 0.5) * 2.0) * (In.vTexcoord.y * vResultColor.r)) * 1.2f;
+    vResultColor.a = ((1.0 - abs(In.vTexcoord.x - 0.5) * 1.5) * (In.vTexcoord.y * vResultColor.r)) * 1.373f;
 
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
