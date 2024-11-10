@@ -3311,12 +3311,12 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
 	/* For.Prototype_Component_VIBuffer_Particle_Explosion */
 	ParticleDesc.iNumInstance = 200;
-	ParticleDesc.vRange = _float3(0.1f, 0.1f, 0.1f);
+	ParticleDesc.vRange = _float3(0.f, 0.f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
-	ParticleDesc.vPivot = _float3(-2.0f, 0.0f, -5.f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(0.4f, 1.f);
-	ParticleDesc.vScale = _float2(0.02f, 0.05f);
-	ParticleDesc.vLifeTime = _float2(0.2f, 0.5f);
+	ParticleDesc.vScale = _float2(1.f, 1.f);
+	ParticleDesc.vLifeTime = _float2(1.f, 2.f);
 	ParticleDesc.isLoop = true;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread_QTE"),
@@ -3325,7 +3325,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
-		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPOS::Elements, VTXPOS::iNumElements))))
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPARTICLE_POINT::Elements, VTXPARTICLE_POINT::iNumElements))))
 		return E_FAIL;
 
 	return S_OK;

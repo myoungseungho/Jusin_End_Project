@@ -76,7 +76,11 @@ void CQTE_Same_Grab_UI_Particle::Late_Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 5.f;
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
 }
 
 HRESULT CQTE_Same_Grab_UI_Particle::Render(_float fTimeDelta)
@@ -84,7 +88,7 @@ HRESULT CQTE_Same_Grab_UI_Particle::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(1)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

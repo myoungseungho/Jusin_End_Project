@@ -8,7 +8,7 @@ BEGIN(Engine)
 class ENGINE_DLL CVIBuffer_Instancing abstract : public CVIBuffer
 {
 public:
-	typedef struct
+	struct VIBUFFER_INSTANCE_DESC
 	{
 		_uint		iNumInstance = { 0 };
 		_float3		vRange = {};
@@ -20,7 +20,7 @@ public:
 		_float2		vLifeTime = {};
 		_bool		isLoop = {};
 
-	}VIBUFFER_INSTANCE_DESC;
+	};
 protected:
 	CVIBuffer_Instancing(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVIBuffer_Instancing(const CVIBuffer_Instancing& Prototype);
