@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "QTE_Continuous_Attack_Space.h"
 #include "QTE_Continuous_Attack_Gauge.h"
+#include "QTE_Continuous_Attack_Effect.h"
 #include "Main_Camera.h"
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -89,6 +90,17 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		// 목표 연타 수 달성 확인
 		if (m_eMissionState == MISSION_SUCCESS)
 		{
+			CQTE_Continuous_Attack_Effect::CONTINUOUS_ATTACK_EFFECT_DESC Desc{};
+
+			Desc.fX = m_fX;
+			Desc.fY = 750.f;
+			Desc.fSizeX = 200.f;
+			Desc.fSizeY = 200.f;
+			Desc.fTimer = 0.5f;
+
+ 			m_pContinuous_Effect = static_cast<CQTE_Continuous_Attack_Effect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Effect"), &Desc));
+			m_bOffsetActive = true;
+
 			End_QTE();
 			return;
 		}
@@ -101,14 +113,18 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 
 		m_pContinuous_Space->Update(fTimeDelta);
 		m_pContinuous_Gauge->Update(fTimeDelta);
+
+		// 애니메이션 업데이트
+		if (m_bIsMoving)
+		{
+			Update_Animation(fTimeDelta);
+		}
 	}
 
 #pragma endregion
-
-	// 애니메이션 업데이트
-	if (m_bIsMoving)
+	else if (m_bOffsetActive)
 	{
-		Update_Animation(fTimeDelta);
+		End_Offset_QTE(fTimeDelta);
 	}
 }
 
@@ -158,25 +174,28 @@ void CQTE_Continuous_Attack::End_QTE()
 	//활성화 여부 초기화
 	m_bIsQTEActive = false;
 
-	// 미션 상태에 따른 처리
-	if (m_eMissionState == MISSION_SUCCESS)
-	{
-		// 성공 시 로직 처리
-	}
-	else if (m_eMissionState == MISSION_FAILED)
-	{
-		// 실패 시 로직 처리
-	}
-	else if (m_eMissionState == MISSION_NOT_DECIDED)
-	{
-		//디버깅 용 로직 처리
-	}
-
 	// 미션 상태 초기화
 	m_eMissionState = MISSION_NOT_DECIDED;
 
 #pragma endregion
 
+}
+
+void CQTE_Continuous_Attack::End_Offset_QTE(_float fTimeDelta)
+{
+	// 오프셋 기간 처리
+	m_fOffsetTimer -= fTimeDelta;
+
+	m_pContinuous_Effect->Update(fTimeDelta);
+
+	if (m_fOffsetTimer <= 0.0f)
+	{
+		Safe_Release(m_pContinuous_Effect);
+		m_pContinuous_Effect = nullptr;
+
+		m_fOffsetTimer = 2.f;
+		m_bOffsetActive = false; // 오프셋 기간 종료
+	}
 }
 
 void CQTE_Continuous_Attack::Handle_QTEInput()
@@ -276,6 +295,9 @@ void CQTE_Continuous_Attack::Late_Update(_float fTimeDelta)
 		m_pContinuous_Space->Late_Update(fTimeDelta);
 		m_pContinuous_Gauge->Late_Update(fTimeDelta);
 	}
+	else if (m_bOffsetActive)
+ 		m_pContinuous_Effect->Late_Update(fTimeDelta);
+
 }
 
 HRESULT CQTE_Continuous_Attack::Render(_float fTimeDelta)
@@ -367,6 +389,7 @@ void CQTE_Continuous_Attack::Free()
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pContinuous_Space);
 	Safe_Release(m_pContinuous_Gauge);
+	Safe_Release(m_pContinuous_Effect);
 
 	__super::Free();
 }

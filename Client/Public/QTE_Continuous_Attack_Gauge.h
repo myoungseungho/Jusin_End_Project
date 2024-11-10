@@ -63,8 +63,8 @@ private:
 	_bool m_bIsMovingDown = false;    // 내려가는 중인지 여부
 
 	_float m_fGaugeProgress = 0.5f; // 게이지는 50%에서 시작
-	_float m_fGaugeDecreaseRate = 0.1f; // 게이지 감소 속도 (초당 10%)
-	_float m_fGaugeIncreaseAmount = 0.04f; // 키 입력 시 게이지 증가량 (10%)
+	_float m_fGaugeDecreaseRate = 0.2f; // 게이지 감소 속도 (초당 10%)
+	_float m_fGaugeIncreaseAmount = 0.06f; // 키 입력 시 게이지 증가량 (10%)
 
 	class CQTE_Continuous_Attack* m_pContinuous_Attack = { nullptr };
 

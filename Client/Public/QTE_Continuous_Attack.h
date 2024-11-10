@@ -42,6 +42,7 @@ private:
 
 	void Start_QTE();
 	void End_QTE();
+	void End_Offset_QTE(_float fTimeDelta);
 	void Handle_QTEInput();
 	void Process_Command();
 
@@ -77,9 +78,14 @@ private:
 
 	class CQTE_Continuous_Attack_Space* m_pContinuous_Space = { nullptr };
 	class CQTE_Continuous_Attack_Gauge* m_pContinuous_Gauge = { nullptr };
+	class CQTE_Continuous_Attack_Effect* m_pContinuous_Effect = { nullptr };
 
 	//카메라
 	class CMain_Camera* m_pMain_Camera = { nullptr };
+
+	//객체들이 사라지는 여유 시간을 줘야 함
+	_float m_fOffsetTimer = { 2.f };
+	_bool m_bOffsetActive = { false };
 public:
 	static CQTE_Continuous_Attack* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
