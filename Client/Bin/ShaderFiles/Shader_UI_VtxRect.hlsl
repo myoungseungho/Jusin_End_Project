@@ -592,6 +592,9 @@ PS_OUT PS_QTE_Hit_UI(PS_IN In)
     // 알파값이 낮은 픽셀은 버림
     if (Out.vColor.a <= 0.1f)
         discard;
+    
+    //주황색 빛깔 나게
+    Out.vColor = float4(255.f / 255.f, 127.f / 255.f, 39.f / 255.f, 1.f);
 
     return Out;
 }
@@ -1052,7 +1055,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
  
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;

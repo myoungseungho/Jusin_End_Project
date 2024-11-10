@@ -539,7 +539,7 @@ void CQTE_Hit_Situation::Create_EffectObject(CQTE_Hit_UI_Icon* pIcon)
 	Desc.fY = pIcon->m_fY;
 	Desc.fSizeX = 300.f;
 	Desc.fSizeY = 300.f;
-	Desc.fTimer = 0.5f;
+	Desc.fTimer = 0.25f;
 
 	CQTE_Hit_UI_Effect* effect = static_cast<CQTE_Hit_UI_Effect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Effect"), &Desc));
 	m_vecHitEffect.push_back(effect);

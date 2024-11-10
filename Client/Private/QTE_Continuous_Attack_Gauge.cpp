@@ -78,7 +78,11 @@ void CQTE_Continuous_Attack_Gauge::Late_Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 2.f;
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
 }
 
 HRESULT CQTE_Continuous_Attack_Gauge::Render(_float fTimeDelta)
