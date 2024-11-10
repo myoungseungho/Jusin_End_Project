@@ -1292,7 +1292,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
 	angle = (angle + 90) * 0.5f;
 
-	cout << angle << endl;
+	//cout << angle << endl;
 
 	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
 	{
@@ -1594,7 +1594,7 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 		//우다다 횟수 소모할때까지 공격.   
 		if (m_iGrabLoof > 0)
 		{
-			cout << m_iGrabLoof << endl;
+			//cout << m_iGrabLoof << endl;
 			m_iGrabLoof--;
 			m_pModelCom->CurrentAnimationPositionJump(26.f);
 		}
@@ -2088,7 +2088,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 
 	m_iDebugComoboDamage += iDamage;
-	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+	//cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
 
 
 	//AttackObject로 옮겨야한다?

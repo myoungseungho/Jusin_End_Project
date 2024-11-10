@@ -119,6 +119,7 @@
 #include "QTE_Continuous_Attack.h"
 #include "QTE_Continuous_Attack_Space.h"
 #include "QTE_Continuous_Attack_Gauge.h"
+#include "QTE_Hit_UI_Effect.h"
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -979,6 +980,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Space"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/QTE_SPACE.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Effect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/vs_effect_01.png"), 1))))
 		return E_FAIL;
 }
 
@@ -3243,6 +3248,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Gauge"),
 		CQTE_Continuous_Attack_Gauge::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_Effect"),
+		CQTE_Hit_UI_Effect::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

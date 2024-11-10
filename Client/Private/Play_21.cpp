@@ -529,7 +529,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		{
 			Stun_Shake();
 			m_fAccStunTime += fTimeDelta;
-			cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
+			//cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
 			if (m_fAccStunTime > m_fMaxStunTime)
 			{
 				m_bStun = false;

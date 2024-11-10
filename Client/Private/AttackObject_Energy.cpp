@@ -355,7 +355,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 
 			AttackColliderResult eResult{ RESULT_NONE };
 	
-			cout << m_iAttackCount << endl;
+			//cout << m_iAttackCount << endl;
 			if (m_iAttackCount != 0)
 			{
 				m_iAttackCount--;
@@ -378,7 +378,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				m_pOwner->Gain_HitCount(m_iGainHitCount);
 
 
-				cout << m_iAttackCount << endl;
+				//cout << m_iAttackCount << endl;
 
 				if (m_iAttackCount == 0)
 				{

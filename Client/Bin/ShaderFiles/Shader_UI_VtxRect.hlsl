@@ -627,6 +627,55 @@ PS_OUT PS_QTE_CONTINUOUS_GAUGE(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_QTE_Hit_Effect(PS_IN In)
+{
+    PS_OUT Out;
+
+     // 텍스처 샘플링
+    float4 baseColor = g_Texture.Sample(DestroySampler, In.vTexcoord);
+
+    if (baseColor.a < 0.1)
+        discard;
+    
+    // 중심에서의 거리 계산
+    float2 center = float2(0.5, 0.5);
+    float distanceFromCenter = distance(In.vTexcoord, center);
+
+    // 시간 비율 계산
+    float ratio = saturate(g_Time / g_MaxTime);
+
+    // 거리 기반 표시 영역 조절
+    float visibilityRadius = ratio * 1.5; // ratio에 따라 원의 반경이 확장됨
+
+    // 반경 바깥쪽은 보이지 않도록 discard
+    if (distanceFromCenter > visibilityRadius)
+    {
+        discard;
+    }
+
+    // 투명도 페이드 인/아웃
+    float alpha;
+    if (ratio < 0.1)
+    {
+        alpha = saturate(ratio / 0.1); // 0에서 0.1까지 페이드 인
+    }
+    else if (ratio > 0.8)
+    {
+        alpha = saturate((1.0 - ratio) / 0.2); // 0.8에서 1.0까지 페이드 아웃
+    }
+    else
+    {
+        alpha = 1.0; // 중간 구간에서는 완전 불투명
+    }
+
+    Out.vColor = baseColor;
+    // 최종 색상과 투명도 결합
+    Out.vColor.a = alpha;
+
+    return Out;
+}
+
+
 
 technique11 DefaultTechnique
 {
@@ -1025,5 +1074,21 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_QTE_CONTINUOUS_GAUGE();
     }
+
+
+//27
+    pass QTE_HIT_EFFECT
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_QTE_Hit_Effect();
+    }
+
 
 }
