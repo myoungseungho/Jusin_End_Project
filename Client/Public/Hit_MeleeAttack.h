@@ -24,6 +24,9 @@ public:
 	void Attack_Medium();
 	void Attack_Heavy();
 	void Attack_Special();
+	void Attack_Crouch_Speical();
+	void Attack_Up_Speical();
+
 	void Attack_Grab();
 
 
@@ -57,6 +60,10 @@ public:
 	_uint* m_pPlayerAnimationIndex = { nullptr };
 
 	_bool* m_pbAttackCount = { nullptr };
+
+
+	_bool* m_pbCounterPose = { nullptr };
+
 	class CGameInstance* m_pGameInstance = { nullptr };
 
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };

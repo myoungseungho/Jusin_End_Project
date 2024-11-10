@@ -238,7 +238,7 @@ public:
 
 	//피격 관련
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
+	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
 
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
@@ -374,6 +374,7 @@ public:
 	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
 	void Update_LoofAnimationCreate(_float fTimeDelta);
 
+	const _float4x4* Get_pTransformMatrix();
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -667,14 +668,14 @@ public:
 
 	//UI에서 써야하는 정보 
 	
-
+protected:
+	_bool					m_bHit = { FALSE };
 private:
 	_uint					m_iComboCount = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
 	
 	_bool					m_bRedHp = { FALSE };
-	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };

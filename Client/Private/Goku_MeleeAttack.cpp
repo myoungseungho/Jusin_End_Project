@@ -862,11 +862,13 @@ void CGoku_MeleeAttack::ForwardDash()
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
 
+		//m_pEffect_Manager->Copy_Layer(TEXT("Dash"), m_pPlayer->Get_pTransformMatrix());
 
-		m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
-		//m_pPlayer->Character_Make_Effect(TEXT("Right_Wall_Crash"), { 0.6f,0.f });
+		//m_pPlayer->Character_Make_Effect(TEXT("Dash"), { 0.9f,0.f });
+		m_pPlayer->Character_Make_Effect(TEXT("Dash"), { 1.2f,0.f });
 
 		
 	}
@@ -881,9 +883,10 @@ void CGoku_MeleeAttack::ForwardDash()
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-		m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
 
+		m_pEffect_Manager->Copy_Layer(TEXT("Dash"),m_pPlayer->Get_pTransformMatrix());
 	}
 
 

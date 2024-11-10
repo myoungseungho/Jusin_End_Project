@@ -487,44 +487,45 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			Character_Play_Animation(fTimeDelta);
 			
 			//3필 전용
-			if (m_bFinalSkillss3)
-			{
-				_bool bAnimationEnd = false;
-
-				_float fPrePosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
-
-				//_int iOneFrameTeest = 0;
-
-				if (fPrePosition == 0)
-				{
-
-					ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
-					fPrePosition += 0.001;
-
-					//iOneFrameTeest++;
-				}
-
-				if (m_pModelCom_Skill->Play_Animation_Lick(fTimeDelta))
-				{
-					//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
-					if (m_pModelCom_Skill->m_isLoopAnim)
-					{
-						fPrePosition = 0.001;
-						ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
-						//iOneFrameTeest++;
-					}
-					bAnimationEnd = true;
-					m_bMotionPlaying = false;
-				}
-				else
-					m_bMotionPlaying = true;
-
-
-				_float fCurPosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
-
-
-				ProcessEventsBetweenFrames2(0, m_pModelCom_Skill->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
-			}
+			// 없어도 돌아가는데? 오히려 있으면 안돌아가는데?
+			//if (m_bFinalSkillss3)
+			//{
+			//	_bool bAnimationEnd = false;
+			//
+			//	_float fPrePosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
+			//
+			//	//_int iOneFrameTeest = 0;
+			//
+			//	if (fPrePosition == 0)
+			//	{
+			//
+			//		ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
+			//		fPrePosition += 0.001;
+			//
+			//		//iOneFrameTeest++;
+			//	}
+			//
+			//	if (m_pModelCom_Skill->Play_Animation_Lick(fTimeDelta))
+			//	{
+			//		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
+			//		if (m_pModelCom_Skill->m_isLoopAnim)
+			//		{
+			//			fPrePosition = 0.001;
+			//			ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
+			//			//iOneFrameTeest++;
+			//		}
+			//		bAnimationEnd = true;
+			//		m_bMotionPlaying = false;
+			//	}
+			//	else
+			//		m_bMotionPlaying = true;
+			//
+			//
+			//	_float fCurPosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
+			//
+			//
+			//	ProcessEventsBetweenFrames2(0, m_pModelCom_Skill->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+			//}
 
 		 }
 		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
@@ -1614,6 +1615,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iDirection = m_iLookDirection;
 
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.strEffectName = TEXT("BurstJ-03_Rotated_Left");
+
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2452,7 +2455,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fForcedGravityTime = 0.f;
 		//Desc.fGrabAnimationPosition = 40.f;
 		//Desc.fGrabAnimationPosition = 25.f;
-		Desc.iGainAttackStep = 0;
+		Desc.iGainAttackStep = 2;
 		Desc.iGrabAnimationIndex = ANIME_FINAL_ELBO;
 		Desc.iOnwerNextAnimationIndex = ANIME_FINAL_UPPER;
 
@@ -2658,8 +2661,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_StunTime = 10.f;
 			//Desc.iDamage = 120 * Get_DamageScale();
 
-			if(m_bFinalSkillss3)
-				Desc.iDamage = 240 * Get_DamageScale(true);
+			//if(m_bFinalSkillss3)
+			if (m_bAlwaysss3Test)
+				Desc.iDamage = 220 * Get_DamageScale(true);
 			else
 				Desc.iDamage = 200 * Get_DamageScale(true);
 			Desc.fLifeTime = 6.f;
@@ -2678,7 +2682,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iPlayerDirection = m_iLookDirection;		//
 			Desc.iGainHitCount = 2;
 			Desc.iGainAttackStep = 0;
-			Desc.fAttackDelayTime = 0.04f;
+			//Desc.fAttackDelayTime = 0.04f;  //꽤 자주 풀히트 못함
+			//Desc.fAttackDelayTime = 0.03f; //종종 풀히트 못함
+			Desc.fAttackDelayTime = 0.02f; //QTE 성공했을때만 못함?
+
 			Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
 
 			Desc.fColliderfCY = 1.2f;

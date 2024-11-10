@@ -49,7 +49,8 @@ public:
 
 
 
-		ANIME_CROUCH_START = 2, ANIME_CROUCHING = 4,
+		ANIME_CROUCH_START = 2, ANIME_CROUCHING = 3,
+		//ANIME_CROUCH_SPIN = 4,
 
 		//가드
 		ANIME_GUARD_GROUND = 17,	//040      //1번 애니메이션은 뒤돌기임
@@ -70,7 +71,7 @@ public:
 
 		ANIME_CHASE = 12,
 
-		ANIME_GRAB_READY = 14,  //036 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
+		ANIME_GRAB_READY = 16,  //036 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
 
 
 
@@ -88,7 +89,7 @@ public:
 		//피격
 		ANIME_HIT_HEAVY_AWAY_LEFT = 31,
 		ANIME_HIT_HEAVY_AWAY_UP = 33, //077      보통 061(26번) 으로 연계됨 
-		ANIME_HIT_HEAVY_AWAY_LEFTDOWN = 39, //081
+		ANIME_HIT_HEAVY_AWAY_LEFTDOWN = 37, //081
 		ANIME_HIT_HEAVY_AWAY_SPIN_UP = 28,
 		ANIME_HIT_HEAVY_AWAY_SPIN_LEFTUP = 29,
 		ANIME_HIT_HEAVY_AWAY_SPIN_LEFT = 30,
@@ -114,9 +115,9 @@ public:
 		//405(=64)는 어퍼 직전까지만 하는데 뭐냐 이거
 
 		//각각 236약, 어퍼, 앉아약  인데 이거 진짜 구현하나?
-		ANIME_236_ENERGY_RIGHT =61,
-		ANIME_236_ENERGY_UP = 49,
-		ANIME_236_ENERGY_DOWN = 47,
+		ANIME_236_SPECIAL_RIGHT =61,
+		ANIME_236_SPECIAL_UP = 49,
+		ANIME_236_SPECIAL_DOWN = 47,
 
 
 		ANIME_214_POSE = 65,
@@ -166,15 +167,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	//virtual void NextMoveCheck() override;
-	//virtual void AttackNextMoveCheck() override;
-	//virtual void AnimeEndNextMoveCheck() override;
 
-	//virtual void Test_InputCommand();
-	//virtual void Set_Animation(_uint iAnimationIndex) override;
-	//virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
-
-	void KeyTest();
+	_bool Update_CounterPose(_float fTimeDelta);
 
 
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) override;
@@ -187,6 +181,8 @@ public:
 
 
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
+	_bool* Get_pbCounterPose() { return &m_bCounterPose; };
+
 	virtual void Reset_AttackCount() override;
 
 	virtual void Gravity(_float fTimeDelta) override;
@@ -196,15 +192,18 @@ public:
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
 
 
-	void Set_UltimateKamehameha(_bool bUltimate);
+	void Reset_PoseTime();
 
 	void Add_YellowLight();
 	void Add_BlueLight();
 
+	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 }) override;
+
+
+
+	void MoveToEnemy_Ground(_float fMaxDistance, _float fOffset = 0.4f);
 
 private:
-	CModel* m_pModelCom_Opening = { nullptr };
-	CModel* m_pModelCom_Skill = { nullptr };
 	
 	CHit_MeleeAttack m_tAttackMap;
 
@@ -212,6 +211,19 @@ private:
 
 
 	_bool m_bFinalSkillAdd = { false };
+
+	_float m_fAccPoseTime = {};
+	_float m_fMaxPoseTime = { 1.5f };
+
+
+	_bool m_bCounterPose = { false };
+	_bool m_bCounterSucces = { false };
+
+	_bool m_bInvisible = { false };
+	_bool m_b236SpecialAttack = { false };
+
+	_ushort m_iAttackLightLoofCount = { 2 };
+
 
 private:
 	HRESULT Ready_Components();

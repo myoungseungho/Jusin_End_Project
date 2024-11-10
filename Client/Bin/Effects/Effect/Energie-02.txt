@@ -1,0 +1,291 @@
+[Layer]
+LayerName: Energie-02
+Duration: 3
+TickPerSecond: 0.1
+KeyFramesCount: 179
+NumEffec: 10
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Energie-02_01
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 1 0
+Scale: 0.03 0.03 0.03
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 142.699 255 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.03 0.03 0.03
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_02
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 1 0
+Scale: 0.03 0.03 0.03
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 0.346688
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1 0
+Scale: 0.03 0.03 0.03
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_03
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.1 1 0
+Scale: 0.02 0.035 0.02
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 0.01
+GlowColor: 0 0 0 1
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 1 0
+Scale: 0.02 0.035 0.02
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1.5 0.2 0
+Scale: 0.16 0.12 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 0 1
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.5 0.2 0
+Scale: 0.16 0.12 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -2.5 0 0
+Scale: 0.3 0.15 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 27.8642 86.9702 255 30
+GlowColor: 1 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2.5 0 0
+Scale: 0.3 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -2.5 -1.49012e-08 0
+Scale: 0.3 0.13 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 0.242716
+GlowColor: 1 0 0 1
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2.5 -1.49012e-08 0
+Scale: 0.3 0.13 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -2.5 1.49012e-08 0
+Scale: 0.3 0.13 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 66.7057 211.937 240.646 0.141391
+GlowColor: 1 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2.5 1.49012e-08 0
+Scale: 0.3 0.13 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.2 1 0
+Scale: 0.249958 0.299909 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 58.2616 81.904 255 0.796688
+GlowColor: 1 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 1 0
+Scale: 0.249959 0.29991 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -0.1 0.8 0
+Scale: 0.199915 0.299926 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 93.7252 255 17.3841
+GlowColor: 1 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 0.8 0
+Scale: 0.19992 0.29993 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Energie-02_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Energie-02Energie-02_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -2.5 -0.9 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 39.6854 44.7517 232.202 0.894039
+GlowColor: 1 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2.5 -0.9 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+

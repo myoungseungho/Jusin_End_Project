@@ -21,7 +21,7 @@ class CRenderer final : public CBase
 public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_MAP,
-		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
+		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT, 
 		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW, RG_MULTY_GLOW, RG_NODE, RG_END };
 
 private:
@@ -96,6 +96,7 @@ private:
 	HRESULT Render_NonLight(_float fTimeDelta);
 	HRESULT Render_NonLight_Effect(_float fTimeDelta);
 	HRESULT Render_Glow(_float fTimeDelta);
+	HRESULT Render_AllGlow_Effect_BackSide(_float fTimeDelta);
 	HRESULT Render_AllGlow_Effect_Pri(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);

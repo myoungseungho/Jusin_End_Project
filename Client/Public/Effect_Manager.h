@@ -37,7 +37,6 @@ public:
 	HRESULT		Set_Test_Effect_Color(_int iCurTestEffectIndex, _float4 vColor);
 	HRESULT		Set_Layer_Effect_Color(wstring& layerName, wstring& effectName, _float4 vColor);
 
-
 	EFFECT_KEYFRAME Get_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 	EFFECT_KEYFRAME Get_Near_Front_KeyFrame(wstring& layerName, wstring& effectName, _uint frameNumber);
 

@@ -72,6 +72,7 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_bDrawNoneStop = pDesc->bDrawNoneStop;
 	m_bReflect = pDesc->bReflect;
+	m_bOnwerHitNoneStop = pDesc->bOnwerHitNoneStop;
 
 	if (pDesc->fCameraShakeDuration != 0)
 	{
@@ -325,7 +326,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		if (eResult == RESULT_HIT)
 		{
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
-			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
+			if(m_bOnwerHitNoneStop == false)
+				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
 			m_pOwner->Set_AttackBackEvent(true);

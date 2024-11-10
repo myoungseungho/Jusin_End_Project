@@ -1186,7 +1186,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 		//원작이랑 가깝긴 한데, 21호, chase 공격충돌 등 이런저런 문제로 취소.   이걸로 할꺼면 준비시간 늘리고 초기속도 빠르게하고 조정해야할게 많음
 		//사전준비자세만으로는 괜찮음 초기속도 어쩌지?
-		Add_Move({ -1.f*fTimeDelta,fTimeDelta * 4.8f });
+		Add_Move({ -1.f * fTimeDelta,fTimeDelta * 4.8f });
 
 		m_fAccChaseTime += fTimeDelta;
 
@@ -1196,8 +1196,11 @@ void CCharacter::Chase2(_float fTimeDelta)
 			m_fJumpPower = fJumpPower;
 
 			//Character_Make_Effect(TEXT("BurstR-02"));
-	
-			m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+			m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			//BurstR-02_Rotated_Left
 
 			//m_pEffect_Manager->Copy_Layer(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
 
@@ -1309,9 +1312,36 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	//애니메이션 이용을 위해 각도값을 특수 처리 할 필요가 있음
 	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
+
+	_float EffectAngle = angle;
+
+	if (m_pChaseEffectLayer != nullptr)
+	{
+
+
+		if(m_iLookDirection == 1)
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
+		else if (m_iLookDirection == -1)
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
+
+		_float xdegree = XMVectorGetX(m_vChaseDir);
+
+		//m_pChaseEffectLayer->Set_Layer_Position({ XMVectorGetX(m_vChaseDir)*1.5f, XMVectorGetY(m_vChaseDir)*1.5f,0.f });
+
+
+		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
+
+		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+
+		
+
+	}
+
 	angle = (angle + 90) * 0.5f;
 
-	cout << angle << endl;
+
+	
+
 
 	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
 	{
@@ -1343,115 +1373,15 @@ void CCharacter::Chase2(_float fTimeDelta)
 	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
 	Set_CurrentAnimationPositionJump(angle);
 
+	
 
-
+}
 	//반드시 Set이던 시절 코드 백업용.
-	/*
 	//m_bChase 가 true일 때만 들어올것
 
 
 
-	//디버그용 예외처리.  멈춰버리면 지랄남
-	if (fTimeDelta > 1)
-	{
-		return;
-	}
 
-
-
-	m_fAccChaseTime += fTimeDelta;
-	//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex && m_fAccChaseTime > 0.3f)
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
-	{
-
-		if (m_fAccChaseTime > 0.2f)
-		{
-			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
-			m_fJumpPower = fJumpPower;
-		}
-		else
-		{
-			return;
-		}
-	}
-
-	else if (m_fAccChaseTime > 5.f)
-	{
-		m_bChase = false;
-		return;
-	}
-
-
-	//CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
-	CTransform* pTarget = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
-
-	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
-
-	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-
-
-
-	_float vLength = GetVectorLength((vTargetPos - vMyPos));
-	if (vLength < 0.5f) //0.3
-	{
-		m_bChase = false;
-
-
-
-		//테스트
-		m_fAccChaseTime = 0.f;
-		m_fGravityTime = 0.185f;
-		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
-
-
-		return;
-	}
-
-
-	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
-	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
-
-
-
-
-	//애니메이션 이용을 위해 각도값을 특수 처리 할 필요가 있음
-	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
-	angle = (angle + 90) * 0.5f;
-
-	cout << angle << endl;
-
-	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
-	{
-		//캐릭터 보는 방향 오른쪽으로 변경
-		FlipDirection(1);
-	}
-
-	else if (angle > 90)   //적이 왼쪽 위에 있는 경우
-	{
-		//110의 경우 70으로 바꿔야 한다.    초과값 20.   90으로부터 초과값 만큼 빼면 됨
-		// angle = 90 - (90 - angle);    =  180-angle;
-
-		FlipDirection(-1);
-		angle = 180 - angle;
-	}
-	else if (angle < 0)   //적이 왼쪽에 아래에 있는 경우
-	{
-		FlipDirection(-1);
-		angle = -angle;
-	}
-
-
-	//추적 속도를 점점 빠르게
-	//m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * 0.5f);
-	m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * m_fAccChaseTime );
-
-
-
-	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
-	Set_CurrentAnimationPositionJump(angle);
-
-	*/
-}
 
 /*
 void CCharacter::Chase_Ready(_float fTimeDelta)
@@ -1522,6 +1452,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 }
 */
+
 void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 {
 	if (m_bChaseEnable == false || m_pModelCom->m_iCurrentAnimationIndex == m_iSparkingAnimationIndex)
@@ -1540,6 +1471,9 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 	{
 		//Character_Make_Effect(TEXT("BurstR-01"));
 		m_pEffect_Manager->Copy_Layer(TEXT("BurstR-01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstR-01"));
+
 	}
 
 	m_bChaseEnable = false;
@@ -1796,7 +1730,8 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		
+
+
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))
@@ -2521,6 +2456,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 void CCharacter::Set_BreakFall_Ground()
 {
+	
+
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
@@ -4189,9 +4126,9 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 {	
 	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
 	
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
+	//static XMFLOAT4X4 s = Make_BoneMatrix(BoneName);
 
-
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
 
 }
 
@@ -4306,6 +4243,12 @@ void CCharacter::Update_LoofAnimationCreate(_float fTimeDelta)
 			Character_Make_Effect(m_strEffectLoofCreateName, m_fEffectLoofCreateOffset, m_bEffectLoofCreateFlip);
 		}
 	}
+
+}
+
+const _float4x4* CCharacter::Get_pTransformMatrix()
+{
+	return m_pTransformCom->Get_WorldMatrixPtr();
 
 }
 
@@ -4491,6 +4434,9 @@ void CCharacter::AnimeEndNextMoveCheck()
 
 void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
+
+	
+
 
 	m_bAttackBackEvent = false;
 

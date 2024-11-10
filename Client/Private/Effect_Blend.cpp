@@ -65,6 +65,15 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		m_fGlowFactor = pEffectDesc->fGlowFactor;
 
 		m_iGameObjectData = m_isGlow;
+
+		if (pEffectDesc->vGlowColor.x == 0.f)
+		{
+			m_bIsBackSideEffect = false;
+		}
+		else if (pEffectDesc->vGlowColor.x == 1.f)
+		{
+			m_bIsBackSideEffect = true;
+		}
 		
 		if (m_iGameObjectData <= -2)
 		{
@@ -122,16 +131,15 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				m_pRenderInstance->Add_RenderObject(m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND, this);
 			}
-
 		}
 		else
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				m_pRenderInstance->Add_RenderObject(m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND, this);
 			}
 		}
 	}

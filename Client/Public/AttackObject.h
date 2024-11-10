@@ -65,6 +65,8 @@ public:
 		_bool bNoCreateMainCollider = { false }; //에너지파 전용
 
 		_bool bReflect = { false };
+		_bool bOnwerHitNoneStop = { false };
+
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -163,6 +165,7 @@ protected:
 
 	_bool	m_bDrawNoneStop = { false };
 	_bool	m_bReflect = { false };
+	_bool	m_bOnwerHitNoneStop = { false };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

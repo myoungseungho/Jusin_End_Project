@@ -47,6 +47,7 @@ void CHit_MeleeAttack::Initalize(CPlay_Hit* pPlayer)
 	m_pGameInstance = CGameInstance::Get_Instance();
 	m_pEffect_Manager = CEffect_Manager::Get_Instance();
 
+	m_pbCounterPose = static_cast<CPlay_Hit*>(m_pPlayer)->Get_pbCounterPose();
 
 	//	Safe_AddRef(m_pEffect_Manager);
 }
@@ -221,7 +222,42 @@ void CHit_MeleeAttack::Attack_Heavy()
 
 void CHit_MeleeAttack::Attack_Special()
 {
-	
+	if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL);
+		*m_pbCounterPose = true;
+
+	}
+
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && ( *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL);
+		*m_pbCounterPose = true;
+
+	}
+
+	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_JUMP_DOWN)
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR);
+		*m_pbCounterPose = true;
+
+	}
+	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR2))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR);
+		*m_pbCounterPose = true;
+	}
+
+}
+
+void CHit_MeleeAttack::Attack_Crouch_Speical()
+{
+}
+
+void CHit_MeleeAttack::Attack_Up_Speical()
+{
 }
 
 void CHit_MeleeAttack::Attack_Grab()
@@ -442,12 +478,13 @@ void CHit_MeleeAttack::ForwardDash()
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
 
-
-		m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
 		//m_pPlayer->Character_Make_Effect(TEXT("Right_Wall_Crash"), { 0.6f,0.f });
 
+		//m_pEffect_Manager->Copy_Layer(TEXT("Dash"), m_pPlayer->Get_pTransformMatrix());
+		m_pPlayer->Character_Make_Effect(TEXT("Dash"), { 1.2f,0.f });
 		
 	}
 
@@ -461,9 +498,10 @@ void CHit_MeleeAttack::ForwardDash()
 
 		m_pPlayer->Set_ForcveGravityTime(0.255f);
 
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-		m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
 
+		m_pEffect_Manager->Copy_Layer(TEXT("Dash"), m_pPlayer->Get_pTransformMatrix());
 	}
 
 

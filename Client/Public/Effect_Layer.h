@@ -49,9 +49,14 @@ public:
 	HRESULT Set_Layer_Position(_float3 ChangePosition);
 	HRESULT Set_Layer_Rotation(_float3 ChangeRotation);
 
+	HRESULT Set_Copy_Layer_Scaled(_float3 ChangeScaled);
+	HRESULT Set_Copy_Layer_Position(_float3 ChangePosition);
+	HRESULT Set_Copy_Layer_Rotation(_float3 ChangeRotation);
+
 	_float3 Get_Layer_Scaled();
 	_float3 Get_Layer_Position();
 	_float3 Get_Layer_Rotation();
+
 
 public:
 	class CTransform* m_pTransformCom = { nullptr };
