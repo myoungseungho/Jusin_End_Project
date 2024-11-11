@@ -264,7 +264,7 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 		}
 		
 		if(m_bStart)
-			MoveAnimUI(vTargetPos, 500.f, fDepth , fTimeDelta);
+			MoveAnimUI(vTargetPos, fSpeed, fDepth , fTimeDelta);
 	}
 }
 

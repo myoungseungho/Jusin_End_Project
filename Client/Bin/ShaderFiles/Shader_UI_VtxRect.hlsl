@@ -620,8 +620,17 @@ PS_OUT PS_VS_BG(PS_IN In)
     vector BaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector BGTex = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
-    Out.vColor = BaseTex * BGTex;
-  
+    vector MaskTex = g_MaskTexture.Sample(LinearSampler, In.vTexcoord );
+    
+    if (MaskTex.a <= 0.1f)
+        MaskTex = 0.f;
+    
+    MaskTex *= BGTex;
+    Out.vColor = saturate(BaseTex * BGTex);
+    
+    Out.vColor.rgb += MaskTex.rgb;
+    Out.vColor = min(1.f, Out.vColor);
+    
     return Out;
 }
 

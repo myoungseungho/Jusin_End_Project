@@ -48,7 +48,7 @@ void CUI_SubHpPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Animation({ 255.f , 87.f ,0.7f, 1.f }, { m_fPosX, m_fPosY, 0.7f, 1.f }, 100.f, 0.7f, fTimeDelta);
+	Animation({ 255.f , 87.f ,0.7f, 1.f }, { m_fPosX, m_fPosY, 0.7f, 1.f }, 500.f, 0.7f, fTimeDelta);
 }
 
 void CUI_SubHpPanel::Late_Update(_float fTimeDelta)
