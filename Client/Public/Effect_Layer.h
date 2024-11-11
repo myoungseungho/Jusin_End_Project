@@ -75,7 +75,7 @@ private:
 	CCollider*					m_pColliderCom = { nullptr };
 	const _float4x4*			 m_pPlayerMatrix = { nullptr };
 	_matrix						LayerMatrix;
-
+	
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
 	CEffect_Layer* Clone(const _float4x4* pArg = nullptr, _bool isBillboading = false);

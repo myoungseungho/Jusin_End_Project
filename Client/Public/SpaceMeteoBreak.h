@@ -3,6 +3,7 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 #include "Effect_Layer.h"
+#include "Effect.h"
 BEGIN(Engine)
 class CShader;
 class CTexture;
@@ -27,6 +28,7 @@ public:
 	virtual void Camera_Update(_float fTimeDelta) override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Priority_Render(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
@@ -44,6 +46,7 @@ private:
 
 	_bool m_isBrakeSwitch = { false };
 	_float m_fBrakeSwitchTime = { 0.f };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

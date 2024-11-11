@@ -191,6 +191,13 @@ HRESULT CRenderer::Add_DebugComponent(CComponent* pDebugComponent)
 
 HRESULT CRenderer::Draw(_float fTimeDelta)
 {
+	/*-----------------µð¹ö±ë¿ë------------------*/
+	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
+		return E_FAIL;
+	/*-------------------------------------------*/
+
 	if (FAILED(Render_Priority(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow_Priority(fTimeDelta)))
@@ -204,12 +211,7 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	//if (FAILED(Render_ShadowObj(fTimeDelta)))
 	//	return E_FAIL;
-	/*-----------------µð¹ö±ë¿ë------------------*/
-	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
-		return E_FAIL;
-	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
-		return E_FAIL;
-	/*-------------------------------------------*/
+
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Deferred(fTimeDelta)))

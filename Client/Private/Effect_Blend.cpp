@@ -103,6 +103,8 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
+
+		m_iRenderGroupIndex = m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND;
 		return S_OK;
 	}
 
@@ -118,7 +120,10 @@ void CEffect_Blend::Camera_Update(_float fTimeDelta)
 
 void CEffect_Blend::Update(_float fTimeDelta)
 {
-
+	if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+	{
+		m_iRenderGroupIndex = m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND;
+	}
 }
 
 void CEffect_Blend::Late_Update(_float fTimeDelta)
@@ -130,16 +135,18 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 2) //레이어
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND, this);
+				if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+					m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
 			}
 		}
 		else
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND, this);
+				if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+					m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
 			}
 		}
 	}
@@ -177,10 +184,15 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 			return E_FAIL;
 	}
 
-	if (m_iPassIndex == 1)
-		m_iPassIndex = 5;
+	if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+	{
+		if (m_iPassIndex == 1)
+			m_iPassIndex = 5;
+		else
+			m_iPassIndex = 1;
+	}
 	else
-		m_iPassIndex = 1;
+		m_iPassIndex = 5;
 
 	return S_OK;
 }
