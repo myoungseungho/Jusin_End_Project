@@ -66,6 +66,7 @@ public:
 
 		_bool bReflect = { false };
 		_bool bOnwerHitNoneStop = { false };
+		_bool bHitNoGravity = { false };
 
 		class CCharacter* pOwner = { nullptr };
 	};
@@ -166,6 +167,7 @@ protected:
 	_bool	m_bDrawNoneStop = { false };
 	_bool	m_bReflect = { false };
 	_bool	m_bOnwerHitNoneStop = { false };
+	_bool	m_bHitNoGravity = { false };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

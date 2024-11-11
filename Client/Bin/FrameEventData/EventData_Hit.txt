@@ -781,7 +781,10 @@ PLAY_HIT,HTN401_body,15,AttackEvent,1
 
 //,236포즈 중공격
 
-PLAY_HIT,HTN402_body,0,AnimSpeedChange,0.008000,61
+//,쓰고있었는데 원작이 말도안되게 빨라서 늘려봄
+//,PLAY_HIT,HTN402_body,0,AnimSpeedChange,0.008000,61
+PLAY_HIT,HTN402_body,0,AnimSpeedChange,0.008000,91
+
 //,안보이게 + 샤샤샥
 PLAY_HIT,HTN402_body,0,AttackEvent,0
 //,이동 + 샤샤샥 + 공격판정 + 보이게

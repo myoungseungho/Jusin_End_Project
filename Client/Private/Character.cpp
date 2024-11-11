@@ -68,6 +68,15 @@ vector<CInput> CCharacter::Command_236Special_Side =
 	{MOVEKEY_DOWN, ATTACK_SPECIAL}
 };
 
+vector<CInput> CCharacter::Command_236Special_Side_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL}
+};
+
 vector<CInput> CCharacter::Command_214Special =
 {
 	{MOVEKEY_DOWN, ATTACK_NONE},
@@ -113,7 +122,14 @@ vector<CInput> CCharacter::Command_236UltimateAttack_Side =
 	{MOVEKEY_DOWN, ATTACK_GRAB}
 };
 
-
+vector<CInput> CCharacter::Command_236UltimateAttack_Side_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_GRAB}
+};
 
 vector<CInput> CCharacter::Command_BackDash =
 {
@@ -2296,7 +2312,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	case Client::HitMotion::HIT_SPIN_AWAY_LEFTUP:
 	{
 		Set_Animation(m_iHit_Air_Spin_LeftUp, false);
-		m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
+		
+		if(Get_fHeight() == 0)
+			m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
+
 		//Set_ForcedGravityTime_LittleUp();
 		Set_ForcveGravityTime(0.f);
 
@@ -2571,6 +2590,12 @@ void CCharacter::BreakFall_Air()
 		}
 
 	}
+}
+
+void CCharacter::Set_bNoGravity(_bool bNoGravity)
+{
+	m_bNoGravity = bNoGravity;
+	m_fNoGravitySafeTime = 0.f;
 }
 
 _bool CCharacter::Update_Tag_In(_float fTimeDelta)
@@ -4167,6 +4192,10 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 }
 
 
+
+
+
+
 _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection)
 {
 	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
@@ -4177,6 +4206,7 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 
 
 	_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1- (2 * bFlipDirection)), 1.f, 1.f)* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+	
 	XMFLOAT4X4 Result4x4;
 	XMStoreFloat4x4(&Result4x4, ovelapMatrix);
 
@@ -4186,6 +4216,32 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 
 }
 
+
+
+/*
+_float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection, _float fYRotation)
+{
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float3 fPos;
+	XMStoreFloat3(&fPos, vPos);
+
+	//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+
+	_matrix ovelapMatrix;
+
+	if(fYRotation == 1000)
+		 ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1- (2 * bFlipDirection)), 1.f, 1.f)* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+	else
+		ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1 - (2 * bFlipDirection)), 1.f, 1.f)
+		* XMMatrixRotationY(fYRotation)  // Replace with desired rotation function and angle
+		* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+
+	XMFLOAT4X4 Result4x4;
+	XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+
+	return Result4x4;
+}
+*/
 /*
 _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection, _float3 fScale)
 {
@@ -4206,7 +4262,8 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 }
 */
 
-void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
+
+CEffect_Layer* CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
 {
 
 
@@ -4219,10 +4276,29 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 	else
 		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
 
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+	return CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(strEffectName, &Result4x4);
+
 
 }
 
+
+/*
+CEffect_Layer* CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection, _float fYRotation)
+{
+	_float4x4 Result4x4;
+
+	if (fOffset.x == 0 && fOffset.y == 0 && bFlipDirection == false && fYRotation == 0.f)
+	{
+		XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+	}
+	else
+		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection,fYRotation);
+
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+	return CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(strEffectName, &Result4x4);
+}
+*/
 
 /*
 void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection, _float3 fScale)
@@ -4491,8 +4567,22 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 
 
-	if (m_bChase == true)
+
+	if (m_bChase == true )
 	{
+		return;
+	}
+
+	if(m_bNoGravity == true)
+	{
+		m_fNoGravitySafeTime += fTimeDelta;
+
+		if (m_fNoGravitySafeTime > 0.3f)
+		{
+			m_bNoGravity = false;
+			m_fNoGravitySafeTime = 0.f;
+		}
+
 		return;
 	}
 

@@ -687,7 +687,6 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		else
 			DebugPositionReset();
 
-		Set_Animation(ANIME_IDLE);
 
 	}
 

@@ -74,6 +74,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bReflect = pDesc->bReflect;
 	m_bOnwerHitNoneStop = pDesc->bOnwerHitNoneStop;
 
+	m_bHitNoGravity = pDesc->bHitNoGravity;
+		 
 	if (pDesc->fCameraShakeDuration != 0)
 	{
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
@@ -676,7 +678,13 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 
 
 	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	//if (ColliderDesc.vExtents.x == 0)
+	//{
+	//	m_pColliderCom->Update(_vector{0.f,-10.f,0.f,1.f});
+	//
+	//}
+	//else
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 	
 
