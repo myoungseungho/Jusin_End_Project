@@ -678,6 +678,23 @@ PS_OUT PS_VS_DynamicLight(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_VS_Bar(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector BaseTexture  = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    BaseTexture.a = 1.f;
+    
+    float2 vTex = (In.vTexcoord.x , In.vTexcoord.y);
+    vector MaskTexture = g_MaskTexture.Sample(LinearSampler, vTex);
+        
+    Out.vColor = BaseTexture * MaskTexture;
+    
+  
+
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASS¿« ±‚¡ÿ : ºŒ¿Ã¥ı ±‚π˝¿« ƒ∏Ω∂»≠. */
@@ -1117,5 +1134,19 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_VS_DynamicLight();
+    }
+
+//30
+    pass VS_Bar
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_Bar();
     }
 }

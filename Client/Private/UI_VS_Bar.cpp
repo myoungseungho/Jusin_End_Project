@@ -72,11 +72,15 @@ HRESULT CUI_VS_Bar::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", iNumUI)))
 		return E_FAIL;
 
+	if (FAILED(m_pMaskTexture->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
+		return E_FAIL;
+
+
 	_float fAlphaValue = { 0.5f };
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &fAlphaValue, sizeof(_float))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(15)))
+	if (FAILED(m_pShaderCom->Begin(30)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -96,6 +100,11 @@ HRESULT CUI_VS_Bar::Ready_Components()
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bar"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+
+	/* For.Com_MaskTexture*/
+	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_CharaPanelPlate"),
+		TEXT("Com_MaskTexture"), reinterpret_cast<CComponent**>(&m_pMaskTexture))))
 		return E_FAIL;
 
 
@@ -130,5 +139,7 @@ CGameObject* CUI_VS_Bar::Clone(void* pArg)
 
 void CUI_VS_Bar::Free()
 {
+	Safe_Release(m_pMaskTexture);
+
 	__super::Free();
 }

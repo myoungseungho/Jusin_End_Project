@@ -2,6 +2,12 @@
 
 #include "UIObject.h"
 
+BEGIN(Engine)
+
+class CTexture;
+
+END
+
 BEGIN(Client)
 
 class CUI_VS_Bar final :public CUIObject
@@ -24,6 +30,8 @@ private:
 
 private:
 	_uint iNumUI = { 0 };
+
+	CTexture* m_pMaskTexture = { nullptr };
 
 public:
 	static CUI_VS_Bar* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
