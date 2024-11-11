@@ -46,7 +46,9 @@ HRESULT CUI_VS_CharaPanel::Initialize(void* pArg)
 
 
 	InitPosition();
-	m_pUI_Manager->m_iTeam = CUIObject::LEFT;
+	m_pUI_Manager->m_bChange[0] = TRUE;
+	m_pUI_Manager->m_bChange[1] = TRUE;
+
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
@@ -61,10 +63,10 @@ void CUI_VS_CharaPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if(m_eLR == LEFT)
-		Animation({ m_fPosX - 200.f,m_fPosY - 200.f ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 20.f, 0.f, fTimeDelta);
-	else if (m_eLR == RIGHT)
-		Animation({ m_fPosX + 100.f,m_fPosY - 100.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 20.f, 0.f, fTimeDelta);
+	if(m_iNumUI == 0)
+		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 1000.f, 0.f, fTimeDelta);
+	else if (m_iNumUI == 1)
+		Animation({ -200, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 1200.f, 0.f, fTimeDelta);
 }
 
 void CUI_VS_CharaPanel::Late_Update(_float fTimeDelta)

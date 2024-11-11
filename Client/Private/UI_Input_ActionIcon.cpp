@@ -44,6 +44,7 @@ HRESULT CUI_Input_ActionIcon::Initialize(void* pArg)
 		if(m_pUI_Manager->m_eBtnInput != ATTACK_GRAB)
 			m_pUI_Manager->m_iNumCommandList++;
 	}
+
 	
 	if (pDirDesc->isGrab)
 		InputGrabPosition(m_fPosX);
