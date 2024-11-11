@@ -46,7 +46,7 @@ private:
 
 	_bool m_isBrakeSwitch = { false };
 	_float m_fBrakeSwitchTime = { 0.f };
-
+	_float4x4 m_Result4x4;
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

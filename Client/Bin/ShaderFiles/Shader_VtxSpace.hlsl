@@ -573,7 +573,7 @@ technique11		DefaultTechnique
     pass Horizon // 6
     {
         SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_Default, 0);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 		//SetDepthStencilState();
 		//SetBlendState();

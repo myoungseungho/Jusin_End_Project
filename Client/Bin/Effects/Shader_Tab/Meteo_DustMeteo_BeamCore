@@ -1,9 +1,9 @@
 Version: 2
 KeyCount: 1
-KeySize: 46
-Key: Prototype_Component_Texture_Effect_cmn_trail04
+KeySize: 55
+Key: Prototype_Component_Texture_Effect_cmn_stoneanim00_gray
 ID: 1
-vTexCoord: 1 1
+vTexCoord: -0.5 -0.5
 NodePosCount: 3
 NodeID: -1 Position: 464 39
 NodeID: 1 Position: 220 15

@@ -1,18 +1,18 @@
 [Layer]
-LayerName: Meteo_BeamCore
+LayerName: Meteo_Dust
 Duration: 2
 TickPerSecond: 0.2
 KeyFramesCount: 12
 NumEffec: 1
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 2.35 2.35 2.35
 Rotation: 0 0 0
 IsFollowing: false
 
 [Effect]
 EffectName: Meteo_BeamCore
 ModelName: Model_Effect_cmn_BeamCore
-MaskTextureName: ../Bin/Effects/Shader_Tab/Meteo_BeamCoreMeteo_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/Meteo_DustMeteo_BeamCore
 DiffuseTextureName: Texture_Effect_cmn_trail04
 EffectType: 1
 RenderIndex: 2
@@ -22,7 +22,7 @@ Position: 100 36 0
 Scale: 0.2 0.2 0.2
 Rotation: -15 0 17.143
 IsLoop: false
-Color: 50 66 80 1.98676
+Color: 50 86 100 1.98676
 GlowColor: 0 0 0 1
 GlowFactor: 0
 DerredPassIndex: 0

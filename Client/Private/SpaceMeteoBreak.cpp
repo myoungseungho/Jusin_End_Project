@@ -88,24 +88,34 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 
 
-			_float4x4 Result4x4;
 
-				XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+
+				XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
 
 			//	Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
 
 			//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Smoke03_Stop"), &Result4x4);
-			//CEffect_Layer* pEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstU-3_01"), &Result4x4);
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &Result4x4);
+			//CEffect_Layer* pEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstU-3_01"), &Result4x4);				
+			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
+
+			_float4x4 Result4x4;
+			XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+			Result4x4._11 = 1.f;
+			Result4x4._22 = 1.f;
+			Result4x4._33 = 1.f;
 			Result4x4._41 = 0.f;
 			Result4x4._42 = 0.f;
 			Result4x4._43 = 0.f;
 			CEffect* pEffect = *(CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4)->m_MixtureEffects.begin());
+			CEffect* paasdEffect = *(CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4)->m_MixtureEffects.begin());
+
+			XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+			CEffect_Layer* paaEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Burst"), &Result4x4);
 	
-			//if (pEffect != nullptr)
-			//	pEffect->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BLEND_PRI);
 			if (paEffect != nullptr)
-				paEffect->Set_Layer_Scaled({ 30.f,30.f,30.f });
+				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+			//if (paEffect != nullptr)
+			//	paEffect->Set_Layer_Scaled({ 30.f,30.f,30.f });
 
 			/* cmn_aura02 디스토션 할때 히트랑 이펙트 화산맵에 사용 가능할것으로 보임 */
 		}
