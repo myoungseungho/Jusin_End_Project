@@ -31,6 +31,9 @@ private:
 private:
 	CTexture* m_pTextureLine = { nullptr };
 	CTexture* m_pTextureColor = { nullptr };
+	CTexture* m_pTextureCircle[4] = {nullptr,nullptr ,nullptr ,nullptr };
+
+	_float m_fMaskMoveValue = { 0.f };
 
 public:
 	static CUI_VS_BG* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

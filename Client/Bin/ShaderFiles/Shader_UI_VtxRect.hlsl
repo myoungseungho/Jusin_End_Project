@@ -7,6 +7,11 @@ texture2D g_MaskTexture;
 texture2D g_MarkTexture;
 texture2D g_BGTexture;
 
+texture2D g_CircleTexture0;
+texture2D g_CircleTexture1;
+texture2D g_CircleTexture2;
+texture2D g_CircleTexture3;
+
 bool g_bState;
 
 float g_Radio;
@@ -620,16 +625,34 @@ PS_OUT PS_VS_BG(PS_IN In)
     vector BaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector BGTex = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
     
-    vector MaskTex = g_MaskTexture.Sample(LinearSampler, In.vTexcoord );
+    vector MaskTex = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
     
-    if (MaskTex.a <= 0.1f)
-        MaskTex = 0.f;
+    vector CircleTex[4];
     
-    MaskTex *= BGTex;
-    Out.vColor = saturate(BaseTex * BGTex);
+
+    CircleTex[0] = g_CircleTexture0.Sample(LinearSampler, In.vTexcoord);
+    CircleTex[1] = g_CircleTexture1.Sample(LinearSampler, In.vTexcoord);
+    CircleTex[2] = g_CircleTexture2.Sample(LinearSampler, In.vTexcoord);
+    CircleTex[3] = g_CircleTexture3.Sample(LinearSampler, In.vTexcoord);
+        
+     Out.vColor = saturate(BaseTex * BGTex);
     
-    Out.vColor.rgb += MaskTex.rgb;
-    Out.vColor = min(1.f, Out.vColor);
+     if (MaskTex.a <= 0.1f)
+         MaskTex = 0.f;
+      
+        MaskTex *= BGTex;
+    
+    for (int i = 0; i < 4; ++i)
+    {
+        if (CircleTex[i].a <= 0.1f)
+            CircleTex[i] = 0.f;
+        
+        CircleTex[i] *= BGTex;
+        Out.vColor.rgb += CircleTex[i].rgb;
+    }
+     
+     Out.vColor.rgb += MaskTex.rgb;
+     Out.vColor = min(1.f, Out.vColor);
     
     return Out;
 }

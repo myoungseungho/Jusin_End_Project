@@ -124,8 +124,6 @@ HRESULT CUI_VS_CharaPanel::Ready_Components()
 		TEXT("Com_MarkTexture"), reinterpret_cast<CComponent**>(&m_pMarkTexture))))
 		return E_FAIL;
 
-
-
 	return S_OK;
 }
 

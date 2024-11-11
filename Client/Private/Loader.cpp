@@ -345,6 +345,26 @@ HRESULT CLoader::Loading_For_VS()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg%d.png"),2))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle0 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle0"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle0.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle1 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle1"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle1.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle2 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle2"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle2.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle3 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle3"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle3.png")))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_VS_BG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_BG"),
 		CUI_VS_BG::Create(m_pDevice, m_pContext))))

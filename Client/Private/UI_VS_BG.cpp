@@ -53,6 +53,10 @@ void CUI_VS_BG::Camera_Update(_float fTimeDelta)
 
 void CUI_VS_BG::Update(_float fTimeDelta)
 {
+	m_fMaskMoveValue += fTimeDelta;
+
+	if (m_fMaskMoveValue >= 25.f)
+		m_fMaskMoveValue = 0.f;
 }
 
 void CUI_VS_BG::Late_Update(_float fTimeDelta)
@@ -97,6 +101,26 @@ HRESULT CUI_VS_BG::Ready_Components()
 		TEXT("Com_TextureLine"), reinterpret_cast<CComponent**>(&m_pTextureLine))))
 		return E_FAIL; 
 
+	//g_MaskTimer
+
+	//MarkTextrue
+	/* Com_TextureMark */
+	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle0"),
+		TEXT("Com_TextureMark"), reinterpret_cast<CComponent**>(&m_pTextureCircle[0]))))
+		return E_FAIL;
+
+	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle1"),
+		TEXT("Com_TextureMark1"), reinterpret_cast<CComponent**>(&m_pTextureCircle[1]))))
+		return E_FAIL;
+	
+	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle2"),
+		TEXT("Com_TextureMark2"), reinterpret_cast<CComponent**>(&m_pTextureCircle[2]))))
+		return E_FAIL;
+	
+	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle3"),
+		TEXT("Com_TextureMark3"), reinterpret_cast<CComponent**>(&m_pTextureCircle[3]))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -120,7 +144,22 @@ HRESULT CUI_VS_BG::Bind_ShaderResources()
 	if (FAILED(m_pTextureLine->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
 		return E_FAIL;
 
+	
+	if (FAILED(m_pTextureCircle[0]->Bind_ShaderResource(m_pShaderCom, "g_CircleTexture0", 0)))
+		return E_FAIL;
 
+	if (FAILED(m_pTextureCircle[1]->Bind_ShaderResource(m_pShaderCom, "g_CircleTexture1", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCircle[2]->Bind_ShaderResource(m_pShaderCom, "g_CircleTexture2", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCircle[3]->Bind_ShaderResource(m_pShaderCom, "g_CircleTexture3", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskMoveValue, sizeof(_float))))
+		return E_FAIL;
+	
 
 	return S_OK;
 }
@@ -155,6 +194,9 @@ void CUI_VS_BG::Free()
 {
 	Safe_Release(m_pTextureLine);
 	Safe_Release(m_pTextureColor);
+
+	for(int i = 0 ; i < 4; i++)
+		Safe_Release(m_pTextureCircle[i]);
 
 	__super::Free();
 }
