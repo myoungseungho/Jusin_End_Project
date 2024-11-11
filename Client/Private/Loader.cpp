@@ -107,6 +107,9 @@
 #include "UI_VS_BG.h"
 #include "UI_VS_Mark.h"
 #include "UI_VS_CharaPanel.h"
+#include "UI_VS_StaticLight.h"
+#include "UI_VS_DynamicLight.h"
+#include "UI_VS_Bar.h"
 
 #include "CharaSelectCamera.h"
 
@@ -327,6 +330,21 @@ HRESULT CLoader::Loading_For_VS()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Chara_Image//Face_A/Chara_Icon/CharaIcon%d.png"), 4))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_VS_StaticLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_StaticLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_effect_00.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_DynamicLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_DynamicLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_effect_01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Bar */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bar"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg%d.png"),2))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_VS_BG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_BG"),
 		CUI_VS_BG::Create(m_pDevice, m_pContext))))
@@ -341,6 +359,22 @@ HRESULT CLoader::Loading_For_VS()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_CharaPanel"),
 		CUI_VS_CharaPanel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* Prototype_GameObject_VS_StaticLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_StaticLight"),
+		CUI_VS_StaticLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_DynamicLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_DynamicLight"),
+		CUI_VS_DynamicLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Bar*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Bar"),
+		CUI_VS_Bar::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -417,6 +451,8 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectCircle"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_effect_00.png")))))
 		return E_FAIL;
+
+
 
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();

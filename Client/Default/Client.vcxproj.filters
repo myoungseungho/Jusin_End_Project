@@ -298,6 +298,15 @@
     <ClCompile Include="..\private\UI_VS_CharaPanel.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\CharaPanel</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_VS_StaticLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\StaticLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_DynamicLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\DynamicLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Bar.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Bar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -677,6 +686,18 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\CharaPanel">
       <UniqueIdentifier>{abdd6309-debe-4bd2-8b4f-0f4806132bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect">
+      <UniqueIdentifier>{a1962fd7-4e71-4eb7-9ed1-fac934ed1455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\StaticLight">
+      <UniqueIdentifier>{ad807948-8216-4a50-88fa-d9ee7cd5c47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\DynamicLight">
+      <UniqueIdentifier>{3613ed52-da44-48b0-bac1-13fdba982abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Bar">
+      <UniqueIdentifier>{73e8b0f4-1c5a-4785-b9cd-1172d939fd80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1183,6 +1204,15 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_VS_CharaPanel.h">
       <Filter>02.GameObjects\UI\BackGround\VS\CharaPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_StaticLight.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\StaticLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_DynamicLight.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\DynamicLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Bar.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Bar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

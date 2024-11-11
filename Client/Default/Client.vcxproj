@@ -280,9 +280,12 @@
     <ClInclude Include="..\Public\Input.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\public\UI_SubHpPanel.h" />
+    <ClInclude Include="..\public\UI_VS_Bar.h" />
     <ClInclude Include="..\public\UI_VS_BG.h" />
     <ClInclude Include="..\public\UI_VS_CharaPanel.h" />
+    <ClInclude Include="..\public\UI_VS_DynamicLight.h" />
     <ClInclude Include="..\public\UI_VS_Mark.h" />
+    <ClInclude Include="..\public\UI_VS_StaticLight.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
@@ -444,9 +447,12 @@
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\private\UI_SubHpPanel.cpp" />
+    <ClCompile Include="..\private\UI_VS_Bar.cpp" />
     <ClCompile Include="..\private\UI_VS_BG.cpp" />
     <ClCompile Include="..\private\UI_VS_CharaPanel.cpp" />
+    <ClCompile Include="..\private\UI_VS_DynamicLight.cpp" />
     <ClCompile Include="..\private\UI_VS_Mark.cpp" />
+    <ClCompile Include="..\private\UI_VS_StaticLight.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />
