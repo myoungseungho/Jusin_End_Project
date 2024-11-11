@@ -177,6 +177,60 @@ void CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 	m_pContext->Unmap(m_pVBInstance, 0);
 }
 
+void CVIBuffer_Instancing::Half_Spread_2D(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		// 현재 파티클의 위치를 개별적으로 로드
+		float currentX = m_pInstanceVertices[i].vTranslation.x;
+		float currentY = m_pInstanceVertices[i].vTranslation.y;
+
+		// 피봇 위치도 개별적으로 로드
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		// 현재 위치와 피봇 위치를 이용해 이동 방향 계산
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 벡터 정규화
+		float length = sqrt(dirX * dirX + dirY * dirY);
+		if (length != 0.f)
+		{
+			dirX /= length;
+			dirY /= length;
+		}
+
+		// 이동 속도 계산
+		float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+		float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+
+		// 파티클의 현재 위치 업데이트
+		pMatrices[i].vTranslation.x += moveX;
+		pMatrices[i].vTranslation.y += moveY;
+
+		// 생명 시간 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		// 루핑 처리
+		if (m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			// 초기 위치로 리셋
+			pMatrices[i].vTranslation.x = m_pInstanceVertices[i].vTranslation.x;
+			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
+			pMatrices[i].vLifeTime.y = 0.f;
+		}
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+}
+
 void CVIBuffer_Instancing::Drop(_float fTimeDelta)
 {
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};

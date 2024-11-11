@@ -265,7 +265,6 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 				Desc.fY = m_UIIcons_P1[m_CurrentIndex_P1]->m_fY + offsetY;
 				Desc.fSizeX = 50.f;
 				Desc.fSizeY = 50.f;
-				Desc.fTimer = 1.f;
 
 				CQTE_Same_Grab_UI_Particle* particle = static_cast<CQTE_Same_Grab_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Particle"), &Desc));
 				m_UIParticles.push_back(particle);
@@ -316,7 +315,6 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 				Desc.fY = m_UIIcons_P2[m_CurrentIndex_P2]->m_fY + offsetY;
 				Desc.fSizeX = 50.f;
 				Desc.fSizeY = 50.f;
-				Desc.fTimer = 1.f;
 
 				CQTE_Same_Grab_UI_Particle* particle = static_cast<CQTE_Same_Grab_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Particle"), &Desc));
 				m_UIParticles.push_back(particle);

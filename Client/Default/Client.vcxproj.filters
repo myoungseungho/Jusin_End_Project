@@ -367,6 +367,9 @@
     <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -779,6 +782,9 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle">
       <UniqueIdentifier>{666b375a-ae68-4548-8b4c-7d9929afb45b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle">
+      <UniqueIdentifier>{955fee1a-d5ca-43ab-9a86-673cadd8a146}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1303,6 +1309,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

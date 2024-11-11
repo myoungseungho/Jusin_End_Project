@@ -3309,7 +3309,6 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		return E_FAIL;
 
 	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
-	/* For.Prototype_Component_VIBuffer_Particle_Explosion */
 	ParticleDesc.iNumInstance = 200;
 	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
@@ -3319,7 +3318,21 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
 	ParticleDesc.isLoop = false;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread_QTE"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Same_Grab_Spread_QTE"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
+	
+	ParticleDesc.iNumInstance = 200;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(5.f, 7.f);
+	ParticleDesc.vScale = _float2(4.f, 4.f);
+	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
+	ParticleDesc.isLoop = false;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Continuous_Spread_QTE"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
