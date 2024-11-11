@@ -683,15 +683,12 @@ PS_OUT PS_VS_Bar(PS_IN In)
     PS_OUT Out;
 
     vector BaseTexture  = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    BaseTexture.a = 1.f;
     
-    float2 vTex = (In.vTexcoord.x , In.vTexcoord.y);
+    float2 vTex = (In.vTexcoord.x , In.vTexcoord.y - 0.075f);
     vector MaskTexture = g_MaskTexture.Sample(LinearSampler, vTex);
         
-    Out.vColor = BaseTexture * MaskTexture;
+    Out.vColor = BaseTexture *MaskTexture;
     
-  
-
     return Out;
 }
 

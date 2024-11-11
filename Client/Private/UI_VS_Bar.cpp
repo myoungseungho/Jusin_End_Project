@@ -30,15 +30,16 @@ HRESULT CUI_VS_Bar::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_fPosX = 570.f, m_fPosY = 90.f;
+	
 	m_fSizeX = 1440.f, m_fSizeY = 180.f;
 
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	iNumUI = pDesc->iNumUI;
 
 	if (iNumUI == 0)
-		m_fPosY = 90.f;
+		m_fPosY = 50.f;
 	else if (iNumUI == 1)
-		m_fPosY = m_vPrevWinSize.y - 90.f;
+		m_fPosY = m_vPrevWinSize.y - 40.f;
 
 	__super::Set_UI_Setting(m_fSizeX, -m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
@@ -53,8 +54,6 @@ void CUI_VS_Bar::Camera_Update(_float fTimeDelta)
 void CUI_VS_Bar::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-
-	DebugTesting(8.f, 0.f);
 }
 
 void CUI_VS_Bar::Late_Update(_float fTimeDelta)
