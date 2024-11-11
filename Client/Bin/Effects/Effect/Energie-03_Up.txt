@@ -1,12 +1,12 @@
 [Layer]
-LayerName: Energie-03
+LayerName: Energie-03_Up
 Duration: 10
 TickPerSecond: 12
 KeyFramesCount: 599
 NumEffec: 5
 Position: 0 -1 0
 Scale: 0.999997 0.999997 1
-Rotation: 0 0 0
+Rotation: 0 0 335
 IsFollowing: false
 
 [Effect]
