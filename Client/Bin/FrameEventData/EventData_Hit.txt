@@ -526,14 +526,17 @@ PLAY_HIT,HTN202_body,50,AttackEvent,3
 PLAY_HIT,HTN203_body,0.000000,AnimSpeedChange,0.015000,56.970001
 PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,204,0,1
 PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,202,0,1
-PLAY_HIT,HTN203_body,15.636000,AnimSpeedChange,0.038000,118.788002
+//,PLAY_HIT,HTN203_body,15.636000,AnimSpeedChange,0.038000,118.788002
+PLAY_HIT,HTN203_body,10,AnimSpeedChange,0.038000,298.788002
 PLAY_HIT,HTN203_body,25.090998,AnimSpeedChange,0.015000,47.676998
 
 //,안보이게, 가로샤샤샥
-PLAY_HIT,HTN203_body,5,AttackEvent,0
+//,PLAY_HIT,HTN203_body,5,AttackEvent,0
+PLAY_HIT,HTN203_body,10,AttackEvent,0
 
 //,적 앞으로 순간이동, 공격판정.  안보이고있었다면 보이게?
-PLAY_HIT,HTN203_body,10,AttackEvent,1
+//,PLAY_HIT,HTN203_body,10,AttackEvent,1
+PLAY_HIT,HTN203_body,25,AttackEvent,1
 
 
 PLAY_HIT,HTN203_body,26,NextAnimationCheck,333333
@@ -550,7 +553,9 @@ PLAY_HIT,HTN204_body,0.000000,AnimSpeedChange,0.008000,80.000000
 
 
 //,안보임 + 가로샤샤샥 //+ 순간이동
-PLAY_HIT,HTN204_body,10,AttackEvent,0
+//,PLAY_HIT,HTN204_body,10,AttackEvent,0
+PLAY_HIT,HTN204_body,15,AttackEvent,0
+
 
 //,속도조절 필요해보이니 세부조정하자
 //,PLAY_HIT,HTN204_body,10.000000,AnimSpeedChange,0.008000,40.000000
@@ -577,14 +582,21 @@ PLAY_HIT,HTN204_body,45,NextAnimationCheck,333333
 PLAY_HIT,HTN205_body,0.000000,AnimSpeedChange,0.018000,62.625999
 
 //,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
-PLAY_HIT,HTN205_body,5,AnimSpeedChange,0.008000,0.5
+PLAY_HIT,HTN205_body,5,AnimSpeedChange,0.008000,0.1
 PLAY_HIT,HTN205_body,5.1,AttackEvent,0
 
-//,카운트끝나면 Position 65로 이동
-//,반격 성공시 적 경직. 사라지게 하고 Position 14.99로 이동
+//,카운트끝나면 Position 64.999로 이동
+PLAY_HIT,HTN205_body,65,AnimSpeedChange,0.008000,70
+
+
+
+//,반격 성공시 적 경직. 사라지게 하고 Position 24.999로 이동
 //,0.몇초 뒤에 공격
-PLAY_HIT,HTN205_body,15,AnimSpeedChange,0.008000,50
-PLAY_HIT,HTN205_body,25,AttackEvent,0
+PLAY_HIT,HTN205_body,25,AnimSpeedChange,0.008000,50
+PLAY_HIT,HTN205_body,25,AttackEvent,1
+
+//,반격성공시 60까지 진행 후 Idle로 복귀
+PLAY_HIT,HTN205_body,60,AttackEvent,2
 
 
 
@@ -597,13 +609,31 @@ PLAY_HIT,HTN205_body,45,NextAnimationCheck,333333
 
 
 //,앉아 약공 47
-//,PLAY_HIT,HTN230_body,0.000000,AnimSpeedChange,0.005000,60.504997
-PLAY_HIT,HTN230_body,0,AnimSpeedChange,0.028,61
-PLAY_HIT,HTN230_body,40,AttackEvent,0     
+//,PLAY_HIT,HTN230_body,0.000000,AnimSpeedChange,0.005000,90.504997
+
+//,PLAY_HIT,HTN230_body,0,AnimSpeedChange,0.028,61
+PLAY_HIT,HTN230_body,0,AnimSpeedChange,0.018,61
+PLAY_HIT,HTN230_body,15,AnimSpeedChange,0.028,120
+PLAY_HIT,HTN230_body,40,AnimSpeedChange,0.018,91
+
+PLAY_HIT,HTN230_body,35,AttackEvent,0     
 PLAY_HIT,HTN230_body,45,NextAnimationCheck,3333
 PLAY_HIT,HTN230_body,50,NextAnimationCheck,3333
 PLAY_HIT,HTN230_body,55,NextAnimationCheck,3333
-PLAY_HIT,HTN230_body,60,SetNextAnimation,0,0
+PLAY_HIT,HTN230_body,65,SetAnimation,0
+
+//,25~35 약간 앞으로 움직이게
+PLAY_HIT,HTN230_body,25,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,26,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,27,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,28,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,29,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,30,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,31,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,32,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,33,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,34,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN230_body,35,ObjectMove,0.05,0,0,0
 
 
 //,앉아중 48
@@ -618,6 +648,19 @@ PLAY_HIT,HTN231_body,55,AnimSpeedChange,0.04,70
 PLAY_HIT,HTN231_body,55,AttackEvent,0
 PLAY_HIT,HTN231_body,65,NextAnimationCheck,3333
 PLAY_HIT,HTN231_body,75,NextAnimationCheck,3333
+
+PLAY_HIT,HTN231_body,45,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,46,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,47,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,48,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,49,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,50,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,51,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,52,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,53,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,54,ObjectMove,0.05,0,0,0
+PLAY_HIT,HTN231_body,55,ObjectMove,0.05,0,0,0
+
 
 
 //,앉아강 51
@@ -721,7 +764,7 @@ PLAY_HIT,HTN400_body,15,AnimSpeedChange,0.008000,2.5
 PLAY_HIT,HTN400_body,15.001,AttackEvent,0
 //,자세끝 bool값 처리
 PLAY_HIT,HTN400_body,20,AttackEvent,1
-PLAY_HIT,HTN400_body,20.1,AnimSpeedChange,0.008000,61
+PLAY_HIT,HTN400_body,20,AnimSpeedChange,0.008000,61
 
 
 

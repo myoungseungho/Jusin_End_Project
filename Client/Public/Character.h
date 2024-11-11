@@ -570,6 +570,7 @@ protected:
 
 	//스턴관련
 	_bool m_bHitGroundSmashed = { false };
+	_bool m_bWallBounce = { true };
 
 	//멤버변수에 넣는 대신 함수로 체크?   이거 없으면  서브캐릭터들도 가드를 해버림.  교체할때 그냥 사라지게?
 	//_bool m_bGuard = { false };

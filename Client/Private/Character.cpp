@@ -2243,8 +2243,25 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_ForcedGravityTime_LittleUp();
 	}
 	break;
+
+	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE:
+	{
+		m_bWallBounce = false;
+		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
+		//m_pModelCom->CurrentAnimationPositionJump()
+		if (Get_fHeight() == 0)
+		{
+			Add_Move({ 0.f,0.2f });
+		}
+		//Set_CurrentAnimationPositionJump(0.f);
+		Set_ForcedGravityDown();
+
+	}
+	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT:
 	{
+		m_bWallBounce = true;
+
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
 		//m_pModelCom->CurrentAnimationPositionJump()
 		if (Get_fHeight() == 0)
@@ -2411,7 +2428,11 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 	//그 외에 맞고서 강하게 날라가는 중에는 전용 가속도를 받음
 	else
 	{
-		m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
+		//벽에 팅길 수 있는 강공격은 그대로 날아가고, 아닌거는 중력까지 받음. 여기서 처리하려다가 중력으로 가, 고싶은데 힘드네?
+		//여기서 처리하면 Height<0 인 경우가 처리가 안되서 1프레임 땅에 묻힘
+		
+		if(m_bWallBounce)
+			m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
 
 		//벽에 튕길 수 있는 공격
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
@@ -2422,29 +2443,41 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 			//if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
 			if(Check_bWall())
 			{
-				Set_Animation(m_iHit_WallBouce);
 
-				Character_Make_Effect(TEXT("Right_Wall_Crash"));
+				if(m_bWallBounce)
+				{
+					Set_Animation(m_iHit_WallBouce);
 
-				CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-				mainCamera->StartCameraShake(0.5f, 0.2f);
+					Character_Make_Effect(TEXT("Right_Wall_Crash"));
 
-				Set_AnimationStop(0.2f);
+					CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+					mainCamera->StartCameraShake(0.5f, 0.2f);
 
-				//playingAnimation == false 에서 처리?
-				//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
+					Set_AnimationStop(0.2f);
 
-				//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
-				Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+					//playingAnimation == false 에서 처리?
+					//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
 
-				//Set_ForcedGravityTime_LittleUp();
-				Set_ForcveGravityTime(0.f);
+					//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
+					Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+
+					//Set_ForcedGravityTime_LittleUp();
+					Set_ForcveGravityTime(0.f);
 
 
-				//새로운 스턴
-				m_fMaxStunTime = 1.f;
-				m_fAccStunTime = 0.f;
+					//새로운 스턴
+					m_fMaxStunTime = 1.f;
+					m_fAccStunTime = 0.f;
+				}
+				else
+				{
+					//애니메이션 끝으로 이동... 할 필요가 있나?
+					//if (m_pModelCom->m_iCurrentAnimationIndex== m_iHit_Away_LeftAnimationIndex && m_pModelCom->m_fCurrentAnimPosition < 18.8)
+					//{
+					//	Set_CurrentAnimationPositionJump(18.99f);
+					//}
 
+				}
 
 			}
 
@@ -3826,6 +3859,7 @@ void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
 _bool CCharacter::Check_bWall()
 {
 
+
 	if (m_bDynamicMove)
 		return false;
 
@@ -4542,7 +4576,15 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
-			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop()))
+			// 
+			//다만 벽에 안팅기는 우측 스매시의 경우 더함
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex && m_bWallBounce == false)
+			{
+				m_fGravityTime += fTimeDelta;
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+			}
+
+			else if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop()))
 			{
 				;
 			}

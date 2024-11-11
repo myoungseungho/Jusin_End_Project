@@ -100,14 +100,25 @@ void CHit_MeleeAttack::Attack_Light()
 	}
 
 	
-	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT)
+	//1프레임 차이로 쓰러지려는거 건지는 문제가 있음
+	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT && m_pPlayer->Get_bAttackBackEvent())
 	{
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_LIGHT1);
+		//m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_LIGHT1);
+		m_pPlayer->Set_NextAnimation(CPlay_Hit::ANIME_ATTACK_LIGHT1, 0.5f);
+
 	}
 	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_LIGHT1);
 	}
+
+
+
+	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_LIGHT);
+	}
+
 }
 
 void CHit_MeleeAttack::Attack_Medium()
@@ -119,11 +130,7 @@ void CHit_MeleeAttack::Attack_Medium()
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_MEDIUM);
 		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_MEDIUM] = false;
 
-		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_MEDIUM];
-		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM];
-		m_pbAttackCount;
 
-		_bool bDebug = true;
 	}
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2
@@ -139,13 +146,13 @@ void CHit_MeleeAttack::Attack_Medium()
 
 	}
 
-	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM)
+	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM && m_pPlayer->Get_bAttackBackEvent())
 	{
 		//서서 중공격 중에 또 누를 시 횟수가 있으면  앉아 중공격 자동 사용
-		if (m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] == true)
+		if (m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_AUTO_MEDIUMTOHEAVY] == true)
 		{
-			m_pPlayer->Set_NextAnimation(CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM,0.5f);
-			m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] = false;
+			m_pPlayer->Set_NextAnimation(CPlay_Hit::ANIME_ATTACK_HEAVY,0.5f);
+			m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_AUTO_MEDIUMTOHEAVY] = false;
 		}
 	}
 
@@ -177,7 +184,10 @@ void CHit_MeleeAttack::Attack_Medium()
 	//	m_pPlayer->Set_NextAnimation(CPlay_Hit::ANIME_ATTACK_AIR2, 0.5f);
 	//}
 
-	
+	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_MEDIUM);
+	}
 	
 }
 
@@ -218,6 +228,12 @@ void CHit_MeleeAttack::Attack_Heavy()
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_AIR3);
 	}
+
+	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
+	}
+
 }
 
 void CHit_MeleeAttack::Attack_Special()
@@ -225,7 +241,7 @@ void CHit_MeleeAttack::Attack_Special()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove(*m_pPlayerAnimationIndex))
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL);
-		*m_pbCounterPose = true;
+		//*m_pbCounterPose = true;
 
 	}
 
@@ -234,20 +250,20 @@ void CHit_MeleeAttack::Attack_Special()
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM))
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL);
-		*m_pbCounterPose = true;
+		//*m_pbCounterPose = true;
 
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_JUMP_DOWN)
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR);
-		*m_pbCounterPose = true;
+		//*m_pbCounterPose = true;
 
 	}
 	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR2))
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR);
-		*m_pbCounterPose = true;
+		//*m_pbCounterPose = true;
 	}
 
 }
@@ -289,8 +305,20 @@ void CHit_MeleeAttack::Attack_Grab()
 void CHit_MeleeAttack::Attack_236()
 {
 
-	
-	
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE);
+		m_pPlayer->Reset_PoseTime();
+	}
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && (
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT3 ||
+		* m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE);
+		m_pPlayer->Reset_PoseTime();
+	}
 
 
 }
@@ -336,14 +364,19 @@ void CHit_MeleeAttack::Attack_Crouch_Light()
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT);
 	}
+
+	if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 && m_pPlayer->Get_bAttackBackEvent())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT);
+	}
 }
 
 void CHit_MeleeAttack::Attack_Crouch_Medium()
 {
 
 	//횟수 없으면 컷
-	if (m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] == false)
-		return;
+	//if (m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] == false)
+	//	return;
 
 
 
@@ -351,7 +384,7 @@ void CHit_MeleeAttack::Attack_Crouch_Medium()
 	if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_CROUCHING || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM);
-		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] = false;
+		//m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] = false;
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT ||
@@ -359,7 +392,7 @@ void CHit_MeleeAttack::Attack_Crouch_Medium()
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM, 1.f);
-		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] = false;
+		//m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_CROUCH_MEDUIM] = false;
 	}
 
 
@@ -449,8 +482,16 @@ void CHit_MeleeAttack::BackDash()
 
 		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"),{1.f,0.f});
 		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"), { -0.3f,0.f });
-
 	}
+
+	//포즈 막바지에 갑자기 푸는거 금지 제대로 포즈중에 해야함
+	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		//m_pPlayer->Set_Animation(CPlay_Hit::ANIME_IDLE);
+		//m_pPlayer->Set_b236Posing(false);
+		m_pPlayer->Set_CurrentAnimationPositionJump(19.99);
+	}
+
 }
 
 void CHit_MeleeAttack::ForwardDash()

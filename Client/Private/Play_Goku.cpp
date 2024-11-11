@@ -1201,7 +1201,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.4f;
+		Desc.fhitCharacter_StunTime = 0.15f;
 
 
 		Desc.iDamage = 700 * Get_DamageScale();
@@ -1439,9 +1439,15 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,1.0f,0.f };
 		}
 
-		Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
 		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
+		 
+		
+		Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
 
+		//if (abs(m_fImpuse.x) < 0.3)
+		//	Desc.fhitCharacter_Impus = { m_fImpuse.x * m_iLookDirection,0 };
+		//else
+		//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 
 		Desc.fhitCharacter_StunTime = 0.6f;
 		Desc.iDamage = 400 * Get_DamageScale();
@@ -1449,6 +1455,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ihitCharacter_Motion = { HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.04f;
+		//Desc.fAnimationLockTime = 0.1f;
+
 		//Desc.bOwnerGravityTimeReset = true;
 		Desc.pOwner = this;
 		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
@@ -1480,7 +1488,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+		
 		Desc.fhitCharacter_Impus = { m_fImpuse.x  ,0 };
+
+		//if (abs(m_fImpuse.x) < 0.3)
+		//	Desc.fhitCharacter_Impus = { m_fImpuse.x * m_iLookDirection,0 };
+		//else
+		//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 
 		Desc.fhitCharacter_StunTime = 0.4f;
 
@@ -1493,6 +1507,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.04f;
+		//Desc.fAnimationLockTime = 0.1f;
+
 		//Desc.bOwnerGravityTimeReset = true;
 		Desc.pOwner = this;
 		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
