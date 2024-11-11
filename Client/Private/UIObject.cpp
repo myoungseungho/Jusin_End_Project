@@ -239,11 +239,11 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 			m_bCheck = FALSE;
 			m_fAnimDelayTiemr = 0.f;
 			m_bStart = FALSE;
-			m_pUI_Manager->m_iTeam = POS_END;
+			m_pUI_Manager->m_bChange[m_eLRPos] = FALSE;
 		}
 	}
 
-	if (m_pUI_Manager->m_iTeam == m_eLRPos )
+	if (m_pUI_Manager->m_bChange[m_eLRPos] == TRUE)
 	{
 		if (m_eLRPos == LEFT)
 		{
