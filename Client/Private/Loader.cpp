@@ -3311,13 +3311,13 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
 	/* For.Prototype_Component_VIBuffer_Particle_Explosion */
 	ParticleDesc.iNumInstance = 200;
-	ParticleDesc.vRange = _float3(0.f, 0.f, 0.f);
+	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(0.4f, 1.f);
-	ParticleDesc.vScale = _float2(1.f, 1.f);
-	ParticleDesc.vLifeTime = _float2(1.f, 2.f);
-	ParticleDesc.isLoop = true;
+	ParticleDesc.vSpeed = _float2(5.f, 7.f);
+	ParticleDesc.vScale = _float2(4.f, 4.f);
+	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
+	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread_QTE"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
