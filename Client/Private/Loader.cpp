@@ -105,6 +105,8 @@
 #include "UI_CharaSelectLight.h"
 #include "UI_CharaSelectCircle.h"
 #include "UI_VS_BG.h"
+#include "UI_VS_Mark.h"
+#include "UI_VS_CharaPanel.h"
 
 #include "CharaSelectCamera.h"
 
@@ -310,9 +312,34 @@ HRESULT CLoader::Loading_For_VS()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/LOC/vs_object_%d.png"),3))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_VS_bG */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_bG"),
+	/* For.Prototype_Component_Texture_UI_VS_CharaPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_CharaPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_object_02b.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_CharaPanelPlate */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_CharaPanelPlate"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_plate_00.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Chara_Image//Face_A/Chara_Icon/CharaIcon%d.png"), 4))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_BG */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_BG"),
 		CUI_VS_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Mark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Mark"),
+		CUI_VS_Mark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_CharaPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_CharaPanel"),
+		CUI_VS_CharaPanel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
@@ -445,11 +472,6 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CUI_CharaSelectMark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_CharacterSlectModel*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectModel"),
-	//	CUI_CharaSelectModel::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
-
 	/* Prototype_GameObject_CharacterSlectModel */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCamera"),
 		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
@@ -464,7 +486,6 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCircle"),
 		CUI_CharaSelectCircle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
 
 	return S_OK;
 }
@@ -602,7 +623,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_eff.png")))))
 		return E_FAIL;
 
-
+	
 	//캐릭터 아이콘
 
 	/* For.Prototype_Component_Texture_UI_CharaIconPanel */

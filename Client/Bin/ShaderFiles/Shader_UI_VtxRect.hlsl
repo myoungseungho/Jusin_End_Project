@@ -4,6 +4,7 @@ float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_Texture;
 texture2D g_NextTexture;
 texture2D g_MaskTexture;
+texture2D g_MarkTexture;
 texture2D g_BGTexture;
 
 bool g_bState;
@@ -36,6 +37,30 @@ struct VS_OUT
     float4 vPosition : SV_POSITION;
     float2 vTexcoord : TEXCOORD0;
 };
+
+float2 GetOverlayUV(float2 uv, float2 mainSize, float2 overlaySize)
+{
+    float aspectRatioMain = mainSize.x / mainSize.y;
+    float aspectRatioOverlay = overlaySize.x / overlaySize.y;
+
+    float2 adjustedUV = uv;
+
+    if (aspectRatioOverlay > aspectRatioMain)
+    {
+        // 작은 이미지가 큰 이미지보다 더 넓을 때
+        adjustedUV.x = uv.x * (mainSize.x / overlaySize.x);
+        adjustedUV.y = uv.y;
+    }
+    else
+    {
+        // 작은 이미지가 큰 이미지보다 더 좁을 때
+        adjustedUV.x = uv.x;
+        adjustedUV.y = uv.y * (mainSize.y / overlaySize.y);
+    }
+
+    return adjustedUV;
+}
+
 
 VS_OUT VS_MAIN(VS_IN In)
 {
@@ -600,6 +625,37 @@ PS_OUT PS_VS_BG(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_VS_PANEL(PS_IN In)
+{
+    PS_OUT Out;
+    
+    vector BaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 vMarkTex = float2(In.vTexcoord.x, In.vTexcoord.y + 0.25f);
+    vector MarkTex = g_MarkTexture.Sample(LinearSampler, vMarkTex);
+    
+    float2 vTex = (In.vTexcoord.x * 2, In.vTexcoord.y);
+    vector BGTex = g_BGTexture.Sample(LinearSampler, vTex);
+    
+    Out.vColor = BaseTex * BGTex;
+    
+  
+    float2 vTopTexcoord = { 0.f, 0.37f };
+    float2 vBotTexcoord = { 1.f, 0.27f };
+    
+    float fLineX = (In.vTexcoord.y - vTopTexcoord.y) * ((vBotTexcoord.x - vTopTexcoord.x) / (vBotTexcoord.y - vTopTexcoord.y)) + vTopTexcoord.x - In.vTexcoord.x;
+    
+    if (fLineX > 0)
+        MarkTex = 0.f;
+    
+    if (Out.vColor.a > 0.1f)
+    {
+        Out.vColor += MarkTex;
+    }
+   
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASS의 기준 : 셰이더 기법의 캡슐화. */
@@ -607,7 +663,6 @@ technique11 DefaultTechnique
 //0
     pass Default
     {
-
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
@@ -1012,5 +1067,19 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_VS_BG();
+    }
+
+//28
+    pass VS_Panel
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_PANEL();
     }
 }

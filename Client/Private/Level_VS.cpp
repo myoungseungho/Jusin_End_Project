@@ -6,6 +6,8 @@
 #include "UI_Define.h"
 #include "UIObject.h"
 #include "GameObject.h"
+#include"UI_Manager.h"
+#include "BattleInterface.h"
 
 #include "CharaSelectCamera.h"
 #include "RenderInstance.h" 
@@ -47,9 +49,32 @@ HRESULT CLevel_VS::Render(_float fTimeDelta)
 
 HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 {
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_bG"), strLayerTag)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_BG"), strLayerTag)))
 		return E_FAIL;
 
+	CUIObject::UI_DESC MarkDesc = {};
+	for (int i = 0; i < 2; i++)
+	{
+		MarkDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Mark"), strLayerTag, &MarkDesc);
+	}
+
+
+
+	CUIObject::UI_DESC CharaDesc = {};
+	for (size_t i = 0; i < 2 ; i++)
+	{
+		CharaDesc.iNumUI = i;
+		for (size_t k = 0; k < 2; k++)
+		{
+			CharaDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(k);
+			CharaDesc.iTotalNum = i * 2 + k;
+
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_CharaPanel"), strLayerTag, &CharaDesc)))
+				return E_FAIL;
+
+		}
+	}
 	return S_OK;
 }
 

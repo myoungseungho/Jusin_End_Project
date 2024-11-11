@@ -39,7 +39,7 @@ void CLevel_Chara_Select::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_SPACE))
 	{
-		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_VS))))
 			return;
 	}
 }

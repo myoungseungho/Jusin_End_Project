@@ -254,24 +254,33 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 
 
 	wstring PrototypeTage = {};
+	CUI_Define::PLAYER_ID ePlayerIDInfo= {};
 	switch (ePlayerID)
 	{
 	case Client::CUI_Define::GOKU:
 		PrototypeTage = TEXT("Prototype_GameObject_Play_Goku");
+		ePlayerIDInfo = CUI_Define::GOKU;
+
 		break;
 	case Client::CUI_Define::ANDROID21:
 		PrototypeTage = TEXT("Prototype_GameObject_Play_21");
+		ePlayerIDInfo = CUI_Define::ANDROID21;
+
 		break;
 	case Client::CUI_Define::BUU:
+		ePlayerIDInfo = CUI_Define::BUU;
+
 		break;
 	case Client::CUI_Define::HIT:
+		ePlayerIDInfo = CUI_Define::HIT;
+
 		break;
 
 	default:
 		break;
 	}
 
-	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(SetIndex,iTeam, ePlayerSlot, PrototypeTage);
+	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(SetIndex,iTeam, ePlayerSlot, PrototypeTage, ePlayerIDInfo);
 }
 
 void CUI_CharaSelectIcon::CreateCharaImage()

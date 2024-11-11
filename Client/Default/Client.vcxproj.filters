@@ -292,6 +292,12 @@
     <ClCompile Include="..\private\UI_VS_BG.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\BG</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Mark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_CharaPanel.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\CharaPanel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -665,6 +671,12 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\BG">
       <UniqueIdentifier>{426f86e8-43df-462a-9b43-974684d4eb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Mark">
+      <UniqueIdentifier>{73fcdabc-53f5-4319-afe4-e0352f2af2fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\CharaPanel">
+      <UniqueIdentifier>{abdd6309-debe-4bd2-8b4f-0f4806132bc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1165,6 +1177,12 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_VS_BG.h">
       <Filter>02.GameObjects\UI\BackGround\VS\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Mark.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_CharaPanel.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\CharaPanel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

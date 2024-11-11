@@ -71,39 +71,39 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
-	//CharacterDesc.iTeam = 1;
-	//CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
-	//
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-	//	return E_FAIL;
-	//
-	//CharacterDesc.iTeam = 2;
-	//CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
-	//
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
-	//	return E_FAIL;
-	//
-	//
-	//CharacterDesc.iTeam = 1;
-	//CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObjecSt_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
-	//	return E_FAIL;
-	//
-	//
-	//CharacterDesc.iTeam = 2;
-	//CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-	//	return E_FAIL;
+	CharacterDesc.iTeam = 1;
+	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
+	
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+		return E_FAIL;
+	
+	CharacterDesc.iTeam = 2;
+	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
+	
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+		return E_FAIL;
+	
+	
+	CharacterDesc.iTeam = 1;
+	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+		return E_FAIL;
+	
+	
+	CharacterDesc.iTeam = 2;
+	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+		return E_FAIL;
 
-	for (int i = 0; i < 4 ; ++i)
-	{
-			CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
-			CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
-			_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
-
-			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
-				return E_FAIL;
-	}
+	//for (int i = 0; i < 4 ; ++i)
+	//{
+	//		CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
+	//		CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
+	//		_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
+	//
+	//		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
+	//			return E_FAIL;
+	//}
 
 #pragma endregion
 
@@ -207,6 +207,12 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
+
+	if (m_pGameInstance->Key_Down(DIK_N))
+	{
+		m_pUI_Manager->UsingCreateEndUI();
+	}
+
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -258,8 +264,8 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpPanel"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpEffect"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
-			return E_FAIL;
+		//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpEffect"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
+		//	return E_FAIL;
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_HpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;

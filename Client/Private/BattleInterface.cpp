@@ -238,9 +238,9 @@ CCharacter* CBattleInterface_Manager::EnemyInitalize(_ubyte iTeam)
     }
 }
 
-void CBattleInterface_Manager::Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag)
+void CBattleInterface_Manager::Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag , CUI_Define::PLAYER_ID ePlayerID)
 {
-    m_tCharaCreateDesc[iIndex] = { iTeam  , eSlot  , PrototypeTag };
+    m_tCharaCreateDesc[iIndex] = { iTeam  , eSlot  , PrototypeTag,ePlayerID };
 }
 
 

@@ -26,6 +26,7 @@ public:
 		_ushort iTeam = {};
 		CUI_Define::PLAYER_SLOT eSlot = {};
 		wstring	PrototypeTag = {};
+		CUI_Define::PLAYER_ID ePlayerID = {};
 	}CHARACREATE_DESC;
 private:
 	CBattleInterface_Manager();
@@ -66,7 +67,7 @@ public:
 private:
 	
 public:
-	void Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag);
+	void Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag, CUI_Define::PLAYER_ID ePlayerID);
 	CHARACREATE_DESC Get_CharaDesc(_uint iIndex){ return m_tCharaCreateDesc[iIndex]; }
 
 private:
