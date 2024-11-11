@@ -7,6 +7,7 @@
 BEGIN(Engine)
 class CShader;
 class CTexture;
+class CVIBuffer_Rect;
 class CModel;
 END
 
@@ -38,6 +39,15 @@ private:
 	CTexture* m_pTextureCom_Diffuse = { nullptr };
 	CModel*					m_pModelCom = { nullptr };
 	CModel* m_pFragmentModelCom[11] = { nullptr,nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+
+private:
+	CTexture* m_pTextureCom = { nullptr };
+	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CTransform* m_pEffectTransform = { nullptr };
+	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
+	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
+
+	_uint m_iRGIndex = { 0 };
 private:
 	const _float m_fFastTimeLimit = { 0.3f };
 	_float m_fAccTime = { 0.f };

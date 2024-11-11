@@ -51,8 +51,18 @@ HRESULT CSpaceMeteoBreak::Initialize(void * pArg)
 	for (size_t i = 0; i < 11; i++)
 		XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
 
-	//Update(4.f);
+	m_pEffectTransform = CTransform::Create(m_pDevice, m_pContext);
+	m_fSizeX = g_iWinSizeX;
+	m_fSizeY = g_iWinSizeY;
+	m_fX = g_iWinSizeX >> 1;
+	m_fY = g_iWinSizeY >> 1;
 
+	m_pEffectTransform->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
+	m_pEffectTransform->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(m_fX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
+
+	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
+	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
 	return S_OK;
 }
 
@@ -65,7 +75,7 @@ void CSpaceMeteoBreak::Camera_Update(_float fTimeDelta)
 
 		for (size_t i = 0; i < 11; i++)
 			XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
-
+		m_iRGIndex = 0;
 		m_fBrakeSwitchTime = false;
 		m_isBrakeSwitch = false;
 		m_isFastSwitch = true;
@@ -86,11 +96,7 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 			m_fBrakeSwitchTime = 0.f;
 			m_isBrakeSwitch = true;
 
-
-
-
-
-				XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
+			XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
 
 			//	Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
 
@@ -143,6 +149,11 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 void CSpaceMeteoBreak::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+
+	if (m_isBrakeSwitch == false)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	
+	
 }
 
 HRESULT CSpaceMeteoBreak::Priority_Render(_float fTimeDelta)
@@ -154,27 +165,63 @@ HRESULT CSpaceMeteoBreak::Priority_Render(_float fTimeDelta)
 
 HRESULT CSpaceMeteoBreak::Render(_float fTimeDelta)
 {
-	if (FAILED(Bind_ShaderResources()))
-		return E_FAIL;
 
+	
 	if (m_isBrakeSwitch == false)
 	{
-		_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
-		for (size_t i = 0; i < iNumMeshes; i++)
+		if (m_iRGIndex == 1)
 		{
-			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+			if (FAILED(m_pEffectTransform->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 				return E_FAIL;
 
-			if (FAILED(m_pShaderCom->Begin(12)))
+			if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 				return E_FAIL;
 
-			if (FAILED(m_pModelCom->Render(i)))
+			if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 				return E_FAIL;
+
+			if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+				return E_FAIL;
+
+			if (FAILED(m_pShaderCom->Begin(13)))
+				return E_FAIL;
+
+			if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+				return E_FAIL;
+
+			if (FAILED(m_pVIBufferCom->Render()))
+				return E_FAIL;
+
+			m_iRGIndex = 0;
 		}
+		else
+		{
+			if (FAILED(Bind_ShaderResources()))
+				return E_FAIL;
+
+			_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
+			for (size_t i = 0; i < iNumMeshes; i++)
+			{
+				if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+					return E_FAIL;
+
+				if (FAILED(m_pShaderCom->Begin(12)))
+					return E_FAIL;
+
+				if (FAILED(m_pModelCom->Render(i)))
+					return E_FAIL;
+			}
+
+			m_iRGIndex = 1;
+		}
+
 	}
 	else
 	{
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
+
 		for (size_t i = 0; i < 11; i++)
 		{
 			_uint		iNumMeshes = m_pFragmentModelCom[i]->Get_NumMeshes();
@@ -219,6 +266,16 @@ HRESULT CSpaceMeteoBreak::Ready_Components()
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
+	/* Com_VIBuffer */
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
+		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
+		return E_FAIL;
+
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_scrline00"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+	
 	for (size_t i = 0; i < 11; i++)
 	{
 		wstring strTagName = TEXT("Prototype_Component_Model_MeteoBrake_") + to_wstring(i + 1);

@@ -450,6 +450,17 @@ PS_OUT_RAINBOW PS_MAIN_RAINBOW(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_METEORECT(PS_IN In)
+{
+    PS_OUT Out;
+    float2 vTexcoord = In.vTexcoord;
+    //vTexcoord.y *= 0.5f;
+    Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
+
+    return Out;
+}
+
+
 PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 {
 	PS_OUT			Out;
@@ -663,6 +674,18 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_METEOBREAK();
+    }
+    pass MeteoRect // 13
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_METEORECT();
     }
 }
 /*
