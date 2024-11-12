@@ -39,11 +39,7 @@ public:
 	_bool Spiral_Spread_2D(_float fTimeDelta);
 	_bool Circular_Spread_2D(_float fTimeDelta);
 	_bool Elliptical_Spread_2D(_float fTimeDelta);
-	_bool Parabolic_Spread_2D(_float fTimeDelta);
-	_bool Random_Parabolic_Spread_2D(_float fTimeDelta);
 	_bool Random_Wiggle_Spread_2D(_float fTimeDelta);
-	_bool Attraction_Spread_2D(_float fTimeDelta);
-	_bool Repulsion_Spread_2D(_float fTimeDelta);
 	void Drop(_float fTimeDelta);
 
 protected:

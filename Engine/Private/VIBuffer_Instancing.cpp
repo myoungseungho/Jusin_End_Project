@@ -440,7 +440,7 @@ _bool CVIBuffer_Instancing::Random_Wiggle_Spread_2D(_float fTimeDelta)
 
 	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
 
-	const float wiggleIntensity = 50.f; // 진동 강도
+	const float scaleFactor = 50.f; // 진동 강도 스케일 팩터
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
@@ -460,6 +460,9 @@ _bool CVIBuffer_Instancing::Random_Wiggle_Spread_2D(_float fTimeDelta)
 			dirX /= length;
 			dirY /= length;
 		}
+
+		// 진동 강도를 속도와 연동
+		float wiggleIntensity = m_pSpeeds[i] * scaleFactor;
 
 		// 랜덤 진동 추가
 		float wiggleX = ((rand() % 100) / 100.f - 0.5f) * wiggleIntensity;
