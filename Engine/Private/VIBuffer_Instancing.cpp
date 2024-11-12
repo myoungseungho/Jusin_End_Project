@@ -253,6 +253,247 @@ _bool CVIBuffer_Instancing::Half_Spread_2D(_float fTimeDelta)
 	return false;
 }
 
+_bool CVIBuffer_Instancing::Spiral_Spread_2D(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	const float spiralSpeed = XM_PI; // 회전 속도 (라디안 단위)
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		float currentX = m_pInstanceVertices[i].vTranslation.x;
+		float currentY = m_pInstanceVertices[i].vTranslation.y;
+
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 각도 계산
+		float angle = atan2(dirY, dirX);
+		angle += spiralSpeed * fTimeDelta; // 회전
+
+		// 새로운 방향 벡터 계산
+		dirX = cosf(angle);
+		dirY = sinf(angle);
+
+		// 이동 속도 계산
+		float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+		float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+
+		// 파티클의 현재 위치 업데이트
+		pMatrices[i].vTranslation.x += moveX;
+		pMatrices[i].vTranslation.y += moveY;
+
+		// 생명 시간 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		// 루핑 처리
+		if (m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			pMatrices[i].vTranslation.x = m_pInstanceVertices[i].vTranslation.x;
+			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
+			pMatrices[i].vLifeTime.y = 0.f;
+		}
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
+}
+
+_bool CVIBuffer_Instancing::Circular_Spread_2D(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		float currentX = m_pInstanceVertices[i].vTranslation.x;
+		float currentY = m_pInstanceVertices[i].vTranslation.y;
+
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 각도 랜덤화 (0도 ~ 360도)
+		float angle = Get_Random(0.f, 360.f) * (XM_PI / 180.f);
+		dirX = cosf(angle);
+		dirY = sinf(angle);
+
+		// 벡터 정규화
+		float length = sqrt(dirX * dirX + dirY * dirY);
+		if (length != 0.f)
+		{
+			dirX /= length;
+			dirY /= length;
+		}
+
+		// 이동 속도 계산
+		float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+		float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+
+		// 파티클의 현재 위치 업데이트
+		pMatrices[i].vTranslation.x += moveX;
+		pMatrices[i].vTranslation.y += moveY;
+
+		// 생명 시간 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		// 루핑 처리
+		if (m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			pMatrices[i].vTranslation.x = m_pInstanceVertices[i].vTranslation.x;
+			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
+			pMatrices[i].vLifeTime.y = 0.f;
+		}
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
+}
+
+_bool CVIBuffer_Instancing::Elliptical_Spread_2D(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		float currentX = m_pInstanceVertices[i].vTranslation.x;
+		float currentY = m_pInstanceVertices[i].vTranslation.y;
+
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 타원형 스프레드를 위해 Y축 속도 감소
+		float ellipseFactor = 0.5f; // Y축 속도 비율
+		dirY *= ellipseFactor;
+
+		// 벡터 정규화
+		float length = sqrt(dirX * dirX + dirY * dirY);
+		if (length != 0.f)
+		{
+			dirX /= length;
+			dirY /= length;
+		}
+
+		// 이동 속도 계산
+		float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+		float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+
+		// 파티클의 현재 위치 업데이트
+		pMatrices[i].vTranslation.x += moveX;
+		pMatrices[i].vTranslation.y += moveY;
+
+		// 생명 시간 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		// 루핑 처리
+		if (m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			pMatrices[i].vTranslation.x = m_pInstanceVertices[i].vTranslation.x;
+			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
+			pMatrices[i].vLifeTime.y = 0.f;
+		}
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
+}
+
+_bool CVIBuffer_Instancing::Random_Wiggle_Spread_2D(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	const float wiggleIntensity = 50.f; // 진동 강도
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		float currentX = m_pInstanceVertices[i].vTranslation.x;
+		float currentY = m_pInstanceVertices[i].vTranslation.y;
+
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 벡터 정규화
+		float length = sqrt(dirX * dirX + dirY * dirY);
+		if (length != 0.f)
+		{
+			dirX /= length;
+			dirY /= length;
+		}
+
+		// 랜덤 진동 추가
+		float wiggleX = ((rand() % 100) / 100.f - 0.5f) * wiggleIntensity;
+		float wiggleY = ((rand() % 100) / 100.f - 0.5f) * wiggleIntensity;
+
+		// 이동 속도 계산
+		float moveX = dirX * m_pSpeeds[i] * fTimeDelta + wiggleX * fTimeDelta;
+		float moveY = dirY * m_pSpeeds[i] * fTimeDelta + wiggleY * fTimeDelta;
+
+		// 파티클의 현재 위치 업데이트
+		pMatrices[i].vTranslation.x += moveX;
+		pMatrices[i].vTranslation.y += moveY;
+
+		// 생명 시간 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		// 루핑 처리
+		if (m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			pMatrices[i].vTranslation.x = m_pInstanceVertices[i].vTranslation.x;
+			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
+			pMatrices[i].vLifeTime.y = 0.f;
+		}
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
+}
+
 void CVIBuffer_Instancing::Drop(_float fTimeDelta)
 {
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
@@ -301,8 +542,5 @@ void CVIBuffer_Instancing::Free()
 	{
 		Safe_Delete_Array(m_pInstanceVertices);
 		Safe_Delete_Array(m_pSpeeds);
-
 	}
-
-
 }

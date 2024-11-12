@@ -56,7 +56,8 @@ void CQTE_Continuous_Attack_Particle::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
-	_bool isComplete = m_pVIBufferCom->Half_Spread_2D(fTimeDelta);
+	_bool isComplete = m_pVIBufferCom->Random_Wiggle_Spread_2D(fTimeDelta);
+	//_bool isComplete = m_pVIBufferCom->Spiral_Spread_2D(fTimeDelta);
 
 	if (isComplete)
 		SetActive(false);

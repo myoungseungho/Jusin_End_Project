@@ -3329,7 +3329,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(5.f, 7.f);
+	ParticleDesc.vSpeed = _float2(3.f, 5.f);
 	ParticleDesc.vScale = _float2(2.f, 2.f);
 	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
 	ParticleDesc.isLoop = false;
@@ -3345,13 +3345,12 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(3.f, 5.f);
 	ParticleDesc.vScale = _float2(3.f, 3.f);
-	ParticleDesc.vLifeTime = _float2(0.3f, 0.5f);
+	ParticleDesc.vLifeTime = _float2(0.2f, 0.3f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
-
 
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),

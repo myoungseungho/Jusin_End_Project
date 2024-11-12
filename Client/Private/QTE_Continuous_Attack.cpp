@@ -95,7 +95,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 
 			Desc.fX = m_fX;
 			Desc.fY = 750.f;
-			Desc.fSizeX = 200.f;
+			Desc.fSizeX = 300.f;
 			Desc.fSizeY = 200.f;
 			Desc.fTimer = 0.5f;
 

@@ -56,7 +56,7 @@ void CQTE_Same_Grab_UI_Particle::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
-	_bool isComplete =m_pVIBufferCom->Spread_2D(fTimeDelta);
+	_bool isComplete = m_pVIBufferCom->Spiral_Spread_2D(fTimeDelta);
 
 	if (isComplete)
 		SetActive(false);
