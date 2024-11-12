@@ -24,7 +24,7 @@ HRESULT CLevel_VS::Initialize()
 {
 	m_iLevelIndex = LEVEL_VS;
 
-	Sleep(3000.f);
+	Sleep(1000);
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
@@ -37,6 +37,9 @@ HRESULT CLevel_VS::Initialize()
 
 void CLevel_VS::Update(_float fTimeDelta)
 {
+	if (fTimeDelta >= 0.1f)
+		fTimeDelta = 0.f;
+
 	m_fNextLevelTimer += fTimeDelta;
 
 	if (m_fNextLevelTimer >= 5.f)
@@ -46,13 +49,13 @@ void CLevel_VS::Update(_float fTimeDelta)
 		//if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
 		//	return;
 	}
-	//m_fUILightCreateTimer += fTimeDelta;
-	//
-	//if (m_fUILightCreateTimer >= 1.f)
-	//{
-	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_DynamicLight"), TEXT("Layer_ABackGround"));
-	//	m_fUILightCreateTimer = 0.f;
-	//}
+	m_fUILightCreateTimer += fTimeDelta;
+	
+	if (m_fUILightCreateTimer >= 1.f)
+	{
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_DynamicLight"), TEXT("Layer_ABackGround"));
+		m_fUILightCreateTimer = 0.f;
+	}
 }
 
 HRESULT CLevel_VS::Render(_float fTimeDelta)
@@ -87,14 +90,14 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 			return E_FAIL;
 	}
 
-	//CUIObject::UI_DESC MarkDesc = {};
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	MarkDesc.iNumUI = i;
-	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Mark"), strLayerTag, &MarkDesc);
-	//}
+	CUIObject::UI_DESC MarkDesc = {};
+	for (int i = 0; i < 2; i++)
+	{
+		MarkDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Mark"), strLayerTag, &MarkDesc);
+	}
 
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_MarkEff"), strLayerTag, &MarkDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_MarkEff"), strLayerTag, &MarkDesc);
 
 	CUIObject::UI_DESC CharaDesc = {};
 	for (size_t i = 0; i < 2 ; i++)
@@ -107,7 +110,12 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 
 			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_CharaPanel"), strLayerTag, &CharaDesc)))
 				return E_FAIL;
-	
+
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_NameOutLine"), strLayerTag, &CharaDesc)))
+				return E_FAIL;
+
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Name"), strLayerTag, &CharaDesc)))
+				return E_FAIL;
 		}
 	}
 
@@ -125,6 +133,8 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 		TeamDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Ball"), strLayerTag, &TeamDesc);
 	}
+
+
 	return S_OK;
 }
 

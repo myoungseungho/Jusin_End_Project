@@ -54,6 +54,9 @@ void CUI_VS_MarkEff::Camera_Update(_float fTimeDelta)
 
 void CUI_VS_MarkEff::Update(_float fTimeDelta)
 {
+	if (fTimeDelta >= 0.1f)
+		fTimeDelta = 0.f;
+
 	__super::Update(fTimeDelta);
 
 	if (m_pUI_Manager->m_fTotalDuration >= 0.5f)

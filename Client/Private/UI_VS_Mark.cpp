@@ -72,6 +72,9 @@ void CUI_VS_Mark::Camera_Update(_float fTimeDelta)
 
 void CUI_VS_Mark::Update(_float fTimeDelta)
 {
+	if (fTimeDelta >= 0.1f)
+		fTimeDelta = 0.f;
+
 	__super::Update(fTimeDelta);
 
 	if(m_iTextureIndex == 0)

@@ -96,6 +96,10 @@ HRESULT CUI_VS_CharaPanel::Render(_float fTimeDelta)
 	if (FAILED(m_pMarkTexture->Bind_ShaderResource(m_pShaderCom, "g_MarkTexture", ePlayerID)))
 		return E_FAIL;
 
+	if (FAILED(m_pNameTexture->Bind_ShaderResource(m_pShaderCom, "g_NameTexture", ePlayerID)))
+		return E_FAIL;
+
+
 	if (FAILED(m_pShaderCom->Begin(28)))
 		return E_FAIL;
 
@@ -127,6 +131,12 @@ HRESULT CUI_VS_CharaPanel::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
 		TEXT("Com_MarkTexture"), reinterpret_cast<CComponent**>(&m_pMarkTexture))))
 		return E_FAIL;
+
+	/* For.Com_NameTexture */
+	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_FontName"),
+		TEXT("Com_NameTexture "), reinterpret_cast<CComponent**>(&m_pNameTexture))))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -178,6 +188,7 @@ void CUI_VS_CharaPanel::Free()
 {
 	Safe_Release(m_pBGTexture);
 	Safe_Release(m_pMarkTexture);
+	Safe_Release(m_pNameTexture);
 
 	__super::Free();
 }

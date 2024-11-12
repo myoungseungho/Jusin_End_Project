@@ -12,6 +12,8 @@ texture2D g_CircleTexture1;
 texture2D g_CircleTexture2;
 texture2D g_CircleTexture3;
 
+texture2D g_NameTexture;
+
 bool g_bState;
 
 float g_Radio;
@@ -669,13 +671,14 @@ PS_OUT PS_VS_PANEL(PS_IN In)
     
     float2 vMarkTex = float2(In.vTexcoord.x, In.vTexcoord.y + 0.25f);
     vector MarkTex = g_MarkTexture.Sample(LinearSampler, vMarkTex);
+    vector NameTex = g_NameTexture.Sample(LinearSampler, vMarkTex);
+
     
     float2 vTex = (In.vTexcoord.x * 2, In.vTexcoord.y);
     vector BGTex = g_BGTexture.Sample(LinearSampler, vTex);
     
     Out.vColor = BaseTex * BGTex;
     
-  
     float2 vTopTexcoord = { 0.f, 0.37f };
     float2 vBotTexcoord = { 1.f, 0.27f };
     
@@ -718,6 +721,26 @@ PS_OUT PS_VS_Bar(PS_IN In)
     
     return Out;
 }
+
+PS_OUT PS_VS_Name(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+     
+    Out.vColor.rgb = lerp(float3(1.0, 1.0, 0.0), float3(1.0, 0.647, 0.0), In.vTexcoord.y * 2.f);
+    
+    
+    //if (Out.vColor.a <= 0.5f)
+    //{
+    //    Out.vColor.rgb = float3(0.f, 0.f, 0.f);
+    //    Out.vColor.a = 1.f;
+    //}
+   
+
+    return Out;
+}
+
 
 technique11 DefaultTechnique
 {
@@ -1172,5 +1195,19 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_VS_Bar();
+    }
+
+//31
+    pass VS_Name
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_Name();
     }
 }
