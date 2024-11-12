@@ -185,18 +185,6 @@ PS_OUT PS_QTE_PARTICLE(PS_IN In)
     return Out;
 }
 
-PS_OUT PS_QTE_CONTINUOUS_PARTICLE(PS_IN In)
-{
-    PS_OUT Out;
-
-    Out.vColor = float4(1.f, 1.f, 0.f, 0.5f);
-
-    if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
-        discard;
-
-    return Out;
-}
-
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
