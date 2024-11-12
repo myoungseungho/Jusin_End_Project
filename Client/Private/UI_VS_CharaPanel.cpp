@@ -61,12 +61,15 @@ void CUI_VS_CharaPanel::Camera_Update(_float fTimeDelta)
 
 void CUI_VS_CharaPanel::Update(_float fTimeDelta)
 {
+	if (fTimeDelta >= 0.1f)
+		fTimeDelta = 0.f;
+
 	__super::Update(fTimeDelta);
 
 	if(m_iNumUI == 0)
-		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 3000.f, 0.f, fTimeDelta);
+		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 2100.f, 0.f, fTimeDelta);
 	else if (m_iNumUI == 1)
-		Animation({ -500, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 3500.f, 0.f, fTimeDelta);
+		Animation({ -500, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 2700.f, 0.f, fTimeDelta);
 
 }
 
