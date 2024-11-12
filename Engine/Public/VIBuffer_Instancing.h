@@ -35,6 +35,7 @@ public:
 public:
 	void Spread(_float fTimeDelta);
 	_bool Spread_2D(_float fTimeDelta);
+	_bool Spread_FireCracker_2D(_float fTimeDelta);
 	_bool Half_Spread_X_2D(_float fTimeDelta);
 	_bool Half_Spread_Y_2D(_float fTimeDelta);
 	_bool Spiral_Spread_2D(_float fTimeDelta);

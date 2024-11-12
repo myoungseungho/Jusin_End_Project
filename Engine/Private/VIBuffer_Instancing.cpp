@@ -1,4 +1,5 @@
 #include "..\Public\VIBuffer_Instancing.h"
+#include <random>
 
 CVIBuffer_Instancing::CVIBuffer_Instancing(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CVIBuffer{ pDevice, pContext }
@@ -180,6 +181,91 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 		}
 	}
 
+	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
+}
+
+_bool CVIBuffer_Instancing::Spread_FireCracker_2D(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
+
+	// 버퍼 매핑
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	// 파티클 데이터 접근
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	// 중력 가속도 (필요에 따라 조정 가능)
+	const float gravity = -5000.f; // 예: 픽셀/초²
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		// 현재 파티클의 위치 로드
+		float currentX = pMatrices[i].vTranslation.x;
+		float currentY = pMatrices[i].vTranslation.y;
+
+		// 피봇 위치 로드
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		// 이동 방향 계산
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 벡터 정규화
+		float length = sqrt(dirX * dirX + dirY * dirY);
+		if (length != 0.f)
+		{
+			dirX /= length;
+			dirY /= length;
+		}
+
+		// 이동 속도 계산 변수
+		float moveX = 0.f;
+		float moveY = 0.f;
+
+		// 생명 시간 비율 계산
+		float ratio = pMatrices[i].vLifeTime.y / pMatrices[i].vLifeTime.x;
+		ratio = max(0.0f, min(ratio, 1.0f)); // 0.0f ~ 1.0f로 클램프
+
+		if (ratio < 0.8f)
+		{
+			// ratio가 0.8 미만일 때는 Spread_2D와 동일하게 이동
+			moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+			moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+		}
+		else
+		{
+			// ratio가 0.8 이상일 때는 중력의 영향을 받아 아래로 떨어짐
+			// 중력 효과를 적용하여 moveY에 중력 가속도 추가
+			float gravityEffect = gravity * fTimeDelta; // 중력 가속도 적용
+			moveY = gravityEffect; // 아래로 떨어짐
+		}
+
+		// 파티클 위치 업데이트
+		pMatrices[i].vTranslation.x += moveX;
+		pMatrices[i].vTranslation.y += moveY;
+
+		// 생명 시간 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		// 루핑 처리
+		if (m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			// 초기 위치로 리셋
+			pMatrices[i].vTranslation.x = m_pInstanceVertices[i].vTranslation.x;
+			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
+			pMatrices[i].vLifeTime.y = 0.f;
+		}
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			// 파티클 비활성화 또는 삭제 로직 추가 가능
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
+	}
+
+	// 버퍼 언매핑
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
 }

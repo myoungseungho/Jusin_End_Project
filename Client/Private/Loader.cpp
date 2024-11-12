@@ -3885,12 +3885,12 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 	//Hit ÆÄÆ¼Å¬
 	ParticleDesc.iNumInstance = 200;
-	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	ParticleDesc.vRange = _float3(0.1f, 0.1f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(3.f, 5.f);
-	ParticleDesc.vScale = _float2(3.f, 3.f);
-	ParticleDesc.vLifeTime = _float2(0.2f, 0.3f);
+	ParticleDesc.vSpeed = _float2(0.05f, 0.01f);
+	ParticleDesc.vScale = _float2(2.f, 2.f);
+	ParticleDesc.vLifeTime = _float2(0.7f, 1.f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
