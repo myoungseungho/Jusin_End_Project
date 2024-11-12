@@ -47,7 +47,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 
 
-	if (FAILED(Open_Level(LEVEL_VS)))
+	if (FAILED(Open_Level(LEVEL_CHARACTER)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
