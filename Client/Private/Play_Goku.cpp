@@ -1211,7 +1211,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
+		//
+		// 
+		// 
+		// 
+		// 
+		// 
+		// ->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
 		Character_Make_Effect(TEXT("Smoke03_Stop"), {}, true);
 		
 	}
