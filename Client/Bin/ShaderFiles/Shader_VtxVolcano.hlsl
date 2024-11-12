@@ -127,7 +127,7 @@ PS_OUT PS_MAIN_ISLAND(PS_IN In)
     PS_OUT Out;
     
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    Out.vDiffuse.rgb *= float3(0.56f, 0.52247f, 0.0f);
+    Out.vDiffuse.rgb *= float3(0.66f, 0.32247f, 0.0f);
     Out.vNormal = vector(Out.vDiffuse.rgb * Out.vDiffuse.a, 0.f);
     Out.vDiffuse.a *= 0.509f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
@@ -139,7 +139,7 @@ PS_OUT PS_MAIN_ISLAND2(PS_IN In)
     PS_OUT Out;
 
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    Out.vDiffuse.rgb *= float3(0.65f, 0.488649f, 0.0f);
+    Out.vDiffuse.rgb *= float3(0.75f, 0.288649f, 0.0f);
     Out.vNormal = vector(Out.vDiffuse.rgb * Out.vDiffuse.a, 0.f);
     Out.vDiffuse.a *= 0.5f;
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
@@ -178,11 +178,16 @@ PS_OUT PS_MAIN_SKY(PS_IN In)
     PS_OUT Out;
     
     float2 vTexcoord = In.vTexcoord;
-    vTexcoord.y += g_Time * 0.01f;
-    
+    vTexcoord.y += g_Time * 0.03f;
+        /* ¸¶½ºÅ© x */
+    float fSideMask = (step(-0.79f, In.vTexcoord.x) * step(In.vTexcoord.x, 1.924f)
+                            * step(-0.821f, In.vTexcoord.y) * step(In.vTexcoord.y, 1.843f));
+    //Tex.x < 0.039 || Tex.x > 0.961 --- 0.074 > Tex.y || 0.932 > Tex.y
+    //170 34 68
+    vector vSideColor = { 0.6666f, 0.1333f, 0.2666f, 1.f };
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
     vector vMtrlMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
-    Out.vDiffuse = vMtrlDiffuse;
+    Out.vDiffuse = (vMtrlDiffuse * fSideMask) + (vSideColor * (1 - fSideMask));
     Out.vNormal = vector(0.f, 0.f, 0.f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
@@ -192,12 +197,12 @@ PS_OUT PS_MAIN_LAVAFALL1(PS_IN In)
 {
     PS_OUT Out;
     
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.01f), In.vTexcoord);
     
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.5f, 0.325939f, 0.0f, 0.399f);
+    vector vLerpParam = vector(0.6f, 0.125939f, 0.0f, 0.399f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -209,11 +214,12 @@ PS_OUT PS_MAIN_LAVAFALL2(PS_IN In)
 {
     PS_OUT Out;
 
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.01f), In.vTexcoord);
+    
     vMtrlDiffuseSrc.rgb *= float3(0.53f, 0.269837f, 0.135193f);
     
-    vector vLerpParam = vector(0.5f, 0.325939f, 0.0f, 0.399f);
+    vector vLerpParam = vector(0.6f, 0.125939f, 0.0f, 0.399f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -224,11 +230,13 @@ PS_OUT PS_MAIN_LAVAFALL2(PS_IN In)
 PS_OUT PS_MAIN_LAVAFALL3(PS_IN In)
 {
     PS_OUT Out;
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.01f), In.vTexcoord);
+    
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.575f, 0.284846f, 0.015132f, 0.518f);
+    vector vLerpParam = vector(0.875f, 0.084846f, 0.015132f, 0.518f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -240,11 +248,12 @@ PS_OUT PS_MAIN_LAVAFALL4(PS_IN In)
 {
     PS_OUT Out;
 
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.01f), In.vTexcoord);
+    
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.5f, 0.396243f, 0.086535f, 0.487f);
+    vector vLerpParam = vector(0.6f, 0.196243f, 0.086535f, 0.487f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -256,11 +265,12 @@ PS_OUT PS_MAIN_LAVAFALL5(PS_IN In)
 {
     PS_OUT Out;
 
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.01f), In.vTexcoord);
+    
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.56f, 0.326768f, 0.f, 0.685f);
+    vector vLerpParam = vector(0.66f, 0.126768f, 0.f, 0.685f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -272,11 +282,12 @@ PS_OUT PS_MAIN_LAVAFALL6(PS_IN In)
 {
     PS_OUT Out;
     
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(15.f, 8.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(12.f, 7.f), float2(-0.01f, -0.01f), In.vTexcoord);
+    
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.56f, 0.326768f, 0.f, 0.685f);
+    vector vLerpParam = vector(0.66f, 0.126768f, 0.f, 0.685f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
 
@@ -289,11 +300,12 @@ PS_OUT PS_MAIN_LAVAFALL7(PS_IN In)
 {
     PS_OUT Out;
     
-    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.18f), In.vTexcoord);
-    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.09f), In.vTexcoord);
+    vector vMtrlDiffuseSrc = TexScalar_ToSampling(float2(7.f, 1.5f), float2(0.01f, -0.05f), In.vTexcoord);
+    vector vMtrlDiffuseDest = TexScalar_ToSampling(float2(10.f, 2.f), float2(-0.01f, -0.01f), In.vTexcoord);
+    
     vMtrlDiffuseSrc.rgb *= float3(0.27f, 0.137464f, 0.068872f);
     
-    vector vLerpParam = vector(0.56f, 0.326768f, 0.f, 0.685f);
+    vector vLerpParam = vector(0.66f, 0.126768f, 0.f, 0.685f);
     Out.vDiffuse = ColorLerpScalarToDiffuse(vLerpParam, vMtrlDiffuseSrc, vMtrlDiffuseDest);
 
     Out.vNormal = vector(Out.vDiffuse.rgb, 0.f);
@@ -368,21 +380,27 @@ PS_OUT PS_MAIN_CLIFF4(PS_IN In)
 PS_OUT PS_MAIN_SMOKE(PS_IN In)
 {
     PS_OUT Out;
-
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    
     float2 vTexcoord = In.vTexcoord;
-    vTexcoord.xy += g_Time * 0.03f;
-    vMtrlDiffuse.g = g_DiffuseTexture.Sample(LinearSampler, vTexcoord).g;
-    vector vLavaColor = { 1.5f, 0.2564f, 0.021219f, 1.f };
+    vTexcoord.y += g_Time * 0.03f;
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
+    vTexcoord.y *= 1.5f;
+    vector vMtrlMask = g_MaskTexture.Sample(LinearSampler, vTexcoord);
+    vector vLavaColor = { 1.2f, 0.2564f, 0.001f, 1.f };
+    vector vYellowColor = { 1.0f, 0.60f, 0.0f, 1.0f };
     vector vResultColor;
     
-    vResultColor.rgb = vMtrlDiffuse.rgb;
-    vResultColor.a = 1.f;
+    float yellowFactor = saturate(1.373 - saturate(vTexcoord.y));
     
+    vMtrlDiffuse = lerp(vMtrlDiffuse, vMtrlMask, 0.3f) * 1.5f;
+    vResultColor.rgb = lerp(vLavaColor.rgb, vYellowColor.rgb, yellowFactor) * vMtrlDiffuse.g;
+    vResultColor.a = ((1.0 - abs(In.vTexcoord.x - 0.5) * 1.5) * (In.vTexcoord.y * vResultColor.r)) * 1.373f;
+
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
     return Out;
 }
+
 
 
 technique11 DefaultTechnique

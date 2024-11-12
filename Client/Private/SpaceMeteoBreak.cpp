@@ -74,7 +74,7 @@ void CSpaceMeteoBreak::Camera_Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		Start_Space_DestructiveFinish(false);
+		Start_Space_DestructiveFinish(true);
 	}
 }
 
@@ -123,7 +123,6 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 			//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Smoke03_Stop"), &Result4x4);
 			//CEffect_Layer* pEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstU-3_01"), &Result4x4);				
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
 
 			_float4x4 Result4x4;
 			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
@@ -133,11 +132,12 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 			Result4x4._41 = 0.f;
 			Result4x4._42 = 0.f;
 			Result4x4._43 = 0.f;
+			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
 
 			if (m_isRight == true)
 			{
 				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4);
-				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4);
+			//	CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4);
 			}
 			else
 			{
@@ -145,8 +145,8 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore_L"), &Result4x4);
 			}
 
-			XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
-			CEffect_Layer* paaEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Burst"), &Result4x4);
+			//XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+			//CEffect_Layer* paaEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Burst"), &Result4x4);
 	
 			if (paEffect != nullptr)
 				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);

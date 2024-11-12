@@ -35,11 +35,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma region ¸Ê »çº» °´Ã¼
 
-	//if (FAILED(Ready_Volcano()))
-	//	return E_FAIL;
-
-	if (FAILED(Ready_Space()))
+	if (FAILED(Ready_Volcano()))
 		return E_FAIL;
+
+	//if (FAILED(Ready_Space()))
+	//	return E_FAIL;
 #pragma endregion
 
 #pragma region Ä³¸¯ÅÍ »çº» °´Ã¼
