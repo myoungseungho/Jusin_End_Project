@@ -30,15 +30,17 @@ HRESULT CLevel_VS::Initialize()
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 
-	//srand(unsigned int(time(NULL)));
-
 	return S_OK;
 }
 
 void CLevel_VS::Update(_float fTimeDelta)
 {
-	if (m_pGameInstance->Key_Down(DIK_RETURN))
+	m_fNextLevelTimer += fTimeDelta;
+
+	if (m_fNextLevelTimer >= 5.f)
 	{
+		m_fNextLevelTimer = 0.f;
+
 		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
 			return;
 	}
@@ -109,12 +111,16 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 
 	CUIObject::UI_DESC TeamDesc = {};
 
-
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_TeamPanel"), strLayerTag);
 	for (size_t i = 0; i < 2; i++)
 	{
 		TeamDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_TeamPanel"), strLayerTag, &TeamDesc);
 
+	}
+
+	for (size_t i = 0; i < 2; i++)
+	{
+		TeamDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Ball"), strLayerTag, &TeamDesc);
 	}
 	return S_OK;

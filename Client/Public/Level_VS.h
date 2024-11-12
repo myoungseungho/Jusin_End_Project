@@ -23,6 +23,7 @@ private:
 
 private:
 	_float m_fUILightCreateTimer = { 0.f };
+	_float m_fNextLevelTimer = { 0.f };
 public:
 	static CLevel_VS* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

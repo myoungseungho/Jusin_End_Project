@@ -23,15 +23,15 @@ HRESULT CUI_VS_TeamPanel::Initialize_Prototype()
 
 HRESULT CUI_VS_TeamPanel::Initialize(void* pArg)
 {
-	m_fPosX = 485.f, m_fPosY = 590.f;
-	 m_fSizeY = 180.f;
+	m_fPosX = 1050.f, m_fPosY = 580.f;
+	m_fSizeX = 675.f , m_fSizeY = 335.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
-	m_fSizeX = 180.f;
+	
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
@@ -45,7 +45,6 @@ void CUI_VS_TeamPanel::Camera_Update(_float fTimeDelta)
 void CUI_VS_TeamPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-	//DebugTesting(2.f, 0.f);
 }
 
 void CUI_VS_TeamPanel::Late_Update(_float fTimeDelta)
