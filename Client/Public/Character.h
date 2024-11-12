@@ -28,6 +28,7 @@ public:
 	static vector<CInput> Command_214Attack_Extra;
 	static vector<CInput> Command_236Special;
 	static vector<CInput> Command_236Special_Side;
+	static vector<CInput> Command_236Special_Side_Extra;
 	static vector<CInput> Command_214Special;
 	static vector<CInput> Command_214Special_Extra;
 
@@ -35,6 +36,8 @@ public:
 	static vector<CInput> Command_214FinalAttack;
 	static vector<CInput> Command_236UltimateAttack;
 	static vector<CInput> Command_236UltimateAttack_Side;
+	static vector<CInput> Command_236UltimateAttack_Side_Extra;
+
 
 	static vector<CInput> Command_BackDash;
 	static vector<CInput> Command_Forward;
@@ -56,6 +59,8 @@ public:
 	static vector<CInput> Command_Crouch_HeavyAttack;
 	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
 	static vector<CInput> Command_Crouch_SpecialAttack;
+
+	static vector<CInput> Command_Up_SpecialAttack;
 
 
 	static vector<CInput> Command_Reflect;
@@ -236,7 +241,7 @@ public:
 
 	//피격 관련
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
+	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
 
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
@@ -250,6 +255,8 @@ public:
 	void Update_StunImpus(_float fTimeDelta);
 	void Set_BreakFall_Ground();
 	void BreakFall_Air();
+
+	void Set_bNoGravity(_bool bNoGravity);
 
 
 
@@ -358,12 +365,15 @@ protected:
 	//기본적으로 좌우반전이 되지만 추가로 뒤집는경우 좌표가 좀 뒤틀릴 수 있음
 	_float4x4 Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection = false);
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float fYRotation =1000.f);
 	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale ={1.f,1.f,1.f});
 
 public:
 	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
 	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
-	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	class CEffect_Layer* Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//class CEffect_Layer* Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float fYRotation =1000.f);
+
 	//void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale={1.f,1.f,1.f});
 
 
@@ -372,6 +382,7 @@ public:
 	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
 	void Update_LoofAnimationCreate(_float fTimeDelta);
 
+	const _float4x4* Get_pTransformMatrix();
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -567,6 +578,11 @@ protected:
 
 	//스턴관련
 	_bool m_bHitGroundSmashed = { false };
+	_bool m_bWallBounce = { true };
+	_bool m_bNoGravity = { false };
+	_float m_fNoGravitySafeTime = { 0.f };
+	_bool m_bAwayUpGravity = { false };
+
 
 	//멤버변수에 넣는 대신 함수로 체크?   이거 없으면  서브캐릭터들도 가드를 해버림.  교체할때 그냥 사라지게?
 	//_bool m_bGuard = { false };
@@ -665,14 +681,14 @@ public:
 
 	//UI에서 써야하는 정보 
 	
-
+protected:
+	_bool					m_bHit = { FALSE };
 private:
 	_uint					m_iComboCount = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
 	
 	_bool					m_bRedHp = { FALSE };
-	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };

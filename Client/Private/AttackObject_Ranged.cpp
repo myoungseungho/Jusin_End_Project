@@ -88,8 +88,11 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
-			//m_pGameInstance->Release_Collider(m_pColliderCom);
+
+			if (m_pRangedEffect_Layer != nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			m_bEnableDestory = false;
 			Destory();
 		}

@@ -152,7 +152,10 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
-			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
+			if(m_bOnwerHitNoneStop == false)
+				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+	
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
