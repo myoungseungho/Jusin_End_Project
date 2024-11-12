@@ -64,9 +64,9 @@ void CUI_VS_CharaPanel::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 
 	if(m_iNumUI == 0)
-		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 1000.f, 0.f, fTimeDelta);
+		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 3000.f, 0.f, fTimeDelta);
 	else if (m_iNumUI == 1)
-		Animation({ -200, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 1200.f, 0.f, fTimeDelta);
+		Animation({ -400, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 3000.f, 0.f, fTimeDelta);
 }
 
 void CUI_VS_CharaPanel::Late_Update(_float fTimeDelta)

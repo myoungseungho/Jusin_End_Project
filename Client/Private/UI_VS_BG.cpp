@@ -31,8 +31,8 @@ HRESULT CUI_VS_BG::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = g_iWinSizeX * 1.75f;
-	m_fSizeY = g_iWinSizeY * 1.75f;
+	m_fSizeX = g_iWinSizeX *1.75f;
+	m_fSizeY = g_iWinSizeY *1.75f;
 	m_fPosX = g_iWinSizeX >> 1;
 	m_fPosY = g_iWinSizeY >> 1;
 
@@ -53,9 +53,9 @@ void CUI_VS_BG::Camera_Update(_float fTimeDelta)
 
 void CUI_VS_BG::Update(_float fTimeDelta)
 {
-	m_fMaskMoveValue += fTimeDelta;
+	m_fMaskMoveValue += fTimeDelta * 90.f;
 
-	if (m_fMaskMoveValue >= 25.f)
+	if (m_fMaskMoveValue >= 360.f)
 		m_fMaskMoveValue = 0.f;
 }
 

@@ -307,6 +307,18 @@
     <ClCompile Include="..\private\UI_VS_Bar.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\Bar</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_VS_BoltEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Bolt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_MarkEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Ball.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_TeamPanel.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\TeamPanel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -698,6 +710,18 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\Bar">
       <UniqueIdentifier>{73e8b0f4-1c5a-4785-b9cd-1172d939fd80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\Bolt">
+      <UniqueIdentifier>{65195844-8ae7-4595-a32c-3d3c700c56fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\Mark">
+      <UniqueIdentifier>{fd950ed7-ab69-4146-ba89-7a640e5e7a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Ball">
+      <UniqueIdentifier>{3a8d6782-5fe3-48fd-b7dc-28165c1782ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\TeamPanel">
+      <UniqueIdentifier>{af5c3bd0-e54a-4f0d-a5e0-ae5f82acfd0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1213,6 +1237,18 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_VS_Bar.h">
       <Filter>02.GameObjects\UI\BackGround\VS\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_BoltEff.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Bolt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_MarkEff.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Ball.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_TeamPanel.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\TeamPanel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

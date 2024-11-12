@@ -12,6 +12,8 @@
 #include "CharaSelectCamera.h"
 #include "RenderInstance.h" 
 
+#include <time.h>
+
 
 CLevel_VS::CLevel_VS(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -27,6 +29,8 @@ HRESULT CLevel_VS::Initialize()
 
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
+
+	//srand(unsigned int(time(NULL)));
 
 	return S_OK;
 }
@@ -73,31 +77,46 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_DynamicLight"), strLayerTag)))
 		return E_FAIL;
 
+	for (int i = 0; i < 4; i++)
+	{
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Bolt"), strLayerTag)))
+			return E_FAIL;
+	}
+
+	CUIObject::UI_DESC MarkDesc = {};
+	for (int i = 0; i < 2; i++)
+	{
+		MarkDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Mark"), strLayerTag, &MarkDesc);
+	}
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_MarkEff"), strLayerTag, &MarkDesc);
+
+	CUIObject::UI_DESC CharaDesc = {};
+	for (size_t i = 0; i < 2 ; i++)
+	{
+		CharaDesc.iNumUI = i;
+		for (size_t k = 0; k < 2; k++)
+		{
+			CharaDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(k);
+			CharaDesc.iTotalNum = i * 2 + k;
+
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_CharaPanel"), strLayerTag, &CharaDesc)))
+				return E_FAIL;
+	
+		}
+	}
+
+	CUIObject::UI_DESC TeamDesc = {};
 
 
-	//CUIObject::UI_DESC MarkDesc = {};
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	MarkDesc.iNumUI = i;
-	//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Mark"), strLayerTag, &MarkDesc);
-	//}
-	//
-	//
-	//
-	//CUIObject::UI_DESC CharaDesc = {};
-	//for (size_t i = 0; i < 2 ; i++)
-	//{
-	//	CharaDesc.iNumUI = i;
-	//	for (size_t k = 0; k < 2; k++)
-	//	{
-	//		CharaDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(k);
-	//		CharaDesc.iTotalNum = i * 2 + k;
-	//
-	//		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_CharaPanel"), strLayerTag, &CharaDesc)))
-	//			return E_FAIL;
-	//
-	//	}
-	//}
+	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_TeamPanel"), strLayerTag);
+	for (size_t i = 0; i < 2; i++)
+	{
+		TeamDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_Ball"), strLayerTag, &TeamDesc);
+	}
 	return S_OK;
 }
 

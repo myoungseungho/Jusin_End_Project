@@ -23,7 +23,7 @@ HRESULT CUI_VS_Mark::Initialize_Prototype()
 
 HRESULT CUI_VS_Mark::Initialize(void* pArg)
 {
-	m_fSizeX = 800.f, m_fSizeY = 1200.f;
+	m_fSizeX = 800.f, m_fSizeY = 1600.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -35,28 +35,27 @@ HRESULT CUI_VS_Mark::Initialize(void* pArg)
 	m_iTextureIndex = pDesc->iNumUI;
 
 	if(m_iTextureIndex == 0)
-		m_fPosX = 600.f, m_fPosY = 285.f;
+		m_fPosX = 630.f, m_fPosY = 305.f;
 	else if (m_iTextureIndex == 1)
-		m_fPosX = 600.f, m_fPosY = 300.f;
+		m_fPosX = 630.f, m_fPosY = 320.f;
 
-	//m_fSizeX = 218.f, m_fSizeY = 435.f;
 	if (m_iTextureIndex == 0)
 	{
-		Set_AnimPosition(200.f, 0.5f);
-		Set_AnimPosition(200.f, 1.1f);
-		Set_AnimPosition(150.f, 1.75f);
-		Set_AnimPosition(200.f, 2.f);
-		Set_AnimPosition(250.f, 2.25f);
+		Set_AnimPosition(400.f, 0.25f);
+		Set_AnimPosition(400.f, 0.5f);
+		Set_AnimPosition(200.f, 0.75f);
+		Set_AnimPosition(200.f, 0.85f);
+		Set_AnimPosition(400.f, 1.f);
 
 		m_fAlphaValue = 0.5f;
 	}
 	else if (m_iTextureIndex == 1)
 	{
-		Set_AnimPosition(800.f, 0.5f);
-		Set_AnimPosition(200.f, 1.f);
-		Set_AnimPosition(150.f, 1.75f);
-		Set_AnimPosition(200.f, 2.f);
-		Set_AnimPosition(250.f, 2.25f);
+		Set_AnimPosition(800.f, 0.1f);
+		Set_AnimPosition(400.f, 0.5f);
+		Set_AnimPosition(200.f, 0.75f);
+		Set_AnimPosition(200.f, 0.85f);
+		Set_AnimPosition(400.f, 1.f);
 
 		m_fAlphaValue = 0.f;
 	}

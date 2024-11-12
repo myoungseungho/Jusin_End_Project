@@ -110,6 +110,10 @@
 #include "UI_VS_StaticLight.h"
 #include "UI_VS_DynamicLight.h"
 #include "UI_VS_Bar.h"
+#include "UI_VS_BoltEff.h"
+#include "UI_VS_MarkEff.h"
+#include "UI_VS_Ball.h"
+#include "UI_VS_TeamPanel.h"
 
 #include "CharaSelectCamera.h"
 
@@ -364,6 +368,21 @@ HRESULT CLoader::Loading_For_VS()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle3"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle3.png")))))
 		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_BG_Bolt */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bolt"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_Bolt%d.png"),7))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_DragonBall */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_DragonBall"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Ball/Ball%d.png"), 7))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_TeamPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_TeamPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/VS_Panel.png")))))
+		return E_FAIL;
 
 	/* Prototype_GameObject_VS_BG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_BG"),
@@ -393,6 +412,26 @@ HRESULT CLoader::Loading_For_VS()
 	/* Prototype_GameObject_VS_Bar*/
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Bar"),
 		CUI_VS_Bar::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Bolt */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Bolt"),
+		CUI_VS_BoltEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_MarkEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_MarkEff"),
+		CUI_VS_MarkEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Ball */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Ball"),
+		CUI_VS_Ball::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_TeamPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_TeamPanel"),
+		CUI_VS_TeamPanel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 
@@ -471,9 +510,6 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectCircle"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_effect_00.png")))))
 		return E_FAIL;
-
-
-
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 		PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);

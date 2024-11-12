@@ -57,7 +57,7 @@ void CUI_VS_StaticLight::Late_Update(_float fTimeDelta)
 	tDesc.tGlowDesc.iPassIndex = 2;
 	tDesc.tGlowDesc.fGlowFactor = 3.2f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this, &tDesc);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
 }
 
 HRESULT CUI_VS_StaticLight::Render(_float fTimeDelta)

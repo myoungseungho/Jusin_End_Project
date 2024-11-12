@@ -43,29 +43,30 @@ struct VS_OUT
     float2 vTexcoord : TEXCOORD0;
 };
 
-float2 GetOverlayUV(float2 uv, float2 mainSize, float2 overlaySize)
+float2 RotateUV(float2 uv, float2 center, float angle)
 {
-    float aspectRatioMain = mainSize.x / mainSize.y;
-    float aspectRatioOverlay = overlaySize.x / overlaySize.y;
+    // 중심점 기준으로 UV를 이동
+    uv -= center;
 
-    float2 adjustedUV = uv;
+    // 비율 보정 (세로 방향으로 0.5배 축소)
+    uv.y *= 0.5;
 
-    if (aspectRatioOverlay > aspectRatioMain)
-    {
-        // 작은 이미지가 큰 이미지보다 더 넓을 때
-        adjustedUV.x = uv.x * (mainSize.x / overlaySize.x);
-        adjustedUV.y = uv.y;
-    }
-    else
-    {
-        // 작은 이미지가 큰 이미지보다 더 좁을 때
-        adjustedUV.x = uv.x;
-        adjustedUV.y = uv.y * (mainSize.y / overlaySize.y);
-    }
+    // 회전 변환
+    float cosAngle = cos(angle);
+    float sinAngle = sin(angle);
+    float2 rotatedUV = float2(
+        uv.x * cosAngle - uv.y * sinAngle,
+        uv.x * sinAngle + uv.y * cosAngle
+    );
 
-    return adjustedUV;
+    // 비율 복원 (세로 방향으로 2배 확대)
+    rotatedUV.y *= 2.0;
+
+    // 원래 위치로 이동
+    rotatedUV += center;
+
+    return rotatedUV;
 }
-
 
 VS_OUT VS_MAIN(VS_IN In)
 {
@@ -630,10 +631,13 @@ PS_OUT PS_VS_BG(PS_IN In)
     vector CircleTex[4];
     
 
-    CircleTex[0] = g_CircleTexture0.Sample(LinearSampler, In.vTexcoord);
-    CircleTex[1] = g_CircleTexture1.Sample(LinearSampler, In.vTexcoord);
-    CircleTex[2] = g_CircleTexture2.Sample(LinearSampler, In.vTexcoord);
-    CircleTex[3] = g_CircleTexture3.Sample(LinearSampler, In.vTexcoord);
+    float2 RotaCoord = RotateUV(In.vTexcoord, float2(0.5f, 0.5f), radians(g_MaskTimer));
+    float2 ReverseRotaCoord = RotateUV(In.vTexcoord, float2(0.5f, 0.5f), radians(360 - g_MaskTimer));
+    CircleTex[0] = g_CircleTexture0.Sample(LinearSampler, RotaCoord);
+    CircleTex[1] = g_CircleTexture1.Sample(LinearSampler, ReverseRotaCoord);
+    CircleTex[2] = g_CircleTexture2.Sample(LinearSampler, RotaCoord);
+    CircleTex[3] = g_CircleTexture3.Sample(LinearSampler, ReverseRotaCoord);
+    
         
      Out.vColor = saturate(BaseTex * BGTex);
     
