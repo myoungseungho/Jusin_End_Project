@@ -79,7 +79,7 @@ HRESULT CQTE_Continuous_Attack_Particle::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(2)))
+	if (FAILED(m_pShaderCom->Begin(1)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -99,7 +99,7 @@ HRESULT CQTE_Continuous_Attack_Particle::Ready_Components()
 		return E_FAIL;
 
 	/* Com_VIBuffer */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Continuous_Spread_QTE"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 
@@ -117,7 +117,10 @@ HRESULT CQTE_Continuous_Attack_Particle::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	return S_OK;
+	_float4 color = _float4(1.f, 1.f, 0.f, 0.5f);
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &color, sizeof(_float4))))
+		return S_OK;
 }
 
 CQTE_Continuous_Attack_Particle* CQTE_Continuous_Attack_Particle::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -148,8 +151,8 @@ CGameObject* CQTE_Continuous_Attack_Particle::Clone(void* pArg)
 
 void CQTE_Continuous_Attack_Particle::Free()
 {
-	__super::Free();
-
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
+
+	__super::Free();
 }

@@ -358,7 +358,7 @@
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\QTE_Hit_UI_Effect.cpp">
+    <ClCompile Include="..\Private\QTE_Hit_UI_Particle.cpp">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Effect.cpp">
@@ -1301,7 +1301,7 @@
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\QTE_Hit_UI_Effect.h">
+    <ClInclude Include="..\Public\QTE_Hit_UI_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Effect.h">

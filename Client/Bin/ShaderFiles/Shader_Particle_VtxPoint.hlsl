@@ -105,7 +105,7 @@ void GS_MAIN(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
 
 
 [maxvertexcount(20)]
-void GS_QTE_SAME_GRAB_PARTICLE(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
+void GS_QTE_PARTICLE(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
 {
     GS_OUT Out[4];
 
@@ -173,12 +173,11 @@ PS_OUT PS_MAIN(PS_IN In)
 }
 
 
-PS_OUT PS_QTE_SAME_GRAB_PARTICLE(PS_IN In)
+PS_OUT PS_QTE_PARTICLE(PS_IN In)
 {
     PS_OUT Out;
 
-    //ÇÏ´Ã»ö
-    Out.vColor = float4(66.f / 255.f, 211.f / 255.f, 240.f / 255.f, 0.5f);
+    Out.vColor = g_vColor;
 
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
         discard;
@@ -214,33 +213,18 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN();
     }
 
-
 //1
-    pass QTE_SAME_GRAB_PARTICLE
+    pass QTE_PARTICLE
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
-        GeometryShader = compile gs_5_0 GS_QTE_SAME_GRAB_PARTICLE();
+        GeometryShader = compile gs_5_0 GS_QTE_PARTICLE();
         HullShader = NULL;
         DomainShader = NULL;
-        PixelShader = compile ps_5_0 PS_QTE_SAME_GRAB_PARTICLE();
-    }
-
-//2
-    pass QTE_CONTINUOUS_PARTICLE
-    {
-        SetRasterizerState(RS_Cull_None);
-        SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-
-        VertexShader = compile vs_5_0 VS_MAIN();
-        GeometryShader = compile gs_5_0 GS_QTE_SAME_GRAB_PARTICLE();
-        HullShader = NULL;
-        DomainShader = NULL;
-        PixelShader = compile ps_5_0 PS_QTE_CONTINUOUS_PARTICLE();
+        PixelShader = compile ps_5_0 PS_QTE_PARTICLE();
     }
 }
 

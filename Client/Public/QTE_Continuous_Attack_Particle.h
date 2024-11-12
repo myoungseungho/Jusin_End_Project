@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "PartObject.h"
+#include "GameObject.h"
 
 BEGIN(Engine)
 class CShader;
@@ -36,7 +36,7 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 	CVIBuffer_Point_Instancing* m_pVIBufferCom = { nullptr };
 
-	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{}, m_fTimer{};
+	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
 
 private:

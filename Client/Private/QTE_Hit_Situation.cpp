@@ -5,7 +5,7 @@
 #include "GameInstance.h"
 #include "QTE_Hit_UI_Icon.h"
 #include "QTE_Hit_UI_Result.h"
-#include "QTE_Hit_UI_Effect.h"
+#include "QTE_Hit_UI_Particle.h"
 #include "Main_Camera.h"
 CQTE_Hit_Situation::CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -88,12 +88,12 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 			for (auto& iter : m_vecHitResult)
 				Safe_Release(iter);
 
-			for (auto& iter : m_vecHitEffect)
+			for (auto& iter : m_vecHitParticle)
 				Safe_Release(iter);
 
 			m_vecHitUIIcon.clear();
 			m_vecHitResult.clear();
-			m_vecHitEffect.clear();
+			m_vecHitParticle.clear();
 
 			m_fOffsetTimer = 0.f;
 			m_bOffsetActive = false; // 오프셋 기간 종료
@@ -126,7 +126,7 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 		for (auto& iter : m_vecHitResult)
 			iter->Update(fTimeDelta);
 
-		for (auto& iter : m_vecHitEffect)
+		for (auto& iter : m_vecHitParticle)
 			iter->Update(fTimeDelta);
 
 		// 다음 아이콘 생성할게 남아있는지 체크
@@ -175,7 +175,7 @@ void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
 		for (auto& iter : m_vecHitResult)
 			iter->Late_Update(fTimeDelta);
 
-		for (auto& iter : m_vecHitEffect)
+		for (auto& iter : m_vecHitParticle)
 			iter->Late_Update(fTimeDelta);
 	}
 }
@@ -258,7 +258,7 @@ void CQTE_Hit_Situation::End_Offset_QTE(_float fTimeDelta)
 	for (auto& iter : m_vecHitResult)
 		iter->Update(fTimeDelta);
 
-	for (auto& iter : m_vecHitEffect)
+	for (auto& iter : m_vecHitParticle)
 		iter->Update(fTimeDelta);
 
 	if (m_fOffsetTimer <= 0.0f)
@@ -483,7 +483,7 @@ void CQTE_Hit_Situation::Process_Command(CQTE_Hit_UI_Icon::KEY_ID input)
 
 			// Result 객체 생성 함수 호출
 			Create_ResultObject(iter);
-			Create_EffectObject(iter);
+			Create_ParticleObject(iter);
 #pragma endregion
 		}
 	}
@@ -528,21 +528,20 @@ void CQTE_Hit_Situation::Create_ResultObject(CQTE_Hit_UI_Icon* pIcon)
 	m_vecHitResult.push_back(Result);
 }
 
-void CQTE_Hit_Situation::Create_EffectObject(CQTE_Hit_UI_Icon* pIcon)
+void CQTE_Hit_Situation::Create_ParticleObject(CQTE_Hit_UI_Icon* pIcon)
 {
 	//실패할 땐 끔
 	if (pIcon->m_currentResult_ID == CQTE_Hit_UI_Icon::HIT_RESULT_FAILED)
 		return;
 
-	CQTE_Hit_UI_Effect::Hit_EFFECT_DESC Desc{};
+	CQTE_Hit_UI_Particle::Hit_PARTICLE_DESC Desc{};
 	Desc.fX = pIcon->m_fX;
 	Desc.fY = pIcon->m_fY;
 	Desc.fSizeX = 300.f;
 	Desc.fSizeY = 300.f;
-	Desc.fTimer = 0.25f;
 
-	CQTE_Hit_UI_Effect* effect = static_cast<CQTE_Hit_UI_Effect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Effect"), &Desc));
-	m_vecHitEffect.push_back(effect);
+	CQTE_Hit_UI_Particle* effect = static_cast<CQTE_Hit_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Particle"), &Desc));
+	m_vecHitParticle.push_back(effect);
 
 }
 
@@ -580,12 +579,12 @@ void CQTE_Hit_Situation::Free()
 	for (auto& iter : m_vecHitResult)
 		Safe_Release(iter);
 
-	for (auto& iter : m_vecHitEffect)
+	for (auto& iter : m_vecHitParticle)
 		Safe_Release(iter);
 
 	m_vecHitUIIcon.clear();
 	m_vecHitResult.clear();
-	m_vecHitEffect.clear();
+	m_vecHitParticle.clear();
 
 	__super::Free();
 }

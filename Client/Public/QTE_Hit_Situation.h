@@ -40,7 +40,7 @@ private:
 	void Process_Command(CQTE_Hit_UI_Icon::KEY_ID input);
 
 	void Create_ResultObject(class CQTE_Hit_UI_Icon* pIcon);
-	void Create_EffectObject(class CQTE_Hit_UI_Icon* pIcon);
+	void Create_ParticleObject(class CQTE_Hit_UI_Icon* pIcon);
 
 private:
 	_float m_fLifeTime = {};
@@ -61,7 +61,7 @@ private:
 	vector<_float> m_vecIconCreationTimes;
 	vector<class CQTE_Hit_UI_Icon*> m_vecHitUIIcon;
 	vector<class CQTE_Hit_UI_Result*> m_vecHitResult;
-	vector<class CQTE_Hit_UI_Effect*> m_vecHitEffect;
+	vector<class CQTE_Hit_UI_Particle*> m_vecHitParticle;
 
 
 	CQTE_Hit::Hit_Situation_ID m_currentSituationID = {};

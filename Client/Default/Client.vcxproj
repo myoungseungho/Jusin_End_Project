@@ -197,7 +197,7 @@
     <ClInclude Include="..\Public\QTE_Hit_Situation.h" />
     <ClInclude Include="..\Public\QTE_Hit.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space.h" />
-    <ClInclude Include="..\Public\QTE_Hit_UI_Effect.h" />
+    <ClInclude Include="..\Public\QTE_Hit_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_Result.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h" />
     <ClInclude Include="..\Public\QTE_UI_Gauge.h" />
@@ -362,7 +362,7 @@
     <ClCompile Include="..\Private\QTE_Hit_Situation.cpp" />
     <ClCompile Include="..\Private\QTE_Hit.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space.cpp" />
-    <ClCompile Include="..\Private\QTE_Hit_UI_Effect.cpp" />
+    <ClCompile Include="..\Private\QTE_Hit_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_Result.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp" />
     <ClCompile Include="..\Private\QTE_UI_Gauge.cpp" />
