@@ -248,16 +248,6 @@ void CQTE_Continuous_Attack::Process_Command()
 
 	//Gauge에 신호를 보내서 연타를 해야함
 	m_pContinuous_Gauge->Process_Command();
-
-	//파티클 생성
-	CQTE_Continuous_Attack_Particle::QTE_Continuous_Attack_Particle_DESC Desc{};
-
-	Desc.fX = m_fX;
-	Desc.fY = 800.f;
-	Desc.fSizeX = 50.f;
-	Desc.fSizeY = 50.f;
-	//파티클 객체 생성
-	m_UIParticles.push_back(static_cast<CQTE_Continuous_Attack_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Particle"), &Desc)));
 }
 
 void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
@@ -276,6 +266,16 @@ void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
 			fProgress = 1.0f;
 			m_bIsMovingDown = false;
 			m_fCurrentTime = 0.0f;
+
+			//파티클 생성
+			CQTE_Continuous_Attack_Particle::QTE_Continuous_Attack_Particle_DESC Desc{};
+
+			Desc.fX = m_fX;
+			Desc.fY = 800.f;
+			Desc.fSizeX = 50.f;
+			Desc.fSizeY = 50.f;
+			//파티클 객체 생성
+			m_UIParticles.push_back(static_cast<CQTE_Continuous_Attack_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Particle"), &Desc)));
 		}
 
 		// 이징 함수 적용 (Ease-In-Out)

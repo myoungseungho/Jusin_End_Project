@@ -1,20 +1,20 @@
 #include "..\Public\VIBuffer_Instancing.h"
 
-CVIBuffer_Instancing::CVIBuffer_Instancing(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
-	: CVIBuffer { pDevice, pContext }
+CVIBuffer_Instancing::CVIBuffer_Instancing(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CVIBuffer{ pDevice, pContext }
 {
 }
 
-CVIBuffer_Instancing::CVIBuffer_Instancing(const CVIBuffer_Instancing & Prototype)
+CVIBuffer_Instancing::CVIBuffer_Instancing(const CVIBuffer_Instancing& Prototype)
 	: CVIBuffer{ Prototype }
-	, m_pVBInstance { Prototype.m_pVBInstance }
-	, m_iNumInstance { Prototype.m_iNumInstance }
-	, m_iInstanceVertexStride { Prototype.m_iInstanceVertexStride }
-	, m_iNumIndexPerInstance { Prototype.m_iNumIndexPerInstance }
-	, m_pInstanceVertices { Prototype.m_pInstanceVertices }
-	, m_pSpeeds { Prototype.m_pSpeeds }
-	, m_vPivotPos { Prototype.m_vPivotPos }
-	, m_isLoop { Prototype.m_isLoop }
+	, m_pVBInstance{ Prototype.m_pVBInstance }
+	, m_iNumInstance{ Prototype.m_iNumInstance }
+	, m_iInstanceVertexStride{ Prototype.m_iInstanceVertexStride }
+	, m_iNumIndexPerInstance{ Prototype.m_iNumIndexPerInstance }
+	, m_pInstanceVertices{ Prototype.m_pInstanceVertices }
+	, m_pSpeeds{ Prototype.m_pSpeeds }
+	, m_vPivotPos{ Prototype.m_vPivotPos }
+	, m_isLoop{ Prototype.m_isLoop }
 {
 	Safe_AddRef(m_pVBInstance);
 }
@@ -34,20 +34,20 @@ HRESULT CVIBuffer_Instancing::Initialize_Prototype(const VIBUFFER_INSTANCE_DESC*
 	{
 		m_pSpeeds[i] = Get_Random(pInitialDesc->vSpeed.x, pInitialDesc->vSpeed.y);
 	}
-	
+
 	return S_OK;
 }
 
-HRESULT CVIBuffer_Instancing::Initialize(void * pArg)
+HRESULT CVIBuffer_Instancing::Initialize(void* pArg)
 {
-	
+
 	return S_OK;
 }
 
 HRESULT CVIBuffer_Instancing::Bind_Buffers()
 {
 
-	ID3D11Buffer*		pVertexBufffers[] = {
+	ID3D11Buffer* pVertexBufffers[] = {
 		m_pVB,
 		m_pVBInstance
 	};
@@ -82,7 +82,7 @@ HRESULT CVIBuffer_Instancing::Create_InstanceBuffer()
 	ZeroMemory(&m_BufferDesc, sizeof(m_BufferDesc));
 
 	m_BufferDesc.ByteWidth = m_iNumInstance * m_iInstanceVertexStride;
-	m_BufferDesc.Usage = D3D11_USAGE_DYNAMIC; 
+	m_BufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	m_BufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	m_BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	m_BufferDesc.MiscFlags = 0;
@@ -103,7 +103,7 @@ void CVIBuffer_Instancing::Spread(_float fTimeDelta)
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
 
-	VTXINSTANCE*		pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
@@ -123,7 +123,7 @@ void CVIBuffer_Instancing::Spread(_float fTimeDelta)
 	m_pContext->Unmap(m_pVBInstance, 0);
 }
 
-void CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
+_bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 {
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
 
@@ -172,12 +172,19 @@ void CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
 	}
 
 	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
 }
 
-void CVIBuffer_Instancing::Half_Spread_2D(_float fTimeDelta)
+_bool CVIBuffer_Instancing::Half_Spread_2D(_float fTimeDelta)
 {
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
 
@@ -198,6 +205,14 @@ void CVIBuffer_Instancing::Half_Spread_2D(_float fTimeDelta)
 		// 현재 위치와 피봇 위치를 이용해 이동 방향 계산
 		float dirX = currentX - pivotX;
 		float dirY = currentY - pivotY;
+
+		// 아래로 향하는 경우 dirY를 양수로 변경하여 위로 향하도록 수정
+		if (dirY < 0.f)
+		{
+			dirX = -dirX;
+			dirY = -dirY;
+		}
+
 
 		// 벡터 정규화
 		float length = sqrt(dirX * dirX + dirY * dirY);
@@ -226,9 +241,16 @@ void CVIBuffer_Instancing::Half_Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
+		}
 	}
 
 	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
 }
 
 void CVIBuffer_Instancing::Drop(_float fTimeDelta)
@@ -237,7 +259,7 @@ void CVIBuffer_Instancing::Drop(_float fTimeDelta)
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
 
-	VTXINSTANCE*		pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
@@ -261,12 +283,12 @@ void CVIBuffer_Instancing::Drop(_float fTimeDelta)
 
 _float CVIBuffer_Instancing::Get_RandomNormalize()
 {
-	return (_float)rand() / RAND_MAX;	
+	return (_float)rand() / RAND_MAX;
 }
 
 _float CVIBuffer_Instancing::Get_Random(_float fMin, _float fMax)
 {
-	return fMin + (fMax - fMin) * Get_RandomNormalize();	
+	return fMin + (fMax - fMin) * Get_RandomNormalize();
 }
 
 void CVIBuffer_Instancing::Free()
@@ -279,8 +301,8 @@ void CVIBuffer_Instancing::Free()
 	{
 		Safe_Delete_Array(m_pInstanceVertices);
 		Safe_Delete_Array(m_pSpeeds);
-		
+
 	}
-	
+
 
 }

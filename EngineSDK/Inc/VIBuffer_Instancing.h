@@ -34,8 +34,8 @@ public:
 
 public:
 	void Spread(_float fTimeDelta);
-	void Spread_2D(_float fTimeDelta);
-	void Half_Spread_2D(_float fTimeDelta);
+	_bool Spread_2D(_float fTimeDelta);
+	_bool Half_Spread_2D(_float fTimeDelta);
 	void Drop(_float fTimeDelta);
 
 protected:

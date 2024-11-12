@@ -3333,7 +3333,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(5.f, 7.f);
-	ParticleDesc.vScale = _float2(4.f, 4.f);
+	ParticleDesc.vScale = _float2(3.f, 3.f);
 	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
 	ParticleDesc.isLoop = false;
 
