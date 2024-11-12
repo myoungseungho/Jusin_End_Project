@@ -1,0 +1,95 @@
+[Layer]
+LayerName: testtest
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 3
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: test
+ModelName: Model_Effect_cmn_BeamCorePattern
+MaskTextureName: ../Bin/Effects/Shader_Tab/testtesttest
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 3.9 4.3 0
+Scale: 0.199996 0.0999978 0.1
+Rotation: 0 0 10
+IsLoop: false
+Color: 255 255 255 0.448013
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.9 4.3 0
+Scale: 0.199996 0.0999978 0.1
+Rotation: 0 0 10
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BG
+ModelName: Model_Effect_cmn_BeamCorePattern
+MaskTextureName: ../Bin/Effects/Shader_Tab/testtestBG
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 4.3 0
+Scale: 0.15 0.15 0.15
+Rotation: 0 0 17.922
+IsLoop: false
+Color: 113.99 193.361 235.579 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 4.3 0
+Scale: 0.15 0.15 0.15
+Rotation: 0 0 17.922
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: floor
+ModelName: Model_Effect_acmn_pivot_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/testtestfloor
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -1.5 0.6 2.9
+Scale: 1.99977 0.999973 99.9967
+Rotation: 2.338 80.377 10.13
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.5 0.6 2.9
+Scale: 1.99977 0.999973 99.9967
+Rotation: 2.338 80.377 10.13
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
