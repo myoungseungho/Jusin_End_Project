@@ -16,8 +16,8 @@ public:
 	struct QTE_Continuous_Attack_Particle_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{};
+		_float* pfGaugeRatio{};
 	};
-
 
 private:
 	CQTE_Continuous_Attack_Particle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -38,6 +38,8 @@ private:
 
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};
+
+	_float* m_pfGaugeRatio = { nullptr };
 
 private:
 	HRESULT Ready_Components();

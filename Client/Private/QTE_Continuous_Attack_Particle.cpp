@@ -34,6 +34,7 @@ HRESULT CQTE_Continuous_Attack_Particle::Initialize(void* pArg)
 	m_fSizeY = desc->fSizeY;
 	m_fX = desc->fX;
 	m_fY = desc->fY;
+	m_pfGaugeRatio = desc->pfGaugeRatio;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
@@ -55,6 +56,16 @@ void CQTE_Continuous_Attack_Particle::Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
+
+	// 게이지의 왼쪽 끝 좌표 계산
+	_float gaugeLeftX = m_fX - (300.f * 0.5f); // 300.f는 게이지의 fSizeX
+
+	// 파티클의 X 좌표 계산
+	_float particleX = gaugeLeftX + (300.f * (*m_pfGaugeRatio));
+
+	// 파티클의 위치 업데이트
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
+		XMVectorSet(particleX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 
 	_bool isComplete = m_pVIBufferCom->Random_Wiggle_Spread_2D(fTimeDelta);
 	//_bool isComplete = m_pVIBufferCom->Spiral_Spread_2D(fTimeDelta);
@@ -100,7 +111,7 @@ HRESULT CQTE_Continuous_Attack_Particle::Ready_Components()
 		return E_FAIL;
 
 	/* Com_VIBuffer */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Continuous_Spread_QTE"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 

@@ -34,7 +34,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void	Process_Command();
-
+	_float* const Get_GaugeProcess() { return &m_fGaugeProgress; };
 public:
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{};
 	_float4x4				m_ViewMatrix{}, m_ProjMatrix{};

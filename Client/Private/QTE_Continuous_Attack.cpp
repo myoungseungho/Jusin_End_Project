@@ -162,6 +162,19 @@ void CQTE_Continuous_Attack::Start_QTE()
 
 	m_pContinuous_Gauge = static_cast<CQTE_Continuous_Attack_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Gauge"), &Gauge_Desc));
 	m_pContinuous_Gauge->SetActive(true);
+
+
+	//파티클 생성
+	CQTE_Continuous_Attack_Particle::QTE_Continuous_Attack_Particle_DESC Particle_Desc{};
+
+	Particle_Desc.fX = 960.f;
+	Particle_Desc.fY = 810.f;
+	Particle_Desc.fSizeX = 50.f;
+	Particle_Desc.fSizeY = 50.f;
+	//객체 게이지바 끝에 있어야 하니까
+	Particle_Desc.pfGaugeRatio = m_pContinuous_Gauge->Get_GaugeProcess();
+	//파티클 객체 생성
+	m_UIParticles.push_back(static_cast<CQTE_Continuous_Attack_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Particle"), &Particle_Desc)));
 }
 
 void CQTE_Continuous_Attack::End_QTE()
@@ -260,22 +273,12 @@ void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
 		// 내려가는 애니메이션 진행
 		_float fProgress = m_fCurrentTime / m_fMoveDownTime;
 
+		// 내려가기 완료, 올라가기 시작
 		if (fProgress >= 1.0f)
 		{
-			// 내려가기 완료, 올라가기 시작
 			fProgress = 1.0f;
 			m_bIsMovingDown = false;
 			m_fCurrentTime = 0.0f;
-
-			//파티클 생성
-			CQTE_Continuous_Attack_Particle::QTE_Continuous_Attack_Particle_DESC Desc{};
-
-			Desc.fX = m_fX;
-			Desc.fY = 800.f;
-			Desc.fSizeX = 50.f;
-			Desc.fSizeY = 50.f;
-			//파티클 객체 생성
-			m_UIParticles.push_back(static_cast<CQTE_Continuous_Attack_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Particle"), &Desc)));
 		}
 
 		// 이징 함수 적용 (Ease-In-Out)

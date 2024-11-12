@@ -3326,13 +3326,13 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 	//연타 파티클
 	ParticleDesc.iNumInstance = 200;
-	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	ParticleDesc.vRange = _float3(0.5f, 0.5f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(3.f, 5.f);
+	ParticleDesc.vSpeed = _float2(0.5f, 0.7f);
 	ParticleDesc.vScale = _float2(2.f, 2.f);
-	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
-	ParticleDesc.isLoop = false;
+	ParticleDesc.vLifeTime = _float2(0.05f, 0.1f);
+	ParticleDesc.isLoop = true;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Continuous_Spread_QTE"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
