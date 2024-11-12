@@ -76,6 +76,15 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 			m_bIsBackSideEffect = true;
 		}
 
+		if (pEffectDesc->vGlowColor.y == 0.f)
+		{
+			m_bIsShaderLoop = false;
+		}
+		else if (pEffectDesc->vGlowColor.y == 1.f)
+		{
+			m_bIsShaderLoop = true;
+		}
+
 		if (m_iGameObjectData <= -2)
 		{
 			/* 글로우 강도 */

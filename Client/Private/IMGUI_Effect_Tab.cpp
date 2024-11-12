@@ -252,11 +252,20 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
 
         if (pEffect->m_bIsBackSideEffect)
         {
-            effectData.vGlowColor = { 1.f, 0.f, 0.f, 1.f };
+            effectData.vGlowColor.x = 1.f;
         }
         else
         {
-            effectData.vGlowColor = { 0.f, 0.f, 0.f, 1.f };
+            effectData.vGlowColor.x = 0.f;
+        }
+
+        if (pEffect->m_bIsShaderLoop)
+        {
+            effectData.vGlowColor.y = 1.f;
+        }
+        else
+        {
+            effectData.vGlowColor.y = 0.f;
         }
 
         if (effectData.uniqueIndex <= -2) //ÇÁ¸®
@@ -843,6 +852,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
             std::vector<bool> effectChecks(effectNames.size(), false);
             std::vector<bool> effectBacksideChecks(effectNames.size(), false);
+            std::vector<bool> effectShaderLoopChecks(effectNames.size(), false);
 
             for (int item = 0; item < effectNames.size(); item++)
             {
@@ -851,6 +861,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 {
                     effectChecks[item] = pEffect->m_bIsLoop;
                     effectBacksideChecks[item] = pEffect->m_bIsBackSideEffect;
+                    effectShaderLoopChecks[item] = pEffect->m_bIsShaderLoop;
                 }
             }
 
@@ -865,6 +876,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
                 bool isChecked = effectChecks[item];
                 bool isBackSide = effectBacksideChecks[item];
+                bool isShaderLoop = effectShaderLoopChecks[item];
 
                 if (ImGui::Button("Change Color"))
                 {
@@ -892,6 +904,18 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                         pEffect->m_bIsBackSideEffect = isBackSide;
                     }
                     effectBacksideChecks[item] = isBackSide;
+                }
+
+                ImGui::SameLine();
+
+                if (ImGui::Checkbox("##ShaderLoopEffect", &isShaderLoop))
+                {
+                    CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
+                    if (pEffect)
+                    {
+                        pEffect->m_bIsShaderLoop = isShaderLoop;
+                    }
+                    effectShaderLoopChecks[item] = isShaderLoop;
                 }
 
                 ImGui::PopStyleColor(2);
