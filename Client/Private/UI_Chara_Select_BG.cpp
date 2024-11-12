@@ -53,6 +53,10 @@ void CUI_Chara_Select_BG::Camera_Update(_float fTimeDelta)
 
 void CUI_Chara_Select_BG::Update(_float fTimeDelta)
 {
+	m_fMarkTimer += fTimeDelta* 0.025f;
+	if (m_fMarkTimer >= 1.f)
+		m_fMarkTimer = 0.f;
+
 }
 
 void CUI_Chara_Select_BG::Late_Update(_float fTimeDelta)
@@ -65,7 +69,7 @@ HRESULT CUI_Chara_Select_BG::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(24)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -88,6 +92,18 @@ HRESULT CUI_Chara_Select_BG::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_BG"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
+
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectLineFrame"),
+		TEXT("Com_BGTexture"), reinterpret_cast<CComponent**>(&m_pBGTexture))))
+		return E_FAIL;
+
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectDustEffect"),
+		TEXT("Com_DustTexture"), reinterpret_cast<CComponent**>(&m_pDustTexutre))))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -102,8 +118,20 @@ HRESULT CUI_Chara_Select_BG::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pBGTexture->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_BGTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pDustTexutre->Bind_ShaderResource(m_pShaderCom, "g_MaskTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMarkTimer, sizeof(_float))))
+		return E_FAIL;
+
+	
+
 
 	return S_OK;
 }
@@ -136,5 +164,8 @@ CGameObject* CUI_Chara_Select_BG::Clone(void* pArg)
 
 void CUI_Chara_Select_BG::Free()
 {
+	Safe_Release(m_pBGTexture);
+	Safe_Release(m_pDustTexutre);
+
 	__super::Free();
 }

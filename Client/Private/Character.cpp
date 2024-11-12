@@ -2300,7 +2300,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		m_bAwayUpGravity = true;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		//Set_ForcedGravityTime_LittleUp();
-
+		if (Get_fHeight() == 0)
+		{
+			Add_Move({ 0.f,0.3f });
+		}
 		Set_ForcveGravityTime(0.f);
 
 	}
@@ -4197,8 +4200,11 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 	
 	//static XMFLOAT4X4 s = Make_BoneMatrix(BoneName);
 
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
 
+
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName,m_pModelCom->Get_BoneMatrixPtr(BoneName));
+	
 }
 
 

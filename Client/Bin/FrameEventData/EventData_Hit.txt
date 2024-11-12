@@ -682,17 +682,20 @@ PLAY_HIT,HTN231_body,55,ObjectMove,0.05,0,0,0
 PLAY_HIT,HTN232_body,0.000000,AnimSpeedChange,0.005000,160
 
 //,236특때문에 속도60은 AttackEvent로 처리함
-//,PLAY_HIT,HTN232_body,10.747000,AnimSpeedChange,0.005000,60
+//,PLAY_HIT,HTN232_body,10.747000,AnimSpeedChange,0.005000,90
+PLAY_HIT,HTN232_body,10,AttackEvent,0
 
 PLAY_HIT,HTN232_body,20,AttackEvent,1
 PLAY_HIT,HTN232_body,40,AnimSpeedChange,0.005000,100
 PLAY_HIT,HTN232_body,41,NextAnimationCheck,3333
-PLAY_HIT,HTN232_body,45,PositionChange,79
+
+//,이거 뭔 코드임?
+//,PLAY_HIT,HTN232_body,45,PositionChange,79
 
 //,PLAY_HIT,HTN232_body,50,NextAnimationCheck,3333
 
 //,64에서 종료니까 63에서 236Special=false
-PLAY_HIT,HTN232_body,63,AttackEvent,3
+PLAY_HIT,HTN232_body,62,AttackEvent,3
 
 
 
@@ -773,6 +776,11 @@ PLAY_HIT,HTN265_body,5.001,AttackEvent,0
 PLAY_HIT,HTN265_body,15,AnimSpeedChange,0.008000,50
 PLAY_HIT,HTN265_body,35,AttackEvent,1
 
+//,반격실패시에는 49.9로 이동 후 속도변경, 60에서원래자세로 복귀
+PLAY_HIT,HTN265_body,50,AnimSpeedChange,0.018000,62.625999
+PLAY_HIT,HTN265_body,60,AttackEvent,2
+
+//,PLAY_HIT,HTN265_body,60,SetAnimation,0
 
 //,236 포즈.  강버전 이펙트 어쩌지? 그냥 특수버튼으로 바꾸자
 
@@ -842,7 +850,12 @@ PLAY_HIT,HTN407_body,0,AnimSpeedChange,0.008000,61
 //,뭔가 처리를 하자. 누르고있는동안 100~118루프?   끝은 119임
 PLAY_HIT,HTN407_body,20,AttackEvent,0
 
+//AttackEvent400은 UpdatePose에서 호출함.
 
+PLAY_HIT,HTN407_body,21	,AttackEvent,1
+PLAY_HIT,HTN407_body,65,AttackEvent,2
+PLAY_HIT,HTN407_body,95,SetAnimation,0
+	
 
 
 

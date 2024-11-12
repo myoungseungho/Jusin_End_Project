@@ -45,7 +45,7 @@ public:
 
 	void Update_CombinedTransformationMatrix(const vector<CBone*>& Bones, _fmatrix PreTransformMatrix);
 	
-
+	
 	//_matrix			ChildMatrix = XMMatrixTranslation(10, 0, 0);
 	//_matrix			ParentMatrix = XMMatrixTranslation(10, 10, 10);
 

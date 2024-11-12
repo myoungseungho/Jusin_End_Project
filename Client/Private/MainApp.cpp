@@ -4,6 +4,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
+#include "UI_Manager.h"
 
 #include "..\Public\MainApp.h"
 
@@ -44,6 +45,7 @@ HRESULT CMainApp::Initialize()
 	//하드웨어의 스레드 수를 넘겨준다. (소프트웨어 스레드 수 아님)
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
+
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
@@ -174,7 +176,6 @@ void CMainApp::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
-
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
@@ -182,5 +183,6 @@ void CMainApp::Free()
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
+
 }
 

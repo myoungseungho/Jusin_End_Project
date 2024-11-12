@@ -40,6 +40,8 @@ void CBone::Update_CombinedTransformationMatrix(const vector<CBone*>& Bones, _fm
 			XMLoadFloat4x4(&m_TransformationMatrix) * XMLoadFloat4x4(&Bones[m_iParentIndex]->m_CombinedTransformationMatrix));	
 }
 
+
+
 CBone* CBone::Create(const string& name, _int parentIndex, const XMFLOAT4X4& transformationMatrix)
 {
 	CBone* pInstance = new CBone();

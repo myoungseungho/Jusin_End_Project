@@ -44,6 +44,8 @@ public:
 
 	void Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime);
 
+
+
 public:
 	HRESULT Bind_MaterialSRV(class CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex);
 	HRESULT Bind_BoneMatrices(class CShader* pShader, const _char* pConstantName, _uint iMeshIndex);

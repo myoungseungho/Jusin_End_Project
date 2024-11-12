@@ -44,7 +44,10 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 	if(m_bStartUI == FALSE)
 		m_fStartUITimer += fTimeDelta;
 
-	if (m_fStartUITimer >= 4.f && m_bStartUI == FALSE)
+	if (fTimeDelta >= 0.1f)
+		m_fStartUITimer = 0.f;
+
+	if (m_fStartUITimer >= 0.5f && m_bStartUI == FALSE)
 	{
 		//UsingCreateStartUI();
 		m_bStartUI = TRUE;
@@ -108,7 +111,8 @@ void CUI_Manager::UsingAttackDestroy(CUI_Define::PLAYER_SLOT eSlotID)
 
 void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 {
-	m_iTeam = CUIObject::POS_END;
+	m_bChange[0] = FALSE;
+	m_bChange[1] = FALSE;
 
 	if (eCurrSlotID == CUI_Define::LPLAYER1 || eCurrSlotID == CUI_Define::LPLAYER2)
 	{
@@ -119,8 +123,9 @@ void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 		m_pPawnArray[CUI_Define::LPLAYER1] = m_pPawnArray[CUI_Define::LPLAYER2];
 		m_pPawnArray[CUI_Define::LPLAYER2] = pSwapPanw;
 
-		m_iTeam = CUIObject::LEFT;
+		m_bChange[0] = TRUE;
 	}
+
 	else if (eCurrSlotID == CUI_Define::RPLAYER1 || eCurrSlotID == CUI_Define::RPLAYER2)
 	{
 		if (m_pPawnArray[CUI_Define::RPLAYER2] == nullptr)
@@ -130,7 +135,7 @@ void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 		m_pPawnArray[CUI_Define::RPLAYER1] = m_pPawnArray[CUI_Define::RPLAYER2];
 		m_pPawnArray[CUI_Define::RPLAYER2] = pSwapPanw;
 
-		m_iTeam = CUIObject::RIGHT;
+		m_bChange[1] = TRUE;
 	}
 }
 

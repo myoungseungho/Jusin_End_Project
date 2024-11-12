@@ -48,7 +48,7 @@ void CUI_HpPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 100.f, 0.8f, fTimeDelta);
+	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 500.f, 0.8f, fTimeDelta);
 
 }
 

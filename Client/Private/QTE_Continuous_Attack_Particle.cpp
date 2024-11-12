@@ -67,7 +67,7 @@ void CQTE_Continuous_Attack_Particle::Update(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,
 		XMVectorSet(particleX - g_iWinSizeX * 0.5f, -m_fY + g_iWinSizeY * 0.5f, 0.f, 1.f));
 
-	_bool isComplete = m_pVIBufferCom->Random_Wiggle_Spread_2D(fTimeDelta);
+	_bool isComplete = m_pVIBufferCom->Random_Wiggle_Half_Spread_2D(fTimeDelta);
 
 	if (isComplete)
 		SetActive(false);

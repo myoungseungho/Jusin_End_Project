@@ -35,11 +35,13 @@ public:
 public:
 	void Spread(_float fTimeDelta);
 	_bool Spread_2D(_float fTimeDelta);
-	_bool Half_Spread_2D(_float fTimeDelta);
+	_bool Half_Spread_X_2D(_float fTimeDelta);
+	_bool Half_Spread_Y_2D(_float fTimeDelta);
 	_bool Spiral_Spread_2D(_float fTimeDelta);
 	_bool Circular_Spread_2D(_float fTimeDelta);
 	_bool Elliptical_Spread_2D(_float fTimeDelta);
 	_bool Random_Wiggle_Spread_2D(_float fTimeDelta);
+	_bool Random_Wiggle_Half_Spread_2D(_float fTimeDelta);
 	void Drop(_float fTimeDelta);
 
 protected:
