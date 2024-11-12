@@ -150,6 +150,16 @@ CEffect_Layer* CEffect_Manager::Copy_Layer_AndGet(const wstring& strEffectLayerT
 	return m_UsingEffect.back();
 }
 
+CEffect_Layer* CEffect_Manager::Copy_Layer_OverTheHandle(const wstring& strEffectLayerTag, const _float4x4* pArg)
+{
+	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
+
+	if (pLayer == nullptr)
+		return nullptr;
+
+	return pLayer->Clone(pArg, true);
+}
+
 HRESULT CEffect_Manager::Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect)
 {
 	if (!pSavedEffect) 

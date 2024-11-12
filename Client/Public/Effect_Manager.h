@@ -27,6 +27,7 @@ public:
 public:
 	HRESULT Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg = nullptr);
 	class CEffect_Layer* Copy_Layer_AndGet(const wstring& strEffectLayerTag, const _float4x4* pArg = nullptr);
+	class CEffect_Layer* Copy_Layer_OverTheHandle(const wstring& strEffectLayerTag, const _float4x4* pArg = nullptr);
 
 	HRESULT Set_Saved_Effects(vector<EFFECT_LAYER_DATA>* pSavedEffect);
 	class CEffect_Layer* Find_Effect_Layer(const wstring& strEffectLayerTag);
