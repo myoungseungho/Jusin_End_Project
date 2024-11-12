@@ -394,7 +394,6 @@ HRESULT CLoader::Loading_For_Lobby()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
 		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -3605,79 +3604,6 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPARTICLE_POINT::Elements, VTXPARTICLE_POINT::iNumElements))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Story_Mode_Building"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Story_Mode_Building.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Arcade_Mode_Building"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Arcade_Mode_Building.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Parasol"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Parasol.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.05f, 0.05f, 0.05f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Sky_Sea_Of_Cloud.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Goku.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-
-	//게임오브젝트
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
-		CLobby_Center_Map::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Battle_Building"),
-		CLobby_Battle_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Local_Battle_Building"),
-		CLocal_Battle_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Story_Mode_Building"),
-		CLobby_Story_Mode_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Arcade_Building"),
-		CLobby_Arcade_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Parasol"),
-		CLobby_Parasol::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku"),
-		CLobby_Goku::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky"),
-		CLobby_Sky::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"),
-		CLobby_Sky_Of_Sea::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
-		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

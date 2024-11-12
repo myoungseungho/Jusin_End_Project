@@ -358,11 +358,18 @@ CGameObject * CSpaceMeteoBreak::Clone(void * pArg)
 
 void CSpaceMeteoBreak::Free()
 {
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pEffectTransform);
+
 	Safe_Release(m_pTextureCom_Diffuse);
 	for (size_t i = 0; i < 11; i++)
 		Safe_Release(m_pFragmentModelCom[i]);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+
+	Safe_Release(m_pEffectLayer);
+
 
 	__super::Free();
 }

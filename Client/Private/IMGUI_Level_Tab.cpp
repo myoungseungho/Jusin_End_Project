@@ -24,7 +24,10 @@ HRESULT CIMGUI_Level_Tab::IMGUI_ShowLevels()
 {
 	// 가정: 레벨 이름과 ID를 가진 배열 또는 리스트
 	vector<pair<string, LEVELID>> levels = {
-		{"GamePlay", LEVEL_GAMEPLAY},
+			{"Logo", LEVEL_LOGO},
+			{"Lobby", LEVEL_LOBBY},
+			{"Character", LEVEL_CHARACTER},
+			{"GamePlay", LEVEL_GAMEPLAY},
 	};
 
 	for (auto& level : levels) {
