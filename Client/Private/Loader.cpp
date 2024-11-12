@@ -111,6 +111,27 @@
 #include "UI_Chara_Select_BG.h"
 #include "UI_CharaSelectIcon.h"
 #include "UI_SelectArrow.h"
+#include "UI_CharaSelectImage.h"
+#include "UI_ChoiceIcon.h"
+#include "UI_SelectLine.h"
+#include "UI_CharaSelectFont.h"
+#include "UI_CharaSelectFude.h"
+#include "UI_CharaSelectMark.h"
+#include "UI_CharaSelectModel.h"
+#include "UI_CharaSelectLight.h"
+#include "UI_CharaSelectCircle.h"
+#include "UI_VS_BG.h"
+#include "UI_VS_Mark.h"
+#include "UI_VS_CharaPanel.h"
+#include "UI_VS_StaticLight.h"
+#include "UI_VS_DynamicLight.h"
+#include "UI_VS_Bar.h"
+#include "UI_VS_BoltEff.h"
+#include "UI_VS_MarkEff.h"
+#include "UI_VS_Ball.h"
+#include "UI_VS_TeamPanel.h"
+
+#include "CharaSelectCamera.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -200,6 +221,12 @@ HRESULT CLoader::Loading()
 	case LEVEL_CHARACTER:
 		hr = Loading_For_CharaSelect();
 		break;
+
+	case LEVEL_VS:
+		hr = Loading_For_VS();
+		break;
+
+
 	}
 
 	if (FAILED(hr))
@@ -397,11 +424,152 @@ HRESULT CLoader::Loading_For_Lobby()
 	return S_OK;
 }
 
+HRESULT CLoader::Loading_For_VS()
+{
+	/* For.Prototype_Component_Texture_UI_VS_BG */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/BackGround.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Color */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Color"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg_00.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Line */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Line"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg_07.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_Mark */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_Mark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/LOC/vs_object_%d.png"),3))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_CharaPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_CharaPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_object_02b.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_CharaPanelPlate */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_CharaPanelPlate"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_plate_00.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Chara_Image//Face_A/Chara_Icon/CharaIcon%d.png"), 4))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_StaticLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_StaticLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_effect_00.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_DynamicLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_DynamicLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_effect_01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Bar */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bar"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg%d.png"),2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle0 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle0"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle0.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle1 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle1"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle1.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle2 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle2"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle2.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_BG_Circle3 */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle3"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle3.png")))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_UI_VS_BG_Bolt */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bolt"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_Bolt%d.png"),7))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_BG_DragonBall */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_DragonBall"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Ball/Ball%d.png"), 7))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_VS_TeamPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_TeamPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/VS_Panel.png")))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_BG */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_BG"),
+		CUI_VS_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Mark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Mark"),
+		CUI_VS_Mark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_CharaPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_CharaPanel"),
+		CUI_VS_CharaPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_StaticLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_StaticLight"),
+		CUI_VS_StaticLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_DynamicLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_DynamicLight"),
+		CUI_VS_DynamicLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Bar*/
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Bar"),
+		CUI_VS_Bar::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Bolt */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Bolt"),
+		CUI_VS_BoltEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_MarkEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_MarkEff"),
+		CUI_VS_MarkEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_Ball */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Ball"),
+		CUI_VS_Ball::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_TeamPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_TeamPanel"),
+		CUI_VS_TeamPanel::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
 HRESULT CLoader::Loading_For_CharaSelect()
 {
 	/* For.Prototype_Component_Texture_CharaSelect_BG */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_BG"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Cmn_CharaSelect/tex/SelectBG.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Main_parts01.png")))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_CharaSelect_Icon */
@@ -409,10 +577,72 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CharacterImage/CS_CIcon%d.png"), 4))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_CharaSelect_Icon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharaSelect_Image"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CharacterImage/CS_CharacterImage_%d.png"), 4))))
+		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_CharacterSelectArrow */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterSelectArrow"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_PlayerCursor_%d.png"), 6))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_CharacterChoiceMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterChoiceMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_PlayerCursor_Choice_%d.png"), 6))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_CharacterBGMask */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterBGMask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_CharacterBG_Mask%d.png"),2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_CharacterSelectLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterSelectLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_ChoiceBG_01.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_Title.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectFude */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectFude"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_BigFude%d.png"),2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectLineFrame*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectLineFrame"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_LineFrame.png")))))
+		return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectDustEffect*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectDustEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_bg_08.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectMark*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Bu.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Eff_Flare0%d.png"),2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharacterSelectCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectCircle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_effect_00.png")))))
+		return E_FAIL;
+
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+		PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharaSelectBG */
@@ -430,6 +660,51 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CUI_SelectArrow::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* Prototype_GameObject_CharaSelectImage */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectImage"),
+		CUI_CharaSelectImage::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharaChoiceMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaChoiceMark"),
+		CUI_ChoiceIcon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSelectLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectLine"),
+		CUI_SelectLine::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectFont"),
+		CUI_CharaSelectFont::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectFude */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectFude"),
+		CUI_CharaSelectFude::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	/* Prototype_GameObject_CharacterSlectMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectMark"),
+		CUI_CharaSelectMark::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectModel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCamera"),
+		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSelectLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectLight"),
+		CUI_CharaSelectLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSelectCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCircle"),
+		CUI_CharaSelectCircle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -527,7 +802,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/TimerNumber/TimerNum%d.png"), 11))))
 		return E_FAIL;
 
-
 	/* For.Prototype_Component_Texture_UI_Time_Panel */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_TimerPanel"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/cp_gauge_Timebase.png")))))
@@ -582,7 +856,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_eff.png")))))
 		return E_FAIL;
 
-
+	
 	//캐릭터 아이콘
 
 	/* For.Prototype_Component_Texture_UI_CharaIconPanel */

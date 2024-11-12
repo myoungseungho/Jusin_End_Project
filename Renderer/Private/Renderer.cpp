@@ -232,11 +232,13 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
 		return E_FAIL;
+
+	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_UI(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow_UI(fTimeDelta)))
-		return E_FAIL;
-	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_AllGlow_Effect(fTimeDelta)))
 		return E_FAIL;
