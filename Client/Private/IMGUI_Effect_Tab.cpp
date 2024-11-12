@@ -78,10 +78,10 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     ImGui::SameLine();
 
-    if (ImGui::Button("All Layer Save"))
-    {
-        Save_All_Effects_File();
-    }
+    //if (ImGui::Button("All Layer Save"))
+    //{
+    //    Save_All_Effects_File();
+    //}
     ImGui::Separator();
     ImGui::Separator();
 
