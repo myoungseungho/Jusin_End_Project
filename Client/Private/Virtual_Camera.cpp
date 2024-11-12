@@ -70,6 +70,9 @@ void CVirtual_Camera::Camera_Update(_float fTimeDelta)
 	case CAMERA_NORMAL_MODE:
 		Default_Camera(fTimeDelta);
 		break;
+	case CAMERA_MAP_MODE:
+		Map_Camera(fTimeDelta);
+		break;
 	case CAMERA_CINEMATIC_MODE:
 		if (m_currentPlayMode == Playing)
 			Play(fTimeDelta);
@@ -340,7 +343,6 @@ void CVirtual_Camera::Pause()
 		m_currentPlayMode = CAMERA_PLAY_MODE::Paused;
 }
 
-
 void CVirtual_Camera::Stop()
 {
 	m_currentMode = m_bIsImguiPlay ? CAMERA_FREE_MODE : CAMERA_NORMAL_MODE;
@@ -518,6 +520,11 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 
 
 }
+
+void CVirtual_Camera::Map_Camera(_float fTimeDelta)
+{
+}
+
 
 _float CVirtual_Camera::ComputeDistanceX(_gvector pos1, _gvector pos2)
 {
@@ -918,8 +925,10 @@ void CVirtual_Camera::Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode)
 {
 	if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_NORMAL)
 		m_currentMode = CAMERA_NORMAL_MODE;
-	else
+	else if(cameraMode == CMain_Camera::VIRTUAL_CAMERA_NORMAL)
 		m_currentMode = CAMERA_FREE_MODE;
+	else if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_MAP)
+		m_currentMode = CAMERA_MAP_MODE;
 }
 
 

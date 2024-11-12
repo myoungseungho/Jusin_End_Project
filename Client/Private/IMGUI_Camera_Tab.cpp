@@ -20,6 +20,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	// 모델 이름 배열 초기화
 	MODEL_NAMES[CAMERA_MODELID_NORMAL] = "Normal";
 	MODEL_NAMES[CAMERA_MODELID_FREE] = "Free";
+	MODEL_NAMES[CAMERA_MODELID_MAP] = "Map";
 	MODEL_NAMES[CAMERA_MODELID_SON] = "Son";
 	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
@@ -37,6 +38,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	// 기본 카메라 매핑
 	m_CameraIndexMap[{CAMERA_MODELID_NORMAL, -1}] = index++;
 	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
+	m_CameraIndexMap[{CAMERA_MODELID_MAP, -1}] = index++;
 
 	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
 	for (const auto& modelSkillPair : m_ModelSkills)
@@ -218,7 +220,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	}
 
 	//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
-	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE)
+	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE || m_iSelected_Model == CAMERA_MODELID_MAP)
 		UpdateCameraSelection();
 }
 
