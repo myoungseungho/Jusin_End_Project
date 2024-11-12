@@ -244,7 +244,7 @@ HRESULT CIMGUI_Effect_Tab::Save_Selected_Effects_File()
         effectData.renderIndex = pEffect->m_iRenderIndex;
         effectData.passIndex = pEffect->m_iPassIndex;
         effectData.uniqueIndex = pEffect->m_iGameObjectData;
-        effectData.isLoop = pEffect->m_bIsLoop;
+        effectData.isLoop = pEffect->m_bIsBillboarding;
         effectData.position = pEffect->Get_Effect_Position();
         effectData.scale = pEffect->Get_Effect_Scaled();
         effectData.rotation = pEffect->Get_Effect_Rotation();
@@ -859,7 +859,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                 if (pEffect)
                 {
-                    effectChecks[item] = pEffect->m_bIsLoop;
+                    effectChecks[item] = pEffect->m_bIsBillboarding;
                     effectBacksideChecks[item] = pEffect->m_bIsBackSideEffect;
                     effectShaderLoopChecks[item] = pEffect->m_bIsShaderLoop;
                 }
@@ -889,7 +889,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     CEffect* pEffect = m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, effectNames[item]);
                     if (pEffect)
                     {
-                        pEffect->m_bIsLoop = isChecked;
+                        pEffect->m_bIsBillboarding = isChecked;
                     }
                     effectChecks[item] = isChecked;
                 }

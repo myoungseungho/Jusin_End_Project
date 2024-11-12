@@ -1,8 +1,8 @@
 [Layer]
 LayerName: EnergieSDO-01
-Duration: 1
-TickPerSecond: 4
-KeyFramesCount: 59
+Duration: 3
+TickPerSecond: 1.5
+KeyFramesCount: 179
 NumEffec: 16
 Position: 0 0 0
 Scale: 1 1 1
@@ -23,10 +23,10 @@ Scale: 0.03 0.03 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 30
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -37,15 +37,6 @@ CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 1 0
-Scale: 0.03 0.03 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
 [Effect]
 EffectName: EnergieSDO-01_02
 ModelName: Model_Effect_acmn_povot_plane00
@@ -55,15 +46,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 -0.2 0
+Position: 0 0.8 0
 Scale: 0.06 0.06 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 92.0364 255 0.845365
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -71,15 +62,6 @@ Position: 0 0.8 0
 Scale: 0.06 0.06 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
-IsNotPlaying: true
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 0.8 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
 
@@ -97,10 +79,10 @@ Scale: 0.06 0.06 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 186.606 255 0.645364
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -111,15 +93,6 @@ CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 0.8 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
 [Effect]
 EffectName: EnergieSDO-01_04
 ModelName: Model_Effect_acmn_povot_plane00
@@ -129,15 +102,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.05 0
-Scale: 0.2 0.2 1
+Position: 0 -3.3 0
+Scale: 0.75 0.75 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 0.592716
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -157,15 +130,6 @@ CurTime: 0.233333
 Duration: 1
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 -3.3 0
-Scale: 0.75 0.75 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
 [Effect]
 EffectName: EnergieSDO-01_05
 ModelName: Model_Effect_acmn_povot_plane00
@@ -175,15 +139,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 0.25 0
-Scale: 0.15 0.15 1
+Position: 0 -1.95 0
+Scale: 0.5 0.5 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 36.3079 142.699 217.003 0.691391
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -203,15 +167,6 @@ CurTime: 0.233333
 Duration: 1
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 -1.95 0
-Scale: 0.5 0.5 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
 [Effect]
 EffectName: EnergieSDO-01_06
 ModelName: Model_Effect_acmn_povot_plane00
@@ -221,15 +176,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -0.1 1.3 0
-Scale: 0.05 0.3 1
+Position: -0.3 0.9 0
+Scale: 0.03 0.8 1
 Rotation: 0 0 24.935
 IsLoop: true
 Color: 120 200 250 0.6
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 4
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -257,15 +212,6 @@ Rotation: 0 0 24.935
 CurTime: 0.566667
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: -0.3 0.9 0
-Scale: 0.03 0.8 1
-Rotation: 0 0 24.935
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: EnergieSDO-01_07
@@ -276,15 +222,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.1 1.3 0
-Scale: 0.05 0.299999 1
+Position: 0.1 1.2 0
+Scale: 0.03 0.8 1
 Rotation: 0 0 317.143
 IsLoop: true
 Color: 120 200 250 0.6
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 4
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -313,15 +259,6 @@ CurTime: 0.566667
 Duration: 1
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.1 1.2 0
-Scale: 0.03 0.8 1
-Rotation: 0 0 317.143
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
 [Effect]
 EffectName: EnergieSDO-01_08
 ModelName: Model_Effect_acmn_povot_plane00
@@ -331,15 +268,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -0.1 1.05 0
-Scale: 0.0499851 0.299993 1
+Position: -0.6 0.45 0
+Scale: 0.0299997 0.799811 1
 Rotation: 0 0 128.571
 IsLoop: true
 Color: 120 200 250 0.6
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 4
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -368,15 +305,6 @@ CurTime: 0.566667
 Duration: 1
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 58
-Position: -0.6 0.45 0
-Scale: 0.0299999 0.799816 1
-Rotation: 0 0 128.571
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
-
 [Effect]
 EffectName: EnergieSDO-01_09
 ModelName: Model_Effect_acmn_povot_plane00
@@ -386,15 +314,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.1 1.05 0
-Scale: 0.0499941 0.299962 1
+Position: 0.1 0.55 0
+Scale: 0.03 0.8 1
 Rotation: 0 0 201.818
 IsLoop: true
 Color: 120 200 250 0.6
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 4
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -422,15 +350,6 @@ Rotation: 0 0 201.818
 CurTime: 0.566667
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.1 0.55 0
-Scale: 0.03 0.8 1
-Rotation: 0 0 201.818
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: EnergieSDO-01_10
@@ -441,15 +360,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.15 1.2 0
-Scale: 0.0499998 0.299998 1
+Position: 0.75 0.5 0
+Scale: 0.03 0.8 1
 Rotation: 0 0 250.13
 IsLoop: true
 Color: 120 200 250 0.6
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 4
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -477,15 +396,6 @@ Rotation: 0 0 250.13
 CurTime: 0.566667
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.75 0.5 0
-Scale: 0.03 0.8 1
-Rotation: 0 0 250.13
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: EnergieSDO-01_11
@@ -501,7 +411,7 @@ Scale: 0.1 0.1 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 53.1954 157.897 232.202 30
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: -4
 DerredPassIndex: 0
 NumKeyFrame: 1
@@ -529,7 +439,7 @@ Scale: 0.08 0.08 1
 Rotation: 0 0 32.727
 IsLoop: true
 Color: 0 0 0 30
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1
@@ -552,15 +462,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 0.6 0
-Scale: 0.1 0.1 1
+Position: 0 -0.3 0
+Scale: 0.25 0.25 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 30
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -579,15 +489,6 @@ Rotation: 0 0 0
 CurTime: 0.233333
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 -0.3 0
-Scale: 0.25 0.25 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: EnergieSDO-01_14
@@ -598,15 +499,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.867435 -0.241383 0
-Scale: 0.288277 0.288277 1
+Position: 0.9 -0.3 0
+Scale: 0.3 0.3 1
 Rotation: 0 0 30.39
 IsLoop: true
 Color: 22.798 115.679 183.228 30
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -625,15 +526,6 @@ Rotation: 0 0 30.39
 CurTime: 0.233333
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.9 -0.3 0
-Scale: 0.3 0.3 1
-Rotation: 0 0 30.39
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: EnergieSDO-01_15
@@ -644,15 +536,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 0.0390781 0
-Scale: 0.193487 0.193487 1
+Position: 0 1.49012e-08 0
+Scale: 0.2 0.2 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 30
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: -4
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -671,15 +563,6 @@ Rotation: 0 0 0
 CurTime: 0.233333
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0 1.49012e-08 0
-Scale: 0.2 0.2 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: EnergieSDO-01_16
@@ -690,15 +573,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.480461 -0.154409 0
-Scale: 0.241533 0.241533 1
+Position: 0.5 -0.2 0
+Scale: 0.25 0.25 1
 Rotation: 0 0 16.364
 IsLoop: true
 Color: 0 178.162 255 1.58874
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -717,13 +600,4 @@ Rotation: 0 0 16.364
 CurTime: 0.233333
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.5 -0.2 0
-Scale: 0.25 0.25 1
-Rotation: 0 0 16.364
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
