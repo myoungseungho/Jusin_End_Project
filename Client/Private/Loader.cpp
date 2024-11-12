@@ -115,6 +115,7 @@
 #include "Character.h"
 #include "Play_Goku.h"
 #include "Play_21.h"
+#include "Play_Hit.h"
 #include "AttackObject.h"
 #include "AttackObject_Chase.h"
 #include "AttackObject_Grab.h"
@@ -124,8 +125,21 @@
 #include "AttackObject_Reflect.h"
 
 #include "BoneEffectObject.h"
-#include "QTE_UI_Icon.h"
+#include "QTE_Same_Grab_UI_Icon.h"
 #include "QTE_Same_Grab.h"
+#include "QTE_UI_Gauge.h"
+#include "QTE_Hit.h"
+#include "QTE_Hit_UI_Icon.h"
+#include "QTE_Hit_Situation.h"
+#include "QTE_Hit_UI_MovingRing_Icon.h"
+#include "QTE_Hit_UI_Result.h"
+#include "QTE_Continuous_Attack.h"
+#include "QTE_Continuous_Attack_Space.h"
+#include "QTE_Continuous_Attack_Gauge.h"
+#include "QTE_Hit_UI_Particle.h"
+#include "QTE_Continuous_Attack_Effect.h"
+#include "QTE_Same_Grab_UI_Particle.h"
+#include "QTE_Continuous_Attack_Particle.h"
 
 //Lobby
 #include "Lobby_Center_Map.h"
@@ -138,6 +152,7 @@
 #include "Lobby_Goku.h"
 #include "Lobby_Sky.h"
 #include "Lobby_Sky_Of_Sea.h"
+
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
 	, m_pContext{ pContext }
@@ -147,8 +162,6 @@ CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	Safe_AddRef(m_pDevice);
 	Safe_AddRef(m_pContext);
 }
-
-#pragma region 로비씬 정리하려고 잠깐 만듬
 
 HRESULT CLoader::Initialize(LEVELID eNextLevelID)
 {
@@ -291,6 +304,99 @@ HRESULT CLoader::Loading_For_Logo()
 	return S_OK;
 }
 
+HRESULT CLoader::Loading_For_Lobby()
+{
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+
+	//모델
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Center"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Center.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Battle_Building"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Battle_Building.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Local_Battle_Building"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Local_Battle_Building.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Story_Mode_Building"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Story_Mode_Building.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Arcade_Mode_Building"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Arcade_Mode_Building.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Parasol"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Parasol.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.05f, 0.05f, 0.05f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Sky_Sea_Of_Cloud.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Goku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Goku.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	//게임오브젝트
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
+		CLobby_Center_Map::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Battle_Building"),
+		CLobby_Battle_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Local_Battle_Building"),
+		CLocal_Battle_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Story_Mode_Building"),
+		CLobby_Story_Mode_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Arcade_Building"),
+		CLobby_Arcade_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Parasol"),
+		CLobby_Parasol::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku"),
+		CLobby_Goku::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky"),
+		CLobby_Sky::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"),
+		CLobby_Sky_Of_Sea::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
+		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	return S_OK;
+}
+
 HRESULT CLoader::Loading_For_CharaSelect()
 {
 	/* For.Prototype_Component_Texture_CharaSelect_BG */
@@ -341,7 +447,6 @@ HRESULT CLoader::Loading_For_GamePlayLevel()
 	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
 	return S_OK;
 }
-
 
 HRESULT CLoader::Load_UI_Resources_Logo()
 {
@@ -795,10 +900,31 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_BG_star02.dds"), 1))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Gauge"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/GameStart/Emblem2.png"), 1))))
+		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Hit_Circle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnBG/tex/CmnBG_Eff_Lens_%d.png"), 8))))
+		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Result"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/QTE_RESULT_%d.png"), 4))))
+		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Arrow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/DebugIcon.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Space"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/QTE_SPACE.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Continuous_Effect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/QTE/CC_Congratulations_Eff_02.png"), 1))))
+		return E_FAIL;
 }
+
 HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 {
 	{
@@ -811,6 +937,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base_2P.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base_2P.png"), 1))))
 		return E_FAIL;
 
 
@@ -1271,7 +1401,12 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HITOutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/HTN_ilm.png"), 1))))
+		return E_FAIL;
 }
+
 HRESULT CLoader::Load_Texture_Resources_GamePlay_2()
 {
 	{
@@ -1746,6 +1881,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 
 
+
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"),
@@ -1755,6 +1891,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base.png")))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
@@ -2111,6 +2250,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 	return S_OK;
 }
+
 HRESULT CLoader::Load_Model_Resources_GamePlay_1()
 {
 	_matrix PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -2629,6 +2769,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CPlay_21::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Hit"),
+		CPlay_Hit::Create(m_pDevice, m_pContext))))
+
+		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack"),
 		CAttackObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3041,12 +3185,64 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CUI_Opt_Sound_Title::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_UI_Icon"),
-		CQTE_UI_Icon::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Icon"),
+		CQTE_Same_Grab_UI_Icon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Same_Grab"),
 		CQTE_Same_Grab::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_UI_Gauge"),
+		CQTE_UI_Gauge::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit"),
+		CQTE_Hit::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_Icon"),
+		CQTE_Hit_UI_Icon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_Situation"),
+		CQTE_Hit_Situation::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_MovingRing_Icon"),
+		CQTE_Hit_UI_MovingRing_Icon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_Result"),
+		CQTE_Hit_UI_Result::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack"),
+		CQTE_Continuous_Attack::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space"),
+		CQTE_Continuous_Attack_Space::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Gauge"),
+		CQTE_Continuous_Attack_Gauge::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit_UI_Particle"),
+		CQTE_Hit_UI_Particle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Effect"),
+		CQTE_Continuous_Attack_Effect::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Particle"),
+		CQTE_Same_Grab_UI_Particle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Particle"),
+		CQTE_Continuous_Attack_Particle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
@@ -3362,108 +3558,56 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxShaderRect.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
-	return S_OK;
-}
+	//동시잡기 파티클
+	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
+	ParticleDesc.iNumInstance = 200;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(5.f, 7.f);
+	ParticleDesc.vScale = _float2(4.f, 4.f);
+	ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
+	ParticleDesc.isLoop = false;
 
-#pragma endregion
-
-
-HRESULT CLoader::Loading_For_Lobby()
-{
-	_matrix			PreTransformMatrix = XMMatrixIdentity();
-
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
-	//모델
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Center"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Center.bin", PreTransformMatrix))))
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Same_Grab_Spread_QTE"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Battle_Building"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Battle_Building.bin", PreTransformMatrix))))
+	//연타 파티클
+	ParticleDesc.iNumInstance = 200;
+	ParticleDesc.vRange = _float3(0.5f, 0.5f, 0.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(0.5f, 0.7f);
+	ParticleDesc.vScale = _float2(2.f, 2.f);
+	ParticleDesc.vLifeTime = _float2(0.05f, 0.1f);
+	ParticleDesc.isLoop = true;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Continuous_Spread_QTE"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Local_Battle_Building"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Local_Battle_Building.bin", PreTransformMatrix))))
+	//Hit 파티클
+	ParticleDesc.iNumInstance = 200;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(3.f, 5.f);
+	ParticleDesc.vScale = _float2(3.f, 3.f);
+	ParticleDesc.vLifeTime = _float2(0.2f, 0.3f);
+	ParticleDesc.isLoop = false;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Story_Mode_Building"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Story_Mode_Building.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Arcade_Mode_Building"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Arcade_Mode_Building.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Parasol"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Parasol.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.05f, 0.05f, 0.05f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Sky_Sea_Of_Cloud.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Goku.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-
-	//게임오브젝트
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
-		CLobby_Center_Map::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Battle_Building"),
-		CLobby_Battle_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Local_Battle_Building"),
-		CLocal_Battle_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Story_Mode_Building"),
-		CLobby_Story_Mode_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Arcade_Building"),
-		CLobby_Arcade_Building::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Parasol"),
-		CLobby_Parasol::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku"),
-		CLobby_Goku::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky"),
-		CLobby_Sky::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"),
-		CLobby_Sky_Of_Sea::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
-		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
+	/* For.Prototype_Component_Shader_VtxPosTex */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPARTICLE_POINT::Elements, VTXPARTICLE_POINT::iNumElements))))
 		return E_FAIL;
 
 	return S_OK;
 }
-
-
 
 CLoader* CLoader::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID)
 {

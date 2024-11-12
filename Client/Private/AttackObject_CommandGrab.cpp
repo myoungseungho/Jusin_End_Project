@@ -32,6 +32,8 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 
 	ATTACK_COMMANDGRAB_DESC* pDesc = static_cast<ATTACK_COMMANDGRAB_DESC*>(pArg);
 	
+	m_bGrabbedEnd = false;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -175,8 +177,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			
 
 
-			pCharacter->Set_bGrabbed(true);
-			pCharacter->Set_bGrabbedGravity(m_bGrabedGravity);
+			//pCharacter->Set_bGrabbed(true);
+			pCharacter->Set_bGrabbed(!m_bGrabbedEnd);
+
+				pCharacter->Set_bGrabbedGravity(m_bGrabedGravity);
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
 				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);

@@ -454,7 +454,7 @@ PS_OUT PS_MAIN_METEORECT(PS_IN In)
 {
     PS_OUT Out;
     float2 vTexcoord = In.vTexcoord;
-    //vTexcoord.y *= 0.5f;
+    
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
 
     return Out;
@@ -677,8 +677,8 @@ technique11		DefaultTechnique
     }
     pass MeteoRect // 13
     {
-        SetRasterizerState(RS_Cull_None);
-        SetDepthStencilState(DSS_Default, 0);
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();

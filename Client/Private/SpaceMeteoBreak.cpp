@@ -63,30 +63,51 @@ HRESULT CSpaceMeteoBreak::Initialize(void * pArg)
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
+	XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
+	m_pEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle(TEXT("testtest"), &m_Result4x4);
+	
 	return S_OK;
 }
 
 void CSpaceMeteoBreak::Camera_Update(_float fTimeDelta)
 {
-	//m_fAccTime += fTimeDelta * 5;
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-
-		for (size_t i = 0; i < 11; i++)
-			XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
-		m_iRGIndex = 0;
-		m_fBrakeSwitchTime = false;
-		m_isBrakeSwitch = false;
-		m_isFastSwitch = true;
-		m_fAccTime = 0.f;
-		m_fBrakeSwitchTime = 0.f;
-		m_fSpeed = 10.5f;
+		Start_Space_DestructiveFinish(true);
 	}
+}
+
+void CSpaceMeteoBreak::Start_Space_DestructiveFinish(_bool isRight)
+{
+	m_isRight = isRight;
+	if (isRight == false)
+	{
+		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(180.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-100.f, 30.f, 0.f, 1.f));
+	}
+
+	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	for (size_t i = 0; i < 11; i++)
+		XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
+
+	m_iRGIndex = 0;
+	m_fBrakeSwitchTime = false;
+	m_isBrakeSwitch = false;
+	m_isFastSwitch = true;
+	m_fAccTime = 0.f;
+	m_fBrakeSwitchTime = 0.f;
+	m_fSpeed = 10.5f;
+	m_isStart = true;
+	
 }
 
 void CSpaceMeteoBreak::Update(_float fTimeDelta)
 {
+	if (m_isStart == false)
+		return;
+
 	if (m_isBrakeSwitch == false)
 	{
 		m_fBrakeSwitchTime += fTimeDelta;
@@ -102,25 +123,34 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 			//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Smoke03_Stop"), &Result4x4);
 			//CEffect_Layer* pEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstU-3_01"), &Result4x4);				
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
 
 			_float4x4 Result4x4;
-			XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
-			Result4x4._11 = 1.f;
-			Result4x4._22 = 1.f;
-			Result4x4._33 = 1.f;
+			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
+			//Result4x4._11 = 1.f;
+			//Result4x4._22 = 1.f;
+			//Result4x4._33 = 1.f;
 			Result4x4._41 = 0.f;
 			Result4x4._42 = 0.f;
 			Result4x4._43 = 0.f;
-			CEffect* pEffect = *(CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4)->m_MixtureEffects.begin());
-			CEffect* paasdEffect = *(CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4)->m_MixtureEffects.begin());
+			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
 
-			XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
-			CEffect_Layer* paaEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Burst"), &Result4x4);
+			if (m_isRight == true)
+			{
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4);
+			//	CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4);
+			}
+			else
+			{
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &Result4x4);
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore_L"), &Result4x4);
+			}
+
+			//XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+			//CEffect_Layer* paaEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Burst"), &Result4x4);
 	
 			if (paEffect != nullptr)
 				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-			//if (paEffect != nullptr)
+			////if (paEffect != nullptr)
 			//	paEffect->Set_Layer_Scaled({ 30.f,30.f,30.f });
 
 			/* cmn_aura02 디스토션 할때 히트랑 이펙트 화산맵에 사용 가능할것으로 보임 */
@@ -148,10 +178,14 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 void CSpaceMeteoBreak::Late_Update(_float fTimeDelta)
 {
+	if (m_isStart == false)
+		return;
+
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
-	if (m_isBrakeSwitch == false)
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	//if (m_isBrakeSwitch == false)
+	//	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 	
 	
 }
@@ -160,62 +194,62 @@ HRESULT CSpaceMeteoBreak::Priority_Render(_float fTimeDelta)
 {
 	//m_pEffect->Priority_Render(fTimeDelta);
 	//m_pEffect->Render(fTimeDelta);
+
+	//for (auto& iter : m_pEffectLayer->m_MixtureEffects)
+	//{
+	//	iter->Priority_Render(-10.f);
+	//	iter->Render(-10.f);
+	//}
+	// 
+	/*if (m_isBrakeSwitch == false)
+	{
+		if (FAILED(m_pEffectTransform->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
+
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(13)))
+			return E_FAIL;
+
+		if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+			return E_FAIL;
+
+		if (FAILED(m_pVIBufferCom->Render()))
+			return E_FAIL;
+
+		m_iRGIndex = 0;
+	}*/
+
 	return S_OK;
 }
 
 HRESULT CSpaceMeteoBreak::Render(_float fTimeDelta)
 {
-
-	
 	if (m_isBrakeSwitch == false)
 	{
-		if (m_iRGIndex == 1)
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
+
+		_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
+		for (size_t i = 0; i < iNumMeshes; i++)
 		{
-			if (FAILED(m_pEffectTransform->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 				return E_FAIL;
 
-			if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			if (FAILED(m_pShaderCom->Begin(12)))
 				return E_FAIL;
 
-			if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
-
-			if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-				return E_FAIL;
-
-			if (FAILED(m_pShaderCom->Begin(13)))
-				return E_FAIL;
-
-			if (FAILED(m_pVIBufferCom->Bind_Buffers()))
-				return E_FAIL;
-
-			if (FAILED(m_pVIBufferCom->Render()))
-				return E_FAIL;
-
-			m_iRGIndex = 0;
 		}
-		else
-		{
-			if (FAILED(Bind_ShaderResources()))
-				return E_FAIL;
-
-			_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
-			for (size_t i = 0; i < iNumMeshes; i++)
-			{
-				if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-					return E_FAIL;
-
-				if (FAILED(m_pShaderCom->Begin(12)))
-					return E_FAIL;
-
-				if (FAILED(m_pModelCom->Render(i)))
-					return E_FAIL;
-			}
-
-			m_iRGIndex = 1;
-		}
-
 	}
 	else
 	{
@@ -342,11 +376,18 @@ CGameObject * CSpaceMeteoBreak::Clone(void * pArg)
 
 void CSpaceMeteoBreak::Free()
 {
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pEffectTransform);
+
 	Safe_Release(m_pTextureCom_Diffuse);
 	for (size_t i = 0; i < 11; i++)
 		Safe_Release(m_pFragmentModelCom[i]);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+
+	Safe_Release(m_pEffectLayer);
+
 
 	__super::Free();
 }

@@ -47,7 +47,7 @@ void CSpaceStage::Update(_float fTimeDelta)
 
 void CSpaceStage::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SPACEMAP, this);
 }
 
 HRESULT CSpaceStage::Render(_float fTimeDelta)

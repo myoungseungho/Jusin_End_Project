@@ -248,21 +248,12 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
-	if (::AllocConsole() == TRUE)
-	{
-		FILE* nfp[3];
-		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-		std::ios::sync_with_stdio();
-	}
 
 	return S_OK;
 }
 
 void CPlay_21::Player_Update(_float fTimeDelta)
 {
-
 	__super::Player_Update(fTimeDelta);
 
 
@@ -332,12 +323,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	Update_LoofAnimationCreate(fTimeDelta);
 	Update_PreviousXPosition();
 
-	//if (m_bGrabbed)
-	//{
-	//	Character_Play_Animation(fTimeDelta);
-	//	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-	//	return;
-	//}
+	
 
 	if (m_bGrabbed)
 	{
@@ -376,27 +362,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	}
 
 
-	//if (m_pGameInstance->Key_Down(DIK_F3))
-	//	m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
-
-	//합치기 전 임시 코드.  적 탐지코드임
-	//if (m_pEnemy == nullptr)
-	//{
-	//	_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-	//
-	//	for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
-	//	{
-	//		CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-	//	
-	//		if (pObject != this)
-	//		{
-	//			m_pEnemy = static_cast<CCharacter*>(pObject);
-	//		}
-	//	
-	//	}
-	//	
-	//}
-
+	
 	Update_BeReflecting(fTimeDelta);
 
 
@@ -576,7 +542,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		{
 			Stun_Shake();
 			m_fAccStunTime += fTimeDelta;
-			cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
+			//cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
 			if (m_fAccStunTime > m_fMaxStunTime)
 			{
 				m_bStun = false;
@@ -687,7 +653,6 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		else
 			DebugPositionReset();
 
-		Set_Animation(ANIME_IDLE);
 
 	}
 
@@ -708,7 +673,10 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		Set_bFinalSkillQTE(true);
 	}
 	//cout << "iHP : " << m_iHP << endl;
-
+	if (m_pGameInstance->Key_Down(DIK_INSERT))
+	{
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(100, m_iPlayerTeam);
+	}
 
 	Check_Ground();
 }
@@ -722,185 +690,6 @@ void CPlay_21::Update(_float fTimeDelta)
 {
 
 	__super::Player_Update(fTimeDelta);
-
-	/*
-
-
-
-	InputedCommandUpdate(fTimeDelta);
-	InputCommand();
-
-
-
-	CheckAllCommands();
-
-	if (m_bAnimationLock == false)
-	{
-
-		Character_Play_Animation(fTimeDelta);
-
-		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
-		if (m_bMotionPlaying == false)
-		{
-			if(m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
-				AnimeEndNextMoveCheck();
-		}
-
-
-	}
-	else
-	{
-		m_fAccAnimationLock += fTimeDelta;
-		if (m_fAccAnimationLock > m_fMaxAnimationLock)
-		{
-			m_fAccAnimationLock = 0.f;
-			m_bAnimationLock = false;
-		}
-	}
-
-
-
-	Gravity(fTimeDelta);
-
-
-	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
-	{
-		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
-		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
-		{
-			Reset_AttackCount();
-
-			_short MoveKey = 0;
-			if (m_pGameInstance->Key_Pressing(DIK_W))
-			{
-				m_pTransformCom->Add_Move({ 0,3,0 });
-				Set_Animation(ANIME_JUMP_UP);
-			}
-
-			else if (m_pGameInstance->Key_Pressing(DIK_S))
-			{
-				//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
-				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
-				{
-					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
-				}
-
-			}
-
-			else
-			{
-				if (m_pGameInstance->Key_Pressing(DIK_A))
-				{
-					MoveKey -= m_iLookDirection;
-				}
-
-				else if (m_pGameInstance->Key_Pressing(DIK_D))
-				{
-					MoveKey += m_iLookDirection;
-				}
-
-
-				if (MoveKey == -1)
-				{
-
-					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
-					//{
-					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
-					//}
-					//else
-						m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-
-
-					m_iNextAnimation.first = ANIME_IDLE;
-					m_iNextAnimation.second = 100.f;
-
-				}
-				else if (MoveKey == 1)
-				{
-					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
-					{
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH, true);
-					}
-					else
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-
-					m_iNextAnimation.first = ANIME_IDLE;
-					m_iNextAnimation.second = 100.f;
-				}
-				else
-				{
-					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
-					{
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH_END, false);
-					}
-					else
-						m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-
-					m_iNextAnimation.first = ANIME_IDLE;
-					m_iNextAnimation.second = 100.f;
-				}
-			}
-
-
-			//앉기 추가 전에는 이거만 있었음
-			//if (m_pGameInstance->Key_Pressing(DIK_A))
-			//{
-			//	MoveKey -= m_iLookDirection;
-			//}
-			//
-			//else if (m_pGameInstance->Key_Pressing(DIK_D))
-			//{
-			//	MoveKey += m_iLookDirection;
-			//}
-			//
-			//
-			//if (MoveKey == -1)
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//
-			//}
-			//else if (MoveKey == 1)
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//}
-			//else
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//}
-
-
-		}
-	}
-
-
-	if (m_pGameInstance->Key_Down(DIK_8))
-	{
-		ShowInputBuffer();
-	}
-	if (m_pGameInstance->Key_Down(DIK_1))
-	{
-		DebugPositionReset();
-	}
-
-	if (m_pGameInstance->Key_Down(DIK_2))
-	{
-		FlipDirection();
-	}
-	if (m_pGameInstance->Key_Down(DIK_3))
-	{
-		m_pModelCom->SetUp_Animation(0,true);
-	}
-
-
-	Check_Ground();
-	*/
-
 
 
 }
@@ -2041,6 +1830,40 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		if (iAttackEvent == 1) //공격
 		{
+			//CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
+			////Desc.ColliderDesc.width = 1.0;
+			////Desc.ColliderDesc.height = 1.0;
+			//if (m_iPlayerTeam == 1)
+			//	Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+			//else
+			//	Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
+			//Desc.ColliderDesc.pMineGameObject = this;
+			//Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
+			//Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
+			//
+			//Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
+			//Desc.fhitCharacter_StunTime = 0.6f;
+			//Desc.iDamage = 900 * Get_DamageScale();;
+			//Desc.fLifeTime = 7.f;
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+			//
+			//Desc.iTeam = m_iPlayerTeam;
+			//
+			//Desc.bCameraZoom = false;
+			//Desc.fAnimationLockTime = 0.05f;
+			//
+			//Desc.pOwner = this;
+			//
+			////Desc.eAttackType = { ATTACKTYPE_HIGH };
+			//Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
+			//Desc.fRanged_Impus_NoneDirection = { 8.f,0.f };  // 1:1.569 비율
+			//
+			//Desc.iDirection = m_iLookDirection;
+			//
+			//Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			//
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
 			CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
 			//Desc.ColliderDesc.height = 1.0;
@@ -2049,31 +1872,36 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
+			Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
 			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
 
-			Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
-			Desc.fhitCharacter_StunTime = 0.6f;
+
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 0.35f;
 			Desc.iDamage = 900 * Get_DamageScale();;
-			Desc.fLifeTime = 7.f;
-			Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+			Desc.fLifeTime = 5.f;
+
+
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+			Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,1.f };
+
 
 			Desc.iTeam = m_iPlayerTeam;
 
 			Desc.bCameraZoom = false;
-			Desc.fAnimationLockTime = 0.05f;
+			Desc.fAnimationLockTime = 0.f;
 
 			Desc.pOwner = this;
 
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
-			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
-			Desc.fRanged_Impus_NoneDirection = { 8.f,0.f };  // 1:1.569 비율
-
+			Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
+			Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
 			Desc.iDirection = m_iLookDirection;
-
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.strEffectName = TEXT("BurstJ-03");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
 		}
 
 	}

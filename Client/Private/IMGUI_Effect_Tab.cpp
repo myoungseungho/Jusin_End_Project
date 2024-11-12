@@ -1349,6 +1349,9 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     ImGui::Separator();
     ImGui::End();
+
+
+    m_pEffect_Manager->Set_ParentMatrixMultiply_LocalMatrix(selectedLayerName, UTF8ToWString(selectedEffectName));
 }
 
 void CIMGUI_Effect_Tab::Render_For_Effect_Color()

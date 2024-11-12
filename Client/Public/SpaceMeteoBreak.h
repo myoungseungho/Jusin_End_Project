@@ -57,6 +57,12 @@ private:
 	_bool m_isBrakeSwitch = { false };
 	_float m_fBrakeSwitchTime = { 0.f };
 	_float4x4 m_Result4x4;
+	CEffect_Layer* m_pEffectLayer = { nullptr };
+
+	_bool m_isStart = { false };
+	_bool m_isRight = { true };
+public:
+	void Start_Space_DestructiveFinish(_bool isRight = true);
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

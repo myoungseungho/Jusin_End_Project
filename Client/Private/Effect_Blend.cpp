@@ -164,8 +164,10 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
 {
-	if (m_iPassIndex != 1)
-		__super::Priority_Render(fTimeDelta);
+	if (m_iPassIndex != 1 || fTimeDelta == -10.f)
+	{
+		__super::Priority_Render(fTimeDelta == -10.f ? 0.02f : fTimeDelta);
+	}
 
 	return S_OK;
 }
@@ -186,7 +188,7 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) // 2
+		if (FAILED(m_pShaderCom->Begin(fTimeDelta != -10.f ? m_iPassIndex : 5))) // 2
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -239,9 +241,9 @@ HRESULT CEffect_Blend::Ready_Components(_wstring* pModelName, _wstring* pMaskTex
 
 HRESULT CEffect_Blend::Bind_ShaderResources()
 {
-	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
-
+	
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
 

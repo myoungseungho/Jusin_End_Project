@@ -28,6 +28,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 	Create_Effect_Manager();
 	Create_QTE_Manager();
+
+#pragma region ÀÌÆåÆ® ¼¼ÆÃ
+	Loading_For_Effect();
+#pragma endregion
+
 #pragma region ¸Ê »çº» °´Ã¼
 
 	if (FAILED(Ready_Volcano()))
@@ -48,13 +53,13 @@ HRESULT CLevel_GamePlay::Initialize()
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 
@@ -66,7 +71,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 #pragma endregion
@@ -113,9 +118,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 #pragma endregion
 
-#pragma region ÀÌÆåÆ® ¼¼ÆÃ
-	Loading_For_Effect();
-#pragma endregion
+
 
 	//ºû ÁØºñ
 	if (FAILED(Ready_Lights()))
@@ -495,8 +498,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 HRESULT CLevel_GamePlay::Ready_Space()
 {
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"))))
-		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceHorizon"), TEXT("Layer_SpaceHorizon"))))
@@ -522,6 +524,8 @@ HRESULT CLevel_GamePlay::Ready_Space()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStone"), TEXT("Layer_SpaceStone"))))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"))))
 		return E_FAIL;
 	return S_OK;
 }
@@ -638,7 +642,7 @@ void CLevel_GamePlay::Free()
 	__super::Free();
 
 	CFrameEvent_Manager::Destroy_Instance();
-
 	Safe_Release(m_pEffect_Manager);
 	Safe_Release(m_pQTE_Manager);
+	Safe_Release(m_pUI_Manager);
 }

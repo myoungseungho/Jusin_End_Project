@@ -25,6 +25,9 @@
 #include "BoneEffectObject.h"
 #include "Effect_Manager.h"	
 
+#include "Effect_Layer.h"
+
+#include "Animation.h"
 
 CPlay_Hit::CPlay_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -121,7 +124,7 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 
 	m_tAttackMap.Initalize(this);
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
-	m_strName = "Hit_" + to_string(m_iPlayerTeam)+"_" + to_string(pDesc->ePlayerSlot);
+	m_strName = "HIT_" + to_string(m_iPlayerTeam)+"_" + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
 	LIGHT_DESC			LightDesc{};
 
@@ -196,6 +199,12 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	MoveCommandPatternsFunction.push_back({ Command_Grab, bind(&CHit_MeleeAttack::Attack_Grab, &m_tAttackMap) });
 
 
+
+
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_Up_SpecialAttack, bind(&CHit_MeleeAttack::Attack_Up_Speical, &m_tAttackMap) });
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_Crouch_SpecialAttack, bind(&CHit_MeleeAttack::Attack_Crouch_Speical, &m_tAttackMap) });
+
+
 	//MoveCommandPatternsFunction.push_back({ Command_BackDash, bind(&CHit_MeleeAttack::BackDash, &m_tAttackMap) });
 	//MoveCommandPatternsFunction.push_back({ Command_Forward, bind(&CHit_MeleeAttack::ForwardDash, &m_tAttackMap) });
 
@@ -205,7 +214,6 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Reflect, bind(&CHit_MeleeAttack::Reflect, &m_tAttackMap) });
 
-	
 
 	m_eCharacterID = CUI_Define::PLAYER_ID::HIT;
 
@@ -229,20 +237,32 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	__super::Player_Update(fTimeDelta);
 
 
+
+
 	Update_Tag_In(fTimeDelta);
 
 
 	if (m_bPlaying == false)
 		return;
 
+
 	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 
+	if (m_pGameInstance->Key_Down(DIK_F1))
+	{
+		m_bDebugInputLock = !m_bDebugInputLock;
+	}
 
 	if (m_bDebugInputLock)
 		return;
+
+	
+
+	//cout << m_pModelCom->m_fCurrentAnimPosition << endl;
+
 
 
 
@@ -292,8 +312,8 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		Update_Dying(fTimeDelta);
 
 
-	
 
+	Update_CounterPose(fTimeDelta);
 
 	Update_LoofAnimationCreate(fTimeDelta);
 
@@ -365,8 +385,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		}
 	}
 
-
-
+	
 
 	//입력되어있는 커맨드 시간에 따라 휘발
 	InputedCommandUpdate(fTimeDelta);
@@ -384,7 +403,6 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	{
 		InputCommand();
 	}
-
 
 
 
@@ -464,7 +482,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 	
 
-		 if (m_bNoEventLoofAnimation)
+		if (m_bNoEventLoofAnimation)
 		{
 			Update_NoEventTime(fTimeDelta);
 
@@ -479,10 +497,13 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		}
 		else
 		 {
+
 			
 
 			Character_Play_Animation(fTimeDelta);
 			
+
+		
 
 
 		 }
@@ -490,6 +511,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		if (m_bMotionPlaying == false)
 		{
 
+			
 			//스턴 추가 전에 있던거
 			//if(m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
 			//	AnimeEndNextMoveCheck();
@@ -528,6 +550,8 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		}
 
 
+		
+
 		//애니메이션 lock 도중에는 발동 안해야함.   아래에 넣자니 
 		if (m_bStun)
 		{
@@ -551,6 +575,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 
 
+			
 
 			BreakFall_Air();
 
@@ -579,7 +604,8 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//}
 	}
 
-	
+
+
 	//중력 처리.    ANimation Lock의 영향을 받아야하나? 위로 옮겨봄
 	//Gravity(fTimeDelta);
 
@@ -593,8 +619,6 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 	if(m_bAnimationLock == false)
 		Move(fTimeDelta);
-
-
 
 
 
@@ -656,7 +680,10 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	{
 		Set_bFinalSkillQTE(true);
 	}
-	
+	if (m_pGameInstance->Key_Down(DIK_INSERT))
+	{
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(100, m_iPlayerTeam);
+	}
 
 }
 
@@ -686,39 +713,8 @@ void CPlay_Hit::Late_Update(_float fTimeDelta)
 HRESULT CPlay_Hit::Render(_float fTimeDelta)
 {
 
-	////백업
-	//if (FAILED(Bind_ShaderResources()))
-	//	return E_FAIL;
-	//
-	//_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-	//
-	//for (size_t i = 0; i < iNumMeshes; i++)
-	//{
-	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-	//			return E_FAIL;
-	//	}
-	//	else
-	//	{
-	//		if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-	//			return E_FAIL;
-	//	}
-	//	 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-	//
-	//	/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
-	//	m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-	//
-	//	if (FAILED(m_pShaderCom->Begin(0)))
-	//		return E_FAIL;
-	//
-	//
-	//	if (FAILED(m_pModelCom->Render(i)))
-	//		return E_FAIL;
-	//}
-
+	if (m_bInvisible == true)
+		return S_OK;
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -744,23 +740,8 @@ HRESULT CPlay_Hit::Render(_float fTimeDelta)
 	   /* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
-		if (FAILED(m_pShaderCom->Begin(0)))
+		if (FAILED(m_pShaderCom->Begin(1)))
 			return E_FAIL;
-
-
-		//if(m_bFinalSkillss3 == false)
-		//{
-		//	if (FAILED(m_pModelCom->Render(i)))
-		//		return E_FAIL;
-		//}
-		//else
-		//{
-		//	if (FAILED(m_pModelCom_Skill->Render(i)))
-		//		return E_FAIL;
-		//}
-
-
-
 
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
@@ -794,6 +775,64 @@ HRESULT CPlay_Hit::Render(_float fTimeDelta)
 
 	return S_OK;
 }
+
+_bool CPlay_Hit::Update_CounterPose(_float fTimeDelta)
+{
+
+	if (m_bCounterPose == false)
+		return false;
+
+
+	//반격 성공시 초기화 하고 업데이트 종료
+	if (m_bCounterSucces == true)
+	{
+		m_bCounterPose = false;
+		m_fAccPoseTime = 0.f;
+		return false;
+	}
+
+	m_fAccPoseTime += fTimeDelta;
+
+
+	if (m_fAccPoseTime > 0.4f)
+	{
+		m_bCounterPose = false;
+		m_fAccPoseTime = 0.f;
+
+		if(m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_SPECIAL)
+			Set_CurrentAnimationPositionJump(64.999f);
+
+		else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_SPECIAL_AIR)
+			Set_CurrentAnimationPositionJump(50.f);
+
+		
+	}
+
+	return true;
+}
+
+_bool CPlay_Hit::Get_b236Posing()
+{
+	return  m_b236Posing;
+
+}
+
+void CPlay_Hit::Set_b236Posing(_bool b236Posing)
+{
+	m_b236Posing = b236Posing;
+
+}
+
+_bool CPlay_Hit::Get_b236Sepcial()
+{
+	return m_b236Special;
+}
+
+void CPlay_Hit::Set_b236Special(_bool b236Special)
+{
+	m_b236Special = b236Special;
+}
+
 
 
 
@@ -845,11 +884,6 @@ void CPlay_Hit::Set_Animation(_uint iAnimationIndex, _bool bloof)
 */
 
 
-void CPlay_Hit::KeyTest()
-{
-
-}
-
 
 
 HRESULT CPlay_Hit::Ready_Components()
@@ -887,18 +921,15 @@ HRESULT CPlay_Hit::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
-		return E_FAIL;
-	
 
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HITOutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
 
 
-	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 		return E_FAIL;
 
 	
@@ -981,13 +1012,14 @@ _short CPlay_Hit::Check_bCurAnimationisCanChase()
 
 
 	//공격중 체이스는 속도 좀 빠르게
-	if(m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY || iModelIndex == ANIME_ATTACK_SPECIAL_AIR || iModelIndex == ANIME_ATTACK_LIGHT3))
+	//if(m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY || iModelIndex == ANIME_ATTACK_SPECIAL_AIR || iModelIndex == ANIME_ATTACK_LIGHT3))
+	if (m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY ))
 	{
 		return 10;
 	}
 
 
-	else if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove())
+	else if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || iModelIndex == ANIME_ATTACK_LIGHT3)
 	{
 		return 1;
 	}
@@ -1047,7 +1079,15 @@ void CPlay_Hit::Gravity(_float fTimeDelta)
 
 void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 {
-	/*
+//case Client::CPlay_Hit::ANIME_236_SPECIAL_RIGHT:
+//	break;
+//case Client::CPlay_Hit::ANIME_236_SPECIAL_UP:
+//	break;
+//case Client::CPlay_Hit::ANIME_236_SPECIAL_DOWN:
+//	break;
+
+	switch (m_pModelCom->m_iCurrentAnimationIndex)
+	{
 	case Client::CPlay_Hit::ANIME_ATTACK_LIGHT1:
 	{
 
@@ -1078,136 +1118,788 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	case Client::CPlay_Hit::ANIME_ATTACK_LIGHT2:
 	{
+		//공격 전 안보임 + 샤샤샥 + 뒤쪽에 구름
+		if (iAttackEvent == 0)
+		{
+		
+			//안보이게,
+			m_bInvisible = true;
 
-		CAttackObject::ATTACK_DESC Desc{};
+			//샤샤샥 이펙트,
+		
+			//대시구름
+			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
-		Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
-
-
-
-		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.4f;
-
-
-		Desc.iDamage = 700 * Get_DamageScale();
-		//Desc.iDamage = 4200 * Get_DamageScale();
-		Desc.fLifeTime = 0.1f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
-		Desc.pOwner = this;
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
+			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
+			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
+			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
 
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
-		Character_Make_Effect(TEXT("Smoke03_Stop"), {}, true);
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
+			
+
+
+		}
+		else if (iAttackEvent == 1)
+		{
+
+			//적까지의 거리를 탐색하고 사정거리 안에있으면 그 앞까지, 그보다 멀면 사정거리까지만 이동하는 함수 필요
+			MoveToEnemy_Ground(2.f);
+			m_bInvisible = false;
+
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"),m_pTransformCom->Get_WorldMatrixPtr());
+
+			//공격 생성
+
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+			Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
+
+
+
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 0.4f;
+
+
+			Desc.iDamage = 700 * Get_DamageScale();
+			//Desc.iDamage = 4200 * Get_DamageScale();
+			Desc.fLifeTime = 0.1f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.pOwner = this;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
+			Character_Make_Effect(TEXT("Smoke03_Stop"), {}, true);
+		}
+
+		
+
+
 
 	}
 	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_LIGHT3:
 	{
 
-		CAttackObject::ATTACK_DESC Desc{};
+		// 순간적으로 안보임, 가로샤샤샥
+		if (iAttackEvent == 0)
+		{
 
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
-		Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
+			//안보이게,
+			m_bInvisible = true;
+
+			//샤샤샥 이펙트,
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
+			//if (pEffect != nullptr)
+			//	pEffect->Set_Copy_Layer_Scaled({ 1.f,0.3f,1.f });
+
+			//대시구름
+			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			if (m_bSparking)
+			{
+				m_iAttackLightLoofCount = 4;
+				//m_pModelCom->Set_MaxAnimationUpdate_Time(fValue[0]);
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 240.f;
+			}
+			else
+				m_iAttackLightLoofCount = 2;
+
+
+		}
+		
+
+		//안보이고있었다면 보이게, 적 앞으로 일정거리 순간이동,  가로샤샤샥  ,공격판정, Grab판정하고? 경직 심하게주기, 또는 그냥 강하게?
+		else if (iAttackEvent == 1)
+		{
+			m_bInvisible = false;
+
+
+			//루프돌고있으면 방향전환
+			if (m_bAttackBackEvent == true)
+			{
+				FlipDirection();
+			}
+
+			MoveToEnemy_Ground(3.f);
+
+			//샤샤샥 이펙트,
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
+			//
+			//if (pEffect != nullptr)
+			//	pEffect->Set_Copy_Layer_Scaled({ 1.f,0.3f,1.f });
+
+			if(m_iAttackLightLoofCount !=0)
+			{
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				//Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
+				Desc.ColliderDesc.vExtents = { 0.8f,0.6f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 20.f;
+				Desc.iDamage = 320 * Get_DamageScale(true);;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.pOwner = this;
+
+				Desc.eAttackType = ATTACKTYPE_HIGH;
+				//Desc.eAttackGrade = GRADE_ULTIMATE;
+
+				Desc.fDistance = { 0.8f * m_iLookDirection,0.f };
+				Desc.fForcedGravityTime = 0.f;
+				//Desc.fGrabAnimationPosition = 40.f;
+				//Desc.fGrabAnimationPosition = 25.f;
+				Desc.iGainAttackStep = 0;
+				Desc.iGrabAnimationIndex = ANIME_ATTACK_LIGHT3;
+				Desc.bOwnerNextAnimation = false;
+
+
+				//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_SON_ULTIMATE;
+				//Desc.ianimationIndex = 1;
+				Desc.fCameraShakeDuration = 0.5f;
+				Desc.fCameraShakeMagnitude = 0.2f;
+
+
+				Desc.fForcedGravityTime = 0.f;
+
+				//Desc.bOnwerHitNoneStop = true;
+
+
+				Desc.bOnwerHitNoneStop = true;
+				Desc.bOwnerNextAnimation = false;
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			}
+
+			else if (m_iAttackLightLoofCount == 0)
+			{
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+				Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
 
 
 
-		//Desc.fhitCharacter_Impus = { 6.f * m_iLookDirection,5.f };
-		//Desc.fhitCharacter_Impus = { 6.f * m_iLookDirection,2.f };
-
-		//Desc.fhitCharacter_Impus = { 5.f * m_iLookDirection,3.f };
-		//Desc.fhitCharacter_StunTime = 0.6f;
-
-		Desc.fhitCharacter_Impus = { 4.f * m_iLookDirection,2.f };
-		//Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.fhitCharacter_StunTime = 0.8f;  //교대까지 가능하려면 0.8초
+				Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 5.f;
 
 
-		Desc.iDamage = 1000 * Get_DamageScale();
-		Desc.fLifeTime = 0.1f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.7f;
-		Desc.pOwner = this;
+				//if (m_iAttackLightLoofCount == 0)
+				{
+					Desc.iDamage = 450 * Get_DamageScale();
+					Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+					Desc.iGainAttackStep = 1;
+					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
-		//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Kick_Wind"), m_pTransformCom->Get_WorldMatrixPtr());
-		Character_Make_Effect(TEXT("Kick_Wind"));
+				}
+				//else
+				//{
+				//	Desc.iDamage = 180 * Get_DamageScale();
+				//	Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+				//	Desc.iGainAttackStep = 0;
+				//
+				//	Desc.bOnwerHitNoneStop = true;
+				//}
+
+				Desc.fLifeTime = 0.1f;
+
+
+
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.4f;
+				Desc.pOwner = this;
+				Desc.bGrabbedEnd = true;
+
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+				//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			}
+
+		}
+
+		//막혔으면 55로 이동하고 끝내기.  35는 옷이 뚫림
+		else if (iAttackEvent == 2)
+		{
+			if (m_bAttackBackEvent == false)
+			{
+				//막히면 감속  무한압박 방지용
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+				Set_CurrentAnimationPositionJump(55.f);
+				
+
+			}
+			else if(m_iAttackLightLoofCount == 0)
+			{
+				Set_CurrentAnimationPositionJump(55.f);
+			}
+			else 
+			{
+				;
+			}
+
+		}
+
+		//,루프타이밍.  안보이게, 달리는척 하다가 적 뒤로이동,  가로샤샤샥, 24로 이동해서 루프돌기. 너무빠르니 20? 어택경직있으니 ㄱㅊ
+		else if (iAttackEvent == 3)
+		{
+			m_bInvisible = true;
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
+			//
+			//if (pEffect != nullptr)
+			//	pEffect->Set_Copy_Layer_Scaled({ 1.f,0.1f,1.f });
+
+
+			Add_Move({ m_iLookDirection * 3.f,0.f });
+
+			Set_CurrentAnimationPositionJump(24.f);
+
+			m_iAttackLightLoofCount--;
+
+			//적 뒤로 이동을 뭘로 구현하느냐
+			//1. Grab판정으로 만들고 애니메이션으로 이동하기
+			//2. Add_Move로 순간이동
+		}
+
 
 	}
 	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_MEDIUM:
 	{
-		CAttackObject::ATTACK_DESC Desc{};
-		//Desc.ColliderDesc.width = 0.7;
-		//Desc.ColliderDesc.height = 0.8;
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 0.4f,0.6f,1.f };
-		Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.7f,0.f };
-		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.4f;
-		//Desc.fhitCharacter_StunTime = 0.55f;
+		//,안보이게, 가로샤샤샥
+		if (iAttackEvent == 0)
+		{
+			m_bInvisible = true;
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
 
-		Desc.iDamage = 700 * Get_DamageScale();;
-		Desc.fLifeTime = 0.2f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
-		Desc.pOwner = this;
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
+		}
 
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		//,적 앞으로 순간이동, 공격판정.  안보이고있었다면 보이게?
+		else if(iAttackEvent == 1)
+		{
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.1f);
+
+			m_bInvisible = false;
+
+			MoveToEnemy_Ground(2.f);
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+
+			CAttackObject::ATTACK_DESC Desc{};
+			//Desc.ColliderDesc.width = 0.7;
+			//Desc.ColliderDesc.height = 0.8;
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vExtents = { 0.3f,0.2f,1.f };
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.9f,0.f };
+			Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 0.4f;
+			//Desc.fhitCharacter_StunTime = 0.55f;
+
+			Desc.iDamage = 700 * Get_DamageScale();;
+			Desc.fLifeTime = 0.2f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.pOwner = this;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
 	}
 	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_HEAVY:
 	{
-	
-
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 1.f,1.f,1.f };
-		Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.8f,0.f };
-
-		Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 1.0f;
-		Desc.iDamage = 1000 * Get_DamageScale();;
-		Desc.fLifeTime = 0.2f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.7f;
-		Desc.bGrabbedEnd = true;
-		Desc.pOwner = this;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-		Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.7f,0.f });
+		//,안보임 + 가로샤샤샥
+		if (iAttackEvent == 0)
+		{
+			m_bInvisible = true;
 
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
+		}
+
+		else if (iAttackEvent == 1)
+		{
+
+			m_bInvisible = false;
+
+			MoveToEnemy_Ground(3.f);
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
+
+			{
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0.5f };
+				Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.iDamage = 0;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.7f;
+
+				Desc.fDistance = { 0.8f,0.05f };
+				Desc.iGrabAnimationIndex = CPlay_Hit::ANIME_ATTACK_HEAVY;
+				Desc.bOwnerNextAnimation = false;
+
+				Desc.iGainAttackStep = 0;
+				Desc.iGainHitCount = 0;
+				Desc.iGainKiAmount = 0;
+
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+			}
+
+			if (false)
+			{
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.iDamage = 1000 * Get_DamageScale();;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.7f;
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			}
+
+			Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.7f,0.f });
+		}
 		//Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.4f,0.f });
-	
-		
+
+
 
 		//Ring_Dust
+
+	}
+	break;
+	case Client::CPlay_Hit::ANIME_ATTACK_SPECIAL:
+	{
+
+		//반격 자세 시작
+		if (iAttackEvent == 0)
+		{
+			m_bCounterPose = true;
+		}
+
+		//반격성공. 적 멈춘상태
+		else if (iAttackEvent == 1)
+		{
+			m_bCounterPose = false;
+			m_bCounterSucces = false;
+			m_bInvisible = false;
+			
+			_vector vTargetPos = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			vTargetPos += {1.3f* m_iLookDirection, 0.f, 0, 0};
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+			FlipDirection();
+
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
+
+			
+			//적이 땅에 있으면 반격
+			if(XMVectorGetY(vTargetPos) == 0)
+			{
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.iDamage = 1000 * Get_DamageScale();;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.7f;
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			}
+
+			//적이 공중에 있으면 점프로 이행 
+			else
+			{
+				Set_Animation(m_iJumpAnimationIndex);
+				Set_ForcedGravityTime_LittleUp();
+			}
+
+		}
+
+
+		//지상 반격 성공 후 돌아오는 모션
+		else if (iAttackEvent == 2)
+		{
+			m_bCounterPose = false;
+			Set_Animation(ANIME_IDLE);
+
+		}
+
+	}
+		break;
+	case Client::CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT:
+	{
+
+		if (iAttackEvent == 301)
+		{
+			if (m_b236Special)
+			{
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 120.f;	
+			}
+			
+		}
+
+		else if(iAttackEvent == 0)
+		{
+			if(m_b236Special == false)
+			{
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+				Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
+
+
+
+				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_Impus = { 0.1f * m_iLookDirection,-10.f };
+
+				Desc.fhitCharacter_StunTime = 0.3f;
+				Desc.iDamage = 400 * Get_DamageScale();
+				Desc.fLifeTime = 0.1f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY_DOWN };//HIT_KNOCK_AWAY_LEFTDOWN //
+				Desc.iTeam = m_iPlayerTeam;
+
+				if (m_pEnemy->Get_fHeight() != 0)
+					Desc.fAnimationLockTime = 0.25f;
+				else
+					Desc.fAnimationLockTime = 0.1f;
+
+				Desc.pOwner = this;
+				Desc.bOnwerHitNoneStop = true;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			}
+			else
+			{
+				//원거리 공격의 경우 손에 파란이팩트는 동일, 원거리 공격판정
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+
+
+				//center를 상대 좌표로 할게 아니라 나~상대 까지의 거리로 해야함
+
+				_vector vEnemyPos = m_pEnemy->Get_vPosition();
+				_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+				_vector vLength = vEnemyPos - vMyPos;
+
+				Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+
+
+				Desc.fhitCharacter_StunTime = 0.4f;
+				Desc.iDamage = 700 * Get_DamageScale();;
+				Desc.fLifeTime = 0.2f;
+				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
+				//Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,8.f };
+
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+				Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,-20.f };
+
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				Desc.bCameraZoom = false;
+				Desc.bOnwerHitNoneStop = true;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+
+			}
+		}
+
+		else if (iAttackEvent == 101)
+		{
+			if(m_b236Special == false)
+				AttackNextMoveCheck();
+		}
+
+		else if (iAttackEvent == 102)
+		{
+			if (m_b236Special == false)
+				AttackNextMoveCheck();
+		}
+		else if (iAttackEvent == 103)
+		{
+			if (m_b236Special == false)
+				AttackNextMoveCheck();
+		}
+
+		else if (iAttackEvent == 201)
+		{
+			//if (m_b236Special == false)
+			//	Set_Animation(ANIME_IDLE);
+			//else
+			//{
+			//	m_b236Special = false;
+			//}
+
+			m_b236Special = false;
+			Set_Animation(ANIME_IDLE);
+
+		}
+
+	}
+	break;
+	case Client::CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM:
+	{
+		if (iAttackEvent == 0)
+		{
+			//너무 크고 z도 안맞음
+			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
+			//Character_Make_Effect(TEXT("Smoke01"), {0.3f,0.f}, true);
+
+			//하나 잘린거 티남, 타이밍 이상함
+			//Character_Make_Effect(TEXT("Smoke_Run"), { 0.25f,0.f },true);
+			// 
+			//뒷받침으로 쓰고있었는데 공격쪽으로 옮김
+			//Character_Make_Effect(TEXT("Smoke03_Stop"),{0.f,0.f},true);
+
+			
+			Character_Make_Effect(TEXT("Smoke03_Stop"), { 0.25f,0.f });
+			
+			CAttackObject::ATTACK_DESC Desc{};
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+
+
+			Desc.ColliderDesc.vExtents = { 0.7f,0.5f,1.f };
+			Desc.ColliderDesc.vCenter = { 0.7f * m_iLookDirection,0.3f,0.f };
+
+			Desc.fhitCharacter_StunTime = 1.f;
+			Desc.iDamage = 700 * Get_DamageScale();
+			Desc.fLifeTime = 0.1f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.13f;
+			Desc.pOwner = this;
+
+			Desc.eAttackType = { ATTACKTYPE_LOW };
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			
+
+		}
+		
+	}
+	break;
+	case Client::CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY:
+	{
+		//어퍼의 경우 속도 60으로 조절. 
+		//236특의 경우 빠른 속도 유지
+		if(iAttackEvent == 0)
+		{
+			if (m_b236Special == false)
+			{
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 60.f;
+			}
+			else
+			{
+				
+			}
+		}
+
+
+		else if(iAttackEvent == 1)
+		{
+			if (m_b236Special == false)
+			{
+				CAttackObject::ATTACK_DESC Desc{};
+				//Desc.ColliderDesc.width = 2.0;
+				//Desc.ColliderDesc.height = 1.3;
+				//Desc.ColliderDesc.vCenter = { 0.4f * m_iLookDirection,1.2f,0.f };
+				//Desc.ColliderDesc.width = 1.5;
+				//Desc.ColliderDesc.height = 1.3;
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 1.5f,1.3f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.2f * m_iLookDirection,1.2f,0.f };
+
+
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
+				Desc.fhitCharacter_Impus = { 0.6f * m_iLookDirection, 10.f };  //원래 가속도.
+
+				//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
+
+				Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.iDamage = 1000 * Get_DamageScale();;
+				Desc.fLifeTime = 0.3f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.5f;
+				Desc.pOwner = this;
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+				//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.7f,0.5f });
+				//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.4f,0.9f });
+				Character_Make_Effect(TEXT("Ring_Dust"), { 0.4f,0.9f });
+			}
+			else
+			{
+				//원거리 공격의 경우 손에 파란이팩트는 동일, 원거리 공격판정
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+
+
+				//center를 상대 좌표로 할게 아니라 나~상대 까지의 거리로 해야함
+
+				_vector vEnemyPos = m_pEnemy->Get_vPosition();
+				_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+				_vector vLength = vEnemyPos - vMyPos;
+
+				Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+			
+
+
+				Desc.fhitCharacter_StunTime = 0.4f;
+				Desc.iDamage = 700 * Get_DamageScale();;
+				Desc.fLifeTime = 0.2f;
+				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
+				//Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,8.f };
+
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+				Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,2.f };
+
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				Desc.bCameraZoom = false;
+				Desc.bOnwerHitNoneStop = true;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+			}
+		}
+		
+		else if (iAttackEvent == 3)
+		{
+			if (m_b236Special == false)
+			{
+			}
+			else
+			{
+				m_b236Special = false;
+			}
+		}
+
 
 	}
 	break;
@@ -1235,6 +1927,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 
 		Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
+		
+		//if(abs(m_fImpuse.x)<0.3 )
+		//	Desc.fhitCharacter_Impus = { m_fImpuse.x*m_iLookDirection,0 };
+		//else
+		//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+
+
 		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
 
 
@@ -1275,7 +1974,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+
 		Desc.fhitCharacter_Impus = { m_fImpuse.x  ,0 };
+
+		//if (abs(m_fImpuse.x) < 0.3)
+		//	Desc.fhitCharacter_Impus = { m_fImpuse.x * m_iLookDirection,0 };
+		//else
+		//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+
 
 		Desc.fhitCharacter_StunTime = 0.4f;
 
@@ -1347,147 +2053,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
 	break;
-	case Client::CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT:
-	{
-
-		CAttackObject::ATTACK_DESC Desc{};
-
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
-		Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
-
-
-
-		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
-		Desc.fhitCharacter_StunTime = 0.3f;
-		Desc.iDamage = 400 * Get_DamageScale();
-		Desc.fLifeTime = 0.1f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.1f;
-		Desc.pOwner = this;
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-		{
-			{
-				//CBoneEffectObject::BONE_EFFECT_DESC EffectDesc;
-				//EffectDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-				//EffectDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_R");
-				//
-				//EffectDesc.strEffectName = TEXT("BurstU-2");
-				//
-				//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Bone_Effect_Object"), TEXT("Layer_BoneEffectObject"), &EffectDesc);
-
-
-
-
-
-				//Body 기준으로 Offset, 좌우반전 주고 이펙트 생성.  성공
-				//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-2"), { 0.f,-0.5f });
-
-
-
-				//뼈에 이펙트 붙히고 Offset주기. 성공
-				//Character_Make_BoneEffect_Offset("GD_fist_R", TEXT("BurstU-2"), { 0.f,-0.3f });
-
-
-				//뼈에 이펙트 붙히고 Offset,좌우반전 테스트.  성공
-				//Character_Make_BoneEffect_Offset("GD_fist_R", TE
-			}
-
-		}
-	}
-	break;
-	case Client::CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM:
-	{
-		//0 : 공격 전 연기  1: 공격판정생성 2: 공격 직후 연기
-		if (iAttackEvent == 0)
-		{
-			Character_Make_Effect(TEXT("Smoke03"));
-		}
-		else if (iAttackEvent == 2)
-		{
-			Character_Make_Effect(TEXT("Smoke03_Stop"));
-		}
-
-		if (iAttackEvent == 1)
-		{
-			CAttackObject::ATTACK_DESC Desc{};
-			//Desc.ColliderDesc.width = 0.7;
-			//Desc.ColliderDesc.height = 0.8;
-			if (m_iPlayerTeam == 1)
-				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-			else
-				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
-			//Desc.ColliderDesc.pTransform = m_pTransformCom;
-			//Desc.fhitCharacter_Impus = { 1.f * m_iLookDirection,0.3f };
-			//Desc.fhitCharacter_Impus = { 1.5f * m_iLookDirection,0.3f };
-			//Desc.ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
-
-			Desc.ColliderDesc.vExtents = { 0.7f,0.5f,1.f };
-			Desc.ColliderDesc.vCenter = { 0.7f * m_iLookDirection,0.3f,0.f };
-
-			Desc.fhitCharacter_StunTime = 1.f;
-			Desc.iDamage = 700 * Get_DamageScale();
-			Desc.fLifeTime = 0.1f;
-			Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
-			Desc.iTeam = m_iPlayerTeam;
-			Desc.fAnimationLockTime = 0.1f;
-			//Desc.bOwnerGravityTimeReset = true;
-			Desc.pOwner = this;
-
-			Desc.eAttackType = { ATTACKTYPE_LOW };
-
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-		}
-	}
-	break;
-	case Client::CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY:
-	{
-		CAttackObject::ATTACK_DESC Desc{};
-		//Desc.ColliderDesc.width = 2.0;
-		//Desc.ColliderDesc.height = 1.3;
-		//Desc.ColliderDesc.vCenter = { 0.4f * m_iLookDirection,1.2f,0.f };
-		//Desc.ColliderDesc.width = 1.5;
-		//Desc.ColliderDesc.height = 1.3;
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 1.5f,1.3f,1.f };
-		Desc.ColliderDesc.vCenter = { 0.2f * m_iLookDirection,1.2f,0.f };
-
-
-		//Desc.ColliderDesc.pTransform = m_pTransformCom;
-		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
-		Desc.fhitCharacter_Impus = { 0.6f * m_iLookDirection, 10.f };  //원래 가속도.
-
-		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 3.f };  //공중 테스트용 임시
-
-		Desc.fhitCharacter_StunTime = 1.0f;
-		Desc.iDamage = 1000 * Get_DamageScale();;
-		Desc.fLifeTime = 0.3f;
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.5f;
-		Desc.pOwner = this;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-
-
-		//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.7f,0.5f });
-		//Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 0.4f,0.9f });
-		Character_Make_Effect(TEXT("Ring_Dust"), { 0.4f,0.9f });
-
-
-	}
-	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_UPPER_AIR:
 	{
 		CAttackObject::ATTACK_DESC Desc{};
@@ -1541,6 +2106,392 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Character_Make_Effect(TEXT("Ring_Dust"), { m_iLookDirection * 1.2f,0.7f });
 	}
 	break;
+	case Client::CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR:
+		break;
+	case Client::CPlay_Hit::ANIME_GRAB:
+		break;
+	case Client::CPlay_Hit::ANIME_SPARKING:
+		break;
+	case Client::CPlay_Hit::ANIME_REFLECT:
+		break;
+	case Client::CPlay_Hit::ANIME_CROUCH_START:
+		break;
+	case Client::CPlay_Hit::ANIME_CROUCHING:
+		break;
+	case Client::CPlay_Hit::ANIME_GUARD_GROUND:
+		break;
+	case Client::CPlay_Hit::ANIME_GUARD_CROUCH:
+		break;
+	case Client::CPlay_Hit::ANIME_GUARD_AIR:
+		break;
+	case Client::CPlay_Hit::ANIME_JUMP_UP:
+		break;
+	case Client::CPlay_Hit::ANIME_JUMP_DOWN:
+		break;
+	case Client::CPlay_Hit::ANIME_IDLE:
+		break;
+	case Client::CPlay_Hit::ANIME_FORWARD_WALK:
+		break;
+	case Client::CPlay_Hit::ANIME_BACK_WALK:
+		break;
+	case Client::CPlay_Hit::ANIME_FORWARD_DASH:
+		break;
+	case Client::CPlay_Hit::ANIME_BACK_DASH:
+		break;
+	case Client::CPlay_Hit::ANIME_FORWARD_DASH_END:
+		break;
+	case Client::CPlay_Hit::ANIME_BACK_DASH_END:
+		break;
+	case Client::CPlay_Hit::ANIME_CHASE:
+		break;
+	case Client::CPlay_Hit::ANIME_GRAB_READY:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_LIGHT:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_LIGHT_FRONT:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_CROUCH:
+		break;
+	case Client::CPlay_Hit::ANIE_HIT_AIR:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_FALL:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_BOUND_DOWN:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_HEAVY_AWAY_LEFT:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_HEAVY_AWAY_UP:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_HEAVY_AWAY_LEFTDOWN:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_HEAVY_AWAY_SPIN_UP:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_HEAVY_AWAY_SPIN_LEFTUP:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_HEAVY_AWAY_SPIN_LEFT:
+		break;
+	case Client::CPlay_Hit::ANIME_HIT_WALLBOUNCE:
+		break;
+	case Client::CPlay_Hit::ANIME_DIE_STAND:
+		break;
+	case Client::CPlay_Hit::ANIME_LAYUP:
+		break;
+	case Client::CPlay_Hit::ANIME_BREAK_FALL_GROUND:
+		break;
+	case Client::CPlay_Hit::ANIME_BREAK_FALL_AIR:
+		break;
+	case Client::CPlay_Hit::ANIME_236_POSE:
+	{
+		if (iAttackEvent == 0)
+		{
+			m_b236Posing = true;
+
+		}
+		else if (iAttackEvent == 1)
+		{
+			m_b236Posing=false;
+		}
+
+	}
+		break;
+	case Client::CPlay_Hit::ANIME_236_POSE_LIGHT:
+	{
+		if (iAttackEvent == 0)
+		{
+
+			if(m_b236Special == false)
+			{
+				m_bInvisible = true;
+				Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+				main_Camera->StartCameraShake(0.1f, 0.3f);
+			}
+			else
+			{
+				//원거리 공격의 경우 스킵
+				;
+			}
+
+
+		}
+		else if (iAttackEvent == 1)
+		{
+			if (m_b236Special == false)
+			{
+				m_bInvisible = false;
+				MoveToEnemy_Ground(5.f);
+				Character_Make_Effect(TEXT("Moving_Line_Right"));
+				m_b236Posing = false;
+
+				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+				main_Camera->StartCameraShake(0.1f, 0.5f);
+				{
+					CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+
+					if (m_iPlayerTeam == 1)
+						Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+					else
+						Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+					Desc.ColliderDesc.pMineGameObject = this;
+					Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+					Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0.5f };
+					Desc.fhitCharacter_StunTime = 1.0f;
+					Desc.iDamage = 0;
+					Desc.fLifeTime = 0.05f;
+					Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+					Desc.iTeam = m_iPlayerTeam;
+					Desc.fAnimationLockTime = 0.7f;
+
+					Desc.fDistance = { 0.8f,0.5f };
+					Desc.iGrabAnimationIndex = CPlay_Hit::ANIME_236_POSE_LIGHT;
+					Desc.bOwnerNextAnimation = false;
+
+					Desc.iGainAttackStep = 0;
+					Desc.iGainHitCount = 0;
+					Desc.iGainKiAmount = 0;
+
+					Desc.bGrabbedEnd = true;
+					Desc.pOwner = this;
+
+					Desc.fCameraShakeDuration = 0.4f;
+					Desc.fCameraShakeMagnitude = 0.1f;
+
+					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+				}
+				{
+					CAttackObject::ATTACK_DESC Desc{};
+
+					if (m_iPlayerTeam == 1)
+						Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+					else
+						Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+					Desc.ColliderDesc.pMineGameObject = this;
+					Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+					Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+					Desc.fhitCharacter_StunTime = 1.0f;
+					Desc.iDamage = 900 * Get_DamageScale();;
+					Desc.fLifeTime = 0.05f;
+					Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+					Desc.iTeam = m_iPlayerTeam;
+					Desc.fAnimationLockTime = 0.7f;
+					Desc.bGrabbedEnd = true;
+					Desc.pOwner = this;
+					Desc.bCameraZoom = false;
+
+					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+				}
+			}
+			else
+			{
+				//원거리 공격의 경우 손에 파란이팩트는 동일, 원거리 공격판정
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+
+
+				//center를 상대 좌표로 할게 아니라 나~상대 까지의 거리로 해야함
+
+				_vector vEnemyPos = m_pEnemy->Get_vPosition();
+				_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+				_vector vLength =  vEnemyPos - vMyPos;
+
+				Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f};
+
+
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.iDamage = 700 * Get_DamageScale();;
+				Desc.fLifeTime = 0.1f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				Desc.bCameraZoom = false;
+				Desc.bOnwerHitNoneStop = true;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			}
+		}
+		else if (iAttackEvent == 2)
+		{
+			//평범하게 사용시 할것없음. 규칙성 유지하느라 틀 만듦
+			if (m_b236Special == false)
+			{
+			}
+			else
+			{
+				m_b236Special = false;
+			}
+		}
+	}
+		break;
+	case Client::CPlay_Hit::ANIME_236_POSE_MEDIUM:
+	{
+		//,안보이게 + 샤샤샥
+		if (iAttackEvent == 0)
+		{
+			m_bInvisible = true;
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+		}
+		else if (iAttackEvent == 1)
+		{
+			m_bInvisible = false;
+			MoveToEnemy_Ground(7.f);
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			m_b236Posing = false;
+
+
+			{
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0.5f };
+				//Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.fhitCharacter_StunTime = 0.3f;
+
+				Desc.iDamage = 0;
+				Desc.fLifeTime = 0.1f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.7f;
+
+				Desc.fDistance = { 0.8f,0.5f };
+				Desc.iGrabAnimationIndex = CPlay_Hit::ANIME_236_POSE_MEDIUM;
+				Desc.bOwnerNextAnimation = false;
+
+				Desc.iGainAttackStep = 0;
+				Desc.iGainHitCount = 0;
+				Desc.iGainKiAmount = 0;
+
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			}
+			{
+				CAttackObject::ATTACK_DESC Desc{};
+
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,-1.f };
+				Desc.fhitCharacter_StunTime = 1.0f;
+				Desc.iDamage = 900 * Get_DamageScale();;
+				Desc.fLifeTime = 0.1f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.7f;
+				Desc.bGrabbedEnd = true;
+				Desc.pOwner = this;
+				Desc.bGroundSmash = true;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+			}
+		}
+	}
+		break;
+	case Client::CPlay_Hit::ANIME_236_POSE_HEAVY:
+	{
+		if (iAttackEvent == 0)
+		{
+			m_bInvisible = true;
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+		}
+		else if (iAttackEvent == 1)
+		{
+			m_bInvisible = false;
+			MoveToEnemy_Ground(5.f);
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			m_b236Posing = false;
+
+
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
+			Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
+
+			Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,3.f };
+			//Desc.fhitCharacter_StunTime = 1.0f;
+			Desc.fhitCharacter_StunTime = 0.7f;
+
+			Desc.iDamage = 1500 * Get_DamageScale();;
+			Desc.fLifeTime = 0.1f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.7f;
+			Desc.pOwner = this;
+			Desc.iGainKiAmount = 60;
+		
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+		else if (iAttackEvent == 2)
+		{
+			if (m_bAttackBackEvent == true)
+			{
+				//기존 61이었던걸 명중시 더 빠르게
+				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 181.f;
+				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 211.f;
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 301.f;
+
+			}
+		}
+	}
+		break;
+
+
+	case Client::CPlay_Hit::ANIME_214_POSE:
+		break;
+	case Client::CPlay_Hit::ANIME_236_SPECIAL:
+		break;
+	case Client::CPlay_Hit::ANIME_236_ULTIMATE:
+		break;
+	case Client::CPlay_Hit::ANIME_214_FINAL_START:
+		break;
+	case Client::CPlay_Hit::ANIME_214_FINAL_SUCESS:
+		break;
+	default:
+		break;
+	}
+
+	/*
+	
+	
+	
+	
+	
 	*/
 }
 
@@ -1552,6 +2503,11 @@ void CPlay_Hit::Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)
 void CPlay_Hit::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 {
 	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
+}
+
+void CPlay_Hit::Reset_PoseTime()
+{
+	m_fAccPoseTime = 0.f;
 }
 
 
@@ -1597,6 +2553,233 @@ void CPlay_Hit::Add_BlueLight()
 }
 
 
+AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+{
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+		return RESULT_MISS;
+
+
+	if (m_bCounterPose)
+	{
+		m_bCounterSucces = true;
+		
+		//시간정지를 여기서? 아니면 따로?
+		Set_AnimationStopWithoutMe(0.5f);
+		Set_AnimationStop(0.1f);
+		m_bInvisible = true;
+
+		//반격 성공 이펙트 만들기
+		Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		main_Camera->StartCameraShake(0.1f, 0.3f);
+
+
+		if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_SPECIAL)
+		{
+			Set_CurrentAnimationPositionJump(24.97f);
+		}
+		else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_SPECIAL_AIR)
+		{
+			Set_CurrentAnimationPositionJump(34.99f);
+		}
+
+		return RESULT_MISS;
+	}
+	//스턴상태, 땅바닥에 꽂혔을때 검사
+	else if (m_bHitGroundSmashed && Get_fHeight() == 0)
+	{
+		if (eAttackGrade != GRADE_ULTIMATE)
+			return RESULT_MISS;
+	}
+
+
+	m_bInvisible = false;
+	m_b236Posing = false;
+	m_b236Special = false;
+
+	//스턴 상태가 아니면 가드 체크
+	if (m_bStun == false)
+	{
+
+		AttackColliderResult eResult = Guard_Check3(eAttackType);
+
+		//공격자의 방향이 iDirection  피격자는 마주봐야하니 그 반대.
+
+
+		if (eResult == RESULT_GUARD)
+		{
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
+				Set_Animation(m_iGuard_CrouchAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iIdleAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iBackWalkAnimationIndex)
+				Set_Animation(m_iGuard_GroundAnimationIndex);
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iJumpAnimationIndex || m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
+				Set_Animation(m_iGuard_AirAnimationIndex);
+
+
+			//HitMotion { HIT_LIGHT, HIT_CHASE, HIT_MEDIUM, HIT_HEAVY, HIT_HEAVY_DOWN, HIT_CROUCH_MEDIUM, 
+			// HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP, HIT_KNOCK_AWAY_LEFTDOWN, HIT_SPIN_AWAY_LEFTUP, HIT_WALLBOUNCE, HIT_NONE };
+
+
+			//가드 이펙트
+			switch (eAnimation)
+			{
+			case Client::HIT_LIGHT:
+			case Client::HIT_CHASE:
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"), m_pTransformCom->Get_WorldMatrixPtr());
+				break;
+
+
+			case Client::HIT_CROUCH_MEDIUM:
+			case Client::HIT_MEDIUM:
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard02"), m_pTransformCom->Get_WorldMatrixPtr());
+				break;
+
+			case Client::HIT_HEAVY:
+			case Client::HIT_HEAVY_DOWN:
+			case Client::HIT_KNOCK_AWAY_LEFT:
+			case Client::HIT_KNOCK_AWAY_UP:
+			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
+			case Client::HIT_SPIN_AWAY_LEFTUP:
+			case Client::HIT_SPIN_AWAY_UP:
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard03"), m_pTransformCom->Get_WorldMatrixPtr());
+				break;
+
+			case Client::HIT_WALLBOUNCE:
+			case Client::HIT_NONE:
+			default:
+				break;
+			}
+
+
+			Set_CurrentAnimationPositionJump(0.f);
+
+			return RESULT_GUARD;
+
+		}
+		else if (eResult != RESULT_HIT)    //회피나 비긴 경우 아니면 일단 속행.   저 경우는 나중에 따로 처리
+			return eResult;
+
+
+	}
+
+
+	m_bHit = TRUE;
+	m_bStun = true;
+
+	//m_fMaxStunTime = fStunTime;
+
+	//누적  콤보수 비례.7배까지,  땅에서는 또 0.9배? 대신 공중에서 1.2배?
+
+	m_fMaxStunTime = fStunTime;// *(30 - CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(m_iPlayerTeam);
+
+	if (Get_fHeight() > 1)
+	{
+		m_fMaxStunTime *= 1.1f;
+	}
+
+	m_fMaxStunTime *= 1.f - 0.01f * CBattleInterface_Manager::Get_Instance()->Get_HitAttackStep(m_iPlayerTeam);
+
+
+
+	m_fAccStunTime = 0.f;
+
+	Set_HitAnimation(eAnimation, Impus);
+	Set_AnimationStop(fStopTime);
+
+	Set_bRedHP(true);
+
+	if (iDirection == 1)
+		FlipDirection(-1);
+	else if (iDirection == -1)
+		FlipDirection(1);
+
+	//0인경우는 뒤집지 않음
+
+	m_iHP -= iDamage;  
+
+
+	m_iDebugComoboDamage += iDamage;
+
+	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+
+	if (m_iHP < 0)
+	{
+		m_iHP = 0;
+	}
+
+	return RESULT_HIT;
+}
+
+void CPlay_Hit::MoveToEnemy_Ground(_float fMaxDistance, _float fOffset)
+{
+	// 나2
+	//적 9
+	//거리 7
+
+	_float fEnemyPosX = m_pEnemy->Get_fPositionX();
+	_float fMyPosX = Get_fPositionX();
+
+	//오른쪽 보고있는경우
+	if (m_iLookDirection == 1)
+	{
+		//적이 왼쪽에 있는경우엔 제자리
+		if(fEnemyPosX <= fMyPosX)
+			return;
+
+
+		//이제 나머지 경우는 적이 오른쪽임.
+
+		_float fDistance = fEnemyPosX - fMyPosX;
+
+		//적이 오른쪽이고, 거리가 최대치보다 먼 경우 최대치까지만 이동
+		if (fDistance > fMaxDistance)
+		{
+			Add_Move({ fMaxDistance,0.f });
+		}
+
+		//적이 오른쪽이고, 거리가 최대치보다 작은경우 적의 앞까지 이동
+		else //if (fDistance <= fMaxDistance)
+		{
+			//myPos가 fEnemyPos가 되도록 fDistance만큼 이동해야하는데 Offset이 빠져야한다?
+			Add_Move({ fDistance - fOffset,0.f });
+		}
+
+
+	}
+
+	//왼쪽을 보고 있는 경우
+	else if (m_iLookDirection == -1)
+	{
+		//적이 오른에 있는경우엔 제자리
+		if (fEnemyPosX >= fMyPosX)
+			return;
+
+
+		//이제 나머지 경우는 적이 왼쪽임.
+
+		_float fDistance = fMyPosX - fEnemyPosX ;
+
+		//적이 왼쪽이고, 거리가 최대치보다 먼 경우 최대치까지만 이동
+		if (fDistance > fMaxDistance)
+		{
+			Add_Move({ -fMaxDistance,0.f });
+		}
+
+		//적이 오른쪽이고, 거리가 최대치보다 작은경우 적의 앞까지 이동
+		else //if (fDistance <= fMaxDistance)
+		{
+			//myPos가 fEnemyPos가 되도록 fDistance만큼 이동해야하는데 Offset이 빠져야한다?
+			Add_Move({ -fDistance + fOffset,0.f });
+		}
+	}
+
+
+
+}
+
 
 
 CPlay_Hit* CPlay_Hit::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -1633,8 +2816,6 @@ void CPlay_Hit::Free()
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
 
-	Safe_Release(m_pModelCom_Opening);
-	Safe_Release(m_pModelCom_Skill);
 	Safe_Release(m_p2PTextureCom);
 
 }

@@ -189,7 +189,7 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 	return S_OK;
 }
 
-inline float Clamp(float value, float minVal, float maxVal)
+inline float Lobby_Goku_Clamp(float value, float minVal, float maxVal)
 {
 	if (value < minVal)
 		return minVal;
@@ -215,7 +215,7 @@ void CLobby_Goku::RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDel
 
 	// 두 벡터 사이의 각도 계산
 	float fDot = XMVectorGetX(XMVector3Dot(vCurrentLook, vTargetLook));
-	fDot = Clamp(fDot, -1.0f, 1.0f); // acos의 정의역을 벗어나지 않도록 클램핑
+	fDot = Lobby_Goku_Clamp(fDot, -1.0f, 1.0f); // acos의 정의역을 벗어나지 않도록 클램핑
 	float fAngle = acosf(fDot);
 
 	// 회전 방향 결정 (외적의 y 성분 사용)

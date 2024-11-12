@@ -14,7 +14,7 @@
 
 #include "Animation.h"
 #include <cmath>
-
+#include "SpaceMeteoBreak.h"
 #include "Effect_Layer.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
@@ -68,6 +68,15 @@ vector<CInput> CCharacter::Command_236Special_Side =
 	{MOVEKEY_DOWN, ATTACK_SPECIAL}
 };
 
+vector<CInput> CCharacter::Command_236Special_Side_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL}
+};
+
 vector<CInput> CCharacter::Command_214Special =
 {
 	{MOVEKEY_DOWN, ATTACK_NONE},
@@ -113,7 +122,14 @@ vector<CInput> CCharacter::Command_236UltimateAttack_Side =
 	{MOVEKEY_DOWN, ATTACK_GRAB}
 };
 
-
+vector<CInput> CCharacter::Command_236UltimateAttack_Side_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_GRAB}
+};
 
 vector<CInput> CCharacter::Command_BackDash =
 {
@@ -152,6 +168,8 @@ vector<CInput> CCharacter::Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_R
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
 
 vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
+
+vector<CInput> CCharacter::Command_Up_SpecialAttack = { {MOVEKEY_UP, ATTACK_SPECIAL} };
 
 
 
@@ -622,7 +640,7 @@ _bool CCharacter::InputCommand()
 		}
 
 
-		if (m_pGameInstance->Key_Down(DIK_9))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD9))
 		{
 			iAttackkey = ATTACK_GRAB;
 
@@ -1184,7 +1202,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 		//원작이랑 가깝긴 한데, 21호, chase 공격충돌 등 이런저런 문제로 취소.   이걸로 할꺼면 준비시간 늘리고 초기속도 빠르게하고 조정해야할게 많음
 		//사전준비자세만으로는 괜찮음 초기속도 어쩌지?
-		Add_Move({ -1.f*fTimeDelta,fTimeDelta * 4.8f });
+		Add_Move({ -1.f * fTimeDelta,fTimeDelta * 4.8f });
 
 		m_fAccChaseTime += fTimeDelta;
 
@@ -1194,8 +1212,11 @@ void CCharacter::Chase2(_float fTimeDelta)
 			m_fJumpPower = fJumpPower;
 
 			//Character_Make_Effect(TEXT("BurstR-02"));
-	
-			m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+			m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			//BurstR-02_Rotated_Left
 
 			//m_pEffect_Manager->Copy_Layer(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
 
@@ -1307,9 +1328,32 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	//애니메이션 이용을 위해 각도값을 특수 처리 할 필요가 있음
 	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
-	angle = (angle + 90) * 0.5f;
 
-	cout << angle << endl;
+	_float EffectAngle = angle;
+
+	if (m_pChaseEffectLayer != nullptr)
+	{
+
+
+		if(m_iLookDirection == 1)
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
+		else if (m_iLookDirection == -1)
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
+
+		_float xdegree = XMVectorGetX(m_vChaseDir);
+
+		//m_pChaseEffectLayer->Set_Layer_Position({ XMVectorGetX(m_vChaseDir)*1.5f, XMVectorGetY(m_vChaseDir)*1.5f,0.f });
+
+
+		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
+
+		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+
+		
+
+	}
+
+	angle = (angle + 90) * 0.5f;
 
 	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
 	{
@@ -1341,115 +1385,15 @@ void CCharacter::Chase2(_float fTimeDelta)
 	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
 	Set_CurrentAnimationPositionJump(angle);
 
+	
 
-
+}
 	//반드시 Set이던 시절 코드 백업용.
-	/*
 	//m_bChase 가 true일 때만 들어올것
 
 
 
-	//디버그용 예외처리.  멈춰버리면 지랄남
-	if (fTimeDelta > 1)
-	{
-		return;
-	}
 
-
-
-	m_fAccChaseTime += fTimeDelta;
-	//if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex && m_fAccChaseTime > 0.3f)
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iFallAnimationIndex)
-	{
-
-		if (m_fAccChaseTime > 0.2f)
-		{
-			m_pModelCom->SetUp_Animation(m_iChaseAnimationIndex, false);
-			m_fJumpPower = fJumpPower;
-		}
-		else
-		{
-			return;
-		}
-	}
-
-	else if (m_fAccChaseTime > 5.f)
-	{
-		m_bChase = false;
-		return;
-	}
-
-
-	//CTransform* pTarget = static_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_GAMEPLAY, TEXT("Layer_Target"), TEXT("Com_Transform")));
-	CTransform* pTarget = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")));
-
-	_vector vTargetPos = pTarget->Get_State(CTransform::STATE_POSITION);
-
-	_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-
-
-
-	_float vLength = GetVectorLength((vTargetPos - vMyPos));
-	if (vLength < 0.5f) //0.3
-	{
-		m_bChase = false;
-
-
-
-		//테스트
-		m_fAccChaseTime = 0.f;
-		m_fGravityTime = 0.185f;
-		m_pModelCom->SetUp_Animation(m_iFallAnimationIndex, false);
-
-
-		return;
-	}
-
-
-	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
-	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
-
-
-
-
-	//애니메이션 이용을 위해 각도값을 특수 처리 할 필요가 있음
-	_float angle = atan2(XMVectorGetY(m_vChaseDir), XMVectorGetX(m_vChaseDir)) * (180.0 / 3.14);
-	angle = (angle + 90) * 0.5f;
-
-	cout << angle << endl;
-
-	if (0 < angle && angle < 90)  //적이 오른쪽에 있는 경우
-	{
-		//캐릭터 보는 방향 오른쪽으로 변경
-		FlipDirection(1);
-	}
-
-	else if (angle > 90)   //적이 왼쪽 위에 있는 경우
-	{
-		//110의 경우 70으로 바꿔야 한다.    초과값 20.   90으로부터 초과값 만큼 빼면 됨
-		// angle = 90 - (90 - angle);    =  180-angle;
-
-		FlipDirection(-1);
-		angle = 180 - angle;
-	}
-	else if (angle < 0)   //적이 왼쪽에 아래에 있는 경우
-	{
-		FlipDirection(-1);
-		angle = -angle;
-	}
-
-
-	//추적 속도를 점점 빠르게
-	//m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * 0.5f);
-	m_pTransformCom->Add_MoveVector(m_vChaseDir * m_fAccChaseTime * m_fAccChaseTime );
-
-
-
-	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
-	Set_CurrentAnimationPositionJump(angle);
-
-	*/
-}
 
 /*
 void CCharacter::Chase_Ready(_float fTimeDelta)
@@ -1520,6 +1464,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta)
 
 }
 */
+
 void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 {
 	if (m_bChaseEnable == false || m_pModelCom->m_iCurrentAnimationIndex == m_iSparkingAnimationIndex)
@@ -1536,7 +1481,11 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 
 	if (iCheck == 1 && bNoReady != true)
 	{
-		Character_Make_BoneEffect("GD_fist_R", TEXT("BurstR-01"));
+		//Character_Make_Effect(TEXT("BurstR-01"));
+		m_pEffect_Manager->Copy_Layer(TEXT("BurstR-01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+		//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstR-01"));
+
 	}
 
 	m_bChaseEnable = false;
@@ -1668,7 +1617,7 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 		//우다다 횟수 소모할때까지 공격.   
 		if (m_iGrabLoof > 0)
 		{
-			cout << m_iGrabLoof << endl;
+			//cout << m_iGrabLoof << endl;
 			m_iGrabLoof--;
 			m_pModelCom->CurrentAnimationPositionJump(26.f);
 		}
@@ -1795,6 +1744,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 
 		m_pEffect_Manager->Copy_Layer(TEXT("EnergieSDO-01"), m_pTransformCom->Get_WorldMatrixPtr());
 		m_pEffect_Manager->Copy_Layer(TEXT("EnergieSDO-02"), m_pTransformCom->Get_WorldMatrixPtr());
+
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))
@@ -2101,6 +2051,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 			case Client::HIT_HEAVY_DOWN:
 			case Client::HIT_KNOCK_AWAY_LEFT:
 			case Client::HIT_KNOCK_AWAY_UP:
+			case Client::HIT_KNOCK_AWAY_UP_GRAVITY:
 			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
 			case Client::HIT_SPIN_AWAY_LEFTUP:
 			case Client::HIT_SPIN_AWAY_UP:
@@ -2164,7 +2115,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 
 	m_iDebugComoboDamage += iDamage;
-	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+	//cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
 
 
 	//AttackObject로 옮겨야한다?
@@ -2216,6 +2167,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		m_fImpuse = Impus;
 	}
 
+
+	m_bWallBounce = true;
 
 	switch (eAnimation)
 	{
@@ -2306,8 +2259,25 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		Set_ForcedGravityTime_LittleUp();
 	}
 	break;
+
+	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE:
+	{
+		m_bWallBounce = false;
+		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
+		//m_pModelCom->CurrentAnimationPositionJump()
+		if (Get_fHeight() == 0)
+		{
+			Add_Move({ 0.f,0.2f });
+		}
+		//Set_CurrentAnimationPositionJump(0.f);
+		Set_ForcedGravityDown();
+
+	}
+	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT:
 	{
+		m_bWallBounce = true;
+
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
 		//m_pModelCom->CurrentAnimationPositionJump()
 		if (Get_fHeight() == 0)
@@ -2320,11 +2290,21 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP:
 	{
+		m_bAwayUpGravity = false;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		Set_ForcedGravityTime_LittleUp();
 	}
 	break;
+	case Client::HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY:
+	{
+		m_bAwayUpGravity = true;
+		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
+		//Set_ForcedGravityTime_LittleUp();
 
+		Set_ForcveGravityTime(0.f);
+
+	}
+	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFTDOWN:
 	{
 		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
@@ -2342,7 +2322,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	case Client::HitMotion::HIT_SPIN_AWAY_LEFTUP:
 	{
 		Set_Animation(m_iHit_Air_Spin_LeftUp, false);
-		m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
+		
+		if(Get_fHeight() == 0)
+			m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
+
 		//Set_ForcedGravityTime_LittleUp();
 		Set_ForcveGravityTime(0.f);
 
@@ -2474,7 +2457,11 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 	//그 외에 맞고서 강하게 날라가는 중에는 전용 가속도를 받음
 	else
 	{
-		m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
+		//벽에 팅길 수 있는 강공격은 그대로 날아가고, 아닌거는 중력까지 받음. 여기서 처리하려다가 중력으로 가, 고싶은데 힘드네?
+		//여기서 처리하면 Height<0 인 경우가 처리가 안되서 1프레임 땅에 묻힘
+		
+		if(m_bWallBounce)
+			m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta, m_fImpuse.y * fTimeDelta, 0 });
 
 		//벽에 튕길 수 있는 공격
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
@@ -2485,29 +2472,41 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 			//if (Get_fPositionX() < -12.f || Get_fPositionX() > 12.f || fabsf(Get_fPositionX() - m_pEnemy->Get_fPositionX()) > 8)
 			if(Check_bWall())
 			{
-				Set_Animation(m_iHit_WallBouce);
 
-				Character_Make_Effect(TEXT("Right_Wall_Crash"));
+				if(m_bWallBounce)
+				{
+					Set_Animation(m_iHit_WallBouce);
 
-				CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-				mainCamera->StartCameraShake(0.5f, 0.2f);
+					Character_Make_Effect(TEXT("Right_Wall_Crash"));
 
-				Set_AnimationStop(0.2f);
+					CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+					mainCamera->StartCameraShake(0.5f, 0.2f);
 
-				//playingAnimation == false 에서 처리?
-				//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
+					Set_AnimationStop(0.2f);
 
-				//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
-				Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+					//playingAnimation == false 에서 처리?
+					//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
 
-				//Set_ForcedGravityTime_LittleUp();
-				Set_ForcveGravityTime(0.f);
+					//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
+					Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+
+					//Set_ForcedGravityTime_LittleUp();
+					Set_ForcveGravityTime(0.f);
 
 
-				//새로운 스턴
-				m_fMaxStunTime = 1.f;
-				m_fAccStunTime = 0.f;
+					//새로운 스턴
+					m_fMaxStunTime = 1.f;
+					m_fAccStunTime = 0.f;
+				}
+				else
+				{
+					//애니메이션 끝으로 이동... 할 필요가 있나?
+					//if (m_pModelCom->m_iCurrentAnimationIndex== m_iHit_Away_LeftAnimationIndex && m_pModelCom->m_fCurrentAnimPosition < 18.8)
+					//{
+					//	Set_CurrentAnimationPositionJump(18.99f);
+					//}
 
+				}
 
 			}
 
@@ -2519,6 +2518,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 void CCharacter::Set_BreakFall_Ground()
 {
+	
+
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
@@ -2599,6 +2600,12 @@ void CCharacter::BreakFall_Air()
 		}
 
 	}
+}
+
+void CCharacter::Set_bNoGravity(_bool bNoGravity)
+{
+	m_bNoGravity = bNoGravity;
+	m_fNoGravitySafeTime = 0.f;
 }
 
 _bool CCharacter::Update_Tag_In(_float fTimeDelta)
@@ -3582,6 +3589,9 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					else
 						m_fMaxSparkingTime = 15.f;
 
+					
+					//m_fMaxSparkingTime = 2005.f;
+				
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
 
@@ -3883,6 +3893,7 @@ void CCharacter::Set_bGrabDraw(_bool bGrabDraw)
 
 _bool CCharacter::Check_bWall()
 {
+
 
 	if (m_bDynamicMove)
 		return false;
@@ -4191,6 +4202,10 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 }
 
 
+
+
+
+
 _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection)
 {
 	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
@@ -4201,6 +4216,7 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 
 
 	_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1- (2 * bFlipDirection)), 1.f, 1.f)* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+	
 	XMFLOAT4X4 Result4x4;
 	XMStoreFloat4x4(&Result4x4, ovelapMatrix);
 
@@ -4210,6 +4226,32 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 
 }
 
+
+
+/*
+_float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection, _float fYRotation)
+{
+	_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	_float3 fPos;
+	XMStoreFloat3(&fPos, vPos);
+
+	//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+
+	_matrix ovelapMatrix;
+
+	if(fYRotation == 1000)
+		 ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1- (2 * bFlipDirection)), 1.f, 1.f)* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+	else
+		ovelapMatrix = XMMatrixScaling((_float)Get_iDirection() * (1 - (2 * bFlipDirection)), 1.f, 1.f)
+		* XMMatrixRotationY(fYRotation)  // Replace with desired rotation function and angle
+		* XMMatrixTranslation(fPos.x + (fOffset.x * Get_iDirection()), fPos.y + fOffset.y, fPos.z);
+
+	XMFLOAT4X4 Result4x4;
+	XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+
+	return Result4x4;
+}
+*/
 /*
 _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirection, _float3 fScale)
 {
@@ -4230,7 +4272,8 @@ _float4x4 CCharacter::Character_Make_Matrix(_float2 fOffset, _bool bFlipDirectio
 }
 */
 
-void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
+
+CEffect_Layer* CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection)
 {
 
 
@@ -4243,9 +4286,29 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 	else
 		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection);
 
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+	return CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(strEffectName, &Result4x4);
+
 }
 
+
+/*
+CEffect_Layer* CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection, _float fYRotation)
+{
+	_float4x4 Result4x4;
+
+	if (fOffset.x == 0 && fOffset.y == 0 && bFlipDirection == false && fYRotation == 0.f)
+	{
+		XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+	}
+	else
+		Result4x4 = Character_Make_Matrix(fOffset, bFlipDirection,fYRotation);
+
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Result4x4);
+	return CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(strEffectName, &Result4x4);
+}
+*/
 
 /*
 void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, _bool bFlipDirection, _float3 fScale)
@@ -4300,6 +4363,12 @@ void CCharacter::Update_LoofAnimationCreate(_float fTimeDelta)
 			Character_Make_Effect(m_strEffectLoofCreateName, m_fEffectLoofCreateOffset, m_bEffectLoofCreateFlip);
 		}
 	}
+
+}
+
+const _float4x4* CCharacter::Get_pTransformMatrix()
+{
+	return m_pTransformCom->Get_WorldMatrixPtr();
 
 }
 
@@ -4486,6 +4555,9 @@ void CCharacter::AnimeEndNextMoveCheck()
 void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
 
+	
+
+
 	m_bAttackBackEvent = false;
 
 	if (iAnimationIndex == m_iIdleAnimationIndex)
@@ -4505,8 +4577,22 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 
 
-	if (m_bChase == true)
+
+	if (m_bChase == true )
 	{
+		return;
+	}
+
+	if(m_bNoGravity == true)
+	{
+		m_fNoGravitySafeTime += fTimeDelta;
+
+		if (m_fNoGravitySafeTime > 0.3f)
+		{
+			m_bNoGravity = false;
+			m_fNoGravitySafeTime = 0.f;
+		}
+
 		return;
 	}
 
@@ -4590,7 +4676,21 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 
 			//스매시 당했으면 시간 더하지 않음.   공중 아래강 중에도 더하지 않음
-			if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop()))
+			// 
+			//다만 벽에 안팅기는 우측 스매시의 경우 더함
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex && m_bWallBounce == false)
+			{
+				m_fGravityTime += fTimeDelta;
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+			}
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_UpAnimationIndex && m_bAwayUpGravity)
+			{
+				m_fGravityTime += fTimeDelta;
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+			}
+
+			else if (Check_bCurAnimationisHitAway() || m_pModelCom->m_iCurrentAnimationIndex == m_iAttack_AirUpper || (m_bAttackGravity == false && Check_bCurAnimationisHalfGravityStop()))
 			{
 				;
 			}
@@ -5028,6 +5128,15 @@ HRESULT CCharacter::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CCharacter::Map_DestructiveFinish()
+{
+	CGameObject* pGameObject = *(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_MeteoBreak")).begin());
+
+	/* 나중에 맵 조건에 따른 분기 처리 해야함*/
+	static_cast<CSpaceMeteoBreak*>(pGameObject)->Start_Space_DestructiveFinish();
+	
 }
 
 void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)

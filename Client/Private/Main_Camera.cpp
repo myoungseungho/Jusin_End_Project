@@ -42,6 +42,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_FREE:
 			name = "Camera_Free";
 			break;
+		case VIRTUAL_CAMERA_MAP:
+			name = "Camera_Map";
+			break;
 		case VIRTUAL_CAMERA_SON_HEAVY:
 			name = "Camera_Son_Heavy";
 			break;

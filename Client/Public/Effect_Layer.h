@@ -57,6 +57,7 @@ public:
 	_float3 Get_Layer_Position();
 	_float3 Get_Layer_Rotation();
 
+
 public:
 	class CTransform* m_pTransformCom = { nullptr };
 	class CTransform* m_pCopyTransformCom = { nullptr };

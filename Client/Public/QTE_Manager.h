@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Client_Defines.h"
 #include "GameObject.h"
-
+#include "QTE_Hit.h"
 BEGIN(Engine)
 class CGameInstance;
 class CGameObject;
@@ -19,6 +19,8 @@ private:
 	enum QTE_ID
 	{
 		QTE_ID_SAME_GRAB,
+		QTE_ID_HIT,
+		QTE_ID_CONTINUOUS_ATTACK,
 		QTE_ID_END
 	};
 private:
@@ -35,6 +37,8 @@ public:
 	CGameInstance* m_pGameInstance = { nullptr };
 
 	vector<class CGameObject*> m_vecQTE;
+
+	void Start_Hit(CQTE_Hit::Hit_Situation_ID _ID);
 
 public:
 	virtual void Free() override;

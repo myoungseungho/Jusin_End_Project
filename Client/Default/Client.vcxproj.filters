@@ -52,9 +52,6 @@
     <Filter Include="02.GameObjects\Map\Space\Earth\EarthLight">
       <UniqueIdentifier>{7c74267a-a233-4365-982d-8d7c3f82ef7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Space\Ground">
-      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Map\Space\Stage">
       <UniqueIdentifier>{5e9d2120-ef8b-45f4-a05c-191c764956f5}</UniqueIdentifier>
     </Filter>
@@ -373,14 +370,53 @@
     <ClCompile Include="..\Private\QTE_Manager.cpp">
       <Filter>02.GameObjects\QTE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\QTE_UI_Icon.cpp">
-      <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Same_Grab.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_Situation.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Result.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Space.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Effect.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Play_Hit.cpp">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
@@ -819,14 +855,53 @@
     <Filter Include="02.GameObjects\QTE">
       <UniqueIdentifier>{e7f7b9ba-ed2f-4138-ae38-9edc7ca5be99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\QTE\QTE_UI_ICON">
-      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab">
       <UniqueIdentifier>{4ec23716-9ecc-4934-ac6e-d8718634652a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
       <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge">
+      <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit">
+      <UniqueIdentifier>{f107e39d-5d21-4bb0-bb46-3c509f791381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon">
+      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon">
+      <UniqueIdentifier>{efca7a0e-a04c-4cb2-a112-95f455bffeaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation">
+      <UniqueIdentifier>{31e25037-8d1e-40db-9f9d-35e27b666a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon">
+      <UniqueIdentifier>{d8900946-436d-4160-96b3-821a7e2bb506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result">
+      <UniqueIdentifier>{abf39edf-0e0e-4cf0-9a28-3cd3c2715a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack">
+      <UniqueIdentifier>{796c94e6-b4de-4bcd-8f7b-542923268867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space">
+      <UniqueIdentifier>{9e7e2f64-d81c-4111-8fd5-a8d69a4970b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge">
+      <UniqueIdentifier>{33d8cbad-e662-4d78-b92e-b15c85290876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect">
+      <UniqueIdentifier>{8a70ad41-bfdf-4608-a3ba-ea7a4b0b3fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Effect">
+      <UniqueIdentifier>{1669c03a-36fb-44c2-b4be-90a5b2aa48f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle">
+      <UniqueIdentifier>{666b375a-ae68-4548-8b4c-7d9929afb45b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle">
+      <UniqueIdentifier>{955fee1a-d5ca-43ab-9a86-673cadd8a146}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Character\Play_Hit">
       <UniqueIdentifier>{9979946a-150e-4d0b-bfb6-70530269ec1d}</UniqueIdentifier>
@@ -836,6 +911,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Space\MeteoBreak">
       <UniqueIdentifier>{75ba9574-6da0-4042-a2f5-9a5e90d9c39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Ground">
+      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1364,8 +1442,8 @@
     <ClInclude Include="..\Public\QTE_Manager.h">
       <Filter>02.GameObjects\QTE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\QTE_UI_Icon.h">
-      <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Same_Grab.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
@@ -1376,6 +1454,45 @@
     <ClInclude Include="..\Public\Play_Goku.h">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\QTE_UI_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_Situation.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Result.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Space.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Effect.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
+  </ClInclude>
     <ClInclude Include="..\Public\Play_Hit.h">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
     </ClInclude>
@@ -1753,6 +1870,9 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Particle_VtxPoint.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

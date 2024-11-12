@@ -85,13 +85,7 @@ void CBattleInterface_Manager::Gain_KiGuage(_ushort iKi, _ushort iTeam)
 
 _bool CBattleInterface_Manager::Use_KiGuage(_ushort irequirementKi, _ushort iTeam)
 {
-
-    //디버그용 코드 반드시 성공
-    if (m_pGameInstance->Key_Pressing(DIK_INSERT))
-    {
-        return true;
-    }
-
+   
     if (m_iKiNumber[iTeam - 1] >= irequirementKi)
     {
         m_iKiNumber[iTeam - 1] -= irequirementKi;

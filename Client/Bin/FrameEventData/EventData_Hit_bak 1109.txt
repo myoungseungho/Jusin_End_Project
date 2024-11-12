@@ -1,0 +1,758 @@
+
+
+//,301 리플렉터. (공용)
+//,PLAY_HIT,HTN301_body,0,AnimSpeedChange,0.015,35
+//,PLAY_HIT,HTN301_body,0,AttackEvent,0
+//,PLAY_HIT,HTN301_body,14.1,AnimSpeedChange,0.015,70
+//,PLAY_HIT,HTN301_body,35,AttackEvent,1
+//,PLAY_HIT,HTN301_body,36,AnimSpeedChange,0.015,20
+
+PLAY_HIT,HTN301_body,0,AnimSpeedChange,0.015,35
+PLAY_HIT,HTN301_body,0,AttackEvent,0
+PLAY_HIT,HTN301_body,14.1,AnimSpeedChange,0.015,90
+PLAY_HIT,HTN301_body,25.1,AnimSpeedChange,0.015,90 
+PLAY_HIT,HTN301_body,40,AttackEvent,1
+PLAY_HIT,HTN301_body,45,AnimSpeedChange,0.015,20
+
+
+//,오프닝 사이드 스탠딩 (공용)  78
+PLAY_HIT,HTN601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+PLAY_HIT,HTN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+
+//,라운드 넘어갈때 맞대기1 (공용) 81
+PLAY_HIT,HTN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
+PLAY_HIT,HTN620cs_body,100,NextAnimation,630
+
+
+//,마지막 상태 정지모션 (공용) 83
+PLAY_HIT,HTN630_body,0.000000,AnimSpeedChange,0.013000,59.798000
+
+
+//,라운드 넘어갈때 맞대기2 (공용)
+PLAY_HIT,HTN621cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
+//,PLAY_HIT,HTN621cs_body,80.000000,AnimSpeedChange,0.013000,40.000000
+PLAY_HIT,HTN621cs_body,100,NextAnimation,631
+
+
+//,마지막 상태 정지모션 (공용)
+PLAY_HIT,HTN631_body,0.000000,AnimSpeedChange,0.013000,59.798000
+
+
+//,승리용 애니메이션
+PLAY_HIT,HTN610cs,0.000000,AnimSpeedChange,0.034,112.323
+
+
+
+//, 승리용 이미지 (공용) (정지?)
+PLAY_HIT,HTN700_body,0.000000,AnimSpeedChange,0.5,10
+
+PLAY_HIT,HTN011_body,0.000000,AnimSpeedChange,0.010000,25.000000
+PLAY_HIT,HTN000_body,54.500000,AnimSpeedChange,0.010000,25.000000
+
+
+
+//,가드정지관련코드는 다른곳에서
+//,서서 방향전환 (공용) 
+PLAY_HIT,HTN001_body,0,AnimSpeedChange,0.010000,60.000000
+
+
+//,앉아방향전환(공용)
+PLAY_HIT,HTN013_body,0,AnimSpeedChange,0.010000,60.000000
+
+//,공중방향전환 (공용)
+PLAY_HIT,HTN025_body,0,AnimSpeedChange,0.010000,60.000000
+
+
+
+//, 002 뭔지모름 (공용)
+
+//,앉기 (공용) 4
+PLAY_HIT,HTN010_body,0.000000,AnimSpeedChange,0.010000,22.625000
+
+//,앉아있기 (공용) 5
+PLAY_HIT,HTN011_body,0.000000,AnimSpeedChange,0.010000,22.625000
+
+
+//,점프 상승 (공용) 7
+PLAY_HIT,HTN021_body,0.000000,AnimSpeedChange,0.010000,37.172001
+
+//,점프 고점~하강 (공용) 9
+PLAY_HIT,HTN022_body,0.000000,AnimSpeedChange,0.010000,37.172001
+
+//,앞으로 걷기 (공용) 10
+PLAY_HIT,HTN030_body,0.000000,AnimSpeedChange,0.010000,41.212002
+PLAY_HIT,HTN030_body,0,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,2,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,4,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,6,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,8,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,10,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,12,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,14,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,16,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,18,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,20,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,22,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,24,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,26,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,28,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,30,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,32,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,34,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,36,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,38,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,40,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,42,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,44,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,46,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,48,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,49,ObjectMove,0.03,0,0,0
+
+
+PLAY_HIT,HTN030_body,1,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,3,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,5,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,7,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,9,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,11,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,13,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,15,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,17,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,19,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,21,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,23,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,25,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,27,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,29,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,31,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,33,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,35,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,37,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,39,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,41,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,43,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,45,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,47,ObjectMove,0.03,0,0,0
+
+PLAY_HIT,HTN030_body,50,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,51,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,52,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,53,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,54,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,55,ObjectMove,0.03,0,0,0
+PLAY_HIT,HTN030_body,55,PositionChange,5
+
+//,뒤로 걷기 (공용) 11
+PLAY_HIT,HTN031_body,0.000000,AnimSpeedChange,0.010000,41.212002
+
+
+PLAY_HIT,HTN031_body, 0,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 2,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 4,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 6,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 8,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_HIT,HTN031_body, 1,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 3,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 5,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 7,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 9,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_HIT,HTN031_body, 10,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 12,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 14,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 16,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 18,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 20,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 22,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 24,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 26,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 28,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 30,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 32,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 34,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 36,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 38,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 40,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 42,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 44,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 46,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 48,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 49,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_HIT,HTN031_body, 11,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 13,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 15,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 17,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 19,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 21,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 23,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 25,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 27,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 29,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 31,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 33,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 35,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 37,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 39,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 41,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 43,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 45,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 47,ObjectMove,-0.03, 0, 0, 0
+
+PLAY_HIT,HTN031_body, 50,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 51,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 52,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 53,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 54,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 55,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 56,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 57,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 58,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 59,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 60,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 61,ObjectMove,-0.03, 0, 0, 0
+PLAY_HIT,HTN031_body, 62,ObjectMove,-0.03, 0, 0, 0
+
+
+//,다리기준으로 이동.  손이 꿈틀거림
+//,PLAY_HIT,HTN031_body, 62,PositionChange,2
+//,PLAY_HIT,HTN031_body, 65.6,PositionChange,0.2
+
+//,손 기준으로 이동, 다리가 조금씩 움찔거림
+PLAY_HIT,HTN031_body, 60,PositionChange,6
+
+
+
+//,앞으로 달리기 (공용) 12
+PLAY_HIT,HTN032_body,0.000000,AnimSpeedChange,0.010000,60.202000
+
+PLAY_HIT,HTN032_body,0,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,1,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,2,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,3,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,4,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,5,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,6,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,7,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,8,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,9,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,10,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,11,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,12,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,13,ObjectMove, 0.1, 0, 0, 0
+PLAY_HIT,HTN032_body,13,PositionChange,0
+
+
+//,백대쉬 (공용) 13
+PLAY_HIT,HTN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
+PLAY_HIT,HTN033_body,0.001000,PlaySound,11,0,0.5
+PLAY_HIT,HTN033_body, 0,ObjectMove, -0.3, 0, 0, 0
+PLAY_HIT,HTN033_body, 1,ObjectMove, -0.3, 0, 0, 0
+PLAY_HIT,HTN033_body, 2,ObjectMove, -0.2, 0, 0, 0
+PLAY_HIT,HTN033_body, 3,ObjectMove, -0.2, 0, 0, 0
+PLAY_HIT,HTN033_body, 4,ObjectMove, -0.1, 0, 0, 0
+PLAY_HIT,HTN033_body, 5,ObjectMove, -0.1, 0, 0, 0
+PLAY_HIT,HTN033_body, 6,ObjectMove, -0.08, 0, 0, 0
+PLAY_HIT,HTN033_body, 7,ObjectMove, -0.08, 0, 0, 0
+PLAY_HIT,HTN033_body, 8,ObjectMove, -0.08, 0, 0, 0
+PLAY_HIT,HTN033_body, 9,ObjectMove, -0.08 0, 0, 0
+PLAY_HIT,HTN033_body,10,ObjectMove, -0.08, 0, 0, 0
+PLAY_HIT,HTN033_body,11,ObjectMove, -0.07, 0, 0, 0
+PLAY_HIT,HTN033_body,12,ObjectMove, -0.05, 0, 0, 0
+PLAY_HIT,HTN033_body,13,ObjectMove, -0.03, 0, 0, 0
+PLAY_HIT,HTN033_body,14,ObjectMove, -0.01, 0, 0, 0
+
+//,앞대쉬 끝 (공용) 15
+PLAY_HIT,HTN035_body,0.000000,AnimSpeedChange,0.010000,90.505997
+PLAY_HIT,HTN035_body,0.001000,PlaySound,11,0,0.5
+PLAY_HIT,HTN035_body,0,ObjectMove, 0.06, 0, 0, 0
+PLAY_HIT,HTN035_body,1,ObjectMove, 0.06, 0, 0, 0
+PLAY_HIT,HTN035_body,2,ObjectMove, 0.06, 0, 0, 0
+PLAY_HIT,HTN035_body,3,ObjectMove, 0.06, 0, 0, 0
+PLAY_HIT,HTN035_body,4,ObjectMove, 0.05, 0, 0, 0
+PLAY_HIT,HTN035_body,5,ObjectMove, 0.05, 0, 0, 0
+PLAY_HIT,HTN035_body,6,ObjectMove, 0.05, 0, 0, 0
+PLAY_HIT,HTN035_body,7,ObjectMove, 0.05, 0, 0, 0
+PLAY_HIT,HTN035_body,8,ObjectMove, 0.05, 0, 0, 0
+PLAY_HIT,HTN035_body,9,ObjectMove, 0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,10,ObjectMove,0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,11,ObjectMove,0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,12,ObjectMove,0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,13,ObjectMove,0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,14,ObjectMove,0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,15,ObjectMove,0.04, 0, 0, 0
+PLAY_HIT,HTN035_body,16,ObjectMove,0.03, 0, 0, 0
+PLAY_HIT,HTN035_body,17,ObjectMove,0.03, 0, 0, 0
+PLAY_HIT,HTN035_body,18,ObjectMove,0.02, 0, 0, 0
+PLAY_HIT,HTN035_body,19,ObjectMove,0.02, 0, 0, 0
+PLAY_HIT,HTN035_body,20,ObjectMove,0.02, 0, 0, 0
+PLAY_HIT,HTN035_body,21,ObjectMove,0.02, 0, 0, 0
+PLAY_HIT,HTN035_body,22,ObjectMove,0.01, 0, 0, 0
+PLAY_HIT,HTN035_body,23,ObjectMove,0.01, 0, 0, 0
+
+
+//,백대쉬끝 (공용) 16
+PLAY_HIT,HTN036_body,0.000000,AnimSpeedChange,0.010000,90.505997
+
+
+//, R추적.  position이 방향값인데 그냥 회전시키는게 더 편할지도.   위쪽을 볼수록 배가 보이도록 모델 자체가 회전함
+//, 0 : 아래, 45:오른쪽, 90 위쪽
+//,PLAY_HIT,HTN034_body,0.000000,AnimSpeedChange,0.010000,60.202000
+
+
+//,037 애니메이션 모름.
+
+//추적 준비 (공용) 18
+PLAY_HIT,HTN038_body,0.000000,AnimSpeedChange,0.010000,61.818001
+
+
+//,서서 가드 (공용)
+PLAY_HIT,HTN040_body,0,AnimSpeedChange,0.010000,61.818001
+PLAY_HIT,HTN040_body,0,FrameMove,10
+
+//,앉아 가드 (공용)
+PLAY_HIT,HTN041_body,0,AnimSpeedChange,0.010000,61.818001
+PLAY_HIT,HTN041_body,0,FrameMove,10
+
+//,공중 가드 (공용)
+PLAY_HIT,HTN042_body,0,AnimSpeedChange,0.010000,61.818001
+PLAY_HIT,HTN042_body,0,FrameMove,10
+
+
+//,서서 피격 (뒤로밀림) 5프레임에서 멈춤, 10에서끝남...?  경직시간만큼 position을 가짐...왜?  중공격 10~24 **
+//,PLAY_HIT,HTN050_body,0,FrameMove,5
+//,PLAY_HIT,HTN050_body,10,FrameMove,5
+PLAY_HIT,HTN050_body,0.000000,AnimSpeedChange,0.064000,86.060997
+PLAY_HIT,HTN050_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN050_body,30.1,AnimSpeedChange,0.064000,86.060997
+
+//,숙이는 피격모션
+PLAY_HIT,HTN051_body,0.000000,AnimSpeedChange,0.064000,5
+PLAY_HIT,HTN051_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN051_body,0,FrameMove,15
+
+//,앉아 피격모션
+PLAY_HIT,HTN052_body,0,AnimSpeedChange,0.020000,57.374001
+PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,203,0,1
+//,PLAY_HIT,HTN052_body,0,FrameMove,10
+
+
+//, 공중피격 약 10   스턴끝날때 40이 되도록 속도를 조정...?  스피드가  스턴시간*4라고?  상대방의 TickPerSecond를 조절하는 기능필요?
+//,PLAY_HIT,HTN060_body,0.000000,AnimSpeedChange,0.044000,49.292999
+PLAY_HIT,HTN060_body,0.000000,AnimSpeedChange,0.044000,30
+PLAY_HIT,HTN060_body,0,PositionChange,14
+PLAY_HIT,HTN060_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN060_body,30,AnimSpeedChange,0.044000,60
+PLAY_HIT,HTN060_body,40,AnimSpeedChange,0.044000,1
+PLAY_HIT,HTN060_body,56,AnimSpeedChange,0.01,2
+
+
+//,낙법 없이 바닥에 누움
+PLAY_HIT,HTN061_body,0.000000,AnimSpeedChange,0.013000,50.101002
+
+
+
+//,공중에서 엎어짐  바닥에 닿으면 100 기상낙법으로 연계됨
+PLAY_HIT,HTN062_body,0.000000,AnimSpeedChange,0.032000,69.494003
+PLAY_HIT,HTN062_body,18.098000,AnimSpeedChange,0.032000,35.959000
+
+//,앉으며기상
+PLAY_HIT,HTN063_body,0.000000,AnimSpeedChange,0.013000,50.099998
+
+
+//,064 뭔지 모르는 서서 피격자세
+
+//,서서 사망자세
+PLAY_HIT,HTN070_body,0.000000,AnimSpeedChange,0.013000,24.646999
+
+//,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
+PLAY_HIT,HTN072_body,0.000000,AnimSpeedChange,0.013000,62.223000
+//,PLAY_HIT,HTN072_body,39,FrameMove,0
+PLAY_HIT,HTN072_body,37,PositionChange,2.78
+
+//,왼쪽위로 회전하며 날아가는 자세
+PLAY_HIT,HTN073_body,0.000000,AnimSpeedChange,0.013000,62.223000
+
+//,왼쪽으로 회전하며 날아가는 자세
+PLAY_HIT,HTN074_body,0.000000,AnimSpeedChange,0.013000,62.223000
+
+
+//,강공맞고 왼쪽으로
+PLAY_HIT,HTN075_body,0.000000,AnimSpeedChange,0.030000,44.040001
+PLAY_HIT,HTN075_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN075_body,5,AnimSpeedChange,0.030000,10.353000
+
+PLAY_HIT,HTN075_body,5,AnimSpeedChange,0.030000,10.353000
+
+//, 076 벽에 부딪힘. 4duration짜리 정지모션   보통 062로 연계됨
+//,PLAY_HIT,HTN076_body,0,AnimSpeedChange,0.030000,25
+PLAY_HIT,HTN076_body,0,AnimSpeedChange,0.030000,50
+
+
+//,어퍼맞고 상승
+//,이거 왜 오공에서 주석처리되어있냐
+//,PLAY_HIT,HTN077_body,0.000000,AnimSpeedChange,0.006000,29.091000
+//,PLAY_HIT,HTN077_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 인데 공중? 살짝왼쪽위
+PLAY_HIT,HTN078_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_HIT,HTN078_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 인데 공중? 70도
+PLAY_HIT,HTN079_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_HIT,HTN079_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 위 70도
+PLAY_HIT,HTN079_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_HIT,HTN079_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+
+//,강공맞고 왼쪽 아래 35도
+PLAY_HIT,HTN080_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_HIT,HTN080_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 아래 15도
+PLAY_HIT,HTN081_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_HIT,HTN081_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+//, 공중 빙글빙글 회전
+PLAY_HITU,HTN090_body,0.000000,AnimSpeedChange,0.032000,103.433998
+
+//,기상낙법(뒤)
+PLAY_HIT,HTN100_body,0.000000,AnimSpeedChange,0.032000,70.303001
+
+
+//,공중낙법
+PLAY_HIT,HTN101_body,0.000000,AnimSpeedChange,0.018000,120
+
+PLAY_HIT,HTN101_body,0.100000,AttackEvent,0
+
+
+//,스파킹 (공용모션)
+PLAY_HIT,HTN303_body,0,AnimSpeedChange,0.017,70
+PLAY_HIT,HTN303_body,20,AnimSpeedChange,0.017,46
+
+
+//드래곤 러시 준비(공중)
+PLAY_HIT,HTN037_body,0,AnimSpeedChange,0.008,61.011
+
+//,드래곤러시 (공용모션) 
+//,PLAY_HIT,HTN304_body,0,AnimSpeedChange,0.008,10
+PLAY_HIT,HTN304_body,0,PositionChange,5.0
+//,PLAY_HIT,HTN304_body,5.1,AnimSpeedChange,0.008,40
+PLAY_HIT,HTN304_body,5.1,AnimSpeedChange,0.008,101
+PLAY_HIT,HTN304_body,5.1,AttackEvent,0
+
+PLAY_HIT,HTN304_body,23.1,PositionChange,139
+
+PLAY_HIT,HTN304_body,25.1,AnimSpeedChange,0.037,180
+
+PLAY_HIT,HTN304_body,50,AttackEvent,1
+PLAY_HIT,HTN304_body,70,AttackEvent,2
+PLAY_HIT,HTN304_body,100,AttackEvent,3
+PLAY_HIT,HTN304_body,120,AttackEvent,4
+
+
+//,드래곤 러시 체이스 (공용모션)
+PLAY_HIT,HTN306cs_body,0.000000,AnimSpeedChange,0.017000,80
+PLAY_HIT,HTN306cs_body,20,AnimSpeedChange,0.017000,40
+
+//,앉아 방향전환 (공용모션)
+PLAY_HIT,HTN013_body,0.000000,AnimSpeedChange,0.023000,120
+
+
+
+//,약공1,    41
+PLAY_HIT,HTN200_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,204,0,1
+PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,202,0,1
+PLAY_HIT,HTN200_body,20,AttackEvent,201
+PLAY_HIT,HTN200_body,22,NextAnimationCheck,333333
+PLAY_HIT,HTN200_body,25,NextAnimationCheck,333333
+PLAY_HIT,HTN200_body,30,NextAnimationCheck,333333
+
+
+//,약공2  42
+PLAY_HIT,HTN201_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,204,0,1
+PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,202,0,1
+
+//,순간이동 또는 앞으로 많이 이동 어차피 이펙트는 만들어야됨. 순간적으로 안보이는건 어떻게 처리?
+//,그냥 히트 개인만 사용가능하게 기능 만들자
+
+//,그냥 앞으로 많이 이동하면 적을 뚫을수도 있으니 어택이벤트에서 처리
+PLAY_HIT,HTN201_body,15,AttackEvent,0
+PLAY_HIT,HTN201_body,30,AttackEvent,0
+PLAY_HIT,HTN201_body,35,NextAnimationCheck,333333
+PLAY_HIT,HTN201_body,40,NextAnimationCheck,333333
+
+
+
+
+//,약공3  알아서 count로 루프돌리기
+PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.015000,80.000000
+
+//,적 앞으로 일정거리 순간이동, 순간적으로 안보임, 가로샤샤샥
+PLAY_HIT,HTN202_body,10,AttackEvent,0
+
+//,공격판정, Grab판정하고 경직 심하게주기, 가로샤샤샥, 안보이고있었다면 보이게?
+PLAY_HIT,HTN202_body,25,AttackEvent,1
+
+//,막혔으면 55로 이동하고 끝내기.  35는 옷이 뚫림
+//,맞췄고, 루프다 끝냈으면 NextAnimationCheck
+PLAY_HIT,HTN202_body,30,AttackEvent,2
+
+//,루프타이밍.  안보이게, 달리는척 하다가 적 뒤로이동,  가로샤샤샥, 24로 이동해서 루프돌기. 너무빠르니 20? 어택경직있으니 ㄱㅊ
+PLAY_HIT,HTN202_body,50,AttackEvent,3
+
+
+
+
+
+
+//,서서 중공 44
+PLAY_HIT,HTN203_body,0.000000,AnimSpeedChange,0.015000,56.970001
+PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,204,0,1
+PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,202,0,1
+PLAY_HIT,HTN203_body,15.636000,AnimSpeedChange,0.038000,118.788002
+PLAY_HIT,HTN203_body,25.090998,AnimSpeedChange,0.015000,47.676998
+
+//,안보이게, 가로샤샤샥
+PLAY_HIT,HTN203_body,5,AttackEvent,0
+
+//,적 앞으로 순간이동, 공격판정.  안보이고있었다면 보이게?
+PLAY_HIT,HTN203_body,10,AttackEvent,1
+
+
+PLAY_HIT,HTN203_body,26,NextAnimationCheck,333333
+PLAY_HIT,HTN203_body,30,NextAnimationCheck,333333
+PLAY_HIT,HTN203_body,40,NextAnimationCheck,333333
+
+
+
+
+//,서서 강공  45
+//,PLAY_HIT,HTN204_body,0.000000,AnimSpeedChange,0.021000,120.000000
+PLAY_HIT,HTN204_body,0.000000,AnimSpeedChange,0.008000,80.000000
+//,PLAY_HIT,HTN204_body,15,AnimSpeedChange,0.021000,100.606003
+
+
+//,안보임 + 가로샤샤샥 //+ 순간이동
+PLAY_HIT,HTN204_body,10,AttackEvent,0
+
+//,속도조절 필요해보이니 세부조정하자
+PLAY_HIT,HTN204_body,10.000000,AnimSpeedChange,0.008000,40.000000
+
+//, 순간이동  + 보임 + 가로샤샤샥  + 공격판정
+PLAY_HIT,HTN204_body,25,AttackEvent,0
+PLAY_HIT,HTN204_body,25.000000,AnimSpeedChange,0.008,61
+
+PLAY_HIT,HTN204_body,40,NextAnimationCheck,333333
+PLAY_HIT,HTN204_body,45,NextAnimationCheck,333333
+
+
+//,기존코드인데 꽤 멀쩡해보였다?
+//,PLAY_HIT,HTN204_body,30,AnimSpeedChange,0.021000,60.202000
+//,PLAY_HIT,HTN204_body,40.657001,AnimSpeedChange,0.021000,100.606003
+
+
+
+
+//,서서 특수 46
+PLAY_HIT,HTN205_body,0.000000,AnimSpeedChange,0.018000,62.625999
+
+//,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
+PLAY_HIT,HTN205_body,5,AnimSpeedChange,0.008000,0.5
+PLAY_HIT,HTN205_body,5.1,AttackEvent,0
+
+//,카운트끝나면 Position 65로 이동
+//,반격 성공시 적 경직. 사라지게 하고 Position 14.99로 이동
+//,0.몇초 뒤에 공격
+PLAY_HIT,HTN205_body,15,AnimSpeedChange,0.008000,50
+PLAY_HIT,HTN205_body,25,AttackEvent,0
+
+
+
+//,반격중에 공격들어오면 hit 이펙트는 뜨는데 다른것들이 안들어옴.  진짜 Set_hit 따로만들어야한다 얘는
+
+
+PLAY_HIT,HTN205_body,35,NextAnimationCheck,333333
+PLAY_HIT,HTN205_body,40,NextAnimationCheck,333333
+PLAY_HIT,HTN205_body,45,NextAnimationCheck,333333
+
+
+//,앉아 약공 47
+//,PLAY_HIT,HTN230_body,0.000000,AnimSpeedChange,0.005000,60.504997
+PLAY_HIT,HTN230_body,0,AnimSpeedChange,0.028,61
+PLAY_HIT,HTN230_body,40,AttackEvent,0     
+PLAY_HIT,HTN230_body,45,NextAnimationCheck,3333
+PLAY_HIT,HTN230_body,50,NextAnimationCheck,3333
+PLAY_HIT,HTN230_body,55,NextAnimationCheck,3333
+PLAY_HIT,HTN230_body,60,SetNextAnimation,0,0
+
+
+//,앉아중 48
+//,PLAY_HIT,HTN231_body,0,AnimSpeedChange,0.04,90
+PLAY_HIT,HTN231_body,0,AnimSpeedChange,0.04,130
+PLAY_HIT,HTN231_body,0.0010,PlayGroupSound,204,0,1
+PLAY_HIT,HTN231_body,0.0010,PlayGroupSound,202,0,1
+PLAY_HIT,HTN231_body,30,AnimSpeedChange,0.04,70
+PLAY_HIT,HTN231_body,40,AnimSpeedChange,0.04,20
+PLAY_HIT,HTN231_body,45,AnimSpeedChange,0.04,150
+PLAY_HIT,HTN231_body,55,AnimSpeedChange,0.04,70
+PLAY_HIT,HTN231_body,55,AttackEvent,0
+PLAY_HIT,HTN231_body,65,NextAnimationCheck,3333
+PLAY_HIT,HTN231_body,75,NextAnimationCheck,3333
+
+
+//,앉아강 51
+//,PLAY_HIT,HTN232_body,0.000000,AnimSpeedChange,0.005000,100
+PLAY_HIT,HTN232_body,0.000000,AnimSpeedChange,0.005000,160
+PLAY_HIT,HTN232_body,10.747000,AnimSpeedChange,0.005000,60
+PLAY_HIT,HTN232_body,20,AttackEvent,232
+PLAY_HIT,HTN232_body,40,AnimSpeedChange,0.005000,100
+PLAY_HIT,HTN232_body,41,NextAnimationCheck,3333
+PLAY_HIT,HTN232_body,45,PositionChange,79
+
+//,PLAY_HIT,HTN232_body,50,NextAnimationCheck,3333
+
+
+
+
+
+
+
+
+//,공중약 50
+PLAY_HIT,HTN260_body,0,AnimSpeedChange,0.027000,120.000000
+PLAY_HIT,HTN260_body,0.0010,PlayGroupSound,204,0,1
+PLAY_HIT,HTN260_body,15,AttackEvent,33333333
+PLAY_HIT,HTN260_body,21,NextAnimationCheck,53
+//,PLAY_HIT,HTN261_body,30,NextAnimationCheck,3333
+
+//,공중 중 51
+PLAY_HIT,HTN261_body,0,AnimSpeedChange,0.025000,120
+PLAY_HIT,HTN261_body,0.0010,PlayGroupSound,204,0,1
+PLAY_HIT,HTN261_body,20,AnimSpeedChange,0.027000,80
+PLAY_HIT,HTN261_body,25,AttackEvent,33333333
+//,PLAY_HIT,HTN261_body,40,NextAnimationCheck,3333
+PLAY_HIT,HTN261_body,30,NextAnimationCheck,3333
+
+
+//,원본은 0.061,120
+
+//,공중강 52
+PLAY_HIT,HTN262_body,0,AnimSpeedChange,0.020000,110.251999
+PLAY_HIT,HTN262_body,15,AnimSpeedChange,0.020000,55.251999
+PLAY_HIT,HTN262_body,40,AttackEvent,33333
+PLAY_HIT,HTN262_body,30,AnimSpeedChange,0.020000,92
+
+PLAY_HIT,HTN262_body,45,NextAnimationCheck,3333
+PLAY_HIT,HTN262_body,55,NextAnimationCheck,3333
+PLAY_HIT,HTN262_body,65,NextAnimationCheck,3333
+
+
+//,공중 아래강 53
+PLAY_HIT,HTN263_body,0.000000,AnimSpeedChange,0.024000,100.011002
+PLAY_HIT,HTN263_body,0.001000,PlaySound,1,0,1
+PLAY_HIT,HTN263_body,0.000100,PlaySound,9,0,1
+PLAY_HIT,HTN263_body,5,AnimSpeedChange,0.020000,80.000000
+PLAY_HIT,HTN263_body,30,AnimSpeedChange,0.02,20
+PLAY_HIT,HTN263_body,31,AttackEvent,33333
+PLAY_HIT,HTN263_body,34,AnimSpeedChange,0.02,120
+PLAY_HIT,HTN263_body,35,NextAnimationCheck,333333
+
+
+PLAY_HIT,HTN263_body,0,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,2,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,4,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,6,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,8,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,10,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,12,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,14,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,16,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,18,ObjectMove,0.1,0,0,0
+PLAY_HIT,HTN263_body,20,ObjectMove,0,0.1,0,0
+PLAY_HIT,HTN263_body,22,ObjectMove,0,0.1,0,0
+PLAY_HIT,HTN263_body,24,ObjectMove,0,0.1,0,0
+PLAY_HIT,HTN263_body,26,ObjectMove,0,0.1,0,0
+PLAY_HIT,HTN263_body,28,ObjectMove,0,0.1,0,0
+
+
+//,공중 특수
+
+PLAY_HIT,HTN265_body,0.000000,AnimSpeedChange,0.018000,62.625999
+//,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
+PLAY_HIT,HTN265_body,5,AnimSpeedChange,0.008000,0.5
+PLAY_HIT,HTN265_body,5.001,AttackEvent,0
+//,카운트끝나면 Position 50으로 이동
+//,반격 성공시 적 경직. 사라지게 하고 Position 34.99로 이동
+PLAY_HIT,HTN265_body,15,AnimSpeedChange,0.008000,50
+PLAY_HIT,HTN265_body,35,AttackEvent,1
+
+
+//,236 포즈.  강버전 이펙트 어쩌지? 그냥 특수버튼으로 바꾸자
+
+PLAY_HIT,HTN400_body,0,AnimSpeedChange,0.008000,60
+PLAY_HIT,HTN400_body,14,AnimSpeedChange,0.008000,30
+PLAY_HIT,HTN400_body,15,AnimSpeedChange,0.008000,2.5
+//,2초간 포즈 유지.  원래는 특수키로 취소하는데 어쩌지 취소빼?
+PLAY_HIT,HTN400_body,15.001,AttackEvent,0
+//,자세끝 bool값 처리
+PLAY_HIT,HTN400_body,20,AttackEvent,1
+PLAY_HIT,HTN400_body,20.1,AnimSpeedChange,0.008000,61
+
+
+
+//, 236포즈 약공격
+
+PLAY_HIT,HTN401_body,0,AnimSpeedChange,0.008000,61
+//,안보이게 + 샤샤샥
+PLAY_HIT,HTN401_body,0,AttackEvent,0
+//,이동 + 샤샤샥 + 공격판정 + 보이게
+PLAY_HIT,HTN401_body,15,AttackEvent,1
+
+
+
+
+//,236포즈 중공격
+
+PLAY_HIT,HTN402_body,0,AnimSpeedChange,0.008000,61
+//,안보이게 + 샤샤샥
+PLAY_HIT,HTN402_body,0,AttackEvent,0
+//,이동 + 샤샤샥 + 공격판정 + 보이게
+PLAY_HIT,HTN402_body,15,AttackEvent,1
+
+
+
+
+
+//,236포즈 강공격
+
+PLAY_HIT,HTN403_body,0,AnimSpeedChange,0.008000,61
+//,안보이게 + 샤샤샥
+PLAY_HIT,HTN403_body,0,AttackEvent,0
+//,이동 + 샤샤샥 + 공격판정 + 보이게
+PLAY_HIT,HTN403_body,15,AttackEvent,1
+
+
+
+//,214 포즈
+//,236포즈 강공격
+
+PLAY_HIT,HTN407_body,0,AnimSpeedChange,0.008000,61
+
+//,뭔가 처리를 하자. 누르고있는동안 100~118루프?   끝은 119임
+PLAY_HIT,HTN407_body,20,AttackEvent,0
+
+
+
+
+
