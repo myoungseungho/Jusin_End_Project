@@ -510,6 +510,11 @@ HRESULT CLoader::Loading_For_VS()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/VS_Panel.png")))))
 		return E_FAIL;
 
+	/* Prototype_Component_Texture_UI_FontName */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_FontName"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Chara_Name%d.png"), 4))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_VS_BG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_BG"),
 		CUI_VS_BG::Create(m_pDevice, m_pContext))))
