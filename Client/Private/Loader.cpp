@@ -130,6 +130,8 @@
 #include "UI_VS_MarkEff.h"
 #include "UI_VS_Ball.h"
 #include "UI_VS_TeamPanel.h"
+#include "UI_VS_Name.h"
+#include "UI_VS_NameOutLine.h"
 
 #include "CharaSelectCamera.h"
 
@@ -566,6 +568,15 @@ HRESULT CLoader::Loading_For_VS()
 		CUI_VS_TeamPanel::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* Prototype_GameObject_VS_Name */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_Name"),
+		CUI_VS_Name::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_VS_NameOutLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VS_NameOutLine"),
+		CUI_VS_NameOutLine::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	return S_OK;
 }
