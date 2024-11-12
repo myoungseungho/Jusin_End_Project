@@ -23,7 +23,7 @@ Scale: 0.12 0.12 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 22.798 215.314 255 30
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 3
@@ -64,12 +64,12 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.1 0.7 0
-Scale: 0.07 0.07 1
+Position: 0.1 0.6 0
+Scale: 0.08 0.08 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 3
@@ -85,7 +85,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 57
-Position: 0.1 0.3 0
+Position: 0.1 0.6 0
 Scale: 0.08 0.08 1
 Rotation: 0 0 0
 CurTime: 0.95
@@ -94,8 +94,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: 0.1 0.3 0
-Scale: 0.1 0.1 1
+Position: 0.1 0.6 0
+Scale: 0.08 0.08 1
 Rotation: 0 0 0
 CurTime: 0.966667
 Duration: 1
@@ -115,7 +115,7 @@ Scale: 0.2 0.2 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 255 255 252.467 0.295364
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1

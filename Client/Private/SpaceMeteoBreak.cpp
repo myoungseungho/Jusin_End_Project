@@ -74,6 +74,10 @@ void CSpaceMeteoBreak::Camera_Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
+		Start_Space_DestructiveFinish(false);
+	}
+	if (m_pGameInstance->Key_Down(DIK_F11))
+	{
 		Start_Space_DestructiveFinish(true);
 	}
 }
@@ -85,6 +89,11 @@ void CSpaceMeteoBreak::Start_Space_DestructiveFinish(_bool isRight)
 	{
 		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(180.f));
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-100.f, 30.f, 0.f, 1.f));
+	}
+	else
+	{
+		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
 	}
 
 	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
@@ -112,7 +121,7 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 	{
 		m_fBrakeSwitchTime += fTimeDelta;
 
-		if (m_fBrakeSwitchTime > 1.f)
+		if (m_fBrakeSwitchTime > 2.8f)
 		{
 			m_fBrakeSwitchTime = 0.f;
 			m_isBrakeSwitch = true;
@@ -133,21 +142,27 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 			Result4x4._42 = 0.f;
 			Result4x4._43 = 0.f;
 			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
-
+			CEffect* pRotationEffect = { nullptr };
+			CEffect_Layer* pRotationEffectToLayer = { nullptr };
 			if (m_isRight == true)
 			{
+//				pRotationEffect = static_cast<CEffect*>(*(CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4))->m_MixtureEffects.begin());
 				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4);
-			//	CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4);
+				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4);
+				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &Result4x4);
 			}
 			else
 			{
 				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &Result4x4);
-				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore_L"), &Result4x4);
+				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &Result4x4);
+				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore_L"), &Result4x4);
 			}
-
+			
 			//XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
 			//CEffect_Layer* paaEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Burst"), &Result4x4);
-	
+
+			pRotationEffectToLayer->Set_Layer_Rotation(_float3(5.f, 0.f, 0.f));
+
 			if (paEffect != nullptr)
 				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
 			////if (paEffect != nullptr)
@@ -169,9 +184,18 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 		for (size_t i = 0; i < 11; i++)
 		{
-			m_vFragmentPosition[i].x += m_vFragmentMoveDir[i].x * fTimeDelta * m_fSpeed;
 			m_vFragmentPosition[i].y += m_vFragmentMoveDir[i].y * fTimeDelta * m_fSpeed;
-			m_vFragmentPosition[i].z += m_vFragmentMoveDir[i].z * fTimeDelta * m_fSpeed;
+
+			if (m_isRight == true)
+			{
+				m_vFragmentPosition[i].x += m_vFragmentMoveDir[i].x * fTimeDelta * m_fSpeed;
+				m_vFragmentPosition[i].z += m_vFragmentMoveDir[i].z * fTimeDelta * m_fSpeed;
+			}
+			else
+			{
+				m_vFragmentPosition[i].x -= m_vFragmentMoveDir[i].x * fTimeDelta * m_fSpeed;
+				m_vFragmentPosition[i].z -= m_vFragmentMoveDir[i].z * fTimeDelta * m_fSpeed;
+			}
 		}
 	}
 }

@@ -2,10 +2,10 @@
 LayerName: Meteo_Dust
 Duration: 2
 TickPerSecond: 0.2
-KeyFramesCount: 12
+KeyFramesCount: 119
 NumEffec: 1
 Position: 0 0 0
-Scale: 2.35 2.35 2.35
+Scale: 1 1 1
 Rotation: 0 0 0
 IsFollowing: false
 
@@ -19,11 +19,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 100 36 0
-Scale: 0.2 0.2 0.2
+Scale: 0.47 0.47 0.47
 Rotation: -15 0 17.143
 IsLoop: false
 Color: 50 86 100 1.98676
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 3
@@ -31,7 +31,7 @@ NumKeyFrame: 3
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 100 36 0
-Scale: 0.2 0.199999 0.199999
+Scale: 0.47 0.47 0.47
 Rotation: -15 0 17.143
 CurTime: 0
 Duration: 2
@@ -40,11 +40,11 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 118
 Position: 100 36 0
-Scale: 0.2 0.2 0.2
+Scale: 0.47 0.47 0.47
 Rotation: -15 0 17.143
-CurTime: 0.166667
+CurTime: 1.96667
 Duration: 2
-IsNotPlaying: false
+IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 119

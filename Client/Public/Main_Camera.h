@@ -75,7 +75,7 @@ public:
 	void Set_Player(CGameObject* pPlayer);
 	const char* Get_Current_CameraName();
 	_bool Get_IsPlay();
-
+	void Set_DyingTeam(_uint iDyingTeam);
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 

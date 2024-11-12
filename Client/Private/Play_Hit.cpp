@@ -1172,8 +1172,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_StunTime = 0.4f;
 
 
-			Desc.iDamage = 700 * Get_DamageScale();
-			//Desc.iDamage = 4200 * Get_DamageScale();
+			//Desc.iDamage = 700 * Get_DamageScale();
+			Desc.iDamage = 4200 * Get_DamageScale();
 			Desc.fLifeTime = 0.1f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 			Desc.iTeam = m_iPlayerTeam;

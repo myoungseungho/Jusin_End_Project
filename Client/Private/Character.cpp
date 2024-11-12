@@ -17,6 +17,7 @@
 #include "SpaceMeteoBreak.h"
 #include "Effect_Layer.h"
 
+
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
 
@@ -3957,6 +3958,19 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 		if (m_iHP < 1)
 		{
 			m_bDying = true;
+
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
+			{
+				m_bDynamicMove = true;
+				static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
+				static_cast<CSpaceMeteoBreak*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_MeteoBreak")).begin()))
+					->Start_Space_DestructiveFinish(m_iLookDirection == -1 ? true : false);
+
+				m_pEnemy->Set_bDynamicMove(true);
+				
+				Set_fImpulse({ -100.f * m_iLookDirection,30.f });
+			}
+
 
 			Set_AnimationStopWithoutMe(2.f);
 			Set_AnimationStop(2.f);
