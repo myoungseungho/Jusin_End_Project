@@ -210,10 +210,6 @@ HRESULT CLoader::Loading()
 		hr = Loading_For_Logo();
 		break;
 
-	case LEVEL_GAMEPLAY:
-		hr = Loading_For_GamePlayLevel();
-		break;
-
 	case LEVEL_LOBBY:
 		hr = Loading_For_Lobby();
 		break;
@@ -226,7 +222,9 @@ HRESULT CLoader::Loading()
 		hr = Loading_For_VS();
 		break;
 
-
+	case LEVEL_GAMEPLAY:
+		hr = Loading_For_GamePlayLevel();
+		break;
 	}
 
 	if (FAILED(hr))
