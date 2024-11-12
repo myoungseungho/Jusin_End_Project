@@ -46,6 +46,9 @@ HRESULT CCamera::Initialize(void* pArg)
 //Main_Camera에서 호출되는 이 함수
 void CCamera::Camera_Update(_float fTimeDelta)
 {
+	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_VIEW, m_pTransformCom->Get_WorldMatrix_Inverse());
+
+	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(m_fFovy, m_fViewportWidth / m_fViewportHeight, m_fNear, m_fFar));
 }
 
 void CCamera::Update(_float fTimeDelta)

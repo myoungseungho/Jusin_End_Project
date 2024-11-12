@@ -7,6 +7,7 @@ NumEffec: 6
 Position: 0.5 0.2 0.7
 Scale: 0.2 0.2 0.2
 Rotation: 0 0 0
+IsFollowing: false
 
 [Effect]
 EffectName: Smoke0201
@@ -16,9 +17,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 76
-Position: 0.1 4.1 7.1
-Scale: 9.72e-06 9.72e-06 9.72e-06
+UniqueIndex: -1
+Position: 3.1 5.3 11.3
+Scale: 6.2208e-10 6.2208e-10 6.2208e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -62,9 +63,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 77
-Position: 0.1 4.1 7.1
-Scale: 9.72e-06 9.72e-06 9.72e-06
+UniqueIndex: -1
+Position: 3.1 5.3 11.3
+Scale: 6.2208e-10 6.2208e-10 6.2208e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -108,9 +109,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 78
-Position: 0.1 4.1 7.1
-Scale: 9.72e-06 9.72e-06 9.72e-06
+UniqueIndex: -1
+Position: 3.1 5.3 11.3
+Scale: 6.2208e-10 6.2208e-10 6.2208e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -154,9 +155,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 79
-Position: 0.1 4.1 7.1
-Scale: 9.72e-06 9.72e-06 9.72e-06
+UniqueIndex: -1
+Position: 3.1 5.3 11.3
+Scale: 6.2208e-10 6.2208e-10 6.2208e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -200,9 +201,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 80
-Position: 0.1 4.1 7.1
-Scale: 9.72e-06 9.72e-06 9.72e-06
+UniqueIndex: -1
+Position: 3.1 5.3 11.3
+Scale: 6.2208e-10 6.2208e-10 6.2208e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -246,9 +247,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 81
-Position: 0.1 4.1 7.1
-Scale: 9.72e-06 9.72e-06 9.72e-06
+UniqueIndex: -1
+Position: 3.1 5.3 11.3
+Scale: 6.2208e-10 6.2208e-10 6.2208e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30

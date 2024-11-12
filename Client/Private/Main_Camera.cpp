@@ -42,6 +42,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_FREE:
 			name = "Camera_Free";
 			break;
+		case VIRTUAL_CAMERA_MAP:
+			name = "Camera_Map";
+			break;
 		case VIRTUAL_CAMERA_SON_HEAVY:
 			name = "Camera_Son_Heavy";
 			break;
@@ -407,7 +410,7 @@ void CMain_Camera::SetPosition(_fvector position)
 
 void CMain_Camera::Set_Player(CGameObject* pPlayer)
 {
-	for (size_t i = VIRTUAL_CAMERA_SON_HEAVY; i < VIRTUAL_CAMERA_END; i++)
+	for (size_t i = VIRTUAL_CAMERA_NORMAL; i < VIRTUAL_CAMERA_END; i++)
 		m_vecVirtualCamera[i]->Set_Player(pPlayer);
 }
 

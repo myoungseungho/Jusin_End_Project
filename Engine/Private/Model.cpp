@@ -172,7 +172,12 @@ _bool CModel::Play_Animation_Lick(_float fTimeDelta)
 
 	_bool bAnimationEnd = false;
 
-	m_fAccAnimationUpdateTime += fTimeDelta;
+	if (fTimeDelta > 1)
+	{
+		m_fAccAnimationUpdateTime += 0.1f;
+	}
+	else
+		m_fAccAnimationUpdateTime += fTimeDelta;
 
 	//if (m_fAccAnimationUpdateTime >m_fMaxAnimationUpdateTime )
 	//{
@@ -317,6 +322,11 @@ void CModel::CurrentAnimationPositionJump(_float fPosition)
 void CModel::Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime)
 {
 	m_fMaxAnimationUpdateTime = fMaxUpdateTime;
+
+	if (fMaxUpdateTime == 0)
+	{
+		_bool bDebugPoint = true;
+	}
 }
 
 HRESULT CModel::Bind_MaterialSRV(CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex)
@@ -324,6 +334,9 @@ HRESULT CModel::Bind_MaterialSRV(CShader* pShader, aiTextureType eType, const _c
 	_uint		iMaterialIndex = m_Meshes[iMeshIndex]->Get_MaterialIndex();
 	if (iMaterialIndex >= m_iNumMaterials)
 		return E_FAIL;
+
+	if (m_Materials[iMaterialIndex].pMaterials[eType] == nullptr)
+		return S_OK;
 
 	return m_Materials[iMaterialIndex].pMaterials[eType]->Bind_ShaderResource(pShader, pConstantName, 0);
 }

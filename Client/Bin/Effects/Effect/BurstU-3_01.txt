@@ -7,6 +7,7 @@ NumEffec: 3
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
+IsFollowing: false
 
 [Effect]
 EffectName: BurstU-3_1
@@ -16,7 +17,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 21
+UniqueIndex: 0
 Position: 0 0 0
 Scale: 0.05 0.05 0.05
 Rotation: 0 0 0
@@ -71,7 +72,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 22
+UniqueIndex: 0
 Position: 0 0.25 -0.01
 Scale: 0.007 0.007 0.05
 Rotation: 0 0 0
@@ -126,7 +127,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 23
+UniqueIndex: 0
 Position: 0 0.23 -0.01
 Scale: 0.01 0.01 0.05
 Rotation: 0 0 0

@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 46
+Key: Prototype_Component_Texture_Effect_cmn_burst08
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 476 99
+NodeID: 1 Position: 211 76
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

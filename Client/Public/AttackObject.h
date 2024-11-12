@@ -54,13 +54,19 @@ public:
 		_bool		bGrabbedEnd = { false };
 		_bool		bCameraZoom = { true };
 
-		_ushort		iGainKiAmount = { 20 };
+		_ushort		iGainKiAmount = { 5 };
 
 
 		_float fCameraShakeDuration = { 0 };
 		_float fCameraShakeMagnitude = { 0 };
 
 		_bool bDrawNoneStop = { false };
+
+		_bool bNoCreateMainCollider = { false }; //에너지파 전용
+
+		_bool bReflect = { false };
+		_bool bOnwerHitNoneStop = { false };
+		_bool bHitNoGravity = { false };
 
 		class CCharacter* pOwner = { nullptr };
 	};
@@ -81,10 +87,12 @@ public:
 	class CCharacter* Get_pOwner() { return m_pOwner; };
 	AttackType		Get_AttackType() { return m_eAttackType; };
 	
+	void Set_AttackBackEvent();
 	void Set_UpdateStop(_float fStopTime);
-
+	_bool Get_bReflect();
 public:
-	//void Set_RemoteDestory();
+	void Set_RemoteDestory();
+
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -149,7 +157,7 @@ protected:
 	_float m_fCameraShakeDuration = {};
 	_float m_fCameraShakeMagnitude = {};
 
-	_ushort		m_iGainKiAmount = { 20 };
+	_ushort		m_iGainKiAmount = { 5 };
 
 
 	_float		m_fAccUpdateStop = {};
@@ -157,7 +165,9 @@ protected:
 	_bool		m_bUpdateStop = { false };
 
 	_bool	m_bDrawNoneStop = { false };
-
+	_bool	m_bReflect = { false };
+	_bool	m_bOnwerHitNoneStop = { false };
+	_bool	m_bHitNoGravity = { false };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

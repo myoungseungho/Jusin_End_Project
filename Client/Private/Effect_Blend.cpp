@@ -57,22 +57,63 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		m_iNumHeighthImage = pEffectDesc->iNumHeightImage;
 
 		m_iUnique_Index = pEffectDesc->iUnique_Index;
+		m_bIsBillboarding = pEffectDesc->bIsBillboarding;
 
 		m_vColor = pEffectDesc->vColor;
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 		m_isGlow = pEffectDesc->isGlow;
-		if (m_isGlow == true)
-			m_iGameObjectData = -1;
+		m_fGlowFactor = pEffectDesc->fGlowFactor;
+
+		m_iGameObjectData = m_isGlow;
+
+		if (pEffectDesc->vGlowColor.x == 0.f)
+		{
+			m_bIsBackSideEffect = false;
+		}
+		else if (pEffectDesc->vGlowColor.x == 1.f)
+		{
+			m_bIsBackSideEffect = true;
+		}
+		
+		if (pEffectDesc->vGlowColor.y == 0.f)
+		{
+			m_bIsShaderLoop = false;
+		}
+		else if (pEffectDesc->vGlowColor.y == 1.f)
+		{
+			m_bIsShaderLoop = true;
+		}
+
+		if (m_iGameObjectData <= -2)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = (_int)m_fGlowFactor + 5 - 1;
+		}
+		else if (m_iGameObjectData == -1)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = 0;
+		}
+		else if (m_iGameObjectData >= 0)
+		{
+			/* 글로우 강도 */
+			m_iObjectRenderData = (_int)m_fGlowFactor - 1;
+		}
+	
+
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)
 		{
 			m_IsColorEffect = true;
 		}
+
 
 		if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
 			return E_FAIL;
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
+
+		m_iRenderGroupIndex = m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND;
 		return S_OK;
 	}
 
@@ -88,7 +129,10 @@ void CEffect_Blend::Camera_Update(_float fTimeDelta)
 
 void CEffect_Blend::Update(_float fTimeDelta)
 {
-
+	if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+	{
+		m_iRenderGroupIndex = m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND;
+	}
 }
 
 void CEffect_Blend::Late_Update(_float fTimeDelta)
@@ -100,17 +144,18 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 2) //레이어
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+					m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
 			}
-
 		}
 		else
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_BLEND, this);
+				if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+					m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
 			}
 		}
 	}
@@ -119,8 +164,10 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
 {
-	if (m_iPassIndex != 1)
-		__super::Priority_Render(fTimeDelta);
+	if (m_iPassIndex != 1 || fTimeDelta == -10.f)
+	{
+		__super::Priority_Render(fTimeDelta == -10.f ? 0.02f : fTimeDelta);
+	}
 
 	return S_OK;
 }
@@ -141,17 +188,22 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) // 2
+		if (FAILED(m_pShaderCom->Begin(fTimeDelta != -10.f ? m_iPassIndex : 5))) // 2
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
 
-	if (m_iPassIndex == 1)
-		m_iPassIndex = 5;
+	if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+	{
+		if (m_iPassIndex == 1)
+			m_iPassIndex = 5;
+		else
+			m_iPassIndex = 1;
+	}
 	else
-		m_iPassIndex = 1;
+		m_iPassIndex = 5;
 
 	return S_OK;
 }
@@ -212,6 +264,12 @@ HRESULT CEffect_Blend::Bind_ShaderResources()
 	}
 	else
 		m_IsColorEffect = false;
+	
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &Color, sizeof(Color))))
+		return E_FAIL;
+	
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fGlowFactor", &m_fGlowFactor, sizeof(float))))
+		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_bColorChange", &m_IsColorEffect, sizeof(m_IsColorEffect))))
 		return E_FAIL;

@@ -7,6 +7,7 @@ NumEffec: 10
 Position: 0 0.6 -0.5
 Scale: 1 1 1
 Rotation: 0 0 0
+IsFollowing: false
 
 [Effect]
 EffectName: BurstU-2_01
@@ -16,7 +17,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 11
+UniqueIndex: 0
 Position: 0 0.7 -0.5
 Scale: 0.05 0.05 1
 Rotation: 0 0 0
@@ -62,7 +63,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 12
+UniqueIndex: 0
 Position: 0 1 -0.5
 Scale: 0.02 0.1 0
 Rotation: 0 0 0
@@ -90,7 +91,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 13
+UniqueIndex: 0
 Position: 0 1 -0.5
 Scale: 0.02 0.06 1
 Rotation: 0 0 120
@@ -118,7 +119,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 14
+UniqueIndex: 0
 Position: 0 1 -0.5
 Scale: 0.02 0.11 1
 Rotation: 0 0 240
@@ -146,7 +147,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 15
+UniqueIndex: 0
 Position: 0 1 -0.5
 Scale: 0.01 0.0500001 1
 Rotation: 0 0 45
@@ -174,7 +175,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 16
+UniqueIndex: 0
 Position: 0 1 -0.5
 Scale: 0.00998856 0.049956 1
 Rotation: 0 0 180
@@ -202,7 +203,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 17
+UniqueIndex: 0
 Position: 0 1 -0.5
 Scale: 0.00999896 0.03 1
 Rotation: 0 0 280
@@ -230,7 +231,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 18
+UniqueIndex: 0
 Position: -0.5 1.5 -0.5
 Scale: 0.05 0.4 1
 Rotation: 0 0 40
@@ -276,7 +277,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 19
+UniqueIndex: 0
 Position: 0 0.5 -0.5
 Scale: 0.0199997 0.399235 0.99938
 Rotation: 0 0 180
@@ -322,7 +323,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 20
+UniqueIndex: 0
 Position: 0.5 1.3 -0.5
 Scale: 0.05 0.4 1
 Rotation: 0 0 300

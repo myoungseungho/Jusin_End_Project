@@ -1,0 +1,307 @@
+[Layer]
+LayerName: Moving_Line_Left
+Duration: 1
+TickPerSecond: 6
+KeyFramesCount: 59
+NumEffec: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Moving_Line_Left01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: 0
+Position: -1.49012e-08 0.7 0
+Scale: 0.0199983 0.19997 0.1
+Rotation: 0 0 270
+IsLoop: false
+Color: 255 255 255 0.85
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.49012e-08 0.7 0
+Scale: 0.0199983 0.19997 0.1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1.49012e-08 0.7 0
+Scale: 0.0199979 0.199967 0.1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: -2
+Position: -1 0.5 0
+Scale: 0.0199991 0.149974 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1 0.5 0
+Scale: 0.0199991 0.149974 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1 0.5 0
+Scale: 0.019999 0.149973 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: -1
+Position: -0.4 0.3 0
+Scale: 0.0299981 0.149985 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.4 0.3 0
+Scale: 0.0299981 0.149985 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -0.4 0.3 0
+Scale: 0.0299979 0.149983 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: -1
+Position: -0.6 1 0
+Scale: 0.0299983 0.149986 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.6 1 0
+Scale: 0.0299983 0.149986 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -0.6 1 0
+Scale: 0.0299981 0.149985 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: -1
+Position: -1.5 0.8 -0.1
+Scale: 0.0299974 0.149982 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.5 0.8 -0.1
+Scale: 0.0299974 0.149982 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1.5 0.8 -0.1
+Scale: 0.0299973 0.149981 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: -2
+Position: -1 0.2 -0.2
+Scale: 0.0299938 0.0999751 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1 0.2 -0.2
+Scale: 0.0299938 0.0999751 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1 0.2 -0.2
+Scale: 0.0299936 0.0999744 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: 0
+Position: -1.7 1.2 0
+Scale: 0.029997 0.149976 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 255 255 255 0.74272
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.7 1.2 0
+Scale: 0.029997 0.149976 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1.7 1.2 0
+Scale: 0.0299968 0.149975 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Moving_Line_Left08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Moving_Line_LeftMoving_Line_Left08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 5
+UniqueIndex: -2
+Position: -1.5 1.4 -0.3
+Scale: 0.0299936 0.249975 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.5 1.4 -0.3
+Scale: 0.0299936 0.249975 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1.5 1.4 -0.3
+Scale: 0.0299933 0.249973 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+

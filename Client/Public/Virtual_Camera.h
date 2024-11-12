@@ -12,6 +12,7 @@ public:
 	{
 		CAMERA_NORMAL_MODE,
 		CAMERA_FREE_MODE,
+		CAMERA_MAP_MODE,
 		CAMERA_CINEMATIC_MODE,
 		CAMERA_MODE_END
 	};
@@ -72,6 +73,7 @@ public:
 private:
 	void Free_Camera(_float fTimeDelta);
 	void Default_Camera(_float fTimeDelta);
+	void Map_Camera(_float fTimeDelta);
 	void Play(_float fTimeDelta);
 	_float ComputeDistanceX(_gvector pos1, _gvector pos2);
 	void Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2);

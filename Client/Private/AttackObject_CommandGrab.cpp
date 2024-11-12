@@ -32,6 +32,8 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 
 	ATTACK_COMMANDGRAB_DESC* pDesc = static_cast<ATTACK_COMMANDGRAB_DESC*>(pArg);
 	
+	m_bGrabbedEnd = false;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -43,6 +45,8 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	
 	m_bForcedHit = pDesc->bForcedHit;
 	m_iOnwerDirection = pDesc->iOnwerDirection;
+
+	m_bGrabedGravity = pDesc->bGrabedGravity;
 
 	if (pDesc->iVirtualCameraindex != 200)
 	{
@@ -78,13 +82,14 @@ void CAttackObject_CommandGrab::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
-		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 }
 
@@ -113,7 +118,7 @@ void CAttackObject_CommandGrab::Set_RemoteDestory()
 	if (m_bEnableDestory)
 	{
 		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }
@@ -147,8 +152,11 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
+			m_pOwner->Set_AttackBackEvent(true);	
 			//m_pOwner->Set_GrabLoofCount(2);
 
+			if(m_fForcedGravityTime !=100)
+				pCharacter->Set_fGravityTime(m_fForcedGravityTime);
 
 
 			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)
@@ -169,7 +177,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			
 
 
-			pCharacter->Set_bGrabbed(true);
+			//pCharacter->Set_bGrabbed(true);
+			pCharacter->Set_bGrabbed(!m_bGrabbedEnd);
+
+				pCharacter->Set_bGrabbedGravity(m_bGrabedGravity);
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
 				pCharacter->Set_ForcveGravityTime(m_fForcedGravityTime);
@@ -215,7 +226,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			{
 				//if (m_bEnableDestory)
 				//{
-				//	Destory();
+				//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				//	m_bEnableDestory = false;
 				//}
 			}
@@ -224,7 +235,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 		//if (m_bEnableDestory)
 		//{
-		//	Destory();
+		//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		//	m_bEnableDestory = false;
 		//}
 	}

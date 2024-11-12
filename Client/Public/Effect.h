@@ -41,15 +41,16 @@ public:
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
 
-
 		_float4 vColor;
 		_matrix LayerMatrix;
+
+		_bool	bIsBillboarding = { false };
 
 		_float4        vGlowColor;
 		_float           fGlowFactor;
 		_uint    DerredPassIndex;
 
-		_bool isGlow;
+		_int isGlow;
 	}EFFECT_DESC;
 
 
@@ -92,7 +93,7 @@ protected:
 
 	_float			m_fCurrentAnimPos = {};
 
-	_bool m_isGlow = { false };
+
 	/* Åø¿ë ½¦ÀÌ´õ ÆÐ½º ÀÎµ¦½º */
 
 public:
@@ -114,15 +115,19 @@ public:
 
 	_float4		m_vColor = { 0.f, 0.f, 0.f, 30.f };
 	_bool			m_IsColorEffect = { false };
-
+	_bool			m_bIsBillboarding = { false };
 
 	_float4        m_vGlowColor = {0.f, 0.f, 0.f, 1.f};
 	_float           m_fGlowFactor = { 1.f };
 	_uint			m_iDerredPassIndex = {0};
 
 	_bool			m_bIsCopy = { false };
+	_int				m_isGlow = { false };
+	_bool			m_bIsBackSideEffect = { false };
+	_bool			m_bIsShaderLoop = { false };
 
 	EFFECT_DESC			m_ForCopyInform;
+	_int	m_iRenderGroupIndex;
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

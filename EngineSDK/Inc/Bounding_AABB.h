@@ -29,7 +29,7 @@ public:
 public:
 	virtual HRESULT Initialize(CBounding::BOUNDING_DESC* pDesc);
 	virtual void Update(_fmatrix TransformMatrix) override;
-	virtual void UpdateVector(_vector vTransform);
+	virtual void Update(_vector vTransform);
 
 	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor) override;
 	virtual _bool isCollision(CCollider::TYPE eTargetColliderType, CBounding* pTargetBounding);

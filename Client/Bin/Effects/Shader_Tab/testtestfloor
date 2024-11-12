@@ -1,0 +1,18 @@
+Version: 2
+KeyCount: 2
+KeySize: 55
+Key: Prototype_Component_Texture_Effect_space_ending_textrue
+ID: 1
+vTexCoord: 4 1
+KeySize: 55
+Key: Prototype_Component_Texture_Effect_space_ending_textrue
+ID: 2
+vTexCoord: 4 1
+NodePosCount: 3
+NodeID: -1 Position: 522 125
+NodeID: 1 Position: 243.006 39.5114
+NodeID: 2 Position: 16.0063 -46.4886
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

@@ -1,0 +1,241 @@
+[Layer]
+LayerName: BurstJ-03
+Duration: 5
+TickPerSecond: 2
+KeyFramesCount: 299
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: true
+
+[Effect]
+EffectName: BurstJ-03_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ-03BurstJ-03_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0.1
+Scale: 0.0299911 0.0699866 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 255 255 0.895365
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0.1
+Scale: 0.0299911 0.0699866 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 0.0699885 0.129978 1
+Rotation: 0 0 90
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0 7.45058e-08
+Scale: 0.0699598 0.129979 1
+Rotation: 0 0 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstJ-03_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ-03BurstJ-03_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0.07
+Scale: 0.0349918 0.0549849 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 54.8841 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0.07
+Scale: 0.0349918 0.0549849 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 1.49012e-08
+Scale: 0.0699943 0.0999898 1
+Rotation: 0 0 90
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0 1.49012e-08
+Scale: 0.0699728 0.0999651 1
+Rotation: 0 0 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstJ-03_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ-03BurstJ-03_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -0.3 0 0.09
+Scale: 0.0199669 0.0099887 0.999936
+Rotation: 0 0 180
+IsLoop: false
+Color: 183.228 174.785 0 30
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 0 0.09
+Scale: 0.0199669 0.0099887 0.999936
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -1.1 0.3 -1.49012e-08
+Scale: 0.149812 0.0399553 0.999936
+Rotation: 0 0 180
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: -1.1 0.3 -1.49012e-08
+Scale: 0.149823 0.0399583 0.999936
+Rotation: 0 0 180
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstJ-03_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ-03BurstJ-03_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0.05
+Scale: 0.0299859 0.0499826 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 181.54 152.831 0 0.591391
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0.05
+Scale: 0.0299861 0.0499829 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 0.09 0.099979 1
+Rotation: 0 0 90
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0 0
+Scale: 0.0899962 0.0999862 1
+Rotation: 0 0 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: BurstJ-03_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/BurstJ-03BurstJ-03_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 -0.1
+Scale: 0.00999427 0.0499562 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 255 255 0.7
+GlowColor: 0 0 0 1
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 -0.1
+Scale: 0.00999427 0.0499562 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 0.0199974 0.07999 1
+Rotation: 0 0 90
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0 0
+Scale: 0.0199947 0.0799807 1
+Rotation: 0 0 90
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+

@@ -5,6 +5,9 @@
 #include "GameInstance.h"
 
 #include "Character.h"
+#include "Effect_Manager.h"
+
+#include "Effect_Layer.h"
 
 CAttackObject_Ranged::CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
@@ -33,6 +36,7 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	
 
 	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
 
@@ -40,14 +44,28 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
 	m_iDirection = pDesc->iDirection;
 
-
-	m_eExplosionColor = pDesc->eExplosionColor;
+	if (m_iDirection == -1)
+	{
+		m_pTransformCom->Set_Scaled(-1, 1, 1);
+	}
+	
+		
+	m_eRangeColor = pDesc->eRangeColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
 	_vector vStartOffset = { m_fStartOffset.x, m_fStartOffset.y, 0.f, 0.f };
 	
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos + vStartOffset);
 
+
+	//이름이 있으면
+	if (pDesc->strEffectName.length() != 0)
+	{
+		m_pRangedEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+		//CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+
+
+	}
 
 	return S_OK;
 }
@@ -70,9 +88,13 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+
+			if (m_pRangedEffect_Layer != nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
@@ -80,7 +102,7 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 		m_pTransformCom->Add_Move({ m_fRanged_Impus_NoneDirection.x * m_iDirection * fTimeDelta , m_fRanged_Impus_NoneDirection.y * fTimeDelta ,0 });
 
 
-		m_pColliderCom->UpdateVector(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 	}
 
 }
@@ -97,9 +119,9 @@ void CAttackObject_Ranged::Late_Update(_float fTimeDelta)
 HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 {
 
-//#ifdef _DEBUG
-//	m_pColliderCom->Render(fTimeDelta);
-//#endif // DEBUG
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
 
 
 	return S_OK;
@@ -110,18 +132,39 @@ HRESULT CAttackObject_Ranged::Render(_float fTimeDelta)
 void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
+	//패링이랑 비교
+	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT)
+	{
+		BeReflect();
+
+
+		//패링 주인
+		CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
+		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
+	
+		
+		pCharacter->Set_ReflectAttackBackEvent(true);
+
+
+
+
+		//pAttackObject->Set_RemoteDestory();
+
+	}
+		
+
 	//원거리 vs 원거리
-	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
+	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack)
 	{
 
 		
 		//이펙트 처리
 		Erase();
 
-		if (m_eExplosionColor != RANGED_LIGHT_NONE)
+		if (m_eRangeColor != RANGED_LIGHT_NONE)
 		{
 			
-			if (m_eExplosionColor == RANGED_LIGHT_YELLOW)
+			if (m_eRangeColor == RANGED_LIGHT_YELLOW)
 			{
 				//Add_YellowLight();
 				
@@ -131,7 +174,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
 
+		if (m_pRangedEffect_Layer != nullptr)
+			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 	}
 
@@ -139,6 +185,13 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_BODY || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
+
+		if (pCharacter->Check_bCurAnimationisChase())
+		{
+			BeReflect();
+			return;
+
+		}
 
 		AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
@@ -149,7 +202,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
-
+			m_pOwner->Set_AttackBackEvent(true);
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
@@ -170,31 +223,44 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
 			}
 
-			if (m_eExplosionColor != RANGED_LIGHT_NONE)
+			if (m_eRangeColor != RANGED_LIGHT_NONE)
 			{
 
-				if (m_eExplosionColor == RANGED_LIGHT_YELLOW)
+				if (m_eRangeColor == RANGED_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			if(m_pRangedEffect_Layer!=nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+			m_pOwner->Set_AttackBackEvent(true);
 
-			if (m_eExplosionColor != RANGED_LIGHT_NONE)
+			if (m_eRangeColor != RANGED_LIGHT_NONE)
 			{
 
-				if (m_eExplosionColor == RANGED_LIGHT_YELLOW)
+				if (m_eRangeColor == RANGED_LIGHT_YELLOW)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+
+			if (m_pRangedEffect_Layer != nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
 		}
 
 		//else if (eResult == RESULT_DRAW)
@@ -210,7 +276,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//{
 			//	if (m_bEnableDestory)
 			//	{
-			//		Destory();
+			//		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 			//		m_bEnableDestory = false;
 			//	}
 			//}
@@ -224,11 +290,32 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		if (m_bEnableDestory)
 		{
-			Destory();
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 
+	//vs 근접공격의 경우 리플렉트가 가능한가 확인
+	//else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
+	//{
+	//	CAttackObject* pAttackOjbect = static_cast<CAttackObject*>(other->GetMineGameObject());
+	//	pAttackOjbect->Set_AttackBackEvent();
+	//
+	//	if (pAttackOjbect->Get_bReflect() == true)
+	//	{
+	//		////Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
+	//		//m_pGameInstance->Release_Collider(m_pColliderCom); 
+	//		//CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;	
+	//		//
+	//		////이펙트, 맵밖으로 이동
+	//
+	//		BeReflect();
+	//
+	//	}
+	//	
+	//}
+	
 
 	_bool Debug = true;
 }
@@ -318,10 +405,26 @@ void CAttackObject_Ranged::Erase()
 {
 	if (m_bEnableDestory)
 	{
-		Destory();
-		m_pGameInstance->Release_Collider(m_pColliderCom);
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+		//m_pGameInstance->Release_Collider(m_pColliderCom);
 		m_bEnableDestory = false;
+		Destory();
 	}
+}
+
+_bool CAttackObject_Ranged::BeReflect()
+{
+
+	//Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
+	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+	//m_pGameInstance->Release_Collider(m_pColliderCom);
+
+	//이펙트, 맵밖으로 이동
+
+
+	Destory();
+	return true;
+	
 }
 
 

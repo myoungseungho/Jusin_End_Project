@@ -1,0 +1,57 @@
+[Layer]
+LayerName: White_Circle
+Duration: 1
+TickPerSecond: 4
+KeyFramesCount: 59
+NumEffec: 1
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: White_Circle
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/White_CircleWhite_Circle
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0.3 -0.4
+Scale: 0.07 0.07 0.1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 0.537418
+GlowColor: 0 0 0 1
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.3 -0.4
+Scale: 0.07 0.07 0.1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0 0.1 -0.4
+Scale: 0.15 0.15 0.1
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0.1 -0.4
+Scale: 0.15 0.15 0.1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+

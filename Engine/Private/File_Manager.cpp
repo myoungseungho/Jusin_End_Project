@@ -455,7 +455,8 @@ HRESULT CFile_Manager::Save_Effects(wstring& FilePath, void* pArg)
 		file << L"NumEffec: " << layerData.iNumEffect << L"\n";
 		file << L"Position: " << layerData.vPosition.x << L" " << layerData.vPosition.y << L" " << layerData.vPosition.z << L"\n";
 		file << L"Scale: " << layerData.vScaled.x << L" " << layerData.vScaled.y << L" " << layerData.vScaled.z << L"\n";
-		file << L"Rotation: " << layerData.vRotation.x << L" " << layerData.vRotation.y << L" " << layerData.vRotation.z << L"\n\n";
+		file << L"Rotation: " << layerData.vRotation.x << L" " << layerData.vRotation.y << L" " << layerData.vRotation.z << L"\n";
+		file << L"IsFollowing: " << (layerData.bIsFollowing ? L"true" : L"false") << L"\n\n";
 
 		// 이펙트 데이터를 파일에 저장
 		for (const auto& effectData : layerData.effects) {
@@ -581,6 +582,9 @@ void CFile_Manager::Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData
 			wistringstream vecStream(value);
 			vecStream >> layerData.vRotation.x >> layerData.vRotation.y >> layerData.vRotation.z;
 		}
+		else if (key == L"IsFollowing") {
+			layerData.bIsFollowing = (value == L"true");
+		}
 	}
 
 	// 각 이펙트 데이터 읽기
@@ -590,6 +594,7 @@ void CFile_Manager::Read_LayerData(wifstream& file, EFFECT_LAYER_DATA& layerData
 		layerData.effects.push_back(effectData);
 	}
 }
+
 
 void CFile_Manager::Read_EffectData(wifstream& file, EFFECT_DATA& effectData)
 {

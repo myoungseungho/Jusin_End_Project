@@ -270,5 +270,26 @@ namespace Engine
 	inline _float ZeroIfSmall(_float value) {
 		return (fabs(value) < 1e-5) ? 0.0f : value;
 	}
+
+	inline _float Clamp(_float value, _float min, _float max)
+	{
+		if (value < min) return min;
+		if (value > max) return max;
+		return value;
+	}
+
+	inline _float Lerp(_float start, _float end, _float t)
+	{
+		return start + t * (end - start);
+	}
+
+	inline _float EaseInOut(_float t)
+	{
+		// ÀÌÂ¡ ÇÔ¼ö: Ease-In-Out Quad
+		if (t < 0.5f)
+			return 2.0f * t * t;
+		else
+			return -1.0f + (4.0f - 2.0f * t) * t;
+	}
 #pragma endregion
 }

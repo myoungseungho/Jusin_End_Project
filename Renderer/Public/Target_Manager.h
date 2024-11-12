@@ -28,8 +28,14 @@ public:
 	HRESULT Copy_RenderTarget(const _wstring& strTargetTag, ID3D11Texture2D* pTexture2D);
 	ID3D11ShaderResourceView* Copy_RenderTarget_SRV(const _wstring& strTargetTag);
 	HRESULT Bind_ShaderResource(class CShader * pShader, const _char * pConstantName, const _wstring& strTargetTag);
+	HRESULT Bind_EffectShaderResource(class CShader* pShader, const _char* pConstantName, const _wstring& strTargetTag, _uint isPri);
 
+	HRESULT Begin_EffectMRT(const _wstring& strMRTTag, _uint iArrayIndex = 2 , ID3D11DepthStencilView* pDSV = nullptr);
+	void	Init_ArrayCount();
 
+	_int	Get_FrameGlowCount(_int isPri);
+	_float	Get_CulGlowIndex(_int isPri);
+	void	Zero_CurGlowIndex(_int isPri);
 #ifdef _DEBUG
 public:
 	HRESULT Ready_Debug(const _wstring& strTargetTag, _float fCenterX, _float fCenterY, _float fSizeX, _float fSizeY);
@@ -44,6 +50,7 @@ private:
 	map<const _wstring, class CRenderTarget*>		m_RenderTargets;
 	map<const _wstring, list<class CRenderTarget*>>	m_MRTs;
 
+	_uint m_iBeginEffectCountArray[10] = { 0,0,0,0,0,0,0,0,0,0 };
 private:
 	ID3D11RenderTargetView*						m_pOldRTV = { nullptr };
 	ID3D11DepthStencilView*						m_pOldDSV = { nullptr };

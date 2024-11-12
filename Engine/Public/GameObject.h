@@ -43,8 +43,13 @@ public:
 	void Set_GameObjectData(_int iData) {
 		m_iGameObjectData = iData;
 	}
+	void Set_ObjectRenderData(_int iData) {
+		m_iObjectRenderData = iData;
+	}
 	_int Get_GameObjectData() { return m_iGameObjectData; }
 	_int* Get_GameObjectData_Ptr() { return &m_iGameObjectData; }
+	_int Get_ObjectRenderData() { return m_iObjectRenderData; }
+	
 public:
 	static const _wstring		m_strTransformTag;
 
@@ -91,6 +96,7 @@ public:
 	//ÆÄ½Ì °ü·Ã
 	_bool						m_bIsPasingObject = { false };
 	_int						m_iGameObjectData = { 0 };
+	_int						m_iObjectRenderData = { 2 };
 
 
 	map<const _wstring, CComponent*>		m_Components;

@@ -62,6 +62,14 @@ namespace Engine
 		float			fAccTime;
 	};
 
+	struct ENGINE_DLL VTXPOS
+	{
+		XMFLOAT3		vPosition;
+
+		static const unsigned int					iNumElements = { 1 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	};
+
 	/*D3DDECLUSAGE*/
 	struct ENGINE_DLL VTXPOSTEX
 	{
@@ -102,6 +110,22 @@ namespace Engine
 		static const unsigned int					iNumElements = { 6 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
+
+	struct ENGINE_DLL VTXINSTANCE
+	{
+		XMFLOAT4		vRight;
+		XMFLOAT4		vUp;
+		XMFLOAT4		vLook;
+		XMFLOAT4		vTranslation;
+		XMFLOAT2		vLifeTime;
+	};
+
+	struct ENGINE_DLL VTXPARTICLE_POINT
+	{
+		static const unsigned int					iNumElements = { 6 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	};
+
 #pragma region 명승호
 
 	//파일 저장 구조체
@@ -212,6 +236,7 @@ namespace Engine
 		_float tickPerSecond;
 		_uint keyFramesCount;
 		_int iNumEffect;
+		_bool bIsFollowing;
 
 		_float3 vPosition;
 		_float3 vScaled;

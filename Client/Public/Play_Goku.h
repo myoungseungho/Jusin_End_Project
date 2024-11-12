@@ -113,8 +113,8 @@ public:
 		//301 58 패링
 		//306cs 61  지상 드래곤러시 성공 후 추적
 
-		ANIME_SPARKING = 59
-
+		ANIME_SPARKING = 59,
+		ANIME_REFLECT = 58,
 	};
 	enum AnimationCount
 	{
@@ -155,6 +155,10 @@ public:
 	virtual _bool Check_bCurAnimationisAirAttack(_uint iAnimation = 1000)override;
 	virtual _bool Check_bCurAnimationisHalfGravityStop(_uint iAnimation = 1000) override;
 
+
+	virtual _short Check_bCurAnimationisCanChase() override;
+
+
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
 	virtual void Reset_AttackCount() override;
@@ -170,18 +174,21 @@ public:
 
 	void Add_YellowLight();
 	void Add_BlueLight();
-
+	_float Get_DamageScale(_bool bUltimate = false) override;
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-
+	
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };
 	_ushort m_iCountGroundSpecial = 0;
 
 	_bool m_bUltimateKamehameha = false;
+
+	_bool m_bFinalSkillss3 = { false };
+	_bool m_bAlwaysss3Test = { false };
 
 private:
 	HRESULT Ready_Components();

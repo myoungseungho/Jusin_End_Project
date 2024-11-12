@@ -17,7 +17,7 @@ IMPLEMENT_SINGLETON(CUI_Manager)
 CUI_Manager::CUI_Manager()
 	: m_pGameInstance{ CGameInstance::Get_Instance() }
 {
-	Safe_AddRef(m_pGameInstance);
+ 	Safe_AddRef(m_pGameInstance);
 }
 
 void CUI_Manager::Add_UIOjbect(CUI_Define::UI_LISTPOS ePos, CUIObject* pObject)
@@ -49,7 +49,7 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 
 	if (m_fStartUITimer >= 0.5f && m_bStartUI == FALSE)
 	{
-		UsingCreateStartUI();
+		//UsingCreateStartUI();
 		m_bStartUI = TRUE;
 	}
 

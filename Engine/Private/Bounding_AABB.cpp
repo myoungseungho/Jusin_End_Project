@@ -44,7 +44,7 @@ HRESULT CBounding_AABB::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fve
 	return S_OK;
 }
 
-void CBounding_AABB::UpdateVector(_vector vTransform)
+void CBounding_AABB::Update(_vector vTransform)
 {
 	_matrix		Transform = XMMatrixAffineTransformation({1.f,1.f,1.f}, XMVectorSet(0.f, 0.f, 0.f, 1.f), XMVectorSet(0.f, 0.f, 0.f, 0.f), vTransform);
 

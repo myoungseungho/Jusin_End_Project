@@ -7,6 +7,7 @@ NumEffec: 16
 Position: 0 0 0
 Scale: 0.1 0.1 0.1
 Rotation: 0 180 0
+IsFollowing: false
 
 [Effect]
 EffectName: Smoke_Run_Inv01
@@ -16,9 +17,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 126
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.01 0.01 0.01
+Scale: 1e-08 1e-08 1e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -53,9 +54,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 127
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -99,9 +100,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 128
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -145,9 +146,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 129
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -191,9 +192,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 130
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -237,9 +238,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 131
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -283,9 +284,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 132
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -329,9 +330,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 133
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0002 0.0002 0.0002
+Scale: 2e-10 2e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -375,9 +376,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 134
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -421,9 +422,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 135
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -467,9 +468,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 136
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -513,9 +514,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 3
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 137
+UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0001 0.0001 0.0002
+Scale: 1e-10 1e-10 2e-10
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -559,7 +560,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 138
+UniqueIndex: -1
 Position: -1.5 0 0.5
 Scale: 0.149991 0.15 0.15
 Rotation: 0 180 0
@@ -587,7 +588,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 139
+UniqueIndex: -1
 Position: -1.6 0.2 -0.5
 Scale: 0.05 0.05 0
 Rotation: 0 0 20
@@ -615,7 +616,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 140
+UniqueIndex: -1
 Position: -1 0 -0.5
 Scale: 0.2 0.05 0.0001
 Rotation: 0 0 0
@@ -643,7 +644,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 0
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 141
+UniqueIndex: -1
 Position: -0.932 0.1 -0.5
 Scale: 0.03 0.03 0
 Rotation: 0 0 15

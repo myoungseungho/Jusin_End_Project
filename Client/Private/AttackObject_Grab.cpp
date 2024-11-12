@@ -61,13 +61,14 @@ void CAttackObject_Grab::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			Destory();
-			m_pGameInstance->Release_Collider(m_pColliderCom);
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
 			m_bEnableDestory = false;
+			Destory();
 		}
 	}
 	else
-		m_pColliderCom->UpdateVector(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 }
 
@@ -96,7 +97,7 @@ void CAttacKObject_Grab::Set_RemoteDestory()
 	if (m_bEnableDestory)
 	{
 		m_pGameInstance->Release_Collider(m_pColliderCom);
-		Destory();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		m_bEnableDestory = false;
 	}
 }
@@ -151,7 +152,10 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
-			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
+			if(m_bOnwerHitNoneStop == false)
+				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+	
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
@@ -214,7 +218,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			{
 				//if (m_bEnableDestory)
 				//{
-				//	Destory();
+				//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 				//	m_bEnableDestory = false;
 				//}
 			}
@@ -223,7 +227,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		//if (m_bEnableDestory)
 		//{
-		//	Destory();
+		//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 		//	m_bEnableDestory = false;
 		//}
 	}

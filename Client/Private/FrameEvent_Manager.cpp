@@ -440,6 +440,16 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 		pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
 
 	}
+	else if (splitText[0] == "AnimSpeedChange_SubModel")
+	{
+
+		CModel* pModel = static_cast<CModel*>(pCharacter->Get_Component(TEXT("Com_Model_Sub")));
+		if (pModel == nullptr)
+			return;
+		pModel->Set_MaxAnimationUpdate_Time(fValue[0]);
+		pModel->Get_pCurrentAnimation()->m_fTickPerSecond = fValue[1];
+
+	}
 
 	else if (splitText[0] == "PositionChange")
 	{
@@ -488,6 +498,10 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	else if (splitText[0] == "AttackGravity")
 	{
 		pCharacter->Set_bAttackGravity(fValue[0]);
+	}
+	else if (splitText[0] == "DynamicMove")
+	{
+		pCharacter->Set_bDynamicMove(fValue[0]);
 	}
 	else if (splitText[0] == "PlaySound")
 	{

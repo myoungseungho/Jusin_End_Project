@@ -7,6 +7,7 @@ NumEffec: 4
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
+IsFollowing: false
 
 [Effect]
 EffectName: Full_Screen_Spark01
@@ -17,13 +18,13 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 3.363 1.5 0
+Position: 3.463 1.5 0
 Scale: 0.2 0.1 0.3
 Rotation: 0 0 14
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 3
 DerredPassIndex: 0
 NumKeyFrame: 1
 
@@ -46,12 +47,12 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -2.3 2.5 0
-Scale: 0.199986 0.0999951 0.3
+Scale: 0.199984 0.0999943 0.3
 Rotation: 0 0 162.948
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 1
 
@@ -74,12 +75,12 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -1.666 0.5 -0.5
-Scale: 0.199956 0.0999804 0.299981
+Scale: 0.199969 0.0999863 0.299981
 Rotation: 63.987 0 232.403
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 
@@ -107,7 +108,7 @@ Rotation: 45.403 0 342.312
 IsLoop: false
 Color: 0 0 0 3
 GlowColor: 0 0 0 1
-GlowFactor: 1
+GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 
