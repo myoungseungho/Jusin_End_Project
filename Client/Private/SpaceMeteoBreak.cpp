@@ -126,7 +126,7 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
 
 			_float4x4 Result4x4;
-			XMStoreFloat4x4(&Result4x4, m_pTransformCom->Get_WorldMatrix());
+			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
 			//Result4x4._11 = 1.f;
 			//Result4x4._22 = 1.f;
 			//Result4x4._33 = 1.f;
