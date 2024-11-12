@@ -177,6 +177,7 @@ PS_OUT PS_QTE_SAME_GRAB_PARTICLE(PS_IN In)
 {
     PS_OUT Out;
 
+    //ÇÏ´Ã»ö
     Out.vColor = float4(66.f / 255.f, 211.f / 255.f, 240.f / 255.f, 0.5f);
 
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
@@ -189,7 +190,7 @@ PS_OUT PS_QTE_CONTINUOUS_PARTICLE(PS_IN In)
 {
     PS_OUT Out;
 
-    Out.vColor = float4(66.f / 255.f, 211.f / 255.f, 240.f / 255.f, 0.5f);
+    Out.vColor = float4(1.f, 1.f, 0.f, 0.5f);
 
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
         discard;
