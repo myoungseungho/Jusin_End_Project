@@ -240,6 +240,8 @@ private:
 
 	_ushort m_iAttackLightLoofCount = { 2 };
 
+	//_bool m_bUltimate_Air
+
 
 private:
 	HRESULT Ready_Components();

@@ -329,6 +329,8 @@ void CModel::Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime)
 	}
 }
 
+
+
 HRESULT CModel::Bind_MaterialSRV(CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex)
 {
 	_uint		iMaterialIndex = m_Meshes[iMeshIndex]->Get_MaterialIndex();

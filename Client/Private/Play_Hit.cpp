@@ -1202,10 +1202,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
 			
 
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
 
 		}
 		else if (iAttackEvent == 1)
 		{
+
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
 
 			//적까지의 거리를 탐색하고 사정거리 안에있으면 그 앞까지, 그보다 멀면 사정거리까지만 이동하는 함수 필요
 			MoveToEnemy_Ground(2.f);
@@ -2330,7 +2336,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_b236Special == false)
 			{
 				m_bInvisible = false;
-				MoveToEnemy_Ground(5.f);
+				MoveToEnemy_Ground(7.f);
 				Character_Make_Effect(TEXT("Moving_Line_Right"));
 				m_b236Posing = false;
 
@@ -2534,9 +2540,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = true;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
 
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
 		}
 		else if (iAttackEvent == 1)
 		{
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
+
 			m_bInvisible = false;
 			MoveToEnemy_Ground(5.f);
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
@@ -2624,7 +2637,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//_vector vLength = vEnemyPos - vMyPos;
 
 				//Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
-				Desc.ColliderDesc.vCenter = { 5.f,0.f ,0.f };
+				Desc.ColliderDesc.vCenter = { 5.f*m_iLookDirection,0.f ,0.f };
 
 
 
@@ -2703,7 +2716,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			_vector vLength = vEnemyPos - vMyPos;
 
 			//Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength), 0.f ,0.f };
-			Desc.ColliderDesc.vCenter = { 5.f, 0.f ,0.f };
+			Desc.ColliderDesc.vCenter = { 5.f * m_iLookDirection, 0.f ,0.f };
 
 
 
