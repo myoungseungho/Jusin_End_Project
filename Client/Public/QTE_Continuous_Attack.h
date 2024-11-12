@@ -79,6 +79,7 @@ private:
 	class CQTE_Continuous_Attack_Space* m_pContinuous_Space = { nullptr };
 	class CQTE_Continuous_Attack_Gauge* m_pContinuous_Gauge = { nullptr };
 	class CQTE_Continuous_Attack_Effect* m_pContinuous_Effect = { nullptr };
+	vector<class CQTE_Continuous_Attack_Particle*> m_UIParticles;
 
 	//Ä«¸Þ¶ó
 	class CMain_Camera* m_pMain_Camera = { nullptr };
