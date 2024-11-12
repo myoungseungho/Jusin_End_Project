@@ -1492,7 +1492,7 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
-  </ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Public\Play_Hit.h">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
     </ClInclude>
@@ -1873,6 +1873,9 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Particle_VtxPoint.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_QTE_VtxRect.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

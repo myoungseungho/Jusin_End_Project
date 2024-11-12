@@ -77,7 +77,7 @@ HRESULT CQTE_Hit_UI_MovingRing_Icon::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(25)))
+	if (FAILED(m_pShaderCom->Begin(3)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -93,7 +93,7 @@ HRESULT CQTE_Hit_UI_MovingRing_Icon::Render(_float fTimeDelta)
 HRESULT CQTE_Hit_UI_MovingRing_Icon::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_UI_VtxRect"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_QTE_VtxRect"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
