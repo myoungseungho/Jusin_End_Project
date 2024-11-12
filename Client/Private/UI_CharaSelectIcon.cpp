@@ -269,9 +269,9 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 		break;
 	case Client::CUI_Define::BUU:
 		ePlayerIDInfo = CUI_Define::BUU;
-
 		break;
 	case Client::CUI_Define::HIT:
+		PrototypeTage = TEXT("Prototype_GameObject_Play_Hit");
 		ePlayerIDInfo = CUI_Define::HIT;
 
 		break;
