@@ -925,7 +925,7 @@ void CVirtual_Camera::Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode)
 {
 	if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_NORMAL)
 		m_currentMode = CAMERA_NORMAL_MODE;
-	else if(cameraMode == CMain_Camera::VIRTUAL_CAMERA_NORMAL)
+	else if(cameraMode == CMain_Camera::VIRTUAL_CAMERA_FREE)
 		m_currentMode = CAMERA_FREE_MODE;
 	else if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_MAP)
 		m_currentMode = CAMERA_MAP_MODE;
