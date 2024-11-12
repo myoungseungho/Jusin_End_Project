@@ -164,8 +164,10 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 
 HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
 {
-	if (m_iPassIndex != 1)
-		__super::Priority_Render(fTimeDelta);
+	if (m_iPassIndex != 1 || fTimeDelta == -10.f)
+	{
+		__super::Priority_Render(fTimeDelta == -10.f ? 0.02f : fTimeDelta);
+	}
 
 	return S_OK;
 }
@@ -186,7 +188,7 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 		if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_AlphaTexture", 1)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(m_iPassIndex))) // 2
+		if (FAILED(m_pShaderCom->Begin(fTimeDelta != -10.f ? m_iPassIndex : 5))) // 2
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))

@@ -14,7 +14,7 @@
 
 #include "Animation.h"
 #include <cmath>
-
+#include "SpaceMeteoBreak.h"
 #include "Effect_Layer.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
@@ -5027,6 +5027,15 @@ HRESULT CCharacter::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CCharacter::Map_DestructiveFinish()
+{
+	CGameObject* pGameObject = *(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_MeteoBreak")).begin());
+
+	/* 나중에 맵 조건에 따른 분기 처리 해야함*/
+	static_cast<CSpaceMeteoBreak*>(pGameObject)->Start_Space_DestructiveFinish();
+	
 }
 
 void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)

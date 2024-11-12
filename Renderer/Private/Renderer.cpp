@@ -413,11 +413,27 @@ HRESULT CRenderer::Render_Map(_float fTimeDelta)
 	if(iRenderCount > 0)
 		Draw_MapBloom();
 
+	for (auto& pRenderObject : m_RenderObjects[RG_SPACEMAP])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_SPACEMAP].clear();
+
 	return S_OK;
 }
 
 HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 {
+	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Priority_Render(fTimeDelta);
+	}
+
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
 		return E_FAIL;
 

@@ -28,6 +28,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 	Create_Effect_Manager();
 	Create_QTE_Manager();
+
+#pragma region ÀÌÆåÆ® ¼¼ÆÃ
+	Loading_For_Effect();
+#pragma endregion
+
 #pragma region ¸Ê »çº» °´Ã¼
 
 	//if (FAILED(Ready_Volcano()))
@@ -113,9 +118,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 #pragma endregion
 
-#pragma region ÀÌÆåÆ® ¼¼ÆÃ
-	Loading_For_Effect();
-#pragma endregion
+
 
 	//ºû ÁØºñ
 	if (FAILED(Ready_Lights()))
@@ -495,8 +498,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 HRESULT CLevel_GamePlay::Ready_Space()
 {
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"))))
-		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceHorizon"), TEXT("Layer_SpaceHorizon"))))
@@ -522,6 +524,8 @@ HRESULT CLevel_GamePlay::Ready_Space()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStone"), TEXT("Layer_SpaceStone"))))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"))))
 		return E_FAIL;
 	return S_OK;
 }

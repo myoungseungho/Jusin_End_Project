@@ -63,30 +63,42 @@ HRESULT CSpaceMeteoBreak::Initialize(void * pArg)
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
+
+	XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
+	m_pEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle(TEXT("testtest"), &m_Result4x4);
+	
 	return S_OK;
 }
 
 void CSpaceMeteoBreak::Camera_Update(_float fTimeDelta)
 {
-	//m_fAccTime += fTimeDelta * 5;
-	if (m_pGameInstance->Key_Down(DIK_F10))
-	{
-		_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
-		for (size_t i = 0; i < 11; i++)
-			XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
-		m_iRGIndex = 0;
-		m_fBrakeSwitchTime = false;
-		m_isBrakeSwitch = false;
-		m_isFastSwitch = true;
-		m_fAccTime = 0.f;
-		m_fBrakeSwitchTime = 0.f;
-		m_fSpeed = 10.5f;
-	}
+}
+
+void CSpaceMeteoBreak::Start_Space_DestructiveFinish()
+{
+
+	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	for (size_t i = 0; i < 11; i++)
+		XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
+
+	m_iRGIndex = 0;
+	m_fBrakeSwitchTime = false;
+	m_isBrakeSwitch = false;
+	m_isFastSwitch = true;
+	m_fAccTime = 0.f;
+	m_fBrakeSwitchTime = 0.f;
+	m_fSpeed = 10.5f;
+	m_isStart = true;
+	
 }
 
 void CSpaceMeteoBreak::Update(_float fTimeDelta)
 {
+	if (m_isStart == false)
+		return;
+
 	if (m_isBrakeSwitch == false)
 	{
 		m_fBrakeSwitchTime += fTimeDelta;
@@ -148,10 +160,14 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 void CSpaceMeteoBreak::Late_Update(_float fTimeDelta)
 {
+	if (m_isStart == false)
+		return;
+
+
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
-	if (m_isBrakeSwitch == false)
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	//if (m_isBrakeSwitch == false)
+	//	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 	
 	
 }
@@ -160,62 +176,62 @@ HRESULT CSpaceMeteoBreak::Priority_Render(_float fTimeDelta)
 {
 	//m_pEffect->Priority_Render(fTimeDelta);
 	//m_pEffect->Render(fTimeDelta);
+
+	//for (auto& iter : m_pEffectLayer->m_MixtureEffects)
+	//{
+	//	iter->Priority_Render(-10.f);
+	//	iter->Render(-10.f);
+	//}
+	// 
+	/*if (m_isBrakeSwitch == false)
+	{
+		if (FAILED(m_pEffectTransform->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
+
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(13)))
+			return E_FAIL;
+
+		if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+			return E_FAIL;
+
+		if (FAILED(m_pVIBufferCom->Render()))
+			return E_FAIL;
+
+		m_iRGIndex = 0;
+	}*/
+
 	return S_OK;
 }
 
 HRESULT CSpaceMeteoBreak::Render(_float fTimeDelta)
 {
-
-	
 	if (m_isBrakeSwitch == false)
 	{
-		if (m_iRGIndex == 1)
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
+
+		_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
+		for (size_t i = 0; i < iNumMeshes; i++)
 		{
-			if (FAILED(m_pEffectTransform->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 				return E_FAIL;
 
-			if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			if (FAILED(m_pShaderCom->Begin(12)))
 				return E_FAIL;
 
-			if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
-
-			if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-				return E_FAIL;
-
-			if (FAILED(m_pShaderCom->Begin(13)))
-				return E_FAIL;
-
-			if (FAILED(m_pVIBufferCom->Bind_Buffers()))
-				return E_FAIL;
-
-			if (FAILED(m_pVIBufferCom->Render()))
-				return E_FAIL;
-
-			m_iRGIndex = 0;
 		}
-		else
-		{
-			if (FAILED(Bind_ShaderResources()))
-				return E_FAIL;
-
-			_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
-			for (size_t i = 0; i < iNumMeshes; i++)
-			{
-				if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-					return E_FAIL;
-
-				if (FAILED(m_pShaderCom->Begin(12)))
-					return E_FAIL;
-
-				if (FAILED(m_pModelCom->Render(i)))
-					return E_FAIL;
-			}
-
-			m_iRGIndex = 1;
-		}
-
 	}
 	else
 	{

@@ -52,9 +52,6 @@
     <Filter Include="02.GameObjects\Map\Space\Earth\EarthLight">
       <UniqueIdentifier>{7c74267a-a233-4365-982d-8d7c3f82ef7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Space\Ground">
-      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Map\Space\Stage">
       <UniqueIdentifier>{5e9d2120-ef8b-45f4-a05c-191c764956f5}</UniqueIdentifier>
     </Filter>
@@ -836,6 +833,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Space\MeteoBreak">
       <UniqueIdentifier>{75ba9574-6da0-4042-a2f5-9a5e90d9c39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Ground">
+      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

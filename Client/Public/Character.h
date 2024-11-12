@@ -695,7 +695,8 @@ private:
 	HRESULT Ready_Components();
 public:
 	HRESULT Bind_ShaderResources();
-
+	// Layer_MeteoBreak
+	void Map_DestructiveFinish();
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
