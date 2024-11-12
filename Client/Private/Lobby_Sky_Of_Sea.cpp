@@ -77,7 +77,7 @@ HRESULT CLobby_Sky_Of_Sea::Render(_float fTimeDelta)
 HRESULT CLobby_Sky_Of_Sea::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Shader_VtxMesh"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 

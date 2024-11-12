@@ -9,6 +9,7 @@
 #include "Collider_Test.h"
 #include "VIBuffer_Rect.h"
 #include "VIBuffer_Line_Rect.h"
+#include "VIBuffer_Point_Instancing.h"
 #include "Bounding_Sphere.h"
 #include "Bounding_AABB.h"
 #include "Bounding_OBB.h"

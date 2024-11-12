@@ -642,7 +642,7 @@ void CLevel_GamePlay::Free()
 	__super::Free();
 
 	CFrameEvent_Manager::Destroy_Instance();
-
 	Safe_Release(m_pEffect_Manager);
 	Safe_Release(m_pQTE_Manager);
+	Safe_Release(m_pUI_Manager);
 }
