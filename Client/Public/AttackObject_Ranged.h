@@ -75,6 +75,8 @@ private:
 
 	Ranged_LightColor m_eRangeColor = { RANGED_LIGHT_NONE };
 
+	class CEffect_Layer* m_pRangedEffect_Layer = { nullptr };
+
 public:
 	static CAttackObject_Ranged* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

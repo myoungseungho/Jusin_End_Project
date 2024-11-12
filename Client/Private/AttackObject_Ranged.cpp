@@ -7,6 +7,8 @@
 #include "Character.h"
 #include "Effect_Manager.h"
 
+#include "Effect_Layer.h"
+
 CAttackObject_Ranged::CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
 {
@@ -34,6 +36,7 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	
 
 	ATTACK_RANGED_DESC* pDesc = static_cast<ATTACK_RANGED_DESC*>(pArg);
 
@@ -41,7 +44,12 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	m_fRanged_Impus_NoneDirection = pDesc->fRanged_Impus_NoneDirection;
 	m_iDirection = pDesc->iDirection;
 
-
+	if (m_iDirection == -1)
+	{
+		m_pTransformCom->Set_Scaled(-1, 1, 1);
+	}
+	
+		
 	m_eRangeColor = pDesc->eRangeColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
@@ -53,7 +61,10 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	//이름이 있으면
 	if (pDesc->strEffectName.length() != 0)
 	{
-		CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+		m_pRangedEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+		//CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+
+
 	}
 
 	return S_OK;
@@ -77,8 +88,11 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	{
 		if (m_bEnableDestory)
 		{
-			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
-			//m_pGameInstance->Release_Collider(m_pColliderCom);
+
+			if (m_pRangedEffect_Layer != nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 			m_bEnableDestory = false;
 			Destory();
 		}
@@ -162,6 +176,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
 		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
 
+		if (m_pRangedEffect_Layer != nullptr)
+			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
 	}
 
 	//아니면 무조건 원거리 vs 몸  이지만 혹시모르니 if
@@ -217,6 +234,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			if(m_pRangedEffect_Layer!=nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
@@ -235,6 +256,11 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+
+			if (m_pRangedEffect_Layer != nullptr)
+				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
 		}
 
 		//else if (eResult == RESULT_DRAW)

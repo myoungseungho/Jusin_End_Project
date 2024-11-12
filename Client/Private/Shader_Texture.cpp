@@ -232,7 +232,7 @@ _int CShader_Texture::Update_CloneValue(CEffect* pEffect, _float fTimeDelta)
 
 		if (it->second.fSpriteCurPos.y == it->second.fSpriteSizeNumber->y)
 		{
-			if (m_isLoop == true)
+			if (pEffect->m_bIsShaderLoop == true)
 			{
 				it->second.fSpriteCurPos.y = 0.f;
 				it->second.fSpriteCurPos.x = 0.f;

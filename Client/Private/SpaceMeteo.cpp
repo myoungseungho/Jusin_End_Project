@@ -49,7 +49,7 @@ void CSpaceMeteo::Update(_float fTimeDelta)
 
 void CSpaceMeteo::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SPACEMAP, this);
 }
 
 HRESULT CSpaceMeteo::Render(_float fTimeDelta)

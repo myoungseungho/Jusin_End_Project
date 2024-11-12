@@ -28,6 +28,7 @@ public:
 	static vector<CInput> Command_214Attack_Extra;
 	static vector<CInput> Command_236Special;
 	static vector<CInput> Command_236Special_Side;
+	static vector<CInput> Command_236Special_Side_Extra;
 	static vector<CInput> Command_214Special;
 	static vector<CInput> Command_214Special_Extra;
 
@@ -35,6 +36,8 @@ public:
 	static vector<CInput> Command_214FinalAttack;
 	static vector<CInput> Command_236UltimateAttack;
 	static vector<CInput> Command_236UltimateAttack_Side;
+	static vector<CInput> Command_236UltimateAttack_Side_Extra;
+
 
 	static vector<CInput> Command_BackDash;
 	static vector<CInput> Command_Forward;
@@ -56,6 +59,8 @@ public:
 	static vector<CInput> Command_Crouch_HeavyAttack;
 	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
 	static vector<CInput> Command_Crouch_SpecialAttack;
+
+	static vector<CInput> Command_Up_SpecialAttack;
 
 
 	static vector<CInput> Command_Reflect;
@@ -216,9 +221,12 @@ public:
 
 	//void Chase(_float fTimeDelta);
 	void Chase2(_float fTimeDelta);
-	void Chase_Ready(_float fTimeDelta);
+	//void Chase_Ready(_float fTimeDelta);
+	void Chase_Ready(_float fTimeDelta, _bool bNoReady = false);
+
 	void Set_ChaseStoping();
 	void Set_ChaseStop();
+
 
 	void Chase_Grab(_float fTimeDelta);
 	void Character_Attack_Grab(_float fTimeDelta);
@@ -233,7 +241,7 @@ public:
 
 	//피격 관련
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
+	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
 
 
 	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
@@ -248,6 +256,8 @@ public:
 	void Set_BreakFall_Ground();
 	void BreakFall_Air();
 
+	void Set_bNoGravity(_bool bNoGravity);
+
 
 
 	//공격 관련
@@ -255,7 +265,7 @@ public:
 	void Gain_HitCount(_ushort iHit);// 
 
 	//_float Get_DamageScale();
-	_float Get_DamageScale(_bool bUltimate = false);
+	virtual _float Get_DamageScale(_bool bUltimate = false);
 
 	void Set_GrabLoofCount(_ushort iLoofCount);
 
@@ -287,6 +297,8 @@ public:
 	_vector Get_vPosition();
 	
 	void Set_bGrabbed(_bool bGrabbed);
+	void Set_bGrabbedGravity(_bool bGrabbedGravity);
+
 	_bool Get_bGrabbed();
 	void Set_GrabAnimation();  //외부에서 호출해야하는데 각자 다르므로?
 
@@ -333,6 +345,8 @@ public:
 	void Set_bBeReflecting(_short iDirection);
 	_bool Update_BeReflecting(_float fTimeDelta);
 
+	void Set_bFinalSkillQTE(_bool bFinalSkillQTE);
+
 protected:
 	void Reset_AttackStep();
 
@@ -351,12 +365,15 @@ protected:
 	//기본적으로 좌우반전이 되지만 추가로 뒤집는경우 좌표가 좀 뒤틀릴 수 있음
 	_float4x4 Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _bool bFlipDirection = false);
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float fYRotation =1000.f);
 	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale ={1.f,1.f,1.f});
 
 public:
 	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
 	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
-	void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	class CEffect_Layer* Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
+	//class CEffect_Layer* Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float fYRotation =1000.f);
+
 	//void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale={1.f,1.f,1.f});
 
 
@@ -365,6 +382,7 @@ public:
 	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
 	void Update_LoofAnimationCreate(_float fTimeDelta);
 
+	const _float4x4* Get_pTransformMatrix();
 
 public:
 	virtual void OnCollisionEnter(class CCollider* other, _float fTimeDelta) override;
@@ -381,6 +399,8 @@ protected:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pOutLineCom = { nullptr };
 	CTexture* m_p2PTextureCom = { nullptr };
+	CTexture* m_pDecalTextureCom = { nullptr };
+
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
 
@@ -445,6 +465,7 @@ protected:
 	_ushort m_iHit_WallBouce = {34};
 
 	_ushort m_iHit_Air_Spin_LeftUp = {31};
+	_ushort m_iHit_Air_Spin_Up = { 30 };  //072
 
 
 	_ushort m_iHit_Air_LightAnimationIndex = { 24 };		//050
@@ -524,6 +545,7 @@ protected:
 	CCharacter* m_pDebugEnemy = { nullptr };
 	CCharacter* m_pEnemy = { nullptr };
 
+	class CEffect_Layer* m_pChaseEffectLayer = { nullptr };
 
 	_short		 m_iHP = 10000;   //맞는순간 음수가 될 수 있으니 ushort 대신 sohrt.  범위가   -32,768 ~ 32,767 니까 주의 
 
@@ -556,6 +578,11 @@ protected:
 
 	//스턴관련
 	_bool m_bHitGroundSmashed = { false };
+	_bool m_bWallBounce = { true };
+	_bool m_bNoGravity = { false };
+	_float m_fNoGravitySafeTime = { 0.f };
+	_bool m_bAwayUpGravity = { false };
+
 
 	//멤버변수에 넣는 대신 함수로 체크?   이거 없으면  서브캐릭터들도 가드를 해버림.  교체할때 그냥 사라지게?
 	//_bool m_bGuard = { false };
@@ -564,6 +591,7 @@ protected:
 	_float m_fPreviousX = {};
 
 	_bool	m_bGrabbed = { false };
+	_bool	m_bGrabbedGravity = { false };
 	_ushort m_iGrabLoof = 3;
 
 
@@ -610,6 +638,8 @@ protected:
 	_float m_fAccBeReflectingTime = { 0.f };
 	CGameObject* m_pReflectObject = { nullptr };
 
+	_bool m_bFinalSkillQTESucces = { false };
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
@@ -651,14 +681,14 @@ public:
 
 	//UI에서 써야하는 정보 
 	
-
+protected:
+	_bool					m_bHit = { FALSE };
 private:
 	_uint					m_iComboCount = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
 	
 	_bool					m_bRedHp = { FALSE };
-	_bool					m_bHit = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
 	
 	_uint					m_iNumAttBuf = { 1 };
@@ -681,7 +711,8 @@ private:
 	HRESULT Ready_Components();
 public:
 	HRESULT Bind_ShaderResources();
-
+	// Layer_MeteoBreak
+	void Map_DestructiveFinish();
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

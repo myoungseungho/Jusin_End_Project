@@ -7,6 +7,7 @@ NumEffec: 5
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 340 0
+IsFollowing: false
 
 [Effect]
 EffectName: Right_Wall_Crash01

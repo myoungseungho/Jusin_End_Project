@@ -94,16 +94,16 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 #ifdef _DEBUG
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_AllGlowAlpha"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
-		return E_FAIL;
-
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_AllGlowDiffuse"), 100.f, 500.f, 200.0f, 200.0f)))
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomAlpha"), 600.f, 100.f, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomDiffuse"), 350.f, 150.f, 300.f, 300.f)))
+		return E_FAIL;
+	
 	//if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowDiffuse"))))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowAlpha"))))
@@ -125,18 +125,18 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Depth"))))
 		return E_FAIL;
 	*/
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Depth"), 100.f, 500.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 600.f, 100.f, 200.0f, 200.0f)))
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Shade"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Player_Depth"), 100.f, 500.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	////if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 600.f, 100.f, 200.0f, 200.0f)))
+	////	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Shade"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Specular"), 350.f, 450.f, 300.f, 300.f)))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 350.f, 450.f, 300.f, 300.f)))
 	//	return E_FAIL;
@@ -191,6 +191,13 @@ HRESULT CRenderer::Add_DebugComponent(CComponent* pDebugComponent)
 
 HRESULT CRenderer::Draw(_float fTimeDelta)
 {
+	/*-----------------디버깅용------------------*/
+	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
+		return E_FAIL;
+	/*-------------------------------------------*/
+
 	if (FAILED(Render_Priority(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow_Priority(fTimeDelta)))
@@ -198,16 +205,13 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend_Priority(fTimeDelta)))
 		return E_FAIL;
 	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
+	if (FAILED(Render_Map(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
 	//if (FAILED(Render_ShadowObj(fTimeDelta)))
 	//	return E_FAIL;
-	/*-----------------디버깅용------------------*/
-	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
-		return E_FAIL;
-	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
-		return E_FAIL;
-	/*-------------------------------------------*/
+
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Deferred(fTimeDelta)))
@@ -217,6 +221,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Player(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_NonLight_Effect(fTimeDelta)))
 		return E_FAIL;
@@ -383,8 +389,51 @@ HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_Map(_float fTimeDelta)
+{
+	_int iRenderCount = { 0 };
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_BloomDiffuse"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_MAP])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		iRenderCount++;
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_MAP].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if(iRenderCount > 0)
+		Draw_MapBloom();
+
+	for (auto& pRenderObject : m_RenderObjects[RG_SPACEMAP])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_SPACEMAP].clear();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 {
+	for (auto& pRenderObject : m_RenderObjects[RG_NONBLEND])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Priority_Render(fTimeDelta);
+	}
+
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_GameObjects"))))
 		return E_FAIL;
 
@@ -608,24 +657,6 @@ HRESULT CRenderer::Render_PlayerBlur(_float fTimeDelta)
 		return E_FAIL;
 
 	//***************************************************
-
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
-		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
-	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
-		return E_FAIL;
-	
-	m_pGlowShader->Begin(9);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
 
 	return S_OK;
 }
@@ -905,6 +936,91 @@ HRESULT CRenderer::Render_Glow(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
+{
+	_uint iEffectGlowPri_RenderCount = 0;
+	for (auto& pRenderObject : m_RenderObjects[RG_BACKSIDE_EFFECT])
+	{
+		if (pRenderObject->Get_GameObjectData() == -2) // -2 면 먼저 글로우 프리로 그려버린다
+		{
+			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
+
+			m_pRenderInstance->Begin_EffectMRT(TEXT("MRT_AllGlowDiffuse_"), pRenderObject->Get_ObjectRenderData());
+
+			if (nullptr != pRenderObject)
+				pRenderObject->Render(fTimeDelta);
+
+			if (FAILED(m_pRenderInstance->End_MRT()))
+				return E_FAIL;
+
+			Safe_Release(pRenderObject);
+
+			iEffectGlowPri_RenderCount++;
+		}
+	}
+
+	if (iEffectGlowPri_RenderCount > 0)
+		Draw_AllGlow_Effect(true);
+
+	_uint iEffectGlow_RenderCount = 0;
+	for (auto& pRenderObject : m_RenderObjects[RG_BACKSIDE_EFFECT])
+	{
+		if (pRenderObject->Get_GameObjectData() > -1) //  -1 이상이면 글로우 뒤로 그리는거
+		{
+			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
+
+			m_pRenderInstance->Begin_EffectMRT(TEXT("MRT_AllGlowDiffuse_"), pRenderObject->Get_ObjectRenderData());
+
+			if (nullptr != pRenderObject)
+				pRenderObject->Render(fTimeDelta);
+
+			Safe_Release(pRenderObject);
+
+			if (FAILED(m_pRenderInstance->End_MRT()))
+				return E_FAIL;
+
+			iEffectGlow_RenderCount++;
+		}
+		else if (pRenderObject->Get_GameObjectData() == -1) // -1 바로 그린다
+		{
+			if (nullptr != pRenderObject)
+				pRenderObject->Priority_Render(fTimeDelta);
+
+			if (nullptr != pRenderObject)
+				pRenderObject->Render(fTimeDelta);
+
+			Safe_Release(pRenderObject);
+		}
+	}
+
+	m_RenderObjects[RG_BACKSIDE_EFFECT].clear();
+	
+	if (iEffectGlow_RenderCount > 0)
+		Draw_AllGlow_Effect(false);
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
+		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
+	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(9);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_AllGlow_Effect_Pri(_float fTimeDelta)
 {
 	m_iEffectGlowPri_RenderCount = 0;
@@ -922,6 +1038,8 @@ HRESULT CRenderer::Render_AllGlow_Effect_Pri(_float fTimeDelta)
 
 			if (FAILED(m_pRenderInstance->End_MRT()))
 				return E_FAIL;
+
+			Safe_Release(pRenderObject);
 
 			m_iEffectGlowPri_RenderCount++;
 		}
@@ -1109,7 +1227,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
@@ -1146,6 +1264,15 @@ HRESULT CRenderer::Initialize_RenderTarget()
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowDiffuse"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowAlpha"))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDiffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomAlpha"))))
 		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
@@ -1237,10 +1364,11 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 			return E_FAIL;
 
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Down"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_DownSecond"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_X"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
@@ -1586,6 +1714,131 @@ HRESULT CRenderer::Draw_Glow(CShader* pShader, GLOW_DESC* pDesc)
 	}
 	else
 		pShader->Begin(2);
+
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Draw_MapBloom()
+{
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	_float2 fTexSize = { 1920.f, 1080.f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
+		return E_FAIL;
+
+	_float2 fSamplingSize = { 4.f,4.f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
+		return E_FAIL;
+	
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_MapBloomAlpha"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_DownSecond"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix_Second)))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	fTexSize = { 1920.f * 0.5f, 1080.f * 0.5f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
+		return E_FAIL;
+
+	fSamplingSize = { 6.f,6.f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_DownTarget"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	//-------------------------------------------
+	//return S_OK;
+	//-------------------------------------------
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Blur_X"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix_Second)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_DownTarget_Second"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(0);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	//****************************************
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Blur_Y"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix_Second)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Blur_X"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(1);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	//***************************************************
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_MapBloomDiffuse"))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(13);
 
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();

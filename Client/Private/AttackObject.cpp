@@ -72,7 +72,10 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_bDrawNoneStop = pDesc->bDrawNoneStop;
 	m_bReflect = pDesc->bReflect;
+	m_bOnwerHitNoneStop = pDesc->bOnwerHitNoneStop;
 
+	m_bHitNoGravity = pDesc->bHitNoGravity;
+		 
 	if (pDesc->fCameraShakeDuration != 0)
 	{
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
@@ -325,7 +328,10 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		if (eResult == RESULT_HIT)
 		{
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
-			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
+			if(m_bOnwerHitNoneStop == false)
+				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
 			m_pOwner->Set_AttackBackEvent(true);
@@ -672,7 +678,15 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 
 
 	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	//if (ColliderDesc.vExtents.x == 0)
+	//{
+	//	m_pColliderCom->Update(_vector{0.f,-10.f,0.f,1.f});
+	//
+	//}
+	//else
+		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+
+	
 
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 

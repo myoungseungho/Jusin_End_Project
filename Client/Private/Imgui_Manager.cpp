@@ -400,8 +400,11 @@ void CImgui_Manager::Free()
 	for (auto& iter : m_vecTabs)
 		Safe_Release(iter);
 
+	m_vecTabs.clear();
+
 	for (auto& iter : m_vecShader_Tabs)
 		Safe_Release(iter.second);
+	m_vecShader_Tabs.clear();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();

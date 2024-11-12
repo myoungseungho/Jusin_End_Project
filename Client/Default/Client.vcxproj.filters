@@ -52,9 +52,6 @@
     <Filter Include="02.GameObjects\Map\Space\Earth\EarthLight">
       <UniqueIdentifier>{7c74267a-a233-4365-982d-8d7c3f82ef7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Map\Space\Ground">
-      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Map\Space\Stage">
       <UniqueIdentifier>{5e9d2120-ef8b-45f4-a05c-191c764956f5}</UniqueIdentifier>
     </Filter>
@@ -238,6 +235,57 @@
     <ClCompile Include="..\private\UI_Opt_Sound_Title.cpp">
       <Filter>02.GameObjects\UI\Option\Sound\Title</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Stage.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Cliff_Back.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Cliff_Far.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff_Far</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Cliff01.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff01</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Cliff02.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff02</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Cliff03.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff03</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Cliff04.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff04</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Ground.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_GroundRock.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_GroundRock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Island01.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Island01</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Island02.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Island02</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Lava_Fall.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Fall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Lava_Pool.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Lava_Ground.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Mountain.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Mountain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_SkyCloud.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_SkyCloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Smoke.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Smoke</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\UI_Manager.cpp">
       <Filter>02.GameObjects\UI\Manager</Filter>
     </ClCompile>
@@ -369,6 +417,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Play_Hit.cpp">
+      <Filter>02.GameObjects\Character\Play_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Hit_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpaceMeteoBreak.cpp">
+      <Filter>02.GameObjects\Map\Space\MeteoBreak</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -654,6 +711,66 @@
     <Filter Include="02.GameObjects\UI\Option\Sound\Title">
       <UniqueIdentifier>{da9be352-896a-4a47-acd3-caf4a4c6f2b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano">
+      <UniqueIdentifier>{93185624-5be0-4edf-91cd-8840c5b48814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Stage">
+      <UniqueIdentifier>{414f9a11-5c55-4599-8bf4-33ec459c8594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs">
+      <UniqueIdentifier>{786c46e7-e1a0-4576-bccb-d5842de985e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff_Far">
+      <UniqueIdentifier>{fc912c61-c5d5-4ac1-ab42-301889ee2a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff_Back">
+      <UniqueIdentifier>{2cdc5888-db5f-44d8-ab94-03e607cb5520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff01">
+      <UniqueIdentifier>{be44fd83-8203-448c-b26f-5ea7faa3b94e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff02">
+      <UniqueIdentifier>{6702f110-c1b9-4fc6-9ef6-d81d43b36163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff03">
+      <UniqueIdentifier>{0a119f4a-fcc5-4c3d-894a-4252d1939155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff04">
+      <UniqueIdentifier>{6e0f4656-19df-4c7b-af47-aa34df2ac292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Ground">
+      <UniqueIdentifier>{b7c04a34-d3c4-4156-9f4e-d49598f1e7f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_GroundRock">
+      <UniqueIdentifier>{5d94a9aa-4542-4c4b-a6fb-7df213b34f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Island01">
+      <UniqueIdentifier>{f15218ac-3fc3-4f73-b12d-93939ecd39c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Island02">
+      <UniqueIdentifier>{44e6af6d-de3c-44b3-8fcc-06d227efe97e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Lavas">
+      <UniqueIdentifier>{8483aeb1-99bc-498b-a4fa-60d1438ae228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Fall">
+      <UniqueIdentifier>{bba4e20c-de1e-4f2b-853f-8e9343221802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Ground">
+      <UniqueIdentifier>{ecf6e409-4bd6-47db-8288-c3b15e5cc5b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Pool">
+      <UniqueIdentifier>{c55f54ed-2da0-4273-b428-c0dbeedf8d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Mountain">
+      <UniqueIdentifier>{91723e57-d696-4921-93cc-73622059ebc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_SkyCloud">
+      <UniqueIdentifier>{3014b64d-52f8-4cbd-b691-4fa3ba110a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Smoke">
+      <UniqueIdentifier>{4d2f4cdb-a74e-45a1-81b6-200b54bedb1c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01.Level\02.CharacterSelect">
       <UniqueIdentifier>{b3d9441e-408d-4ddd-9b46-cd61e574f9df}</UniqueIdentifier>
     </Filter>
@@ -785,6 +902,18 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle">
       <UniqueIdentifier>{955fee1a-d5ca-43ab-9a86-673cadd8a146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Hit">
+      <UniqueIdentifier>{9979946a-150e-4d0b-bfb6-70530269ec1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Hit\Hit_MeleeAttack">
+      <UniqueIdentifier>{9aab07f7-0732-4afd-b888-6fabf74e8680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\MeteoBreak">
+      <UniqueIdentifier>{75ba9574-6da0-4042-a2f5-9a5e90d9c39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Space\Ground">
+      <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1178,6 +1307,57 @@
     <ClInclude Include="..\public\UI_Opt_Sound_Title.h">
       <Filter>02.GameObjects\UI\Option\Sound\Title</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Stage.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Cliff_Back.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Cliff_Far.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff_Far</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Cliff01.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff01</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Cliff02.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff02</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Cliff03.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff03</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Cliff04.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Cliffs\Volcano_Cliff04</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Ground.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_GroundRock.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_GroundRock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Island01.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Island01</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Island02.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Island02</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Lava_Fall.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Fall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Lava_Pool.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Lava_Ground.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Lavas\Volcano_Lava_Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Mountain.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Mountain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_SkyCloud.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_SkyCloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Smoke.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Smoke</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\UI_Manager.h">
       <Filter>02.GameObjects\UI\Manager</Filter>
     </ClInclude>
@@ -1312,6 +1492,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
+  </ClInclude>
+    <ClInclude Include="..\Public\Play_Hit.h">
+      <Filter>02.GameObjects\Character\Play_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Hit_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpaceMeteoBreak.h">
+      <Filter>02.GameObjects\Map\Space\MeteoBreak</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1672,6 +1864,9 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxVolcano.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl">

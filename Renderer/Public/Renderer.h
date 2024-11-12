@@ -20,8 +20,8 @@ class CRenderer final : public CBase
 {
 public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
-	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR,
-		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ,
+	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP,RG_MAP,
+		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT, 
 		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW, RG_MULTY_GLOW, RG_NODE, RG_END };
 
 private:
@@ -83,6 +83,7 @@ private:
 	HRESULT Render_ShadowObj(_float fTimeDelta);
 	HRESULT Render_Glow_Priority(_float fTimeDelta);
 	HRESULT Render_Blend_Priority(_float fTimeDelta);
+	HRESULT Render_Map(_float fTimeDelta);
 	HRESULT Render_NonBlend(_float fTimeDelta);
 	HRESULT Render_Player(_float fTimeDelta);
 	HRESULT Render_PlayerLight(_float fTimeDelta, _int iCount);
@@ -95,6 +96,7 @@ private:
 	HRESULT Render_NonLight(_float fTimeDelta);
 	HRESULT Render_NonLight_Effect(_float fTimeDelta);
 	HRESULT Render_Glow(_float fTimeDelta);
+	HRESULT Render_AllGlow_Effect_BackSide(_float fTimeDelta);
 	HRESULT Render_AllGlow_Effect_Pri(_float fTimeDelta);
 	HRESULT Render_Blend(_float fTimeDelta);
 	HRESULT Render_UI(_float fTimeDelta);
@@ -112,6 +114,7 @@ private:
 	HRESULT Draw_OutLine_Effect();
 	HRESULT Draw_AllGlow_Effect(_int isPri);
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
+	HRESULT Draw_MapBloom();
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -19,13 +19,17 @@ CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContex
 
 CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
 	: m_fDuration{Prototype.m_fDuration}
+	, m_pDevice { Prototype.m_pDevice }
+	, m_pContext{ Prototype.m_pContext }
 	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
 	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
 	, m_pGameInstance { Prototype.m_pGameInstance }
+	, m_bIsFollowing {Prototype.m_bIsFollowing}
 {
-	
+	Safe_AddRef(m_pContext);
+	Safe_AddRef(m_pDevice);
 	for (auto& pProtoEffect : Prototype.m_MixtureEffects)
 	{
 		m_bIsCopy = true;
@@ -174,10 +178,54 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 	if (m_bIsCopy)
 	{
+
 		for (auto& pEffect : m_MixtureEffects)
 		{
 			_matrix EffectToLayerMatrix = LayerMatrix;
 
+			if (m_bIsFollowing)
+			{
+				LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+
+				if (0 > m_pPlayerMatrix->_11)
+				{
+					LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+
+					XMVECTOR Scale, Rotation, Position;
+
+					XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+
+					_float4x4 fLayerMatrix;
+
+					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
+
+					//fLayerMatrix._41 *= -1;
+					fLayerMatrix._43 *= -1;
+					fLayerMatrix._41 += XMVectorGetX(Position);
+					fLayerMatrix._42 += XMVectorGetY(Position);
+
+					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+				}
+				else
+				{
+					XMVECTOR Scale, Rotation, Position;
+
+					XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+
+					_float4x4 fLayerMatrix;
+
+					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
+
+					fLayerMatrix._41 += XMVectorGetX(Position);
+					fLayerMatrix._42 += XMVectorGetY(Position);
+
+					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+
+				}
+			}
+			
 			if (pEffect->m_bIsBillboarding)
 			{
 				_vector camPosition = m_pGameInstance->Get_CamPosition_Vector();
@@ -204,11 +252,6 @@ void CEffect_Layer::Late_Update(_float fTimeDelta)
 	{
 		for (auto& pEffect : m_MixtureEffects)
 		{
-			if (pEffect->m_EffectName.find(L"BurstJ-03") != std::wstring::npos)
-			{
-				int a = 10;
-			}
-
 			pEffect->Late_Update(fTimeDelta);
 		}
 	}
@@ -340,6 +383,26 @@ HRESULT CEffect_Layer::Set_Layer_Rotation(_float3 ChangeRotation)
 	return S_OK;
 }
 
+HRESULT CEffect_Layer::Set_Copy_Layer_Scaled(_float3 ChangeScaled)
+{
+	m_pCopyTransformCom->Set_Scaled(ChangeScaled.x, ChangeScaled.y, ChangeScaled.z);
+
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_Copy_Layer_Position(_float3 ChangePosition)
+{
+	m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+	return S_OK;
+}
+
+HRESULT CEffect_Layer::Set_Copy_Layer_Rotation(_float3 ChangeRotation)
+{
+	m_pCopyTransformCom->Rotate(ChangeRotation);
+
+	return S_OK;
+}
+
 _float3 CEffect_Layer::Get_Layer_Scaled()
 {
 	return m_pTransformCom->Get_Scaled();
@@ -389,6 +452,8 @@ CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg, _bool isBillboading)
 
 void CEffect_Layer::Free()
 {
+	__super::Free();
+
 	if (m_bIsCopy == true)
 	{
 		for (auto& iter : m_MixtureEffects)
@@ -398,8 +463,6 @@ void CEffect_Layer::Free()
 				->Delete_Clone_EffectToShader_Texture(&(*iter));
 		}
 	}
-
-	__super::Free();
 
 
 	Safe_Release(m_pContext);

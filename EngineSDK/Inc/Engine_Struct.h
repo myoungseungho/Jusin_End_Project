@@ -236,6 +236,7 @@ namespace Engine
 		_float tickPerSecond;
 		_uint keyFramesCount;
 		_int iNumEffect;
+		_bool bIsFollowing;
 
 		_float3 vPosition;
 		_float3 vScaled;

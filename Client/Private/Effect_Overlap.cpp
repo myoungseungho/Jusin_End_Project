@@ -62,6 +62,25 @@ HRESULT CEffect_Overlap::Initialize(void* pArg)
 		m_LayerMatrix = pEffectDesc->LayerMatrix;
 		m_isGlow = pEffectDesc->isGlow;
 		m_fGlowFactor = pEffectDesc->fGlowFactor;
+
+		if (pEffectDesc->vGlowColor.x == 0.f)
+		{
+			m_bIsBackSideEffect = false;
+		}
+		else if (pEffectDesc->vGlowColor.x == 1.f)
+		{
+			m_bIsBackSideEffect = true;
+		}
+	
+		if (pEffectDesc->vGlowColor.y == 0.f)
+		{
+			m_bIsShaderLoop = false;
+		}
+		else if (pEffectDesc->vGlowColor.y == 1.f)
+		{
+			m_bIsShaderLoop = true;
+		}
+
 		if (m_isGlow == true)
 			m_iGameObjectData = -1;
 		if (m_vColor.x != 0.0f || m_vColor.y != 0.0f || m_vColor.z != 0.0f || m_vColor.w != 30.0f)

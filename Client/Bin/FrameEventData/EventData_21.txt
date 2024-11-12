@@ -22,7 +22,7 @@ PLAY_21,TON600cs_body,300,PositionChange,395
 
 
 //,오프닝 사이드 스탠딩 (공용)  78
-PLAY_21G,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+PLAY_21,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_21,TON602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
 //,라운드 넘어갈때 맞대기1 (공용) 81
@@ -914,26 +914,23 @@ PLAY_21,TON402_body,50,ObjectMove,0.09,0,0,0
 //,25까지 차지 
 //,지대지 50에서 발사,105까지 스탠딩으로 복귀
 //,지대공 105부터시작, 115에 발사 88로 이동, 105까지 스탠딩 복귀 실화냐
-
-
 PLAY_21,TON403_body,0.000000,AnimSpeedChange,0.028000,81.009998
 //,PLAY_21,TON403_body,0.000000,AnimSpeedChange,0.028000,110.009998
-
 
 //,괜찮은데 더 찾자
 //,PLAY_21,TON403_body,20.000000,AnimSpeedChange,0.028000,171.009998
 PLAY_21,TON403_body,20.000000,AnimSpeedChange,0.028000,131.009998
-
-
 //,PLAY_21,TON403_body,25.000000,AnimSpeedChange,0.028000,81.009998
 
 
 //,PLAY_21,TON403_body,58.501999,AnimSpeedChange,0.028000,52.929001
 PLAY_21,TON403_body,58.501999,AnimSpeedChange,0.028000,110.929001
 
-PLAY_21,TON403_body,60,AttackEvent,403
+PLAY_21,TON403_body,60,AttackEvent,1
 PLAY_21,TON403_body,65,NextAnimationCheck,444444
-PLAY_21,TON403_body,105,PositionChange,139
+//,PLAY_21,TON403_body,105,PositionChange,139
+PLAY_21,TON403_body,98,SetAnimation,2
+
 
 //,못움직이는 버그 있음
 //,PLAY_21,TON403_body,139,SetAnimation,0,0
@@ -958,9 +955,9 @@ PLAY_21,TON430_body,50,AttackEvent,2
 PLAY_21,TON430_body,90,AnimSpeedChange,0.012000,45.455002
 
 PLAY_21,TON430_body,90,AttackEvent,3
-//,PLAY_21,TON430_body,95,AttackEvent,4
-//,PLAY_21,TON430_body,100,AttackEvent,5
-//,PLAY_21,TON430_body,105,AttackEvent,6
+PLAY_21,TON430_body,95,AttackEvent,4
+PLAY_21,TON430_body,100,AttackEvent,5
+PLAY_21,TON430_body,105,AttackEvent,6
 
 
 
@@ -968,6 +965,7 @@ PLAY_21,TON430_body,90,AttackEvent,3
 //,0~60 상시, 명중시 60~80   아몰라 생략
 
 //,432 폭발3필  간단한데 부우 1필과 겹치므로 보류
+//,사용중인 돌진 3필
 
 PLAY_21,TON433_body,0.000000,AnimSpeedChange,0.018000,120.000000
 PLAY_21,TON433_body,0,AttackEvent,0
@@ -979,7 +977,11 @@ PLAY_21,TON433_body,36,AnimSpeedChange,0.018,90
 
 
 //,PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,120
-PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,200
+
+//,200도 좀 느린거같아서 더 늘려보려고 함
+//,PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,200
+
+PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,260
 
 
 PLAY_21,TON433_body,53,AttackEvent,1
@@ -989,18 +991,47 @@ PLAY_21,TON433_body,53,AttackEvent,1
 //,PLAY_21,TON433_body,81.2,PositionChange,210
 
 PLAY_21,TON433_body,115,AttackEvent,3
-PLAY_21,TON433_body,120,AttackEvent,ㅁㅁㅁ
+PLAY_21,TON433_body,120,AttackEvent,90
 PLAY_21,TON433_body,135,AttackEvent,4
 
+
+PLAY_21,TON433_body,225,AttackEvent,6
+
 //,PLAY_21,TON433_body,230,AnimSpeedChange,0.018,0.1
+PLAY_21,TON433_body,225,AnimSpeedChange,0.018,0.1
+
+//,QTE 성공시 추가타
+
+//,올려차기 전 자체 슬로우 , 적 시간정지, 순간이동, 이펙트, 카메라
+//,PLAY_21,TON433_body,137,AnimSpeedChange,0.018,20
+PLAY_21,TON433_body,137,AnimSpeedChange,0.018,10
+PLAY_21,TON433_body,137,AttackEvent,5
+
+//,올려차기
+PLAY_21,TON433_body,149,AnimSpeedChange,0.018,90
+PLAY_21,TON433_body,150,AttackEvent,10
+PLAY_21,TON433_body,167,AnimSpeedChange,0.018,50
+
+//,225로 연계?  224.9로 이동 괜찮을듯
+//,190 너무 빠른듯 아니면 속도가 빠르거나
+//,PLAY_21,TON433_body,190,AttackEvent,11
+PLAY_21,TON433_body,180,AnimSpeedChange,0.018,20
+PLAY_21,TON433_body,200,PositionChange,224.9
+
 
 
 
 //,땅에 닿으면 433cs로넘어감
-PLAY_21,TON433_body,230,NextAnimationCheck,44444
 
 //,먼지로 가리는동안 position 0~30넘어감
-PLAY_21,TON433cs_body,230,AnimSpeedChange,0.018000,3.636000 
+PLAY_21,TON433cs_body,0,AttackEvent,0
+PLAY_21,TON433cs_body,0,AnimSpeedChange,0.018,62 
+PLAY_21,TON433cs_body,30,AnimSpeedChange,0.018,40
+PLAY_21,TON433cs_body,90,AnimSpeedChange,0.018,34.636000
+PLAY_21,TON433cs_body,120,AttackEvent,2
+PLAY_21,TON433cs_body,130,AttackEvent,3
+PLAY_21,TON433cs_body,135,AttackEvent,4
+
 
 
 

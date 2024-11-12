@@ -1,6 +1,6 @@
-PLAY_HIT,HTN403_body,7,ObjectMove,1.003,0,0,0
-PLAY_HIT,HTN021_body,20.000000,AnimSpeedChange,0.000000,25.000000
-PLAY_HIT,HTN620cs_body,40.000000,AnimSpeedChange,0.000000,25.000000
+//,PLAY_HIT,HTN403_body,7,ObjectMove,1.003,0,0,0
+//,PLAY_HIT,HTN021_body,20.000000,AnimSpeedChange,0.000000,25.000000
+//,PLAY_HIT,HTN620cs_body,40.000000,AnimSpeedChange,0.000000,25.000000
 
 
 //,체이스는 034  인덱스 13
@@ -291,7 +291,7 @@ PLAY_GOKU,GKS263_body,18,ObjectMove,0.1,0,0,0
 
 
 
-//,공중 특
+//,공중 특 기탄
 //,갱신 딜레이 짧은버전
 //,PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,60.202 
 
@@ -306,7 +306,7 @@ PLAY_GOKU,GKS265_body,0.000000,AnimSpeedChange,0.007000,100.202
 PLAY_GOKU,GKS265_body,0,AttackGravity,0
 PLAY_GOKU,GKS265_body,0.1,AttackEvent,0
 PLAY_GOKU,GKS265_body,20,AttackEvent,1
-PLAY_GOKU,GKS265_body,20,AttackGravity,1
+PLAY_GOKU,GKS265_body,19,AttackGravity,1
 PLAY_GOKU,GKS265_body,25,NextAnimationCheck,333333
 PLAY_GOKU,GKS265_body,30,NextAnimationCheck,333333
 
@@ -333,7 +333,7 @@ PLAY_GOKU,GKS400_body,15,AnimSpeedChange,0.017000,240.000000
 //, 236 지대공 에너지파
 PLAY_GOKU,GKS401_body,0.000000,AnimSpeedChange,0.017000,240.000000
 PLAY_GOKU,GKS401_body,55.000000,AnimSpeedChange,0.017000,80.000000
-PLAY_GOKU,GKS401_body,59,AttackEvent,33333
+PLAY_GOKU,GKS401_body,59,AttackEvent,1
 PLAY_GOKU,GKS401_body,59,AnimSpeedChange,0.013,4.00000
 PLAY_GOKU,GKS401_body,63,AnimSpeedChange,0.013,60.000000
 
@@ -346,7 +346,7 @@ PLAY_GOKU,GKS401_body,20,AttackEvent,0
 //, 236 공대공 에너지파
 PLAY_GOKU,GKS402_body,0.000000,AnimSpeedChange,0.017000,240.000000
 PLAY_GOKU,GKS402_body,55.000000,AnimSpeedChange,0.017000,80.000000
-PLAY_GOKU,GKS402_body,59,AttackEvent,33333
+PLAY_GOKU,GKS402_body,59,AttackEvent,1
 PLAY_GOKU,GKS402_body,59,AnimSpeedChange,0.013,4.00000
 PLAY_GOKU,GKS402_body,63,AnimSpeedChange,0.013,60.000000
 
@@ -361,7 +361,7 @@ PLAY_GOKU,GKS402_body,20,AttackEvent,0
 //, 236 공대지 에너지파
 PLAY_GOKU,GKS403_body,0.000000,AnimSpeedChange,0.017000,240.000000
 PLAY_GOKU,GKS403_body,55.000000,AnimSpeedChange,0.017000,80.000000
-PLAY_GOKU,GKS403_body,59,AttackEvent,33333
+PLAY_GOKU,GKS403_body,59,AttackEvent,1
 PLAY_GOKU,GKS403_body,59,AnimSpeedChange,0.013,4.00000
 PLAY_GOKU,GKS403_body,63,AnimSpeedChange,0.013,60.000000
 
@@ -440,6 +440,7 @@ PLAY_GOKU,GKS404_body,59,ObjectMove,0.01,0,0,0
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,85.656998
 //,PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,120.656998
 PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,180.656998
+PLAY_GOKU,GKS405_body,0,AttackGravity,0
 PLAY_GOKU,GKS405_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS405_body,45,AttackEvent,0
 PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
@@ -671,6 +672,7 @@ PLAY_GOKU,GKS442_body,60,SetNextAnimation,70
 
 //, 3필 모션-마지막
 PLAY_GOKU,GKS436cs,0.000000,AnimSpeedChange,0.043000,60.808998
+PLAY_GOKU,GKS436cs,0,AttackEvent,3
 PLAY_GOKU,GKS436cs,0,Camera_Play_Son_Ultimate_4_Camera,8,4
 //,PLAY_GOKU,GKS436cs,1,ObjectMove,2,-2,0,0
 PLAY_GOKU,GKS436cs,1,ObjectMove,4,-7,0,0

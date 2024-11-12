@@ -4,9 +4,10 @@ Duration: 1
 TickPerSecond: 2
 KeyFramesCount: 59
 NumEffec: 10
-Position: 0 0 0
+Position: 0 -1 0
 Scale: 1 1 1
 Rotation: 0 0 0
+IsFollowing: false
 
 [Effect]
 EffectName: BurstJ3-Hit01_07
@@ -17,8 +18,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 1.1 0.5
-Scale: 0.0119582 0.0219995 0.0149998
+Position: 0 0.1 0.5
+Scale: 0.0119177 0.0219995 0.0149998
 Rotation: 30 0 110
 IsLoop: false
 Color: 41.3742 39.6854 17.7318 0.896026
@@ -81,8 +82,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 1.5 0.480412
-Scale: 0.000462339 0.0139999 0.012
+Position: 0 0.5 0.480817
+Scale: 0.000461045 0.0139999 0.012
 Rotation: 30 0 110
 IsLoop: false
 Color: 112.301 51.5066 10.9768 28.5099
@@ -145,7 +146,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0.5 0
+Position: 0 -0.5 0
 Scale: 0.17 0.2 1
 Rotation: 0 0 340
 IsLoop: false
@@ -182,7 +183,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 0.5 0
+Position: 0 -0.5 0
 Scale: 0.17 0.2 1
 Rotation: 0 0 340
 IsLoop: false
@@ -219,7 +220,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0.5 0
+Position: 0 -0.5 0
 Scale: 0.17 0.2 1
 Rotation: 0 0 20
 IsLoop: false
@@ -256,7 +257,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 0.5 0
+Position: 0 -0.5 0
 Scale: 0.17 0.2 1
 Rotation: 0 0 20
 IsLoop: false
@@ -293,7 +294,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0.5 0
+Position: 0 -0.5 0
 Scale: 0.15 0.15 1
 Rotation: 0 0 350
 IsLoop: false
@@ -330,7 +331,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.5 0
+Position: 0 -0.5 0
 Scale: 0.15 0.15 1
 Rotation: 0 0 350
 IsLoop: false
@@ -395,7 +396,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.6 0
+Position: 0 -0.4 0
 Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: false

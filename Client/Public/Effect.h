@@ -41,7 +41,6 @@ public:
 		_int iNumWidthImage = { 1 };
 		_int iNumHeightImage = { 1 };
 
-
 		_float4 vColor;
 		_matrix LayerMatrix;
 
@@ -124,8 +123,11 @@ public:
 
 	_bool			m_bIsCopy = { false };
 	_int				m_isGlow = { false };
+	_bool			m_bIsBackSideEffect = { false };
+	_bool			m_bIsShaderLoop = { false };
 
 	EFFECT_DESC			m_ForCopyInform;
+	_int	m_iRenderGroupIndex;
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

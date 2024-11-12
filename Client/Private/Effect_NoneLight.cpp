@@ -27,6 +27,7 @@ HRESULT CEffect_NoneLight::Initialize_Prototype()
 HRESULT CEffect_NoneLight::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_NONELIGHT;
+	m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_NONLIGHT_EFFECT);
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -66,6 +67,24 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 
 		m_iGameObjectData = m_isGlow;
 
+		if (pEffectDesc->vGlowColor.x == 0.f)
+		{
+			m_bIsBackSideEffect = false;
+		}
+		else if (pEffectDesc->vGlowColor.x == 1.f)
+		{
+			m_bIsBackSideEffect = true;
+		}
+
+		if (pEffectDesc->vGlowColor.y == 0.f)
+		{
+			m_bIsShaderLoop = false;
+		}
+		else if (pEffectDesc->vGlowColor.y == 1.f)
+		{
+			m_bIsShaderLoop = true;
+		}
+
 		if (m_iGameObjectData <= -2)
 		{
 			/* 글로우 강도 */
@@ -92,13 +111,11 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 
 		if (pEffectDesc->SRV_Ptr != nullptr)
 			m_pDiffuseTextureCom->Set_SRV(static_cast<ID3D11ShaderResourceView*>(pEffectDesc->SRV_Ptr));
-			return S_OK;
+
+
+		return S_OK;
 	}
 
-	m_pTransformCom->Set_Matrix(m_LayerMatrix);
-
-	if (FAILED(Ready_Components(&m_ModelName, &m_MaskTextureName, &m_DiffuseTextureName)))
-		return S_OK;
 
 }
 
@@ -121,7 +138,8 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 2) //레이어
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
+				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
 
 		}
@@ -130,7 +148,8 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 			if (m_iRenderIndex == 1) //테스트
 			{
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
-				m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
+				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
+				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
 		}
 	}

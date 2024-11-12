@@ -95,6 +95,8 @@ private:
 	_float m_fColliderfCY = {0.8f};
 	_float m_fAttackDelayTime = { 0.07f };
 
+	CCollider_Manager::COLLIDERGROUP m_ecolliderGroup;
+
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

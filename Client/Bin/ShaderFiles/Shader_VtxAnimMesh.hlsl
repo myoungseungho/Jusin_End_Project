@@ -13,9 +13,11 @@ float4 g_vMtrlSpecular = float4(1.f, 1.f, 1.f, 1.f);
 
 vector g_vCamPosition;
 int g_iPlayerDirection;
+texture2D g_DecalTexture;
 texture2D g_DiffuseTexture;
 texture2D g_OutLineTexture;
 /* 모델 전체의 뼈(x), 메시에게 영향을 주는 뼈(o)*/
+
 float4x4 g_BoneMatrices[800];
 
 
@@ -89,6 +91,7 @@ struct PS_OUT
     float4 vDepth : SV_TARGET2;
 };
 
+
 PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
@@ -99,7 +102,6 @@ PS_OUT PS_MAIN(PS_IN In)
 //    vector vHairColor = { 255.f / 255.f, 255.f / 255.f, 130.f / 255.f, 1.f };
 
     vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
-
     vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
     
@@ -114,7 +116,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
     float fFaceMask = (step(0.095, In.vTexcoord.x) * step(In.vTexcoord.x, 0.2832)) * (step(0.0, In.vTexcoord.y) * step(In.vTexcoord.y, 0.316));
     float fFaceDetailMask = (step(0.013, In.vTexcoord.x) * step(In.vTexcoord.x, 0.016)) * (step(0.015, In.vTexcoord.y) * step(In.vTexcoord.y, 0.017));
-    
+    float fFaceDetailMask2 = step(0.3f, In.vTexcoord.x) * step(In.vTexcoord.x, 0.427f) * step(0.031f, In.vTexcoord.y) * step(In.vTexcoord.y, 0.158f);
     //float fOffset = 0.02f;
     //float inRangeCondition = (step(0.095, In.vTexcoord.x) * step(In.vTexcoord.x, 0.2832)) *
     //                     (step(0.0, In.vTexcoord.y) * step(In.vTexcoord.y, 0.316)); 
@@ -125,16 +127,15 @@ PS_OUT PS_MAIN(PS_IN In)
     //float fFaceMask = inRangeCondition + fSkillDetailUV;
     //fFaceMask = saturate(fFaceMask);
 
-    
-    
+    float isFace = fFaceMask;
     /* g값은 명암? r값이랑 같이 쓰는데 모호함 */
-    vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
-	
+    vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.r + (isFace == 1 ? 0.502745f : vMtrlShadeDesc.g) * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
+    
 	/* b값은 보니까 스펙큘러인거같음 그 처리 */
     vResultColor.rgb = saturate(vResultColor.rgb + vMtrlShadeDesc.b * 0.1f);
-
+    vResultColor.a = 1.f;
     Out.vDiffuse = vResultColor;
-    Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask));
+    Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask2 /*+ fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     
     //float2 vTexcoordFloor = In.vTexcoord - vTexcoordFraction;
@@ -166,32 +167,6 @@ PS_OUT PS_MAIN_21(PS_IN In)
     
 	/* vMtrlShadeDesc 에 알파값으로 일단 아웃라인을 생성 */
     vResultColor.rgb = saturate(vMtrlDiffuse.rgb - (1 - vMtrlShadeDesc.a));
-    
-	/* g값은 명암? r값이랑 같이 쓰는데 모호함 */
-    // In.vTexcoord.x, In.vTexcoord.y 머리카락 분할 해야될듯 if문?
-
-    //vResultColor.rgb = saturate(vResultColor.rgb * (saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g)));
-	
-    //vResultColor.rgb = saturate(vResultColor.rgb * (vHairColor.rgb * ((saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g)))));
-    	///* 0.0f ~ 1.f */
- //   float fShade = max(dot(normalize(g_vLightDir) * -1.f, normalize(In.vNormal)), 0.f);
-
-	///* 0.3f ~ 1.f */
- //   vector vShade = saturate(fShade + g_vLightAmbient * g_vMtrlAmbient);
- //   float shadeIntensity = max(dot(normalize(vPlayerLightDir) * -1.f, In.vNormal), 0.f);
- //   shadeIntensity = saturate(shadeIntensity);
-     
- //   float shadeStep = 2.0f;
- //   shadeIntensity = floor(shadeIntensity * shadeStep) / shadeStep;
-
- //   vShade = (g_vLightDiffuse * shadeIntensity * 1.f) + vShade;
-    
- //   vector vReflect = reflect(normalize(g_vLightDir), normalize(In.vNormal));
- //   vector vLook = In.vWorldPos - g_vCamPosition;
-
- //   float fSpecular = pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
- //   vector vSpecular = g_vLightSpecular * g_vMtrlSpecular * fSpecular;
-
 
   //  Out.vDiffuse = (g_vLightDiffuse * vResultColor) * vShade;
     float fPlayerDir = saturate(g_iPlayerDirection);
@@ -239,6 +214,32 @@ PS_OUT PS_MAIN_LOBBY_GOKU(PS_IN In)
 	/* Out.vNormal.xyz -> 0 ~ 1 */
 
     Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_GOKUDECAL(PS_IN In)
+{
+    PS_OUT Out;
+    float2 Test = { 0.1f, 0.1f };
+    //vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, Test);
+    vector vMtrlDecal = g_DecalTexture.Sample(LinearSampler, In.vTexcoord);
+    //float vAlpha = (vMtrlDiffuse.r + vMtrlDiffuse.g + vMtrlDiffuse.b) / 3.f;
+    //vMtrlDiffuse.a = vAlpha * 2.f;
+  //  step(vMtrlDiffuse.r, 0)
+   // vMtrlDiffuse.a = saturate((1 - (vMtrlDiffuse.r - vMtrlDiffuse.r)));
+    clip(0.4f - vMtrlDecal.r);
+    
+    //vMtrlDecal.rgb = saturate(((0.5 - 0.00588) - vMtrlDecal.r) * 2.f);
+    
+    
+   // vMtrlDiffuse.a = 0.f;
+    //float fHairMask = step(In.vTexcoord.x, 0.9f) * step(In.vTexcoord.y, 0.9f);
+    //vMtrlDecal.a = fHairMask;
+    Out.vDiffuse = vMtrlDecal;
+
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 1);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
     return Out;
@@ -301,6 +302,21 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_LOBBY_GOKU();
+    }
+
+
+    pass Goku_Decal
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_GOKUDECAL();
     }
 }
 

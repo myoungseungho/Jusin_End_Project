@@ -32,10 +32,26 @@
 #include "SpaceGround.h"
 #include "SpaceHorizon.h"
 #include "SpaceEarth_Light.h"
+#include "SpaceMeteoBreak.h"
 #include "FallingStar.h"
-
 #include "SpaceRock.h"
-
+#include "Volcano_Stage.h"
+#include "Volcano_Cliff_Back.h"
+#include "Volcano_Cliff_Far.h"
+#include "Volcano_Cliff01.h"
+#include "Volcano_Cliff02.h"
+#include "Volcano_Cliff03.h"
+#include "Volcano_Cliff04.h"
+#include "Volcano_Ground.h"
+#include "Volcano_GroundRock.h"
+#include "Volcano_Island01.h"
+#include "Volcano_Island02.h"
+#include "Volcano_Lava_Fall.h"
+#include "Volcano_Lava_Ground.h"
+#include "Volcano_Lava_Pool.h"
+#include "Volcano_SkyCloud.h"
+#include "Volcano_Smoke.h"
+#include "Volcano_Mountain.h"
 //LOGO
 #include "UI_Logo_BG.h"
 #include "UI_Logo_Mark.h"
@@ -99,6 +115,7 @@
 #include "Character.h"
 #include "Play_Goku.h"
 #include "Play_21.h"
+#include "Play_Hit.h"
 #include "AttackObject.h"
 #include "AttackObject_Chase.h"
 #include "AttackObject_Grab.h"
@@ -731,88 +748,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		return E_FAIL;
 
 
-
-	//-----------------------------------//-----------------------------------//-----------------------------------
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Diffuse"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_Space.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star1"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_star01.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star2"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_star02.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_FallingStar"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/FallingStar/sp_SStar.png"), 1))))
-		return E_FAIL;
-
-#pragma region SpaceGround_Resouces
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground.png"), 1))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground_Cliff"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_groundcliff.png"), 1))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground_Pattern"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground_pattern.png"), 1))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground_Shadow"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground_shadow.png"), 1))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Crater"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_crater.png"), 1))))
-		return E_FAIL;
-
-#pragma endregion
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Stage"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/BRGround/sp_BRGround.png"), 1))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Cliff"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Cliff/sp_cliff.png"), 1))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Horizon"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Horizon/sp_horizon_light.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Light"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Sun/sp_light.png"), 1))))
-		return E_FAIL;
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Rainbow"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Sun/sp_rainbow.png"), 1))))
-		return E_FAIL;
-
-
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Diffuse"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/sp_earth.png"), 1))))
-		return E_FAIL;
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Light"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Light.png"), 1))))
-		return E_FAIL;
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Shadow"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Shadow.png"), 1))))
-		return E_FAIL;
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Cloud"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Cloud_%d.png"), 3))))
-		return E_FAIL;
-
 #pragma region Effect Texture
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_Default_Mask"),
@@ -1003,6 +938,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base_2P.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base_2P.png"), 1))))
 		return E_FAIL;
 
 
@@ -1254,6 +1193,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_line01.dds"), 1))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_space_ending_textrue"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/space_ending_textrue.png"), 1))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_line02"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_line02.dds"), 1))))
 		return E_FAIL;
@@ -1447,10 +1390,21 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
 		return E_FAIL;
-
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_decal.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png"), 1))))
+		return E_FAIL;
+	
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HITOutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/HTN_ilm.png"), 1))))
 		return E_FAIL;
 }
 
@@ -1905,7 +1859,8 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		std::lock_guard<std::mutex> lock(m_TextMutex);
 		lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));
 	}
-
+	if (FAILED(Load_Map()))
+		return E_FAIL;
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -1915,14 +1870,39 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
 	//	return E_FAIL;
 
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1_AllMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
+
+
+
+
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_decal.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_AllMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	//21호
@@ -1930,75 +1910,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceGround"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Ground/sp_Ground.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStage"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/BRGround/BRGround.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceCliff"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Cliff/Cliff.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceHorizon"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Horizon/Horizon.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSun"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Sun/Sun.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRainbow"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Sun/Rainbow.bin", PreTransformMatrix))))
-		return E_FAIL;
+	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
 
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStone"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Stone/Stone.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSky"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/SpaceSky/SpaceSky.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_FallingStar"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/FallingStar/FallingStar.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEarth"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Earth/Earth.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMoon"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Moon/Moon.bin", PreTransformMatrix))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_1"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_1/Rock_1.bin", PreTransformMatrix))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_2"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_2/Rock_2.bin", PreTransformMatrix))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_3"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_3/Rock_3.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_1"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_1/Meteo_1.bin", PreTransformMatrix))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_2"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_2/Meteo_2.bin", PreTransformMatrix))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_3"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_3/Meteo_3.bin", PreTransformMatrix))))
-		return E_FAIL;
 
 
 #pragma region Effect Model
@@ -2856,6 +2770,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CPlay_21::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Hit"),
+		CPlay_Hit::Create(m_pDevice, m_pContext))))
+
+		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack"),
 		CAttackObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -2891,6 +2809,64 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		return E_FAIL;
 
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Stage"),
+		CVolcano_Stage::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Cliff_Back"),
+		CVolcano_Cliff_Back::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Cliff_Far"),
+		CVolcano_Cliff_Far::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Cliff01"),
+		CVolcano_Cliff01::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Cliff02"),
+		CVolcano_Cliff02::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Cliff03"),
+		CVolcano_Cliff03::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Cliff04"),
+		CVolcano_Cliff04::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Island01"),
+		CVolcano_Island01::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Island02"),
+		CVolcano_Island02::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Lava_Fall"),
+		CVolcano_Lava_Fall::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Lava_Ground"),
+		CVolcano_Lava_Ground::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Lava_Pool"),
+		CVolcano_Lava_Pool::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_GroundRock"),
+		CVolcano_GroundRock::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Ground"),
+		CVolcano_Ground::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_SkyCloud"),
+		CVolcano_SkyCloud::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Smoke"),
+		CVolcano_Smoke::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Mountain"),
+		CVolcano_Mountain::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceMeteoBreak"),
+		CSpaceMeteoBreak::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3273,6 +3249,275 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	return S_OK;
 }
 
+HRESULT CLoader::Load_Map()
+{
+		/*---------------------------------------- - Map_Volcano--------------------------------------------*/
+
+	/*---------------------------------- -//-----------------TEXTURE------------------//-----------------------------------*/
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_smoke02"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke02.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_BRground01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground01.png"), 1))))
+		return E_FAIL;
+
+		/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_skycloud2"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud2.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river01.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river02"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river02.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river03"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river03.png"), 1))))
+		return E_FAIL;
+	/*---------------------------------- -//-----------------MODEL------------------//-----------------------------------*/
+
+	_matrix	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_smoke03"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke03.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_skycloud"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_mountain"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_mountain/vo_mountain.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_pool"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_pool/vo_lava_pool.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_ground"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_ground/vo_lava_ground.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_fall"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_fall/vo_lava_fall.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_island02"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_island02/vo_island02.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_island01"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_island01/vo_island01.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_groundrock"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_groundrock/vo_groundrock.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_ground00"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_ground00/vo_ground00.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff04"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff04/vo_cliff04.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff03"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff03/vo_cliff03.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff02"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff02/vo_cliff02.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff01"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff01/vo_cliff01.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff_far"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff_far/vo_cliff_far.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff_back"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff_back/vo_cliff_back.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_BRground"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+#pragma region SpaceResources
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_MeteoBreak"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/MeteoBreak/MeteoBreak.bin", PreTransformMatrix))))
+		return E_FAIL;
+	for (size_t i = 0; i < 11; i++)
+	{
+		wstring strTagName = TEXT("Prototype_Component_Model_MeteoBrake_") + to_wstring(i + 1);
+		string strModelName = "../Bin/Resources/Map/Space/MeteoBreak/MeteoBrake_" + to_string(i + 1) + ".bin";
+		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, strTagName.c_str(),
+			CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
+			return E_FAIL;
+	}
+	
+		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_sp_meteobrake01"),
+			CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/MeteoBreak/sp_meteobrake01.png"), 1))))
+			return E_FAIL;
+
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Diffuse"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_Space.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star1"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_star01.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_SpaceSky_Star2"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/SpaceSky/sp_star02.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_FallingStar"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/FallingStar/sp_SStar.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground_Cliff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_groundcliff.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground_Pattern"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground_pattern.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Ground_Shadow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_ground_shadow.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Crater"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Ground/sp_crater.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Stage"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/BRGround/sp_BRGround.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Cliff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Cliff/sp_cliff.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Horizon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Horizon/sp_horizon_light.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Light"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Sun/sp_light.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Rainbow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Sun/sp_rainbow.png"), 1))))
+		return E_FAIL;
+
+
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Diffuse"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/sp_earth.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Light"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Light.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Shadow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Shadow.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Space_Earth_Cloud"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/Earth/Earth_Cloud_%d.png"), 3))))
+		return E_FAIL;
+	//-----------------------------------//-----------------------------------//-----------------------------------
+
+	/*---------------------------------------- - Map_Space--------------------------------------------*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceGround"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Ground/sp_Ground.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStage"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/BRGround/BRGround.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceCliff"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Cliff/Cliff.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceHorizon"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Horizon/Horizon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSun"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Sun/Sun.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRainbow"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Sun/Rainbow.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceStone"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Stone/Stone.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceSky"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/SpaceSky/SpaceSky.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_FallingStar"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/FallingStar/FallingStar.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEarth"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Earth/Earth.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMoon"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Moon/Moon.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_1/Rock_1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_2"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_2/Rock_2.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_3"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_3/Rock_3.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_1/Meteo_1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_2"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_2/Meteo_2.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_3"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_3/Meteo_3.bin", PreTransformMatrix))))
+		return E_FAIL;
+#pragma endregion
+
+	return S_OK;
+}
+
 HRESULT CLoader::Load_Prototype_Component_GamePlay()
 {
 	{
@@ -3302,6 +3547,11 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	/* For.Prototype_Component_Shader_VtxSpace */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxSpace"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxSpace.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Shader_VtxSpace */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxVolcano"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxVolcano.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Shader_VtxPosTex */
@@ -3355,6 +3605,79 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPARTICLE_POINT::Elements, VTXPARTICLE_POINT::iNumElements))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Story_Mode_Building"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Story_Mode_Building.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Arcade_Mode_Building"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Arcade_Mode_Building.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Parasol"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Parasol.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.05f, 0.05f, 0.05f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Sky_Sea_Of_Cloud.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Goku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Goku.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
+	//게임오브젝트
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
+		CLobby_Center_Map::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Battle_Building"),
+		CLobby_Battle_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Local_Battle_Building"),
+		CLocal_Battle_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Story_Mode_Building"),
+		CLobby_Story_Mode_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Arcade_Building"),
+		CLobby_Arcade_Building::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Parasol"),
+		CLobby_Parasol::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku"),
+		CLobby_Goku::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky"),
+		CLobby_Sky::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"),
+		CLobby_Sky_Of_Sea::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
+		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

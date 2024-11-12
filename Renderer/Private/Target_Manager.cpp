@@ -37,7 +37,7 @@ _int CTarget_Manager::Add_ClientRenderTarget(const _wstring& strMRTTag, const _w
 		CRenderTarget* pRenderTarget = nullptr;
 		CRenderTarget* pAlphaRenderTarget = nullptr;
 		iCount++;
-		for (size_t i = 0; i < 30; i++)
+		for (size_t i = 0; i < 30000; i++)
 		{
 			if (nullptr != Find_RenderTarget(strTargetTag + to_wstring(iCount)))
 			{
@@ -423,6 +423,7 @@ void CTarget_Manager::Free()
 			Safe_Release(pRenderTarget);
 		Pair.second.clear();		
 	}
+
 	m_MRTs.clear();
 
 	for (auto& Pair : m_RenderTargets)

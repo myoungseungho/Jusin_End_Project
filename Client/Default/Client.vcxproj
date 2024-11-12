@@ -174,6 +174,7 @@
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
+    <ClInclude Include="..\Public\Hit_MeleeAttack.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Level_Tab.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
     <ClInclude Include="..\Public\Lobby_Goku.h" />
+    <ClInclude Include="..\Public\Play_Hit.h" />
     <ClInclude Include="..\Public\QTE_Same_Grab.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_Icon.h" />
     <ClInclude Include="..\Public\QTE_Same_Grab_UI_Icon.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="..\Public\Main_Camera_Lobby.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\QTE_Manager.h" />
+    <ClInclude Include="..\Public\SpaceMeteoBreak.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
@@ -329,6 +332,24 @@
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
     <ClInclude Include="..\Public\SpaceStone.h" />
+    <ClInclude Include="..\Public\Volcano_Cliff01.h" />
+    <ClInclude Include="..\Public\Volcano_Cliff02.h" />
+    <ClInclude Include="..\Public\Volcano_Cliff03.h" />
+    <ClInclude Include="..\Public\Volcano_Cliff04.h" />
+    <ClInclude Include="..\Public\Volcano_Cliff_Back.h" />
+    <ClInclude Include="..\Public\Volcano_Cliff_Far.h" />
+    <ClInclude Include="..\Public\Volcano_Defines.h" />
+    <ClInclude Include="..\Public\Volcano_Ground.h" />
+    <ClInclude Include="..\Public\Volcano_GroundRock.h" />
+    <ClInclude Include="..\Public\Volcano_Island01.h" />
+    <ClInclude Include="..\Public\Volcano_Island02.h" />
+    <ClInclude Include="..\Public\Volcano_Lava_Fall.h" />
+    <ClInclude Include="..\Public\Volcano_Lava_Ground.h" />
+    <ClInclude Include="..\Public\Volcano_Lava_Pool.h" />
+    <ClInclude Include="..\Public\Volcano_Mountain.h" />
+    <ClInclude Include="..\Public\Volcano_SkyCloud.h" />
+    <ClInclude Include="..\Public\Volcano_Smoke.h" />
+    <ClInclude Include="..\Public\Volcano_Stage.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -346,6 +367,7 @@
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
+    <ClCompile Include="..\Private\Hit_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
@@ -369,6 +391,7 @@
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
     <ClCompile Include="..\Private\Lobby_Goku.cpp" />
+    <ClCompile Include="..\Private\Play_Hit.cpp" />
     <ClCompile Include="..\Private\QTE_Same_Grab.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_Icon.cpp" />
     <ClCompile Include="..\Private\QTE_Same_Grab_UI_Icon.cpp" />
@@ -384,6 +407,7 @@
     <ClCompile Include="..\Private\Main_Camera_Lobby.cpp" />
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\QTE_Manager.cpp" />
+    <ClCompile Include="..\Private\SpaceMeteoBreak.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
@@ -505,6 +529,23 @@
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
     <ClCompile Include="..\Private\SpaceStone.cpp" />
+    <ClCompile Include="..\Private\Volcano_Cliff01.cpp" />
+    <ClCompile Include="..\Private\Volcano_Cliff02.cpp" />
+    <ClCompile Include="..\Private\Volcano_Cliff03.cpp" />
+    <ClCompile Include="..\Private\Volcano_Cliff04.cpp" />
+    <ClCompile Include="..\Private\Volcano_Cliff_Back.cpp" />
+    <ClCompile Include="..\Private\Volcano_Cliff_Far.cpp" />
+    <ClCompile Include="..\Private\Volcano_Ground.cpp" />
+    <ClCompile Include="..\Private\Volcano_GroundRock.cpp" />
+    <ClCompile Include="..\Private\Volcano_Island01.cpp" />
+    <ClCompile Include="..\Private\Volcano_Island02.cpp" />
+    <ClCompile Include="..\Private\Volcano_Lava_Fall.cpp" />
+    <ClCompile Include="..\Private\Volcano_Lava_Ground.cpp" />
+    <ClCompile Include="..\Private\Volcano_Lava_Pool.cpp" />
+    <ClCompile Include="..\Private\Volcano_Mountain.cpp" />
+    <ClCompile Include="..\Private\Volcano_SkyCloud.cpp" />
+    <ClCompile Include="..\Private\Volcano_Smoke.cpp" />
+    <ClCompile Include="..\Private\Volcano_Stage.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -530,6 +571,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSpace.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxShaderRect.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxVolcano.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

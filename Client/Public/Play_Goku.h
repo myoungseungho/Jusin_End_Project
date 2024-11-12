@@ -174,18 +174,21 @@ public:
 
 	void Add_YellowLight();
 	void Add_BlueLight();
-
+	_float Get_DamageScale(_bool bUltimate = false) override;
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-
+	
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };
 	_ushort m_iCountGroundSpecial = 0;
 
 	_bool m_bUltimateKamehameha = false;
+
+	_bool m_bFinalSkillss3 = { false };
+	_bool m_bAlwaysss3Test = { false };
 
 private:
 	HRESULT Ready_Components();
