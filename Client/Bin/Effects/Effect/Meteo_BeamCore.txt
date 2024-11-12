@@ -1,5 +1,6 @@
 [Layer]
 LayerName: Meteo_BeamCore
+Duration: 2
 TickPerSecond: 0.2
 KeyFramesCount: 12
 NumEffec: 1
