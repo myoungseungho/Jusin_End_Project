@@ -752,6 +752,7 @@ CModel* CModel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, con
 
 	if (FAILED(pInstance->Initialize_Prototype(pModelFilePath, PreTransformMatrix)))
 	{
+
 		MSG_BOX(TEXT("Failed to Created : CModel"));
 		Safe_Release(pInstance);
 	}

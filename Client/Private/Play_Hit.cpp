@@ -314,6 +314,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 
 	Update_CounterPose(fTimeDelta);
+	Update_214Pose(fTimeDelta);
 
 	Update_LoofAnimationCreate(fTimeDelta);
 
@@ -803,12 +804,58 @@ _bool CPlay_Hit::Update_CounterPose(_float fTimeDelta)
 			Set_CurrentAnimationPositionJump(64.999f);
 
 		else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_SPECIAL_AIR)
-			Set_CurrentAnimationPositionJump(50.f);
+			Set_CurrentAnimationPositionJump(49.999f);
 
 		
 	}
 
 	return true;
+}
+
+_bool CPlay_Hit::Update_214Pose(_float fTimeDelta)
+{
+	if (m_b214Posing == false)
+		return false;
+
+
+	_bool bKeyPressing = false;
+
+
+	//자세 유지중인지 확인
+	if (m_iPlayerTeam == 1)
+	{
+		bKeyPressing = m_pGameInstance->Key_Pressing(DIK_U);
+	}
+	else if (m_iPlayerTeam == 2)
+	{
+		bKeyPressing = m_pGameInstance->Key_Pressing(DIK_NUMPAD7);
+	}
+
+	//유지중이면 시간더하고 이펙트처리
+	if (bKeyPressing == true)
+	{
+	
+		m_fAccPoseTime += fTimeDelta;
+		//이펙트처리도?
+
+	}
+
+	else
+	{
+		//자세를 시작했으면 최소한 0.2초는 유지해야함 강제로 유지처리
+		if (m_fAccPoseTime < 0.2f)
+		{
+			bKeyPressing = true;
+			m_fAccPoseTime += fTimeDelta;
+		}
+		else
+		{
+			AttackEvent(400);
+			m_b214Posing = false;
+		}
+
+	}
+
 }
 
 _bool CPlay_Hit::Get_b236Posing()
@@ -1013,10 +1060,21 @@ _short CPlay_Hit::Check_bCurAnimationisCanChase()
 
 	//공격중 체이스는 속도 좀 빠르게
 	//if(m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY || iModelIndex == ANIME_ATTACK_SPECIAL_AIR || iModelIndex == ANIME_ATTACK_LIGHT3))
-	if (m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY ))
+	//if (m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY ))
+	//{
+	//	return 10;
+	//}
+
+	if (m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY))
 	{
+		if (m_b236Special)
+			return 0;
+
 		return 10;
 	}
+
+
+	//m_b236Special
 
 
 	else if (Check_bCurAnimationisGroundMove() || Check_bCurAnimationisAirMove() || iModelIndex == ANIME_ATTACK_LIGHT3)
@@ -1042,7 +1100,10 @@ void CPlay_Hit::Reset_AttackCount()
 
 void CPlay_Hit::Gravity(_float fTimeDelta)
 {
-
+	if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_ATTACK_SPECIAL_AIR)
+	{
+		return;
+	}
 	
 	
 	__super::Gravity(fTimeDelta);
@@ -1622,7 +1683,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_b236Special)
 			{
-				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 120.f;	
+				//120도 느리다?
+				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 120.f;
+
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 180.f;
+
 			}
 			
 		}
@@ -1691,7 +1756,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
 				//Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,8.f };
 
-				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY_DOWN };
+
+				
 				Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,-20.f };
 
 				Desc.iTeam = m_iPlayerTeam;
@@ -1795,7 +1863,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_b236Special == false)
 			{
-				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 60.f;
+				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 60.f;
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 90.f;
+
 			}
 			else
 			{
@@ -1891,13 +1961,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		
 		else if (iAttackEvent == 3)
 		{
-			if (m_b236Special == false)
-			{
-			}
-			else
-			{
-				m_b236Special = false;
-			}
+			
+			m_b236Special = false;
+			
 		}
 
 
@@ -2107,6 +2173,50 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	}
 	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR:
+	{
+		//반격 자세 시작
+		if (iAttackEvent == 0)
+		{
+			m_bCounterPose = true;
+		}
+
+		//반격성공. 적 멈춘상태
+		else if (iAttackEvent == 1)
+		{
+			m_bCounterPose = false;
+			m_bCounterSucces = false;
+			m_bInvisible = false;
+
+			_vector vTargetPos = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			vTargetPos += {1.3f * m_iLookDirection, 0.1f, 0, 0};
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+			FlipDirection();
+
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->StartCameraShake(0.1f, 0.3f);
+
+
+			
+			//점프로 이행 
+			Set_Animation(m_iJumpAnimationIndex);
+			Set_ForcedGravityTime_LittleUp();
+			
+
+		}
+
+
+		//반격 실패시 돌아오는 모션
+		else if (iAttackEvent == 2)
+		{
+			m_bCounterPose = false;
+			Set_ForcedGravityDown();
+			Set_Animation(ANIME_JUMP_DOWN);
+
+		}
+	}
 		break;
 	case Client::CPlay_Hit::ANIME_GRAB:
 		break;
@@ -2209,8 +2319,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			else
 			{
-				//원거리 공격의 경우 스킵
-				;
+				//원거리 공격의 경우 스킵 대신 속도 더 빠르게. 기존 61
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 121.f;
 			}
 
 
@@ -2314,7 +2424,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_StunTime = 1.0f;
 				Desc.iDamage = 700 * Get_DamageScale();;
 				Desc.fLifeTime = 0.1f;
-				Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
 				Desc.iTeam = m_iPlayerTeam;
 				Desc.fAnimationLockTime = 0.1f;
 				Desc.bGrabbedEnd = true;
@@ -2473,6 +2583,159 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 	case Client::CPlay_Hit::ANIME_214_POSE:
+	{
+		if (iAttackEvent == 0) //Position 20에서 발생
+		{
+			//딱 20.f에서 멈추는 일 없도록
+			Set_CurrentAnimationPositionJump(20.05f);
+
+			m_b214Posing = true;
+			m_fAccPoseTime = 0.f;
+			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 0.f;
+		}
+
+		//txt로부터 호출할게 아니라 Update214로부터 호출할것
+		//처음에 잡기로 고정시켜두고 나중에 추가공격 함
+		else if (iAttackEvent == 400)
+		{
+
+			//적 위치로부터 AccTime만큼 크기로 잡기판정테스트
+
+			// 실패시 애니메이션 Position 80으로 변경, 성공시 속도 변경.. 실패해도 속도는 바꿔야지  
+			//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 61.f;
+
+			//콜라이더 먼저 되도록 속도 늦춰야됨
+			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 5.f;
+
+			//공격판정 생성
+			{
+
+
+
+				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+
+
+				//_vector vEnemyPos = m_pEnemy->Get_vPosition();
+				//_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+				//_vector vLength = vEnemyPos - vMyPos;
+
+				//Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+				Desc.ColliderDesc.vCenter = { 5.f,0.f ,0.f };
+
+
+
+
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { m_fAccPoseTime*2.f,0.5f,1.f };
+
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+				Desc.fhitCharacter_StunTime = 10.f;
+				Desc.iDamage = 0 ;
+				Desc.fLifeTime = 0.2f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
+				Desc.iTeam = m_iPlayerTeam;
+				Desc.fAnimationLockTime = 0.1f;
+				Desc.pOwner = this;
+
+
+
+
+				Desc.eAttackType = ATTACKTYPE_COMMANDGRAB;
+
+				//Desc.fDistance = { XMVectorGetX(vLength),XMVectorGetY(vLength)};
+
+				///_vector vLength = vEnemyPos - vMyPos;
+				//Desc.fDistance = { XMVectorGetX(vLength),0.f };
+			
+				_float fLength = m_pEnemy->Get_fPositionX() - Get_fPositionX();
+				Desc.fDistance = { fLength,0.f };
+
+				
+
+				//Desc.fGrabAnimationPosition = 40.f;
+				//Desc.fGrabAnimationPosition = 25.f;
+				Desc.iGainAttackStep = 0;
+				Desc.iGainKiAmount = 0;
+
+				Desc.bOwnerNextAnimation = false;
+
+				Desc.iGrabAnimationIndex = ANIME_214_POSE;
+
+
+				//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+			}
+
+		}
+		else if (iAttackEvent == 1)
+		{
+			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 61.f;
+
+			if (m_bAttackBackEvent == false)
+			{
+				Set_CurrentAnimationPositionJump(80.f);
+			}
+
+		}
+		else if (iAttackEvent == 2)
+		{
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vExtents = { m_fAccPoseTime*3.f,1.f,1.f };
+
+
+			//center를 상대 좌표로 할게 아니라 나~상대 까지의 거리로 해야함
+
+			_vector vEnemyPos = m_pEnemy->Get_vPosition();
+			_vector vMyPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+			_vector vLength = vEnemyPos - vMyPos;
+
+			//Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength), 0.f ,0.f };
+			Desc.ColliderDesc.vCenter = { 5.f, 0.f ,0.f };
+
+
+
+			Desc.fhitCharacter_StunTime = 0.4f;
+			Desc.iDamage = 1334 * Get_DamageScale();;
+			Desc.fLifeTime = 0.2f;
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
+			//Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,8.f };
+
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+
+			//Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,-20.f };
+			Desc.fhitCharacter_Impus = { 4.f * m_iLookDirection,2.f };
+
+			
+
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.bGrabbedEnd = true;
+			Desc.pOwner = this;
+			Desc.bCameraZoom = false;
+			Desc.bOnwerHitNoneStop = true;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+
+		//처음에 잡기로 고정시켜두고 추가공격 함
+
+		//Position 95에서 Idle로 변경은 txt로 함
+
+	}
 		break;
 	case Client::CPlay_Hit::ANIME_236_SPECIAL:
 		break;
@@ -2597,6 +2860,9 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 	m_bInvisible = false;
 	m_b236Posing = false;
 	m_b236Special = false;
+	m_b214Posing = false;
+	m_fAccPoseTime = 0.f;
+
 
 	//스턴 상태가 아니면 가드 체크
 	if (m_bStun == false)

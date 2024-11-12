@@ -173,6 +173,8 @@ public:
 
 
 	_bool Update_CounterPose(_float fTimeDelta);
+	_bool Update_214Pose(_float fTimeDelta);
+
 
 	_bool Get_b236Posing();
 	void Set_b236Posing(_bool b236Posing);
@@ -228,6 +230,8 @@ private:
 	_bool m_b236Posing = { false };
 	_bool m_b236Special = { false };
 
+	_bool m_b214Posing = { false };
+	//_bool m_b214Medium = { 0 };
 
 	_bool m_bCounterPose = { false };
 	_bool m_bCounterSucces = { false };
