@@ -121,6 +121,12 @@
     <Filter Include="01.Utility\07.Sound_Manager">
       <UniqueIdentifier>{8bd465ad-ff01-48ad-b8d1-b82c3d67a459}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\VIBuffer_Instancing">
+      <UniqueIdentifier>{443054cf-9fc8-4b45-921b-fd38bf26cf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\VIBuffer_Instancing\VIBuffer_Point_Instancing">
+      <UniqueIdentifier>{90ce4904-e6d5-4b2e-8ccb-1e53e4abb7c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -270,6 +276,12 @@
     <ClCompile Include="..\Private\Sound_Manager.cpp">
       <Filter>01.Utility\07.Sound_Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Instancing.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Instancing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Point_Instancing.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Instancing\VIBuffer_Point_Instancing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Timer.h">
@@ -415,6 +427,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\Sound_Manager.h">
       <Filter>01.Utility\07.Sound_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Instancing.h">
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Instancing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Point_Instancing.h">
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Instancing\VIBuffer_Point_Instancing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

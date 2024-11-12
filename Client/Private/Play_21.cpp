@@ -248,21 +248,12 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
-	if (::AllocConsole() == TRUE)
-	{
-		FILE* nfp[3];
-		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-		std::ios::sync_with_stdio();
-	}
 
 	return S_OK;
 }
 
 void CPlay_21::Player_Update(_float fTimeDelta)
 {
-
 	__super::Player_Update(fTimeDelta);
 
 
@@ -551,7 +542,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		{
 			Stun_Shake();
 			m_fAccStunTime += fTimeDelta;
-			cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
+			//cout << "Stun Time :" << m_fAccStunTime  <<" / " <<m_fMaxStunTime << endl;
 			if (m_fAccStunTime > m_fMaxStunTime)
 			{
 				m_bStun = false;

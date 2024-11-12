@@ -301,6 +301,69 @@
     <ClCompile Include="..\private\UI_SelectArrow.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_ChoiceIcon.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectImage.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceImage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_SelectLine.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectFude.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Fude</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectMark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectFont.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\CharaSelectCamera.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_CharaSelectCircle.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Level_VS.cpp">
+      <Filter>01.Level\VS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_BG.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\BG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Mark.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_CharaPanel.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\CharaPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_StaticLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\StaticLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_DynamicLight.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\DynamicLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Bar.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_BoltEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Bolt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_MarkEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Mark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Ball.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_TeamPanel.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\TeamPanel</Filter>
+	</ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClCompile>
@@ -370,14 +433,53 @@
     <ClCompile Include="..\Private\QTE_Manager.cpp">
       <Filter>02.GameObjects\QTE</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\QTE_UI_Icon.cpp">
-      <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Same_Grab.cpp">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_Situation.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Result.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Space.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Hit_UI_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Effect.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Play_Hit.cpp">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
@@ -747,6 +849,75 @@
     <Filter Include="02.GameObjects\UI\BackGround\Character\Arrow">
       <UniqueIdentifier>{acb79254-4fd3-4ad4-bdb4-de460db34100}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\ChoiceIcon">
+      <UniqueIdentifier>{8481b05b-b50a-47ff-bdd0-e0c81ebdae78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\ChoiceImage">
+      <UniqueIdentifier>{80ae107a-a24b-4d02-9d5d-45a7cc9c9394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Line">
+      <UniqueIdentifier>{318e66d1-4d99-4261-ae82-187e50f5fe6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Font">
+      <UniqueIdentifier>{c0111337-7f13-42d6-952c-c955bc871098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Fude">
+      <UniqueIdentifier>{a8cba14f-b60e-4a6e-9fea-78a781ec16a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Mark">
+      <UniqueIdentifier>{4931c660-e905-4176-9eb4-31f7d2fe780f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Model">
+      <UniqueIdentifier>{ef0f8f86-d6e2-4d4e-b74c-ba43f6680c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Camera">
+      <UniqueIdentifier>{5be9da0f-7882-41ad-bdad-614c2547f4c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Light">
+      <UniqueIdentifier>{00ec77e1-233f-42fa-8f7e-5def52dc9b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Character\Circle">
+      <UniqueIdentifier>{f216e0dd-b45f-4eba-b460-74fb4df3a08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Level\VS">
+      <UniqueIdentifier>{af7cdd80-b775-4e0d-9567-1866610dfbe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS">
+      <UniqueIdentifier>{65f894c1-0062-42e3-9112-2395c0a7f4fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\BG">
+      <UniqueIdentifier>{426f86e8-43df-462a-9b43-974684d4eb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Mark">
+      <UniqueIdentifier>{73fcdabc-53f5-4319-afe4-e0352f2af2fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\CharaPanel">
+      <UniqueIdentifier>{abdd6309-debe-4bd2-8b4f-0f4806132bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect">
+      <UniqueIdentifier>{a1962fd7-4e71-4eb7-9ed1-fac934ed1455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\StaticLight">
+      <UniqueIdentifier>{ad807948-8216-4a50-88fa-d9ee7cd5c47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\DynamicLight">
+      <UniqueIdentifier>{3613ed52-da44-48b0-bac1-13fdba982abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Bar">
+      <UniqueIdentifier>{73e8b0f4-1c5a-4785-b9cd-1172d939fd80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\Bolt">
+      <UniqueIdentifier>{65195844-8ae7-4595-a32c-3d3c700c56fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Effect\Mark">
+      <UniqueIdentifier>{fd950ed7-ab69-4146-ba89-7a640e5e7a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Ball">
+      <UniqueIdentifier>{3a8d6782-5fe3-48fd-b7dc-28165c1782ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\TeamPanel">
+      <UniqueIdentifier>{af5c3bd0-e54a-4f0d-a5e0-ae5f82acfd0c}</UniqueIdentifier>
+	</Filter>
     <Filter Include="97.IMGUI\Tab">
       <UniqueIdentifier>{f4b4a581-1401-407e-a8eb-2577c1ad0dc3}</UniqueIdentifier>
     </Filter>
@@ -816,14 +987,53 @@
     <Filter Include="02.GameObjects\QTE">
       <UniqueIdentifier>{e7f7b9ba-ed2f-4138-ae38-9edc7ca5be99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\QTE\QTE_UI_ICON">
-      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab">
       <UniqueIdentifier>{4ec23716-9ecc-4934-ac6e-d8718634652a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
       <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge">
+      <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit">
+      <UniqueIdentifier>{f107e39d-5d21-4bb0-bb46-3c509f791381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon">
+      <UniqueIdentifier>{7cf9133a-4681-43af-8316-14c79ea0b7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon">
+      <UniqueIdentifier>{efca7a0e-a04c-4cb2-a112-95f455bffeaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation">
+      <UniqueIdentifier>{31e25037-8d1e-40db-9f9d-35e27b666a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon">
+      <UniqueIdentifier>{d8900946-436d-4160-96b3-821a7e2bb506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result">
+      <UniqueIdentifier>{abf39edf-0e0e-4cf0-9a28-3cd3c2715a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack">
+      <UniqueIdentifier>{796c94e6-b4de-4bcd-8f7b-542923268867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space">
+      <UniqueIdentifier>{9e7e2f64-d81c-4111-8fd5-a8d69a4970b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge">
+      <UniqueIdentifier>{33d8cbad-e662-4d78-b92e-b15c85290876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect">
+      <UniqueIdentifier>{8a70ad41-bfdf-4608-a3ba-ea7a4b0b3fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Effect">
+      <UniqueIdentifier>{1669c03a-36fb-44c2-b4be-90a5b2aa48f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle">
+      <UniqueIdentifier>{666b375a-ae68-4548-8b4c-7d9929afb45b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle">
+      <UniqueIdentifier>{955fee1a-d5ca-43ab-9a86-673cadd8a146}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Character\Play_Hit">
       <UniqueIdentifier>{9979946a-150e-4d0b-bfb6-70530269ec1d}</UniqueIdentifier>
@@ -1295,6 +1505,69 @@
     <ClInclude Include="..\public\UI_SelectArrow.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Arrow</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_ChoiceIcon.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectImage.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\ChoiceImage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_SelectLine.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectFude.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Fude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectMark.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectFont.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectLight.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\CharaSelectCamera.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_CharaSelectCircle.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Level_VS.h">
+      <Filter>01.Level\VS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_BG.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Mark.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_CharaPanel.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\CharaPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_StaticLight.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\StaticLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_DynamicLight.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\DynamicLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Bar.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_BoltEff.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Bolt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_MarkEff.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Effect\Mark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Ball.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_TeamPanel.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\TeamPanel</Filter>
+	</ClInclude>
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
     </ClInclude>
@@ -1364,8 +1637,8 @@
     <ClInclude Include="..\Public\QTE_Manager.h">
       <Filter>02.GameObjects\QTE</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\QTE_UI_Icon.h">
-      <Filter>02.GameObjects\QTE\QTE_UI_ICON</Filter>
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Icon</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Same_Grab.h">
       <Filter>02.GameObjects\QTE\QTE_Same_Grab</Filter>
@@ -1375,6 +1648,45 @@
     </ClInclude>
     <ClInclude Include="..\Public\Play_Goku.h">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_UI_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_Situation.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_Situation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_MovingRing_Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Result.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Space.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Hit_UI_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Hit\QTE_Hit_UI_Icon\QTE_Hit_UI_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Effect.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
+      <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Play_Hit.h">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
@@ -1753,6 +2065,12 @@
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Particle_VtxPoint.hlsl">
+      <Filter>96.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_QTE_VtxRect.hlsl">
       <Filter>96.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

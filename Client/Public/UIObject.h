@@ -29,6 +29,7 @@ public:
 		
 		UI_TYPE	eType = {};
 		_uint iNumUI = {};
+		_uint iTotalNum = {};
 	}UI_DESC;
 
 protected:

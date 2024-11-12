@@ -40,6 +40,7 @@ HRESULT CUI_InputDirIcon::Initialize(void* pArg)
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 
 	m_pUI_Manager->m_iNumCommandList++;
+
 	m_iNumCommandList  = m_pUI_Manager->m_iNumCommandList;
 
 	return S_OK;

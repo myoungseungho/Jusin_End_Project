@@ -22,6 +22,7 @@
 #include "Character.h"
 
 #include "imnodes.h"
+#include <iostream>
 
 _bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
@@ -148,13 +149,23 @@ void CImgui_Manager::Show_Debug_COut(_bool bShow)
 	{
 		if (::AllocConsole() == TRUE)
 		{
-			FILE* nfp[3];
-			freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-			freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-			freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-			std::ios::sync_with_stdio();
+			FILE* fp;
+			if (freopen_s(&fp, "CONOUT$", "w", stdout) != 0)
+			{
+				MessageBox(NULL, L"stdout 리디렉션 실패", L"Error", MB_OK);
+			}
+			if (freopen_s(&fp, "CONOUT$", "w", stderr) != 0)
+			{
+				MessageBox(NULL, L"stderr 리디렉션 실패", L"Error", MB_OK);
+			}
+			// 동기화 활성화
+			std::ios::sync_with_stdio(true);
+			// 스트림 상태 초기화
+			std::cout.clear();
+			std::cerr.clear();
+			std::cout << "콘솔 초기화 완료" << std::endl;
+			std::cerr << "콘솔 초기화 완료" << std::endl;
 		}
-
 	}
 	else // false일 때 콘솔을 끄기
 	{

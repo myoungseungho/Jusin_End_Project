@@ -39,6 +39,7 @@ using namespace DirectX;
 #include <tuple>
 #include <mutex>
 #include <future>
+#include <iostream>
 
 using namespace std;
 

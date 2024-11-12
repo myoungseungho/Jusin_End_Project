@@ -4,7 +4,13 @@ float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_Texture;
 texture2D g_NextTexture;
 texture2D g_MaskTexture;
+texture2D g_MarkTexture;
 texture2D g_BGTexture;
+
+texture2D g_CircleTexture0;
+texture2D g_CircleTexture1;
+texture2D g_CircleTexture2;
+texture2D g_CircleTexture3;
 
 bool g_bState;
 
@@ -24,9 +30,6 @@ vector g_vCamPosition;
 int iSpriteIndex = 0;
 int iNumSprite = 0;
 
-//QTE_UI
-int g_IconState;
-
 
 struct VS_IN
 {
@@ -39,6 +42,31 @@ struct VS_OUT
     float4 vPosition : SV_POSITION;
     float2 vTexcoord : TEXCOORD0;
 };
+
+float2 RotateUV(float2 uv, float2 center, float angle)
+{
+    // 중심점 기준으로 UV를 이동
+    uv -= center;
+
+    // 비율 보정 (세로 방향으로 0.5배 축소)
+    uv.y *= 0.5;
+
+    // 회전 변환
+    float cosAngle = cos(angle);
+    float sinAngle = sin(angle);
+    float2 rotatedUV = float2(
+        uv.x * cosAngle - uv.y * sinAngle,
+        uv.x * sinAngle + uv.y * cosAngle
+    );
+
+    // 비율 복원 (세로 방향으로 2배 확대)
+    rotatedUV.y *= 2.0;
+
+    // 원래 위치로 이동
+    rotatedUV += center;
+
+    return rotatedUV;
+}
 
 VS_OUT VS_MAIN(VS_IN In)
 {
@@ -71,16 +99,9 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    // 텍스처 샘플링
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    
-    // CORRECTLY_PRESSED 상태일 때 색상 회색으로 변환
-    if (g_IconState == 2) // CORRECTLY_PRESSED
-    {
-        Out.vColor.rgb *= 0.5f; // 회색 효과 (0.5는 조절 가능)
-    }
 
-    // 알파값이 낮은 픽셀은 버림
+	//Out.vColor.gb = Out.vColor.r;
     if (Out.vColor.a <= 0.1f)
         discard;
     
@@ -519,15 +540,181 @@ PS_OUT PS_Volume(PS_IN In)
       return Out;
 }
 
-PS_OUT PS_QTE_UI(PS_IN In)
+PS_OUT PS_SelectIcon(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vMask = g_MaskTexture.Sample(LinearSampler, In.vTexcoord - 0.05f);
+    
+    if (vMask.a < 0.1f)
+        discard;
+    
+    if (Out.vColor.a < 0.1f)
+        discard;
+    
+       Out.vColor.rgb *= vMask.rgb;
+        Out.vColor.a = vMask.r;
+    
+    float2 vTopTexcoord = { 0.5f , 0.f};
+    float2 vBotTexcoord = { 0.7f ,1.f};
+    
+    float fLineY = (vBotTexcoord.y - vTopTexcoord.y) / (vBotTexcoord.x - vTopTexcoord.x) * (In.vTexcoord.x - vTopTexcoord.x) + vTopTexcoord.y - In.vTexcoord.y;
+    
+    if (fLineY > 0)
+        discard;
+    
+    return Out;
+}
+
+PS_OUT PS_CHARA_BG(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector LineTexture = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vBGTexutre = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 fMaskTexcoord = float2(g_MaskTimer , 0.f);
+    float2 vMaskTexCoord = (In.vTexcoord + fMaskTexcoord);
+   
+    vector vDustTexture = g_MaskTexture.Sample(LinearSampler, vMaskTexCoord);
+    
+    LineTexture.rgb *= vBGTexutre.rgb;
+    vDustTexture.rgb *= vBGTexutre.rgb;
+    
+    vBGTexutre.rgb += LineTexture.rgb;
+    vBGTexutre.rgb += vDustTexture.rgb;
+    Out.vColor = vBGTexutre;
+   
+    return Out;
+}
+
+PS_OUT PS_Default_NoneAlpha(PS_IN In)
 {
     PS_OUT Out;
 
     Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
 
-	//Out.vColor.gb = Out.vColor.r;
+    Out.vColor.a = Out.vColor.r;
+    
+    Out.vColor.a *= g_fAlphaTimer;
+    
     if (Out.vColor.a <= 0.1f)
         discard;
+    
+    return Out;
+}
+
+PS_OUT PS_LightCircle(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(DestroySampler, In.vTexcoord);
+        
+    float fDistance = abs(In.vTexcoord - float2(0.5f, 0.5f));
+            
+    Out.vColor.a -= (fDistance * 2.f);
+    Out.vColor.a = max(0.f, Out.vColor.a);
+  
+    return Out;
+}
+
+PS_OUT PS_VS_BG(PS_IN In)
+{
+    PS_OUT Out;
+    
+    vector BaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector BGTex = g_BGTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    vector MaskTex = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    vector CircleTex[4];
+    
+
+    float2 RotaCoord = RotateUV(In.vTexcoord, float2(0.5f, 0.5f), radians(g_MaskTimer));
+    float2 ReverseRotaCoord = RotateUV(In.vTexcoord, float2(0.5f, 0.5f), radians(360 - g_MaskTimer));
+    CircleTex[0] = g_CircleTexture0.Sample(LinearSampler, RotaCoord);
+    CircleTex[1] = g_CircleTexture1.Sample(LinearSampler, ReverseRotaCoord);
+    CircleTex[2] = g_CircleTexture2.Sample(LinearSampler, RotaCoord);
+    CircleTex[3] = g_CircleTexture3.Sample(LinearSampler, ReverseRotaCoord);
+    
+        
+     Out.vColor = saturate(BaseTex * BGTex);
+    
+     if (MaskTex.a <= 0.1f)
+         MaskTex = 0.f;
+      
+        MaskTex *= BGTex;
+    
+    for (int i = 0; i < 4; ++i)
+    {
+        if (CircleTex[i].a <= 0.1f)
+            CircleTex[i] = 0.f;
+        
+        CircleTex[i] *= BGTex;
+        Out.vColor.rgb += CircleTex[i].rgb;
+    }
+     
+     Out.vColor.rgb += MaskTex.rgb;
+     Out.vColor = min(1.f, Out.vColor);
+    
+    return Out;
+}
+
+PS_OUT PS_VS_PANEL(PS_IN In)
+{
+    PS_OUT Out;
+    
+    vector BaseTex = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 vMarkTex = float2(In.vTexcoord.x, In.vTexcoord.y + 0.25f);
+    vector MarkTex = g_MarkTexture.Sample(LinearSampler, vMarkTex);
+    
+    float2 vTex = (In.vTexcoord.x * 2, In.vTexcoord.y);
+    vector BGTex = g_BGTexture.Sample(LinearSampler, vTex);
+    
+    Out.vColor = BaseTex * BGTex;
+    
+  
+    float2 vTopTexcoord = { 0.f, 0.37f };
+    float2 vBotTexcoord = { 1.f, 0.27f };
+    
+    float fLineX = (In.vTexcoord.y - vTopTexcoord.y) * ((vBotTexcoord.x - vTopTexcoord.x) / (vBotTexcoord.y - vTopTexcoord.y)) + vTopTexcoord.x - In.vTexcoord.x;
+    
+    if (fLineX > 0)
+        MarkTex = 0.f;
+    
+    if (Out.vColor.a > 0.1f)
+    {
+        Out.vColor += MarkTex;
+    }
+   
+    return Out;
+}
+
+PS_OUT PS_VS_DynamicLight(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    Out.vColor.a *= 0.8f;
+    Out.vColor.rgb *= 1.5f;
+
+    return Out;
+}
+
+PS_OUT PS_VS_Bar(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector BaseTexture  = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 vTex = (In.vTexcoord.x , In.vTexcoord.y - 0.075f);
+    vector MaskTexture = g_MaskTexture.Sample(LinearSampler, vTex);
+        
+    Out.vColor = BaseTexture *MaskTexture;
     
     return Out;
 }
@@ -539,7 +726,6 @@ technique11 DefaultTechnique
 //0
     pass Default
     {
-
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
@@ -704,6 +890,7 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_Sprite();
     }
+
 //11
     pass OnlyColor
     {
@@ -718,6 +905,7 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_OnlyColor();
     }
+
 //12
     pass Input
     {
@@ -875,7 +1063,7 @@ technique11 DefaultTechnique
     }
 
 //23
-    pass QTE_UI
+    pass SelectIcon
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
@@ -885,7 +1073,104 @@ technique11 DefaultTechnique
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;
-        PixelShader = compile ps_5_0 PS_QTE_UI();
+        PixelShader = compile ps_5_0 PS_SelectIcon();
     }
 
+//24
+    pass CHARA_BG
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_CHARA_BG();
+    }
+
+//25
+    pass Default_NoneAlpha
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_Default_NoneAlpha();
+    }
+
+//26
+    pass LightCircle
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_LightCircle();
+    }
+
+//27
+    pass VS_BG
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_BG();
+    }
+
+//28
+    pass VS_Panel
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_PANEL();
+    }
+
+//29
+    pass VS_DynamicLight
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_DynamicLight();
+    }
+
+//30
+    pass VS_Bar
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_VS_Bar();
+    }
 }
