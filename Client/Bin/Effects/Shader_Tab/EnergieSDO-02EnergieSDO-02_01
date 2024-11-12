@@ -1,0 +1,22 @@
+Version: 2
+KeyCount: 2
+KeySize: 48
+Key: Prototype_Component_Texture_Effect_T_Smoke_SubUV
+ID: 3
+vTexCoord: 1 1
+KeySize: 52
+Key: Prototype_Component_Texture_Effect_cmn_aura12_orange
+ID: 3
+vTexCoord: 1 1
+NodePosCount: 5
+NodeID: -1 Position: 518 61
+NodeID: 3 Position: 277 57
+NodeID: 3001 Position: 36 120
+NodeID: 2 Position: 278 31
+NodeID: 1 Position: 0 0
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 10 3 Speed: 30
+LinkCount: 2
+LinkSrcNodeID: 8 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 11

@@ -100,8 +100,6 @@ EFFECT_KEYFRAME CEffect::Get_KeyFrame(_uint KeyFrameNumber)
 	Set_Effect_Position(KeyFrame.vPosition);
 	Set_Effect_Rotation(KeyFrame.vRotation);
 
-	m_pTransformCom->Set_Matrix(m_LayerMatrix);
-
 	EFFECT_KEYFRAME ResultKeyFrame;
 
 	ResultKeyFrame.vPosition.x = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
@@ -118,7 +116,26 @@ EFFECT_KEYFRAME CEffect::Get_KeyFrame(_uint KeyFrameNumber)
 	ResultKeyFrame.fCurTime = KeyFrame.fCurTime;
 	ResultKeyFrame.fDuration = KeyFrame.fDuration;
 
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 	return ResultKeyFrame;
+}
+
+void CEffect::Set_ParentMatrixMultiply_LocalMatrix()
+{
+	_float4x4 LayerMatrix;
+	_matrix WorldMatrix = m_pTransformCom->Get_WorldMatrix();
+
+	//LayerMatrix * 
+	_matrix TestMatrix = WorldMatrix * m_LayerMatrix;
+	XMStoreFloat4x4(&LayerMatrix, TestMatrix);
+	//m_pTransformCom->Set_WorldMatrix(LayerMatrix);
+
+	XMStoreFloat4x4(&m_WorldMatrix, WorldMatrix* m_LayerMatrix);
+	//m_pTransformCom->Set_Matrix(TestMatrix);
+//	m_pTransformCom->Set_Matrix(m_pTransformCom->Get_WorldMatrix_Inverse());
+	//m_pTransformCom->Set_Matrix(m_LayerMatrix);
+
 }
 
 EFFECT_KEYFRAME CEffect::Get_Near_Front_KeyFrame(_uint frameNumber)
@@ -189,8 +206,7 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	Set_Effect_Position(ResultKeyFrame.vPosition);
 	Set_Effect_Rotation(ResultKeyFrame.vRotation);
 
-	m_pTransformCom->Set_Matrix(m_LayerMatrix);
-	//LookCamObject();
+	XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * m_LayerMatrix);
 
 	return S_OK;
 }
@@ -203,6 +219,11 @@ void CEffect::Set_Effect_Color(_float4 vColor)
 void CEffect::Get_Layer_Matrix(_matrix LayerMatrix)
 {
 	m_LayerMatrix= LayerMatrix;
+}
+
+void CEffect::Set_Layer_Matrix()
+{
+	m_pTransformCom->Set_Matrix(m_LayerMatrix);
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

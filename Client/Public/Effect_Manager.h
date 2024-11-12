@@ -65,6 +65,7 @@ public:
 	HRESULT Set_Layer_Effect_Position(wstring& layerName, wstring& effectName, _float3 ChangePosition);
 	HRESULT Set_Layer_Effect_Rotation(wstring& layerName, wstring& effectName, _float3 ChangeRotation);
 	HRESULT Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstring& effectName, _bool bIsNotPlaying);
+	void	Set_ParentMatrixMultiply_LocalMatrix(wstring& layerName, wstring& effectName);
 
 	_float3 Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName);
 	_float3 Get_Layer_Effect_Position(wstring& layerName, wstring& effectName);

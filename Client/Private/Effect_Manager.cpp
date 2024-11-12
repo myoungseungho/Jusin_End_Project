@@ -927,6 +927,11 @@ HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstri
 	return E_FAIL;
 }
 
+void CEffect_Manager::Set_ParentMatrixMultiply_LocalMatrix(wstring& layerName, wstring& effectName)
+{
+	Find_In_Layer_Effect(layerName, effectName)->Set_ParentMatrixMultiply_LocalMatrix();
+}
+
 _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)
 {
 	CEffect* pEffect = Find_In_Layer_Effect(layerName, effectName);
