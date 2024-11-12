@@ -2054,6 +2054,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 			case Client::HIT_HEAVY_DOWN:
 			case Client::HIT_KNOCK_AWAY_LEFT:
 			case Client::HIT_KNOCK_AWAY_UP:
+			case Client::HIT_KNOCK_AWAY_UP_GRAVITY:
 			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
 			case Client::HIT_SPIN_AWAY_LEFTUP:
 			case Client::HIT_SPIN_AWAY_UP:
@@ -2169,6 +2170,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		m_fImpuse = Impus;
 	}
 
+
+	m_bWallBounce = true;
 
 	switch (eAnimation)
 	{
@@ -2290,11 +2293,21 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP:
 	{
+		m_bAwayUpGravity = false;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		Set_ForcedGravityTime_LittleUp();
 	}
 	break;
+	case Client::HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY:
+	{
+		m_bAwayUpGravity = true;
+		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
+		//Set_ForcedGravityTime_LittleUp();
 
+		Set_ForcveGravityTime(0.f);
+
+	}
+	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFTDOWN:
 	{
 		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
@@ -4669,6 +4682,12 @@ void CCharacter::Gravity(_float fTimeDelta)
 			// 
 			//다만 벽에 안팅기는 우측 스매시의 경우 더함
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex && m_bWallBounce == false)
+			{
+				m_fGravityTime += fTimeDelta;
+				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });
+			}
+
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_UpAnimationIndex && m_bAwayUpGravity)
 			{
 				m_fGravityTime += fTimeDelta;
 				m_pTransformCom->Add_Move({ m_fImpuse.x * fTimeDelta,-fGravity,0 });

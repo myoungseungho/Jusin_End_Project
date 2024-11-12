@@ -150,6 +150,9 @@ public:
 		//COUNT_ATTACK_CROUCH_MEDUIM,
 		COUNT_ATTACK_AUTO_MEDIUMTOHEAVY,
 		COUNT_ATTACK_SPECIAL,
+		COUNT_ATTACK_236SPECIAL_UP,
+		COUNT_ATTACK_236SPECIAL_RIGHT,
+		COUNT_ATTACK_236SPECIAL_DOWN,
 		COUNT_ATTACK_GRAB,
 		COUNT_END
 	};
@@ -173,6 +176,10 @@ public:
 
 	_bool Get_b236Posing();
 	void Set_b236Posing(_bool b236Posing);
+
+	_bool Get_b236Sepcial();
+	void Set_b236Special(_bool b236Special);
+
 
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) override;
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) override;
@@ -219,12 +226,13 @@ private:
 	_float m_fMaxPoseTime = { 1.5f };
 
 	_bool m_b236Posing = { false };
+	_bool m_b236Special = { false };
+
 
 	_bool m_bCounterPose = { false };
 	_bool m_bCounterSucces = { false };
 
 	_bool m_bInvisible = { false };
-	_bool m_b236SpecialAttack = { false };
 
 	_ushort m_iAttackLightLoofCount = { 2 };
 

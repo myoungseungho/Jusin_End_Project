@@ -332,12 +332,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	Update_LoofAnimationCreate(fTimeDelta);
 	Update_PreviousXPosition();
 
-	//if (m_bGrabbed)
-	//{
-	//	Character_Play_Animation(fTimeDelta);
-	//	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-	//	return;
-	//}
+	
 
 	if (m_bGrabbed)
 	{
@@ -376,27 +371,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	}
 
 
-	//if (m_pGameInstance->Key_Down(DIK_F3))
-	//	m_pUI_Manager->UsingChangeCharacher(m_ePlayerSlot);
-
-	//합치기 전 임시 코드.  적 탐지코드임
-	//if (m_pEnemy == nullptr)
-	//{
-	//	_short i = m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-	//
-	//	for (int i = 0; i < m_pGameInstance->Get_LayerSize(LEVEL_GAMEPLAY, TEXT("Layer_Character")); i++)
-	//	{
-	//		CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), i);
-	//	
-	//		if (pObject != this)
-	//		{
-	//			m_pEnemy = static_cast<CCharacter*>(pObject);
-	//		}
-	//	
-	//	}
-	//	
-	//}
-
+	
 	Update_BeReflecting(fTimeDelta);
 
 
@@ -707,7 +682,10 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		Set_bFinalSkillQTE(true);
 	}
 	//cout << "iHP : " << m_iHP << endl;
-
+	if (m_pGameInstance->Key_Down(DIK_INSERT))
+	{
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(100, m_iPlayerTeam);
+	}
 
 	Check_Ground();
 }
@@ -721,185 +699,6 @@ void CPlay_21::Update(_float fTimeDelta)
 {
 
 	__super::Player_Update(fTimeDelta);
-
-	/*
-
-
-
-	InputedCommandUpdate(fTimeDelta);
-	InputCommand();
-
-
-
-	CheckAllCommands();
-
-	if (m_bAnimationLock == false)
-	{
-
-		Character_Play_Animation(fTimeDelta);
-
-		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
-		if (m_bMotionPlaying == false)
-		{
-			if(m_pModelCom->m_iCurrentAnimationIndex != ANIME_JUMP_DOWN)
-				AnimeEndNextMoveCheck();
-		}
-
-
-	}
-	else
-	{
-		m_fAccAnimationLock += fTimeDelta;
-		if (m_fAccAnimationLock > m_fMaxAnimationLock)
-		{
-			m_fAccAnimationLock = 0.f;
-			m_bAnimationLock = false;
-		}
-	}
-
-
-
-	Gravity(fTimeDelta);
-
-
-	if (Check_bCurAnimationisGroundMove() || m_pModelCom->m_iCurrentAnimationIndex ==ANIME_FORWARD_DASH)
-	{
-		//if ((m_iNextAnimation.first == ANIME_IDLE) || ((m_iNextAnimation.first == ANIME_FORWARD_WALK) || (m_iNextAnimation.first == ANIME_BACK_WALK)))
-		if(Check_bCurAnimationisGroundMove(m_iNextAnimation.first))
-		{
-			Reset_AttackCount();
-
-			_short MoveKey = 0;
-			if (m_pGameInstance->Key_Pressing(DIK_W))
-			{
-				m_pTransformCom->Add_Move({ 0,3,0 });
-				Set_Animation(ANIME_JUMP_UP);
-			}
-
-			else if (m_pGameInstance->Key_Pressing(DIK_S))
-			{
-				//if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_CROUCHING)
-				if (m_pModelCom->m_iCurrentAnimationIndex != ANIME_FORWARD_DASH)
-				{
-					m_pModelCom->SetUp_Animation(ANIME_CROUCHING, true);
-				}
-
-			}
-
-			else
-			{
-				if (m_pGameInstance->Key_Pressing(DIK_A))
-				{
-					MoveKey -= m_iLookDirection;
-				}
-
-				else if (m_pGameInstance->Key_Pressing(DIK_D))
-				{
-					MoveKey += m_iLookDirection;
-				}
-
-
-				if (MoveKey == -1)
-				{
-
-					//if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_BACK_DASH)
-					//{
-					//	m_pModelCom->SetUp_Animation(ANIME_BACK_DASH, false);
-					//}
-					//else
-						m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-
-
-					m_iNextAnimation.first = ANIME_IDLE;
-					m_iNextAnimation.second = 100.f;
-
-				}
-				else if (MoveKey == 1)
-				{
-					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
-					{
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH, true);
-					}
-					else
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-
-					m_iNextAnimation.first = ANIME_IDLE;
-					m_iNextAnimation.second = 100.f;
-				}
-				else
-				{
-					if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_FORWARD_DASH)
-					{
-						m_pModelCom->SetUp_Animation(ANIME_FORWARD_DASH_END, false);
-					}
-					else
-						m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-
-					m_iNextAnimation.first = ANIME_IDLE;
-					m_iNextAnimation.second = 100.f;
-				}
-			}
-
-
-			//앉기 추가 전에는 이거만 있었음
-			//if (m_pGameInstance->Key_Pressing(DIK_A))
-			//{
-			//	MoveKey -= m_iLookDirection;
-			//}
-			//
-			//else if (m_pGameInstance->Key_Pressing(DIK_D))
-			//{
-			//	MoveKey += m_iLookDirection;
-			//}
-			//
-			//
-			//if (MoveKey == -1)
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_BACK_WALK, false);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//
-			//}
-			//else if (MoveKey == 1)
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_FORWARD_WALK, false);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//}
-			//else
-			//{
-			//	m_pModelCom->SetUp_Animation(ANIME_IDLE, true);
-			//	m_iNextAnimation.first = ANIME_IDLE;
-			//	m_iNextAnimation.second = 100.f;
-			//}
-
-
-		}
-	}
-
-
-	if (m_pGameInstance->Key_Down(DIK_8))
-	{
-		ShowInputBuffer();
-	}
-	if (m_pGameInstance->Key_Down(DIK_1))
-	{
-		DebugPositionReset();
-	}
-
-	if (m_pGameInstance->Key_Down(DIK_2))
-	{
-		FlipDirection();
-	}
-	if (m_pGameInstance->Key_Down(DIK_3))
-	{
-		m_pModelCom->SetUp_Animation(0,true);
-	}
-
-
-	Check_Ground();
-	*/
-
 
 
 }

@@ -612,15 +612,29 @@ PLAY_HIT,HTN205_body,45,NextAnimationCheck,333333
 //,PLAY_HIT,HTN230_body,0.000000,AnimSpeedChange,0.005000,90.504997
 
 //,PLAY_HIT,HTN230_body,0,AnimSpeedChange,0.028,61
+
 PLAY_HIT,HTN230_body,0,AnimSpeedChange,0.018,61
+PLAY_HIT,HTN230_body,0.1,AttackEvent,301     
+
+
+
 PLAY_HIT,HTN230_body,15,AnimSpeedChange,0.028,120
 PLAY_HIT,HTN230_body,40,AnimSpeedChange,0.018,91
 
 PLAY_HIT,HTN230_body,35,AttackEvent,0     
-PLAY_HIT,HTN230_body,45,NextAnimationCheck,3333
-PLAY_HIT,HTN230_body,50,NextAnimationCheck,3333
-PLAY_HIT,HTN230_body,55,NextAnimationCheck,3333
-PLAY_HIT,HTN230_body,65,SetAnimation,0
+
+//,이것들 전부 Special 아닐때만 하도록 바꿔야함
+PLAY_HIT,HTN230_body,45,AttackEvent,101     
+PLAY_HIT,HTN230_body,50,AttackEvent,102
+PLAY_HIT,HTN230_body,55,AttackEvent,103
+PLAY_HIT,HTN230_body,65,AttackEvent,201
+     
+//,PLAY_HIT,HTN230_body,45,NextAnimationCheck,3333
+//,PLAY_HIT,HTN230_body,50,NextAnimationCheck,3333
+//,PLAY_HIT,HTN230_body,55,NextAnimationCheck,3333
+//,PLAY_HIT,HTN230_body,65,SetAnimation,0
+
+
 
 //,25~35 약간 앞으로 움직이게
 PLAY_HIT,HTN230_body,25,ObjectMove,0.05,0,0,0
@@ -666,14 +680,19 @@ PLAY_HIT,HTN231_body,55,ObjectMove,0.05,0,0,0
 //,앉아강 51
 //,PLAY_HIT,HTN232_body,0.000000,AnimSpeedChange,0.005000,100
 PLAY_HIT,HTN232_body,0.000000,AnimSpeedChange,0.005000,160
-PLAY_HIT,HTN232_body,10.747000,AnimSpeedChange,0.005000,60
-PLAY_HIT,HTN232_body,20,AttackEvent,232
+
+//,236특때문에 속도60은 AttackEvent로 처리함
+//,PLAY_HIT,HTN232_body,10.747000,AnimSpeedChange,0.005000,60
+
+PLAY_HIT,HTN232_body,20,AttackEvent,1
 PLAY_HIT,HTN232_body,40,AnimSpeedChange,0.005000,100
 PLAY_HIT,HTN232_body,41,NextAnimationCheck,3333
 PLAY_HIT,HTN232_body,45,PositionChange,79
 
 //,PLAY_HIT,HTN232_body,50,NextAnimationCheck,3333
 
+//,64에서 종료니까 63에서 236Special=false
+PLAY_HIT,HTN232_body,63,AttackEvent,3
 
 
 
@@ -778,6 +797,15 @@ PLAY_HIT,HTN401_body,15,AttackEvent,1
 
 
 
+//,236특 인 경우
+//,0에서부터 특별처리. 속도조절
+//,1에서 공격판정
+//,2 종료시 Special=false.  59에서 끝이니 그 전에 처리함
+PLAY_HIT,HTN401_body,58,AttackEvent,2
+
+
+
+
 
 //,236포즈 중공격
 
@@ -802,6 +830,8 @@ PLAY_HIT,HTN403_body,0,AttackEvent,0
 //,이동 + 샤샤샥 + 공격판정 + 보이게
 PLAY_HIT,HTN403_body,15,AttackEvent,1
 
+//,맞췄으면 좀 일찍 정자세로, 또는 속도를 빠르게
+PLAY_HIT,HTN403_body,20,AttackEvent,2
 
 
 //,214 포즈

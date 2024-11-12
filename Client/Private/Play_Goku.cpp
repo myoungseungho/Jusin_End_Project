@@ -253,7 +253,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
-
+	cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
 
 
 
@@ -706,7 +706,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		Set_bFinalSkillQTE(true);
 	}
 	
-
+	if (m_pGameInstance->Key_Down(DIK_INSERT))
+	{
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(100, m_iPlayerTeam);
+	}
 }
 
 void CPlay_Goku::Camera_Update(_float fTimeDelta)
@@ -2873,7 +2876,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_Impus = { 40.f * m_iLookDirection,5.f };
 
 			Desc.fhitCharacter_StunTime = 10.f;
-			Desc.iDamage = 0;
+			Desc.iDamage = 1;
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 			Desc.iTeam = m_iPlayerTeam;

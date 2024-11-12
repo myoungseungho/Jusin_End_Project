@@ -54,7 +54,7 @@ public:
 		_bool		bGrabbedEnd = { false };
 		_bool		bCameraZoom = { true };
 
-		_ushort		iGainKiAmount = { 20 };
+		_ushort		iGainKiAmount = { 5 };
 
 
 		_float fCameraShakeDuration = { 0 };
@@ -157,7 +157,7 @@ protected:
 	_float m_fCameraShakeDuration = {};
 	_float m_fCameraShakeMagnitude = {};
 
-	_ushort		m_iGainKiAmount = { 20 };
+	_ushort		m_iGainKiAmount = { 5 };
 
 
 	_float		m_fAccUpdateStop = {};

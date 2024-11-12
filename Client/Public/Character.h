@@ -581,6 +581,7 @@ protected:
 	_bool m_bWallBounce = { true };
 	_bool m_bNoGravity = { false };
 	_float m_fNoGravitySafeTime = { 0.f };
+	_bool m_bAwayUpGravity = { false };
 
 
 	//멤버변수에 넣는 대신 함수로 체크?   이거 없으면  서브캐릭터들도 가드를 해버림.  교체할때 그냥 사라지게?

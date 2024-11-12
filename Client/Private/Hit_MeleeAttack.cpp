@@ -132,7 +132,18 @@ void CHit_MeleeAttack::Attack_Medium()
 
 
 	}
-	
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2
+		|| *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM))
+	{
+		//서서 중공격 횟수가 남아있으면 일단 사용
+		if (m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_MEDIUM] == true)
+		{
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_MEDIUM, 0.5f);
+			m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_MEDIUM] = false;
+		}
+
+	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2
 		|| *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM)
 	{
@@ -229,9 +240,12 @@ void CHit_MeleeAttack::Attack_Heavy()
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_AIR3);
 	}
 
+
+
 	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
 	{
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
+		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1,m_pPlayer->Get_iPlayerTeam()))
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
 	}
 
 }
@@ -266,14 +280,64 @@ void CHit_MeleeAttack::Attack_Special()
 		//*m_pbCounterPose = true;
 	}
 
+	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_RIGHT);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] = false;
+		m_pPlayer->Set_b236Special(true);
+
+	}
+
+	else if (m_pPlayer->Get_b236Sepcial() && m_pPlayer->Get_bAttackBackEvent() && m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_RIGHT);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] = false;
+
+	}
+
+
 }
 
 void CHit_MeleeAttack::Attack_Crouch_Speical()
 {
+
+	 if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_DOWN);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_DOWN] = false;
+		m_pPlayer->Set_b236Special(true);
+
+		}
+
+	else if (m_pPlayer->Get_b236Sepcial() && m_pPlayer->Get_bAttackBackEvent() && m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_DOWN] && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_RIGHT))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_DOWN);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_DOWN] = false;
+
+	}
+
 }
 
 void CHit_MeleeAttack::Attack_Up_Speical()
 {
+	if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_UP);
+		m_pPlayer->Set_b236Special(true);
+
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_UP] = false;
+	}
+
+
+	else if (m_pPlayer->Get_b236Sepcial() && m_pPlayer->Get_bAttackBackEvent() && m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_UP] && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_RIGHT))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_UP);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_UP] = false;
+
+	}
+
+
+
 }
 
 void CHit_MeleeAttack::Attack_Grab()
