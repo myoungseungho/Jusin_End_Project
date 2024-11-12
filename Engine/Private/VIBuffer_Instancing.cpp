@@ -196,7 +196,7 @@ _bool CVIBuffer_Instancing::Spread_FireCracker_2D(_float fTimeDelta)
 	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
 
 	// 중력 가속도 (필요에 따라 조정 가능)
-	const float gravity = -5000.f; // 예: 픽셀/초²
+	const float gravity = -200.f; // 예: 픽셀/초²
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
@@ -239,6 +239,7 @@ _bool CVIBuffer_Instancing::Spread_FireCracker_2D(_float fTimeDelta)
 			// ratio가 0.8 이상일 때는 중력의 영향을 받아 아래로 떨어짐
 			// 중력 효과를 적용하여 moveY에 중력 가속도 추가
 			float gravityEffect = gravity * fTimeDelta; // 중력 가속도 적용
+			moveX = dirX * m_pSpeeds[i] * fTimeDelta * ratio * ratio;
 			moveY = gravityEffect; // 아래로 떨어짐
 		}
 

@@ -541,8 +541,8 @@ void CQTE_Hit_Situation::Create_ParticleObject(CQTE_Hit_UI_Icon* pIcon)
 	CQTE_Hit_UI_Particle::Hit_PARTICLE_DESC Desc{};
 	Desc.fX = pIcon->m_fX;
 	Desc.fY = pIcon->m_fY;
-	Desc.fSizeX = 1920.f;
-	Desc.fSizeY = 1080.f;
+	Desc.fSizeX = 600.f;
+	Desc.fSizeY = 600.f;
 
 	CQTE_Hit_UI_Particle* effect = static_cast<CQTE_Hit_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Particle"), &Desc));
 	m_vecHitParticle.push_back(effect);
