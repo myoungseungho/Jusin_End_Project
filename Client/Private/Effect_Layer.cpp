@@ -109,14 +109,9 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 
 HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 {
-
-	//m_isBillboading = isBillboading;
 	m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
 
-
-	
 	LayerMatrix = m_pTransformCom->Get_WorldMatrix();
-
 
 	if (pArg != nullptr)
 	{
@@ -126,7 +121,6 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 
 		if (0 > m_pPlayerMatrix->_11)
 		{
-			/* 문제 터질때 가장 먼저 봐야됨 */
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
 
 			XMVECTOR Scale, Rotation, Position;
@@ -137,17 +131,17 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 
 			XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
 
-			//fLayerMatrix._41 *= -1;4
-			fLayerMatrix._43 = 0;
 			fLayerMatrix._41 += XMVectorGetX(Position);
 			fLayerMatrix._42 += XMVectorGetY(Position);
+			fLayerMatrix._43 *= -1;
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 
-			/* AttackObject에서 Range 는 플레이어의 스케일 x가 -1인 영향을 받고 있음 그래서 회전시킴  */
 			_matrix CopyWorldMatrix = m_pCopyTransformCom->Get_WorldMatrix();
 			CopyWorldMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+
 			XMStoreFloat4x4(&fLayerMatrix, CopyWorldMatrix);
+
 			m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 		}
 		else
@@ -164,18 +158,17 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
-			m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 		}
 
 		return S_OK;
 	}
-	//else
-	//{
-	//	_matrix TestMatrix = XMMatrixIdentity();
+	else
+	{
+		_matrix TestMatrix = XMMatrixIdentity();
 
-	//	LayerMatrix = TestMatrix;
-	//	//m_pTransformCom->Multiple_Matrix(TestMatrix);
-	//}
+		LayerMatrix = TestMatrix;
+		//m_pTransformCom->Multiple_Matrix(TestMatrix);
+	}
 
 	return S_OK;
 }
@@ -215,20 +208,17 @@ void CEffect_Layer::Update(_float fTimeDelta)
 			
 			if (pEffect->m_bIsBillboarding)
 			{
-				m_pCopyTransformCom->LookAt(m_pGameInstance->Get_CamPosition_Vector());
+				CTransform* pTransform = CTransform::Create(m_pDevice, m_pContext);
 
-				_float4x4 FinalMatrix;
-				XMStoreFloat4x4(&FinalMatrix, m_pCopyTransformCom->Get_WorldMatrix());
+				_float4x4 SwitchMatrix;
+				XMStoreFloat4x4(&SwitchMatrix, EffectToLayerMatrix);
 
-				XMVECTOR Scale, Rotation, Position;
+				pTransform->Set_WorldMatrix(SwitchMatrix);
+				pTransform->LookAt(m_pGameInstance->Get_CamPosition_Vector());
 
-				XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+				EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix() * pTransform->Get_WorldMatrix();
 
-				FinalMatrix._43 = 0;
-				FinalMatrix._41 = FinalMatrix._41 + XMVectorGetX(Position) /*+ m_fChangePosition.x*/;
-				FinalMatrix._42 = FinalMatrix._42 + XMVectorGetY(Position) /*+ m_fChangePosition.y*/;
-
-				EffectToLayerMatrix = XMLoadFloat4x4(&FinalMatrix);
+				Safe_Release(pTransform);
 			}
 
 			if(m_pPlayerTransformCom != nullptr)

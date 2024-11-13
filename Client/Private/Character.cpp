@@ -619,29 +619,29 @@ _bool CCharacter::InputCommand()
 
 
 
-		if (m_pGameInstance->Key_Down(DIK_NUMPAD7))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD7) || m_pGameInstance->Key_Down(DIK_7))
 		{
 			iAttackkey = ATTACK_LIGHT;
 		}
 
-		if (m_pGameInstance->Key_Down(DIK_NUMPAD8))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD8) || m_pGameInstance->Key_Down(DIK_8))
 		{
 			iAttackkey = ATTACK_MEDIUM;
 
 		}
-		if (m_pGameInstance->Key_Down(DIK_NUMPAD4))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD4) || m_pGameInstance->Key_Down(DIK_4))
 		{
 			iAttackkey = ATTACK_SPECIAL;
 
 		}
-		if (m_pGameInstance->Key_Down(DIK_NUMPAD5))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD5) || m_pGameInstance->Key_Down(DIK_5))
 		{
 			iAttackkey = ATTACK_HEAVY;
 
 		}
 
 
-		if (m_pGameInstance->Key_Down(DIK_NUMPAD9))
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD9) || m_pGameInstance->Key_Down(DIK_9))
 		{
 			iAttackkey = ATTACK_GRAB;
 
@@ -1217,8 +1217,8 @@ void CCharacter::Chase2(_float fTimeDelta)
 			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
 			CEffect_Layer::COPY_DESC tDesc{};
 			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-			tDesc.m_isBurstR = true;
 			tDesc.m_isPlayerDirRight = m_iLookDirection;
+
 			m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
 
 			//BurstR-02_Rotated_Left
@@ -1719,6 +1719,16 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 	if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 	//if (m_pGameInstance->Key_Down(DIK_W) && m_bJumpLock == false)
 	{
+		//점프 먼지WWDDDWWWWWWWW
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+		//점프 먼지
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
+
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
 		//Set_fJumpPower(4.f); //중력Ver1 기준
@@ -1741,14 +1751,6 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 
 		//점프 시작
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
-
-		//점프 먼지WWDDDWWWWWWWW
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
-
 		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), m_pTransformCom->Get_WorldMatrixPtr());
 
 	}
@@ -1830,6 +1832,16 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 	_short MoveKey = 0;
 	if (m_pGameInstance->Key_Pressing(DIK_UP) && m_bJumpLock == false)
 	{
+
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+		//점프 먼지
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
+
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
 		//Set_fJumpPower(4.f); //중력Ver1 기준
@@ -1851,15 +1863,6 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 
 		//점프 시작
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
-
-		CEffect_Layer::COPY_DESC tDesc{};
-		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-		//점프 먼지
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_DOWN))
@@ -4835,7 +4838,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 		//먼지
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-	//	m_pEffect_Manager->Copy_Layer(TEXT("Smoke05"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke05"), &tDesc);
 		m_pEffect_Manager->Copy_Layer(TEXT("Aura01"), &tDesc);
 
 		

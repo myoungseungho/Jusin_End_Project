@@ -134,8 +134,8 @@ HRESULT CImgui_Manager::Render(_float fTimeDelta)
 	
 	//// Render IMGUI UI elements
 	Render_IMGUI(fTimeDelta);
-	//Render_ShaderTabs(fTimeDelta);
-	//Render_EffectAnimationTabs(fTimeDelta);
+	Render_ShaderTabs(fTimeDelta);
+	Render_EffectAnimationTabs(fTimeDelta);
 
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

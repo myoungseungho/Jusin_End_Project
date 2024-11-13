@@ -14,7 +14,7 @@ EffectName: Aura01
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/Aura01Aura01
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1

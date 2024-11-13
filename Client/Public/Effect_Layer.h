@@ -27,7 +27,6 @@ public:
 	{
 		const _float4x4* pPlayertMatrix = { nullptr };
 		CTransform* pTransformCom = { nullptr };
-		_bool m_isBurstR = { true };
 		_int m_isPlayerDirRight = { 1 };
 	}COPY_DESC;
 
