@@ -69,16 +69,16 @@ void CUI_HpGauge::Camera_Update(_float fTimeDelta)
 	if (m_bRedAlpha == FALSE)
 		m_fRedHpRadio = m_fHpRadio;
 
-	if (m_bCharaStun == TRUE)
-	{
-		if (m_bHit == FALSE)
-		{
-			m_bHit = TRUE;
-			m_fRedHpRadio = m_fHpRadio;
-		}
-	}
-	else
-		m_bHit = FALSE;
+	//if (m_bCharaStun == TRUE)
+	//{
+	//	if (m_bHit == FALSE)
+	//	{
+	//		m_bHit = TRUE;
+	//		m_fRedHpRadio = m_fHpRadio;
+	//	}
+	//}
+	//else
+	//	m_bHit = FALSE;
 
 
 	////캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
@@ -115,16 +115,16 @@ void CUI_HpGauge::Late_Update(_float fTimeDelta)
 	if (m_bRedAlpha == FALSE)
 		m_fRedHpRadio = m_fHpRadio;
 
-	if (m_bCharaStun == TRUE)
-	{
-		if (m_bHit == FALSE)
-		{
-			m_bHit = TRUE;
-			m_fRedHpRadio = m_fHpRadio;
-		}
-	}
-	else
-		m_bHit = FALSE;
+	//if (m_bCharaStun == TRUE)
+	//{
+	//	if (m_bHit == FALSE)
+	//	{
+	//		m_bHit = TRUE;
+	//		m_fRedHpRadio = m_fHpRadio;
+	//	}
+	//}
+	//else
+	//	m_bHit = FALSE;
 
 
 	//캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
