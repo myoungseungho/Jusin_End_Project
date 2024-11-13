@@ -1604,7 +1604,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//
 			//}
 
-			//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-3_02"));
+			//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-3_02"));jjwj
 			Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-3_01"));
 
 			//BurstU-3_02

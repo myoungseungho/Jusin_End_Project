@@ -23,6 +23,14 @@ public:
 		const _float4x4* pPlayertMatrix;
 
 	}LAYER_DESC;
+	typedef struct
+	{
+		const _float4x4* pPlayertMatrix = { nullptr };
+		CTransform* pTransformCom = { nullptr };
+		_bool m_isBurstR = { true };
+		_int m_isPlayerDirRight = { 1 };
+	}COPY_DESC;
+
 
 private:
 	CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -31,7 +39,8 @@ private:
 
 public:
 	HRESULT Initialize_Prototype(void* pArg);
-	HRESULT Initialize(const _float4x4* pArg = nullptr, _bool isBillboading = false);
+
+	HRESULT Initialize(COPY_DESC* pArg = nullptr, _bool isBillboading = false);
 	void Camera_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -79,12 +88,13 @@ private:
 	CGameInstance*			m_pGameInstance = { nullptr };
 	CCollider*					m_pColliderCom = { nullptr };
 	const _float4x4*			 m_pPlayerMatrix = { nullptr };
+	const CTransform*			m_pPlayerTransformCom = { nullptr };
 	_matrix						LayerMatrix;
 	_float3							m_fChangePosition = { 0.f, 0.f, 0.f };
 	
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
-	CEffect_Layer* Clone(const _float4x4* pArg = nullptr, _bool isBillboading = false);
+	CEffect_Layer* Clone(COPY_DESC* pArg = nullptr, _bool isBillboading = false);
 	virtual void Free() override;
 };
 

@@ -1201,7 +1201,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//»þ»þ¼¡ ÀÌÆåÆ®,
 		
 			//´ë½Ã±¸¸§
-			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
 
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
@@ -1290,7 +1293,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//	pEffect->Set_Copy_Layer_Scaled({ 1.f,0.3f,1.f });
 
 			//´ë½Ã±¸¸§
-			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
 
 			if (m_bSparking)
 			{
@@ -2919,15 +2924,22 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 			{
 			case Client::HIT_LIGHT:
 			case Client::HIT_CHASE:
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"), m_pTransformCom->Get_WorldMatrixPtr());
+			{
+
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"),&tDesc);
 				break;
-
-
+			}
 			case Client::HIT_CROUCH_MEDIUM:
 			case Client::HIT_MEDIUM:
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard02"), m_pTransformCom->Get_WorldMatrixPtr());
+			{
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard02"), &tDesc);
 				break;
-
+			}
 			case Client::HIT_HEAVY:
 			case Client::HIT_HEAVY_DOWN:
 			case Client::HIT_KNOCK_AWAY_LEFT:
@@ -2935,8 +2947,12 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
 			case Client::HIT_SPIN_AWAY_LEFTUP:
 			case Client::HIT_SPIN_AWAY_UP:
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard03"), m_pTransformCom->Get_WorldMatrixPtr());
+			{
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard03"), &tDesc);
 				break;
+			}
 
 			case Client::HIT_WALLBOUNCE:
 			case Client::HIT_NONE:

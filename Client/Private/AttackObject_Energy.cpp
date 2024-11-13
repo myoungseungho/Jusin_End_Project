@@ -283,7 +283,9 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 					XMFLOAT4X4 Result4x4;
 					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = &Result4x4;
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &tDesc);
 					//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
 				}
 
@@ -297,7 +299,9 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 					XMFLOAT4X4 Result4x4;
 					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = &Result4x4;
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &tDesc);
 				}
 
 				break;
@@ -313,7 +317,9 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 					XMFLOAT4X4 Result4x4;
 					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = &Result4x4;
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &tDesc);
 					break;
 				}
 				case Client::HIT_WALLBOUNCE:
@@ -492,7 +498,9 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 					XMFLOAT4X4 Result4x4;
 					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &Result4x4);
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = &Result4x4;
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-1"), &tDesc);
 					//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
 				}
 	
@@ -506,7 +514,9 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 					XMFLOAT4X4 Result4x4;
 					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = &Result4x4;
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &tDesc);
 				}
 	
 				break;
@@ -522,7 +532,9 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 					_matrix ovelapMatrix = XMMatrixScaling((_float)m_pOwner->Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x, fPos.y, fPos.z);
 					XMFLOAT4X4 Result4x4;
 					XMStoreFloat4x4(&Result4x4, ovelapMatrix);
-					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &Result4x4);
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = &Result4x4;
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &tDesc);
 					break;
 				}
 				case Client::HIT_WALLBOUNCE:

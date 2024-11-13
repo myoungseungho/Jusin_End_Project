@@ -65,7 +65,9 @@ HRESULT CVolcano_Destructive::Initialize(void* pArg)
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinSizeX, g_iWinSizeY, 0.f, 1.f));
 
 	XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
-	m_pEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle(TEXT("testtest"), &m_Result4x4);
+	CEffect_Layer::COPY_DESC tDesc{};
+	tDesc.pPlayertMatrix = &m_Result4x4;
+	m_pEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle(TEXT("testtest"), &tDesc);
 
 	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_DEST_VOLCANO,
 		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
@@ -137,18 +139,23 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 			Result4x4._41 = 0.f;
 			Result4x4._42 = 0.f;
 			Result4x4._43 = -5.f;
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &m_Result4x4);
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = &m_Result4x4;
+			CEffect_Layer::COPY_DESC m_tDesc{};
+			m_tDesc.pPlayertMatrix = &Result4x4;
+
+			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &tDesc);
 			CEffect* pRotationEffect = { nullptr };
 			CEffect_Layer* pRotationEffectToLayer = { nullptr };
 			if (m_isRight == true)
 			{
-				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4);
-				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &Result4x4);
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
+				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
 			}
 			else
 			{
-				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &Result4x4);
-				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &Result4x4);
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
+				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
 			}
 
 			pRotationEffectToLayer->Set_Layer_Rotation(_float3(5.f, 0.f, 0.f));
