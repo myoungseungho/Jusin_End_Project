@@ -412,7 +412,21 @@ void CHit_MeleeAttack::Attack_236Special()
 
 void CHit_MeleeAttack::Attack_236Ultimate()
 {
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
+	}
 
+	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_HEAVY ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT3 ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_SPECIAL ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_HEAVY ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_RIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN
+		))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
+	}
 	
 
 
@@ -423,6 +437,22 @@ void CHit_MeleeAttack::Attack_236Ultimate()
 void CHit_MeleeAttack::Attack_214Final()
 {
 
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_FINAL_START);
+	}
+
+	if (m_pPlayer->Get_bAttackBackEvent())
+	{
+		if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_ULTIMATE || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_214_FINAL_SUCESS == CPlay_Hit::ANIME_214_FINAL_START)
+		{
+			return;
+		}
+
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_FINAL_START);
+
+	}
 	
 }
 

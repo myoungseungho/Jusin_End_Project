@@ -852,10 +852,144 @@ PLAY_HIT,HTN407_body,20,AttackEvent,0
 
 //AttackEvent400은 UpdatePose에서 호출함.
 
-PLAY_HIT,HTN407_body,21	,AttackEvent,1
+PLAY_HIT,HTN407_body,21,AttackEvent,1
 PLAY_HIT,HTN407_body,65,AttackEvent,2
 PLAY_HIT,HTN407_body,95,SetAnimation,0
 	
 
+//,236 1필
+//,PLAY_HIT,HTN430_body,0,AnimSpeedChange,0.008000,91
+PLAY_HIT,HTN430_body,0,AnimSpeedChange,0.008000,161
 
+
+//,20시간정지  + 카메라
+PLAY_HIT,HTN430_body,20,AttackEvent,0
+
+
+//,55~85조금씩 앞으로 이동
+PLAY_HIT,HTN430_body,55,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,56,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,57,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,58,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,59,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,60,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,61,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,62,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,63,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,64,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,65,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,66,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,67,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,68,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,69,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,70,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,71,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,72,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,73,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,74,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,75,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,76,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,77,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,78,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,79,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,80,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,81,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,82,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,83,ObjectMove,0.05,0,0
+PLAY_HIT,HTN430_body,84,ObjectMove,0.05,0,0
+
+
+//,85안보이게 + 샤샤샥
+PLAY_HIT,HTN430_body,85,AttackEvent,1
+
+//,100 적 앞으로 이동 + 보이게 + 샤샤샥 + 공격판정
+PLAY_HIT,HTN430_body,100,AttackEvent,2
+
+//,정지 + 더 앞으로 이동 + 카메라 + 추가공격 + 이펙트,  애니메이션속도 감속, 120으로 읻오
+
+
+//,공격 성공했는지 판정 성공시 정지 + 더 앞으로 이동 + 카메라 +애니메이션속도 감속,
+PLAY_HIT,HTN430_body,110,AttackEvent,3
+
+//,성공시2  추가공격 + 이펙트,  
+PLAY_HIT,HTN430_body,115,AttackEvent,302
+
+
+//,속도1
+PLAY_HIT,HTN430_body,120,AttackEvent,4
+
+//,속도 정상화
+PLAY_HIT,HTN430_body,123,AttackEvent,5
+
+
+//,성공했으면 155->Idle
+PLAY_HIT,HTN430_body,155,AttackEvent,6
+
+
+//,막혔으면  160->200->Idle
+PLAY_HIT,HTN430_body,160,AttackEvent,7
+
+//,170~200 약간 뒤+위로 이동?
+PLAY_HIT,HTN430_body,170,ObjectMove,-0.05,0.05,0
+PLAY_HIT,HTN430_body,171,ObjectMove,-0.05,0.05,0
+PLAY_HIT,HTN430_body,172,ObjectMove,-0.05,0.05,0
+PLAY_HIT,HTN430_body,173,ObjectMove,-0.05,0.05,0
+PLAY_HIT,HTN430_body,174,ObjectMove,-0.05,0.04,0
+PLAY_HIT,HTN430_body,175,ObjectMove,-0.05,0.04,0
+PLAY_HIT,HTN430_body,176,ObjectMove,-0.05,0.04,0
+PLAY_HIT,HTN430_body,177,ObjectMove,-0.05,0.03,0
+PLAY_HIT,HTN430_body,178,ObjectMove,-0.05,0.03,0
+PLAY_HIT,HTN430_body,179,ObjectMove,-0.05,0.02,0
+PLAY_HIT,HTN430_body,180,ObjectMove,-0.05,0.02,0
+PLAY_HIT,HTN430_body,181,ObjectMove,-0.05,0.02,0
+PLAY_HIT,HTN430_body,182,ObjectMove,-0.05,0.01,0
+PLAY_HIT,HTN430_body,183,ObjectMove,-0.05,0.00,0
+PLAY_HIT,HTN430_body,184,ObjectMove,-0.05,-0.01,0
+PLAY_HIT,HTN430_body,185,ObjectMove,-0.05,-0.02,0
+PLAY_HIT,HTN430_body,186,ObjectMove,-0.05,-0.01,0
+PLAY_HIT,HTN430_body,187,ObjectMove,-0.05,-0.01,0
+PLAY_HIT,HTN430_body,188,ObjectMove,-0.05,-0.02,0
+PLAY_HIT,HTN430_body,189,ObjectMove,-0.05,-0.02,0
+PLAY_HIT,HTN430_body,190,ObjectMove,-0.05,-0.02,0
+PLAY_HIT,HTN430_body,191,ObjectMove,-0.05,-0.02,0
+PLAY_HIT,HTN430_body,190,ObjectMove,-0.05,-0.02,0
+PLAY_HIT,HTN430_body,192,ObjectMove,-0.05,-0.03,0
+PLAY_HIT,HTN430_body,193,ObjectMove,-0.05,-0.03,0
+PLAY_HIT,HTN430_body,194,ObjectMove,-0.05,-0.03,0
+PLAY_HIT,HTN430_body,195,ObjectMove,-0.05,-0.03,0
+PLAY_HIT,HTN430_body,196,ObjectMove,-0.05,-0.03,0
+PLAY_HIT,HTN430_body,197,ObjectMove,-0.05,-0.00,0
+PLAY_HIT,HTN430_body,198,ObjectMove,-0.05,0.00,0
+PLAY_HIT,HTN430_body,199,ObjectMove,-0.05,0.00,0
+
+
+
+
+//,200에서 jump로 연계?
+PLAY_HIT,HTN430_body,200,AttackEvent,8
+
+
+
+//,3필
+PLAY_HIT,HTN432_body,0,AnimSpeedChange,0.005,61
+
+//,상대만 시간정지
+PLAY_HIT,HTN432_body,1,AttackEvent,0
+
+//,PLAY_HIT,HTN432_body,60,AnimSpeedChange,0.005,40
+
+//,안보이게,속도빠르게, 샤샤샥
+PLAY_HIT,HTN432_body,70,AttackEvent,1
+
+//,순간이동, 샤샤샥, 공격판정, 속도감소, 타격성공시 카메라연출, 432cs(=70)으로 연계
+PLAY_HIT,HTN432_body,125,AttackEvent,2
+
+//,막혔으면 150->Idle
+PLAY_HIT,HTN432_body,150,AttackEvent,3
+
+
+//,3필 성공시
+PLAY_HIT,HTN432cs_body,0,AnimSpeedChange,0.005,60
+
+PLAY_HIT,HTN432cs_body,95,AnimSpeedChange,0.005,40
 

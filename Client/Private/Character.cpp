@@ -719,6 +719,7 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 	}
 
 	if (m_pModelCom->Play_Animation_Lick(fTimeDelta))
+	//if (m_pModelCom->Play_Animation(fTimeDelta))
 	{
 		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
 		if (m_pModelCom->m_isLoopAnim)

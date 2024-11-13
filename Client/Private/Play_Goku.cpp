@@ -253,7 +253,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
-	//cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
+	cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
 
 
 
