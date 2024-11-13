@@ -329,6 +329,8 @@ void CModel::Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime)
 	}
 }
 
+
+
 HRESULT CModel::Bind_MaterialSRV(CShader* pShader, aiTextureType eType, const _char* pConstantName, _uint iMeshIndex)
 {
 	_uint		iMaterialIndex = m_Meshes[iMeshIndex]->Get_MaterialIndex();
@@ -752,6 +754,7 @@ CModel* CModel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, con
 
 	if (FAILED(pInstance->Initialize_Prototype(pModelFilePath, PreTransformMatrix)))
 	{
+
 		MSG_BOX(TEXT("Failed to Created : CModel"));
 		Safe_Release(pInstance);
 	}

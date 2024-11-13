@@ -253,7 +253,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
-	cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
+	//cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
 
 
 
@@ -1223,7 +1223,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
+		//
+		// 
+		// 
+		// 
+		// 
+		// 
+		// ->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
 		Character_Make_Effect(TEXT("Smoke03_Stop"), {}, true);
 		
 	}
@@ -2036,7 +2042,25 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Set_LoofAnimationCreate(TEXT("Aura11_Yellow"), 2.6f, 0.3f);
 
 
+				Character_Make_Effect(TEXT("EnergieSDO-01"),{-0.5f,-0.2f});
+				Character_Make_Effect(TEXT("EnergieSDO-02"), { -0.5f,-0.2f });
+
+				//Set_LoofAnimationCreate(TEXT("EnergieSDO-01"), 2.f, 0.3f, { -0.5f,-0.2f });
+				//Set_LoofAnimationCreate(TEXT("EnergieSDO-02"), 2.f, 0.3f, { -0.5f,-0.2f });
+
+
 			}
+			else
+			{
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("Energie-01"));
+
+				//Character_Make_Effect(TEXT("Energie-01"), { -0.6f,-0.2f });
+
+
+				
+			}
+			Character_Make_Effect(TEXT("Energie-01"), { -0.6f,-0.2f });
+
 		}
 		else
 		{
@@ -2763,6 +2787,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//위치 고정용 빈거
 		else if (iAttackEvent == 0)
 		{
+
 
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)

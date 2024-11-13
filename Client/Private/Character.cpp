@@ -1349,7 +1349,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
 
 		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
-
+		//디버깅
 		
 
 	}
@@ -1737,15 +1737,14 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
 
 		//점프 먼지WWDDDWWWWWWWW
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), m_pTransformCom->Get_WorldMatrixPtr());
 
-
-		//m_pEffect_Manager->Copy_Layer(TEXT("Energie-01"), m_pTransformCom->Get_WorldMatrixPtr());
 	}
 
 	else if (m_pGameInstance->Key_Pressing(DIK_S))
@@ -2301,7 +2300,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		m_bAwayUpGravity = true;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		//Set_ForcedGravityTime_LittleUp();
-
+		if (Get_fHeight() == 0)
+		{
+			Add_Move({ 0.f,0.3f });
+		}
 		Set_ForcveGravityTime(0.f);
 
 	}
@@ -4213,8 +4215,11 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 	
 	//static XMFLOAT4X4 s = Make_BoneMatrix(BoneName);
 
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
 
+
+	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName,m_pModelCom->Get_BoneMatrixPtr(BoneName));
+	
 }
 
 

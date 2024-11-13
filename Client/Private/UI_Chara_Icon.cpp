@@ -54,7 +54,7 @@ void CUI_Chara_Icon::Update(_float fTimeDelta)
 	if (m_pMainPawn != nullptr)
 		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
 	
-	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 100.f, 0.85f, fTimeDelta);
+	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 500.f, 0.85f, fTimeDelta);
 }
 
 void CUI_Chara_Icon::Late_Update(_float fTimeDelta)

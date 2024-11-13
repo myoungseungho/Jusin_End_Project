@@ -173,6 +173,7 @@
     <ClInclude Include="..\Public\AttackObject_Reflect.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
+    <ClInclude Include="..\public\CharaSelectCamera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Hit_MeleeAttack.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Level_Lobby.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
+    <ClInclude Include="..\public\Level_VS.h" />
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
@@ -222,9 +224,19 @@
     <ClInclude Include="..\Public\SpaceMeteoBreak.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
+    <ClInclude Include="..\public\UI_CharaSelectCircle.h" />
+    <ClInclude Include="..\public\UI_CharaSelectFont.h" />
+    <ClInclude Include="..\public\UI_CharaSelectFude.h" />
     <ClInclude Include="..\public\UI_CharaSelectIcon.h" />
+    <ClInclude Include="..\public\UI_CharaSelectImage.h" />
+    <ClInclude Include="..\public\UI_CharaSelectLight.h" />
+    <ClInclude Include="..\public\UI_CharaSelectMark.h" />
+    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
+    <ClInclude Include="..\public\UI_ChoiceIcon.h" />
     <ClInclude Include="..\public\UI_FightFont.h" />
     <ClInclude Include="..\public\UI_FontName.h" />
     <ClInclude Include="..\public\UI_HpEffect.h" />
@@ -263,6 +275,7 @@
     <ClInclude Include="..\public\UI_Opt_Sound_Volume_Panel.h" />
     <ClInclude Include="..\public\UI_PosMark.h" />
     <ClInclude Include="..\public\UI_SelectArrow.h" />
+    <ClInclude Include="..\public\UI_SelectLine.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -291,6 +304,16 @@
     <ClInclude Include="..\Public\Input.h" />
     <ClInclude Include="..\public\MainApp.h" />
     <ClInclude Include="..\public\UI_SubHpPanel.h" />
+    <ClInclude Include="..\public\UI_VS_Ball.h" />
+    <ClInclude Include="..\public\UI_VS_Bar.h" />
+    <ClInclude Include="..\public\UI_VS_BG.h" />
+    <ClInclude Include="..\public\UI_VS_BoltEff.h" />
+    <ClInclude Include="..\public\UI_VS_CharaPanel.h" />
+    <ClInclude Include="..\public\UI_VS_DynamicLight.h" />
+    <ClInclude Include="..\public\UI_VS_Mark.h" />
+    <ClInclude Include="..\public\UI_VS_MarkEff.h" />
+    <ClInclude Include="..\public\UI_VS_StaticLight.h" />
+    <ClInclude Include="..\public\UI_VS_TeamPanel.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
@@ -368,6 +391,7 @@
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
+    <ClCompile Include="..\private\CharaSelectCamera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Hit_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
@@ -375,6 +399,7 @@
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp" />
     <ClCompile Include="..\private\Level_Chara_Select.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
+    <ClCompile Include="..\private\Level_VS.cpp" />
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
@@ -413,9 +438,19 @@
     <ClCompile Include="..\Private\SpaceMeteoBreak.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectCircle.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectFont.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectFude.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectIcon.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectLight.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectMark.cpp" />
+    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
+    <ClCompile Include="..\private\UI_ChoiceIcon.cpp" />
     <ClCompile Include="..\private\UI_FightFont.cpp" />
     <ClCompile Include="..\private\UI_FontName.cpp" />
     <ClCompile Include="..\private\UI_HpEffect.cpp" />
@@ -454,6 +489,7 @@
     <ClCompile Include="..\private\UI_Opt_Sound_Volume_Panel.cpp" />
     <ClCompile Include="..\private\UI_PosMark.cpp" />
     <ClCompile Include="..\private\UI_SelectArrow.cpp" />
+    <ClCompile Include="..\private\UI_SelectLine.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -490,6 +526,16 @@
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\private\MainApp.cpp" />
     <ClCompile Include="..\private\UI_SubHpPanel.cpp" />
+    <ClCompile Include="..\private\UI_VS_Ball.cpp" />
+    <ClCompile Include="..\private\UI_VS_Bar.cpp" />
+    <ClCompile Include="..\private\UI_VS_BG.cpp" />
+    <ClCompile Include="..\private\UI_VS_BoltEff.cpp" />
+    <ClCompile Include="..\private\UI_VS_CharaPanel.cpp" />
+    <ClCompile Include="..\private\UI_VS_DynamicLight.cpp" />
+    <ClCompile Include="..\private\UI_VS_Mark.cpp" />
+    <ClCompile Include="..\private\UI_VS_MarkEff.cpp" />
+    <ClCompile Include="..\private\UI_VS_StaticLight.cpp" />
+    <ClCompile Include="..\private\UI_VS_TeamPanel.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />
@@ -567,6 +613,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Particle_VtxPoint.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_QTE_VtxRect.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI_VtxRect.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Material_Defines.hlsli" />

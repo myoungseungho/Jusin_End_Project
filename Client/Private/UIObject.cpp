@@ -109,11 +109,7 @@ void CUIObject::DebugTesting(_float fSizeOffset, _float fDepth)
 }
 
 _bool CUIObject::ClickRange(_float fPickPosX, _float fPickPosY)
-{
-	//POINT pt;
-	//GetCursorPos(&pt);
-	//ScreenToClient(g_hWnd, &pt);
-	
+{	
 	_float MouseX = fPickPosX;
 	_float MouseY = fPickPosY;
 
@@ -129,9 +125,8 @@ _bool CUIObject::ClickRange(_float fPickPosX, _float fPickPosY)
 	_bool bBot = (fPosY + fSizeY * 0.5f > MouseY);
 
 	if (bLeft && bRight && bTop && bBot)
-	{
 		return true;
-	}
+	
 
 	return false;
 }
@@ -244,11 +239,11 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 			m_bCheck = FALSE;
 			m_fAnimDelayTiemr = 0.f;
 			m_bStart = FALSE;
-			m_pUI_Manager->m_iTeam = POS_END;
+			m_pUI_Manager->m_bChange[m_eLRPos] = FALSE;
 		}
 	}
 
-	if (m_pUI_Manager->m_iTeam == m_eLRPos )
+	if (m_pUI_Manager->m_bChange[m_eLRPos] == TRUE)
 	{
 		if (m_eLRPos == LEFT)
 		{
@@ -269,7 +264,7 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 		}
 		
 		if(m_bStart)
-			MoveAnimUI(vTargetPos, 500.f, fDepth , fTimeDelta);
+			MoveAnimUI(vTargetPos, fSpeed, fDepth , fTimeDelta);
 	}
 }
 

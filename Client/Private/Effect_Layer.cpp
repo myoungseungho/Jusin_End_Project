@@ -161,7 +161,8 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 	{
 		_matrix TestMatrix = XMMatrixIdentity();
 
-		LayerMatrix = m_pTransformCom->Multiple_Matrix(TestMatrix);
+		LayerMatrix = TestMatrix;
+			//m_pTransformCom->Multiple_Matrix(TestMatrix);
 	}
 
 	return S_OK;
@@ -186,10 +187,11 @@ void CEffect_Layer::Update(_float fTimeDelta)
 			if (m_bIsFollowing)
 			{
 				LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+				_float3 CopyRotation = m_pCopyTransformCom->Get_Rotation();
 
 				if (0 > m_pPlayerMatrix->_11)
 				{
-					LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+					//LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
 
 					XMVECTOR Scale, Rotation, Position;
 
@@ -201,11 +203,25 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 					//fLayerMatrix._41 *= -1;
 					fLayerMatrix._43 *= -1;
-					fLayerMatrix._41 += XMVectorGetX(Position);
-					fLayerMatrix._42 += XMVectorGetY(Position);
+					fLayerMatrix._41 += XMVectorGetX(Position) + m_fChangePosition.x;
+					fLayerMatrix._42 += XMVectorGetY(Position) + m_fChangePosition.y;
 
-					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+
+					_vector Pos = m_pCopyTransformCom->Get_State(CTransform::STATE_POSITION);
+
+					m_pCopyTransformCom->Rotate(CopyRotation);
+
+					_matrix Dst = m_pCopyTransformCom->Get_WorldMatrix() * XMMatrixRotationY(XMConvertToRadians(180.0f));
+
+					XMStoreFloat4x4(&fLayerMatrix, Dst);
+
+					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+
+					m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, Pos);
+
+					LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+					EffectToLayerMatrix = LayerMatrix;
 				}
 				else
 				{
@@ -217,12 +233,19 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
 
-					fLayerMatrix._41 += XMVectorGetX(Position);
-					fLayerMatrix._42 += XMVectorGetY(Position);
+					fLayerMatrix._41 += XMVectorGetX(Position) + m_fChangePosition.x;
+					fLayerMatrix._42 += XMVectorGetY(Position) + m_fChangePosition.y;
 
-					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 
+					_vector Pos = m_pCopyTransformCom->Get_State(CTransform::STATE_POSITION);
+
+					m_pCopyTransformCom->Rotate(CopyRotation);
+
+					m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, Pos);
+
+					LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+					EffectToLayerMatrix = LayerMatrix;
 				}
 			}
 			
@@ -393,6 +416,9 @@ HRESULT CEffect_Layer::Set_Copy_Layer_Scaled(_float3 ChangeScaled)
 HRESULT CEffect_Layer::Set_Copy_Layer_Position(_float3 ChangePosition)
 {
 	m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+
+	m_fChangePosition = ChangePosition;
+
 	return S_OK;
 }
 

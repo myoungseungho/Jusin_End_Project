@@ -54,8 +54,11 @@ void CUI_AttBuf::Update(_float fTimeDelta)
 void CUI_AttBuf::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 3.2f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this, &tDesc);
 }
 
 HRESULT CUI_AttBuf::Render(_float fTimeDelta)

@@ -89,7 +89,7 @@ HRESULT CQTE_Continuous_Attack_Effect::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(27)))
+	if (FAILED(m_pShaderCom->Begin(5)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
@@ -105,7 +105,7 @@ HRESULT CQTE_Continuous_Attack_Effect::Render(_float fTimeDelta)
 HRESULT CQTE_Continuous_Attack_Effect::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_UI_VtxRect"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_QTE_VtxRect"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 

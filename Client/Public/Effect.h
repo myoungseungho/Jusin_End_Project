@@ -84,6 +84,7 @@ public:
 	HRESULT Play_Animation(_float CurrentFrame);
 	void		Set_Effect_Color(_float4 vColor);
 	void		Get_Layer_Matrix(_matrix LayerMatrix);
+	void		Set_Layer_Matrix();
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel*	 m_pModelCom = { nullptr };

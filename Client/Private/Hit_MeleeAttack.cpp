@@ -259,6 +259,21 @@ void CHit_MeleeAttack::Attack_Special()
 
 	}
 
+	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_RIGHT);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] = false;
+		m_pPlayer->Set_b236Special(true);
+
+	}
+	
+	//아래약->서서특  되지 않도록 이거 먼저 처리해야함
+	else if (m_pPlayer->Get_b236Sepcial() && m_pPlayer->Get_bAttackBackEvent() && m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_RIGHT);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] = false;
+
+	}
 
 	else if (m_pPlayer->Get_bAttackBackEvent() && ( *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM ||
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM))
@@ -280,20 +295,7 @@ void CHit_MeleeAttack::Attack_Special()
 		//*m_pbCounterPose = true;
 	}
 
-	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
-	{
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_RIGHT);
-		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] = false;
-		m_pPlayer->Set_b236Special(true);
 
-	}
-
-	else if (m_pPlayer->Get_b236Sepcial() && m_pPlayer->Get_bAttackBackEvent() && m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP))
-	{
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_SPECIAL_RIGHT);
-		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236SPECIAL_RIGHT] = false;
-
-	}
 
 
 }
@@ -390,6 +392,10 @@ void CHit_MeleeAttack::Attack_236()
 void CHit_MeleeAttack::Attack_214()
 {
 	
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_POSE);
+	}
 
 
 

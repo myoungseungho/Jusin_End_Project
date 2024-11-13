@@ -68,7 +68,7 @@ public:
 
 	//RedBlueTimer
 	_float m_fColorValue = { 0.f };
-	 _uint m_iTeam = { 2 };
+	_bool m_bChange[2] = {FALSE , FALSE };
 	 
 private:
 	_float m_fStartTimer = { 0.f };
