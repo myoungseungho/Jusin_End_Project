@@ -112,7 +112,11 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	}
 
 	CGameObject* player = { nullptr };
-	player = m_iTeam == 1 ? m_p1pPlayer : m_p2pPlayer;
+
+	if (m_pEnemy == nullptr)
+		player = m_iTeam == 1 ? m_p1pPlayer : m_p2pPlayer;
+	else
+		player = m_pEnemy;
 
 	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
 	CCharacter* character = static_cast<CCharacter*>(player);
@@ -292,7 +296,7 @@ void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvec
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, fixedLook);
 }
 
-void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
+void CVirtual_Camera::Set_Player(CGameObject* pPlayer, CGameObject* pEnemy)
 {
 	m_iTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
 
@@ -310,6 +314,7 @@ void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
 		}
 	}
 
+	m_pEnemy = pEnemy;
 }
 
 void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject)
@@ -350,6 +355,8 @@ void CVirtual_Camera::Stop()
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;
+
+	m_pEnemy = nullptr;
 }
 
 void CVirtual_Camera::Button_Stop()
