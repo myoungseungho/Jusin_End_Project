@@ -1,12 +1,13 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/Resources/Map/Volcano/vo_DestructiveFinish/"
+#define DATAFILEPATH "../Client/Bin/Resources/Map/Space/BRGround/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/VolcanoDynamic.fbx", TYPE_NONANIM},
+		{"Models/aaa.fbx", TYPE_NONANIM},
+
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그

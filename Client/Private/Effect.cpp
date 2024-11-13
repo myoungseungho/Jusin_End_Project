@@ -218,7 +218,7 @@ void CEffect::Set_Effect_Color(_float4 vColor)
 
 void CEffect::Get_Layer_Matrix(_matrix LayerMatrix)
 {
-	m_LayerMatrix= LayerMatrix;
+	m_LayerMatrix = LayerMatrix;
 }
 
 HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName)

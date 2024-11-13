@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Effect_Layer.h"
 #include "Effect.h"
+#include "Map_Manager.h"
 BEGIN(Engine)
 class CShader;
 class CTexture;
@@ -38,7 +39,8 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom_Diffuse = { nullptr };
 	CModel* m_pModelCom = { nullptr };
-	CModel* m_pFragmentModelCom[11] = { nullptr,nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+	CModel* m_pBRModelCom = { nullptr };
+	CModel* m_pFragmentModelCom[15] = { nullptr,nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,nullptr,nullptr,nullptr,nullptr };
 
 private:
 	CTexture* m_pTextureCom = { nullptr };

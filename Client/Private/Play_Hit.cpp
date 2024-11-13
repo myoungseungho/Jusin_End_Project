@@ -287,7 +287,18 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			}
 			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
 
-			if (m_bMotionPlaying == false)
+			if (m_bDestructiveFinish)
+			{
+				m_fAccDyingTime += fTimeDelta;
+				if (m_fAccDyingTime > 7.f)
+				{
+					Tag_In(m_ePlayerSlot);
+					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
+
+				}
+			}
+
+			else if (m_bMotionPlaying == false)
 			{
 				
 				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
@@ -304,6 +315,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			{
 				Stun_Shake();
 			}
+			
 		}
 	
 		return;

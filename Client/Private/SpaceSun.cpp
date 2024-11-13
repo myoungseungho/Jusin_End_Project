@@ -42,7 +42,8 @@ HRESULT CSpaceSun::Initialize(void * pArg)
 	m_RendererDesc.tGlowDesc.fGlowFactor = 1.f;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -1.5f, -200.f, 1.f));
 	m_iGameObjectData = 8;
-
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
 	return S_OK;
 }
 

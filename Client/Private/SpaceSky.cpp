@@ -29,6 +29,9 @@ HRESULT CSpaceSky::Initialize(void * pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
+
 	return S_OK;
 }
 

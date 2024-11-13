@@ -66,7 +66,9 @@ HRESULT CSpaceMeteoBreak::Initialize(void * pArg)
 
 	XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
 	m_pEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle(TEXT("testtest"), &m_Result4x4);
-	
+
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_DEST_SPACE,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
 	return S_OK;
 }
 

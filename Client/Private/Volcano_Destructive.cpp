@@ -67,6 +67,9 @@ HRESULT CVolcano_Destructive::Initialize(void* pArg)
 	XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
 	m_pEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle(TEXT("testtest"), &m_Result4x4);
 
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_DEST_VOLCANO,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
+
 	return S_OK;
 }
 
@@ -310,7 +313,9 @@ HRESULT CVolcano_Destructive::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveFinish"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
-
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_SFmountain01"),
+		TEXT("Com_BRModel"), reinterpret_cast<CComponent**>(&m_pBRModelCom))))
+		return E_FAIL;
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
@@ -320,15 +325,15 @@ HRESULT CVolcano_Destructive::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_scrline00"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
-
-	//for (size_t i = 0; i < 11; i++)
-	//{
-	//	wstring strTagName = TEXT("Prototype_Component_Model_MeteoBrake_") + to_wstring(i + 1);
-	//	wstring strComName = TEXT("Com_FragmentModel_") + to_wstring(i + 1);
-	//	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, strTagName.c_str(),
-	//		strComName.c_str(), reinterpret_cast<CComponent**>(&m_pFragmentModelCom[i]))))
-	//		return E_FAIL;
-	//}
+	
+	for (size_t i = 0; i < 15; i++)
+	{
+		wstring strTagName = TEXT("Prototype_Component_Model_vo_SFmountainrRock") + to_wstring(i);
+		wstring strComName = TEXT("Com_FragmentModel_") + to_wstring(i);
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, strTagName.c_str(),
+			strComName.c_str(), reinterpret_cast<CComponent**>(&m_pFragmentModelCom[i]))))
+			return E_FAIL;
+	}
 
 
 
@@ -390,9 +395,9 @@ void CVolcano_Destructive::Free()
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pEffectTransform);
-
+	Safe_Release(m_pBRModelCom);
 	Safe_Release(m_pTextureCom_Diffuse);
-	for (size_t i = 0; i < 11; i++)
+	for (size_t i = 0; i < 15; i++)
 		Safe_Release(m_pFragmentModelCom[i]);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);

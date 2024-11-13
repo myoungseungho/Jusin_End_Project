@@ -231,11 +231,11 @@ void CEffect_Layer::Update(_float fTimeDelta)
 				_vector camPosition = m_pGameInstance->Get_CamPosition_Vector();
 
 				m_pCopyTransformCom->LookAt(camPosition);
-				EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
 
+				EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
 			}
 
-			pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
+			pEffect->Get_Layer_Matrix(m_pCopyTransformCom->Get_WorldMatrix());
 		}
 
 		Play_Effect_Animation(fTimeDelta);

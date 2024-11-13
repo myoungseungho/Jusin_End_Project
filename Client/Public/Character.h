@@ -629,6 +629,7 @@ protected:
 	//_bool m_bKO = { false };
 
 	_bool m_bDynamicMove = { false };
+	_bool m_bDestructiveFinish = { false };
 	_bool m_bAttackBackEvent = { false };
 
 	_bool m_bReflect = { false };

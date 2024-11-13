@@ -37,6 +37,7 @@ private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 	class CImgui_Manager* m_pIMGUI_Manager = { nullptr };
 	class CQTE_Manager* m_pQTE_Manager = { nullptr };
+	class CMap_Manager* m_pMap_Manager = { nullptr };
 
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

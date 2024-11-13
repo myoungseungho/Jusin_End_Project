@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Effect_Layer.h"
 #include "Effect.h"
+#include "Map_Manager.h"
 BEGIN(Engine)
 class CShader;
 class CTexture;

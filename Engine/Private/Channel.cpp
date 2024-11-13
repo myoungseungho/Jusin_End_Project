@@ -43,9 +43,7 @@ void CChannel::Compute_TransformationMatrix(_float fCurrentPosition, const vecto
 	KEYFRAME	LastKeyFrame = m_KeyFrames.back();
 
 	_vector		vScale{}, vRotation{}, vPosition{};
-	_vector		vSourScale, vDestScale;
-	_vector		vSourRotation, vDestRotation;
-	_vector		vSourPosition, vDestPosition;
+
 	/* 마지막 키프레임의 상태를 가지낟. */
 	if (fCurrentPosition >= LastKeyFrame.fTime)
 	{
@@ -59,23 +57,24 @@ void CChannel::Compute_TransformationMatrix(_float fCurrentPosition, const vecto
 		while (fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex)+ 1].fTime)
 			++(*pKeyFrameIndex);
 
-		//_float		fRatio = (fCurrentPosition - m_KeyFrames[(*pKeyFrameIndex)].fTime) /
-		//	(m_KeyFrames[(*pKeyFrameIndex)+ 1].fTime - m_KeyFrames[(*pKeyFrameIndex)].fTime);
+		_float		fRatio = (fCurrentPosition - m_KeyFrames[(*pKeyFrameIndex)].fTime) /
+			(m_KeyFrames[(*pKeyFrameIndex)+ 1].fTime - m_KeyFrames[(*pKeyFrameIndex)].fTime);
 
-
+		_vector		vSourScale, vDestScale;
+		_vector		vSourRotation, vDestRotation;
+		_vector		vSourPosition, vDestPosition;
 
 		vSourScale = XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)].vScale);
 		vSourRotation = XMLoadFloat4(&m_KeyFrames[(*pKeyFrameIndex)].vRotation);
 		vSourPosition = XMVectorSetW(XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)].vPosition), 1.f);
 
-		//vDestScale = XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vScale);
-		//vDestRotation = XMLoadFloat4(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vRotation);
-		//vDestPosition = XMVectorSetW(XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vPosition), 1.f);
+		vDestScale = XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vScale);
+		vDestRotation = XMLoadFloat4(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vRotation);
+		vDestPosition = XMVectorSetW(XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vPosition), 1.f);
 		
-
-		vScale = vSourScale;
-		vRotation = vSourRotation;
-		vPosition = vSourPosition;
+		vScale = XMVectorLerp(vSourScale, vDestScale, fRatio);
+		vRotation = XMQuaternionSlerp(vSourRotation, vDestRotation, fRatio);
+		vPosition = XMVectorLerp(vSourPosition, vDestPosition, fRatio);
 	}
 
 	TransformationMatrix = XMMatrixAffineTransformation(vScale, XMVectorSet(0.f, 0.f, 0.f, 1.f), vRotation, vPosition);

@@ -3969,6 +3969,8 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 				m_pEnemy->Set_bDynamicMove(true);
 				
 				Set_fImpulse({ -100.f * m_iLookDirection,30.f });
+
+				m_bDestructiveFinish = true;
 			}
 
 

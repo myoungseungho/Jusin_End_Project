@@ -12,6 +12,7 @@
 #include "UIObject.h"
 #include "UI_GameState.h"
 
+#include "Map_Manager.h"
 #include "Character.h"
 #include "Sound_Manager.h"
 
@@ -20,12 +21,14 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 	, m_pIMGUI_Manager{ CImgui_Manager::Get_Instance() }
 	, m_pQTE_Manager{ CQTE_Manager::Get_Instance() }
+	, m_pMap_Manager {CMap_Manager::Get_Instance() }
 {
 }
 
 HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelIndex = LEVEL_GAMEPLAY;
+	m_pMap_Manager->Initialize(m_pDevice, m_pContext);
 	Create_Effect_Manager();
 	Create_QTE_Manager();
 
@@ -38,8 +41,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Volcano()))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Space()))
-	//	return E_FAIL;
+	if (FAILED(Ready_Space()))
+		return E_FAIL;
 #pragma endregion
 
 #pragma region 캐릭터 사본 객체
@@ -498,79 +501,107 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 HRESULT CLevel_GamePlay::Ready_Space()
 {
+	CMap_Manager::Map_Object_Key tDesc{};
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceSky");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceHorizon");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceHorizon"), TEXT("Layer_SpaceHorizon"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceSun");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSun"), TEXT("Layer_SpaceSun"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceGround");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceGround"), TEXT("Layer_SpaceGround"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceCliff");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceCliff"), TEXT("Layer_SpaceSky"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceStage");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStage"), TEXT("Layer_SpaceStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceEarth");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth"), TEXT("Layer_Space_Earth"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceEarth_Light");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth_Light"), TEXT("Layer_SpaceEarth_Light"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_FallingStar");
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"))))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_FallingStar"), TEXT("Layer__FallingStar"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceHorizon"), TEXT("Layer_SpaceHorizon"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceMoon");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMoon"), TEXT("Layer_SpaceMoon"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSun"), TEXT("Layer_SpaceSun"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceStone");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStone"), TEXT("Layer_SpaceStone"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceGround"), TEXT("Layer_SpaceGround"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceRock");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceCliff"), TEXT("Layer_SpaceSky"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStage"), TEXT("Layer_SpaceStage"))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth"), TEXT("Layer_Space_Earth"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEarth_Light"), TEXT("Layer_SpaceEarth_Light"))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_FallingStar"), TEXT("Layer__FallingStar"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMoon"), TEXT("Layer_SpaceMoon"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceStone"), TEXT("Layer_SpaceStone"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceRock"), TEXT("Layer_SpaceRock"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceMeteoBreak");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"), &tDesc)))
 		return E_FAIL;
 	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Volcano()
 {
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Stage"), TEXT("Layer_VolcanoStage"))))
+	CMap_Manager::Map_Object_Key tDesc{};
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Stage");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Stage"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Cliff_Back");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff_Back"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Cliff_Far");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff_Far"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Cliff04");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff04"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Cliff03");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff03"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Cliff02");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff02"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Cliff01");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff01"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Ground");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Ground"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_GroundRock");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_GroundRock"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Island01");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Island01"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Island02");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Island02"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Lava_Pool");
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff_Back"), TEXT("Layer_VolcanoStage"))))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Lava_Pool"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff_Far"), TEXT("Layer_VolcanoStage"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Lava_Fall");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Lava_Fall"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff04"), TEXT("Layer_VolcanoStage"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Lava_Ground");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Lava_Ground"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff03"), TEXT("Layer_VolcanoStage"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_SkyCloud");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_SkyCloud"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff02"), TEXT("Layer_VolcanoStage"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Smoke");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Smoke"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Cliff01"), TEXT("Layer_VolcanoStage"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Mountain");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Mountain"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Ground"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_GroundRock"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Island01"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Island02"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Lava_Pool"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Lava_Fall"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Lava_Ground"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_SkyCloud"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Smoke"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Mountain"), TEXT("Layer_VolcanoStage"))))
-		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Destructive"), TEXT("Layer_VolcanoStage"))))
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Destructive");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Destructive"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
 	
 	return S_OK;
@@ -647,4 +678,5 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pEffect_Manager);
 	Safe_Release(m_pQTE_Manager);
 	Safe_Release(m_pUI_Manager);
+	Safe_Release(m_pMap_Manager);
 }
