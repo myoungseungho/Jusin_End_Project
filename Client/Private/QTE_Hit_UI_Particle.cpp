@@ -58,7 +58,7 @@ void CQTE_Hit_UI_Particle::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
-	_bool isComplete = m_pVIBufferCom->Spread_FireCracker_2D(fTimeDelta);
+	_bool isComplete = m_pVIBufferCom->Spread_2D(fTimeDelta);
 
 	if (isComplete)
 		SetActive(false);

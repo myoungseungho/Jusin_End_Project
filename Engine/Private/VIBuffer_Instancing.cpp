@@ -139,6 +139,9 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 
 	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
 
+	// 중력 가속도 (필요에 따라 조정 가능)
+	const _float gravity = -100.f; // 예: 픽셀/초²
+
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
 		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
@@ -146,8 +149,8 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 			continue;
 
 		// 현재 파티클의 위치를 개별적으로 로드
-		_float currentX = m_pInstanceVertices[i].vTranslation.x;
-		_float currentY = m_pInstanceVertices[i].vTranslation.y;
+		_float currentX = pMatrices[i].vTranslation.x;
+		_float currentY = pMatrices[i].vTranslation.y;
 
 		// 피봇 위치도 개별적으로 로드
 		_float pivotX = m_vPivotPos.x;
@@ -165,11 +168,29 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 			dirY /= length;
 		}
 
-		// 이동 속도 계산
-		_float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
-		_float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+		// 이동 속도 계산 변수
+		float moveX = 0.f;
+		float moveY = 0.f;
 
-		// 파티클의 현재 위치 업데이트
+		// 생명 시간 비율 계산
+		_float ratio = pMatrices[i].vLifeTime.y / pMatrices[i].vLifeTime.x;
+
+
+		if (ratio < 0.5f)
+		{
+			// 초기 이동
+			moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+			moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+		}
+		else if (0.5f <= ratio && ratio <= 1.f)
+		{
+			// 중력 적용
+			float gravityEffect = gravity * fTimeDelta; // 중력 가속도 적용
+			moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+			moveY = gravityEffect * fTimeDelta;
+		}
+
+		// 파티클 위치 업데이트
 		pMatrices[i].vTranslation.x += moveX;
 		pMatrices[i].vTranslation.y += moveY;
 
