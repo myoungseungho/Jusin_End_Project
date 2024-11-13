@@ -71,7 +71,7 @@ void CQTE_Hit_UI_Particle::Late_Update(_float fTimeDelta)
 
 	RENDER_OBJECT tDesc{};
 	tDesc.tGlowDesc.iPassIndex = 2;
-	tDesc.tGlowDesc.fGlowFactor = 4.f;
+	tDesc.tGlowDesc.fGlowFactor = 10.f;
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
 }

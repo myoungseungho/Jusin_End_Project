@@ -201,8 +201,9 @@ _bool CVIBuffer_Instancing::Spread_FireCracker_2D(_float fTimeDelta)
 
 	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
 
-	// 중력 가속도 (필요에 따라 조정 가능)
-	const _float gravity = -1.f; // 예: 픽셀/초²
+	// 조절 변수
+	const float decelerationFactor = 0.8f; // 속도 감속 비율
+	const float gravityStrength = -0.8f;  // 중력 가속도
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
@@ -212,35 +213,51 @@ _bool CVIBuffer_Instancing::Spread_FireCracker_2D(_float fTimeDelta)
 		// 생명 시간 비율 계산
 		float ratio = pMatrices[i].vLifeTime.y / pMatrices[i].vLifeTime.x;
 
-		// 무작위 각도 생성 (0 ~ 360도)
-		float angle = static_cast<float>(i) / m_iNumInstance * XM_2PI;
+		// 현재 파티클의 위치를 개별적으로 로드
+		float currentX = m_pInstanceVertices[i].vTranslation.x;
+		float currentY = m_pInstanceVertices[i].vTranslation.y;
 
-		// 방향 벡터 계산
-		float dirX = cosf(angle);
-		float dirY = sinf(angle);
+		// 피봇 위치도 개별적으로 로드
+		float pivotX = m_vPivotPos.x;
+		float pivotY = m_vPivotPos.y;
+
+		// 현재 위치와 피봇 위치를 이용해 이동 방향 계산
+		float dirX = currentX - pivotX;
+		float dirY = currentY - pivotY;
+
+		// 벡터 정규화
+		float length = sqrt(dirX * dirX + dirY * dirY);
+		if (length != 0.f)
+		{
+			dirX /= length;
+			dirY /= length;
+		}
 
 		// 초기 속도 가져오기
 		float initialSpeed = m_pSpeeds[i];
 
-		// 속도 감쇠 계산
-		float speedDamping = 1.0f;
-		if (ratio < 0.5f)
+		float vx = 0.f;
+		float vy = 0.f;
+
+		if (ratio < 0.7f)
 		{
-			speedDamping = 1.0f - (ratio / 0.5f) * 0.8f; // 0.5까지 20% 감쇠
+			// 속도 감속 계산
+			float speedDamping = 1.0f - (ratio / 0.7f) * decelerationFactor; // 감속 비율 적용
+
+			// 현재 속도 계산
+			vx = dirX * initialSpeed * speedDamping;
+			vy = dirY * initialSpeed * speedDamping;
 		}
 		else
 		{
-			speedDamping = 0.2f; // 0.5 이후에는 20% 속도 유지
-		}
+			// 감속된 속도를 유지
+			float speedDamping = 1.0f - decelerationFactor; // 감속 후 남은 속도
 
-		// 현재 속도 계산
-		float vx = dirX * initialSpeed * speedDamping;
-		float vy = dirY * initialSpeed * speedDamping;
+			// 수평 속도는 감속된 값을 유지
+			vx = dirX * initialSpeed * speedDamping;
 
-		// 중력 적용
-		if (ratio >= 0.5f)
-		{
-			vy += gravity * (pMatrices[i].vLifeTime.y - pMatrices[i].vLifeTime.x * 0.5f);
+			// 중력 가속도 적용 (속도에 누적)
+			vy = dirY * initialSpeed * speedDamping + gravityStrength * (pMatrices[i].vLifeTime.y - pMatrices[i].vLifeTime.x * 0.7f);
 		}
 
 		// 위치 업데이트
