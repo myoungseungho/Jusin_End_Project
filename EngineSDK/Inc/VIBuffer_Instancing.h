@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 
 /* 인스턴싱을 통해 그려야하는 모델들이 상속받아야하는 클래스 .*/
 #include "VIBuffer.h"
@@ -21,6 +22,7 @@ public:
 		_bool		isLoop = {};
 
 	};
+
 protected:
 	CVIBuffer_Instancing(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVIBuffer_Instancing(const CVIBuffer_Instancing& Prototype);
