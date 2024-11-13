@@ -186,10 +186,11 @@ void CEffect_Layer::Update(_float fTimeDelta)
 			if (m_bIsFollowing)
 			{
 				LayerMatrix = m_pTransformCom->Get_WorldMatrix();
+				_float3 CopyRotation = m_pCopyTransformCom->Get_Rotation();
 
 				if (0 > m_pPlayerMatrix->_11)
 				{
-					LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+					//LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
 
 					XMVECTOR Scale, Rotation, Position;
 
@@ -204,8 +205,22 @@ void CEffect_Layer::Update(_float fTimeDelta)
 					fLayerMatrix._41 += XMVectorGetX(Position);
 					fLayerMatrix._42 += XMVectorGetY(Position);
 
-					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+
+					_vector Pos = m_pCopyTransformCom->Get_State(CTransform::STATE_POSITION);
+
+					m_pCopyTransformCom->Rotate(CopyRotation);
+
+					_matrix Dst = m_pCopyTransformCom->Get_WorldMatrix() * XMMatrixRotationY(XMConvertToRadians(180.0f));
+
+					XMStoreFloat4x4(&fLayerMatrix, Dst);
+
+					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
+
+					m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, Pos);
+
+					LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+					EffectToLayerMatrix = LayerMatrix;
 				}
 				else
 				{
@@ -220,9 +235,16 @@ void CEffect_Layer::Update(_float fTimeDelta)
 					fLayerMatrix._41 += XMVectorGetX(Position);
 					fLayerMatrix._42 += XMVectorGetY(Position);
 
-					LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 
+					_vector Pos = m_pCopyTransformCom->Get_State(CTransform::STATE_POSITION);
+
+					m_pCopyTransformCom->Rotate(CopyRotation);
+
+					m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, Pos);
+
+					LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+					EffectToLayerMatrix = LayerMatrix;
 				}
 			}
 			
