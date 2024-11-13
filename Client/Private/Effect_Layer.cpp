@@ -161,7 +161,8 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 	{
 		_matrix TestMatrix = XMMatrixIdentity();
 
-		LayerMatrix = m_pTransformCom->Multiple_Matrix(TestMatrix);
+		LayerMatrix = TestMatrix;
+			//m_pTransformCom->Multiple_Matrix(TestMatrix);
 	}
 
 	return S_OK;
@@ -202,8 +203,8 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 					//fLayerMatrix._41 *= -1;
 					fLayerMatrix._43 *= -1;
-					fLayerMatrix._41 += XMVectorGetX(Position);
-					fLayerMatrix._42 += XMVectorGetY(Position);
+					fLayerMatrix._41 += XMVectorGetX(Position) + m_fChangePosition.x;
+					fLayerMatrix._42 += XMVectorGetY(Position) + m_fChangePosition.y;
 
 					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 
@@ -232,8 +233,8 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
 
-					fLayerMatrix._41 += XMVectorGetX(Position);
-					fLayerMatrix._42 += XMVectorGetY(Position);
+					fLayerMatrix._41 += XMVectorGetX(Position) + m_fChangePosition.x;
+					fLayerMatrix._42 += XMVectorGetY(Position) + m_fChangePosition.y;
 
 					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 
@@ -415,6 +416,9 @@ HRESULT CEffect_Layer::Set_Copy_Layer_Scaled(_float3 ChangeScaled)
 HRESULT CEffect_Layer::Set_Copy_Layer_Position(_float3 ChangePosition)
 {
 	m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+
+	m_fChangePosition = ChangePosition;
+
 	return S_OK;
 }
 

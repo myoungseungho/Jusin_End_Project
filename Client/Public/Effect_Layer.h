@@ -80,6 +80,7 @@ private:
 	CCollider*					m_pColliderCom = { nullptr };
 	const _float4x4*			 m_pPlayerMatrix = { nullptr };
 	_matrix						LayerMatrix;
+	_float3							m_fChangePosition = { 0.f, 0.f, 0.f };
 	
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);

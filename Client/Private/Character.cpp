@@ -1348,7 +1348,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
 
 		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
-
+		//µð¹ö±ë
 		
 
 	}
