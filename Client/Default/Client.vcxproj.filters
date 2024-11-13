@@ -427,6 +427,9 @@
     <ClCompile Include="..\Private\SpaceMeteoBreak.cpp">
       <Filter>02.GameObjects\Map\Space\MeteoBreak</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Destructive.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Destructive</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -914,6 +917,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Space\Ground">
       <UniqueIdentifier>{41546f4d-bf05-4076-8392-622932c492f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Destructive">
+      <UniqueIdentifier>{159c2191-b272-4d65-a21b-8b701028abe9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1492,7 +1498,7 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
-  </ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Public\Play_Hit.h">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
     </ClInclude>
@@ -1504,6 +1510,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\SpaceMeteoBreak.h">
       <Filter>02.GameObjects\Map\Space\MeteoBreak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Destructive.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Destructive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,7 @@
 #include "Volcano_SkyCloud.h"
 #include "Volcano_Smoke.h"
 #include "Volcano_Mountain.h"
+#include "Volcano_Destructive.h"
 //LOGO
 #include "UI_Logo_BG.h"
 #include "UI_Logo_Mark.h"
@@ -2845,8 +2846,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Lava_Pool"),
 		CVolcano_Lava_Pool::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
-
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Destructive"),
+		CVolcano_Destructive::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_GroundRock"),
 		CVolcano_GroundRock::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3293,6 +3296,14 @@ HRESULT CLoader::Load_Map()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_mountain"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_mountain/vo_mountain.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveFinish"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_DestructiveFinish.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveDynamic"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_DestructiveDynamic.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_pool"),

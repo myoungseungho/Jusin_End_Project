@@ -339,6 +339,7 @@
     <ClInclude Include="..\Public\Volcano_Cliff_Back.h" />
     <ClInclude Include="..\Public\Volcano_Cliff_Far.h" />
     <ClInclude Include="..\Public\Volcano_Defines.h" />
+    <ClInclude Include="..\Public\Volcano_Destructive.h" />
     <ClInclude Include="..\Public\Volcano_Ground.h" />
     <ClInclude Include="..\Public\Volcano_GroundRock.h" />
     <ClInclude Include="..\Public\Volcano_Island01.h" />
@@ -535,6 +536,7 @@
     <ClCompile Include="..\Private\Volcano_Cliff04.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff_Back.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff_Far.cpp" />
+    <ClCompile Include="..\Private\Volcano_Destructive.cpp" />
     <ClCompile Include="..\Private\Volcano_Ground.cpp" />
     <ClCompile Include="..\Private\Volcano_GroundRock.cpp" />
     <ClCompile Include="..\Private\Volcano_Island01.cpp" />

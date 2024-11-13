@@ -1,22 +1,12 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/Resources/Map/Space/MeteoBreak/"
+#define DATAFILEPATH "../Client/Bin/Resources/Map/Volcano/vo_DestructiveFinish/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/MeteoBrake_1.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_2.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_3.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_4.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_5.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_6.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_7.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_8.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_9.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_10.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_11.fbx", TYPE_NONANIM},
+		{"Models/VolcanoDynamic.fbx", TYPE_NONANIM},
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그
