@@ -59,12 +59,18 @@ void CUI_Loading_FlyEff::Update(_float fTimeDelta)
 	_float WarfPosX = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) + 100.f * cos(m_fAngle * (3.14f / 180.f));
 	_float WarfPosZ = XMVectorGetZ(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) - 100.f * sin(m_fAngle * (3.14f / 180.f));
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { WarfPosX  , WarfPosZ  , 0.f,1.f});
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { WarfPosX  , WarfPosZ  , 0.f,1.f });
 
 	m_fCurrPos = _float2(WarfPosX, WarfPosZ);
 
-	if(fTimeDelta >= 0.2f)
+	if (m_fPosDuration >= 0.2f)
+	{
 		m_fPrevPos = _float2(WarfPosX, WarfPosZ);
+		m_fPosDuration = 0.f;
+	}
+	//_float3 vStart = 
+
+	m_pTrail_VIBufferCom->CalculateQuad(_float3{ m_fPrevPos.x,m_fPrevPos.y ,0.f});
 }
 
 void CUI_Loading_FlyEff::Late_Update(_float fTimeDelta)
@@ -82,10 +88,10 @@ HRESULT CUI_Loading_FlyEff::Render(_float fTimeDelta)
 	if (FAILED(m_pShaderCom->Begin(32)))
 		return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Bind_Buffers()))
+	if (FAILED(m_pTrail_VIBufferCom->Bind_Buffers()))
 		return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Render()))
+	if (FAILED(m_pTrail_VIBufferCom->Render()))
 		return E_FAIL;
 
 	return S_OK;
@@ -99,6 +105,11 @@ HRESULT CUI_Loading_FlyEff::Ready_Components()
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFlyEffect"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+
+	/* For.Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Trail"),
+		TEXT("Com_TrailVIBuffer"), reinterpret_cast<CComponent**>(&m_pTrail_VIBufferCom))))
 		return E_FAIL;
 
 	return S_OK;
@@ -149,5 +160,7 @@ CGameObject* CUI_Loading_FlyEff::Clone(void* pArg)
 
 void CUI_Loading_FlyEff::Free()
 {
+	Safe_Release(m_pTrail_VIBufferCom);
+
 	__super::Free();
 }

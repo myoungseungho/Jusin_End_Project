@@ -2,6 +2,12 @@
 
 #include "UIObject.h"
 
+BEGIN(Engine)
+
+class CVIBuffer_Trail_Rect;
+
+END
+
 BEGIN(Client)
 
 class CUI_Loading_FlyEff final :public CUIObject
@@ -29,6 +35,8 @@ private:
 
 	_float m_fAngle = { 0.f };
 	_float m_fPosDuration = { 0.f };
+
+	CVIBuffer_Trail_Rect* m_pTrail_VIBufferCom = { nullptr };
 
 public:
 	static CUI_Loading_FlyEff* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
