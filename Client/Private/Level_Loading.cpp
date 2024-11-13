@@ -16,8 +16,7 @@
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 #include "UI_LoadingSpaceLight.h"
-
-
+#include "UI_Loading_FlyEff.h"
 
 _bool CLevel_Loading::m_bIsLevelPrepared = false;
 
@@ -40,7 +39,7 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	//m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	//if (nullptr == m_pLoader)
 	//	return E_FAIL;
-	//
+	
 	m_bIsLevelPrepared = TRUE;
 	
 	return S_OK;
@@ -76,6 +75,13 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Stage_Image/sp_light.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_LoadingSpaceLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFlyEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
+		return E_FAIL;
+
+
+
 #pragma endregion
 
 	/* For.Prototype_GameObject_UI_Loading */
@@ -98,6 +104,10 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CUI_LoadingSpaceLight::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_UI_LoadingFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_FlyEff"),
+		CUI_Loading_FlyEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	m_bIsLevelPrepared = true;
 
@@ -121,6 +131,9 @@ HRESULT CLevel_Loading::Ready_Layer()
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingFont"), TEXT("Layer_UI_LoadingBackGround"));
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
+
+	Desc.fSpeedPerSec = 50.f;
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_FlyEff"), TEXT("Layer_UI_LoadingBackGround"),&Desc);
 
 	return S_OK;
 }

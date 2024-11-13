@@ -496,6 +496,9 @@
     <ClCompile Include="..\private\UI_VS_NameOutLine.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\Name\OutLine</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_FlyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1058,6 +1061,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\Name\OutLine">
       <UniqueIdentifier>{fb1e193e-7444-4c2a-9b1c-c1cd12512f0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\FlyEffect">
+      <UniqueIdentifier>{c5718074-c156-483f-bf17-d531286d0ccd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1717,6 +1723,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_VS_NameOutLine.h">
       <Filter>02.GameObjects\UI\BackGround\VS\Name\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_FlyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

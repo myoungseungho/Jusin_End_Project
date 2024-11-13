@@ -32,6 +32,8 @@ vector g_vCamPosition;
 int iSpriteIndex = 0;
 int iNumSprite = 0;
 
+float2 g_vCurrPos;
+float2 g_vPrevPos;
 
 struct VS_IN
 {
@@ -742,6 +744,27 @@ PS_OUT PS_VS_Name(PS_IN In)
 }
 
 
+PS_OUT PS_FLYEFF(PS_IN In)
+{
+    PS_OUT Out;
+     
+    //float2 moveDir = g_vCurrPos - g_vPrevPos;
+    //float moveDist = length(moveDir);
+    //moveDir = normalize(moveDir);
+    //
+    //float stretchFactor = 0.1 * moveDist;
+    //float2 uv = In.vTexcoord;
+    //
+    //uv += moveDir * stretchFactor;
+    
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor.a = Out.vColor.r;
+    //float fadeAmount = saturate(1.0 - stretchFactor);
+    //Out.vColor.a *= fadeAmount;
+    
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASS¿« ±‚¡ÿ : ºŒ¿Ã¥ı ±‚π˝¿« ƒ∏Ω∂»≠. */
@@ -1210,4 +1233,19 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_VS_Name();
     }
+
+//32
+    pass FLYEFF
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_FLYEFF();
+    }
+
 }
