@@ -30,7 +30,7 @@ HRESULT CUI_SelectArrow::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 150.f , m_fPosY = 620.f;
+	m_fPosX = m_vPrevWinSize.x * 0.5f, m_fPosY = 620.f;
 	m_fSizeX = 50.f, m_fSizeY = 50.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);

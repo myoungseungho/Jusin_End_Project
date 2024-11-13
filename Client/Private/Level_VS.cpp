@@ -140,6 +140,12 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 
 HRESULT CLevel_VS::Ready_Sound()
 {
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0401_Versus_GetReadyForBattle.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_VS, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_VS, false, 1.f);
+
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_VSLoading.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_VS_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_VS_SFX, false, 0.2f);
+	
 	return S_OK;
 }
 
