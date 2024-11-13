@@ -42,6 +42,7 @@ private:
 	_uint m_iTextureIndex = { 0 };
 	_uint m_iNumChoice = { 0 };
 
+	_float m_fSpeedOffset = { 1.f };
 
 
 public:
