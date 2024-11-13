@@ -16,6 +16,7 @@ CVIBuffer_Instancing::CVIBuffer_Instancing(const CVIBuffer_Instancing& Prototype
 	, m_pSpeeds{ Prototype.m_pSpeeds }
 	, m_vPivotPos{ Prototype.m_vPivotPos }
 	, m_isLoop{ Prototype.m_isLoop }
+	, m_fMaxTime{ Prototype.m_fMaxTime }
 {
 	Safe_AddRef(m_pVBInstance);
 }
@@ -29,6 +30,8 @@ HRESULT CVIBuffer_Instancing::Initialize_Prototype(const VIBUFFER_INSTANCE_DESC*
 	m_vPivotPos = pInitialDesc->vPivot;
 
 	m_isLoop = pInitialDesc->isLoop;
+
+	m_fMaxTime = pInitialDesc->vLifeTime.y;
 
 	/* 인게임내에서 스피드가 바뀌지 않도록 파티클 원형객체를 생성할때 각 입자별 스피드를 계산하여 저장해둔다. */
 	for (size_t i = 0; i < m_iNumInstance; i++)
@@ -126,6 +129,10 @@ void CVIBuffer_Instancing::Spread(_float fTimeDelta)
 
 _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 {
+	//MaxTime을 넘어서면 모든 파티클 입자가 다 시간이 지났다고 판단
+	if (m_fElapsedTime >= m_fMaxTime)
+		return true;
+
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
@@ -134,20 +141,24 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			continue;
+
 		// 현재 파티클의 위치를 개별적으로 로드
-		float currentX = m_pInstanceVertices[i].vTranslation.x;
-		float currentY = m_pInstanceVertices[i].vTranslation.y;
+		_float currentX = m_pInstanceVertices[i].vTranslation.x;
+		_float currentY = m_pInstanceVertices[i].vTranslation.y;
 
 		// 피봇 위치도 개별적으로 로드
-		float pivotX = m_vPivotPos.x;
-		float pivotY = m_vPivotPos.y;
+		_float pivotX = m_vPivotPos.x;
+		_float pivotY = m_vPivotPos.y;
 
 		// 현재 위치와 피봇 위치를 이용해 이동 방향 계산
-		float dirX = currentX - pivotX;
-		float dirY = currentY - pivotY;
+		_float dirX = currentX - pivotX;
+		_float dirY = currentY - pivotY;
 
 		// 벡터 정규화
-		float length = sqrt(dirX * dirX + dirY * dirY);
+		_float length = sqrt(dirX * dirX + dirY * dirY);
 		if (length != 0.f)
 		{
 			dirX /= length;
@@ -155,8 +166,8 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 		}
 
 		// 이동 속도 계산
-		float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
-		float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
+		_float moveX = dirX * m_pSpeeds[i] * fTimeDelta;
+		_float moveY = dirY * m_pSpeeds[i] * fTimeDelta;
 
 		// 파티클의 현재 위치 업데이트
 		pMatrices[i].vTranslation.x += moveX;
@@ -173,13 +184,9 @@ _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
-		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
-		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
-		}
 	}
+
+	m_fElapsedTime += fTimeDelta;
 
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
@@ -342,6 +349,10 @@ _bool CVIBuffer_Instancing::Half_Spread_X_2D(_float fTimeDelta)
 
 _bool CVIBuffer_Instancing::Half_Spread_Y_2D(_float fTimeDelta)
 {
+	//MaxTime을 넘어서면 모든 파티클 입자가 다 시간이 지났다고 판단
+	if (m_fElapsedTime >= m_fMaxTime)
+		return true;
+
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
@@ -350,6 +361,10 @@ _bool CVIBuffer_Instancing::Half_Spread_Y_2D(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			continue;
+
 		// 현재 파티클의 위치를 개별적으로 로드
 		float currentX = m_pInstanceVertices[i].vTranslation.x;
 		float currentY = m_pInstanceVertices[i].vTranslation.y;
@@ -397,13 +412,9 @@ _bool CVIBuffer_Instancing::Half_Spread_Y_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
-		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
-		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
-		}
 	}
+
+	m_fElapsedTime += fTimeDelta;
 
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
@@ -411,6 +422,10 @@ _bool CVIBuffer_Instancing::Half_Spread_Y_2D(_float fTimeDelta)
 
 _bool CVIBuffer_Instancing::Spiral_Spread_2D(_float fTimeDelta)
 {
+	//MaxTime을 넘어서면 모든 파티클 입자가 다 시간이 지났다고 판단
+	if (m_fElapsedTime >= m_fMaxTime)
+		return true;
+
 	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
@@ -421,6 +436,10 @@ _bool CVIBuffer_Instancing::Spiral_Spread_2D(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			continue;
+
 		float currentX = m_pInstanceVertices[i].vTranslation.x;
 		float currentY = m_pInstanceVertices[i].vTranslation.y;
 
@@ -456,12 +475,9 @@ _bool CVIBuffer_Instancing::Spiral_Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
-		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
-		}
 	}
+
+	m_fElapsedTime += fTimeDelta;
 
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
@@ -469,6 +485,10 @@ _bool CVIBuffer_Instancing::Spiral_Spread_2D(_float fTimeDelta)
 
 _bool CVIBuffer_Instancing::Circular_Spread_2D(_float fTimeDelta)
 {
+	//MaxTime을 넘어서면 모든 파티클 입자가 다 시간이 지났다고 판단
+	if (m_fElapsedTime >= m_fMaxTime)
+		return true;
+
 	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
@@ -477,6 +497,10 @@ _bool CVIBuffer_Instancing::Circular_Spread_2D(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			continue;
+
 		float currentX = m_pInstanceVertices[i].vTranslation.x;
 		float currentY = m_pInstanceVertices[i].vTranslation.y;
 
@@ -517,12 +541,9 @@ _bool CVIBuffer_Instancing::Circular_Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
-		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
-		}
 	}
+
+	m_fElapsedTime += fTimeDelta;
 
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
@@ -530,6 +551,10 @@ _bool CVIBuffer_Instancing::Circular_Spread_2D(_float fTimeDelta)
 
 _bool CVIBuffer_Instancing::Elliptical_Spread_2D(_float fTimeDelta)
 {
+	//MaxTime을 넘어서면 모든 파티클 입자가 다 시간이 지났다고 판단
+	if (m_fElapsedTime >= m_fMaxTime)
+		return true;
+
 	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
@@ -538,6 +563,10 @@ _bool CVIBuffer_Instancing::Elliptical_Spread_2D(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			continue;
+
 		float currentX = m_pInstanceVertices[i].vTranslation.x;
 		float currentY = m_pInstanceVertices[i].vTranslation.y;
 
@@ -577,19 +606,19 @@ _bool CVIBuffer_Instancing::Elliptical_Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
-		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
-		}
 	}
 
+	m_fElapsedTime += fTimeDelta;
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
 }
 
 _bool CVIBuffer_Instancing::Random_Wiggle_Spread_2D(_float fTimeDelta)
 {
+	//MaxTime을 넘어서면 모든 파티클 입자가 다 시간이 지났다고 판단
+	if (m_fElapsedTime >= m_fMaxTime)
+		return true;
+
 	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
@@ -600,6 +629,10 @@ _bool CVIBuffer_Instancing::Random_Wiggle_Spread_2D(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
+		// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			continue;
+
 		float currentX = m_pInstanceVertices[i].vTranslation.x;
 		float currentY = m_pInstanceVertices[i].vTranslation.y;
 
@@ -642,13 +675,9 @@ _bool CVIBuffer_Instancing::Random_Wiggle_Spread_2D(_float fTimeDelta)
 			pMatrices[i].vTranslation.y = m_pInstanceVertices[i].vTranslation.y;
 			pMatrices[i].vLifeTime.y = 0.f;
 		}
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
-		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
-		}
 	}
 
+	m_fElapsedTime += fTimeDelta;
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
 }

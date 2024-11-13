@@ -14,6 +14,7 @@ struct VS_IN
     float3 vPosition : POSITION;
 
 	/* 정점 여섯개마다 한번씩 갱신되는 데이터들. */
+    // 인스턴스 버퍼에 있는 녀석들
     row_major matrix LocalMatrix : WORLD;
     float2 vLifeTime : TEXCOORD0;
 };

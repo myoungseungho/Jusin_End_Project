@@ -57,7 +57,8 @@ protected:
 	_float3					m_vPivotPos = {};
 	_float*					m_pSpeeds = { nullptr };
 	_bool					m_isLoop = {  };
-
+	_float					m_fMaxTime = {};
+	_float					m_fElapsedTime = {};
 	_uint					m_iNumIndexPerInstance = { 0 };
 
 	VTXINSTANCE*			m_pInstanceVertices = { nullptr };
