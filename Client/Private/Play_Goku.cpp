@@ -1326,6 +1326,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fAnimationLockTime = 0.7f;
 		Desc.bGrabbedEnd = true;
 		Desc.pOwner = this;
+
+		Desc.bCameraZoom = false;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 

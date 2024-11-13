@@ -1275,7 +1275,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 		m_fAccChaseTime += fTimeDelta;
 
-		if (m_fAccChaseTime > 5.f)
+		if (m_fAccChaseTime > 20.f)
 		{
 			m_bChase = false;
 			//if (m_pChaseAttackObejct != nullptr)
@@ -1332,7 +1332,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	_float EffectAngle = angle;
 
-	if (m_pChaseEffectLayer != nullptr)
+	if (m_pChaseEffectLayer != nullptr && m_fAccChaseTime <2.f)
 	{
 
 

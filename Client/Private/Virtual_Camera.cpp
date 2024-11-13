@@ -533,7 +533,7 @@ void CVirtual_Camera::Map_Camera(_float fTimeDelta)
 		vPlayerPos =  static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 		break;
 	case 2:
-		vPlayerPos = static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+		vPlayerPos = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 		break;
 	}
 
