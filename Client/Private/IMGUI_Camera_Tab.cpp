@@ -24,8 +24,6 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
 	MODEL_NAMES[CAMERA_MODELID_MINE] = "Mine";
-	MODEL_NAMES[CAMERA_MODELID_MAP] = "Map";
-
 
 	_int index = 0;
 
@@ -39,7 +37,6 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	// 기본 카메라 매핑
 	m_CameraIndexMap[{CAMERA_MODELID_NORMAL, -1}] = index++;
 	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
-	m_CameraIndexMap[{(CAMERA_MODELID)23, -1}] = index++;
 
 	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
 	for (const auto& modelSkillPair : m_ModelSkills)
@@ -115,7 +112,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 7)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3", "21_Ultimate_Anim4", "21_Ultimate_Anim5" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3_Success", "21_Ultimate_Anim3_Fail", "21_Ultimate_Anim4" };
 				}
 			}
 			else if (model == CAMERA_MODELID_HIT)
@@ -221,7 +218,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	}
 
 	//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
-	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE || m_iSelected_Model == CAMERA_MODELID_MAP)
+	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE)
 		UpdateCameraSelection();
 }
 

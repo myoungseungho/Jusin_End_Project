@@ -443,22 +443,94 @@ SkillName: Camera_21_Ultimate
 
 [Animation]
 AnimationName: 21_Ultimate_Anim1
-PointCount: 0
+PointCount: 9
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.05
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.466618 1.98339 -3.43306
+Rotation: -0 0 -0 1
+Duration: 0.05
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.39993 1.48331 -2.83295
+Rotation: -0 0 -0 1
+Duration: 0.05
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.424987 0.996665 -1.41443
+Rotation: -0.109428 -0.0753977 -0.00832476 0.991096
+Duration: 0.05
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.264593 0.945876 -1.18796
+Rotation: -0.18874 -0.0102845 -0.00197673 0.981971
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.264593 0.945876 -1.18796
+Rotation: -0.18874 -0.0102845 -0.00197673 0.981971
+Duration: 0.05
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.301734 0.497362 -1.22927
+Rotation: -0.387419 -0.0301639 -0.012684 0.921323
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: 21_Ultimate_Anim2
 PointCount: 0
 
 [Animation]
-AnimationName: 21_Ultimate_Anim3
+AnimationName: 21_Ultimate_Anim3_Success
+PointCount: 0
+
+[Animation]
+AnimationName: 21_Ultimate_Anim3_Fail
 PointCount: 0
 
 [Animation]
 AnimationName: 21_Ultimate_Anim4
-PointCount: 0
-
-[Animation]
-AnimationName: 21_Ultimate_Anim5
 PointCount: 0
 
 [VirtualCamera]

@@ -159,9 +159,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Energy_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim2"] = 1;
-	stringToAnimID["21_Ultimate_Anim3"] = 2;
-	stringToAnimID["21_Ultimate_Anim4"] = 3;
-	stringToAnimID["21_Ultimate_Anim5"] = 4;
+	stringToAnimID["21_Ultimate_Anim3_Success"] = 2;
+	stringToAnimID["21_Ultimate_Anim3_Fail"] = 3;
+	stringToAnimID["21_Ultimate_Anim4"] = 4;
 
 #pragma endregion
 

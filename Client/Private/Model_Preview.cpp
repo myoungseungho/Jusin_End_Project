@@ -46,6 +46,8 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 	//CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
 	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_21.txt");
 
+	FlipDirection(1);
+
 	return S_OK;
 }
 
