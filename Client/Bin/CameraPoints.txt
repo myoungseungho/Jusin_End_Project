@@ -803,7 +803,59 @@ SkillName: Camera_Hit_1_Ultimate
 
 [Animation]
 AnimationName: Hit_1_Ultimate_Anim1
-PointCount: 0
+PointCount: 4
+
+[CameraPoint]
+Position: 0.863542 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.26551 1.43442 -0.950747
+Rotation: 0 -0.400742 0 0.91546
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.26551 1.43442 -0.950747
+Rotation: 0 -0.400742 0 0.91546
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.863542 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_1_Ultimate_Anim2
+PointCount: 2
+
+[CameraPoint]
+Position: 2.29303 1.43078 -1.47817
+Rotation: 0 -0.483782 0 0.874307
+Duration: 1.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 2.29303 1.43078 -1.47817
+Rotation: 0 -0.483782 0 0.874307
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Hit_3_Ultimate

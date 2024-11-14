@@ -316,7 +316,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			{
 				Stun_Shake();
 			}
-			
+
 		}
 
 		return;
@@ -1353,7 +1353,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.ColliderDesc.pTransform = m_pTransformCom;
 				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 20.f;
-				if(m_bSparking)
+				if (m_bSparking)
 					Desc.iDamage = 280 * Get_DamageScale(true);
 				else
 					Desc.iDamage = 320 * Get_DamageScale(true);
@@ -2570,7 +2570,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bOnwerHitNoneStop = true;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-
 			}
 		}
 		else if (iAttackEvent == 2)
@@ -2898,6 +2897,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Set_AnimationStopWithoutMe(1.5f);
 			Set_AnimationStop(0.6f);
+
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_1_ULTIMATE, 0, this);
+			mainCamera->StartCameraShake(1.f, 0.1f);
 		}
 
 
@@ -3042,6 +3045,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.iGrabAnimationIndex = ANIME_236_ULTIMATE;
 
+				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_HIT_1_ULTIMATE;
+				Desc.ianimationIndex = 1;
+				Desc.fCameraShakeDuration = 1.f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
@@ -3278,7 +3285,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fCameraShakeMagnitude = 0.2f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-			
+
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 91.f;
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 281.f;
 
@@ -3809,7 +3816,7 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 				CEffect_Layer::COPY_DESC tDesc{};
 				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"),&tDesc);
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"), &tDesc);
 				break;
 			}
 			case Client::HIT_CROUCH_MEDIUM:

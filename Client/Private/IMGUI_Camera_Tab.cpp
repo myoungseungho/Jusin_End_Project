@@ -143,7 +143,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 6) // 히트 1필
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Hit_1_Ultimate_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_1_Ultimate_Anim1","Hit_1_Ultimate_Anim2" };
 				}
 				else if (skillIdx == 7) // 히트 3필
 				{

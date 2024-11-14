@@ -199,6 +199,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Hit_236_Middle_Anim1"] = 0;
 	stringToAnimID["Hit_236_Heavy_Anim1"] = 0;
 	stringToAnimID["Hit_1_Ultimate_Anim1"] = 0;
+	stringToAnimID["Hit_1_Ultimate_Anim2"] = 1;
 	stringToAnimID["Hit_3_Ultimate_Anim1"] = 0;
 
 #pragma endregion
