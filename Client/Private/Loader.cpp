@@ -3572,22 +3572,22 @@ HRESULT CLoader::Load_Map()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_mountain/vo_mountain.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveFinish"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_DestructiveFinish.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveFinish"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_DestructiveFinish.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_SFmountain01"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountain01.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_SFmountain01"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountain01.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	//for (size_t i = 0; i < 15; i++)
-	//{
-	//	wstring strTagName = TEXT("Prototype_Component_Model_vo_SFmountainrRock") + to_wstring(i);
-	//	string strModelName = "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountainrRock" + to_string(i) + ".bin";
-	//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, strTagName.c_str(),
-	//		CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
-	//		return E_FAIL;
-	//}
+	for (size_t i = 0; i < 15; i++)
+	{
+		wstring strTagName = TEXT("Prototype_Component_Model_vo_SFmountainrRock") + to_wstring(i);
+		string strModelName = "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountainrRock" + to_string(i) + ".bin";
+		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, strTagName.c_str(),
+			CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
+			return E_FAIL;
+	}
 
 
 

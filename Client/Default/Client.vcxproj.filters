@@ -363,7 +363,7 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_VS_TeamPanel.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\TeamPanel</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Private\IMGUI_UI_Tab.cpp">
       <Filter>97.IMGUI\Tab\IMGUI_UI_Tab</Filter>
     </ClCompile>
@@ -923,7 +923,7 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\TeamPanel">
       <UniqueIdentifier>{af5c3bd0-e54a-4f0d-a5e0-ae5f82acfd0c}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="97.IMGUI\Tab">
       <UniqueIdentifier>{f4b4a581-1401-407e-a8eb-2577c1ad0dc3}</UniqueIdentifier>
     </Filter>
@@ -1579,7 +1579,7 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_VS_TeamPanel.h">
       <Filter>02.GameObjects\UI\BackGround\VS\TeamPanel</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h">
       <Filter>97.IMGUI\Tab\IMGUI_Animation_Tab</Filter>
     </ClInclude>
@@ -1700,9 +1700,6 @@
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Play_Hit.h">
-      <Filter>02.GameObjects\Character\Play_Hit</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Hit_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
     </ClInclude>
@@ -1717,6 +1714,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Map_Manager.h">
       <Filter>02.GameObjects\Map\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Hit.h">
+      <Filter>02.GameObjects\Character\Play_Hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

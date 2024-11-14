@@ -16,7 +16,7 @@
 #include <cmath>
 #include "SpaceMeteoBreak.h"
 #include "Effect_Layer.h"
-
+#include "Map_Manager.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
@@ -311,7 +311,29 @@ void CCharacter::Update(_float fTimeDelta)
 
 void CCharacter::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	if (m_bDestructiveFinish == true)
+	{
+		m_fAccDyingTime += fTimeDelta;
+		if (m_fAccDyingTime > 7)
+		{
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&m_vDyingPosition));
+
+			m_bDestructiveFinish = false;
+			m_fAccDyingTime = 0.f;
+
+
+
+			Set_fImpulse({ 0.f,0.f });
+		}
+	}
+
+	if (m_bPlaying || m_bTag_In)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+#ifdef _DEBUG
+	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+#endif
+
 }
 
 HRESULT CCharacter::Render(_float fTimeDelta)
@@ -1338,12 +1360,12 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	if (m_pChaseEffectLayer != nullptr && m_fAccChaseTime <2.f)
 	{
+		/* 체이스 2P 수정 */
 
-
-		if(m_iLookDirection == 1)
+		//if(m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
-		else if (m_iLookDirection == -1)
-			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
+		//else if (m_iLookDirection == -1)
+		//	m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 
 		_float xdegree = XMVectorGetX(m_vChaseDir);
 
@@ -1352,7 +1374,9 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
 
-		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+		//m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f});
+
 		//디버깅
 		
 
@@ -3984,12 +4008,13 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 			{
 				m_bDynamicMove = true;
 				static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
-				static_cast<CSpaceMeteoBreak*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_MeteoBreak")).begin()))
-					->Start_Space_DestructiveFinish(m_iLookDirection == -1 ? true : false);
+
+				_float2 fMapToImpulse = CMap_Manager::Get_Instance()->Active_DestructiveFinish(m_iLookDirection == -1 ? true : false);
 
 				m_pEnemy->Set_bDynamicMove(true);
 				
-				Set_fImpulse({ -100.f * m_iLookDirection,30.f });
+				XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+				Set_fImpulse(fMapToImpulse);
 
 				m_bDestructiveFinish = true;
 			}

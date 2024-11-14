@@ -133,7 +133,11 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 
 			fLayerMatrix._41 += XMVectorGetX(Position);
 			fLayerMatrix._42 += XMVectorGetY(Position);
-			fLayerMatrix._43 *= -1;
+			if ((*m_MixtureEffects.begin())->m_EffectName != L"BurstR-02")
+			{
+				fLayerMatrix._43 *= -1;
+			}
+			
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 
@@ -322,6 +326,7 @@ HRESULT CEffect_Layer::Set_In_Layer_Effect()
 		if (pEffect)
 		{
 			pEffect->Get_Layer_Matrix(m_pTransformCom->Get_WorldMatrix());
+			//pEffect->Set_Layer_Matrix();
 		}
 	}
 

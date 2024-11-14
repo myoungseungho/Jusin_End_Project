@@ -116,6 +116,11 @@ void CSpaceMeteoBreak::Start_Space_DestructiveFinish(_bool isRight)
 	
 }
 
+void CSpaceMeteoBreak::IsDone_Active_Init()
+{
+	m_isStart = false;
+}
+
 void CSpaceMeteoBreak::Update(_float fTimeDelta)
 {
 	if (m_isStart == false)
@@ -125,7 +130,7 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 	{
 		m_fBrakeSwitchTime += fTimeDelta;
 
-		if (m_fBrakeSwitchTime > 2.8f)
+		if (m_fBrakeSwitchTime > 0.8f)
 		{
 
 			m_fBrakeSwitchTime = 0.f;
@@ -202,13 +207,10 @@ void CSpaceMeteoBreak::Late_Update(_float fTimeDelta)
 	if (m_isStart == false)
 		return;
 
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
 	//if (m_isBrakeSwitch == false)
 	//	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-	
-	
 }
 
 HRESULT CSpaceMeteoBreak::Priority_Render(_float fTimeDelta)
