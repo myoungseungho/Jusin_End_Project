@@ -267,7 +267,7 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [VirtualCamera]
-ModelID: MODELID_HIT
+ModelID: MODELID_21
 
 [Skill]
 SkillName: Camera_21_Heavy
@@ -666,31 +666,98 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [VirtualCamera]
-ModelID: MODELID_MINE
+ModelID: MODELID_HIT
 
 [Skill]
 SkillName: Camera_Hit_Heavy
 
 [Animation]
 AnimationName: Hit_Heavy_Anim1
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.560064 1.17205 -3.3237
+Rotation: 0 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Hit_Knock_Away_Up
 
 [Animation]
 AnimationName: Hit_Knock_Away_Up_Anim1
+PointCount: 1
+
+[CameraPoint]
+Position: 0.243729 0.11623 -2.37281
+Rotation: -0.22716 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_Hit_Grab
+
+[Animation]
+AnimationName: Hit_Grab_Anim1
+PointCount: 2
+
+[CameraPoint]
+Position: 0.72 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.98053 1 -2.2965
+Rotation: -0.00571109 0.488677 0.00319895 0.87244
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Skill]
+SkillName: Camera_Hit_214_Middle
+
+[Animation]
+AnimationName: Hit_214_Middle_Anim1
 PointCount: 0
 
 [Skill]
-SkillName: Camera_Hit_Air_Smash
+SkillName: Camera_Hit_236_Middle
 
 [Animation]
-AnimationName: Hit_Air_Smash_Anim1
+AnimationName: Hit_236_Middle_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Hit_236_Heavy
+
+[Animation]
+AnimationName: Hit_236_Heavy_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Hit_1_Ultimate
+
+[Animation]
+AnimationName: Hit_1_Ultimate_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Hit_3_Ultimate
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim1
 PointCount: 0
 
 [VirtualCamera]
-ModelID: MODELID_21
+ModelID: MODELID_MINE
 
 [Skill]
 SkillName: Camera_Mine_Heavy

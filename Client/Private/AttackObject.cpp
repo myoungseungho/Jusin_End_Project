@@ -584,6 +584,10 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 	case Client::CUI_Define::BUU:
 		break;
 	case Client::CUI_Define::HIT:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY, 0, pOwner);
+	/*	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_21, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);*/
+		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	}
 }
@@ -613,6 +617,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	case Client::CUI_Define::BUU:
 		break;
 	case Client::CUI_Define::HIT:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP, 0, pOwner);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	}
 }

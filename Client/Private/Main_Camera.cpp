@@ -90,6 +90,30 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_21_ULTIMATE:
 			name = "Camera_21_Ultimate";
 			break;
+		case VIRTUAL_CAMERA_HIT_HEAVY:
+			name = "Camera_Hit_Heavy";
+			break;
+		case VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP:
+			name = "Camera_Hit_Knock_Away_Up";
+			break;
+		case VIRTUAL_CAMERA_HIT_GRAB:
+			name = "Camera_Hit_Grab";
+			break;
+		case VIRTUAL_CAMERA_HIT_214_MIDDLE:
+			name = "Camera_Hit_214_Middle";
+			break;
+		case VIRTUAL_CAMERA_HIT_236_MIDDLE:
+			name = "Camera_Hit_236_Middle";
+			break;
+		case VIRTUAL_CAMERA_HIT_236_HEAVY:
+			name = "Camera_Hit_236_Heavy";
+			break;
+		case VIRTUAL_CAMERA_HIT_1_ULTIMATE:
+			name = "Camera_Hit_1_Ultimate";
+			break;
+		case VIRTUAL_CAMERA_HIT_3_ULTIMATE:
+			name = "Camera_Hit_3_Ultimate";
+			break;
 		case VIRTUAL_CAMERA_MINE_HEAVY:
 			name = "Camera_Mine_Heavy";
 			break;
@@ -98,15 +122,6 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 			break;
 		case VIRTUAL_CAMERA_MINE_AIR_SMASH:
 			name = "Camera_Mine_Air_Smash";
-			break;
-		case VIRTUAL_CAMERA_HIT_HEAVY:
-			name = "Camera_Hit_Heavy";
-			break;
-		case VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP:
-			name = "Camera_Hit_Knock_Away_Up";
-			break;
-		case VIRTUAL_CAMERA_HIT_AIR_SMASH:
-			name = "Camera_Hit_Air_Smash";
 			break;
 		}
 
@@ -165,6 +180,29 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Ultimate_Anim4_Flip"] = 5;
 
 #pragma endregion
+
+#pragma region Hit
+	stringToSkillID["Camera_Hit_Heavy"] = VIRTUAL_CAMERA_HIT_HEAVY;
+	stringToSkillID["Camera_Hit_Knock_Away_Up"] = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
+	stringToSkillID["Camera_Hit_Grab"] = VIRTUAL_CAMERA_HIT_GRAB;
+	stringToSkillID["Camera_Hit_214_Middle"] = VIRTUAL_CAMERA_HIT_214_MIDDLE;
+	stringToSkillID["Camera_Hit_236_Middle"] = VIRTUAL_CAMERA_HIT_236_MIDDLE;
+	stringToSkillID["Camera_Hit_236_Heavy"] = VIRTUAL_CAMERA_HIT_236_HEAVY;
+	stringToSkillID["Camera_Hit_1_Ultimate"] = VIRTUAL_CAMERA_HIT_1_ULTIMATE;
+	stringToSkillID["Camera_Hit_3_Ultimate"] = VIRTUAL_CAMERA_HIT_3_ULTIMATE;
+
+
+	stringToAnimID["Hit_Heavy_Anim1"] = 0;
+	stringToAnimID["Hit_Knock_Away_Up_Anim1"] = 0;
+	stringToAnimID["Hit_Grab_Anim1"] = 0;
+	stringToAnimID["Hit_214_Middle_Anim1"] = 0;
+	stringToAnimID["Hit_236_Middle_Anim1"] = 0;
+	stringToAnimID["Hit_236_Heavy_Anim1"] = 0;
+	stringToAnimID["Hit_1_Ultimate_Anim1"] = 0;
+	stringToAnimID["Hit_3_Ultimate_Anim1"] = 0;
+
+#pragma endregion
+
 
 
 	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
@@ -383,19 +421,29 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 	}
 	else if (modelID == 3) { // MODELID_HIT
 		if (skillID == 0)
+			index = VIRTUAL_CAMERA_HIT_HEAVY;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_HIT_GRAB;
+		else if (skillID == 3)
+			index = VIRTUAL_CAMERA_HIT_214_MIDDLE;
+		else if (skillID == 4)
+			index = VIRTUAL_CAMERA_HIT_236_MIDDLE;
+		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_HIT_236_HEAVY;
+		else if (skillID == 6)
+			index = VIRTUAL_CAMERA_HIT_1_ULTIMATE;
+		else if (skillID == 7)
+			index = VIRTUAL_CAMERA_HIT_3_ULTIMATE;
+	}
+	else if (modelID == 4) { // MODELID_HIT
+		if (skillID == 0)
 			index = VIRTUAL_CAMERA_MINE_HEAVY;
 		else if (skillID == 1)
 			index = VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP;
 		else if (skillID == 2)
 			index = VIRTUAL_CAMERA_MINE_AIR_SMASH;
-	}
-	else if (modelID == 4) { // MODELID_HIT
-		if (skillID == 0)
-			index = VIRTUAL_CAMERA_HIT_HEAVY;
-		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
-		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_HIT_AIR_SMASH;
 	}
 
 	return index;
