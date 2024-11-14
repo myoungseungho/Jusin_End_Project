@@ -56,7 +56,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 	if (m_isDestructive_View == true)
 	{
 		m_MapViewTime += fTimeDelta;
-		if (m_MapViewTime > 7.f)
+		if (m_MapViewTime > 5.f)
 		{
 			IsDone_Active();
 			m_isDestructive_View = false;
@@ -169,6 +169,9 @@ void CMap_Manager::IsDone_Active()
 		
 		break;
 	case MAP_VOLCANO:
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(true);
+
 		static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
 			->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
@@ -176,6 +179,9 @@ void CMap_Manager::IsDone_Active()
 			->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(0.f));
 		
 		static_cast<CVolcano_Destructive*>(m_Destructive_VolcanoModels[L"Prototype_GameObject_Volcano_Destructive"])->IsDone_Active_Init();
+
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(false);
 		break;
 	}
 
