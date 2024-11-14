@@ -79,6 +79,7 @@ private:
 	void Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2);
 	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
+	void Print_Flip_Rotation();
 public:
 	CAMERA_MODE m_currentMode = { CAMERA_NORMAL_MODE };
 	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;

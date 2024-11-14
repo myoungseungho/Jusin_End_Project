@@ -162,6 +162,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Ultimate_Anim3_Success"] = 2;
 	stringToAnimID["21_Ultimate_Anim3_Fail"] = 3;
 	stringToAnimID["21_Ultimate_Anim4"] = 4;
+	stringToAnimID["21_Ultimate_Anim4_Flip"] = 5;
 
 #pragma endregion
 

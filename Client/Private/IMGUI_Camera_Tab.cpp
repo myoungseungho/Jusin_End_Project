@@ -112,7 +112,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 7)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3_Success", "21_Ultimate_Anim3_Fail", "21_Ultimate_Anim4" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3_Success", "21_Ultimate_Anim3_Fail", "21_Ultimate_Anim4", "21_Ultimate_Anim4_Flip" };
 				}
 			}
 			else if (model == CAMERA_MODELID_HIT)

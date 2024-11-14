@@ -81,6 +81,13 @@ void CVirtual_Camera::Camera_Update(_float fTimeDelta)
 
 	if (m_bIsShaking)
 		ApplyCameraShake(fTimeDelta);
+
+	static _bool isTest = false;
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+		isTest = !isTest;
+
+	if (isTest)
+		Print_Flip_Rotation();
 }
 
 void CVirtual_Camera::Update(_float fTimeDelta)
@@ -202,7 +209,7 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	//**direction에 따른 회전 조정**
 	if (direction == -1)
 	{
-		// 쿼터니언의 Y와 Z 성분 반전
+		// 쿼터니언의 Y 성분 반전
 		interpolatedRotationLocal = XMVectorSet(
 			XMVectorGetX(interpolatedRotationLocal),
 			-XMVectorGetY(interpolatedRotationLocal),
@@ -294,6 +301,89 @@ void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvec
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, fixedRight);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, fixedUp);
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, fixedLook);
+}
+
+void CVirtual_Camera::Print_Flip_Rotation()
+{
+	// 입력 쿼터니언 값 설정 (데이터 파일에서 가져오거나 하드코딩)
+	float x = -0.162778f;
+	float y = -0.584241f;
+	float z = -0.121022f;
+	float w = 0.785824f;
+
+	// 쿼터니언 로드 및 정규화
+	XMVECTOR quat = XMVectorSet(x, y, z, w);
+	quat = XMQuaternionNormalize(quat);
+
+	// 원본 쿼터니언 출력
+	cout << "Original Quaternion: (" << x << ", " << y << ", " << z << ", " << w << ")" << endl;
+
+	// 반사 변환을 적용하는 함수 정의
+	auto ReflectQuaternion = [](XMVECTOR q, XMMATRIX reflectionMatrix) {
+		// 쿼터니언을 회전 행렬로 변환
+		XMMATRIX rotMatrix = XMMatrixRotationQuaternion(q);
+		// 반사된 회전 행렬 계산: M' = R * M * R
+		XMMATRIX reflectedMatrix = reflectionMatrix * rotMatrix * reflectionMatrix;
+		// 반사된 회전 행렬을 쿼터니언으로 변환
+		XMVECTOR qReflected = XMQuaternionRotationMatrix(reflectedMatrix);
+		// 정규화
+		qReflected = XMQuaternionNormalize(qReflected);
+		return qReflected;
+		};
+
+	// 각 축에 대한 반사 행렬 정의
+	XMMATRIX reflectX = XMMatrixScaling(-1.0f, 1.0f, 1.0f);
+	XMMATRIX reflectY = XMMatrixScaling(1.0f, -1.0f, 1.0f);
+	XMMATRIX reflectZ = XMMatrixScaling(1.0f, 1.0f, -1.0f);
+	XMMATRIX reflectXY = XMMatrixScaling(-1.0f, -1.0f, 1.0f);
+	XMMATRIX reflectXZ = XMMatrixScaling(-1.0f, 1.0f, -1.0f);
+	XMMATRIX reflectYZ = XMMatrixScaling(1.0f, -1.0f, -1.0f);
+	XMMATRIX reflectXYZ = XMMatrixScaling(-1.0f, -1.0f, -1.0f);
+
+	// 결과를 저장할 변수
+	XMFLOAT4 reflectedQuaternion;
+
+	// X축 반전
+	XMVECTOR qReflectX = ReflectQuaternion(quat, reflectX);
+	XMStoreFloat4(&reflectedQuaternion, qReflectX);
+	cout << "Reflection over X-axis: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// Y축 반전
+	XMVECTOR qReflectY = ReflectQuaternion(quat, reflectY);
+	XMStoreFloat4(&reflectedQuaternion, qReflectY);
+	cout << "Reflection over Y-axis: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// Z축 반전
+	XMVECTOR qReflectZ = ReflectQuaternion(quat, reflectZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectZ);
+	cout << "Reflection over Z-axis: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// XY축 반전
+	XMVECTOR qReflectXY = ReflectQuaternion(quat, reflectXY);
+	XMStoreFloat4(&reflectedQuaternion, qReflectXY);
+	cout << "Reflection over X and Y axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// XZ축 반전
+	XMVECTOR qReflectXZ = ReflectQuaternion(quat, reflectXZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectXZ);
+	cout << "Reflection over X and Z axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// YZ축 반전
+	XMVECTOR qReflectYZ = ReflectQuaternion(quat, reflectYZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectYZ);
+	cout << "Reflection over Y and Z axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// XYZ축 반전
+	XMVECTOR qReflectXYZ = ReflectQuaternion(quat, reflectXYZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectXYZ);
+	cout << "Reflection over X, Y, and Z axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
 }
 
 void CVirtual_Camera::Set_Player(CGameObject* pPlayer, CGameObject* pEnemy)
