@@ -3184,6 +3184,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			Set_AnimationStopWithoutMe(1.5f);
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 0, this);
+			//main_Camera->StartCameraShake(0.8f, 0.3f);
 		}
 
 		//,¾Èº¸ÀÌ°Ô,¼Óµµºü¸£°Ô, »þ»þ¼¡
@@ -3191,7 +3195,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = true;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			    
 			//,0ÀÏ‹š ¼Óµµ´Â 61
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 181.f;
 

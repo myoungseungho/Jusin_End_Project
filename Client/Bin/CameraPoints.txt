@@ -862,7 +862,39 @@ SkillName: Camera_Hit_3_Ultimate
 
 [Animation]
 AnimationName: Hit_3_Ultimate_Anim1
-PointCount: 0
+PointCount: 4
+
+[CameraPoint]
+Position: 0.79 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.44035 1.47028 -0.694434
+Rotation: 0 -0.518087 0 0.855292
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.44035 1.47028 -0.694434
+Rotation: 0 -0.518087 0 0.855292
+Duration: 0.4
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.05629 1.47709 -0.493739
+Rotation: 0 -0.518087 0 0.855292
+Duration: 0.3
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [VirtualCamera]
 ModelID: MODELID_MINE
