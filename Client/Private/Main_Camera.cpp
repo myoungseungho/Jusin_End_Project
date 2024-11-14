@@ -203,13 +203,11 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 #pragma endregion
 
+	//CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
+	//Set_Player(player1p);
 
-
-	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
-	Set_Player(player1p);
-
-	CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
-	Set_Player(player2p);
+	//CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
+	//Set_Player(player2p);
 
 	return S_OK;
 }

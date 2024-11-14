@@ -81,13 +81,6 @@ void CVirtual_Camera::Camera_Update(_float fTimeDelta)
 
 	if (m_bIsShaking)
 		ApplyCameraShake(fTimeDelta);
-
-	static _bool isTest = false;
-	if (m_pGameInstance->Key_Down(DIK_SPACE))
-		isTest = !isTest;
-
-	if (isTest)
-		Print_Flip_Rotation();
 }
 
 void CVirtual_Camera::Update(_float fTimeDelta)
@@ -413,11 +406,11 @@ void CVirtual_Camera::Print_Flip_Rotation()
 
 void CVirtual_Camera::Set_Player(CGameObject* pPlayer, CGameObject* pEnemy)
 {
-	m_iTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
+	_uint uTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
 
-	if (m_iTeam == 1)
+	if (uTeam == 1)
 		m_p1pPlayer = pPlayer;
-	else if (m_iTeam == 2)
+	else if (uTeam == 2)
 		m_p2pPlayer = pPlayer;
 
 	for (auto& iter : m_mapPoints)
@@ -443,7 +436,7 @@ void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameOb
 
 	m_bIsIgnoreFlip = ignoreFlip;
 	m_AnimationIndex = animationIndex;
-
+	m_iTeam = static_cast<CCharacter*>(gameObject)->Get_iPlayerTeam();
 	// Stopped 상태에서 Play를 시작하면 초기화
 	if (m_currentPlayMode == Stopped) {
 		m_currentPointIndex = 0;
