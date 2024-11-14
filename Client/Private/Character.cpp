@@ -311,7 +311,29 @@ void CCharacter::Update(_float fTimeDelta)
 
 void CCharacter::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	if (m_bDestructiveFinish == true)
+	{
+		m_fAccDyingTime += fTimeDelta;
+		if (m_fAccDyingTime > 7)
+		{
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&m_vDyingPosition));
+
+			m_bDestructiveFinish = false;
+			m_fAccDyingTime = 0.f;
+
+
+
+			Set_fImpulse({ 0.f,0.f });
+		}
+	}
+
+	if (m_bPlaying || m_bTag_In)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+#ifdef _DEBUG
+	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
+#endif
+
 }
 
 HRESULT CCharacter::Render(_float fTimeDelta)
@@ -1340,10 +1362,10 @@ void CCharacter::Chase2(_float fTimeDelta)
 	{
 
 
-		if(m_iLookDirection == 1)
+		//if(m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
-		else if (m_iLookDirection == -1)
-			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
+		//else if (m_iLookDirection == -1)
+		//	m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 
 		_float xdegree = XMVectorGetX(m_vChaseDir);
 
@@ -1352,7 +1374,9 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
 
-		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+		//m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f});
+
 		//µð¹ö±ë
 		
 
@@ -3988,6 +4012,7 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 
 				m_pEnemy->Set_bDynamicMove(true);
 				
+				XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				Set_fImpulse(fMapToImpulse);
 
 				m_bDestructiveFinish = true;

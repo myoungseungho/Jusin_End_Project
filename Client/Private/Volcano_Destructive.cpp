@@ -122,6 +122,11 @@ void CVolcano_Destructive::Start_Volcano_DestructiveFinish(_bool isRight)
 
 }
 
+void CVolcano_Destructive::IsDone_Active_Init()
+{
+	m_isStart = false;
+}
+
 void CVolcano_Destructive::Update(_float fTimeDelta)
 {
 	if (m_isStart == false)

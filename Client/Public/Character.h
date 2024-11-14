@@ -707,7 +707,7 @@ protected:
 	class CEffect_Manager*	m_pEffect_Manager = { nullptr };
 
 	string m_strName = "";
-
+	_float4		m_vDyingPosition = { 0.f,0.f,0.f,1.f };
 private:
 	HRESULT Ready_Components();
 public:

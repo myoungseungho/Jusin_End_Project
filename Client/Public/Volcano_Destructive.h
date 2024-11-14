@@ -65,6 +65,7 @@ private:
 	_bool m_isRight = { true };
 public:
 	void Start_Volcano_DestructiveFinish(_bool isRight = true);
+	void IsDone_Active_Init();
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
