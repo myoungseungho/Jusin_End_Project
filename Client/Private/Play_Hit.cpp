@@ -3314,10 +3314,23 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Set_CurrentAnimationPositionJump(105.f);
 			//m_pModelCom->Get_pCurrentAnimation()->m_fDuration = 0.20f;
-			m_pModelCom->Set_MaxAnimationUpdate_Time(0.05f);
-			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.00f;
+
+
+			//너무 느린가
+			//m_pModelCom->Set_MaxAnimationUpdate_Time(0.05f);
+			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.00f;
+
+			//너무 빠른가
+			//m_pModelCom->Set_MaxAnimationUpdate_Time(0.01f);
+			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 100.00f;
+
+
+			m_pModelCom->Set_MaxAnimationUpdate_Time(0.02f);
+			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 50.00f;
 
 			m_bInvisible = true;
+
+
 		}
 
 		//Position 148
@@ -3356,7 +3369,61 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
+
+
+			Add_Move({ -3.f * m_iLookDirection,0.f });
+			{
+				CAttackObject_Energy::ATTACK_RANGED_DESC Desc{};
+				if (m_iPlayerTeam == 1)
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack;
+				else
+					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Energy_Attack;
+				Desc.ColliderDesc.pMineGameObject = this;
+				Desc.ColliderDesc.vExtents = { 0.f,0.f,1.f };
+				Desc.ColliderDesc.vCenter = { -10.f * m_iLookDirection,1.2f,0.f };
+				//Desc.ColliderDesc.pTransform = m_pTransformCom;
+				//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0.1f };
+				Desc.fhitCharacter_Impus = {  };
+
+				Desc.fhitCharacter_StunTime = 10.f;
+				//Desc.iDamage = 120 * Get_DamageScale();
+
+				//if(m_bFinalSkillss3)
+
+				Desc.iDamage = 20 * Get_DamageScale(true);
+				Desc.fLifeTime = 7.f;
+				Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
+				Desc.iTeam = m_iPlayerTeam;
+				//Desc.bGroundSmash = true;
+				Desc.fAnimationLockTime = 0.0f;
+				Desc.pOwner = this;
+				Desc.eAttackGrade = { GRADE_ULTIMATE };
+				Desc.bCameraZoom = false;
+
+				Desc.fStartOffset = { -2.f,0.f };
+				Desc.fMoveSpeedNoneDirection = { 20.f,0.f };
+
+				Desc.iAttackCount = 50;
+				Desc.iPlayerDirection = m_iLookDirection;		//
+				Desc.iGainHitCount = 2;
+				Desc.iGainAttackStep = 0;
+				//Desc.fAttackDelayTime = 0.04f;  //꽤 자주 풀히트 못함
+				//Desc.fAttackDelayTime = 0.03f; //종종 풀히트 못함
+				Desc.fAttackDelayTime = 0.03f; //QTE 성공했을때만 못함?
+
+				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+
+				Desc.fColliderfCY = 1.2f;
+
+				//Desc.bGrabbedEnd = true;
+				Desc.bCameraZoom = false;
+
+				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
+
 			}
+			Add_Move({ 3.f * m_iLookDirection,0.f });
+
+		}
 			//Position 148.2
 		else if (iAttackEvent == 202)
 		{
