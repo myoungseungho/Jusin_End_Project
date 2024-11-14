@@ -124,7 +124,6 @@ void CChannel::Compute_TransformationMatrix_NoLinear(_float fCurrentPosition, co
 		vScale = vSourScale;
 		vRotation = vSourRotation;
 		vPosition = vSourPosition;
->>>>>>> f3878c26f172a6e8f732262a749b5b736d825c2c
 	}
 
 	TransformationMatrix = XMMatrixAffineTransformation(vScale, XMVectorSet(0.f, 0.f, 0.f, 1.f), vRotation, vPosition);
