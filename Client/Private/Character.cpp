@@ -4015,6 +4015,7 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 				m_pEnemy->Set_bDynamicMove(true);
 				
 				XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
 				Set_fImpulse(fMapToImpulse);
 
 				m_bDestructiveFinish = true;
