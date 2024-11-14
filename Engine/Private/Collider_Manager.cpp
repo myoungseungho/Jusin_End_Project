@@ -224,7 +224,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 
 		// 충돌 그룹에 따른 처리
-	
+
 
 		if (is_1P_Body_Vs_2P_Body)
 		{
@@ -281,7 +281,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 
 
 
-		
+
 
 		if (is_1P_Melee_Attack_Vs_2P_Body)
 		{
@@ -378,7 +378,7 @@ void CCollider_Manager::ProcessCollisionResults(_float fTimeDelta)
 	{
 		Process_1P_Energy_Skill_2P_Ranged_Skill_Group(Energy_1P_Skill_VS_Ranged_2P_Skill_Collisions, fTimeDelta, currentCollisions);
 	}
-	
+
 	if (!Reflect_1P_VS_Energy_2P_Skill_Collisions.empty())
 	{
 		Process_1P_Reflect_2P_Energy_Skill_Group(Reflect_1P_VS_Energy_2P_Skill_Collisions, fTimeDelta, currentCollisions);
@@ -409,11 +409,20 @@ void CCollider_Manager::Process_1P_Body_2P_Body(pair<CCollider*, CCollider*> pai
 	// 현재 충돌 상태 업데이트
 	currentCollisions[make_pair(pairCollider.first, pairCollider.second)] = true;
 
-	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
+	// 이전 프레임에서 1P Body와 2P Body 간의 충돌 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		// 충돌 쌍이 1P Body와 2P Body인지 확인
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_BODY)
+		{
+
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
@@ -501,9 +510,16 @@ void CCollider_Manager::Process_1P_Ranged_Skill_2P_Body(pair<CCollider*, CCollid
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_BODY)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 
@@ -552,9 +568,16 @@ void CCollider_Manager::Process_1P_Ranged_Skill_2P_Ranged_Skill(pair<CCollider*,
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 
@@ -579,9 +602,16 @@ void CCollider_Manager::Process_1P_Melee_Skill_2P_Body(pair<CCollider*, CCollide
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_BODY)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 
@@ -605,9 +635,16 @@ void CCollider_Manager::Process_1P_Body_2P_Ranged_Skill(pair<CCollider*, CCollid
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 
@@ -656,9 +693,16 @@ void CCollider_Manager::Process_1P_Body_2P_Melee_Skill(pair<CCollider*, CCollide
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_BODY && colliderB->m_ColliderGroup == CG_2P_Melee_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 
@@ -682,9 +726,16 @@ void CCollider_Manager::Process_1P_Melee_2P_Melee_Skill(pair<CCollider*, CCollid
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_Melee_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 
@@ -709,9 +760,16 @@ void CCollider_Manager::Process_1P_Range_2P_Melee_Skill(pair<CCollider*, CCollid
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_Melee_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
@@ -733,9 +791,16 @@ void CCollider_Manager::Process_1P_Melee_2P_Range_Skill(pair<CCollider*, CCollid
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
@@ -779,9 +844,16 @@ void CCollider_Manager::Process_1P_Reflect_2P_Range_Skill(pair<CCollider*, CColl
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_REFLECT && colliderB->m_ColliderGroup == CG_2P_Ranged_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
@@ -803,9 +875,16 @@ void CCollider_Manager::Process_1P_Reflect_2P_Melee_Skill(pair<CCollider*, CColl
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_REFLECT && colliderB->m_ColliderGroup == CG_2P_Melee_Attack)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
@@ -850,9 +929,16 @@ void CCollider_Manager::Process_1P_Range_2P_Reflect(pair<CCollider*, CCollider*>
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Ranged_Attack && colliderB->m_ColliderGroup == CG_2P_REFLECT)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
@@ -874,9 +960,16 @@ void CCollider_Manager::Process_1P_Melee_2P_Reflect(pair<CCollider*, CCollider*>
 
 	// 이전 프레임에서 충돌한 것들 중 이번 프레임에서 충돌하지 않은 경우 처리
 	for (auto& pair : m_CollisionHistory) {
-		if (currentCollisions.find(pair.first) == currentCollisions.end()) {
-			pair.first.first->OnCollisionExit(pair.first.second);
-			pair.first.second->OnCollisionExit(pair.first.first);
+		CCollider* colliderA = pair.first.first;
+		CCollider* colliderB = pair.first.second;
+
+		if (colliderA->m_ColliderGroup == CG_1P_Melee_Attack && colliderB->m_ColliderGroup == CG_2P_REFLECT)
+		{
+			if (currentCollisions.find(pair.first) == currentCollisions.end()) {
+				colliderA->OnCollisionExit(colliderB);
+				colliderB->OnCollisionExit(colliderA);
+				break;
+			}
 		}
 	}
 }
