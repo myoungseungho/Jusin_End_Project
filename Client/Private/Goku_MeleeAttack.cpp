@@ -698,6 +698,11 @@ void CGoku_MeleeAttack::Attack_214Final()
 	{
 		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
 		{
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+
+			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
 			m_pPlayer->Set_AnimationStopWithoutMe(2.f);
 

@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 46
+Key: Prototype_Component_Texture_Effect_cmn_water01
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 556 148
+NodeID: 1 Position: 322 62
+NodeID: 3001 Position: 69 92
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 5 4 Speed: 21.2
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7

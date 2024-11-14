@@ -1722,6 +1722,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//점프 먼지WWDDDWWWWWWWW
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+
 		//점프 먼지
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
