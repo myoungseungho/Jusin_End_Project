@@ -1235,7 +1235,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 			//Character_Make_Effect(TEXT("BurstR-02"));
 
 			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
-			XMStoreFloat4x4(&m_IdentityMatrix , XMMatrixIdentity());
+			//XMStoreFloat4x4(&m_IdentityMatrix , XMMatrixIdentity());
 			CEffect_Layer::COPY_DESC tDesc{};
 			
 			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
