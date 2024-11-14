@@ -2565,7 +2565,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//상대 플레이어 안보이게?
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 4, this);
+			//원래 방향
+			if (Get_iDirection() == 1)
+				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 4, this);
+			//좌우 반전
+			else
+				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 5, this, nullptr, true);
 
 			//안보이게 하는 대신에  고정 위치를 저 멀리로 보내버리고, 공격기술 범위를 엄청 크게 한 뒤에 잡기 풀때 다시 데려오는 방법도 있음
 			//이때 맵밖으로 밀려나가는건 어떻게 처리?

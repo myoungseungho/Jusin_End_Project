@@ -190,6 +190,21 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	// **3. 모델의 월드 행렬 로드 (스케일링 포함)**
 	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 
+	// 좌우 반전을 카메라 단위로 따로 만들어준 녀석은 스케일링 제거해야 함
+	if (direction == -1 && m_bIsIgnoreFlip) {
+		// **스케일링 제거를 위한 행렬 분해**
+		_vector modelScale;
+		_vector modelRotationQuat;
+		_vector modelTranslation;
+		XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, modelWorldMatrix);
+
+		// **스케일링이 제거된 모델의 월드 행렬 재구성**
+		_matrix modelRotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
+		_matrix modelTranslationMatrix = XMMatrixTranslationFromVector(modelTranslation);
+		modelWorldMatrix = modelRotationMatrix * modelTranslationMatrix;
+	}
+
+
 	// **4. 로컬 포지션을 월드 포지션으로 변환 (스케일링 포함)**
 	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrix);
 
@@ -207,12 +222,22 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	}
 
 	//**direction에 따른 회전 조정**
-	if (direction == -1)
+	//또한 Flip을 무시하는 속성이 false여야 반전시키기
+	if (direction == -1 && m_bIsIgnoreFlip == false)
 	{
 		// 쿼터니언의 Y 성분 반전
 		interpolatedRotationLocal = XMVectorSet(
 			XMVectorGetX(interpolatedRotationLocal),
 			-XMVectorGetY(interpolatedRotationLocal),
+			XMVectorGetZ(interpolatedRotationLocal),
+			XMVectorGetW(interpolatedRotationLocal));
+	}
+	else if (direction == -1 && m_bIsIgnoreFlip)
+	{
+		// 쿼터니언의 Y 성분 반전
+		interpolatedRotationLocal = XMVectorSet(
+			XMVectorGetX(interpolatedRotationLocal),
+			XMVectorGetY(interpolatedRotationLocal),
 			XMVectorGetZ(interpolatedRotationLocal),
 			XMVectorGetW(interpolatedRotationLocal));
 	}
@@ -407,7 +432,7 @@ void CVirtual_Camera::Set_Player(CGameObject* pPlayer, CGameObject* pEnemy)
 	m_pEnemy = pEnemy;
 }
 
-void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject)
+void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject, _bool ignoreFlip)
 {
 	if (m_mapPoints[animationIndex].size() == 0)
 		return;
@@ -416,6 +441,7 @@ void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameOb
 		for (auto& iter2 : iter.second)
 			iter2.pWorldFloat4x4 = static_cast<CTransform*>(gameObject->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
 
+	m_bIsIgnoreFlip = ignoreFlip;
 	m_AnimationIndex = animationIndex;
 
 	// Stopped 상태에서 Play를 시작하면 초기화
@@ -445,7 +471,7 @@ void CVirtual_Camera::Stop()
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;
-
+	m_bIsIgnoreFlip = false;
 	m_pEnemy = nullptr;
 }
 

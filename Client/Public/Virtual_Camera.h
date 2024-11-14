@@ -60,7 +60,7 @@ public:
 	const _char* GetTabName() const { return m_Name; };
 	void Set_Player(CGameObject* pPlayer, CGameObject* pEnemy = nullptr);
 
-	void Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject = nullptr);
+	void Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject = nullptr, _bool ignoreFlip = false);
 	void Pause();
 	void Stop();
 	void Button_Stop();
@@ -116,8 +116,8 @@ public:
 
 	//IMGUI
 	_bool m_bIsImguiPlay = { false };
-
-	_bool m_bIsScaleIgnore = { false };
+	
+	_bool m_bIsIgnoreFlip = { false };
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

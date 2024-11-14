@@ -59,7 +59,7 @@ public:
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
 	void IMGUI_Play(_int animationIndex, CGameObject* gameObject = nullptr);
-	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject = nullptr, CGameObject* EnemyObject = nullptr);
+	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject = nullptr, CGameObject* EnemyObject = nullptr, _bool ignoreFlip = false);
 	void Stop();
 	void Pause();
 	void Button_Stop();

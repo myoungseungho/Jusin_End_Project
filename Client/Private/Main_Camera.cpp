@@ -232,14 +232,14 @@ void CMain_Camera::IMGUI_Play(_int animationIndex, CGameObject* gameObject)
 	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, true, gameObject);
 }
 
-void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject, CGameObject* EnemyObject)
+void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject, CGameObject* EnemyObject, _bool ignoreFlip)
 {
 	//현재 재생중인 Stop
 	Stop();
 	Set_Player(gameObject, EnemyObject);
 	//가상카메라를 CameraID에 따라 셋팅
 	Set_Virtual_Camera(cameraID);
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, gameObject);
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, gameObject, ignoreFlip);
 }
 
 void CMain_Camera::Stop()
