@@ -531,7 +531,15 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: 21_Ultimate_Anim3_Success
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: -2.65242 1.85829 -3.88262
+Rotation: 0 0.340105 0 0.940354
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: 21_Ultimate_Anim3_Fail

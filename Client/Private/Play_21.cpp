@@ -2500,6 +2500,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Character_Make_Effect(TEXT("Moving_Line_Down"));
 
+			//적 카메라로 순간적으로 올라가야함
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 2, this);
+			mainCamera->StartCameraShake(1.f, 0.4f);
 
 		}
 		else if (iAttackEvent == 10) //Position 150   올려차기 
