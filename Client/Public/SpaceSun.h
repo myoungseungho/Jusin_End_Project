@@ -2,7 +2,7 @@
 
 #include "Client_Defines.h"
 #include "GameObject.h"
-
+#include "Map_Manager.h"
 BEGIN(Engine)
 class CShader;
 class CTexture;

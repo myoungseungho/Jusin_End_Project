@@ -118,6 +118,14 @@ public:
 	_bool m_bIsImguiPlay = { false };
 	
 	_bool m_bIsIgnoreFlip = { false };
+
+	_bool m_bIsScaleIgnore = { false };
+
+public:
+	/* Map_Camera Dying PlayerTeam Check */
+	void Set_DyingTeam(_uint iTeamIndex,_matrix CamWorldMatrix);
+	_uint m_isDyingTeam = { 0 };
+
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

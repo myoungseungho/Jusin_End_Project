@@ -193,6 +193,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space_Particle.h" />
+    <ClInclude Include="..\Public\Map_Manager.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h" />
     <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack.h" />
@@ -363,6 +364,7 @@
     <ClInclude Include="..\Public\Volcano_Cliff_Back.h" />
     <ClInclude Include="..\Public\Volcano_Cliff_Far.h" />
     <ClInclude Include="..\Public\Volcano_Defines.h" />
+    <ClInclude Include="..\Public\Volcano_Destructive.h" />
     <ClInclude Include="..\Public\Volcano_Ground.h" />
     <ClInclude Include="..\Public\Volcano_GroundRock.h" />
     <ClInclude Include="..\Public\Volcano_Island01.h" />
@@ -403,6 +405,7 @@
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space_Particle.cpp" />
+    <ClCompile Include="..\Private\Map_Manager.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp" />
@@ -583,6 +586,7 @@
     <ClCompile Include="..\Private\Volcano_Cliff04.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff_Back.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff_Far.cpp" />
+    <ClCompile Include="..\Private\Volcano_Destructive.cpp" />
     <ClCompile Include="..\Private\Volcano_Ground.cpp" />
     <ClCompile Include="..\Private\Volcano_GroundRock.cpp" />
     <ClCompile Include="..\Private\Volcano_Island01.cpp" />

@@ -66,7 +66,9 @@ HRESULT CBoneEffectObject::Initialize(void* pArg)
 
 	_float4x4 tFinalMatrix;
 	XMStoreFloat4x4(&tFinalMatrix, resultMatrix);
-	CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, &tFinalMatrix);
+	CEffect_Layer::COPY_DESC tDesc{};
+	tDesc.pPlayertMatrix = &tFinalMatrix;
+	CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, &tDesc);
 
 
 

@@ -1,0 +1,22 @@
+Version: 2
+KeyCount: 2
+KeySize: 45
+Key: Prototype_Component_Texture_Effect_cmn_aura00
+ID: 1
+vTexCoord: 1 1
+KeySize: 55
+Key: Prototype_Component_Texture_Effect_cmn_gradation_orange
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 521 123
+NodeID: 1 Position: 225 56
+NodeID: 3001 Position: 14 90
+NodeID: 2 Position: 7 313
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 2 Speed: 7.7
+LinkCount: 3
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 8 LinkDestNodeID: 5

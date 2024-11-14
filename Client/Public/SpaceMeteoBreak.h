@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Effect_Layer.h"
 #include "Effect.h"
+#include "Map_Manager.h"
 BEGIN(Engine)
 class CShader;
 class CTexture;
@@ -63,6 +64,7 @@ private:
 	_bool m_isRight = { true };
 public:
 	void Start_Space_DestructiveFinish(_bool isRight = true);
+	void IsDone_Active_Init();
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

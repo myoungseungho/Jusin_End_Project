@@ -6,17 +6,10 @@ int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/MeteoBrake_1.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_2.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_3.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_4.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_5.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_6.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_7.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_8.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_9.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_10.fbx", TYPE_NONANIM},
-		{"Models/MeteoBrake_11.fbx", TYPE_NONANIM},
+		{"Models/FRN_TestMesh.fbx", TYPE_ANIM},
+		{"Models/FRN_AllMesh.fbx", TYPE_ANIM},
+		{"Models/KRN_AllMesh.fbx", TYPE_ANIM},
+		{"Models/Goku_AllMesh_Event.fbx", TYPE_ANIM},
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그

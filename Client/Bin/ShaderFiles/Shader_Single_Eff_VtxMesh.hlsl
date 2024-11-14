@@ -132,23 +132,23 @@ PS_OUT PS_MAIN_ALPHABLEND_EFFECT(PS_IN In)
     float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f };
     float fAlpha = vMtrlAlpha.a;
     
-    if (g_bColorChange)
-    {
-        vMtrlDiffuse.rgb *= vAddColor;
-        vMtrlDiffuse.a = saturate(fAlpha * g_vColor.a);
-    }
+        if (g_bColorChange)
+        {
+            vMtrlDiffuse.rgb *= vAddColor;
+            vMtrlDiffuse.a = saturate(fAlpha * g_vColor.a);
+        }
           
-    if (!g_bColorChange)
-    {
-        vMtrlDiffuse.a = fAlpha;
-    }
+        if (!g_bColorChange)
+        {
+            vMtrlDiffuse.a = fAlpha;
+        }
         
-    Out.vDiffuse = vMtrlDiffuse;
-    Out.vAlpha = vector(0.f, 0.f, 0.f, 1.f);
-    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+        Out.vDiffuse = vMtrlDiffuse;
+        Out.vAlpha = vector(0.f, 0.f, 0.f, 1.f);
+        Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
-    return Out;
-}
+        return Out;
+    }
 
 PS_OUT PS_MAIN_MODELANIMATION(PS_IN In)
 {

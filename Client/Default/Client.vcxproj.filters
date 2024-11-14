@@ -493,6 +493,12 @@
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space_Particle.cpp">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space_Particle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Volcano_Destructive.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Destructive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Map_Manager.cpp">
+      <Filter>02.GameObjects\Map\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1052,6 +1058,12 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space_Particle">
       <UniqueIdentifier>{b62ebed8-7712-44b1-b4df-34d2e434a818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_Destructive">
+      <UniqueIdentifier>{159c2191-b272-4d65-a21b-8b701028abe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Manager">
+      <UniqueIdentifier>{e1787cdf-4e20-409a-b6c6-3fab229bdacc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1694,9 +1706,6 @@
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Play_Hit.h">
-      <Filter>02.GameObjects\Character\Play_Hit</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Hit_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Hit\Hit_MeleeAttack</Filter>
     </ClInclude>
@@ -1708,6 +1717,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space_Particle.h">
       <Filter>02.GameObjects\QTE\QTE_Continuous_Attack\QTE_Continuous_Attack_Space_Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Volcano_Destructive.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_Destructive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Map_Manager.h">
+      <Filter>02.GameObjects\Map\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Play_Hit.h">
+      <Filter>02.GameObjects\Character\Play_Hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

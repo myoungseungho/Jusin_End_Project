@@ -205,9 +205,16 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	Set_Effect_Scaled(ResultKeyFrame.vScale);
 	Set_Effect_Position(ResultKeyFrame.vPosition);
 	Set_Effect_Rotation(ResultKeyFrame.vRotation);
+	
+
+	//_float fOriginZ = XMVectorGetZ(m_pTransformCom->Get_WorldMatrix().r[3]);
+	//_float fOriginY = XMVectorGetY(m_pTransformCom->Get_WorldMatrix().r[3]);
+	
 
 	XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * m_LayerMatrix);
-
+	//m_WorldMatrix._43 = fOriginZ;
+	//m_WorldMatrix._42 = fOriginY;
+	
 	return S_OK;
 }
 
@@ -218,7 +225,7 @@ void CEffect::Set_Effect_Color(_float4 vColor)
 
 void CEffect::Get_Layer_Matrix(_matrix LayerMatrix)
 {
-	m_LayerMatrix= LayerMatrix;
+	m_LayerMatrix = LayerMatrix;
 }
 
 void CEffect::Set_Layer_Matrix()

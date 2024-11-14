@@ -474,6 +474,14 @@ _bool CMain_Camera::Get_IsPlay()
 	return m_vecVirtualCamera[m_currentVirtualMode]->Get_IsPlay();
 }
 
+void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
+{
+	
+	m_vecVirtualCamera[VIRTUAL_CAMERA_MAP]->Set_DyingTeam(iDyingTeam,
+		static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrix());
+	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
+}
+
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)
 {

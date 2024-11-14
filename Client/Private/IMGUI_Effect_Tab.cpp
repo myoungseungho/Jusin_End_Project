@@ -78,10 +78,10 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
 
     ImGui::SameLine();
 
-    if (ImGui::Button("All Layer Save"))
-    {
-        Save_All_Effects_File();
-    }
+    //if (ImGui::Button("All Layer Save"))
+    //{
+    //    Save_All_Effects_File();
+    //}
     ImGui::Separator();
     ImGui::Separator();
 
@@ -100,14 +100,14 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         Render_For_Layer_KeyFrame(fTimeDelta);
     }
 
+    if (openLayerTransformWindow)
+        Render_For_Layer_Transform();
     if(openKeyFrameWindow)
       Render_For_Effect_KeyFrame();
 
     if (openColorWindow)
        Render_For_Effect_Color();
 
-    if (openLayerTransformWindow)
-        Render_For_Layer_Transform();
 }
 
 void CIMGUI_Effect_Tab::Push_Initialize()
@@ -796,7 +796,10 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             ImGui::Dummy(ImVec2(100.0f, 0.0f));
             if (ImGui::Button("Copy"))
             {
-                m_pEffect_Manager->Copy_Layer(selectedLayerName);
+                CEffect_Layer::COPY_DESC tDesc{};
+                XMStoreFloat4x4(&m_IdentityMatrix, XMMatrixIdentity());
+                tDesc.pPlayertMatrix = &m_IdentityMatrix;
+                m_pEffect_Manager->Copy_Layer(selectedLayerName,&tDesc);
                 // 카피버튼 테스트용
             }
 
@@ -830,9 +833,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             ImVec2 lineEnd(lineStart.x, lineStart.y + 300);
 
             drawList->AddLine(lineStart, lineEnd, IM_COL32(255, 0, 0, 255), 2.0f);
-
+            lineStart.x -= 75.f;
             ImGui::SetCursorScreenPos(lineStart);
-            ImGui::InvisibleButton("##DragRedLine", ImVec2(10.0f, 30.0f));
+            ImGui::InvisibleButton("##DragRedLine", ImVec2(300.0f, 30.0f));
 
             if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
             {
@@ -993,37 +996,25 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
     if (!initialized)
     {
         bool keyFrameExists = m_pEffect_Manager->Find_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
-
         if (keyFrameExists)
         {
             newKeyFrame = m_pEffect_Manager->Get_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
-
-            CurPosition = newKeyFrame.vPosition;
-            CurScale = newKeyFrame.vScale;
-            CurRotation = newKeyFrame.vRotation;
-            IsNotPlaying = newKeyFrame.bIsNotPlaying;
-
-            m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-            m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-            m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-
-            m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
         }
         else
         {
             newKeyFrame = m_pEffect_Manager->Get_Near_Front_KeyFrame(selectedLayerName, UTF8ToWString(selectedEffectName), selectedFrame);
-
-            CurPosition = newKeyFrame.vPosition;
-            CurScale = newKeyFrame.vScale;
-            CurRotation = newKeyFrame.vRotation;
-            IsNotPlaying = newKeyFrame.bIsNotPlaying;
-
-            m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-            m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-            m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-            m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
         }
 
+        CurPosition = newKeyFrame.vPosition;
+        CurScale = newKeyFrame.vScale;
+        CurRotation = newKeyFrame.vRotation;
+        IsNotPlaying = newKeyFrame.bIsNotPlaying;
+
+        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
+        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
+        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
+
+        //m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
 
         initialized = true;
     }
@@ -1051,276 +1042,199 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
     ImGui::Separator();
 
+    _bool isPosClick = { false };
     // Position 섹션
     ImGui::Text("Position");
 
-    ImGui::Text("X"); ImGui::SameLine();
-    if (ImGui::SliderFloat("##Position X Slider", &CurPosition.x, -100.0f, 100.0f))
-    {
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
+    ImGui::Text("X"); 
+    ImGui::SameLine(); if (ImGui::SliderFloat("##Position X Slider", &CurPosition.x, -100.0f, 100.0f)) { isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::Button("-##Position X Dec")) { CurPosition.x -= 0.1f; isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::Button("+##Position X Inc")) { CurPosition.x += 0.1f; isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::InputFloat("##Position X Input", &CurPosition.x, 0.1f)) { isPosClick = true; }
 
-    ImGui::SameLine();
-    if (ImGui::Button("-##Position X Dec")) 
-    { 
-        CurPosition.x -= 0.1f; 
+    ImGui::Text("Y"); 
+    ImGui::SameLine(); if (ImGui::SliderFloat("##Position Y Slider", &CurPosition.y, -100.0f, 100.0f)) { isPosClick = true; } 
+    ImGui::SameLine(); if (ImGui::Button("-##Position Y Dec")) { CurPosition.y -= 0.1f; isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::Button("+##Position Y Inc")) { CurPosition.y += 0.1f; isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::InputFloat("##Position Y", &CurPosition.y, 0.1f))   { isPosClick = true; }
 
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("+##Position X Inc")) 
-    { 
-         CurPosition.x += 0.1f; 
-
-         m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-         m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if (ImGui::InputFloat("##Position X Input", &CurPosition.x, 0.1f)) 
-    {
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-
-    ImGui::Text("Y"); ImGui::SameLine();
-    if (ImGui::SliderFloat("##Position Y Slider", &CurPosition.y, -100.0f, 100.0f))
-    {
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
- 
-    ImGui::SameLine();
-    if (ImGui::Button("-##Position Y Dec")) 
-    { 
-        CurPosition.y -= 0.1f; 
-
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("+##Position Y Inc")) 
-    { 
-        CurPosition.y += 0.1f; 
-         m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); 
-         m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if (ImGui::InputFloat("##Position Y", &CurPosition.y, 0.1f))
-    {
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-
-    ImGui::Text("Z"); ImGui::SameLine();
-    if (ImGui::SliderFloat("##Position Z Slider", &CurPosition.z, -100.0f, 100.0f))
-    {
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("-##Position Z Dec")) 
-    { 
-        CurPosition.z -= 0.1f;
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("+##Position Z Inc")) 
-    { 
-        CurPosition.z += 0.1f; 
-          m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition); 
-          m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
-    ImGui::SameLine();
-    if(ImGui::InputFloat("##Position Z", &CurPosition.z, 0.1f))
-    {
-        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
-    }
+    ImGui::Text("Z"); 
+    ImGui::SameLine(); if (ImGui::SliderFloat("##Position Z Slider", &CurPosition.z, -100.0f, 100.0f)) { isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::Button("-##Position Z Dec")) { CurPosition.z -= 0.1f; isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::Button("+##Position Z Inc")) { CurPosition.z += 0.1f; isPosClick = true; }
+    ImGui::SameLine(); if (ImGui::InputFloat("##Position Z", &CurPosition.z, 0.1f)) { isPosClick = true; }
 
     ImGui::Separator();
 
+    _bool isScaleClick = { false };
     // Scale 섹션
     ImGui::Text("Scale");
 
     ImGui::Text("X"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Scale X Slider", &CurScale.x, 0.0001f, 100.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
 
     ImGui::SameLine();
     if (ImGui::Button("-##Scale X Dec")) 
     { 
         CurScale.x = max(0.0001f, CurScale.x - 0.0001f); 
-         m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); 
-           m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
     ImGui::SameLine();
     if (ImGui::Button("+##Scale X Inc")) 
     { 
         CurScale.x += 0.0001f; 
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); 
-         m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
     ImGui::SameLine();
     if(ImGui::InputFloat("##Scale X", &CurScale.x, 0.0001f))
     {
         CurScale.x = max(0.0001f, CurScale.x);
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
 
     ImGui::Text("Y"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Scale Y Slider", &CurScale.y, 0.0001f, 100.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
 
     ImGui::SameLine();
     if (ImGui::Button("-##Scale Y Dec")) 
     { 
         CurScale.y = max(0.0001f, CurScale.y - 0.0001f); 
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
     ImGui::SameLine();
     if (ImGui::Button("+##Scale Y Inc")) 
     { 
         CurScale.y += 0.0001f; 
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
     ImGui::SameLine();
     if(ImGui::InputFloat("##Scale Y", &CurScale.y, 0.0001f))
     {
         CurScale.y = max(0.0001f, CurScale.y);
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
-
-
     ImGui::Text("Z"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Scale Z Slider", &CurScale.z, 0.0001f, 100.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
 
     ImGui::SameLine();
     if (ImGui::Button("-##Scale Z Dec")) 
     { 
         CurScale.z = max(0.0001f, CurScale.z - 0.0001f); 
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
     ImGui::SameLine();
     if (ImGui::Button("+##Scale Z Inc")) 
     { 
         CurScale.z += 0.0001f; 
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
     }
     ImGui::SameLine();
     if (ImGui::InputFloat("##Scale Z", &CurScale.z, 0.0001f))
     {
         CurScale.z = max(0.0001f, CurScale.z);
-        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isScaleClick = true;
+       
     }
-
     ImGui::Separator();
 
+    _bool isRotationClick = { false };
     // Rotation 섹션
     ImGui::Text("Rotation");
 
     ImGui::Text("X"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Rotation X Slider", &CurRotation.x, 0.0f, 360.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
 
     ImGui::SameLine();
     if (ImGui::Button("-##Rotation X Dec")) 
     { 
         CurRotation.x = fmod(CurRotation.x - 1.0f + 360.0f, 360.0f); 
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
     ImGui::SameLine();
     if (ImGui::Button("+##Rotation X Inc")) 
     {
         CurRotation.x = fmod(CurRotation.x + 1.0f, 360.0f); 
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
     ImGui::SameLine();
     if(ImGui::InputFloat("##Rotation X", &CurRotation.x, 1.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
 
     ImGui::Text("Y"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Rotation Y Slider", &CurRotation.y, 0.0f, 360.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
 
     ImGui::SameLine();
     if (ImGui::Button("-##Rotation Y Dec")) 
     {
         CurRotation.y = fmod(CurRotation.y - 1.0f + 360.0f, 360.0f); 
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
     ImGui::SameLine();
     if (ImGui::Button("+##Rotation Y Inc")) 
     { 
         CurRotation.y = fmod(CurRotation.y + 1.0f, 360.0f); 
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
     ImGui::SameLine();
     if(ImGui::InputFloat("##Rotation Y", &CurRotation.y, 1.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
 
     ImGui::Text("Z"); ImGui::SameLine();
     if (ImGui::SliderFloat("##Rotation Z Slider", &CurRotation.z, 0.0f, 360.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
 
     ImGui::SameLine();
     if (ImGui::Button("-##Rotation Z Dec")) 
     { 
         CurRotation.z = fmod(CurRotation.z - 1.0f + 360.0f, 360.0f); 
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
     ImGui::SameLine();
     if (ImGui::Button("+##Rotation Z Inc")) 
     {
         CurRotation.z = fmod(CurRotation.z + 1.0f, 360.0f); 
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation); 
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
     ImGui::SameLine();
     if (ImGui::InputFloat("##Rotation Z", &CurRotation.z, 1.0f))
     {
-        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
-        m_pEffect_Manager->Find_In_Layer_Effect(selectedLayerName, UTF8ToWString(selectedEffectName))->Set_Layer_Matrix();
+        isRotationClick = true;
     }
+
+
+    if (isPosClick == true)
+        m_pEffect_Manager->Set_Layer_Effect_Position(selectedLayerName, UTF8ToWString(selectedEffectName), CurPosition);
+
+    if (isScaleClick == true)
+        m_pEffect_Manager->Set_Layer_Effect_Scaled(selectedLayerName, UTF8ToWString(selectedEffectName), CurScale);
+
+    if (isRotationClick == true)
+    {
+
+        m_pEffect_Manager->Set_Layer_Effect_Rotation(selectedLayerName, UTF8ToWString(selectedEffectName), CurRotation);
+    }
+  
 
     ImGui::Separator();
 
@@ -1352,6 +1266,7 @@ void CIMGUI_Effect_Tab::Render_For_Effect_KeyFrame()
 
 
     m_pEffect_Manager->Set_ParentMatrixMultiply_LocalMatrix(selectedLayerName, UTF8ToWString(selectedEffectName));
+    
 }
 
 void CIMGUI_Effect_Tab::Render_For_Effect_Color()
@@ -1556,7 +1471,6 @@ void CIMGUI_Effect_Tab::Render_For_Layer_Transform()
     }
 
     m_pEffect_Manager->Set_In_Layer_Effect_Layer_Transform(selectedLayerName);
-
 
     ImGui::End();
 }
