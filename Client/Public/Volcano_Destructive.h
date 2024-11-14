@@ -66,6 +66,7 @@ private:
 public:
 	void Start_Volcano_DestructiveFinish(_bool isRight = true);
 	void IsDone_Active_Init();
+	_float4x4 m_IdentityMatrix;
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
