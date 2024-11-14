@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 
 /* 인스턴싱을 통해 그려야하는 모델들이 상속받아야하는 클래스 .*/
 #include "VIBuffer.h"
@@ -21,6 +22,7 @@ public:
 		_bool		isLoop = {};
 
 	};
+
 protected:
 	CVIBuffer_Instancing(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CVIBuffer_Instancing(const CVIBuffer_Instancing& Prototype);
@@ -35,6 +37,7 @@ public:
 public:
 	void Spread(_float fTimeDelta);
 	_bool Spread_2D(_float fTimeDelta);
+	_bool Spread_FireCracker_2D(_float fTimeDelta);
 	_bool Half_Spread_X_2D(_float fTimeDelta);
 	_bool Half_Spread_Y_2D(_float fTimeDelta);
 	_bool Spiral_Spread_2D(_float fTimeDelta);
@@ -56,7 +59,8 @@ protected:
 	_float3					m_vPivotPos = {};
 	_float*					m_pSpeeds = { nullptr };
 	_bool					m_isLoop = {  };
-
+	_float					m_fMaxTime = {};
+	_float					m_fElapsedTime = {};
 	_uint					m_iNumIndexPerInstance = { 0 };
 
 	VTXINSTANCE*			m_pInstanceVertices = { nullptr };

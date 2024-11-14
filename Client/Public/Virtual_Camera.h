@@ -58,9 +58,9 @@ public:
 	void Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode);
 public:
 	const _char* GetTabName() const { return m_Name; };
-	void Set_Player(CGameObject* pPlayer);
+	void Set_Player(CGameObject* pPlayer, CGameObject* pEnemy = nullptr);
 
-	void Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject = nullptr);
+	void Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject = nullptr, _bool ignoreFlip = false);
 	void Pause();
 	void Stop();
 	void Button_Stop();
@@ -79,6 +79,7 @@ private:
 	void Set_Camera_Position(_float averageX, _float distanceX, _float higherY, _gvector pos1, _gvector pos2);
 	void Set_Camera_Direction(_float averageX, _gvector pos1, _gvector pos2);
 
+	void Print_Flip_Rotation();
 public:
 	CAMERA_MODE m_currentMode = { CAMERA_NORMAL_MODE };
 	CAMERA_PLAY_MODE m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
@@ -101,6 +102,8 @@ public:
 
 	class CGameObject* m_p1pPlayer = { nullptr };
 	class CGameObject* m_p2pPlayer = { nullptr };
+	class CGameObject* m_pEnemy = { nullptr };
+
 	_uint m_iTeam = {};
 
 	_float m_previousFOV = {};
@@ -113,6 +116,8 @@ public:
 
 	//IMGUI
 	_bool m_bIsImguiPlay = { false };
+	
+	_bool m_bIsIgnoreFlip = { false };
 
 	_bool m_bIsScaleIgnore = { false };
 
@@ -120,6 +125,7 @@ public:
 	/* Map_Camera Dying PlayerTeam Check */
 	void Set_DyingTeam(_uint iTeamIndex,_matrix CamWorldMatrix);
 	_uint m_isDyingTeam = { 0 };
+
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

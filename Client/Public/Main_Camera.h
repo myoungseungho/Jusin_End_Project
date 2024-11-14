@@ -28,12 +28,17 @@ public:
 		VIRTUAL_CAMERA_21_GRAB_SPECIAL,
 		VIRTUAL_CAMERA_21_ENERGY,
 		VIRTUAL_CAMERA_21_ULTIMATE,
+		VIRTUAL_CAMERA_HIT_HEAVY,
+		VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP,
+		VIRTUAL_CAMERA_HIT_GRAB,
+		VIRTUAL_CAMERA_HIT_214_MIDDLE,
+		VIRTUAL_CAMERA_HIT_236_MIDDLE,
+		VIRTUAL_CAMERA_HIT_236_HEAVY,
+		VIRTUAL_CAMERA_HIT_1_ULTIMATE,
+		VIRTUAL_CAMERA_HIT_3_ULTIMATE,
 		VIRTUAL_CAMERA_MINE_HEAVY,
 		VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_MINE_AIR_SMASH,
-		VIRTUAL_CAMERA_HIT_HEAVY,
-		VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP,
-		VIRTUAL_CAMERA_HIT_AIR_SMASH,
 		VIRTUAL_CAMERA_MAP,
 		VIRTUAL_CAMERA_END
 	};
@@ -59,7 +64,7 @@ public:
 	void Remove_Point(_int currentIndex, _int animationIndex);
 	vector<CameraPoint>& Get_VectorPoint(_int index);
 	void IMGUI_Play(_int animationIndex, CGameObject* gameObject = nullptr);
-	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject = nullptr);
+	void Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject = nullptr, CGameObject* EnemyObject = nullptr, _bool ignoreFlip = false);
 	void Stop();
 	void Pause();
 	void Button_Stop();
@@ -72,7 +77,7 @@ public:
 	void Delete_Points(_int animationIndex);
 	void SetPosition(_fvector position);
 
-	void Set_Player(CGameObject* pPlayer);
+	void Set_Player(CGameObject* pPlayer, CGameObject* pEnemy = nullptr);
 	const char* Get_Current_CameraName();
 	_bool Get_IsPlay();
 	void Set_DyingTeam(_uint iDyingTeam);
