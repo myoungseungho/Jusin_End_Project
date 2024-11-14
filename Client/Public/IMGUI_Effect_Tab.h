@@ -32,6 +32,7 @@ public:
 
 private:
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
+	_float4x4 m_IdentityMatrix;
 	vector<string> ModelName;
 	vector<string> TextureName;
 	vector<EFFECT_LAYER_DATA> m_vecEffectData;

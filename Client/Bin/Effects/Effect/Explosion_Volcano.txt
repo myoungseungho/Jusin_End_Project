@@ -1,0 +1,270 @@
+[Layer]
+LayerName: Explosion_Volcano
+Duration: 30
+TickPerSecond: 20
+KeyFramesCount: 1799
+NumEffec: 7
+Position: 0 0 0
+Scale: 0.999989 0.999989 1
+Rotation: 0 0 90
+IsFollowing: false
+
+[Effect]
+EffectName: Explosion_Volcano_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1.49012e-08 0.0999999 0
+Scale: 0.0998885 0.049989 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 255 92.0364 0 0.492716
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.49012e-08 0.0999999 0
+Scale: 0.0998885 0.049989 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 0.0999999 -0.1 0
+Scale: 0.299703 0.998171 1
+Rotation: 0 0 270
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Explosion_Volcano_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.3 -0.6 0
+Scale: 0.0499719 0.099972 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 191.672 90.3477 4.22185 0.321525
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 -0.6 0
+Scale: 0.0499719 0.099972 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 6.2 -2 0
+Scale: 0.99542 0.299973 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Explosion_Volcano_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.3 -1.1 0
+Scale: 0.0499246 0.199952 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 44.7517 0 1.24007
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 -1.1 0
+Scale: 0.0499246 0.199952 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 6.2 -3.7 0
+Scale: 0.99776 0.599485 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Explosion_Volcano_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.1 0.7 0
+Scale: 0.0499296 0.0999989 1
+Rotation: 0 0 290
+IsLoop: false
+Color: 225.447 78.5265 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 0.7 0
+Scale: 0.0499296 0.0999989 1
+Rotation: 0 0 290
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: -0.1 1.3 0
+Scale: 0.299053 0.999924 1
+Rotation: 0 0 290
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Explosion_Volcano_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.1 0.7 0
+Scale: 0.049945 0.0999649 1
+Rotation: 0 0 290
+IsLoop: false
+Color: 244.023 58.2616 0 15.3974
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 0.7 0
+Scale: 0.049945 0.0999649 1
+Rotation: 0 0 290
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: -0.1 1.3 0
+Scale: 0.29975 0.999989 1
+Rotation: 0 0 290
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Explosion_Volcano_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1 -0.4 0
+Scale: 0.0499193 0.0999775 1
+Rotation: 0 0 245
+IsLoop: false
+Color: 225.447 78.5265 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1 -0.4 0
+Scale: 0.0499193 0.0999775 1
+Rotation: 0 0 245
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 1 -1.5 0
+Scale: 0.298746 0.699992 1
+Rotation: 0 0 245
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: Explosion_Volcano_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Explosion_VolcanoExplosion_Volcano_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 1 -0.4 0
+Scale: 0.0499316 0.0999383 1
+Rotation: 0 0 245
+IsLoop: false
+Color: 244.023 58.2616 0 15.3974
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1 -0.4 0
+Scale: 0.0499316 0.0999383 1
+Rotation: 0 0 245
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 1 -1.5 0
+Scale: 0.299061 0.699991 1
+Rotation: 0 0 245
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+

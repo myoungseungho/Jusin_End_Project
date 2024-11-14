@@ -84,6 +84,7 @@ public:
 	HRESULT Play_Animation(_float CurrentFrame);
 	void		Set_Effect_Color(_float4 vColor);
 	void		Get_Layer_Matrix(_matrix LayerMatrix);
+	void		Set_Layer_Matrix();
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CModel*	 m_pModelCom = { nullptr };
@@ -134,6 +135,9 @@ protected:
 
 	_matrix				m_LayerMatrix = {};
 	_float4x4				m_WorldMatrix = {};
+public:
+	void Set_ParentMatrixMultiply_LocalMatrix();
+
 public:
 	static CEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg = nullptr) override;

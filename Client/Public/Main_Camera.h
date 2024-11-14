@@ -13,7 +13,6 @@ public:
 	{
 		VIRTUAL_CAMERA_NORMAL,
 		VIRTUAL_CAMERA_FREE,
-		VIRTUAL_CAMERA_MAP,
 		VIRTUAL_CAMERA_SON_HEAVY,
 		VIRTUAL_CAMERA_SON_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_SON_AIR_SMASH,
@@ -35,6 +34,7 @@ public:
 		VIRTUAL_CAMERA_HIT_HEAVY,
 		VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP,
 		VIRTUAL_CAMERA_HIT_AIR_SMASH,
+		VIRTUAL_CAMERA_MAP,
 		VIRTUAL_CAMERA_END
 	};
 
@@ -75,7 +75,7 @@ public:
 	void Set_Player(CGameObject* pPlayer);
 	const char* Get_Current_CameraName();
 	_bool Get_IsPlay();
-
+	void Set_DyingTeam(_uint iDyingTeam);
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 

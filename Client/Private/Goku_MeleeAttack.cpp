@@ -698,6 +698,11 @@ void CGoku_MeleeAttack::Attack_214Final()
 	{
 		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
 		{
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+
+			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
 			m_pPlayer->Set_AnimationStopWithoutMe(2.f);
 
@@ -847,7 +852,9 @@ void CGoku_MeleeAttack::ForwardDash()
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_DownHook_Dash_SFX, false, 0.5f);
 
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke_Run"), static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr());
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke_Run"), &tDesc);
 
 
 	}
@@ -886,7 +893,10 @@ void CGoku_MeleeAttack::ForwardDash()
 		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
 		//m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Dash"),m_pPlayer->Get_pTransformMatrix());
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();
+
+		m_pEffect_Manager->Copy_Layer(TEXT("Dash"), &tDesc);
 	}
 
 

@@ -62,6 +62,8 @@ HRESULT CFallingStar::Initialize(void * pArg)
 	m_RendererDesc.tGlowDesc.iPassIndex = 2;
 	m_RendererDesc.tGlowDesc.fGlowFactor = 3.2f;
 
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
 	return S_OK;
 }
 

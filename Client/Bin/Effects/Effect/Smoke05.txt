@@ -14,7 +14,7 @@ EffectName: Smoke05
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/Smoke05Smoke05
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1

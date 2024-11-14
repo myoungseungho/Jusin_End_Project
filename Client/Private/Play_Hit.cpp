@@ -287,7 +287,18 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			}
 			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
 
-			if (m_bMotionPlaying == false)
+			//if (m_bDestructiveFinish)
+			//{
+			//	m_fAccDyingTime += fTimeDelta;
+			//	if (m_fAccDyingTime > 7.f)
+			//	{
+			//		Tag_In(m_ePlayerSlot);
+			//		//static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
+
+			//	}
+			//}
+
+			/*else */if (m_bMotionPlaying == false)
 			{
 				
 				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
@@ -304,6 +315,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			{
 				Stun_Shake();
 			}
+			
 		}
 	
 		return;
@@ -701,13 +713,7 @@ void CPlay_Hit::Update(_float fTimeDelta)
 
 void CPlay_Hit::Late_Update(_float fTimeDelta)
 {
-	if (m_bPlaying || m_bTag_In)
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
-
-
-#ifdef _DEBUG
-	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-#endif
+	__super::Late_Update(fTimeDelta);
 
 }
 
@@ -1201,7 +1207,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//»þ»þ¼¡ ÀÌÆåÆ®,
 		
 			//´ë½Ã±¸¸§
-			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
 
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
@@ -1251,8 +1260,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_StunTime = 0.4f;
 
 
-			Desc.iDamage = 700 * Get_DamageScale();
-			//Desc.iDamage = 4200 * Get_DamageScale();
+			//Desc.iDamage = 700 * Get_DamageScale();
+			Desc.iDamage = 4200 * Get_DamageScale();
 			Desc.fLifeTime = 0.1f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 			Desc.iTeam = m_iPlayerTeam;
@@ -1290,7 +1299,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//	pEffect->Set_Copy_Layer_Scaled({ 1.f,0.3f,1.f });
 
 			//´ë½Ã±¸¸§
-			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), m_pTransformCom->Get_WorldMatrixPtr());
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
 
 			if (m_bSparking)
 			{
@@ -3786,15 +3797,22 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 			{
 			case Client::HIT_LIGHT:
 			case Client::HIT_CHASE:
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"), m_pTransformCom->Get_WorldMatrixPtr());
+			{
+
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"),&tDesc);
 				break;
-
-
+			}
 			case Client::HIT_CROUCH_MEDIUM:
 			case Client::HIT_MEDIUM:
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard02"), m_pTransformCom->Get_WorldMatrixPtr());
+			{
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard02"), &tDesc);
 				break;
-
+			}
 			case Client::HIT_HEAVY:
 			case Client::HIT_HEAVY_DOWN:
 			case Client::HIT_KNOCK_AWAY_LEFT:
@@ -3802,8 +3820,12 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 			case Client::HIT_KNOCK_AWAY_LEFTDOWN:
 			case Client::HIT_SPIN_AWAY_LEFTUP:
 			case Client::HIT_SPIN_AWAY_UP:
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard03"), m_pTransformCom->Get_WorldMatrixPtr());
+			{
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard03"), &tDesc);
 				break;
+			}
 
 			case Client::HIT_WALLBOUNCE:
 			case Client::HIT_NONE:

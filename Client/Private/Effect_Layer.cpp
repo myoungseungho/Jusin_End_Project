@@ -107,17 +107,18 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 	return S_OK;
 }
 
-HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
+HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 {
-
-	//m_isBillboading = isBillboading;
 	m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
 
-	m_pPlayerMatrix = pArg;
 	LayerMatrix = m_pTransformCom->Get_WorldMatrix();
 
 	if (pArg != nullptr)
 	{
+		COPY_DESC* pDesc = static_cast<COPY_DESC*>(pArg);
+		m_pPlayerMatrix = pDesc->pPlayertMatrix;
+		m_pPlayerTransformCom = pDesc->pTransformCom;
+
 		if (0 > m_pPlayerMatrix->_11)
 		{
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
@@ -130,12 +131,21 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 
 			XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
 
-			//fLayerMatrix._41 *= -1;
-			fLayerMatrix._43 *= -1;
 			fLayerMatrix._41 += XMVectorGetX(Position);
 			fLayerMatrix._42 += XMVectorGetY(Position);
+			if ((*m_MixtureEffects.begin())->m_EffectName != L"BurstR-02")
+			{
+				fLayerMatrix._43 *= -1;
+			}
+			
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
+
+			_matrix CopyWorldMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+			CopyWorldMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+
+			XMStoreFloat4x4(&fLayerMatrix, CopyWorldMatrix);
+
 			m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 		}
 		else
@@ -152,7 +162,6 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
-			m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
 		}
 
 		return S_OK;
@@ -161,7 +170,8 @@ HRESULT CEffect_Layer::Initialize(const _float4x4* pArg, _bool isBillboading)
 	{
 		_matrix TestMatrix = XMMatrixIdentity();
 
-		LayerMatrix = m_pTransformCom->Multiple_Matrix(TestMatrix);
+		LayerMatrix = TestMatrix;
+		//m_pTransformCom->Multiple_Matrix(TestMatrix);
 	}
 
 	return S_OK;
@@ -186,79 +196,40 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 			if (m_bIsFollowing)
 			{
-				LayerMatrix = m_pTransformCom->Get_WorldMatrix();
-				_float3 CopyRotation = m_pCopyTransformCom->Get_Rotation();
+				LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+				_float4x4 FinalMatrix;
+				XMStoreFloat4x4(&FinalMatrix, LayerMatrix);
 
-				if (0 > m_pPlayerMatrix->_11)
-				{
-					//LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+				XMVECTOR Scale, Rotation, Position;
 
-					XMVECTOR Scale, Rotation, Position;
+				XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
 
-					XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
+				FinalMatrix._43 = 0;
+				FinalMatrix._41 = FinalMatrix._41 + XMVectorGetX(Position) /*+ m_fChangePosition.x*/;
+				FinalMatrix._42 = FinalMatrix._42 + XMVectorGetY(Position) /*+ m_fChangePosition.y*/;
 
-					_float4x4 fLayerMatrix;
-
-					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
-
-					//fLayerMatrix._41 *= -1;
-					fLayerMatrix._43 *= -1;
-					fLayerMatrix._41 += XMVectorGetX(Position);
-					fLayerMatrix._42 += XMVectorGetY(Position);
-
-					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
-
-					_vector Pos = m_pCopyTransformCom->Get_State(CTransform::STATE_POSITION);
-
-					m_pCopyTransformCom->Rotate(CopyRotation);
-
-					_matrix Dst = m_pCopyTransformCom->Get_WorldMatrix() * XMMatrixRotationY(XMConvertToRadians(180.0f));
-
-					XMStoreFloat4x4(&fLayerMatrix, Dst);
-
-					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
-
-					m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, Pos);
-
-					LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
-					EffectToLayerMatrix = LayerMatrix;
-				}
-				else
-				{
-					XMVECTOR Scale, Rotation, Position;
-
-					XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
-
-					_float4x4 fLayerMatrix;
-
-					XMStoreFloat4x4(&fLayerMatrix, LayerMatrix);
-
-					fLayerMatrix._41 += XMVectorGetX(Position);
-					fLayerMatrix._42 += XMVectorGetY(Position);
-
-					m_pCopyTransformCom->Set_WorldMatrix(fLayerMatrix);
-
-					_vector Pos = m_pCopyTransformCom->Get_State(CTransform::STATE_POSITION);
-
-					m_pCopyTransformCom->Rotate(CopyRotation);
-
-					m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, Pos);
-
-					LayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
-					EffectToLayerMatrix = LayerMatrix;
-				}
+				EffectToLayerMatrix = XMLoadFloat4x4(&FinalMatrix);
 			}
 
 			if (pEffect->m_bIsBillboarding)
 			{
-				_vector camPosition = m_pGameInstance->Get_CamPosition_Vector();
+				CTransform* pTransform = CTransform::Create(m_pDevice, m_pContext);
 
-				m_pCopyTransformCom->LookAt(camPosition);
-				EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix();
+				_float4x4 SwitchMatrix;
+				XMStoreFloat4x4(&SwitchMatrix, EffectToLayerMatrix);
 
+				pTransform->Set_WorldMatrix(SwitchMatrix);
+				pTransform->LookAt(m_pGameInstance->Get_CamPosition_Vector());
+
+				EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix() * pTransform->Get_WorldMatrix();
+
+				Safe_Release(pTransform);
 			}
 
-			pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
+			if(m_pPlayerTransformCom != nullptr)
+				pEffect->Get_Layer_Matrix(EffectToLayerMatrix * m_pPlayerTransformCom->Get_WorldMatrix());
+			else
+				pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
 		}
 
 		Play_Effect_Animation(fTimeDelta);
@@ -358,6 +329,7 @@ HRESULT CEffect_Layer::Set_In_Layer_Effect()
 		if (pEffect)
 		{
 			pEffect->Get_Layer_Matrix(m_pTransformCom->Get_WorldMatrix());
+			//pEffect->Set_Layer_Matrix();
 		}
 	}
 
@@ -418,6 +390,9 @@ HRESULT CEffect_Layer::Set_Copy_Layer_Scaled(_float3 ChangeScaled)
 HRESULT CEffect_Layer::Set_Copy_Layer_Position(_float3 ChangePosition)
 {
 	m_pCopyTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(ChangePosition.x, ChangePosition.y, ChangePosition.z, 1.f));
+
+	m_fChangePosition = ChangePosition;
+
 	return S_OK;
 }
 
@@ -462,7 +437,7 @@ CEffect_Layer* CEffect_Layer::Create(ID3D11Device* pDevice, ID3D11DeviceContext*
 	return pInstance;
 }
 
-CEffect_Layer* CEffect_Layer::Clone(const _float4x4* pArg, _bool isBillboading)
+CEffect_Layer* CEffect_Layer::Clone(COPY_DESC* pArg, _bool isBillboading)
 {
 	CEffect_Layer* pInstance = new CEffect_Layer(*this);
 

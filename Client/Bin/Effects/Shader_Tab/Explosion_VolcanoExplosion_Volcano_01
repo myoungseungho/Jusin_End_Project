@@ -1,0 +1,18 @@
+Version: 2
+KeyCount: 1
+KeySize: 48
+Key: Prototype_Component_Texture_Effect_cmn_pattern02
+ID: 3
+vTexCoord: 1 1
+NodePosCount: 5
+NodeID: -1 Position: 529 99
+NodeID: 3001 Position: 42.2828 111.111
+NodeID: 1501 Position: 33.2828 57.1112
+NodeID: 3 Position: 267 69
+NodeID: 1 Position: 281 66
+MoveTexNodeCount: 1
+MoveTexNodeID: 1501 Direction: 0 1 Speed: 7.5
+SpriteNodeCount: 0
+LinkCount: 2
+LinkSrcNodeID: 1502 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2

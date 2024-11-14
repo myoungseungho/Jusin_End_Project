@@ -72,13 +72,9 @@ void CChannel::Compute_TransformationMatrix(_float fCurrentPosition, const vecto
 		vDestRotation = XMLoadFloat4(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vRotation);
 		vDestPosition = XMVectorSetW(XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)+ 1].vPosition), 1.f);
 		
-
 		vScale = XMVectorLerp(vSourScale, vDestScale, fRatio);
 		vRotation = XMQuaternionSlerp(vSourRotation, vDestRotation, fRatio);
-		vPosition = XMVectorLerp(vSourPosition, vDestPosition, fRatio);		
-
-
-
+		vPosition = XMVectorLerp(vSourPosition, vDestPosition, fRatio);
 	}
 
 	TransformationMatrix = XMMatrixAffineTransformation(vScale, XMVectorSet(0.f, 0.f, 0.f, 1.f), vRotation, vPosition);

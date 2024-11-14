@@ -264,6 +264,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			Update_AnimationLock(fTimeDelta);
 		else
 		{
+			
 			Character_Play_Animation(fTimeDelta);
 	
 			if(Get_fHeight()>0)
@@ -683,13 +684,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
-	if (m_bPlaying || m_bTag_In)
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
-
-
-#ifdef _DEBUG
-	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-#endif
+	__super::Late_Update(fTimeDelta);
 
 }
 
@@ -1172,8 +1167,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fhitCharacter_StunTime = 0.15f;
 
 
-		Desc.iDamage = 700 * Get_DamageScale();
-		//Desc.iDamage = 4200 * Get_DamageScale();
+		//Desc.iDamage = 700 * Get_DamageScale();
+		Desc.iDamage = 4200 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
@@ -1183,7 +1178,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
+		//
+		// 
+		// 
+		// 
+		// 
+		// 
+		// ->Copy_Layer(TEXT("Smoke03_Stop"), m_pTransformCom->Get_WorldMatrixPtr());
 		Character_Make_Effect(TEXT("Smoke03_Stop"), {}, true);
 		
 	}
@@ -1273,12 +1274,15 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 		Desc.fhitCharacter_StunTime = 1.0f;
 		Desc.iDamage = 1000 * Get_DamageScale();;
+		///Desc.iDamage = 30000 * Get_DamageScale();;
 		Desc.fLifeTime = 0.2f;
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.7f;
 		Desc.bGrabbedEnd = true;
 		Desc.pOwner = this;
+
+		Desc.bCameraZoom = false;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
@@ -1555,7 +1559,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//
 			//}
 
-			//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-3_02"));
+			//Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-3_02"));jjwj
 			Character_Make_BoneEffect("GD_fist_R", TEXT("BurstU-3_01"));
 
 			//BurstU-3_02

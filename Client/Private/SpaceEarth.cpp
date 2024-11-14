@@ -32,6 +32,9 @@ HRESULT CSpaceEarth::Initialize(void * pArg)
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-90.f));
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, -100.f, -200.f, 1.f));
 
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
+
 	return S_OK;
 }
 

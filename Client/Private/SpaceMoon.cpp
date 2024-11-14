@@ -34,6 +34,9 @@ HRESULT CSpaceMoon::Initialize(void * pArg)
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
 	//m_pTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(45.f));
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, -180.f, 1.f));
+
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
 	return S_OK;
 }
 

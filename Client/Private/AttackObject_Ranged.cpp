@@ -61,7 +61,9 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	//이름이 있으면
 	if (pDesc->strEffectName.length() != 0)
 	{
-		m_pRangedEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+		m_pRangedEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(pDesc->strEffectName, &tDesc);
 		//CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
 
 
@@ -174,7 +176,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
-		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
 
 		if (m_pRangedEffect_Layer != nullptr)
 			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
@@ -232,8 +236,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
-
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
 
 			if(m_pRangedEffect_Layer!=nullptr)
 				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
@@ -254,8 +259,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
-
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), m_pTransformCom->Get_WorldMatrixPtr());
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
 
 
 			if (m_pRangedEffect_Layer != nullptr)

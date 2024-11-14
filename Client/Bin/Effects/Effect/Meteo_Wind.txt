@@ -4,9 +4,9 @@ Duration: 30
 TickPerSecond: 3
 KeyFramesCount: 1799
 NumEffec: 1
-Position: -0.5 0 0
-Scale: 20 30 30
-Rotation: -20 0 -20
+Position: 0 10 0
+Scale: 1 1 1
+Rotation: -10 0 0
 IsFollowing: false
 
 [Effect]
@@ -18,20 +18,20 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -0.404493 0.469078 0.270822
-Scale: 0.000699928 0.00559884 0.0056
-Rotation: 0 0 90
+Position: 0 15 0
+Scale: 0.999853 0.999866 1
+Rotation: 0 0 100
 IsLoop: false
 Color: 50 66 80 1
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 10.55 0
-Scale: 0.0054 0.0054 0.0054
+Position: 0 0 0
+Scale: 0.0999997 0.0999997 0.1
 Rotation: 0 0 100
 CurTime: 0
 Duration: 30
@@ -39,10 +39,10 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 132
-Position: 0 27.5 0
-Scale: 0.039964 0.0399964 0.0399971
+Position: 0 15 0
+Scale: 0.999913 0.999927 1
 Rotation: 0 0 100
-CurTime: 2.199
+CurTime: 2.2
 Duration: 30
 IsNotPlaying: false
 

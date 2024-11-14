@@ -1,10 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include "Effect_Manager.h"
-#include "Effect_Layer.h"
-#include "Effect.h"
-#include "GameInstance.h"
 #include "Imgui_Manager.h"
+#include "GameInstance.h"
+#include "Effect.h"
 #include <string>
 #include <locale>
 #include <codecvt>
@@ -39,11 +38,11 @@ HRESULT CEffect_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* 
 
 void CEffect_Manager::Camera_Update(_float fTimeDelta)
 {
-	for (auto& Pair : m_FinalEffects)
-		Pair.second->Camera_Update(fTimeDelta);
+	//for (auto& Pair : m_FinalEffects)
+	//	Pair.second->Camera_Update(fTimeDelta);
 
-	for (auto& Pair : m_TestEffect)
-		Pair->Camera_Update(fTimeDelta);
+	//for (auto& Pair : m_TestEffect)
+	//	Pair->Camera_Update(fTimeDelta);
 
 	for (auto& Pair : m_UsingEffect)
 		Pair->Camera_Update(fTimeDelta);
@@ -104,7 +103,7 @@ void CEffect_Manager::Render(_float fTimeDelta)
 	//	Pair->Render(fTimeDelta);
 }
 
-HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _float4x4* pArg)
+HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, CEffect_Layer::COPY_DESC* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
@@ -127,7 +126,7 @@ HRESULT CEffect_Manager::Copy_Layer(const wstring& strEffectLayerTag, const _flo
 }
 
 
-CEffect_Layer* CEffect_Manager::Copy_Layer_AndGet(const wstring& strEffectLayerTag, const _float4x4* pArg)
+CEffect_Layer* CEffect_Manager::Copy_Layer_AndGet(const wstring& strEffectLayerTag, CEffect_Layer::COPY_DESC* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
@@ -150,7 +149,7 @@ CEffect_Layer* CEffect_Manager::Copy_Layer_AndGet(const wstring& strEffectLayerT
 	return m_UsingEffect.back();
 }
 
-CEffect_Layer* CEffect_Manager::Copy_Layer_OverTheHandle(const wstring& strEffectLayerTag, const _float4x4* pArg)
+CEffect_Layer* CEffect_Manager::Copy_Layer_OverTheHandle(const wstring& strEffectLayerTag, CEffect_Layer::COPY_DESC* pArg)
 {
 	CEffect_Layer* pLayer = Find_Effect_Layer(strEffectLayerTag);
 
@@ -925,6 +924,11 @@ HRESULT CEffect_Manager::Set_Layer_Effect_IsNotPlaying(wstring& layerName, wstri
 		return S_OK;
 	}
 	return E_FAIL;
+}
+
+void CEffect_Manager::Set_ParentMatrixMultiply_LocalMatrix(wstring& layerName, wstring& effectName)
+{
+	Find_In_Layer_Effect(layerName, effectName)->Set_ParentMatrixMultiply_LocalMatrix();
 }
 
 _float3 CEffect_Manager::Get_Layer_Effect_Scaled(wstring& layerName, wstring& effectName)

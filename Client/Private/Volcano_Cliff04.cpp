@@ -31,7 +31,8 @@ HRESULT CVolcano_Cliff04::Initialize(void * pArg)
 
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
-
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_VOLCANO,
+		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
 	return S_OK;
 }
 

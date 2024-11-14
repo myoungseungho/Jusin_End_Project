@@ -518,11 +518,28 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 	//// 카메라의 방향 벡터 설정
 	Set_Camera_Direction(averageX, pos1, pos2);
 
-
 }
 
 void CVirtual_Camera::Map_Camera(_float fTimeDelta)
 {
+	if (m_isDyingTeam == 0)
+		return;
+
+	_vector vPlayerPos = { 0.f,0.f,0.f,1.f };
+
+	switch (m_isDyingTeam)
+	{
+	case 1:
+		vPlayerPos =  static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+		break;
+	case 2:
+		vPlayerPos = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+		break;
+	}
+
+	vPlayerPos = XMVectorSetY(vPlayerPos, XMVectorGetY(vPlayerPos) + 1.f);
+
+	m_pTransformCom->LookAt(vPlayerPos);
 }
 
 
@@ -931,6 +948,14 @@ void CVirtual_Camera::Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode)
 		m_currentMode = CAMERA_MAP_MODE;
 }
 
+
+void CVirtual_Camera::Set_DyingTeam(_uint iTeamIndex, _matrix CamWorldMatrix)
+{
+	m_isDyingTeam = iTeamIndex;
+	_float4x4 ResultMatrix;
+	XMStoreFloat4x4(&ResultMatrix, CamWorldMatrix);
+	m_pTransformCom->Set_WorldMatrix(ResultMatrix);
+}
 
 CVirtual_Camera* CVirtual_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

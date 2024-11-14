@@ -1,0 +1,17 @@
+Version: 2
+KeyCount: 1
+KeySize: 50
+Key: Prototype_Component_Texture_Effect_cmn_aura12_gray
+ID: 6
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 521 123
+NodeID: 6 Position: 294 58
+NodeID: 3001 Position: 21 88
+NodeID: 1 Position: 204 78
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 10 3 Speed: 22.1
+LinkCount: 2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2

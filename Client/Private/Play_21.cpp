@@ -696,13 +696,7 @@ void CPlay_21::Update(_float fTimeDelta)
 
 void CPlay_21::Late_Update(_float fTimeDelta)
 {
-	if (m_bPlaying || m_bTag_In)
-		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
-
-	#ifdef _DEBUG
-		m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
-	#endif
-
+	__super::Late_Update(fTimeDelta);
 	
 }
 
