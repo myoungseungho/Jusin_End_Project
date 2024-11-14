@@ -2514,6 +2514,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
+
+				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_HIT_236_MIDDLE;
+				Desc.fCameraShakeDuration = 1.4f;
+				Desc.fCameraShakeMagnitude = 0.2f;
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
 			}

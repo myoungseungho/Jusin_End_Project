@@ -757,7 +757,23 @@ SkillName: Camera_Hit_236_Middle
 
 [Animation]
 AnimationName: Hit_236_Middle_Anim1
-PointCount: 0
+PointCount: 2
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.27013 1.33331 -2.04604
+Rotation: 0 0.466839 0 0.884342
+Duration: 0.6
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Hit_236_Heavy
