@@ -719,6 +719,7 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 	}
 
 	if (m_pModelCom->Play_Animation_Lick(fTimeDelta))
+	//if (m_pModelCom->Play_Animation(fTimeDelta))
 	{
 		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
 		if (m_pModelCom->m_isLoopAnim)
@@ -739,10 +740,7 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
-	if (m_bAttackGravity && m_pModelCom->m_iCurrentAnimationIndex == 67)
-	{
-		_bool bDebug = true;
-	}
+	
 
 	return bAnimationEnd;
 }
@@ -1288,7 +1286,6 @@ void CCharacter::Chase2(_float fTimeDelta)
 	else   //돌진중도 준비자세도 아니면
 	{
 		return;
-		AttackNextMoveCheck();
 
 	}
 
@@ -1335,19 +1332,24 @@ void CCharacter::Chase2(_float fTimeDelta)
 	{
 
 
-		if(m_iLookDirection == 1)
+		if (m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 		else if (m_iLookDirection == -1)
-			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180 - EffectAngle });
 
 		_float xdegree = XMVectorGetX(m_vChaseDir);
 
 		//m_pChaseEffectLayer->Set_Layer_Position({ XMVectorGetX(m_vChaseDir)*1.5f, XMVectorGetY(m_vChaseDir)*1.5f,0.f });
 
 
+		cout << angle << endl;
+
 		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
 
 		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness * m_iLookDirection, XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
+	
+		//m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * m_iLookDirection *1200.f, XMVectorGetY(m_vChaseDir) * 90.f,0.f });
+		//m_pChaseEffectLayer->Set_Copy_Layer_Position({ 100.f,3.f,0.f});
 
 		
 
@@ -3389,6 +3391,7 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+			cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
 		}
 
 		//둘 다 stun상태가 아니고, 땅에있으면
@@ -3455,6 +3458,7 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+			cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
 		}
 
 
@@ -4562,7 +4566,7 @@ void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
 
 	
-
+	m_bMotionPlaying = true;
 
 	m_bAttackBackEvent = false;
 

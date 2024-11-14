@@ -199,6 +199,7 @@ _bool CModel::Play_Animation_Lick(_float fTimeDelta)
 	//	m_fAccAnimationUpdateTime -= m_fMaxAnimationUpdateTime;
 	//}
 
+	
 	while (m_fAccAnimationUpdateTime > m_fMaxAnimationUpdateTime)
 	{
 		//_float fMoveFrame = m_fMaxAnimationTime / m_Animations[m_iCurrentAnimationIndex]->m_fTickPerSecond;
@@ -218,6 +219,10 @@ _bool CModel::Play_Animation_Lick(_float fTimeDelta)
 
 		m_fAccAnimationUpdateTime -= m_fMaxAnimationUpdateTime;
 	}
+
+
+
+	
 
 	return bAnimationEnd;
 }
@@ -323,10 +328,6 @@ void CModel::Set_MaxAnimationUpdate_Time(_float fMaxUpdateTime)
 {
 	m_fMaxAnimationUpdateTime = fMaxUpdateTime;
 
-	if (fMaxUpdateTime == 0)
-	{
-		_bool bDebugPoint = true;
-	}
 }
 
 
