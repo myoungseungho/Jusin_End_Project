@@ -711,6 +711,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                     }
 
                     m_pEffect_Manager->Set_Render_Layer(selectedLayerName);
+                    m_pEffect_Manager->m_strSelectLayerName = selectedLayerName;
                     
                     CImgui_Manager::Get_Instance()->Set_CurEffectLayer(m_pEffect_Manager->Find_Effect_Layer(selectedLayerName));
                 }

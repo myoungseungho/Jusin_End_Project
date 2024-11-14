@@ -51,8 +51,11 @@ void CEffect_Manager::Camera_Update(_float fTimeDelta)
 
 void CEffect_Manager::Update(_float fTimeDelta)
 {
-	for (auto& Pair : m_FinalEffects)
-		Pair.second->Update(fTimeDelta);
+	//CEffect_Layer* pLayer = Find_Effect_Layer(m_strSelectLayerName);
+
+	//if (pLayer != nullptr)
+	//	pLayer->Update(fTimeDelta);
+	
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Update(fTimeDelta);
@@ -74,11 +77,11 @@ void CEffect_Manager::Update(_float fTimeDelta)
 
 void CEffect_Manager::Late_Update(_float fTimeDelta)
 {
-	for (auto& Pair : m_FinalEffects)
-		if (Pair.second->m_bIsRender)
-		{
-			Pair.second->Late_Update(fTimeDelta);
-		}
+	CEffect_Layer* pLayer = Find_Effect_Layer(m_strSelectLayerName);
+
+	if (pLayer != nullptr)
+		pLayer->Late_Update(fTimeDelta);
+	
 
 	for (auto& Pair : m_TestEffect)
 		Pair->Late_Update(fTimeDelta);
