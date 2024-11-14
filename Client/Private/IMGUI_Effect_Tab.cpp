@@ -100,10 +100,10 @@ void CIMGUI_Effect_Tab::Render(_float fTimeDelta)
         Render_For_Layer_KeyFrame(fTimeDelta);
     }
 
-    if(openKeyFrameWindow)
-      Render_For_Effect_KeyFrame();
     if (openLayerTransformWindow)
         Render_For_Layer_Transform();
+    if(openKeyFrameWindow)
+      Render_For_Effect_KeyFrame();
 
     if (openColorWindow)
        Render_For_Effect_Color();
@@ -833,9 +833,9 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
             ImVec2 lineEnd(lineStart.x, lineStart.y + 300);
 
             drawList->AddLine(lineStart, lineEnd, IM_COL32(255, 0, 0, 255), 2.0f);
-
+            lineStart.x -= 75.f;
             ImGui::SetCursorScreenPos(lineStart);
-            ImGui::InvisibleButton("##DragRedLine", ImVec2(10.0f, 30.0f));
+            ImGui::InvisibleButton("##DragRedLine", ImVec2(300.0f, 30.0f));
 
             if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
             {
