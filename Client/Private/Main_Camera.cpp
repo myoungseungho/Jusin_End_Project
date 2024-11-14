@@ -239,7 +239,10 @@ void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObjec
 	Set_Player(gameObject, EnemyObject);
 	//가상카메라를 CameraID에 따라 셋팅
 	Set_Virtual_Camera(cameraID);
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, gameObject, ignoreFlip);
+
+	//EnemyObject가 들어오면 EnemyObject로 들어가야함
+	CGameObject* selectObject = EnemyObject == nullptr ? gameObject : EnemyObject;
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, selectObject, ignoreFlip);
 }
 
 void CMain_Camera::Stop()

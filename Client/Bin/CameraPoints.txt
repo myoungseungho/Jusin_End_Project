@@ -519,20 +519,12 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: 21_Ultimate_Anim2
-PointCount: 2
+PointCount: 1
 
 [CameraPoint]
-Position: 0.59 1.5 -5
+Position: 0.0732741 0.399759 -8
 Rotation: -0 0 -0 1
-Duration: 0.2
-InterpolationType: 0
-Damping: 1
-HasWorldFloat4x4: 1
-
-[CameraPoint]
-Position: 0.0732741 0.399759 -5
-Rotation: -0 0 -0 1
-Duration: 4
+Duration: 1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1

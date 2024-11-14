@@ -652,8 +652,8 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		}
 		else
 			DebugPositionReset();
-	
-	
+
+
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_2))
@@ -2331,7 +2331,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				FlipDirection();
 				Teleport_ToEnemy(-10.f, -2.f);
 				//Set_fImpulse({ m_iLookDirection * 80.f, 10.f });
-				
+
 				//Set_fImpulse({ m_iLookDirection * 80.f, 13.f });
 				Set_fImpulse({ m_iLookDirection * 80.f, 15.f });
 
@@ -2347,12 +2347,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			
+
 			//Desc.ColliderDesc.vExtents = { 0.8f,0.6f,1.f };
 			//Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
 
 			Desc.ColliderDesc.vExtents = { 0.3f,0.6f,1.f };
-			Desc.ColliderDesc.vCenter = { 0.9f,0.7f,0.f };
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.7f,0.f };
 
 
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
@@ -2401,6 +2401,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Desc.iGainAttackStep = 0;
 				Desc.iDamage = 150 * Get_DamageScale(true);;
+				Desc.fDistance = { 100.f,0.f };
+
+				//적 카메라로 순간적으로 올라가야함
+				CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 1, this, m_pEnemy);
+
 			}
 			Desc.iGrabAnimationIndex = ANIME_FINAL_START;
 			Desc.bOwnerNextAnimation = false;
@@ -2427,6 +2433,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//명중했으면 루프돌기
 			if (m_bAttackBackEvent && m_iFinalLoofCount != 0)
 			{
+
 				//m_bFinalSkillSucess = true;
 
 				Set_CurrentAnimationPositionJump(52.9);
@@ -2664,20 +2671,20 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 
 
-			
 
-			
+
+
 
 		}
 		else if (iAttackEvent == 201)
 		{
 
-			
-		
+
+
 		}
 	}
 
-		break;
+	break;
 
 	case Client::CPlay_21::ANIME_FINAL_END:
 	{
