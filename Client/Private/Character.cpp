@@ -1360,7 +1360,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	if (m_pChaseEffectLayer != nullptr && m_fAccChaseTime <2.f)
 	{
-
+		/* 체이스 2P 수정 */
 
 		//if(m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });

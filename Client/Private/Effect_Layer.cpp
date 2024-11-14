@@ -326,6 +326,7 @@ HRESULT CEffect_Layer::Set_In_Layer_Effect()
 		if (pEffect)
 		{
 			pEffect->Get_Layer_Matrix(m_pTransformCom->Get_WorldMatrix());
+			pEffect->Set_Layer_Matrix();
 		}
 	}
 

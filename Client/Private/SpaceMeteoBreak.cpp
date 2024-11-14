@@ -207,13 +207,10 @@ void CSpaceMeteoBreak::Late_Update(_float fTimeDelta)
 	if (m_isStart == false)
 		return;
 
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 
 	//if (m_isBrakeSwitch == false)
 	//	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-	
-	
 }
 
 HRESULT CSpaceMeteoBreak::Priority_Render(_float fTimeDelta)
