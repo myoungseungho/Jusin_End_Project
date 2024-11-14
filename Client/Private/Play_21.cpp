@@ -2349,7 +2349,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
 
 			Desc.ColliderDesc.vExtents = { 0.3f,0.6f,1.f };
-			Desc.ColliderDesc.vCenter = { 0.9f,0.7f,0.f };
+			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.7f,0.f };
 
 
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
@@ -2398,6 +2398,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Desc.iGainAttackStep = 0;
 				Desc.iDamage = 150 * Get_DamageScale(true);;
+				Desc.fDistance = { 100.f,0.f };
 			}
 			Desc.iGrabAnimationIndex = ANIME_FINAL_START;
 			Desc.bOwnerNextAnimation = false;

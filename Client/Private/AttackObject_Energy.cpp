@@ -217,7 +217,10 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pOwner->Gain_HitCount(m_iGainHitCount);
 
 				pCharacter->Set_GroundSmash(m_bGroundSmash);
-				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
+				if(m_bOnwerHitNoneStop == false)
+					m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
 				m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
 				pCharacter->Set_bNoGravity(m_bHitNoGravity);
@@ -435,7 +438,10 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 			{
 	
 				pCharacter->Set_GroundSmash(m_bGroundSmash);
-				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
+				if (m_bOnwerHitNoneStop == false)
+					m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
+
 				m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 				m_pOwner->Gain_HitCount(m_iGainHitCount);
 
