@@ -183,6 +183,7 @@ void CEffect_Layer::Camera_Update(_float fTimeDelta)
 
 void CEffect_Layer::Update(_float fTimeDelta)
 {
+	
 	for (auto& pEffect : m_MixtureEffects)
 		pEffect->Update(fTimeDelta);
 
@@ -209,7 +210,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 				EffectToLayerMatrix = XMLoadFloat4x4(&FinalMatrix);
 			}
-			
+
 			if (pEffect->m_bIsBillboarding)
 			{
 				CTransform* pTransform = CTransform::Create(m_pDevice, m_pContext);
@@ -236,6 +237,8 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 
 	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
+	
 
 }
 

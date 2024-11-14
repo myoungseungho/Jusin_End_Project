@@ -81,6 +81,56 @@ void CChannel::Compute_TransformationMatrix(_float fCurrentPosition, const vecto
 	Bones[m_iBoneIndex]->SetUp_TransformationMatrix(TransformationMatrix);
 }
 
+void CChannel::Compute_TransformationMatrix_NoLinear(_float fCurrentPosition, const vector<class CBone*>& Bones, _uint* pKeyFrameIndex)
+{
+	if (0.f == fCurrentPosition)
+		(*pKeyFrameIndex) = 0;
+
+	_matrix		TransformationMatrix = XMMatrixIdentity();
+
+	KEYFRAME	LastKeyFrame = m_KeyFrames.back();
+
+	_vector		vScale{}, vRotation{}, vPosition{};
+
+	/* 마지막 키프레임의 상태를 가지낟. */
+	if (fCurrentPosition >= LastKeyFrame.fTime)
+	{
+		vScale = XMLoadFloat3(&LastKeyFrame.vScale);
+		vRotation = XMLoadFloat4(&LastKeyFrame.vRotation);
+		vPosition = XMVectorSetW(XMLoadFloat3(&LastKeyFrame.vPosition), 1.f);
+	}
+	/* 왼쪽키프레임와 오른쪽 키프레임사이의 보간된 값을 구하낟. */
+	else
+	{
+		while (fCurrentPosition >= m_KeyFrames[(*pKeyFrameIndex) + 1].fTime)
+			++(*pKeyFrameIndex);
+
+		_float		fRatio = (fCurrentPosition - m_KeyFrames[(*pKeyFrameIndex)].fTime) /
+			(m_KeyFrames[(*pKeyFrameIndex) + 1].fTime - m_KeyFrames[(*pKeyFrameIndex)].fTime);
+
+		_vector		vSourScale, vDestScale;
+		_vector		vSourRotation, vDestRotation;
+		_vector		vSourPosition, vDestPosition;
+
+		vSourScale = XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)].vScale);
+		vSourRotation = XMLoadFloat4(&m_KeyFrames[(*pKeyFrameIndex)].vRotation);
+		vSourPosition = XMVectorSetW(XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex)].vPosition), 1.f);
+
+		//vDestScale = XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex) + 1].vScale);
+		//vDestRotation = XMLoadFloat4(&m_KeyFrames[(*pKeyFrameIndex) + 1].vRotation);
+		//vDestPosition = XMVectorSetW(XMLoadFloat3(&m_KeyFrames[(*pKeyFrameIndex) + 1].vPosition), 1.f);
+
+
+		vScale = vSourScale;
+		vRotation = vSourRotation;
+		vPosition = vSourPosition;
+>>>>>>> f3878c26f172a6e8f732262a749b5b736d825c2c
+	}
+
+	TransformationMatrix = XMMatrixAffineTransformation(vScale, XMVectorSet(0.f, 0.f, 0.f, 1.f), vRotation, vPosition);
+	Bones[m_iBoneIndex]->SetUp_TransformationMatrix(TransformationMatrix);
+}
+
 void CChannel::Update_FrameIndex(_float fCurrentPosition, _uint* pKeyFrameIndex)
 {
 	*pKeyFrameIndex = 0;

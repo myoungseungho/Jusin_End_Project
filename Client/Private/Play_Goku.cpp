@@ -472,7 +472,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	
 
-		 if (m_bNoEventLoofAnimation)
+		if (m_bNoEventLoofAnimation)
 		{
 			Update_NoEventTime(fTimeDelta);
 
@@ -486,51 +486,12 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			 }
 		}
 		else
-		 {
+		{
 			
 
 			Character_Play_Animation(fTimeDelta);
 			
-			//3필 전용
-			// 없어도 돌아가는데? 오히려 있으면 안돌아가는데?
-			//if (m_bFinalSkillss3)
-			//{
-			//	_bool bAnimationEnd = false;
-			//
-			//	_float fPrePosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
-			//
-			//	//_int iOneFrameTeest = 0;
-			//
-			//	if (fPrePosition == 0)
-			//	{
-			//
-			//		ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
-			//		fPrePosition += 0.001;
-			//
-			//		//iOneFrameTeest++;
-			//	}
-			//
-			//	if (m_pModelCom_Skill->Play_Animation_Lick(fTimeDelta))
-			//	{
-			//		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
-			//		if (m_pModelCom_Skill->m_isLoopAnim)
-			//		{
-			//			fPrePosition = 0.001;
-			//			ProcessEventsFramesZero(SKILL_GOKU, m_pModelCom_Skill->m_iCurrentAnimationIndex);
-			//			//iOneFrameTeest++;
-			//		}
-			//		bAnimationEnd = true;
-			//		m_bMotionPlaying = false;
-			//	}
-			//	else
-			//		m_bMotionPlaying = true;
-			//
-			//
-			//	_float fCurPosition = m_pModelCom_Skill->m_fCurrentAnimPosition;
-			//
-			//
-			//	ProcessEventsBetweenFrames2(0, m_pModelCom_Skill->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
-			//}
+			
 
 		 }
 		//이건 반복재생이 아닌데 모션이 끝난경우 (=움직임 자체가 멈췄을 경우),  추락 등 몇몇 애니메이션 제외
@@ -684,7 +645,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		}
 		else
 			DebugPositionReset();
-
+	
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_2))

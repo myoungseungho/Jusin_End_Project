@@ -118,7 +118,7 @@ private:
     _char m_PostionBuffer[30] = "0.0";
 
 
-
+   // _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_Hit.txt";
     _char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_21.txt";
     //_char m_EventTXTBuffer[128] = "../Bin/FrameEventData/EventData_Goku.txt";
 

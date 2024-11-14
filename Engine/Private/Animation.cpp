@@ -60,6 +60,7 @@ _bool CAnimation::Update_TransformationMatrix(_float* pCurrentAnimPosition, _flo
 	for (size_t i = 0; i < m_iNumChannels; i++)
 	{
 		m_Channels[i]->Compute_TransformationMatrix(*pCurrentAnimPosition, Bones, &KeyFrameIndices[i]);
+		//m_Channels[i]->Compute_TransformationMatrix_NoLinear(*pCurrentAnimPosition, Bones, &KeyFrameIndices[i]);
 	}
 
 	return bAnimationEnd;
