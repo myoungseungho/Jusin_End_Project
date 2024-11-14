@@ -209,6 +209,10 @@ public:
 	void Add_YellowLight();
 	void Add_BlueLight();
 
+
+	void Update_214FinalInvisible();
+	_bool isNearlyEqual(_float CurValue, _float TargetValue);
+
 	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 }) override;
 
 

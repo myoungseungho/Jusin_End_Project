@@ -996,6 +996,7 @@ PLAY_21,TON433_body,135,AttackEvent,4
 
 
 PLAY_21,TON433_body,225,AttackEvent,6
+PLAY_21,TON433_body,226,AttackEvent,201
 
 //,PLAY_21,TON433_body,230,AnimSpeedChange,0.018,0.1
 PLAY_21,TON433_body,225,AnimSpeedChange,0.018,0.1

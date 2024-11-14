@@ -988,8 +988,54 @@ PLAY_HIT,HTN432_body,125,AttackEvent,2
 PLAY_HIT,HTN432_body,150,AttackEvent,3
 
 
+//,성공시 끝내고 돌아와서 막타
+PLAY_HIT,HTN432_body,240.1,AnimSpeedChange,0.005,40
+PLAY_HIT,HTN432_body,250,AttackEvent,4
+
+//,다 때리고 뒤돌아서 찐막공격 + 이펙트
+PLAY_HIT,HTN432_body,310,AttackEvent,5
+
+//,Idle로
+PLAY_HIT,HTN432_body,330,AttackEvent,6
+
+
+
 //,3필 성공시
 PLAY_HIT,HTN432cs_body,0,AnimSpeedChange,0.005,60
+PLAY_HIT,HTN432cs_body,0.1,AttackEvent,100
 
-PLAY_HIT,HTN432cs_body,95,AnimSpeedChange,0.005,40
+PLAY_HIT,HTN432cs_body,30,ObjectMove,0.5,0,0.5
+
+PLAY_HIT,HTN432cs_body,48,AttackEvent,0
+PLAY_HIT,HTN432cs_body,48.2,AttackEvent,101
+
+PLAY_HIT,HTN432cs_body,77,AttackEvent,1
+PLAY_HIT,HTN432cs_body,77.2,AttackEvent,102
+
+PLAY_HIT,HTN432cs_body,96,AttackEvent,2
+PLAY_HIT,HTN432cs_body,100,AttackEvent,3
+
+PLAY_HIT,HTN432cs_body,110.05,ObjectMove,1,0,0
+
+
+PLAY_HIT,HTN432cs_body,148.01,AttackEvent,201
+PLAY_HIT,HTN432cs_body,148.2,AttackEvent,202
+
+
+
+
+PLAY_HIT,HTN432cs_body,255,AttackEvent,4
+
+PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
+
+
+//,PLAY_HIT,HTN432cs_body,95,AnimSpeedChange,0.005,40
+//,PLAY_HIT,HTN432cs_body,120,ObjectMove,2,0,0
+//,PLAY_HIT,HTN432cs_body,148,AnimSpeedChange,0.1,60
+//,PLAY_HIT,HTN432cs_body,148,AnimSpeedChange,0.2,30
+//,PLAY_HIT,HTN432cs_body,196,ObjectMove,-2,0,0
+
+PLAY_HIT,HTN432cs_body,255,AnimSpeedChange,0.005,40
+
+PLAY_HIT,HTN432cs_body,293.8,NextAnimationCheck,333333
 
