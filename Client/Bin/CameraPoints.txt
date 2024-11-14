@@ -881,20 +881,28 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 1.44035 1.47028 -0.694434
-Rotation: 0 -0.518087 0 0.855292
+Position: 1.44035 1.58696 -0.694434
+Rotation: -0 -0.51808 -0 0.855332
 Duration: 0.4
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 1.05629 1.47709 -0.493739
-Rotation: 0 -0.518087 0 0.855292
+Position: 0.819924 1.64378 -0.370207
+Rotation: -0 -0.51808 -0 0.855332
 Duration: 0.3
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim3
+PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_MINE

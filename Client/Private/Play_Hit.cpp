@@ -3187,7 +3187,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 0, this);
-			//main_Camera->StartCameraShake(0.8f, 0.3f);
+			main_Camera->StartCameraShake(1.1f, 0.05f);
 		}
 
 		//,¾Èº¸ÀÌ°Ô,¼Óµµºü¸£°Ô, »þ»þ¼¡
