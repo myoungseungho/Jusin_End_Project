@@ -646,7 +646,7 @@ void CVirtual_Camera::Map_Camera(_float fTimeDelta)
 	switch (m_isDyingTeam)
 	{
 	case 1:
-		vPlayerPos =  static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+		vPlayerPos = static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 		break;
 	case 2:
 		vPlayerPos = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
@@ -836,8 +836,13 @@ void CVirtual_Camera::Move_Point(_int index, _int animationIndex)
 		// 2. 로컬 회전
 		_float4 localQuaternion = targetPoint.rotation;
 
-		// **3. 모델의 월드 행렬 로드**
-		_matrix modelWorldMatrix = Float4x4ToMatrix(*targetPoint.pWorldFloat4x4);
+
+		_matrix modelWorldMatrix = {};
+
+		modelWorldMatrix =
+			targetPoint.pWorldFloat4x4 == nullptr
+			? Float4x4ToMatrix(*static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"))->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr())
+			: Float4x4ToMatrix(*targetPoint.pWorldFloat4x4);
 
 		// **스케일링 제거를 위한 행렬 분해**
 		_vector modelScale;

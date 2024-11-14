@@ -3195,14 +3195,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = true;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
-			    
+
 			//,0일떄 속도는 61
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 181.f;
 
 		}
-
+		//여기가 모두 하나의 애니메이션
 		else if (iAttackEvent == 2)
 		{
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 1, this, m_pEnemy);
 
 			MoveToEnemy_Ground(12.f);
 
@@ -3251,14 +3253,15 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 
 		}
+		//이거는 안타네
 		else if (iAttackEvent == 3)
 		{
-
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_IDLE);
 			}
 		}
+		//마지막 펀치
 		else if (iAttackEvent == 4)
 		{
 

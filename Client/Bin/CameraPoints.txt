@@ -898,7 +898,15 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Hit_3_Ultimate_Anim2
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.066347 0.0612768 -6.65303
+Rotation: -0.0902125 0 -0 0.995923
+Duration: 10
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Hit_3_Ultimate_Anim3
