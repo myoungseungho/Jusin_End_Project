@@ -191,7 +191,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 
 	m_pQTE_Manager->Update(fTimeDelta);
 	m_pQTE_Manager->Late_Update(fTimeDelta);
-
+	m_pMap_Manager->Update(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -604,9 +604,9 @@ HRESULT CLevel_GamePlay::Ready_Volcano()
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Mountain");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Mountain"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	//tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Destructive");
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Destructive"), TEXT("Layer_VolcanoStage"), &tDesc)))
-	//	return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Destructive");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Destructive"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
 	
 	return S_OK;
 }

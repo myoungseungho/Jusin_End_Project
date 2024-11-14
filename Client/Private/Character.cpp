@@ -16,7 +16,7 @@
 #include <cmath>
 #include "SpaceMeteoBreak.h"
 #include "Effect_Layer.h"
-
+#include "Map_Manager.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
@@ -3983,12 +3983,12 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 			{
 				m_bDynamicMove = true;
 				static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
-				static_cast<CSpaceMeteoBreak*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_MeteoBreak")).begin()))
-					->Start_Space_DestructiveFinish(m_iLookDirection == -1 ? true : false);
+
+				_float2 fMapToImpulse = CMap_Manager::Get_Instance()->Active_DestructiveFinish(m_iLookDirection == -1 ? true : false);
 
 				m_pEnemy->Set_bDynamicMove(true);
 				
-				Set_fImpulse({ -100.f * m_iLookDirection,30.f });
+				Set_fImpulse(fMapToImpulse);
 
 				m_bDestructiveFinish = true;
 			}

@@ -34,8 +34,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	_float3 m_vFragmentMoveDir[11];
-	_float4 m_vFragmentPosition[11];
+	_float3 m_vFragmentMoveDir[15];
+	_float4 m_vFragmentPosition[15];
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom_Diffuse = { nullptr };
 	CModel* m_pModelCom = { nullptr };
@@ -64,7 +64,7 @@ private:
 	_bool m_isStart = { false };
 	_bool m_isRight = { true };
 public:
-	void Start_Space_DestructiveFinish(_bool isRight = true);
+	void Start_Volcano_DestructiveFinish(_bool isRight = true);
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

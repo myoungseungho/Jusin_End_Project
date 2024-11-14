@@ -177,7 +177,7 @@ PS_OUT PS_MAIN_SKY(PS_IN In)
 {
     PS_OUT Out;
     
-    float2 vTexcoord = In.vTexcoord;
+    float2 vTexcoord = In.vTexcoord * 2.f;
     vTexcoord.y += g_Time * 0.03f;
         /* ¸¶½ºÅ© x */
     float fSideMask = (step(-0.79f, In.vTexcoord.x) * step(In.vTexcoord.x, 1.924f)

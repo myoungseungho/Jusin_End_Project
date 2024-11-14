@@ -44,11 +44,14 @@ HRESULT CVolcano_Destructive::Initialize(void* pArg)
 		return E_FAIL;
 
 	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
+	CTransform::TRANSFORM_DESC tTransformDesc{};
+	tTransformDesc.fRotationPerSec = 1.f;
+	m_pTransformCom->SetUp_TransformDesc(&tTransformDesc);
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0.f));
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
 	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
-	for (size_t i = 0; i < 11; i++)
+	for (size_t i = 0; i < 15; i++)
 		XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
 
 	m_pEffectTransform = CTransform::Create(m_pDevice, m_pContext);
@@ -79,31 +82,33 @@ void CVolcano_Destructive::Camera_Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		Start_Space_DestructiveFinish(false);
+		Start_Volcano_DestructiveFinish(false);
 	}
 	if (m_pGameInstance->Key_Down(DIK_F11))
 	{
-		Start_Space_DestructiveFinish(true);
+		Start_Volcano_DestructiveFinish(true);
 	}
 }
 
-void CVolcano_Destructive::Start_Space_DestructiveFinish(_bool isRight)
+void CVolcano_Destructive::Start_Volcano_DestructiveFinish(_bool isRight)
 {
 	m_isRight = isRight;
 	if (isRight == false)
 	{
 		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(180.f));
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-100.f, 30.f, 0.f, 1.f));
+		m_pTransformCom->Turn(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-20));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-10.f, 0.f, -5.f, 1.f));
 	}
 	else
 	{
 		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0));
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
+		m_pTransformCom->Turn(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(20));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(10.f, 0.f, -5.f, 1.f));
 	}
 
 	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
-	for (size_t i = 0; i < 11; i++)
+	for (size_t i = 0; i < 15; i++)
 		XMStoreFloat4(&m_vFragmentPosition[i], vMainPos);
 
 	m_iRGIndex = 0;

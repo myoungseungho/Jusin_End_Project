@@ -8,7 +8,9 @@
 #include <string>
 #include <locale>
 #include <codecvt>
-
+#include "Volcano_Destructive.h"
+#include "Volcano_SkyCloud.h"
+#include "SpaceMeteoBreak.h"
 
 IMPLEMENT_SINGLETON(CMap_Manager)
 
@@ -39,7 +41,19 @@ void CMap_Manager::Camera_Update(_float fTimeDelta)
 
 void CMap_Manager::Update(_float fTimeDelta)
 {
+	if (m_isDestructive_Active == true)
+	{
+		m_AccTime += fTimeDelta;
+		if (m_AccTime >= 2.f)
+		{
+			Active_DestructiveFinish(m_isRight);
+		}
+	}
 
+	if (m_pGameInstance->Key_Pressing(DIK_F8))
+		Map_Change(MAP_SPACE);
+	if (m_pGameInstance->Key_Pressing(DIK_F7))
+		Map_Change(MAP_VOLCANO);
 }
 
 void CMap_Manager::Late_Update(_float fTimeDelta)
@@ -54,7 +68,81 @@ void CMap_Manager::Render(_float fTimeDelta)
 
 void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 {
+	switch (eMapType)
+	{
+	case MAP_SPACE:
+	case MAP_DEST_SPACE:
+		for (auto& iter : m_SpaceModels)
+			iter.second->SetActive(true);
+		for (auto& iter : m_Destructive_SpaceModels)
+			iter.second->SetActive(true);
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(false);
 
+		m_eCurMap = MAP_SPACE;
+		break;
+	case MAP_VOLCANO:
+	case MAP_DEST_VOLCANO:
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(true);
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(true);
+		for (auto& iter : m_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_SpaceModels)
+			iter.second->SetActive(false);
+
+		m_eCurMap = MAP_VOLCANO;
+		break;
+	}
+}
+
+_float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
+{
+	_float2 fMapToImpulse = { 0.f,0.f };
+	m_isDestructive_Active = true;
+	m_isRight = isRight;
+	if (m_AccTime < 2)
+	{
+		switch (m_eCurMap)
+		{
+		case MAP_SPACE:
+			fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
+			break;
+		case MAP_VOLCANO:
+			fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),40.f };
+			break;
+		}
+		
+		return fMapToImpulse;
+	}
+
+	switch (m_eCurMap)
+	{
+	case MAP_SPACE:
+	static_cast<CSpaceMeteoBreak*>(m_Destructive_SpaceModels[L"Prototype_GameObject_SpaceMeteoBreak"])->Start_Space_DestructiveFinish(isRight);
+	fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
+		break;
+	case MAP_VOLCANO:
+	for (auto& iter : m_VolcanoModels)
+		iter.second->SetActive(false);
+
+	m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"]->m_bIsActive = true;
+
+	static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
+		->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, XMVectorSet(1500, 0, -1000, 1.f));
+	static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
+		->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-10.f));
+	m_VolcanoModels[L"Prototype_GameObject_Volcano_Lava_Ground"]->m_bIsActive = true;
+	m_VolcanoModels[L"Prototype_GameObject_Volcano_Stage"]->m_bIsActive = true;
+	fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
+	static_cast<CVolcano_Destructive*>(m_Destructive_VolcanoModels[L"Prototype_GameObject_Volcano_Destructive"])->Start_Volcano_DestructiveFinish(isRight);
+		break;
+	}
+
+	return fMapToImpulse;
 }
 
 void CMap_Manager::Push_MapObject(MAP_TYPE eMapType, _wstring& strKey, CGameObject* pGameObject)
