@@ -50,6 +50,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 			Active_DestructiveFinish(m_isRight);
 			m_isDestructive_Active = false;
 			m_isDestructive_View = true;
+			m_AccTime = 0.f;
 		}
 	}
 
@@ -60,6 +61,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 		{
 			IsDone_Active();
 			m_isDestructive_View = false;
+			m_MapViewTime = 0.f;
 		}
 	}
 
