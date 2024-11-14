@@ -2564,7 +2564,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->StartCameraShake(0.1f, 0.3f);
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY, 0, this);
+			main_Camera->StartCameraShake(0.8f, 0.3f);
 
 			m_bInvisible = false;
 			MoveToEnemy_Ground(5.f);

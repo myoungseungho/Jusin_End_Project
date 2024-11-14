@@ -780,7 +780,23 @@ SkillName: Camera_Hit_236_Heavy
 
 [Animation]
 AnimationName: Hit_236_Heavy_Anim1
-PointCount: 0
+PointCount: 2
+
+[CameraPoint]
+Position: 0.82 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.63227 1.06662 -2.08723
+Rotation: 0 0.509095 0 0.86071
+Duration: 0.6
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Hit_1_Ultimate
