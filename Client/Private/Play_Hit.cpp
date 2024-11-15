@@ -3312,7 +3312,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Position 240.1
 		else if (iAttackEvent == 240)
 		{
-
+			
+			//main_Camera->StartCameraShake(0.5f, 0.05f);
 		}
 		//마지막 펀치
 		else if (iAttackEvent == 4)
@@ -3702,6 +3703,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//255 클로즈업 ,  다음애니메이션 설정, START의 240으로 이동
 		else if (iAttackEvent == 4)
 		{
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 3, this);
+
 			m_bInvisible = false;
 			m_bDynamicMove = false;
 
