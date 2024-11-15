@@ -1,7 +1,7 @@
 [Layer]
 LayerName: Volcano_Dust
 Duration: 1
-TickPerSecond: 0
+TickPerSecond: 0.1
 KeyFramesCount: 59
 NumEffec: 1
 Position: 0 0 0
@@ -19,7 +19,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.3 0.3 0.2
 Rotation: 0 0 0
 IsLoop: false
 Color: 254.156 48.1291 0 30
@@ -36,3 +36,4 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
+

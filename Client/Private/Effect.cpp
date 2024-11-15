@@ -130,7 +130,7 @@ void CEffect::Set_ParentMatrixMultiply_LocalMatrix()
 	_matrix TestMatrix = WorldMatrix * m_LayerMatrix;
 	XMStoreFloat4x4(&LayerMatrix, TestMatrix);
 	//m_pTransformCom->Set_WorldMatrix(LayerMatrix);
-
+	
 	XMStoreFloat4x4(&m_WorldMatrix, WorldMatrix* m_LayerMatrix);
 	//m_pTransformCom->Set_Matrix(TestMatrix);
 //	m_pTransformCom->Set_Matrix(m_pTransformCom->Get_WorldMatrix_Inverse());

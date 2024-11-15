@@ -1758,6 +1758,8 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Five_Dir"), &tDesc);
+
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
 		//Set_fJumpPower(4.f); //중력Ver1 기준
