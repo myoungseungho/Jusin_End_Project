@@ -53,6 +53,10 @@ _ushort CBattleInterface_Manager::Get_HitCount(_ushort iTeam)
 
 _bool CBattleInterface_Manager::Get_bSparkingEnable(_ushort iTeam)
 {
+
+    if (m_pGameInstance->Key_Pressing(DIK_HOME))
+        return true;
+
     return  m_bSparkingEnable[iTeam-1];
 }
 

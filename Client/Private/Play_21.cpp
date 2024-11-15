@@ -73,6 +73,8 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	//m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
+	m_fAIrGrabEndAnimationPositon = 29.99f;
+
 	m_eCharacterIndex = PLAY_21;
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;

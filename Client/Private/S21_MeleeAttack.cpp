@@ -276,9 +276,11 @@ void CS21_MeleeAttack::Attack_Special()
 
 
 	}
-	else if(*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2)
+	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2))
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL,0.5f,16.f);
+		//m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL, 0.5f, 16.f);
+		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL);
+		m_pPlayer->Set_CurrentAnimationPositionJump(16.f);
 
 		if (m_pPlayer->Get_fHeight() < 1)
 		{
@@ -291,6 +293,21 @@ void CS21_MeleeAttack::Attack_Special()
 
 		m_pPlayer->Set_fGravityTime(0.07f);
 	}
+	//else if( m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_AIR2))
+	//{
+	//	m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL,0.5f,16.f);
+	//
+	//	if (m_pPlayer->Get_fHeight() < 1)
+	//	{
+	//		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 1.f,0.5f });
+	//	}
+	//	else
+	//	{
+	//		m_pPlayer->Set_fImpulse({ m_pPlayer->Get_iDirection() * 1.f,0.f });
+	//	}
+	//
+	//	m_pPlayer->Set_fGravityTime(0.07f);
+	//}
 	
 	else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_CROUCHING)
 	{

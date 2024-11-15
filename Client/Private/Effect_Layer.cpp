@@ -121,7 +121,9 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 
 		if (0 > m_pPlayerMatrix->_11)
 		{
+
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
+
 
 			XMVECTOR Scale, Rotation, Position;
 
@@ -133,11 +135,9 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 
 			fLayerMatrix._41 += XMVectorGetX(Position);
 			fLayerMatrix._42 += XMVectorGetY(Position);
-			if ((*m_MixtureEffects.begin())->m_EffectName != L"BurstR-02")
-			{
-				fLayerMatrix._43 *= -1;
-			}
-			
+
+			fLayerMatrix._43 *= -1;
+
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 

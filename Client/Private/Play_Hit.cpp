@@ -54,6 +54,8 @@ HRESULT CPlay_Hit::Initialize_Prototype()
 HRESULT CPlay_Hit::Initialize(void* pArg)
 {
 
+	m_fAIrGrabEndAnimationPositon = 39.99f;
+
 	m_eCharacterIndex = PLAY_HIT;
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
@@ -3487,7 +3489,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Position 100
 		else if (iAttackEvent == 3)
 		{
-			Set_CurrentAnimationPositionJump(105.f);
+
 			//m_pModelCom->Get_pCurrentAnimation()->m_fDuration = 0.20f;
 
 
@@ -3500,8 +3502,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 100.00f;
 
 
-			m_pModelCom->Set_MaxAnimationUpdate_Time(0.02f);
-			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 50.00f;
+			//Set_CurrentAnimationPositionJump(105.f);
+			//m_pModelCom->Set_MaxAnimationUpdate_Time(0.02f);
+			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 50.00f;
+
+			Set_CurrentAnimationPositionJump(135.f);
+			Add_Move({ 1.f * m_iLookDirection,0.f });
+			m_pModelCom->Set_MaxAnimationUpdate_Time(0.04f);
+			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.00f;
+			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 40.00f;
+
 
 			m_bInvisible = true;
 
@@ -3565,7 +3575,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				//if(m_bFinalSkillss3)
 
-				Desc.iDamage = 100 * Get_DamageScale(true);
 				Desc.fLifeTime = 15.f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY };
 				Desc.iTeam = m_iPlayerTeam;
@@ -3582,8 +3591,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//애니메이션 속도 100
 				Desc.fMoveSpeedNoneDirection = { 10.f,0.f };
 
+				//속도 0.02
+				//Desc.iDamage = 100 * Get_DamageScale(true);
+				//Desc.iAttackCount = 50;
 
-				Desc.iAttackCount = 50;
+				Desc.iDamage = 50 * Get_DamageScale(true);
+				Desc.iAttackCount = 100;
+
+
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 2;
 				Desc.iGainAttackStep = 0;

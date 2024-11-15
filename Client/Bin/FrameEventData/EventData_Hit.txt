@@ -726,8 +726,10 @@ PLAY_HIT,HTN262_body,0,AnimSpeedChange,0.020000,110.251999
 //,PLAY_HIT,HTN262_body,15,AnimSpeedChange,0.020000,55.251999
 //,PLAY_HIT,HTN262_body,15,AnimSpeedChange,0.020000,85.251999
 
-PLAY_HIT,HTN262_body,40,AttackEvent,33333
 PLAY_HIT,HTN262_body,30,AnimSpeedChange,0.020000,92
+PLAY_HIT,HTN262_body,40,AttackEvent,33333
+PLAY_HIT,HTN262_body,40,AnimSpeedChange,0.020000,92
+
 
 PLAY_HIT,HTN262_body,45,NextAnimationCheck,3333
 PLAY_HIT,HTN262_body,55,NextAnimationCheck,3333
