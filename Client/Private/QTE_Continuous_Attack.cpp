@@ -66,20 +66,20 @@ void CQTE_Continuous_Attack::Camera_Update(_float fTimeDelta)
 void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 {
 #pragma region 디버그
-	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F1))
-	{
-		if (m_bIsQTEActive)
-		{
-			// QTE가 활성화되어 있으면 즉시 종료
-			End_QTE();
-		}
-		else
-		{
-			// QTE가 비활성화되어 있으면 시작
-			Start_QTE();
-		}
-	}
+	//// F5 키 입력 감지
+	//if (m_pGameInstance->Key_Down(DIK_F1))
+	//{
+	//	if (m_bIsQTEActive)
+	//	{
+	//		// QTE가 활성화되어 있으면 즉시 종료
+	//		End_QTE();
+	//	}
+	//	else
+	//	{
+	//		// QTE가 비활성화되어 있으면 시작
+	//		Start_QTE();
+	//	}
+	//}
 #pragma endregion
 
 #pragma region 활성화
@@ -380,6 +380,20 @@ HRESULT CQTE_Continuous_Attack::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CQTE_Continuous_Attack::Start()
+{
+	if (m_bIsQTEActive)
+	{
+		// QTE가 활성화되어 있으면 즉시 종료
+		End_QTE();
+	}
+	else
+	{
+		// QTE가 비활성화되어 있으면 시작
+		Start_QTE();
+	}
 }
 
 HRESULT CQTE_Continuous_Attack::Ready_Components()

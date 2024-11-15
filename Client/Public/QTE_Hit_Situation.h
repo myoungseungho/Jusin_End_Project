@@ -31,6 +31,7 @@ public:
 
 	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complete = true; };
 	void Notify_Faild_Result(class CQTE_Hit_UI_Icon* icon);
+	void Start();
 private:
 	void Start_QTE();
 	void End_QTE();

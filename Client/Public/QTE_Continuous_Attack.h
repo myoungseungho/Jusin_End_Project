@@ -35,7 +35,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Notify_Result(MISSION_STATE isResult) { m_eMissionState = isResult; };
-
+	void Start();
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

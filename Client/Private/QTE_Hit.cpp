@@ -73,6 +73,7 @@ HRESULT CQTE_Hit::Render(_float fTimeDelta)
 void CQTE_Hit::Start_Hit(Hit_Situation_ID _ID)
 {
 	m_current_Situation_ID = _ID;
+	m_vecHit_Situation[m_current_Situation_ID]->Start();
 }
 
 

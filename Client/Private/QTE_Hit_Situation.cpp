@@ -76,35 +76,35 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 	// F5 키 입력 감지
 	if (m_pGameInstance->Key_Down(DIK_F5))
 	{
-		if (m_bIsQTEActive)
-		{
-			// QTE가 활성화되어 있으면 즉시 종료
-			End_QTE();
+		//if (m_bIsQTEActive)
+		//{
+		//	// QTE가 활성화되어 있으면 즉시 종료
+		//	End_QTE();
 
-			// UI 객체 삭제 시간
-			for (auto& iter : m_vecHitUIIcon)
-				Safe_Release(iter);
+		//	// UI 객체 삭제 시간
+		//	for (auto& iter : m_vecHitUIIcon)
+		//		Safe_Release(iter);
 
-			for (auto& iter : m_vecHitResult)
-				Safe_Release(iter);
+		//	for (auto& iter : m_vecHitResult)
+		//		Safe_Release(iter);
 
-			for (auto& iter : m_vecHitParticle)
-				Safe_Release(iter);
+		//	for (auto& iter : m_vecHitParticle)
+		//		Safe_Release(iter);
 
-			m_vecHitUIIcon.clear();
-			m_vecHitResult.clear();
-			m_vecHitParticle.clear();
+		//	m_vecHitUIIcon.clear();
+		//	m_vecHitResult.clear();
+		//	m_vecHitParticle.clear();
 
-			m_fOffsetTimer = 0.f;
-			m_bOffsetActive = false; // 오프셋 기간 종료
+		//	m_fOffsetTimer = 0.f;
+		//	m_bOffsetActive = false; // 오프셋 기간 종료
 
-		}
-		else
-		{
-			// QTE가 비활성화되어 있으면 시작
-			// 첫번째 아이콘을 즉각 만들어버림
-			Start_QTE();
-		}
+		//}
+		//else
+		//{
+		//	// QTE가 비활성화되어 있으면 시작
+		//	// 첫번째 아이콘을 즉각 만들어버림
+		//	Start_QTE();
+		//}
 	}
 #pragma endregion
 
@@ -188,6 +188,39 @@ HRESULT CQTE_Hit_Situation::Render(_float fTimeDelta)
 void CQTE_Hit_Situation::Notify_Faild_Result(CQTE_Hit_UI_Icon* icon)
 {
 	Create_ResultObject(icon);
+}
+
+void CQTE_Hit_Situation::Start()
+{
+	if (m_bIsQTEActive)
+	{
+		// QTE가 활성화되어 있으면 즉시 종료
+		End_QTE();
+
+		// UI 객체 삭제 시간
+		for (auto& iter : m_vecHitUIIcon)
+			Safe_Release(iter);
+
+		for (auto& iter : m_vecHitResult)
+			Safe_Release(iter);
+
+		for (auto& iter : m_vecHitParticle)
+			Safe_Release(iter);
+
+		m_vecHitUIIcon.clear();
+		m_vecHitResult.clear();
+		m_vecHitParticle.clear();
+
+		m_fOffsetTimer = 0.f;
+		m_bOffsetActive = false; // 오프셋 기간 종료
+
+	}
+	else
+	{
+		// QTE가 비활성화되어 있으면 시작
+		// 첫번째 아이콘을 즉각 만들어버림
+		Start_QTE();
+	}
 }
 
 void CQTE_Hit_Situation::Start_QTE()

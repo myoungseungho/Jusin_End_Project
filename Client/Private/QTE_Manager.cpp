@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "QTE_Manager.h"
 #include "GameInstance.h"
+#include "QTE_Same_Grab.h"
+#include "QTE_Hit.h"
+#include "QTE_Continuous_Attack.h"
 
 IMPLEMENT_SINGLETON(CQTE_Manager)
 
@@ -36,6 +39,9 @@ void CQTE_Manager::Update(_float fTimeDelta)
 {
 	for (auto& iter : m_vecQTE)
 		iter->Update(fTimeDelta);
+
+	if (m_pGameInstance->Key_Down(DIK_F1))
+		Start_QTE(QTE_ID::QTE_ID_CONTINUOUS_ATTACK);
 }
 
 void CQTE_Manager::Late_Update(_float fTimeDelta)
@@ -49,9 +55,20 @@ HRESULT CQTE_Manager::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_Manager::Start_Hit(CQTE_Hit::Hit_Situation_ID _ID)
+void CQTE_Manager::Start_QTE(QTE_ID ID, Hit_Situation_ID Hit_Situation_ID)
 {
-	static_cast<CQTE_Hit*>(m_vecQTE[_ID])->Start_Hit(_ID);
+	switch (ID)
+	{
+	case Client::CQTE_Manager::QTE_ID_SAME_GRAB:
+		static_cast<CQTE_Same_Grab*>(m_vecQTE[ID])->Start();
+		break;
+	case Client::CQTE_Manager::QTE_ID_HIT:
+		static_cast<CQTE_Hit*>(m_vecQTE[ID])->Start_Hit((CQTE_Hit::Hit_Situation_ID)Hit_Situation_ID);
+		break;
+	case Client::CQTE_Manager::QTE_ID_CONTINUOUS_ATTACK:
+		static_cast<CQTE_Continuous_Attack*>(m_vecQTE[ID])->Start();
+		break;
+	}
 }
 
 void CQTE_Manager::Free()

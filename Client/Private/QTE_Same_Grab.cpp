@@ -42,20 +42,20 @@ void CQTE_Same_Grab::Camera_Update(_float fTimeDelta)
 void CQTE_Same_Grab::Update(_float fTimeDelta)
 {
 #pragma region 디버그
-	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F6))
-	{
-		if (m_bIsQTEActive)
-		{
-			// QTE가 활성화되어 있으면 즉시 종료
-			End_QTE();
-		}
-		else
-		{
-			// QTE가 비활성화되어 있으면 시작
-			Start_QTE();
-		}
-	}
+	//// F5 키 입력 감지
+	//if (m_pGameInstance->Key_Down(DIK_F6))
+	//{
+	//	if (m_bIsQTEActive)
+	//	{
+	//		// QTE가 활성화되어 있으면 즉시 종료
+	//		End_QTE();
+	//	}
+	//	else
+	//	{
+	//		// QTE가 비활성화되어 있으면 시작
+	//		Start_QTE();
+	//	}
+	//}
 #pragma endregion
 
 
@@ -136,6 +136,20 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 	}
 }
 
+
+void CQTE_Same_Grab::Start()
+{
+	if (m_bIsQTEActive)
+	{
+		// QTE가 활성화되어 있으면 즉시 종료
+		End_QTE();
+	}
+	else
+	{
+		// QTE가 비활성화되어 있으면 시작
+		Start_QTE();
+	}
+}
 
 void CQTE_Same_Grab::Start_QTE()
 {

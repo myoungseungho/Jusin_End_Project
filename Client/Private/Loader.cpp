@@ -3934,12 +3934,12 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		return E_FAIL;
 
 	//Hit ÆÄÆ¼Å¬
-	ParticleDesc.iNumInstance = 200;
+	ParticleDesc.iNumInstance = 500;
 	ParticleDesc.vRange = _float3(0.1f, 0.1f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(0.3f, 0.4f);
-	ParticleDesc.vScale = _float2(3.f, 3.f);
+	ParticleDesc.vSpeed = _float2(0.05f, 0.5f);
+	ParticleDesc.vScale = _float2(2.f, 2.f);
 	ParticleDesc.vLifeTime = _float2(1.2f, 1.5f);
 	ParticleDesc.isLoop = false;
 
