@@ -16,8 +16,8 @@
 #include "UI_LoadingMark.h"
 #include "UI_Loading_Font.h"
 #include "UI_LoadingSpaceLight.h"
-
-
+#include "UI_Loading_FlyEff.h"
+#include "UI_Loading_DragonBall.h"
 
 _bool CLevel_Loading::m_bIsLevelPrepared = false;
 
@@ -37,10 +37,10 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (FAILED(Ready_Layer()))
 		return E_FAIL;
 
-	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
-	if (nullptr == m_pLoader)
-		return E_FAIL;
-
+	//m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
+	//if (nullptr == m_pLoader)
+	//	return E_FAIL;
+	
 	m_bIsLevelPrepared = TRUE;
 	
 	return S_OK;
@@ -76,6 +76,21 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Stage_Image/sp_light.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_LoadingSpaceLight */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingFlyEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_LoadingBallEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBallEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/cp_dg_ball_Eff%d.png"),9))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_LoadingBallEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingDragonBall"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/DragonBall%d.png"), 8))))
+		return E_FAIL;
+
 #pragma endregion
 
 	/* For.Prototype_GameObject_UI_Loading */
@@ -93,9 +108,19 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CUI_Loading_Font::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_UI_LoadingFont */
+	/* For.Prototype_GameObject_UI_LoadingSpaceLight */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_LoadingSpaceLight"),
 		CUI_LoadingSpaceLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Loading_FlyEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_FlyEff"),
+		CUI_Loading_FlyEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Loading_DragonBall */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_DragonBall"),
+		CUI_Loading_DragonBall::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 
@@ -120,43 +145,55 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingFont"), TEXT("Layer_UI_LoadingBackGround"));
 
+	CUIObject::UI_DESC BallDesc = {};
+	for (int i = 0; i < 7; i++)
+	{
+		BallDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_DragonBall"), TEXT("Layer_UI_LoadingHole"), &BallDesc);
+	}
+
+	CUIObject::UI_DESC FlyDesc = {};
+	FlyDesc.fSpeedPerSec = 200.f;
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_FlyEff"), TEXT("Layer_UI_LoadingBackGround"),&FlyDesc);
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
+	
 	return S_OK;
 }
 
 void CLevel_Loading::Update(_float fTimeDelta)
 {
-	if (true == m_pLoader->isFinished())
-	{
-		CLevel* pNextLevel = { nullptr };
-
-		switch (m_eNextLevelID)
-		{
-		case LEVEL_LOGO:
-			pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
-			break;
-
-		case LEVEL_GAMEPLAY:
-			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
-			break;
-		case LEVEL_LOBBY:
-			pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
-			break;
-		case LEVEL_CHARACTER:
-			pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
-			break;
-
-		case LEVEL_VS:
-			pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
-			break;
-
-
-		}
-
-		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
-			return;
-	}
+	//if (true == m_pLoader->isFinished())
+	//{
+	//	CLevel* pNextLevel = { nullptr };
+	//
+	//	switch (m_eNextLevelID)
+	//	{
+	//	case LEVEL_LOGO:
+	//		pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
+	//		break;
+	//
+	//	case LEVEL_GAMEPLAY:
+	//		pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
+	//		break;
+	//	case LEVEL_LOBBY:
+	//		pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
+	//		break;
+	//	case LEVEL_CHARACTER:
+	//		pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
+	//		break;
+	//
+	//	case LEVEL_VS:
+	//		pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
+	//		break;
+	//
+	//
+	//	}
+	//
+	//	if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+	//		return;
+	//}
 }
 
 HRESULT CLevel_Loading::Render(_float fTimeDelta)

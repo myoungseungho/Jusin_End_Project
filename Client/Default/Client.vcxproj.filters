@@ -498,6 +498,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\Map_Manager.cpp">
       <Filter>02.GameObjects\Map\Manager</Filter>
+</ClCompile>
+    <ClCompile Include="..\private\UI_VS_Name.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_NameOutLine.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_FlyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_DragonBall.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\DragonBall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1064,6 +1076,18 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Manager">
       <UniqueIdentifier>{e1787cdf-4e20-409a-b6c6-3fab229bdacc}</UniqueIdentifier>
+  </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Name">
+      <UniqueIdentifier>{e99bdeb3-a273-44fe-ab5e-b12818390da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Name\OutLine">
+      <UniqueIdentifier>{fb1e193e-7444-4c2a-9b1c-c1cd12512f0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\FlyEffect">
+      <UniqueIdentifier>{c5718074-c156-483f-bf17-d531286d0ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\DragonBall">
+      <UniqueIdentifier>{901edc1d-0bde-4cc1-9ff9-03cfb3f2c976}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1726,6 +1750,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\Play_Hit.h">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Name.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_NameOutLine.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_FlyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_DragonBall.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\DragonBall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

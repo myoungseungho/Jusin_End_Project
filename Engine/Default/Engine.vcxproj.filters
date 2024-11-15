@@ -127,6 +127,9 @@
     <Filter Include="01.Utility\03.Components\VIBuffer\VIBuffer_Instancing\VIBuffer_Point_Instancing">
       <UniqueIdentifier>{90ce4904-e6d5-4b2e-8ccb-1e53e4abb7c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\Rect\Trail">
+      <UniqueIdentifier>{dbe6c22f-5bd8-4904-9a25-7db03eeff661}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\GameInstance.cpp">
@@ -282,6 +285,9 @@
     <ClCompile Include="..\Private\VIBuffer_Point_Instancing.cpp">
       <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Instancing\VIBuffer_Point_Instancing</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Trail_Rect.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\Rect\Trail</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Timer.h">
@@ -433,6 +439,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Point_Instancing.h">
       <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Instancing\VIBuffer_Point_Instancing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Trail_Rect.h">
+      <Filter>01.Utility\03.Components\VIBuffer\Rect\Trail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

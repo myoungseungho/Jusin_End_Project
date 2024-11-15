@@ -38,6 +38,7 @@ private:
 	CTransform* m_pArrowTransform = { nullptr };
 	vector<CUI_Define::PLAYER_ID> m_ePlayerID = {};
 	_bool m_bOverClear = { FALSE };
+	_bool m_bOnCursor = { FALSE };
 
 public:
 	static CUI_CharaSelectIcon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -89,7 +89,7 @@ void GS_MAIN(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
     Out[2].vLifeTime = In[0].vLifeTime;
 
     Out[3].vPosition = vector(In[0].vPosition.xyz - vRight - vUp, 1.f);
-    Out[3].vTexcoord = float2(0.f, 1.f);
+    Out[3].vTexcoord = float2(0.f, 1.f); 
     Out[3].vPosition = mul(Out[3].vPosition, matVP);
     Out[3].vLifeTime = In[0].vLifeTime;
 	
