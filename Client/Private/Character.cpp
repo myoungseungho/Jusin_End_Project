@@ -1752,11 +1752,11 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 
 		//점프 먼지
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
