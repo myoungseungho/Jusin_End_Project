@@ -485,12 +485,15 @@ void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
 }
 
+void CMain_Camera::Set_CirclePlay(_bool isCircle, _bool isClockwise, _float duration, _float rotationSpeed)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->SetCirclePlay(isCircle, isClockwise, duration, rotationSpeed);
+}
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
-
 
 CMain_Camera* CMain_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
