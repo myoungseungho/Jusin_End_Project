@@ -20,7 +20,6 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	// 모델 이름 배열 초기화
 	MODEL_NAMES[CAMERA_MODELID_NORMAL] = "Normal";
 	MODEL_NAMES[CAMERA_MODELID_FREE] = "Free";
-	MODEL_NAMES[CAMERA_MODELID_MAP] = "Map";
 	MODEL_NAMES[CAMERA_MODELID_SON] = "Son";
 	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
@@ -31,14 +30,13 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	// 모델별 스킬 목록 초기화
 	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash","Camera_Son_Grab","Camera_Son_Same_Grab","Camera_Son_Energy","Camera_Son_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash","Camera_21_Grab","Camera_21_Same_Grab","Camera_21_Grab_Special","Camera_21_Energy","Camera_21_Ultimate" };
-	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Air_Smash" };
+	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Grab","Camera_Hit_214_Middle","Camera_Hit_236_Middle","Camera_Hit_236_Heavy","Camera_Hit_1_Ultimate","Camera_Hit_3_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_MINE] = { "Camera_Mine_Heavy", "Camera_Mine_Knock_Away_Up","Camera_Mine_Air_Smash" };
 
 	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
 	// 기본 카메라 매핑
 	m_CameraIndexMap[{CAMERA_MODELID_NORMAL, -1}] = index++;
 	m_CameraIndexMap[{CAMERA_MODELID_FREE, -1}] = index++;
-	m_CameraIndexMap[{CAMERA_MODELID_MAP, -1}] = index++;
 
 	// 각 모델과 그에 해당하는 스킬을 순회하며 매핑 설정
 	for (const auto& modelSkillPair : m_ModelSkills)
@@ -114,22 +112,42 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 7)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3", "21_Ultimate_Anim4", "21_Ultimate_Anim5" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Ultimate_Anim1", "21_Ultimate_Anim2", "21_Ultimate_Anim3_Success", "21_Ultimate_Anim3_Fail", "21_Ultimate_Anim4", "21_Ultimate_Anim4_Flip" };
 				}
 			}
 			else if (model == CAMERA_MODELID_HIT)
 			{
-				if (skillIdx == 0) // 21_Skill1
+				if (skillIdx == 0) // 21_강공격
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "Hit_Heavy_Anim1" };
 				}
-				else if (skillIdx == 1) // 21_Skill2
+				else if (skillIdx == 1) // 어퍼
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "Hit_Knock_Away_Up_Anim1" };
 				}
-				else if (skillIdx == 2) // 21_Skill3
+				else if (skillIdx == 2) // 잡기
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Hit_Air_Smash_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_Grab_Anim1" };
+				}
+				else if (skillIdx == 3) // 히트 214 중
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_214_Middle_Anim1" };
+				}
+				else if (skillIdx == 4) // 히트 236 중
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_236_Middle_Anim1" };
+				}
+				else if (skillIdx == 5) // 히트 236 강
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_236_Heavy_Anim1" };
+				}
+				else if (skillIdx == 6) // 히트 1필
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_1_Ultimate_Anim1" };
+				}
+				else if (skillIdx == 7) // 히트 3필
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_3_Ultimate_Anim1" };
 				}
 			}
 			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화
@@ -220,7 +238,7 @@ void CIMGUI_Camera_Tab::IMGUI_Camera_Select_Model(_float fTimeDelta)
 	}
 
 	//카메라 모델이 디폴트나 FREE모드라면 모델 선택 후 바로 교체
-	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE || m_iSelected_Model == CAMERA_MODELID_MAP)
+	if (m_iSelected_Model == CAMERA_MODELID_NORMAL || m_iSelected_Model == CAMERA_MODELID_FREE)
 		UpdateCameraSelection();
 }
 

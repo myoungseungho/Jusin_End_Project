@@ -112,7 +112,11 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	}
 
 	CGameObject* player = { nullptr };
-	player = m_iTeam == 1 ? m_p1pPlayer : m_p2pPlayer;
+
+	if (m_pEnemy == nullptr)
+		player = m_iTeam == 1 ? m_p1pPlayer : m_p2pPlayer;
+	else
+		player = m_pEnemy;
 
 	// 플레이어의 방향 가져오기 (1이면 그대로, -1이면 반전)
 	CCharacter* character = static_cast<CCharacter*>(player);
@@ -179,6 +183,21 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	// **3. 모델의 월드 행렬 로드 (스케일링 포함)**
 	_matrix modelWorldMatrix = Float4x4ToMatrix(*currentPoint.pWorldFloat4x4);
 
+	// 좌우 반전을 카메라 단위로 따로 만들어준 녀석은 스케일링 제거해야 함
+	if (direction == -1 && m_bIsIgnoreFlip) {
+		// **스케일링 제거를 위한 행렬 분해**
+		_vector modelScale;
+		_vector modelRotationQuat;
+		_vector modelTranslation;
+		XMMatrixDecompose(&modelScale, &modelRotationQuat, &modelTranslation, modelWorldMatrix);
+
+		// **스케일링이 제거된 모델의 월드 행렬 재구성**
+		_matrix modelRotationMatrix = XMMatrixRotationQuaternion(modelRotationQuat);
+		_matrix modelTranslationMatrix = XMMatrixTranslationFromVector(modelTranslation);
+		modelWorldMatrix = modelRotationMatrix * modelTranslationMatrix;
+	}
+
+
 	// **4. 로컬 포지션을 월드 포지션으로 변환 (스케일링 포함)**
 	_vector interpolatedPositionWorld = XMVector3TransformCoord(interpolatedPositionLocal, modelWorldMatrix);
 
@@ -196,12 +215,22 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 	}
 
 	//**direction에 따른 회전 조정**
-	if (direction == -1)
+	//또한 Flip을 무시하는 속성이 false여야 반전시키기
+	if (direction == -1 && m_bIsIgnoreFlip == false)
 	{
-		// 쿼터니언의 Y와 Z 성분 반전
+		// 쿼터니언의 Y 성분 반전
 		interpolatedRotationLocal = XMVectorSet(
 			XMVectorGetX(interpolatedRotationLocal),
 			-XMVectorGetY(interpolatedRotationLocal),
+			XMVectorGetZ(interpolatedRotationLocal),
+			XMVectorGetW(interpolatedRotationLocal));
+	}
+	else if (direction == -1 && m_bIsIgnoreFlip)
+	{
+		// 쿼터니언의 Y 성분 반전
+		interpolatedRotationLocal = XMVectorSet(
+			XMVectorGetX(interpolatedRotationLocal),
+			XMVectorGetY(interpolatedRotationLocal),
 			XMVectorGetZ(interpolatedRotationLocal),
 			XMVectorGetW(interpolatedRotationLocal));
 	}
@@ -292,13 +321,96 @@ void CVirtual_Camera::Set_Camera_Direction(_float averageX, _gvector pos1, _gvec
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, fixedLook);
 }
 
-void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
+void CVirtual_Camera::Print_Flip_Rotation()
 {
-	m_iTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
+	// 입력 쿼터니언 값 설정 (데이터 파일에서 가져오거나 하드코딩)
+	float x = -0.162778f;
+	float y = -0.584241f;
+	float z = -0.121022f;
+	float w = 0.785824f;
 
-	if (m_iTeam == 1)
+	// 쿼터니언 로드 및 정규화
+	XMVECTOR quat = XMVectorSet(x, y, z, w);
+	quat = XMQuaternionNormalize(quat);
+
+	// 원본 쿼터니언 출력
+	cout << "Original Quaternion: (" << x << ", " << y << ", " << z << ", " << w << ")" << endl;
+
+	// 반사 변환을 적용하는 함수 정의
+	auto ReflectQuaternion = [](XMVECTOR q, XMMATRIX reflectionMatrix) {
+		// 쿼터니언을 회전 행렬로 변환
+		XMMATRIX rotMatrix = XMMatrixRotationQuaternion(q);
+		// 반사된 회전 행렬 계산: M' = R * M * R
+		XMMATRIX reflectedMatrix = reflectionMatrix * rotMatrix * reflectionMatrix;
+		// 반사된 회전 행렬을 쿼터니언으로 변환
+		XMVECTOR qReflected = XMQuaternionRotationMatrix(reflectedMatrix);
+		// 정규화
+		qReflected = XMQuaternionNormalize(qReflected);
+		return qReflected;
+		};
+
+	// 각 축에 대한 반사 행렬 정의
+	XMMATRIX reflectX = XMMatrixScaling(-1.0f, 1.0f, 1.0f);
+	XMMATRIX reflectY = XMMatrixScaling(1.0f, -1.0f, 1.0f);
+	XMMATRIX reflectZ = XMMatrixScaling(1.0f, 1.0f, -1.0f);
+	XMMATRIX reflectXY = XMMatrixScaling(-1.0f, -1.0f, 1.0f);
+	XMMATRIX reflectXZ = XMMatrixScaling(-1.0f, 1.0f, -1.0f);
+	XMMATRIX reflectYZ = XMMatrixScaling(1.0f, -1.0f, -1.0f);
+	XMMATRIX reflectXYZ = XMMatrixScaling(-1.0f, -1.0f, -1.0f);
+
+	// 결과를 저장할 변수
+	XMFLOAT4 reflectedQuaternion;
+
+	// X축 반전
+	XMVECTOR qReflectX = ReflectQuaternion(quat, reflectX);
+	XMStoreFloat4(&reflectedQuaternion, qReflectX);
+	cout << "Reflection over X-axis: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// Y축 반전
+	XMVECTOR qReflectY = ReflectQuaternion(quat, reflectY);
+	XMStoreFloat4(&reflectedQuaternion, qReflectY);
+	cout << "Reflection over Y-axis: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// Z축 반전
+	XMVECTOR qReflectZ = ReflectQuaternion(quat, reflectZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectZ);
+	cout << "Reflection over Z-axis: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// XY축 반전
+	XMVECTOR qReflectXY = ReflectQuaternion(quat, reflectXY);
+	XMStoreFloat4(&reflectedQuaternion, qReflectXY);
+	cout << "Reflection over X and Y axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// XZ축 반전
+	XMVECTOR qReflectXZ = ReflectQuaternion(quat, reflectXZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectXZ);
+	cout << "Reflection over X and Z axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// YZ축 반전
+	XMVECTOR qReflectYZ = ReflectQuaternion(quat, reflectYZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectYZ);
+	cout << "Reflection over Y and Z axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+
+	// XYZ축 반전
+	XMVECTOR qReflectXYZ = ReflectQuaternion(quat, reflectXYZ);
+	XMStoreFloat4(&reflectedQuaternion, qReflectXYZ);
+	cout << "Reflection over X, Y, and Z axes: (" << reflectedQuaternion.x << ", " << reflectedQuaternion.y << ", "
+		<< reflectedQuaternion.z << ", " << reflectedQuaternion.w << ")" << endl;
+}
+
+void CVirtual_Camera::Set_Player(CGameObject* pPlayer, CGameObject* pEnemy)
+{
+	_uint uTeam = static_cast<CCharacter*>(pPlayer)->Get_iPlayerTeam();
+
+	if (uTeam == 1)
 		m_p1pPlayer = pPlayer;
-	else if (m_iTeam == 2)
+	else if (uTeam == 2)
 		m_p2pPlayer = pPlayer;
 
 	for (auto& iter : m_mapPoints)
@@ -310,9 +422,10 @@ void CVirtual_Camera::Set_Player(CGameObject* pPlayer)
 		}
 	}
 
+	m_pEnemy = pEnemy;
 }
 
-void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject)
+void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameObject* gameObject, _bool ignoreFlip)
 {
 	if (m_mapPoints[animationIndex].size() == 0)
 		return;
@@ -321,8 +434,9 @@ void CVirtual_Camera::Start_Play(_int animationIndex, _bool isImguiPlay, CGameOb
 		for (auto& iter2 : iter.second)
 			iter2.pWorldFloat4x4 = static_cast<CTransform*>(gameObject->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
 
+	m_bIsIgnoreFlip = ignoreFlip;
 	m_AnimationIndex = animationIndex;
-
+	m_iTeam = static_cast<CCharacter*>(gameObject)->Get_iPlayerTeam();
 	// Stopped 상태에서 Play를 시작하면 초기화
 	if (m_currentPlayMode == Stopped) {
 		m_currentPointIndex = 0;
@@ -350,6 +464,8 @@ void CVirtual_Camera::Stop()
 	m_currentPlayMode = CAMERA_PLAY_MODE::Stopped;
 	m_currentPointIndex = 0;
 	m_elapsedTime = 0.f;
+	m_bIsIgnoreFlip = false;
+	m_pEnemy = nullptr;
 }
 
 void CVirtual_Camera::Button_Stop()
@@ -942,10 +1058,12 @@ void CVirtual_Camera::Set_CameraMode(CMain_Camera::VIRTUAL_CAMERA cameraMode)
 {
 	if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_NORMAL)
 		m_currentMode = CAMERA_NORMAL_MODE;
-	else if(cameraMode == CMain_Camera::VIRTUAL_CAMERA_FREE)
+	else if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_FREE)
 		m_currentMode = CAMERA_FREE_MODE;
 	else if (cameraMode == CMain_Camera::VIRTUAL_CAMERA_MAP)
 		m_currentMode = CAMERA_MAP_MODE;
+	else
+		m_currentMode = CAMERA_FREE_MODE;
 }
 
 

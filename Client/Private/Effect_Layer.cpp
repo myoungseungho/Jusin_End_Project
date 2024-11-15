@@ -184,8 +184,8 @@ void CEffect_Layer::Camera_Update(_float fTimeDelta)
 void CEffect_Layer::Update(_float fTimeDelta)
 {
 	
-	for (auto& pEffect : m_MixtureEffects)
-		pEffect->Update(fTimeDelta);
+	//for (auto& pEffect : m_MixtureEffects)
+	//	pEffect->Update(fTimeDelta);
 
 	if (m_bIsCopy)
 	{

@@ -7,6 +7,7 @@
 #include "QTE_Continuous_Attack_Gauge.h"
 #include "QTE_Continuous_Attack_Effect.h"
 #include "QTE_Continuous_Attack_Particle.h"
+#include "QTE_Continuous_Attack_Space_Particle.h"
 #include "Main_Camera.h"
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -98,7 +99,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 			Desc.fSizeX = 300.f;
 			Desc.fSizeY = 200.f;
 			Desc.fTimer = 0.5f;
-
+			Desc.iTextureNum = 1;
 			m_pContinuous_Effect = static_cast<CQTE_Continuous_Attack_Effect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Effect"), &Desc));
 			m_bOffsetActive = true;
 
@@ -108,6 +109,17 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		// 타이머 확인
 		else if (m_eMissionState == MISSION_FAILED)
 		{
+			CQTE_Continuous_Attack_Effect::CONTINUOUS_ATTACK_EFFECT_DESC Desc{};
+
+			Desc.fX = m_fX;
+			Desc.fY = 750.f;
+			Desc.fSizeX = 300.f;
+			Desc.fSizeY = 200.f;
+			Desc.fTimer = 0.5f;
+			Desc.iTextureNum = 0;
+			m_pContinuous_Effect = static_cast<CQTE_Continuous_Attack_Effect*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Effect"), &Desc));
+			m_bOffsetActive = true;
+
 			End_QTE();
 			return;
 		}
@@ -116,6 +128,9 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 		m_pContinuous_Gauge->Update(fTimeDelta);
 
 		for (auto& iter : m_UIParticles)
+			iter->Update(fTimeDelta);
+
+		for (auto& iter : m_UISpaceParticles)
 			iter->Update(fTimeDelta);
 
 		// 애니메이션 업데이트
@@ -206,6 +221,8 @@ void CQTE_Continuous_Attack::End_Offset_QTE(_float fTimeDelta)
 	m_pContinuous_Effect->Update(fTimeDelta);
 	for (auto& iter : m_UIParticles)
 		iter->Update(fTimeDelta);
+	for (auto& iter : m_UISpaceParticles)
+		iter->Update(fTimeDelta);
 
 	if (m_fOffsetTimer <= 0.0f)
 	{
@@ -217,6 +234,9 @@ void CQTE_Continuous_Attack::End_Offset_QTE(_float fTimeDelta)
 			Safe_Release(iter);
 		m_UIParticles.clear();
 
+		for (auto& iter : m_UISpaceParticles)
+			Safe_Release(iter);
+		m_UISpaceParticles.clear();
 
 		m_fOffsetTimer = 2.f;
 		m_bOffsetActive = false; // 오프셋 기간 종료
@@ -279,6 +299,16 @@ void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
 			fProgress = 1.0f;
 			m_bIsMovingDown = false;
 			m_fCurrentTime = 0.0f;
+
+			//파티클 생성
+			CQTE_Continuous_Attack_Space_Particle::QTE_Continuous_Attack_Space_Particle_DESC Particle_SpaceDesc{};
+
+			Particle_SpaceDesc.fX = 960.f;
+			Particle_SpaceDesc.fY = 790.f;
+			Particle_SpaceDesc.fSizeX = 50.f;
+			Particle_SpaceDesc.fSizeY = 50.f;
+			//파티클 객체 생성
+			m_UISpaceParticles.push_back(static_cast<CQTE_Continuous_Attack_Space_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space_Particle"), &Particle_SpaceDesc)));
 		}
 
 		// 이징 함수 적용 (Ease-In-Out)
@@ -321,11 +351,15 @@ void CQTE_Continuous_Attack::Late_Update(_float fTimeDelta)
 		m_pContinuous_Gauge->Late_Update(fTimeDelta);
 		for (auto& iter : m_UIParticles)
 			iter->Late_Update(fTimeDelta);
+		for (auto& iter : m_UISpaceParticles)
+			iter->Late_Update(fTimeDelta);
 	}
 	else if (m_bOffsetActive)
 	{
 		m_pContinuous_Effect->Late_Update(fTimeDelta);
 		for (auto& iter : m_UIParticles)
+			iter->Late_Update(fTimeDelta);
+		for (auto& iter : m_UISpaceParticles)
 			iter->Late_Update(fTimeDelta);
 	}
 
@@ -423,6 +457,9 @@ void CQTE_Continuous_Attack::Free()
 	Safe_Release(m_pContinuous_Effect);
 
 	for (auto& iter : m_UIParticles)
+		Safe_Release(iter);
+
+	for (auto& iter : m_UISpaceParticles)
 		Safe_Release(iter);
 
 	__super::Free();

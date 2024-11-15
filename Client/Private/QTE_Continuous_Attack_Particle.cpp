@@ -57,8 +57,9 @@ void CQTE_Continuous_Attack_Particle::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
+	_float offsetX = -2.f;
 	// 게이지의 왼쪽 끝 좌표 계산
-	_float gaugeLeftX = m_fX - (300.f * 0.5f); // 300.f는 게이지의 fSizeX
+	_float gaugeLeftX = m_fX + offsetX - (300.f * 0.5f); // 300.f는 게이지의 fSizeX
 
 	// 파티클의 X 좌표 계산
 	_float particleX = gaugeLeftX + (300.f * (*m_pfGaugeRatio));

@@ -37,18 +37,20 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 		return E_FAIL;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-4.f + (1 * 2), 0.f, 0.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 	m_pTransformCom->Set_Scaled(-1.f, 1.f, 1.f);
 	//m_pModelCom->SetUp_Animation(16, true);
 	m_pModelCom->SetUp_Animation(0, false);
 	m_pModelCom->Play_Animation(0.f);
-	
+
 	CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
 	//CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
-	//CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_21.txt");
+	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_21.txt");
 
 	FlipDirection(1);
+
+	//FlipDirection(-1);
 
 	return S_OK;
 }

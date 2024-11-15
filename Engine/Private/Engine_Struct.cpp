@@ -45,17 +45,17 @@ namespace Engine
         {-1, L"MODELID_NOT"},
         {0, L"MODELID_DEFAULT"},
         {2, L"MODELID_SON"},
-        {3, L"MODELID_HIT"},
-        {4, L"MODELID_MINE"},
-        {5, L"MODELID_21"}
+        {3, L"MODELID_21"},
+        {4, L"MODELID_HIT"},
+        {5, L"MODELID_MINE"}
     };
 
     unordered_map<_wstring, _int> stringToModelID = {
         {L"MODELID_NOT", -1},
         {L"MODELID_DEFAULT", 0},
         {L"MODELID_SON", 2},
-        {L"MODELID_HIT", 3},
-        {L"MODELID_MINE", 4},
-        {L"MODELID_21", 5}
+        {L"MODELID_21", 3},
+        {L"MODELID_HIT", 4},
+        {L"MODELID_MINE", 5},
     };
 }

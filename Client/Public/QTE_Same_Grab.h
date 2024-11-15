@@ -11,8 +11,8 @@ class CQTE_Same_Grab final : public CGameObject
 	{
 		UI_COMMAND_LIGHT, //약공
 		UI_COMMAND_MIDDLE, //중공
-		UI_COMMAND_ULTIMATE, //특수공격
 		UI_COMMAND_HEAVY, //강공
+		UI_COMMAND_ULTIMATE, //특수공격
 		UI_COMMAND_END
 	};
 

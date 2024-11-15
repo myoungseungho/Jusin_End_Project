@@ -36,6 +36,7 @@ HRESULT CQTE_Continuous_Attack_Effect::Initialize(void* pArg)
 	m_fSizeX = Desc->fSizeX;
 	m_fSizeY = Desc->fSizeY;
 	m_fLifeTime = Desc->fTimer;
+	m_iTextureNum = Desc->iTextureNum;
 	m_fTimer = m_fLifeTime;
 
 	m_pTransformCom->Set_Scaled(m_fSizeX, m_fSizeY, 1.f);
@@ -133,7 +134,7 @@ HRESULT CQTE_Continuous_Attack_Effect::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureNum)))
 		return E_FAIL;
 
 	// 시간 값을 셰이더로 전달
