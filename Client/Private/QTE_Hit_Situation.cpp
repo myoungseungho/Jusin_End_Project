@@ -119,6 +119,9 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 			End_QTE();
 		}
 
+		// 사용자 입력 처리
+		Handle_QTEInput();
+
 		// 각 Hit_UI_Icon 업데이트
 		for (auto& iter : m_vecHitUIIcon)
 			iter->Update(fTimeDelta);
@@ -140,9 +143,6 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 				m_iNextIconIndex++;
 			}
 		}
-
-		// 사용자 입력 처리
-		Handle_QTEInput();
 
 		// 경과 시간 업데이트
 		m_fElapsedTime += fTimeDelta;
@@ -270,8 +270,12 @@ void CQTE_Hit_Situation::End_Offset_QTE(_float fTimeDelta)
 		for (auto& iter : m_vecHitResult)
 			Safe_Release(iter);
 
+		for (auto& iter : m_vecHitParticle)
+			Safe_Release(iter);
+
 		m_vecHitUIIcon.clear();
 		m_vecHitResult.clear();
+		m_vecHitParticle.clear();
 
 		m_fOffsetTimer = 0.f;
 		m_bOffsetActive = false; // 오프셋 기간 종료
@@ -537,8 +541,8 @@ void CQTE_Hit_Situation::Create_ParticleObject(CQTE_Hit_UI_Icon* pIcon)
 	CQTE_Hit_UI_Particle::Hit_PARTICLE_DESC Desc{};
 	Desc.fX = pIcon->m_fX;
 	Desc.fY = pIcon->m_fY;
-	Desc.fSizeX = 300.f;
-	Desc.fSizeY = 300.f;
+	Desc.fSizeX = 600.f;
+	Desc.fSizeY = 600.f;
 
 	CQTE_Hit_UI_Particle* effect = static_cast<CQTE_Hit_UI_Particle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_UI_Particle"), &Desc));
 	m_vecHitParticle.push_back(effect);

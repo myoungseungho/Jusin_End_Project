@@ -90,6 +90,30 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_21_ULTIMATE:
 			name = "Camera_21_Ultimate";
 			break;
+		case VIRTUAL_CAMERA_HIT_HEAVY:
+			name = "Camera_Hit_Heavy";
+			break;
+		case VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP:
+			name = "Camera_Hit_Knock_Away_Up";
+			break;
+		case VIRTUAL_CAMERA_HIT_GRAB:
+			name = "Camera_Hit_Grab";
+			break;
+		case VIRTUAL_CAMERA_HIT_214_MIDDLE:
+			name = "Camera_Hit_214_Middle";
+			break;
+		case VIRTUAL_CAMERA_HIT_236_MIDDLE:
+			name = "Camera_Hit_236_Middle";
+			break;
+		case VIRTUAL_CAMERA_HIT_236_HEAVY:
+			name = "Camera_Hit_236_Heavy";
+			break;
+		case VIRTUAL_CAMERA_HIT_1_ULTIMATE:
+			name = "Camera_Hit_1_Ultimate";
+			break;
+		case VIRTUAL_CAMERA_HIT_3_ULTIMATE:
+			name = "Camera_Hit_3_Ultimate";
+			break;
 		case VIRTUAL_CAMERA_MINE_HEAVY:
 			name = "Camera_Mine_Heavy";
 			break;
@@ -98,15 +122,6 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 			break;
 		case VIRTUAL_CAMERA_MINE_AIR_SMASH:
 			name = "Camera_Mine_Air_Smash";
-			break;
-		case VIRTUAL_CAMERA_HIT_HEAVY:
-			name = "Camera_Hit_Heavy";
-			break;
-		case VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP:
-			name = "Camera_Hit_Knock_Away_Up";
-			break;
-		case VIRTUAL_CAMERA_HIT_AIR_SMASH:
-			name = "Camera_Hit_Air_Smash";
 			break;
 		}
 
@@ -159,18 +174,38 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["21_Energy_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim1"] = 0;
 	stringToAnimID["21_Ultimate_Anim2"] = 1;
-	stringToAnimID["21_Ultimate_Anim3"] = 2;
-	stringToAnimID["21_Ultimate_Anim4"] = 3;
-	stringToAnimID["21_Ultimate_Anim5"] = 4;
+	stringToAnimID["21_Ultimate_Anim3_Success"] = 2;
+	stringToAnimID["21_Ultimate_Anim3_Fail"] = 3;
+	stringToAnimID["21_Ultimate_Anim4"] = 4;
+	stringToAnimID["21_Ultimate_Anim4_Flip"] = 5;
 
 #pragma endregion
 
+#pragma region Hit
+	stringToSkillID["Camera_Hit_Heavy"] = VIRTUAL_CAMERA_HIT_HEAVY;
+	stringToSkillID["Camera_Hit_Knock_Away_Up"] = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
+	stringToSkillID["Camera_Hit_Grab"] = VIRTUAL_CAMERA_HIT_GRAB;
+	stringToSkillID["Camera_Hit_214_Middle"] = VIRTUAL_CAMERA_HIT_214_MIDDLE;
+	stringToSkillID["Camera_Hit_236_Middle"] = VIRTUAL_CAMERA_HIT_236_MIDDLE;
+	stringToSkillID["Camera_Hit_236_Heavy"] = VIRTUAL_CAMERA_HIT_236_HEAVY;
+	stringToSkillID["Camera_Hit_1_Ultimate"] = VIRTUAL_CAMERA_HIT_1_ULTIMATE;
+	stringToSkillID["Camera_Hit_3_Ultimate"] = VIRTUAL_CAMERA_HIT_3_ULTIMATE;
 
-	CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
-	Set_Player(player1p);
 
-	CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
-	Set_Player(player2p);
+	stringToAnimID["Hit_Heavy_Anim1"] = 0;
+	stringToAnimID["Hit_Knock_Away_Up_Anim1"] = 0;
+	stringToAnimID["Hit_Grab_Anim1"] = 0;
+	stringToAnimID["Hit_214_Middle_Anim1"] = 0;
+	stringToAnimID["Hit_236_Middle_Anim1"] = 0;
+	stringToAnimID["Hit_236_Heavy_Anim1"] = 0;
+	stringToAnimID["Hit_1_Ultimate_Anim1"] = 0;
+	stringToAnimID["Hit_1_Ultimate_Anim2"] = 1;
+	stringToAnimID["Hit_3_Ultimate_Anim1"] = 0;
+	stringToAnimID["Hit_3_Ultimate_Anim2"] = 1;
+	stringToAnimID["Hit_3_Ultimate_Anim3"] = 2;
+	stringToAnimID["Hit_3_Ultimate_Anim4"] = 3;
+
+#pragma endregion
 
 	return S_OK;
 }
@@ -231,14 +266,17 @@ void CMain_Camera::IMGUI_Play(_int animationIndex, CGameObject* gameObject)
 	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, true, gameObject);
 }
 
-void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject)
+void CMain_Camera::Play(VIRTUAL_CAMERA cameraID, _int animationIndex, CGameObject* gameObject, CGameObject* EnemyObject, _bool ignoreFlip)
 {
 	//현재 재생중인 Stop
 	Stop();
-	Set_Player(gameObject);
+	Set_Player(gameObject, EnemyObject);
 	//가상카메라를 CameraID에 따라 셋팅
 	Set_Virtual_Camera(cameraID);
-	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, gameObject);
+
+	//EnemyObject가 들어오면 EnemyObject로 들어가야함
+	CGameObject* selectObject = EnemyObject == nullptr ? gameObject : EnemyObject;
+	m_vecVirtualCamera[m_currentVirtualMode]->Start_Play(animationIndex, false, selectObject, ignoreFlip);
 }
 
 void CMain_Camera::Stop()
@@ -379,19 +417,29 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 	}
 	else if (modelID == 3) { // MODELID_HIT
 		if (skillID == 0)
+			index = VIRTUAL_CAMERA_HIT_HEAVY;
+		else if (skillID == 1)
+			index = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
+		else if (skillID == 2)
+			index = VIRTUAL_CAMERA_HIT_GRAB;
+		else if (skillID == 3)
+			index = VIRTUAL_CAMERA_HIT_214_MIDDLE;
+		else if (skillID == 4)
+			index = VIRTUAL_CAMERA_HIT_236_MIDDLE;
+		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_HIT_236_HEAVY;
+		else if (skillID == 6)
+			index = VIRTUAL_CAMERA_HIT_1_ULTIMATE;
+		else if (skillID == 7)
+			index = VIRTUAL_CAMERA_HIT_3_ULTIMATE;
+	}
+	else if (modelID == 4) { // MODELID_HIT
+		if (skillID == 0)
 			index = VIRTUAL_CAMERA_MINE_HEAVY;
 		else if (skillID == 1)
 			index = VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP;
 		else if (skillID == 2)
 			index = VIRTUAL_CAMERA_MINE_AIR_SMASH;
-	}
-	else if (modelID == 4) { // MODELID_HIT
-		if (skillID == 0)
-			index = VIRTUAL_CAMERA_HIT_HEAVY;
-		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP;
-		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_HIT_AIR_SMASH;
 	}
 
 	return index;
@@ -408,10 +456,10 @@ void CMain_Camera::SetPosition(_fvector position)
 	virtual_Transform->Set_State(CTransform::STATE_POSITION, position);
 }
 
-void CMain_Camera::Set_Player(CGameObject* pPlayer)
+void CMain_Camera::Set_Player(CGameObject* pPlayer, CGameObject* pEnemy)
 {
 	for (size_t i = VIRTUAL_CAMERA_NORMAL; i < VIRTUAL_CAMERA_END; i++)
-		m_vecVirtualCamera[i]->Set_Player(pPlayer);
+		m_vecVirtualCamera[i]->Set_Player(pPlayer, pEnemy);
 }
 
 const char* CMain_Camera::Get_Current_CameraName()
@@ -432,12 +480,15 @@ void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
 }
 
+void CMain_Camera::Set_CirclePlay(_bool isClockwise, _float rotationSpeed)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->SetCirclePlay(isClockwise, rotationSpeed);
+}
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
-
 
 CMain_Camera* CMain_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

@@ -25,8 +25,8 @@ HRESULT CUI_VS_CharaPanel::Initialize_Prototype()
 
 HRESULT CUI_VS_CharaPanel::Initialize(void* pArg)
 {
-	m_fSizeY = 575.f;
-	m_fPosX = 230, m_fPosY = 120.f;
+	m_fSizeY = 660.f;
+	m_fPosX = 200, m_fPosY = 120.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -40,9 +40,9 @@ HRESULT CUI_VS_CharaPanel::Initialize(void* pArg)
 	m_eLR = pDesc->eLRPos;
 
 	if (m_eLR == LEFT)
-		m_fSizeX = -575.f;
+		m_fSizeX = -660.f;
 	else if(m_eLR == RIGHT)
-		m_fSizeX = 575.f;
+		m_fSizeX = 660.f;
 
 
 	InitPosition();
@@ -61,12 +61,16 @@ void CUI_VS_CharaPanel::Camera_Update(_float fTimeDelta)
 
 void CUI_VS_CharaPanel::Update(_float fTimeDelta)
 {
+	if (fTimeDelta >= 0.1f)
+		fTimeDelta = 0.f;
+
 	__super::Update(fTimeDelta);
 
 	if(m_iNumUI == 0)
-		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 3000.f, 0.f, fTimeDelta);
+		Animation({ 0.f, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 2100.f, 0.f, fTimeDelta);
 	else if (m_iNumUI == 1)
-		Animation({ -400, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 3000.f, 0.f, fTimeDelta);
+		Animation({ -500, m_fPosY - 200.f  ,0.f, 1.f }, { m_fPosX, m_fPosY, 0.f, 1.f }, 2700.f, 0.f, fTimeDelta);
+
 }
 
 void CUI_VS_CharaPanel::Late_Update(_float fTimeDelta)
@@ -132,7 +136,7 @@ void CUI_VS_CharaPanel::InitPosition()
 	switch (m_iNumUI)
 	{
 	case 0:
-		m_fPosY = 120.f;
+		m_fPosY = 150.f;
 		break;
 
 	case 1:

@@ -17,6 +17,7 @@ public:
 	struct CONTINUOUS_ATTACK_EFFECT_DESC
 	{
 		_float	fSizeX{}, fSizeY{}, fX{}, fY{}, fTimer;
+		_int iTextureNum{};
 	};
 
 private:
@@ -47,7 +48,7 @@ private:
 
 	_float m_fElapsedTime = 0.f; // 경과 시간을 저장하는 변수
 	_float m_fLifeTime = 0.f;
-
+	_int m_iTextureNum = {};
 public:
 	static CQTE_Continuous_Attack_Effect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

@@ -58,7 +58,7 @@ void CQTE_Hit_UI_Particle::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
-	_bool isComplete = m_pVIBufferCom->Spread_2D(fTimeDelta);
+	_bool isComplete = m_pVIBufferCom->Spread_FireCracker_2D(fTimeDelta);
 
 	if (isComplete)
 		SetActive(false);
@@ -71,7 +71,7 @@ void CQTE_Hit_UI_Particle::Late_Update(_float fTimeDelta)
 
 	RENDER_OBJECT tDesc{};
 	tDesc.tGlowDesc.iPassIndex = 2;
-	tDesc.tGlowDesc.fGlowFactor = 4.f;
+	tDesc.tGlowDesc.fGlowFactor = 10.f;
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
 }

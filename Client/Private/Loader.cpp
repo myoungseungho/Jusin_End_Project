@@ -162,6 +162,7 @@
 #include "QTE_Continuous_Attack_Effect.h"
 #include "QTE_Same_Grab_UI_Particle.h"
 #include "QTE_Continuous_Attack_Particle.h"
+#include "QTE_Continuous_Attack_Space_Particle.h"
 
 //Lobby
 #include "Lobby_Center_Map.h"
@@ -211,10 +212,6 @@ HRESULT CLoader::Loading()
 		hr = Loading_For_Logo();
 		break;
 
-	case LEVEL_GAMEPLAY:
-		hr = Loading_For_GamePlayLevel();
-		break;
-
 	case LEVEL_LOBBY:
 		hr = Loading_For_Lobby();
 		break;
@@ -227,7 +224,9 @@ HRESULT CLoader::Loading()
 		hr = Loading_For_VS();
 		break;
 
-
+	case LEVEL_GAMEPLAY:
+		hr = Loading_For_GamePlayLevel();
+		break;
 	}
 
 	if (FAILED(hr))
@@ -510,6 +509,11 @@ HRESULT CLoader::Loading_For_VS()
 	/* For.Prototype_Component_Texture_UI_VS_TeamPanel */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_TeamPanel"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/VS_Panel.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_FontName */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_FontName"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Chara_Name%d.png"), 4))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_VS_BG */
@@ -2139,10 +2143,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
-	//손오공
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+		return E_FAIL;*/
 
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
@@ -2158,9 +2161,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		return E_FAIL;
 
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
@@ -2188,6 +2191,10 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	//21호
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
@@ -2490,7 +2497,6 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
 	//	return E_FAIL;
-
 
 
 	//히트
@@ -3528,6 +3534,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CQTE_Continuous_Attack_Particle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space_Particle"),
+		CQTE_Continuous_Attack_Space_Particle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -3877,10 +3887,10 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 	//연타 파티클
 	ParticleDesc.iNumInstance = 200;
-	ParticleDesc.vRange = _float3(0.5f, 0.5f, 0.f);
+	ParticleDesc.vRange = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(0.5f, 0.7f);
+	ParticleDesc.vSpeed = _float2(0.2f, 0.5f);
 	ParticleDesc.vScale = _float2(2.f, 2.f);
 	ParticleDesc.vLifeTime = _float2(0.05f, 0.1f);
 	ParticleDesc.isLoop = true;
@@ -3889,14 +3899,28 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
-	//Hit 파티클
+	//연타 스페이스 파티클
 	ParticleDesc.iNumInstance = 200;
 	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(3.f, 5.f);
-	ParticleDesc.vScale = _float2(3.f, 3.f);
+	ParticleDesc.vScale = _float2(2.f, 2.f);
 	ParticleDesc.vLifeTime = _float2(0.2f, 0.3f);
+	ParticleDesc.isLoop = false;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Continuous_Space_Spread_QTE"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
+	//Hit 파티클
+	ParticleDesc.iNumInstance = 200;
+	ParticleDesc.vRange = _float3(0.1f, 0.1f, 0.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(0.1f, 0.2f);
+	ParticleDesc.vScale = _float2(2.f, 2.f);
+	ParticleDesc.vLifeTime = _float2(1.f, 1.f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),

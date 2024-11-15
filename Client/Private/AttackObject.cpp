@@ -621,6 +621,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	case Client::CUI_Define::BUU:
 		break;
 	case Client::CUI_Define::HIT:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP, 0, pOwner);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	}
 }
