@@ -1600,8 +1600,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iGainHitCount = 0;
 				Desc.iGainKiAmount = 0;
 
-				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY, 0, this);
-				main_Camera->StartCameraShake(0.5f, 0.2f);
+				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY;
+				Desc.fCameraShakeDuration = 0.5f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
@@ -3264,7 +3265,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 
 		}
-		//ÀÌ°Å´Â ¾ÈÅ¸³×
 		else if (iAttackEvent == 3)
 		{
 			if (m_bAttackBackEvent == false)
@@ -3321,6 +3321,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//»þ»þ¼¡,º¸ÀÌ°Ô,
 			m_bInvisible = false;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+
 		}
 		else if (iAttackEvent == 5)
 		{

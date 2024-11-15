@@ -945,9 +945,45 @@ AnimationName: Hit_3_Ultimate_Anim3
 PointCount: 1
 
 [CameraPoint]
-Position: 0.066347 0.36059 -9.09707
+Position: 0.066347 0.45059 -9.09707
 Rotation: -0.0902125 0 -0 0.995923
 Duration: 5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim4
+PointCount: 4
+
+[CameraPoint]
+Position: 1.03805 1.54372 -0.507299
+Rotation: 0 -0.521331 0 0.853097
+Duration: 0.1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.672691 1.53001 -0.45328
+Rotation: 0 -0.533679 0 0.845686
+Duration: 0.3
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.443737 1.51954 -0.321334
+Rotation: 0 -0.437521 0 0.8989
+Duration: 1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1

@@ -203,14 +203,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Hit_3_Ultimate_Anim1"] = 0;
 	stringToAnimID["Hit_3_Ultimate_Anim2"] = 1;
 	stringToAnimID["Hit_3_Ultimate_Anim3"] = 2;
+	stringToAnimID["Hit_3_Ultimate_Anim4"] = 3;
 
 #pragma endregion
-
-	//CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
-	//Set_Player(player1p);
-
-	//CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
-	//Set_Player(player2p);
 
 	return S_OK;
 }
