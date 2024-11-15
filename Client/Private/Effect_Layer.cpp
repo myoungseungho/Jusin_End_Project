@@ -218,6 +218,8 @@ void CEffect_Layer::Update(_float fTimeDelta)
 				_float4x4 SwitchMatrix;
 				XMStoreFloat4x4(&SwitchMatrix, EffectToLayerMatrix);
 
+
+				//여기 보자
 				pTransform->Set_WorldMatrix(SwitchMatrix);
 				pTransform->LookAt(m_pGameInstance->Get_CamPosition_Vector());
 
