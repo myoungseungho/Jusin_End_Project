@@ -3205,11 +3205,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//여기가 모두 하나의 애니메이션
 		else if (iAttackEvent == 2)
 		{
-			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 2, this, m_pEnemy);
-			// 원형 회전 시작 (시계 방향, 지속 시간 10초, 원형 도는 속도)
-			main_Camera->Set_CirclePlay(true, XM_2PI / 15.f);
-
 			MoveToEnemy_Ground(12.f);
 
 			m_bInvisible = false;
@@ -3361,6 +3356,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = true;
 			m_bDynamicMove = true;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//첫번째방
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 1, this);
+			main_Camera->StartCameraShake(0.3f, 0.2f);
 		}
 
 		//Position 48
@@ -3395,11 +3395,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.pOwner = this;
 				Desc.iGainKiAmount = 0;
 				Desc.iGainAttackStep = 0;
-
-
+				Desc.fCameraShakeDuration = 0.3f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-
-				//첫번째방
 			}
 		}
 		//Position 48.1
@@ -3448,7 +3446,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.pOwner = this;
 				Desc.iGainKiAmount = 0;
 				Desc.iGainAttackStep = 0;
-
+				Desc.fCameraShakeDuration = 0.3f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 				//두번째방 
@@ -3489,6 +3488,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Position 100
 		else if (iAttackEvent == 3)
 		{
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 2, this, m_pEnemy);
+			// 원형 회전 시작 (시계 방향, 지속 시간 10초, 원형 도는 속도)
+			main_Camera->Set_CirclePlay(true, XM_2PI / 15.f);
 
 			//m_pModelCom->Get_pCurrentAnimation()->m_fDuration = 0.20f;
 
