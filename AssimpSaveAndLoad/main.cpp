@@ -1,15 +1,13 @@
 #include "ModelConverter.h"
 
-#define DATAFILEPATH "../Client/Bin/Resources/Map/Space/MeteoBreak/"
+#define DATAFILEPATH "../Client/Bin/Resources/Map/Volcano/vo_DestructiveFinish/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/FRN_TestMesh.fbx", TYPE_ANIM},
-		{"Models/FRN_AllMesh.fbx", TYPE_ANIM},
-		{"Models/KRN_AllMesh.fbx", TYPE_ANIM},
-		{"Models/Goku_AllMesh_Event.fbx", TYPE_ANIM},
+		{"Models/aASDASDASDSA.fbx", TYPE_NONANIM},
+
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그

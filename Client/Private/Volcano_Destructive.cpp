@@ -47,8 +47,8 @@ HRESULT CVolcano_Destructive::Initialize(void* pArg)
 	CTransform::TRANSFORM_DESC tTransformDesc{};
 	tTransformDesc.fRotationPerSec = 1.f;
 	m_pTransformCom->SetUp_TransformDesc(&tTransformDesc);
-	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
+	//m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0.f));
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
 	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
 	for (size_t i = 0; i < 15; i++)
@@ -136,7 +136,7 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 	{
 		m_fBrakeSwitchTime += fTimeDelta;
 
-		if (m_fBrakeSwitchTime > 2.8f)
+		if (m_fBrakeSwitchTime > 0.8f)
 		{
 			m_fBrakeSwitchTime = 0.f;
 			m_isBrakeSwitch = true;
@@ -183,17 +183,17 @@ Rotation: 0 90 90
 
 			if (paEffect != nullptr)
 				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-			if (pExplosionLayer != nullptr)
-			{	
-				for (auto& iter : pExplosionLayer->m_MixtureEffects)
-				{
-					iter->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-				}
-				//(*pExplosionLayer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-				/*pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
-				pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
-				pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));*/
-			}
+			//if (pExplosionLayer != nullptr)
+			//{	
+			//	for (auto& iter : pExplosionLayer->m_MixtureEffects)
+			//	{
+			//		iter->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+			//	}
+			//	//(*pExplosionLayer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+			//	/*pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
+			//	pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
+			//	pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));*/
+			//}
 
 
 		}
@@ -279,8 +279,8 @@ HRESULT CVolcano_Destructive::Priority_Render(_float fTimeDelta)
 
 HRESULT CVolcano_Destructive::Render(_float fTimeDelta)
 {
-	/*if (m_isBrakeSwitch == false)
-	{*/
+	if (m_isBrakeSwitch == false)
+	{
 		if (FAILED(Bind_ShaderResources()))
 			return E_FAIL;
 
@@ -297,36 +297,59 @@ HRESULT CVolcano_Destructive::Render(_float fTimeDelta)
 			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
 		}
-	/*}
+	}
 	else
 	{
 		if (FAILED(Bind_ShaderResources()))
 			return E_FAIL;
 
-		for (size_t i = 0; i < 11; i++)
+		_uint		iMainNumMeshes = m_pModelCom->Get_NumMeshes();
+
+		for (size_t i = 1; i < iMainNumMeshes; i++)
+		{
+			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+				return E_FAIL;
+
+			if (FAILED(m_pShaderCom->Begin(i == 0 ? 19 : 18)))
+				return E_FAIL;
+
+			if (FAILED(m_pModelCom->Render(i)))
+				return E_FAIL;
+		}
+
+		if (FAILED(m_pBRModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(19)))
+			return E_FAIL;
+
+		if (FAILED(m_pBRModelCom->Render(0)))
+			return E_FAIL;
+		
+		for (size_t i = 0; i < 15; i++)
 		{
 			_uint		iNumMeshes = m_pFragmentModelCom[i]->Get_NumMeshes();
 
 			for (size_t j = 0; j < iNumMeshes; j++)
 			{
-				if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+				if (FAILED(m_pFragmentModelCom[i]->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", j)))
 					return E_FAIL;
 
-				_int iMeshIndex = j;
-				if (FAILED(m_pShaderCom->Bind_RawValue("g_iMeteoIndex", &iMeshIndex, sizeof(_int))))
+				//_int iMeshIndex = j;
+				//if (FAILED(m_pShaderCom->Bind_RawValue("g_iMeteoIndex", &iMeshIndex, sizeof(_int))))
+				//	return E_FAIL;
+
+				if (FAILED(m_pShaderCom->Bind_RawValue("g_vDestructivePos", &m_vFragmentPosition[i], sizeof(_float4))))
 					return E_FAIL;
 
-				if (FAILED(m_pShaderCom->Bind_RawValue("g_iMeteoPosition", &m_vFragmentPosition[i], sizeof(_float4))))
-					return E_FAIL;
-
-				if (FAILED(m_pShaderCom->Begin(11)))
+				if (FAILED(m_pShaderCom->Begin(20)))
 					return E_FAIL;
 
 				if (FAILED(m_pFragmentModelCom[i]->Render(j)))
 					return E_FAIL;
 			}
 		}
-	}*/
+	}
 
 	return S_OK;
 }

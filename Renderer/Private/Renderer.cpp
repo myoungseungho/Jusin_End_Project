@@ -1187,6 +1187,11 @@ HRESULT CRenderer::Render_AllGlow_Effect(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_CutScene_Pri_Effect(_float fTimeDelta)
+{
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_CutScene_Object(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_OBJECT])
@@ -1199,6 +1204,11 @@ HRESULT CRenderer::Render_CutScene_Object(_float fTimeDelta)
 
 	m_RenderObjects[RG_CUTSCENE_OBJECT].clear();
 
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_CutScene_Late_Effect(_float fTimeDelta)
+{
 	return S_OK;
 }
 
