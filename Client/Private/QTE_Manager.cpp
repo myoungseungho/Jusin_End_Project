@@ -41,7 +41,7 @@ void CQTE_Manager::Update(_float fTimeDelta)
 		iter->Update(fTimeDelta);
 
 	if (m_pGameInstance->Key_Down(DIK_F1))
-		Start_QTE(QTE_ID::QTE_ID_CONTINUOUS_ATTACK);
+		Start_QTE(QTE_ID::QTE_ID_HIT, Hit_Situation_ID_A);
 }
 
 void CQTE_Manager::Late_Update(_float fTimeDelta)

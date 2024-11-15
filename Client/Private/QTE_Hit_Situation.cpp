@@ -50,7 +50,7 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 	{
 	case Client::CQTE_Hit::Hit_Situation_ID_A:
 		//3개라서 2개요소가 있음
-		m_vecIconCreationTimes = { 1.f, 2.f };
+		m_vecIconCreationTimes = { 1.f, 2.f,1.f,2.f };
 		break;
 	case Client::CQTE_Hit::Hit_Situation_ID_B:
 		break;
@@ -141,6 +141,7 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 				// 아이콘 생성
 				Create_UIIcon();
 				m_iNextIconIndex++;
+				m_fElapsedTime = 0.f;
 			}
 		}
 
