@@ -10,7 +10,7 @@
 #include "Effect_Manager.h"
 
 #include "AttackObject.h"
-
+#include "Effect.h"
 
 #include "BattleInterface.h"
 //vector<CInput> Command_236Attack =
@@ -699,10 +699,17 @@ void CGoku_MeleeAttack::Attack_214Final()
 		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
 		{
 			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+//			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+			/*tDesc.pPlayertMatrix = m_pPlayer->Character_Make_BoneEffect()
+			tDesc.pTransformCom = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);*/
+			CEffect_Layer* pEffectLayer = m_pPlayer->Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
 
-			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
-
+			//·¹ÀÌ¾î ¾È¿¡ ÀÌÆåÆ® ²°´Ù Ä×´Ù
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_01")->m_bIsSpriteEnd = true;
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_02")->m_bIsSpriteEnd = true;
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_03")->m_bIsSpriteEnd = true;
+			
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
 			m_pPlayer->Set_AnimationStopWithoutMe(2.f);
 

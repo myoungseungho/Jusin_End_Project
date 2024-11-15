@@ -2616,7 +2616,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
-		m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
 
 
 		CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
@@ -2666,7 +2666,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
-		m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
 
 		CAttackObject::ATTACK_DESC Desc{};
 		if (m_iPlayerTeam == 1)
@@ -2705,7 +2705,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
-		m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
 
 		CAttackObject::ATTACK_DESC Desc{};
 		if (m_iPlayerTeam == 1)

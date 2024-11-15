@@ -4265,7 +4265,7 @@ _float4x4 CCharacter::Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _b
 	return tFinalMatrix;
 }
 
-void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectName)
+CEffect_Layer* CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectName)
 {	
 	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
 	
@@ -4275,8 +4275,7 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 	CEffect_Layer::COPY_DESC tDesc{};
 	tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr(BoneName);
 	tDesc.pTransformCom = m_pTransformCom;
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &tDesc);
-	
+	return CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(strEffectName, &tDesc);	
 }
 
 

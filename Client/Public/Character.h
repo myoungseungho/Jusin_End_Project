@@ -370,7 +370,7 @@ protected:
 
 public:
 	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
-	void		Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
+	class CEffect_Layer* Character_Make_BoneEffect(char* BoneName, _wstring strEffectName);
 	class CEffect_Layer* Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
 	//class CEffect_Layer* Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float fYRotation =1000.f);
 

@@ -64,9 +64,6 @@ public:
 
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 
-
-
-
 };
 
 END

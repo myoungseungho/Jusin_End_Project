@@ -253,7 +253,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -2.88842 1.21663 -2.42041
 Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
-Duration: 1
+Duration: 0.5
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
@@ -261,7 +261,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -2.88842 1.21663 -2.42041
 Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
-Duration: 0.1
+Duration: 0.01
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
@@ -803,14 +803,198 @@ SkillName: Camera_Hit_1_Ultimate
 
 [Animation]
 AnimationName: Hit_1_Ultimate_Anim1
-PointCount: 0
+PointCount: 4
+
+[CameraPoint]
+Position: 0.863542 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.26551 1.43442 -0.950747
+Rotation: 0 -0.400742 0 0.91546
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.26551 1.43442 -0.950747
+Rotation: 0 -0.400742 0 0.91546
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.863542 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_1_Ultimate_Anim2
+PointCount: 2
+
+[CameraPoint]
+Position: 2.29303 1.43078 -1.47817
+Rotation: 0 -0.483782 0 0.874307
+Duration: 1.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 2.29303 1.43078 -1.47817
+Rotation: 0 -0.483782 0 0.874307
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Hit_3_Ultimate
 
 [Animation]
 AnimationName: Hit_3_Ultimate_Anim1
-PointCount: 0
+PointCount: 4
+
+[CameraPoint]
+Position: 0.79 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.44035 1.47028 -0.694434
+Rotation: 0 -0.518087 0 0.855292
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.44035 1.58696 -0.694434
+Rotation: -0 -0.51808 -0 0.855332
+Duration: 0.4
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.819924 1.64378 -0.370207
+Rotation: -0 -0.51808 -0 0.855332
+Duration: 0.2
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim2
+PointCount: 5
+
+[CameraPoint]
+Position: 0.099822 1.09995 -3.56648
+Rotation: -0 0 -0 1
+Duration: 0.5
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.099822 1.09995 -3.56648
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.86998 1.99995 -1.30789
+Rotation: -0 0.59619 -0 0.802844
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.86998 1.99995 -1.30789
+Rotation: -0 0.59619 -0 0.802844
+Duration: 0.05
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -3.88395 1.77363 -1.70061
+Rotation: -0 0.56691 -0 0.82378
+Duration: 1.3
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim3
+PointCount: 1
+
+[CameraPoint]
+Position: 0.066347 0.45059 -9.09707
+Rotation: -0.0902125 0 -0 0.995923
+Duration: 5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim4
+PointCount: 5
+
+[CameraPoint]
+Position: 1.03805 1.54372 -0.507299
+Rotation: 0 -0.521331 0 0.853097
+Duration: 0.3
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.672691 1.53001 -0.45328
+Rotation: 0 -0.533679 0 0.845686
+Duration: 0.2
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.351132 1.51954 -0.439361
+Rotation: 0 -0.437445 0 0.899241
+Duration: 0.8
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.5 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.0 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [VirtualCamera]
 ModelID: MODELID_MINE
