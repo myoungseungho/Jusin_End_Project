@@ -1600,6 +1600,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iGainHitCount = 0;
 				Desc.iGainKiAmount = 0;
 
+				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY, 0, this);
+				main_Camera->StartCameraShake(0.5f, 0.2f);
+
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
@@ -1626,6 +1629,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fAnimationLockTime = 0.7f;
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
+
+			
+		
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
@@ -1690,7 +1696,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
 				Desc.bCameraZoom = false;
-				
+
 				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_214_MIDDLE, 0, this);
 				main_Camera->StartCameraShake(0.5f, 0.2f);
 
