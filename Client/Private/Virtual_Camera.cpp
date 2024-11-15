@@ -127,7 +127,10 @@ void CVirtual_Camera::Play(_float fTimeDelta)
 
 	// 원형 회전 모드인지 체크
 	if (m_bIsCirclePlay)
+	{
+		m_circleDuration = currentPoint.duration;
 		CirclePlay(fTimeDelta, currentPoint);
+	}
 	else
 	{
 		CameraPoint nextPoint = {};
@@ -558,11 +561,10 @@ void CVirtual_Camera::Stop()
 }
 
 // 원형 회전 모드 설정 함수
-void CVirtual_Camera::SetCirclePlay(_bool isCircle, _bool isClockwise, _float duration, _float rotationSpeed)
+void CVirtual_Camera::SetCirclePlay(_bool isCircle, _bool isClockwise, _float rotationSpeed)
 {
 	m_bIsCirclePlay = isCircle;
 	m_bIsClockwise = isClockwise;
-	m_circleDuration = duration;
 	m_rotationSpeed = rotationSpeed;
 	m_circleElapsedTime = 0.0f;
 	m_circleAngle = 0.0f;

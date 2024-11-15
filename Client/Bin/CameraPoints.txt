@@ -901,9 +901,9 @@ AnimationName: Hit_3_Ultimate_Anim2
 PointCount: 1
 
 [CameraPoint]
-Position: 0.066347 0.258226 -6.689
+Position: 0.066347 0.36059 -9.09707
 Rotation: -0.0902125 0 -0 0.995923
-Duration: 10
+Duration: 6
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1

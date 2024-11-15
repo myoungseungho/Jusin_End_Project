@@ -3206,7 +3206,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 1, this, m_pEnemy);
 			// 원형 회전 시작 (시계 방향, 지속 시간 10초, 원형 도는 속도)
-			main_Camera->Set_CirclePlay(true, true, 10.0f, XM_2PI / 2.5f);
+			main_Camera->Set_CirclePlay(true, true, XM_2PI / 15.f);
 
 			MoveToEnemy_Ground(12.f);
 
@@ -3396,6 +3396,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+				//첫번째방
 			}
 		}
 		//Position 48.1
@@ -3446,6 +3448,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iGainAttackStep = 0;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+				//두번째방 
 			}
 		}
 		//Position 77.2
@@ -3477,6 +3481,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = false;
 
+			//뒤 점프
 		}
 
 		//Position 100
