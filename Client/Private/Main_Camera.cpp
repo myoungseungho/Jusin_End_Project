@@ -221,8 +221,6 @@ void CMain_Camera::Camera_Update(_float fTimeDelta)
 	//가상카메라의 포지션의 정보를 메인카메라의 셋팅하기
 	_vector position = static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
-
-	__super::Camera_Update(fTimeDelta);
 }
 
 void CMain_Camera::Update(_float fTimeDelta)
