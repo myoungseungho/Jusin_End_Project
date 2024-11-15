@@ -561,9 +561,9 @@ void CVirtual_Camera::Stop()
 }
 
 // 원형 회전 모드 설정 함수
-void CVirtual_Camera::SetCirclePlay(_bool isCircle, _bool isClockwise, _float rotationSpeed)
+void CVirtual_Camera::SetCirclePlay(_bool isClockwise, _float rotationSpeed)
 {
-	m_bIsCirclePlay = isCircle;
+	m_bIsCirclePlay = true;
 	m_bIsClockwise = isClockwise;
 	m_rotationSpeed = rotationSpeed;
 	m_circleElapsedTime = 0.0f;

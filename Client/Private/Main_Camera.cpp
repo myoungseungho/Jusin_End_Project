@@ -485,9 +485,9 @@ void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
 }
 
-void CMain_Camera::Set_CirclePlay(_bool isCircle, _bool isClockwise, _float rotationSpeed)
+void CMain_Camera::Set_CirclePlay(_bool isClockwise, _float rotationSpeed)
 {
-	m_vecVirtualCamera[m_currentVirtualMode]->SetCirclePlay(isCircle, isClockwise, rotationSpeed);
+	m_vecVirtualCamera[m_currentVirtualMode]->SetCirclePlay(isClockwise, rotationSpeed);
 }
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)

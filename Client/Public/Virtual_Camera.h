@@ -71,7 +71,7 @@ public:
 	};
 
 	// 원형 회전 모드 설정 함수
-	void SetCirclePlay(_bool isCircle, _bool isClockwise = true, _float rotationSpeed = XM_2PI / 10.0f);
+	void SetCirclePlay(_bool isClockwise = true, _float rotationSpeed = XM_2PI / 10.0f);
 
 private:
 	void Free_Camera(_float fTimeDelta);
