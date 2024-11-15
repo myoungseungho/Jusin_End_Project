@@ -4,9 +4,9 @@ Duration: 30
 TickPerSecond: 20
 KeyFramesCount: 1799
 NumEffec: 7
-Position: 0 0 0
-Scale: 0.999989 0.999989 1
-Rotation: 0 0 90
+Position: 150 15 -5
+Scale: 9.99997 5.99998 0.999996
+Rotation: 321.818 90 90
 IsFollowing: false
 
 [Effect]
@@ -129,8 +129,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.1 0.7 0
-Scale: 0.0499296 0.0999989 1
+Position: -0.1 1.3 0
+Scale: 0.299053 0.999925 1
 Rotation: 0 0 290
 IsLoop: false
 Color: 225.447 78.5265 0 30

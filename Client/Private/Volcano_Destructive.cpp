@@ -150,30 +150,50 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 			Result4x4._42 = 0.f;
 			Result4x4._43 = -5.f;
 			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = &m_Result4x4;
+			//m_Result4x4._41 = 0.f;
+			//m_Result4x4._42 = 0.f;
+			//m_Result4x4._43 = 0.f;
+			XMStoreFloat4x4(&m_IdentityMatrix, XMMatrixIdentity());
+			tDesc.pPlayertMatrix = &m_IdentityMatrix;
 			CEffect_Layer::COPY_DESC m_tDesc{};
 			m_tDesc.pPlayertMatrix = &Result4x4;
 
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Wind"), &tDesc);
+			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind"), &tDesc);
+			CEffect_Layer* pExplosionLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Explosion_Volcano"), &tDesc);
 			CEffect* pRotationEffect = { nullptr };
-			CEffect_Layer* pRotationEffectToLayer = { nullptr };
+			//CEffect_Layer* pRotationEffectToLayer = { nullptr };
 			if (m_isRight == true)
 			{
-				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
-				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
+				/*
+				Position: 150 0 -5
+Scale: 10 6 1
+Rotation: 0 90 90
+				*/
+				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
+				//pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
+
 			}
 			else
 			{
-				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
-				pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
+				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
+				//pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
 			}
 
-			pRotationEffectToLayer->Set_Layer_Rotation(_float3(5.f, 0.f, 0.f));
+		//	pRotationEffectToLayer->Set_Layer_Rotation(_float3(5.f, 0.f, 0.f));
 
 			if (paEffect != nullptr)
 				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-			////if (paEffect != nullptr)
-			//	paEffect->Set_Layer_Scaled({ 30.f,30.f,30.f });
+			if (pExplosionLayer != nullptr)
+			{	
+				for (auto& iter : pExplosionLayer->m_MixtureEffects)
+				{
+					iter->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+				}
+				//(*pExplosionLayer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+				/*pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
+				pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
+				pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));*/
+			}
 
 
 		}
@@ -189,7 +209,7 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 		}
 
 
-		for (size_t i = 0; i < 11; i++)
+		for (size_t i = 0; i < 15; i++)
 		{
 			m_vFragmentPosition[i].y += m_vFragmentMoveDir[i].y * fTimeDelta * m_fSpeed;
 
@@ -213,11 +233,7 @@ void CVolcano_Destructive::Late_Update(_float fTimeDelta)
 		return;
 
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MAP, this);
-
-	//if (m_isBrakeSwitch == false)
-	//	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
-
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_CUTSCENE_OBJECT, this);
 
 }
 

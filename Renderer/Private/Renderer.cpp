@@ -243,15 +243,15 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_AllGlow_Effect(fTimeDelta)))
 		return E_FAIL;
 
-	if (FAILED(Render_Node(fTimeDelta)))
+	if (FAILED(Render_CutScene_Object(fTimeDelta)))
 		return E_FAIL;
 
+	if (FAILED(Render_Node(fTimeDelta)))
+		return E_FAIL;
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
 		return E_FAIL;
 #endif
-
-
 	return S_OK;
 }
 
@@ -1183,6 +1183,21 @@ HRESULT CRenderer::Render_AllGlow_Effect(_float fTimeDelta)
 	{
 		Draw_AllGlow_Effect(false);
 	}
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_CutScene_Object(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_OBJECT])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_CUTSCENE_OBJECT].clear();
 
 	return S_OK;
 }

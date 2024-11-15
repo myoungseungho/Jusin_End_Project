@@ -123,7 +123,7 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 		{
 
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
-
+			
 
 			XMVECTOR Scale, Rotation, Position;
 
@@ -137,7 +137,7 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			fLayerMatrix._43 *= -1;
-
+			
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 
@@ -184,8 +184,8 @@ void CEffect_Layer::Camera_Update(_float fTimeDelta)
 void CEffect_Layer::Update(_float fTimeDelta)
 {
 	
-	for (auto& pEffect : m_MixtureEffects)
-		pEffect->Update(fTimeDelta);
+	//for (auto& pEffect : m_MixtureEffects)
+	//	pEffect->Update(fTimeDelta);
 
 	if (m_bIsCopy)
 	{
@@ -218,8 +218,6 @@ void CEffect_Layer::Update(_float fTimeDelta)
 				_float4x4 SwitchMatrix;
 				XMStoreFloat4x4(&SwitchMatrix, EffectToLayerMatrix);
 
-
-				//여기 보자
 				pTransform->Set_WorldMatrix(SwitchMatrix);
 				pTransform->LookAt(m_pGameInstance->Get_CamPosition_Vector());
 
