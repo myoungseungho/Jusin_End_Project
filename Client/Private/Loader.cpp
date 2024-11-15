@@ -240,41 +240,44 @@ atomic_bool CLoader::isFinished()
 	if (m_isFinished)
 		return true;
 
-	bool allDone = true;
-	for (auto& fut : m_futures)
+	for (auto it = m_taskInfos.begin(); it != m_taskInfos.end(); )
 	{
-		if (fut.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
+		if (it->future.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
 		{
-			allDone = false;
-			break;
-		}
-	}
-
-	if (allDone)
-	{
-		try
-		{
-			for (auto& fut : m_futures)
+			try
 			{
-				if (FAILED(fut.get()))
+				HRESULT result = it->future.get();
+				if (FAILED(result))
 				{
 					// 실패 처리 (예: 로그 기록, 에러 플래그 설정 등)
 					m_isFinished = true;
 					return false;
 				}
+				else
+				{
+					// 작업이 성공적으로 완료됨. 큐에 enum 값을 추가
+					CUI_Manager::Get_Instance()->AddToQueue(it->taskType);
+				}
 			}
-
-			// 모든 작업이 성공적으로 완료됨
-			m_isFinished = true;
-			m_futures.clear(); // future 객체 정리
-			return true;
+			catch (const std::exception& e)
+			{
+				// 예외 처리 (예: 로그 기록, 에러 플래그 설정 등)
+				m_isFinished = true;
+				return false;
+			}
+			// 완료된 작업을 리스트에서 제거
+			it = m_taskInfos.erase(it);
 		}
-		catch (const std::exception& e)
+		else
 		{
-			// 예외 처리 (예: 로그 기록, 에러 플래그 설정 등)
-			m_isFinished = true;
-			return false;
+			++it;
 		}
+	}
+
+	if (m_taskInfos.empty())
+	{
+		m_isFinished = true;
+		return true;
 	}
 
 	return false;
@@ -325,8 +328,7 @@ HRESULT CLoader::Loading_For_Loading()
 
 HRESULT CLoader::Loading_For_Logo()
 {
-	//UI 작업
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_UI_Resources_Logo(); }));
+	Load_UI_Resources_Logo();
 
 	return S_OK;
 }
@@ -443,7 +445,7 @@ HRESULT CLoader::Loading_For_VS()
 
 	/* For.Prototype_Component_Texture_UI_VS_Mark */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_Mark"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/LOC/vs_object_%d.png"),3))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/LOC/vs_object_%d.png"), 3))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_VS_CharaPanel */
@@ -465,7 +467,7 @@ HRESULT CLoader::Loading_For_VS()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_StaticLight"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_effect_00.png")))))
 		return E_FAIL;
-	
+
 	/* For.Prototype_Component_Texture_UI_VS_DynamicLight */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_DynamicLight"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_effect_01.png")))))
@@ -473,7 +475,7 @@ HRESULT CLoader::Loading_For_VS()
 
 	/* For.Prototype_Component_Texture_UI_VS_BG_Bar */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bar"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg%d.png"),2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_bg%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_VS_BG_Circle0 */
@@ -485,20 +487,20 @@ HRESULT CLoader::Loading_For_VS()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle1"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle1.png")))))
 		return E_FAIL;
-	
+
 	/* For.Prototype_Component_Texture_UI_VS_BG_Circle2 */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle2"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle2.png")))))
 		return E_FAIL;
-	
+
 	/* For.Prototype_Component_Texture_UI_VS_BG_Circle3 */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Circle3"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/Circle3.png")))))
 		return E_FAIL;
-	
+
 	/* For.Prototype_Component_Texture_UI_VS_BG_Bolt */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_BG_Bolt"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_Bolt%d.png"),7))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/vsinfo/tex/vs_Bolt%d.png"), 7))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_VS_BG_DragonBall */
@@ -599,7 +601,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 
 	/* For.Prototype_Component_Texture_CharacterBGMask */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_CharacterBGMask"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_CharacterBG_Mask%d.png"),2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CS_CharacterBG_Mask%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_CharacterSelectLine */
@@ -614,7 +616,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 
 	/* For.Prototype_Component_Texture_UI_CharacterSelectFude */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectFude"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_BigFude%d.png"),2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_BigFude%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_CharacterSelectLineFrame*/
@@ -635,7 +637,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 
 	/* For.Prototype_Component_Texture_UI_CharacterSelectLight */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_CharacterSelectLight"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Eff_Flare0%d.png"),2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/CmnBG_Eff_Flare0%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_CharacterSelectCircle */
@@ -644,7 +646,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
-		PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
@@ -716,14 +718,13 @@ HRESULT CLoader::Loading_For_CharaSelect()
 
 HRESULT CLoader::Loading_For_GamePlayLevel()
 {
-	// 작업을 스레드 풀에 추가하고 future를 저장
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_0(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_1(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_2(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_0(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_1(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }));
-	m_futures.push_back(m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }));
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_0(); }), CUI_Manager::THREAD_TEXTURE_0 });
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_1(); }), CUI_Manager::THREAD_TEXTURE_1 });
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Texture_Resources_GamePlay_2(); }), CUI_Manager::THREAD_TEXTURE_2 });
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_0(); }), CUI_Manager::THREAD_MODEL_0 });
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Model_Resources_GamePlay_1(); }), CUI_Manager::THREAD_MODEL_1 });
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Object_GamePlay(); }), CUI_Manager::THREAD_OBJECT_0 });
+	m_taskInfos.push_back({ m_pGameInstance->EnqueueTask([this]() { return Load_Prototype_Component_GamePlay(); }), CUI_Manager::THREAD_COMPONENT_0 });
 	// 즉시 반환하여 메인 스레드가 계속 실행되도록 함
 	return S_OK;
 }
@@ -861,7 +862,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_eff.png")))))
 		return E_FAIL;
 
-	
+
 	//캐릭터 아이콘
 
 	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
@@ -1675,7 +1676,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_base"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png"), 1))))
 		return E_FAIL;
-	
+
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
@@ -2147,14 +2148,14 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
 		return E_FAIL;*/
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		//	return E_FAIL;
 
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1_AllMesh.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1_AllMesh.bin", PreTransformMatrix))))
+		//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
@@ -3122,7 +3123,7 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Island02"),
 		CVolcano_Island02::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Lava_Fall"),
 		CVolcano_Lava_Fall::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3135,7 +3136,7 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_Destructive"),
 		CVolcano_Destructive::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Volcano_GroundRock"),
 		CVolcano_GroundRock::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3154,7 +3155,7 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceMeteoBreak"),
 		CSpaceMeteoBreak::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3543,9 +3544,9 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 HRESULT CLoader::Load_Map()
 {
-		/*---------------------------------------- - Map_Volcano--------------------------------------------*/
+	/*---------------------------------------- - Map_Volcano--------------------------------------------*/
 
-	/*---------------------------------- -//-----------------TEXTURE------------------//-----------------------------------*/
+/*---------------------------------- -//-----------------TEXTURE------------------//-----------------------------------*/
 
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_smoke02"),
@@ -3556,7 +3557,7 @@ HRESULT CLoader::Load_Map()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground01.png"), 1))))
 		return E_FAIL;
 
-		/* For.Prototype_Component_Texture_Terrain */
+	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_skycloud2"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud2.png"), 1))))
 		return E_FAIL;
@@ -3675,10 +3676,10 @@ HRESULT CLoader::Load_Map()
 			CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
 			return E_FAIL;
 	}
-	
-		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_sp_meteobrake01"),
-			CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/MeteoBreak/sp_meteobrake01.png"), 1))))
-			return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_sp_meteobrake01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Space/MeteoBreak/sp_meteobrake01.png"), 1))))
+		return E_FAIL;
 
 
 	/* For.Prototype_Component_Texture_Terrain */

@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "Base.h"
+#include "UI_Manager.h"
 
 /* 3. 다음 장면(레벨)에 필요한 자원도 로드하낟. */
 
@@ -28,6 +29,11 @@ public:
 		SetWindowText(g_hWnd, m_szLoadingText);
 	}
 
+	struct TaskInfo {
+		future<HRESULT> future;
+		CUI_Manager::ThreadPool_For_Loading taskType;
+	};
+
 private:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
@@ -40,7 +46,7 @@ private:
 	//스레드 관련
 
 	atomic_bool m_isFinished;
-	vector<future<HRESULT>> m_futures;
+	vector<TaskInfo> m_taskInfos;
 
 	// 스레드 안전성을 위한 뮤텍스
 	mutex m_TextMutex;
@@ -56,8 +62,6 @@ private:
 	HRESULT Load_Texture_Resources_GamePlay_0();
 	HRESULT Load_Texture_Resources_GamePlay_1();
 	HRESULT Load_Texture_Resources_GamePlay_2();
-
-
 
 	HRESULT Load_Model_Resources_GamePlay_0();
 	HRESULT Load_Model_Resources_GamePlay_1();
