@@ -931,3 +931,27 @@ void CGoku_MeleeAttack::StopMacro(_float fStopTime)
 	}
 }
 
+void CGoku_MeleeAttack::Attack_Benishing()
+{
+	
+
+	if (m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_BENISHING])
+	{
+		//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,2.f,0.f);
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_AIR2);
+		m_pPlayer->Set_CurrentAnimationPositionJump(30.99);
+		m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
+		m_pPlayer->Set_AnimationStop(0.3f);
+		//»þ»þ¼¡
+		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+		m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
+		m_pPlayer->FlipDirection();
+
+		m_pPlayer->Set_bBenishingAttack(true);
+		m_pPlayer->Set_ForcedGravityDown();
+		m_pPlayer->Set_bInivisible(true);
+	}
+
+}
+

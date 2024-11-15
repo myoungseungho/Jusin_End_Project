@@ -31,7 +31,8 @@ enum ButtonInput {
     ATTACK_MEDIUM,          // 킥 버튼
     ATTACK_HEAVY,
     ATTACK_SPECIAL,
-    ATTACK_GRAB
+    ATTACK_GRAB,
+    ATTACK_BENISHING,
 };
 
 // Input 클래스 정의 (방향 + 버튼을 포함)

@@ -54,6 +54,7 @@ public:
 
 	void StopMacro(_float fStopTime);
 
+	void Attack_Benishing();
 
 	class CPlay_Goku* m_pPlayer = { nullptr };
 	_uint* m_pPlayerAnimationIndex = { nullptr };

@@ -60,7 +60,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 	}
 
 
-	m_bIsActive = false;
+	//m_bIsActive = false;
 	return S_OK;
 }
 

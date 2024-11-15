@@ -108,6 +108,9 @@ void CAnimationNameMap::Initalize()
 	m_MAP_AnimationPedia[PLAY_GOKU]["GKS700_body"] = 83;
 	m_MAP_AnimationPedia[PLAY_GOKU]["ready"] = 84;
 	m_MAP_AnimationPedia[PLAY_GOKU]["stand"] = 85;
+	m_MAP_AnimationPedia[PLAY_GOKU]["GKS_FRN801cs_01_body"] = 86;
+	m_MAP_AnimationPedia[PLAY_GOKU]["GKS_FRN801cs_02_body"] = 87;
+	m_MAP_AnimationPedia[PLAY_GOKU]["GKS_FRN805cs_body"] = 88;
 
 
 

@@ -153,6 +153,9 @@ public:
 		COUNT_ATTACK_236SPECIAL_UP,
 		COUNT_ATTACK_236SPECIAL_RIGHT,
 		COUNT_ATTACK_236SPECIAL_DOWN,
+		COUNT_ATTACK_236_LIGHT,
+		COUNT_ATTACK_236_MEDIUM,
+		COUNT_ATTACK_236_HEAVY,
 		COUNT_ATTACK_GRAB,
 		COUNT_END
 	};
@@ -240,7 +243,7 @@ private:
 	_bool m_bCounterPose = { false };
 	_bool m_bCounterSucces = { false };
 
-	_bool m_bInvisible = { false };
+	//_bool m_bInvisible = { false };
 
 	_ushort m_iAttackLightLoofCount = { 2 };
 
