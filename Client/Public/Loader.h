@@ -68,7 +68,8 @@ private:
 	HRESULT Load_Prototype_Object_GamePlay();
 	HRESULT Load_Prototype_Component_GamePlay();
 
-	HRESULT Load_Map();
+	HRESULT Load_Map_Space();
+	HRESULT Load_Map_Volcano();
 public:
 	static CLoader* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVELID eNextLevelID);
 	virtual void Free() override;

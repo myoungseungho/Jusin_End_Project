@@ -2138,7 +2138,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		std::lock_guard<std::mutex> lock(m_TextMutex);
 		lstrcpy(m_szLoadingText, TEXT("모델(정점 -> 폴리곤 -> 메시 -> 모델)을 로딩 중 입니다."));
 	}
-	if (FAILED(Load_Map()))
+	if (FAILED(Load_Map_Space()))
 		return E_FAIL;
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
@@ -2541,6 +2541,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 HRESULT CLoader::Load_Model_Resources_GamePlay_1()
 {
+	if (FAILED(Load_Map_Volcano()))
+		return E_FAIL;
+
 	_matrix PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_cmn_SmokeModels0101"),
@@ -3542,127 +3545,9 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	return S_OK;
 }
 
-HRESULT CLoader::Load_Map()
+HRESULT CLoader::Load_Map_Space()
 {
-	/*---------------------------------------- - Map_Volcano--------------------------------------------*/
-
-/*---------------------------------- -//-----------------TEXTURE------------------//-----------------------------------*/
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_smoke02"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke02.png"), 1))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_BRground01"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground01.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_skycloud2"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud2.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river01"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river01.png"), 1))))
-		return E_FAIL;
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river02"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river02.png"), 1))))
-		return E_FAIL;
-	/* For.Prototype_Component_Texture_Terrain */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river03"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river03.png"), 1))))
-		return E_FAIL;
-	/*---------------------------------- -//-----------------MODEL------------------//-----------------------------------*/
-
 	_matrix	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_smoke03"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke03.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_skycloud"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_mountain"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_mountain/vo_mountain.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveFinish"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_DestructiveFinish.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_SFmountain01"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountain01.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	for (size_t i = 0; i < 15; i++)
-	{
-		wstring strTagName = TEXT("Prototype_Component_Model_vo_SFmountainrRock") + to_wstring(i);
-		string strModelName = "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountainrRock" + to_string(i) + ".bin";
-		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, strTagName.c_str(),
-			CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
-			return E_FAIL;
-	}
-
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_pool"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_pool/vo_lava_pool.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_ground"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_ground/vo_lava_ground.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_fall"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_fall/vo_lava_fall.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_island02"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_island02/vo_island02.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_island01"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_island01/vo_island01.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_groundrock"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_groundrock/vo_groundrock.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_ground00"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_ground00/vo_ground00.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff04"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff04/vo_cliff04.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff03"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff03/vo_cliff03.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff02"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff02/vo_cliff02.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff01"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff01/vo_cliff01.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff_far"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff_far/vo_cliff_far.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff_back"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff_back/vo_cliff_back.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_BRground"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground.bin", PreTransformMatrix))))
-		return E_FAIL;
 
 #pragma region SpaceResources
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_MeteoBreak"),
@@ -3826,6 +3711,131 @@ HRESULT CLoader::Load_Map()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_3/Meteo_3.bin", PreTransformMatrix))))
 		return E_FAIL;
 #pragma endregion
+
+	return S_OK;
+}
+
+HRESULT CLoader::Load_Map_Volcano()
+{
+	/*---------------------------------------- - Map_Volcano--------------------------------------------*/
+
+/*---------------------------------- -//-----------------TEXTURE------------------//-----------------------------------*/
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_smoke02"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke02.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_BRground01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground01.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_skycloud2"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud2.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river01.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river02"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river02.png"), 1))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_vo_river03"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Volcano/vo_lava_ground/vo_river03.png"), 1))))
+		return E_FAIL;
+	/*---------------------------------- -//-----------------MODEL------------------//-----------------------------------*/
+
+	_matrix	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_smoke03"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_smoke03/vo_smoke03.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_skycloud"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_skycloud/vo_skycloud.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_mountain"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_mountain/vo_mountain.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_DestructiveFinish"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_DestructiveFinish.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_SFmountain01"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountain01.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	for (size_t i = 0; i < 15; i++)
+	{
+		wstring strTagName = TEXT("Prototype_Component_Model_vo_SFmountainrRock") + to_wstring(i);
+		string strModelName = "../Bin/Resources/Map/Volcano/vo_DestructiveFinish/vo_SFmountainrRock" + to_string(i) + ".bin";
+		if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, strTagName.c_str(),
+			CModel::Create(m_pDevice, m_pContext, strModelName.c_str(), PreTransformMatrix))))
+			return E_FAIL;
+	}
+
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_pool"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_pool/vo_lava_pool.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_ground"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_ground/vo_lava_ground.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_lava_fall"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_lava_fall/vo_lava_fall.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_island02"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_island02/vo_island02.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_island01"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_island01/vo_island01.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_groundrock"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_groundrock/vo_groundrock.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_ground00"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_ground00/vo_ground00.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff04"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff04/vo_cliff04.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff03"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff03/vo_cliff03.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff02"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff02/vo_cliff02.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff01"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff01/vo_cliff01.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff_far"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff_far/vo_cliff_far.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_cliff_back"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_cliff_back/vo_cliff_back.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_vo_BRground"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Volcano/vo_BRground/vo_BRground.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	return S_OK;
 }
