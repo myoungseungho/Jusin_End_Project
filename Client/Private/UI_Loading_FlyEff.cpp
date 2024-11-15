@@ -50,10 +50,10 @@ void CUI_Loading_FlyEff::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	m_fAngle += fTimeDelta * 180.f;
-	m_fPosDuration += fTimeDelta;
+	//m_fAngle += fTimeDelta * 180.f;
+	//m_fPosDuration += fTimeDelta;
 
-	if (m_fAngle >= 360.f)
+	/*if (m_fAngle >= 360.f)
 		m_fAngle = 0.f;
 
 	_float WarfPosX = XMVectorGetX(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) + 100.f * cos(m_fAngle * (3.14f / 180.f));
@@ -67,10 +67,32 @@ void CUI_Loading_FlyEff::Update(_float fTimeDelta)
 	{
 		m_fPrevPos = _float2(WarfPosX, WarfPosZ);
 		m_fPosDuration = 0.f;
-	}
-	//_float3 vStart = 
+	}*/
 
-	m_pTrail_VIBufferCom->CalculateQuad(_float3{ m_fPrevPos.x,m_fPrevPos.y ,0.f});
+	if (m_pGameInstance->Key_Pressing(DIK_UP))
+	{
+		m_pTransform->Go_Up(fTimeDelta);
+	}
+
+	if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+	{
+		m_pTransform->Go_Down(fTimeDelta);
+	}
+
+	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+	{
+		m_pTransform->Go_Left(fTimeDelta);
+	}
+
+	if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+	{
+		m_pTransform->Go_Right(fTimeDelta);
+	}
+
+	 _matrix matLocal = m_pTransformCom->(Get_WorldMatrix_Inverse() * m_pTransformCom->Get_WorldMatrix();
+	 _float3 vPos = {};
+	XMStoreFloat4(&vPos  , matLocal.r[3]);
+	m_pTrail_VIBufferCom->Line(vPos);
 }
 
 void CUI_Loading_FlyEff::Late_Update(_float fTimeDelta)
@@ -85,7 +107,7 @@ HRESULT CUI_Loading_FlyEff::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(32)))
+	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;
 
 	if (FAILED(m_pTrail_VIBufferCom->Bind_Buffers()))
@@ -123,11 +145,11 @@ HRESULT CUI_Loading_FlyEff::Bind_ShaderResources()
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCurrPos", &m_fCurrPos, sizeof(_float2))))
+	/*if (FAILED(m_pShaderCom->Bind_RawValue("g_vCurrPos", &m_fCurrPos, sizeof(_float2))))
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vPrevPos", &m_fPrevPos, sizeof(_float2))))
-		return E_FAIL;
+		return E_FAIL;*/
 
 	return S_OK;
 }

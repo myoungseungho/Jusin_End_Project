@@ -13,17 +13,17 @@ private:
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
-	virtual HRESULT Initialize_Prototype_Half();
+	virtual HRESULT Initialize_Prototype_Trail(_uint iNumRect ,_float fRectWidth);
 	virtual HRESULT Initialize(void* pArg) override;
 
-	void CalculateQuad(const _float3& start);
+	void Line(const _float3& start);
 
 private:
-	_bool isInitialized = { FALSE };
+	_uint m_iNumRect = { 0 };
 
 public:
 	static CVIBuffer_Trail_Rect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	static CVIBuffer_Trail_Rect* Create_Half(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CVIBuffer_Trail_Rect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, _uint iNummRect, _float fRectWidth);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 };
