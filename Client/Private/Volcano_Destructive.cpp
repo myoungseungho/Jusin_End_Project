@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Effect_Manager.h"
-
+#include "Main_Camera.h"
 CVolcano_Destructive::CVolcano_Destructive(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -14,17 +14,21 @@ CVolcano_Destructive::CVolcano_Destructive(ID3D11Device* pDevice, ID3D11DeviceCo
 CVolcano_Destructive::CVolcano_Destructive(const CVolcano_Destructive& Prototype)
 	: CGameObject{ Prototype },
 	m_vFragmentMoveDir{
-		{0.f, 1.f, 0.f},
-		{0.f, 1.f, 1.f},
-		{0.f, 0.f, 1.f},
-		{-0.5f, 0.1f, 1.f}, // 오른쪽 속도 1 말고 다르게
-		{0.f, 0.1f, -1.2f},
-		{-0.5f, -0.1f, -0.3f}, //6
-		{-0.3f, -0.2f, 0.8f},
-		{0.f, -1.f, 0.3f},
-		{0.f, -0.1f, -1.2f},
-		{-0.2f, -0.2f, -0.8f},
-		{0.f, -1.f, -0.3f}
+		{0.f, 0.f, -2.f}, //0
+		{-0.5f, 0.f, -0.7f},//1
+		{-0.6f, 0.f, -0.5f},//2
+		{-0.2f, 0.7f, -1.f},//3
+		{-0.2f, 0.5f, -0.3f},//4
+		{-0.2f, 0.4f, -0.2f},//5
+		{-0.3f, 0.2f, 0.2f},//6
+		{0.f, 0.3f, 0.1f},//7
+		{0.f, 0.7f, -0.1f},//8
+		{-0.2f, 0.6f, 0.4f},//9
+		{-0.3f, 0.9f, 0.8f},//10
+		{-0.3f, 0.9f, 0.8f},//11
+		{ -0.1f, 0.1f, 0.3f },//12
+		{ 0.f, 1.f, 0.f },//13
+		{ 0.f, 1.f, 0.3f },//14
 	}
 {
 
@@ -150,39 +154,48 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 			Result4x4._42 = 0.f;
 			Result4x4._43 = -5.f;
 			CEffect_Layer::COPY_DESC tDesc{};
-			//m_Result4x4._41 = 0.f;
-			//m_Result4x4._42 = 0.f;
-			//m_Result4x4._43 = 0.f;
+
 			XMStoreFloat4x4(&m_IdentityMatrix, XMMatrixIdentity());
 			tDesc.pPlayertMatrix = &m_IdentityMatrix;
 			CEffect_Layer::COPY_DESC m_tDesc{};
 			m_tDesc.pPlayertMatrix = &Result4x4;
 
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind"), &tDesc);
-			CEffect_Layer* pExplosionLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Explosion_Volcano"), &tDesc);
-			CEffect* pRotationEffect = { nullptr };
-			//CEffect_Layer* pRotationEffectToLayer = { nullptr };
+			CEffect_Layer* pBeamEffect = { nullptr }; 
+			CEffect_Layer* pBustEffect = { nullptr };
+			CEffect_Layer* pMeteo_Dust_Effect = { nullptr };
+			CEffect_Layer* pWindEffect = { nullptr };
+
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(3.f, 1.f);
+			//
 			if (m_isRight == true)
 			{
-				/*
-				Position: 150 0 -5
-Scale: 10 6 1
-Rotation: 0 90 90
-				*/
-				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
-				//pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
-
+				pBeamEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &tDesc);
+				pBustEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Dust"), &tDesc);
+				pMeteo_Dust_Effect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &tDesc);
+				pWindEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind"), &tDesc);
 			}
 			else
 			{
-				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
-				//pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
+				pBeamEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore_Left"), &tDesc);
+				pBustEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Dust_Left"), &tDesc);
+				pMeteo_Dust_Effect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &tDesc);
+				pWindEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind_Left"), &tDesc);
 			}
+			CEffect_Layer* pExplosionLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Explosion_Volcano"), &tDesc);
+		
+			(*pWindEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pWindEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 7;
 
-		//	pRotationEffectToLayer->Set_Layer_Rotation(_float3(5.f, 0.f, 0.f));
+			(*pBustEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pBustEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 9;
 
-			if (paEffect != nullptr)
-				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+			(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
+
+			(*pMeteo_Dust_Effect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pMeteo_Dust_Effect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
+			(*pMeteo_Dust_Effect->m_MixtureEffects.begin())->m_vColor = _float4(38.f, 1.f, 4.f, 1.9f);
+			
 			//if (pExplosionLayer != nullptr)
 			//{	
 			//	for (auto& iter : pExplosionLayer->m_MixtureEffects)

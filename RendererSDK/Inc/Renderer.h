@@ -82,6 +82,11 @@ private:
 
 	_uint m_iEffectRenderCount = { 0 };
 	_uint m_iEffectGlowPri_RenderCount = { 0 };
+
+	_bool m_isStartBlackOut = { false };
+	_float m_fAccBlackTime = { 0.f };
+	const _float m_fBlackTime = { 0.8f };
+
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -118,11 +123,14 @@ private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
 
+	HRESULT Draw_MapBlackOut(_float fTimeDelta);
 	HRESULT Draw_OutLine_Effect();
 	HRESULT Draw_AllGlow_Effect(_int isPri);
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 	HRESULT Draw_MapBloom();
 
+public:
+	void Switch_BlackOut(_bool isTrue);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

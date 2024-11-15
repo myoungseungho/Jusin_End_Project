@@ -68,7 +68,8 @@ public:/*For.Light_Manager*/
 public:/*For.Picking*/
 	_float4 Picked_Position(_bool* pPicked);
 	_int Picked_Effect_Index();
-
+public: /* For.Renderer */
+	void Switch_BlackOut(_bool isTrue);
 private:
 	class CRenderer*		m_pRenderer = { nullptr };
 	class CTarget_Manager*	m_pTarget_Manager = { nullptr };

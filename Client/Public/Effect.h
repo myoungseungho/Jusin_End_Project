@@ -129,6 +129,8 @@ public:
 
 	EFFECT_DESC			m_ForCopyInform;
 	_int	m_iRenderGroupIndex;
+	_int m_iChangePassIndex = { 0 };
+	_bool m_isInitializeRender = { false };
 protected:
 	virtual HRESULT Ready_Components(_wstring* pModelName, _wstring* pMaskTextureName, _wstring* pDiffuseTexturueName);
 	virtual HRESULT Bind_ShaderResources();

@@ -27,7 +27,7 @@ HRESULT CEffect_Blend::Initialize_Prototype()
 HRESULT CEffect_Blend::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_BLEND;
-
+	m_iChangePassIndex = 5;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -175,6 +175,22 @@ HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
 
 HRESULT CEffect_Blend::Render(_float fTimeDelta)
 {
+	if (m_isInitializeRender == false)
+	{
+		m_isInitializeRender = true;
+		if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
+		{
+			if (m_iPassIndex == 1)
+				m_iPassIndex = m_iChangePassIndex;
+			else
+				m_iPassIndex = 1;
+		}
+		else
+			m_iPassIndex = m_iChangePassIndex;
+
+		return S_OK;
+	}
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -198,12 +214,12 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 	if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_BLEND)
 	{
 		if (m_iPassIndex == 1)
-			m_iPassIndex = 5;
+			m_iPassIndex = m_iChangePassIndex;
 		else
 			m_iPassIndex = 1;
 	}
 	else
-		m_iPassIndex = 5;
+		m_iPassIndex = m_iChangePassIndex;
 
 	return S_OK;
 }

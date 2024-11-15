@@ -69,6 +69,8 @@ void CMap_Manager::Update(_float fTimeDelta)
 		Map_Change(MAP_SPACE);
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
 		Map_Change(MAP_VOLCANO);
+	
+	
 }
 
 void CMap_Manager::Late_Update(_float fTimeDelta)
