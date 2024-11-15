@@ -215,6 +215,11 @@ _int CRenderInstance::Picked_Effect_Index()
 	return m_pPicking->Picked_Effect_Index();
 }
 
+void CRenderInstance::Switch_BlackOut(_bool isTrue)
+{
+	m_pRenderer->Switch_BlackOut(isTrue);
+}
+
 void CRenderInstance::Release_Engine()
 {
 	Safe_Release(m_pRenderer);

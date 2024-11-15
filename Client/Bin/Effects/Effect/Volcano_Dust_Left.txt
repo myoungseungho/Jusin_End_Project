@@ -1,10 +1,10 @@
 [Layer]
-LayerName: Volcano_Dust
+LayerName: Volcano_Dust_Left
 Duration: 0.042
 TickPerSecond: 0.01
 KeyFramesCount: 59
 NumEffec: 1
-Position: 70 19.5 -2
+Position: -70 19.5 -2
 Scale: 3.79997 4.29998 0.999992
 Rotation: 0 90 346.753
 IsFollowing: false

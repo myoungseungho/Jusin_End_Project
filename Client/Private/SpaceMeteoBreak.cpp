@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Effect_Manager.h"
-
+#include "Main_Camera.h"
 CSpaceMeteoBreak::CSpaceMeteoBreak(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 	: CGameObject { pDevice, pContext }
 {
@@ -78,12 +78,16 @@ void CSpaceMeteoBreak::Camera_Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		Start_Space_DestructiveFinish(false);
+		//Start_Space_DestructiveFinish(false);
+		m_pRenderInstance->Switch_BlackOut(false);
 	}
 	if (m_pGameInstance->Key_Down(DIK_F11))
 	{
-		Start_Space_DestructiveFinish(true);
+		//Start_Space_DestructiveFinish(true);
+		m_pRenderInstance->Switch_BlackOut(true);
 	}
+	
+	//
 }
 
 void CSpaceMeteoBreak::Start_Space_DestructiveFinish(_bool isRight)
@@ -135,7 +139,7 @@ void CSpaceMeteoBreak::Update(_float fTimeDelta)
 
 			m_fBrakeSwitchTime = 0.f;
 			m_isBrakeSwitch = true;
-
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(3.f, 0.3);
 			XMStoreFloat4x4(&m_Result4x4, m_pTransformCom->Get_WorldMatrix());
 
 			_float4x4 Result4x4;

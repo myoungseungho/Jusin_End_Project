@@ -28,7 +28,7 @@ HRESULT CEffect_NoneLight::Initialize(void* pArg)
 {
 	m_eEffect_Type = EFFECT_NONELIGHT;
 	m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_NONLIGHT_EFFECT);
-
+	m_iChangePassIndex = 4;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -137,7 +137,8 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 2) //레이어
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_NONLIGHT_EFFECT)
+					m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
 				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
@@ -147,7 +148,8 @@ void CEffect_NoneLight::Late_Update(_float fTimeDelta)
 		{
 			if (m_iRenderIndex == 1) //테스트
 			{
-				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
+				if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_NONLIGHT_EFFECT)
+					m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderIndex), this);
 				m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iRenderGroupIndex), this);
 				//m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT_EFFECT, this);
 			}
@@ -166,6 +168,22 @@ HRESULT CEffect_NoneLight::Priority_Render(_float fTimeDelta)
 
 HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
 {
+	if (m_isInitializeRender == false)
+	{
+		m_isInitializeRender = true;
+		
+		if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_NONLIGHT_EFFECT)
+		{
+			if (m_iPassIndex == 1)
+				m_iPassIndex = m_iChangePassIndex;
+			else
+				m_iPassIndex = 1;
+		}
+		else
+			m_iPassIndex = m_iChangePassIndex;
+		return S_OK;
+	}
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -186,10 +204,15 @@ HRESULT CEffect_NoneLight::Render(_float fTimeDelta)
 			return E_FAIL;
 	}
 
-	if (m_iPassIndex == 1)
-		m_iPassIndex = 4;
+	if (m_iRenderGroupIndex == CRenderer::RG_BACKSIDE_EFFECT || m_iRenderGroupIndex == CRenderer::RG_NONLIGHT_EFFECT)
+	{
+		if (m_iPassIndex == 1)
+			m_iPassIndex = m_iChangePassIndex;
+		else
+			m_iPassIndex = 1;
+	}
 	else
-		m_iPassIndex = 1;
+		m_iPassIndex = m_iChangePassIndex;
 
 	return S_OK;
 }

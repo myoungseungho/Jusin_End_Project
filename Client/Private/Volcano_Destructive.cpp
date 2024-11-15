@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Effect_Manager.h"
-
+#include "Main_Camera.h"
 CVolcano_Destructive::CVolcano_Destructive(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -14,17 +14,21 @@ CVolcano_Destructive::CVolcano_Destructive(ID3D11Device* pDevice, ID3D11DeviceCo
 CVolcano_Destructive::CVolcano_Destructive(const CVolcano_Destructive& Prototype)
 	: CGameObject{ Prototype },
 	m_vFragmentMoveDir{
-		{0.f, 1.f, 0.f},
-		{0.f, 1.f, 1.f},
-		{0.f, 0.f, 1.f},
-		{-0.5f, 0.1f, 1.f}, // 오른쪽 속도 1 말고 다르게
-		{0.f, 0.1f, -1.2f},
-		{-0.5f, -0.1f, -0.3f}, //6
-		{-0.3f, -0.2f, 0.8f},
-		{0.f, -1.f, 0.3f},
-		{0.f, -0.1f, -1.2f},
-		{-0.2f, -0.2f, -0.8f},
-		{0.f, -1.f, -0.3f}
+		{0.f, 0.f, -2.f}, //0
+		{-0.5f, 0.f, -0.7f},//1
+		{-0.6f, 0.f, -0.5f},//2
+		{-0.2f, 0.7f, -1.f},//3
+		{-0.2f, 0.5f, -0.3f},//4
+		{-0.2f, 0.4f, -0.2f},//5
+		{-0.3f, 0.2f, 0.2f},//6
+		{0.f, 0.3f, 0.1f},//7
+		{0.f, 0.7f, -0.1f},//8
+		{-0.2f, 0.6f, 0.4f},//9
+		{-0.3f, 0.9f, 0.8f},//10
+		{-0.3f, 0.9f, 0.8f},//11
+		{ -0.1f, 0.1f, 0.3f },//12
+		{ 0.f, 1.f, 0.f },//13
+		{ 0.f, 1.f, 0.3f },//14
 	}
 {
 
@@ -47,8 +51,8 @@ HRESULT CVolcano_Destructive::Initialize(void* pArg)
 	CTransform::TRANSFORM_DESC tTransformDesc{};
 	tTransformDesc.fRotationPerSec = 1.f;
 	m_pTransformCom->SetUp_TransformDesc(&tTransformDesc);
-	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
+	//m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0.f));
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(100.f, 30.f, 0.f, 1.f));
 	_vector vMainPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
 	for (size_t i = 0; i < 15; i++)
@@ -136,7 +140,7 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 	{
 		m_fBrakeSwitchTime += fTimeDelta;
 
-		if (m_fBrakeSwitchTime > 2.8f)
+		if (m_fBrakeSwitchTime > 0.8f)
 		{
 			m_fBrakeSwitchTime = 0.f;
 			m_isBrakeSwitch = true;
@@ -150,50 +154,59 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 			Result4x4._42 = 0.f;
 			Result4x4._43 = -5.f;
 			CEffect_Layer::COPY_DESC tDesc{};
-			//m_Result4x4._41 = 0.f;
-			//m_Result4x4._42 = 0.f;
-			//m_Result4x4._43 = 0.f;
+
 			XMStoreFloat4x4(&m_IdentityMatrix, XMMatrixIdentity());
 			tDesc.pPlayertMatrix = &m_IdentityMatrix;
 			CEffect_Layer::COPY_DESC m_tDesc{};
 			m_tDesc.pPlayertMatrix = &Result4x4;
 
-			CEffect_Layer* paEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind"), &tDesc);
-			CEffect_Layer* pExplosionLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Explosion_Volcano"), &tDesc);
-			CEffect* pRotationEffect = { nullptr };
-			//CEffect_Layer* pRotationEffectToLayer = { nullptr };
+			CEffect_Layer* pBeamEffect = { nullptr }; 
+			CEffect_Layer* pBustEffect = { nullptr };
+			CEffect_Layer* pMeteo_Dust_Effect = { nullptr };
+			CEffect_Layer* pWindEffect = { nullptr };
+
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(3.f, 1.f);
+			//
 			if (m_isRight == true)
 			{
-				/*
-				Position: 150 0 -5
-Scale: 10 6 1
-Rotation: 0 90 90
-				*/
-				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
-				//pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &m_tDesc);
-
+				pBeamEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore"), &tDesc);
+				pBustEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Dust"), &tDesc);
+				pMeteo_Dust_Effect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust"), &tDesc);
+				pWindEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind"), &tDesc);
 			}
 			else
 			{
-				//CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
-				//pRotationEffectToLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &m_tDesc);
+				pBeamEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_BeamCore_Left"), &tDesc);
+				pBustEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Dust_Left"), &tDesc);
+				pMeteo_Dust_Effect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Meteo_Dust_L"), &tDesc);
+				pWindEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Volcano_Wind_Left"), &tDesc);
 			}
+			CEffect_Layer* pExplosionLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Explosion_Volcano"), &tDesc);
+		
+			(*pWindEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pWindEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 7;
 
-		//	pRotationEffectToLayer->Set_Layer_Rotation(_float3(5.f, 0.f, 0.f));
+			(*pBustEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pBustEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 9;
 
-			if (paEffect != nullptr)
-				(*paEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-			if (pExplosionLayer != nullptr)
-			{	
-				for (auto& iter : pExplosionLayer->m_MixtureEffects)
-				{
-					iter->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-				}
-				//(*pExplosionLayer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-				/*pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
-				pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
-				pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));*/
-			}
+			(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
+
+			(*pMeteo_Dust_Effect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pMeteo_Dust_Effect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
+			(*pMeteo_Dust_Effect->m_MixtureEffects.begin())->m_vColor = _float4(38.f, 1.f, 4.f, 1.9f);
+			
+			//if (pExplosionLayer != nullptr)
+			//{	
+			//	for (auto& iter : pExplosionLayer->m_MixtureEffects)
+			//	{
+			//		iter->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+			//	}
+			//	//(*pExplosionLayer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+			//	/*pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
+			//	pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
+			//	pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));*/
+			//}
 
 
 		}
@@ -279,8 +292,8 @@ HRESULT CVolcano_Destructive::Priority_Render(_float fTimeDelta)
 
 HRESULT CVolcano_Destructive::Render(_float fTimeDelta)
 {
-	/*if (m_isBrakeSwitch == false)
-	{*/
+	if (m_isBrakeSwitch == false)
+	{
 		if (FAILED(Bind_ShaderResources()))
 			return E_FAIL;
 
@@ -297,36 +310,59 @@ HRESULT CVolcano_Destructive::Render(_float fTimeDelta)
 			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
 		}
-	/*}
+	}
 	else
 	{
 		if (FAILED(Bind_ShaderResources()))
 			return E_FAIL;
 
-		for (size_t i = 0; i < 11; i++)
+		_uint		iMainNumMeshes = m_pModelCom->Get_NumMeshes();
+
+		for (size_t i = 1; i < iMainNumMeshes; i++)
+		{
+			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+				return E_FAIL;
+
+			if (FAILED(m_pShaderCom->Begin(i == 0 ? 19 : 18)))
+				return E_FAIL;
+
+			if (FAILED(m_pModelCom->Render(i)))
+				return E_FAIL;
+		}
+
+		if (FAILED(m_pBRModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(19)))
+			return E_FAIL;
+
+		if (FAILED(m_pBRModelCom->Render(0)))
+			return E_FAIL;
+		
+		for (size_t i = 0; i < 15; i++)
 		{
 			_uint		iNumMeshes = m_pFragmentModelCom[i]->Get_NumMeshes();
 
 			for (size_t j = 0; j < iNumMeshes; j++)
 			{
-				if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+				if (FAILED(m_pFragmentModelCom[i]->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", j)))
 					return E_FAIL;
 
-				_int iMeshIndex = j;
-				if (FAILED(m_pShaderCom->Bind_RawValue("g_iMeteoIndex", &iMeshIndex, sizeof(_int))))
+				//_int iMeshIndex = j;
+				//if (FAILED(m_pShaderCom->Bind_RawValue("g_iMeteoIndex", &iMeshIndex, sizeof(_int))))
+				//	return E_FAIL;
+
+				if (FAILED(m_pShaderCom->Bind_RawValue("g_vDestructivePos", &m_vFragmentPosition[i], sizeof(_float4))))
 					return E_FAIL;
 
-				if (FAILED(m_pShaderCom->Bind_RawValue("g_iMeteoPosition", &m_vFragmentPosition[i], sizeof(_float4))))
-					return E_FAIL;
-
-				if (FAILED(m_pShaderCom->Begin(11)))
+				if (FAILED(m_pShaderCom->Begin(20)))
 					return E_FAIL;
 
 				if (FAILED(m_pFragmentModelCom[i]->Render(j)))
 					return E_FAIL;
 			}
 		}
-	}*/
+	}
 
 	return S_OK;
 }

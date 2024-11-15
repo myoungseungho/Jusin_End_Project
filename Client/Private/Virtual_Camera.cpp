@@ -758,6 +758,12 @@ void CVirtual_Camera::Map_Camera(_float fTimeDelta)
 	vPlayerPos = XMVectorSetY(vPlayerPos, XMVectorGetY(vPlayerPos) + 1.f);
 
 	m_pTransformCom->LookAt(vPlayerPos);
+	if (m_bIsShaking == true)
+	{
+		_vector position = m_vBaseCameraPosition + m_vShakeOffset;
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
+	}
+
 }
 
 
