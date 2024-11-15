@@ -16,10 +16,15 @@ public:
 	virtual HRESULT Initialize_Prototype_Trail(_uint iNumRect ,_float fRectWidth);
 	virtual HRESULT Initialize(void* pArg) override;
 
-	void Line(const _float3& start);
+	void Line(const _float3& start, _float fTimeDelta);
 
 private:
 	_uint m_iNumRect = { 0 };
+	_float m_fTimeAcc = { 0.f };
+
+	_bool m_bInit = { FALSE };
+
+	VTXPOSTEX trailVertices[50 * 4] = {};
 
 public:
 	static CVIBuffer_Trail_Rect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

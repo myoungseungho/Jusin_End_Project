@@ -7,6 +7,7 @@ CVIBuffer_Trail_Rect::CVIBuffer_Trail_Rect(ID3D11Device* pDevice, ID3D11DeviceCo
 
 CVIBuffer_Trail_Rect::CVIBuffer_Trail_Rect(const CVIBuffer_Trail_Rect& Prototype)
     : CVIBuffer{ Prototype }
+     , m_iNumRect{ Prototype.m_iNumRect}
 {
 }
 
@@ -179,38 +180,51 @@ HRESULT CVIBuffer_Trail_Rect::Initialize(void* pArg)
     return S_OK;
 }
 
-void CVIBuffer_Trail_Rect::Line(const _float3& start)
+void CVIBuffer_Trail_Rect::Line(const _float3& start , _float fTimeDelta)
 {
+    m_fTimeAcc += fTimeDelta;
+
     //// 현재 텍스처 위치를 버퍼에 추가
-    VTXPOSTEX trailVertices[50];
+    
+   if (m_bInit == FALSE)
+   {
+       for (int i = 0; i < m_iNumRect; ++i) {
 
-    for (int i = 0; i < m_iNumRect; ++i) {
-     
-        trailVertices[i].vPosition = start;
-        trailVertices[i * 4 + 0].vTexcoord = _float2(0.0f, 0.f);
+           _float fRatio = ((_float)(i + 1) / (_float)m_iNumRect);
+           _float fScaleOffset = 1.f - fRatio;
+           float offset = fRatio * 5.f; // 각 렉트를 오른쪽으로 오프셋
 
-        trailVertices[i * 4 + 1].vTexcoord = _float2(1.0f, 0.f);
+           trailVertices[i * 4 + 0].vPosition = _float3((-0.5f * fScaleOffset) + offset, (0.5f * fScaleOffset), 0.f);
+           trailVertices[i * 4 + 0].vTexcoord = _float2(0.0f, 0.f);
 
-        trailVertices[i * 4 + 2].vTexcoord = _float2(1.0f, 1.0f);
+           trailVertices[i * 4 + 1].vPosition = _float3((0.5f * fScaleOffset) + offset, 0.5f * fScaleOffset, 0.f);
+           trailVertices[i * 4 + 1].vTexcoord = _float2(1.0f, 0.f);
 
-        trailVertices[i * 4 + 3].vTexcoord = _float2(0.0f, 1.0f);
-    }
+           trailVertices[i * 4 + 2].vPosition = _float3((0.5f * fScaleOffset) + offset, -0.5f * fScaleOffset, 0.f);
+           trailVertices[i * 4 + 2].vTexcoord = _float2(1.0f, 1.0f);
 
-    //for (int i = 0; i < 50; i++)
-    //{
-    //    trailVertices
-    //}
-   
-
-    // Trail 버퍼 매핑 및 업데이트
-   D3D11_MAPPED_SUBRESOURCE mappedResource;
-   HRESULT hr = m_pContext->Map(m_pVB, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-   
-   if (SUCCEEDED(hr)) {
-       VTXPOSTEX* pVertexData = reinterpret_cast<VTXPOSTEX*>(mappedResource.pData);
-       memcpy(pVertexData, trailVertices, sizeof(trailVertices));
-       m_pContext->Unmap(m_pVB, 0);  
+           trailVertices[i * 4 + 3].vPosition = _float3((-0.5f * fScaleOffset) + offset, -0.5f * fScaleOffset, 0.f);
+           trailVertices[i * 4 + 3].vTexcoord = _float2(0.0f, 1.0f);
+       }
+       m_bInit = TRUE;
    }
+   else
+   {
+ 
+       for (int i = (50 *4) - 1; i > 3; --i) {
+           trailVertices[i] = trailVertices[i - 4];
+       }
+   }
+ 
+  // // Trail 버퍼 매핑 및 업데이트
+  D3D11_MAPPED_SUBRESOURCE mappedResource;
+  HRESULT hr = m_pContext->Map(m_pVB, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+  
+  if (SUCCEEDED(hr)) {
+      VTXPOSTEX* pVertexData = reinterpret_cast<VTXPOSTEX*>(mappedResource.pData);
+      memcpy(pVertexData, trailVertices, sizeof(trailVertices));
+      m_pContext->Unmap(m_pVB, 0);  
+  }
 }
 
 CVIBuffer_Trail_Rect* CVIBuffer_Trail_Rect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

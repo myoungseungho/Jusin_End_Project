@@ -30,13 +30,13 @@ private:
 	virtual HRESULT Bind_ShaderResources();
 
 private:
-	_float2 m_fCurrPos = {};
-	_float2 m_fPrevPos = {};
+	void Go_Target();
 
-	_float m_fAngle = { 0.f };
-	_float m_fPosDuration = { 0.f };
+private:
+	_float m_fAnimFream = { 0.f };
+	_bool m_bAnimStop = { FALSE };
 
-	CVIBuffer_Trail_Rect* m_pTrail_VIBufferCom = { nullptr };
+	CTransform* m_pHoleTransform = { nullptr };
 
 public:
 	static CUI_Loading_FlyEff* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
