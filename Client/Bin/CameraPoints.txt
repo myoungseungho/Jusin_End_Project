@@ -898,6 +898,10 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Hit_3_Ultimate_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Hit_3_Ultimate_Anim3
 PointCount: 1
 
 [CameraPoint]
@@ -907,10 +911,6 @@ Duration: 6
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
-
-[Animation]
-AnimationName: Hit_3_Ultimate_Anim3
-PointCount: 0
 
 [VirtualCamera]
 ModelID: MODELID_MINE

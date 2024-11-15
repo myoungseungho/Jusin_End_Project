@@ -3204,7 +3204,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 2)
 		{
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 1, this, m_pEnemy);
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 2, this, m_pEnemy);
 			// 원형 회전 시작 (시계 방향, 지속 시간 10초, 원형 도는 속도)
 			main_Camera->Set_CirclePlay(true, XM_2PI / 15.f);
 
