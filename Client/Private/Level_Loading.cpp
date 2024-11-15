@@ -37,9 +37,9 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (FAILED(Ready_Layer()))
 		return E_FAIL;
 
-	//m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
-	//if (nullptr == m_pLoader)
-	//	return E_FAIL;
+	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
+	if (nullptr == m_pLoader)
+		return E_FAIL;
 	
 	m_bIsLevelPrepared = TRUE;
 	
@@ -164,36 +164,36 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 void CLevel_Loading::Update(_float fTimeDelta)
 {
-	//if (true == m_pLoader->isFinished())
-	//{
-	//	CLevel* pNextLevel = { nullptr };
-	//
-	//	switch (m_eNextLevelID)
-	//	{
-	//	case LEVEL_LOGO:
-	//		pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
-	//		break;
-	//
-	//	case LEVEL_GAMEPLAY:
-	//		pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
-	//		break;
-	//	case LEVEL_LOBBY:
-	//		pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
-	//		break;
-	//	case LEVEL_CHARACTER:
-	//		pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
-	//		break;
-	//
-	//	case LEVEL_VS:
-	//		pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
-	//		break;
-	//
-	//
-	//	}
-	//
-	//	if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
-	//		return;
-	//}
+	if (true == m_pLoader->isFinished())
+	{
+		CLevel* pNextLevel = { nullptr };
+	
+		switch (m_eNextLevelID)
+		{
+		case LEVEL_LOGO:
+			pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
+			break;
+	
+		case LEVEL_GAMEPLAY:
+			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
+			break;
+		case LEVEL_LOBBY:
+			pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
+			break;
+		case LEVEL_CHARACTER:
+			pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
+			break;
+	
+		case LEVEL_VS:
+			pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
+			break;
+	
+	
+		}
+	
+		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+			return;
+	}
 }
 
 HRESULT CLevel_Loading::Render(_float fTimeDelta)
