@@ -1235,11 +1235,16 @@ void CCharacter::Chase2(_float fTimeDelta)
 			//Character_Make_Effect(TEXT("BurstR-02"));
 
 			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+			//XMStoreFloat4x4(&m_IdentityMatrix , XMMatrixIdentity());
 			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			
+			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
+			tDesc.pTransformCom = m_pTransformCom;
 			tDesc.m_isPlayerDirRight = m_iLookDirection;
 
-			m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
+			m_pChaseEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstR-02"), &tDesc);
+			
+			//m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
 
 			//BurstR-02_Rotated_Left
 
@@ -1359,10 +1364,10 @@ void CCharacter::Chase2(_float fTimeDelta)
 	{
 		/* 체이스 2P 수정 */
 
-		//if(m_iLookDirection == 1)
+		if (m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
-		//else if (m_iLookDirection == -1)
-		//	m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
+		else if (m_iLookDirection == -1)
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
 
 		_float xdegree = XMVectorGetX(m_vChaseDir);
 
@@ -1374,7 +1379,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 		_float closeness = 70.0f / (1.0f + abs(EffectAngle - 90));
 
 		//m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f });
-		m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f});
+		//m_pChaseEffectLayer->Set_Copy_Layer_Position({ XMVectorGetX(m_vChaseDir) * closeness , XMVectorGetY(m_vChaseDir) * 1.5f,0.f});
 
 
 		//디버깅

@@ -708,6 +708,7 @@ protected:
 
 	string m_strName = "";
 	_float4		m_vDyingPosition = { 0.f,0.f,0.f,1.f };
+	//_float4x4 m_IdentityMatrix;
 private:
 	HRESULT Ready_Components();
 public:

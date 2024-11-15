@@ -90,6 +90,8 @@ private:
 	const CTransform*			m_pPlayerTransformCom = { nullptr };
 	_matrix						LayerMatrix;
 	_float3							m_fChangePosition = { 0.f, 0.f, 0.f };
+
+	//_bool m_isChase
 	
 public:
 	static CEffect_Layer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, void* pArg);
