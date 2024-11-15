@@ -1509,8 +1509,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else //¹è´Ï½Ì °ø°Ý
 			{
 				m_bInvisible = false;
+				m_bBenishingAttack = false;
 				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 120.f;
-
 
 				Character_Make_Effect(TEXT("Moving_Line_Right"));
 
@@ -1535,7 +1535,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fAnimationLockTime = 0.3f;
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
-				Desc.iGainAttackStep = 3;
+				Desc.iGainAttackStep = 2;
 
 				Desc.bCameraZoom = false;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -3053,8 +3053,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
-			Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+			Desc.ColliderDesc.vExtents = { 1.2f,1.0f,1.f };
+			Desc.ColliderDesc.vCenter = { 0.3f* m_iLookDirection,0.7f,0.f };
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 1.f;

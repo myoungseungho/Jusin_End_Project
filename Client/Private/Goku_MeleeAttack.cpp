@@ -934,24 +934,62 @@ void CGoku_MeleeAttack::StopMacro(_float fStopTime)
 void CGoku_MeleeAttack::Attack_Benishing()
 {
 	
+	if(CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) == 0 || m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_BENISHING] == false)
+		return;
 
-	if (m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_BENISHING])
+
+	if (m_pPlayer->Get_bAttackBackEvent() && 
+		(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR3 ||
+			*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236_AIR || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_214 ||
+			*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_HEAVY) )
 	{
-		//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,2.f,0.f);
-		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_AIR2);
-		m_pPlayer->Set_CurrentAnimationPositionJump(30.99);
-		m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
-		m_pPlayer->Set_AnimationStop(0.3f);
-		//時時次
-		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
 
-		m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
-		m_pPlayer->FlipDirection();
+		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1,m_pPlayer->Get_iPlayerTeam()))
+		{		
+			m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_BENISHING] = false;
+			//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,2.f,0.f);
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_AIR2);
+			m_pPlayer->Set_CurrentAnimationPositionJump(30.99);
+			m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
+			m_pPlayer->Set_AnimationStop(0.3f);
+			//時時次
+			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
 
-		m_pPlayer->Set_bBenishingAttack(true);
-		m_pPlayer->Set_ForcedGravityDown();
-		m_pPlayer->Set_bInivisible(true);
+			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
+			m_pPlayer->FlipDirection();
+
+			m_pPlayer->Set_bBenishingAttack(true);
+			m_pPlayer->Set_ForcedGravityDown();
+			m_pPlayer->Set_bInivisible(true);
+			m_pPlayer->Set_fImpulse({ 0.f,0.f });
+		}
+
 	}
+
+	else if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
+	{
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pbAttackCount[CPlay_Goku::COUNT_ATTACK_BENISHING] = false;
+			//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,2.f,0.f);
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_AIR2);
+			m_pPlayer->Set_CurrentAnimationPositionJump(30.99);
+			m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
+			m_pPlayer->Set_AnimationStop(0.3f);
+			//時時次
+			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
+			m_pPlayer->FlipDirection();
+
+			m_pPlayer->Set_bBenishingAttack(true);
+			m_pPlayer->Set_ForcedGravityDown();
+			m_pPlayer->Set_bInivisible(true);
+			m_pPlayer->Set_fImpulse({ 0.f,0.f });
+		}
+	}
+	
 
 }
 

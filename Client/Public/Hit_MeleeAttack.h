@@ -51,7 +51,7 @@ public:
 	void ForwardDash();
 
 	void Reflect();
-
+	void Attack_Benishing();
 
 	void StopMacro(_float fStopTime);
 

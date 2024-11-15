@@ -1641,14 +1641,28 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
 	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
 
-	if (m_bGrab_Air == false)
+	if (m_bGrab_Air == true)
+	{
+		m_vChaseDir = XMVectorSetX(m_vChaseDir, XMVectorGetX(m_vChaseDir)*1.5f);
+
+		//m_pTransformCom->Add_MoveVector(m_vChaseDir * (20 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+		m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+
+	}
+	else
 	{
 		m_vChaseDir = XMVectorSetY(m_vChaseDir, 0.f);
+		m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
 	}
-
+	
 
 	//m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime*m_fAccChaseTime*3.f) * fTimeDelta);
-	m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+
+
+	//기존에 쓰던것. 공중에서X길이 늘리려고 다시 만들것
+	//m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+
+
 
 
 
@@ -2566,7 +2580,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 					//Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
 
 					//팅겨져나오는 거리 수정중
-					Set_fImpulse({ m_iLookDirection * 4.f,0.5f });
+					//Set_fImpulse({ m_iLookDirection * 4.f,0.5f });
+					Set_fImpulse({ m_iLookDirection * 4.f,0.05f });
 
 					//Set_ForcedGravityTime_LittleUp();
 					Set_ForcveGravityTime(0.f);
