@@ -1284,6 +1284,7 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (NULL == m_Distortions.size())
 		return S_OK;
 
+	/* 벡터를 순회하면서 현재 기록된 위치에 디스토션 마스크를 한 렌더타겟에 한번에 그림 */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
 		return E_FAIL;
 
@@ -1323,6 +1324,8 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
+	/* 백버퍼 쉐이더리소스뷰를 바로 렌더타겟으로 있는 상태에선 불가능함
+	   그래서 임의의 다른 렌더타겟의 백버퍼와 여러 디스토션을 그린 렌더타겟을 이용해서 효과를 줌 */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
 		return E_FAIL;
 	
@@ -1331,6 +1334,9 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
 		return E_FAIL;
 
 	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
@@ -1343,6 +1349,7 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
+	/* 나온 결과를 바로 백버퍼에 덮어씀 */
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
