@@ -228,8 +228,28 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 			if(m_pPlayerTransformCom != nullptr)
 				pEffect->Get_Layer_Matrix(EffectToLayerMatrix * m_pPlayerTransformCom->Get_WorldMatrix());
-			else
+			else  
+			{
+				if ((pEffect->m_bIsBillboarding))
+				{
+					CTransform* pTransform = CTransform::Create(m_pDevice, m_pContext);
+
+					_float4x4 SwitchMatrix;
+					XMStoreFloat4x4(&SwitchMatrix, EffectToLayerMatrix);
+
+					pTransform->Set_WorldMatrix(SwitchMatrix);
+					pTransform->LookAt(m_pGameInstance->Get_CamPosition_Vector());
+
+					EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix() * pTransform->Get_WorldMatrix();
+
+					pEffect->m_bIsAlreadyBillboading = true;
+
+					Safe_Release(pTransform);
+				}
+
 				pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
+
+			}
 		}
 
 		Play_Effect_Animation(fTimeDelta);
