@@ -48,12 +48,12 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 
 	m_bGrabedGravity = pDesc->bGrabedGravity;
 
-	if (pDesc->iVirtualCameraindex != 200)
-	{
-		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
-		m_ianimationIndex = pDesc->ianimationIndex;
-		
-	}
+	//if (pDesc->iVirtualCameraindex != 200)
+	//{
+	//	m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
+	//	m_ianimationIndex = pDesc->ianimationIndex;
+	//	
+	//}
 	
 
 	if (m_iOnwerDirection == 231)

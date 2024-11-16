@@ -2607,7 +2607,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 1.0f;
-				Desc.iDamage = 700 * Get_DamageScale();;
+				Desc.iDamage = 900 * Get_DamageScale();;
 				Desc.fLifeTime = 0.1f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
 				Desc.iTeam = m_iPlayerTeam;
@@ -2702,7 +2702,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,-1.f };
 				Desc.fhitCharacter_StunTime = 1.0f;
-				Desc.iDamage = 900 * Get_DamageScale();;
+				Desc.iDamage = 1450 * Get_DamageScale();;
 				Desc.fLifeTime = 0.1f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
 				Desc.iTeam = m_iPlayerTeam;
@@ -2730,9 +2730,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 
-			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY, 0, this);
-			main_Camera->StartCameraShake(0.8f, 0.3f);
+		
 
 			m_bInvisible = false;
 			MoveToEnemy_Ground(5.f);
@@ -2761,7 +2759,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fAnimationLockTime = 0.7f;
 			Desc.pOwner = this;
 			Desc.iGainKiAmount = 7;
-		
+
+			Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY;
+			Desc.fCameraShakeDuration = 0.8f;
+			Desc.fCameraShakeMagnitude = 0.3f;
+			//CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			//main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY, 0, this);
+			//main_Camera->StartCameraShake(0.8f, 0.3f);
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -3309,11 +3313,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 		}
 
-		//Position 240.1
-		else if (iAttackEvent == 240)
-		{
-
-		}
 		//¸¶Áö¸· ÆÝÄ¡
 		else if (iAttackEvent == 4)
 		{

@@ -2581,7 +2581,9 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 					//팅겨져나오는 거리 수정중
 					//Set_fImpulse({ m_iLookDirection * 4.f,0.5f });
-					Set_fImpulse({ m_iLookDirection * 4.f,0.05f });
+					//Set_fImpulse({ m_iLookDirection * 4.f,0.05f });
+					Set_fImpulse({ m_iLookDirection * 4.f,0.1f - Get_fHeight()});
+
 
 					//Set_ForcedGravityTime_LittleUp();
 					Set_ForcveGravityTime(0.f);
@@ -4067,6 +4069,9 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 
 	if(m_bDying == false)
 	{
+		if (m_bGrabbed == true)
+			return;
+
 		if (m_iHP < 1)
 		{
 			m_bDying = true;

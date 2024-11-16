@@ -263,7 +263,7 @@ void CHit_MeleeAttack::Attack_Heavy()
 		else if ((CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) != 0))
 		{
 			CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam());
-			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_pPlayer->Get_iPlayerTeam());
+			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(25, m_pPlayer->Get_iPlayerTeam());
 			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
 
 		}
