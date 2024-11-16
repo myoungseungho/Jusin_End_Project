@@ -6,6 +6,7 @@
 #include "GameInstance.h"
 #include "Component.h"
 #include "Light_Manager.h"
+#include "Transform.h"
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
@@ -56,6 +57,12 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	m_pUI_GlowShader = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_UI_Glow.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	if (nullptr == m_pUI_GlowShader)
+		return E_FAIL;
+
+	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
+	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.dds"), 4);
+	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
+	if (nullptr == m_pDistortionTextureCom || nullptr == m_pDistortionTransformCom || nullptr == m_pDistortionShaderCom)
 		return E_FAIL;
 
 	ID3D11Texture2D* pDepthStencilTexture = nullptr;
@@ -263,6 +270,11 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 #endif
 	return S_OK;
+}
+
+void CRenderer::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
+{
+	m_Distortions.push_back(tDistortionDesc);
 }
 
 HRESULT CRenderer::Render_Priority(_float fTimeDelta)
@@ -1258,6 +1270,54 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
+{
+	if (NULL == m_Distortions.size())
+		return S_OK;
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
+		return E_FAIL;
+
+	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
+	{
+		iter->fLifeTime -= fTimeDelta;
+
+		if (iter->fLifeTime <= 0)
+		{
+			iter = m_Distortions.erase(iter);
+			continue;
+		}
+
+		m_pDistortionTransformCom->Set_Scaled(iter->vScale.x, iter->vScale.y, 1.f);
+		m_pDistortionTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), iter->fDir.y > 0 ? 90 : 0);
+		m_pDistortionTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&iter->vPosition));
+
+		if (FAILED(m_pDistortionTransformCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_WorldMatrix")))
+			return E_FAIL;
+		if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
+
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_PlayerDefferd"))))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+			return E_FAIL;
+
+		m_pDistortionShaderCom->Begin(0);
+		m_pVIBuffer->Bind_Buffers();
+		m_pVIBuffer->Render();
+
+		++iter;
+	}
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	
+	return S_OK;
+}
+
 
 #ifdef _DEBUG
 
@@ -1960,6 +2020,14 @@ HRESULT CRenderer::Initialize_RenderTarget()
 
 #pragma endregion	
 
+#pragma region Distortion
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Distortion"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Distortion"), TEXT("Target_Distortion"))))
+		return E_FAIL;
+#pragma endregion	
+
 	return S_OK;
 }
 
@@ -1999,7 +2067,11 @@ void CRenderer::Free()
 
 	for (auto& pComponent : m_DebugComponent)
 		Safe_Release(pComponent);
+	
 
+	Safe_Release(m_pDistortionTransformCom);
+	Safe_Release(m_pDistortionTextureCom);
+	Safe_Release(m_pDistortionShaderCom);
 	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);

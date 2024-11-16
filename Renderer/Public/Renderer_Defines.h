@@ -16,6 +16,34 @@ namespace Renderer
 
 using namespace Renderer;
 
+struct RENDERER_DLL DISTORTION_DESC
+{
+    _float4    vPosition;
+    _float2    vOffSet;
+    
+    _float2    vScale;
+
+    _float  fLifeTime;
+    _float  fFactor;
+    _float2 fDir;
+
+    DISTORTION_DESC()
+        : vPosition{ 0.0f, 0.0f, 0.0f, 1.0f },
+        vOffSet{ 0.0f, 0.0f },
+        vScale{ 1.0f, 1.0f },
+        fLifeTime(0.0f),
+        fFactor(0.0f),
+        fDir{ 1.0f, 0.0f } {}
+
+    DISTORTION_DESC(const _float4& position, const _float2& offset, const _float2& scale,
+        float lifeTime, float factor, const _float2& dir)
+        : vPosition(position),
+        vOffSet(offset),
+        vScale(scale),
+        fLifeTime(lifeTime),
+        fFactor(factor),
+        fDir(dir) {}
+};
 struct RENDERER_DLL GLOW_DESC
 {
     string          strTagName; 

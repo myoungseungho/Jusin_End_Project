@@ -10,6 +10,7 @@ BEGIN(Engine)
 class CGameObject;
 class CShader;
 class CVIBuffer_Rect;
+class CTransform;
 class CGameInstance;
 class CComponent;
 END
@@ -83,9 +84,22 @@ private:
 	_uint m_iEffectRenderCount = { 0 };
 	_uint m_iEffectGlowPri_RenderCount = { 0 };
 
+private: /* For.BlackOut Variable */
 	_bool m_isStartBlackOut = { false };
 	_float m_fAccBlackTime = { 0.f };
 	const _float m_fBlackTime = { 0.8f };
+
+public: /* For.Distortion Function*/
+
+	HRESULT Render_Distortion(_float fTimeDelta);
+
+	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
+
+private: /* For.Distortion Variable */
+	vector<DISTORTION_DESC>		m_Distortions;
+	class CTransform*			m_pDistortionTransformCom = { nullptr };
+	class CTexture*				m_pDistortionTextureCom = { nullptr };
+	class CShader*				m_pDistortionShaderCom = { nullptr };
 
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
@@ -116,7 +130,6 @@ private:
 	HRESULT Render_CutScene_Object(_float fTimeDelta);
 	HRESULT Render_CutScene_Late_Effect(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
-
 
 	HRESULT Initialize_RenderTarget();
 private:
