@@ -54,7 +54,7 @@ PS_OUT PS_MAIN_DRAW_DISTORTION(PS_IN In)
 
     
     float2 speedUV = In.vTexcoord;
-    speedUV.x += g_Time * 0.1f;
+    //speedUV.x += g_Time * 0.1f;
     
     vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, speedUV);
@@ -73,7 +73,7 @@ PS_OUT PS_MAIN_DISTORTION_TO_BACKBUFFER(PS_IN In)
     float2 distortedUV = In.vTexcoord;
     /* 디스토션 렌더타겟에서 0 0 0 0 인 부분을 검출 해서 만약 그렇다면 UV좌표 자기 기존 텍스쿠드로 해야될듯 */
     distortedUV.x += (vDistortion.r) * 0.05f;
-    distortedUV.y += (vDistortion.g) * 0.05f;
+    distortedUV.y += (vDistortion.g) * 0.005f;
 
     float4 vBackBufferColor = g_BackBufferTexture.Sample(LinearSampler, distortedUV);
 

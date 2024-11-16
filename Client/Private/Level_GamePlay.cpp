@@ -148,7 +148,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 		DISTORTION_DESC tDistortionDesc{};
 		tDistortionDesc.vPosition = { 0.f,1.f,0.f,1.f };
 		tDistortionDesc.fLifeTime = 3.f;
-		tDistortionDesc.vScale = { 1.f,1.f };
+		tDistortionDesc.vScale = { 4.f,2.f };
 		tDistortionDesc.fFactor = 3.f;
 		
 		m_pRenderInstance->Create_Distortion(tDistortionDesc);
