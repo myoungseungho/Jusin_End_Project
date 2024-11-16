@@ -1288,6 +1288,8 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (NULL == m_Distortions.size())
 		return S_OK;
 
+	m_fAccTime += fTimeDelta;
+
 	/* 벡터를 순회하면서 현재 기록된 위치에 디스토션 마스크를 한 렌더타겟에 한번에 그림 */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
 		return E_FAIL;
@@ -1320,9 +1322,9 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 			return E_FAIL;
-		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 1)))
+		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 3)))
 			return E_FAIL;
-
+		m_pDistortionShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(_float));
 		m_pDistortionShaderCom->Begin(0);
 		m_pVIBuffer->Bind_Buffers();
 		m_pVIBuffer->Render();
@@ -1351,6 +1353,8 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
 		return E_FAIL;
 
+	
+
 	m_pDistortionShaderCom->Begin(1);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
@@ -1372,8 +1376,6 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	m_pDistortionShaderCom->Begin(2);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
-	return S_OK;
 
 	return S_OK;
 }

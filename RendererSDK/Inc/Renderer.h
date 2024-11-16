@@ -102,7 +102,7 @@ private: /* For.Distortion Variable */
 	class CShader*				m_pDistortionShaderCom = { nullptr };
 
 	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
-
+	_float m_fAccTime = { 0.f };
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);

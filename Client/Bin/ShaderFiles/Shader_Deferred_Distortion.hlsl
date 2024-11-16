@@ -9,6 +9,7 @@ texture2D       g_Texture, g_MaskTexture, g_BackBufferTexture;
 
 float			fLifeTime;
 float			fFactor;
+float g_Time;
 
 struct VS_IN
 {
@@ -51,8 +52,12 @@ PS_OUT PS_MAIN_DRAW_DISTORTION(PS_IN In)
 {
 	PS_OUT			Out = (PS_OUT)0;	
 
+    
+    float2 speedUV = In.vTexcoord;
+    speedUV.y += g_Time * 0.7f;
+    
     vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, speedUV);
     
 	Out.vColor = vMaskDiffuse * vBaseDiffuse.a;
     
@@ -66,8 +71,9 @@ PS_OUT PS_MAIN_DISTORTION_TO_BACKBUFFER(PS_IN In)
     float3 vDistortion = g_Texture.Sample(LinearSampler, In.vTexcoord).rgb;
 
     float2 distortedUV = In.vTexcoord;
-    distortedUV.x += (vDistortion.r - 0.5f) * 0.05f;
-    distortedUV.y += (vDistortion.g - 0.5f) * 0.05f;
+    /* 디스토션 렌더타겟에서 0 0 0 0 인 부분을 검출 해서 만약 그렇다면 UV좌표 자기 기존 텍스쿠드로 해야될듯 */
+    distortedUV.x += (vDistortion.r) * 0.05f;
+    distortedUV.y += (vDistortion.g) * 0.05f;
 
     float4 vBackBufferColor = g_BackBufferTexture.Sample(LinearSampler, distortedUV);
 
