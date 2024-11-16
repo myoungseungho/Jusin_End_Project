@@ -1309,7 +1309,6 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 		if (FAILED(m_pDistortionTransformCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
 
-
 		/* 뷰투영 카메라로 하는게 플레이어가 직접 세팅할때 편한가? or UI 처럼 크기를 픽셀크기로 던져줘서 그리는게 편한가?*/
 		_float4x4 viewMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW);
 		if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &viewMatrix)))
@@ -1333,8 +1332,6 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
-
-	return S_OK;
 
 	/* 백버퍼 쉐이더리소스뷰를 바로 렌더타겟으로 있는 상태에선 불가능함
 	   그래서 임의의 다른 렌더타겟의 백버퍼와 여러 디스토션을 그린 렌더타겟을 이용해서 효과를 줌 */

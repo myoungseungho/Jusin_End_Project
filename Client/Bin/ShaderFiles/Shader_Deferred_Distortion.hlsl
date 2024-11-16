@@ -63,11 +63,16 @@ PS_OUT PS_MAIN_DISTORTION_TO_BACKBUFFER(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
 
-    vector vDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    
-    //vDiffuse.a = saturate(vDiffuse.a - (0.8f - g_fAccBlackTime));
-    
-    //Out.vColor = vDiffuse;
+    float3 vDistortion = g_Texture.Sample(LinearSampler, In.vTexcoord).rgb;
+
+    float2 distortedUV = In.vTexcoord;
+    distortedUV.x += (vDistortion.r - 0.5f) * 0.05f;
+    distortedUV.y += (vDistortion.g - 0.5f) * 0.05f;
+
+    float4 vBackBufferColor = g_BackBufferTexture.Sample(LinearSampler, distortedUV);
+
+    Out.vColor = vBackBufferColor;
+
     return Out;
 }
 
