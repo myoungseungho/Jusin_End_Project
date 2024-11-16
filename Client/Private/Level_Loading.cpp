@@ -191,7 +191,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		m_iNumThreadEnd++;
 	}
 
-	if (m_fNextLevelTimer > 5.f)
+	if (m_fNextLevelTimer > 2.8f)
 		m_bNextLevel = TRUE;
 	
 	if (m_pLoader->isFinished())
