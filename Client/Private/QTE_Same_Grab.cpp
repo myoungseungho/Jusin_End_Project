@@ -7,6 +7,7 @@
 #include "QTE_Same_Grab_UI_Gauge.h"
 #include "Main_Camera.h"
 #include "QTE_Same_Grab_UI_Particle.h"
+
 CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -278,6 +279,8 @@ void CQTE_Same_Grab::End_QTE()
 	m_p1PCharacter = nullptr;
 	m_p2PCharacter = nullptr;
 	m_pListGameObject.clear();
+
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
 }
 
 _int CQTE_Same_Grab::Determine_QTE_Result() const
@@ -330,7 +333,6 @@ _int CQTE_Same_Grab::Determine_QTE_Result() const
 
 	return result;
 }
-
 
 void CQTE_Same_Grab::Handle_QTEInput()
 {
@@ -420,11 +422,14 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			}
 
 			m_pMain_Camera->StartCameraShake(0.1, 0.1);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_SUCCESS_SFX, false, 0.7f);
+
 		}
 		else
 		{
 			// 잘못된 입력 시 QTE 실패 처리
 			Handle_WrongInput(playerID);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, false, 0.7f);
 			return;
 		}
 	}
@@ -470,11 +475,13 @@ void CQTE_Same_Grab::Process_Command(UI_COMMAND input, _int playerID)
 			}
 
 			m_pMain_Camera->StartCameraShake(0.1, 0.1);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_SUCCESS_SFX, false, 0.7f);
 		}
 		else
 		{
 			// 잘못된 입력 시 QTE 실패 처리
 			Handle_WrongInput(playerID);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, false, 0.7f);
 			return;
 		}
 	}

@@ -501,7 +501,12 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma endregion
 
 #pragma region QTE 사운드
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/QTE_UI_SOUND/NA_0509_BattleCall_Start01.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_READY, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//QTE 성공
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/QTE_UI_SOUND/QTE_Sucess.ogg", CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//동시잡기 성공
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/QTE_UI_SOUND/QTE_SAME_GRAB_ICON_Sucess.ogg", CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_SUCCESS_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//동시잡기 실패
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/QTE_UI_SOUND/QTE_SAME_GRAB_ICON_Fail.ogg", CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
 
