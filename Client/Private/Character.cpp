@@ -5350,6 +5350,19 @@ void CCharacter::Notify_QTE_Hit(_int result)
 	}
 }
 
+void CCharacter::Notify_QTE_Continuous_Attack(_int result)
+{
+	switch (result)
+	{
+		//½Â
+	case 1:
+		break;
+		//ÆÐ
+	case -1:
+		break;
+	}
+}
+
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CCharacter* pInstance = new CCharacter(pDevice, pContext);

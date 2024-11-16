@@ -40,7 +40,7 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	void Start_QTE();
+	void Start_QTE(class CGameObject* callObject);
 	void End_QTE();
 	void End_Offset_QTE(_float fTimeDelta);
 	void Handle_QTEInput();

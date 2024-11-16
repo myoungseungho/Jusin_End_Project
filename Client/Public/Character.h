@@ -734,6 +734,10 @@ public:
 	// -1 : ÆÐ 
 	void Notify_QTE_Hit(_int result);
 
+	// 1: ½Â, 
+	// -1 : ÆÐ 
+	void Notify_QTE_Continuous_Attack(_int result);
+
 	CUI_Define::PLAYER_ID Get_CharacterID() { return m_eCharacterID; };
 
 public:

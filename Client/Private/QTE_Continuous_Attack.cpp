@@ -9,6 +9,7 @@
 #include "QTE_Continuous_Attack_Particle.h"
 #include "QTE_Continuous_Attack_Space_Particle.h"
 #include "Main_Camera.h"
+#include "Character.h"
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -147,7 +148,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 	}
 }
 
-void CQTE_Continuous_Attack::Start_QTE()
+void CQTE_Continuous_Attack::Start_QTE(CGameObject* callObject)
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
@@ -157,6 +158,7 @@ void CQTE_Continuous_Attack::Start_QTE()
 
 	//활성화
 	m_bIsQTEActive = true;
+	m_pCall_Object = callObject;
 
 	//스페이스 객체 생성
 	CQTE_Continuous_Attack_Space::CONTINUOUS_ATTACK_DESC Desc{};
@@ -195,6 +197,20 @@ void CQTE_Continuous_Attack::Start_QTE()
 void CQTE_Continuous_Attack::End_QTE()
 {
 #pragma region 초기화
+
+	// 미션 상태에 따라 hitResult 설정
+	// 성공
+ 	if (m_eMissionState == MISSION_SUCCESS)
+	{
+		static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Continuous_Attack(1);
+	}
+	// 실패
+	else if (m_eMissionState == MISSION_FAILED)
+	{
+		static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Continuous_Attack(-1);
+	}
+
+	m_pCall_Object = nullptr;
 
 	//Space 객체는 삭제
 	Safe_Release(m_pContinuous_Space);
@@ -392,7 +408,7 @@ void CQTE_Continuous_Attack::Start(CGameObject* callObject)
 	else
 	{
 		// QTE가 비활성화되어 있으면 시작
-		Start_QTE();
+		Start_QTE(callObject);
 	}
 }
 
