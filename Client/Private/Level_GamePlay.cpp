@@ -500,6 +500,11 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Cursor.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
+#pragma region QTE »ç¿îµå
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/QTE_UI_SOUND/NA_0509_BattleCall_Start01.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_READY, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+#pragma endregion
+
+
 	return S_OK;
 }
 
