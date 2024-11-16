@@ -955,8 +955,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 539
-Position: 0.3 0 0
-Scale: 0.349997 0.699963 1
+Position: 0.2 0 0
+Scale: 0.14998 0.499997 1
 Rotation: 0 0 270
 CurTime: 8.98333
 Duration: 10
@@ -1019,8 +1019,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 539
-Position: -0.2 0 0
-Scale: 0.399982 0.599971 1
+Position: 0.2 0 0
+Scale: 0.199996 0.599997 1
 Rotation: 0 0 270
 CurTime: 8.98333
 Duration: 10
@@ -1083,8 +1083,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 539
-Position: -0.1 0 0
-Scale: 0.499935 0.799999 1
+Position: 0.0999997 0 0
+Scale: 0.199995 0.699998 1
 Rotation: 0 0 270
 CurTime: 8.98333
 Duration: 10
