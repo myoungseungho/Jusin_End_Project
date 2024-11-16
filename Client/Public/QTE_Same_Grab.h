@@ -66,7 +66,7 @@ private:
 	vector<class CQTE_Same_Grab_UI_Icon*> m_UIIcons_P1;
 	vector<class CQTE_Same_Grab_UI_Icon*> m_UIIcons_P2;
 	vector<class CQTE_Same_Grab_UI_Particle*> m_UIParticles;
-	class CQTE_UI_Gauge* m_UIGauge = { nullptr };
+	class CQTE_Same_Grab_UI_Gauge* m_UIGauge = { nullptr };
 
 	// 각 플레이어의 쿨다운 타이머
 	_float m_fCooldown_P1 = {};

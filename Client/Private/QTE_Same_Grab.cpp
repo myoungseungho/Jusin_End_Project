@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Same_Grab_UI_Icon.h"
-#include "QTE_UI_Gauge.h"
+#include "QTE_Same_Grab_UI_Gauge.h"
 #include "Main_Camera.h"
 #include "QTE_Same_Grab_UI_Particle.h"
 CQTE_Same_Grab::CQTE_Same_Grab(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -581,13 +581,13 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 	}
 
 #pragma region 게이지 객체 생성
-	CQTE_UI_Gauge::QTE_UI_Gauge_DESC Desc{};
+	CQTE_Same_Grab_UI_Gauge::QTE_UI_Gauge_DESC Desc{};
 	Desc.fSizeX = 400.f;
 	Desc.fSizeY = 20.f;
 	Desc.fX = 960.f;
 	Desc.fY = 810.f;
 	Desc.playTime = m_iTotalTime;
-	m_UIGauge = dynamic_cast<CQTE_UI_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_UI_Gauge"), &Desc));
+	m_UIGauge = dynamic_cast<CQTE_Same_Grab_UI_Gauge*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Gauge"), &Desc));
 #pragma endregion
 }
 

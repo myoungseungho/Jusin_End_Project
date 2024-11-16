@@ -45,7 +45,8 @@ void CQTE_Manager::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_F6))
 	{
 		CGameObject* gameObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
-		Start_QTE(QTE_ID::QTE_ID_CONTINUOUS_ATTACK, gameObject);
+
+		Start_QTE(QTE_ID::QTE_ID_HIT, gameObject);
 	}
 }
 

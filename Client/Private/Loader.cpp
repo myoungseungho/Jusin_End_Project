@@ -151,7 +151,7 @@
 #include "BoneEffectObject.h"
 #include "QTE_Same_Grab_UI_Icon.h"
 #include "QTE_Same_Grab.h"
-#include "QTE_UI_Gauge.h"
+#include "QTE_Same_Grab_UI_Gauge.h"
 #include "QTE_Hit.h"
 #include "QTE_Hit_UI_Icon.h"
 #include "QTE_Hit_Situation.h"
@@ -3495,8 +3495,8 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CQTE_Same_Grab::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_UI_Gauge"),
-		CQTE_UI_Gauge::Create(m_pDevice, m_pContext))))
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Gauge"),
+		CQTE_Same_Grab_UI_Gauge::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Hit"),
