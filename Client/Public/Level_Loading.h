@@ -26,7 +26,12 @@ public:
 private:
 	LEVELID				m_eNextLevelID = {};
 	class CLoader*		m_pLoader = { nullptr };
+	
+	_float m_fNextLevelTimer = { 0.f };
+	_uint m_iNumThreadEnd = { 0 };
 
+	_bool m_bNextLevel = { FALSE };
+		
 	static _bool m_bIsLevelPrepared;
 
 public:

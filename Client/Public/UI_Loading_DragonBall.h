@@ -24,7 +24,13 @@ private:
 	void InitPosition();
 
 private:
+	_bool m_bSwitchColor = { FALSE };
+
 	_uint m_iTextureIndex = { 0 };
+	_uint m_iDefTextureIndex = { 7 };
+
+	_float m_fBlurValue = { 0.f };
+	_bool m_bBlurSwitch = { FALSE };
 
 public:
 	static CUI_Loading_DragonBall* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

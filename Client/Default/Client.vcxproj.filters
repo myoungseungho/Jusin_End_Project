@@ -498,7 +498,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Map_Manager.cpp">
       <Filter>02.GameObjects\Map\Manager</Filter>
-</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\private\UI_VS_Name.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
     </ClCompile>
@@ -510,6 +510,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UI_Loading_DragonBall.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\DragonBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1076,7 +1079,7 @@
     </Filter>
     <Filter Include="02.GameObjects\Map\Manager">
       <UniqueIdentifier>{e1787cdf-4e20-409a-b6c6-3fab229bdacc}</UniqueIdentifier>
-  </Filter>
+    </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\Name">
       <UniqueIdentifier>{e99bdeb3-a273-44fe-ab5e-b12818390da8}</UniqueIdentifier>
     </Filter>
@@ -1088,6 +1091,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Loading\DragonBall">
       <UniqueIdentifier>{901edc1d-0bde-4cc1-9ff9-03cfb3f2c976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\FlyEffect\Create">
+      <UniqueIdentifier>{18aedf42-182a-4447-b400-e0ba03547b21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1762,6 +1768,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Loading_DragonBall.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\DragonBall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
