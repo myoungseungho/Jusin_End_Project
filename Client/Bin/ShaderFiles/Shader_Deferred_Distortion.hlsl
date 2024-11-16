@@ -54,7 +54,7 @@ PS_OUT PS_MAIN_DRAW_DISTORTION(PS_IN In)
 
     
     float2 speedUV = In.vTexcoord;
-    speedUV.y += g_Time * 0.7f;
+    speedUV.x += g_Time * 0.1f;
     
     vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, speedUV);
