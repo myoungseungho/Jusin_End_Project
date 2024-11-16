@@ -46,7 +46,7 @@ void CQTE_Manager::Update(_float fTimeDelta)
 	{
 		CGameObject* gameObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 
-		Start_QTE(QTE_ID::QTE_ID_HIT, gameObject);
+		Start_QTE(QTE_ID::QTE_ID_SAME_GRAB, nullptr);
 	}
 }
 

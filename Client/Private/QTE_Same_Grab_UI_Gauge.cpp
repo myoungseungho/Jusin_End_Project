@@ -93,9 +93,14 @@ HRESULT CQTE_Same_Grab_UI_Gauge::Ready_Components()
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
-	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_QTE_Gauge"),
-		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+	/* For.Com_Texture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom[0]))))
+		return E_FAIL;
+
+	/* For.Com_NextTexture */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SKillGaugeBar"),
+		TEXT("Com_NextTexture"), reinterpret_cast<CComponent**>(&m_pTextureCom[1]))))
 		return E_FAIL;
 
 	/* Com_VIBuffer */
@@ -117,7 +122,10 @@ HRESULT CQTE_Same_Grab_UI_Gauge::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pTextureCom[0]->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom[1]->Bind_ShaderResource(m_pShaderCom, "g_NextTexture", 7)))
 		return E_FAIL;
 
 	// 시간 값을 셰이더로 전달
@@ -158,7 +166,9 @@ CGameObject* CQTE_Same_Grab_UI_Gauge::Clone(void* pArg)
 
 void CQTE_Same_Grab_UI_Gauge::Free()
 {
-	Safe_Release(m_pTextureCom);
+	for (auto& iter : m_pTextureCom)
+		Safe_Release(iter);
+
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);
 

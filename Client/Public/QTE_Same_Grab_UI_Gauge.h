@@ -38,7 +38,8 @@ private:
 
 private:
 	CShader* m_pShaderCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	//게이지바와 게이지
+	CTexture* m_pTextureCom[2] = { nullptr,nullptr };
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 	_float					m_fSizeX{}, m_fSizeY{}, m_fX{}, m_fY{}, m_fAlpha{};
@@ -46,6 +47,7 @@ private:
 
 	_float m_fElapsedTime = {};
 	_float m_fPlayTime{};
+
 public:
 	static CQTE_Same_Grab_UI_Gauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
