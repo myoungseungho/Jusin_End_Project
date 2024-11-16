@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Hit_Situation.h"
-
+#include "Character.h"
 
 CQTE_Hit::CQTE_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -31,13 +31,51 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 	m_vecHit_Situation.resize(Hit_Situation_ID_END);
 
 	CQTE_Hit_Situation::QTE_HIT_SITUATION_DESC Desc{};
+
+#pragma region Goku_Hit
+
 	Desc.lifeTime = 15.f;
 	Desc.create_Num = 5;
-	Desc.ID = 
+	Desc.ID = Hit_Situation_ID_Goku;
 
-	CQTE_Hit_Situation* situation = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
-	//A 상황 셋팅 넣어두기
-	m_vecHit_Situation[Hit_Situation_ID_A] = situation;
+	CQTE_Hit_Situation* situation_Goku = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
+	m_vecHit_Situation[Hit_Situation_ID_Goku] = situation_Goku;
+
+#pragma endregion
+
+#pragma region 21_Hit
+
+	Desc.lifeTime = 15.f;
+	Desc.create_Num = 3;
+	Desc.ID = Hit_Situation_ID_21;
+
+	CQTE_Hit_Situation* situation_21 = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
+	m_vecHit_Situation[Hit_Situation_ID_21] = situation_21;
+
+#pragma endregion
+
+#pragma region Frieza_Hit
+
+	Desc.lifeTime = 15.f;
+	Desc.create_Num = 5;
+	Desc.ID = Hit_Situation_ID_Frieza;
+
+	CQTE_Hit_Situation* situation_Frieza = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
+	m_vecHit_Situation[Hit_Situation_ID_Frieza] = situation_Frieza;
+
+#pragma endregion
+
+#pragma region Hit_Hit
+
+	Desc.lifeTime = 10.f;
+	Desc.create_Num = 3;
+	Desc.ID = Hit_Situation_ID_Hit;
+
+	CQTE_Hit_Situation* situation_Hit = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
+	m_vecHit_Situation[Hit_Situation_ID_Hit] = situation_Hit;
+
+#pragma endregion
+
 
 	return S_OK;
 }
@@ -70,12 +108,13 @@ HRESULT CQTE_Hit::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_Hit::Start_Hit(Hit_Situation_ID _ID, CGameObject* pCall_Object)
+void CQTE_Hit::Start_Hit(CGameObject* pCall_Object)
 {
-	m_current_Situation_ID = _ID;
+	CUI_Define::PLAYER_ID ID = static_cast<CCharacter*>(pCall_Object)->Get_CharacterID();
+
+	m_current_Situation_ID = (Hit_Situation_ID)ID;
 	m_vecHit_Situation[m_current_Situation_ID]->Start(pCall_Object);
 }
-
 
 CQTE_Hit* CQTE_Hit::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

@@ -260,18 +260,18 @@ void CQTE_Same_Grab::End_QTE()
 	{
 	case 1:
 		// 1P ½Â¸®, 2P ÆÐ¹è
-		m_p1PCharacter->Notify_QTE_Result(1);
-		m_p2PCharacter->Notify_QTE_Result(-1);
+		m_p1PCharacter->Notify_QTE_Same_Grab(1);
+		m_p2PCharacter->Notify_QTE_Same_Grab(-1);
 		break;
 	case 2:
 		// 1P ÆÐ¹è, 2P ½Â¸®
-		m_p1PCharacter->Notify_QTE_Result(-1);
-		m_p2PCharacter->Notify_QTE_Result(1);
+		m_p1PCharacter->Notify_QTE_Same_Grab(-1);
+		m_p2PCharacter->Notify_QTE_Same_Grab(1);
 		break;
 	case 0:
 		// ºñ±è
-		m_p1PCharacter->Notify_QTE_Result(0);
-		m_p2PCharacter->Notify_QTE_Result(0);
+		m_p1PCharacter->Notify_QTE_Same_Grab(0);
+		m_p2PCharacter->Notify_QTE_Same_Grab(0);
 		break;
 	}
 

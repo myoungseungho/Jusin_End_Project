@@ -19,7 +19,6 @@ HRESULT CQTE_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	CGameObject* SameGrab = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Same_Grab"));
 	m_vecQTE.push_back(SameGrab);
 
-	//Hit
 	CGameObject* Hit = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit"));
 	m_vecQTE.push_back(Hit);
 
@@ -40,8 +39,12 @@ void CQTE_Manager::Update(_float fTimeDelta)
 	for (auto& iter : m_vecQTE)
 		iter->Update(fTimeDelta);
 
+
 	if (m_pGameInstance->Key_Down(DIK_F6))
-		Start_QTE(QTE_ID::QTE_ID_HIT, Hit_Situation_ID_Goku);
+	{
+		CGameObject* gameObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
+		Start_QTE(QTE_ID::QTE_ID_HIT, gameObject);
+	}
 }
 
 void CQTE_Manager::Late_Update(_float fTimeDelta)
@@ -55,7 +58,7 @@ HRESULT CQTE_Manager::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_Manager::Start_QTE(QTE_ID ID, Hit_Situation_ID Hit_Situation_ID, CGameObject* callObject)
+void CQTE_Manager::Start_QTE(QTE_ID ID, CGameObject* callObject)
 {
 	switch (ID)
 	{
@@ -63,7 +66,7 @@ void CQTE_Manager::Start_QTE(QTE_ID ID, Hit_Situation_ID Hit_Situation_ID, CGame
 		static_cast<CQTE_Same_Grab*>(m_vecQTE[ID])->Start(callObject);
 		break;
 	case Client::CQTE_Manager::QTE_ID_HIT:
-		static_cast<CQTE_Hit*>(m_vecQTE[ID])->Start_Hit((CQTE_Hit::Hit_Situation_ID)Hit_Situation_ID, callObject);
+		static_cast<CQTE_Hit*>(m_vecQTE[ID])->Start_Hit(callObject);
 		break;
 	case Client::CQTE_Manager::QTE_ID_CONTINUOUS_ATTACK:
 		static_cast<CQTE_Continuous_Attack*>(m_vecQTE[ID])->Start(callObject);

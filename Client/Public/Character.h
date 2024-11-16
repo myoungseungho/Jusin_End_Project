@@ -728,7 +728,13 @@ public:
 	// 1: ½Â, 
 	// -1 : ÆÐ 
 	// 0: ºñ±è
-	void Notify_QTE_Result(_int result);
+	void Notify_QTE_Same_Grab(_int result);
+
+	// 1: ½Â, 
+	// -1 : ÆÐ 
+	void Notify_QTE_Hit(_int result);
+
+	CUI_Define::PLAYER_ID Get_CharacterID() { return m_eCharacterID; };
 
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

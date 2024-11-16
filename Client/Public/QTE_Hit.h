@@ -13,15 +13,13 @@ public:
 	{
 		Hit_Situation_ID_Goku,
 		Hit_Situation_ID_21,
-		Hit_Situation_ID_Hit,
 		Hit_Situation_ID_Frieza,
+		Hit_Situation_ID_Hit,
 		Hit_Situation_ID_END
 	};
 
 	struct QTE_HIT_DESC
 	{
-		_float lifeTime = {};
-		_int create_Num = {};
 		CQTE_Hit::Hit_Situation_ID ID = {};
 	};
 
@@ -38,7 +36,7 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
-	void Start_Hit(Hit_Situation_ID _ID, class CGameObject* pCall_Object);
+	void Start_Hit(class CGameObject* pCall_Object);
 
 private:
 	vector<class CQTE_Hit_Situation* >m_vecHit_Situation;

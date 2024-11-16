@@ -24,15 +24,6 @@ public:
 		QTE_ID_END
 	};
 
-	enum Hit_Situation_ID
-	{
-		Hit_Situation_ID_Goku,
-		Hit_Situation_ID_21,
-		Hit_Situation_ID_Hit,
-		Hit_Situation_ID_Frieza,
-		Hit_Situation_ID_END
-	};
-
 private:
 	CQTE_Manager();
 	virtual ~CQTE_Manager() = default;
@@ -48,7 +39,7 @@ public:
 
 	vector<class CGameObject*> m_vecQTE;
 
-	void Start_QTE(QTE_ID ID, Hit_Situation_ID Hit_Situation_ID = Hit_Situation_ID_END, class CGameObject* callObject = nullptr);
+	void Start_QTE(QTE_ID ID, class CGameObject* callObject = nullptr);
 
 public:
 	virtual void Free() override;
