@@ -7,6 +7,7 @@
 #include "QTE_Hit_UI_Result.h"
 #include "QTE_Hit_UI_Particle.h"
 #include "Main_Camera.h"
+#include "Sound_Manager.h"
 CQTE_Hit_Situation::CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -548,19 +549,24 @@ void CQTE_Hit_Situation::Create_ResultObject(CQTE_Hit_UI_Icon* pIcon)
 	switch (pIcon->m_currentResult_ID)
 	{
 	case CQTE_Hit_UI_Icon::HIT_RESULT_FAILED:
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, false, 0.7f);
 		iTextureNum = 0;
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_GOOD:
 		iTextureNum = 1;
 		m_pMain_Camera->StartCameraShake(0.1, 0.1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
+
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_EXCELLENT:
 		iTextureNum = 2;
 		m_pMain_Camera->StartCameraShake(0.1, 0.1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_PERFECT:
 		iTextureNum = 3;
 		m_pMain_Camera->StartCameraShake(0.1, 0.1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
 		break;
 	default:
 		iTextureNum = 0;

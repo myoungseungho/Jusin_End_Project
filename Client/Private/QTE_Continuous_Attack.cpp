@@ -203,11 +203,13 @@ void CQTE_Continuous_Attack::End_QTE()
  	if (m_eMissionState == MISSION_SUCCESS)
 	{
 		static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Continuous_Attack(1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
 	}
 	// 실패
 	else if (m_eMissionState == MISSION_FAILED)
 	{
 		static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Continuous_Attack(-1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, false, 0.7f);
 	}
 
 	m_pCall_Object = nullptr;
@@ -297,6 +299,8 @@ void CQTE_Continuous_Attack::Process_Command()
 
 	//Gauge에 신호를 보내서 연타를 해야함
 	m_pContinuous_Gauge->Process_Command();
+
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_SUCCESS_SFX, false, 0.7f);
 }
 
 void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
