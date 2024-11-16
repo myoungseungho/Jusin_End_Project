@@ -780,7 +780,113 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
 	}
 
+
+	//공격 버프
+
+	/* For.Prototype_Component_Texture_UI_AttBufNone */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufNone"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon_none.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_AttBuf */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBuf"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon0%d.png"), 3))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_AttBufEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon_eff0%d.png"), 3))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_AttBufMark */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufMark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon_S.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_AttBufElectricEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufElectricEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/ElectricEff/cp_spicon_ElectricEff%d.png"), 6))))
+		return E_FAIL;
+
+	//게임 스타트 
+	/* For.Prototype_Component_Texture_UI_GameStartCircle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartCircle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/GameStart/GameStart%d.png"), 8))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameStartEmblem */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartEmblem"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/GameStart/Emblem%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameReadyFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameReadyFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/Ready%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameFightFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameFightFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/Fight%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameKOFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/BP_roundfinish_KO.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_GameKOFontEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFontEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/BP_roundfinish_KO_eff.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_KOPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/BP_roundfinish_eff0%d.png"), 7))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_KOParticle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOParticle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/BP_roundfinish_KO_eff_sumi.png")))))
+		return E_FAIL;
+
 	//HP
+
+
+
+
+	//Combo
+	/* For.Prototype_Component_Texture_UI_ComboNumber */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Number/ComboNumber%d.png"), 30))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_ComboFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Combo_Hit_Font%d.png"), 3))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_ComboEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_eff.png")))))
+		return E_FAIL;
+
+
+	//캐릭터 아이콘
+
+	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIconPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame//Top/Cp_CharaIconPanel.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubCharaIconPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/SubIconPanel%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_CharIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Chara_Image//Face_A/Chara_Icon/CharaIcon%d.png"), 4))))
+		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_HpPanel */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_HpPanel"),
@@ -855,188 +961,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillGaugeEff"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/cp_tensiontex_base00_Eff.png")))))
 		return E_FAIL;
-
-
-	//Combo
-	/* For.Prototype_Component_Texture_UI_ComboNumber */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboNumber"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Number/ComboNumber%d.png"), 30))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_ComboFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Combo_Hit_Font%d.png"), 3))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_ComboEffect */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ComboEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/cp_combo_eff.png")))))
-		return E_FAIL;
-
-
-	//캐릭터 아이콘
-
-	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIconPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame//Top/Cp_CharaIconPanel.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_CharaIconPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SubCharaIconPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/SubIconPanel%d.png"), 2))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_CharIcon */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_CharaIcon"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Chara_Image//Face_A/Chara_Icon/CharaIcon%d.png"), 4))))
-		return E_FAIL;
-
-	//공격 버프
-
-	/* For.Prototype_Component_Texture_UI_AttBufNone */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufNone"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon_none.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_AttBuf */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBuf"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon0%d.png"), 3))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_AttBufEff */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufEff"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon_eff0%d.png"), 3))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_AttBufMark */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufMark"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/cp_spicon_S.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_AttBufElectricEff */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_AttBufElectricEff"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/AttBufEffect/ElectricEff/cp_spicon_ElectricEff%d.png"), 6))))
-		return E_FAIL;
-
-	//게임 스타트 
-	/* For.Prototype_Component_Texture_UI_GameStartCircle */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartCircle"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/GameStart/GameStart%d.png"), 8))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_GameStartEmblem */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameStartEmblem"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/GameStart/Emblem%d.png"), 2))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_GameReadyFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameReadyFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/Ready%d.png"), 2))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_GameFightFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameFightFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/Fight%d.png"), 2))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_GameKOFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/BP_roundfinish_KO.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_GameKOFontEffect */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_GameKOFontEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Middle/Font/BP_roundfinish_KO_eff.png")))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_KOPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/BP_roundfinish_eff0%d.png"), 7))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_UI_KOParticle */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_KOParticle"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/BP_roundfinish_KO_eff_sumi.png")))))
-		return E_FAIL;
-
-	//KeyInput 
-
-	/* For.Prototype_Component_Texture_UI_DirInputPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/KeyInputPanel.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_ActionInputPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/KeyInputButton%d.png"), 7))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_DirInputIcon */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputIcon"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/UI_DirInput%d.png"), 9))))
-		return E_FAIL;
-
-
-	/* Prototype_Component_Texture_UI_InputPanel*/
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/TON_Icon_none.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_DirKeyInputEffect */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirKeyInputEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/window_arrow_key_%d.png"), 2))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_InputIconPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputIconPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Training_BlackBG_00.png")))))
-		return E_FAIL;
-
-
-	//Font
-
-	/* Prototype_Component_Texture_UI_FontName */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontName"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Chara_Name%d.png"), 4))))
-		return E_FAIL;
-
-	//옵션
-
-	/* Prototype_Component_Texture_UI_OptPanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptPanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_bg_01.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_OptArrow */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptArrow"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_00.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_OptSelectEffect */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSelectEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_01.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_OptVolumePanel */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptVolumePanel"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_gage_01.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_OptVolumeGauge */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptVolumeGauge"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_gage_00.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_OptTitle */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptTitle"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_title_00.png")))))
-		return E_FAIL;
-
-	/* Prototype_Component_Texture_UI_OptSoundFont */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSoundFont"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Sound_Font.png")))))
-		return E_FAIL;
-
 
 #pragma region Effect Texture
 
@@ -1119,6 +1043,88 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		std::lock_guard<std::mutex> lock(m_TextMutex);
 		lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다.1"));
 	}
+
+	
+
+	
+
+	//KeyInput 
+
+	/* For.Prototype_Component_Texture_UI_DirInputPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/KeyInputPanel.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_ActionInputPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_ActionInput"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/KeyInputButton%d.png"), 7))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_DirInputIcon */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirInputIcon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/UI_DirInput%d.png"), 9))))
+		return E_FAIL;
+
+
+	/* Prototype_Component_Texture_UI_InputPanel*/
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/TON_Icon_none.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_DirKeyInputEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_DirKeyInputEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/window_arrow_key_%d.png"), 2))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_InputIconPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_InputIconPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Training_BlackBG_00.png")))))
+		return E_FAIL;
+
+
+	//Font
+
+	/* Prototype_Component_Texture_UI_FontName */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontName"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Chara_Name%d.png"), 4))))
+		return E_FAIL;
+
+	//옵션
+
+	/* Prototype_Component_Texture_UI_OptPanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptPanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_bg_01.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptArrow */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptArrow"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_00.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptSelectEffect */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSelectEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_01.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptVolumePanel */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptVolumePanel"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_gage_01.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptVolumeGauge */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptVolumeGauge"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_gage_00.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptTitle */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptTitle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_title_00.png")))))
+		return E_FAIL;
+
+	/* Prototype_Component_Texture_UI_OptSoundFont */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_OptSoundFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Sound_Font.png")))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base_2P.png"), 1))))
@@ -2212,6 +2218,97 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 
 
+
+#pragma region 주석 리소스 파일
+
+	/*PreTransformMatrix = XMMatrixIdentity();
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);*/
+
+	//손오공 오프닝
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Opening.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+
+	//손오공
+	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		return E_FAIL;*/
+
+
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		//	return E_FAIL;
+
+		//부우
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Bou.bin", PreTransformMatrix))))
+		//	return E_FAIL;
+
+
+		//히트 선택화면
+		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit_Select.bin", PreTransformMatrix))))
+		//	return E_FAIL;
+
+
+		//PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));  //이것도 방향 이상함
+	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
+
+
+	//손오공 3스킬
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+
+	//히트
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	//21호
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+
+
+	//21호 선택화면
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton_Select.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	//부우 선택화면
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Bou_Select.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	//오공 선택화면
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Select.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+#pragma endregion
+
+	return S_OK;
+}
+
+HRESULT CLoader::Load_Model_Resources_GamePlay_1()
+{
+	if (FAILED(Load_Map_Volcano()))
+		return E_FAIL;
+
+	_matrix PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+
+
 #pragma region Effect Model
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -2465,95 +2562,6 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		return E_FAIL;
 
 #pragma endregion
-
-#pragma region 주석 리소스 파일
-
-	/*PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);*/
-
-	//손오공 오프닝
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Opening.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-
-	//손오공
-	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
-		return E_FAIL;*/
-
-
-		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
-		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
-		//	return E_FAIL;
-
-		//부우
-		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Bou.bin", PreTransformMatrix))))
-		//	return E_FAIL;
-
-
-		//히트 선택화면
-		//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit_Select.bin", PreTransformMatrix))))
-		//	return E_FAIL;
-
-
-		//PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));  //이것도 방향 이상함
-	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
-
-
-	//손오공 3스킬
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-
-	//히트
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-	//21호
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-
-
-	//21호 선택화면
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton_Select.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-	//부우 선택화면
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Bou_Select.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-	//오공 선택화면
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Select.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
-	//	return E_FAIL;
-#pragma endregion
-
-	return S_OK;
-}
-
-HRESULT CLoader::Load_Model_Resources_GamePlay_1()
-{
-	if (FAILED(Load_Map_Volcano()))
-		return E_FAIL;
-
-	_matrix PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_cmn_SmokeModels0101"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Eff/TestModel/cmn_SmokeModels0101.bin", PreTransformMatrix))))
