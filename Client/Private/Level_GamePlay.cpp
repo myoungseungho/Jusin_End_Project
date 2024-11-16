@@ -143,7 +143,16 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
-
+	if (m_pGameInstance->Key_Down(DIK_F9))
+	{
+		DISTORTION_DESC tDistortionDesc{};
+		tDistortionDesc.vPosition = { 0.f,1.f,0.f,1.f };
+		tDistortionDesc.fLifeTime = 3.f;
+		tDistortionDesc.vScale = { 1.f,1.f };
+		tDistortionDesc.fFactor = 3.f;
+		
+		m_pRenderInstance->Create_Distortion(tDistortionDesc);
+	}
 	if (m_pGameInstance->Key_Down(DIK_Z))
 	{
 		LIGHT_DESC			LightDesc{};

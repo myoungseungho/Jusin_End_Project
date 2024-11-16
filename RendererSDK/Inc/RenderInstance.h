@@ -25,7 +25,7 @@ public: /* For.Renderer */
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
 	void SetActive_Debug_Component(_bool isOn);
-
+	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
 	void Show_OutLine();
 	void Show_Layer_View();
 	_bool Get_isLayerView();

@@ -51,8 +51,11 @@ PS_OUT PS_MAIN_DRAW_DISTORTION(PS_IN In)
 {
 	PS_OUT			Out = (PS_OUT)0;	
 
-	Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-
+    vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, In.vTexcoord);
+    
+	Out.vColor = vMaskDiffuse * vBaseDiffuse.a;
+    
 	return Out;
 }
 

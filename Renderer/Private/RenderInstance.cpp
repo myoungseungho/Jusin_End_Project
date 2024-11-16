@@ -68,6 +68,11 @@ void CRenderInstance::SetActive_Debug_Component(_bool isOn)
 	m_pRenderer->SetActive_Debug_Component(isOn);
 }
 
+void CRenderInstance::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
+{
+	m_pRenderer->Create_Distortion(tDistortionDesc);
+}
+
 void CRenderInstance::Show_OutLine()
 {
 	m_pRenderer->Show_OutLine();
