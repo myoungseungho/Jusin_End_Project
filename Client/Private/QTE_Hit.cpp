@@ -33,7 +33,7 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 	CQTE_Hit_Situation::QTE_HIT_SITUATION_DESC Desc{};
 	Desc.lifeTime = 15.f;
 	Desc.create_Num = 5;
-	Desc.ID = Hit_Situation_ID_A;
+	Desc.ID = 
 
 	CQTE_Hit_Situation* situation = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));
 	//A 상황 셋팅 넣어두기
@@ -70,10 +70,10 @@ HRESULT CQTE_Hit::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_Hit::Start_Hit(Hit_Situation_ID _ID)
+void CQTE_Hit::Start_Hit(Hit_Situation_ID _ID, CGameObject* pCall_Object)
 {
 	m_current_Situation_ID = _ID;
-	m_vecHit_Situation[m_current_Situation_ID]->Start();
+	m_vecHit_Situation[m_current_Situation_ID]->Start(pCall_Object);
 }
 
 

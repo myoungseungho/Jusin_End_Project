@@ -19,7 +19,7 @@ HRESULT CSound_Manager::Initialize_Prototype()
 {
 	// FMOD 시스템 초기화
 	FMOD_System_Create(&m_pSoundSystem, FMOD_VERSION);
-	FMOD_System_Init(m_pSoundSystem, MAX_CHANNELS, FMOD_INIT_NORMAL, nullptr);
+	FMOD_System_Init(m_pSoundSystem, MAX_CHANNELS, FMOD_INIT_NORMAL | FMOD_INIT_STREAM_FROM_UPDATE, nullptr);
 
 	// 채널 그룹 생성
 	FMOD_System_CreateChannelGroup(m_pSoundSystem, nullptr, &m_pChannelGroup);
@@ -90,7 +90,7 @@ void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME
 	std::string filePathStr = converter.to_bytes(filePath);
 
 	// 모드를 설정하여 사운드 생성
-	FMOD_MODE mode = loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+	FMOD_MODE mode = loop ? FMOD_LOOP_NORMAL | FMOD_CREATESAMPLE : FMOD_LOOP_OFF | FMOD_CREATESAMPLE;
 	if (FMOD_System_CreateSound(m_pSoundSystem, filePathStr.c_str(), FMOD_DEFAULT | mode, nullptr, &sound) != FMOD_OK)
 	{
 		return;

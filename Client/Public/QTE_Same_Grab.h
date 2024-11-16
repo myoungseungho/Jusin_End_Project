@@ -30,9 +30,9 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complate = true; };
-	void Start();
+	void Start(class CGameObject* callObject);
 private:
-	void Start_QTE();
+	void Start_QTE(class CGameObject* callObject);
 	void End_QTE();
 	void Handle_QTEInput();
 	void Process_Command(UI_COMMAND input, _int playerID);
@@ -42,6 +42,8 @@ private:
 	void Ascend_UIIcons(vector<class CQTE_Same_Grab_UI_Icon*>& icons);
 
 	void Final_End_QTE();
+	_bool Check_GameStart(class CGameObject* callObject);
+	_int Determine_QTE_Result() const;
 private:
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f }; // 타이머
@@ -83,6 +85,10 @@ private:
 	_bool m_bUI_Final_Complate = { false };
 	//카메라
 	class CMain_Camera* m_pMain_Camera = { nullptr };
+	//두명 모두 호출해야함
+	list<class CGameObject*> m_pListGameObject;
+	class CCharacter* m_p1PCharacter = { nullptr };
+	class CCharacter* m_p2PCharacter = { nullptr };
 
 public:
 	static CQTE_Same_Grab* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -191,7 +191,7 @@ void CQTE_Hit_Situation::Notify_Faild_Result(CQTE_Hit_UI_Icon* icon)
 	Create_ResultObject(icon);
 }
 
-void CQTE_Hit_Situation::Start()
+void CQTE_Hit_Situation::Start(CGameObject* pCall_Object)
 {
 	if (m_bIsQTEActive)
 	{
@@ -220,14 +220,23 @@ void CQTE_Hit_Situation::Start()
 	{
 		// QTE가 비활성화되어 있으면 시작
 		// 첫번째 아이콘을 즉각 만들어버림
-		Start_QTE();
+		Start_QTE(pCall_Object);
 	}
 }
 
-void CQTE_Hit_Situation::Start_QTE()
+void CQTE_Hit_Situation::Start_QTE(CGameObject* pCall_Object)
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
+
+	//디버그용
+	if (pCall_Object == nullptr)
+	{
+		//1p로 받기
+		m_pCall_Object = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+	}
+	else
+		m_pCall_Object = pCall_Object;
 
 	//카메라 쉐이킹용으로 필요함
 	m_pMain_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
@@ -275,7 +284,7 @@ void CQTE_Hit_Situation::End_QTE()
 	m_fTimer = m_fLifeTime;
 	//마지막 객체 완료 처리 여부 초기화
 	m_bUI_Final_Complete = false;
-
+	m_pCall_Object = nullptr;
 #pragma endregion
 
 }

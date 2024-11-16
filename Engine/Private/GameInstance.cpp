@@ -86,6 +86,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->Player_Update(fTimeDelta);
 
+	m_pSoundManager->Update(fTimeDelta);
+
 	m_pCollider_Manager->Destory_ColliderGroup();
 
 	m_pObject_Manager->Update(fTimeDelta);
@@ -100,8 +102,6 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pFrustum->Update();
 
 	m_pLevel_Manager->Update(fTimeDelta);
-
-	m_pSoundManager->Update(fTimeDelta);
 }
 
 HRESULT CGameInstance::Render_Engine(_float fTimeDelta)

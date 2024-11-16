@@ -382,7 +382,7 @@ HRESULT CQTE_Continuous_Attack::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CQTE_Continuous_Attack::Start()
+void CQTE_Continuous_Attack::Start(CGameObject* callObject)
 {
 	if (m_bIsQTEActive)
 	{

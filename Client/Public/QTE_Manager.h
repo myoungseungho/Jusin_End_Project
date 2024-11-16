@@ -26,9 +26,10 @@ public:
 
 	enum Hit_Situation_ID
 	{
-		Hit_Situation_ID_A,
-		Hit_Situation_ID_B,
-		Hit_Situation_ID_C,
+		Hit_Situation_ID_Goku,
+		Hit_Situation_ID_21,
+		Hit_Situation_ID_Hit,
+		Hit_Situation_ID_Frieza,
 		Hit_Situation_ID_END
 	};
 
@@ -47,7 +48,7 @@ public:
 
 	vector<class CGameObject*> m_vecQTE;
 
-	void Start_QTE(QTE_ID ID, Hit_Situation_ID Hit_Situation_ID = Hit_Situation_ID_END);
+	void Start_QTE(QTE_ID ID, Hit_Situation_ID Hit_Situation_ID = Hit_Situation_ID_END, class CGameObject* callObject = nullptr);
 
 public:
 	virtual void Free() override;

@@ -137,7 +137,7 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 }
 
 
-void CQTE_Same_Grab::Start()
+void CQTE_Same_Grab::Start(CGameObject* callObject)
 {
 	if (m_bIsQTEActive)
 	{
@@ -146,12 +146,53 @@ void CQTE_Same_Grab::Start()
 	}
 	else
 	{
-		// QTE가 비활성화되어 있으면 시작
-		Start_QTE();
+		//두명이 다 들어차야 게임 시작함
+		_bool isPossibleStart = Check_GameStart(callObject);
+
+		if (isPossibleStart)
+			Start_QTE(callObject);
 	}
 }
 
-void CQTE_Same_Grab::Start_QTE()
+_bool CQTE_Same_Grab::Check_GameStart(CGameObject* callObject)
+{
+	//디버그용
+	if (callObject == nullptr)
+	{
+		m_p1PCharacter = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0));
+		m_p2PCharacter = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1));
+		return true;
+	}
+
+	m_pListGameObject.push_back(callObject);
+
+	//2명이 모두 들어왔다면
+	if (m_pListGameObject.size() == 2)
+	{
+		CCharacter* character = static_cast<CCharacter*>(m_pListGameObject.front());
+		//처음 들어온 플레이어가 1P라면
+		if (character->Get_iPlayerTeam() == 1)
+		{
+			m_p1PCharacter = character;
+			m_p2PCharacter = static_cast<CCharacter*>(m_pListGameObject.back());
+		}
+		else
+		{
+			m_p1PCharacter = static_cast<CCharacter*>(m_pListGameObject.back());
+			m_p2PCharacter = character;
+		}
+
+		//클리어
+		m_pListGameObject.clear();
+		return true;
+	}
+	else
+		return false;
+}
+
+
+
+void CQTE_Same_Grab::Start_QTE(CGameObject* callObject)
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
@@ -210,7 +251,86 @@ void CQTE_Same_Grab::End_QTE()
 	// QTE 종료 프로세스 시작 표시
 	m_bIsEndQTE = true;
 	m_fEndQTE_Timer = 0.0f;
+
+	// 결과 판정 함수 호출
+	_int result = Determine_QTE_Result();
+
+	// 결과에 따라 캐릭터에게 알림
+	switch (result)
+	{
+	case 1:
+		// 1P 승리, 2P 패배
+		m_p1PCharacter->Notify_QTE_Result(1);
+		m_p2PCharacter->Notify_QTE_Result(-1);
+		break;
+	case 2:
+		// 1P 패배, 2P 승리
+		m_p1PCharacter->Notify_QTE_Result(-1);
+		m_p2PCharacter->Notify_QTE_Result(1);
+		break;
+	case 0:
+		// 비김
+		m_p1PCharacter->Notify_QTE_Result(0);
+		m_p2PCharacter->Notify_QTE_Result(0);
+		break;
+	}
+
+	m_p1PCharacter = nullptr;
+	m_p2PCharacter = nullptr;
+	m_pListGameObject.clear();
 }
+
+_int CQTE_Same_Grab::Determine_QTE_Result() const
+{
+	// QTE 종료 사유 판단
+	_bool isTimerEnded = (m_fTimer <= 0.0f);
+	_bool isP1Completed = (m_iCorrectInputs_P1 == m_iSequenceLength);
+	_bool isP2Completed = (m_iCorrectInputs_P2 == m_iSequenceLength);
+
+	// 결과 변수 초기화
+	_int result = 0; // 1: 1P 승, 2: 2P 승, 0: 비김
+
+	if (isTimerEnded)
+	{
+		if (m_iCorrectInputs_P1 > m_iCorrectInputs_P2)
+		{
+			result = 1; // 1P 승리
+		}
+		else if (m_iCorrectInputs_P1 < m_iCorrectInputs_P2)
+		{
+			result = 2; // 2P 승리
+		}
+		else
+		{
+			result = 0; // 비김
+		}
+	}
+	else
+	{
+		// 타이머가 종료되지 않았을 경우, 시퀀스를 완료한 플레이어가 승리
+		if (isP1Completed && !isP2Completed)
+		{
+			result = 1; // 1P 승리
+		}
+		else if (isP2Completed && !isP1Completed)
+		{
+			result = 2; // 2P 승리
+		}
+		else if (isP1Completed && isP2Completed)
+		{
+			// 두 플레이어가 동시에 시퀀스를 완료한 경우
+			if (m_iCorrectInputs_P1 > m_iCorrectInputs_P2)
+				result = 1;
+			else if (m_iCorrectInputs_P1 < m_iCorrectInputs_P2)
+				result = 2;
+			else
+				result = 0;
+		}
+	}
+
+	return result;
+}
+
 
 void CQTE_Same_Grab::Handle_QTEInput()
 {
@@ -376,8 +496,14 @@ void CQTE_Same_Grab::Create_UIIcons(_int playerID, const vector<UI_COMMAND>& seq
 	// 각 플레이어의 UI 아이콘 벡터에 추가
 	vector<CQTE_Same_Grab_UI_Icon*>& targetIcons = (playerID == 1) ? m_UIIcons_P1 : m_UIIcons_P2;
 
-	// 플레이어별 중앙 x 위치 설정
-	_float centerX = (playerID == 1) ? 480.f : 1440.f;
+	// 1P의 방향 가져오기
+	_int Direction_1P = m_p1PCharacter->Get_iDirection();
+
+	// 플레이어 ID와 1P의 방향에 따라 centerX 설정
+	_float centerX = (playerID == 1)
+		? (Direction_1P == 1 ? 480.f : 1440.f)
+		: (Direction_1P == 1 ? 1440.f : 480.f);
+
 
 	// y 위치 고정
 	_float centerY = 300.f;
@@ -518,6 +644,7 @@ void CQTE_Same_Grab::Final_End_QTE()
 		// 무승부 처리
 	}
 }
+
 
 
 void CQTE_Same_Grab::Clear_UIIcons()

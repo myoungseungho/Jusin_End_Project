@@ -3989,7 +3989,7 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 
 	m_iDebugComoboDamage += iDamage;
 
-	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+	//cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
 
 	if (m_iHP < 0)
 	{

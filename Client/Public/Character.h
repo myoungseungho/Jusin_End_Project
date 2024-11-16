@@ -80,7 +80,7 @@ public:
 		//_wstring strModelName;
 		_ushort iTeam = 1;
 		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
-		
+
 
 	}Character_DESC;
 
@@ -138,7 +138,7 @@ public:
 	virtual _bool Check_bCurAnimationisHitGround(_uint iAnimation = 1000);
 
 	virtual _bool Check_bCurAnimationisChase(_uint iAnimation = 1000);  //특이한 경우라 애니메이션 뿐 만 아니라 m_bChase까지 끼워넣음
-	virtual _bool Check_bCurAnimationisReflect(_uint iAnimation = 1000);  
+	virtual _bool Check_bCurAnimationisReflect(_uint iAnimation = 1000);
 
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
@@ -299,7 +299,7 @@ public:
 	_float Get_fAbsCalculatePreviousXPosition();
 	_float Get_fPositionX();
 	_vector Get_vPosition();
-	
+
 	void Set_bGrabbed(_bool bGrabbed);
 	void Set_bGrabbedGravity(_bool bGrabbedGravity);
 
@@ -386,7 +386,7 @@ public:
 
 
 
-	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection=false);
+	void Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);
 	void Update_LoofAnimationCreate(_float fTimeDelta);
 
 	const _float4x4* Get_pTransformMatrix();
@@ -469,9 +469,9 @@ protected:
 	_ushort m_iHit_Away_UpAnimationIndex = { 35 };
 	_ushort m_iHit_Away_LeftDownAnimationIndex = { 39 };
 
-	_ushort m_iHit_WallBouce = {34};
+	_ushort m_iHit_WallBouce = { 34 };
 
-	_ushort m_iHit_Air_Spin_LeftUp = {31};
+	_ushort m_iHit_Air_Spin_LeftUp = { 31 };
 	_ushort m_iHit_Air_Spin_Up = { 30 };  //072
 
 
@@ -491,11 +491,11 @@ protected:
 	_ushort m_iAttack_Air3 = { 54 };
 	_ushort m_iAttack_AirUpper = { 55 };
 
-	_ushort m_iAttack_Heavy = {45};
+	_ushort m_iAttack_Heavy = { 45 };
 	_ushort m_iAttack_Crouch_Heavy = { 51 };
 
 
-	_ushort m_iAttack_LightLast = {47};
+	_ushort m_iAttack_LightLast = { 47 };
 
 	//가드
 	_ushort m_iGuard_GroundAnimationIndex = { 18 };
@@ -509,7 +509,7 @@ protected:
 
 	_ushort m_iSparkingAnimationIndex = { 59 };  //303
 
-	_ushort m_iDyingStandingAnimationIndex = {29};
+	_ushort m_iDyingStandingAnimationIndex = { 29 };
 
 
 	_float m_fGravityTime = { 0.f };
@@ -533,7 +533,7 @@ protected:
 
 
 	_bool m_bChase = { false };
-	_float m_fAccChaseTime = { 0.f }; 
+	_float m_fAccChaseTime = { 0.f };
 	_vector m_vChaseDir{ 0 };
 
 
@@ -600,7 +600,7 @@ protected:
 	_bool	m_bGrabbed = { false };
 	_bool	m_bGrabbedGravity = { false };
 	_ushort m_iGrabLoof = 3;
-	_float m_fAIrGrabEndAnimationPositon = {29.99}; //공중 잡기시 막타로 사용하는 애니메이션의 AttackEvent Posioton 
+	_float m_fAIrGrabEndAnimationPositon = { 29.99 }; //공중 잡기시 막타로 사용하는 애니메이션의 AttackEvent Posioton 
 
 
 	_bool m_bCharacterDead = { false };
@@ -654,15 +654,15 @@ protected:
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
 
-	
 
-	public:
-		void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }
+
+public:
+	void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }
 
 	//class CAttackObject* m_pChaseAttackObejct = { nullptr };
 	//Set_RemoteDestory()
 
-	
+
 
 public:
 	typedef struct
@@ -670,18 +670,18 @@ public:
 		_bool        bStun = { FALSE };
 		_bool        bHit = { FALSE };
 		_bool        bAttBuf = { FALSE };
-	
+
 		_int        iHp = { 0 };
 		_uint        iComboCount = { 0 };
-	
+
 		_int        iSKillPoint = { 0 };
 		_int        iSKillCount = { 0 };
 
-		_uint		iTeam =  {0};
+		_uint		iTeam = { 0 };
 
 		CUI_Define::PLAYER_SLOT		ePlayer_Slot = {};
 		CUI_Define::PLAYER_ID        ePlayerID = {};
-	
+
 	}Character_INFO_DESC;
 
 public:
@@ -690,17 +690,17 @@ public:
 
 
 	//UI에서 써야하는 정보 
-	
+
 protected:
 	_bool					m_bHit = { FALSE };
 private:
 	_uint					m_iComboCount = { 0 };
 	_int					m_iSKillPoint = { 0 };
 	_int					m_iSKillCount = { 0 };
-	
+
 	_bool					m_bRedHp = { FALSE };
 	_bool					m_bAttBuf = { FALSE };
-	
+
 	_uint					m_iNumAttBuf = { 1 };
 	_uint   m_iPrevComboCount = { 0 };
 
@@ -712,8 +712,8 @@ private:
 protected:
 	CUI_Define::PLAYER_ID				m_eCharacterID = {};
 	CUI_Define::PLAYER_SLOT				m_ePlayerSlot = { CUI_Define::SLOT_END };
-	class CUI_Manager*		m_pUI_Manager = { nullptr };
-	class CEffect_Manager*	m_pEffect_Manager = { nullptr };
+	class CUI_Manager* m_pUI_Manager = { nullptr };
+	class CEffect_Manager* m_pEffect_Manager = { nullptr };
 
 	string m_strName = "";
 	_float4		m_vDyingPosition = { 0.f,0.f,0.f,1.f };
@@ -724,6 +724,12 @@ public:
 	HRESULT Bind_ShaderResources();
 	// Layer_MeteoBreak
 	void Map_DestructiveFinish();
+
+	// 1: 승, 
+	// -1 : 패 
+	// 0: 비김
+	void Notify_QTE_Result(_int result);
+
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

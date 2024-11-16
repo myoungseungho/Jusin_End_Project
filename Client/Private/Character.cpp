@@ -5320,6 +5320,23 @@ void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput 
 	m_pUI_Manager->m_eBtnInput = eBtnInput;
 }
 
+void CCharacter::Notify_QTE_Result(_int result)
+{
+	switch (result)
+	{
+		//½Â
+	case 1:
+		break;
+		//ÆÐ
+	case -1:
+		break;
+		//ºñ±è
+	case 0:
+		break;
+	}
+}
+
+
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CCharacter* pInstance = new CCharacter(pDevice, pContext);
