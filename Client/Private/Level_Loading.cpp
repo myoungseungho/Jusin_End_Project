@@ -18,6 +18,9 @@
 #include "UI_LoadingSpaceLight.h"
 #include "UI_Loading_FlyEff.h"
 #include "UI_Loading_DragonBall.h"
+#include "UI_Loading_CreateFlyEff.h"
+
+#include "UI_Manager.h"
 
 _bool CLevel_Loading::m_bIsLevelPrepared = false;
 
@@ -91,6 +94,11 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/DragonBall%d.png"), 8))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_LoadingBallEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingCreateFlyEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/congra_eff01.png")))))
+		return E_FAIL;
+
 #pragma endregion
 
 	/* For.Prototype_GameObject_UI_Loading */
@@ -123,6 +131,11 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CUI_Loading_DragonBall::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_UI_Loading_CreateFlyEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_CreateFlyEff"),
+		CUI_Loading_CreateFlyEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	m_bIsLevelPrepared = true;
 
@@ -152,10 +165,7 @@ HRESULT CLevel_Loading::Ready_Layer()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_DragonBall"), TEXT("Layer_UI_LoadingHole"), &BallDesc);
 	}
 
-	CUIObject::UI_DESC FlyDesc = {};
-	FlyDesc.fSpeedPerSec = 200.f;
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_FlyEff"), TEXT("Layer_UI_LoadingBackGround"),&FlyDesc);
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
 	
@@ -164,7 +174,27 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 void CLevel_Loading::Update(_float fTimeDelta)
 {
-	if (true == m_pLoader->isFinished())
+	if (m_iNumThreadEnd >= 7)
+		m_fNextLevelTimer += fTimeDelta;
+
+	CUI_Manager::ThreadPool_For_Loading eTheadID = CUI_Manager::Get_Instance()->Get_Thread();
+	if(eTheadID != CUI_Manager::THREAD_END)
+	{
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_CreateFlyEff"), TEXT("Layer_UI_LoadingBackGround"));
+
+		CUI_Loading_FlyEff::UI_FLYEFF_DESC FlyDesc = {};
+		FlyDesc.fSpeedPerSec = 200.f;
+		FlyDesc.eTheadID = eTheadID;
+	
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_FlyEff"), TEXT("Layer_UI_LoadingFlyEff"), &FlyDesc);
+
+		m_iNumThreadEnd++;
+	}
+
+	if (m_fNextLevelTimer > 5.f)
+		m_bNextLevel = TRUE;
+	
+	if (m_pLoader->isFinished())
 	{
 		CLevel* pNextLevel = { nullptr };
 	
@@ -183,12 +213,22 @@ void CLevel_Loading::Update(_float fTimeDelta)
 			pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
 			break;
 		case LEVEL_GAMEPLAY:
-			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
+			if (m_bNextLevel)
+				pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
 			break;
 		}
 	
-		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
-			return;
+		if (m_bNextLevel && m_eNextLevelID == LEVEL_GAMEPLAY)
+		{
+			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+				return;
+		}
+
+		else if(m_eNextLevelID != LEVEL_GAMEPLAY)
+		{
+			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+				return;
+		}
 	}
 }
 

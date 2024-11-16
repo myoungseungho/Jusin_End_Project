@@ -3,6 +3,8 @@
 #include "UI_Loading_DragonBall.h"
 #include "RenderInstance.h"
 
+#include "UI_Loading_FlyEff.h"
+
 CUI_Loading_DragonBall::CUI_Loading_DragonBall(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
 {
@@ -58,16 +60,39 @@ void CUI_Loading_DragonBall::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_fBlurValue >= 2.f)
+		m_bBlurSwitch = FALSE;
+	else if (m_fBlurValue <= 0.f)
+		m_bBlurSwitch = TRUE;
+
+	m_bBlurSwitch ? m_fBlurValue += fTimeDelta : m_fBlurValue -= fTimeDelta;;
+
+	RENDER_OBJECT tDesc{};
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 1.2f + m_fBlurValue;
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this,&tDesc);
 }
 
 HRESULT CUI_Loading_DragonBall::Render(_float fTimeDelta)
 {
 	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;;
-
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iTextureIndex)))
 		return E_FAIL;
+
+	for (auto& pAuto : m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")))
+	{
+		CUI_Loading_FlyEff* pFlyEff = dynamic_cast<CUI_Loading_FlyEff*>(pAuto);
+
+		_bool bAnimEnd = pFlyEff->Get_AnimEnd();
+		if (pFlyEff->Get_ThreadID() == m_iTextureIndex && bAnimEnd)
+		{
+			m_iDefTextureIndex = m_iTextureIndex;
+		}
+	}
+
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iDefTextureIndex)))
+		return E_FAIL;
+
 
 	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;

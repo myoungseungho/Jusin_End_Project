@@ -31,16 +31,32 @@ HRESULT CUI_Loading_FlyEff::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pHoleTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOADING, TEXT("Layer_UI_LoadingHole"), TEXT("Com_Transform")));
+	UI_FLYEFF_DESC* pDesc = static_cast<UI_FLYEFF_DESC*>(pArg);
+	ThreadID = pDesc->eTheadID;
+
+	m_pHoleTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOADING, TEXT("Layer_UI_LoadingHole"), TEXT("Com_Transform") , ThreadID));
 	Safe_AddRef(m_pHoleTransform);
 
+	m_iRandomMove = rand() % 2;
 
-	m_fSizeX = 200.f;
-	m_fSizeY = 200.f;
-	m_fPosX = m_vPrevWinSize.x * 0.5f;
-	m_fPosY = m_vPrevWinSize.y * 0.5f;
+	m_fSizeY = 20.f;
+	m_fPosX = 730;
+	m_fPosY = 170;
 
+	_float fOffsetX = g_iWinSizeX * 0.5f;
+	_float fOffsetY = g_iWinSizeY * 0.5f;
 
+	if (m_iRandomMove == 0)
+	{
+		m_fSizeX = 20.f;
+		QueueAnim.push({ 500.f * m_vOffSetWinSize.x - fOffsetX ,(-170.f * m_vOffSetWinSize.y) + fOffsetY, 0.f });
+	}
+	else
+	{
+		m_fSizeX = -20.f;
+		QueueAnim.push({ 960.f * m_vOffSetWinSize.x - fOffsetX ,(-170.f * m_vOffSetWinSize.y) + fOffsetY, 0.f });
+	}
+	QueueAnim.push(m_pHoleTransform->Get_State(CTransform::STATE_POSITION));
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
@@ -56,7 +72,10 @@ void CUI_Loading_FlyEff::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	AnimSpeed(fTimeDelta);
 
+
+	QueueAnim.empty() ? m_bEndAnim = TRUE : Animation(QueueAnim.front(), fTimeDelta);
 }
 
 void CUI_Loading_FlyEff::Late_Update(_float fTimeDelta)
@@ -67,7 +86,7 @@ void CUI_Loading_FlyEff::Late_Update(_float fTimeDelta)
 	tDesc.tGlowDesc.iPassIndex = 2;
 	tDesc.tGlowDesc.fGlowFactor = 1.5f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this,&tDesc);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this,&tDesc);
 }
 
 HRESULT CUI_Loading_FlyEff::Render(_float fTimeDelta)
@@ -111,10 +130,100 @@ HRESULT CUI_Loading_FlyEff::Bind_ShaderResources()
 	return S_OK;
 }
 
-void CUI_Loading_FlyEff::Go_Target()
+_bool CUI_Loading_FlyEff::Go_Target(_vector fTargetPos ,_float fTimeDelta)
 {
-	_vector vTargetPos = m_pHoleTransform->Get_State(CTransform::STATE_POSITION);
+	_vector vTargetPos = fTargetPos;
 	_vector vOriginPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	_vector vDistance = vTargetPos - vOriginPos;
+	_vector vDir = XMVector3Normalize(vDistance);
+
+	_vector MovePos = vOriginPos + vDir * 500.f * fTimeDelta;
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, MovePos);
+
+	m_fScaleOffset += fTimeDelta * 3.f;
+
+	if (m_iRandomMove == 0)
+		m_pTransformCom->Set_Scaled(m_fSizeX * m_fScaleOffset, m_fSizeY * m_fScaleOffset,1.f);
+	else 
+		m_pTransformCom->Set_Scaled(-m_fSizeX * m_fScaleOffset, m_fSizeY * m_fScaleOffset, 1.f);
+
+	_float fLength = XMVectorGetX(XMVector2Length(vDistance));
+
+	_float fDestroyPos = { 0.f };
+
+	(m_bEndAnim) ? fDestroyPos = 50.f : fDestroyPos = 10.f;
+
+	if (fLength <= fDestroyPos)
+	{
+		QueueAnim.pop();
+
+		if (m_bEndAnim)
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+void CUI_Loading_FlyEff::Animation(_vector fTargetPos, _float fTimeDelta)
+{
+	//Set_Scaled();
+	Go_Target(fTargetPos, fTimeDelta);
+}
+
+void CUI_Loading_FlyEff::AnimSpeed(_float fTimeDelta)
+{
+	switch ((_uint)m_fAnimFream)
+	{
+	case 0:
+		if (QueueAnim.size() == 2)
+			m_fAnimFream += fTimeDelta * 2.f;
+		break;
+
+	case 1:		
+		m_fAnimFream += fTimeDelta * 4.f;
+		break;
+
+	case 2:
+		m_fAnimFream += fTimeDelta * 16.f;
+		break;
+
+	case 3:
+		m_bEndAnim = TRUE;
+		
+		if (QueueAnim.size() == 0)
+			m_fAnimFream += fTimeDelta * 16.f;
+		
+		break;
+
+	case 4:
+			m_fAnimFream += fTimeDelta * 16.f;
+		break;
+
+	case 5:
+		m_fAnimFream += fTimeDelta * 16.f;
+		break;
+
+	case 6:
+		m_fAnimFream += fTimeDelta * 16.f;
+		break;
+
+
+	case 7:
+		m_bCreateBall = TRUE;
+		m_fAnimFream += fTimeDelta * 16.f;
+		
+		break;
+
+	case 8:
+		m_fAnimFream = 8.f;
+		Destory();
+
+		break;
+
+	}
 }
 
 CUI_Loading_FlyEff* CUI_Loading_FlyEff::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
