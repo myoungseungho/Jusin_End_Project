@@ -119,7 +119,7 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	SwapChain.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	SwapChain.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	SwapChain.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-	SwapChain.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	SwapChain.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
 	SwapChain.BufferCount = 1;
 
 	/*스왑하는 형태*/
@@ -127,7 +127,7 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	SwapChain.BufferDesc.RefreshRate.Denominator = 1;
 	SwapChain.SampleDesc.Quality = 0;
 	SwapChain.SampleDesc.Count = 1;
-
+	
 	SwapChain.OutputWindow = hWnd;
 	SwapChain.Windowed = isWindowed;
 	SwapChain.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;

@@ -101,6 +101,8 @@ private: /* For.Distortion Variable */
 	class CTexture*				m_pDistortionTextureCom = { nullptr };
 	class CShader*				m_pDistortionShaderCom = { nullptr };
 
+	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
+
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);

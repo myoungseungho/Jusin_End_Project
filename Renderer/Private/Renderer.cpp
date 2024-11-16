@@ -64,6 +64,8 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pDistortionTextureCom || nullptr == m_pDistortionTransformCom || nullptr == m_pDistortionShaderCom)
 		return E_FAIL;
+	m_pBackBufferSRV = m_pGameInstance->Get_BackBufferShaderResourceView();
+	Safe_AddRef(m_pBackBufferSRV);
 
 	ID3D11Texture2D* pDepthStencilTexture = nullptr;
 
@@ -1299,9 +1301,9 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 		if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 			return E_FAIL;
 
-		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_PlayerDefferd"))))
+		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 1)))
 			return E_FAIL;
 
 		m_pDistortionShaderCom->Begin(0);
@@ -1314,7 +1316,42 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
 	
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(1);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(2);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	return S_OK;
+
 	return S_OK;
 }
 
@@ -2026,6 +2063,12 @@ HRESULT CRenderer::Initialize_RenderTarget()
 
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Distortion"), TEXT("Target_Distortion"))))
 		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_ResultDistortion_BackBuffer"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_ResultDistortion_BackBuffer"), TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
 #pragma endregion	
 
 	return S_OK;
@@ -2072,6 +2115,7 @@ void CRenderer::Free()
 	Safe_Release(m_pDistortionTransformCom);
 	Safe_Release(m_pDistortionTextureCom);
 	Safe_Release(m_pDistortionShaderCom);
+	Safe_Release(m_pBackBufferSRV);
 	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
