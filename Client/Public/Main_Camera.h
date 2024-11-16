@@ -81,6 +81,8 @@ public:
 	const char* Get_Current_CameraName();
 	_bool Get_IsPlay();
 	void Set_DyingTeam(_uint iDyingTeam);
+	void Set_CirclePlay(_bool isClockwise = true, _float rotationSpeed = XM_2PI / 10.0f);
+
 public:
 	vector<class CVirtual_Camera*> m_vecVirtualCamera;
 

@@ -12,6 +12,7 @@ CVIBuffer_Rect::CVIBuffer_Rect(const CVIBuffer_Rect & Prototype)
 
 HRESULT CVIBuffer_Rect::Initialize_Prototype()
 {
+    
     m_iNumVertexBuffers = 1;
     m_iNumVertices = 4;
     m_iVertexStride = sizeof(VTXPOSTEX);
@@ -31,7 +32,7 @@ HRESULT CVIBuffer_Rect::Initialize_Prototype()
 
     VTXPOSTEX* pVertices = new VTXPOSTEX[m_iNumVertices];
     ZeroMemory(pVertices, sizeof(VTXPOSTEX) * m_iNumVertices);
-
+    
     // 초기 정점 위치는 임의로 설정 (나중에 업데이트 예정)
     pVertices[0].vPosition = _float3(-0.5f, 0.5f, 0.f);
     pVertices[0].vTexcoord = _float2(0.0f, 0.f);

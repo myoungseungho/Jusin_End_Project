@@ -143,11 +143,11 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 6) // 히트 1필
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Hit_1_Ultimate_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_1_Ultimate_Anim1","Hit_1_Ultimate_Anim2" };
 				}
 				else if (skillIdx == 7) // 히트 3필
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Hit_3_Ultimate_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_3_Ultimate_Anim1","Hit_3_Ultimate_Anim2","Hit_3_Ultimate_Anim3","Hit_3_Ultimate_Anim4" };
 				}
 			}
 			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화

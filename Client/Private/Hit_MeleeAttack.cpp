@@ -114,10 +114,19 @@ void CHit_MeleeAttack::Attack_Light()
 
 
 
-	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	//else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
+	//{
+	//	m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_LIGHT);
+	//	m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236_LIGHT] = false;
+	//}
+
+	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing() && m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236_LIGHT])
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_LIGHT);
+		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236_LIGHT] = false;
 	}
+
+	
 
 }
 
@@ -244,8 +253,20 @@ void CHit_MeleeAttack::Attack_Heavy()
 
 	else  if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE && m_pPlayer->Get_b236Posing())
 	{
-		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1,m_pPlayer->Get_iPlayerTeam()))
+
+		//if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1,m_pPlayer->Get_iPlayerTeam()))
+		//	m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
+
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiRealGuage(50, m_pPlayer->Get_iPlayerTeam()))
 			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
+
+		else if ((CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) != 0))
+		{
+			CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam());
+			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_pPlayer->Get_iPlayerTeam());
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
+
+		}
 	}
 
 }
@@ -381,6 +402,15 @@ void CHit_MeleeAttack::Attack_236()
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT3 ||
 		* m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM ||
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY))
+	{
+		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE);
+		m_pPlayer->Reset_PoseTime();
+	}
+
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && m_pPlayer->Get_bSparking() && (
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_HEAVY 
+		))
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE);
 		m_pPlayer->Reset_PoseTime();
@@ -668,6 +698,67 @@ void CHit_MeleeAttack::Reflect()
 
 	}
 
+}
+
+void CHit_MeleeAttack::Attack_Benishing()
+{
+
+	if (CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) == 0 || m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_BENISHING] == false)
+		return;
+
+
+	if (m_pPlayer->Get_bAttackBackEvent() &&
+		(*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR3 ||
+			*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY ||
+			*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_HEAVY ||
+			*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_RIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN))
+	{
+
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_BENISHING] = false;
+			//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,2.f,0.f);
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_AIR1);
+			m_pPlayer->Set_CurrentAnimationPositionJump(14.99);
+			m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
+			m_pPlayer->Set_AnimationStop(0.3f);
+			//時時次
+			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
+			m_pPlayer->FlipDirection();
+
+			m_pPlayer->Set_bBenishingAttack(true);
+			m_pPlayer->Set_ForcedGravityDown();
+			m_pPlayer->Set_bInivisible(true);
+			m_pPlayer->Set_fImpulse({ 0.f,0.f });
+		}
+
+	}
+
+	else if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
+	{
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_BENISHING] = false;
+			//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_AIR2,2.f,0.f);
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_AIR1);
+			m_pPlayer->Set_CurrentAnimationPositionJump(14.99);
+			m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
+			m_pPlayer->Set_AnimationStop(0.3f);
+			//時時次
+			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
+			m_pPlayer->FlipDirection();
+
+			m_pPlayer->Set_bBenishingAttack(true);
+			m_pPlayer->Set_ForcedGravityDown();
+			m_pPlayer->Set_bInivisible(true);
+			m_pPlayer->Set_fImpulse({ 0.f,0.f });
+		}
+
+	}
 }
 
 void CHit_MeleeAttack::StopMacro(_float fStopTime)

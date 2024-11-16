@@ -53,6 +53,10 @@ _ushort CBattleInterface_Manager::Get_HitCount(_ushort iTeam)
 
 _bool CBattleInterface_Manager::Get_bSparkingEnable(_ushort iTeam)
 {
+
+    if (m_pGameInstance->Key_Pressing(DIK_HOME))
+        return true;
+
     return  m_bSparkingEnable[iTeam-1];
 }
 
@@ -64,6 +68,8 @@ void CBattleInterface_Manager::Set_bSparkingEnable(_bool bSparkingEnable, _ushor
 void CBattleInterface_Manager::Gain_KiGuage(_ushort iKi, _ushort iTeam)
 {
    
+    iKi *= 2;
+
     //기 게이지 꽉찬게 아니면
     if (m_iKiNumber[iTeam - 1] != 7)
     {
@@ -89,6 +95,17 @@ _bool CBattleInterface_Manager::Use_KiGuage(_ushort irequirementKi, _ushort iTea
     if (m_iKiNumber[iTeam - 1] >= irequirementKi)
     {
         m_iKiNumber[iTeam - 1] -= irequirementKi;
+        return true;
+    }
+
+    return false;
+}
+
+_bool CBattleInterface_Manager::Use_KiRealGuage(_ushort irequirementKi, _ushort iTeam)
+{
+    if (m_iKiGuage[iTeam - 1] >= irequirementKi)
+    {
+        m_iKiGuage[iTeam - 1] -= irequirementKi;
         return true;
     }
 

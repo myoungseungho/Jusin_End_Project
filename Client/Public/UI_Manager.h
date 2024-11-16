@@ -17,6 +17,16 @@ BEGIN(Client)
 class CUI_Manager final : public CBase
 {
 public:
+	enum ThreadPool_For_Loading
+	{
+		THREAD_TEXTURE_0,
+		THREAD_TEXTURE_1,
+		THREAD_TEXTURE_2,
+		THREAD_MODEL_0,
+		THREAD_MODEL_1,
+		THREAD_OBJECT_0,
+		THREAD_COMPONENT_0
+	};
 
 	DECLARE_SINGLETON(CUI_Manager)
 
@@ -44,6 +54,18 @@ public:
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
 	//값 초기화
 	void InitUIObject();
+
+	//쓰레드 관련
+public:
+	void AddToQueue(ThreadPool_For_Loading taskType)
+	{
+		lock_guard<mutex> lock(m_queueMutex);
+		m_QueueThreadPool.push(taskType);
+	}
+
+private:
+	queue<ThreadPool_For_Loading> m_QueueThreadPool;
+	mutex m_queueMutex;
 
 private:
 	void CreateOption();

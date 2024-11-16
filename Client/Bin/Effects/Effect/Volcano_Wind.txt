@@ -1,10 +1,10 @@
 [Layer]
 LayerName: Volcano_Wind
-Duration: 30
+Duration: 12.6
 TickPerSecond: 3
 KeyFramesCount: 1799
 NumEffec: 1
-Position: 150 0 -5
+Position: 150 30 -5
 Scale: 1 1 1
 Rotation: -10 0 0
 IsFollowing: false
@@ -12,7 +12,7 @@ IsFollowing: false
 [Effect]
 EffectName: Kick_Wind02
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Meteo_WindKick_Wind02
+MaskTextureName: ../Bin/Effects/Shader_Tab/Volcano_WindKick_Wind02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -34,7 +34,7 @@ Position: 0 0 0
 Scale: 0.0999997 0.0999997 0.1
 Rotation: 0 0 100
 CurTime: 0
-Duration: 30
+Duration: 12.6
 IsNotPlaying: false
 
 [KeyFrame]
@@ -43,6 +43,6 @@ Position: 0 15 0
 Scale: 0.999913 0.999927 1
 Rotation: 0 0 100
 CurTime: 2.2
-Duration: 30
+Duration: 12.6
 IsNotPlaying: false
 

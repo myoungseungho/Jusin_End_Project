@@ -30,7 +30,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complate = true; };
-
+	void Start();
 private:
 	void Start_QTE();
 	void End_QTE();

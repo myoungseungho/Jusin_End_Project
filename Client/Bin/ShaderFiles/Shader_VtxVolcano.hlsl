@@ -16,7 +16,7 @@ vector g_vCamPosition;
 int g_LavaFallIndex;
 float2 g_fSpriteCurPos;
 float4 g_vCamPos;
-
+float4 g_vDestructivePos;
 vector TexScalar_ToSampling(float2 vScale, float2 vScroll, float2 vTexcoord);
 vector ColorLerpScalarToDiffuse(vector vLerpParam, vector vDiffuseSrc, vector vDiffuseDest);
 
@@ -38,6 +38,35 @@ struct VS_OUT
     float3 vTangent : TANGENT;
     float3 vBinormal : BINORMAL;
 };
+
+VS_OUT VS_MAIN_DESTRUCTIVE(VS_IN In)
+{
+    VS_OUT Out;
+
+	/* mul : 곱하기가 가능한 모든 행렬(좌변의 열, 우변의 행 같다면)에 대해서 다 곱하기를 수행해준다. */
+    float4x4 WorldMatrix = g_WorldMatrix;
+    WorldMatrix._41_42_43_44 = g_vDestructivePos;
+    
+    vector vPosition = mul(vector(In.vPosition, 1.f), WorldMatrix);
+    vPosition = mul(vPosition, g_ViewMatrix);
+    vPosition = mul(vPosition, g_ProjMatrix);
+
+	/* 투영행렬까지 곱한 위치벡터 */
+	/* = x : fov적용 */
+	/* = y : fov적용 */
+	/* = z : 0 ~ f */
+	/* = w : n ~ f */
+
+    Out.vPosition = vPosition;
+    Out.vNormal = normalize(mul(vector(In.vNormal, 0.f), WorldMatrix));
+    Out.vTexcoord = In.vTexcoord;
+    Out.vWorldPos = mul(vector(In.vPosition, 1.f), WorldMatrix);
+    Out.vProjPos = vPosition;
+    Out.vTangent = normalize(mul(vector(In.vTangent, 0.f), WorldMatrix));
+    Out.vBinormal = normalize(cross(Out.vNormal, Out.vTangent));
+
+    return Out;
+}
 
 VS_OUT VS_MAIN_RECT(VS_IN In)
 {
@@ -701,6 +730,18 @@ technique11 DefaultTechnique
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DESTRUCTIVE_MOUNTAIN();
+    }
+    pass DestructivePaticle // 20
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN_DESTRUCTIVE();
         GeometryShader = NULL;
         HullShader = NULL;
         DomainShader = NULL;

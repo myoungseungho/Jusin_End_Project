@@ -1,0 +1,57 @@
+[Layer]
+LayerName: Meteo_BeamCore_Left
+Duration: 0.84
+TickPerSecond: 0.2
+KeyFramesCount: 119
+NumEffec: 1
+Position: -100 40 -4.4
+Scale: 3 3 3
+Rotation: 350.299 0 320.259
+IsFollowing: false
+
+[Effect]
+EffectName: Meteo_BeamCore
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/Meteo_BeamCore_LeftMeteo_BeamCore
+DiffuseTextureName: Texture_Effect_cmn_trail04
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 18.701
+IsLoop: false
+Color: 83.5927 56.5729 56.5729 1.98676
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 17.143
+CurTime: 0
+Duration: 0.84
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 118
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 18.701
+CurTime: 1.96667
+Duration: 0.84
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 119
+Position: 100 36 0
+Scale: 0.2 0.2 0.2
+Rotation: -15 0 17.143
+CurTime: 0.183333
+Duration: 0.84
+IsNotPlaying: true
+

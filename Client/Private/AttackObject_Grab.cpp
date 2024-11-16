@@ -83,9 +83,9 @@ void CAttackObject_Grab::Late_Update(_float fTimeDelta)
 HRESULT CAttackObject_Grab::Render(_float fTimeDelta)
 {
 //
-//#ifdef _DEBUG
-//	m_pColliderCom->Render(fTimeDelta);
-//#endif // DEBUG
+#ifdef _DEBUG
+	m_pColliderCom->Render(fTimeDelta);
+#endif // DEBUG
 
 
 	return S_OK;
@@ -128,7 +128,9 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//pCharacter->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			//pCharacter->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
-			m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f});
+			//m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f});
+			m_pOwner->Add_Move({ -0.15f * m_pOwner->Get_iDirection(),0.3f});
+
 			m_pOwner->Set_GrabLoofCount(1);
 			m_pOwner->Set_bGrabDraw(true);
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());

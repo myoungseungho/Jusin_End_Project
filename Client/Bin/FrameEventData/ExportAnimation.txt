@@ -84,3 +84,6 @@
 ["GKS700_body"] = 83
 ["ready"] = 84
 ["stand"] = 85
+["GKS_FRN801cs_01_body"] = 86
+["GKS_FRN801cs_02_body"] = 87
+["GKS_FRN805cs_body"] = 88

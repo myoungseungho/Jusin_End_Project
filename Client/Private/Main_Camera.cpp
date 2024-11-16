@@ -199,15 +199,13 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Hit_236_Middle_Anim1"] = 0;
 	stringToAnimID["Hit_236_Heavy_Anim1"] = 0;
 	stringToAnimID["Hit_1_Ultimate_Anim1"] = 0;
+	stringToAnimID["Hit_1_Ultimate_Anim2"] = 1;
 	stringToAnimID["Hit_3_Ultimate_Anim1"] = 0;
+	stringToAnimID["Hit_3_Ultimate_Anim2"] = 1;
+	stringToAnimID["Hit_3_Ultimate_Anim3"] = 2;
+	stringToAnimID["Hit_3_Ultimate_Anim4"] = 3;
 
 #pragma endregion
-
-	//CGameObject* player1p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
-	//Set_Player(player1p);
-
-	//CGameObject* player2p = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
-	//Set_Player(player2p);
 
 	return S_OK;
 }
@@ -483,12 +481,15 @@ void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
 }
 
+void CMain_Camera::Set_CirclePlay(_bool isClockwise, _float rotationSpeed)
+{
+	m_vecVirtualCamera[m_currentVirtualMode]->SetCirclePlay(isClockwise, rotationSpeed);
+}
 
 HRESULT CMain_Camera::Render(_float fTimeDelta)
 {
 	return S_OK;
 }
-
 
 CMain_Camera* CMain_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

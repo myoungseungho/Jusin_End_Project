@@ -54,6 +54,8 @@ HRESULT CPlay_Hit::Initialize_Prototype()
 HRESULT CPlay_Hit::Initialize(void* pArg)
 {
 
+	m_fAIrGrabEndAnimationPositon = 39.99f;
+
 	m_eCharacterIndex = PLAY_HIT;
 	m_iFallAnimationIndex = ANIME_JUMP_DOWN;
 	m_iIdleAnimationIndex = ANIME_IDLE;
@@ -215,6 +217,7 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Reflect, bind(&CHit_MeleeAttack::Reflect, &m_tAttackMap) });
 
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_BenishingAttack, bind(&CHit_MeleeAttack::Attack_Benishing, &m_tAttackMap) });
 
 	m_eCharacterID = CUI_Define::PLAYER_ID::HIT;
 
@@ -316,7 +319,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			{
 				Stun_Shake();
 			}
-			
+
 		}
 
 		return;
@@ -723,16 +726,6 @@ HRESULT CPlay_Hit::Render(_float fTimeDelta)
 
 	if (m_bInvisible == true)
 		return S_OK;
-
-	if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_214_FINAL_SUCESS)
-	{
-		_float fHeight = Get_fHeight();
-
-		if (fHeight > 0.5f)
-			m_bInvisible = true;
-		else
-			m_bInvisible = false;
-	}
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -1261,8 +1254,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fhitCharacter_StunTime = 0.4f;
 
 
-			//Desc.iDamage = 700 * Get_DamageScale();
-			Desc.iDamage = 4200 * Get_DamageScale();
+			Desc.iDamage = 700 * Get_DamageScale();
+			//Desc.iDamage = 4200 * Get_DamageScale();
 			Desc.fLifeTime = 0.1f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 			Desc.iTeam = m_iPlayerTeam;
@@ -1353,7 +1346,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.ColliderDesc.pTransform = m_pTransformCom;
 				//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 20.f;
-				if(m_bSparking)
+				if (m_bSparking)
 					Desc.iDamage = 280 * Get_DamageScale(true);
 				else
 					Desc.iDamage = 320 * Get_DamageScale(true);
@@ -1374,7 +1367,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iGainAttackStep = 0;
 				Desc.iGrabAnimationIndex = ANIME_ATTACK_LIGHT3;
 				Desc.bOwnerNextAnimation = false;
-
+				//Desc.iGainKiAmount=3; //어차피 적용 안됨
 
 				//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_SON_ULTIMATE;
 				//Desc.ianimationIndex = 1;
@@ -1598,6 +1591,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iGainHitCount = 0;
 				Desc.iGainKiAmount = 0;
 
+				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY;
+				Desc.fCameraShakeDuration = 0.5f;
+				Desc.fCameraShakeMagnitude = 0.2f;
+
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
@@ -1624,6 +1621,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fAnimationLockTime = 0.7f;
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
+
+			
+		
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
@@ -1687,6 +1687,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fAnimationLockTime = 0.7f;
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
+				Desc.bCameraZoom = false;
+
+				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_214_MIDDLE, 0, this);
+				main_Camera->StartCameraShake(0.5f, 0.2f);
+
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
@@ -2006,48 +2012,88 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Hit::ANIME_ATTACK_AIR1:
 	{
 
-		CAttackObject::ATTACK_DESC Desc{};
-		//Desc.ColliderDesc.width = 0.7;
-		//Desc.ColliderDesc.height = 0.8;
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-
-		if (Get_fHeight() > 3)  //공중에선 더 맞추기 쉽도록 보정
+		if(m_bBenishingAttack == false)
 		{
-			Desc.ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
-			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+			CAttackObject::ATTACK_DESC Desc{};
+			//Desc.ColliderDesc.width = 0.7;
+			//Desc.ColliderDesc.height = 0.8;
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+
+			if (Get_fHeight() > 3)  //공중에선 더 맞추기 쉽도록 보정
+			{
+				Desc.ColliderDesc.vExtents = { 0.7f,0.8f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
+			}
+			else
+			{
+				Desc.ColliderDesc.vExtents = { 0.4f,0.4f,1.f };
+				Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,1.0f,0.f };
+			}
+
+			Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
+
+			//if(abs(m_fImpuse.x)<0.3 )
+			//	Desc.fhitCharacter_Impus = { m_fImpuse.x*m_iLookDirection,0 };
+			//else
+			//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+
+
+			//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
+
+
+			Desc.fhitCharacter_StunTime = 0.6f;
+			Desc.iDamage = 400 * Get_DamageScale();
+			Desc.fLifeTime = 0.1f;
+			Desc.ihitCharacter_Motion = { HIT_LIGHT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.04f;
+			//Desc.bOwnerGravityTimeReset = true;
+			Desc.pOwner = this;
+			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
-		else
+		else //배니싱 공격
 		{
-			Desc.ColliderDesc.vExtents = { 0.4f,0.4f,1.f };
-			Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,1.0f,0.f };
-		}
+			m_bInvisible = false;
+			m_bBenishingAttack = false;
+			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 120.f;
+			Character_Make_Effect(TEXT("Moving_Line_Right"));
 
-		Desc.fhitCharacter_Impus = { m_fImpuse.x,0 };
+			CAttackObject::ATTACK_DESC Desc{};
 
-		//if(abs(m_fImpuse.x)<0.3 )
-		//	Desc.fhitCharacter_Impus = { m_fImpuse.x*m_iLookDirection,0 };
-		//else
-		//	Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
+
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vExtents = { 1.f,1.f,1.f };
+			Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.8f,0.f };
+
+			Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+			Desc.fhitCharacter_StunTime = 1.0f;
+			Desc.iDamage = 1000 * Get_DamageScale();;
+			///Desc.iDamage = 30000 * Get_DamageScale();;
+			Desc.fLifeTime = 0.2f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.3f;
+			Desc.bGrabbedEnd = true;
+			Desc.pOwner = this;
+			Desc.iGainAttackStep = 2;
+
+			Desc.bCameraZoom = false;
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-		//Desc.fhitCharacter_Impus = { m_fImpuse.x * 0.9f,0 };
 
+			}
 
-		Desc.fhitCharacter_StunTime = 0.6f;
-		Desc.iDamage = 400 * Get_DamageScale();
-		Desc.fLifeTime = 0.1f;
-		Desc.ihitCharacter_Motion = { HIT_LIGHT };
-		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.04f;
-		//Desc.bOwnerGravityTimeReset = true;
-		Desc.pOwner = this;
-		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
 	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_AIR2:
@@ -2266,7 +2312,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
+			//Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
+			Desc.ColliderDesc.vExtents = { 1.2f,1.0f,1.f };
+
 			Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
@@ -2570,7 +2618,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bOnwerHitNoneStop = true;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-
 			}
 		}
 		else if (iAttackEvent == 2)
@@ -2713,7 +2760,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iTeam = m_iPlayerTeam;
 			Desc.fAnimationLockTime = 0.7f;
 			Desc.pOwner = this;
-			Desc.iGainKiAmount = 60;
+			Desc.iGainKiAmount = 7;
+		
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2898,6 +2946,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Set_AnimationStopWithoutMe(1.5f);
 			Set_AnimationStop(0.6f);
+
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_1_ULTIMATE, 0, this);
+			mainCamera->StartCameraShake(1.f, 0.1f);
 		}
 
 
@@ -3042,6 +3094,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.iGrabAnimationIndex = ANIME_236_ULTIMATE;
 
+				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_HIT_1_ULTIMATE;
+				Desc.ianimationIndex = 1;
+				Desc.fCameraShakeDuration = 1.f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
@@ -3107,7 +3163,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Desc.fhitCharacter_StunTime = 0.4f;
-				Desc.iDamage = 1334 * Get_DamageScale();;
+				//Desc.iDamage = 1334 * Get_DamageScale();;
+				Desc.iDamage = 2200 * Get_DamageScale();;
+
 				Desc.fLifeTime = 0.2f;
 				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
 				//Desc.fhitCharacter_Impus = { 0.5f * m_iLookDirection,8.f };
@@ -3119,7 +3177,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_Impus = { 1.f * m_iLookDirection,2.f };
 
 
-
+				Desc.iGainHitCount = 16;
 				Desc.iTeam = m_iPlayerTeam;
 				Desc.fAnimationLockTime = 0.1f;
 				Desc.pOwner = this;
@@ -3177,6 +3235,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			Set_AnimationStopWithoutMe(1.5f);
+
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 0, this);
+			main_Camera->StartCameraShake(1.1f, 0.05f);
 		}
 
 		//,안보이게,속도빠르게, 샤샤샥
@@ -3189,10 +3251,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 181.f;
 
 		}
-
+		//여기가 모두 하나의 애니메이션
 		else if (iAttackEvent == 2)
 		{
-
 			MoveToEnemy_Ground(12.f);
 
 			m_bInvisible = false;
@@ -3242,12 +3303,19 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 3)
 		{
-
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_IDLE);
 			}
 		}
+
+		//Position 240.1
+		else if (iAttackEvent == 240)
+		{
+			
+			//main_Camera->StartCameraShake(0.5f, 0.05f);
+		}
+		//마지막 펀치
 		else if (iAttackEvent == 4)
 		{
 
@@ -3278,7 +3346,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fCameraShakeMagnitude = 0.2f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-			
+
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 91.f;
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 281.f;
 
@@ -3296,6 +3364,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//샤샤샥,보이게,
 			m_bInvisible = false;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+
 		}
 		else if (iAttackEvent == 5)
 		{
@@ -3343,6 +3413,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = true;
 			m_bDynamicMove = true;
 			Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//첫번째방
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 1, this);
+			main_Camera->StartCameraShake(0.3f, 0.2f);
 		}
 
 		//Position 48
@@ -3377,8 +3452,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.pOwner = this;
 				Desc.iGainKiAmount = 0;
 				Desc.iGainAttackStep = 0;
-
-
+				Desc.fCameraShakeDuration = 0.3f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 		}
@@ -3428,8 +3503,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.pOwner = this;
 				Desc.iGainKiAmount = 0;
 				Desc.iGainAttackStep = 0;
-
+				Desc.fCameraShakeDuration = 0.3f;
+				Desc.fCameraShakeMagnitude = 0.2f;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+				//두번째방 
 			}
 		}
 		//Position 77.2
@@ -3461,12 +3539,17 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = false;
 
+			//뒤 점프
 		}
 
 		//Position 100
 		else if (iAttackEvent == 3)
 		{
-			Set_CurrentAnimationPositionJump(105.f);
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 2, this, m_pEnemy);
+			// 원형 회전 시작 (시계 방향, 지속 시간 10초, 원형 도는 속도)
+			main_Camera->Set_CirclePlay(true, XM_2PI / 15.f);
+
 			//m_pModelCom->Get_pCurrentAnimation()->m_fDuration = 0.20f;
 
 
@@ -3479,8 +3562,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 100.00f;
 
 
-			m_pModelCom->Set_MaxAnimationUpdate_Time(0.02f);
-			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 50.00f;
+			//Set_CurrentAnimationPositionJump(105.f);
+			//m_pModelCom->Set_MaxAnimationUpdate_Time(0.02f);
+			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 50.00f;
+
+			Set_CurrentAnimationPositionJump(135.f);
+			Add_Move({ 1.f * m_iLookDirection,0.f });
+			m_pModelCom->Set_MaxAnimationUpdate_Time(0.04f);
+			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.00f;
+			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 40.00f;
+
 
 			m_bInvisible = true;
 
@@ -3544,7 +3635,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				//if(m_bFinalSkillss3)
 
-				Desc.iDamage = 100 * Get_DamageScale(true);
 				Desc.fLifeTime = 15.f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY };
 				Desc.iTeam = m_iPlayerTeam;
@@ -3561,8 +3651,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//애니메이션 속도 100
 				Desc.fMoveSpeedNoneDirection = { 10.f,0.f };
 
+				//속도 0.02
+				//Desc.iDamage = 100 * Get_DamageScale(true);
+				//Desc.iAttackCount = 50;
 
-				Desc.iAttackCount = 50;
+				Desc.iDamage = 50 * Get_DamageScale(true);
+				Desc.iAttackCount = 100;
+
+
 				Desc.iPlayerDirection = m_iLookDirection;		//
 				Desc.iGainHitCount = 2;
 				Desc.iGainAttackStep = 0;
@@ -3607,6 +3703,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//255 클로즈업 ,  다음애니메이션 설정, START의 240으로 이동
 		else if (iAttackEvent == 4)
 		{
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 3, this);
+
 			m_bInvisible = false;
 			m_bDynamicMove = false;
 
@@ -3809,7 +3908,7 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 				CEffect_Layer::COPY_DESC tDesc{};
 				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 
-				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"),&tDesc);
+				m_pEffect_Manager->Copy_Layer(TEXT("Guard01"), &tDesc);
 				break;
 			}
 			case Client::HIT_CROUCH_MEDIUM:

@@ -52,7 +52,7 @@ public:
 
 
 	void Reflect();
-
+	void Attack_Benishing();
 
 	class CPlay_21* m_pPlayer = { nullptr };
 	_uint* m_pPlayerAnimationIndex = { nullptr };

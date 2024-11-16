@@ -172,6 +172,9 @@ vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
 
 vector<CInput> CCharacter::Command_Up_SpecialAttack = { {MOVEKEY_UP, ATTACK_SPECIAL} };
 
+vector<CInput> CCharacter::Command_BenishingAttack = { {MOVEKEY_NEUTRAL, ATTACK_BENISHING} };
+
+
 
 
 
@@ -579,6 +582,11 @@ _bool CCharacter::InputCommand()
 			iAttackkey = ATTACK_GRAB;
 
 		}
+		if (m_pGameInstance->Key_Down(DIK_L))
+		{
+			iAttackkey = ATTACK_BENISHING;
+		}
+
 		// if (m_pGameInstance->Key_Pressing(DIK_Y))
 		// {
 		//	 iAttackkey = ATTACK_LIGHT;
@@ -668,6 +676,11 @@ _bool CCharacter::InputCommand()
 			iAttackkey = ATTACK_GRAB;
 
 		}
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD6))
+		{
+			iAttackkey = ATTACK_BENISHING;
+		}
+
 		// if (m_pGameInstance->Key_Pressing(DIK_Y))
 		// {
 		//	 iAttackkey = ATTACK_LIGHT;
@@ -1235,9 +1248,10 @@ void CCharacter::Chase2(_float fTimeDelta)
 			//Character_Make_Effect(TEXT("BurstR-02"));
 
 			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
-			//XMStoreFloat4x4(&m_IdentityMatrix , XMMatrixIdentity());
+
+			//XMStoreFloat4x4(&m_IdentityMatrix, XMMatrixIdentity());
 			CEffect_Layer::COPY_DESC tDesc{};
-			
+
 			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
 			tDesc.pTransformCom = m_pTransformCom;
 			tDesc.m_isPlayerDirRight = m_iLookDirection;
@@ -1309,8 +1323,8 @@ void CCharacter::Chase2(_float fTimeDelta)
 			m_bChase = false;
 			//if (m_pChaseAttackObejct != nullptr)
 			//{
-			//	m_pChaseAttackObejct->Set_RemoteDestory();
-			//	m_pChaseAttackObejct = nullptr;
+			//   m_pChaseAttackObejct->Set_RemoteDestory();
+			//   m_pChaseAttackObejct = nullptr;
 			//}
 			return;
 		}
@@ -1360,14 +1374,16 @@ void CCharacter::Chase2(_float fTimeDelta)
 
 	_float EffectAngle = angle;
 
-	if (m_pChaseEffectLayer != nullptr && m_fAccChaseTime <2.f)
+	if (m_pChaseEffectLayer != nullptr && m_fAccChaseTime < 2.f)
 	{
 		/* 체이스 2P 수정 */
 
 		if (m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 		else if (m_iLookDirection == -1)
-			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180-EffectAngle });
+
+			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180 - EffectAngle });
+
 
 		_float xdegree = XMVectorGetX(m_vChaseDir);
 
@@ -1418,7 +1434,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 	//애니메이션의 position이 각도를 의미함 (1:1은 아니고 특수처리되어있음)
 	Set_CurrentAnimationPositionJump(angle);
 
-	
+
 
 }
 	//반드시 Set이던 시절 코드 백업용.
@@ -1628,14 +1644,28 @@ void CCharacter::Chase_Grab(_float fTimeDelta)
 	m_vChaseDir = XMVector4Normalize(vTargetPos - vMyPos);
 	Set_fImpulse(XMVectorGetX(m_vChaseDir) * 2.f);
 
-	if (m_bGrab_Air == false)
+	if (m_bGrab_Air == true)
+	{
+		m_vChaseDir = XMVectorSetX(m_vChaseDir, XMVectorGetX(m_vChaseDir)*1.5f);
+
+		//m_pTransformCom->Add_MoveVector(m_vChaseDir * (20 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+		m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+
+	}
+	else
 	{
 		m_vChaseDir = XMVectorSetY(m_vChaseDir, 0.f);
+		m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
 	}
-
+	
 
 	//m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime*m_fAccChaseTime*3.f) * fTimeDelta);
-	m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+
+
+	//기존에 쓰던것. 공중에서X길이 늘리려고 다시 만들것
+	//m_pTransformCom->Add_MoveVector(m_vChaseDir * (15 - m_fAccChaseTime * m_fAccChaseTime * 10.f) * fTimeDelta);
+
+
 
 
 
@@ -1679,8 +1709,15 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 			else //공격 성공시
 			{
 				Add_Move({ -0.4f * m_iLookDirection,0.f });
-				Set_Animation(m_iAttack_Heavy);
 
+				if(Get_fHeight()==0)
+					Set_Animation(m_iAttack_Heavy);
+				else
+				{
+					Set_Animation(m_iAttack_Air3);
+					Set_CurrentAnimationPositionJump(m_fAIrGrabEndAnimationPositon);
+					Set_ForcedGravityDown();
+				}
 			}
 
 			//else if (m_bGrab_Air)
@@ -1971,6 +2008,11 @@ void CCharacter::Reset_AttackCount()
 {
 	m_bChaseEnable = true;
 	m_bAriDashEnable = true;
+}
+
+void CCharacter::Set_bInivisible(_bool bInvisible)
+{
+	m_bInvisible = bInvisible;
 }
 
 
@@ -2540,7 +2582,11 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 					//Set_NextAnimation(m_iHit_Air_FallAnimationIndex,1.f);
 
 					//맞는순간 보는 방향이 갱신된다면 LookDirection을 써도 될텐데
-					Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+					//Set_fImpulse({ m_iLookDirection * 2.f,0.5f });
+
+					//팅겨져나오는 거리 수정중
+					//Set_fImpulse({ m_iLookDirection * 4.f,0.5f });
+					Set_fImpulse({ m_iLookDirection * 4.f,0.05f });
 
 					//Set_ForcedGravityTime_LittleUp();
 					Set_ForcveGravityTime(0.f);
@@ -3438,7 +3484,7 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
-			cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
+			//cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
 		}
 
 		//둘 다 stun상태가 아니고, 땅에있으면
@@ -3505,7 +3551,7 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 		else if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
-			cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
+			//cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
 		}
 
 
@@ -3612,6 +3658,16 @@ void CCharacter::Set_GrabAnimation()
 	Set_Animation(m_iGrabAnimationIndex);
 }
 
+void CCharacter::Set_bBenishingAttack(_bool bBenishing)
+{
+	m_bBenishingAttack = bBenishing;
+}
+
+_bool CCharacter::Get_bBenishingAttack()
+{
+	return m_bBenishingAttack;
+}
+
 void CCharacter::Add_Move(_float2 fMovement)
 {
 	m_pTransformCom->Add_Move({ fMovement.x, fMovement.y,0 });
@@ -3638,7 +3694,11 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					
 					_ushort iAliveMemberCount = CBattleInterface_Manager::Get_Instance()->Get_iAliveMemberCount(m_iPlayerTeam);
 
-					if(iAliveMemberCount == 1)
+
+					if (m_pGameInstance->Key_Pressing(DIK_HOME))
+						m_fMaxSparkingTime = 2000.f;
+
+					else if(iAliveMemberCount == 1)
 						m_fMaxSparkingTime = 30.f;
 					else
 						m_fMaxSparkingTime = 15.f;
@@ -3671,6 +3731,9 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					//인원수 조건문
 
 					_ushort iAliveMemberCount = CBattleInterface_Manager::Get_Instance()->Get_iAliveMemberCount(m_iPlayerTeam);
+
+					if (m_pGameInstance->Key_Pressing(DIK_HOME))
+						m_fMaxSparkingTime = 2000.f;
 
 					if (iAliveMemberCount == 1)
 						m_fMaxSparkingTime = 30.f;
@@ -3711,6 +3774,7 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 		if (m_fAccSparkingTime > m_fMaxSparkingTime)
 		{
 			m_bSparking = false;
+			m_fAccSparkingTime = 0.f;
 			//UI한테 끈다고 전해주기
 			CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
 

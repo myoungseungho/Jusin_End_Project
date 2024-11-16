@@ -64,6 +64,8 @@ public:
 
 
 	static vector<CInput> Command_Reflect;
+	static vector<CInput> Command_BenishingAttack;
+
 
 public:
 	const int BUFFER_SIZE = 30;
@@ -239,6 +241,8 @@ public:
 	virtual void Reset_AttackCount();
 
 
+	void Set_bInivisible(_bool bInvisible);
+
 	//피격 관련
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
 	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
@@ -302,6 +306,9 @@ public:
 	_bool Get_bGrabbed();
 	void Set_GrabAnimation();  //외부에서 호출해야하는데 각자 다르므로?
 
+
+	void Set_bBenishingAttack(_bool bBenishing);
+	_bool Get_bBenishingAttack();
 
 	void Add_Move(_float2 fMovement);
 
@@ -593,7 +600,7 @@ protected:
 	_bool	m_bGrabbed = { false };
 	_bool	m_bGrabbedGravity = { false };
 	_ushort m_iGrabLoof = 3;
-
+	_float m_fAIrGrabEndAnimationPositon = {29.99}; //공중 잡기시 막타로 사용하는 애니메이션의 AttackEvent Posioton 
 
 
 	_bool m_bCharacterDead = { false };
@@ -640,6 +647,8 @@ protected:
 	CGameObject* m_pReflectObject = { nullptr };
 
 	_bool m_bFinalSkillQTESucces = { false };
+	_bool m_bBenishingAttack = { false };
+	_bool m_bInvisible = { false };
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };

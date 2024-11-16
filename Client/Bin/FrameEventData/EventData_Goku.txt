@@ -227,9 +227,11 @@ PLAY_GOKU,GKS260_body,20,NextAnimationCheck,333333
 
 //,공중 중
 PLAY_GOKU,GKS261_body,0,AnimSpeedChange,0.025000,120
+PLAY_GOKU,GKS261_body,1,AttackEvent,0
+
 PLAY_GOKU,GKS261_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS261_body,30,AnimSpeedChange,0.027000,80
-PLAY_GOKU,GKS261_body,31,AttackEvent,33333333
+PLAY_GOKU,GKS261_body,31,AttackEvent,1
 PLAY_GOKU,GKS261_body,35,NextAnimationCheck,333333
 PLAY_GOKU,GKS261_body,46,NextAnimationCheck,333333
 PLAY_GOKU,GKS261_body,58,NextAnimationCheck,333333

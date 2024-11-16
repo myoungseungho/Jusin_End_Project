@@ -1,12 +1,12 @@
 [Layer]
 LayerName: Volcano_Dust
-Duration: 1
-TickPerSecond: 0.1
+Duration: 0.042
+TickPerSecond: 0.01
 KeyFramesCount: 59
 NumEffec: 1
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
+Position: 70 19.5 -2
+Scale: 3.79997 4.29998 0.999992
+Rotation: 0 90 346.753
 IsFollowing: false
 
 [Effect]
@@ -14,7 +14,7 @@ EffectName: Volcano_Dust_01
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/Volcano_DustVolcano_Dust_01
 DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
+EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
@@ -22,7 +22,7 @@ Position: 0 0 0
 Scale: 0.3 0.3 0.2
 Rotation: 0 0 0
 IsLoop: false
-Color: 254.156 48.1291 0 30
+Color: 83.5927 32.9305 36.3079 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
@@ -34,6 +34,6 @@ Position: 0 0 0
 Scale: 0.3 0.3 0.2
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
+Duration: 0.042
 IsNotPlaying: false
 

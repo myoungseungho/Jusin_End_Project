@@ -9,13 +9,16 @@ CCamera::CCamera(const CCamera& Prototype)
 	: CGameObject{ Prototype }
 	, m_fViewportWidth{ Prototype.m_fViewportWidth }
 	, m_fViewportHeight{ Prototype.m_fViewportHeight }
+	, m_fFovy{Prototype.m_fFovy}
+	, m_fNear{ Prototype.m_fNear }
+	, m_fFar{ Prototype.m_fFar }
 {
 }
 
 HRESULT CCamera::Initialize_Prototype()
 {
-	m_fViewportWidth = 1280;
-	m_fViewportHeight = 720;
+	m_fViewportWidth = 1920;
+	m_fViewportHeight = 1080;
 
 	return S_OK;
 }

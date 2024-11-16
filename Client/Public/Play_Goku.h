@@ -115,6 +115,13 @@ public:
 
 		ANIME_SPARKING = 59,
 		ANIME_REFLECT = 58,
+
+
+		//시네마틱
+		ANIME_GOKU_CINEMATIC_01 = 86, //FRN801cs_01  //오프닝 무비
+		ANIME_GOKU_CINEMATIC_02 = 87, //FRN801cs_02 //시작 직후 
+		ANIME_GOKU_CINEMATIC_03 = 88,  //승리 후
+
 	};
 	enum AnimationCount
 	{
@@ -122,6 +129,7 @@ public:
 		COUNT_ATTACK_CROUCH_MEDUIM,
 		COUNT_ATTACK_SPECIAL,
 		COUNT_ATTACK_GRAB,
+		COUNT_ATTACK_BENISHING,
 		COUNT_END
 	};
 

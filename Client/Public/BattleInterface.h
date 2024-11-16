@@ -48,6 +48,7 @@ public:
 
 	void Gain_KiGuage(_ushort iKi, _ushort iTeam);
 	_bool Use_KiGuage(_ushort  irequirementKi, _ushort iTeam);
+	_bool Use_KiRealGuage(_ushort  irequirementKi, _ushort iTeam);
 	_ushort Get_KiGuage(_ushort iTeam);
 
 	_ushort Get_KiNumber(_ushort iTeam);
