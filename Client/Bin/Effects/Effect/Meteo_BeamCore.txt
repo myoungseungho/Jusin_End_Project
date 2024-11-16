@@ -1,12 +1,12 @@
 [Layer]
 LayerName: Meteo_BeamCore
-Duration: 2
+Duration: 0.84
 TickPerSecond: 0.2
-KeyFramesCount: 12
+KeyFramesCount: 119
 NumEffec: 1
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
+Position: 100 40 -4.3
+Scale: 3 3 3
+Rotation: 351.429 0 0
 IsFollowing: false
 
 [Effect]
@@ -18,32 +18,32 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 100 36 0
-Scale: 0.2 0.2 0.2
-Rotation: -15 0 17.143
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 17.143
 IsLoop: false
-Color: 50 66 80 1.98676
-GlowColor: 0 0 0 1
+Color: 83.5927 56.5729 56.5729 1.98676
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 100 36 0
-Scale: 0.2 0.199999 0.199999
-Rotation: -15 0 17.143
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 17.143
 CurTime: 0
-Duration: 2
+Duration: 0.84
 IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 118
-Position: 100 36 0
-Scale: 0.2 0.2 0.2
-Rotation: -15 0 17.143
-CurTime: 0.166667
-Duration: 2
+Position: 0 0 0
+Scale: 0.1 0.1 0.1
+Rotation: 0 0 18.701
+CurTime: 1.96667
+Duration: 0.84
 IsNotPlaying: false
 
 [KeyFrame]
@@ -52,6 +52,6 @@ Position: 100 36 0
 Scale: 0.2 0.2 0.2
 Rotation: -15 0 17.143
 CurTime: 0.183333
-Duration: 2
+Duration: 0.84
 IsNotPlaying: true
 

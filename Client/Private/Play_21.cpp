@@ -2315,8 +2315,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 0, this);
 
 			m_iFinalLoofCount = 10;
-			m_bFinalSkillQTESucces = false;
+			m_iQTE = -1;
 			m_bFinalSkillAdd = false;
+			if (m_pEnemy->Get_bStun() == true || m_pEnemy->Check_bCurAnimationisGroundSmash())
+			{
+				Character_Start_QTE(2);
+			}
 
 			_float fStopTime = 1.2f;
 
@@ -2493,7 +2497,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				//QTE 성공했으면 5번 더 하고 위쪽으로 감
-				if (m_bFinalSkillQTESucces)
+				if (m_iQTE == 1)
 				{
 					m_bFinalSkillAdd = true;
 					m_iFinalLoofCount = 5;

@@ -132,8 +132,8 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , ArrowToPlayerID(CUI_Define::ANDROID21), InputEvent(DIK_RETURN, CUI_Define::ANDROID21) : m_fPosY = 620.f;
 			break;
 
-		case CUI_Define::BUU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::BUU), InputEvent(DIK_RETURN, CUI_Define::BUU) : m_fPosY = 620.f;
+		case CUI_Define::FRIEZA:
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::FRIEZA), InputEvent(DIK_RETURN, CUI_Define::FRIEZA) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::HIT:
@@ -144,7 +144,8 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 			break;
 	}
 
-
+	if(ClickRange(fPosX, fPosY) == FALSE)
+		m_bOnCursor = FALSE;
 		
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 }
@@ -155,6 +156,7 @@ void CUI_CharaSelectIcon::InputEvent(_uint iKey, CUI_Define::PLAYER_ID ePlayerID
 	{
 		if (OverlapCheck(ePlayerID) == FALSE)
 			return;
+
 
 		CreateChoiceMark(ePlayerID);
 		CharacterCreateDesc(ePlayerID);
@@ -260,19 +262,24 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 	case Client::CUI_Define::GOKU:
 		PrototypeTage = TEXT("Prototype_GameObject_Play_Goku");
 		ePlayerIDInfo = CUI_Define::GOKU;
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_GOKU, false, 1.f);
 
 		break;
 	case Client::CUI_Define::ANDROID21:
 		PrototypeTage = TEXT("Prototype_GameObject_Play_21");
 		ePlayerIDInfo = CUI_Define::ANDROID21;
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_21, false, 1.f);
 
 		break;
-	case Client::CUI_Define::BUU:
-		ePlayerIDInfo = CUI_Define::BUU;
+	case Client::CUI_Define::FRIEZA:
+		ePlayerIDInfo = CUI_Define::FRIEZA;
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_BUU, false, 1.f);
+
 		break;
 	case Client::CUI_Define::HIT:
 		PrototypeTage = TEXT("Prototype_GameObject_Play_Hit");
 		ePlayerIDInfo = CUI_Define::HIT;
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_HIT, false, 1.f);
 
 		break;
 
@@ -301,6 +308,12 @@ void CUI_CharaSelectIcon::CreateSelectLine()
 
 void CUI_CharaSelectIcon::ArrowToPlayerID(CUI_Define::PLAYER_ID eID)
 {
+	if (m_bOnCursor == FALSE)
+	{
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
+		m_bOnCursor = TRUE;
+	}
+
 	dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SetPlayerID(eID);
 }
 

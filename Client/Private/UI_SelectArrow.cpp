@@ -30,7 +30,7 @@ HRESULT CUI_SelectArrow::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 150.f , m_fPosY = 620.f;
+	m_fPosX = m_vPrevWinSize.x * 0.5f, m_fPosY = 620.f;
 	m_fSizeX = 50.f, m_fSizeY = 50.f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
@@ -48,6 +48,7 @@ void CUI_SelectArrow::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 
 	Move(fTimeDelta);
+
 }
 
 void CUI_SelectArrow::Late_Update(_float fTimeDelta)
@@ -119,26 +120,37 @@ void CUI_SelectArrow::PositionUpdate(_float fTimeDelta)
 void CUI_SelectArrow::Move(_float fTimeDelta)
 {
 	PositionUpdate(fTimeDelta);
+	_bool bInput[4] = { FALSE , FALSE ,FALSE ,FALSE };
 
 		if (m_pGameInstance->Key_Pressing(DIK_W))
 		{
-			m_pTransformCom->Go_Up(fTimeDelta);
+			m_pTransformCom->Go_Up(fTimeDelta * m_fSpeedOffset);
+			bInput[0] = TRUE;
 		}
 
 		if (m_pGameInstance->Key_Pressing(DIK_S))
 		{
-			m_pTransformCom->Go_Down(fTimeDelta);
+			m_pTransformCom->Go_Down(fTimeDelta * m_fSpeedOffset);
+			bInput[1] = TRUE;
 		}
 
 		if (m_pGameInstance->Key_Pressing(DIK_A))
 		{
-			m_pTransformCom->Go_Left(fTimeDelta);
+			m_pTransformCom->Go_Left(fTimeDelta * m_fSpeedOffset);
+			bInput[2] = TRUE;
 		}
 
 		if (m_pGameInstance->Key_Pressing(DIK_D))
 		{
-			m_pTransformCom->Go_Right(fTimeDelta);
+			m_pTransformCom->Go_Right(fTimeDelta * m_fSpeedOffset);
+			bInput[3] = TRUE;
 		}
+
+		_bool bResultInput = bInput[0] || bInput[1] || bInput[2] || bInput[3];
+		bResultInput ? m_fSpeedOffset += fTimeDelta : m_fSpeedOffset = 1.f;
+		
+		if (m_fSpeedOffset >= 2.5f)
+			m_fSpeedOffset = 2.5f;
 }
 
 CUI_SelectArrow* CUI_SelectArrow::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

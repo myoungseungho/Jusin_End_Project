@@ -8,9 +8,9 @@
 #include "IMGUI_Shader_Tab.h"
 
 CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:	m_pContext{ pContext },
-		m_pDevice{ pDevice },
-		m_pGameInstance{CGameInstance::Get_Instance()}
+	: m_pContext{ pContext },
+	m_pDevice{ pDevice },
+	m_pGameInstance{ CGameInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pContext);
 	Safe_AddRef(m_pDevice);
@@ -18,15 +18,15 @@ CEffect_Layer::CEffect_Layer(ID3D11Device* pDevice, ID3D11DeviceContext* pContex
 }
 
 CEffect_Layer::CEffect_Layer(const CEffect_Layer& Prototype)
-	: m_fDuration{Prototype.m_fDuration}
-	, m_pDevice { Prototype.m_pDevice }
+	: m_fDuration{ Prototype.m_fDuration }
+	, m_pDevice{ Prototype.m_pDevice }
 	, m_pContext{ Prototype.m_pContext }
-	, m_iNumKeyFrames{Prototype.m_iNumKeyFrames }
-	, m_fTickPerSecond {Prototype.m_fTickPerSecond }
+	, m_iNumKeyFrames{ Prototype.m_iNumKeyFrames }
+	, m_fTickPerSecond{ Prototype.m_fTickPerSecond }
 	, m_pTransformCom{ Prototype.m_pTransformCom }
 	, m_pColliderCom{ Prototype.m_pColliderCom }
-	, m_pGameInstance { Prototype.m_pGameInstance }
-	, m_bIsFollowing {Prototype.m_bIsFollowing}
+	, m_pGameInstance{ Prototype.m_pGameInstance }
+	, m_bIsFollowing{ Prototype.m_bIsFollowing }
 {
 	Safe_AddRef(m_pContext);
 	Safe_AddRef(m_pDevice);
@@ -102,7 +102,7 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 	ColliderDesc.fRadius = 0.1f;
 
 	m_pColliderCom = reinterpret_cast<CCollider*>(m_pGameInstance->Clone_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_Sphere"), &ColliderDesc));
-	
+
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 	return S_OK;
 }
@@ -183,9 +183,9 @@ void CEffect_Layer::Camera_Update(_float fTimeDelta)
 
 void CEffect_Layer::Update(_float fTimeDelta)
 {
-	
-	for (auto& pEffect : m_MixtureEffects)
-		pEffect->Update(fTimeDelta);
+
+	//for (auto& pEffect : m_MixtureEffects)
+	//	pEffect->Update(fTimeDelta);
 
 	if (m_bIsCopy)
 	{
@@ -226,7 +226,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 				Safe_Release(pTransform);
 			}
 
-			if(m_pPlayerTransformCom != nullptr)
+			if (m_pPlayerTransformCom != nullptr)
 				pEffect->Get_Layer_Matrix(EffectToLayerMatrix * m_pPlayerTransformCom->Get_WorldMatrix());
 			else
 				pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
@@ -238,7 +238,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
-	
+
 
 }
 

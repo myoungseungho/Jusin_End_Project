@@ -11,7 +11,7 @@ END
 
 BEGIN(Client)
 
-class CQTE_UI_Gauge final : public CGameObject
+class CQTE_Same_Grab_UI_Gauge final : public CGameObject
 {
 public:
 	struct QTE_UI_Gauge_DESC
@@ -20,9 +20,9 @@ public:
 	};
 
 private:
-	CQTE_UI_Gauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CQTE_UI_Gauge(const CQTE_UI_Gauge& Prototype);
-	virtual ~CQTE_UI_Gauge() = default;
+	CQTE_Same_Grab_UI_Gauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CQTE_Same_Grab_UI_Gauge(const CQTE_Same_Grab_UI_Gauge& Prototype);
+	virtual ~CQTE_Same_Grab_UI_Gauge() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -47,7 +47,7 @@ private:
 	_float m_fElapsedTime = {};
 	_float m_fPlayTime{};
 public:
-	static CQTE_UI_Gauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CQTE_Same_Grab_UI_Gauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\QTE_UI_Gauge.h"
+#include "..\Public\QTE_Same_Grab_UI_Gauge.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CQTE_UI_Gauge::CQTE_UI_Gauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CQTE_Same_Grab_UI_Gauge::CQTE_Same_Grab_UI_Gauge(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CQTE_UI_Gauge::CQTE_UI_Gauge(const CQTE_UI_Gauge& Prototype)
+CQTE_Same_Grab_UI_Gauge::CQTE_Same_Grab_UI_Gauge(const CQTE_Same_Grab_UI_Gauge& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CQTE_UI_Gauge::Initialize_Prototype()
+HRESULT CQTE_Same_Grab_UI_Gauge::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CQTE_UI_Gauge::Initialize(void* pArg)
+HRESULT CQTE_Same_Grab_UI_Gauge::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(nullptr)))
 		return E_FAIL;
@@ -29,7 +29,7 @@ HRESULT CQTE_UI_Gauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	CQTE_UI_Gauge::QTE_UI_Gauge_DESC* desc = static_cast<CQTE_UI_Gauge::QTE_UI_Gauge_DESC*>(pArg);
+	CQTE_Same_Grab_UI_Gauge::QTE_UI_Gauge_DESC* desc = static_cast<CQTE_Same_Grab_UI_Gauge::QTE_UI_Gauge_DESC*>(pArg);
 
 	m_fSizeX = desc->fSizeX;
 	m_fSizeY = desc->fSizeY;
@@ -47,12 +47,12 @@ HRESULT CQTE_UI_Gauge::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CQTE_UI_Gauge::Camera_Update(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Gauge::Camera_Update(_float fTimeDelta)
 {
 
 }
 
-void CQTE_UI_Gauge::Update(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Gauge::Update(_float fTimeDelta)
 {
 	//½Ã°£ÀÌ ´Ù Èê·¶´Ù¸é
 	if (m_fElapsedTime >= m_fPlayTime)
@@ -64,12 +64,12 @@ void CQTE_UI_Gauge::Update(_float fTimeDelta)
 	m_fElapsedTime += fTimeDelta;
 }
 
-void CQTE_UI_Gauge::Late_Update(_float fTimeDelta)
+void CQTE_Same_Grab_UI_Gauge::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
-HRESULT CQTE_UI_Gauge::Render(_float fTimeDelta)
+HRESULT CQTE_Same_Grab_UI_Gauge::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -86,7 +86,7 @@ HRESULT CQTE_UI_Gauge::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CQTE_UI_Gauge::Ready_Components()
+HRESULT CQTE_Same_Grab_UI_Gauge::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_QTE_VtxRect"),
@@ -106,7 +106,7 @@ HRESULT CQTE_UI_Gauge::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CQTE_UI_Gauge::Bind_ShaderResources()
+HRESULT CQTE_Same_Grab_UI_Gauge::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -130,33 +130,33 @@ HRESULT CQTE_UI_Gauge::Bind_ShaderResources()
 	return S_OK;
 }
 
-CQTE_UI_Gauge* CQTE_UI_Gauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CQTE_Same_Grab_UI_Gauge* CQTE_Same_Grab_UI_Gauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CQTE_UI_Gauge* pInstance = new CQTE_UI_Gauge(pDevice, pContext);
+	CQTE_Same_Grab_UI_Gauge* pInstance = new CQTE_Same_Grab_UI_Gauge(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CQTE_UI_Gauge"));
+		MSG_BOX(TEXT("Failed to Created : CQTE_Same_Grab_UI_Gauge"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CQTE_UI_Gauge::Clone(void* pArg)
+CGameObject* CQTE_Same_Grab_UI_Gauge::Clone(void* pArg)
 {
-	CQTE_UI_Gauge* pInstance = new CQTE_UI_Gauge(*this);
+	CQTE_Same_Grab_UI_Gauge* pInstance = new CQTE_Same_Grab_UI_Gauge(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CQTE_UI_Gauge"));
+		MSG_BOX(TEXT("Failed to Cloned : CQTE_Same_Grab_UI_Gauge"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CQTE_UI_Gauge::Free()
+void CQTE_Same_Grab_UI_Gauge::Free()
 {
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);

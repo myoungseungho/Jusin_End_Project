@@ -3313,6 +3313,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 		}
 
+
 		//마지막 펀치
 		else if (iAttackEvent == 4)
 		{
@@ -3701,6 +3702,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//255 클로즈업 ,  다음애니메이션 설정, START의 240으로 이동
 		else if (iAttackEvent == 4)
 		{
+			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 3, this);
+
 			m_bInvisible = false;
 			m_bDynamicMove = false;
 
@@ -3984,7 +3988,7 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 
 	m_iDebugComoboDamage += iDamage;
 
-	cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
+	//cout << "Dagage : " << iDamage << "  ,  Total : " << m_iDebugComoboDamage << endl;
 
 	if (m_iHP < 0)
 	{

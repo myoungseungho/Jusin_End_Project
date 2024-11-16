@@ -207,7 +207,7 @@
     <ClInclude Include="..\Public\QTE_Hit_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_Result.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h" />
-    <ClInclude Include="..\Public\QTE_UI_Gauge.h" />
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Gauge.h" />
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
     <ClInclude Include="..\Public\Lobby_Goku.h" />
@@ -264,6 +264,9 @@
     <ClInclude Include="..\Public\UI_LoadingMark.h" />
     <ClInclude Include="..\public\UI_LoadingSpaceLight.h" />
     <ClInclude Include="..\Public\UI_Loading_BG.h" />
+    <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h" />
+    <ClInclude Include="..\public\UI_Loading_DragonBall.h" />
+    <ClInclude Include="..\public\UI_Loading_FlyEff.h" />
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
     <ClInclude Include="..\Public\UI_Logo_BG.h" />
     <ClInclude Include="..\Public\UI_Logo_Mark.h" />
@@ -315,6 +318,8 @@
     <ClInclude Include="..\public\UI_VS_DynamicLight.h" />
     <ClInclude Include="..\public\UI_VS_Mark.h" />
     <ClInclude Include="..\public\UI_VS_MarkEff.h" />
+    <ClInclude Include="..\public\UI_VS_Name.h" />
+    <ClInclude Include="..\public\UI_VS_NameOutLine.h" />
     <ClInclude Include="..\public\UI_VS_StaticLight.h" />
     <ClInclude Include="..\public\UI_VS_TeamPanel.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
@@ -421,7 +426,7 @@
     <ClCompile Include="..\Private\QTE_Hit_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_Result.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp" />
-    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp" />
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Gauge.cpp" />
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
     <ClCompile Include="..\Private\Lobby_Goku.cpp" />
@@ -481,6 +486,9 @@
     <ClCompile Include="..\Private\UI_LoadingMark.cpp" />
     <ClCompile Include="..\private\UI_LoadingSpaceLight.cpp" />
     <ClCompile Include="..\Private\UI_Loading_BG.cpp" />
+    <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp" />
+    <ClCompile Include="..\private\UI_Loading_DragonBall.cpp" />
+    <ClCompile Include="..\private\UI_Loading_FlyEff.cpp" />
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
     <ClCompile Include="..\Private\UI_Logo_BG.cpp" />
     <ClCompile Include="..\Private\UI_Logo_Mark.cpp" />
@@ -540,6 +548,8 @@
     <ClCompile Include="..\private\UI_VS_DynamicLight.cpp" />
     <ClCompile Include="..\private\UI_VS_Mark.cpp" />
     <ClCompile Include="..\private\UI_VS_MarkEff.cpp" />
+    <ClCompile Include="..\private\UI_VS_Name.cpp" />
+    <ClCompile Include="..\private\UI_VS_NameOutLine.cpp" />
     <ClCompile Include="..\private\UI_VS_StaticLight.cpp" />
     <ClCompile Include="..\private\UI_VS_TeamPanel.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />

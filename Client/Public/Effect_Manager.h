@@ -102,6 +102,7 @@ public:
 
 public:
 	_int									m_TestEffect_Count = { 0 };
+	_wstring m_strSelectLayerName;
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

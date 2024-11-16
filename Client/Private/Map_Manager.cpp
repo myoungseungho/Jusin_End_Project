@@ -69,6 +69,8 @@ void CMap_Manager::Update(_float fTimeDelta)
 		Map_Change(MAP_SPACE);
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
 		Map_Change(MAP_VOLCANO);
+	
+	
 }
 
 void CMap_Manager::Late_Update(_float fTimeDelta)
@@ -147,10 +149,10 @@ _float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
 	m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"]->m_bIsActive = true;
 
 	static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
-		->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, XMVectorSet(1500, 0, -1000, 1.f));
+		->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, XMVectorSet(1500 * (isRight == true ? 1.f : -1.f), 0, -1000, 1.f));
 
 	static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
-		->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-10.f));
+		->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-10.f * (isRight == true ? 1.f : -1.f)));
 
 	m_VolcanoModels[L"Prototype_GameObject_Volcano_Lava_Ground"]->m_bIsActive = true;
 	m_VolcanoModels[L"Prototype_GameObject_Volcano_Stage"]->m_bIsActive = true;
@@ -182,8 +184,6 @@ void CMap_Manager::IsDone_Active()
 		
 		static_cast<CVolcano_Destructive*>(m_Destructive_VolcanoModels[L"Prototype_GameObject_Volcano_Destructive"])->IsDone_Active_Init();
 
-		for (auto& iter : m_Destructive_VolcanoModels)
-			iter.second->SetActive(false);
 		break;
 	}
 

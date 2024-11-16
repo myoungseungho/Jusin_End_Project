@@ -9,13 +9,16 @@ CCamera::CCamera(const CCamera& Prototype)
 	: CGameObject{ Prototype }
 	, m_fViewportWidth{ Prototype.m_fViewportWidth }
 	, m_fViewportHeight{ Prototype.m_fViewportHeight }
+	, m_fFovy{ Prototype.m_fFovy }
+	, m_fNear{ Prototype.m_fNear }
+	, m_fFar{ Prototype.m_fFar }
 {
 }
 
 HRESULT CCamera::Initialize_Prototype()
 {
-	m_fViewportWidth = 1280;
-	m_fViewportHeight = 720;
+	m_fViewportWidth = 1920;
+	m_fViewportHeight = 1080;
 
 	return S_OK;
 }
@@ -24,6 +27,13 @@ HRESULT CCamera::Initialize(void* pArg)
 {
 	if (pArg == nullptr)
 	{
+		////시야각
+		//m_fFovy = XMConvertToRadians(40.0f);
+		////Near
+		//m_fNear = 0.1f;
+		////Far
+		//m_fFar = 10000.f;
+
 		//메인카메라
 		if (FAILED(__super::Initialize(pArg)))
 			return E_FAIL;
@@ -48,7 +58,9 @@ void CCamera::Camera_Update(_float fTimeDelta)
 {
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_VIEW, m_pTransformCom->Get_WorldMatrix_Inverse());
 
-	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(m_fFovy, m_fViewportWidth / m_fViewportHeight, m_fNear, m_fFar));
+	//메인카메라 처음 업데이트 탈때 타지 마라고
+	if (m_fFovy != 0.f)
+		m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(m_fFovy, m_fViewportWidth / m_fViewportHeight, m_fNear, m_fFar));
 }
 
 void CCamera::Update(_float fTimeDelta)

@@ -28,6 +28,8 @@
 #include "Effect_Layer.h"
 #include "Animation.h"
 
+#include "QTE_Manager.h"
+
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -2668,9 +2670,25 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		break;
 	case Client::CPlay_Goku::ANIME_FINAL_START:
+	{
+
+		if (iAttackEvent == 0)
+		{
+			if (m_pEnemy->Get_bStun() == true || m_pEnemy->Check_bCurAnimationisGroundSmash())
+			{
+				Character_Start_QTE(CQTE_Manager::QTE_ID_HIT);
+			}
+		}
+
+	}
 		break;
 	case Client::CPlay_Goku::ANIME_FINAL_ELBO:
 	{
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+
+
 		CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 		if (m_iPlayerTeam == 1)
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2716,6 +2734,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Goku::ANIME_FINAL_UPPER:
 	{
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+
 		CAttackObject::ATTACK_DESC Desc{};
 		if (m_iPlayerTeam == 1)
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2751,6 +2773,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	case Client::CPlay_Goku::ANIME_FINAL_SMASH:
 	{
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+
 		CAttackObject::ATTACK_DESC Desc{};
 		if (m_iPlayerTeam == 1)
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2785,12 +2811,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//모델변경 테스트  Position0
 		if (iAttackEvent == 3)
 		{
-			//m_bFinalSkillQTESucces = true;
+			//m_iQTE = true;
 
-			if (m_bFinalSkillQTESucces == true)
+			if (m_iQTE == 1) // 1
 			{
 				m_bFinalSkillss3 = true;
-				m_bFinalSkillQTESucces = false;
+				m_iQTE = -1;
 				m_pModelCom_Skill->SetUp_Animation(0,false,0);
 				m_pModelCom_Skill->CurrentAnimationPositionJump(0.1f);
 
@@ -2895,8 +2921,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
 
-			Character_Make_Effect(TEXT("Energie-02"), { 0.7f,0.9f });
-			Character_Make_Effect(TEXT("Energie-03"), { 0.7f,0.9f });	
+			Character_Make_Effect(TEXT("EnergieSAO-03"), { 0.7f,0.9f });
+			//Character_Make_Effect(TEXT("Energie-03"), { 0.7f,0.9f });	
 
 		}
 		else  if (iAttackEvent == 2) //고정풀기
@@ -2940,7 +2966,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-			m_bFinalSkillQTESucces = false;
+			m_iQTE = -1;
 			m_bFinalSkillss3 = false;
 		}
 

@@ -442,8 +442,8 @@
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp">
       <Filter>02.GameObjects\AttackObject\AttackObject_Reflect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp">
-      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Gauge.cpp">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Gauge</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\QTE_Hit.cpp">
       <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
@@ -504,6 +504,21 @@
     </ClCompile>
     <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_Name.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_VS_NameOutLine.cpp">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_FlyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_DragonBall.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\DragonBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1008,9 +1023,6 @@
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Reflect">
       <UniqueIdentifier>{71fa52a6-f445-47d5-8624-369a796c6893}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge">
-      <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Hit">
       <UniqueIdentifier>{f107e39d-5d21-4bb0-bb46-3c509f791381}</UniqueIdentifier>
     </Filter>
@@ -1076,6 +1088,24 @@
     </Filter>
     <Filter Include="02.GameObjects\Character\Play_Frieza\Frieza_MeleeAttack">
       <UniqueIdentifier>{8049ce2b-79fb-4023-a176-56356a57dd60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Name">
+      <UniqueIdentifier>{e99bdeb3-a273-44fe-ab5e-b12818390da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\VS\Name\OutLine">
+      <UniqueIdentifier>{fb1e193e-7444-4c2a-9b1c-c1cd12512f0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\FlyEffect">
+      <UniqueIdentifier>{c5718074-c156-483f-bf17-d531286d0ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\DragonBall">
+      <UniqueIdentifier>{901edc1d-0bde-4cc1-9ff9-03cfb3f2c976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\FlyEffect\Create">
+      <UniqueIdentifier>{18aedf42-182a-4447-b400-e0ba03547b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Gauge">
+      <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1297,9 +1327,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\AnimationNameMap.h">
       <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Character.h">
-      <Filter>02.GameObjects\Character</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Play_21.h">
       <Filter>02.GameObjects\Character\Play_21</Filter>
@@ -1679,8 +1706,8 @@
     <ClInclude Include="..\Public\Play_Goku.h">
       <Filter>02.GameObjects\Character\Play_Goku</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\QTE_UI_Gauge.h">
-      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_UI_Gauge</Filter>
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Gauge.h">
+      <Filter>02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Gauge</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\QTE_Hit.h">
       <Filter>02.GameObjects\QTE\QTE_Hit</Filter>
@@ -1744,6 +1771,24 @@
     </ClInclude>
     <ClInclude Include="..\Public\Frieza_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_Name.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_VS_NameOutLine.h">
+      <Filter>02.GameObjects\UI\BackGround\VS\Name\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_FlyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_DragonBall.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\DragonBall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

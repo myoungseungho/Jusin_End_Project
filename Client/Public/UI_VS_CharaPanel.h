@@ -33,6 +33,7 @@ private:
 
 	CTexture* m_pBGTexture = { nullptr };
 	CTexture* m_pMarkTexture = { nullptr };
+	CTexture* m_pNameTexture = { nullptr };
 
 public:
 	static CUI_VS_CharaPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

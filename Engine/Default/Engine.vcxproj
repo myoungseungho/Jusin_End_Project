@@ -203,6 +203,7 @@
     <ClInclude Include="..\Public\VIBuffer_Line_Rect.h" />
     <ClInclude Include="..\Public\VIBuffer_Point_Instancing.h" />
     <ClInclude Include="..\Public\VIBuffer_Rect.h" />
+    <ClInclude Include="..\public\VIBuffer_Trail_Rect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Animation.cpp" />
@@ -250,6 +251,7 @@
     <ClCompile Include="..\Private\VIBuffer_Line_Rect.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Point_Instancing.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Rect.cpp" />
+    <ClCompile Include="..\private\VIBuffer_Trail_Rect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -253,7 +253,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -2.88842 1.21663 -2.42041
 Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
-Duration: 1
+Duration: 0.5
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
@@ -261,7 +261,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -2.88842 1.21663 -2.42041
 Rotation: 4.10357e-08 0.496694 -2.32752e-08 0.867925
-Duration: 0.1
+Duration: 0.01
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
@@ -954,12 +954,12 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Hit_3_Ultimate_Anim4
-PointCount: 4
+PointCount: 5
 
 [CameraPoint]
 Position: 1.03805 1.54372 -0.507299
 Rotation: 0 -0.521331 0 0.853097
-Duration: 0.1
+Duration: 0.3
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
@@ -967,21 +967,29 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.672691 1.53001 -0.45328
 Rotation: 0 -0.533679 0 0.845686
-Duration: 0.3
+Duration: 0.2
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 0.443737 1.51954 -0.321334
-Rotation: 0 -0.437521 0 0.8989
-Duration: 1
+Position: 0.351132 1.51954 -0.439361
+Rotation: 0 -0.437445 0 0.899241
+Duration: 0.8
 InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 1 1.5 -5
+Position: 1.5 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.0 1.5 -5
 Rotation: -0 0 -0 1
 Duration: 0.1
 InterpolationType: 0

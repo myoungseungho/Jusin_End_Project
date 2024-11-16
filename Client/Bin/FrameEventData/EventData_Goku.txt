@@ -601,6 +601,7 @@ PLAY_GOKU,GKS406_body,102,ObjectMove,0.09,0.01,0,0
 
 //,3필 시작 기모으기
 PLAY_GOKU,GKS436_body,0,AnimSpeedChange,0.023000,25
+PLAY_GOKU,GKS436_body,0,AttackEvent,0
 PLAY_GOKU,GKS436_body,0,Camera_Play_Son_Ultimate_0,8,0,1.2,0.2
 PLAY_GOKU,GKS436_body,0.001000,PlaySound,13,0,1
 PLAY_GOKU,GKS436_body,20.001000,PlaySound,5,0,1

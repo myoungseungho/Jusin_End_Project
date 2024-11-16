@@ -18,6 +18,8 @@
 #include "Effect_Layer.h"
 #include "Map_Manager.h"
 
+#include "QTE_Manager.h"
+
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
 
@@ -1248,6 +1250,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 			//Character_Make_Effect(TEXT("BurstR-02"));
 
 			//m_pChaseEffectLayer= m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02"), m_pTransformCom->Get_WorldMatrixPtr());
+
 			//XMStoreFloat4x4(&m_IdentityMatrix, XMMatrixIdentity());
 			CEffect_Layer::COPY_DESC tDesc{};
 
@@ -1255,8 +1258,8 @@ void CCharacter::Chase2(_float fTimeDelta)
 			tDesc.pTransformCom = m_pTransformCom;
 			tDesc.m_isPlayerDirRight = m_iLookDirection;
 
-			m_pChaseEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstR-02"), &tDesc);
-
+			m_pChaseEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
+			
 			//m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
 
 			//BurstR-02_Rotated_Left
@@ -1380,7 +1383,9 @@ void CCharacter::Chase2(_float fTimeDelta)
 		if (m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 		else if (m_iLookDirection == -1)
+
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180 - EffectAngle });
+
 
 		_float xdegree = XMVectorGetX(m_vChaseDir);
 
@@ -1786,11 +1791,13 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 
 		//Á¡ÇÁ ¸ÕÁö
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
+		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
+
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Five_Dir"), &tDesc);
 
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
@@ -4171,7 +4178,7 @@ _bool CCharacter::Update_BeReflecting(_float fTimeDelta)
 
 void CCharacter::Set_bFinalSkillQTE(_bool bFinalSkillQTE)
 {
-	m_bFinalSkillQTESucces = bFinalSkillQTE;
+	m_iQTE = bFinalSkillQTE;
 }
 
 
@@ -4329,7 +4336,7 @@ _float4x4 CCharacter::Make_BoneMatrix_Offset(char* BoneName, _float2 fOffset, _b
 	return tFinalMatrix;
 }
 
-void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectName)
+CEffect_Layer* CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectName)
 {	
 	//CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &Make_BoneMatrix(BoneName));
 	
@@ -4339,8 +4346,7 @@ void CCharacter::Character_Make_BoneEffect(char* BoneName, _wstring strEffectNam
 	CEffect_Layer::COPY_DESC tDesc{};
 	tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr(BoneName);
 	tDesc.pTransformCom = m_pTransformCom;
-	CEffect_Manager::Get_Instance()->Copy_Layer(strEffectName, &tDesc);
-	
+	return CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(strEffectName, &tDesc);	
 }
 
 
@@ -4641,6 +4647,22 @@ _bool CCharacter::Check_bCurAnimationisGrab(_uint iAnimation)
 
 
 	if (iModelIndex == m_iGrabAnimationIndex || iModelIndex == m_iGrabReadyAnimationIndex)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+_bool CCharacter::Check_bCurAnimationisGroundSmash(_uint iAnimation)
+{
+	_uint iModelIndex = iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+	if (m_bHitGroundSmashed)
+		return true;
+
+	if (iModelIndex == m_iHit_Air_LightAnimationIndex && m_pModelCom->m_fCurrentAnimPosition>=55)
 	{
 		return true;
 	}
@@ -5319,6 +5341,72 @@ void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput 
 
 	m_pUI_Manager->m_eDirInput = eDirInput;
 	m_pUI_Manager->m_eBtnInput = eBtnInput;
+}
+
+void CCharacter::Notify_QTE_Same_Grab(_int result)
+{
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//	//ºñ±è
+	//case 0:
+	//	break;
+	//}
+}
+
+
+void CCharacter::Notify_QTE_Hit(_int result)
+{
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//}
+}
+
+void CCharacter::Notify_QTE_Continuous_Attack(_int result)
+{
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//}
+}
+
+void CCharacter::Character_Start_QTE(_uint iQTEID)
+{
+	/*
+	enum QTE_ID
+	{
+		QTE_ID_SAME_GRAB,
+		QTE_ID_HIT,
+		QTE_ID_CONTINUOUS_ATTACK,
+		QTE_ID_END
+	};
+	*/
+
+	m_iQTE = -1;
+	CQTE_Manager::Get_Instance()->Start_QTE((CQTE_Manager::QTE_ID)iQTEID, this);
+
 }
 
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

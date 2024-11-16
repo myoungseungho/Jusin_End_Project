@@ -298,6 +298,12 @@ namespace Engine
 		float ticksPerSecond;
 		vector<ChannelData> channels;
 	};
+
+	struct TrailInfo {
+		_float3 position;
+		_float2 texcoord;
+		float alpha;  // 잔상의 투명도 (점차적으로 감소)
+	};
 #pragma endregion
 
 #pragma endregion
