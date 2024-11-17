@@ -293,7 +293,7 @@ void CRenderer::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
 	m_Distortions.push_back(tDistortionDesc);
 }
 
-void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float2 vOffSetPos, _float2 vOffSetScale, _float3 vDir, _float fLifeTime)
+void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
 {
 	random_device rd;
 	mt19937 gen(rd());

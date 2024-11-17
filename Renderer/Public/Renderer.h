@@ -94,7 +94,7 @@ public: /* For.Distortion Function*/
 	HRESULT Render_Distortion(_float fTimeDelta);
 
 	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
-	void Create_HitDistortion(_float4 vPlayerPos, _float2 vOffSetPos = { 0.f,0.f }, _float2 vOffSetScale = { 1.f,1.f }, _float3 vDir = { 1,0,0 }, _float fLifeTime = 0.1f);
+	void Create_HitDistortion(_float4 vPlayerPos, _float3 vDir = { 1,0,0 }, _float2 vOffSetPos = { 0.f,0.f }, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = 0.1f);
 private: /* For.Distortion Variable */
 	vector<DISTORTION_DESC>		m_Distortions;
 	class CTransform*			m_pDistortionTransformCom = { nullptr };
