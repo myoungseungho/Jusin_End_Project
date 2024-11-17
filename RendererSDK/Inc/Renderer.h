@@ -143,7 +143,7 @@ private:
 	HRESULT Draw_AllGlow_Effect(_int isPri);
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 	HRESULT Draw_MapBloom();
-
+	HRESULT Draw_WhiteBlack_Mode();
 public:
 	void Switch_BlackOut(_bool isTrue);
 public:

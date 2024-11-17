@@ -279,7 +279,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 
 
-
+	if(FAILED(Draw_WhiteBlack_Mode()))
+		return E_FAIL;
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
@@ -1996,6 +1997,50 @@ HRESULT CRenderer::Draw_MapBloom()
 
 	m_pGlowShader->Begin(13);
 
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Draw_WhiteBlack_Mode()
+{
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
+	//	return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	/* 나온 결과를 바로 백버퍼에 덮어씀 */
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(2);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
