@@ -57,7 +57,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 	CharacterDesc.iTeam = 2;
@@ -472,6 +472,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma region 21_Sound
 
+#pragma region 21_Voice
+
 	//약공
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_21_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Light_Attack_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_21_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -494,10 +496,22 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//추적
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/ChaseDash.ogg", CSound_Manager::SOUND_KEY_NAME::Chase_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+#pragma endregion
+
+#pragma region 21_SFX
+
 	//그랩_SFX_0
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Grab_0.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_0_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//그랩_SFX_1
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Grab_1.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_1_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//J 기탄
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+#pragma endregion
+
+
+
+
 #pragma endregion
 
 #pragma region Hit Sound
@@ -566,6 +580,25 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma region Hit_SFX
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Light_Attack_0_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_J_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_J_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 아래 앞 약공격 + 약공격 + 중공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Down_Forward_Light_Light_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 아래 앞 약공격 + 강공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Down_Forward_Light_Heavy_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Heavy_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 아래 뒤 약공격 기모으다 유리 깨질 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Down_Backward_Light_Cancle_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Backward_Light_Cancle_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//1필 스타트, 3필 스타트
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1_Start, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//1필 공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ultimate_1_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1_Attack, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 연타 공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ultimate_3_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_Attack, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
 
 #pragma endregion
 

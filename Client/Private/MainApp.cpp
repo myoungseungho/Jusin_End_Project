@@ -135,6 +135,7 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 #pragma endregion
 
 #pragma region VIBuffer
+
 	/* For.Prototype_Component_VIBuffer_Rect */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Rect"),
 		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))
@@ -149,6 +150,7 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Trail"),
 		CVIBuffer_Trail_Rect::Create(m_pDevice, m_pContext, 50, 0.25f))))
 		return E_FAIL;
+
 #pragma endregion
 
 	return S_OK;
