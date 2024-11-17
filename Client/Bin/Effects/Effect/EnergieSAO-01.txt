@@ -1,13 +1,13 @@
 [Layer]
 LayerName: EnergieSAO-01
-Duration: 2
+Duration: 8
 TickPerSecond: 1
-KeyFramesCount: 119
+KeyFramesCount: 479
 NumEffec: 11
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: EnergieSAO-01_01
@@ -19,8 +19,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 1 0
-Scale: 0.00299836 0.0499783 0.0499847
-Rotation: 0 700 90
+Scale: 0.0199971 0.00699888 0.007
+Rotation: 30 0 90
 IsLoop: false
 Color: 255 255 255 0.795364
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -56,8 +56,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0.55 0
-Scale: 0.00199926 0.0199909 0.0199887
-Rotation: 0 500 90
+Scale: 0.00999881 0.00399962 0.004
+Rotation: 30 0 90
 IsLoop: false
 Color: 255 255 255 0.588743
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -93,8 +93,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 1.3 0
-Scale: 0.00199824 0.0199823 0.0199893
-Rotation: 0 400 90
+Scale: 0.00999882 0.00399962 0.004
+Rotation: 30 0 90
 IsLoop: false
 Color: 255 255 255 0.588743
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -130,14 +130,14 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 0 0
-Scale: 0.0199993 0.0299992 0.0299982
-Rotation: 0 300 270
+Scale: 0.0149997 0.0149998 0.015
+Rotation: 0 0 270
 IsLoop: false
 Color: 255 135.944 0 29.5033
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -151,11 +151,20 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 118
 Position: 0 0 0
-Scale: 0.0199994 0.0299992 0.0299982
+Scale: 0.0199987 0.0299992 0.0299982
 Rotation: 0 300 270
 CurTime: 1.96667
 Duration: 2
-IsNotPlaying: true
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 478
+Position: 0 0 0
+Scale: 0.019998 0.029999 0.029998
+Rotation: 0 1200 270
+CurTime: 7.96667
+Duration: 8
+IsNotPlaying: false
 
 [Effect]
 EffectName: EnergieSAO-01_05
@@ -167,14 +176,14 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 0 0
-Scale: 0.00999863 0.0199991 0.0199996
-Rotation: 0 400 270
+Scale: 0.00999952 0.0199992 0.02
+Rotation: 0 0 270
 IsLoop: false
 Color: 181.54 117.368 68.394 30
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -188,11 +197,20 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 118
 Position: 0 0 0
-Scale: 0.00999874 0.0199991 0.0199996
+Scale: 0.00999865 0.0199991 0.0199996
 Rotation: 0 400 270
 CurTime: 1.96667
 Duration: 2
-IsNotPlaying: true
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 478
+Position: 0 0 0
+Scale: 0.00999823 0.0199989 0.0199993
+Rotation: 0 1600 270
+CurTime: 7.96667
+Duration: 8
+IsNotPlaying: false
 
 [Effect]
 EffectName: EnergieSAO-01_06

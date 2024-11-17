@@ -24,6 +24,7 @@ public:
 public: /* For.Graphic_Device */
 	HRESULT Clear_BackBuffer_View(_float4 vClearColor);
 	HRESULT Clear_DepthStencil_View();
+	ID3D11ShaderResourceView* Get_BackBufferShaderResourceView();
 	HRESULT Present();
 
 public: /* For.Input_Device */

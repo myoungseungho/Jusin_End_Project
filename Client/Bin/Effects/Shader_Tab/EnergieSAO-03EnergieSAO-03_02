@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 48
+Key: Prototype_Component_Texture_Effect_cmn_thunder02
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 515 76
+NodeID: 1 Position: 244 60
+NodeID: 3001 Position: 0 0
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 2 2 Speed: 18.3
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7

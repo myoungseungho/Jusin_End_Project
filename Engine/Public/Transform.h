@@ -152,6 +152,7 @@ public:
 	void Rotation(_fvector vAxis, _float fRadian);
 	void Rotation(_float3 vRotation);
 	void LookAt(_fvector vAt);
+	void LookAtY(_fvector vAt);
 	void Rotate(_float3 ChangeRotation);
 
 	void Set_WorldMatrix(_float4x4 WorldMatrix) { m_WorldMatrix = WorldMatrix; }

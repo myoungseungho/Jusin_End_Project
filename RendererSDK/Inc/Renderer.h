@@ -10,6 +10,7 @@ BEGIN(Engine)
 class CGameObject;
 class CShader;
 class CVIBuffer_Rect;
+class CTransform;
 class CGameInstance;
 class CComponent;
 END
@@ -21,9 +22,12 @@ class CRenderer final : public CBase
 public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 
-	enum RENDERGROUP { RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP,RG_MAP,
-		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT, 
-		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND ,RG_UI , RG_UI_GLOW, RG_MULTY_GLOW, RG_NODE, RG_END };
+	enum RENDERGROUP {
+		RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP, RG_MAP,
+		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT,
+		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND, RG_UI, RG_UI_GLOW, RG_MULTY_GLOW,
+		RG_CUTSCENE_PRI_EFFECT, RG_CUTSCENE_OBJECT, RG_CUTSCENE_LATE_EFFECT, RG_NODE, RG_END
+	};
 
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -79,6 +83,26 @@ private:
 
 	_uint m_iEffectRenderCount = { 0 };
 	_uint m_iEffectGlowPri_RenderCount = { 0 };
+
+private: /* For.BlackOut Variable */
+	_bool m_isStartBlackOut = { false };
+	_float m_fAccBlackTime = { 0.f };
+	const _float m_fBlackTime = { 0.8f };
+
+public: /* For.Distortion Function*/
+
+	HRESULT Render_Distortion(_float fTimeDelta);
+
+	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
+	void Create_HitDistortion(_float4 vPlayerPos, _float3 vDir = { 1,0,0 }, _float2 vOffSetPos = { 0.f,0.f }, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = 0.1f);
+private: /* For.Distortion Variable */
+	vector<DISTORTION_DESC>		m_Distortions;
+	class CTransform*			m_pDistortionTransformCom = { nullptr };
+	class CTexture*				m_pDistortionTextureCom = { nullptr };
+	class CShader*				m_pDistortionShaderCom = { nullptr };
+
+	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
+	_float m_fAccTime = { 0.f };
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -104,19 +128,24 @@ private:
 	HRESULT Render_Glow_UI(_float fTimeDelta);
 	HRESULT Render_MultyGlow_UI(_float fTimeDelta);
 	HRESULT Render_AllGlow_Effect(_float fTimeDelta);
+	HRESULT Render_CutScene_Pri_Effect(_float fTimeDelta);
+	HRESULT Render_CutScene_Object(_float fTimeDelta);
+	HRESULT Render_CutScene_Late_Effect(_float fTimeDelta);
 	HRESULT Render_Node(_float fTimeDelta);
-
 
 	HRESULT Initialize_RenderTarget();
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
 
+	HRESULT Draw_MapBlackOut(_float fTimeDelta);
 	HRESULT Draw_OutLine_Effect();
 	HRESULT Draw_AllGlow_Effect(_int isPri);
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 	HRESULT Draw_MapBloom();
 
+public:
+	void Switch_BlackOut(_bool isTrue);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

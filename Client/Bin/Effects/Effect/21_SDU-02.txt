@@ -1,0 +1,169 @@
+[Layer]
+LayerName: 21_SDU-02
+Duration: 1
+TickPerSecond: 3
+KeyFramesCount: 59
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 10 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_SDU-02_01
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDU-0221_SDU-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.001 0.003 0.003
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.001 0.003 0.003
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDU-02_02
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDU-0221_SDU-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.05 0 0
+Scale: 0.001 0.00249999 0.00249999
+Rotation: 130 0 0
+IsLoop: false
+Color: 255 34.6192 49.8179 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.05 0 0
+Scale: 0.001 0.00249999 0.00249999
+Rotation: 130 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDU-02_03
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDU-0221_SDU-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.05 0 0
+Scale: 0.001 0.0025 0.0025
+Rotation: 130 0 0
+IsLoop: false
+Color: 205.182 0 65.0166 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.05 0 0
+Scale: 0.001 0.0025 0.0025
+Rotation: 130 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDU-02_04
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDU-0221_SDU-02_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.15 0 0
+Scale: 0.0005 0.005 0.005
+Rotation: 0 0 0
+IsLoop: false
+Color: 100 100 100 0.476823
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: -4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.15 0 0
+Scale: 0.0005 0.005 0.005
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 31
+Position: 0.15 0 0
+Scale: 0.0005 0.005 0.005
+Rotation: 400 0 0
+CurTime: 0.516667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDU-02_05
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDU-0221_SDU-02_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.25 0 0
+Scale: 0.0003 0.003 0.003
+Rotation: 0 0 0
+IsLoop: false
+Color: 100 100 100 0.390066
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: -4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.25 0 0
+Scale: 0.0003 0.003 0.003
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0.25 0 0
+Scale: 0.0003 0.003 0.003
+Rotation: 300 0 0
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: true
+

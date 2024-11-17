@@ -334,7 +334,7 @@ PLAY_21,TON050_body,0.0010,PlayGroupSound,203,0,1
 PLAY_21,TON050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,숙이는 피격모션
-PLAY_21,TON051_body,0.000000,AnimSpeedChange,0.064000,5
+PLAY_21,TON051_body,0.000000,AnimSpeedChange,0.064000,50
 PLAY_21,TON051_body,0.0010,PlayGroupSound,203,0,1
 PLAY_21,TON051_body,0,FrameMove,15
 

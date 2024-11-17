@@ -10,7 +10,7 @@
 #include "Effect_Manager.h"
 
 #include "AttackObject.h"
-
+#include "Effect.h"
 
 #include "BattleInterface.h"
 //vector<CInput> Command_236Attack =
@@ -699,9 +699,75 @@ void CGoku_MeleeAttack::Attack_214Final()
 		if(CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
 		{
 			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+//			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+			/*tDesc.pPlayertMatrix = m_pPlayer->Character_Make_BoneEffect()
+			tDesc.pTransformCom = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);*/
+			CEffect_Layer* pEffectLayer = m_pPlayer->Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
 
-			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);
+			//레이어 안에 이펙트 껐다 켰다
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_01")->m_bIsSpriteEnd = true;
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_02")->m_bIsSpriteEnd = true;
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_03")->m_bIsSpriteEnd = true;
+			
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
+			m_pPlayer->Set_AnimationStopWithoutMe(2.f);
+
+			//이전에 만들어진 모든 Attack Object들 2초간 정지.  이거 본인은 이 직후에 만들어질테니 괜찮음
+			for (auto pAttackObject : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_AttackObject")))
+			{
+				static_cast<CAttackObject*>(pAttackObject)->Set_UpdateStop(2.f);
+			}
+
+			m_pPlayer->Set_bFinalSkillQTE(false);
+		}
+	}
+
+	//이거 빗맞음
+	//else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY))
+	//{
+	//	if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
+	//	{
+	//		CEffect_Layer::COPY_DESC tDesc{};
+	//		//			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+	//					/*tDesc.pPlayertMatrix = m_pPlayer->Character_Make_BoneEffect()
+	//					tDesc.pTransformCom = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+	//					m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);*/
+	//		CEffect_Layer* pEffectLayer = m_pPlayer->Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
+	//
+	//		//레이어 안에 이펙트 껐다 켰다
+	//		//pEffectLayer->Find_Effect(L"EnergieSAO-01_01")->m_bIsSpriteEnd = true;
+	//		//pEffectLayer->Find_Effect(L"EnergieSAO-01_02")->m_bIsSpriteEnd = true;
+	//		//pEffectLayer->Find_Effect(L"EnergieSAO-01_03")->m_bIsSpriteEnd = true;
+	//
+	//		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
+	//		m_pPlayer->Set_AnimationStopWithoutMe(2.f);
+	//
+	//		//이전에 만들어진 모든 Attack Object들 2초간 정지.  이거 본인은 이 직후에 만들어질테니 괜찮음
+	//		for (auto pAttackObject : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_AttackObject")))
+	//		{
+	//			static_cast<CAttackObject*>(pAttackObject)->Set_UpdateStop(2.f);
+	//		}
+	//
+	//		m_pPlayer->Set_bFinalSkillQTE(false);
+	//	}
+	//}
+
+	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_236))
+	{
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
+		{
+			CEffect_Layer::COPY_DESC tDesc{};
+			//			tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();//m_pTransformCom->Get_WorldMatrixPtr();
+						/*tDesc.pPlayertMatrix = m_pPlayer->Character_Make_BoneEffect()
+						tDesc.pTransformCom = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
+						m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);*/
+			CEffect_Layer* pEffectLayer = m_pPlayer->Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
+
+			//레이어 안에 이펙트 껐다 켰다
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_01")->m_bIsSpriteEnd = true;
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_02")->m_bIsSpriteEnd = true;
+			//pEffectLayer->Find_Effect(L"EnergieSAO-01_03")->m_bIsSpriteEnd = true;
 
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FINAL_START);
 			m_pPlayer->Set_AnimationStopWithoutMe(2.f);
@@ -899,6 +965,23 @@ void CGoku_MeleeAttack::ForwardDash()
 		m_pEffect_Manager->Copy_Layer(TEXT("Dash"), &tDesc);
 	}
 
+	else if (m_pPlayer->Get_bSparking() && m_pPlayer->Get_bAirDashEnable() && m_pPlayer->Get_bAttackBackEvent() && *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_214)
+	{
+		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_FORWARD_DASH);
+		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (10.f));
+		m_pPlayer->Set_bAirDashEnable(false);
+		//m_pPlayer->Set_ForcedGravityDown();
+
+		m_pPlayer->Set_ForcedGravityTime_LittleUp();
+
+		//m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//m_pPlayer->Character_Make_Effect(TEXT("Ring_Dust_Right"), { 0.9f,0.f });
+
+		CEffect_Layer::COPY_DESC tDesc{};
+		tDesc.pPlayertMatrix = m_pPlayer->Get_pTransformMatrix();
+
+		m_pEffect_Manager->Copy_Layer(TEXT("Dash"), &tDesc);
+	}
 
 
 }

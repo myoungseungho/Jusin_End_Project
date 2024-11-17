@@ -1,0 +1,48 @@
+[Layer]
+LayerName: Volcano_Wind_Left
+Duration: 12.6
+TickPerSecond: 3
+KeyFramesCount: 1799
+NumEffec: 1
+Position: -150 30 -5
+Scale: 1 1 1
+Rotation: -10 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Kick_Wind02
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Volcano_WindKick_Wind02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 15 0
+Scale: 0.999853 0.999866 1
+Rotation: 0 0 100
+IsLoop: false
+Color: 130 66 70 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0999997 0.0999997 0.1
+Rotation: 0 0 100
+CurTime: 0
+Duration: 12.6
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 132
+Position: 0 15 0
+Scale: 0.999913 0.999927 1
+Rotation: 0 0 100
+CurTime: 2.2
+Duration: 12.6
+IsNotPlaying: false
+

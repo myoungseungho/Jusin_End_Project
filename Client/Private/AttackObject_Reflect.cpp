@@ -132,7 +132,7 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 		m_pOwner->Set_ReflectAttackBackEvent(true);
 
 
-		
+		m_pOwner->Gain_KiAmount(15);
 		
 		pAttackObject->Set_RemoteDestory();
 		pCharacter->Set_bBeReflecting(1);
@@ -143,6 +143,8 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 	{
 		m_pOwner->Set_ReflectAttackBackEvent(true);
 		//¾øÀ½
+
+		m_pOwner->Gain_KiAmount(10);
 
 		//CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
 		//pAttackObject->Set_RemoteDestory();

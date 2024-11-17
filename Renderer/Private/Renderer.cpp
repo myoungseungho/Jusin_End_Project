@@ -1,3 +1,6 @@
+#include <random>
+#include <vector>
+
 #include "Renderer.h"
 #include "GameObject.h"
 #include "RenderInstance.h"
@@ -6,6 +9,7 @@
 #include "GameInstance.h"
 #include "Component.h"
 #include "Light_Manager.h"
+#include "Transform.h"
 _uint		g_iSizeX = 8192;
 _uint		g_iSizeY = 4608;
 
@@ -58,6 +62,14 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pUI_GlowShader)
 		return E_FAIL;
 
+	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
+	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 4);
+	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
+	if (nullptr == m_pDistortionTextureCom || nullptr == m_pDistortionTransformCom || nullptr == m_pDistortionShaderCom)
+		return E_FAIL;
+	m_pBackBufferSRV = m_pGameInstance->Get_BackBufferShaderResourceView();
+	Safe_AddRef(m_pBackBufferSRV);
+
 	ID3D11Texture2D* pDepthStencilTexture = nullptr;
 
 	D3D11_TEXTURE2D_DESC	TextureDesc;
@@ -99,11 +111,15 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomAlpha"), 600.f, 100.f, 200.0f, 200.0f)))
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Distortion"), 600.f, 100.f, 200.0f, 200.0f)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomDiffuse"), 350.f, 150.f, 300.f, 300.f)))
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_ResultDistortion_BackBuffer"), 350.f, 150.f, 300.f, 300.f)))
 		return E_FAIL;
-	
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomAlpha"), 600.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomDiffuse"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL;
+
 	//if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowDiffuse"))))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse"), TEXT("Target_AllGlowAlpha"))))
@@ -191,6 +207,8 @@ HRESULT CRenderer::Add_DebugComponent(CComponent* pDebugComponent)
 
 HRESULT CRenderer::Draw(_float fTimeDelta)
 {
+	if (FAILED(Render_Node(fTimeDelta)))
+		return E_FAIL;
 	/*-----------------디버깅용------------------*/
 	if (FAILED(Render_NonBlend_Test(fTimeDelta)))
 		return E_FAIL;
@@ -222,8 +240,15 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
+
+	/* 맵을 어둡게 할려고 여기 호출하지만 캐릭터는*/
+	if (FAILED(Draw_MapBlackOut(fTimeDelta)))
+		return E_FAIL;
+
+	/* 여기서 그리고 있음 이펙트를 위한 행동 하지만 위에서 블러를 먹인 그림을 가지고만 있고 그리진 않아서 영향이 안가짐 */
 	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
 		return E_FAIL;
+
 	if (FAILED(Render_NonLight_Effect(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_AllGlow_Effect_Pri(fTimeDelta)))
@@ -231,6 +256,9 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
+		return E_FAIL;
+	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
+	if (FAILED(Render_Distortion(fTimeDelta)))
 		return E_FAIL;
 
 	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
@@ -243,16 +271,74 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_AllGlow_Effect(fTimeDelta)))
 		return E_FAIL;
 
-	if (FAILED(Render_Node(fTimeDelta)))
+	if (FAILED(Render_CutScene_Pri_Effect(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_CutScene_Object(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Render_CutScene_Late_Effect(fTimeDelta)))
+		return E_FAIL;
+
+
+
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
 		return E_FAIL;
 #endif
-
-
 	return S_OK;
+}
+
+void CRenderer::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
+{
+	m_Distortions.push_back(tDistortionDesc);
+}
+
+void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<_float> offsetDist(0.04f, 0.08f);
+	uniform_real_distribution<_float> scaleDist(0.8f, 1.2f);   
+	uniform_real_distribution<_float> factorDist(0.8f, 1.2f);
+	_float yOffset = 1.55f;	
+	_float yDecrement = 0.2f;
+	_float xStep = 0.12f;	
+
+	for (_int i = 0; i < 8; ++i)
+	{
+		DISTORTION_DESC tDistortionDesc{};
+		_float4 vStrainPos = vPlayerPos;
+
+		_float xDirection = (i % 2 == 0) ? 1.0f : -1.0f;
+		//tDistortionDesc.vDir = _float3(vDir.x * xDirection, vDir.y, vDir.z);
+		vStrainPos.x += xDirection * xStep;
+		vStrainPos.y += yOffset - offsetDist(gen);
+
+		tDistortionDesc.vPosition = {
+			vStrainPos.x + vOffSetPos.x + offsetDist(gen),
+			vStrainPos.y + vOffSetPos.y /*+ offsetDist(gen)*/,
+			vStrainPos.z,
+			1.0f
+		};
+
+		float scaleModifier = scaleDist(gen);
+		tDistortionDesc.vScale = {
+			2.0f * vOffSetScale.x * scaleModifier,
+			0.47f * vOffSetScale.y * scaleModifier
+		};
+
+		tDistortionDesc.fLifeTime = fLifeTime;
+		tDistortionDesc.fMaxTime = fLifeTime;
+		tDistortionDesc.fFactor = factorDist(gen);
+		tDistortionDesc.vDir = vDir;
+
+		m_Distortions.push_back(tDistortionDesc);
+
+		yOffset -= yDecrement;
+
+		xStep += 0.02f;
+	}
+
 }
 
 HRESULT CRenderer::Render_Priority(_float fTimeDelta)
@@ -1019,7 +1105,7 @@ HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
 	m_pGlowShader->Begin(9);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
+	
 	return S_OK;
 }
 
@@ -1134,11 +1220,6 @@ HRESULT CRenderer::Render_Glow_UI(_float fTimeDelta)
 	m_GlowDescs[GLOW_UI].clear();
 	m_RenderObjects[RG_UI_GLOW].clear();
 
-
-
-
-
-
 	return S_OK;
 }
 
@@ -1187,6 +1268,57 @@ HRESULT CRenderer::Render_AllGlow_Effect(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_CutScene_Pri_Effect(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_PRI_EFFECT])
+	{
+		if (nullptr != pRenderObject)
+		{
+			pRenderObject->Priority_Render(fTimeDelta);
+			pRenderObject->Render(fTimeDelta);
+		}
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_CUTSCENE_PRI_EFFECT].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_CutScene_Object(_float fTimeDelta)
+{
+	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_OBJECT])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_CUTSCENE_OBJECT].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_CutScene_Late_Effect(_float fTimeDelta)
+{
+	
+	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_LATE_EFFECT])
+	{
+		if (nullptr != pRenderObject)
+		{
+			pRenderObject->Priority_Render(fTimeDelta);
+			pRenderObject->Render(fTimeDelta);
+		}
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_CUTSCENE_LATE_EFFECT].clear();
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_Node(_float fTimeDelta)
 {
 	for (auto& pRenderObject : m_RenderObjects[RG_NODE])
@@ -1202,144 +1334,109 @@ HRESULT CRenderer::Render_Node(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderer::Initialize_RenderTarget()
+HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 {
-	D3D11_VIEWPORT			ViewportDesc{};
-	_uint					iNumViewport = { 1 };
-	m_pContext->RSGetViewports(&iNumViewport, &ViewportDesc);
+	if (NULL == m_Distortions.size())
+		return S_OK;
 
-#pragma region Light_Object
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Diffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
+	m_fAccTime += fTimeDelta;
+
+	/* 벡터를 순회하면서 현재 기록된 위치에 디스토션 마스크를 한 렌더타겟에 한번에 그림 */
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Diffuse"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Normal"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Depth"))))
-		return E_FAIL;
-#pragma endregion
 
-#pragma region Player
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Diffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+	_float4x4 viewMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW);
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &viewMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Normal"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Depth"))))
-		return E_FAIL;
-#pragma endregion
-
-#pragma region EffectPicking
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PickDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_EffectToolPick"), TEXT("Target_PickDepth"))))
-		return E_FAIL;
-#pragma endregion
-
-#pragma region Light
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Shade"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Specular"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_LightAcc"), TEXT("Target_Shade"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_LightAcc"), TEXT("Target_Specular"))))
-		return E_FAIL;
-#pragma endregion
-
-#pragma region Glow
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_GlowDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_GlowAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowDiffuse"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowAlpha"))))
+	_float4x4 projMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ);
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &projMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDiffuse"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomAlpha"))))
+	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 1)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget_Second"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Down"), TEXT("Target_DownTarget"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_DownSecond"), TEXT("Target_DownTarget_Second"))))
-		return E_FAIL;
-#pragma endregion
-
-#pragma region Glow_Blur
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Blur_X"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Blur_Y"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_X"), TEXT("Target_Blur_X"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_Y"), TEXT("Target_Blur_Y"))))
-		return E_FAIL;
-	/* 업샘플링 임시 */
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UpTarget_Second"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UpSecond"), TEXT("Target_UpTarget_Second"))))
-		return E_FAIL;
-#pragma endregion
-
-#pragma region PlayerBlur
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PlayerDefferd"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_PlayerDefferd"), TEXT("Target_PlayerDefferd"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Blur_X"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Blur_Y"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_X"), TEXT("Target_Player_Blur_X"))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_Y"), TEXT("Target_Player_Blur_Y"))))
-		return E_FAIL;
-#pragma endregion
-
-	/* 그림자 임시 */
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), g_iSizeX, g_iSizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_ShadowObjects"), TEXT("Target_LightDepth"))))
-		return E_FAIL;
-
-#pragma region All_EffectGlow
-	for (size_t i = 0; i < 10; i++)
+	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
 	{
-		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowDiffuse_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		iter->fLifeTime -= fTimeDelta;
+
+		if (iter->fLifeTime <= 0)
+		{
+			iter = m_Distortions.erase(iter);
+			continue;
+		}
+
+		m_pDistortionTransformCom->Set_Scaled(iter->vScale.x, iter->vScale.y, 1.f);
+		m_pDistortionTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians((iter->vDir.x == 1.f ? 0 : 180)));
+		m_pDistortionTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&iter->vPosition));
+
+		if (FAILED(m_pDistortionTransformCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowAlpha_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse_") + to_wstring(i), TEXT("Target_AllGlowDiffuse_") + to_wstring(i))))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse_") + to_wstring(i), TEXT("Target_AllGlowAlpha_") + to_wstring(i))))
-			return E_FAIL;
+
+		m_pDistortionShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(_float));
+		m_pDistortionShaderCom->Bind_RawValue("fLifeTime", &iter->fLifeTime, sizeof(_float));
+		m_pDistortionShaderCom->Bind_RawValue("fLifeMaxTime", &iter->fMaxTime, sizeof(_float));
+		m_pDistortionShaderCom->Bind_RawValue("g_vDir", &iter->vDir, sizeof(_float3));
+		m_pDistortionShaderCom->Bind_RawValue("g_Factor", &iter->fFactor, sizeof(_float));
+
+		m_pDistortionShaderCom->Begin(0);
+		m_pVIBuffer->Bind_Buffers();
+		m_pVIBuffer->Render();
+
+		++iter;
 	}
 
-#pragma endregion
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	/* 백버퍼 쉐이더리소스뷰를 바로 렌더타겟으로 있는 상태에선 불가능함
+	   그래서 임의의 다른 렌더타겟의 백버퍼와 여러 디스토션을 그린 렌더타겟을 이용해서 효과를 줌 */
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+	
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
+		return E_FAIL;
+
+	
+
+	m_pDistortionShaderCom->Begin(1);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	/* 나온 결과를 바로 백버퍼에 덮어씀 */
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(2);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
 	return S_OK;
 }
+
 
 #ifdef _DEBUG
 
@@ -1368,9 +1465,18 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Distortion"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ResultDistortion_BackBuffer"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
 
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
+
+		/*
+		MRT_Distortion
+		MRT_ResultDistortion_BackBuffer
+		*/
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_X"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
@@ -1420,6 +1526,54 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 }
 #endif // _DEBUG
+
+HRESULT CRenderer::Draw_MapBlackOut(_float fTimeDelta)
+{
+	if (m_fAccBlackTime == 0.f && m_isStartBlackOut == false)
+		return S_OK;
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_BlackOut"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if(m_isStartBlackOut == true)
+		m_fAccBlackTime += fTimeDelta;
+	else
+		m_fAccBlackTime -= fTimeDelta;
+
+	if (m_fAccBlackTime >= m_fBlackTime)
+		m_fAccBlackTime = m_fBlackTime;
+	else if (m_fAccBlackTime <= 0)
+		m_fAccBlackTime = 0.f;
+
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+	/*
+	_bool m_isStartBlackOut = { false };
+	_float m_fAccBlackTime = { 0.f };
+	const _float m_fBlackTime = { 1.f };
+	*/
+	
+	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &m_isStartBlackOut, sizeof(_bool))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_RawValue("g_fAccBlackTime", &m_fAccBlackTime, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_Texture", TEXT("Target_BlackOut"))))
+		return E_FAIL;
+
+	m_pShader->Begin(8);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+	
+
+	return S_OK;
+}
 
 HRESULT CRenderer::Draw_OutLine_Effect()
 {
@@ -1848,6 +2002,175 @@ HRESULT CRenderer::Draw_MapBloom()
 	return S_OK;
 }
 
+HRESULT CRenderer::Initialize_RenderTarget()
+{
+	D3D11_VIEWPORT			ViewportDesc{};
+	_uint					iNumViewport = { 1 };
+	m_pContext->RSGetViewports(&iNumViewport, &ViewportDesc);
+
+#pragma region Light_Object
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Diffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Normal"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Depth"))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region Player
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Diffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Normal"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Normal"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Depth"))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region EffectPicking
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PickDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, -1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_EffectToolPick"), TEXT("Target_PickDepth"))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region Light
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Shade"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Specular"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_LightAcc"), TEXT("Target_Shade"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_LightAcc"), TEXT("Target_Specular"))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region Glow
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_GlowDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_GlowAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowDiffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_GlowDiffuse"), TEXT("Target_GlowAlpha"))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomDiffuse"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDiffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomAlpha"))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget_Second"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Down"), TEXT("Target_DownTarget"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_DownSecond"), TEXT("Target_DownTarget_Second"))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region Glow_Blur
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Blur_X"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Blur_Y"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_X"), TEXT("Target_Blur_X"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Blur_Y"), TEXT("Target_Blur_Y"))))
+		return E_FAIL;
+	/* 업샘플링 임시 */
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_UpTarget_Second"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_UpSecond"), TEXT("Target_UpTarget_Second"))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region PlayerBlur
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_PlayerDefferd"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_PlayerDefferd"), TEXT("Target_PlayerDefferd"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Blur_X"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Blur_Y"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_X"), TEXT("Target_Player_Blur_X"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_Y"), TEXT("Target_Player_Blur_Y"))))
+		return E_FAIL;
+#pragma endregion
+
+	/* 그림자 임시 */
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), g_iSizeX, g_iSizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_ShadowObjects"), TEXT("Target_LightDepth"))))
+		return E_FAIL;
+
+#pragma region All_EffectGlow
+	for (size_t i = 0; i < 10; i++)
+	{
+		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowDiffuse_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllGlowAlpha_") + to_wstring(i), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse_") + to_wstring(i), TEXT("Target_AllGlowDiffuse_") + to_wstring(i))))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllGlowDiffuse_") + to_wstring(i), TEXT("Target_AllGlowAlpha_") + to_wstring(i))))
+			return E_FAIL;
+	}
+#pragma endregion
+
+#pragma region BlackOut
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_BlackOut"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.5f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BlackOut"), TEXT("Target_BlackOut"))))
+		return E_FAIL;
+
+#pragma endregion	
+
+#pragma region Distortion
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Distortion"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Distortion"), TEXT("Target_Distortion"))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_ResultDistortion_BackBuffer"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_ResultDistortion_BackBuffer"), TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+#pragma endregion	
+
+	return S_OK;
+}
+
+void CRenderer::Switch_BlackOut(_bool isTrue)
+{
+	m_isStartBlackOut = isTrue;
+	//m_fAccBlackTime += 0.01f;
+}
+
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CRenderer* pInstance = new CRenderer(pDevice, pContext);
@@ -1878,7 +2201,12 @@ void CRenderer::Free()
 
 	for (auto& pComponent : m_DebugComponent)
 		Safe_Release(pComponent);
+	
 
+	Safe_Release(m_pDistortionTransformCom);
+	Safe_Release(m_pDistortionTextureCom);
+	Safe_Release(m_pDistortionShaderCom);
+	Safe_Release(m_pBackBufferSRV);
 	Safe_Release(m_pShadowDSV);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);

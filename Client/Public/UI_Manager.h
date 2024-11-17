@@ -97,6 +97,9 @@ public:
 public:
 	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
+	//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
+	_bool m_bActive = { FALSE };
+
 	//Anim
 	_float m_fTotalDuration = { 0.f };
 

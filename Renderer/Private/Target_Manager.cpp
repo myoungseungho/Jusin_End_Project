@@ -168,7 +168,7 @@ HRESULT CTarget_Manager::Begin_MRT(const _wstring & strMRTTag, ID3D11DepthStenci
 		return E_FAIL;
 	
 	m_pContext->OMGetRenderTargets(1, &m_pOldRTV, &m_pOldDSV);
-
+	
 	_uint		iNumRTV = { 0 };
 
 	ID3D11RenderTargetView*		RenderTargets[8] = { nullptr };

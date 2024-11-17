@@ -155,6 +155,26 @@ void CTransform::LookAt(_fvector vAt)
 
 }
 
+void CTransform::LookAtY(_fvector vAt)
+{
+	_vector vPosition = Get_State(STATE_POSITION);
+
+	_vector vLook = vAt - vPosition;
+	vLook = XMVectorSetY(vLook, 0.0f);
+	vLook = XMVector3Normalize(vLook);
+
+	_vector vRight = XMVector3Cross(XMVectorSet(0.f, 1.f, 0.f, 0.f), vLook);
+	vRight = XMVector3Normalize(vRight);
+
+	_vector vUp = XMVector3Cross(vLook, vRight);
+
+	_float3 vScaled = Get_Scaled();
+
+	Set_State(STATE_RIGHT, vRight * vScaled.x);
+	Set_State(STATE_UP, vUp * vScaled.y);
+	Set_State(STATE_LOOK, vLook * vScaled.z);
+}
+
 void CTransform::Rotate(_float3 ChangeRotation)
 {
 	m_fCurrentRotation = ChangeRotation;

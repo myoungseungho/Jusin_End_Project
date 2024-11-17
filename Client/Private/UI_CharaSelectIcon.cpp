@@ -132,8 +132,8 @@ void CUI_CharaSelectIcon::SelectIcon(_float fPosX, _float fPosY)
 			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f , ArrowToPlayerID(CUI_Define::ANDROID21), InputEvent(DIK_RETURN, CUI_Define::ANDROID21) : m_fPosY = 620.f;
 			break;
 
-		case CUI_Define::BUU:
-			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::BUU), InputEvent(DIK_RETURN, CUI_Define::BUU) : m_fPosY = 620.f;
+		case CUI_Define::FRIEZA:
+			ClickRange(fPosX, fPosY) ? m_fPosY = 600.f, ArrowToPlayerID(CUI_Define::FRIEZA), InputEvent(DIK_RETURN, CUI_Define::FRIEZA) : m_fPosY = 620.f;
 			break;
 
 		case CUI_Define::HIT:
@@ -271,8 +271,8 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_21, false, 1.f);
 
 		break;
-	case Client::CUI_Define::BUU:
-		ePlayerIDInfo = CUI_Define::BUU;
+	case Client::CUI_Define::FRIEZA:
+		ePlayerIDInfo = CUI_Define::FRIEZA;
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_BUU, false, 1.f);
 
 		break;

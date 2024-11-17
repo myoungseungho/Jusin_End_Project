@@ -95,20 +95,29 @@ PS_OUT PS_QTE_UI_GAUGE(PS_IN In)
 {
     PS_OUT Out;
 
-    // 텍스처 샘플링
-    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
-    
-    float ratio = g_Time / g_MaxTime;
+    // UV 좌표 가져오기
+    float2 uv = In.vTexcoord.xy;
 
-    if (In.vTexcoord.x > (1.0 - ratio))
-    {
-        discard;
-    }
-    
-    // 알파값이 낮은 픽셀은 버림
+    // ratio를 g_Time / g_MaxTime으로 계산하고 클램프 (0.0 ~ 1.0)
+    float ratio = saturate(g_Time / g_MaxTime);
+
+    // 마스크 생성: uv.x <= (1.0 - ratio)인 경우 1, 그렇지 않으면 0
+    float mask = (uv.x <= (1.0f - ratio)) ? 1.0f : 0.0f;
+
+    // Second_Texture 샘플링 (채워진 부분)
+    float4 secondColor = g_NextTexture.Sample(LinearSampler, uv);
+
+    // First_Texture 샘플링 (배경)
+    float4 firstColor = g_Texture.Sample(LinearSampler, uv);
+
+    // 마스크를 이용해 두 텍스처를 구분하여 합성
+    // mask가 1인 영역은 secondColor, 0인 영역은 firstColor
+    Out.vColor = mask * secondColor + (1.0f - mask) * firstColor;
+
+    // 알파값이 낮은 픽셀은 버림 (필요 시)
     if (Out.vColor.a <= 0.1f)
         discard;
-    
+
     return Out;
 }
 
@@ -227,6 +236,7 @@ PS_OUT PS_QTE_Hit_Effect(PS_IN In)
     return Out;
 }
 
+
 technique11 DefaultTechnique
 {
 	/* PASS의 기준 : 셰이더 기법의 캡슐화. */
@@ -246,7 +256,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN();
     }
 
-//23 -> 1
+//1
     pass QTE_UI
     {
         SetRasterizerState(RS_Cull_None);
@@ -260,7 +270,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_QTE_UI();
     }
 
-//24 -> 2
+//2
     pass QTE_UI_GAUGE
     {
         SetRasterizerState(RS_Cull_None);
@@ -274,7 +284,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_QTE_UI_GAUGE();
     }
 
-//25 -> 3
+//3
     pass QTE_Hit_UI
     {
         SetRasterizerState(RS_Cull_None);
@@ -288,7 +298,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_QTE_Hit_UI();
     }
 
-//26 - > 4
+//4
     pass QTE_CONTINUOUS_GAUGE
     {
         SetRasterizerState(RS_Cull_None);
@@ -303,7 +313,7 @@ technique11 DefaultTechnique
     }
 
 
-//27 -> 5
+//5
     pass QTE_HIT_EFFECT
     {
         SetRasterizerState(RS_Cull_None);
@@ -316,6 +326,4 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_QTE_Hit_Effect();
     }
-
-
 }

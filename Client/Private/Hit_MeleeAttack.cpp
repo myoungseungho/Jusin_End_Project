@@ -263,7 +263,7 @@ void CHit_MeleeAttack::Attack_Heavy()
 		else if ((CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) != 0))
 		{
 			CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam());
-			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_pPlayer->Get_iPlayerTeam());
+			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(25, m_pPlayer->Get_iPlayerTeam());
 			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_HEAVY);
 
 		}
@@ -452,7 +452,8 @@ void CHit_MeleeAttack::Attack_236Ultimate()
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY ||
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_SPECIAL ||
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_POSE_HEAVY ||
-		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_RIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_RIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_236_SPECIAL_DOWN ||
+		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_SPECIAL
 		))
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
@@ -662,7 +663,7 @@ void CHit_MeleeAttack::ForwardDash()
 	}
 
 	else if (m_pPlayer->Get_bSparking() && m_pPlayer->Get_bAirDashEnable() && m_pPlayer->Get_bAttackBackEvent() && 
-		(*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_SPECIAL_AIR || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR2))
+		(*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_AIR2))
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_FORWARD_DASH);
 		m_pPlayer->Set_fImpulse(m_pPlayer->Get_iDirection() * (10.f));

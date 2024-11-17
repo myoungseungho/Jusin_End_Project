@@ -9,6 +9,7 @@
 #include "QTE_Continuous_Attack_Particle.h"
 #include "QTE_Continuous_Attack_Space_Particle.h"
 #include "Main_Camera.h"
+#include "Character.h"
 CQTE_Continuous_Attack::CQTE_Continuous_Attack(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -66,20 +67,20 @@ void CQTE_Continuous_Attack::Camera_Update(_float fTimeDelta)
 void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 {
 #pragma region 디버그
-	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F1))
-	{
-		if (m_bIsQTEActive)
-		{
-			// QTE가 활성화되어 있으면 즉시 종료
-			End_QTE();
-		}
-		else
-		{
-			// QTE가 비활성화되어 있으면 시작
-			Start_QTE();
-		}
-	}
+	//// F5 키 입력 감지
+	//if (m_pGameInstance->Key_Down(DIK_F1))
+	//{
+	//	if (m_bIsQTEActive)
+	//	{
+	//		// QTE가 활성화되어 있으면 즉시 종료
+	//		End_QTE();
+	//	}
+	//	else
+	//	{
+	//		// QTE가 비활성화되어 있으면 시작
+	//		Start_QTE();
+	//	}
+	//}
 #pragma endregion
 
 #pragma region 활성화
@@ -147,7 +148,7 @@ void CQTE_Continuous_Attack::Update(_float fTimeDelta)
 	}
 }
 
-void CQTE_Continuous_Attack::Start_QTE()
+void CQTE_Continuous_Attack::Start_QTE(CGameObject* callObject)
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
@@ -157,6 +158,7 @@ void CQTE_Continuous_Attack::Start_QTE()
 
 	//활성화
 	m_bIsQTEActive = true;
+	m_pCall_Object = callObject;
 
 	//스페이스 객체 생성
 	CQTE_Continuous_Attack_Space::CONTINUOUS_ATTACK_DESC Desc{};
@@ -195,6 +197,22 @@ void CQTE_Continuous_Attack::Start_QTE()
 void CQTE_Continuous_Attack::End_QTE()
 {
 #pragma region 초기화
+
+	// 미션 상태에 따라 hitResult 설정
+	// 성공
+ 	if (m_eMissionState == MISSION_SUCCESS)
+	{
+		static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Continuous_Attack(1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
+	}
+	// 실패
+	else if (m_eMissionState == MISSION_FAILED)
+	{
+		static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Continuous_Attack(-1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, false, 0.7f);
+	}
+
+	m_pCall_Object = nullptr;
 
 	//Space 객체는 삭제
 	Safe_Release(m_pContinuous_Space);
@@ -281,6 +299,8 @@ void CQTE_Continuous_Attack::Process_Command()
 
 	//Gauge에 신호를 보내서 연타를 해야함
 	m_pContinuous_Gauge->Process_Command();
+
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_SUCCESS_SFX, false, 0.7f);
 }
 
 void CQTE_Continuous_Attack::Update_Animation(_float fTimeDelta)
@@ -380,6 +400,20 @@ HRESULT CQTE_Continuous_Attack::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CQTE_Continuous_Attack::Start(CGameObject* callObject)
+{
+	if (m_bIsQTEActive)
+	{
+		// QTE가 활성화되어 있으면 즉시 종료
+		End_QTE();
+	}
+	else
+	{
+		// QTE가 비활성화되어 있으면 시작
+		Start_QTE(callObject);
+	}
 }
 
 HRESULT CQTE_Continuous_Attack::Ready_Components()
