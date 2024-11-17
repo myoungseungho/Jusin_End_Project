@@ -79,7 +79,7 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
    
     //이거 ModelPreview로 이사감
     //CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
-    CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Frieza.txt");
+   // CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Frieza.txt");
 
 
 

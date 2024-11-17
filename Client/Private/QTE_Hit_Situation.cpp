@@ -50,7 +50,7 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 	{
 	case Client::CQTE_Hit::Hit_Situation_ID_Goku:
 		//m_iCreate_Num - 1개가 나와야함
-		m_vecIconCreationTimes = { 1.f, 1.f,1.f };
+		m_vecIconCreationTimes = { 1.f, 1.f};
 		break;
 	case Client::CQTE_Hit::Hit_Situation_ID_21:
 		//m_iCreate_Num - 1개가 나와야함
@@ -391,8 +391,8 @@ void CQTE_Hit_Situation::Create_UIIcon()
 
 
 	// fTimer를 최소 및 최대 값 사이에서 랜덤하게 설정
-	_float minTimer = 1.f; // 최소 시간
-	_float maxTimer = 2.5f; // 최대 시간
+	_float minTimer = 1.0f; // 최소 시간
+	_float maxTimer = 1.9f; // 최대 시간
 	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
 
 

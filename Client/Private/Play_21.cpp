@@ -677,7 +677,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	//cout << "iHP : " << m_iHP << endl;
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
 	{
-		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(100, m_iPlayerTeam);
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_iPlayerTeam);
 	}
 
 	Check_Ground();
@@ -1533,7 +1533,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fLifeTime = 0.1f;
 		Desc.ihitCharacter_Motion = { HIT_LIGHT };
 		Desc.iTeam = m_iPlayerTeam;
-		Desc.fAnimationLockTime = 0.04f;
+		Desc.fAnimationLockTime = 0.07f;
 		//Desc.bOwnerGravityTimeReset = true;
 		Desc.pOwner = this;
 		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
@@ -1566,7 +1566,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fLifeTime = 0.1f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 			Desc.iTeam = m_iPlayerTeam;
-			Desc.fAnimationLockTime = 0.04f;
+			Desc.fAnimationLockTime = 0.07f;
 			//Desc.bOwnerGravityTimeReset = true;
 			Desc.pOwner = this;
 			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
@@ -2320,6 +2320,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_pEnemy->Get_bStun() == true || m_pEnemy->Check_bCurAnimationisGroundSmash())
 			{
 				Character_Start_QTE(2);
+
 			}
 
 			_float fStopTime = 1.2f;
@@ -2524,6 +2525,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_JUMP_DOWN);
+				if (m_bCreateQTE)
+				{
+					Character_Start_QTE(2);
+					m_bCreateQTE = false;
+				}
 			}
 		}
 		else if (iAttackEvent == 5) //Position 137   올려차기 시작 직전?   135랑 겹쳐서 문제생길 수 있으니 확인
@@ -2545,7 +2551,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//적 카메라로 순간적으로 올라가야함
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 2, this);
-			mainCamera->StartCameraShake(1.f, 0.4f);
+			//mainCamera->StartCameraShake(1.f, 0.4f);
 
 		}
 		else if (iAttackEvent == 10) //Position 150   올려차기 

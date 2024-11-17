@@ -31,6 +31,7 @@ public:
 
 		Ranged_LightColor eRangeColor = { RANGED_LIGHT_NONE };
 
+		_bool bExplosion = true;
 		_wstring strEffectName = {};
 	};
 private:
@@ -72,6 +73,7 @@ private:
 	_float2	m_fStartOffset = {};
 	_float2 m_fRanged_Impus_NoneDirection = {};
 	_short  m_iDirection = {};		
+	_bool m_bExplosion = { true };
 
 	Ranged_LightColor m_eRangeColor = { RANGED_LIGHT_NONE };
 

@@ -336,9 +336,19 @@ void CFrieza_MeleeAttack::Attack_Grab()
 void CFrieza_MeleeAttack::Attack_236()
 {
 
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
+	}
 
-
-	
+	else if (m_pPlayer->Get_bAttackBackEvent() &&
+		(*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_HEAVY)
+		)
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
+	}
 
 
 }
@@ -581,7 +591,7 @@ void CFrieza_MeleeAttack::Attack_Benishing()
 			m_pbAttackCount[CPlay_Frieza::COUNT_ATTACK_BENISHING] = false;
 			//m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_AIR2,2.f,0.f);
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_AIR2);
-			m_pPlayer->Set_CurrentAnimationPositionJump(30.99);
+			m_pPlayer->Set_CurrentAnimationPositionJump(44.99);
 			m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//時時次
@@ -605,7 +615,7 @@ void CFrieza_MeleeAttack::Attack_Benishing()
 			m_pbAttackCount[CPlay_Frieza::COUNT_ATTACK_BENISHING] = false;
 			//m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_AIR2,2.f,0.f);
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_AIR2);
-			m_pPlayer->Set_CurrentAnimationPositionJump(30.99);
+			m_pPlayer->Set_CurrentAnimationPositionJump(44.99);
 			m_pPlayer->Set_AnimationStopWithoutMe(0.3f);
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//時時次

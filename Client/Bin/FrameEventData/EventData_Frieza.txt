@@ -39,7 +39,7 @@ PLAY_FRN,FRN631_body,0.000000,AnimSpeedChange,0.013000,59.798000
 
 
 //,승리용 애니메이션
-PLAY_FRN,FRN610cs,0.000000,AnimSpeedChange,0.034,112.323
+PLAY_FRN,FRN610cs_body,0.000000,AnimSpeedChange,0.034,112.323
 
 
 
@@ -47,20 +47,20 @@ PLAY_FRN,FRN610cs,0.000000,AnimSpeedChange,0.034,112.323
 PLAY_FRN,FRN700_body,0.000000,AnimSpeedChange,0.5,10
 
 PLAY_FRN,FRN011_body,0.000000,AnimSpeedChange,0.010000,25.000000
-PLAY_FRN,FRN000_body,54.500000,AnimSpeedChange,0.010000,25.000000
+//,PLAY_FRN,FRN000_body,54.500000,AnimSpeedChange,0.010000,25.000000
 
 
 
 //,가드정지관련코드는 다른곳에서
 //,서서 방향전환 (공용) 
-PLAY_FRN,FRN001_body,0,AnimSpeedChange,0.010000,60.000000
+//,PLAY_FRN,FRN001_body,0,AnimSpeedChange,0.010000,60.000000
 
 
 //,앉아방향전환(공용)
-PLAY_FRN,FRN013_body,0,AnimSpeedChange,0.010000,60.000000
+//,PLAY_FRN,FRN013_body,0,AnimSpeedChange,0.010000,60.000000
 
 //,공중방향전환 (공용)
-PLAY_FRN,FRN025_body,0,AnimSpeedChange,0.010000,60.000000
+//,PLAY_FRN,FRN025_body,0,AnimSpeedChange,0.010000,60.000000
 
 
 
@@ -473,6 +473,9 @@ PLAY_FRN,FRN013_body,0.000000,AnimSpeedChange,0.023000,120
 PLAY_FRN,FRN200_body,0.000000,AnimSpeedChange,0.008,70
 PLAY_FRN,FRN200_body,15,AttackEvent,0
 
+PLAY_FRN,FRN200_body,20,NextAnimationCheck,333333
+PLAY_FRN,FRN200_body,25,NextAnimationCheck,333333
+
 
 PLAY_FRN,FRN200_body,0,ObjectMove,0.07,0,0,0
 PLAY_FRN,FRN200_body,2,ObjectMove,0.07,0,0,0
@@ -489,6 +492,8 @@ PLAY_FRN,FRN200_body,14,ObjectMove,0.07,0,0,0
 PLAY_FRN,FRN201_body,0.000000,AnimSpeedChange,0.02,90
 PLAY_FRN,FRN201_body,30,AttackEvent,0
 
+PLAY_FRN,FRN201_body,35,NextAnimationCheck,333333
+PLAY_FRN,FRN201_body,40,NextAnimationCheck,333333
 
 PLAY_FRN,FRN201_body,0,ObjectMove,0.07,0,0,0
 PLAY_FRN,FRN201_body,2,ObjectMove,0.07,0,0,0
@@ -510,19 +515,35 @@ PLAY_FRN,FRN202_body,15,AttackEvent,0
 //,성공시 애니메이션 속도 조절
 PLAY_FRN,FRN202_body,20,AttackEvent,1
 
+//,적 상승 종료용 
+PLAY_FRN,FRN202_body,25,AttackEvent,101
+
+
 //,적 상승, 애니메이션 2초 정지?
 PLAY_FRN,FRN202_body,35,AttackEvent,2
 
 //, 폭발.
 PLAY_FRN,FRN202_body,40,AttackEvent,3
 
+
+PLAY_FRN,FRN202_body,50,NextAnimationCheck,333333
+
 //,서서 중공
 PLAY_FRN,FRN203_body,0.000000,AnimSpeedChange,0.008,90
 PLAY_FRN,FRN203_body,40.000000,AnimSpeedChange,0.008,190
 PLAY_FRN,FRN203_body,60.000000,AnimSpeedChange,0.008,90
 
+//,거리 가까우면 바로 40정도로 점프?  일부러 AttackEvent1로 통일한거임 둘 다 1 맞음
+PLAY_FRN,FRN203_body,15,AttackEvent,1
+PLAY_FRN,FRN203_body,20,AttackEvent,1
+PLAY_FRN,FRN203_body,25,AttackEvent,1
+PLAY_FRN,FRN203_body,30,AttackEvent,1
+
+
 PLAY_FRN,FRN203_body,55,AttackEvent,0
 
+PLAY_FRN,FRN203_body,65,NextAnimationCheck,333333
+PLAY_FRN,FRN203_body,75,NextAnimationCheck,333333
 
 PLAY_FRN,FRN203_body,0,ObjectMove,0.2,0,0,0
 PLAY_FRN,FRN203_body,2,ObjectMove,0.2,0,0,0
@@ -555,9 +576,16 @@ PLAY_FRN,FRN203_body,54,ObjectMove,0.2,0,0,0
 
 
 //,서서 강공	
-PLAY_FRN,FRN204_body,88.552826,AnimSpeedChange,0.016000,93.806000
+//,PLAY_FRN,FRN204_body,88.552826,AnimSpeedChange,0.016000,93.806000
+PLAY_FRN,FRN204_body,0,AnimSpeedChange,0.016000,93.806000
+
 PLAY_FRN,FRN204_body,46,AttackEvent,0
 PLAY_FRN,FRN204_body,75,AttackEvent,1
+
+
+PLAY_FRN,FRN204_body,80,NextAnimationCheck,333333
+PLAY_FRN,FRN204_body,85,NextAnimationCheck,333333
+
 
 //,서서 특수
 PLAY_FRN,FRN205_body,0,AnimSpeedChange,0.005000,120.403000
@@ -613,12 +641,13 @@ PLAY_FRN,FRN232_body,0,AnimSpeedChange,0.01,90
 //,PLAY_FRN,FRN232_body,12,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN232_body,40,AttackEvent,0
 
+PLAY_FRN,FRN232_body,50,NextAnimationCheck,333333
 
 //,앉아특
 PLAY_FRN,FRN233_body,0,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN233_body,50,AttackEvent,0
 
-
+PLAY_FRN,FRN233_body,60,NextAnimationCheck,333333
 
 //,공중 약
 PLAY_FRN,FRN260_body,0,AnimSpeedChange,0.01,110
@@ -627,10 +656,23 @@ PLAY_FRN,FRN260_body,15,AttackEvent,0
 PLAY_FRN,FRN260_body,17,AnimSpeedChange,0.01,90
 
 
+PLAY_FRN,FRN260_body,20,NextAnimationCheck,333333
+PLAY_FRN,FRN260_body,25,NextAnimationCheck,333333
+
+
 //,공중 중
 PLAY_FRN,FRN261_body,0,AnimSpeedChange,0.01,110
 PLAY_FRN,FRN261_body,15,AttackEvent,0
+
+PLAY_FRN,FRN261_body,20,NextAnimationCheck,333333
+PLAY_FRN,FRN261_body,25,NextAnimationCheck,333333
+
 PLAY_FRN,FRN261_body,45,AttackEvent,1
+PLAY_FRN,FRN261_body,45,AnimSpeedChange,0.01,110
+
+PLAY_FRN,FRN261_body,50,NextAnimationCheck,333333
+PLAY_FRN,FRN261_body,55,NextAnimationCheck,333333
+
 
 //,공중 강
 PLAY_FRN,FRN262_body,0,AnimSpeedChange,0.01,110
@@ -705,6 +747,8 @@ PLAY_FRN,FRN267_body,30,AttackEvent,0
 PLAY_FRN,FRN400_body,0,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN400_body,35,AttackEvent,0
 
+//,그냥 AttackBack쓰자
+PLAY_FRN,FRN400_body,40,NextAnimationCheck,333333
 
 
 

@@ -775,7 +775,10 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
 	
-
+	if (m_iPlayerTeam == 2 && m_pModelCom->m_iCurrentAnimationIndex == 0)
+	{
+		_bool bDebug = true;
+	}
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
 	
@@ -1786,9 +1789,10 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 	if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 	//if (m_pGameInstance->Key_Down(DIK_W) && m_bJumpLock == false)
 	{
-		//점프 먼지WWDDDWWWWWWWW
+		//점프 먼지
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+		
 
 		//점프 먼지
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
@@ -1805,6 +1809,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		Set_fJumpPower(3.f); //중력Ver2 기준
 
 
+		m_fGravityTime = 0.f;
 
 		Set_Animation(m_iJumpAnimationIndex);
 
@@ -1920,6 +1925,7 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 
 		Set_Animation(m_iJumpAnimationIndex);
 
+		m_fGravityTime = 0.f;
 
 		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 		{
@@ -4722,6 +4728,7 @@ void CCharacter::AnimeEndNextMoveCheck()
 void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
 
+
 	
 	m_bMotionPlaying = true;
 
@@ -5010,6 +5017,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 				Set_BreakFall_Ground();
 
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+				//Set_fGravityTime(0.f);
 
 				//천천히 꼬라박힐 때
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, false, 1.f);
@@ -5403,7 +5411,7 @@ void CCharacter::Character_Start_QTE(_uint iQTEID)
 		QTE_ID_END
 	};
 	*/
-
+	m_bCreateQTE = true;
 	m_iQTE = -1;
 	CQTE_Manager::Get_Instance()->Start_QTE((CQTE_Manager::QTE_ID)iQTEID, this);
 
