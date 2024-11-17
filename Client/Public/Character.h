@@ -385,6 +385,8 @@ public:
 
 	//void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale={1.f,1.f,1.f});
 
+	void Character_Create_Distortion(_float3 vDir = { 0.f,1.f,0.f }, _float2 vOffSetPos = {0.f,0.f}, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = { 0.3f });
+	void Character_Create_Distortion(_float3 vDir, _float3 vOffSetPos, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = { 0.3f });
 
 
 

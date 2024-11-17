@@ -119,7 +119,7 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	SwapChain.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	SwapChain.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	SwapChain.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-	SwapChain.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	SwapChain.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
 	SwapChain.BufferCount = 1;
 
 	/*스왑하는 형태*/
@@ -127,7 +127,7 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	SwapChain.BufferDesc.RefreshRate.Denominator = 1;
 	SwapChain.SampleDesc.Quality = 0;
 	SwapChain.SampleDesc.Count = 1;
-
+	
 	SwapChain.OutputWindow = hWnd;
 	SwapChain.Windowed = isWindowed;
 	SwapChain.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
@@ -151,19 +151,26 @@ HRESULT CGraphic_Device::Ready_BackBufferRenderTargetView()
 	if (nullptr == m_pDevice)
 		return E_FAIL;
 
-
-
-	/* 내가 앞으로 사용하기위한 용도의 텍스쳐를 생성하기위한 베이스 데이터를 가지고 있는 객체이다. */
-	/* 내가 앞으로 사용하기위한 용도의 텍스쳐 : ID3D11RenderTargetView, ID3D11ShaderResoureView, ID3D11DepthStencilView */
+	// 스왑 체인이 들고 있는 백버퍼 텍스처 가져오기
 	ID3D11Texture2D* pBackBufferTexture = nullptr;
-
-	/* 스왑체인이 들고있던 텍스처를 가져와봐. */
 	if (FAILED(m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBufferTexture)))
 		return E_FAIL;
 
+	// 백버퍼로부터 RenderTargetView 생성
 	if (FAILED(m_pDevice->CreateRenderTargetView(pBackBufferTexture, nullptr, &m_pBackBufferRTV)))
+	{
+		Safe_Release(pBackBufferTexture);
 		return E_FAIL;
+	}
 
+	// 백버퍼로부터 ShaderResourceView 생성
+	if (FAILED(m_pDevice->CreateShaderResourceView(pBackBufferTexture, nullptr, &m_pBackBufferSRV)))
+	{
+		Safe_Release(pBackBufferTexture);
+		return E_FAIL;
+	}
+
+	// 백버퍼 텍스처 해제 (뷰가 참조를 유지하고 있음)
 	Safe_Release(pBackBufferTexture);
 
 	return S_OK;
@@ -198,6 +205,7 @@ HRESULT CGraphic_Device::Ready_DepthStencilRenderTargetView(_uint iWinCX, _uint 
 
 	if (FAILED(m_pDevice->CreateTexture2D(&TextureDesc, nullptr, &pDepthStencilTexture)))
 		return E_FAIL;
+	/* m_pBackBufferSRV */
 
 	/* RenderTarget */
 	/* ShaderResource */
@@ -231,7 +239,7 @@ void CGraphic_Device::Free()
 	Safe_Release(m_pBackBufferRTV);
 	Safe_Release(m_pDeviceContext);
 	Safe_Release(m_pDepthTexture);
-
+	Safe_Release(m_pBackBufferSRV); 
 	
 	//#if defined(DEBUG) || defined(_DEBUG)
 	//	ID3D11Debug* d3dDebug;

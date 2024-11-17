@@ -4483,6 +4483,24 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 }
 */
 
+void CCharacter::Character_Create_Distortion(_float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
+{
+	_float4 fPos{};
+	XMStoreFloat4(&fPos, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	m_pRenderInstance->Create_HitDistortion(fPos, { vDir.x * m_iLookDirection, vDir.y, vDir.z }, vOffSetPos, vOffSetScale, fLifeTime);
+
+}
+
+void CCharacter::Character_Create_Distortion(_float3 vDir, _float3 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
+{
+	_float4 fPos{};
+	XMStoreFloat4(&fPos, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	fPos.z += vOffSetPos.z;
+
+	m_pRenderInstance->Create_HitDistortion(fPos, { vDir.x * m_iLookDirection, vDir.y, vDir.z }, { vOffSetPos.x, vOffSetPos.y }, vOffSetScale, fLifeTime);
+
+}
+
 void CCharacter::Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset, _bool bFlipDirection)
 {
 
