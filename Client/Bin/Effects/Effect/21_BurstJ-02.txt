@@ -1,0 +1,205 @@
+[Layer]
+LayerName: 21_BurstJ-02
+Duration: 1
+TickPerSecond: 2
+KeyFramesCount: 59
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_BurstJ-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0221_BurstJ-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.0299993 0.0499986 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0299993 0.0499986 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 33
+Position: 0 0 0
+Scale: 0.0299989 0.0499979 1
+Rotation: 0 0 270
+CurTime: 0.55
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.0199998 0.0499957 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_BurstJ-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0221_BurstJ-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.0249995 0.0499974 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 255 0 90.3477 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0249995 0.0499974 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 33
+Position: 0 0 0
+Scale: 0.0249993 0.0499971 1
+Rotation: 0 0 270
+CurTime: 0.55
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.0149998 0.0499952 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_BurstJ-02_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0221_BurstJ-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.0249996 0.0499986 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 255 102.169 169.719 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0249997 0.0499989 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 33
+Position: 0 0 0
+Scale: 0.0249995 0.0499985 1
+Rotation: 0 0 270
+CurTime: 0.55
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.00999992 0.0499952 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_BurstJ-02_04
+ModelName: Model_Effect_cmn_puffyplane
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0221_BurstJ-02_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.0399952 0.0499999 0.04
+Rotation: 0 0 180
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0399952 0.0499999 0.04
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-02_05
+ModelName: Model_Effect_cmn_puffyplane
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0221_BurstJ-02_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.0399813 0.0299999 0.04
+Rotation: 0 0 180
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0399813 0.0299999 0.04
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

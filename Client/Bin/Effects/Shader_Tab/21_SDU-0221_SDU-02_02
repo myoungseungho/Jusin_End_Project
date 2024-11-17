@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 45
+Key: Prototype_Component_Texture_Effect_cmn_wind00
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 476 90
+NodeID: 1 Position: 234.644 67.8178
+NodeID: 3001 Position: 19.6439 58.8178
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 1 6 Speed: 11.5
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
