@@ -133,7 +133,8 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 
-	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
+	//LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
+	LightDesc.vDirection = _float4(-1.f, -0.2f, 1.f, 0.f);
 	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
