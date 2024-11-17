@@ -33,7 +33,7 @@ HRESULT CUI_HpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosY = 87.f;
+	m_fPosY = 67.f;
 	m_fSizeY = 30.f;
 
 	switch (m_eLRPos)
@@ -97,7 +97,7 @@ void CUI_HpGauge::Update(_float fTimeDelta)
 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 1;
 
-	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 500.f, 0.8f, fTimeDelta);
+	Animation({ 271 ,107 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 500.f, 0.8f, fTimeDelta);
 }
 
 void CUI_HpGauge::Late_Update(_float fTimeDelta)

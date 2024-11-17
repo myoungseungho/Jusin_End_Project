@@ -91,6 +91,8 @@ public:
 	_bool m_bHit = { FALSE };
 	_uint m_iHp = {0};
 	_uint m_iNumThreadFinish = { 0 };
+
+	_bool m_bGamePlayLoadingFinish = { FALSE };
 	
 public:
 	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };

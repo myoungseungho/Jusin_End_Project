@@ -24,6 +24,9 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
+	HRESULT Ready_Sound();
+
+private:
 	LEVELID				m_eNextLevelID = {};
 	class CLoader*		m_pLoader = { nullptr };
 	

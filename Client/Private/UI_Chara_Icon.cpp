@@ -25,7 +25,7 @@ HRESULT CUI_Chara_Icon::Initialize_Prototype()
 HRESULT CUI_Chara_Icon::Initialize(void* pArg)
 {
 	m_fPosX = 50.f;
-	m_fPosY = 40.f;
+	m_fPosY = 20.f;
 	m_fSizeY = 150.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -54,7 +54,7 @@ void CUI_Chara_Icon::Update(_float fTimeDelta)
 	if (m_pMainPawn != nullptr)
 		m_iCharaID = m_pMainPawn->Get_PawnDesc().ePlayerID;
 	
-	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 500.f, 0.85f, fTimeDelta);
+	Animation({ 72.f ,100.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 500.f, 0.85f, fTimeDelta);
 }
 
 void CUI_Chara_Icon::Late_Update(_float fTimeDelta)

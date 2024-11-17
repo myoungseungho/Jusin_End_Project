@@ -40,6 +40,9 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (FAILED(Ready_Layer()))
 		return E_FAIL;
 
+	if(FAILED(Ready_Sound()))
+		return E_FAIL;
+
 	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	if (nullptr == m_pLoader)
 		return E_FAIL;
@@ -60,7 +63,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 
 	/* For.Prototyp_Component_Texture_UI_LoadingBackGround_Mask */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround_Mask"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/stage/stage_bg_0.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/stage/stage_bg_%d.png"),2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_GameStartCircle */
@@ -180,6 +183,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 	CUI_Manager::ThreadPool_For_Loading eTheadID = CUI_Manager::Get_Instance()->Get_Thread();
 	if(eTheadID != CUI_Manager::THREAD_END)
 	{
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOADING_CREATE_SFX, false, 0.2f);
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_CreateFlyEff"), TEXT("Layer_UI_LoadingBackGround"));
 
 		CUI_Loading_FlyEff::UI_FLYEFF_DESC FlyDesc = {};
@@ -191,7 +195,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		m_iNumThreadEnd++;
 	}
 
-	if (m_fNextLevelTimer > 5.f)
+	if (CUI_Manager::Get_Instance()->m_bGamePlayLoadingFinish)
 		m_bNextLevel = TRUE;
 	
 	if (m_pLoader->isFinished())
@@ -238,6 +242,15 @@ void CLevel_Loading::Update(_float fTimeDelta)
 HRESULT CLevel_Loading::Render(_float fTimeDelta)
 {
 	m_pLoader->Draw_Text();
+
+	return S_OK;
+}
+
+HRESULT CLevel_Loading::Ready_Sound()
+{
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Decide_CharaSel.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_CREATE_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Icon_On.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Result_Rank_2.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_FINISH_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 	return S_OK;
 }

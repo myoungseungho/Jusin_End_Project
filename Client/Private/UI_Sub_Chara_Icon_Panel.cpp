@@ -25,7 +25,7 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize_Prototype()
 HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 {
 	m_fPosX = 73.f;
-	m_fPosY = 145.f;
+	m_fPosY = 100.f;
 	m_fSizeX = 184.f;
 	m_fSizeY = 46.f;
 
@@ -49,7 +49,8 @@ void CUI_Sub_Chara_Icon_Panel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Animation({ 73.f ,88.f ,0.65f, 1.f }, { m_fPosX, m_fPosY, 0.65f, 1.f }, 500.f, 0.65f, fTimeDelta);
+
+	Animation({ 73.f ,78.f ,0.65f, 1.f }, { m_fPosX, m_fPosY, 0.65f, 1.f }, 500.f, 0.65f, fTimeDelta);
 
 	if (m_pSubPawn == nullptr)
 		Destory();

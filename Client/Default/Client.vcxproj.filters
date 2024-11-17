@@ -1442,9 +1442,6 @@
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\MainApp.h">
-      <Filter>01.Level</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\AttackObject_Ranged.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Ranged</Filter>
     </ClInclude>
@@ -1771,6 +1768,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MainApp.h">
+      <Filter>00.MainApp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
