@@ -2155,6 +2155,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	}
 	if (FAILED(Load_Map_Space()))
 		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
