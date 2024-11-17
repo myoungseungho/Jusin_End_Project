@@ -514,6 +514,9 @@
     <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\QTE_1P_Same_Grab.cpp">
+      <Filter>02.GameObjects\QTE\QTE_1P_Same_Grab</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1094,6 +1097,9 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_Same_Grab\QTE_Same_Grab_UI_Gauge">
       <UniqueIdentifier>{1e1f93f7-2e46-4bb3-b840-799654c56abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\QTE\QTE_1P_Same_Grab">
+      <UniqueIdentifier>{a8152535-b696-444a-b28a-79325c90da0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1771,6 +1777,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\FlyEffect\Create</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\QTE_1P_Same_Grab.h">
+      <Filter>02.GameObjects\QTE\QTE_1P_Same_Grab</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

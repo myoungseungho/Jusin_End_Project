@@ -138,7 +138,7 @@ void CQTE_Same_Grab::Late_Update(_float fTimeDelta)
 }
 
 
-void CQTE_Same_Grab::Start(CGameObject* callObject)
+void CQTE_Same_Grab::Start(CGameObject* callObject, _float _lifeTime)
 {
 	if (m_bIsQTEActive)
 	{
@@ -151,7 +151,7 @@ void CQTE_Same_Grab::Start(CGameObject* callObject)
 		_bool isPossibleStart = Check_GameStart(callObject);
 
 		if (isPossibleStart)
-			Start_QTE(callObject);
+			Start_QTE(callObject, _lifeTime);
 	}
 }
 
@@ -193,7 +193,7 @@ _bool CQTE_Same_Grab::Check_GameStart(CGameObject* callObject)
 
 
 
-void CQTE_Same_Grab::Start_QTE(CGameObject* callObject)
+void CQTE_Same_Grab::Start_QTE(CGameObject* callObject, _float _lifeTime)
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
@@ -205,6 +205,11 @@ void CQTE_Same_Grab::Start_QTE(CGameObject* callObject)
 	Clear_UIIcons();
 
 	m_bIsQTEActive = true;
+
+	//lifeTime을 따로 넣어주지 않았으면 갱신 X
+	if (_lifeTime != -1.f)
+		m_iTotalTime = _lifeTime;
+
 	m_fTimer = static_cast<_float>(m_iTotalTime);
 
 	// 1P 초기화

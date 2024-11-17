@@ -165,6 +165,7 @@
 #include "QTE_Same_Grab_UI_Particle.h"
 #include "QTE_Continuous_Attack_Particle.h"
 #include "QTE_Continuous_Attack_Space_Particle.h"
+#include "QTE_1P_Same_Grab.h"
 
 //Lobby
 #include "Lobby_Center_Map.h"
@@ -3558,6 +3559,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Continuous_Attack_Space_Particle"),
 		CQTE_Continuous_Attack_Space_Particle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_1P_Same_Grab"),
+		CQTE_1P_Same_Grab::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

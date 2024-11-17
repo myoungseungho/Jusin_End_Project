@@ -195,6 +195,7 @@
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space_Particle.h" />
     <ClInclude Include="..\Public\Map_Manager.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h" />
+    <ClInclude Include="..\Public\QTE_1P_Same_Grab.h" />
     <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h" />
@@ -412,6 +413,7 @@
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space_Particle.cpp" />
     <ClCompile Include="..\Private\Map_Manager.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp" />
+    <ClCompile Include="..\Private\QTE_1P_Same_Grab.cpp" />
     <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp" />

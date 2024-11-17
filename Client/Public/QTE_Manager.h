@@ -21,6 +21,7 @@ public:
 		QTE_ID_SAME_GRAB,
 		QTE_ID_HIT,
 		QTE_ID_CONTINUOUS_ATTACK,
+		QTE_ID_1P_SAME_GRAB,
 		QTE_ID_END
 	};
 
@@ -39,7 +40,7 @@ public:
 
 	vector<class CGameObject*> m_vecQTE;
 
-	void Start_QTE(QTE_ID ID, class CGameObject* callObject = nullptr);
+	void Start_QTE(QTE_ID ID, class CGameObject* callObject = nullptr, _float _lifeTime = -1.f);
 
 public:
 	virtual void Free() override;

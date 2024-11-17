@@ -732,6 +732,10 @@ public:
 
 	// 1: ½Â, 
 	// -1 : ÆÐ 
+	void Notify_QTE_1p_Grab(_int result);
+
+	// 1: ½Â, 
+	// -1 : ÆÐ 
 	void Notify_QTE_Hit(_int result);
 
 	// 1: ½Â, 
