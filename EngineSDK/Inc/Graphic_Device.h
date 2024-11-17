@@ -30,6 +30,8 @@ public:
 	/* 후면 버퍼를 전면버퍼로 교체한다.(백버퍼를 화면에 직접 보여준다.) */
 	HRESULT Present();
 
+	/* 가즈아 */
+	ID3D11ShaderResourceView* Get_BackBufferShaderResourceView() { return m_pBackBufferSRV; }
 private:
 	// IDirect3DDevice9* == LPDIRECT3DDEVICE9 == ID3D11Device + ID3D11DeviceContext 
 
@@ -51,6 +53,7 @@ private:
 	/* ID3D11ShaderResourceView : 셰이더에 전달될 수 있는 텍스처 타입. */
 	/* ID3D11RenderTargetView : 렌더타겟용으로 사용될 수 있는 텍스처 타입. */
 	/* ID3D11DepthStencilView : 깊이스텐실 버퍼로서 사용될 수 있는 타입.  */
+	ID3D11ShaderResourceView* m_pBackBufferSRV = { nullptr };
 	ID3D11RenderTargetView* m_pBackBufferRTV = { nullptr };
 	ID3D11Texture2D* m_pDepthTexture = { nullptr };
 	ID3D11DepthStencilView* m_pDepthStencilView = { nullptr };

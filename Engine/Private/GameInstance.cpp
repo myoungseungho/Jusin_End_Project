@@ -141,6 +141,11 @@ HRESULT CGameInstance::Clear_DepthStencil_View()
 	return m_pGraphic_Device->Clear_DepthStencil_View();
 }
 
+ID3D11ShaderResourceView* CGameInstance::Get_BackBufferShaderResourceView()
+{
+	return m_pGraphic_Device->Get_BackBufferShaderResourceView();
+}
+
 HRESULT CGameInstance::Present()
 {
 	return m_pGraphic_Device->Present();

@@ -25,7 +25,11 @@ public: /* For.Renderer */
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
 	void SetActive_Debug_Component(_bool isOn);
+	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
 
+	/* 캐릭터 1Team 기준 : 가만히 있을때 오른쪽으로 순간이동 시작 하는 느낌 Dir은 x -1 
+	왼쪽에서 오른쪽으로 도착했을때 느낌 Dir은 x 1 */
+	void Create_HitDistortion(_float4 vPlayerPos, _float3 vDir = { 1,0,0 }, _float2 vOffSetPos = { 0.f,0.f }, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = 0.1f);
 	void Show_OutLine();
 	void Show_Layer_View();
 	_bool Get_isLayerView();
