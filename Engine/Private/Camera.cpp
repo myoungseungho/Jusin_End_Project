@@ -86,7 +86,6 @@ void CCamera::Update_Camera(CCamera* camera, _float fTimeDelta)
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(camera->m_fFovy, camera->m_fViewportWidth / camera->m_fViewportHeight, camera->m_fNear, camera->m_fFar));
 }
 
-
 void CCamera::Free()
 {
 	__super::Free();

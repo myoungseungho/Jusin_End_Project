@@ -48,12 +48,12 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 
 	m_bGrabedGravity = pDesc->bGrabedGravity;
 
-	if (pDesc->iVirtualCameraindex != 200)
-	{
-		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
-		m_ianimationIndex = pDesc->ianimationIndex;
-		
-	}
+	//if (pDesc->iVirtualCameraindex != 200)
+	//{
+	//	m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
+	//	m_ianimationIndex = pDesc->ianimationIndex;
+	//	
+	//}
 	
 
 	if (m_iOnwerDirection == 231)
@@ -158,6 +158,7 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 			m_pOwner->Set_AttackBackEvent(true);	
 			//m_pOwner->Set_GrabLoofCount(2);
+			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
 			if(m_fForcedGravityTime !=100)
 				pCharacter->Set_fGravityTime(m_fForcedGravityTime);

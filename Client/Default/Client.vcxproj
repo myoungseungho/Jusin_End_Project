@@ -175,6 +175,7 @@
     <ClInclude Include="..\Public\BoneEffectObject.h" />
     <ClInclude Include="..\public\CharaSelectCamera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
+    <ClInclude Include="..\Public\Frieza_MeleeAttack.h" />
     <ClInclude Include="..\Public\Hit_MeleeAttack.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\Public\Play_Frieza.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space_Particle.h" />
     <ClInclude Include="..\Public\Map_Manager.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h" />
@@ -400,6 +402,7 @@
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
     <ClCompile Include="..\private\CharaSelectCamera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
+    <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\Hit_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
@@ -410,6 +413,7 @@
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\Private\Play_Frieza.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space_Particle.cpp" />
     <ClCompile Include="..\Private\Map_Manager.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp" />

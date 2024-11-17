@@ -18,6 +18,8 @@
 #include "Effect_Layer.h"
 #include "Map_Manager.h"
 
+#include "QTE_Manager.h"
+
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
 
@@ -773,7 +775,10 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
 	
-
+	if (m_iPlayerTeam == 2 && m_pModelCom->m_iCurrentAnimationIndex == 0)
+	{
+		_bool bDebug = true;
+	}
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
 	
@@ -1784,9 +1789,10 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 	if (m_pGameInstance->Key_Pressing(DIK_W) && m_bJumpLock == false)
 	//if (m_pGameInstance->Key_Down(DIK_W) && m_bJumpLock == false)
 	{
-		//Á¡ÇÁ ¸ÕÁöWWDDDWWWWWWWW
+		//Á¡ÇÁ ¸ÕÁö
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+		
 
 		//Á¡ÇÁ ¸ÕÁö
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
@@ -1803,6 +1809,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		Set_fJumpPower(3.f); //Áß·ÂVer2 ±âÁØ
 
 
+		m_fGravityTime = 0.f;
 
 		Set_Animation(m_iJumpAnimationIndex);
 
@@ -1918,6 +1925,7 @@ void CCharacter::MoveKey2Team(_float fTimeDelta)
 
 		Set_Animation(m_iJumpAnimationIndex);
 
+		m_fGravityTime = 0.f;
 
 		if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 		{
@@ -2586,7 +2594,9 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 
 					//ÆÃ°ÜÁ®³ª¿À´Â °Å¸® ¼öÁ¤Áß
 					//Set_fImpulse({ m_iLookDirection * 4.f,0.5f });
-					Set_fImpulse({ m_iLookDirection * 4.f,0.05f });
+					//Set_fImpulse({ m_iLookDirection * 4.f,0.05f });
+					Set_fImpulse({ m_iLookDirection * 4.f,0.1f - Get_fHeight()});
+
 
 					//Set_ForcedGravityTime_LittleUp();
 					Set_ForcveGravityTime(0.f);
@@ -4072,6 +4082,9 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 
 	if(m_bDying == false)
 	{
+		if (m_bGrabbed == true)
+			return;
+
 		if (m_iHP < 1)
 		{
 			m_bDying = true;
@@ -4171,7 +4184,7 @@ _bool CCharacter::Update_BeReflecting(_float fTimeDelta)
 
 void CCharacter::Set_bFinalSkillQTE(_bool bFinalSkillQTE)
 {
-	m_bFinalSkillQTESucces = bFinalSkillQTE;
+	m_iQTE = bFinalSkillQTE;
 }
 
 
@@ -4470,6 +4483,24 @@ void CCharacter::Character_Make_Effect(_wstring strEffectName, _float2 fOffset, 
 }
 */
 
+void CCharacter::Character_Create_Distortion(_float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
+{
+	_float4 fPos{};
+	XMStoreFloat4(&fPos, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	m_pRenderInstance->Create_HitDistortion(fPos, { vDir.x * m_iLookDirection, vDir.y, vDir.z }, vOffSetPos, vOffSetScale, fLifeTime);
+
+}
+
+void CCharacter::Character_Create_Distortion(_float3 vDir, _float3 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
+{
+	_float4 fPos{};
+	XMStoreFloat4(&fPos, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+	fPos.z += vOffSetPos.z;
+
+	m_pRenderInstance->Create_HitDistortion(fPos, { vDir.x * m_iLookDirection, vDir.y, vDir.z }, { vOffSetPos.x, vOffSetPos.y }, vOffSetScale, fLifeTime);
+
+}
+
 void CCharacter::Set_LoofAnimationCreate(_wstring strEffectName, _float fMaxTime, _float fPeriodTime, _float2 fOffset, _bool bFlipDirection)
 {
 
@@ -4647,6 +4678,22 @@ _bool CCharacter::Check_bCurAnimationisGrab(_uint iAnimation)
 	return false;
 }
 
+_bool CCharacter::Check_bCurAnimationisGroundSmash(_uint iAnimation)
+{
+	_uint iModelIndex = iModelIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+
+	if (m_bHitGroundSmashed)
+		return true;
+
+	if (iModelIndex == m_iHit_Air_LightAnimationIndex && m_pModelCom->m_fCurrentAnimPosition>=55)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 void CCharacter::Set_NextAnimation(_uint iAnimationIndex, _float fLifeTime, _float fAnimationPosition)
 {
@@ -4698,6 +4745,7 @@ void CCharacter::AnimeEndNextMoveCheck()
 
 void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 {
+
 
 	
 	m_bMotionPlaying = true;
@@ -4987,6 +5035,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 				Set_BreakFall_Ground();
 
 				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+				//Set_fGravityTime(0.f);
 
 				//ÃµÃµÈ÷ ²¿¶ó¹ÚÈú ¶§
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, false, 1.f);
@@ -5322,18 +5371,20 @@ void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput 
 
 void CCharacter::Notify_QTE_Same_Grab(_int result)
 {
-	switch (result)
-	{
-		//½Â
-	case 1:
-		break;
-		//ÆÐ
-	case -1:
-		break;
-		//ºñ±è
-	case 0:
-		break;
-	}
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//	//ºñ±è
+	//case 0:
+	//	break;
+	//}
 }
 
 void CCharacter::Notify_QTE_1p_Grab(_int result)
@@ -5352,28 +5403,49 @@ void CCharacter::Notify_QTE_1p_Grab(_int result)
 
 void CCharacter::Notify_QTE_Hit(_int result)
 {
-	switch (result)
-	{
-		//½Â
-	case 1:
-		break;
-		//ÆÐ
-	case -1:
-		break;
-	}
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//}
 }
 
 void CCharacter::Notify_QTE_Continuous_Attack(_int result)
 {
-	switch (result)
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//}
+}
+
+void CCharacter::Character_Start_QTE(_uint iQTEID)
+{
+	/*
+	enum QTE_ID
 	{
-		//½Â
-	case 1:
-		break;
-		//ÆÐ
-	case -1:
-		break;
-	}
+		QTE_ID_SAME_GRAB,
+		QTE_ID_HIT,
+		QTE_ID_CONTINUOUS_ATTACK,
+		QTE_ID_END
+	};
+	*/
+	m_bCreateQTE = true;
+	m_iQTE = -1;
+	CQTE_Manager::Get_Instance()->Start_QTE((CQTE_Manager::QTE_ID)iQTEID, this);
+
 }
 
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

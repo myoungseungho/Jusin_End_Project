@@ -499,6 +499,12 @@
     <ClCompile Include="..\Private\Map_Manager.cpp">
       <Filter>02.GameObjects\Map\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Play_Frieza.cpp">
+      <Filter>02.GameObjects\Character\Play_Frieza</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp">
+      <Filter>02.GameObjects\Character\Play_Frieza\Frieza_MeleeAttack</Filter>
+    </ClCompile>
     <ClCompile Include="..\private\UI_VS_Name.cpp">
       <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
     </ClCompile>
@@ -1080,6 +1086,12 @@
     <Filter Include="02.GameObjects\Map\Manager">
       <UniqueIdentifier>{e1787cdf-4e20-409a-b6c6-3fab229bdacc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Frieza">
+      <UniqueIdentifier>{4236c754-e696-46df-bffd-35e3b8ec8787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Play_Frieza\Frieza_MeleeAttack">
+      <UniqueIdentifier>{8049ce2b-79fb-4023-a176-56356a57dd60}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\VS\Name">
       <UniqueIdentifier>{e99bdeb3-a273-44fe-ab5e-b12818390da8}</UniqueIdentifier>
     </Filter>
@@ -1321,9 +1333,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\AnimationNameMap.h">
       <Filter>90.FrameEvent_Manager\AnimationNameMap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Character.h">
-      <Filter>02.GameObjects\Character</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Play_21.h">
       <Filter>02.GameObjects\Character\Play_21</Filter>
@@ -1763,6 +1772,12 @@
     <ClInclude Include="..\Public\Play_Hit.h">
       <Filter>02.GameObjects\Character\Play_Hit</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Play_Frieza.h">
+      <Filter>02.GameObjects\Character\Play_Frieza</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Frieza_MeleeAttack.h">
+      <Filter>02.GameObjects\Character\Play_Frieza\Frieza_MeleeAttack</Filter>
+    </ClInclude>
     <ClInclude Include="..\public\UI_VS_Name.h">
       <Filter>02.GameObjects\UI\BackGround\VS\Name</Filter>
     </ClInclude>
@@ -1780,6 +1795,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\QTE_1P_Same_Grab.h">
       <Filter>02.GameObjects\QTE\QTE_1P_Same_Grab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Character.h">
+      <Filter>02.GameObjects\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -218,6 +218,7 @@ void CMain_Camera::Camera_Update(_float fTimeDelta)
 
 	//선택된 가상카메라의 정보로 뷰 투영 만들기
 	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], fTimeDelta);
+
 }
 
 void CMain_Camera::Update(_float fTimeDelta)

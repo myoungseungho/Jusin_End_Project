@@ -133,7 +133,8 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 
-	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
+	//LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
+	LightDesc.vDirection = _float4(-1.f, -0.2f, 1.f, 0.f);
 	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
@@ -518,7 +519,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 
 			Character_Play_Animation(fTimeDelta);
-			Update_214FinalInvisible();
+			Update_214FinalInvisible(fTimeDelta);
 
 
 
@@ -699,7 +700,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
 	{
-		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(100, m_iPlayerTeam);
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_iPlayerTeam);
 	}
 
 }
@@ -1184,7 +1185,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.1f;
 		Desc.pOwner = this;
-
+		
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
 	break;
@@ -1206,13 +1207,24 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 			m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
 
+
+
+			Character_Create_Distortion({ -1.f,0.f,0.f });
+
+
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), m_pTransformCom->Get_WorldMatrixPtr());
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), m_pTransformCom->Get_WorldMatrixPtr());
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), m_pTransformCom->Get_WorldMatrixPtr());
 			//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), m_pTransformCom->Get_WorldMatrixPtr());
 
 
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			////Character_Make_Effect(TEXT("Moving_Line_Right"));
+
+			//_float4 fPos{};
+			//XMStoreFloat4(&fPos, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+			//m_pRenderInstance->Create_HitDistortion(fPos, { 1,0,0 }, {},{5.f, 5.f},0.3f);
+
+
 
 			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
 
@@ -1232,7 +1244,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			MoveToEnemy_Ground(2.f);
 			m_bInvisible = false;
 
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			////Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"),m_pTransformCom->Get_WorldMatrixPtr());
 
@@ -1286,7 +1299,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = true;
 
 			//»þ»þ¼¡ ÀÌÆåÆ®,
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
 			//if (pEffect != nullptr)
@@ -1325,7 +1339,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			MoveToEnemy_Ground(3.f);
 
 			//»þ»þ¼¡ ÀÌÆåÆ®,
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
 			//
@@ -1467,7 +1482,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 3)
 		{
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 
 			//CEffect_Layer* pEffect = m_pEffect_Manager->Get_Instance()->Copy_Layer_AndGet(TEXT("Moving_Line_Right"), m_pTransformCom->Get_WorldMatrixPtr());
 			//
@@ -1495,7 +1510,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -1510,8 +1526,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = false;
 
 			MoveToEnemy_Ground(2.f);
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 0.7;
@@ -1547,7 +1563,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = true;
 
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -1559,7 +1576,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = false;
 
 			MoveToEnemy_Ground(3.f);
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -1589,8 +1607,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.iGainAttackStep = 0;
 				Desc.iGainHitCount = 0;
-				Desc.iGainKiAmount = 0;
-
+				
 				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY;
 				Desc.fCameraShakeDuration = 0.5f;
 				Desc.fCameraShakeMagnitude = 0.2f;
@@ -1659,7 +1676,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			FlipDirection();
 
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -2062,7 +2080,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = false;
 			m_bBenishingAttack = false;
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 120.f;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 0.f,1.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CAttackObject::ATTACK_DESC Desc{};
 
@@ -2273,7 +2292,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			FlipDirection();
 
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 0.f,1.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -2408,6 +2428,71 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Hit::ANIME_SPARKING:
 		break;
 	case Client::CPlay_Hit::ANIME_REFLECT:
+	{
+		if (iAttackEvent == 0)
+		{
+			CAttackObject::ATTACK_DESC Desc{};
+
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_REFLECT;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_REFLECT;
+			Desc.ColliderDesc.pMineGameObject = this;
+
+			Desc.ColliderDesc.vCenter = { 0.f,0.8f,0.f };
+			Desc.ColliderDesc.vExtents = { 1.f,1.f,0.2f };
+
+
+			Desc.fhitCharacter_Impus = { 0,0 };
+			Desc.fhitCharacter_StunTime = 0.f;
+			Desc.iDamage = 0;
+			Desc.fLifeTime = 1.f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_NONE };
+			Desc.iTeam = m_iPlayerTeam;
+			Desc.fAnimationLockTime = 0.f;
+			Desc.pOwner = this;
+			Desc.iGainHitCount = 0;
+			Desc.iGainAttackStep = 0;
+
+			Desc.bReflect = true;
+			Desc.iGainKiAmount = 15;
+
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Reflect"), TEXT("Layer_AttackObject"), &Desc);
+			m_pReflectObject = m_pGameInstance->Add_GameObject_ToLayer_AndGet(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Reflect"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			m_bReflect = true;
+		}
+		if (iAttackEvent == 1)
+		{
+			if (m_bAttackBackEvent)
+			{
+				Set_Animation(CPlay_Hit::ANIME_IDLE);
+
+				//if (m_pReflectObject != nullptr)
+				//{
+				//	//static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Set_RemoteDestory();
+				//	static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Destory();
+				//
+				//	m_pReflectObject = nullptr;
+				//}
+			}
+
+			if (m_pReflectObject != nullptr)
+			{
+				if (m_pReflectObject->m_iGameObjectData != 0)
+				{
+					m_pReflectObject = nullptr;
+				}
+				else
+					static_cast<CAttackObject_Reflect*>(m_pReflectObject)->Set_RemoteDestory();
+
+				m_pReflectObject = nullptr;
+			}
+
+			m_bReflect = false;
+		}
+	}
 		break;
 	case Client::CPlay_Hit::ANIME_CROUCH_START:
 		break;
@@ -2497,7 +2582,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_b236Special == false)
 			{
 				m_bInvisible = true;
-				Character_Make_Effect(TEXT("Moving_Line_Right"));
+				//Character_Make_Effect(TEXT("Moving_Line_Right"));
+				Character_Create_Distortion({ -1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 				main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -2516,7 +2602,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				m_bInvisible = false;
 				MoveToEnemy_Ground(7.f);
-				Character_Make_Effect(TEXT("Moving_Line_Right"));
+				//Character_Make_Effect(TEXT("Moving_Line_Right"));
+				Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 				m_b236Posing = false;
 
 				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
@@ -2532,7 +2619,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 					Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
 					Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
 
-					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0.5f };
+					//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0.5f };
+					Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,0.5f };
+
 					Desc.fhitCharacter_StunTime = 1.0f;
 					Desc.iDamage = 0;
 					Desc.fLifeTime = 0.05f;
@@ -2568,7 +2657,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 					Desc.ColliderDesc.vExtents = { 0.2f,1.f,1.f };
 					Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.8f,0.f };
 
-					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+					//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+					Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,0 };
+
 					Desc.fhitCharacter_StunTime = 1.0f;
 					Desc.iDamage = 900 * Get_DamageScale();;
 					Desc.fLifeTime = 0.05f;
@@ -2607,7 +2698,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 1.0f;
-				Desc.iDamage = 700 * Get_DamageScale();;
+				Desc.iDamage = 900 * Get_DamageScale();;
 				Desc.fLifeTime = 0.1f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
 				Desc.iTeam = m_iPlayerTeam;
@@ -2639,14 +2730,15 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f });
 		}
 		else if (iAttackEvent == 1)
 		{
 			m_bInvisible = false;
 			MoveToEnemy_Ground(7.f);
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 			m_b236Posing = false;
 
 
@@ -2702,7 +2794,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,-1.f };
 				Desc.fhitCharacter_StunTime = 1.0f;
-				Desc.iDamage = 900 * Get_DamageScale();;
+				Desc.iDamage = 1450 * Get_DamageScale();;
 				Desc.fLifeTime = 0.1f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
 				Desc.iTeam = m_iPlayerTeam;
@@ -2721,8 +2813,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f });
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
@@ -2730,13 +2822,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 
-			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY, 0, this);
-			main_Camera->StartCameraShake(0.8f, 0.3f);
+		
 
 			m_bInvisible = false;
 			MoveToEnemy_Ground(5.f);
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 			m_b236Posing = false;
 
 
@@ -2761,7 +2852,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fAnimationLockTime = 0.7f;
 			Desc.pOwner = this;
 			Desc.iGainKiAmount = 7;
-		
+
+			Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY;
+			Desc.fCameraShakeDuration = 0.8f;
+			Desc.fCameraShakeMagnitude = 0.3f;
+			//CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			//main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_236_HEAVY, 0, this);
+			//main_Camera->StartCameraShake(0.8f, 0.3f);
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2957,7 +3054,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f });
 		}
 
 
@@ -2973,7 +3071,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//{
 			//	MoveToEnemy_Ground(12.f);
 			//	m_bInvisible = false;
-			//	Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//	//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			//
 			//	CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			//	if (m_iPlayerTeam == 1)
@@ -3099,6 +3197,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fCameraShakeDuration = 1.f;
 				Desc.fCameraShakeMagnitude = 0.2f;
 
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
@@ -3164,7 +3263,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fhitCharacter_StunTime = 0.4f;
 				//Desc.iDamage = 1334 * Get_DamageScale();;
-				Desc.iDamage = 2200 * Get_DamageScale();;
+				Desc.iDamage = 2200 * Get_DamageScale(true);;
 
 				Desc.fLifeTime = 0.2f;
 				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY };
@@ -3184,7 +3283,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bCameraZoom = false;
 				Desc.bOnwerHitNoneStop = true;
 				Desc.bGrabbedEnd = true;
-
+				Desc.iGainKiAmount = 0;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 			else
@@ -3245,8 +3344,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f });
 			//,0ÀÏ‹š ¼Óµµ´Â 61
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 181.f;
 
@@ -3257,7 +3356,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			MoveToEnemy_Ground(12.f);
 
 			m_bInvisible = false;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 61.f;
 
@@ -3309,12 +3409,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 		}
 
-		//Position 240.1
-		else if (iAttackEvent == 240)
-		{
-			
-			//main_Camera->StartCameraShake(0.5f, 0.05f);
-		}
+
 		//¸¶Áö¸· ÆÝÄ¡
 		else if (iAttackEvent == 4)
 		{
@@ -3333,7 +3428,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 1.0f;
-			Desc.iDamage = 1000 * Get_DamageScale();;
+			Desc.iDamage = 1000 * Get_DamageScale(true);;
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 			Desc.iTeam = m_iPlayerTeam;
@@ -3356,14 +3451,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			//»þ»þ¼¡,¾Èº¸ÀÌ°Ô, Position290 (µÚµ¹±â) Á÷ÀüÀ¸·Î ÀÌµ¿?
 			m_bInvisible = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f });
 			Set_CurrentAnimationPositionJump(285.f);
 		}
 		else if (iAttackEvent == 290)
 		{
 			//»þ»þ¼¡,º¸ÀÌ°Ô,
 			m_bInvisible = false;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f });
 
 
 		}
@@ -3381,7 +3478,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 1.0f;
-			Desc.iDamage = 1000 * Get_DamageScale();;
+			Desc.iDamage = 1000 * Get_DamageScale(true);;
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 			Desc.iTeam = m_iPlayerTeam;
@@ -3412,7 +3509,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = true;
 			m_bDynamicMove = true;
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ -1.f,0.f,0.f });
 
 			//Ã¹¹øÂ°¹æ
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
@@ -3425,7 +3523,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			m_bInvisible = false;
 
-			Character_Make_Effect(TEXT("Moving_Line_Right"));
+			//Character_Make_Effect(TEXT("Moving_Line_Right"));
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
+
 			Set_CurrentAnimationPositionJump(48.01f);
 
 
@@ -3444,7 +3544,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_StunTime = 0.4f;
 				//Desc.fhitCharacter_StunTime = 0.55f;
 
-				Desc.iDamage = 90 * Get_DamageScale();;
+				Desc.iDamage = 90 * Get_DamageScale(true);;
 				Desc.fLifeTime = 0.2f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 				Desc.iTeam = m_iPlayerTeam;
@@ -3469,8 +3569,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 			{
 				m_bInvisible = true;
-				Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+				//Character_Make_Effect(TEXT("Moving_Line_Right"));
+				Character_Create_Distortion({ -1.f,0.f,0.f });
 				//cout << "Event 101 " << endl;
 			}
 
@@ -3495,7 +3595,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_StunTime = 0.4f;
 				//Desc.fhitCharacter_StunTime = 0.55f;
 
-				Desc.iDamage = 90 * Get_DamageScale();;
+				Desc.iDamage = 90 * Get_DamageScale(true);;
 				Desc.fLifeTime = 0.2f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 				Desc.iTeam = m_iPlayerTeam;
@@ -3529,7 +3629,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pTransformCom->Add_Move({ 1.f,0.f,-1.5f });
 				//cout << XMVectorGetZ(m_pTransformCom->Get_State(CTransform::STATE_POSITION)) << endl;
 
-				Character_Make_Effect(TEXT("Moving_Line_Right"));
+				//Character_Make_Effect(TEXT("Moving_Line_Right"));
+				Character_Create_Distortion({ 1.f,0.f,0.f });
+
 			}
 
 
@@ -3603,7 +3705,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_StunTime = 0.4f;
 				//Desc.fhitCharacter_StunTime = 0.55f;
 
-				Desc.iDamage = 90 * Get_DamageScale();;
+				Desc.iDamage = 90 * Get_DamageScale(true);;
 				Desc.fLifeTime = 0.2f;
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_MEDIUM };
 				Desc.iTeam = m_iPlayerTeam;
@@ -3667,6 +3769,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fAttackDelayTime = 0.02f; //QTE ¼º°øÇßÀ»¶§¸¸ ¸øÇÔ?
 
 				Desc.eEnergyColor = CAttackObject_Energy::ENERGY_LIGHT_BLUE;
+				Desc.iGainKiAmount = 0;
 
 				Desc.fColliderfCY = 1.2f;
 				Desc.fAnimationLockTime = 1.f;
@@ -3693,7 +3796,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 			{
 				m_bInvisible = true;
-				Character_Make_Effect(TEXT("Moving_Line_Right"));
+				//Character_Make_Effect(TEXT("Moving_Line_Right"));
+				Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 			}
 
 
@@ -3818,6 +3922,49 @@ void CPlay_Hit::Update_214FinalInvisible()
 
 }
 
+void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
+{
+	if (m_pModelCom->m_iCurrentAnimationIndex != CPlay_Hit::ANIME_214_FINAL_SUCESS)
+		return;
+
+
+	_float fCurrentAnimationPosition = m_pModelCom->m_fCurrentAnimPosition;
+
+	if (fCurrentAnimationPosition < 150 || fCurrentAnimationPosition > 254.9)
+		return;
+
+
+	m_fAccFinalTime += fTimeDelta;
+
+	if (m_fAccFinalTime > 0.02f)
+	{
+		m_fAccFinalTime = 0.f;
+
+		//-2~+2,  0~1.5
+
+		Character_Create_Distortion({ 1.f,0.f,0.f }, { (rand()%600-300)*0.01f , rand()%150 *0.01f, (rand()%200-100) * 0.01f}, {1.5f,1.5f}, 0.2f);
+
+		//Character_Create_Distortion({ 1.f,0.f,0.f });
+
+
+	}
+
+
+	if (isNearlyEqual(fCurrentAnimationPosition, 155) || isNearlyEqual(fCurrentAnimationPosition, 164) || isNearlyEqual(fCurrentAnimationPosition, 172) || isNearlyEqual(fCurrentAnimationPosition, 178) ||
+		isNearlyEqual(fCurrentAnimationPosition, 183) || isNearlyEqual(fCurrentAnimationPosition, 196) || isNearlyEqual(fCurrentAnimationPosition, 202)
+		|| isNearlyEqual(fCurrentAnimationPosition, 208) || isNearlyEqual(fCurrentAnimationPosition, 217) || isNearlyEqual(fCurrentAnimationPosition, 225) || isNearlyEqual(fCurrentAnimationPosition, 148))
+	{
+		m_bInvisible = false;
+	}
+
+	else
+	{
+		m_bInvisible = true;
+	}
+
+
+}
+
 _bool CPlay_Hit::isNearlyEqual(_float CurValue, _float TargetValue)
 {
 
@@ -3841,7 +3988,8 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 		m_bInvisible = true;
 
 		//¹Ý°Ý ¼º°ø ÀÌÆåÆ® ¸¸µé±â
-		Character_Make_Effect(TEXT("Moving_Line_Right"));
+		//Character_Make_Effect(TEXT("Moving_Line_Right"));
+		Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 		main_Camera->StartCameraShake(0.1f, 0.3f);

@@ -140,6 +140,7 @@
 #include "Play_Goku.h"
 #include "Play_21.h"
 #include "Play_Hit.h"
+#include "Play_Frieza.h"
 #include "AttackObject.h"
 #include "AttackObject_Chase.h"
 #include "AttackObject_Grab.h"
@@ -2183,6 +2184,13 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
 	//	return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Frieza"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_TestMesh.bin", PreTransformMatrix))))
+		return E_FAIL;
+	 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_TestMesh.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
@@ -2211,13 +2219,12 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
-
-
+	
 
 
 
@@ -3081,8 +3088,12 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Hit"),
 		CPlay_Hit::Create(m_pDevice, m_pContext))))
-
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Frieza"),
+		CPlay_Frieza::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack"),
 		CAttackObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

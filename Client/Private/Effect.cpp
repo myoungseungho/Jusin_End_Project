@@ -211,7 +211,23 @@ HRESULT CEffect::Play_Animation(_float CurrentFrame)
 	//_float fOriginY = XMVectorGetY(m_pTransformCom->Get_WorldMatrix().r[3]);
 	
 
-	XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * m_LayerMatrix);
+	//XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * m_LayerMatrix);
+
+
+	if (m_bIsBillboarding && m_bIsAlreadyBillboading == false)
+	{
+		XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * m_LayerMatrix);
+		m_pTransformCom->Set_WorldMatrix(m_WorldMatrix);
+		m_pTransformCom->LookAt(m_pGameInstance->Get_CamPosition_Vector());
+		XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix());
+	}
+	else
+	{
+		XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * m_LayerMatrix);
+	}
+
+	m_bIsAlreadyBillboading = false;
+
 	//m_WorldMatrix._43 = fOriginZ;
 	//m_WorldMatrix._42 = fOriginY;
 	

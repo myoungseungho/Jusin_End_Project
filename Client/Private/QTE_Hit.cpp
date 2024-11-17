@@ -35,7 +35,7 @@ HRESULT CQTE_Hit::Initialize(void* pArg)
 #pragma region Goku_Hit
 
 	Desc.lifeTime = 15.f;
-	Desc.create_Num = 5;
+	Desc.create_Num = 3;
 	Desc.ID = Hit_Situation_ID_Goku;
 
 	CQTE_Hit_Situation* situation_Goku = static_cast<CQTE_Hit_Situation*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_QTE_Hit_Situation"), &Desc));

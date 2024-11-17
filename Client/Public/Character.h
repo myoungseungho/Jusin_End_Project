@@ -143,6 +143,8 @@ public:
 	virtual _bool Check_bCurAnimationisGuard(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisGrab(_uint iAnimation = 1000);
 
+	virtual _bool Check_bCurAnimationisGroundSmash(_uint iAnimation = 1000);
+
 	virtual _short Check_bCurAnimationisCanChase() { return 0; };  //현재 모션이 체이스로 연계 가능한지 여부를 체크, 0이면 불가능 그 외의 숫자는 시작속도*10니까 받아서 *0.01f할것
 
 
@@ -383,6 +385,8 @@ public:
 
 	//void Character_Make_Effect(_wstring strEffectName, _float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale={1.f,1.f,1.f});
 
+	void Character_Create_Distortion(_float3 vDir = { 0.f,1.f,0.f }, _float2 vOffSetPos = {0.f,0.f}, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = { 0.3f });
+	void Character_Create_Distortion(_float3 vDir, _float3 vOffSetPos, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = { 0.3f });
 
 
 
@@ -646,7 +650,8 @@ protected:
 	_float m_fAccBeReflectingTime = { 0.f };
 	CGameObject* m_pReflectObject = { nullptr };
 
-	_bool m_bFinalSkillQTESucces = { false };
+
+	//_bool m_bFinalSkillQTESucces = { false }; //m_iQTE 로 대체됨
 	_bool m_bBenishingAttack = { false };
 	_bool m_bInvisible = { false };
 
@@ -743,6 +748,15 @@ public:
 	void Notify_QTE_Continuous_Attack(_int result);
 
 	CUI_Define::PLAYER_ID Get_CharacterID() { return m_eCharacterID; };
+
+
+//public:
+	
+
+	void Character_Start_QTE(_uint iQTEID);
+protected:
+	_short m_iQTE = { -1 };
+	_bool m_bCreateQTE = { false };
 
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

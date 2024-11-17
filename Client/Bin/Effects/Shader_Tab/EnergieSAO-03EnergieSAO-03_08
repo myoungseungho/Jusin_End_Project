@@ -6,8 +6,8 @@ ID: 2
 vTexCoord: 1 0.5
 NodePosCount: 4
 NodeID: -1 Position: 472 88
-NodeID: 1501 Position: 24 55
 NodeID: 2 Position: 217 52
+NodeID: 1501 Position: 24 55
 NodeID: 1 Position: 183 62
 MoveTexNodeCount: 0
 SpriteNodeCount: 0

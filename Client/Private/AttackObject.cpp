@@ -76,6 +76,13 @@ HRESULT CAttackObject::Initialize(void* pArg)
 
 	m_bHitNoGravity = pDesc->bHitNoGravity;
 		 
+	if (pDesc->iVirtualCameraindex != 200)
+	{
+		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
+		m_ianimationIndex = pDesc->ianimationIndex;
+
+	}
+
 	if (pDesc->fCameraShakeDuration != 0)
 	{
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
@@ -391,6 +398,21 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				}
 
 			}
+			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)
+			{
+				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
+				if (m_iVirtualCameraindex != 200)
+				{
+					main_Camera->Play((CMain_Camera::VIRTUAL_CAMERA)m_iVirtualCameraindex, m_ianimationIndex, m_pOwner);
+
+				}
+				if (m_fCameraShakeDuration != 0)
+				{
+					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
+				}
+			}
+
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 

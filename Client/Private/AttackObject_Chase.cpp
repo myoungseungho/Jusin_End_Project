@@ -287,6 +287,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
+			m_pOwner->Gain_KiAmount(4);
 
 			if (m_bOwnerNextAnimation)
 			{
