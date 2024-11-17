@@ -77,6 +77,8 @@ public:
 		Hit_Ultimate_3_1,
 		Hit_Ultimate_3_2,
 		Hit_Ultimate_3_3,
+		Hit_Light_Attack_SFX,
+		Hit_J_Attack_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

@@ -491,6 +491,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma region Hit Sound
 
+#pragma region Hit_Voice
+
 	//약공격 4개 그룹사운드
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_HIT, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Light_Attack_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Hit_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_HIT, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Hit_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -548,6 +550,15 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Ultimate_3_2.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//네번째 (오레와 센츄~)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Ultimate_3_3.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_3, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+#pragma endregion
+
+#pragma region Hit_SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Light_Attack_0_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_J_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_J_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+#pragma endregion
+
+
 #pragma endregion
 
 #pragma region Frieza Sound
