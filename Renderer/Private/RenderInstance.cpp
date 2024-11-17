@@ -73,6 +73,11 @@ void CRenderInstance::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
 	m_pRenderer->Create_Distortion(tDistortionDesc);
 }
 
+void CRenderInstance::Create_HitDistortion(_float4 vPlayerPos, _float2 vOffSetPos, _float2 vOffSetScale, _float3 vDir, _float fLifeTime)
+{
+	m_pRenderer->Create_HitDistortion(vPlayerPos, vOffSetPos, vOffSetScale, vDir, fLifeTime);
+}
+
 void CRenderInstance::Show_OutLine()
 {
 	m_pRenderer->Show_OutLine();

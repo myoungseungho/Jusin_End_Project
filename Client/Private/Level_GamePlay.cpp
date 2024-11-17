@@ -145,13 +145,14 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
-		DISTORTION_DESC tDistortionDesc{};
-		tDistortionDesc.vPosition = { 0.f,1.f,0.f,1.f };
-		tDistortionDesc.fLifeTime = 3.f;
-		tDistortionDesc.vScale = { 4.f,2.f };
-		tDistortionDesc.fFactor = 3.f;
-		
-		m_pRenderInstance->Create_Distortion(tDistortionDesc);
+		//DISTORTION_DESC tDistortionDesc{};
+		//tDistortionDesc.vPosition = { 0.f,1.f,0.f,1.f };
+		//tDistortionDesc.fLifeTime = 0.1f;
+		//tDistortionDesc.vScale = { 4.f,2.f };
+		//tDistortionDesc.fFactor = 3.f;
+		//tDistortionDesc.fMaxTime = 0.1f;
+		//m_pRenderInstance->Create_Distortion(tDistortionDesc);
+		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f));
 	}
 	if (m_pGameInstance->Key_Down(DIK_Z))
 	{

@@ -26,6 +26,7 @@ public: /* For.Renderer */
 	void SetActive_RenderTarget(_bool isOn);
 	void SetActive_Debug_Component(_bool isOn);
 	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
+	void Create_HitDistortion(_float4 vPlayerPos, _float2 vOffSetPos = { 0.f,0.f }, _float2 vOffSetScale = { 1.f,1.f }, _float3 vDir = { 1,0,0 }, _float fLifeTime = 0.1f);
 	void Show_OutLine();
 	void Show_Layer_View();
 	_bool Get_isLayerView();

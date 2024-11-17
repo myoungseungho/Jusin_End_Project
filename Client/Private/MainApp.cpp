@@ -39,7 +39,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 
 	//IMGUI 생성, 싱글턴
-	//Create_IMGUI_Manager();
+	Create_IMGUI_Manager();
 
 	//스레드풀 초기화
 	//하드웨어의 스레드 수를 넘겨준다. (소프트웨어 스레드 수 아님)

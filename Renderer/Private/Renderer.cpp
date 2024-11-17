@@ -1,3 +1,6 @@
+#include <random>
+#include <vector>
+
 #include "Renderer.h"
 #include "GameObject.h"
 #include "RenderInstance.h"
@@ -60,7 +63,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
-	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.dds"), 4);
+	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 4);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pDistortionTextureCom || nullptr == m_pDistortionTransformCom || nullptr == m_pDistortionShaderCom)
 		return E_FAIL;
@@ -242,10 +245,6 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Draw_MapBlackOut(fTimeDelta)))
 		return E_FAIL;
 
-	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
-	if (FAILED(Render_Distortion(fTimeDelta)))
-		return E_FAIL;
-
 	/* 여기서 그리고 있음 이펙트를 위한 행동 하지만 위에서 블러를 먹인 그림을 가지고만 있고 그리진 않아서 영향이 안가짐 */
 	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
 		return E_FAIL;
@@ -257,6 +256,9 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
+		return E_FAIL;
+	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
+	if (FAILED(Render_Distortion(fTimeDelta)))
 		return E_FAIL;
 
 	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
@@ -277,7 +279,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 
 
-	
+
+
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
 		return E_FAIL;
@@ -288,6 +291,54 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 void CRenderer::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
 {
 	m_Distortions.push_back(tDistortionDesc);
+}
+
+void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float2 vOffSetPos, _float2 vOffSetScale, _float3 vDir, _float fLifeTime)
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<_float> offsetDist(0.04f, 0.08f);
+	uniform_real_distribution<_float> scaleDist(0.8f, 1.2f);   
+	uniform_real_distribution<_float> factorDist(0.8f, 1.2f);
+	_float yOffset = 1.55f;	
+	_float yDecrement = 0.2f;
+	_float xStep = 0.12f;	
+
+	for (_int i = 0; i < 8; ++i)
+	{
+		DISTORTION_DESC tDistortionDesc{};
+		_float4 vStrainPos = vPlayerPos;
+
+		_float xDirection = (i % 2 == 0) ? 1.0f : -1.0f;
+		//tDistortionDesc.vDir = _float3(vDir.x * xDirection, vDir.y, vDir.z);
+		vStrainPos.x += xDirection * xStep;
+		vStrainPos.y += yOffset - offsetDist(gen);
+
+		tDistortionDesc.vPosition = {
+			vStrainPos.x + vOffSetPos.x + offsetDist(gen),
+			vStrainPos.y + vOffSetPos.y /*+ offsetDist(gen)*/,
+			vStrainPos.z,
+			1.0f
+		};
+
+		float scaleModifier = scaleDist(gen);
+		tDistortionDesc.vScale = {
+			2.0f * vOffSetScale.x * scaleModifier,
+			0.47f * vOffSetScale.y * scaleModifier
+		};
+
+		tDistortionDesc.fLifeTime = fLifeTime;
+		tDistortionDesc.fMaxTime = fLifeTime;
+		tDistortionDesc.fFactor = factorDist(gen);
+		tDistortionDesc.vDir = vDir;
+
+		m_Distortions.push_back(tDistortionDesc);
+
+		yOffset -= yDecrement;
+
+		xStep += 0.02f;
+	}
+
 }
 
 HRESULT CRenderer::Render_Priority(_float fTimeDelta)
@@ -1294,6 +1345,20 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
 		return E_FAIL;
 
+
+	_float4x4 viewMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW);
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &viewMatrix)))
+		return E_FAIL;
+
+	_float4x4 projMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ);
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &projMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 1)))
+		return E_FAIL;
+
 	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
 	{
 		iter->fLifeTime -= fTimeDelta;
@@ -1305,26 +1370,18 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 		}
 
 		m_pDistortionTransformCom->Set_Scaled(iter->vScale.x, iter->vScale.y, 1.f);
-		m_pDistortionTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), iter->fDir.y > 0 ? 90 : 0);
+		m_pDistortionTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians((iter->vDir.x == 1.f ? 0 : 180)));
 		m_pDistortionTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&iter->vPosition));
 
 		if (FAILED(m_pDistortionTransformCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
 
-		/* 뷰투영 카메라로 하는게 플레이어가 직접 세팅할때 편한가? or UI 처럼 크기를 픽셀크기로 던져줘서 그리는게 편한가?*/
-		_float4x4 viewMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW);
-		if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &viewMatrix)))
-			return E_FAIL;
-
-		_float4x4 projMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ);
-		if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &projMatrix)))
-			return E_FAIL;
-
-		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
-			return E_FAIL;
-		if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 3)))
-			return E_FAIL;
 		m_pDistortionShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(_float));
+		m_pDistortionShaderCom->Bind_RawValue("fLifeTime", &iter->fLifeTime, sizeof(_float));
+		m_pDistortionShaderCom->Bind_RawValue("fLifeMaxTime", &iter->fMaxTime, sizeof(_float));
+		m_pDistortionShaderCom->Bind_RawValue("g_vDir", &iter->vDir, sizeof(_float3));
+		m_pDistortionShaderCom->Bind_RawValue("g_Factor", &iter->fFactor, sizeof(_float));
+
 		m_pDistortionShaderCom->Begin(0);
 		m_pVIBuffer->Bind_Buffers();
 		m_pVIBuffer->Render();
@@ -2092,7 +2149,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 #pragma endregion	
 
 #pragma region Distortion
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Distortion"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Distortion"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
 		return E_FAIL;
 
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Distortion"), TEXT("Target_Distortion"))))

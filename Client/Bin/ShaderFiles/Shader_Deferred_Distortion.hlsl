@@ -7,10 +7,12 @@ float4x4		g_ViewMatrixInv, g_ProjMatrixInv;
 
 texture2D       g_Texture, g_MaskTexture, g_BackBufferTexture;
 
+float           fLifeMaxTime;
 float			fLifeTime;
 float			fFactor;
 float g_Time;
-
+float3 g_vDir;
+float g_Factor;
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -25,9 +27,36 @@ struct VS_OUT
 
 VS_OUT VS_MAIN(VS_IN In)
 {
+    VS_OUT Out;
+
+    vector vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+    vPosition = mul(vPosition, g_ViewMatrix);
+    vPosition = mul(vPosition, g_ProjMatrix);
+
+    Out.vPosition = vPosition;
+    Out.vTexcoord = In.vTexcoord;
+
+    return Out;
+}
+
+
+VS_OUT VS_MAIN_DISTORTION(VS_IN In)
+{
 	VS_OUT			Out;
 	
-	vector		vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+    //float cosTheta = g_vDir.x; 
+    //float sinTheta = g_vDir.y; 
+
+    //float4x4 zRotationMatrix = float4x4(
+    //cosTheta, -sinTheta, 0, 0,
+    //sinTheta, cosTheta, 0, 0,
+    //0, 0, 1, 0,
+    //0, 0, 0, 1
+    //);
+
+    //float4x4 rotatedWorldMatrix = mul(g_WorldMatrix, zRotationMatrix);
+    //vector vPosition = mul(vector(In.vPosition, 1.f), rotatedWorldMatrix);
+    vector vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
 	vPosition = mul(vPosition, g_ViewMatrix);
 	vPosition = mul(vPosition, g_ProjMatrix);
 
@@ -59,7 +88,7 @@ PS_OUT PS_MAIN_DRAW_DISTORTION(PS_IN In)
     vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, speedUV);
     
-	Out.vColor = vMaskDiffuse * vBaseDiffuse.a;
+    Out.vColor.g = ((vMaskDiffuse.g * vBaseDiffuse.a) * (fLifeTime / fLifeMaxTime)) * g_Factor;
     
 	return Out;
 }
@@ -72,15 +101,16 @@ PS_OUT PS_MAIN_DISTORTION_TO_BACKBUFFER(PS_IN In)
 
     float2 distortedUV = In.vTexcoord;
     /* 디스토션 렌더타겟에서 0 0 0 0 인 부분을 검출 해서 만약 그렇다면 UV좌표 자기 기존 텍스쿠드로 해야될듯 */
-    distortedUV.x += (vDistortion.r) * 0.05f;
-    distortedUV.y += (vDistortion.g) * 0.005f;
-
+    distortedUV.x += (vDistortion.g) * 0.07f;
+    //distortedUV.y += (vDistortion.g) * 0.005f;
+    
     float4 vBackBufferColor = g_BackBufferTexture.Sample(LinearSampler, distortedUV);
 
     Out.vColor = vBackBufferColor;
 
     return Out;
 }
+        //distortedUV.y += (vDistortion.g) * 0.005f;  y = 1 - (fLifeTime - 0.01) / 2.99
 
 PS_OUT PS_MAIN_RESULT(PS_IN In)
 {
@@ -97,9 +127,9 @@ technique11		DefaultTechnique
 	{
 		SetRasterizerState(RS_Default);
 		SetDepthStencilState(DSS_None, 0);
-		SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		SetBlendState(BS_OneBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
-		VertexShader = compile vs_5_0 VS_MAIN();
+        VertexShader = compile vs_5_0 VS_MAIN_DISTORTION();
 		GeometryShader = NULL;
 		HullShader = NULL;
 		DomainShader = NULL;
