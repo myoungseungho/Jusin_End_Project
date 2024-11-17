@@ -45,13 +45,12 @@ void CQTE_Manager::Update(_float fTimeDelta)
 	for (auto& iter : m_vecQTE)
 		iter->Update(fTimeDelta);
 
-
 	//디버그용
 	if (m_pGameInstance->Key_Down(DIK_F6))
 	{
-		CGameObject* gameObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 1);
+		CGameObject* gameObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 
-		Start_QTE(QTE_ID::QTE_ID_1P_SAME_GRAB, gameObject, 3.F);
+		Start_QTE(QTE_ID::QTE_ID_1P_SAME_GRAB, gameObject, 10.f);
 	}
 }
 
