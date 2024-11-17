@@ -25,7 +25,7 @@ HRESULT CUI_HpPanel::Initialize_Prototype()
 
 HRESULT CUI_HpPanel::Initialize(void* pArg)
 {
-	m_fSizeX = 464.f, m_fSizeY = 116.f, m_fPosX = 330.f, m_fPosY = 87.f;
+	m_fSizeX = 464.f, m_fSizeY = 116.f, m_fPosX = 330.f, m_fPosY = 67.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -48,7 +48,7 @@ void CUI_HpPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Animation({ 271 ,147 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 500.f, 0.8f, fTimeDelta);
+	Animation({ 271 ,107 ,0.8, 1.f }, { m_fPosX, m_fPosY, 0.8f, 1.f }, 500.f, 0.8f, fTimeDelta);
 
 }
 

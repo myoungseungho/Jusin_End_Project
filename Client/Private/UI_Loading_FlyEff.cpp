@@ -46,18 +46,34 @@ HRESULT CUI_Loading_FlyEff::Initialize(void* pArg)
 	_float fOffsetX = g_iWinSizeX * 0.5f;
 	_float fOffsetY = g_iWinSizeY * 0.5f;
 
+
+	_float svHolePosX = XMVectorGetX(m_pHoleTransform->Get_State(CTransform::STATE_POSITION));
+	_float svHolePosY = XMVectorGetY(m_pHoleTransform->Get_State(CTransform::STATE_POSITION));
+
+	_vector vSetPos = {};
+
+
 	if (m_iRandomMove == 0)
 	{
 		m_fSizeX = 20.f;
+
+		vSetPos = XMVectorSetX(m_pHoleTransform->Get_State(CTransform::STATE_POSITION), svHolePosX - 40.f);
+		vSetPos = XMVectorSetY(vSetPos, svHolePosY + 50.f);
 		QueueAnim.push({ 500.f * m_vOffSetWinSize.x - fOffsetX ,(-170.f * m_vOffSetWinSize.y) + fOffsetY, 0.f });
 	}
 	else
 	{
 		m_fSizeX = -20.f;
+
+		vSetPos = XMVectorSetX(m_pHoleTransform->Get_State(CTransform::STATE_POSITION), svHolePosX + 40.f);
+		vSetPos = XMVectorSetY(vSetPos, svHolePosY + 50.f);
 		QueueAnim.push({ 960.f * m_vOffSetWinSize.x - fOffsetX ,(-170.f * m_vOffSetWinSize.y) + fOffsetY, 0.f });
 	}
-	QueueAnim.push(m_pHoleTransform->Get_State(CTransform::STATE_POSITION));
 
+	
+
+	QueueAnim.push(vSetPos);
+	QueueAnim.push(m_pHoleTransform->Get_State(CTransform::STATE_POSITION));
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
@@ -138,10 +154,10 @@ _bool CUI_Loading_FlyEff::Go_Target(_vector fTargetPos ,_float fTimeDelta)
 	_vector vDistance = vTargetPos - vOriginPos;
 	_vector vDir = XMVector3Normalize(vDistance);
 
-	_vector MovePos = vOriginPos + vDir * 500.f * fTimeDelta;
+	_vector MovePos = vOriginPos + vDir * m_fSpeedVaule * fTimeDelta;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, MovePos);
 
-	m_fScaleOffset += fTimeDelta * 3.f;
+	m_fScaleOffset += fTimeDelta * 4.f;
 
 	if (m_iRandomMove == 0)
 		m_pTransformCom->Set_Scaled(m_fSizeX * m_fScaleOffset, m_fSizeY * m_fScaleOffset,1.f);
@@ -152,7 +168,7 @@ _bool CUI_Loading_FlyEff::Go_Target(_vector fTargetPos ,_float fTimeDelta)
 
 	_float fDestroyPos = { 0.f };
 
-	(m_bEndAnim) ? fDestroyPos = 50.f : fDestroyPos = 10.f;
+	(m_bEndAnim) ? fDestroyPos = 100.f : fDestroyPos = 10.f;
 
 	if (fLength <= fDestroyPos)
 	{
@@ -178,8 +194,10 @@ void CUI_Loading_FlyEff::AnimSpeed(_float fTimeDelta)
 	switch ((_uint)m_fAnimFream)
 	{
 	case 0:
-		if (QueueAnim.size() == 2)
+		if (QueueAnim.size() == 3)
 			m_fAnimFream += fTimeDelta * 2.f;
+
+		m_fSpeedVaule = 500;
 		break;
 
 	case 1:		
@@ -192,14 +210,18 @@ void CUI_Loading_FlyEff::AnimSpeed(_float fTimeDelta)
 
 	case 3:
 		m_bEndAnim = TRUE;
+		m_fSpeedVaule = 1000.f;
 		
-		if (QueueAnim.size() == 0)
-			m_fAnimFream += fTimeDelta * 16.f;
-		
+		if (QueueAnim.size() == 1)
+		{
+			++m_fAnimFream;
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_SFX, false, 0.2f);
+		}
 		break;
 
 	case 4:
-			m_fAnimFream += fTimeDelta * 16.f;
+		m_bEndAnim = FALSE;
+		m_fAnimFream += fTimeDelta * 16.f;
 		break;
 
 	case 5:

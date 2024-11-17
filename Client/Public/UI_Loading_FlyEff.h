@@ -59,6 +59,7 @@ private:
 	_float m_fScaleOffset = {1.f};
 
 	_uint m_iRandomMove = { 0 };
+	_float m_fSpeedVaule = { 0.f };
 
 	CUI_Manager::ThreadPool_For_Loading ThreadID = {};
 

@@ -26,7 +26,7 @@ HRESULT CUI_Chara_Icon_Panel::Initialize(void* pArg)
 	m_fSizeX = 84.f * 2.f;
 	m_fSizeY = 84.f;
 	m_fPosX = 73.f;
-	m_fPosY = 88.f;
+	m_fPosY = 78.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -48,7 +48,7 @@ void CUI_Chara_Icon_Panel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Animation({ 72.f ,112.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 500.f, 0.85f, fTimeDelta);
+	Animation({ 72.f ,57.f ,0.85f, 1.f }, { m_fPosX, m_fPosY, 0.85f, 1.f }, 500.f, 0.85f, fTimeDelta);
 }
 
 void CUI_Chara_Icon_Panel::Late_Update(_float fTimeDelta)

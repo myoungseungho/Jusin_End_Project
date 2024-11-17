@@ -33,7 +33,7 @@ HRESULT CUI_SubHpPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosY = 140.f;
+	m_fPosY = 100.f;
 	__super::Set_UI_Setting(m_fSizeX , 63.f, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
@@ -48,7 +48,7 @@ void CUI_SubHpPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	Animation({ 255.f , 87.f ,0.7f, 1.f }, { m_fPosX, m_fPosY, 0.7f, 1.f }, 500.f, 0.7f, fTimeDelta);
+	Animation({ 255.f , 67.f ,0.7f, 1.f }, { m_fPosX, m_fPosY, 0.7f, 1.f }, 500.f, 0.7f, fTimeDelta);
 }
 
 void CUI_SubHpPanel::Late_Update(_float fTimeDelta)

@@ -1457,9 +1457,6 @@
     <ClInclude Include="..\Public\S21_MeleeAttack.h">
       <Filter>02.GameObjects\Character\Play_21\S21_MeleeAttack</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\MainApp.h">
-      <Filter>01.Level</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\AttackObject_Ranged.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Ranged</Filter>
     </ClInclude>
@@ -1798,6 +1795,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Character.h">
       <Filter>02.GameObjects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MainApp.h">
+      <Filter>00.MainApp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

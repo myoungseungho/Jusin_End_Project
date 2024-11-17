@@ -23,7 +23,7 @@ HRESULT CUI_AttBufMark::Initialize_Prototype()
 
 HRESULT CUI_AttBufMark::Initialize(void* pArg)
 {
-	m_fPosX = 437.f, m_fPosY = 146.f;
+	m_fPosX = 437.f, m_fPosY = 116.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
