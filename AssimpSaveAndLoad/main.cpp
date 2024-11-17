@@ -1,12 +1,12 @@
-#include "ModelConverter.h"
+#include "ModelConverter.h" 
 
-#define DATAFILEPATH "../Client/Bin/Resources/Map/Volcano/vo_DestructiveFinish/"
+#define DATAFILEPATH "../Client/Bin/ModelData/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/aASDASDASDSA.fbx", TYPE_NONANIM},
+		{"Models/Lobby_Frieza.fbx", TYPE_ANIM},
 
 	};
 

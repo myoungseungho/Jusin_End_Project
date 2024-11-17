@@ -66,6 +66,10 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Goku"), TEXT("Layer_Lobby_Goku"))))
 		return E_FAIL;
 
+	//로비 NPC 프리저
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Frieza"), TEXT("Layer_Lobby_Frieza"))))
+		return E_FAIL;
+
 	//로비 하늘
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Sky"), TEXT("Layer_Lobby_Sky"))))
 		return E_FAIL;

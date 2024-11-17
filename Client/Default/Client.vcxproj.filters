@@ -523,6 +523,9 @@
     <ClCompile Include="..\Private\QTE_1P_Same_Grab.cpp">
       <Filter>02.GameObjects\QTE\QTE_1P_Same_Grab</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Lobby_Frieza.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Frieza</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1112,6 +1115,9 @@
     </Filter>
     <Filter Include="02.GameObjects\QTE\QTE_1P_Same_Grab">
       <UniqueIdentifier>{a8152535-b696-444a-b28a-79325c90da0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Frieza">
+      <UniqueIdentifier>{e9d29bf8-c1d3-4ac2-88f1-81a8ca79b45c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1798,6 +1804,9 @@
     </ClInclude>
     <ClInclude Include="..\public\MainApp.h">
       <Filter>00.MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Frieza.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Frieza</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
