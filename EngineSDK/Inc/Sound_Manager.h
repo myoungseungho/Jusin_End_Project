@@ -104,6 +104,15 @@ public:
 		Ultimate_3_Dash_21_SFX,
 		Ultimate_3_Attacks_21_SFX,
 		Ultimate_3_Finish_21_SFX,
+		Frieza_Back_Dash,
+		Frieza_J_Attack,
+		Frieza_Heavy_Attack,
+		Frieza_Down_Forward_Light,
+		Frieza_Down_Forward_J,
+		Frieza_Down_Back_J,
+		Frieza_Grab,
+		Frieza_Light_Attack_Final,
+
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -152,6 +161,9 @@ public:
 		Hit_Hit_0,
 		Hit_Hit_1,
 		Hit_Hit_2,
+		Light_Attack_0_Frieza,
+		Light_Attack_1_Frieza,
+		Light_Attack_2_Frieza,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
@@ -165,7 +177,8 @@ public:
 		J_ATTACK_HIT,
 		HIT_Down_Back_Light,
 		Hit_Air_Chase,
-		Hit_Hit
+		Hit_Hit,
+		Light_Attack_Frieza,
 	};
 
 	enum class SOUND_CATEGORY

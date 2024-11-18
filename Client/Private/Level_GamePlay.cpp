@@ -652,6 +652,45 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma region Frieza Sound
 
+#pragma region Frieza_Voice
+
+	//약공 3개, 중공도 포함
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_0_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_1_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_2_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//약공 마지막 (쿠라이, 아래 기탄)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_Final.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Light_Attack_Final, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//백대쉬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Back_Dash.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Back_Dash, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//J 기탄 (또다이)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/J_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//강공격 (죠또 오도시데루카이~) , 아래 강공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Heavy_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Heavy_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//아래 앞 약공격 (나마 이키다요), 중공격, 강공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Down_Forward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Forward_Light, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//아래 앞 J(기탄) (하이잇!~)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Down_Forward_J.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Forward_J, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 아래 뒤 J(기탄) (오레가 나마테루가)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Down_Back_J.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Back_J, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 잡기
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Grab.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Grab, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+#pragma endregion
+
+#pragma region Frieza_SFX
+
+#pragma endregion
+
+
+
 #pragma endregion
 
 
