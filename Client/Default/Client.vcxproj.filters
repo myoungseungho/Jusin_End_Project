@@ -524,7 +524,16 @@
       <Filter>02.GameObjects\QTE\QTE_1P_Same_Grab</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Lobby_Frieza.cpp">
-      <Filter>02.GameObjects\Lobby\Lobby_Frieza</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Krillin.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_Text.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_TextCharaIcon.cpp">
+      <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1116,8 +1125,23 @@
     <Filter Include="02.GameObjects\QTE\QTE_1P_Same_Grab">
       <UniqueIdentifier>{a8152535-b696-444a-b28a-79325c90da0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Lobby\Lobby_Frieza">
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC">
+      <UniqueIdentifier>{bb79a2c4-790f-44b5-9e1f-d8fde22c1b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza">
       <UniqueIdentifier>{e9d29bf8-c1d3-4ac2-88f1-81a8ca79b45c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin">
+      <UniqueIdentifier>{3aae5ab3-ac80-4bd3-a641-7291fea50241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby">
+      <UniqueIdentifier>{7162f6ba-fece-4ddf-966a-d1e03ac3300d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Text">
+      <UniqueIdentifier>{11d2951b-4a1d-44be-bbfc-169bf6b3fded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\CharaIcon">
+      <UniqueIdentifier>{7be82973-c935-4be3-ab95-afa681a3d0c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1806,7 +1830,16 @@
       <Filter>00.MainApp</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Lobby_Frieza.h">
-      <Filter>02.GameObjects\Lobby\Lobby_Frieza</Filter>
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Krillin.h">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_Text.h">
+      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_TextCharaIcon.h">
+      <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

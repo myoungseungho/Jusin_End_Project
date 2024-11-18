@@ -5,6 +5,8 @@
 #include "Level_Loading.h"
 #include "RenderInstance.h"
 
+#include "GameObject.h"
+
 
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -70,6 +72,10 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Frieza"), TEXT("Layer_Lobby_Frieza"))))
 		return E_FAIL;
 
+	//로비 NPC 크리링
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Krillin"), TEXT("Layer_Lobby_Krillin"))))
+		return E_FAIL;
+
 	//로비 하늘
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Sky"), TEXT("Layer_Lobby_Sky"))))
 		return E_FAIL;
@@ -81,6 +87,19 @@ HRESULT CLevel_Lobby::Initialize()
 	//로비 카메라
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))
 		return E_FAIL;
+#pragma endregion
+
+#pragma region 사본 UI 객체 만들기
+
+	//텍스처 박스
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextBox"), TEXT("Layer_Lobby_TextBox"))))
+		return E_FAIL;
+
+	//텍스처 캐릭터 아이콘
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCharaIcon"), TEXT("Layer_Lobby_TextCharaIcon"))))
+		return E_FAIL;
+
+
 #pragma endregion
 
 #pragma region Light

@@ -35,6 +35,15 @@ private:
 	void RotateTowardsTarget(const _float3& vTargetDir, _float fTimeDelta);
 	void MoveForward(_float fTimeDelta);
 	void Entry_Level();
+
+	void Set_CharacterInfo();
+
+	//해당 레이어 오브젝트와의 거리 체크
+	_float ObjectDistance(_wstring strLayerTag ,_uint iLayerIndex = 0);
+
+	//프리저와 상호작용
+	void Talk_Frieza(_float fEnableDistance);
+
 	// 애니메이션 상태 관리
 	_bool m_bDashTriggered = false; // 대쉬 애니메이션이 트리거되었는지 여부
 

@@ -1,29 +1,29 @@
 #include "stdafx.h"
-#include "..\Public\Lobby_Frieza.h"
+#include "..\Public\Lobby_Krillin.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Level_Loading.h"
 #include "Level_Lobby.h"
 
-CLobby_Frieza::CLobby_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CLobby_Krillin::CLobby_Krillin(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CLobby_Frieza::CLobby_Frieza(const CLobby_Frieza& Prototype)
+CLobby_Krillin::CLobby_Krillin(const CLobby_Krillin& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CLobby_Frieza::Initialize_Prototype()
+HRESULT CLobby_Krillin::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CLobby_Frieza::Initialize(void* pArg)
+HRESULT CLobby_Krillin::Initialize(void* pArg)
 {
 	CTransform::TRANSFORM_DESC Desc{};
 	Desc.fRotationPerSec = 1.f;
@@ -35,32 +35,32 @@ HRESULT CLobby_Frieza::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, 0.7f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
-	
+	m_pTransformCom->Set_State_Position(_float3(-56.6f, 0.f, -1.8f));
+	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(86.f));
+
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(0, true, 0.1f);
 
 	return S_OK;
 }
 
-void CLobby_Frieza::Camera_Update(_float fTimeDelta)
+void CLobby_Krillin::Camera_Update(_float fTimeDelta)
 {
 
 }
 
-void CLobby_Frieza::Update(_float fTimeDelta)
+void CLobby_Krillin::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 }
 
-void CLobby_Frieza::Late_Update(_float fTimeDelta)
+void CLobby_Krillin::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
-HRESULT CLobby_Frieza::Render(_float fTimeDelta)
+HRESULT CLobby_Krillin::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -91,7 +91,7 @@ HRESULT CLobby_Frieza::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CLobby_Frieza::Ready_Components()
+HRESULT CLobby_Krillin::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -99,14 +99,14 @@ HRESULT CLobby_Frieza::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Frieza"),
+	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Krillin"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CLobby_Frieza::Bind_ShaderResources()
+HRESULT CLobby_Krillin::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -120,7 +120,7 @@ HRESULT CLobby_Frieza::Bind_ShaderResources()
 	return S_OK;
 }
 
-void CLobby_Frieza::Entry_Level()
+void CLobby_Krillin::Entry_Level()
 {
 	_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	_float x = XMVectorGetX(position);
@@ -135,33 +135,33 @@ void CLobby_Frieza::Entry_Level()
 	}
 }
 
-CLobby_Frieza* CLobby_Frieza::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CLobby_Krillin* CLobby_Krillin::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CLobby_Frieza* pInstance = new CLobby_Frieza(pDevice, pContext);
+	CLobby_Krillin* pInstance = new CLobby_Krillin(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CLobby_Frieza"));
+		MSG_BOX(TEXT("Failed to Created : CLobby_Krillin"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CLobby_Frieza::Clone(void* pArg)
+CGameObject* CLobby_Krillin::Clone(void* pArg)
 {
-	CLobby_Frieza* pInstance = new CLobby_Frieza(*this);
+	CLobby_Krillin* pInstance = new CLobby_Krillin(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CLobby_Frieza"));
+		MSG_BOX(TEXT("Failed to Cloned : CLobby_Krillin"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CLobby_Frieza::Free()
+void CLobby_Krillin::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);

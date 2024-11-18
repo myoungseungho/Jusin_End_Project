@@ -51,7 +51,8 @@ void CUI_Combo::Update(_float fTimeDelta)
 
 void CUI_Combo::Late_Update(_float fTimeDelta)
 {
-	m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
+	if(m_pMainPawn !=nullptr)
+		m_bComboEnd = m_pMainPawn->Get_PawnDesc().bStun;
 
 
 	if (m_bCharaStun == FALSE)

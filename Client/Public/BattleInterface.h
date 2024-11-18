@@ -24,9 +24,9 @@ public:
 	typedef struct
 	{
 		_ushort iTeam = {};
-		CUI_Define::PLAYER_SLOT eSlot = {};
+		CUI_Define::PLAYER_SLOT eSlot = { CUI_Define::SLOT_END };
 		wstring	PrototypeTag = {};
-		CUI_Define::PLAYER_ID ePlayerID = {};
+		CUI_Define::PLAYER_ID ePlayerID = { CUI_Define::PAWN_END };
 	}CHARACREATE_DESC;
 private:
 	CBattleInterface_Manager();
