@@ -132,7 +132,7 @@ public:
 		Frieza_Ultimate_3_Expl_0_SFX,
 		Frieza_Ultimate_3_Expl_1_SFX,
 		Frieza_Golden_Frieza_SFX,
-
+		VOLCANO_BGM,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

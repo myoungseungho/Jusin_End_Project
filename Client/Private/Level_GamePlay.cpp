@@ -401,9 +401,13 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 HRESULT CLevel_GamePlay::Ready_Sound()
 {
-	//배경음
+	//우주배경음
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/013_bat_space.ogg", CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
-	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
+	//화산배경음
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/004_bat_volcano.ogg", CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
+
+	//현재 화산맵인지 우주맵인지  체크할 수 있는가?
+	//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 
 #pragma region Goku_Sound
 
