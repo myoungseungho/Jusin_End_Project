@@ -20,8 +20,10 @@ public:
 		const _float4x4* pParentMatrix;
 		const _float4x4* pSocketBoneMatrix;
 
-		const _float3	vScale;
-		const _float4	vPosition;
+		_float3	vScale;
+		_float4	vPosition;
+
+		_int* pLookDirection;
 	}Frieza_Metal_DESC;
 
 private:
@@ -47,6 +49,7 @@ private:
 	const _float4x4* m_pSocketMatrix = { nullptr };
 	_float4x4 m_WorldMatrix = {};
 	CTransform* m_pLookAtTransformCom = { nullptr };
+	_int* m_pLookDirection = { nullptr };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

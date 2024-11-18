@@ -232,22 +232,64 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 
 	CFrieza_Metal::Frieza_Metal_DESC tMetalDesc{};
 	/* ¸Ó¸® */
-	//tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-	//tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("G_eyes_base");
-	//tMetalDesc.vPosition = _float4(0.0f, 0.0883401930f, 0.0f, 1.f);
-	//tMetalDesc.vScale = _float3(0.25f, 0.25f, 1.0f);
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
-	//	TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
-	//	return E_FAIL;
-
-	/* ¾î±ú */
 	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("G_eyes_base");
 	tMetalDesc.vPosition = _float4(0.0f, 0.0883401930f, 0.0f, 1.f);
 	tMetalDesc.vScale = _float3(0.25f, 0.25f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
 		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
 		return E_FAIL;
+
+	/* ¿À¸¥ÂÊ ¾î±ú */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_shldrHalf_R");
+	tMetalDesc.vPosition = _float4(0.0f, 0.f, 0.0f, 1.f);
+	tMetalDesc.vScale = _float3(0.178303823f, 0.150784373f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* ¿ÞÂÊ ¾î±ú */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_shldrHalf_L");
+	tMetalDesc.vPosition = _float4(-0.00833033770f, 0.f, -0.0199901238f, 1.f);
+	tMetalDesc.vScale = _float3(0.174982980f, 0.139942512f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* ¸öÅë */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_chest");
+	tMetalDesc.vPosition = _float4(-0.00499127991f, -0.0133360298f, -0.140040994f, 1.f);
+	tMetalDesc.vScale = _float3(0.0910967141f, 0.111640006f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* ¿À¸¥ÂÊ ´Ù¸® */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_R");
+	tMetalDesc.vPosition = _float4(0.0199940223f, -0.0383511372f, -0.0100060701f, 1.f);
+	tMetalDesc.vScale = _float3(0.0566315502f, 0.281670630f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	//tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	//tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_L");
+	//tMetalDesc.vPosition = _float4(0.0199940223f, -0.0383511372f, -0.0100060701f, 1.f);
+	//tMetalDesc.vScale = _float3(0.0566315502f, 0.281670630f, 1.0f);
+	//tMetalDesc.pLookDirection = &m_iLookDirection;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+	//	TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+	//	return E_FAIL;
+
 	return S_OK;
 }
 

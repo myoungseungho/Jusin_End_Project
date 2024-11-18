@@ -30,7 +30,7 @@ HRESULT CFrieza_Metal::Initialize(void* pArg)
 
 	m_pParentMatrix = pDesc->pParentMatrix;
 	m_pSocketMatrix = pDesc->pSocketBoneMatrix;
-
+	m_pLookDirection = pDesc->pLookDirection;
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -39,52 +39,85 @@ HRESULT CFrieza_Metal::Initialize(void* pArg)
 
 	CTransform::TRANSFORM_DESC tDesc{};
 	tDesc.fSpeedPerSec = 1.f;
+	tDesc.fRotationPerSec = 1.f;
 	m_pTransformCom->SetUp_TransformDesc(&tDesc);
+	m_pLookAtTransformCom->SetUp_TransformDesc(&tDesc);
+
 
 	m_pTransformCom->Set_Scaled(pDesc->vScale.x, pDesc->vScale.y, pDesc->vScale.z);
-	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(270.f));
+	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(180.f));
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&pDesc->vPosition));
-	//vPosition
-	//{ x = 0.00000000 y =  z = 0.00000000 ... }
+	
+
 	return S_OK;
 }
 
 void CFrieza_Metal::Player_Update(_float fTimeDelta)
 {
 	/* Test Position */
-	/*
-	if (m_pGameInstance->Key_Pressing(DIK_W))
-	{
-		m_pTransformCom->Go_Straight(fTimeDelta * 0.1f);
-	}
-	if (m_pGameInstance->Key_Pressing(DIK_S))
-	{
-		m_pTransformCom->Go_Backward(fTimeDelta * 0.1f);
-	}
-	if (m_pGameInstance->Key_Pressing(DIK_A))
-	{
-		m_pTransformCom->Go_Left(fTimeDelta * 0.1f);
-	}
-	if (m_pGameInstance->Key_Pressing(DIK_D))
-	{
-		m_pTransformCom->Go_Right(fTimeDelta * 0.1f);
-	}
-	if (m_pGameInstance->Key_Pressing(DIK_Q))
-	{
-		m_pTransformCom->Go_Up(fTimeDelta * 0.1f);
-	}
-	if (m_pGameInstance->Key_Pressing(DIK_E))
-	{
-		m_pTransformCom->Go_Down(fTimeDelta * 0.1f);
-	}
+	
+	//if (m_pGameInstance->Key_Pressing(DIK_W))
+	//{
+	//	m_pTransformCom->Go_Straight(fTimeDelta * 0.1f);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_S))
+	//{
+	//	m_pTransformCom->Go_Backward(fTimeDelta * 0.1f);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_A))
+	//{
+	//	m_pTransformCom->Go_Left(fTimeDelta * 0.1f);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_D))
+	//{
+	//	m_pTransformCom->Go_Right(fTimeDelta * 0.1f);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_Q))
+	//{
+	//	m_pTransformCom->Go_Up(fTimeDelta * 0.1f);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_E))
+	//{
+	//	m_pTransformCom->Go_Down(fTimeDelta * 0.1f);
+	//}
 
-	_vector LocalPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-	_float4 ChangeTaetPos;
-	XMStoreFloat4(&ChangeTaetPos, LocalPos);
+	//if (m_pGameInstance->Key_Pressing(DIK_UP))
+	//{
+	//	_float3 vScale = m_pTransformCom->Get_Scaled();
+	//	vScale.y += fTimeDelta * 0.1f;
+	//	m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_DOWN))
+	//{
+	//	_float3 vScale = m_pTransformCom->Get_Scaled();
+	//	vScale.y -= fTimeDelta * 0.1f;
+	//	m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
+	//}
 
-	int a = 10;
-	*/
+	//if (m_pGameInstance->Key_Pressing(DIK_LEFT))
+	//{
+	//	_float3 vScale = m_pTransformCom->Get_Scaled();
+	//	vScale.x -= fTimeDelta * 0.1f;
+	//	m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
+	//}
+	//if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
+	//{
+	//	_float3 vScale = m_pTransformCom->Get_Scaled();
+	//	vScale.x += fTimeDelta * 0.1f;
+	//	m_pTransformCom->Set_Scaled(vScale.x, vScale.y, vScale.z);
+	//}
+
+
+
+	//_vector LocalPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	//_float4 ChangeTaetPos;
+	//XMStoreFloat4(&ChangeTaetPos, LocalPos);
+
+	//_float3 vScale = m_pTransformCom->Get_Scaled();
+
+	//int a = 10;
+	
 }
 
 void CFrieza_Metal::Camera_Update(_float fTimeDelta)
@@ -94,16 +127,9 @@ void CFrieza_Metal::Camera_Update(_float fTimeDelta)
 
 void CFrieza_Metal::Update(_float fTimeDelta)
 {
-	__super::Update(fTimeDelta);
+	//__super::Update(fTimeDelta);
 
-	_matrix		SocketBoneMatrix = XMLoadFloat4x4(m_pSocketMatrix);
 
-	for (size_t i = 0; i < 3; i++)
-		SocketBoneMatrix.r[i] = XMVector3Normalize(SocketBoneMatrix.r[i]);
-
-	XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * SocketBoneMatrix * XMLoadFloat4x4(m_pParentMatrix));
-	m_pLookAtTransformCom->Set_WorldMatrix(m_WorldMatrix);
-	m_pLookAtTransformCom->LookAt(m_pGameInstance->Get_CamPosition_Vector());
 	
 }
 
@@ -114,6 +140,29 @@ void CFrieza_Metal::Late_Update(_float fTimeDelta)
 
 HRESULT CFrieza_Metal::Render(_float fTimeDelta)
 {
+	_matrix		SocketBoneMatrix = XMLoadFloat4x4(m_pSocketMatrix);
+
+	for (size_t i = 0; i < 3; i++)
+		SocketBoneMatrix.r[i] = XMVector3Normalize(SocketBoneMatrix.r[i]);
+
+	if (*m_pLookDirection == 1)
+		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0.f));
+	else
+		m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(180.f));
+
+	XMStoreFloat4x4(&m_WorldMatrix, m_pTransformCom->Get_WorldMatrix() * SocketBoneMatrix * XMLoadFloat4x4(m_pParentMatrix));
+	m_pLookAtTransformCom->Set_WorldMatrix(m_WorldMatrix);
+
+	_vector vCamPos = m_pGameInstance->Get_CamPosition_Vector();
+	if (*m_pLookDirection != 1)
+	{
+		_vector vPos = m_pLookAtTransformCom->Get_State(CTransform::STATE_POSITION);
+
+		_vector vDir = vPos - vCamPos;
+		vCamPos += vDir * 2.f;
+	}
+	m_pLookAtTransformCom->LookAt(vCamPos);
+
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
