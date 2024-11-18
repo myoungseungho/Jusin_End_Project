@@ -677,7 +677,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//아래 앞 J(기탄) (하이잇!~)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Down_Forward_J.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Forward_J, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	// 아래 뒤 J(기탄) (오레가 나마테루가)
+	// 아래 뒤 J(기탄) (오레가 나마테루가) (부메랑)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Down_Back_J.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Back_J, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	// 잡기
@@ -706,6 +706,45 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma region Frieza_SFX
 
+	//약공격 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Light_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//약공격 마지막 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Light_Attack_Final_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Light_Attack_Final_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//기탄 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/J_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//강공격 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Heavy_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Heavy_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//어퍼 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Knock_Away_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Knock_Away_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//아래 앞 약공격
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Down_Forward_Light_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Forward_Light_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 아래 뒤 J(기탄) (부메랑)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Down_Backward_J_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Backward_J_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 1필 기모으기
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Ultimate_0_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_0_Start_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 1필 발사
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Ultimate_0_Fire.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_0_Fire_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	// 1필 폭발
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Ultimate_0_Expl.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_0_Expl_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 시작
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Ultimate_3_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_3_Start_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 폭발 _0 (동시 시작)
+	//3필 폭발 _1 (동시 시작)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Ultimate_3_Expl_0.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_3_Expl_0_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Ultimate_3_Expl_1.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_3_Expl_1_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//골든프리저
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Golden_Frieza.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Golden_Frieza_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 
 #pragma endregion

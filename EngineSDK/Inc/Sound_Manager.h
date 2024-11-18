@@ -118,6 +118,21 @@ public:
 		Frieza_Ultimate_3_End,
 		Frieza_Air_Chase,
 		Frieza_Golden,
+		Frieza_Light_Attack_SFX,
+		Frieza_Light_Attack_Final_SFX,
+		Frieza_J_Attack_SFX,
+		Frieza_Heavy_SFX,
+		Frieza_Knock_Away_SFX,
+		Frieza_Down_Forward_Light_SFX,
+		Frieza_Down_Backward_J_SFX,
+		Frieza_Ultimate_0_Start_SFX,
+		Frieza_Ultimate_0_Fire_SFX,
+		Frieza_Ultimate_0_Expl_SFX,
+		Frieza_Ultimate_3_Start_SFX,
+		Frieza_Ultimate_3_Expl_0_SFX,
+		Frieza_Ultimate_3_Expl_1_SFX,
+		Frieza_Golden_Frieza_SFX,
+
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
