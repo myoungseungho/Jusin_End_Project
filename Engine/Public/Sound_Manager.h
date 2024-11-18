@@ -89,6 +89,21 @@ public:
 		Hit_Ultimate_1_Attack,
 		Hit_Ultimate_3_Attack,
 		J_Attack_21,
+		Down_Forward_J_21,
+		Down_Backward_Light_21,
+		Ultimate_1_Start_21,
+		Ultimate_3_Start_21,
+		Ultimate_3_Middle_21,
+		Ultimate_3_Final_21,
+		J_Attack_Voice_21,
+		Ultimate_1_Start_21_SFX,
+		Ultimate_1_Charge_21_SFX,
+		Ultimate_1_Expl_21_SFX,
+		Ultimate_1_Shot_21_SFX,
+		Ultimate_3_Start_21_SFX,
+		Ultimate_3_Dash_21_SFX,
+		Ultimate_3_Attacks_21_SFX,
+		Ultimate_3_Finish_21_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

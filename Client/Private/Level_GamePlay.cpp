@@ -48,8 +48,6 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma region 캐릭터 사본 객체
 
-
-
 	//반드시 1P,2P 순서로 생성해야하는가?
 
 	//1P
@@ -491,10 +489,28 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Hit_21_4.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_21_4, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Hit_21_5.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_21_5, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	//그랩
+	//그랩 (카그고와 이이)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Grab.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
-	//추적
+	//추적 (마다요)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/ChaseDash.ogg", CSound_Manager::SOUND_KEY_NAME::Chase_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//아래 앞 J (소코)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Down_Forward_J.ogg", CSound_Manager::SOUND_KEY_NAME::Down_Forward_J_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//아래 뒤 약공격 (스라나이데)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Down_Backward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Down_Backward_Light_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//1필 (미세테 아게르)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//3필 시작 (우케테 미나사이)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_3_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Start_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//3필 중간 (데아!!)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_3_Middle.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Middle_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//3필 마지막 (오사에 키레나이요오)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_3_Final.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Final_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//J 기탄 보이스
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/J_Attack_Voice.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_Voice_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 #pragma endregion
 
@@ -507,6 +523,29 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//J 기탄
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//1필 Start
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	
+	//1필 Charge
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Charge.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Charge_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//1필 Expl
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Expl.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Expl_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//1필 Shot
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Shot.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Shot_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 Start
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 Dash
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Dash.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Dash_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 Attacks
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Attacks.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Attacks_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//3필 Finish
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Finish.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Finish_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
 
