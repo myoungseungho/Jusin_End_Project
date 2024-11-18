@@ -7,6 +7,7 @@
 #include "QTE_Hit_UI_Result.h"
 #include "QTE_Hit_UI_Particle.h"
 #include "Main_Camera.h"
+#include "Sound_Manager.h"
 CQTE_Hit_Situation::CQTE_Hit_Situation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -48,17 +49,21 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 
 	switch (m_currentSituationID)
 	{
-	case Client::CQTE_Hit::Hit_Situation_ID_A:
-		//3개라서 2개요소가 있음
-		m_vecIconCreationTimes = { 1.f, 2.f,1.f,2.f };
+	case Client::CQTE_Hit::Hit_Situation_ID_Goku:
+		//m_iCreate_Num - 1개가 나와야함
+		m_vecIconCreationTimes = { 1.f, 1.f};
 		break;
-	case Client::CQTE_Hit::Hit_Situation_ID_B:
+	case Client::CQTE_Hit::Hit_Situation_ID_21:
+		//m_iCreate_Num - 1개가 나와야함
+		m_vecIconCreationTimes = { 1.f, 1.f };
 		break;
-	case Client::CQTE_Hit::Hit_Situation_ID_C:
+	case Client::CQTE_Hit::Hit_Situation_ID_Frieza:
+		//m_iCreate_Num - 1개가 나와야함
+		m_vecIconCreationTimes = { 1.f, 1.f};
 		break;
-	case Client::CQTE_Hit::Hit_Situation_ID_END:
-		break;
-	default:
+	case Client::CQTE_Hit::Hit_Situation_ID_Hit:
+		//m_iCreate_Num - 1개가 나와야함
+		m_vecIconCreationTimes = { 1.f, 1.f };
 		break;
 	}
 
@@ -73,39 +78,39 @@ void CQTE_Hit_Situation::Camera_Update(_float fTimeDelta)
 void CQTE_Hit_Situation::Update(_float fTimeDelta)
 {
 #pragma region 디버그
-	// F5 키 입력 감지
-	if (m_pGameInstance->Key_Down(DIK_F5))
-	{
-		//if (m_bIsQTEActive)
-		//{
-		//	// QTE가 활성화되어 있으면 즉시 종료
-		//	End_QTE();
+	//// F5 키 입력 감지
+	//if (m_pGameInstance->Key_Down(DIK_F5))
+	//{
+	//	if (m_bIsQTEActive)
+	//	{
+	//		// QTE가 활성화되어 있으면 즉시 종료
+	//		End_QTE();
 
-		//	// UI 객체 삭제 시간
-		//	for (auto& iter : m_vecHitUIIcon)
-		//		Safe_Release(iter);
+	//		// UI 객체 삭제 시간
+	//		for (auto& iter : m_vecHitUIIcon)
+	//			Safe_Release(iter);
 
-		//	for (auto& iter : m_vecHitResult)
-		//		Safe_Release(iter);
+	//		for (auto& iter : m_vecHitResult)
+	//			Safe_Release(iter);
 
-		//	for (auto& iter : m_vecHitParticle)
-		//		Safe_Release(iter);
+	//		for (auto& iter : m_vecHitParticle)
+	//			Safe_Release(iter);
 
-		//	m_vecHitUIIcon.clear();
-		//	m_vecHitResult.clear();
-		//	m_vecHitParticle.clear();
+	//		m_vecHitUIIcon.clear();
+	//		m_vecHitResult.clear();
+	//		m_vecHitParticle.clear();
 
-		//	m_fOffsetTimer = 0.f;
-		//	m_bOffsetActive = false; // 오프셋 기간 종료
+	//		m_fOffsetTimer = 0.f;
+	//		m_bOffsetActive = false; // 오프셋 기간 종료
 
-		//}
-		//else
-		//{
-		//	// QTE가 비활성화되어 있으면 시작
-		//	// 첫번째 아이콘을 즉각 만들어버림
-		//	Start_QTE();
-		//}
-	}
+	//	}
+	//	else
+	//	{
+	//		// QTE가 비활성화되어 있으면 시작
+	//		// 첫번째 아이콘을 즉각 만들어버림
+	//		Start_QTE();
+	//	}
+	//}
 #pragma endregion
 
 #pragma region 활성화
@@ -161,8 +166,6 @@ void CQTE_Hit_Situation::Update(_float fTimeDelta)
 		End_Offset_QTE(fTimeDelta);
 	}
 #pragma endregion
-
-
 }
 
 void CQTE_Hit_Situation::Late_Update(_float fTimeDelta)
@@ -191,7 +194,7 @@ void CQTE_Hit_Situation::Notify_Faild_Result(CQTE_Hit_UI_Icon* icon)
 	Create_ResultObject(icon);
 }
 
-void CQTE_Hit_Situation::Start()
+void CQTE_Hit_Situation::Start(CGameObject* pCall_Object)
 {
 	if (m_bIsQTEActive)
 	{
@@ -220,14 +223,23 @@ void CQTE_Hit_Situation::Start()
 	{
 		// QTE가 비활성화되어 있으면 시작
 		// 첫번째 아이콘을 즉각 만들어버림
-		Start_QTE();
+		Start_QTE(pCall_Object);
 	}
 }
 
-void CQTE_Hit_Situation::Start_QTE()
+void CQTE_Hit_Situation::Start_QTE(CGameObject* pCall_Object)
 {
 	if (m_bIsQTEActive)
 		return; // 이미 QTE가 활성화되어 있으면 무시
+
+	//디버그용
+	if (pCall_Object == nullptr)
+	{
+		//1p로 받기
+		m_pCall_Object = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+	}
+	else
+		m_pCall_Object = pCall_Object;
 
 	//카메라 쉐이킹용으로 필요함
 	m_pMain_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
@@ -256,7 +268,11 @@ void CQTE_Hit_Situation::End_QTE()
 		}
 	}
 
-	//이제 여기에 결과를 전달해줄 객체에 isSuccess 전달
+	// isSuccess를 int로 변환 (true -> 1, false -> -1)
+	_int hitResult = isSuccess ? 1 : -1;
+	// 결과를 전달
+	static_cast<CCharacter*>(m_pCall_Object)->Notify_QTE_Hit(hitResult);
+
 #pragma endregion
 
 #pragma region 초기화
@@ -275,7 +291,7 @@ void CQTE_Hit_Situation::End_QTE()
 	m_fTimer = m_fLifeTime;
 	//마지막 객체 완료 처리 여부 초기화
 	m_bUI_Final_Complete = false;
-
+	m_pCall_Object = nullptr;
 #pragma endregion
 
 }
@@ -376,8 +392,8 @@ void CQTE_Hit_Situation::Create_UIIcon()
 
 
 	// fTimer를 최소 및 최대 값 사이에서 랜덤하게 설정
-	_float minTimer = 1.f; // 최소 시간
-	_float maxTimer = 2.5f; // 최대 시간
+	_float minTimer = 1.0f; // 최소 시간
+	_float maxTimer = 1.9f; // 최대 시간
 	Desc.fTimer = minTimer + static_cast<_float>(rand()) / RAND_MAX * (maxTimer - minTimer);
 
 
@@ -533,19 +549,24 @@ void CQTE_Hit_Situation::Create_ResultObject(CQTE_Hit_UI_Icon* pIcon)
 	switch (pIcon->m_currentResult_ID)
 	{
 	case CQTE_Hit_UI_Icon::HIT_RESULT_FAILED:
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, false, 0.7f);
 		iTextureNum = 0;
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_GOOD:
 		iTextureNum = 1;
 		m_pMain_Camera->StartCameraShake(0.1, 0.1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
+
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_EXCELLENT:
 		iTextureNum = 2;
 		m_pMain_Camera->StartCameraShake(0.1, 0.1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
 		break;
 	case CQTE_Hit_UI_Icon::HIT_RESULT_PERFECT:
 		iTextureNum = 3;
 		m_pMain_Camera->StartCameraShake(0.1, 0.1);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::QTE_SUCCESS_SFX, false, 0.7f);
 		break;
 	default:
 		iTextureNum = 0;

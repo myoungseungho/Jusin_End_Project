@@ -175,6 +175,7 @@
     <ClInclude Include="..\Public\BoneEffectObject.h" />
     <ClInclude Include="..\public\CharaSelectCamera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
+    <ClInclude Include="..\Public\Frieza_MeleeAttack.h" />
     <ClInclude Include="..\Public\Hit_MeleeAttack.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
@@ -192,9 +193,11 @@
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\Public\Play_Frieza.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Space_Particle.h" />
     <ClInclude Include="..\Public\Map_Manager.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Particle.h" />
+    <ClInclude Include="..\Public\QTE_1P_Same_Grab.h" />
     <ClInclude Include="..\Public\QTE_Same_Grab_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack.h" />
     <ClInclude Include="..\Public\QTE_Continuous_Attack_Gauge.h" />
@@ -205,7 +208,7 @@
     <ClInclude Include="..\Public\QTE_Hit_UI_Particle.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_Result.h" />
     <ClInclude Include="..\Public\QTE_Hit_UI_MovingRing_Icon.h" />
-    <ClInclude Include="..\Public\QTE_UI_Gauge.h" />
+    <ClInclude Include="..\Public\QTE_Same_Grab_UI_Gauge.h" />
     <ClInclude Include="..\Public\Lobby_Battle_Building.h" />
     <ClInclude Include="..\Public\Lobby_Center_Map.h" />
     <ClInclude Include="..\Public\Lobby_Goku.h" />
@@ -262,6 +265,7 @@
     <ClInclude Include="..\Public\UI_LoadingMark.h" />
     <ClInclude Include="..\public\UI_LoadingSpaceLight.h" />
     <ClInclude Include="..\Public\UI_Loading_BG.h" />
+    <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h" />
     <ClInclude Include="..\public\UI_Loading_DragonBall.h" />
     <ClInclude Include="..\public\UI_Loading_FlyEff.h" />
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
@@ -398,6 +402,7 @@
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
     <ClCompile Include="..\private\CharaSelectCamera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
+    <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\Hit_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />
@@ -408,9 +413,11 @@
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\Private\Play_Frieza.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Space_Particle.cpp" />
     <ClCompile Include="..\Private\Map_Manager.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Particle.cpp" />
+    <ClCompile Include="..\Private\QTE_1P_Same_Grab.cpp" />
     <ClCompile Include="..\Private\QTE_Same_Grab_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack.cpp" />
     <ClCompile Include="..\Private\QTE_Continuous_Attack_Gauge.cpp" />
@@ -421,7 +428,7 @@
     <ClCompile Include="..\Private\QTE_Hit_UI_Particle.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_Result.cpp" />
     <ClCompile Include="..\Private\QTE_Hit_UI_MovingRing_Icon.cpp" />
-    <ClCompile Include="..\Private\QTE_UI_Gauge.cpp" />
+    <ClCompile Include="..\Private\QTE_Same_Grab_UI_Gauge.cpp" />
     <ClCompile Include="..\Private\Lobby_Battle_Building.cpp" />
     <ClCompile Include="..\Private\Lobby_Center_Map.cpp" />
     <ClCompile Include="..\Private\Lobby_Goku.cpp" />
@@ -481,6 +488,7 @@
     <ClCompile Include="..\Private\UI_LoadingMark.cpp" />
     <ClCompile Include="..\private\UI_LoadingSpaceLight.cpp" />
     <ClCompile Include="..\Private\UI_Loading_BG.cpp" />
+    <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp" />
     <ClCompile Include="..\private\UI_Loading_DragonBall.cpp" />
     <ClCompile Include="..\private\UI_Loading_FlyEff.cpp" />
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />

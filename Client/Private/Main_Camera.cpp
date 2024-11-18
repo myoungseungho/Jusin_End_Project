@@ -139,7 +139,6 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Son_Energy"] = VIRTUAL_CAMERA_SON_ENERGY;
 	stringToSkillID["Camera_Son_Ultimate"] = VIRTUAL_CAMERA_SON_ULTIMATE;
 
-
 	stringToAnimID["Son_Heavy_Anim1"] = 0;
 	stringToAnimID["Son_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["Son_Air_Smash_Anim1"] = 0;
@@ -163,7 +162,6 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_21_Grab_Special"] = VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 	stringToSkillID["Camera_21_Energy"] = VIRTUAL_CAMERA_21_ENERGY;
 	stringToSkillID["Camera_21_Ultimate"] = VIRTUAL_CAMERA_21_ULTIMATE;
-
 
 	stringToAnimID["21_Heavy_Anim1"] = 0;
 	stringToAnimID["21_Knock_Away_Up_Anim1"] = 0;
@@ -191,7 +189,6 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Hit_1_Ultimate"] = VIRTUAL_CAMERA_HIT_1_ULTIMATE;
 	stringToSkillID["Camera_Hit_3_Ultimate"] = VIRTUAL_CAMERA_HIT_3_ULTIMATE;
 
-
 	stringToAnimID["Hit_Heavy_Anim1"] = 0;
 	stringToAnimID["Hit_Knock_Away_Up_Anim1"] = 0;
 	stringToAnimID["Hit_Grab_Anim1"] = 0;
@@ -215,12 +212,12 @@ void CMain_Camera::Camera_Update(_float fTimeDelta)
 	//선택된 가상카메라 업데이트
 	m_vecVirtualCamera[m_currentVirtualMode]->Camera_Update(fTimeDelta);
 
-	//선택된 가상카메라의 정보로 뷰 투영 만들기
-	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], fTimeDelta);
-
 	//가상카메라의 포지션의 정보를 메인카메라의 셋팅하기
 	_vector position = static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
+
+	//선택된 가상카메라의 정보로 뷰 투영 만들기
+	Update_Camera(m_vecVirtualCamera[m_currentVirtualMode], fTimeDelta);
 
 }
 

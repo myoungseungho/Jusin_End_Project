@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 50
+Key: Prototype_Component_Texture_Effect_cmn_gradation00
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 476 90
+NodeID: 1 Position: 188.644 74.8178
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

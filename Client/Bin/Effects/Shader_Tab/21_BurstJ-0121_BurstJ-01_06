@@ -1,0 +1,17 @@
+Version: 2
+KeyCount: 1
+KeySize: 46
+Key: Prototype_Component_Texture_Effect_ton_spark01
+ID: 3
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 536 153
+NodeID: 3001 Position: 22 65
+NodeID: 3 Position: 291 69
+NodeID: 1 Position: 273 125
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 2 Speed: 15.6
+LinkCount: 2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2

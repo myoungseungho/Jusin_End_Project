@@ -33,7 +33,7 @@ HRESULT CUI_HpEffect::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX * 1.01f , 116.f * 1.01f, m_fPosX, 87.f, 0.f);
+	__super::Set_UI_Setting(m_fSizeX * 1.01f , 116.f * 1.01f, m_fPosX, 67.f, 0.f);
 	//__super::Set_UI_Setting(m_fSizeX * 1.01f, 116.f * 1.01f, m_fPosX, 150.f, 0.f);
 
 	return S_OK;

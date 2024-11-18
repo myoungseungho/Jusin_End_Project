@@ -1,0 +1,938 @@
+
+
+//,301 리플렉터. (공용)
+//,PLAY_FRN,FRN301_body,0,AnimSpeedChange,0.015,35
+//,PLAY_FRN,FRN301_body,0,AttackEvent,0
+//,PLAY_FRN,FRN301_body,14.1,AnimSpeedChange,0.015,70
+//,PLAY_FRN,FRN301_body,35,AttackEvent,1
+//,PLAY_FRN,FRN301_body,36,AnimSpeedChange,0.015,20
+
+PLAY_FRN,FRN301_body,0,AnimSpeedChange,0.015,35
+PLAY_FRN,FRN301_body,0,AttackEvent,0
+PLAY_FRN,FRN301_body,14.1,AnimSpeedChange,0.015,90
+PLAY_FRN,FRN301_body,25.1,AnimSpeedChange,0.015,90 
+PLAY_FRN,FRN301_body,40,AttackEvent,1
+PLAY_FRN,FRN301_body,45,AnimSpeedChange,0.015,20
+
+
+//,오프닝 사이드 스탠딩 (공용)  78
+PLAY_FRN,FRN601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+PLAY_FRN,FRN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
+
+//,라운드 넘어갈때 맞대기1 (공용) 81
+PLAY_FRN,FRN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
+PLAY_FRN,FRN620cs_body,100,NextAnimation,630
+
+
+//,마지막 상태 정지모션 (공용) 83
+PLAY_FRN,FRN630_body,0.000000,AnimSpeedChange,0.013000,59.798000
+
+
+//,라운드 넘어갈때 맞대기2 (공용)
+PLAY_FRN,FRN621cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
+//,PLAY_FRN,FRN621cs_body,80.000000,AnimSpeedChange,0.013000,40.000000
+PLAY_FRN,FRN621cs_body,100,NextAnimation,631
+
+
+//,마지막 상태 정지모션 (공용)
+PLAY_FRN,FRN631_body,0.000000,AnimSpeedChange,0.013000,59.798000
+
+
+//,승리용 애니메이션
+PLAY_FRN,FRN610cs_body,0.000000,AnimSpeedChange,0.034,112.323
+
+
+
+//, 승리용 이미지 (공용) (정지?)
+PLAY_FRN,FRN700_body,0.000000,AnimSpeedChange,0.5,10
+
+PLAY_FRN,FRN011_body,0.000000,AnimSpeedChange,0.010000,25.000000
+//,PLAY_FRN,FRN000_body,54.500000,AnimSpeedChange,0.010000,25.000000
+
+
+
+//,가드정지관련코드는 다른곳에서
+//,서서 방향전환 (공용) 
+//,PLAY_FRN,FRN001_body,0,AnimSpeedChange,0.010000,60.000000
+
+
+//,앉아방향전환(공용)
+//,PLAY_FRN,FRN013_body,0,AnimSpeedChange,0.010000,60.000000
+
+//,공중방향전환 (공용)
+//,PLAY_FRN,FRN025_body,0,AnimSpeedChange,0.010000,60.000000
+
+
+
+//, 002 뭔지모름 (공용)
+
+//,앉기 (공용) 4
+PLAY_FRN,FRN010_body,0,AnimSpeedChange,0.010000,22.625000
+
+//,앉아있기 (공용) 5
+PLAY_FRN,FRN011_body,0.,AnimSpeedChange,0.010000,22.625000
+
+
+//,점프 상승 (공용) 7
+PLAY_FRN,FRN021_body,0,AnimSpeedChange,0.02,37.172001
+
+//,점프 고점~하강 (공용) 9
+PLAY_FRN,FRN022_body,0,AnimSpeedChange,0.02,37.172001
+
+//,앞으로 걷기 (공용) 10
+PLAY_FRN,FRN030_body,0.000000,AnimSpeedChange,0.010000,41.212002
+PLAY_FRN,FRN030_body,0,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,2,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,4,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,6,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,8,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,10,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,12,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,14,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,16,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,18,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,20,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,22,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,24,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,26,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,28,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,30,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,32,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,34,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,36,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,38,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,40,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,42,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,44,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,46,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,48,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,49,ObjectMove,0.03,0,0,0
+
+
+PLAY_FRN,FRN030_body,1,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,3,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,5,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,7,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,9,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,11,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,13,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,15,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,17,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,19,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,21,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,23,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,25,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,27,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,29,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,31,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,33,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,35,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,37,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,39,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,41,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,43,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,45,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,47,ObjectMove,0.03,0,0,0
+
+PLAY_FRN,FRN030_body,50,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,51,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,52,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,53,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,54,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,55,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN030_body,55,PositionChange,5
+
+//,뒤로 걷기 (공용) 11
+PLAY_FRN,FRN031_body,0.000000,AnimSpeedChange,0.010000,41.212002
+
+
+PLAY_FRN,FRN031_body, 0,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 2,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 4,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 6,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 8,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_FRN,FRN031_body, 1,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 3,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 5,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 7,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 9,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_FRN,FRN031_body, 10,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 12,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 14,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 16,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 18,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 20,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 22,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 24,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 26,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 28,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 30,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 32,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 34,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 36,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 38,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 40,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 42,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 44,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 46,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 48,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 49,ObjectMove, -0.03, 0, 0, 0
+
+PLAY_FRN,FRN031_body, 11,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 13,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 15,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 17,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 19,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 21,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 23,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 25,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 27,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 29,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 31,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 33,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 35,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 37,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 39,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 41,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 43,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 45,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 47,ObjectMove,-0.03, 0, 0, 0
+
+PLAY_FRN,FRN031_body, 50,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 51,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 52,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 53,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 54,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 55,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 56,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 57,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 58,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 59,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 60,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 61,ObjectMove,-0.03, 0, 0, 0
+PLAY_FRN,FRN031_body, 62,ObjectMove,-0.03, 0, 0, 0
+
+
+//,다리기준으로 이동.  손이 꿈틀거림
+//,PLAY_FRN,FRN031_body, 62,PositionChange,2
+//,PLAY_FRN,FRN031_body, 65.6,PositionChange,0.2
+
+//,손 기준으로 이동, 다리가 조금씩 움찔거림
+PLAY_FRN,FRN031_body, 60,PositionChange,6
+
+
+
+//,앞으로 달리기 (공용) 12
+PLAY_FRN,FRN032_body,0.000000,AnimSpeedChange,0.010000,60.202000
+
+PLAY_FRN,FRN032_body,0,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,1,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,2,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,3,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,4,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,5,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,6,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,7,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,8,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,9,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,10,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,11,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,12,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,13,ObjectMove, 0.1, 0, 0, 0
+PLAY_FRN,FRN032_body,13,PositionChange,0
+
+
+//,백대쉬 (공용) 13
+PLAY_FRN,FRN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
+PLAY_FRN,FRN033_body,0.001000,PlaySound,11,0,0.5
+PLAY_FRN,FRN033_body, 0,ObjectMove, -0.3, 0, 0, 0
+PLAY_FRN,FRN033_body, 1,ObjectMove, -0.3, 0, 0, 0
+PLAY_FRN,FRN033_body, 2,ObjectMove, -0.2, 0, 0, 0
+PLAY_FRN,FRN033_body, 3,ObjectMove, -0.2, 0, 0, 0
+PLAY_FRN,FRN033_body, 4,ObjectMove, -0.1, 0, 0, 0
+PLAY_FRN,FRN033_body, 5,ObjectMove, -0.1, 0, 0, 0
+PLAY_FRN,FRN033_body, 6,ObjectMove, -0.08, 0, 0, 0
+PLAY_FRN,FRN033_body, 7,ObjectMove, -0.08, 0, 0, 0
+PLAY_FRN,FRN033_body, 8,ObjectMove, -0.08, 0, 0, 0
+PLAY_FRN,FRN033_body, 9,ObjectMove, -0.08 0, 0, 0
+PLAY_FRN,FRN033_body,10,ObjectMove, -0.08, 0, 0, 0
+PLAY_FRN,FRN033_body,11,ObjectMove, -0.07, 0, 0, 0
+PLAY_FRN,FRN033_body,12,ObjectMove, -0.05, 0, 0, 0
+PLAY_FRN,FRN033_body,13,ObjectMove, -0.03, 0, 0, 0
+PLAY_FRN,FRN033_body,14,ObjectMove, -0.01, 0, 0, 0
+
+//,앞대쉬 끝 (공용) 15
+PLAY_FRN,FRN035_body,0.000000,AnimSpeedChange,0.010000,90.505997
+PLAY_FRN,FRN035_body,0.001000,PlaySound,11,0,0.5
+PLAY_FRN,FRN035_body,0,ObjectMove, 0.06, 0, 0, 0
+PLAY_FRN,FRN035_body,1,ObjectMove, 0.06, 0, 0, 0
+PLAY_FRN,FRN035_body,2,ObjectMove, 0.06, 0, 0, 0
+PLAY_FRN,FRN035_body,3,ObjectMove, 0.06, 0, 0, 0
+PLAY_FRN,FRN035_body,4,ObjectMove, 0.05, 0, 0, 0
+PLAY_FRN,FRN035_body,5,ObjectMove, 0.05, 0, 0, 0
+PLAY_FRN,FRN035_body,6,ObjectMove, 0.05, 0, 0, 0
+PLAY_FRN,FRN035_body,7,ObjectMove, 0.05, 0, 0, 0
+PLAY_FRN,FRN035_body,8,ObjectMove, 0.05, 0, 0, 0
+PLAY_FRN,FRN035_body,9,ObjectMove, 0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,10,ObjectMove,0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,11,ObjectMove,0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,12,ObjectMove,0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,13,ObjectMove,0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,14,ObjectMove,0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,15,ObjectMove,0.04, 0, 0, 0
+PLAY_FRN,FRN035_body,16,ObjectMove,0.03, 0, 0, 0
+PLAY_FRN,FRN035_body,17,ObjectMove,0.03, 0, 0, 0
+PLAY_FRN,FRN035_body,18,ObjectMove,0.02, 0, 0, 0
+PLAY_FRN,FRN035_body,19,ObjectMove,0.02, 0, 0, 0
+PLAY_FRN,FRN035_body,20,ObjectMove,0.02, 0, 0, 0
+PLAY_FRN,FRN035_body,21,ObjectMove,0.02, 0, 0, 0
+PLAY_FRN,FRN035_body,22,ObjectMove,0.01, 0, 0, 0
+PLAY_FRN,FRN035_body,23,ObjectMove,0.01, 0, 0, 0
+
+
+//,백대쉬끝 (공용) 16
+PLAY_FRN,FRN036_body,0.000000,AnimSpeedChange,0.010000,90.505997
+
+
+//, R추적.  position이 방향값인데 그냥 회전시키는게 더 편할지도.   위쪽을 볼수록 배가 보이도록 모델 자체가 회전함
+//, 0 : 아래, 45:오른쪽, 90 위쪽
+//,PLAY_FRN,FRN034_body,0.000000,AnimSpeedChange,0.010000,60.202000
+
+
+//,037 애니메이션 모름.
+
+//추적 준비 (공용) 18
+PLAY_FRN,FRN038_body,0.000000,AnimSpeedChange,0.010000,61.818001
+
+
+//,서서 가드 (공용)
+PLAY_FRN,FRN040_body,0,AnimSpeedChange,0.010000,61.818001
+PLAY_FRN,FRN040_body,0,FrameMove,10
+
+//,앉아 가드 (공용)
+PLAY_FRN,FRN041_body,0,AnimSpeedChange,0.010000,61.818001
+PLAY_FRN,FRN041_body,0,FrameMove,10
+
+//,공중 가드 (공용)
+PLAY_FRN,FRN042_body,0,AnimSpeedChange,0.010000,61.818001
+PLAY_FRN,FRN042_body,0,FrameMove,10
+
+
+//,서서 피격 (뒤로밀림) 5프레임에서 멈춤, 10에서끝남...?  경직시간만큼 position을 가짐...왜?  중공격 10~24 **
+//,PLAY_FRN,FRN050_body,0,FrameMove,5
+//,PLAY_FRN,FRN050_body,10,FrameMove,5
+PLAY_FRN,FRN050_body,0.000000,AnimSpeedChange,0.064000,86.060997
+PLAY_FRN,FRN050_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN050_body,30.1,AnimSpeedChange,0.064000,86.060997
+
+//,숙이는 피격모션
+PLAY_FRN,FRN051_body,0.000000,AnimSpeedChange,0.064000,50
+PLAY_FRN,FRN051_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN051_body,0,FrameMove,15
+
+//,앉아 피격모션
+PLAY_FRN,FRN052_body,0,AnimSpeedChange,0.020000,57.374001
+PLAY_FRN,FRN052_body,0.0010,PlayGroupSound,203,0,1
+//,PLAY_FRN,FRN052_body,0,FrameMove,10
+
+
+//, 공중피격 약 10   스턴끝날때 40이 되도록 속도를 조정...?  스피드가  스턴시간*4라고?  상대방의 TickPerSecond를 조절하는 기능필요?
+//,PLAY_FRN,FRN060_body,0.000000,AnimSpeedChange,0.044000,49.292999
+PLAY_FRN,FRN060_body,0.000000,AnimSpeedChange,0.044000,30
+PLAY_FRN,FRN060_body,0,PositionChange,14
+PLAY_FRN,FRN060_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN060_body,30,AnimSpeedChange,0.044000,60
+PLAY_FRN,FRN060_body,40,AnimSpeedChange,0.044000,1
+PLAY_FRN,FRN060_body,56,AnimSpeedChange,0.01,2
+
+
+//,낙법 없이 바닥에 누움
+PLAY_FRN,FRN061_body,0.000000,AnimSpeedChange,0.013000,50.101002
+
+
+
+//,공중에서 엎어짐  바닥에 닿으면 100 기상낙법으로 연계됨
+PLAY_FRN,FRN062_body,0.000000,AnimSpeedChange,0.032000,69.494003
+PLAY_FRN,FRN062_body,18.098000,AnimSpeedChange,0.032000,35.959000
+
+//,앉으며기상
+PLAY_FRN,FRN063_body,0.000000,AnimSpeedChange,0.013000,50.099998
+
+
+//,064 뭔지 모르는 서서 피격자세
+
+//,서서 사망자세
+PLAY_FRN,FRN070_body,0.000000,AnimSpeedChange,0.013000,24.646999
+
+//,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
+PLAY_FRN,FRN072_body,0.000000,AnimSpeedChange,0.013000,62.223000
+//,PLAY_FRN,FRN072_body,39,FrameMove,0
+PLAY_FRN,FRN072_body,37,PositionChange,2.78
+
+//,왼쪽위로 회전하며 날아가는 자세
+PLAY_FRN,FRN073_body,0.000000,AnimSpeedChange,0.013000,62.223000
+
+//,왼쪽으로 회전하며 날아가는 자세
+PLAY_FRN,FRN074_body,0.000000,AnimSpeedChange,0.013000,62.223000
+
+
+//,강공맞고 왼쪽으로
+PLAY_FRN,FRN075_body,0.000000,AnimSpeedChange,0.030000,44.040001
+PLAY_FRN,FRN075_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN075_body,5,AnimSpeedChange,0.030000,10.353000
+
+PLAY_FRN,FRN075_body,5,AnimSpeedChange,0.030000,10.353000
+
+//, 076 벽에 부딪힘. 4duration짜리 정지모션   보통 062로 연계됨
+//,PLAY_FRN,FRN076_body,0,AnimSpeedChange,0.030000,25
+PLAY_FRN,FRN076_body,0,AnimSpeedChange,0.030000,50
+
+
+//,어퍼맞고 상승
+//,이거 왜 오공에서 주석처리되어있냐
+//,PLAY_FRN,FRN077_body,0.000000,AnimSpeedChange,0.006000,29.091000
+//,PLAY_FRN,FRN077_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 인데 공중? 살짝왼쪽위
+PLAY_FRN,FRN078_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_FRN,FRN078_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 인데 공중? 70도
+PLAY_FRN,FRN079_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_FRN,FRN079_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 위 70도
+PLAY_FRN,FRN079_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_FRN,FRN079_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+
+//,강공맞고 왼쪽 아래 35도
+PLAY_FRN,FRN080_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_FRN,FRN080_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+
+//,강공맞고 왼쪽 아래 15도
+PLAY_FRN,FRN081_body,0.000000,AnimSpeedChange,0.006000,29.091000
+PLAY_FRN,FRN081_body,5.235000,AnimSpeedChange,0.006000,3.636000
+
+//, 공중 빙글빙글 회전
+PLAY_FRNU,FRN090_body,0.000000,AnimSpeedChange,0.032000,103.433998
+
+//,기상낙법(뒤)
+PLAY_FRN,FRN100_body,0.000000,AnimSpeedChange,0.032000,70.303001
+
+
+//,공중낙법
+PLAY_FRN,FRN101_body,0.000000,AnimSpeedChange,0.018000,120
+
+PLAY_FRN,FRN101_body,0.100000,AttackEvent,0
+
+
+//,스파킹 (공용모션)
+PLAY_FRN,FRN303_body,0,AnimSpeedChange,0.017,70
+PLAY_FRN,FRN303_body,20,AnimSpeedChange,0.017,46
+
+
+//드래곤 러시 준비(공중)
+PLAY_FRN,FRN037_body,0,AnimSpeedChange,0.008,61.011
+
+//,드래곤러시 (공용모션) 
+//,PLAY_FRN,FRN304_body,0,AnimSpeedChange,0.008,10
+PLAY_FRN,FRN304_body,0,PositionChange,5.0
+//,PLAY_FRN,FRN304_body,5.1,AnimSpeedChange,0.008,40
+PLAY_FRN,FRN304_body,5.1,AnimSpeedChange,0.008,101
+PLAY_FRN,FRN304_body,5.1,AttackEvent,0
+
+PLAY_FRN,FRN304_body,23.1,PositionChange,139
+
+PLAY_FRN,FRN304_body,25.1,AnimSpeedChange,0.037,180
+
+PLAY_FRN,FRN304_body,50,AttackEvent,1
+PLAY_FRN,FRN304_body,70,AttackEvent,2
+PLAY_FRN,FRN304_body,100,AttackEvent,3
+PLAY_FRN,FRN304_body,120,AttackEvent,4
+
+
+//,드래곤 러시 체이스 (공용모션)
+PLAY_FRN,FRN306cs_body,0.000000,AnimSpeedChange,0.017000,80
+PLAY_FRN,FRN306cs_body,20,AnimSpeedChange,0.017000,40
+
+//,앉아 방향전환 (공용모션)
+PLAY_FRN,FRN013_body,0.000000,AnimSpeedChange,0.023000,120
+
+
+
+
+//,서서 약공1
+PLAY_FRN,FRN200_body,0.000000,AnimSpeedChange,0.008,70
+PLAY_FRN,FRN200_body,15,AttackEvent,0
+
+PLAY_FRN,FRN200_body,20,NextAnimationCheck,333333
+PLAY_FRN,FRN200_body,25,NextAnimationCheck,333333
+
+
+PLAY_FRN,FRN200_body,0,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,2,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,4,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,6,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,8,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,10,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,12,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN200_body,14,ObjectMove,0.07,0,0,0
+
+
+
+//,서서 약공2
+PLAY_FRN,FRN201_body,0.000000,AnimSpeedChange,0.02,90
+PLAY_FRN,FRN201_body,30,AttackEvent,0
+
+PLAY_FRN,FRN201_body,35,NextAnimationCheck,333333
+PLAY_FRN,FRN201_body,40,NextAnimationCheck,333333
+
+PLAY_FRN,FRN201_body,0,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,2,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,4,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,6,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,8,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,10,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,12,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN201_body,14,ObjectMove,0.07,0,0,0
+
+
+//,서서 약공3
+PLAY_FRN,FRN202_body,0.000000,AnimSpeedChange,0.008,70
+
+//,잡기판정
+PLAY_FRN,FRN202_body,15,AttackEvent,0
+
+//,AttackBack확인 실패시 55로 이동?
+//,성공시 애니메이션 속도 조절
+PLAY_FRN,FRN202_body,20,AttackEvent,1
+
+//,적 상승 종료용 
+PLAY_FRN,FRN202_body,25,AttackEvent,101
+
+
+//,적 상승, 애니메이션 2초 정지?
+PLAY_FRN,FRN202_body,35,AttackEvent,2
+
+//, 폭발.
+PLAY_FRN,FRN202_body,40,AttackEvent,3
+
+
+PLAY_FRN,FRN202_body,50,NextAnimationCheck,333333
+
+//,서서 중공
+PLAY_FRN,FRN203_body,0.000000,AnimSpeedChange,0.008,90
+PLAY_FRN,FRN203_body,40.000000,AnimSpeedChange,0.008,190
+PLAY_FRN,FRN203_body,60.000000,AnimSpeedChange,0.008,90
+
+//,거리 가까우면 바로 40정도로 점프?  일부러 AttackEvent1로 통일한거임 둘 다 1 맞음
+PLAY_FRN,FRN203_body,15,AttackEvent,1
+PLAY_FRN,FRN203_body,20,AttackEvent,1
+PLAY_FRN,FRN203_body,25,AttackEvent,1
+PLAY_FRN,FRN203_body,30,AttackEvent,1
+
+
+PLAY_FRN,FRN203_body,55,AttackEvent,0
+
+PLAY_FRN,FRN203_body,65,NextAnimationCheck,333333
+PLAY_FRN,FRN203_body,75,NextAnimationCheck,333333
+
+PLAY_FRN,FRN203_body,0,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,2,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,4,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,6,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,8,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,10,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,12,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,14,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,16,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,18,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,20,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,22,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,24,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,26,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,28,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,30,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,32,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,34,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,36,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,38,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,40,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,42,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,44,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,46,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,48,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,50,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,52,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN203_body,54,ObjectMove,0.2,0,0,0
+
+
+//,서서 강공	
+//,PLAY_FRN,FRN204_body,88.552826,AnimSpeedChange,0.016000,93.806000
+PLAY_FRN,FRN204_body,0,AnimSpeedChange,0.016000,93.806000
+
+PLAY_FRN,FRN204_body,46,AttackEvent,0
+PLAY_FRN,FRN204_body,75,AttackEvent,1
+
+
+PLAY_FRN,FRN204_body,80,NextAnimationCheck,333333
+PLAY_FRN,FRN204_body,85,NextAnimationCheck,333333
+
+
+//,서서 특수
+PLAY_FRN,FRN205_body,0,AnimSpeedChange,0.005000,120.403000
+PLAY_FRN,FRN205_body,20,AnimSpeedChange,0.005000,54.403000
+
+PLAY_FRN,FRN205_body,25,AttackEvent,0
+PLAY_FRN,FRN205_body,40,AttackEvent,1
+PLAY_FRN,FRN205_body,55,AttackEvent,1
+PLAY_FRN,FRN205_body,70,AttackEvent,1
+
+
+//,PLAY_FRN,FRN205_body,35,AttackEvent,1
+//,PLAY_FRN,FRN205_body,45,AttackEvent,1
+//,PLAY_FRN,FRN205_body,55,AttackEvent,1
+
+
+
+//,앉아약
+PLAY_FRN,FRN230_body,0,AnimSpeedChange,0.028,90
+PLAY_FRN,FRN230_body,15,AttackEvent,33333     
+PLAY_FRN,FRN230_body,20,NextAnimationCheck,3333
+PLAY_FRN,FRN230_body,30,NextAnimationCheck,3333
+PLAY_FRN,FRN230_body,36,NextAnimationCheck,3333
+
+
+//,앉아중
+PLAY_FRN,FRN231_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN231_body,30,AttackEvent,0
+PLAY_FRN,FRN231_body,30,AnimSpeedChange,0.01,70
+
+PLAY_FRN,FRN231_body,35,NextAnimationCheck,3333
+
+PLAY_FRN,FRN231_body,55,AttackEvent,1
+PLAY_FRN,FRN231_body,56,AnimSpeedChange,0.01,90
+
+PLAY_FRN,FRN231_body,60,NextAnimationCheck,3333
+
+
+
+
+PLAY_FRN,FRN231_body,0,ObjectMove,0.2,0,0,0
+PLAY_FRN,FRN231_body,2,ObjectMove,0.19,0,0,0
+PLAY_FRN,FRN231_body,4,ObjectMove,0.18,0,0,0
+PLAY_FRN,FRN231_body,6,ObjectMove,0.17,0,0,0
+PLAY_FRN,FRN231_body,8,ObjectMove,0.16,0,0,0
+PLAY_FRN,FRN231_body,10,ObjectMove,0.15,0,0,0
+PLAY_FRN,FRN231_body,12,ObjectMove,0.14,0,0,0
+PLAY_FRN,FRN231_body,14,ObjectMove,0.13,0,0,0
+PLAY_FRN,FRN231_body,16,ObjectMove,0.11,0,0,0
+PLAY_FRN,FRN231_body,18,ObjectMove,0.10,0,0,0
+PLAY_FRN,FRN231_body,20,ObjectMove,0.08,0,0,0
+PLAY_FRN,FRN231_body,22,ObjectMove,0.07,0,0,0
+PLAY_FRN,FRN231_body,24,ObjectMove,0.05,0,0,0
+PLAY_FRN,FRN231_body,26,ObjectMove,0.04,0,0,0
+PLAY_FRN,FRN231_body,28,ObjectMove,0.03,0,0,0
+PLAY_FRN,FRN231_body,30,ObjectMove,0.01,0,0,0
+
+//,앉아 강
+PLAY_FRN,FRN232_body,0,AnimSpeedChange,0.01,90
+//,PLAY_FRN,FRN232_body,12,AnimSpeedChange,0.01,90
+//,PLAY_FRN,FRN232_body,12,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN232_body,40,AttackEvent,0
+
+PLAY_FRN,FRN232_body,50,NextAnimationCheck,333333
+
+//,앉아특
+PLAY_FRN,FRN233_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN233_body,50,AttackEvent,0
+
+PLAY_FRN,FRN233_body,60,NextAnimationCheck,333333
+
+//,공중 약
+PLAY_FRN,FRN260_body,0,AnimSpeedChange,0.01,110
+PLAY_FRN,FRN260_body,14,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN260_body,15,AttackEvent,0
+PLAY_FRN,FRN260_body,17,AnimSpeedChange,0.01,90
+
+
+PLAY_FRN,FRN260_body,20,NextAnimationCheck,333333
+PLAY_FRN,FRN260_body,25,NextAnimationCheck,333333
+
+
+//,공중 중
+PLAY_FRN,FRN261_body,0,AnimSpeedChange,0.01,110
+PLAY_FRN,FRN261_body,15,AttackEvent,0
+
+PLAY_FRN,FRN261_body,20,NextAnimationCheck,333333
+PLAY_FRN,FRN261_body,25,NextAnimationCheck,333333
+
+PLAY_FRN,FRN261_body,45,AttackEvent,1
+PLAY_FRN,FRN261_body,45,AnimSpeedChange,0.01,110
+
+PLAY_FRN,FRN261_body,50,NextAnimationCheck,333333
+PLAY_FRN,FRN261_body,55,NextAnimationCheck,333333
+
+
+//,공중 강
+PLAY_FRN,FRN262_body,0,AnimSpeedChange,0.01,110
+PLAY_FRN,FRN262_body,30,AnimSpeedChange,0.01,170
+PLAY_FRN,FRN262_body,40,AttackEvent,0
+PLAY_FRN,FRN262_body,41,AnimSpeedChange,0.01,110
+
+
+
+
+
+//,공중 특 1 준비~1타 왼손
+//,PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,90
+//,PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,160
+//,PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,240
+PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,300
+
+
+
+//,루프시 40으로 이동
+PLAY_FRN,FRN265_body,40.1,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN265_body,45,AttackEvent,0
+
+
+//,공중 특 2
+//,공중 특 1 의 Position이 45 이상일때 연계
+//,PLAY_FRN,FRN266_body,0,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN266_body,0,AnimSpeedChange,0.01,130
+
+PLAY_FRN,FRN266_body,15,AttackEvent,0
+
+//,40에서 JumpDown으로 연계하면서 종료
+PLAY_FRN,FRN266_body,40,AttackEvent,1
+
+//,한번 더 누른 경우 45로 이동
+PLAY_FRN,FRN266_body,45,AttackEvent,2
+
+//,55에서 265의 40으로 이동
+PLAY_FRN,FRN266_body,55,AttackEvent,3	
+
+
+
+
+
+//,밑밑특
+PLAY_FRN,FRN267_body,0,AnimSpeedChange,0.01,90
+
+//,순간이동 필요 GroundMove, 샤샤샥
+
+//,15까지 상승,
+
+PLAY_FRN,FRN267_body,0,ObjectMove,0,0.08,0,0
+PLAY_FRN,FRN267_body,1,ObjectMove,0,0.08,0,0
+PLAY_FRN,FRN267_body,2,ObjectMove,0,0.07,0,0
+PLAY_FRN,FRN267_body,3,ObjectMove,0,0.07,0,0
+PLAY_FRN,FRN267_body,4,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN267_body,5,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN267_body,6,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN267_body,7,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN267_body,8,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN267_body,9,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN267_body,10,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN267_body,11,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN267_body,12,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN267_body,13,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN267_body,14,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN267_body,15,ObjectMove,0,0.01,0,0
+
+
+
+
+//,발사, 이제 중력받게
+PLAY_FRN,FRN267_body,30,AttackEvent,0
+
+
+
+
+
+//,FRN 310 뭔지 모르겠음. 3필 준비자세같기도 하고
+
+//,236약
+PLAY_FRN,FRN400_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN400_body,35,AttackEvent,0
+
+//,그냥 AttackBack쓰자
+PLAY_FRN,FRN400_body,40,NextAnimationCheck,333333
+
+
+
+
+//,236특 (공중사용가능)
+//,PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,180
+
+
+//,본인 애니메이션정지, 잡기판정 생성
+PLAY_FRN,FRN402_body,40,AttackEvent,0
+PLAY_FRN,FRN402_body,40,AnimSpeedChange,0.01,50
+
+//,잡기기술 attack back 확인
+PLAY_FRN,FRN402_body,45,AttackEvent,1
+
+//,발사. 잡기성공시랑 아닌경우 구분할것... 해야하나? 그냥 잡기추뎀 주자
+PLAY_FRN,FRN402_body,60,AttackEvent,2
+PLAY_FRN,FRN402_body,61,AnimSpeedChange,0.01,60
+
+
+//,반동 움직임
+PLAY_FRN,FRN402_body,61,ObjectMove,-0.04,0.06,0,0
+PLAY_FRN,FRN402_body,62,ObjectMove,-0.04,0.05,0,0
+PLAY_FRN,FRN402_body,63,ObjectMove,-0.03,0.04,0,0
+PLAY_FRN,FRN402_body,64,ObjectMove,-0.03,0.03,0,0
+PLAY_FRN,FRN402_body,65,ObjectMove,-0.02,0.02,0,0
+PLAY_FRN,FRN402_body,66,ObjectMove,-0.01,0.01,0,0
+PLAY_FRN,FRN402_body,67,ObjectMove,-0.01,0.00,0,0
+
+//,준비 움직임
+
+PLAY_FRN,FRN402_body,2,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN402_body,4,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN402_body,6,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN402_body,8,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN402_body,10,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,12,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,14,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,16,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN402_body,18,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN402_body,20,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN402_body,22,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN402_body,24,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,26,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,28,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,30,ObjectMove,0,0.01,0,0
+
+
+
+
+//,214특 기원참
+PLAY_FRN,FRN403_body,0,AnimSpeedChange,0.01,90
+
+//,던지면서 본인만 시간정지?
+PLAY_FRN,FRN403_body,60,AnimSpeedChange,0.01,40
+PLAY_FRN,FRN403_body,60,AttackEvent,0
+
+
+//,1필
+PLAY_FRN,FRN430_body,0,AnimSpeedChange,0.01,60
+
+//,본인포함 약간 시간정지, 컷씬
+PLAY_FRN,FRN430_body,0,AttackEvent,0
+
+//,이펙트생성. 손가락 끝을 따라다님?
+PLAY_FRN,FRN430_body,25,AttackEvent,1
+
+//,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
+PLAY_FRN,FRN430_body,50,AttackEvent,2
+
+
+
+//, 3필 66.    풀파워 3필은 67
+PLAY_FRN,FRN431_body,0,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN431_body,0,AttackEvent,0
+
+PLAY_FRN,FRN431_body,0,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,1,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,2,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,3,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,4,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,5,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,6,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,7,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,8,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,9,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,10,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,11,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,12,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,13,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,14,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,15,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,16,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,17,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,18,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,19,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,20,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,21,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,22,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,23,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,24,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,25,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,26,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,27,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,28,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,29,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,30,ObjectMove,0,0.05,0,0
+
+
+PLAY_FRN,FRN431_body,30,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN431_body,30,AttackEvent,1
+PLAY_FRN,FRN431_body,100,AttackEvent,2
+PLAY_FRN,FRN431_body,100,AnimSpeedChange,0.01,0.5
+
+//,착지시 124.999로 이동
+PLAY_FRN,FRN431_body,125,AnimSpeedChange,0.01,60
+
+//,Duration 끝은 169.  그 전에 원래모델로 돌아올지는 선택
+
+
+
+
+
+//,기상3필  68
+PLAY_FRN,FRN432_body,0,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN432_body,0,AttackEvent,0
+
+//,자세잡음, 시간정지, 사운드추가?
+PLAY_FRN,FRN432_body,25,AttackEvent,1
+
+//,발사
+PLAY_FRN,FRN432_body,50,AttackEvent,2
+
+PLAY_FRN,FRN432_body,50,AnimSpeedChange,0.01,20
+
+//,후딜레이
+PLAY_FRN,FRN432_body,76,AnimSpeedChange,0.01,60
+
+
+
+
+
+//,변신3필
+PLAY_FRN,FRN433_body,0,AnimSpeedChange,0.01,10
+
+//,컷씬, 적 시간정지
+PLAY_FRN,FRN433_body,0,AttackEvent,0
+
+//,이펙트,화면가리기,  433cs(70)로 연계?
+PLAY_FRN,FRN433_body,15,AttackEvent,1
+
+//,모델변경, 카메라 컷씬지속?
+PLAY_FRN,FRN433_body,20,AttackEvent,2
+
+
+//,변신3필 컷씬? 이펙트로 가리다가 보이는건 120부터
+PLAY_FRN,FRN433cs_body,0,AnimSpeedChange,0.01,25
+
+
+
+//,VS오공 시네마틱 
+PLAY_FRN,FRN_GKS801cs_01_body,0,AnimSpeedChange,0.005,60
+
+//,VS 오공 패배 시네마틱
+PLAY_FRN,FRN_GKS805cs_body,588.213013,AnimSpeedChange,0.005000,60.000000
+
+//,지렌 시네마틱? 왜 여기있냐
+PLAY_FRNr,FRN_GKS819cs_body,255.516998,AnimSpeedChange,0.005000,60.000000

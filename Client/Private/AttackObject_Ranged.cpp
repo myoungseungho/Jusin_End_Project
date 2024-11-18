@@ -50,6 +50,7 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 	}
 	
 		
+	m_bExplosion = pDesc->bExplosion;
 	m_eRangeColor = pDesc->eRangeColor;
 
 	_vector vPos = m_pOwner->Get_vPosition();
@@ -147,6 +148,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		
 		pCharacter->Set_ReflectAttackBackEvent(true);
 
+		pCharacter->Gain_KiAmount(15);
 
 
 
@@ -176,9 +178,13 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
-		CEffect_Layer::COPY_DESC tDesc{};
-		tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-		CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+
+		if (m_bExplosion)
+		{
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+		}
 
 		if (m_pRangedEffect_Layer != nullptr)
 			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
@@ -236,9 +242,12 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
-			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+			if (m_bExplosion)
+			{
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+			}
 
 			if(m_pRangedEffect_Layer!=nullptr)
 				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
@@ -246,8 +255,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
-			m_pOwner->Set_AnimationStop(0.08f);
-			pCharacter->Set_AnimationStop(0.08f);
+			//m_pOwner->Set_AnimationStop(0.08f);
+			//pCharacter->Set_AnimationStop(0.08f);
 			m_pOwner->Set_AttackBackEvent(true);
 
 			if (m_eRangeColor != RANGED_LIGHT_NONE)
@@ -259,9 +268,12 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
 				}
 			}
-			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+			if (m_bExplosion)
+			{
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+			}
 
 
 			if (m_pRangedEffect_Layer != nullptr)

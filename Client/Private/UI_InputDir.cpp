@@ -24,16 +24,19 @@ HRESULT CUI_InputDir::Initialize_Prototype()
 
 HRESULT CUI_InputDir::Initialize(void* pArg)
 {
+
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosX = 230.f;
-	m_fPosY = 510.f;
-	m_fSizeX = 30.f;
-	m_fSizeY = 30.f;
+	m_fPosX = 150.f;
+	m_fPosY = 550.f;
+
+	m_fSizeX = 2.f;
+	m_fSizeY = 2.f;
 
 	m_vPos.x = m_fPosX;
 	m_vPos.y = m_fPosY;
@@ -199,48 +202,48 @@ void CUI_InputDir::MovePos(DirectionInput eInput, _float& fPosX, _float& fPosY)
 	switch (eInput)
 	{
 	case DirectionInput::MOVEKEY_NEUTRAL:
-		fPosX = 230.f;
-		fPosY = 505.f;
+		fPosX = 150.f;
+		fPosY = 554.f;
 		break;
 
 	case DirectionInput::MOVEKEY_UP:
-		fPosX = 230.f;
-		fPosY = 450.f;
+		fPosX = 150.f;
+		fPosY = 508.f;
 		break;
 
 	case DirectionInput::MOVEKEY_DOWN:
-		fPosX = 225.f;
-		fPosY = 565.f;
+		fPosX = 150.f;
+		fPosY = 600.f;
 		break;
 
 	case DirectionInput::MOVEKEY_LEFT:
-		fPosX = 170.f;
-		fPosY = 505.f;
+		fPosX = 100.f;
+		fPosY = 554.f;
 		break;
 
 	case DirectionInput::MOVEKEY_RIGHT:
-		fPosX = 285.f;
-		fPosY = 505.f;
+		fPosX = 200.f;
+		fPosY = 554.f;
 		break;
 
 	case DirectionInput::MOVEKEY_UP_LEFT:
-		fPosX = 180.f;
-		fPosY = 460.f;
+		fPosX = 110.f;
+		fPosY = 514.f;
 		break;
 
 	case DirectionInput::MOVEKEY_UP_RIGHT:
-		fPosX = 275.f;
-		fPosY = 460.f;
+		fPosX = 190.f;
+		fPosY = 514.f;
 		break;
 
 	case DirectionInput::MOVEKEY_DOWN_LEFT:
-		fPosX = 180.f;
-		fPosY = 550.f;
+		fPosX = 110.f;
+		fPosY = 594.f;
 		break;
 
 	case DirectionInput::MOVEKEY_DOWN_RIGHT:
-		fPosX = 275.f;
-		fPosY = 550.f;
+		fPosX = 190.f;
+		fPosY = 594.f;
 		break;
 	}
 

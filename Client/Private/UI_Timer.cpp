@@ -31,7 +31,7 @@ HRESULT CUI_Timer::Initialize(void* pArg)
 
 	
 
-	__super::Set_UI_Setting(128.f, 64.f, m_vPrevWinSize.x * 0.5f, 90.f, 0.8f);
+	__super::Set_UI_Setting(100.f, 50.f, m_vPrevWinSize.x * 0.5f, 60.f, 0.8f);
 
 	return S_OK;
 }

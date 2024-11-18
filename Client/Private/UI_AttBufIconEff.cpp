@@ -23,7 +23,7 @@ HRESULT CUI_AttBufIconEff::Initialize_Prototype()
 
 HRESULT CUI_AttBufIconEff::Initialize(void* pArg)
 {
-	m_fSizeX = 100.f, m_fSizeY = 100.f, m_fPosX = 50.f, m_fPosY = 90.f;
+	m_fSizeX = 100.f, m_fSizeY = 100.f, m_fPosX = 50.f, m_fPosY = 60.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

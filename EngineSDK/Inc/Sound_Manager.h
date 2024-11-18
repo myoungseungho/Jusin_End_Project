@@ -60,6 +60,28 @@ public:
 		CHARASELECT_BGM,
 		NARRATION_VS,
 		NARRATION_VS_SFX,
+		LOADING_CREATE_SFX,
+		LOADING_BALL_SFX,
+		LOADING_BALL_FINISH_SFX,
+		QTE_SUCCESS_SFX,
+		QTE_SAMEGRAB_SUCCESS_SFX,
+		QTE_SAMEGRAB_FAIL_SFX,
+		Heavy_Attack_Hit,
+		Hit_Down_Forward_Light,
+		Hit_Down_Forward_Light_Light_Attack,
+		Hit_Down_Forward_Light_Middle_Attack,
+		Hit_Down_Forward_Light_Heavy_Attack,
+		Hit_BackDash,
+		Hit_Grab_Try,
+		Hit_Grab_Success,
+		Hit_Light_Attack_Final_Attack,
+		Hit_Ultimate_1,
+		Hit_Ultimate_3_0,
+		Hit_Ultimate_3_1,
+		Hit_Ultimate_3_2,
+		Hit_Ultimate_3_3,
+		Hit_Light_Attack_SFX,
+		Hit_J_Attack_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -95,6 +117,16 @@ public:
 		Light_Attack_Goku_1_SFX,
 		Light_Attack_Goku_2_SFX,
 		Light_Attack_Goku_3_SFX,
+		Light_Attack_Hit_0,
+		Light_Attack_Hit_1,
+		Light_Attack_Hit_2,
+		Light_Attack_Hit_3,
+		HIT_J_Attack_0,
+		HIT_J_Attack_1,
+		HIT_Down_Back_Light_0,
+		HIT_Down_Back_Light_1,
+		Hit_Air_Chase_0,
+		Hit_Air_Chase_1,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
@@ -103,7 +135,11 @@ public:
 		Hit_Goku,
 		LIGHT_ATTACK_21,
 		Hit_21,
-		LIGHT_ATTACK_Goku_SFX
+		LIGHT_ATTACK_Goku_SFX,
+		LIGHT_ATTACK_HIT,
+		J_ATTACK_HIT,
+		HIT_Down_Back_Light,
+		Hit_Air_Chase,
 	};
 
 	enum class SOUND_CATEGORY

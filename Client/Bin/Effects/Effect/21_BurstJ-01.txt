@@ -1,0 +1,179 @@
+[Layer]
+LayerName: 21_BurstJ-01
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 6
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_BurstJ-01_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0121_BurstJ-01_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.3 0.3 0
+Scale: 0.0999489 0.0499785 1
+Rotation: 0 0 180
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 0.3 0
+Scale: 0.0999578 0.0499829 1
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-01_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0121_BurstJ-01_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.25 0.2 0
+Scale: 0.0799293 0.0349756 1
+Rotation: 0 0 180
+IsLoop: false
+Color: 255 48.1291 81.904 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.25 0.2 0
+Scale: 0.079956 0.0349863 1
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-01_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0121_BurstJ-01_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.22 0.13 0
+Scale: 0.0698824 0.0249808 0.999413
+Rotation: 0 0 180
+IsLoop: false
+Color: 255 120.745 220.381 0.548013
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.22 0.13 0
+Scale: 0.0698858 0.024982 0.999413
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-01_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0121_BurstJ-01_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.6 0.2 0
+Scale: 0.0499315 0.0299476 1
+Rotation: 0 0 180
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.6 0.2 0
+Scale: 0.0499315 0.0299476 1
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-01_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0121_BurstJ-01_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -1.1 0.097 0
+Scale: 0.0499252 0.00999084 1
+Rotation: 0 0 180
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.1 0.097 0
+Scale: 0.0499252 0.00999084 1
+Rotation: 0 0 180
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-01_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_BurstJ-0121_BurstJ-01_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.2 -0.4 0
+Scale: 0.08 0.07 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 0 32.9305 5.66225
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 -0.4 0
+Scale: 0.08 0.07 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

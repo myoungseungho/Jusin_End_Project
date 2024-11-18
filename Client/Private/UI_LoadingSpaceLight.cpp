@@ -3,6 +3,8 @@
 #include "UI_LoadingSpaceLight.h"
 #include "RenderInstance.h"
 
+#include "UI_Loading_FlyEff.h"
+
 CUI_LoadingSpaceLight::CUI_LoadingSpaceLight(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	:CUIObject{ pDevice ,pContext }
 {
@@ -47,6 +49,18 @@ void CUI_LoadingSpaceLight::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+
+	_bool bEmpty = m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).empty();
+
+	//if (bEmpty == FALSE)
+	//{
+	//	_bool bAnimEnd = dynamic_cast<CUI_Loading_FlyEff*>(m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).back())->Get_AnimEnd();
+	//
+	//	if (bAnimEnd && m_pUI_Manager->m_iNumThreadFinish >= 7)
+	//	{
+	//		Destory();
+	//	}
+	//}
 }
 
 void CUI_LoadingSpaceLight::Late_Update(_float fTimeDelta)

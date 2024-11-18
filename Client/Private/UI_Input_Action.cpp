@@ -24,7 +24,7 @@ HRESULT CUI_Input_Action::Initialize_Prototype()
 HRESULT CUI_Input_Action::Initialize(void* pArg)
 {
 
-	m_fSizeX = 35.f, m_fSizeY = 35.f, m_fPosX = 60.f, m_fPosY = 190.f;
+	m_fSizeX = 30.f, m_fSizeY = 30.f, m_fPosX = 60.f, m_fPosY = 190.f;
 
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -39,30 +39,30 @@ HRESULT CUI_Input_Action::Initialize(void* pArg)
 	switch (m_iTextureIndex)
 	{
 	case KEY_LIGHT:
-		m_fPosX = 345.f;
-		m_fPosY = 510.f;
+		m_fPosX = 250.f;
+		m_fPosY = 550.f;
 		break;
 	case KEY_MEDIUM:
-		m_fPosX = 385.f;
-		m_fPosY = 470.f;
-		break;
-	case KEY_SPECIAL:
-		m_fPosX = 425.f;
+		m_fPosX = 290.f;
 		m_fPosY = 510.f;
 		break;
-	case KEY_HEAVY:
-		m_fPosX = 345.f;
+	case KEY_SPECIAL:
+		m_fPosX = 330.f;
 		m_fPosY = 550.f;
+		break;
+	case KEY_HEAVY:
+		m_fPosX = 250.f;
+		m_fPosY = 590.f;
 		break;
 
 	case KEY_A1:
-		m_fPosX = 385.f;
-		m_fPosY = 550.f;
+		m_fPosX = 290.f;
+		m_fPosY = 590.f;
 		break;
 
 	case KEY_A2:
-		m_fPosX = 425.f;
-		m_fPosY = 550.f;
+		m_fPosX = 330.f;
+		m_fPosY = 590.f;
 		break;
 	}
 

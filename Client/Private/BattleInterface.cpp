@@ -81,6 +81,12 @@ void CBattleInterface_Manager::Gain_KiGuage(_ushort iKi, _ushort iTeam)
         {
             m_iKiNumber[iTeam - 1]++;
             m_iKiGuage[iTeam - 1] -= 100;
+
+            //줄 넘어간거 안보이면 위화감 드니 조금 올림
+            if (m_iKiGuage[iTeam - 1] < 5)
+            {
+                m_iKiGuage[iTeam - 1] += 5;
+            }
         }
     }
 

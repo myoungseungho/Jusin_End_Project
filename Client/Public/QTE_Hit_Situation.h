@@ -31,9 +31,9 @@ public:
 
 	void Notify_Last_UI_Final_Complete() { m_bUI_Final_Complete = true; };
 	void Notify_Faild_Result(class CQTE_Hit_UI_Icon* icon);
-	void Start();
+	void Start(class CGameObject* pCall_Object);
 private:
-	void Start_QTE();
+	void Start_QTE(class CGameObject* pCall_Object);
 	void End_QTE();
 	void End_Offset_QTE(_float fTimeDelta);
 	void Handle_QTEInput();
@@ -71,6 +71,8 @@ private:
 	_bool m_bUI_Final_Complete = { false };
 	//카메라
 	class CMain_Camera* m_pMain_Camera = { nullptr };
+	//호출자 오브젝트
+	class CGameObject* m_pCall_Object = { nullptr };
 
 public:
 	static CQTE_Hit_Situation* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
