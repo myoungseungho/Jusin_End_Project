@@ -614,6 +614,12 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Ultimate_3_2.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//네번째 (오레와 센츄~)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Ultimate_3_3.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_3, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//피격
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Hit_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_Hit_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Hit_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_Hit_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Hit, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Hit_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_Hit_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region Hit_SFX

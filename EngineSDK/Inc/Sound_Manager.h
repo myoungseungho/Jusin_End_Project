@@ -149,6 +149,9 @@ public:
 		HIT_Down_Back_Light_1,
 		Hit_Air_Chase_0,
 		Hit_Air_Chase_1,
+		Hit_Hit_0,
+		Hit_Hit_1,
+		Hit_Hit_2,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
@@ -162,6 +165,7 @@ public:
 		J_ATTACK_HIT,
 		HIT_Down_Back_Light,
 		Hit_Air_Chase,
+		Hit_Hit
 	};
 
 	enum class SOUND_CATEGORY
