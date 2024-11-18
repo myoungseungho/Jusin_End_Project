@@ -276,6 +276,8 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 	case Client::CUI_Define::ANDROID21:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_GRAB, 0, pOwner);
 		main_Camera->StartCameraShake(2.5f, 0.07f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Grab_Attack_21, false, 1.f);
+
 		break;
 	case Client::CUI_Define::FRIEZA:
 		break;

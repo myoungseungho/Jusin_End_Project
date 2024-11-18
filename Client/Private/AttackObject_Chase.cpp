@@ -300,7 +300,7 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			pCharacter->Set_AnimationStop(0.2f);
 
 			//여기 Chase 피격시 사운드
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 			static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")))->StartCameraShake(0.5f, 0.2f);
 
 			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);

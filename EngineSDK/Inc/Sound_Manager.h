@@ -133,6 +133,7 @@ public:
 		Frieza_Ultimate_3_Expl_1_SFX,
 		Frieza_Golden_Frieza_SFX,
 		VOLCANO_BGM,
+		J_Attack_Hit_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -192,7 +193,7 @@ public:
 		Hit_Goku,
 		LIGHT_ATTACK_21,
 		Hit_21,
-		LIGHT_ATTACK_Goku_SFX,
+		LIGHT_ATTACK_Hit_SFX,
 		LIGHT_ATTACK_HIT,
 		J_ATTACK_HIT,
 		HIT_Down_Back_Light,
@@ -246,26 +247,26 @@ public:
 
 private:
 	FMOD_SYSTEM* m_pSoundSystem;
-	map<SOUND_KEY_NAME, FMOD_SOUND*> m_soundMap; // 개별 사운드 맵
-	map<SOUND_GROUP_KEY_NAME, FMOD_SOUND*> m_groupSoundMap; // 그룹 사운드 맵 (새로 추가)
-	map<SOUND_KEY_NAME, ChannelInfo> m_channelMap;
-	map<SOUND_GROUP_KEY_NAME, ChannelInfo> m_groupChannelMap;
+	unordered_map<SOUND_KEY_NAME, FMOD_SOUND*> m_soundMap; // 개별 사운드 맵
+	unordered_map<SOUND_GROUP_KEY_NAME, FMOD_SOUND*> m_groupSoundMap; // 그룹 사운드 맵 (새로 추가)
+	unordered_map<SOUND_KEY_NAME, ChannelInfo> m_channelMap;
+	unordered_map<SOUND_GROUP_KEY_NAME, ChannelInfo> m_groupChannelMap;
 
 	_uint m_iNumLevels;
 	static const _uint MAX_CHANNELS = 64;  // 최대 채널 수 정의
 	class FMOD_CHANNELGROUP* m_pChannelGroup = nullptr;
 
 	// 추가된 멤버 변수
-	map<SOUND_GROUP_KEY, vector<SOUND_GROUP_KEY_NAME>> m_soundGroupMap;  // 그룹별로 음원 alias를 저장하는 맵
-	map<SOUND_GROUP_KEY, SOUND_GROUP_KEY_NAME> m_lastPlayedSound;  // 마지막에 재생된 음원을 저장하는 맵
+	unordered_map<SOUND_GROUP_KEY, vector<SOUND_GROUP_KEY_NAME>> m_soundGroupMap;  // 그룹별로 음원 alias를 저장하는 맵
+	unordered_map<SOUND_GROUP_KEY, SOUND_GROUP_KEY_NAME> m_lastPlayedSound;  // 마지막에 재생된 음원을 저장하는 맵
 
 	// 개별 사운드용 맵
-	map<SOUND_KEY_NAME, SOUND_CATEGORY> m_soundCategoryMap;
+	unordered_map<SOUND_KEY_NAME, SOUND_CATEGORY> m_soundCategoryMap;
 	// 그룹 사운드용 맵
-	map<SOUND_GROUP_KEY_NAME, SOUND_CATEGORY> m_groupSoundCategoryMap;
+	unordered_map<SOUND_GROUP_KEY_NAME, SOUND_CATEGORY> m_groupSoundCategoryMap;
 
 	// 카테고리별 현재 볼륨을 저장하는 맵
-	map<SOUND_CATEGORY, float> m_categoryVolumes;
+	unordered_map<SOUND_CATEGORY, float> m_categoryVolumes;
 public:
 
 	static CSound_Manager* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
