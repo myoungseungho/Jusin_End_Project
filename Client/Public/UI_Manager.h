@@ -25,7 +25,8 @@ public:
 		THREAD_MODEL_0,
 		THREAD_MODEL_1,
 		THREAD_OBJECT_0,
-		THREAD_COMPONENT_0
+		THREAD_COMPONENT_0,
+		THREAD_END
 	};
 
 	DECLARE_SINGLETON(CUI_Manager)
@@ -63,6 +64,20 @@ public:
 		m_QueueThreadPool.push(taskType);
 	}
 
+	ThreadPool_For_Loading Get_Thread()
+	{
+		if (m_QueueThreadPool.empty() == FALSE)
+		{
+		
+			ThreadPool_For_Loading TheadID =  m_QueueThreadPool.front();
+			m_QueueThreadPool.pop();
+			m_iNumThreadFinish++;
+			return TheadID;
+		}
+
+		return THREAD_END;
+	}
+
 private:
 	queue<ThreadPool_For_Loading> m_QueueThreadPool;
 	mutex m_queueMutex;
@@ -75,9 +90,15 @@ public:
 	_bool m_bStun = { FALSE };
 	_bool m_bHit = { FALSE };
 	_uint m_iHp = {0};
+	_uint m_iNumThreadFinish = { 0 };
+
+	_bool m_bGamePlayLoadingFinish = { FALSE };
 	
 public:
 	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
+
+	//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
+	_bool m_bActive = { FALSE };
 
 	//Anim
 	_float m_fTotalDuration = { 0.f };

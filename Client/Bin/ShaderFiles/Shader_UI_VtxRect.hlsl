@@ -747,23 +747,23 @@ PS_OUT PS_VS_Name(PS_IN In)
 PS_OUT PS_FLYEFF(PS_IN In)
 {
     PS_OUT Out;
-     
-    //float2 moveDir = g_vCurrPos - g_vPrevPos;
-    //float moveDist = length(moveDir);
-    //moveDir = normalize(moveDir);
-    //
-    //float stretchFactor = 0.1 * moveDist;
-    //float2 uv = In.vTexcoord;
-    //
-    //uv += moveDir * stretchFactor;
     
-    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+      Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     Out.vColor.a = Out.vColor.r;
-    //float fadeAmount = saturate(1.0 - stretchFactor);
-    //Out.vColor.a *= fadeAmount;
     
     return Out;
 }
+
+PS_OUT PS_DRAGONBALL(PS_IN In)
+{
+    PS_OUT Out;
+    
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor.rgb += g_MaskTimer;
+    
+    return Out;
+}
+
 
 technique11 DefaultTechnique
 {
@@ -1246,6 +1246,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_FLYEFF();
+    }
+
+//33
+    pass DRAGONBALL
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+ 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_DRAGONBALL();
     }
 
 }

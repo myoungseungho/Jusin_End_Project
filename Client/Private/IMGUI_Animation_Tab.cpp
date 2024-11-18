@@ -34,7 +34,7 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 
 
 
-    m_iTestModelIndex = PLAY_GOKU;
+    m_iTestModelIndex = PLAY_FRN;
 
     //static FrameEventMap FrameEvent[CHARACTER_INDEX_END][100][2];
   //  FrameEvent[SELECT_HIT][0][5].emplace("TEST");
@@ -79,7 +79,7 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
    
     //이거 ModelPreview로 이사감
     //CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
-    //CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
+   // CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Frieza.txt");
 
 
 
@@ -811,8 +811,8 @@ string CIMGUI_Animation_Tab::Get_CharacterName()
         strCharacterTEXT += "SELECT_GOKU";
         break;
 
-    case Client::SELECT_BOU:
-        strCharacterTEXT += "SELECT_BOU";
+    case Client::SELECT_FRN:
+        strCharacterTEXT += "SELECT_FRN";
         break;
 
     case Client::SELECT_21:
@@ -827,8 +827,8 @@ string CIMGUI_Animation_Tab::Get_CharacterName()
         strCharacterTEXT += "PLAY_GOKU";
         break;
 
-    case Client::PLAY_BOU:
-        strCharacterTEXT += "PLAY_BOU";
+    case Client::PLAY_FRN:
+        strCharacterTEXT += "PLAY_FRN";
         break;
 
     case Client::PLAY_21:

@@ -35,12 +35,12 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Notify_Result(MISSION_STATE isResult) { m_eMissionState = isResult; };
-	void Start();
+	void Start(class CGameObject* callObject);
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	void Start_QTE();
+	void Start_QTE(class CGameObject* callObject);
 	void End_QTE();
 	void End_Offset_QTE(_float fTimeDelta);
 	void Handle_QTEInput();
@@ -84,6 +84,8 @@ private:
 
 	//카메라
 	class CMain_Camera* m_pMain_Camera = { nullptr };
+	//호출자 객체
+	class CGameObject* m_pCall_Object = { nullptr };
 
 	//객체들이 사라지는 여유 시간을 줘야 함
 	_float m_fOffsetTimer = { 2.f };

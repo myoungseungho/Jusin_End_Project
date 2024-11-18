@@ -4,7 +4,7 @@
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "QTE_Same_Grab.h"
-
+#include "QTE_1P_Same_Grab.h"
 
 CQTE_Same_Grab_UI_Icon::CQTE_Same_Grab_UI_Icon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -223,7 +223,16 @@ void CQTE_Same_Grab_UI_Icon::Update_Falling(_float fTimeDelta)
 
 			//Same_Grab에게 마지막 객체가 Final_UI가 떨어졌다고 알려야함
 			if (m_bIsLast)
-				static_cast<CQTE_Same_Grab*>(m_pSameGrab)->Notify_Last_UI_Final_Complete();
+			{
+				CQTE_Same_Grab* IsSameGrab = dynamic_cast<CQTE_Same_Grab*>(m_pSameGrab);
+				if (IsSameGrab)
+					IsSameGrab->Notify_Last_UI_Final_Complete();
+				else
+				{
+					CQTE_1P_Same_Grab* is1pSameGrab = dynamic_cast<CQTE_1P_Same_Grab*>(m_pSameGrab);
+					is1pSameGrab->Notify_Last_UI_Final_Complete();
+				}
+			}
 
 			Set_State(NOT_SELECTED); // 애니메이션 완료 후 기본 상태로 전환
 		}

@@ -46,8 +46,8 @@ void CLevel_VS::Update(_float fTimeDelta)
 	{
 		m_fNextLevelTimer = 0.f;
 
-		//if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
-		//	return;
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+			return;
 	}
 	m_fUILightCreateTimer += fTimeDelta;
 	

@@ -39,7 +39,9 @@ private:
 
 private:
 	_float m_fBGAlphaValue = { 1.f };
+	_bool m_bBallFinish = { FALSE };
 	_bool m_IsAlphaSwich = { FALSE };
+	_uint m_iTextureIndex = { 0 };
 
 public:
 	static CUI_Loading_BG* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

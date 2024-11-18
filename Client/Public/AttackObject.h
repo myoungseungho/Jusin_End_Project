@@ -56,7 +56,9 @@ public:
 
 		_ushort		iGainKiAmount = { 5 };
 
-
+		//카메라용
+		_uint iVirtualCameraindex = { 200 }; //200 : 미사용(기본값)
+		_uint ianimationIndex = {};
 		_float fCameraShakeDuration = { 0 };
 		_float fCameraShakeMagnitude = { 0 };
 
@@ -169,6 +171,8 @@ protected:
 	_bool	m_bOnwerHitNoneStop = { false };
 	_bool	m_bHitNoGravity = { false };
 
+	_uint m_iVirtualCameraindex = { 200 };
+	_uint m_ianimationIndex = {};
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);
 

@@ -323,20 +323,18 @@ void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameo
 	{
 
 
-		//CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
+	CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
 
-		//CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+	CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+	if (nullptr == pTransform)
+	    return;
+	_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+	vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3]};
+	pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
+	//static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
 
-		//if (nullptr == pTransform)
-		//    return;
-		//_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
-		//vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3]};
-		//pTransform->Set_State(CTransform::STATE_POSITION, vPos);
-
-		////static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
-
-		//_bool bDebug = false;
+	_bool bDebug = false;
 	}
 
 	else if (splitText[0] == "TickPerSecondChange")
@@ -588,15 +586,15 @@ CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)
 	/*
    const static enum CHARACTER_INDEX {
 		SELECT_GOKU, SELECT_BOU, SELECT_21, SELECT_HIT,
-		PLAY_GOKU, PLAY_BOU, PLAY_21, PLAY_HIT, CHARACTER_INDEX_END
+		PLAY_GOKU, PLAY_FRN, PLAY_21, PLAY_HIT, CHARACTER_INDEX_END
 	};
    */
 
 	if (strText == "SELECT_GOKU")
 		return SELECT_GOKU;
 
-	if (strText == "SELECT_BOU")
-		return SELECT_BOU;
+	if (strText == "SELECT_FRN")
+		return SELECT_FRN;
 
 	if (strText == "SELECT_21")
 		return SELECT_21;
@@ -609,8 +607,8 @@ CHARACTER_INDEX CFrameEvent_Manager::Convert_strtoCharacterIndex(string strText)
 	if (strText == "PLAY_GOKU")
 		return PLAY_GOKU;
 
-	if (strText == "PLAY_BOU")
-		return PLAY_BOU;
+	if (strText == "PLAY_FRN")
+		return PLAY_FRN;
 
 	if (strText == "PLAY_21")
 		return PLAY_21;

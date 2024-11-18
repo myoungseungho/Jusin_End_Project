@@ -23,10 +23,10 @@ HRESULT CUI_Input_DirPanel::Initialize_Prototype()
 
 HRESULT CUI_Input_DirPanel::Initialize(void* pArg)
 {
-	m_fSizeX = 190; 
-	m_fSizeY = 190;
-	m_fPosX = 228;
-	m_fPosY = 503;
+	m_fSizeX = 150; 
+	m_fSizeY = 150;
+	m_fPosX = 150;
+	m_fPosY = 550;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

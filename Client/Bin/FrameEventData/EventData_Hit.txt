@@ -992,7 +992,7 @@ PLAY_HIT,HTN432_body,150,AttackEvent,3
 
 //,성공시 끝내고 돌아와서 막타
 PLAY_HIT,HTN432_body,240.1,AnimSpeedChange,0.005,40
-PLAY_HIT,HTN432_body,240.1,AttackEvent,240
+
 PLAY_HIT,HTN432_body,250,AttackEvent,4
 //,PLAY_HIT,HTN432_body,251,AnimSpeedChange,0.005,80
 PLAY_HIT,HTN432_body,251,AttackEvent,255

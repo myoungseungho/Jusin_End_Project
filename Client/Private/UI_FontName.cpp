@@ -42,7 +42,7 @@ HRESULT CUI_FontName::Initialize(void* pArg)
 		m_fPosX -= 30;
 
 
-	__super::Set_UI_Setting(255.f, 32.f, m_fPosX, 47, 0.f);
+	__super::Set_UI_Setting(255.f, 32.f, m_fPosX, 27, 0.f);
 
 
 	return S_OK;

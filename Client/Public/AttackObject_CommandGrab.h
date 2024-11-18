@@ -35,9 +35,7 @@ public:
 		_short iOnwerDirection = {231};  //보통 보는 방향의 반대가 되도록 조정하지만  0으로 넣으면 뒤통수 때려도 뒤집히지 않음. 기본값(231)이면 자동처리하기
 
 
-		//카메라용
-		_uint iVirtualCameraindex = {200}; //200 : 미사용(기본값)
-		_uint ianimationIndex = {};
+		
 
 		//_float fCameraShakeDuration = {200};
 		//_float fCameraShakeMagnitude = {200};
@@ -81,8 +79,7 @@ private:
 	_bool m_bForcedHit = { false };
 
 	_short m_iOnwerDirection = {1};
-	_uint m_iVirtualCameraindex = { 200 };
-	_uint m_ianimationIndex = {};
+	
 
 	_bool m_bGrabedGravity = { false };
 

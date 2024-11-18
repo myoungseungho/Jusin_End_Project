@@ -4,6 +4,8 @@
 #include "GameInstance.h"
 #include "RenderInstance.h"
 
+#include "UI_Loading_FlyEff.h"
+
 CUI_Loading_BG::CUI_Loading_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
 {
@@ -47,16 +49,38 @@ HRESULT CUI_Loading_BG::Initialize(void* pArg)
 
 void CUI_Loading_BG::Camera_Update(_float fTimeDelta)
 {
-	m_IsAlphaSwich ? (m_fBGAlphaValue += fTimeDelta * 0.25f) : (m_fBGAlphaValue -= fTimeDelta * 0.25f);
-
-	if (m_fBGAlphaValue <= 0.25f)
-		m_IsAlphaSwich = TRUE;
-	else if (m_fBGAlphaValue >= 1.f)
-		m_IsAlphaSwich = FALSE;
+	
 }
 
 void CUI_Loading_BG::Update(_float fTimeDelta)
 {
+	//_bool bEmpty =  m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).empty();
+	//_bool bAnimEnd = FALSE;
+	//if (bEmpty == FALSE)
+	//	bAnimEnd  = dynamic_cast<CUI_Loading_FlyEff*>(m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).back())->Get_AnimEnd();
+	//
+	//if (bAnimEnd && m_pUI_Manager->m_iNumThreadFinish >= 7 && m_bBallFinish == FALSE)
+	//{
+	//	m_iTextureIndex = 1;
+	//	m_fBGAlphaValue = 0.f;
+	//	m_bBallFinish = TRUE;
+	//}
+	//
+	//if (m_bBallFinish == FALSE)
+	//{
+		m_IsAlphaSwich ? (m_fBGAlphaValue += fTimeDelta * 0.25f) : (m_fBGAlphaValue -= fTimeDelta * 0.25f);
+
+		if (m_fBGAlphaValue <= 0.25f)
+			m_IsAlphaSwich = TRUE;
+		else if (m_fBGAlphaValue >= 1.f)
+			m_IsAlphaSwich = FALSE;
+	//}
+	//else
+	//{
+	//	m_fBGAlphaValue += fTimeDelta * 0.25f;
+	//	if (m_fBGAlphaValue >= 1.f)
+	//		m_fBGAlphaValue = 1.f;
+	//}
 }
 
 void CUI_Loading_BG::Late_Update(_float fTimeDelta)
@@ -117,12 +141,11 @@ HRESULT CUI_Loading_BG::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pBGTextureCom->Bind_ShaderResource(m_pShaderCom, "g_BGTexture", 0)))
+	if (FAILED(m_pBGTextureCom->Bind_ShaderResource(m_pShaderCom, "g_BGTexture", m_iTextureIndex)))
 		return E_FAIL;
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_fAlphaTimer", &m_fBGAlphaValue, sizeof(_float))))
 		return E_FAIL;
