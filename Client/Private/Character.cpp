@@ -148,6 +148,16 @@ vector<CInput> CCharacter::Command_Forward =
 	{ MOVEKEY_RIGHT, ATTACK_NONE }
 
 };
+vector<CInput> CCharacter::Command_Crouch_Crouch_SpecialAttack = 
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL},
+
+};
+
+
 
 vector<CInput> CCharacter::Command_LightAttack = { {MOVEKEY_NEUTRAL, ATTACK_LIGHT} };
 vector<CInput> CCharacter::Command_MediumAttack = { {MOVEKEY_NEUTRAL, ATTACK_MEDIUM} };
@@ -167,6 +177,7 @@ vector<CInput> CCharacter::Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
 vector<CInput> CCharacter::Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
 
+
 vector<CInput> CCharacter::Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
 
@@ -174,7 +185,12 @@ vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
 
 vector<CInput> CCharacter::Command_Up_SpecialAttack = { {MOVEKEY_UP, ATTACK_SPECIAL} };
 
+
+vector<CInput> CCharacter::Command_LowBenishingAttack = { {MOVEKEY_DOWN, ATTACK_BENISHING} };
 vector<CInput> CCharacter::Command_BenishingAttack = { {MOVEKEY_NEUTRAL, ATTACK_BENISHING} };
+
+
+vector<CInput> CCharacter::Command_Transform = { {MOVEKEY_DOWN, ATTACK_TRANSFORM} };
 
 
 
@@ -588,7 +604,10 @@ _bool CCharacter::InputCommand()
 		{
 			iAttackkey = ATTACK_BENISHING;
 		}
-
+		if (m_pGameInstance->Key_Down(DIK_M))
+		{
+			iAttackkey = ATTACK_TRANSFORM;
+		}
 		// if (m_pGameInstance->Key_Pressing(DIK_Y))
 		// {
 		//	 iAttackkey = ATTACK_LIGHT;
@@ -682,7 +701,10 @@ _bool CCharacter::InputCommand()
 		{
 			iAttackkey = ATTACK_BENISHING;
 		}
-
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD1))
+		{
+			iAttackkey = ATTACK_TRANSFORM;
+		}
 		// if (m_pGameInstance->Key_Pressing(DIK_Y))
 		// {
 		//	 iAttackkey = ATTACK_LIGHT;
@@ -966,6 +988,11 @@ _float CCharacter::Get_fHeight()
 {
 	return 	XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
+}
+
+CCharacter* CCharacter::Get_pEnemy()
+{
+	return m_pEnemy;
 }
 
 void CCharacter::Set_ForcedGravityDown()
@@ -2095,7 +2122,8 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 */
 AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
 {
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground
+		|| m_pModelCom->m_iCurrentAnimationIndex == m_iLayUp)
 		return RESULT_MISS;
 
 	//스턴상태, 땅바닥에 꽂혔을때 검사
@@ -2104,6 +2132,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 		if (eAttackGrade != GRADE_ULTIMATE)
 			return RESULT_MISS;
 	}
+
+	m_bInvisible = false;
 
 	//스턴 상태가 아니면 가드 체크
 	if (m_bStun == false)
@@ -2116,6 +2146,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 		if (eResult == RESULT_GUARD)
 		{
+
+
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 				Set_Animation(m_iGuard_CrouchAnimationIndex);
 
@@ -2171,7 +2203,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 		}
 		else if (eResult != RESULT_HIT)    //회피나 비긴 경우 아니면 일단 속행.   저 경우는 나중에 따로 처리
 			return eResult;
-
+		
 
 	}
 
@@ -2628,6 +2660,7 @@ void CCharacter::Set_BreakFall_Ground()
 {
 	
 
+
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
@@ -2635,6 +2668,10 @@ void CCharacter::Set_BreakFall_Ground()
 	Reset_AttackStep();
 
 
+	if (inputBuffer.size() == 0)
+	{
+		inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
+	}
 	DirectionInput iMoveKey = inputBuffer.back().direction;
 
 	if (iMoveKey == MOVEKEY_UP || iMoveKey == MOVEKEY_UP_LEFT)
@@ -2649,7 +2686,11 @@ void CCharacter::Set_BreakFall_Ground()
 
 		Set_ForcedGravityTime_LittleUp();
 	}
-
+	else if (iMoveKey == MOVEKEY_DOWN)
+	{
+		Set_Animation(m_iBound_Ground, 2.f);
+		Set_NextAnimation(m_iLayUp, 2.f);
+	}
 
 	else //if (iMoveKey == MOVEKEY_LEFT)
 	{
@@ -2710,10 +2751,12 @@ void CCharacter::BreakFall_Air()
 	}
 }
 
-void CCharacter::Set_bNoGravity(_bool bNoGravity)
+void CCharacter::Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime)
 {
 	m_bNoGravity = bNoGravity;
 	m_fNoGravitySafeTime = 0.f;
+	m_fMaxfNoGravitySafeTime = MaxfNoGravitySafeTime;
+
 }
 
 _bool CCharacter::Update_Tag_In(_float fTimeDelta)
@@ -2929,7 +2972,8 @@ _float CCharacter::Get_DamageScale(_bool bUltimate)
 	if (m_bSparking)
 	{
 		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
-		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		//fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		fDamageScale += 0.1f;
 	}
 
 
@@ -4779,7 +4823,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 	{
 		m_fNoGravitySafeTime += fTimeDelta;
 
-		if (m_fNoGravitySafeTime > 0.3f)
+		if (m_fNoGravitySafeTime > m_fMaxfNoGravitySafeTime)
 		{
 			m_bNoGravity = false;
 			m_fNoGravitySafeTime = 0.f;
@@ -5177,7 +5221,10 @@ void CCharacter::Gravity(_float fTimeDelta)
 			else
 			{
 				//Set_Animation(m_iBound_Ground);
-
+				if (inputBuffer.size() == 0)
+				{
+					inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
+				}
 				Set_Animation(m_iBreakFall_Ground, 2.f);
 				if (inputBuffer.back() == CInput{ MOVEKEY_UP, ATTACK_LIGHT })
 				{

@@ -92,6 +92,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iAttack_Crouch_Heavy = { ANIME_ATTACK_CROUCH_HEAVY };
 
 	m_iBound_Ground = { ANIME_HIT_BOUND_DOWN };
+	m_iLayUp = { ANIME_LAYUP };
 
 	m_iGuard_GroundAnimationIndex = { ANIME_GUARD_GROUND };
 	m_iGuard_CrouchAnimationIndex = { ANIME_GUARD_CROUCH };
@@ -528,7 +529,11 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			{
 				Set_Animation(m_iHit_Air_FallAnimationIndex);
 			}
-
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+			{
+				Set_Animation(ANIME_LAYUP);
+				Set_CurrentAnimationPositionJump(5.f);
+			}
 			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
 
@@ -1269,6 +1274,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_HEAVY:
 	{
+		m_bGrab_Air = false;
+
 		CAttackObject::ATTACK_DESC Desc{};
 		/*	Desc.ColliderDesc.width = 1.0;
 			Desc.ColliderDesc.height = 1.0;
@@ -1295,7 +1302,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 		Desc.iGainKiAmount = 10;
 
-		Desc.bCameraZoom = false;
+		//Desc.bCameraZoom = false;
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
@@ -1356,7 +1364,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
+		//Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
+		Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
+
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 		Desc.strEffectName = TEXT("BurstJ-03");
@@ -1591,7 +1601,15 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//높이가 5 이상이면 내려찍히는 판정.  디폴트는 false이므로  else 처리 안함
 		//if(Get_fHeight() > 5)
-		if (Get_fHeight() > 3)
+
+		if (m_bGrab_Air)
+		{
+			Desc.bGroundSmash = true;
+			Desc.fAnimationLockTime = 0.7f;
+			m_bGrab_Air = false;
+
+		}
+		else if (Get_fHeight() > 3)
 		{
 			Desc.bGroundSmash = true;
 			Desc.fAnimationLockTime = 0.7f;
@@ -1676,6 +1694,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.strEffectName = TEXT("BurstJ-03_Rotated_Left");
 			Desc.iGainKiAmount = 7;
 
+			Desc.bOnwerHitNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -3401,7 +3420,8 @@ _float CPlay_Goku::Get_DamageScale(_bool bUltimate)
 	if (m_bSparking)
 	{
 		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
-		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		//fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		fDamageScale += 0.1f;
 	}
 
 	if (m_bAlwaysss3Test)

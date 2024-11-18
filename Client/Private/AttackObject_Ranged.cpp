@@ -49,6 +49,8 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 		m_pTransformCom->Set_Scaled(-1, 1, 1);
 	}
 
+	m_bPierce = pDesc->bPierce;
+		
 
 	m_bExplosion = pDesc->bExplosion;
 	m_eRangeColor = pDesc->eRangeColor;
@@ -89,16 +91,47 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	//생존시간 지났거나 맵바깥(땅포함)으로 나갔으면 삭제
 	if (m_fAccLifeTime > m_fLifeTime || Check_MapOut())
 	{
-		if (m_bEnableDestory)
+
+		if (m_pRangedEffect_Layer != nullptr)
+			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+		if (m_bPierce == false)
 		{
+			if (m_bEnableDestory)
+			{
+				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+				//m_pGameInstance->Release_Collider(m_pColliderCom);
+				m_bEnableDestory = false;
+				Destory();
 
-			if (m_pRangedEffect_Layer != nullptr)
-				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
-
-			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
-			m_bEnableDestory = false;
-			Destory();
+			}
 		}
+		else
+		{
+			if (m_bEnableDestory)
+			{
+				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+				//m_pGameInstance->Release_Collider(m_pColliderCom);
+				m_bEnableDestory = false;
+
+			}
+
+			Destory();
+
+		}
+
+
+		//전에 쓰던거
+		//if (m_bEnableDestory)
+		//{
+		//
+		//	if (m_pRangedEffect_Layer != nullptr)
+		//		m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+		//
+		//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
+		//	m_bEnableDestory = false;
+		//	Destory();
+		//}
 	}
 	else
 	{
@@ -178,6 +211,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 		if (m_bExplosion)
 		{
@@ -196,6 +230,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	{
 		CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
+	
 		if (pCharacter->Check_bCurAnimationisChase())
 		{
 			BeReflect();
@@ -204,7 +239,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 		AttackColliderResult eResult =
-			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
+			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_iOnwerDirection, m_fhitCharacter_Impus);
 
 		if (eResult == RESULT_HIT)
 		{
@@ -213,6 +248,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
 			m_pOwner->Set_AttackBackEvent(true);
+			pCharacter->Set_bNoGravity(m_bHitNoGravity, m_fMaxNoNoGravitySafeTime);
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
@@ -250,14 +286,17 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, false, 1.f);
 			}
 
-			if (m_pRangedEffect_Layer != nullptr)
-				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			if (m_bPierce == false)
+				if (m_pRangedEffect_Layer != nullptr)
+					m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
 
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
-			m_pOwner->Set_AnimationStop(0.08f);
-			pCharacter->Set_AnimationStop(0.08f);
+			//m_pOwner->Set_AnimationStop(0.08f);
+			//pCharacter->Set_AnimationStop(0.08f);
 			m_pOwner->Set_AttackBackEvent(true);
 
 			if (m_eRangeColor != RANGED_LIGHT_NONE)
@@ -277,8 +316,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 
 
-			if (m_pRangedEffect_Layer != nullptr)
-				m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			if (m_bPierce == false)
+				if (m_pRangedEffect_Layer != nullptr)
+					m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 		}
 
@@ -307,12 +348,42 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 
 
-		if (m_bEnableDestory)
+		//Pierce 추가 전 코드
+		//if (m_bEnableDestory)
+		//{
+		//	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+		//	m_bEnableDestory = false;
+		//	Destory();
+		//}
+
+		if (m_bPierce == false)
 		{
-			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
-			m_bEnableDestory = false;
-			Destory();
+			if (m_bEnableDestory)
+			{
+				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+				//m_pGameInstance->Release_Collider(m_pColliderCom);
+				m_bEnableDestory = false;
+				Destory();
+
+			}
 		}
+		else
+		{
+			if (m_bEnableDestory)
+			{
+				CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+				//m_pGameInstance->Release_Collider(m_pColliderCom);
+				m_bEnableDestory = false;
+
+			}
+
+			//if (m_fLifeTime > m_fAccLifeTime)
+			//{
+			//	Destory();
+			//}
+
+		}
+
 	}
 
 	//vs 근접공격의 경우 리플렉트가 가능한가 확인
@@ -422,12 +493,32 @@ void CAttackObject_Ranged::Add_YellowLight()
 
 void CAttackObject_Ranged::Erase()
 {
-	if (m_bEnableDestory)
+	if(m_bPierce == false)
 	{
-		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
-		//m_pGameInstance->Release_Collider(m_pColliderCom);
-		m_bEnableDestory = false;
-		Destory();
+		if (m_bEnableDestory)
+		{
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
+			m_bEnableDestory = false;
+			Destory();
+
+		}
+	}
+	else
+	{
+		if (m_bEnableDestory)
+		{
+			CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
+			//m_pGameInstance->Release_Collider(m_pColliderCom);
+			m_bEnableDestory = false;
+
+		}
+	
+		if (m_fLifeTime > m_fAccLifeTime)
+		{
+			Destory();
+		}
+
 	}
 }
 
@@ -439,6 +530,8 @@ _bool CAttackObject_Ranged::BeReflect()
 	//m_pGameInstance->Release_Collider(m_pColliderCom);
 
 	//이펙트, 맵밖으로 이동
+	if (m_pRangedEffect_Layer != nullptr)
+		m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 
 	Destory();

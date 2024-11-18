@@ -69,6 +69,10 @@ public:
 		_bool bReflect = { false };
 		_bool bOnwerHitNoneStop = { false };
 		_bool bHitNoGravity = { false };
+		_float fMaxNoNoGravitySafeTime = { 0.2f };
+
+		_short iOnwerDirection = { 231 };  //보통 보는 방향의 반대가 되도록 조정하지만  0으로 넣으면 뒤통수 때려도 뒤집히지 않음. 기본값(231)이면 자동처리하기
+
 
 		class CCharacter* pOwner = { nullptr };
 	};
@@ -170,9 +174,14 @@ protected:
 	_bool	m_bReflect = { false };
 	_bool	m_bOnwerHitNoneStop = { false };
 	_bool	m_bHitNoGravity = { false };
+	_float	m_fMaxNoNoGravitySafeTime = { 0.2f };
 
 	_uint m_iVirtualCameraindex = { 200 };
 	_uint m_ianimationIndex = {};
+
+
+	_short m_iOnwerDirection = { 1 };
+
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);
 

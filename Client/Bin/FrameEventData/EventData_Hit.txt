@@ -512,7 +512,9 @@ PLAY_HIT,HTN202_body,25,AttackEvent,1
 
 //,막혔으면 55로 이동하고 끝내기.  35는 옷이 뚫림
 //,맞췄고, 루프다 끝냈으면 NextAnimationCheck
-PLAY_HIT,HTN202_body,30,AttackEvent,2
+//,PLAY_HIT,HTN202_body,30,AttackEvent,2
+PLAY_HIT,HTN202_body,32,AttackEvent,2
+
 
 //,루프타이밍.  안보이게, 달리는척 하다가 적 뒤로이동,  가로샤샤샥, 24로 이동해서 루프돌기. 너무빠르니 20? 어택경직있으니 ㄱㅊ
 PLAY_HIT,HTN202_body,50,AttackEvent,3

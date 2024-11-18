@@ -110,6 +110,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iAttack_Crouch_Heavy = { ANIME_ATTACK_CROUCH_HEAVY };
 
 	m_iBound_Ground = { ANIME_HIT_BOUND_DOWN };
+	m_iLayUp = { ANIME_LAYUP };
 
 	m_iGuard_GroundAnimationIndex = { ANIME_GUARD_GROUND };
 	m_iGuard_CrouchAnimationIndex = { ANIME_GUARD_CROUCH };
@@ -137,6 +138,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iNextAnimation.first = ANIME_IDLE;
 
 
+	//m_eChaseSoundIndex = ;
 
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -525,7 +527,11 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			{
 				Set_Animation(m_iHit_Air_FallAnimationIndex);
 			}
-
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+			{
+				Set_Animation(ANIME_LAYUP);
+				Set_CurrentAnimationPositionJump(5.f);
+			}
 			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
 
@@ -1406,6 +1412,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_HEAVY:
 	{
+		m_bGrab_Air = false;
+
 		CAttackObject::ATTACK_DESC Desc{};
 		/*	Desc.ColliderDesc.width = 1.0;
 			Desc.ColliderDesc.height = 1.0;
@@ -1613,6 +1621,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_AIR3:
 	{
+
 		CAttackObject::ATTACK_DESC Desc{};
 
 		if (m_iPlayerTeam == 1)
@@ -1630,7 +1639,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iDamage = 1000 * Get_DamageScale();
 		Desc.fLifeTime = 0.1f;
-		if (Get_fHeight() > 0)
+		if (m_bGrab_Air)
+		{
+			Desc.bGroundSmash = true;
+			Desc.fAnimationLockTime = 0.7f;
+			m_bGrab_Air = false;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+			Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,-20.f };
+		}
+		else if (Get_fHeight() > 0)
 		{
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
 			//Desc.bCameraZoom = false;
@@ -1641,6 +1658,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.7f;
 		Desc.pOwner = this;
+		Desc.bGrabbedEnd = true;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
