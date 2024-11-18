@@ -13,9 +13,11 @@ float4 g_vMtrlSpecular = float4(1.f, 1.f, 1.f, 1.f);
 
 vector g_vCamPosition;
 int g_iPlayerDirection;
+float g_MeshIndex;
 texture2D g_DecalTexture;
 texture2D g_DiffuseTexture;
 texture2D g_OutLineTexture;
+texture2D g_DetailTexture;
 /* 모델 전체의 뼈(x), 메시에게 영향을 주는 뼈(o)*/
 
 float4x4 g_BoneMatrices[800];
@@ -184,6 +186,45 @@ PS_OUT PS_MAIN_21(PS_IN In)
 
     return Out;
 }
+PS_OUT PS_MAIN_FRIEZA(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+	
+    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
+    //vector vMtrlDetailDesc = g_DetailTexture.Sample(LinearSampler, In.vTexcoord);
+    
+//    vector vHairColor = { 255.f / 255.f, 255.f / 255.f, 130.f / 255.f, 1.f };
+
+    vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
+    vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
+    vector vResultColor = { 0.f, 0.f, 0.f, 1.f };  
+
+    /* vMtrlShadeDesc 알파값으로 아웃라인을 생성 */
+    vResultColor.rgb = saturate(vHairColor.rgb - (1 - vMtrlShadeDesc.a));
+
+    ///* 프리저 헤어 텍스쿠드 좌표 
+    /*
+    Texcoord
+    x   0.151 ~ 0.34
+    y   0.147 ~ 0.385
+    */
+    float fFaceMask = (step(0.151, In.vTexcoord.x) * step(In.vTexcoord.x, 0.34)) * (step(0.136, In.vTexcoord.y) * step(In.vTexcoord.y, 0.385));
+    float fFaceMask2 = step(0.3, vMtrlShadeDesc.g - vMtrlShadeDesc.r);
+    float fFaceMask3 = (step(0.182, In.vTexcoord.x) * step(In.vTexcoord.x, 0.491)) * (step(0.004, In.vTexcoord.y) * step(In.vTexcoord.y, 0.057));
+    /* g값은 명암? r값이랑 같이 쓰는데 모호함 */
+    //vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.g));
+    
+    //* b값은 보니까 스펙큘러인거같음 그 처리 */
+    vResultColor.rgb = saturate(vResultColor.rgb + vMtrlShadeDesc.b * 0.1f);
+    vResultColor.a = 1.f;
+    Out.vDiffuse = vResultColor;
+    Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fFaceMask + fFaceMask2 + fFaceMask3));
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_MeshIndex, 0.f);
+
+    return Out;
+}
 
 struct PS_OUT_SHADOW
 {
@@ -305,7 +346,7 @@ technique11 DefaultTechnique
     }
 
 
-    pass Goku_Decal
+    pass Goku_Decal // 4
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
@@ -317,6 +358,20 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_GOKUDECAL();
+    }
+
+    pass Default_Frieza // 5
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_FRIEZA();
     }
 }
 

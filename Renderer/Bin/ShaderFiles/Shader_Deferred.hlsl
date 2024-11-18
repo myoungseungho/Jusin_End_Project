@@ -32,7 +32,7 @@ texture2D		g_ShadeTexture;
 texture2D		g_DepthTexture;
 texture2D		g_SpecularTexture;
 texture2D		g_LightDepthTexture;
-
+texture2D g_MetallicTexture;
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -405,7 +405,72 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
 
     vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
     vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMetallicDesc = g_MetallicTexture.Sample(LinearSampler, In.vTexcoord);
+
+    
+    float fViewZ = vDepthDesc.x * 1000.f;
+    float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
+
+    float fEdgeNormalThreshold = 0.2f;
+    float fEdgeDepthThreshold = 0.1f;
+	
+    float fEdge = CalculateEdge(In.vTexcoord, fViewZ, vNormal, 0.f, fEdgeNormalThreshold, fEdgeDepthThreshold);
+
+    vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
+    Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
    
+            
+//    bool bLight = step(0.5, vMetallicDesc.b * vMetallicDesc.a);
+//    bool bMid = step(0.4, vMetallicDesc.r * vMetallicDesc.a) * (1 - bLight);
+//    bool bDark = step(0.9, vMetallicDesc.a - vMetallicDesc.r);
+//// 기본            
+//    Out.vColor.rgb = (Out.vColor.rgb * (1 - step(0.5, vMetallicDesc.a))) // 기본 몸통 색상 처리 (렉트 범위가 아닌거)
+//    //+ Out.vColor.rgb * (1 - (bLight + bMid + bDark))    //머리 부분 밖 렉트 범위 안
+//    + (step(0.35f, vDepthDesc.b)
+//    * ((Out.vColor.rgb * (1.6f * bLight)) + (Out.vColor.rgb * (0.8f * bMid)) + (Out.vColor.rgb * (0.4f * bDark))));
+    vector vMaskColor = { 0.f, 0.f, 0.f, 1.f };
+    
+    bool bLight = step(0.5, vMetallicDesc.b * vMetallicDesc.a);
+    bool bMid = step(0.4, vMetallicDesc.r * vMetallicDesc.a) * (1 - bLight);
+    bool bDark = step(0.9, vMetallicDesc.a - vMetallicDesc.r) * step(0.39f, vDepthDesc.b);
+       
+    float fMaskFactor = step(0.39f, vDepthDesc.b) * ((0.6f * bLight) + (0.4f * bMid) + (-0.4f * bDark));
+    
+    /* 머리 메쉬지만 렉트 범위 밖인 애들 검출*/
+    float fIn_RectOut = step(0.5f,
+    /* 하나라도 렉트 범위 안에든 머리메쉬              머리메쉬인데 * 정말 렉트 범위 안에 안들었는지 */
+    (1 - step(0.5f, bLight + bMid + bDark)) + step(0.39f, vDepthDesc.b * (1 - step(0.5f, bLight + bMid + bDark))));    
+    
+    /* 렉트 범위 밖인 머리메쉬가 가장 외곽 색영향을 안받기 때문에 색을 일단 저장 */
+    vMaskColor.rgb = (Out.vColor.rgb * 0.6f) * fIn_RectOut;
+    
+    /* 기본적인 팩터 즉 메탈 텍스쳐에 적용된 팩터를 지정한메쉬로 거르기 */
+    Out.vColor.rgb = (Out.vColor.rgb + (Out.vColor.rgb * fMaskFactor)) + (vMaskColor.rgb * step(0.39f, vDepthDesc.b));
+    //* (1 - fIn_RectOut))
+    //+ (vMaskColor.rgb * fIn_RectOut); 
+    
+    return Out;
+}
+
+PS_OUT PS_MAIN_DEFERRED_PART(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    clip(vDiffuse.a - 0.98f);
+
+    vector vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
+    //clip(vShade.a - 0.98f);
+    vector vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
+
+    //Out.vColor = vDiffuse * (g_isUsingEffectLight ? 1.0 : vShade) + vSpecular;
+    Out.vColor = vDiffuse * vShade + vSpecular;
+
+    vector vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMetallicDesc = g_MetallicTexture.Sample(LinearSampler, In.vTexcoord);
+
+    
     float fViewZ = vDepthDesc.x * 1000.f;
     float4 vNormal = float4(vNormalDesc.xyz * 2.f - 1.f, 0.f);
 
@@ -418,7 +483,13 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
    
     
-
+        /* 마젠타 색상 */
+    
+    bool bLight = step(0.5, vMetallicDesc.b * vMetallicDesc.a);
+    bool bMid = step(0.4, vMetallicDesc.r * vMetallicDesc.a) * (1 - bLight);
+    bool bDark = step(0.9, vMetallicDesc.a - vMetallicDesc.r);
+// 기본            
+    Out.vColor.rgb = (Out.vColor.rgb * (1.6f * bLight)) + (Out.vColor.rgb * (0.8f * bMid)) + (Out.vColor.rgb * (0.4f * bDark));
     return Out;
 }
 
@@ -600,6 +671,19 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_BLACKOUT();
+    }
+
+    pass Deferred_Part // 9
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DEFERRED_PART();
     }
 }
 

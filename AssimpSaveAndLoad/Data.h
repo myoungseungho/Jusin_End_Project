@@ -18,7 +18,7 @@ using namespace std;
 
 enum ModelType {
     TYPE_NONANIM,
-    TYPE_ANIM
+    TYPE_ANIM,
 };
 
 struct Vertex {

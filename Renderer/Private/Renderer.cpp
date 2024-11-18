@@ -238,6 +238,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
+
+	if (FAILED(Render_Metallic(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
 
@@ -279,8 +283,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 
 
-	if(FAILED(Draw_WhiteBlack_Mode()))
-		return E_FAIL;
+	//if(FAILED(Draw_WhiteBlack_Mode()))
+	//	return E_FAIL;
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
@@ -684,6 +688,11 @@ HRESULT CRenderer::Render_PlayerDeferred(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Player_Depth"))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_MetallicTexture", TEXT("Target_Metallic"))))
+		return E_FAIL;
+
+
 	_float4x4			LightViewMatrix, LightProjMatrix;
 
 	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
@@ -905,7 +914,6 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 	m_pShader->Begin(4);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
 	return S_OK;
 }
 
@@ -1373,6 +1381,7 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 		m_pDistortionTransformCom->Set_Scaled(iter->vScale.x, iter->vScale.y, 1.f);
 		m_pDistortionTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians((iter->vDir.x == 1.f ? 0 : 180)));
 		m_pDistortionTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&iter->vPosition));
+		m_pDistortionTransformCom->LookAt(m_pGameInstance->Get_CamPosition_Vector());
 
 		if (FAILED(m_pDistortionTransformCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
@@ -1527,6 +1536,25 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 }
 #endif // _DEBUG
+
+HRESULT CRenderer::Render_Metallic(_float fTimeDelta)
+{
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Matallic"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_PLAYER_METALLIC])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_PLAYER_METALLIC].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+}
 
 HRESULT CRenderer::Draw_MapBlackOut(_float fTimeDelta)
 {
@@ -2207,6 +2235,25 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 #pragma endregion	
 
+#pragma region Metalic
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Metallic"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Matallic"), TEXT("Target_Metallic"))))
+		return E_FAIL;
+
+#pragma endregion	
+
+#pragma region PlayerPart
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Part"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Part"), TEXT("Target_Player_Part"))))
+		return E_FAIL;
+
+#pragma endregion	
 	return S_OK;
 }
 

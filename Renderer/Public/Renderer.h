@@ -24,6 +24,7 @@ public:
 
 	enum RENDERGROUP {
 		RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP, RG_MAP,
+		RG_PLAYER_METALLIC, RG_PLAYER_PART,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT,
 		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND, RG_UI, RG_UI_GLOW, RG_MULTY_GLOW,
 		RG_CUTSCENE_PRI_EFFECT, RG_CUTSCENE_OBJECT, RG_CUTSCENE_LATE_EFFECT, RG_NODE, RG_END
@@ -103,6 +104,8 @@ private: /* For.Distortion Variable */
 
 	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
 	_float m_fAccTime = { 0.f };
+
+	_bool m_isFriezaRender = { false };
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -137,7 +140,7 @@ private:
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
-
+	HRESULT Render_Metallic(_float fTimeDelta);
 	HRESULT Draw_MapBlackOut(_float fTimeDelta);
 	HRESULT Draw_OutLine_Effect();
 	HRESULT Draw_AllGlow_Effect(_int isPri);
