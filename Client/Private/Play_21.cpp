@@ -2433,6 +2433,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 				//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_HEAVY;
 				//Desc.fAnimationLockTime = 0.7f;
+
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Dash_21_SFX, false, 1.f);
+
+				//3필 올라가면서 소리 내야하는데 115 키프레임이 정확한 싱크임, 태욱이가 추가한댔음
+				//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Attacks_21_SFX, false, 1.f);
 			}
 			//else if (m_bFinalSkillAdd && m_iFinalLoofCount == 0)
 			//{

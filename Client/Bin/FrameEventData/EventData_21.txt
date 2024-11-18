@@ -664,7 +664,7 @@ PLAY_21,TON232_body,45,PositionChange,79
 
 
 PLAY_21,TON233_body,0,AnimSpeedChange,0.005000,160
-
+PLAY_21,TON233_body,0.001000,PlaySound,77,0,1
 //,공중사용 전용 속도조절
 
 PLAY_21,TON233_body,17,AttackEvent,0
@@ -795,6 +795,7 @@ PLAY_21,TON301_body,45,AnimSpeedChange,0.015,20
 //,400 공중 214약  61
 
 PLAY_21,TON400_body,0.000000,AnimSpeedChange,0.028000,92.525002
+PLAY_21,TON400_body,0.001000,PlaySound,72,0,1
 PLAY_21,TON400_body,27.131001,AnimSpeedChange,0.028000,120.000000
 PLAY_21,TON400_body,33.5,AnimSpeedChange,0.028000,2.009998
 PLAY_21,TON400_body,33.5,AttackEvent,0
@@ -823,6 +824,7 @@ PLAY_21,TON400_body,57,NextAnimationCheck,3333
 //,PLAY_21,TON401_body,165,PositionChange,274
 
 PLAY_21,TON401_body,0.000000,AnimSpeedChange,0.028000,59.696999
+PLAY_21,TON401_body,0.001000,PlaySound,71,0,1
 PLAY_21,TON401_body,0,PositionChange,60
 PLAY_21,TON401_body,58,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
 PLAY_21,TON401_body,58.001000,PlaySound,22,0,1
@@ -976,6 +978,9 @@ PLAY_21,TON430_body,105,AttackEvent,6
 
 PLAY_21,TON433_body,0.000000,AnimSpeedChange,0.018000,120.000000
 PLAY_21,TON433_body,0,AttackEvent,0
+PLAY_21,TON433_body,0.001000,PlaySound,82,0,1
+PLAY_21,TON433_body,0.001000,PlaySound,74,0,1
+
 PLAY_21,TON433_body,34.333000,AnimSpeedChange,0.018,3.636000
 PLAY_21,TON433_body,34.333000,PositionChange,35
 PLAY_21,TON433_body,35,AnimSpeedChange,0.018,1
@@ -989,6 +994,7 @@ PLAY_21,TON433_body,36,AnimSpeedChange,0.018,90
 //,PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,200
 
 PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,260
+
 
 
 PLAY_21,TON433_body,53,AttackEvent,1
@@ -1035,6 +1041,7 @@ PLAY_21,TON433_body,200,PositionChange,224.9
 PLAY_21,TON433cs_body,0,AttackEvent,0
 PLAY_21,TON433cs_body,0,AnimSpeedChange,0.018,62 
 PLAY_21,TON433cs_body,30,AnimSpeedChange,0.018,40
+PLAY_21,TON433cs_body,30.001000,PlaySound,76,0,1
 PLAY_21,TON433cs_body,90,AnimSpeedChange,0.018,34.636000
 PLAY_21,TON433cs_body,120,AttackEvent,2
 PLAY_21,TON433cs_body,130,AttackEvent,3

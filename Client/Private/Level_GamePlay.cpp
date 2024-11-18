@@ -501,23 +501,23 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Grab.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//추적 (마다요)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/ChaseDash.ogg", CSound_Manager::SOUND_KEY_NAME::Chase_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
-	//아래 앞 J (소코)
+	//아래 앞 J (소코) // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Down_Forward_J.ogg", CSound_Manager::SOUND_KEY_NAME::Down_Forward_J_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
-	//아래 뒤 약공격 (스라나이데)
+	//아래 뒤 약공격 (스라나이데) // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Down_Backward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Down_Backward_Light_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
-	//1필 (미세테 아게르)
+	//1필 (미세테 아게르) // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	//3필 시작 (우케테 미나사이)
+	//3필 시작 (우케테 미나사이) // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_3_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Start_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	//3필 중간 (데아!!)
+	//3필 중간 (데아!!) // 이거 태욱이가 손봐줘야함, 공중 상승 할때 중복 호출문제 때문에 X
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_3_Middle.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Middle_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	//3필 마지막 (오사에 키레나이요오)
+	//3필 마지막 (오사에 키레나이요오) // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Ultimate_3_Final.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Final_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	//J 기탄 보이스
+	//J 기탄 보이스 // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/J_Attack_Voice.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_Voice_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 #pragma endregion
