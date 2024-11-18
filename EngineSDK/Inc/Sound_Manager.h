@@ -112,7 +112,12 @@ public:
 		Frieza_Down_Back_J,
 		Frieza_Grab,
 		Frieza_Light_Attack_Final,
-
+		Frieza_Ultimate_0_Start,
+		Frieza_Ultimate_0_End,
+		Frieza_Ultimate_3_Start,
+		Frieza_Ultimate_3_End,
+		Frieza_Air_Chase,
+		Frieza_Golden,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

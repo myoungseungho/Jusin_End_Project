@@ -683,9 +683,30 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	// 잡기
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Grab.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Grab, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	// 1필 시작 (코코마데다)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Ultimate_0_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_0_Start, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 1필 마무리 (시네!)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Ultimate_0_End.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_0_End, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 3필 시작 (이마 스그네~)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Ultimate_3_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_3_Start, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 3필 마무리 (으아~)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Ultimate_3_End.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Ultimate_3_End, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 공중 추적 (이키마스요)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Air_Chase.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Air_Chase, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	// 골든 프리저 (아래 + 뒤 + 강특)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Golden.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Golden, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+
 #pragma endregion
 
 #pragma region Frieza_SFX
+
+
 
 #pragma endregion
 
