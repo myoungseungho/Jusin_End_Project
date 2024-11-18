@@ -138,6 +138,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iNextAnimation.first = ANIME_IDLE;
 
 
+	//m_eChaseSoundIndex = ;
 
 
 	if (FAILED(__super::Initialize(pArg)))

@@ -55,6 +55,8 @@ public:
 	void StopMacro(_float fStopTime);
 
 	void Attack_Benishing();
+	void Attack_LowBenishing();
+
 	void Frieza_Transform();
 
 	class CPlay_Frieza* m_pPlayer = { nullptr };

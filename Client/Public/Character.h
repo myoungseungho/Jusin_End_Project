@@ -67,6 +67,7 @@ public:
 
 	static vector<CInput> Command_Reflect;
 	static vector<CInput> Command_BenishingAttack;
+	static vector<CInput> Command_LowBenishingAttack;
 
 	static vector<CInput> Command_Transform;
 
@@ -211,6 +212,8 @@ public:
 	_float Get_fHeight();
 	_bool Get_bAirDashEnable() { return m_bAriDashEnable; };
 	void Set_bAirDashEnable(_bool bAirDashEnable) { m_bAriDashEnable = bAirDashEnable; };
+
+	CCharacter* Get_pEnemy();
 
 	void Set_ForcedGravityDown();
 	void Set_ForcedGravityTime_LittleUp();
@@ -665,6 +668,7 @@ protected:
 	_bool m_bDebugInputLock = { false };
 
 
+	_short m_eChaseSoundIndex = {0};
 
 public:
 	void Set_InputActive(_bool isActive) { m_bDebugInputLock = isActive; }

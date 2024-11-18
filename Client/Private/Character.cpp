@@ -185,6 +185,8 @@ vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
 
 vector<CInput> CCharacter::Command_Up_SpecialAttack = { {MOVEKEY_UP, ATTACK_SPECIAL} };
 
+
+vector<CInput> CCharacter::Command_LowBenishingAttack = { {MOVEKEY_DOWN, ATTACK_BENISHING} };
 vector<CInput> CCharacter::Command_BenishingAttack = { {MOVEKEY_NEUTRAL, ATTACK_BENISHING} };
 
 
@@ -986,6 +988,11 @@ _float CCharacter::Get_fHeight()
 {
 	return 	XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
+}
+
+CCharacter* CCharacter::Get_pEnemy()
+{
+	return m_pEnemy;
 }
 
 void CCharacter::Set_ForcedGravityDown()
@@ -2652,6 +2659,7 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 void CCharacter::Set_BreakFall_Ground()
 {
 	
+
 
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);

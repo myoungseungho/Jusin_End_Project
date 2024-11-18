@@ -211,6 +211,10 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 
 
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Reflect, bind(&CFrieza_MeleeAttack::Reflect, &m_tAttackMap) });
+
+	
+	MoveCommandPatternsFunction_Exactly.push_back({ Command_LowBenishingAttack, bind(&CFrieza_MeleeAttack::Attack_LowBenishing, &m_tAttackMap) });
+
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_BenishingAttack, bind(&CFrieza_MeleeAttack::Attack_Benishing, &m_tAttackMap) });
 
 	MoveCommandPatternsFunction_Exactly.push_back({ Command_Crouch_Crouch_SpecialAttack, bind(&CFrieza_MeleeAttack::Attack_Crouch_Crouch_Special, &m_tAttackMap) });
@@ -1028,9 +1032,15 @@ _short CPlay_Frieza::Check_bCurAnimationisCanChase()
 
 
 	//공격중 체이스는 속도 좀 빠르게
-	if(m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY || iModelIndex == ANIME_ATTACK_SPECIAL_AIR || iModelIndex == ANIME_ATTACK_LIGHT3 || iModelIndex == ANIME_ATTACK_CROUCH_SPECIAL))
+	if(m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_HEAVY || iModelIndex == ANIME_ATTACK_CROUCH_HEAVY || iModelIndex == ANIME_ATTACK_SPECIAL_AIR || iModelIndex == ANIME_ATTACK_LIGHT3 ||
+		iModelIndex == ANIME_ATTACK_CROUCH_SPECIAL ))
 	{
 		return 10;
+	}
+
+	else if (m_bAttackBackEvent && (iModelIndex == ANIME_ATTACK_CROUCH_CROUCH_SPECIAL))
+	{
+		return 15;
 	}
 
 
@@ -1533,7 +1543,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iTeam = m_iPlayerTeam;
 
 			Desc.bCameraZoom = false;
-			Desc.fAnimationLockTime = 0.f;
+			Desc.fAnimationLockTime = 0.1f;
+			Desc.bOnwerHitNoneStop = true;
 
 			Desc.pOwner = this;
 
@@ -1790,6 +1801,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.iGainKiAmount = 3;
 				//Desc.fForcedGravityTime = m_fGravityTime;
 				Desc.fForcedGravityTime = m_fGravityTime - 0.08f;
+
+				Desc.iGainAttackStep = 0;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
@@ -2123,6 +2136,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 			Desc.iGainKiAmount = 4;
 
+			Desc.iGainAttackStep = 0;
+
 			Desc.eAttackType = { ATTACKTYPE_LOW };
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
@@ -2252,13 +2267,21 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
 			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
 
-			Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
-			Desc.fhitCharacter_StunTime = 0.6f;
+			//Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
+			//Desc.fhitCharacter_StunTime = 0.6f;
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+
+
+			//CROUCH_MEDIUM은 x값만 받음
+			Desc.fhitCharacter_Impus = { 1.f * m_iLookDirection,1.f };
+			Desc.fhitCharacter_StunTime = 0.7f;
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+
 
 
 			Desc.iDamage = 600 * Get_DamageScale();;
 			Desc.fLifeTime = 5.f;
-			Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
+			
 
 			Desc.iTeam = m_iPlayerTeam;
 
@@ -2738,7 +2761,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.bGroundSmash = true;
 		
 
-		Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,1.f };
+		//Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,1.f };
+		Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,0.3f };
+
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
 		Desc.fForcedGravityTime = 0.f;
 
@@ -2918,6 +2943,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bGroundSmash = true;
 			Desc.bCameraZoom = false;
 			Desc.iGainAttackStep = 0;
+			Desc.bGrabbedEnd = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -3390,7 +3416,7 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 
 
 		//0.9였음
-		Desc.fStartOffset = { Get_fPositionX() + 19 * m_i214AttackPreviousDirection, 0.7f - Get_fHeight()};
+		Desc.fStartOffset = { Get_fPositionX() + 19 * m_i214AttackPreviousDirection, 0.8f - Get_fHeight()};
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -3402,7 +3428,7 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 		else
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
 
-		Desc.fStartOffset = { Get_fPositionX() + 20 * m_i214AttackPreviousDirection, 0.7f - Get_fHeight() };
+		Desc.fStartOffset = { Get_fPositionX() + 20 * m_i214AttackPreviousDirection, 0.8f - Get_fHeight() };
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
