@@ -114,14 +114,14 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_HIT_3_ULTIMATE:
 			name = "Camera_Hit_3_Ultimate";
 			break;
-		case VIRTUAL_CAMERA_MINE_HEAVY:
-			name = "Camera_Mine_Heavy";
+		case VIRTUAL_CAMERA_FRIEZA_HEAVY:
+			name = "Camera_Frieza_Heavy";
 			break;
-		case VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP:
-			name = "Camera_Mine_Knock_Away_Up";
+		case VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP:
+			name = "Camera_Frieza_Knock_Away_Up";
 			break;
-		case VIRTUAL_CAMERA_MINE_AIR_SMASH:
-			name = "Camera_Mine_Air_Smash";
+		case VIRTUAL_CAMERA_FRIEZA_AIR_SMASH:
+			name = "Camera_Frieza_Air_Smash";
 			break;
 		}
 
@@ -203,6 +203,11 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Hit_3_Ultimate_Anim4"] = 3;
 
 #pragma endregion
+
+#pragma region Frieza
+
+#pragma endregion
+
 
 	return S_OK;
 }
@@ -431,13 +436,13 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 		else if (skillID == 7)
 			index = VIRTUAL_CAMERA_HIT_3_ULTIMATE;
 	}
-	else if (modelID == 4) { // MODELID_HIT
+	else if (modelID == 4) { // MODELID_Frieza
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_MINE_HEAVY;
+			index = VIRTUAL_CAMERA_FRIEZA_HEAVY;
 		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_MINE_KNOCK_AWAY_UP;
+			index = VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP;
 		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_MINE_AIR_SMASH;
+			index = VIRTUAL_CAMERA_FRIEZA_AIR_SMASH;
 	}
 
 	return index;

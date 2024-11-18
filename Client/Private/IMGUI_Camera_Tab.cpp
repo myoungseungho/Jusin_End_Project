@@ -23,7 +23,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	MODEL_NAMES[CAMERA_MODELID_SON] = "Son";
 	MODEL_NAMES[CAMERA_MODELID_21] = "21";
 	MODEL_NAMES[CAMERA_MODELID_HIT] = "Hit";
-	MODEL_NAMES[CAMERA_MODELID_MINE] = "Mine";
+	MODEL_NAMES[CAMERA_MODELID_FRIEZA] = "Frieza";
 
 	_int index = 0;
 
@@ -31,7 +31,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash","Camera_Son_Grab","Camera_Son_Same_Grab","Camera_Son_Energy","Camera_Son_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash","Camera_21_Grab","Camera_21_Same_Grab","Camera_21_Grab_Special","Camera_21_Energy","Camera_21_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Grab","Camera_Hit_214_Middle","Camera_Hit_236_Middle","Camera_Hit_236_Heavy","Camera_Hit_1_Ultimate","Camera_Hit_3_Ultimate" };
-	m_ModelSkills[CAMERA_MODELID_MINE] = { "Camera_Mine_Heavy", "Camera_Mine_Knock_Away_Up","Camera_Mine_Air_Smash" };
+	m_ModelSkills[CAMERA_MODELID_FRIEZA] = { "Camera_Frieza_Heavy", "Camera_Frieza_Knock_Away_Up","Camera_Frieza_Air_Smash" };
 
 	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
 	// 기본 카메라 매핑
@@ -151,19 +151,19 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 			}
 			// 다른 모델과 스킬에 대한 애니메이션도 유사하게 초기화
-			else if (model == CAMERA_MODELID_MINE)
+			else if (model == CAMERA_MODELID_FRIEZA)
 			{
 				if (skillIdx == 0) // 21_Skill1
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Mine_Heavy_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Heavy_Anim1" };
 				}
 				else if (skillIdx == 1) // 21_Skill2
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Mine_Knock_Away_Up_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Knock_Away_Up_Anim1" };
 				}
 				else if (skillIdx == 2) // 21_Skill3
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Mine_Air_Smash_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Air_Smash_Anim1" };
 				}
 			}
 		}
@@ -536,13 +536,13 @@ const _float4x4* CIMGUI_Camera_Tab::Get_Model_Float4x4()
 	case CAMERA_MODELID_SON:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 		break;
+	case CAMERA_MODELID_21:
+		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
+		break;
 	case CAMERA_MODELID_HIT:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"), 0);
 		break;
-	case CAMERA_MODELID_MINE:
-		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
-		break;
-	case CAMERA_MODELID_21:
+	case CAMERA_MODELID_FRIEZA:
 		model = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character"));
 		break;
 	}
