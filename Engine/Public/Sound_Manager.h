@@ -231,6 +231,7 @@ public:
 
 	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop = false);
 	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, SOUND_CATEGORY category, _bool loop);
+	void Register_NonOverlapping_Sound(SOUND_KEY_NAME alias); // 중복 재생 방지 사운드 등록 함수
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);
@@ -251,6 +252,7 @@ private:
 	unordered_map<SOUND_GROUP_KEY_NAME, FMOD_SOUND*> m_groupSoundMap; // 그룹 사운드 맵 (새로 추가)
 	unordered_map<SOUND_KEY_NAME, ChannelInfo> m_channelMap;
 	unordered_map<SOUND_GROUP_KEY_NAME, ChannelInfo> m_groupChannelMap;
+	unordered_set<SOUND_KEY_NAME> m_nonOverlappingSounds; // 중복 재생을 방지할 사운드 집합
 
 	_uint m_iNumLevels;
 	static const _uint MAX_CHANNELS = 64;  // 최대 채널 수 정의

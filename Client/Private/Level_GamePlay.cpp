@@ -471,9 +471,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Smash_Hit.ogg", CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 	//기탄 Hit
-
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/J_Attack_Hit.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
-
+	//중복 방지 사운드
+	m_pGameInstance->Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX);
 #pragma endregion
 
 #pragma region 21_Sound

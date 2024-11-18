@@ -521,11 +521,10 @@ void CGameInstance::Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKe
 	m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias, category, loop);
 }
 
-
-
-
-
-
+void CGameInstance::Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME alias)
+{
+	m_pSoundManager->Register_NonOverlapping_Sound(alias);
+}
 
 void CGameInstance::Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume)
 {
