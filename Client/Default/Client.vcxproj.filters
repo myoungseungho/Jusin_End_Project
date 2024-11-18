@@ -535,6 +535,9 @@
     <ClCompile Include="..\private\UI_Lobby_TextCharaIcon.cpp">
       <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_TextCursor.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Cursor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1142,6 +1145,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Lobby\CharaIcon">
       <UniqueIdentifier>{7be82973-c935-4be3-ab95-afa681a3d0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Cursor">
+      <UniqueIdentifier>{679dc305-3acb-4388-8280-406f37f5d4c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1840,6 +1846,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Lobby_TextCharaIcon.h">
       <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_TextCursor.h">
+      <Filter>02.GameObjects\UI\Lobby\Cursor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

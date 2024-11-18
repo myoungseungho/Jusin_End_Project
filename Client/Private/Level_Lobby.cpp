@@ -91,12 +91,16 @@ HRESULT CLevel_Lobby::Initialize()
 
 #pragma region 사본 UI 객체 만들기
 
-	//텍스처 박스
+	//텍스트 박스
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextBox"), TEXT("Layer_Lobby_TextBox"))))
 		return E_FAIL;
 
-	//텍스처 캐릭터 아이콘
+	//텍스트 캐릭터 아이콘
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCharaIcon"), TEXT("Layer_Lobby_TextCharaIcon"))))
+		return E_FAIL;
+
+	//텍스트 커서 
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCursor"), TEXT("Layer_Lobby_TextCursor"))))
 		return E_FAIL;
 
 

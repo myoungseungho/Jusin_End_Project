@@ -133,6 +133,7 @@
 #include "UI_VS_TeamPanel.h"
 #include "UI_VS_Name.h"
 #include "UI_VS_NameOutLine.h"
+#include "UI_Lobby_TextCursor.h"
 
 #include "CharaSelectCamera.h"
 
@@ -352,6 +353,10 @@ HRESULT CLoader::Loading_For_Lobby()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/LIVEChar%d.png"),2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCursor"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_02.png")))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -464,6 +469,11 @@ HRESULT CLoader::Loading_For_Lobby()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextCharaIcon"),
 		CUI_Lobby_TextCharaIcon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextCursor"),
+		CUI_Lobby_TextCursor::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	return S_OK;
 }

@@ -131,6 +131,7 @@ void CUI_Lobby_Text::TextOutput(_float fOutputSpeed,_float fTimeDelta)
 		m_iTextIndex++;
 		m_fFontDration = 0.f;
 		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextCharaIcon"))->SetActive(TRUE);
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextCursor"))->SetActive(TRUE);
 		m_pUI_Manager->m_eNpcID = m_vTextArray.front().eNpcID;
 
 	}
@@ -141,6 +142,7 @@ void CUI_Lobby_Text::TextOutput(_float fOutputSpeed,_float fTimeDelta)
 		m_strOutputText.clear();
 		m_vTextArray.pop();
 		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextCharaIcon"))->SetActive(FALSE);
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextCursor"))->SetActive(FALSE);
 	}
 }
 
