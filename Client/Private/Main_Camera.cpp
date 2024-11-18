@@ -114,14 +114,26 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_HIT_3_ULTIMATE:
 			name = "Camera_Hit_3_Ultimate";
 			break;
+		case VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL:
+			name = "Camera_Frieza_Light_Final";
+			break;
 		case VIRTUAL_CAMERA_FRIEZA_HEAVY:
 			name = "Camera_Frieza_Heavy";
 			break;
 		case VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP:
 			name = "Camera_Frieza_Knock_Away_Up";
 			break;
-		case VIRTUAL_CAMERA_FRIEZA_AIR_SMASH:
-			name = "Camera_Frieza_Air_Smash";
+		case VIRTUAL_CAMERA_FRIEZA_GRAB:
+			name = "Camera_Frieza_Grab";
+			break;
+		case VIRTUAL_CAMERA_FRIEZA_ULTIMATE_1:
+			name = "Camera_Frieza_Ultimate_1";
+			break;
+		case VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3:
+			name = "Camera_Frieza_Ultimate_3";
+			break;
+		case VIRTUAL_CAMERA_FRIEZA_GOLDEN:
+			name = "Camera_Frieza_Golden";
 			break;
 		}
 
@@ -206,6 +218,25 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 
 #pragma region Frieza
 
+	stringToSkillID["Camera_Frieza_Light_Final"] = VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
+	stringToSkillID["Camera_Frieza_Heavy"] = VIRTUAL_CAMERA_FRIEZA_HEAVY;
+	stringToSkillID["Camera_Frieza_Knock_Away_Up"] = VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP;
+	stringToSkillID["Camera_Frieza_Grab"] = VIRTUAL_CAMERA_FRIEZA_GRAB;
+	stringToSkillID["Camera_Frieza_Ultimate_1"] = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_1;
+	stringToSkillID["Camera_Frieza_Ultimate_3"] = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3;
+	stringToSkillID["Camera_Frieza_Golden"] = VIRTUAL_CAMERA_FRIEZA_GOLDEN;
+
+	stringToAnimID["Frieza_Light_Final_Anim1"] = 0;
+	stringToAnimID["Frieza_Light_Final_Anim1_Flip"] = 1;
+	stringToAnimID["Frieza_Heavy_Anim1"] = 0;
+	stringToAnimID["Frieza_Knock_Away_Up_Anim1"] = 0;
+	stringToAnimID["Frieza_Grab_Anim1"] = 0;
+	stringToAnimID["Frieza_Ultimate_1_Anim1"] = 0;
+	stringToAnimID["Frieza_Ultimate_1_Anim1_Flip"] = 1;
+	stringToAnimID["Frieza_Ultimate_3_Anim1"] = 0;
+	stringToAnimID["Frieza_Golden_Anim1"] = 0;
+	stringToAnimID["Frieza_Golden_Anim2"] = 1;
+	stringToAnimID["Frieza_Golden_Anim2_Flip"] = 2;
 #pragma endregion
 
 
@@ -438,11 +469,20 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 	}
 	else if (modelID == 4) { // MODELID_Frieza
 		if (skillID == 0)
-			index = VIRTUAL_CAMERA_FRIEZA_HEAVY;
+			index = VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
 		else if (skillID == 1)
-			index = VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP;
+			index = VIRTUAL_CAMERA_FRIEZA_HEAVY;
 		else if (skillID == 2)
-			index = VIRTUAL_CAMERA_FRIEZA_AIR_SMASH;
+			index = VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP;
+		else if (skillID == 3)
+			index = VIRTUAL_CAMERA_FRIEZA_GRAB;
+		else if (skillID == 4)
+			index = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_1;
+		else if (skillID == 5)
+			index = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3;
+		else if (skillID == 6)
+			index = VIRTUAL_CAMERA_FRIEZA_GOLDEN;
+
 	}
 
 	return index;
