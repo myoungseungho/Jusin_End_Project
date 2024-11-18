@@ -75,7 +75,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bOnwerHitNoneStop = pDesc->bOnwerHitNoneStop;
 
 	m_bHitNoGravity = pDesc->bHitNoGravity;
-		 
+	m_fMaxNoNoGravitySafeTime = pDesc->fMaxNoNoGravitySafeTime;
+
 	if (pDesc->iVirtualCameraindex != 200)
 	{
 		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
@@ -88,6 +89,14 @@ HRESULT CAttackObject::Initialize(void* pArg)
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
 		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
 	}
+
+
+	m_iOnwerDirection = pDesc->iOnwerDirection;
+	if (m_iOnwerDirection == 231)
+	{
+		m_iOnwerDirection = m_pOwner->Get_iDirection();
+	}
+
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

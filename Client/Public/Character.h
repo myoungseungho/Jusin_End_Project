@@ -59,6 +59,8 @@ public:
 	static vector<CInput> Command_Crouch_HeavyAttack;
 	static vector<CInput> Command_Crouch_HeavyAttack_Extra;
 	static vector<CInput> Command_Crouch_SpecialAttack;
+	static vector<CInput> Command_Crouch_Crouch_SpecialAttack;
+
 
 	static vector<CInput> Command_Up_SpecialAttack;
 
@@ -66,6 +68,7 @@ public:
 	static vector<CInput> Command_Reflect;
 	static vector<CInput> Command_BenishingAttack;
 
+	static vector<CInput> Command_Transform;
 
 public:
 	const int BUFFER_SIZE = 30;
@@ -259,10 +262,10 @@ public:
 	void Stun_Shake();
 	void Update_AnimationLock(_float fTimeDelta);
 	void Update_StunImpus(_float fTimeDelta);
-	void Set_BreakFall_Ground();
+	virtual void Set_BreakFall_Ground();
 	void BreakFall_Air();
 
-	void Set_bNoGravity(_bool bNoGravity);
+	void Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime = 0.2f);
 
 
 
@@ -487,7 +490,7 @@ protected:
 	_ushort m_iBreakFall_Ground = { 41 };   //100
 	_ushort m_iBreakFall_Air = { 42 };   //101
 	_ushort m_iBound_Ground = { 25 };
-
+	_ushort m_iLayUp = {27};
 
 
 	_ushort m_iAttack_Air1 = { 52 };
@@ -592,6 +595,8 @@ protected:
 	_bool m_bWallBounce = { true };
 	_bool m_bNoGravity = { false };
 	_float m_fNoGravitySafeTime = { 0.f };
+	_float m_fMaxfNoGravitySafeTime = { 0.2f };
+
 	_bool m_bAwayUpGravity = { false };
 
 

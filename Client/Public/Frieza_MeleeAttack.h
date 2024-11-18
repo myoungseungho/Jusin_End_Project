@@ -43,6 +43,8 @@ public:
 	void Attack_Crouch_Light();
 	void Attack_Crouch_Medium();
 	void Attack_Crouch_Heavy();
+	void Attack_Crouch_Speical();
+	void Attack_Crouch_Crouch_Special();
 
 	void BackDash();
 	void ForwardDash();
@@ -53,6 +55,7 @@ public:
 	void StopMacro(_float fStopTime);
 
 	void Attack_Benishing();
+	void Frieza_Transform();
 
 	class CPlay_Frieza* m_pPlayer = { nullptr };
 	_uint* m_pPlayerAnimationIndex = { nullptr };

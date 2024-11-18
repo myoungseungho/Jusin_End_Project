@@ -59,7 +59,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 		}
 	}
 
-	m_bIsActive = false;
+	//m_bIsActive = false;
 	m_pUI_Manager->m_bActive = m_bIsActive;
 	return S_OK;
 }

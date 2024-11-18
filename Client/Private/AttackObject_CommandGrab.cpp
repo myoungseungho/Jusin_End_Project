@@ -44,7 +44,6 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	m_fGrabAnimationPosition = pDesc->fGrabAnimationPosition;
 	
 	m_bForcedHit = pDesc->bForcedHit;
-	m_iOnwerDirection = pDesc->iOnwerDirection;
 
 	m_bGrabedGravity = pDesc->bGrabedGravity;
 
@@ -56,10 +55,7 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	//}
 	
 
-	if (m_iOnwerDirection == 231)
-	{
-		m_iOnwerDirection = m_pOwner->Get_iDirection();
-	}
+	
 
 	return S_OK;
 }

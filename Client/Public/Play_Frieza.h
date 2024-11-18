@@ -133,6 +133,7 @@ public:
 		COUNT_ATTACK_SPECIAL,
 		COUNT_ATTACK_GRAB,
 		COUNT_ATTACK_BENISHING,
+		COUNT_ATTACK_CROUCH_SPECIAL,
 		COUNT_END
 	};
 
@@ -183,10 +184,16 @@ public:
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
 
 
+	virtual _float Get_DamageScale(_bool bUltimate = false) override;
+	virtual void Set_BreakFall_Ground() override;
 
 	void Add_YellowLight();
 	void Add_BlueLight();
-	_float Get_DamageScale(_bool bUltimate = false) override;
+
+
+	void Update214ReturnEvent(_float fTimeDelta);
+
+	_bool Get_bGoldenFrieza();
 
 private:
 	//CModel* m_pModelCom_Opening = { nullptr };
@@ -199,6 +206,12 @@ private:
 	_ushort m_iCountAirSpecial = 0;
 
 
+	_float m_fAcc214AttackTime = {};
+	_bool m_bAcc214Attack = false;
+	_short m_i214AttackPreviousDirection = { 0 };
+
+
+	_bool m_bGoldFrieza = false;
 
 private:
 	HRESULT Ready_Components();
