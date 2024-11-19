@@ -230,9 +230,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop = false);
+	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop = false, _bool isNonOverlapping = true);
 	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, SOUND_CATEGORY category, _bool loop);
-	void Register_NonOverlapping_Sound(SOUND_KEY_NAME alias); // 중복 재생 방지 사운드 등록 함수
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);

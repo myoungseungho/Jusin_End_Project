@@ -472,8 +472,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//기탄 Hit
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/J_Attack_Hit.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
-	//중복 방지 사운드
-	m_pGameInstance->Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX);
 #pragma endregion
 
 #pragma region 21_Sound
@@ -533,8 +531,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Grab_1.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_1_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//J 기탄
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false);
-	//중복 방지 사운드
-	m_pGameInstance->Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21);
 
 	//1필 Start
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);

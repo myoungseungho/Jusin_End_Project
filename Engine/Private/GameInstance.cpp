@@ -511,19 +511,14 @@ void* CGameInstance::Load_Effects(wstring& FilePath)
 	return m_pFile_Manager->Load_Effects(FilePath);
 }
 
-void CGameInstance::Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop)
+void CGameInstance::Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop, _bool isNonOverlapping)
 {
-	m_pSoundManager->Register_Sound(filePath, alias, category, loop);
+	m_pSoundManager->Register_Sound(filePath, alias, category, loop, isNonOverlapping);
 }
 
 void CGameInstance::Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop)
 {
 	m_pSoundManager->Register_Sound_Group(groupKey, filePath, alias, category, loop);
-}
-
-void CGameInstance::Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME alias)
-{
-	m_pSoundManager->Register_NonOverlapping_Sound(alias);
 }
 
 void CGameInstance::Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume)
