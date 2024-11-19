@@ -81,9 +81,9 @@ HRESULT CMainApp::Render(_float fTimeDelta)
  
     _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
 
-	//_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
-	//if (isOk_Render && m_pImgui_Manager != nullptr)
-	//	m_pImgui_Manager->Render(fTimeDelta);
+	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
+	if (isOk_Render && m_pImgui_Manager != nullptr)
+		m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
