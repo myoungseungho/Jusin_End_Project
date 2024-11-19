@@ -1629,10 +1629,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_Hit, false, 1.f);
+				Desc.isfxSoundIndex = (_ushort)CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX;
+				Desc.fsfxVolume = 1.f;
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
-				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_Hit, false, 1.f);
-				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 			}
 
 			if (false)
