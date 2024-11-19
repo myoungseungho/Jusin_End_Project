@@ -588,6 +588,8 @@ PLAY_HIT,HTN204_body,45,NextAnimationCheck,333333
 
 //,서서 특수 46
 PLAY_HIT,HTN205_body,0.000000,AnimSpeedChange,0.018000,62.625999
+PLAY_HIT,HTN205_body,0.0010,PlayGroupSound,206,0,1
+PLAY_HIT,HTN205_body,0.001000,PlaySound,63,0,1
 
 //,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
 PLAY_HIT,HTN205_body,5,AnimSpeedChange,0.008000,0.1
