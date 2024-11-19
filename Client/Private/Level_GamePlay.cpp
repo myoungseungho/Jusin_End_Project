@@ -587,7 +587,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	// 아래 앞 약공격 + 약공격 (쓉)
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Light_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	// 아래 앞 약공격 + 중공격 (코치라다)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Middle_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Middle_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);

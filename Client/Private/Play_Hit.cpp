@@ -2591,6 +2591,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_b236Posing = true;
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light, false, 1.f);
 
 		}
 		else if (iAttackEvent == 1)
@@ -2604,15 +2605,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		if (iAttackEvent == 0)
 		{
-
 			if (m_b236Special == false)
 			{
 				m_bInvisible = true;
 				//Character_Make_Effect(TEXT("Moving_Line_Right"));
 				Character_Create_Distortion({ -1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 
-				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-				main_Camera->StartCameraShake(0.1f, 0.3f);
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack, false, 1.f);
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack_SFX, false, 1.f);
 			}
 			else
 			{
@@ -2666,8 +2666,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 					Desc.bGrabbedEnd = true;
 					Desc.pOwner = this;
 
-					Desc.fCameraShakeDuration = 0.4f;
-					Desc.fCameraShakeMagnitude = 0.1f;
+					Desc.fCameraShakeDuration = 0.5f;
+					Desc.fCameraShakeMagnitude = 0.2f;
 
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -2767,6 +2767,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 			m_b236Posing = false;
 
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Middle_Attack, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack_SFX, false, 1.f);
 
 			{
 				CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
@@ -2842,12 +2844,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			Character_Create_Distortion({ -1.f,0.f,0.f });
 
-			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->StartCameraShake(0.1f, 0.3f);
+			
 		}
 		else if (iAttackEvent == 1)
 		{
-
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Heavy_Attack, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Heavy_Attack_SFX, false, 1.f);
 
 
 			m_bInvisible = false;
@@ -2992,7 +2994,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.iGrabAnimationIndex = ANIME_214_POSE;
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Backward_Light_Cancle_Attack_SFX, false, 1.f);
-				
+
 				//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
