@@ -2844,7 +2844,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			Character_Create_Distortion({ -1.f,0.f,0.f });
 
-			
+
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -3080,6 +3080,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_1_ULTIMATE, 0, this);
 			mainCamera->StartCameraShake(1.f, 0.1f);
+
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1_Start, false, 1.f);
 		}
 
 
@@ -3231,6 +3234,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fCameraShakeMagnitude = 0.2f;
 
 
+
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
@@ -3241,6 +3246,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//공격 성공했는지 판정 성공시 정지 + 더 앞으로 이동 + 카메라 +애니메이션속도 감속,
 		else if (iAttackEvent == 3)
 		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1_Attack, false, 1.f);
+
 			m_bInvisible = false;
 
 			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 161.f;
