@@ -44,6 +44,11 @@ private:
 	//프리저와 상호작용
 	void Talk_Frieza(_float fEnableDistance);
 
+	//걸었을 때 먼지 이펙트
+	void CreateRunDustEffect(_bool bOnInput, _float fCreateDuration,_float fTimeDelta);
+
+	_float CreateDustTimer = { 0.f };
+
 	// 애니메이션 상태 관리
 	_bool m_bDashTriggered = false; // 대쉬 애니메이션이 트리거되었는지 여부
 

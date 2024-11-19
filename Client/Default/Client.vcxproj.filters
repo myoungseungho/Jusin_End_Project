@@ -538,6 +538,9 @@
     <ClCompile Include="..\private\UI_Lobby_TextCursor.cpp">
       <Filter>02.GameObjects\UI\Lobby\Cursor</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1148,6 +1151,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Lobby\Cursor">
       <UniqueIdentifier>{679dc305-3acb-4388-8280-406f37f5d4c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Goku_RunEff">
+      <UniqueIdentifier>{876d86ba-004f-4190-a8fb-e03c8085fb75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1849,6 +1855,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Lobby_TextCursor.h">
       <Filter>02.GameObjects\UI\Lobby\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Goku_RunEff.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

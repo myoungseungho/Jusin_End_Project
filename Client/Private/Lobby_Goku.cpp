@@ -118,6 +118,9 @@ void CLobby_Goku::Update(_float fTimeDelta)
 		m_fFootstepTimer = 0.f;
 	}
 
+	//걸었을 때 이펙트 생성
+	CreateRunDustEffect(bInput ,0.25f ,fTimeDelta);
+
 	// 현재 프레임의 애니메이션 재생
 	m_pModelCom->Play_Animation(fTimeDelta * 3.f);
 
@@ -318,6 +321,17 @@ void CLobby_Goku::Talk_Frieza(_float fEnableDistance)
 	{
 		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox"))->SetActive(TRUE);
 	}
+}
+
+void CLobby_Goku::CreateRunDustEffect(_bool bOnInput ,_float fCreateDuration , _float fTimeDelta)
+{
+	CreateDustTimer += fTimeDelta;
+	if (bOnInput && CreateDustTimer >= fCreateDuration)
+	{
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Goku_RunEff"), TEXT("Layer_Lobby_Goku_RunEff"));
+		CreateDustTimer = 0.f;
+	}
+	//m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Goku_RunEff"))->SetActive(bOnInput);
 }
 
 CLobby_Goku* CLobby_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

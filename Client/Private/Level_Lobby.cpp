@@ -87,6 +87,11 @@ HRESULT CLevel_Lobby::Initialize()
 	//로비 카메라
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))
 		return E_FAIL;
+
+	//코구 달리기 먼지 이펙트
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Goku_RunEff"), TEXT("Layer_Lobby_Goku_RunEff"))))
+		return E_FAIL;
+
 #pragma endregion
 
 #pragma region 사본 UI 객체 만들기
