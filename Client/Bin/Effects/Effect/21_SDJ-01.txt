@@ -1,0 +1,123 @@
+[Layer]
+LayerName: 21_SDJ-01
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_SDJ-01_01
+ModelName: Model_Effect_ton401_eff00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0121_SDJ-01_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.00999981 0.02 0.0199727
+Rotation: 0 180 0
+IsLoop: false
+Color: 0 0 0 0.496688
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.00999998 0.02 0.0199731
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDJ-01_02
+ModelName: Model_Effect_ton401_eff00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0121_SDJ-01_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.00999978 0.02 0.0199976
+Rotation: 22.597 180 0
+IsLoop: false
+Color: 235.579 0 156.209 0.248013
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.00999997 0.02 0.019998
+Rotation: 22.597 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDJ-01_03
+ModelName: Model_Effect_ton401_eff00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0121_SDJ-01_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.0099997 0.02 0.0199981
+Rotation: 49.091 180 0
+IsLoop: false
+Color: 235.579 0 37.9971 0.248013
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.00999997 0.02 0.0199985
+Rotation: 49.091 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDJ-01_04
+ModelName: Model_Effect_ton401_eff02
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0121_SDJ-01_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.015 0.04 0.04
+Rotation: 0 0 0
+IsLoop: false
+Color: 247.401 76.8377 176.474 0.794039
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.015 0.04 0.04
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

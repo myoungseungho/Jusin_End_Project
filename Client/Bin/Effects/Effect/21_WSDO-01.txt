@@ -1,7 +1,7 @@
 [Layer]
-LayerName: 21_SDO-01
+LayerName: 21_WSDO-01
 Duration: 1
-TickPerSecond: 3
+TickPerSecond: 1
 KeyFramesCount: 59
 NumEffec: 12
 Position: 0 0 0
@@ -10,9 +10,9 @@ Rotation: 0 0 0
 IsFollowing: false
 
 [Effect]
-EffectName: 21_SDO-01_01
+EffectName: 21_WSAO-01_01
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_01
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_01
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -38,9 +38,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_02
+EffectName: 21_WSAO-01_02
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_02
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -66,9 +66,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_03
+EffectName: 21_WSAO-01_03
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_03
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_03
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -94,9 +94,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_04
+EffectName: 21_WSAO-01_04
 ModelName: Model_Effect_cmn_halfsphere00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_04
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_04
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -122,9 +122,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_05
+EffectName: 21_WSAO-01_05
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_05
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_05
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -150,9 +150,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_06
+EffectName: 21_WSAO-01_06
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_06
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_06
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -178,9 +178,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_07
+EffectName: 21_WSAO-01_07
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_07
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_07
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -206,9 +206,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_08
+EffectName: 21_WSAO-01_08
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_08
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_08
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -234,9 +234,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_09
+EffectName: 21_WSAO-01_09
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_09
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_09
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -262,9 +262,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_10
+EffectName: 21_WSAO-01_!0
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_10
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_!0
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -290,9 +290,9 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: 21_SDO-01_11
+EffectName: 21_WSAO-01_11
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_11
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_11
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -327,9 +327,9 @@ Duration: 1
 IsNotPlaying: true
 
 [Effect]
-EffectName: 21_SDO-01_12
+EffectName: 21_WSAO-01_12
 ModelName: Model_Effect_cmn_cylinder01
-MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0121_SDO-01_12
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0121_WSAO-01_12
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2

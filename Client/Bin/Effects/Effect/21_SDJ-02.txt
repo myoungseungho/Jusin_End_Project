@@ -1,0 +1,232 @@
+[Layer]
+LayerName: 21_SDJ-02
+Duration: 1
+TickPerSecond: 2
+KeyFramesCount: 59
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_SDJ-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0221_SDJ-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.035 0.3 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 233.891 0 125.811 0.894039
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.035 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDJ-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0221_SDJ-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.03 0.25 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 208.56 100.48 168.03 0.695364
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.03 0.25 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_BurstJ-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0221_BurstJ-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.0299989 0.19599 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 29.95
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0299989 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0 0 0
+Scale: 0.0299989 0.15 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 0.0299989 0.15 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.0299989 0.2 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_BurstJ-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0221_BurstJ-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.0249994 0.166792 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 0 90.3477 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0249994 0.13 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0 0 0
+Scale: 0.0249994 0.13 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 0.0249994 0.13 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.0249994 0.17 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_BurstJ-02_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0221_BurstJ-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.0249995 0.177594 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 102.169 169.719 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0249995 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0 0 0
+Scale: 0.0249995 0.15 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 0.0249995 0.15 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.0249995 0.18 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+

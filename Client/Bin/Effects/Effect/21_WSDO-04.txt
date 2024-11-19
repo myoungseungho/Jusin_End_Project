@@ -1,0 +1,39 @@
+[Layer]
+LayerName: 21_WSDO-04
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 1
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_WSDO-04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_WSDO-0421_WSDO-04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.498827 0.25 0.997655
+Rotation: 0 180 0
+IsLoop: false
+Color: 141.01 70.0828 73.4603 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.499979 0.25 0.999958
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

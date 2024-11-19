@@ -2224,17 +2224,17 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 4)
 		{
-			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 2.f ,-2.f });
+			Character_Make_Effect(TEXT("21_SDO-03"), { 3.f ,-2.f });
 
 		}
 		else if (iAttackEvent == 5)
 		{
-			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 4.f ,-2.f });
+			Character_Make_Effect(TEXT("21_SDO-03"), { 5.f ,-2.f });
 
 		}
 		else if (iAttackEvent == 6)
 		{
-			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 6.f ,-2.f });
+			Character_Make_Effect(TEXT("21_SDO-03"), { 7.f ,-2.f });
 
 		}
 
