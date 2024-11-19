@@ -412,6 +412,22 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Krillin.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	//컴포넌트 
+
+	//CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
+	//ParticleDesc.iNumInstance = 200;
+	//ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	//ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	//ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	//ParticleDesc.vSpeed = _float2(5.f, 7.f);
+	//ParticleDesc.vScale = _float2(4.f, 4.f);
+	//ParticleDesc.vLifeTime = _float2(0.1f, 0.2f);
+	//ParticleDesc.isLoop = false;
+	//
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_VIBuffer_Particle_Lobby_Goku_"),
+	//	CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+	//	return E_FAIL;
+
 	//게임오브젝트
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
