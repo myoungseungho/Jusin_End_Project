@@ -489,6 +489,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//강공
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Heavy_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	//아래 앞 약공 (기탄)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Down_Forward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Down_Forward_Light_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 	//히트
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Hit_21_0.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_21_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Hit_21_1.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_21_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -530,6 +533,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Grab_1.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_1_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//J 기탄
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//중복 방지 사운드
+	m_pGameInstance->Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21);
 
 	//1필 Start
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);

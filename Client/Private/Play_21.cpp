@@ -1959,7 +1959,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.strEffectName = TEXT("BurstJ-03");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
-
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Down_Forward_Light_21, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21, false, 1.f);
 		}
 
 	}

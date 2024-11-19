@@ -134,6 +134,7 @@ public:
 		Frieza_Golden_Frieza_SFX,
 		VOLCANO_BGM,
 		J_Attack_Hit_SFX,
+		Down_Forward_Light_21,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
