@@ -47,7 +47,7 @@ namespace Engine
         {2, L"MODELID_SON"},
         {3, L"MODELID_21"},
         {4, L"MODELID_HIT"},
-        {5, L"MODELID_MINE"}
+        {5, L"MODELID_FRIEZA"}
     };
 
     unordered_map<_wstring, _int> stringToModelID = {
@@ -56,6 +56,6 @@ namespace Engine
         {L"MODELID_SON", 2},
         {L"MODELID_21", 3},
         {L"MODELID_HIT", 4},
-        {L"MODELID_MINE", 5},
+        {L"MODELID_FRIEZA", 5},
     };
 }

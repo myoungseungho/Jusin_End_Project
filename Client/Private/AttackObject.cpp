@@ -11,6 +11,7 @@
 
 #include "Effect_Manager.h"
 
+
 CAttackObject::CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -75,7 +76,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bOnwerHitNoneStop = pDesc->bOnwerHitNoneStop;
 
 	m_bHitNoGravity = pDesc->bHitNoGravity;
-		 
+	m_fMaxNoNoGravitySafeTime = pDesc->fMaxNoNoGravitySafeTime;
+
 	if (pDesc->iVirtualCameraindex != 200)
 	{
 		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
@@ -88,6 +90,16 @@ HRESULT CAttackObject::Initialize(void* pArg)
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
 		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
 	}
+
+
+	m_iOnwerDirection = pDesc->iOnwerDirection;
+	if (m_iOnwerDirection == 231)
+	{
+		m_iOnwerDirection = m_pOwner->Get_iDirection();
+	}
+
+	m_isfxSoundIndex = pDesc->isfxSoundIndex;
+	m_fsfxVolume= pDesc->fsfxVolume;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -343,6 +355,11 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			m_pOwner->Set_AttackBackEvent(true);
 
+			
+			if (m_isfxSoundIndex != 60000)
+			{
+				m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)m_isfxSoundIndex, false, m_fsfxVolume);
+			}
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
