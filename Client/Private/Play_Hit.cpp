@@ -115,6 +115,16 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 
 	m_iReflectAnimationIndex = { ANIME_REFLECT };
 
+
+	m_iStartAnimatonIndex = { ANIME_START_DEFAULT }; //600cs 
+	m_iWinAnimationIndex = { ANIME_WIN_DEFAULT };	//610cs
+	m_iNextRound_RightHandAppear_Cutscene_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE }; //620c
+	m_iNextRound_RightHand_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND };  //621cs ->631으로 연계
+
+	m_iNextRound_LeftHand_Cutscene_AnimationIndex = { ANIME_NEWROUND_LEFTHAND_CUTSCENE };  //630 Durtaio
+	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
+
+
 	m_iNextAnimation.first = ANIME_IDLE;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -148,6 +158,7 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	빛 각자 생성해주기
 	*/
 
+	//m_eChaseSoundIndex = (_short)CSound_Manager::SOUND_KEY_NAME::Chase_At;
 
 	//m_pModelCom->SetUp_Animation(16, true);
 	m_pModelCom->SetUp_Animation(0, true);
@@ -312,7 +323,9 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 					m_fAccDyingTime += fTimeDelta;
 					if (m_fAccDyingTime > 2.f)
 					{
-						Tag_In(m_ePlayerSlot);
+						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+
+						//Tag_In(m_ePlayerSlot);
 					}
 				}
 
@@ -696,7 +709,8 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
-		system("cls");
+		//system("cls");
+		m_iHP = 2;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))

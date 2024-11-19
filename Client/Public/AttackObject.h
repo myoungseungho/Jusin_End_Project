@@ -74,6 +74,11 @@ public:
 		_short iOnwerDirection = { 231 };  //보통 보는 방향의 반대가 되도록 조정하지만  0으로 넣으면 뒤통수 때려도 뒤집히지 않음. 기본값(231)이면 자동처리하기
 
 
+		_ushort isfxSoundIndex = { 60000 };
+		_float fsfxVolume = { 1.f };
+
+
+
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -181,6 +186,10 @@ protected:
 
 
 	_short m_iOnwerDirection = { 1 };
+
+
+	_ushort m_isfxSoundIndex = { 1000 };
+	_float  m_fsfxVolume = { 1.f };
 
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);

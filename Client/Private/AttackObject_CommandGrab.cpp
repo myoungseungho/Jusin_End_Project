@@ -141,6 +141,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 		if (eResult == RESULT_HIT || m_bForcedHit)
 		{
+			if (m_isfxSoundIndex != 60000)
+			{
+				m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)m_isfxSoundIndex, false, m_fsfxVolume);
+			}
 
 
 			pCharacter->Set_GroundSmash(m_bGroundSmash);

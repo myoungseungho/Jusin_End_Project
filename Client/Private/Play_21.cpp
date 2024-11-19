@@ -42,6 +42,10 @@
 
 #include "AttackObject_Reflect.h"
 
+#include "Effect_Manager.h"
+#include "Effect.h"
+//#include "Effect_Layer.h"
+
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -135,10 +139,19 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 	m_iReflectAnimationIndex = { ANIME_REFLECT };
 
+	m_iStartAnimatonIndex = { ANIME_START_DEFAULT }; //600cs 
+	m_iWinAnimationIndex = { ANIME_WIN_DEFAULT };	//610cs
+	m_iNextRound_RightHandAppear_Cutscene_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE }; //620c
+	m_iNextRound_RightHand_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND };  //621cs ->631으로 연계
+
+	m_iNextRound_LeftHand_Cutscene_AnimationIndex = { ANIME_NEWROUND_LEFTHAND_CUTSCENE };  //630 Durtaio
+	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
+
+
 	m_iNextAnimation.first = ANIME_IDLE;
 
 
-	//m_eChaseSoundIndex = ;
+	m_eChaseSoundIndex = (_short)CSound_Manager::SOUND_KEY_NAME::Chase_Attack_21;
 
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -307,7 +320,10 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 					m_fAccDyingTime += fTimeDelta;
 					if (m_fAccDyingTime > 2.f)
 					{
-						Tag_In(m_ePlayerSlot);
+						
+						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+						//Tag_In(m_ePlayerSlot);
+
 					}
 				}
 
@@ -673,7 +689,8 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
-		system("cls");
+		//system("cls");
+		m_iHP = 2;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
@@ -1459,6 +1476,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.pMineGameObject = this;
 		Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
 
+		Desc.ColliderDesc.vCenter = { 0.f, 0.f, 0.f };
 
 
 		Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
@@ -1485,6 +1503,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
+
+		Desc.strEffectName = TEXT("21_BurstJ-01");
+
 		//Desc.ColliderDesc.vCenter = { 0.2f,-0.2f,0.f };
 		//Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
 		//
@@ -1500,20 +1521,36 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
-		Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
+
+		_float4x4 pBoneMatrix = *m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
+
+
+		//Desc.fStartOffset = { 0.2f *m_iLookDirection,1.1f };
+		Desc.fStartOffset = { (pBoneMatrix._41 +0.2f)*m_iLookDirection ,pBoneMatrix._42 - 0.2f };
+
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
-
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+		Character_Make_Effect(TEXT("21_BurstJ-02"), { pBoneMatrix._41 + 0.2f ,pBoneMatrix._42 - 0.2f });
 
 
-		Desc.ColliderDesc.vCenter = { -0.1f,0.1f,0.f };
+		//Desc.fStartOffset = { 0.3f * m_iLookDirection,0.8f };
+		Desc.fStartOffset = { (pBoneMatrix._41 + 0.6f) * m_iLookDirection ,pBoneMatrix._42 - 0.5f };
+
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_LIGHT };
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+		Character_Make_Effect(TEXT("21_BurstJ-02"), { pBoneMatrix._41 - 0.4f  ,pBoneMatrix._42 - 0.7f });
 
-		Desc.ColliderDesc.vCenter = { 0.2f,0.f,0.f };
+
+		//Desc.fStartOffset = { -0.4f * m_iLookDirection,0.8f };
+		//Desc.fStartOffset = { (pBoneMatrix._41 - 0.1f) * m_iLookDirection ,pBoneMatrix._42 - 0.5f };
+		Desc.fStartOffset = { (pBoneMatrix._41 - 0.1f) * m_iLookDirection ,pBoneMatrix._42 - 0.7f };
+
 		Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+		Character_Make_Effect(TEXT("21_BurstJ-02"), { pBoneMatrix._41 - 0.1f ,pBoneMatrix._42 - 0.5f });
 
+
+		//Character_Make_Effect(TEXT("21_BurstJ-02"), { pBoneMatrix._41 + 0.1f ,pBoneMatrix._42 });
 
 
 	}
@@ -1886,41 +1923,31 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_21::ANIME_ATTACK_236:
 	{
 
-		if (iAttackEvent == 1) //공격
+		//시작. Position 5
+		if (iAttackEvent == 0)
 		{
-			//CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
-			////Desc.ColliderDesc.width = 1.0;
-			////Desc.ColliderDesc.height = 1.0;
-			//if (m_iPlayerTeam == 1)
-			//	Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
-			//else
-			//	Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
-			//Desc.ColliderDesc.pMineGameObject = this;
-			//Desc.ColliderDesc.vExtents = { 0.5f,0.5f,1.f };
-			//Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
-			//
-			//Desc.fhitCharacter_Impus = { 3.f * m_iLookDirection,3.f };
-			//Desc.fhitCharacter_StunTime = 0.6f;
-			//Desc.iDamage = 900 * Get_DamageScale();;
-			//Desc.fLifeTime = 7.f;
-			//Desc.ihitCharacter_Motion = { HitMotion::HIT_CROUCH_MEDIUM };
-			//
-			//Desc.iTeam = m_iPlayerTeam;
-			//
-			//Desc.bCameraZoom = false;
-			//Desc.fAnimationLockTime = 0.05f;
-			//
-			//Desc.pOwner = this;
-			//
-			////Desc.eAttackType = { ATTACKTYPE_HIGH };
-			//Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
-			//Desc.fRanged_Impus_NoneDirection = { 8.f,0.f };  // 1:1.569 비율
-			//
-			//Desc.iDirection = m_iLookDirection;
-			//
-			//Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-			//
-			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			CEffect_Layer::COPY_DESC tDesc{};
+
+			//tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
+
+			//_float4x4 BoneMatrix = *m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
+			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
+			tDesc.pTransformCom = m_pTransformCom;
+			m_pAttack236ChargeEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("21_SDU-01"), &tDesc);
+
+			 
+		}
+
+		else if (iAttackEvent == 1) //공격
+		{
+			if (m_pAttack236ChargeEffect_Layer != nullptr)
+			{
+				for (auto& iter : m_pAttack236ChargeEffect_Layer->m_MixtureEffects)
+					iter->m_bIsSpriteEnd = true;
+			
+				m_pAttack236ChargeEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttack236ChargeEffect_Layer = nullptr;
+			}
 
 			CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
@@ -1930,7 +1957,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
+			Desc.ColliderDesc.vExtents = { 0.4f,0.4f,1.f };
 			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
 
 
@@ -1956,7 +1983,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
 			Desc.iDirection = m_iLookDirection;
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-			Desc.strEffectName = TEXT("BurstJ-03");
+			Desc.strEffectName = TEXT("21_SDU-01");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Down_Forward_Light_21, false, 1.f);

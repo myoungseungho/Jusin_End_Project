@@ -1413,7 +1413,6 @@ void CCharacter::Chase2(_float fTimeDelta)
 		if (m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 		else if (m_iLookDirection == -1)
-
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180 - EffectAngle });
 
 
@@ -2783,6 +2782,20 @@ _bool CCharacter::Update_Tag_In(_float fTimeDelta)
 	}
 
 	return false;
+}
+
+_uint CCharacter::Get_NewCharacterslot()
+{
+	//짝수면 +1  홀수면 -1
+	if (m_ePlayerSlot % 2 == 0)
+	{
+		//bTag_Succes = CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 1, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		return 1;
+	}
+	else
+		return 0;
+		//bTag_Succes = CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 0, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
 }
 
 void CCharacter::Gain_AttackStep(_ushort iStep)
@@ -4184,6 +4197,69 @@ _bool CCharacter::Get_bDying()
 {
 	return m_bDying;
 }
+
+void CCharacter::Play_WinAnimation()
+{
+	//맵 좌표이동, 카메라컷씬, ui나 다른 캐릭터들 안보이게
+
+
+	//다른캐릭터들 안보이게
+	CBattleInterface_Manager::Get_Instance()->Set_InvisibleWithoutMe(m_iPlayerTeam,m_ePlayerSlot);
+
+
+	//위치는 이게 아니겠지만 일단 설정
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0,0,0,1.f });
+
+	Set_Animation(m_iWinAnimationIndex);
+
+	//m_bOnlyCutSceneNoMove = true;
+
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	main_Camera->StartCameraShake(0.2f, 0.2f);
+	
+		
+
+
+
+
+}
+
+void CCharacter::Play_NewRound_Loser()
+{
+	//if(m_iPlayerTeam)
+	//	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, {-2.f+(m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+
+	Set_Animation(m_iNextRound_RightHandAppear_Cutscene_AnimationIndex);
+	Set_NextAnimation(m_iNextRound_RightHand_AnimationIndex,20.f);
+
+	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	pMainCamera->Set_Player(this);
+
+
+
+
+}
+
+void CCharacter::Play_NewRound_Winner()
+{
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -2.f + (m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+
+	Set_Animation(m_iNextRound_LeftHand_Cutscene_AnimationIndex);
+	Set_NextAnimation(m_iNextRound_LeftHand_AnimationIndex, 20.f);
+
+	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	pMainCamera->Set_Player(this);
+
+
+}
+
+void CCharacter::Set_bPlaying(_bool bPlaying)
+{
+	m_bPlaying = bPlaying;
+}
+
 
 void CCharacter::Set_StopAllAttackObject(_float fStopTime)
 {

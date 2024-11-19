@@ -337,6 +337,7 @@ public:
 	void Tag_Out(_vector vPosition);
 
 	_bool Update_Tag_In(_float fTimeDelta);
+	_uint Get_NewCharacterslot();
 
 	void Set_AttackBackEvent(_bool bEvent);
 	void Set_ReflectAttackBackEvent(_bool bEvent);
@@ -352,6 +353,12 @@ public:
 
 	void Update_Dying(_float fTimeDelta);
 	_bool Get_bDying();
+
+	void Play_WinAnimation();
+	void Play_NewRound_Loser();
+	void Play_NewRound_Winner();
+
+	void Set_bPlaying(_bool bPlaying);
 
 	void Set_StopAllAttackObject(_float fStopTime);
 
@@ -522,6 +529,24 @@ protected:
 	_ushort m_iDyingStandingAnimationIndex = { 29 };
 
 
+
+	//시작
+	_ushort m_iStartAnimatonIndex = { 75 };  //600cs
+
+	//승리
+	_ushort m_iWinAnimationIndex = {78 };  //610
+
+	//라운드변경
+	_ushort m_iNextRound_RightHandAppear_Cutscene_AnimationIndex = { 79 };  //620cs ->630로 연계
+	_ushort m_iNextRound_RightHand_AnimationIndex = { 81 };  //621cs ->631으로 연계 Durtaion 122
+
+	_ushort m_iNextRound_LeftHand_Cutscene_AnimationIndex = { 80 };  //630 Durtaion 24
+	_ushort m_iNextRound_LeftHand_AnimationIndex = { 82 };  //631 Durtaion 24
+
+
+
+
+
 	_float m_fGravityTime = { 0.f };
 	_float m_fJumpPower = 3;// { 0.f };
 
@@ -546,6 +571,8 @@ protected:
 	_float m_fAccChaseTime = { 0.f };
 	_vector m_vChaseDir{ 0 };
 
+
+	
 
 
 	//스턴 관련
@@ -579,6 +606,7 @@ protected:
 
 
 
+	//_bool m_bOnlyCutSceneNoMove = { false };
 
 	_bool m_bChaseStoping = false;
 	_bool m_bChaseEnable = true;
