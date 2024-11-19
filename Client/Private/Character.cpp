@@ -333,7 +333,11 @@ void CCharacter::Late_Update(_float fTimeDelta)
 	}
 
 	if (m_bPlaying || m_bTag_In)
+	{
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+
+	}
 
 #ifdef _DEBUG
 	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
@@ -5311,14 +5315,6 @@ HRESULT CCharacter::Bind_ShaderResources()
 	if (nullptr == pLightDesc)
 		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDiffuse", &pLightDesc->vDiffuse, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightAmbient", &pLightDesc->vDiffuse, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightSpecular", &pLightDesc->vSpecular, sizeof(_float4))))
-	//	return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iPlayerDirection", pLightDesc->pPlayerDirection, sizeof(_int))))
 		return E_FAIL;
 
@@ -5477,7 +5473,8 @@ CGameObject* CCharacter::Clone(void* pArg)
 void CCharacter::Free()
 {
 	__super::Free();
-
+	Safe_Release(m_pDetailTextureCom);
+	Safe_Release(m_p1PTextureCom);
 	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);

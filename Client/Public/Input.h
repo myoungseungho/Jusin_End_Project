@@ -58,9 +58,7 @@ public:
     bool operator==(const CInput& other) const {
         return direction == other.direction && button == other.button;
     }
-
-    
-
+  
 };
 
 END

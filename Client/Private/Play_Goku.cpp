@@ -1356,7 +1356,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
+		//Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
+		Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
+
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 		Desc.strEffectName = TEXT("BurstJ-03");
@@ -1676,6 +1678,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.strEffectName = TEXT("BurstJ-03_Rotated_Left");
 			Desc.iGainKiAmount = 7;
 
+			Desc.bOnwerHitNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}

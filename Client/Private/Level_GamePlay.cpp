@@ -57,7 +57,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 	CharacterDesc.iTeam = 2;
@@ -146,15 +146,13 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
-		//DISTORTION_DESC tDistortionDesc{};
-		//tDistortionDesc.vPosition = { 0.f,1.f,0.f,1.f };
-		//tDistortionDesc.fLifeTime = 0.1f;
-		//tDistortionDesc.vScale = { 4.f,2.f };
-		//tDistortionDesc.fFactor = 3.f;
-		//tDistortionDesc.fMaxTime = 0.1f;
-		//m_pRenderInstance->Create_Distortion(tDistortionDesc);
-		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f));
+		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(0, 1, 0), {}, { 1.f,1.5f });
 	}
+	if (m_pGameInstance->Key_Down(DIK_F10))
+	{
+		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(1, 0, 0));
+	}
+
 	if (m_pGameInstance->Key_Down(DIK_Z))
 	{
 		LIGHT_DESC			LightDesc{};

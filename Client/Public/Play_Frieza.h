@@ -172,6 +172,8 @@ public:
 
 	_bool* Get_pbAttackCount() { return m_bAttackCount; };
 	_ushort* Get_piSpecialCount() { return &m_iCountGroundSpecial; };
+	_ushort* Get_piSAirpecialCount() { return &m_iCountAirSpecial; };
+
 	virtual void Reset_AttackCount() override;
 
 	virtual void Gravity(_float fTimeDelta) override;
@@ -189,11 +191,15 @@ public:
 private:
 	//CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-	
+	CTexture* m_pGold_BaseTexture = { nullptr };
+	CTexture* m_pGold_OutLineTexture = { nullptr };
+	CTexture* m_pMetalTexture = { nullptr };
+
 	CFrieza_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };
 	_ushort m_iCountGroundSpecial = 0;
+	_ushort m_iCountAirSpecial = 0;
 
 
 

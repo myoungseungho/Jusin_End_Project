@@ -43,6 +43,7 @@ void CFrieza_MeleeAttack::Initalize(CPlay_Frieza* pPlayer)
 
 	m_pbAttackCount = m_pPlayer->Get_pbAttackCount();
 	m_piCountGroundSpecial = m_pPlayer->Get_piSpecialCount();
+	m_piCountAirSpecial = m_pPlayer->Get_piSAirpecialCount();
 
 	m_pGameInstance = CGameInstance::Get_Instance();
 	m_pEffect_Manager = CEffect_Manager::Get_Instance();
@@ -237,50 +238,47 @@ void CFrieza_MeleeAttack::Attack_Special()
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_SPECIAL)
 	{
-		_ushort iCount = *m_piCountGroundSpecial;
+		//_ushort iCount = *m_piCountGroundSpecial;
 
 		
 		//0에선 더할 수 없으니 5대신 4,    4발째일때까지 다음공격 가능하니 이하 대신 미만.
-		if (iCount < 4)
-		{
-
-			//m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f);
-			
-			//홀짝 판별 비트연산 (최적화)  true일때 홀수
-			if (iCount & 1)  //홀수만큼 썻으니 왼손
-			{
-
-				//if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 10.f) == false)
-
-				if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_IDLE))
-				{
-					//m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
-					m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
-
-					//cout << "TEST1" << endl;
-					(*m_piCountGroundSpecial)++;
-				}
-				
-			}
-			else
-			{
-				//if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 55.f) == false)
-				if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_IDLE))
-				{
-					m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f, 55);
-					//cout << "TEST2" << endl;
-
-					(*m_piCountGroundSpecial)++;
-				}
-
-			}
-
-
-		}
-		else
-		{
-			(*m_piCountGroundSpecial)++;
-		}
+		//if (iCount < 4)
+		//{
+		//
+		//	//m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f);
+		//	
+		//	//홀짝 판별 비트연산 (최적화)  true일때 홀수
+		//	if (iCount & 1)  //홀수만큼 썻으니 왼손
+		//	{
+		//		if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_IDLE))
+		//		{
+		//			//m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
+		//			m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f, 10.f);
+		//
+		//			//cout << "TEST1" << endl;
+		//			(*m_piCountGroundSpecial)++;
+		//		}
+		//		
+		//	}
+		//	else
+		//	{
+		//		//if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 55.f) == false)
+		//		if (m_pPlayer->CompareNextAnimation(CPlay_Frieza::ANIME_IDLE))
+		//		{
+		//			m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL, 0.5f, 55);
+		//			//cout << "TEST2" << endl;
+		//
+		//			(*m_piCountGroundSpecial)++;
+		//		}
+		//
+		//	}
+		//
+		//
+		//}
+		//else
+		//{
+		//	(*m_piCountGroundSpecial)++;
+		//}
 	}
 
 
@@ -293,17 +291,48 @@ void CFrieza_MeleeAttack::Attack_Special()
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_JUMP_DOWN)
 	{
-		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR);
-	
+		if (*m_piCountAirSpecial != 0)
+		{
+			(*m_piCountAirSpecial)--;
+			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR);
+			//*m_piCountAirSpecial = 5;  이건 땅에 닿았을때 하자  풀리자마자 다시쏜다
+		}
+
 
 	}
 	else if(*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_AIR2)
 	{
-		m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR,0.5f);
+		if (*m_piCountAirSpecial != 0)
+		{
+			(*m_piCountAirSpecial)--;
+			m_pPlayer->Set_NextAnimation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR, 0.5f);
+			//*m_piCountAirSpecial = 5;  이건 땅에 닿았을때 하자  풀리자마자 다시쏜다
 
+		}
+	}
+	else if (m_pPlayer->Get_bAttackBackEvent() && *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR)
+	{
+		
+		if (*m_piCountAirSpecial != 0)
+		{
+			(*m_piCountAirSpecial)--;
+			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR2);
+		}
+
+
+		//m_pPlayer->Set_CurrentAnimationPositionJump()
+	}
+	else if (m_pPlayer->Get_bAttackBackEvent() && *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR2)
+	{
+		//m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR);
+		if (*m_piCountAirSpecial != 0)
+		{
+			(*m_piCountAirSpecial)--;
+			m_pPlayer->Set_CurrentAnimationPositionJump(44.99f);
+			//m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR2);
+		}
 
 	}
-	
 
 }
 
@@ -363,7 +392,21 @@ void CFrieza_MeleeAttack::Attack_214()
 
 void CFrieza_MeleeAttack::Attack_236Special()
 {
+	if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236_SPECIAL);
+	}
 
+	else if (m_pPlayer->Get_bAttackBackEvent() &&
+		(*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_AIR2)
+		)
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236_SPECIAL);
+	}
+
+	//	*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_HEAVY)
 	
 
 }

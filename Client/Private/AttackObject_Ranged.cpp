@@ -255,8 +255,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출
 		{
-			m_pOwner->Set_AnimationStop(0.08f);
-			pCharacter->Set_AnimationStop(0.08f);
+			//m_pOwner->Set_AnimationStop(0.08f);
+			//pCharacter->Set_AnimationStop(0.08f);
 			m_pOwner->Set_AttackBackEvent(true);
 
 			if (m_eRangeColor != RANGED_LIGHT_NONE)

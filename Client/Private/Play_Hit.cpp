@@ -1116,7 +1116,6 @@ void CPlay_Hit::Gravity(_float fTimeDelta)
 		return;
 	}
 
-
 	__super::Gravity(fTimeDelta);
 
 

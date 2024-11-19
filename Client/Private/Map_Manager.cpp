@@ -4,6 +4,7 @@
 #include "Effect_Layer.h"
 #include "Effect.h"
 #include "GameInstance.h"
+#include "RenderInstance.h"
 #include "Imgui_Manager.h"
 #include <string>
 #include <locale>
@@ -16,9 +17,11 @@
 IMPLEMENT_SINGLETON(CMap_Manager)
 
 CMap_Manager::CMap_Manager()
-	:m_pGameInstance{CGameInstance::Get_Instance()}
+	:m_pGameInstance{CGameInstance::Get_Instance()},
+	m_pRenderInstance{ CRenderInstance::Get_Instance()}
 {
 	Safe_AddRef(m_pGameInstance); 
+	Safe_AddRef(m_pRenderInstance);
 }
 
 HRESULT CMap_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -85,6 +88,8 @@ void CMap_Manager::Render(_float fTimeDelta)
 
 void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 {
+	m_pRenderInstance->Delete_LoopDistortion();
+
 	switch (eMapType)
 	{
 	case MAP_SPACE:
@@ -99,6 +104,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 
 		m_eCurMap = MAP_SPACE;
+		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_SPACE);
 		break;
 	case MAP_VOLCANO:
 	case MAP_DEST_VOLCANO:
@@ -112,6 +118,17 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 
 		m_eCurMap = MAP_VOLCANO;
+		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_VOLCANO);
+		DISTORTION_DESC tDistortionDesc{};
+		tDistortionDesc.vPosition = { 0.f,0.f,0.f,1.f };
+		tDistortionDesc.fLifeTime = 3.f;
+		tDistortionDesc.vScale = { 20.f,20.f };
+		tDistortionDesc.fFactor = 300.f;
+		tDistortionDesc.fMaxTime = 3.f;
+		tDistortionDesc.isLoop = true;
+		tDistortionDesc.vDir = { 1.f,0.f,0.f };
+		m_pRenderInstance->Create_Distortion(tDistortionDesc);
+		
 		break;
 	}
 }
@@ -219,6 +236,7 @@ void CMap_Manager::Free()
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);
 	Safe_Release(m_pGameInstance);
+	Safe_Release(m_pRenderInstance);
 	for (auto& iter : m_SpaceModels)
 		Safe_Release(iter.second);
 	for (auto& iter : m_Destructive_SpaceModels)

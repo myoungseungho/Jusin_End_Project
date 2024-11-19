@@ -592,9 +592,9 @@ PLAY_FRN,FRN205_body,0,AnimSpeedChange,0.005000,120.403000
 PLAY_FRN,FRN205_body,20,AnimSpeedChange,0.005000,54.403000
 
 PLAY_FRN,FRN205_body,25,AttackEvent,0
-PLAY_FRN,FRN205_body,40,AttackEvent,0
-PLAY_FRN,FRN205_body,55,AttackEvent,0
-PLAY_FRN,FRN205_body,70,AttackEvent,0
+PLAY_FRN,FRN205_body,40,AttackEvent,1
+PLAY_FRN,FRN205_body,55,AttackEvent,1
+PLAY_FRN,FRN205_body,70,AttackEvent,1
 
 
 //,PLAY_FRN,FRN205_body,35,AttackEvent,1
@@ -615,8 +615,16 @@ PLAY_FRN,FRN230_body,36,NextAnimationCheck,3333
 PLAY_FRN,FRN231_body,0,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN231_body,30,AttackEvent,0
 PLAY_FRN,FRN231_body,30,AnimSpeedChange,0.01,70
+
+PLAY_FRN,FRN231_body,35,NextAnimationCheck,3333
+
 PLAY_FRN,FRN231_body,55,AttackEvent,1
 PLAY_FRN,FRN231_body,56,AnimSpeedChange,0.01,90
+
+PLAY_FRN,FRN231_body,60,NextAnimationCheck,3333
+
+
+
 
 PLAY_FRN,FRN231_body,0,ObjectMove,0.2,0,0,0
 PLAY_FRN,FRN231_body,2,ObjectMove,0.19,0,0,0
@@ -681,8 +689,16 @@ PLAY_FRN,FRN262_body,40,AttackEvent,0
 PLAY_FRN,FRN262_body,41,AnimSpeedChange,0.01,110
 
 
+
+
+
 //,공중 특 1 준비~1타 왼손
-PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,90
+//,PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,90
+//,PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,160
+//,PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,240
+PLAY_FRN,FRN265_body,0,AnimSpeedChange,0.01,300
+
+
 
 //,루프시 40으로 이동
 PLAY_FRN,FRN265_body,40.1,AnimSpeedChange,0.01,90
@@ -691,17 +707,19 @@ PLAY_FRN,FRN265_body,45,AttackEvent,0
 
 //,공중 특 2
 //,공중 특 1 의 Position이 45 이상일때 연계
-PLAY_FRN,FRN266_body,0,AnimSpeedChange,0.01,60
-PLAY_FRN,FRN265_body,15,AttackEvent,0
+//,PLAY_FRN,FRN266_body,0,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN266_body,0,AnimSpeedChange,0.01,130
+
+PLAY_FRN,FRN266_body,15,AttackEvent,0
 
 //,40에서 JumpDown으로 연계하면서 종료
-PLAY_FRN,FRN265_body,40,AttackEvent,0
+PLAY_FRN,FRN266_body,40,AttackEvent,1
 
 //,한번 더 누른 경우 45로 이동
-PLAY_FRN,FRN265_body,45,AttackEvent,1
+PLAY_FRN,FRN266_body,45,AttackEvent,2
 
 //,55에서 265의 40으로 이동
-PLAY_FRN,FRN265_body,55,AttackEvent,2
+PLAY_FRN,FRN266_body,55,AttackEvent,3	
 
 
 
@@ -754,7 +772,9 @@ PLAY_FRN,FRN400_body,40,NextAnimationCheck,333333
 
 
 //,236특 (공중사용가능)
-PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,90
+//,PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,180
+
 
 //,본인 애니메이션정지, 잡기판정 생성
 PLAY_FRN,FRN402_body,40,AttackEvent,0
@@ -776,6 +796,25 @@ PLAY_FRN,FRN402_body,64,ObjectMove,-0.03,0.03,0,0
 PLAY_FRN,FRN402_body,65,ObjectMove,-0.02,0.02,0,0
 PLAY_FRN,FRN402_body,66,ObjectMove,-0.01,0.01,0,0
 PLAY_FRN,FRN402_body,67,ObjectMove,-0.01,0.00,0,0
+
+//,준비 움직임
+
+PLAY_FRN,FRN402_body,2,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN402_body,4,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN402_body,6,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN402_body,8,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN402_body,10,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,12,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,14,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,16,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN402_body,18,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN402_body,20,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN402_body,22,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN402_body,24,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,26,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,28,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,30,ObjectMove,0,0.01,0,0
+
 
 
 

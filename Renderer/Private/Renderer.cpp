@@ -63,7 +63,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
-	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 4);
+	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 5);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pDistortionTextureCom || nullptr == m_pDistortionTransformCom || nullptr == m_pDistortionShaderCom)
 		return E_FAIL;
@@ -238,6 +238,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Render_NonLight(fTimeDelta)))
 		return E_FAIL;
+
+	if (FAILED(Render_Metallic(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
 
@@ -279,7 +283,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 
 
-
+	//if(FAILED(Draw_WhiteBlack_Mode()))
+	//	return E_FAIL;
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
@@ -293,6 +298,18 @@ void CRenderer::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
 	m_Distortions.push_back(tDistortionDesc);
 }
 
+void CRenderer::Delete_LoopDistortion()
+{
+	m_Distortions.erase(
+		remove_if(m_Distortions.begin(),m_Distortions.end(),[](const DISTORTION_DESC& distortion) {
+				return distortion.isLoop;
+			}
+		),
+		m_Distortions.end()
+	);
+}
+
+
 void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
 {
 	random_device rd;
@@ -304,39 +321,82 @@ void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 v
 	_float yDecrement = 0.2f;
 	_float xStep = 0.12f;	
 
-	for (_int i = 0; i < 8; ++i)
+	if (vDir.x == 1)
 	{
-		DISTORTION_DESC tDistortionDesc{};
-		_float4 vStrainPos = vPlayerPos;
 
-		_float xDirection = (i % 2 == 0) ? 1.0f : -1.0f;
-		//tDistortionDesc.vDir = _float3(vDir.x * xDirection, vDir.y, vDir.z);
-		vStrainPos.x += xDirection * xStep;
-		vStrainPos.y += yOffset - offsetDist(gen);
+		for (_int i = 0; i < 8; ++i)
+		{
+			DISTORTION_DESC tDistortionDesc{};
+			_float4 vStrainPos = vPlayerPos;
 
-		tDistortionDesc.vPosition = {
-			vStrainPos.x + vOffSetPos.x + offsetDist(gen),
-			vStrainPos.y + vOffSetPos.y /*+ offsetDist(gen)*/,
-			vStrainPos.z,
-			1.0f
-		};
+			_float xDirection = (i % 2 == 0) ? 1.0f : -1.0f;
+			//tDistortionDesc.vDir = _float3(vDir.x * xDirection, vDir.y, vDir.z);
+			vStrainPos.x += xDirection * xStep;
+			vStrainPos.y += yOffset - offsetDist(gen);
 
-		float scaleModifier = scaleDist(gen);
-		tDistortionDesc.vScale = {
-			2.0f * vOffSetScale.x * scaleModifier,
-			0.47f * vOffSetScale.y * scaleModifier
-		};
+			tDistortionDesc.vPosition = {
+				vStrainPos.x + vOffSetPos.x + offsetDist(gen),
+				vStrainPos.y + vOffSetPos.y /*+ offsetDist(gen)*/,
+				vStrainPos.z,
+				1.0f
+			};
 
-		tDistortionDesc.fLifeTime = fLifeTime;
-		tDistortionDesc.fMaxTime = fLifeTime;
-		tDistortionDesc.fFactor = factorDist(gen);
-		tDistortionDesc.vDir = vDir;
+			float scaleModifier = scaleDist(gen);
+			tDistortionDesc.vScale = {
+				2.0f * vOffSetScale.x * scaleModifier,
+				0.47f * vOffSetScale.y * scaleModifier
+			};
 
-		m_Distortions.push_back(tDistortionDesc);
+			tDistortionDesc.fLifeTime = fLifeTime;
+			tDistortionDesc.fMaxTime = fLifeTime;
+			tDistortionDesc.fFactor = factorDist(gen);
+			tDistortionDesc.vDir = vDir;
 
-		yOffset -= yDecrement;
+			m_Distortions.push_back(tDistortionDesc);
 
-		xStep += 0.02f;
+			yOffset -= yDecrement;
+
+			xStep += 0.02f;
+		}
+	}
+	else
+	{
+		yOffset = 1.f;
+		//yDecrement = 1.2f;
+		for (_int i = 0; i < 6; ++i)
+		{
+			DISTORTION_DESC tDistortionDesc{};
+			_float4 vStrainPos = vPlayerPos;
+
+			_float xDirection = (i % 2 == 0) ? 1.0f : -1.0f;
+			//tDistortionDesc.vDir = _float3(vDir.x * xDirection, vDir.y, vDir.z);
+			vStrainPos.x += yOffset - offsetDist(gen);
+			vStrainPos.y += 1 + xDirection * xStep;
+
+			tDistortionDesc.vPosition = {
+				vStrainPos.x + vOffSetPos.x + offsetDist(gen),
+				vStrainPos.y + vOffSetPos.y /*+ offsetDist(gen)*/,
+				vStrainPos.z,
+				1.0f
+			};
+
+			float scaleModifier = scaleDist(gen);
+			tDistortionDesc.vScale = {
+				0.47f * vOffSetScale.x * scaleModifier,
+				2.f * vOffSetScale.y * scaleModifier
+			};
+
+			tDistortionDesc.fLifeTime = fLifeTime;
+			tDistortionDesc.fMaxTime = fLifeTime;
+			tDistortionDesc.fFactor = factorDist(gen);
+			tDistortionDesc.vDir = vDir;
+
+			m_Distortions.push_back(tDistortionDesc);
+
+			yOffset -= yDecrement;
+
+			xStep += 0.02f;
+		}
 	}
 
 }
@@ -683,6 +743,11 @@ HRESULT CRenderer::Render_PlayerDeferred(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Player_Depth"))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_MetallicTexture", TEXT("Target_Metallic"))))
+		return E_FAIL;
+
+
 	_float4x4			LightViewMatrix, LightProjMatrix;
 
 	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
@@ -904,7 +969,6 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 	m_pShader->Begin(4);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
 	return S_OK;
 }
 
@@ -1356,8 +1420,6 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 1)))
-		return E_FAIL;
 
 	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
 	{
@@ -1365,13 +1427,34 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 		if (iter->fLifeTime <= 0)
 		{
-			iter = m_Distortions.erase(iter);
-			continue;
+			if (iter->isLoop == true)
+			{
+				iter->fLifeTime = iter->fMaxTime;
+			}
+			else
+			{
+				iter = m_Distortions.erase(iter);
+				continue;
+			}
 		}
 
 		m_pDistortionTransformCom->Set_Scaled(iter->vScale.x, iter->vScale.y, 1.f);
-		m_pDistortionTransformCom->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians((iter->vDir.x == 1.f ? 0 : 180)));
 		m_pDistortionTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&iter->vPosition));
+		m_pDistortionTransformCom->LookAt(m_pGameInstance->Get_CamPosition_Vector());
+		//_vector vCamPos = m_pGameInstance->Get_CamPosition_Vector();
+		//if (iter->vDir.x == -1.f)
+		//{
+		//	_vector vPos = m_pDistortionTransformCom->Get_State(CTransform::STATE_POSITION);
+
+		//	_vector vDir = vPos - vCamPos;
+		//	vCamPos += vDir * 2.f;
+		//}
+		//m_pDistortionTransformCom->LookAt(vCamPos);
+		if (iter->vDir.y == 1)
+		{
+			if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_MaskTexture", 4)))
+				return E_FAIL;
+		}
 
 		if (FAILED(m_pDistortionTransformCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
@@ -1382,7 +1465,11 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 		m_pDistortionShaderCom->Bind_RawValue("g_vDir", &iter->vDir, sizeof(_float3));
 		m_pDistortionShaderCom->Bind_RawValue("g_Factor", &iter->fFactor, sizeof(_float));
 
-		m_pDistortionShaderCom->Begin(0);
+		if(iter->isLoop == false)
+			m_pDistortionShaderCom->Begin(0);
+		else
+			m_pDistortionShaderCom->Begin(4);
+
 		m_pVIBuffer->Bind_Buffers();
 		m_pVIBuffer->Render();
 
@@ -1526,6 +1613,25 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 }
 #endif // _DEBUG
+
+HRESULT CRenderer::Render_Metallic(_float fTimeDelta)
+{
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Matallic"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_PLAYER_METALLIC])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_PLAYER_METALLIC].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+}
 
 HRESULT CRenderer::Draw_MapBlackOut(_float fTimeDelta)
 {
@@ -2001,6 +2107,50 @@ HRESULT CRenderer::Draw_MapBloom()
 
 	return S_OK;
 }
+/* 하얀색 전환 화면 및 색상반전 기능 추가 및 디스토션 텍스쳐 세로짜리 하나 저장하고 등등 */
+HRESULT CRenderer::Draw_WhiteBlack_Mode()
+{
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
+	//	return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	/* 나온 결과를 바로 백버퍼에 덮어씀 */
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(2);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	return S_OK;
+}
 
 HRESULT CRenderer::Initialize_RenderTarget()
 {
@@ -2162,6 +2312,25 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 #pragma endregion	
 
+#pragma region Metalic
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Metallic"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Matallic"), TEXT("Target_Metallic"))))
+		return E_FAIL;
+
+#pragma endregion	
+
+#pragma region PlayerPart
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Part"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Part"), TEXT("Target_Player_Part"))))
+		return E_FAIL;
+
+#pragma endregion	
 	return S_OK;
 }
 

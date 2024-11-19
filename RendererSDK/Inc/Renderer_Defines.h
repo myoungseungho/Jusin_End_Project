@@ -27,6 +27,7 @@ struct RENDERER_DLL DISTORTION_DESC
     _float  fLifeTime;
     _float  fFactor;
     _float3 vDir;
+    _bool isLoop;
 
     DISTORTION_DESC()
         : vPosition{ 0.0f, 0.0f, 0.0f, 1.0f },
@@ -35,7 +36,8 @@ struct RENDERER_DLL DISTORTION_DESC
         fLifeTime(0.0f),
         fFactor(0.0f),
         vDir{ 1.0f, 0.0f,0.f },
-        fMaxTime(0.f){}
+        fMaxTime(0.f),
+        isLoop(false){}
 
     DISTORTION_DESC(const _float4& position, const _float2& offset, const _float2& scale,
         float lifeTime, float factor, const _float3& dir)
@@ -45,7 +47,8 @@ struct RENDERER_DLL DISTORTION_DESC
         fLifeTime(lifeTime),
         fMaxTime(lifeTime),
         fFactor(factor),
-        vDir(dir) {}
+        vDir(dir),
+        isLoop(false) {}
 };
 struct RENDERER_DLL GLOW_DESC
 {
