@@ -1800,6 +1800,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Voice_21, false, 1.f);
 			//공중 콤보가능하도록 속도 더 빠르게+중력은 강하게
 			if (Get_fHeight() > 3)
 			{
