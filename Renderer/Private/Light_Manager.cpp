@@ -106,6 +106,7 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 
 		break;
 	case LIGHT_EFFECT:
+		_int iFrameRenderCount = { 0 };
 		for (auto it = m_EffectLights.begin(); it != m_EffectLights.end(); )
 		{
 			LIGHT_DESC* pLightDesc = it->second->Get_LightDesc();
@@ -115,8 +116,11 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 				it = m_EffectLights.erase(it);
 			else
 			{
-				it->second->Render(pShader, pVIBuffer, 6, m_PlayerLights[strName]->Get_LightDesc());
+				/* È½¼ö Á¦ÇÑ */
+				if(iFrameRenderCount < 2)
+					it->second->Render(pShader, pVIBuffer, 6, m_PlayerLights[strName]->Get_LightDesc());
 				++it;
+				++iFrameRenderCount;
 			}
 		}
 		break;

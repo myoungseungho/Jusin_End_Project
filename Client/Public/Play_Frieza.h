@@ -213,7 +213,10 @@ public:
 private:
 	//CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-	
+	CTexture* m_pGold_BaseTexture = { nullptr };
+	CTexture* m_pGold_OutLineTexture = { nullptr };
+	CTexture* m_pMetalTexture = { nullptr };
+
 	CFrieza_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };

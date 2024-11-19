@@ -357,6 +357,12 @@ public:
 	void Play_WinAnimation();
 	void Play_NewRound_Loser();
 	void Play_NewRound_Winner();
+	void Update_Collider();
+
+	void Update_Opening(_float fTimeDelta);
+	_bool m_bOpening = false;
+	_float m_fAccOpeningTime = {0.f};
+	_float m_fMaxOpeningTime = {3.f};
 
 	void Set_bPlaying(_bool bPlaying);
 
@@ -423,8 +429,10 @@ protected:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pOutLineCom = { nullptr };
 	CTexture* m_p2PTextureCom = { nullptr };
+	CTexture* m_p1PTextureCom = { nullptr };
 	CTexture* m_pDecalTextureCom = { nullptr };
-
+	CTexture* m_pDetailTextureCom = { nullptr };
+	
 	_float					m_fRandom = {};
 	_wstring				m_strModelName{};
 

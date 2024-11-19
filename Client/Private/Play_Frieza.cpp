@@ -27,7 +27,7 @@
 
 #include "Effect_Layer.h"
 #include "Animation.h"
-
+#include "Frieza_Metal.h"
 
 CPlay_Frieza::CPlay_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -135,6 +135,7 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 	m_eChaseSoundIndex = (_short)CSound_Manager::SOUND_KEY_NAME::Frieza_Air_Chase;
 
 	m_tAttackMap.Initalize(this);
+	
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	m_strName = "FRN_" + to_string(m_iPlayerTeam)+"_" + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
@@ -142,8 +143,8 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 
-	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
-	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vDirection = _float4(-0.06f, -0.07f, 0.1f, 0.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
@@ -247,6 +248,67 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
+
+	CFrieza_Metal::Frieza_Metal_DESC tMetalDesc{};
+	/* 머리 */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("G_eyes_base");
+	tMetalDesc.vPosition = _float4(0.0f, 0.0883401930f, 0.0f, 1.f);
+	tMetalDesc.vScale = _float3(0.25f, 0.25f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* 오른쪽 어깨 */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_shldrHalf_R");
+	tMetalDesc.vPosition = _float4(0.0f, 0.f, 0.0f, 1.f);
+	tMetalDesc.vScale = _float3(0.178303823f, 0.150784373f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* 왼쪽 어깨 */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_shldrHalf_L");
+	tMetalDesc.vPosition = _float4(-0.00833033770f, 0.f, -0.0199901238f, 1.f);
+	tMetalDesc.vScale = _float3(0.174982980f, 0.139942512f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* 몸통 */
+	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_chest");
+	tMetalDesc.vPosition = _float4(-0.00499127991f, -0.0133360298f, -0.140040994f, 1.f);
+	tMetalDesc.vScale = _float3(0.0910967141f, 0.111640006f, 1.0f);
+	tMetalDesc.pLookDirection = &m_iLookDirection;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+		return E_FAIL;
+
+	/* 오른쪽 다리 */
+	//tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	//tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_R");
+	//tMetalDesc.vPosition = _float4(0.0199940223f, -0.0383511372f, -0.0100060701f, 1.f);
+	//tMetalDesc.vScale = _float3(0.0566315502f, 0.281670630f, 1.0f);
+	//tMetalDesc.pLookDirection = &m_iLookDirection;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+	//	TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+	//	return E_FAIL;
+
+	//tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	//tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_L");
+	//tMetalDesc.vPosition = _float4(0.0199940223f, -0.0383511372f, -0.0100060701f, 1.f);
+	//tMetalDesc.vScale = _float3(0.0566315502f, 0.281670630f, 1.0f);
+	//tMetalDesc.pLookDirection = &m_iLookDirection;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+	//	TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+	//	return E_FAIL;
+
 	return S_OK;
 }
 
@@ -269,6 +331,8 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 
 	if (m_bDebugInputLock)
 		return;
+
+	Update_Opening(fTimeDelta);
 
 	//cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
 
@@ -688,7 +752,7 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
-		m_iHP = 2;
+		m_iHP = 100;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
@@ -718,7 +782,6 @@ void CPlay_Frieza::Update(_float fTimeDelta)
 void CPlay_Frieza::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
-
 }
 
 HRESULT CPlay_Frieza::Render(_float fTimeDelta)
@@ -762,70 +825,52 @@ HRESULT CPlay_Frieza::Render(_float fTimeDelta)
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
+	
+	if (m_iPlayerTeam == 1)
+	{
+		if (FAILED(m_p1PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+	}
+	else
+	{
+		if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
 
+	}
+
+	if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+		return E_FAIL;
+	
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
 	/* Main MeshIndex : 0 */
 	/* DramaticCamera MeshIndex : 1 */
 	/* Shadow MeshIndex : 2 */
 	/* Decal MeshIndex : 3 */
 	/* Detail?? MeshIndex : 4 */
+	/* 쓰레기 : 5 */
+
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		if (i == 1 || i == 2 || i == 4)
+		if (i == 1 || i == 2 || i == 5)
 			continue;
-
-		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-		_uint iPassIndex = { 0 };
-		if(i==3)
+	
+		_uint iPassIndex = { 5 };
+		if (i == 3)
 			iPassIndex = 4;
+	
+		_float fMeshIndex = i * 0.1f;
+		m_pShaderCom->Bind_RawValue("g_MeshIndex", &fMeshIndex, sizeof(_float));
 
-		if (i == 0)
-		{
-			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-				return E_FAIL;
-		}
-
-		else
-		{
-
-			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-				return E_FAIL;
-			if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
-				return E_FAIL;
-		}
-
-
-
-	   /* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
 		if (FAILED(m_pShaderCom->Begin(iPassIndex)))
 			return E_FAIL;
 
-
-		//if(m_bFinalSkillss3 == false)
-		//{
-		//	if (FAILED(m_pModelCom->Render(i)))
-		//		return E_FAIL;
-		//}
-		//else
-		//{
-		//	if (FAILED(m_pModelCom_Skill->Render(i)))
-		//		return E_FAIL;
-		//}
-
-
-
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 
-		
 	}
-
-
-
+	
 
 	//corlorChange Test
 	//for (size_t i = 0; i < iNumMeshes; i++)
@@ -940,36 +985,51 @@ HRESULT CPlay_Frieza::Ready_Components()
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 
 
-	/* Com_Model */
+	/* 모델 근육질은 아직 */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Frieza"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Frieza_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
-	//	return E_FAIL;
-	
-
-
-	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+	/* 아웃라인 및 명암 처리 텍스쳐 (골드버전은 따로 존재함) */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_ilm"), TEXT("Com_OutLine_Base_Texture"),
+		reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_ilm"), TEXT("Com_OutLine_Gold_Texture"),
+		reinterpret_cast<CComponent**>(&m_pGold_OutLineTexture))))
 		return E_FAIL;
 
+	/* 표정 텍스쳐 (애니메이션) */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_decal"),
+		TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
+		return E_FAIL;
+	/* 디테일 텍스쳐 (바디 메쉬에 쓰임) */
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_detail"),
+		TEXT("Com_DetailTexture"), reinterpret_cast<CComponent**>(&m_pDetailTextureCom))))
+		return E_FAIL;
+
+	/* For.Team Diffuse_Gold */
 	if (m_iPlayerTeam == 1)
 	{
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"), TEXT("Com_1PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_base_1P"),
+			TEXT("Com_Base_1P_Texture"), reinterpret_cast<CComponent**>(&m_p1PTextureCom))))
+			return E_FAIL;
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_base_1P"),
+			TEXT("Com_Gold_1P_Texture"), reinterpret_cast<CComponent**>(&m_pGold_BaseTexture))))
 			return E_FAIL;
 	}
 	else
 	{
-		/* Com_Model */
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_base_2P"),
+			TEXT("Com_Base_2P_Texture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+			return E_FAIL;
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_base_2P"),
+			TEXT("Com_Gold_2P_Texture"), reinterpret_cast<CComponent**>(&m_pGold_BaseTexture))))
 			return E_FAIL;
 	}
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"), TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_metal"),
+		TEXT("Com_Metal_Texture"), reinterpret_cast<CComponent**>(&m_pMetalTexture))))
 		return E_FAIL;
-		
-
-
+	
 	return S_OK;
 }
 
@@ -3499,5 +3559,7 @@ void CPlay_Frieza::Free()
 	Safe_Release(m_pModelCom_Skill);
 	Safe_Release(m_p2PTextureCom);
 	Safe_Release(m_pDecalTextureCom);
-
+	Safe_Release(m_pGold_BaseTexture);
+	Safe_Release(m_pGold_OutLineTexture);
+	Safe_Release(m_pMetalTexture);
 }

@@ -287,6 +287,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	}
 
 
+	Update_Opening(fTimeDelta);
 
 	if (m_bDebugInputLock)
 		return;
@@ -690,7 +691,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
-		m_iHP = 2;
+		m_iHP = 100;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))

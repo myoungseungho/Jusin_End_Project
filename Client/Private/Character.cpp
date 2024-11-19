@@ -349,7 +349,11 @@ void CCharacter::Late_Update(_float fTimeDelta)
 	}
 
 	if (m_bPlaying || m_bTag_In)
+	{
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+
+	}
 
 #ifdef _DEBUG
 	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
@@ -4204,7 +4208,15 @@ void CCharacter::Play_WinAnimation()
 
 
 	//다른캐릭터들 안보이게
-	CBattleInterface_Manager::Get_Instance()->Set_InvisibleWithoutMe(m_iPlayerTeam,m_ePlayerSlot);
+
+	_short iMySlot = Get_NewCharacterslot();
+
+	if (iMySlot == 0)
+		iMySlot = 1;
+	else if(iMySlot == 1)
+		iMySlot = 0;
+
+	CBattleInterface_Manager::Get_Instance()->Set_InvisibleWithoutMe(m_iPlayerTeam, iMySlot);
 
 
 	//위치는 이게 아니겠지만 일단 설정
@@ -4229,10 +4241,24 @@ void CCharacter::Play_NewRound_Loser()
 	//if(m_iPlayerTeam)
 	//	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, {-2.f+(m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+	//m_bDynamicMove = true;
+
+	m_bGrabbed = true;
+	m_bOpening = true;
+	m_fMaxOpeningTime = 2.f;
+
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, {-1.f+(m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f,0.5f, 0.f, 1.f });
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (1.5f - m_iPlayerTeam),0.5f, 0.f, 1.f });
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (1.5f - m_iPlayerTeam) * 0.5f,0.5f, 0.f, 1.f });
 
 	Set_Animation(m_iNextRound_RightHandAppear_Cutscene_AnimationIndex);
-	Set_NextAnimation(m_iNextRound_RightHand_AnimationIndex,20.f);
+	//Set_NextAnimation(m_iNextRound_RightHand_AnimationIndex,20.f);
+	//Set_NextAnimation(m_iBreakFall_Air, 20.f);
+	//Set_fImpulse({ (1.5f - m_iPlayerTeam) * -3.f * m_iLookDirection,2.f });
+
+
+
 
 	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	pMainCamera->Set_Player(this);
@@ -4244,15 +4270,60 @@ void CCharacter::Play_NewRound_Loser()
 
 void CCharacter::Play_NewRound_Winner()
 {
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -2.f + (m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+	m_bGrabbed = true;
+	m_bOpening = true;
+	m_fMaxOpeningTime = 2.f;
+
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -1.f + (m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+
+	//되긴 하는데 불안함
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f,0.5f, 0.f, 1.f });
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (1.5f - m_iPlayerTeam)*0.5f,0.5f, 0.f, 1.f });
+
 
 	Set_Animation(m_iNextRound_LeftHand_Cutscene_AnimationIndex);
-	Set_NextAnimation(m_iNextRound_LeftHand_AnimationIndex, 20.f);
+	//Set_NextAnimation(m_iNextRound_LeftHand_AnimationIndex, 20.f);
+	//Set_NextAnimation(m_iBreakFall_Air, 20.f);
+
+	//1팀이면 왼쪽 2팀이면 오른쪽
+	
+	//-일땐 됐는데 왜 갑자기 이러냐
+	//Set_fImpulse({ (1.5f - m_iPlayerTeam) * -3.f * m_iLookDirection,2.f });
+
+	//Set_fImpulse({ (1.5f - m_iPlayerTeam) * -3.f * m_iLookDirection,2.f });
 
 	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	pMainCamera->Set_Player(this);
 
 
+}
+
+void CCharacter::Update_Collider()
+{
+	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+void CCharacter::Update_Opening(_float fTimeDelta)
+{
+	if (m_bOpening == false)
+		return;
+
+
+	m_fAccOpeningTime += fTimeDelta;
+
+	if (m_fAccOpeningTime > m_fMaxOpeningTime)
+	{
+		m_fAccOpeningTime = 0.f;
+		m_bOpening = false;
+		m_bGrabbed = false;
+		m_bDynamicMove = false;
+
+		Add_Move({ (-1.5f + m_iPlayerTeam)*0.5f,0.f });
+		Set_Animation(m_iBreakFall_Air);
+		Set_fImpulse({ (-1.5f + m_iPlayerTeam) * 8.f, 4.f });
+	}
+	
+	
 }
 
 void CCharacter::Set_bPlaying(_bool bPlaying)
@@ -5434,14 +5505,6 @@ HRESULT CCharacter::Bind_ShaderResources()
 	if (nullptr == pLightDesc)
 		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDiffuse", &pLightDesc->vDiffuse, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightAmbient", &pLightDesc->vDiffuse, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightSpecular", &pLightDesc->vSpecular, sizeof(_float4))))
-	//	return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iPlayerDirection", pLightDesc->pPlayerDirection, sizeof(_int))))
 		return E_FAIL;
 
@@ -5600,7 +5663,8 @@ CGameObject* CCharacter::Clone(void* pArg)
 void CCharacter::Free()
 {
 	__super::Free();
-
+	Safe_Release(m_pDetailTextureCom);
+	Safe_Release(m_p1PTextureCom);
 	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);

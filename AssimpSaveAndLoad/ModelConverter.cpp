@@ -198,7 +198,7 @@ bool ModelConverter::LoadModelFromBinary(const std::string& filePath, ModelHeade
 			inFile.read(reinterpret_cast<char*>(mesh.offsetMatrices.data()), numOffsetMatrices * sizeof(XMFLOAT4X4));
 		}
 	}
-
+	
 	// Load materials
 	materials.resize(header.numMaterials);
 	for (auto& material : materials) {
@@ -319,7 +319,7 @@ void ModelConverter::FillModelData(const aiScene* scene, ModelHeader& header, ve
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
 		const aiMesh* aiMesh = scene->mMeshes[i];
 		MeshData& mesh = meshes[i];
-
+		
 		mesh.name = aiMesh->mName.C_Str(); // 메쉬 이름 저장
 		mesh.vertexCount = aiMesh->mNumVertices; // 메쉬의 버텍스 숫자
 		mesh.indexCount = aiMesh->mNumFaces * 3; // 메쉬의 인덱스 숫자

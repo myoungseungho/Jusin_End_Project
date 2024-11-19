@@ -357,6 +357,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
     if (iTeam == 1)
     {
         m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]->Add_Move({ 0.f,200.f });
+        m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]->Update_Collider();
         m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]->Set_bPlaying(false);
 
 
@@ -408,27 +409,105 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
                     m_p2TeamCharacter[1]->Play_NewRound_Winner();
                     m_p2TeamCharacter[1]->Set_bPlaying(true);
                     m_p2TeamCharacter[0]->Set_bPlaying(false);
+                    m_p2TeamCharacter[0]->Add_Move({ 200.f,100.f });
+                    m_p2TeamCharacter[0]->Update_Collider();
+
                     m_i2TeamPlayingCharacterIndex = 1;
                     CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
 
                     
 
                 }
-            }
-            // 1:1 된거면 맵 변경 하지 않고 맵 유지
-            else
-            {
-                //진팀에서 달려오기
-                Set_Character_pEnemy(1, NewCharacterslot);
-                m_p1TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
-                CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
 
-                //승자달려오기
-                Set_Character_pEnemy(2, 0);
-                m_p2TeamCharacter[0]->Play_NewRound_Winner();
+                // 1:1 된거면 맵 변경 하지 않고 맵 유지
+                else //   if (m_p2TeamCharacter[1]->Get_bDying() == true) , m_i2TeamPlayingCharacterIndex == 0
+                {
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(1, NewCharacterslot);
+                    m_p1TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p1TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
 
 
+                    m_i1TeamPlayingCharacterIndex = NewCharacterslot;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+
+                    //승자 기존 캐릭터 받아치기
+                    Set_Character_pEnemy(2, 0);
+                    m_p2TeamCharacter[0]->Play_NewRound_Winner();
+                    m_p2TeamCharacter[0]->Set_bPlaying(true);
               
+
+                    m_i2TeamPlayingCharacterIndex = 1;
+                    //CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+                }
+            }
+            else // m_i2TeamPlayingCharacterIndex == 1
+            {
+
+                //살아있으면 맵바꾸고  캐릭터 변경
+                if (m_p2TeamCharacter[0]->Get_bDying() == false)
+                {
+                    //맵변경
+                    if (CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_SPACE)
+                    {
+                        CMap_Manager::Get_Instance()->Map_Change(CMap_Manager::MAP_VOLCANO);
+
+                    }
+                    else  if (CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_VOLCANO)
+                    {
+                        CMap_Manager::Get_Instance()->Map_Change(CMap_Manager::MAP_SPACE);
+
+                    }
+
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(1, NewCharacterslot);
+                    m_p1TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p1TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
+
+
+                    m_i1TeamPlayingCharacterIndex = NewCharacterslot;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+
+
+                    //승자 새 캐릭터 달려오기
+                    Set_Character_pEnemy(2, 0);
+                    m_p2TeamCharacter[0]->Play_NewRound_Winner();
+                    m_p2TeamCharacter[0]->Set_bPlaying(true);
+                    m_p2TeamCharacter[1]->Set_bPlaying(false);
+                    m_p2TeamCharacter[1]->Add_Move({ 200.f,100.f });
+                    m_p2TeamCharacter[1]->Update_Collider();
+
+                    m_i2TeamPlayingCharacterIndex = 0;
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+
+
+
+                }
+
+                // 1:1 된거면 맵 변경 하지 않고 맵 유지
+                else //   if (m_p2TeamCharacter[0]->Get_bDying() == true) , m_i2TeamPlayingCharacterIndex == 1
+                {
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(1, NewCharacterslot);
+                    m_p1TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p1TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
+
+
+                    m_i1TeamPlayingCharacterIndex = NewCharacterslot;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+
+                    //승자 기존 캐릭터 받아치기
+                    Set_Character_pEnemy(2, 1);
+                    m_p2TeamCharacter[1]->Play_NewRound_Winner();
+                    m_p2TeamCharacter[1]->Set_bPlaying(true);
+
+
+                    m_i2TeamPlayingCharacterIndex = 1;
+                   // CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+                }
 
             }
 
@@ -439,14 +518,17 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
      
     else if (iTeam == 2)
     {
-        m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]->Add_Move({ 0.f,200.f });
-        m_p2TeamCharacter[m_i2TeamPlayingCharacterIndex]->Set_bPlaying(false);
+        m_p2TeamCharacter[m_i1TeamPlayingCharacterIndex]->Add_Move({ 100.f,200.f });
+        m_p2TeamCharacter[m_i1TeamPlayingCharacterIndex]->Update_Collider();
+        m_p2TeamCharacter[m_i1TeamPlayingCharacterIndex]->Set_bPlaying(false);
+
 
         //나올 캐릭터가 없으면 패배
         if (m_p2TeamCharacter[NewCharacterslot]->Get_bDying())
         {
-            //1Team 현재 캐릭터 승리연출
 
+            //1Team 현재 캐릭터 승리연출
+            m_p1TeamCharacter[m_i1TeamPlayingCharacterIndex]->Play_WinAnimation();
 
 
         }
@@ -454,6 +536,144 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
         //다음 캐릭터가 있으면 연출 + 다음라운드
         else
         {
+
+            //이긴 팀에 캐릭터 더 있으면 맵 바꾸기
+            if (m_i1TeamPlayingCharacterIndex == 0)
+            {
+                //살아있으면 맵바꾸고  캐릭터 변경
+                if (m_p1TeamCharacter[1]->Get_bDying() == false)
+                {
+                    //맵변경
+                    if (CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_SPACE)
+                    {
+                        CMap_Manager::Get_Instance()->Map_Change(CMap_Manager::MAP_VOLCANO);
+
+                    }
+                    else  if (CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_VOLCANO)
+                    {
+                        CMap_Manager::Get_Instance()->Map_Change(CMap_Manager::MAP_SPACE);
+
+                    }
+
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(2, NewCharacterslot);
+                    m_p2TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p2TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
+
+
+                    m_i2TeamPlayingCharacterIndex = NewCharacterslot;
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+
+
+
+                    //승자 새 캐릭터 달려오기
+                    Set_Character_pEnemy(1, 1);
+                    m_p1TeamCharacter[1]->Play_NewRound_Winner();
+                    m_p1TeamCharacter[1]->Set_bPlaying(true);
+                    m_p1TeamCharacter[0]->Set_bPlaying(false);
+                    m_p1TeamCharacter[0]->Add_Move({ 100.f,100.f });
+                    m_p1TeamCharacter[0]->Update_Collider();
+
+                    m_i1TeamPlayingCharacterIndex = 1;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+
+
+                }
+
+                // 1:1 된거면 맵 변경 하지 않고 맵 유지
+                else //   if (m_p1TeamCharacter[1]->Get_bDying() == true) , m_i1TeamPlayingCharacterIndex == 0
+                {
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(2, NewCharacterslot);
+                    m_p2TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p2TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
+
+
+                    m_i2TeamPlayingCharacterIndex = NewCharacterslot;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+
+                    //승자 기존 캐릭터 받아치기
+                    Set_Character_pEnemy(1, 0);
+                    m_p1TeamCharacter[0]->Play_NewRound_Winner();
+                    m_p1TeamCharacter[0]->Set_bPlaying(true);
+
+
+                    m_i1TeamPlayingCharacterIndex = 1;
+                    //CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+                }
+            }
+            else // m_i1TeamPlayingCharacterIndex == 1
+            {
+
+                //살아있으면 맵바꾸고  캐릭터 변경
+                if (m_p1TeamCharacter[0]->Get_bDying() == false)
+                {
+                    //맵변경
+                    if (CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_SPACE)
+                    {
+                        CMap_Manager::Get_Instance()->Map_Change(CMap_Manager::MAP_VOLCANO);
+
+                    }
+                    else  if (CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_VOLCANO)
+                    {
+                        CMap_Manager::Get_Instance()->Map_Change(CMap_Manager::MAP_SPACE);
+
+                    }
+
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(2, NewCharacterslot);
+                    m_p2TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p2TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
+
+
+                    m_i2TeamPlayingCharacterIndex = NewCharacterslot;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+
+
+                    //승자 새 캐릭터 달려오기
+                    Set_Character_pEnemy(1, 0);
+                    m_p1TeamCharacter[0]->Play_NewRound_Winner();
+                    m_p1TeamCharacter[0]->Set_bPlaying(true);
+                    m_p1TeamCharacter[1]->Set_bPlaying(false);
+                    m_p1TeamCharacter[1]->Add_Move({ 300.f,100.f });
+                    m_p1TeamCharacter[1]->Update_Collider();
+
+                    m_i1TeamPlayingCharacterIndex = 0;
+
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
+
+
+                }
+
+                // 1:1 된거면 맵 변경 하지 않고 맵 유지
+                else //   if (m_p1TeamCharacter[0]->Get_bDying() == true) , m_i1TeamPlayingCharacterIndex == 1
+                {
+                    //진팀에서 달려오기
+                    Set_Character_pEnemy(2, NewCharacterslot);
+                    m_p2TeamCharacter[NewCharacterslot]->Play_NewRound_Loser();
+                    m_p2TeamCharacter[NewCharacterslot]->Set_bPlaying(true);
+
+
+                    m_i2TeamPlayingCharacterIndex = NewCharacterslot;
+                    CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+
+
+                    //승자 기존 캐릭터 받아치기
+                    Set_Character_pEnemy(1, 1);
+                    m_p1TeamCharacter[1]->Play_NewRound_Winner();
+                    m_p1TeamCharacter[1]->Set_bPlaying(true);
+
+
+                    m_i2TeamPlayingCharacterIndex = 1;
+                   // CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
+                }
+
+            }
+
+
 
         }
     }
