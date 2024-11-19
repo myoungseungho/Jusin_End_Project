@@ -1292,7 +1292,8 @@ void CCharacter::Chase2(_float fTimeDelta)
 			tDesc.pTransformCom = m_pTransformCom;
 			tDesc.m_isPlayerDirRight = m_iLookDirection;
 
-			m_pChaseEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
+		
+			m_pChaseEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
 			
 			//m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
 

@@ -148,6 +148,10 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
 
 
+
+
+	m_ChaseEffectName = TEXT("21_SAU-02");
+
 	m_iNextAnimation.first = ANIME_IDLE;
 
 
@@ -1986,12 +1990,22 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
+
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
+			tDesc.pTransformCom = m_pTransformCom;
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("21_SDU-02"), &tDesc);
+
+			//Character_Make_Effect(TEXT("21_SDU-02"));
+
 		}
 
 	}
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_214:
 	{
+
+
 		//³»·ÁÂï´ÂÁß
 		if (iAttackEvent == 0)
 		{
@@ -2044,6 +2058,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			Character_Make_Effect(TEXT("21_SAU-03"));
+			Character_Make_BoneEffect("G_head", TEXT("21_SAU-02"));
+
 		}
 
 		//¶¥¿¡ ´ê¾Æ¼­ Ãæ°ÝÆÄ
@@ -2080,6 +2099,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.iGainAttackStep = 2;  
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Make_Effect(TEXT("21_SAU-01"));
+
 		}
 	}
 	break;

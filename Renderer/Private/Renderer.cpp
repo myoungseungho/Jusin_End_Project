@@ -321,7 +321,7 @@ void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 v
 	_float yDecrement = 0.2f;
 	_float xStep = 0.12f;	
 
-	if (vDir.x == 1)
+	if (vDir.x != 0)
 	{
 
 		for (_int i = 0; i < 8; ++i)
