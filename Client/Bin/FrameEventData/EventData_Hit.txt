@@ -781,6 +781,8 @@ PLAY_HIT,HTN263_body,28,ObjectMove,0,0.1,0,0
 //,공중 특수
 
 PLAY_HIT,HTN265_body,0.000000,AnimSpeedChange,0.018000,62.625999
+PLAY_HIT,HTN265_body,0.0010,PlayGroupSound,206,0,1
+PLAY_HIT,HTN265_body,0.001000,PlaySound,63,0,1
 //,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
 PLAY_HIT,HTN265_body,5,AnimSpeedChange,0.008000,0.5
 PLAY_HIT,HTN265_body,5.001,AttackEvent,0
@@ -1021,6 +1023,7 @@ PLAY_HIT,HTN432_body,330,AttackEvent,6
 //,3필 성공시
 PLAY_HIT,HTN432cs_body,0,AnimSpeedChange,0.005,60
 PLAY_HIT,HTN432cs_body,0.1,AttackEvent,100
+PLAY_HIT,HTN432cs_body,0.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,30,ObjectMove,0.5,0,0.5
 //,PLAY_HIT,HTN432cs_body,30.001000,PlaySound,60,0,1
@@ -1028,30 +1031,34 @@ PLAY_HIT,HTN432cs_body,30,ObjectMove,0.5,0,0.5
 
 PLAY_HIT,HTN432cs_body,48,AttackEvent,0
 PLAY_HIT,HTN432cs_body,48.2,AttackEvent,101
-
+PLAY_HIT,HTN432cs_body,48.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+PLAY_HIT,HTN432cs_body,77.201000,PlaySound,69,0,1
 
 
 PLAY_HIT,HTN432cs_body,77,AttackEvent,1
 PLAY_HIT,HTN432cs_body,77.2,AttackEvent,102
-PLAY_HIT,HTN432cs_body,77.201000,PlaySound,69,0,1
+PLAY_HIT,HTN432cs_body,77.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+
 
 
 PLAY_HIT,HTN432cs_body,96,AttackEvent,2
+PLAY_HIT,HTN432cs_body,96.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,100,AttackEvent,3
 PLAY_HIT,HTN432cs_body,100.201000,PlaySound,60,0,1
+PLAY_HIT,HTN432cs_body,100.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,110.05,ObjectMove,1,0,0
 
 
 PLAY_HIT,HTN432cs_body,148.01,AttackEvent,201
 PLAY_HIT,HTN432cs_body,148.2,AttackEvent,202
-
+PLAY_HIT,HTN432cs_body,148.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 
 
 PLAY_HIT,HTN432cs_body,255,AttackEvent,4
-
+PLAY_HIT,HTN432cs_body,255.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
 
