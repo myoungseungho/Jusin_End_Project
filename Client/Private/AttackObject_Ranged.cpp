@@ -262,7 +262,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
-
+			if (m_isfxSoundIndex != 60000)
+			{
+				m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)m_isfxSoundIndex, false, m_fsfxVolume);
+			}
 
 			if (m_bOwnerNextAnimation)
 			{

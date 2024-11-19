@@ -920,6 +920,7 @@ PLAY_21,TON402_body,50,ObjectMove,0.09,0,0,0
 //,지대공 105부터시작, 115에 발사 88로 이동, 105까지 스탠딩 복귀 실화냐
 PLAY_21,TON403_body,0.000000,AnimSpeedChange,0.028000,81.009998
 //,PLAY_21,TON403_body,0.000000,AnimSpeedChange,0.028000,110.009998
+PLAY_21,TON403_body,5,AttackEvent,0
 
 //,괜찮은데 더 찾자
 //,PLAY_21,TON403_body,20.000000,AnimSpeedChange,0.028000,171.009998

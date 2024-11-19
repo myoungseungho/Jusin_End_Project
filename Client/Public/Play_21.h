@@ -194,6 +194,8 @@ private:
 	_ushort m_iFinalLoofCount = { 10 };
 	_bool m_bFinalSkillAdd = { false };
 
+	class CEffect_Layer* m_pAttack236ChargeEffect_Layer = { nullptr };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

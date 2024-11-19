@@ -282,6 +282,11 @@ void CAttackObject_Chase::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		if (eResult == RESULT_HIT)
 		{
+			if (m_isfxSoundIndex != 60000)
+			{
+				m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)m_isfxSoundIndex, false, m_fsfxVolume);
+			}
+
 			//pCharacter->Set_GroundSmash(m_bGroundSmash);
 			m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
