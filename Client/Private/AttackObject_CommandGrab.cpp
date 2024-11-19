@@ -44,7 +44,6 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	m_fGrabAnimationPosition = pDesc->fGrabAnimationPosition;
 	
 	m_bForcedHit = pDesc->bForcedHit;
-	m_iOnwerDirection = pDesc->iOnwerDirection;
 
 	m_bGrabedGravity = pDesc->bGrabedGravity;
 
@@ -56,10 +55,7 @@ HRESULT CAttackObject_CommandGrab::Initialize(void* pArg)
 	//}
 	
 
-	if (m_iOnwerDirection == 231)
-	{
-		m_iOnwerDirection = m_pOwner->Get_iDirection();
-	}
+	
 
 	return S_OK;
 }
@@ -145,6 +141,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 		if (eResult == RESULT_HIT || m_bForcedHit)
 		{
+			if (m_isfxSoundIndex != 60000)
+			{
+				m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)m_isfxSoundIndex, false, m_fsfxVolume);
+			}
 
 
 			pCharacter->Set_GroundSmash(m_bGroundSmash);

@@ -90,6 +90,7 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	m_iAttack_Crouch_Heavy = { ANIME_ATTACK_CROUCH_HEAVY };
 
 	m_iBound_Ground = { ANIME_HIT_BOUND_DOWN };
+	m_iLayUp = { ANIME_LAYUP };
 
 	m_iGuard_GroundAnimationIndex = { ANIME_GUARD_GROUND };
 	m_iGuard_CrouchAnimationIndex = { ANIME_GUARD_CROUCH };
@@ -113,6 +114,16 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	m_iDyingStandingAnimationIndex = { ANIME_DIE_STAND };
 
 	m_iReflectAnimationIndex = { ANIME_REFLECT };
+
+
+	m_iStartAnimatonIndex = { ANIME_START_DEFAULT }; //600cs 
+	m_iWinAnimationIndex = { ANIME_WIN_DEFAULT };	//610cs
+	m_iNextRound_RightHandAppear_Cutscene_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE }; //620c
+	m_iNextRound_RightHand_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND };  //621cs ->631으로 연계
+
+	m_iNextRound_LeftHand_Cutscene_AnimationIndex = { ANIME_NEWROUND_LEFTHAND_CUTSCENE };  //630 Durtaio
+	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
+
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -147,6 +158,7 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	빛 각자 생성해주기
 	*/
 
+	//m_eChaseSoundIndex = (_short)CSound_Manager::SOUND_KEY_NAME::Chase_At;
 
 	//m_pModelCom->SetUp_Animation(16, true);
 	m_pModelCom->SetUp_Animation(0, true);
@@ -256,15 +268,19 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 
+
+
 	if (m_pGameInstance->Key_Down(DIK_F1))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 
+
 	if (m_bDebugInputLock)
 		return;
 
 
+	Update_Opening(fTimeDelta);
 
 	//cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
@@ -311,7 +327,9 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 					m_fAccDyingTime += fTimeDelta;
 					if (m_fAccDyingTime > 2.f)
 					{
-						Tag_In(m_ePlayerSlot);
+						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+
+						//Tag_In(m_ePlayerSlot);
 					}
 				}
 
@@ -554,7 +572,11 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			{
 				Set_Animation(m_iHit_Air_FallAnimationIndex);
 			}
-
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+			{
+				Set_Animation(ANIME_LAYUP);
+				Set_CurrentAnimationPositionJump(5.f);
+			}
 			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
 
@@ -691,7 +713,8 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
-		system("cls");
+		//system("cls");
+		m_iHP = 100;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
@@ -1556,6 +1579,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Hit::ANIME_ATTACK_HEAVY:
 	{
 
+		m_bGrab_Air = false;
 
 		//,안보임 + 가로샤샤샥
 		if (iAttackEvent == 0)
@@ -2199,7 +2223,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//높이가 5 이상이면 내려찍히는 판정.  디폴트는 false이므로  else 처리 안함
 		//if(Get_fHeight() > 5)
-		if (Get_fHeight() > 3)
+		if (m_bGrab_Air)
+		{
+			Desc.bGroundSmash = true;
+			Desc.fAnimationLockTime = 0.7f;
+			m_bGrab_Air = false;
+
+		}
+		else if (Get_fHeight() > 3)
 		{
 			Desc.bGroundSmash = true;
 			Desc.fAnimationLockTime = 0.7f;
@@ -2357,7 +2388,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iOnwerNextAnimationIndex = m_iGrabAnimationIndex;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Grab"), TEXT("Layer_AttackObject"), &Desc);
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 
 		}
 		break;
@@ -2390,7 +2421,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bDrawNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		break;
 		case 2:
@@ -2419,7 +2450,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bDrawNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		}
 		break;
@@ -3214,22 +3245,23 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == true)
 			{
 
-				//중간단계 있는버전
-				if (false)
-				{
-					Add_Move({ 7.f * m_iLookDirection,0.f });
-					m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 10.f;
-				}
+				
 
-				{
-					//Add_Move({ 20.f * m_iLookDirection,0.f });
-					Teleport_ToEnemy(7.f, 0.f);
-					m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 10.f;
-				}
+				//Add_Move({ 20.f * m_iLookDirection,0.f });
+				Teleport_ToEnemy(7.f, 0.f);
+				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 10.f;
+				Character_Create_Distortion({ 1.f,0.f,0.f }, { -2.f*m_iLookDirection,0.f }, { 1.5f,1.f }, { 0.5f });
+
+				Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.5f,1.f }, { 0.5f });
+
+
+				
 			}
 			else
 			{
 				MoveToEnemy_Ground(12.f);
+				Character_Create_Distortion({ 1.f,0.f,0.f });
+
 			}
 		}
 
@@ -3973,7 +4005,8 @@ _bool CPlay_Hit::isNearlyEqual(_float CurValue, _float TargetValue)
 
 AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
 {
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground
+		|| m_pModelCom->m_iCurrentAnimationIndex == m_iLayUp)
 		return RESULT_MISS;
 
 

@@ -117,6 +117,20 @@ public:
 		ANIME_REFLECT = 58,
 
 
+		//시작 600cs
+		ANIME_START_DEFAULT = 75,
+
+		//승리 610cs
+		ANIME_WIN_DEFAULT = 78,
+
+		//라운드변경
+		ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE = 79 , //620 cs.   ->630로 연계
+		ANIME_NEWROUND_LEFTHAND_CUTSCENE = 80 , //621 cs ->631으로 연계 Durtaion 122
+
+		ANIME_NEWROUND_RIGHTHAND = 81,  //630.   
+		ANIME_NEWROUND_LEFTHAND = 82,  //631.    Durtaion 24
+
+
 		//시네마틱
 		ANIME_GOKU_CINEMATIC_01 = 86, //FRN801cs_01  //오프닝 무비
 		ANIME_GOKU_CINEMATIC_02 = 87, //FRN801cs_02 //시작 직후 

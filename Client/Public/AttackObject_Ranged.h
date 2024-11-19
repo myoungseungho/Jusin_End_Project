@@ -32,7 +32,9 @@ public:
 		Ranged_LightColor eRangeColor = { RANGED_LIGHT_NONE };
 
 		_bool bExplosion = true;
+		_bool bPierce = false;
 		_wstring strEffectName = {};
+
 	};
 private:
 	CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -74,6 +76,7 @@ private:
 	_float2 m_fRanged_Impus_NoneDirection = {};
 	_short  m_iDirection = {};		
 	_bool m_bExplosion = { true };
+	_bool m_bPierce = { false };
 
 	Ranged_LightColor m_eRangeColor = { RANGED_LIGHT_NONE };
 

@@ -125,6 +125,21 @@ public:
 		ANIME_GRAB_READY = 16,  //038 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
 
 
+
+		//시작 600cs
+		ANIME_START_DEFAULT = 71,
+
+		//승리 610cs
+		ANIME_WIN_DEFAULT = 74,
+
+		//라운드변경
+		ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE = 76, //620 cs.   ->630로 연계
+		ANIME_NEWROUND_LEFTHAND_CUTSCENE = 77, //621 cs ->631으로 연계 Durtaion 122
+
+		ANIME_NEWROUND_RIGHTHAND = 78,  //630.   
+		ANIME_NEWROUND_LEFTHAND = 79,  //631.    Durtaion 24
+
+
 	};
 	enum AnimationCount
 	{
@@ -133,6 +148,7 @@ public:
 		COUNT_ATTACK_SPECIAL,
 		COUNT_ATTACK_GRAB,
 		COUNT_ATTACK_BENISHING,
+		COUNT_ATTACK_CROUCH_SPECIAL,
 		COUNT_END
 	};
 
@@ -183,10 +199,16 @@ public:
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
 
 
+	virtual _float Get_DamageScale(_bool bUltimate = false) override;
+	virtual void Set_BreakFall_Ground() override;
 
 	void Add_YellowLight();
 	void Add_BlueLight();
-	_float Get_DamageScale(_bool bUltimate = false) override;
+
+
+	void Update214ReturnEvent(_float fTimeDelta);
+
+	_bool Get_bGoldenFrieza();
 
 private:
 	//CModel* m_pModelCom_Opening = { nullptr };
@@ -202,6 +224,12 @@ private:
 	_ushort m_iCountAirSpecial = 0;
 
 
+	_float m_fAcc214AttackTime = {};
+	_bool m_bAcc214Attack = false;
+	_short m_i214AttackPreviousDirection = { 0 };
+
+
+	_bool m_bGoldFrieza = false;
 
 private:
 	HRESULT Ready_Components();

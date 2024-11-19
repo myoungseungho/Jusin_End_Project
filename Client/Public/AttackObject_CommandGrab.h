@@ -32,7 +32,7 @@ public:
 		_short iGrabAnimationIndex = {};
 
 		_bool bForcedHit = false;
-		_short iOnwerDirection = {231};  //보통 보는 방향의 반대가 되도록 조정하지만  0으로 넣으면 뒤통수 때려도 뒤집히지 않음. 기본값(231)이면 자동처리하기
+		//_short iOnwerDirection = {231};  //보통 보는 방향의 반대가 되도록 조정하지만  0으로 넣으면 뒤통수 때려도 뒤집히지 않음. 기본값(231)이면 자동처리하기
 
 
 		
@@ -78,7 +78,6 @@ private:
 
 	_bool m_bForcedHit = { false };
 
-	_short m_iOnwerDirection = {1};
 	
 
 	_bool m_bGrabedGravity = { false };

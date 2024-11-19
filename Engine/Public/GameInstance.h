@@ -126,6 +126,7 @@ public: /* For.Font_Manager */
 public: /* For.Sound*/
 	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop = false);
 	void Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY groupKey, const std::wstring& filePath, CSound_Manager::SOUND_GROUP_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop);
+	void Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME alias);
 	void Play_Sound(CSound_Manager::SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY alias, _bool loop, _float volume);
 	void Stop_Group_Sound(CSound_Manager::SOUND_GROUP_KEY groupKey);

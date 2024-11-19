@@ -989,7 +989,7 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 1.0 1.5 -5
+Position: 1 1.5 -5
 Rotation: -0 0 -0 1
 Duration: 0.1
 InterpolationType: 0
@@ -997,26 +997,70 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [VirtualCamera]
-ModelID: MODELID_MINE
+ModelID: MODELID_FRIEZA
 
 [Skill]
-SkillName: Camera_Mine_Heavy
+SkillName: Camera_Frieza_Light_Final
 
 [Animation]
-AnimationName: Mine_Heavy_Anim1
+AnimationName: Frieza_Light_Final_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Frieza_Light_Final_Anim1_Flip
 PointCount: 0
 
 [Skill]
-SkillName: Camera_Mine_Knock_Away_Up
+SkillName: Camera_Frieza_Heavy
 
 [Animation]
-AnimationName: Mine_Knock_Away_Up_Anim1
+AnimationName: Frieza_Heavy_Anim1
 PointCount: 0
 
 [Skill]
-SkillName: Camera_Mine_Air_Smash
+SkillName: Camera_Frieza_Knock_Away_Up
 
 [Animation]
-AnimationName: Mine_Air_Smash_Anim1
+AnimationName: Frieza_Knock_Away_Up_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Frieza_Grab
+
+[Animation]
+AnimationName: Frieza_Grab_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Frieza_Ultimate_1
+
+[Animation]
+AnimationName: Frieza_Ultimate_1_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Frieza_Ultimate_1_Anim1_Flip
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Frieza_Ultimate_3
+
+[Animation]
+AnimationName: Frieza_Ultimate_3_Anim1
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Frieza_Golden
+
+[Animation]
+AnimationName: Frieza_Golden_Anim1
+PointCount: 0
+
+[Animation]
+AnimationName: Frieza_Golden_Anim2
+PointCount: 0
+
+[Animation]
+AnimationName: Frieza_Golden_Anim2_Flip
 PointCount: 0
 

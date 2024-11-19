@@ -491,20 +491,9 @@ void CAnimationNameMap::Initalize()
 
 _int CAnimationNameMap::Get_AnimationIndex(_int Characterenum, string strAnimationName)
 {
-	_int iDebug = m_MAP_AnimationPedia[Characterenum][strAnimationName];
+	//_int iDebug = m_MAP_AnimationPedia[Characterenum][strAnimationName];
 
-	if(Characterenum == 5 && iDebug == 0)
-	{
-		strAnimationName;
-		_bool bDebug = true;
-		Initalize();
-		iDebug = m_MAP_AnimationPedia[Characterenum][strAnimationName];
-		
-		if (iDebug == 0)
-		{
-			_bool bDebugSIbla = true;
-		}
-	}
+	
 	return m_MAP_AnimationPedia[Characterenum][strAnimationName];
 }
 
