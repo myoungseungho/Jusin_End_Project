@@ -135,6 +135,8 @@ public:
 		VOLCANO_BGM,
 		J_Attack_Hit_SFX,
 		Down_Forward_Light_21,
+		Air_Chase_21,
+		Hit_Air_Chase,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -178,8 +180,6 @@ public:
 		HIT_J_Attack_1,
 		HIT_Down_Back_Light_0,
 		HIT_Down_Back_Light_1,
-		Hit_Air_Chase_0,
-		Hit_Air_Chase_1,
 		Hit_Hit_0,
 		Hit_Hit_1,
 		Hit_Hit_2,
@@ -198,7 +198,6 @@ public:
 		LIGHT_ATTACK_HIT,
 		J_ATTACK_HIT,
 		HIT_Down_Back_Light,
-		Hit_Air_Chase,
 		Hit_Hit,
 		Light_Attack_Frieza,
 	};
