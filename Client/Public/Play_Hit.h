@@ -141,6 +141,21 @@ public:
 		//037 (=15) 이상하게 앉는모션
 		//038 이상하게 점프
 		//040 이상하게 서서가드
+		 
+
+		//시작 600cs
+		ANIME_START_DEFAULT = 71,
+
+		//승리 610cs
+		ANIME_WIN_DEFAULT = 74,
+
+		//라운드변경
+		ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE = 75, //620 cs.   ->630로 연계
+		ANIME_NEWROUND_LEFTHAND_CUTSCENE = 76, //621 cs ->631으로 연계 Durtaion 122
+
+		ANIME_NEWROUND_RIGHTHAND = 77,  //630.   
+		ANIME_NEWROUND_LEFTHAND = 78,  //631.    Durtaion 24
+
 
 		
 	};

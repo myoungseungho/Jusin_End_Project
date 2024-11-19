@@ -107,6 +107,21 @@ public:
 		ANIME_SPARKING = 57,
 		ANIME_REFLECT=56,//301 56 패링
 		//306cs 61  지상 드래곤러시 성공 후 추적
+
+
+		//시작 600cs
+		ANIME_START_DEFAULT = 77,
+
+		//승리 610cs
+		ANIME_WIN_DEFAULT = 80,
+
+		//라운드변경
+		ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE = 81, //620 cs.   ->630로 연계
+		ANIME_NEWROUND_LEFTHAND_CUTSCENE = 82, //621 cs ->631으로 연계 Durtaion 122
+
+		ANIME_NEWROUND_RIGHTHAND = 83,  //630.   
+		ANIME_NEWROUND_LEFTHAND = 84,  //631.    Durtaion 24
+
 	};
 	enum AnimationCount
 	{

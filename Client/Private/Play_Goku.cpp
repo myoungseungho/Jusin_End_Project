@@ -117,6 +117,15 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	m_iReflectAnimationIndex = { ANIME_REFLECT };
 
+	m_iStartAnimatonIndex = { ANIME_START_DEFAULT }; //600cs 
+	m_iWinAnimationIndex = { ANIME_WIN_DEFAULT };	//610cs
+	m_iNextRound_RightHandAppear_Cutscene_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE }; //620c
+	m_iNextRound_RightHand_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND };  //621cs ->631으로 연계
+
+	m_iNextRound_LeftHand_Cutscene_AnimationIndex = { ANIME_NEWROUND_LEFTHAND_CUTSCENE };  //630 Durtaio
+	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
+
+
 	m_iNextAnimation.first = ANIME_IDLE;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -127,6 +136,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
 
+	//m_eChaseSoundIndex = (_short)CSound_Manager::SOUND_KEY_NAME::Chase_Attack_21;
 
 	m_tAttackMap.Initalize(this);
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
@@ -245,6 +255,13 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	__super::Player_Update(fTimeDelta);
 
 
+	//if (m_bOnlyCutSceneNoMove)
+	//{
+	//	Character_Play_Animation(fTimeDelta);
+	//	return;
+	//}
+
+
 	Update_Tag_In(fTimeDelta);
 
 
@@ -293,7 +310,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 					m_fAccDyingTime += fTimeDelta;
 					if (m_fAccDyingTime > 2.f)
 					{
-						Tag_In(m_ePlayerSlot);
+						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+						//Tag_In(m_ePlayerSlot);
 					}
 				}
 				 
@@ -668,7 +686,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
-		system("cls");
+		//system("cls");
+		m_iHP = 2;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))

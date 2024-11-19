@@ -125,6 +125,21 @@ public:
 		ANIME_GRAB_READY = 16,  //038 기본잡기 준비자세.  (공중)   추적에선 사용하지 않고 잡기 준비로만 사용,  NextPosition 5
 
 
+
+		//시작 600cs
+		ANIME_START_DEFAULT = 71,
+
+		//승리 610cs
+		ANIME_WIN_DEFAULT = 74,
+
+		//라운드변경
+		ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE = 76, //620 cs.   ->630로 연계
+		ANIME_NEWROUND_LEFTHAND_CUTSCENE = 77, //621 cs ->631으로 연계 Durtaion 122
+
+		ANIME_NEWROUND_RIGHTHAND = 78,  //630.   
+		ANIME_NEWROUND_LEFTHAND = 79,  //631.    Durtaion 24
+
+
 	};
 	enum AnimationCount
 	{
