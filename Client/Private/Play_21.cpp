@@ -2785,6 +2785,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 5, this, nullptr, true);
 
+
+			
 			//안보이게 하는 대신에  고정 위치를 저 멀리로 보내버리고, 공격기술 범위를 엄청 크게 한 뒤에 잡기 풀때 다시 데려오는 방법도 있음
 			//이때 맵밖으로 밀려나가는건 어떻게 처리?
 			//아예 하늘 위로?  땅 밑은?
@@ -2838,7 +2840,6 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 2)
 		{
 			//공격이펙트로 화면가리기
-
 		}
 		else if (iAttackEvent == 3)
 		{
