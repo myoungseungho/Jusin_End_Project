@@ -270,6 +270,7 @@
     <ClInclude Include="..\Public\UI_Loading_BG.h" />
     <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h" />
     <ClInclude Include="..\public\UI_Loading_DragonBall.h" />
+    <ClInclude Include="..\public\UI_Loading_EnergyEff.h" />
     <ClInclude Include="..\public\UI_Loading_FlyEff.h" />
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
     <ClInclude Include="..\public\UI_Lobby_Text.h" />
@@ -499,6 +500,7 @@
     <ClCompile Include="..\Private\UI_Loading_BG.cpp" />
     <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp" />
     <ClCompile Include="..\private\UI_Loading_DragonBall.cpp" />
+    <ClCompile Include="..\private\UI_Loading_EnergyEff.cpp" />
     <ClCompile Include="..\private\UI_Loading_FlyEff.cpp" />
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
     <ClCompile Include="..\private\UI_Lobby_Text.cpp" />

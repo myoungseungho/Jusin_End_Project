@@ -16,7 +16,7 @@ public:
 	virtual HRESULT Initialize_Prototype_Trail(_uint iNumRect ,_float fRectWidth);
 	virtual HRESULT Initialize(void* pArg) override;
 
-	void Line(const _float3& start, _float fTimeDelta);
+	void Line(_float3 vOffPos);
 
 private:
 	_uint m_iNumRect = { 0 };

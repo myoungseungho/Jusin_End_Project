@@ -748,8 +748,15 @@ PS_OUT PS_FLYEFF(PS_IN In)
 {
     PS_OUT Out;
     
-      Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
     Out.vColor.a = Out.vColor.r;
+    
+    float fDistance = length(abs(In.vTexcoord - float2(0.5f, 0.5f)));
+    
+    if (fDistance >= 0.25f)
+        discard;
+    
+    //Out.vColor.rgb *= g_vColor.rgb;
     
     return Out;
 }

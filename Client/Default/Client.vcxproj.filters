@@ -541,6 +541,9 @@
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_EnergyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\EnergyEff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1154,6 +1157,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_Goku_RunEff">
       <UniqueIdentifier>{876d86ba-004f-4190-a8fb-e03c8085fb75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\EnergyEff">
+      <UniqueIdentifier>{684377dc-be5f-42f6-9ddc-b95e6594b3b9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1858,6 +1864,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Lobby_Goku_RunEff.h">
       <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_EnergyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\EnergyEff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
