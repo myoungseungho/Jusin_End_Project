@@ -1395,7 +1395,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Desc.fForcedGravityTime = 0.f;
-
 				//Desc.bOnwerHitNoneStop = true;
 
 
@@ -1416,7 +1415,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.ColliderDesc.pMineGameObject = this;
 				Desc.ColliderDesc.vCenter = { 0.9f * m_iLookDirection,0.8f,0.f };
 				Desc.ColliderDesc.vExtents = { 0.3f,0.5f,0.2f };
-
 
 
 				Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };

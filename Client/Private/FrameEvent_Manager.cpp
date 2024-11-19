@@ -580,7 +580,7 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 		main_Camera->StartCameraShake(fValue[0], fValue[1]);
-		}
+	}
 #pragma endregion
 	
 }

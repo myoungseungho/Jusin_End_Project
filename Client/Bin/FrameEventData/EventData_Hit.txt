@@ -514,6 +514,7 @@ PLAY_HIT,HTN202_body,25,AttackEvent,1
 PLAY_HIT,HTN202_body,25.0010,PlayGroupSound,205,0,1
 PLAY_HIT,HTN202_body,25.0010,PlayGroupSound,204,0,1
 
+
 //,막혔으면 55로 이동하고 끝내기.  35는 옷이 뚫림
 //,맞췄고, 루프다 끝냈으면 NextAnimationCheck
 //,PLAY_HIT,HTN202_body,30,AttackEvent,2
@@ -524,7 +525,6 @@ PLAY_HIT,HTN202_body,32,AttackEvent,2
 PLAY_HIT,HTN202_body,50,AttackEvent,3
 PLAY_HIT,HTN202_body,50.001000,PlaySound,48,0,1
 PLAY_HIT,HTN202_body,50.001000,PlaySound,8,0,1
-
 
 
 
