@@ -1031,13 +1031,14 @@ PLAY_HIT,HTN432cs_body,30,ObjectMove,0.5,0,0.5
 
 PLAY_HIT,HTN432cs_body,48,AttackEvent,0
 PLAY_HIT,HTN432cs_body,48.2,AttackEvent,101
-PLAY_HIT,HTN432cs_body,48.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
-PLAY_HIT,HTN432cs_body,77.201000,PlaySound,69,0,1
+PLAY_HIT,HTN432cs_body,48.201000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+
 
 
 PLAY_HIT,HTN432cs_body,77,AttackEvent,1
 PLAY_HIT,HTN432cs_body,77.2,AttackEvent,102
-PLAY_HIT,HTN432cs_body,77.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+PLAY_HIT,HTN432cs_body,77.201000,PlaySound,69,0,1
+PLAY_HIT,HTN432cs_body,77.202000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 
 
