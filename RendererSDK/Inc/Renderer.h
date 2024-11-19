@@ -30,6 +30,7 @@ public:
 		RG_CUTSCENE_PRI_EFFECT, RG_CUTSCENE_OBJECT, RG_CUTSCENE_LATE_EFFECT, RG_NODE, RG_END
 	};
 
+	enum MAP_TYPE { MAP_SPACE, MAP_VOLCANO, MAP_END };
 private:
 	CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CRenderer() = default;
@@ -91,13 +92,14 @@ private: /* For.BlackOut Variable */
 	const _float m_fBlackTime = { 0.8f };
 
 public: /* For.Distortion Function*/
-
-	HRESULT Render_Distortion(_float fTimeDelta);
-
 	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
+	void Delete_LoopDistortion();
 	void Create_HitDistortion(_float4 vPlayerPos, _float3 vDir = { 1,0,0 }, _float2 vOffSetPos = { 0.f,0.f }, _float2 vOffSetScale = { 1.f,1.f }, _float fLifeTime = 0.1f);
+
+	void Set_CurMapType(MAP_TYPE eType) { m_eCurMapType = eType; }
 private: /* For.Distortion Variable */
 	vector<DISTORTION_DESC>		m_Distortions;
+	
 	class CTransform*			m_pDistortionTransformCom = { nullptr };
 	class CTexture*				m_pDistortionTextureCom = { nullptr };
 	class CShader*				m_pDistortionShaderCom = { nullptr };
@@ -106,6 +108,8 @@ private: /* For.Distortion Variable */
 	_float m_fAccTime = { 0.f };
 
 	_bool m_isFriezaRender = { false };
+
+	MAP_TYPE m_eCurMapType = { MAP_SPACE };
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -140,7 +144,9 @@ private:
 private:
 	HRESULT Render_Debug(_float fTimeDelta);
 
+	HRESULT Render_Distortion(_float fTimeDelta);
 	HRESULT Render_Metallic(_float fTimeDelta);
+
 	HRESULT Draw_MapBlackOut(_float fTimeDelta);
 	HRESULT Draw_OutLine_Effect();
 	HRESULT Draw_AllGlow_Effect(_int isPri);

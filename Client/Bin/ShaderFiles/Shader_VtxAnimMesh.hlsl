@@ -200,19 +200,21 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
     vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
     vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };  
-
+    
     /* vMtrlShadeDesc 알파값으로 아웃라인을 생성 */
     vResultColor.rgb = saturate(vHairColor.rgb - (1 - vMtrlShadeDesc.a));
 
     ///* 프리저 헤어 텍스쿠드 좌표 
     /*
     Texcoord
-    x   0.151 ~ 0.34
-    y   0.147 ~ 0.385
+    x 0.505 0.55
+    y 0.353  0.495
     */
     float fFaceMask = (step(0.151, In.vTexcoord.x) * step(In.vTexcoord.x, 0.34)) * (step(0.136, In.vTexcoord.y) * step(In.vTexcoord.y, 0.385));
     float fFaceMask2 = step(0.3, vMtrlShadeDesc.g - vMtrlShadeDesc.r);
     float fFaceMask3 = (step(0.182, In.vTexcoord.x) * step(In.vTexcoord.x, 0.491)) * (step(0.004, In.vTexcoord.y) * step(In.vTexcoord.y, 0.057));
+    float fLegMask = (step(0.505f, In.vTexcoord.x) * step(In.vTexcoord.x, 0.55f)) * (step(0.353f, In.vTexcoord.y) * step(In.vTexcoord.y, 0.495));
+    float fArmMask = (step(0.507f, In.vTexcoord.x) * step(In.vTexcoord.x, 0.6291f)) * (step(0.916f, In.vTexcoord.y) * step(In.vTexcoord.y, 0.955));
     /* g값은 명암? r값이랑 같이 쓰는데 모호함 */
     //vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.g));
     
@@ -221,7 +223,7 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
     vResultColor.a = 1.f;
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fFaceMask + fFaceMask2 + fFaceMask3));
-    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_MeshIndex, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_MeshIndex * ((1 - fLegMask) * (1 - fArmMask)), 0.f);
 
     return Out;
 }

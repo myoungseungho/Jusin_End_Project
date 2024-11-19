@@ -41,15 +41,19 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
-	CShader* m_pShaderCom = { nullptr };
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	CShader*			m_pShaderCom = { nullptr };
+	CVIBuffer_Rect*		m_pVIBufferCom = { nullptr };
+	CTexture*			m_pTextureCom = { nullptr };
 
-	const _float4x4* m_pParentMatrix = { nullptr };
-	const _float4x4* m_pSocketMatrix = { nullptr };
-	_float4x4 m_WorldMatrix = {};
-	CTransform* m_pLookAtTransformCom = { nullptr };
-	_int* m_pLookDirection = { nullptr };
+	const _float4x4*	m_pParentMatrix = { nullptr };
+	const _float4x4*	m_pSocketMatrix = { nullptr };
+
+	_float4x4			m_WorldMatrix = {};
+	CTransform*			m_pLookAtTransformCom = { nullptr };
+
+	_int*				m_pLookDirection = { nullptr };
+
+	_uint		m_iTestRGIndex = { 0 };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

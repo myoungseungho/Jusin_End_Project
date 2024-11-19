@@ -129,13 +129,20 @@ void CFrieza_Metal::Update(_float fTimeDelta)
 {
 	//__super::Update(fTimeDelta);
 
-
+	if (m_pGameInstance->Key_Down(DIK_F6))
+	{
+		if(m_iTestRGIndex == CRenderer::RG_UI)
+			m_iTestRGIndex = CRenderer::RG_PLAYER_METALLIC;
+		else
+			m_iTestRGIndex = CRenderer::RG_UI;
+	}
 	
 }
 
 void CFrieza_Metal::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER_METALLIC, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER_METALLIC, this);
+	m_pRenderInstance->Add_RenderObject(static_cast<CRenderer::RENDERGROUP>(m_iTestRGIndex), this);
 }
 
 HRESULT CFrieza_Metal::Render(_float fTimeDelta)

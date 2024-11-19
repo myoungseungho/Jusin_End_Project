@@ -9,6 +9,10 @@ class CGameObject;
 class CModel;
 END
 
+BEGIN(Renderer)
+class CRenderInstance;
+END
+
 BEGIN(Client)
 
 class CMap_Manager : public CBase
@@ -41,15 +45,18 @@ public:
 	map<const wstring, class CGameObject*>			m_Destructive_SpaceModels;
 	map<const wstring, class CGameObject*>			m_VolcanoModels;
 	map<const wstring, class CGameObject*>			m_Destructive_VolcanoModels;
-
 	MAP_TYPE m_eCurMap = { MAP_SPACE };
+
+private:
+
 	_bool m_isRight = { false };
 	_bool m_isDestructive_Active = { false };
 	_float m_AccTime = { 0.f };
 	_bool m_isDestructive_View = { false };
 	_float m_MapViewTime = { 0.f };
-private:
+
 	CGameInstance* m_pGameInstance = { nullptr };
+	CRenderInstance* m_pRenderInstance = { nullptr };
 
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };

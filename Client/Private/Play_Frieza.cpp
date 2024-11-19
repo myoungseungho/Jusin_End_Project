@@ -272,14 +272,14 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 		return E_FAIL;
 
 	/* 오른쪽 다리 */
-	tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-	tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_R");
-	tMetalDesc.vPosition = _float4(0.0199940223f, -0.0383511372f, -0.0100060701f, 1.f);
-	tMetalDesc.vScale = _float3(0.0566315502f, 0.281670630f, 1.0f);
-	tMetalDesc.pLookDirection = &m_iLookDirection;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
-		TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
-		return E_FAIL;
+	//tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	//tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_R");
+	//tMetalDesc.vPosition = _float4(0.0199940223f, -0.0383511372f, -0.0100060701f, 1.f);
+	//tMetalDesc.vScale = _float3(0.0566315502f, 0.281670630f, 1.0f);
+	//tMetalDesc.pLookDirection = &m_iLookDirection;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Frieza_Metal"),
+	//	TEXT("Layer_Frieza_Metal"), &tMetalDesc)))
+	//	return E_FAIL;
 
 	//tMetalDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 	//tMetalDesc.pSocketBoneMatrix = m_pModelCom->Get_BoneMatrixPtr("GP_calf_mid_L");

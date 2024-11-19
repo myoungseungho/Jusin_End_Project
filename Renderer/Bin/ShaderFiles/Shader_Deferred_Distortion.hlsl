@@ -94,9 +94,26 @@ PS_OUT PS_MAIN_DRAW_DISTORTION(PS_IN In)
     vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
     vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, speedUV);
     
-    Out.vColor.g = ((vMaskDiffuse.g * vBaseDiffuse.a) * (fLifeTime / fLifeMaxTime)) * g_Factor;
+    Out.vColor.g = ((vMaskDiffuse.g * vBaseDiffuse.a) * (fLifeTime / fLifeMaxTime)) * g_Factor * abs(g_vDir.x);
+    Out.vColor.b = ((vMaskDiffuse.g * vBaseDiffuse.a) * (fLifeTime / fLifeMaxTime)) * g_Factor * abs(g_vDir.y);
     
 	return Out;
+}
+
+PS_OUT PS_MAIN_DRAW_DISTORTION_MOVE(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    
+    float2 speedUV = In.vTexcoord;
+    speedUV.x += g_Time * 0.01f;
+    
+    vector vBaseDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    vector vMaskDiffuse = g_MaskTexture.Sample(LinearSampler, speedUV);
+    
+    Out.vColor.g = ((vMaskDiffuse.g * vBaseDiffuse.a) * (fLifeTime / fLifeMaxTime)) * g_Factor * abs(g_vDir.x);
+    Out.vColor.b = ((vMaskDiffuse.g * vBaseDiffuse.a) * (fLifeTime / fLifeMaxTime)) * g_Factor * abs(g_vDir.y);
+    return Out;
 }
 
 PS_OUT PS_MAIN_DISTORTION_TO_BACKBUFFER(PS_IN In)
@@ -108,7 +125,7 @@ PS_OUT PS_MAIN_DISTORTION_TO_BACKBUFFER(PS_IN In)
     float2 distortedUV = In.vTexcoord;
     /* 디스토션 렌더타겟에서 0 0 0 0 인 부분을 검출 해서 만약 그렇다면 UV좌표 자기 기존 텍스쿠드로 해야될듯 */
     distortedUV.x += (vDistortion.g) * 0.07f;
-    //distortedUV.y += (vDistortion.g) * 0.005f;
+    distortedUV.y += (vDistortion.b) * 0.07f;
     
     float4 vBackBufferColor = g_BackBufferTexture.Sample(LinearSampler, distortedUV);
 
@@ -128,8 +145,8 @@ PS_OUT PS_MAIN_WHITE(PS_IN In)
     //Out.vColor = float4(gray, gray, gray, vBackBufferColor.a);
     //Out.vColor = ApplySepia(vBackBufferColor);
     float grainIntensity = 1.f; // 0.0 = 없음, 1.0 = 강함
-    Out.vColor = AddGrain(vBackBufferColor, In.vTexcoord, grainIntensity);
-    
+    Out.vColor = ApplySepia(vBackBufferColor);
+    Out.vColor = AddGrain(Out.vColor, In.vTexcoord, 0.2);
     return Out;
 }
 
@@ -196,6 +213,20 @@ technique11		DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_WHITE();
     }
+
+    pass DistortionMove //4
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_OneBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DRAW_DISTORTION_MOVE();
+    }
+
 }
 
 float4 ApplySepia(float4 color)

@@ -419,22 +419,14 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     vector vOutlineBlack = float4(0.f, 0.f, 0.f, 1.f);
     Out.vColor = lerp(Out.vColor, vOutlineBlack, fEdge);
    
-            
-//    bool bLight = step(0.5, vMetallicDesc.b * vMetallicDesc.a);
-//    bool bMid = step(0.4, vMetallicDesc.r * vMetallicDesc.a) * (1 - bLight);
-//    bool bDark = step(0.9, vMetallicDesc.a - vMetallicDesc.r);
-//// 기본            
-//    Out.vColor.rgb = (Out.vColor.rgb * (1 - step(0.5, vMetallicDesc.a))) // 기본 몸통 색상 처리 (렉트 범위가 아닌거)
-//    //+ Out.vColor.rgb * (1 - (bLight + bMid + bDark))    //머리 부분 밖 렉트 범위 안
-//    + (step(0.35f, vDepthDesc.b)
-//    * ((Out.vColor.rgb * (1.6f * bLight)) + (Out.vColor.rgb * (0.8f * bMid)) + (Out.vColor.rgb * (0.4f * bDark))));
+    /* 프리저용 */
     vector vMaskColor = { 0.f, 0.f, 0.f, 1.f };
     
-    bool bLight = step(0.5, vMetallicDesc.b * vMetallicDesc.a);
-    bool bMid = step(0.4, vMetallicDesc.r * vMetallicDesc.a) * (1 - bLight);
-    bool bDark = step(0.9, vMetallicDesc.a - vMetallicDesc.r) * step(0.39f, vDepthDesc.b);
+    bool bLight = step(0.5f, vMetallicDesc.b * vMetallicDesc.a);
+    bool bMid = step(0.4f, vMetallicDesc.r * vMetallicDesc.a) * (1 - bLight);
+    bool bDark = step(0.9f, vMetallicDesc.a - vMetallicDesc.r) * step(0.39f, vDepthDesc.b);
        
-    float fMaskFactor = step(0.39f, vDepthDesc.b) * ((0.6f * bLight) + (0.4f * bMid) + (-0.4f * bDark));
+    float fMaskFactor = step(0.39f, vDepthDesc.b) * ((0.6f * bLight) + (0.2f * bMid) + (-0.5f * bDark));
     
     /* 머리 메쉬지만 렉트 범위 밖인 애들 검출*/
     float fIn_RectOut = step(0.5f,
@@ -446,9 +438,7 @@ PS_OUT PS_MAIN_DEFERRED(PS_IN In)
     
     /* 기본적인 팩터 즉 메탈 텍스쳐에 적용된 팩터를 지정한메쉬로 거르기 */
     Out.vColor.rgb = (Out.vColor.rgb + (Out.vColor.rgb * fMaskFactor)) + (vMaskColor.rgb * step(0.39f, vDepthDesc.b));
-    //* (1 - fIn_RectOut))
-    //+ (vMaskColor.rgb * fIn_RectOut); 
-    
+
     return Out;
 }
 
