@@ -2913,6 +2913,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_b214Posing = true;
 			m_fAccPoseTime = 0.f;
 			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 0.f;
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::HIT_Down_Back_Light, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_J_Attack_SFX, false, 1.f);
 		}
 
 		//txt로부터 호출할게 아니라 Update214로부터 호출할것
@@ -2988,8 +2991,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bOwnerNextAnimation = false;
 
 				Desc.iGrabAnimationIndex = ANIME_214_POSE;
-
-
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Backward_Light_Cancle_Attack_SFX, false, 1.f);
+				
 				//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
@@ -3050,6 +3053,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 			Desc.bCameraZoom = false;
 			Desc.bOnwerHitNoneStop = true;
+
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ice_Hit_SFX, false, 1.f);
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}

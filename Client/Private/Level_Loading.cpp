@@ -40,15 +40,15 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (FAILED(Ready_Layer()))
 		return E_FAIL;
 
-	if(FAILED(Ready_Sound()))
+	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 
 	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
 	if (nullptr == m_pLoader)
 		return E_FAIL;
-	
+
 	m_bIsLevelPrepared = TRUE;
-	
+
 	return S_OK;
 }
 
@@ -63,7 +63,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 
 	/* For.Prototyp_Component_Texture_UI_LoadingBackGround_Mask */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBackGround_Mask"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/stage/stage_bg_%d.png"),2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CharaSelect_S3/tex/stage/stage_bg_%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_GameStartCircle */
@@ -89,7 +89,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 
 	/* For.Prototype_Component_Texture_UI_LoadingBallEff */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Texture_UI_LoadingBallEff"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/cp_dg_ball_Eff%d.png"),9))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/cp_dg_ball_Eff%d.png"), 9))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_UI_LoadingBallEff */
@@ -171,7 +171,7 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
-	
+
 	return S_OK;
 }
 
@@ -181,7 +181,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		m_fNextLevelTimer += fTimeDelta;
 
 	CUI_Manager::ThreadPool_For_Loading eTheadID = CUI_Manager::Get_Instance()->Get_Thread();
-	if(eTheadID != CUI_Manager::THREAD_END)
+	if (eTheadID != CUI_Manager::THREAD_END)
 	{
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOADING_CREATE_SFX, false, 0.2f);
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_CreateFlyEff"), TEXT("Layer_UI_LoadingBackGround"));
@@ -189,7 +189,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		CUI_Loading_FlyEff::UI_FLYEFF_DESC FlyDesc = {};
 		FlyDesc.fSpeedPerSec = 200.f;
 		FlyDesc.eTheadID = eTheadID;
-	
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_FlyEff"), TEXT("Layer_UI_LoadingFlyEff"), &FlyDesc);
 
 		m_iNumThreadEnd++;
@@ -197,22 +197,22 @@ void CLevel_Loading::Update(_float fTimeDelta)
 
 	if (CUI_Manager::Get_Instance()->m_bGamePlayLoadingFinish)
 		m_bNextLevel = TRUE;
-	
+
 	if (m_pLoader->isFinished())
 	{
 		CLevel* pNextLevel = { nullptr };
-	
+
 		switch (m_eNextLevelID)
 		{
 		case LEVEL_LOGO:
 			pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
 			break;
-	
+
 		case LEVEL_GAMEPLAY:
 			//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-			if(m_bNextLevel || CUI_Manager::Get_Instance()->m_bActive == FALSE)
+			if (m_bNextLevel || CUI_Manager::Get_Instance()->m_bActive == FALSE)
 				pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
-	
+
 			break;
 		case LEVEL_LOBBY:
 			pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
@@ -220,12 +220,12 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		case LEVEL_CHARACTER:
 			pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
 			break;
-	
+
 		case LEVEL_VS:
 			pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
 			break;
 		}
-	
+
 		if (m_bNextLevel && m_eNextLevelID == LEVEL_GAMEPLAY)
 		{
 			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
@@ -233,7 +233,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		}
 
 		//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-		else if(m_eNextLevelID != LEVEL_GAMEPLAY || CUI_Manager::Get_Instance()->m_bActive == FALSE)
+		else if (m_eNextLevelID != LEVEL_GAMEPLAY || CUI_Manager::Get_Instance()->m_bActive == FALSE)
 		{
 			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
 				return;
@@ -250,9 +250,9 @@ HRESULT CLevel_Loading::Render(_float fTimeDelta)
 
 HRESULT CLevel_Loading::Ready_Sound()
 {
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Decide_CharaSel.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_CREATE_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Icon_On.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Result_Rank_2.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_FINISH_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Decide_CharaSel.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_CREATE_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Icon_On.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Result_Rank_2.ogg", CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_FINISH_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false, false);
 
 	return S_OK;
 }

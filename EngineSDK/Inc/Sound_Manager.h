@@ -137,6 +137,7 @@ public:
 		Down_Forward_Light_21,
 		Air_Chase_21,
 		Hit_Air_Chase,
+		Hit_Ice_Hit_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

@@ -650,6 +650,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//3필 연타 공격
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ultimate_3_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_Attack, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//아이스 깨질 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ice_Hit_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ice_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
