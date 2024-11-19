@@ -1162,8 +1162,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	//case Client::CPlay_Hit::ANIME_236_SPECIAL_DOWN:
 	//	break;
 
-	cout << "Hit : " << m_pModelCom->m_iCurrentAnimationIndex << ", Attack Event : " << iAttackEvent << endl;
-
 	switch (m_pModelCom->m_iCurrentAnimationIndex)
 	{
 	case Client::CPlay_Hit::ANIME_ATTACK_LIGHT1:
@@ -1189,7 +1187,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iTeam = m_iPlayerTeam;
 		Desc.fAnimationLockTime = 0.1f;
 		Desc.pOwner = this;
-		
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
 	break;
@@ -1571,6 +1569,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
+
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
+
 		}
 
 		else if (iAttackEvent == 1)
@@ -1610,7 +1611,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.iGainAttackStep = 0;
 				Desc.iGainHitCount = 0;
-				
+
 				Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY;
 				Desc.fCameraShakeDuration = 0.5f;
 				Desc.fCameraShakeMagnitude = 0.2f;
@@ -1642,8 +1643,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bGrabbedEnd = true;
 				Desc.pOwner = this;
 
-			
-		
+
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
@@ -2033,7 +2034,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	case Client::CPlay_Hit::ANIME_ATTACK_AIR1:
 	{
 
-		if(m_bBenishingAttack == false)
+		if (m_bBenishingAttack == false)
 		{
 			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 0.7;
@@ -2114,7 +2115,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 
-			}
+		}
 
 	}
 	break;
@@ -2503,7 +2504,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bReflect = false;
 		}
 	}
-		break;
+	break;
 	case Client::CPlay_Hit::ANIME_CROUCH_START:
 		break;
 	case Client::CPlay_Hit::ANIME_CROUCHING:
@@ -2832,7 +2833,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 
-		
+
 
 			m_bInvisible = false;
 			MoveToEnemy_Ground(5.f);
@@ -3225,17 +3226,17 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == true)
 			{
 
-				
+
 
 				//Add_Move({ 20.f * m_iLookDirection,0.f });
 				Teleport_ToEnemy(7.f, 0.f);
 				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 10.f;
-				Character_Create_Distortion({ 1.f,0.f,0.f }, { -2.f*m_iLookDirection,0.f }, { 1.5f,1.f }, { 0.5f });
+				Character_Create_Distortion({ 1.f,0.f,0.f }, { -2.f * m_iLookDirection,0.f }, { 1.5f,1.f }, { 0.5f });
 
 				Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.5f,1.f }, { 0.5f });
 
 
-				
+
 			}
 			else
 			{
@@ -3953,7 +3954,7 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 
 		//-2~+2,  0~1.5
 
-		Character_Create_Distortion({ 1.f,0.f,0.f }, { (rand()%600-300)*0.01f , rand()%150 *0.01f, (rand()%200-100) * 0.01f}, {1.5f,1.5f}, 0.2f);
+		Character_Create_Distortion({ 1.f,0.f,0.f }, { (rand() % 600 - 300) * 0.01f , rand() % 150 * 0.01f, (rand() % 200 - 100) * 0.01f }, { 1.5f,1.5f }, 0.2f);
 
 		//Character_Create_Distortion({ 1.f,0.f,0.f });
 
