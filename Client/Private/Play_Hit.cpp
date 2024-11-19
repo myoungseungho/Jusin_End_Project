@@ -3379,6 +3379,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 0, this);
 			main_Camera->StartCameraShake(1.1f, 0.05f);
+
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_0, false, 1.f);
 		}
 
 		//,¾Èº¸ÀÌ°Ô,¼Óµµºü¸£°Ô, »þ»þ¼¡
@@ -3438,6 +3440,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fForcedGravityTime = 0.f;
 
 				Desc.bOwnerNextAnimation = true;
+
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_1, false, 1.f);
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
 

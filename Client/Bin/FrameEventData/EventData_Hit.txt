@@ -1023,15 +1023,23 @@ PLAY_HIT,HTN432cs_body,0,AnimSpeedChange,0.005,60
 PLAY_HIT,HTN432cs_body,0.1,AttackEvent,100
 
 PLAY_HIT,HTN432cs_body,30,ObjectMove,0.5,0,0.5
+//,PLAY_HIT,HTN432cs_body,30.001000,PlaySound,60,0,1
+
 
 PLAY_HIT,HTN432cs_body,48,AttackEvent,0
 PLAY_HIT,HTN432cs_body,48.2,AttackEvent,101
 
+
+
 PLAY_HIT,HTN432cs_body,77,AttackEvent,1
 PLAY_HIT,HTN432cs_body,77.2,AttackEvent,102
+PLAY_HIT,HTN432cs_body,77.201000,PlaySound,69,0,1
+
 
 PLAY_HIT,HTN432cs_body,96,AttackEvent,2
+
 PLAY_HIT,HTN432cs_body,100,AttackEvent,3
+PLAY_HIT,HTN432cs_body,100.201000,PlaySound,60,0,1
 
 PLAY_HIT,HTN432cs_body,110.05,ObjectMove,1,0,0
 
@@ -1044,6 +1052,7 @@ PLAY_HIT,HTN432cs_body,148.2,AttackEvent,202
 
 PLAY_HIT,HTN432cs_body,255,AttackEvent,4
 
+
 PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
 
 
@@ -1055,5 +1064,6 @@ PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
 
 PLAY_HIT,HTN432cs_body,255,AnimSpeedChange,0.005,40
 
+PLAY_HIT,HTN432cs_body,280.201000,PlaySound,61,0,1
 PLAY_HIT,HTN432cs_body,293.8,NextAnimationCheck,333333
 
