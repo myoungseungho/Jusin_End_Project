@@ -471,8 +471,8 @@ PLAY_HIT,HTN013_body,0.000000,AnimSpeedChange,0.023000,120
 //,약공1,    41
 //,PLAY_HIT,HTN200_body,0.000000,AnimSpeedChange,0.028000,120.000000
 PLAY_HIT,HTN200_body,0.000000,AnimSpeedChange,0.008,120.000000
+PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,205,0,1
 PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,204,0,1
-PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,202,0,1
 PLAY_HIT,HTN200_body,20,AttackEvent,0
 PLAY_HIT,HTN200_body,22,NextAnimationCheck,333333
 PLAY_HIT,HTN200_body,25,NextAnimationCheck,333333
@@ -481,8 +481,8 @@ PLAY_HIT,HTN200_body,30,NextAnimationCheck,333333
 
 //,약공2  42
 PLAY_HIT,HTN201_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,205,0,1
 PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,204,0,1
-PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,202,0,1
 
 //,순간이동 또는 앞으로 많이 이동 어차피 이펙트는 만들어야됨. 순간적으로 안보이는건 어떻게 처리?
 //,그냥 히트 개인만 사용가능하게 기능 만들자
@@ -499,6 +499,8 @@ PLAY_HIT,HTN201_body,40,NextAnimationCheck,333333
 //,약공3  알아서 count로 루프돌리기
 //,PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.009000,80.000000
 PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.009000,120.000000
+PLAY_HIT,HTN202_body,0.0010,PlayGroupSound,205,0,1
+PLAY_HIT,HTN202_body,0.0010,PlayGroupSound,204,0,1
 
 //,무조건 히트경직 있을땐 240
 //,PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.009000,240.000000
@@ -509,6 +511,8 @@ PLAY_HIT,HTN202_body,10,AttackEvent,0
 
 //,공격판정, Grab판정하고 경직 심하게주기, 가로샤샤샥, 안보이고있었다면 보이게?
 PLAY_HIT,HTN202_body,25,AttackEvent,1
+PLAY_HIT,HTN202_body,25.0010,PlayGroupSound,205,0,1
+PLAY_HIT,HTN202_body,25.0010,PlayGroupSound,204,0,1
 
 //,막혔으면 55로 이동하고 끝내기.  35는 옷이 뚫림
 //,맞췄고, 루프다 끝냈으면 NextAnimationCheck
@@ -518,6 +522,8 @@ PLAY_HIT,HTN202_body,32,AttackEvent,2
 
 //,루프타이밍.  안보이게, 달리는척 하다가 적 뒤로이동,  가로샤샤샥, 24로 이동해서 루프돌기. 너무빠르니 20? 어택경직있으니 ㄱㅊ
 PLAY_HIT,HTN202_body,50,AttackEvent,3
+PLAY_HIT,HTN202_body,50.001000,PlaySound,48,0,1
+PLAY_HIT,HTN202_body,50.001000,PlaySound,8,0,1
 
 
 
