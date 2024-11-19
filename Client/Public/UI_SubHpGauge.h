@@ -35,6 +35,8 @@ private:
 	_float m_iCharaCurrHp = { 0.f };
 	_float m_fHpRadio = { 0.f };
 	_float m_fRedHpRadio = { 0.f };
+
+	_float m_fOffset = { 0.1f };
 public:
 	static CUI_SubHpGauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);

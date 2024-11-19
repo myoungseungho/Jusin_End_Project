@@ -125,6 +125,7 @@ private:
 	_bool m_bStartUI = { FALSE };
 public:
 	_bool m_bOnOption = { FALSE };
+	CUI_Define::NPC_ID m_eNpcID = {};
 
 public:
 	list<class CUIObject*> m_ListTopUI = {};

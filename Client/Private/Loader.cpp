@@ -134,6 +134,7 @@
 #include "UI_VS_TeamPanel.h"
 #include "UI_VS_Name.h"
 #include "UI_VS_NameOutLine.h"
+#include "UI_Lobby_TextCursor.h"
 
 #include "CharaSelectCamera.h"
 
@@ -178,8 +179,13 @@
 #include "Lobby_Arcade_Building.h"
 #include "Lobby_Parasol.h"
 #include "Lobby_Goku.h"
+#include "Lobby_Frieza.h"
+#include "Lobby_Krillin.h"
 #include "Lobby_Sky.h"
 #include "Lobby_Sky_Of_Sea.h"
+#include "Lobby_Goku_RunEff.h"
+#include "UI_Lobby_Text.h"
+#include "UI_Lobby_TextCharaIcon.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -340,6 +346,23 @@ HRESULT CLoader::Loading_For_Logo()
 
 HRESULT CLoader::Loading_For_Lobby()
 {
+	//텍스처
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextBox"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Text/Z_League_WindowTxtBG.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCharaIcon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/LIVEChar%d.png"),2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCursor"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_02.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_Goku_RunEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/Lobby_Goku_Dust%d.png"),4))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -387,6 +410,35 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Goku.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Frieza"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Frieza.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Krillin"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Krillin.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	//컴포넌트 
+	
+	/* For.Prototype_Component_Shader_VtxPosTex */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPARTICLE_POINT::Elements, VTXPARTICLE_POINT::iNumElements))))
+		return E_FAIL;
+
+	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
+	ParticleDesc.iNumInstance = 5;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 0.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(1.5f, 2.f);
+	ParticleDesc.vScale = _float2(0.5f, 1.f);
+	ParticleDesc.vLifeTime = _float2(0.25f, 1.f);
+	ParticleDesc.isLoop = false;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_VIBuffer_Particle_Lobby_Goku_RunEff"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
 	//게임오브젝트
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Center_Map"),
@@ -417,6 +469,14 @@ HRESULT CLoader::Loading_For_Lobby()
 		CLobby_Goku::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Frieza"),
+		CLobby_Frieza::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Krillin"),
+		CLobby_Krillin::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Sky"),
 		CLobby_Sky::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -428,6 +488,23 @@ HRESULT CLoader::Loading_For_Lobby()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Main_Camera_Lobby"),
 		CMain_Camera_Lobby::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextBox"),
+		CUI_Lobby_Text::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextCharaIcon"),
+		CUI_Lobby_TextCharaIcon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextCursor"),
+		CUI_Lobby_TextCursor::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku_RunEff"),
+		CLobby_Goku_RunEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

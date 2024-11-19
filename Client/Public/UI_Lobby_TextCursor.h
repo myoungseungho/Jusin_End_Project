@@ -1,15 +1,15 @@
 #pragma once
 
-#include "UI_BaseAttBuf.h"
+#include "UIObject.h"
 
 BEGIN(Client)
 
-class CUI_SubHpPanel final :public CUIObject
+class CUI_Lobby_TextCursor final :public CUIObject
 {
 private:
-	CUI_SubHpPanel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CUI_SubHpPanel(const CUI_SubHpPanel& Prototype);
-	virtual ~CUI_SubHpPanel() = default;
+	CUI_Lobby_TextCursor(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CUI_Lobby_TextCursor(const CUI_Lobby_TextCursor& Prototype);
+	virtual ~CUI_Lobby_TextCursor() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -23,13 +23,11 @@ private:
 	virtual HRESULT Ready_Components();
 
 private:
-	_float m_fAlphaTimer = { 0.f };
-	_bool m_bSign = { TRUE };
-
-	_float m_fDebug = { 0.1f };
+	_float m_fOffsetPosY = { 0.f };
+	_bool  m_bOffsetSwitch = { FALSE };
 
 public:
-	static CUI_SubHpPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CUI_Lobby_TextCursor* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);
 	virtual void Free() override;
 };

@@ -24,8 +24,8 @@ HRESULT CUI_Chara_SubIcon::Initialize_Prototype()
 
 HRESULT CUI_Chara_SubIcon::Initialize(void* pArg)
 {
-	m_fPosX = 72.f;
-	m_fPosY = 67.f;
+	m_fPosX = 82.f;
+	m_fPosY = 72.f;
 	m_fSizeY = 115.f;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -105,11 +105,7 @@ HRESULT CUI_Chara_SubIcon::Bind_ShaderResources()
 	
 		if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &bZeroHpCheck, sizeof(_bool))))
 			return E_FAIL;
-		
-
 	}
-
-
 	return S_OK;
 }
 
