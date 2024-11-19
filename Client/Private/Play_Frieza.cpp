@@ -270,6 +270,8 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 	if (m_bDebugInputLock)
 		return;
 
+	Update_Opening(fTimeDelta);
+
 	//cout << m_fAccStunTime << " / " << m_fMaxStunTime << endl;
 
 
@@ -688,7 +690,7 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
-		m_iHP = 2;
+		m_iHP = 100;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))

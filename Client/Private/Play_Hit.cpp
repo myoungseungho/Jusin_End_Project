@@ -268,15 +268,19 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 
+
+
 	if (m_pGameInstance->Key_Down(DIK_F1))
 	{
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 
+
 	if (m_bDebugInputLock)
 		return;
 
 
+	Update_Opening(fTimeDelta);
 
 	//cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
@@ -710,7 +714,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
-		m_iHP = 2;
+		m_iHP = 100;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
