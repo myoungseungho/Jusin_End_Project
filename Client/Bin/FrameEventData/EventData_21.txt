@@ -980,6 +980,7 @@ PLAY_21,TON433_body,0.000000,AnimSpeedChange,0.018000,120.000000
 PLAY_21,TON433_body,0,AttackEvent,0
 PLAY_21,TON433_body,0.001000,PlaySound,82,0,1
 PLAY_21,TON433_body,0.001000,PlaySound,74,0,1
+PLAY_21,TON433_body,0.002000,Camera_Play_21_Ultimate_3_Start_Shake,1.0,0.2
 
 PLAY_21,TON433_body,34.333000,AnimSpeedChange,0.018,3.636000
 PLAY_21,TON433_body,34.333000,PositionChange,35
@@ -998,6 +999,7 @@ PLAY_21,TON433_body,52.9,AnimSpeedChange,0.018,260
 
 
 PLAY_21,TON433_body,53,AttackEvent,1
+PLAY_21,TON433_body,53.002000,Camera_Play_21_Ultimate_3_Start_Shake,0.1,0.2
 //,PLAY_21,TON433_body,61,AttackEvent,2
 
 
@@ -1013,7 +1015,6 @@ PLAY_21,TON433_body,226,AttackEvent,201
 
 //,PLAY_21,TON433_body,230,AnimSpeedChange,0.018,0.1
 PLAY_21,TON433_body,225,AnimSpeedChange,0.018,0.1
-
 //,QTE 성공시 추가타
 
 //,올려차기 전 자체 슬로우 , 적 시간정지, 순간이동, 이펙트, 카메라
@@ -1024,6 +1025,7 @@ PLAY_21,TON433_body,137,AttackEvent,5
 //,올려차기
 PLAY_21,TON433_body,149,AnimSpeedChange,0.018,90
 PLAY_21,TON433_body,150,AttackEvent,10
+PLAY_21,TON433_body,150.002000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 PLAY_21,TON433_body,167,AnimSpeedChange,0.018,50
 
 //,225로 연계?  224.9로 이동 괜찮을듯

@@ -2756,8 +2756,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 
-
-
+			// 카메라 진동넣어야겠다
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->StartCameraShake(0.5f, 0.2f);
 		}
 		else if (iAttackEvent == 201)
 		{
