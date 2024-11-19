@@ -2183,6 +2183,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Set_StopAllAttackObject(fStopTime);
 
 
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENERGY, 0, this);
+			mainCamera->StartCameraShake(1.5f, 0.2f);
 			//¿Ã∆Â∆ÆµÈ
 
 		}
@@ -2231,6 +2234,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->StartCameraShake(0.9f, 0.2f);
 
 			//¿”Ω√ ¿Ã∆Â∆Æ
 
