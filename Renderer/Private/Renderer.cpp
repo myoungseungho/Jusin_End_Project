@@ -241,6 +241,9 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Render_Metallic(fTimeDelta)))
 		return E_FAIL;
+	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
+	if (FAILED(Render_Distortion(fTimeDelta)))
+		return E_FAIL;
 
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
@@ -261,9 +264,7 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
 		return E_FAIL;
-	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
-	if (FAILED(Render_Distortion(fTimeDelta)))
-		return E_FAIL;
+	
 
 	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
 		return E_FAIL;
@@ -1417,6 +1418,9 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 	_float4x4 projMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ);
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &projMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
 	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
