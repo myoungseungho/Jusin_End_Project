@@ -1119,6 +1119,9 @@
     <Filter Include="02.GameObjects\Character\Play_Frieza\Frieza_Metal">
       <UniqueIdentifier>{021744e4-818f-4f2c-91e9-d6986aac7c8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\ParryingRangedObject">
+      <UniqueIdentifier>{fbf01e1b-73c2-4f57-a790-0d9dd16737ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">

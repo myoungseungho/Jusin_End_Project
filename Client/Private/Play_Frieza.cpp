@@ -2769,9 +2769,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.fRanged_Impus_NoneDirection = { 14.f,-25.f };
 
 				//어차피 필중
+				//Desc.fRanged_Impus_NoneDirection = { 10.f,-15.f };
 				Desc.fRanged_Impus_NoneDirection = { 10.f,-15.f };
-
-				Desc.fhitCharacter_Impus = { 15.f * m_iLookDirection, -15.f };
+	
+				Desc.fhitCharacter_Impus = { 10.f * m_iLookDirection, -15.f };
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
 
 			}
@@ -2951,6 +2952,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.fRanged_Impus_NoneDirection = { 14.f,-25.f };
 
 			Desc.fRanged_Impus_NoneDirection = { 10.f,-15.f };
+			//Desc.fRanged_Impus_NoneDirection = { 15.f,-15.f };
+
 
 			Desc.fhitCharacter_Impus = { 15.f * m_iLookDirection, -15.f };
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY_DOWN };

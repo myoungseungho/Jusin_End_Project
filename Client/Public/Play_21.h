@@ -195,6 +195,9 @@ private:
 	_bool m_bFinalSkillAdd = { false };
 
 	class CEffect_Layer* m_pAttack236ChargeEffect_Layer = { nullptr };
+	class CEffect_Layer* m_pAttack214AssultEffect_Layer = { nullptr };
+	class CEffect_Layer* m_pAttackUltimateLaserEffect_Layer = { nullptr };
+
 
 private:
 	HRESULT Ready_Components();

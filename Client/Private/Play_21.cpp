@@ -150,7 +150,7 @@ HRESULT CPlay_21::Initialize(void* pArg)
 
 
 
-	m_ChaseEffectName = TEXT("21_SAU-02");
+	m_ChaseEffectName = TEXT("21_BurstR");
 
 	m_iNextAnimation.first = ANIME_IDLE;
 
@@ -1281,6 +1281,13 @@ void CPlay_21::Gravity(_float fTimeDelta)
 
 			Set_CurrentAnimationPositionJump(230.f);
 
+			if (m_pAttack214AssultEffect_Layer != nullptr)
+			{
+				m_pAttack214AssultEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttack214AssultEffect_Layer = nullptr;
+			}
+
+
 		}
 	}
 
@@ -2012,8 +2019,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//높이가 아주 높고, 특정모션이면 더 앞으로 가도록
 			//if ((m_pModelCom->m_iCurrentAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL))
 			{
-				//Set_fImpulse({ m_iLookDirection * 9.f, -15.f });
-				Set_fImpulse({ m_iLookDirection * 9.f, -30.f });
+				Set_fImpulse({ m_iLookDirection * 9.f, -15.f });
+				//Set_fImpulse({ m_iLookDirection * 9.f, -30.f });
 
 			}
 
@@ -2061,7 +2068,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Character_Make_Effect(TEXT("21_SAU-03"));
-			Character_Make_BoneEffect("G_head", TEXT("21_SAU-02"));
+			m_pAttack214AssultEffect_Layer = Character_Make_BoneEffect("G_head", TEXT("21_SAU-02"));
 
 		}
 
@@ -2101,6 +2108,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 			Character_Make_Effect(TEXT("21_SAU-01"));
+			if (m_pAttack214AssultEffect_Layer != nullptr)
+			{
+				m_pAttack214AssultEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttack214AssultEffect_Layer = nullptr;
+			}
 
 		}
 	}
@@ -2240,11 +2252,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Set_AnimationStopWithoutMe(fStopTime + 0.3f);
 			//Set_AnimationStop(fStopTime);
 			//Set_StopAllAttackObject(fStopTime);
+			Character_Make_BoneEffect("GD_fng_b3_L", TEXT("21_SDO-02"));
 
 		}
 		else if (iAttackEvent == 2) //손뻗음. 레이저?
 		{
 			//Set_AnimationStopWithoutMe(0.f);
+
+			
 		}
 		else if (iAttackEvent == 3)
 		{

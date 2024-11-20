@@ -1,7 +1,7 @@
 [Layer]
 LayerName: 21_BurstJ-02
 Duration: 1
-TickPerSecond: 2
+TickPerSecond: 3
 KeyFramesCount: 59
 NumEffec: 5
 Position: 0 0 0
@@ -19,7 +19,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0299993 0.0499986 1
+Scale: 0.0299985 0.0499971 1
 Rotation: 0 0 270
 IsLoop: false
 Color: 0 0 0 29.95
@@ -65,7 +65,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 0 0
-Scale: 0.0249995 0.0499974 1
+Scale: 0.0249988 0.0499959 1
 Rotation: 0 0 270
 IsLoop: false
 Color: 255 0 90.3477 30
@@ -111,7 +111,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 0 0
-Scale: 0.0249996 0.0499986 1
+Scale: 0.0249992 0.0499978 1
 Rotation: 0 0 270
 IsLoop: false
 Color: 255 102.169 169.719 30
@@ -157,7 +157,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 0 0
-Scale: 0.0399952 0.0499999 0.04
+Scale: 0.0399904 0.0499942 0.04
 Rotation: 0 0 180
 IsLoop: false
 Color: 0 0 0 29.95
@@ -185,7 +185,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.0399813 0.0299999 0.04
+Scale: 0.0399731 0.0299934 0.04
 Rotation: 0 0 180
 IsLoop: false
 Color: 0 0 0 29.95

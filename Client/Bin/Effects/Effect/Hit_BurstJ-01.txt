@@ -93,36 +93,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0.9 0
-Scale: 0.0149209 0.015 0.0149213
+Scale: 0.0149705 0.015 0.0149709
 Rotation: 0 90 0
-IsLoop: false
-Color: 0 0 0 30
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
-GlowFactor: 5
-DerredPassIndex: 0
-NumKeyFrame: 1
-
-[KeyFrame]
-KeyFrameNumber: 0
-Position: 0 0.9 0
-Scale: 0.014999 0.015 0.0149994
-Rotation: 0 90 0
-CurTime: 0
-Duration: 1
-IsNotPlaying: false
-
-[Effect]
-EffectName: Hit_BurstJ-01_04
-ModelName: Model_Effect_htn_plane01
-MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_BurstJ-01Hit_BurstJ-01_04
-DiffuseTextureName: Texture_Effect_cmn_test
-EffectType: 1
-RenderIndex: 2
-PassIndex: 1
-UniqueIndex: -1
-Position: 0 0 0
-Scale: 0.1 0.1 0.1
-Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
@@ -132,10 +104,38 @@ NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.1 0.1 0.1
+Position: 0 0.9 0
+Scale: 0.0149706 0.015 0.014971
+Rotation: 0 90 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_BurstJ-01_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_BurstJ-01Hit_BurstJ-01_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -0.3 0
+Scale: 0.2 0.2 0.0999894
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 0.196688
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.3 0
+Scale: 0.2 0.2 0.0999894
 Rotation: 0 0 0
 CurTime: 0
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
