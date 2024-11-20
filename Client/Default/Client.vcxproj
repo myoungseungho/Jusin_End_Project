@@ -194,6 +194,7 @@
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\Public\ParryingRangedObject.h" />
     <ClInclude Include="..\public\Lobby_Frieza.h" />
     <ClInclude Include="..\public\Lobby_Goku_RunEff.h" />
     <ClInclude Include="..\public\Lobby_Krillin.h" />
@@ -421,6 +422,7 @@
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\Private\ParryingRangedObject.cpp" />
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp" />
     <ClCompile Include="..\private\Lobby_Krillin.cpp" />

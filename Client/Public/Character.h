@@ -579,6 +579,7 @@ protected:
 	_float m_fAccChaseTime = { 0.f };
 	_vector m_vChaseDir{ 0 };
 
+	_wstring m_ChaseEffectName = { TEXT("BurstR-02_Rotated_Left") };
 
 	
 

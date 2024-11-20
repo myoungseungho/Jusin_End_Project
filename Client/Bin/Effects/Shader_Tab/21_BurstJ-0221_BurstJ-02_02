@@ -10,7 +10,7 @@ NodeID: 1 Position: 210 54
 NodeID: 3001 Position: 4 33
 MoveTexNodeCount: 0
 SpriteNodeCount: 1
-SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 1 Speed: 8.4
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 1 Speed: 14
 LinkCount: 2
 LinkSrcNodeID: 4 LinkDestNodeID: -2
 LinkSrcNodeID: 3002 LinkDestNodeID: 7

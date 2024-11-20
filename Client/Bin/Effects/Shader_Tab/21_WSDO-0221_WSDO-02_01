@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 52
+Key: Prototype_Component_Texture_Effect_cmn_BG_EarthCloud
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 461 134
+NodeID: 1 Position: 177 97
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

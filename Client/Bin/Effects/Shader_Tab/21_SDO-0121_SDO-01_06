@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 52
+Key: Prototype_Component_Texture_Effect_cmn_aura03_middle
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 533 117
+NodeID: 1 Position: 270 66
+NodeID: 3001 Position: 11 102
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 1 Speed: 17.1
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7

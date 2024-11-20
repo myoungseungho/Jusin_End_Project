@@ -148,6 +148,10 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
 
 
+
+
+	m_ChaseEffectName = TEXT("21_BurstR");
+
 	m_iNextAnimation.first = ANIME_IDLE;
 
 
@@ -1277,6 +1281,13 @@ void CPlay_21::Gravity(_float fTimeDelta)
 
 			Set_CurrentAnimationPositionJump(230.f);
 
+			if (m_pAttack214AssultEffect_Layer != nullptr)
+			{
+				m_pAttack214AssultEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttack214AssultEffect_Layer = nullptr;
+			}
+
+
 		}
 	}
 
@@ -1987,22 +1998,33 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.strEffectName = TEXT("21_SDU-01");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
+			tDesc.pTransformCom = m_pTransformCom;
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("21_SDU-02"), &tDesc);
+
+			//Character_Make_Effect(TEXT("21_SDU-02"));
+
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Down_Forward_Light_21, false, 1.f);
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21, false, 1.f);
+
 		}
 
 	}
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_214:
 	{
+
+
 		//내려찍는중
 		if (iAttackEvent == 0)
 		{
 			//높이가 아주 높고, 특정모션이면 더 앞으로 가도록
 			//if ((m_pModelCom->m_iCurrentAnimationIndex == CPlay_21::ANIME_ATTACK_CROUCH_SPECIAL))
 			{
-				//Set_fImpulse({ m_iLookDirection * 9.f, -15.f });
-				Set_fImpulse({ m_iLookDirection * 9.f, -30.f });
+				Set_fImpulse({ m_iLookDirection * 9.f, -15.f });
+				//Set_fImpulse({ m_iLookDirection * 9.f, -30.f });
 
 			}
 
@@ -2047,6 +2069,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			Character_Make_Effect(TEXT("21_SAU-03"));
+			m_pAttack214AssultEffect_Layer = Character_Make_BoneEffect("G_head", TEXT("21_SAU-02"));
+
 		}
 
 		//땅에 닿아서 충격파
@@ -2083,6 +2110,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.iGainAttackStep = 2;  
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Make_Effect(TEXT("21_SAU-01"));
+			if (m_pAttack214AssultEffect_Layer != nullptr)
+			{
+				m_pAttack214AssultEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttack214AssultEffect_Layer = nullptr;
+			}
+
 		}
 	}
 	break;
@@ -2224,11 +2259,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Set_AnimationStopWithoutMe(fStopTime + 0.3f);
 			//Set_AnimationStop(fStopTime);
 			//Set_StopAllAttackObject(fStopTime);
+			Character_Make_BoneEffect("GD_fng_b3_L", TEXT("21_SDO-02"));
 
 		}
 		else if (iAttackEvent == 2) //손뻗음. 레이저?
 		{
 			//Set_AnimationStopWithoutMe(0.f);
+
+			
 		}
 		else if (iAttackEvent == 3)
 		{
@@ -2278,17 +2316,17 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 4)
 		{
-			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 2.f ,-2.f });
+			Character_Make_Effect(TEXT("21_SDO-03"), { 3.f ,-2.f });
 
 		}
 		else if (iAttackEvent == 5)
 		{
-			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 4.f ,-2.f });
+			Character_Make_Effect(TEXT("21_SDO-03"), { 5.f ,-2.f });
 
 		}
 		else if (iAttackEvent == 6)
 		{
-			Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 6.f ,-2.f });
+			Character_Make_Effect(TEXT("21_SDO-03"), { 7.f ,-2.f });
 
 		}
 
