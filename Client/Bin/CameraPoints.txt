@@ -1255,6 +1255,58 @@ SkillName: Camera_Frieza_Ultimate_3
 
 [Animation]
 AnimationName: Frieza_Ultimate_3_Anim1
+PointCount: 6
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.133002 1.2333 -2.93307
+Rotation: -0 0 -0 1
+Duration: 0.3
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.133002 1.2333 -2.93307
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.206249 0.560834 -1.82592
+Rotation: -0.19894 -0.0115458 -0.00234394 0.979941
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.206249 0.560834 -1.82592
+Rotation: -0.19894 -0.0115458 -0.00234394 0.979941
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[Animation]
+AnimationName: Frieza_Ultimate_3_Anim1_Flip
 PointCount: 0
 
 [Skill]

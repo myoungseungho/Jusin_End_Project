@@ -175,7 +175,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 5)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Ultimate_3_Anim1" };
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Ultimate_3_Anim1","Frieza_Ultimate_3_Anim1_Flip" };
 				}
 				else if (skillIdx == 6)
 				{

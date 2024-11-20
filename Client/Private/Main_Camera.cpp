@@ -238,6 +238,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Ultimate_1_Anim1"] = 0;
 	stringToAnimID["Frieza_Ultimate_1_Anim1_Flip"] = 1;
 	stringToAnimID["Frieza_Ultimate_3_Anim1"] = 0;
+	stringToAnimID["Frieza_Ultimate_3_Anim1_Flip"] = 1;
 	stringToAnimID["Frieza_Golden_Anim1"] = 0;
 	stringToAnimID["Frieza_Golden_Anim2"] = 1;
 	stringToAnimID["Frieza_Golden_Anim2_Flip"] = 2;

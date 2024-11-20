@@ -3009,6 +3009,16 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Set_fImpulse({ 0.f , 0.f });
 
 			Set_AnimationStopWithoutMe(2.f);
+
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			if (Get_iDirection() == 1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3, 0, this);
+			}
+			else if (Get_iDirection() == -1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3, 1, this, nullptr, true);
+			}
 		}
 
 		//¡ÿ∫Ò?
