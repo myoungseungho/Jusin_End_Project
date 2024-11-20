@@ -105,6 +105,11 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 
 		m_eCurMap = MAP_SPACE;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_SPACE);
+
+		////화산맵 음원 정지
+		//m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM);
+		////Space 음원 재생
+		//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 1.f);
 		break;
 	case MAP_EF_SPACE:
 		for (auto& iter : m_SpaceModels)
@@ -142,6 +147,10 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 		tDistortionDesc.vDir = { 1.f,0.f,0.f };
 		m_pRenderInstance->Create_Distortion(tDistortionDesc);
 		
+		////Space 음원 정지
+		//m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
+		////화산맵 음원 재생
+		//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, true, 1.f);
 		break;
 	}
 }

@@ -82,7 +82,7 @@ void CAttackObject_Grab::Late_Update(_float fTimeDelta)
 
 HRESULT CAttackObject_Grab::Render(_float fTimeDelta)
 {
-//
+	//
 #ifdef _DEBUG
 	m_pColliderCom->Render(fTimeDelta);
 #endif // DEBUG
@@ -120,7 +120,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		AttackType eAttackType = static_cast<CAttackObject*>(other->GetMineGameObject())->Get_AttackType();
 		if (eAttackType == ATTACKTYPE_GRAB_GROUND || eAttackType == ATTACKTYPE_GRAB_AIR)
 		{
-			
+
 			m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
@@ -129,7 +129,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//pCharacter->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
 			//m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f});
-			m_pOwner->Add_Move({ -0.15f * m_pOwner->Get_iDirection(),0.3f});
+			m_pOwner->Add_Move({ -0.15f * m_pOwner->Get_iDirection(),0.3f });
 
 			m_pOwner->Set_GrabLoofCount(1);
 			m_pOwner->Set_bGrabDraw(true);
@@ -147,7 +147,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		AttackColliderResult eResult =
 			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
-			//pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
+		//pCharacter->Set_Hit3(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_fhitCharacter_Impus);
 
 		if (eResult == RESULT_HIT)
 		{
@@ -159,9 +159,9 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 
-			if(m_bOnwerHitNoneStop == false)
+			if (m_bOnwerHitNoneStop == false)
 				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
-	
+
 			m_pOwner->Gain_AttackStep(m_iGainAttackStep);
 			m_pOwner->Gain_HitCount(m_iGainHitCount);
 
@@ -196,7 +196,7 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			//둘다 같이 잡기 했을 때 카메라 셋팅,, 그다음에 여기 말고 아래 Draw때 한번
 			//만든 각도는 동일하게
-		
+
 			//m_pOwner->Set_AnimationStop(0.3f);
 			//pCharacter->Set_AnimationStop(0.3f);
 
@@ -284,6 +284,8 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 
 		break;
 	case Client::CUI_Define::FRIEZA:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GRAB, 0, pOwner);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::HIT:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_GRAB, 0, pOwner);
