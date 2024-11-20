@@ -186,6 +186,22 @@ PS_OUT PS_QTE_PARTICLE(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_RUN_DUST(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vColor = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    //Out.vColor.a = Out.vColor.r;
+
+    if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
+        discard;
+    
+    Out.vColor.a *= min((In.vLifeTime.x - In.vLifeTime.y) + 0.5f  , 1.f);
+    //Out.vColor.rgb = Out.vColor.rgb * float3(0.529, 0.290, 0.078);
+
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 	/* PASSÀÇ ±âÁØ : ¼ÎÀÌ´õ ±â¹ýÀÇ Ä¸½¶È­. */
@@ -215,6 +231,21 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_QTE_PARTICLE();
     }
+
+//2 
+    pass RUN_DUST
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = compile gs_5_0 GS_MAIN();
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_RUN_DUST();
+    }
+
 }
 
 

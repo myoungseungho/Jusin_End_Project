@@ -61,19 +61,20 @@ HRESULT CLevel_GamePlay::Initialize()
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 	//for (int i = 0; i < 4 ; ++i)
@@ -412,7 +413,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//약 공격1,2
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku, L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Light_Attack_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_Goku_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
-	//약 공격3 (호랴)
+	//약 공격3 (호랴), (공중추적)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Heavy_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	//어퍼 공격 (소코카)
@@ -434,9 +435,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//필살기_2
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-
-
-
 	//SFX
 
 	//Light_Attack
@@ -451,7 +449,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//에네르기파
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Energy_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Energy_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//강공격
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Heavy_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Heavy_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false, false);
 	//원거리 공격
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Range_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Range_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
@@ -470,8 +468,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//기탄 Hit
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/J_Attack_Hit.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
-	//중복 방지 사운드
-	m_pGameInstance->Register_NonOverlapping_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX);
 #pragma endregion
 
 #pragma region 21_Sound
@@ -486,6 +482,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//강공
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Heavy_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//아래 앞 약공 (기탄)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Down_Forward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Down_Forward_Light_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	//히트
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_21, L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Hit_21_0.wav", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_21_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -518,6 +517,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//J 기탄 보이스 // O
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/J_Attack_Voice.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_Voice_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	//공중추적 (소코네)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Air_Chase.ogg", CSound_Manager::SOUND_KEY_NAME::Air_Chase_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region 21_SFX
@@ -531,7 +533,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//1필 Start
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
-	
+
 	//1필 Charge
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Charge.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Charge_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
@@ -553,9 +555,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//3필 Finish
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Finish.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Finish_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
-
-
-
 
 #pragma endregion
 
@@ -587,7 +586,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	// 아래 앞 약공격 + 약공격 (쓉)
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Light_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	// 아래 앞 약공격 + 중공격 (코치라다)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Middle_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Middle_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -595,9 +594,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	// 아래 앞 약공격 + 강공격 (흠!)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Down_Forward_Light_Heavy_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Heavy_Attack, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	// 공중추적 ( 세이데미로, 사떼)
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Air_Chase, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Air_Chase_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_Air_Chase_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
-	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Air_Chase, L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Air_Chase_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_Air_Chase_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	// 공중추적 ( 세이데미로, 사떼
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Air_Chase_0.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Air_Chase, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	// 백대시
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_Voice/Hit_Back_Dash.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_BackDash, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -630,6 +628,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma region Hit_SFX
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Light_Attack_0_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//J 어택
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_J_Attack_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_J_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 	// 아래 앞 약공격 + 약공격 + 중공격
@@ -650,6 +649,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//3필 연타 공격
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ultimate_3_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_Attack, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//아이스 깨질 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ice_Hit_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ice_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
@@ -707,7 +708,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	// 골든 프리저 (아래 + 뒤 + 강특)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Golden.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Golden, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-
 #pragma endregion
 
 #pragma region Frieza_SFX
@@ -755,11 +755,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma endregion
 
-
-
 #pragma endregion
-
-
 
 #pragma region UI 나레이션 사운드
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0509_BattleCall_Start01.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_READY, CSound_Manager::SOUND_CATEGORY::VOICE, false);

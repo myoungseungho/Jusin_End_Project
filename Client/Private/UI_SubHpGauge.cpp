@@ -25,9 +25,9 @@ HRESULT CUI_SubHpGauge::Initialize_Prototype()
 
 HRESULT CUI_SubHpGauge::Initialize(void* pArg)
 {
-	m_fPosX = 270.f;
-	m_fPosY = 100.f;
-	m_fSizeX = 238;
+	m_fPosX = 237.f;
+	m_fPosY = 103.f;
+	m_fSizeX = 194.4;
 
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -36,7 +36,7 @@ HRESULT CUI_SubHpGauge::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, 17, m_fPosX, m_fPosY, 0.75f);
+	__super::Set_UI_Setting(m_fSizeX, 18, m_fPosX, m_fPosY, 0.75f);
 
 	return S_OK;
 }
@@ -52,7 +52,6 @@ void CUI_SubHpGauge::Update(_float fTimeDelta)
 	__super::Update(fTimeDelta);
 	
 	(m_pSubPawn != nullptr) ? m_fHpRadio = m_pSubPawn->Get_PawnDesc().iHp / 10000.f : Destory();
-
 
 	(m_fHpRadio >= 1.f) ? m_iShaderID = 11 : m_iShaderID = 5;
 

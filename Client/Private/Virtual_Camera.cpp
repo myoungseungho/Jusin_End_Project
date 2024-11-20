@@ -339,7 +339,8 @@ void CVirtual_Camera::CirclePlay(float fTimeDelta, const CameraPoint& currentPoi
 	m_pTransformCom->Set_State(CTransform::STATE_RIGHT, NewWorldMatrix.r[0]);
 	m_pTransformCom->Set_State(CTransform::STATE_UP, NewWorldMatrix.r[1]);
 	m_pTransformCom->Set_State(CTransform::STATE_LOOK, NewWorldMatrix.r[2]);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, NewWorldMatrix.r[3]);
+	_vector position = m_vShakeOffset + NewWorldMatrix.r[3];
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
 
 	// 원형 회전이 완료되었는지 체크
 	if (m_circleElapsedTime >= m_circleDuration)

@@ -321,7 +321,7 @@ void CRenderer::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 v
 	_float yDecrement = 0.2f;
 	_float xStep = 0.12f;	
 
-	if (vDir.x == 1)
+	if (vDir.x != 0)
 	{
 
 		for (_int i = 0; i < 8; ++i)
@@ -1416,6 +1416,9 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 	_float4x4 projMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ);
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &projMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
 	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )

@@ -24,8 +24,8 @@ HRESULT CUI_Sub_Chara_Icon_Panel::Initialize_Prototype()
 
 HRESULT CUI_Sub_Chara_Icon_Panel::Initialize(void* pArg)
 {
-	m_fPosX = 73.f;
-	m_fPosY = 100.f;
+	m_fPosX = 83.f;
+	m_fPosY = 105.f;
 	m_fSizeX = 184.f;
 	m_fSizeY = 46.f;
 

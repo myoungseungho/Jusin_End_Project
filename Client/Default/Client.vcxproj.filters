@@ -525,6 +525,27 @@
     </ClCompile>
     <ClCompile Include="..\Private\Frieza_Metal.cpp">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_Metal</Filter>
+  </ClCompile>
+    <ClCompile Include="..\private\Lobby_Frieza.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Krillin.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_Text.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_TextCharaIcon.cpp">
+      <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_TextCursor.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\ParryingRangedObject.cpp">
+      <Filter>02.GameObjects\ParryingRangedObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1118,6 +1139,33 @@
     </Filter>
     <Filter Include="02.GameObjects\Character\Play_Frieza\Frieza_Metal">
       <UniqueIdentifier>{021744e4-818f-4f2c-91e9-d6986aac7c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\ParryingRangedObject">
+      <UniqueIdentifier>{fbf01e1b-73c2-4f57-a790-0d9dd16737ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC">
+      <UniqueIdentifier>{bb79a2c4-790f-44b5-9e1f-d8fde22c1b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza">
+      <UniqueIdentifier>{e9d29bf8-c1d3-4ac2-88f1-81a8ca79b45c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin">
+      <UniqueIdentifier>{3aae5ab3-ac80-4bd3-a641-7291fea50241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby">
+      <UniqueIdentifier>{7162f6ba-fece-4ddf-966a-d1e03ac3300d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Text">
+      <UniqueIdentifier>{11d2951b-4a1d-44be-bbfc-169bf6b3fded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\CharaIcon">
+      <UniqueIdentifier>{7be82973-c935-4be3-ab95-afa681a3d0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Cursor">
+      <UniqueIdentifier>{679dc305-3acb-4388-8280-406f37f5d4c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Goku_RunEff">
+      <UniqueIdentifier>{876d86ba-004f-4190-a8fb-e03c8085fb75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1807,6 +1855,27 @@
     </ClInclude>
     <ClInclude Include="..\Public\Frieza_Metal.h">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_Metal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\ParryingRangedObject.h">
+      <Filter>02.GameObjects\ParryingRangedObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Frieza.h">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Krillin.h">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_Text.h">
+      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_TextCharaIcon.h">
+      <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_TextCursor.h">
+      <Filter>02.GameObjects\UI\Lobby\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Goku_RunEff.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

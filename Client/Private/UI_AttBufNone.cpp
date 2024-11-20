@@ -23,7 +23,7 @@ HRESULT CUI_AttBufNone::Initialize_Prototype()
 
 HRESULT CUI_AttBufNone::Initialize(void* pArg)
 {
-	m_fSizeX = 40.f, m_fSizeY = 40.f, m_fPosX = 437.f, m_fPosY = 116.f;
+	m_fSizeX = 40.f, m_fSizeY = 40.f, m_fPosX = 510.f, m_fPosY = 112.f;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;

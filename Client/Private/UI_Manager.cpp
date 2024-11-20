@@ -168,34 +168,34 @@ void CUI_Manager::UsingCreateEndUI()
 
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {
-	if (m_pGameInstance->Get_DIKeyState(DIK_LEFT))
+	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD7))
 	{
 		fSizeY--;
 		fSizeX = fSizeRadio * fSizeY;
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_RIGHT))
+	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD9))
 	{
 		fSizeY++;
 		fSizeX = fSizeRadio * fSizeY;
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_A))
+	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD4))
 	{
 		fPosX--;
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_D))
+	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD6))
 	{
 		fPosX++;
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_W))
+	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD8))
 	{
 		fPosY--;
 	}
 
-	if (m_pGameInstance->Get_DIKeyState(DIK_S))
+	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD2))
 	{
 		fPosY++; 
 	}

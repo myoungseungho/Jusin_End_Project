@@ -174,6 +174,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
 		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
 
+		pCharacter->Character_Make_Effect(TEXT("Parrying_Hit"), { 0.5f,0.f });
+		//pCharacter->Character_Make_Effect(TEXT("Parrying_Ball"), { 0.5f,0.f });
 
 		pCharacter->Set_ReflectAttackBackEvent(true);
 
