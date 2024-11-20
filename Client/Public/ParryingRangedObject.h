@@ -64,6 +64,7 @@ private:
 	_float m_fAccLifeTime = {};
 
 	_float* m_pHeight = {m_pTransformCom->Get_State(CTransform::STATE_POSITION)}
+	_float* m_pHeight = { nullptr };// {m_pTransformCom->Get_State(CTransform::STATE_POSITION)}
 
 private:
 
