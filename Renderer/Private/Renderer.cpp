@@ -241,9 +241,6 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Render_Metallic(fTimeDelta)))
 		return E_FAIL;
-	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
-	if (FAILED(Render_Distortion(fTimeDelta)))
-		return E_FAIL;
 
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
@@ -251,6 +248,7 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	/* 맵을 어둡게 할려고 여기 호출하지만 캐릭터는*/
 	if (FAILED(Draw_MapBlackOut(fTimeDelta)))
 		return E_FAIL;
+
 
 	/* 여기서 그리고 있음 이펙트를 위한 행동 하지만 위에서 블러를 먹인 그림을 가지고만 있고 그리진 않아서 영향이 안가짐 */
 	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
@@ -265,6 +263,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Glow(fTimeDelta)))
 		return E_FAIL;
 	
+	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
+	if (FAILED(Render_Distortion(fTimeDelta)))
+		return E_FAIL;
+
 
 	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
 		return E_FAIL;
