@@ -524,7 +524,7 @@ PLAY_FRN,FRN202_body,35,AttackEvent,2
 
 //, 폭발.
 PLAY_FRN,FRN202_body,40,AttackEvent,3
-
+PLAY_FRN,FRN202_body,40,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
 
 PLAY_FRN,FRN202_body,50,NextAnimationCheck,333333
 
