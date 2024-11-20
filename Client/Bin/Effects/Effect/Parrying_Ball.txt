@@ -1,13 +1,13 @@
 [Layer]
 LayerName: Parrying_Ball
-Duration: 1
+Duration: 20
 TickPerSecond: 5
-KeyFramesCount: 59
+KeyFramesCount: 1199
 NumEffec: 3
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: Parrying_Ball_01
@@ -19,11 +19,11 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 0 0.04 0
-Scale: 0.00998164 0.00998164 0.01
+Scale: 0.00992841 0.00992841 0.01
 Rotation: 0 0 180
 IsLoop: false
 Color: 237.268 210.248 0 30
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 2
@@ -60,7 +60,7 @@ Scale: 0.02 0.02 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 228.825 68.394 0 0.794703
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 5
 DerredPassIndex: 0
 NumKeyFrame: 1
@@ -75,7 +75,7 @@ Duration: 1
 IsNotPlaying: false
 
 [Effect]
-EffectName: Parring_Ball_03
+EffectName: Parrying_Ball_03
 ModelName: Model_Effect_acmn_povot_plane00
 MaskTextureName: ../Bin/Effects/Shader_Tab/Parrying_BallParring_Ball_03
 DiffuseTextureName: Texture_Effect_cmn_test
@@ -88,7 +88,7 @@ Scale: 0.02 0.02 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
-GlowColor: 0 0 0 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1

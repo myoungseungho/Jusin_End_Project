@@ -1,13 +1,13 @@
 [Layer]
 LayerName: 21_SAU-02
-Duration: 1
+Duration: 3
 TickPerSecond: 4
-KeyFramesCount: 59
+KeyFramesCount: 179
 NumEffec: 9
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: 21_SAU-02_01
@@ -19,8 +19,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.3 0
-Scale: 0.2 0.3 1
-Rotation: 0 0 0
+Scale: 0.2 0.35 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 0 0 0 29.95
 GlowColor: 1 1 -1.07374e+08 -1.07374e+08
@@ -32,7 +32,7 @@ NumKeyFrame: 2
 KeyFrameNumber: 0
 Position: 0 -0.3 0
 Scale: 0.2 0.3 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -40,11 +40,11 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 -0.3 0
-Scale: 0.2 0.4 1
-Rotation: 0 0 0
+Scale: 0.2 0.35 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_02
@@ -56,8 +56,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.2 0.3 1
-Rotation: 0 0 0
+Scale: 0.2 0.35 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 255 0 132.566 0.796688
 GlowColor: 1 1 -1.07374e+08 -1.07374e+08
@@ -69,7 +69,7 @@ NumKeyFrame: 2
 KeyFrameNumber: 0
 Position: 0 -0.3 0
 Scale: 0.2 0.3 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -77,11 +77,11 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 -0.3 0
-Scale: 0.2 0.4 1
-Rotation: 0 0 0
+Scale: 0.2 0.35 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_03
@@ -93,8 +93,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.25 0.34 1
-Rotation: 0 0 0
+Scale: 0.25 0.43 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 255 97.1026 183.228 1
 GlowColor: 1 1 -1.07374e+08 -1.07374e+08
@@ -106,7 +106,7 @@ NumKeyFrame: 2
 KeyFrameNumber: 0
 Position: 0 -0.3 0
 Scale: 0.25 0.34 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -114,11 +114,11 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 -0.3 0
-Scale: 0.25 0.45 1
-Rotation: 0 0 0
+Scale: 0.25 0.43 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_04
@@ -130,8 +130,8 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.3 0
-Scale: 0.12 0.0999954 0.07
-Rotation: 0 0 90
+Scale: 0.119993 0.0999871 0.07
+Rotation: 0 0 110
 IsLoop: false
 Color: 255 255 255 0.542716
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -142,8 +142,8 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 -0.3 0
-Scale: 0.12 0.0999954 0.07
-Rotation: 0 0 90
+Scale: 0.119993 0.0999871 0.07
+Rotation: 0 0 110
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -157,9 +157,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.5 0.9 0
-Scale: 0.03 0.15 1
-Rotation: 0 0 0
+Position: -1 0.9 0
+Scale: 0.03 0.2 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 247.401 44.7517 129.189 2.88079
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -169,21 +169,21 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -0.5 0.9 0
+Position: -1 0.9 0
 Scale: 0.03 0.15 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: -0.5 0.9 0
-Scale: 0.03 0.25 1
-Rotation: 0 0 0
+Position: -1 0.9 0
+Scale: 0.03 0.2 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_06
@@ -194,9 +194,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0.2 1.6 0
-Scale: 0.03 0.2 1
-Rotation: 0 0 0
+Position: -0.2 1.6 0
+Scale: 0.03 0.25 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 0 0 0 1.7947
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -206,21 +206,21 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 1.6 0
+Position: -0.2 1.6 0
 Scale: 0.03 0.2 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: 0.2 1.6 0
-Scale: 0.03 0.35 1
-Rotation: 0 0 0
+Position: -0.2 1.6 0
+Scale: 0.03 0.25 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_07
@@ -231,9 +231,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.2 0.9 0
-Scale: 0.03 0.2 1
-Rotation: 0 0 0
+Position: -0.6 0.9 0
+Scale: 0.03 0.25 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 0 0 0 3.87417
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -243,21 +243,21 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -0.2 0.9 0
+Position: -0.6 0.9 0
 Scale: 0.03 0.2 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: -0.2 0.9 0
-Scale: 0.03 0.35 1
-Rotation: 0 0 0
+Position: -0.6 0.9 0
+Scale: 0.03 0.25 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_08
@@ -268,9 +268,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 1
-Position: 0.4 0.5 0
-Scale: 0.04 0.15 1
-Rotation: 0 0 0
+Position: 0.2 0.5 0
+Scale: 0.04 0.2 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 255 65.0166 129.189 1.09272
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -280,21 +280,21 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.4 0.5 0
+Position: 0.2 0.5 0
 Scale: 0.04 0.15 1
-Rotation: 0 0 0
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: 0.4 0.5 0
-Scale: 0.04 0.3 1
-Rotation: 0 0 0
+Position: 0.2 0.5 0
+Scale: 0.04 0.2 1
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: 21_SAU-02_09
@@ -305,9 +305,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.7 -0.3 0
-Scale: 0.04 0.200001 1
-Rotation: 0 0 4
+Position: -0.8 -0.3 0
+Scale: 0.04 0.25 1
+Rotation: 0 0 20
 IsLoop: false
 Color: 255 81.904 149.454 2.08609
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -317,19 +317,19 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -0.7 -0.3 0
+Position: -0.8 -0.3 0
 Scale: 0.04 0.200001 1
-Rotation: 0 0 4
+Rotation: 0 0 20
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: -0.7 -0.3 0
+Position: -0.8 -0.3 0
 Scale: 0.04 0.25 1
-Rotation: 0 0 4
+Rotation: 0 0 20
 CurTime: 0.966667
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
