@@ -891,6 +891,7 @@ PLAY_FRN,FRN431_body,25,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,26,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,27,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,28,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN431_body,28.0001,Camera_Play_21_Grab_Special_0_Shake,0.8,0.2
 PLAY_FRN,FRN431_body,29,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,30,ObjectMove,0,0.05,0,0
 
@@ -900,9 +901,10 @@ PLAY_FRN,FRN431_body,30,AttackEvent,1
 PLAY_FRN,FRN431_body,100,AttackEvent,2
 PLAY_FRN,FRN431_body,100,AnimSpeedChange,0.01,0.5
 
+
 //,착지시 124.999로 이동
 PLAY_FRN,FRN431_body,125,AnimSpeedChange,0.01,60
-
+PLAY_FRN,FRN431_body,125.0002,Camera_Play_21_Grab_Special_0_Shake,1.0,0.2
 //,Duration 끝은 169.  그 전에 원래모델로 돌아올지는 선택
 
 
