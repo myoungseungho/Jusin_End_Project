@@ -553,6 +553,9 @@
     <ClCompile Include="..\private\UI_Lobby_Key_Enter.cpp">
       <Filter>02.GameObjects\UI\Lobby\Key\Enter</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\ParryingRangedObject.cpp">
+      <Filter>02.GameObjects\ParryingRangedObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1145,6 +1148,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Character\Play_Frieza\Frieza_Metal">
       <UniqueIdentifier>{021744e4-818f-4f2c-91e9-d6986aac7c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\ParryingRangedObject">
+      <UniqueIdentifier>{fbf01e1b-73c2-4f57-a790-0d9dd16737ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_NPC">
       <UniqueIdentifier>{bb79a2c4-790f-44b5-9e1f-d8fde22c1b3a}</UniqueIdentifier>
@@ -1870,6 +1876,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Frieza_Metal.h">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_Metal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\ParryingRangedObject.h">
+      <Filter>02.GameObjects\ParryingRangedObject</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Lobby_Frieza.h">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza</Filter>

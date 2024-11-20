@@ -121,6 +121,8 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 	if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
 
+		m_pOwner->Character_Make_Effect(TEXT("Parrying_Hit"), { 0.5f,0.f });
+
 		CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
 
 		CCharacter* pCharacter = static_cast<CCharacter*>(pAttackObject->Get_pOwner());
@@ -148,7 +150,7 @@ void CAttackObject_Reflect::OnCollisionEnter(CCollider* other, _float fTimeDelta
 
 		//CAttackObject* pAttackObject = static_cast<CAttackObject*>(other->GetMineGameObject());
 		//pAttackObject->Set_RemoteDestory();
-
+		m_pOwner->Character_Make_Effect(TEXT("Parrying_Hit"), { 0.5f,0.f });
 	}
 	
 	

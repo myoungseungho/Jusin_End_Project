@@ -135,6 +135,12 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_FRIEZA_GOLDEN:
 			name = "Camera_Frieza_Golden";
 			break;
+		case VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J:
+			name = "Camera_Frieza_Down_Forward_J";
+			break;
+		case VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT:
+			name = "Camera_Frieza_Fall_Reflect";
+			break;
 		}
 
 		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera"), &name);
@@ -225,6 +231,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Frieza_Ultimate_1"] = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_1;
 	stringToSkillID["Camera_Frieza_Ultimate_3"] = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3;
 	stringToSkillID["Camera_Frieza_Golden"] = VIRTUAL_CAMERA_FRIEZA_GOLDEN;
+	stringToSkillID["Camera_Frieza_Down_Forward_J"] = VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J;
+	stringToSkillID["Camera_Frieza_Fall_Reflect"] = VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT;
+
 
 	stringToAnimID["Frieza_Light_Final_Anim1"] = 0;
 	stringToAnimID["Frieza_Light_Final_Anim1_Flip"] = 1;
@@ -234,9 +243,15 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Ultimate_1_Anim1"] = 0;
 	stringToAnimID["Frieza_Ultimate_1_Anim1_Flip"] = 1;
 	stringToAnimID["Frieza_Ultimate_3_Anim1"] = 0;
+	stringToAnimID["Frieza_Ultimate_3_Anim1_Flip"] = 1;
 	stringToAnimID["Frieza_Golden_Anim1"] = 0;
 	stringToAnimID["Frieza_Golden_Anim2"] = 1;
 	stringToAnimID["Frieza_Golden_Anim2_Flip"] = 2;
+	stringToAnimID["Frieza_Down_Forward_J"] = 0;
+	stringToAnimID["Frieza_Down_Forward_J_Flip"] = 1;
+	stringToAnimID["Frieza_Fall_Reflect"] = 0;
+
+
 #pragma endregion
 
 
@@ -482,7 +497,10 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3;
 		else if (skillID == 6)
 			index = VIRTUAL_CAMERA_FRIEZA_GOLDEN;
-
+		else if (skillID == 7)
+			index = VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J;
+		else if (skillID == 8)
+			index = VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT;
 	}
 
 	return index;
@@ -517,7 +535,7 @@ _bool CMain_Camera::Get_IsPlay()
 
 void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 {
-	
+
 	m_vecVirtualCamera[VIRTUAL_CAMERA_MAP]->Set_DyingTeam(iDyingTeam,
 		static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrix());
 	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);

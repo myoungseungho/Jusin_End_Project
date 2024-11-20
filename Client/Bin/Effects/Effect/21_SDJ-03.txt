@@ -1,0 +1,85 @@
+[Layer]
+LayerName: 21_SDJ-03
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 2
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_SDJ-03_01
+ModelName: Model_Effect_ton401_eff03
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0321_SDJ-03_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1 -0.6 0
+Scale: 0.00799848 0.007 0.00799848
+Rotation: 0 180 0
+IsLoop: false
+Color: 225.447 0 154.52 0.841391
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1 -0.6 0
+Scale: 0.00799848 0.007 0.00799848
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 1 -0.6 0
+Scale: 0.00799774 0.007 0.00799774
+Rotation: 0 180 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDJ-03_02
+ModelName: Model_Effect_ton401_eff03
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDJ-0321_SDJ-03_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 1.1 -0.9 0
+Scale: 0.00999264 0.01 0.00999264
+Rotation: 0 180 0
+IsLoop: false
+Color: 0 0 0 0.690066
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.1 -0.9 0
+Scale: 0.00999623 0.01 0.00999623
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 1.1 -0.9 0
+Scale: 0.00999582 0.01 0.00999582
+Rotation: 0 180 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+

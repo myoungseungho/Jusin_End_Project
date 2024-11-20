@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 45
+Key: Prototype_Component_Texture_Effect_cmn_bomb02
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 522 136
+NodeID: 1 Position: 306 77
+NodeID: 3001 Position: 57 91
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 6 2 Speed: 11.2
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7

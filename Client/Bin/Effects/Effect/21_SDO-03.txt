@@ -1,0 +1,826 @@
+[Layer]
+LayerName: 21_SDO-03
+Duration: 1.5
+TickPerSecond: 1
+KeyFramesCount: 89
+NumEffec: 23
+Position: 0 0 0
+Scale: 0.6 0.6 0.6
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_SDO-03_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.38943 0
+Scale: 0.526286 0.526286 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 253.311 228.825 0 0.442716
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.8 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 -1.5 0
+Scale: 0.6 0.6 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: 0 -1.2 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0.5
+Duration: 1.5
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1.2 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.1 -0.2 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 14
+Position: -1.2 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.233333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: -1.2 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 1.2 -0.4 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.1 -0.4 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 6
+Position: 1.2 -0.4 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.1
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 1.2 -0.4 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.4 0.6 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.4 0.2 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0.4 0.6 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0.4 0.6 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1.1 -1.3 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.1 -1.3 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 21
+Position: -1.1 -1.3 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.35
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: -1.1 -1.3 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1 0.2 0
+Scale: 0.5 0.7 1
+Rotation: 0 0 21.818
+IsLoop: false
+Color: 162.964 98.7914 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1 0.2 0
+Scale: 0.5 0.7 1
+Rotation: 0 0 21.818
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: -1 0.2 0
+Scale: 0.5 0.7 1
+Rotation: 0 0 21.818
+CurTime: 0.683333
+Duration: 1.5
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 1.7 0.5 0
+Scale: 0.7 0.8 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 178.162 73.4603 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.7 0.5 0
+Scale: 0.7 0.8 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 1.7 0.5 0
+Scale: 0.7 0.8 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1.5
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_SDO-03_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 2.9 0 1
+Scale: 0.2 0.4 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 122.434 120.745 122.434 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 2.9 0 1
+Scale: 0.2 0.4 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3.6 -0.4 1.8
+Scale: 0.299869 0.5 0.998872
+Rotation: 0 180 0
+IsLoop: false
+Color: 122.434 120.745 122.434 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3.6 -0.4 1.8
+Scale: 0.299869 0.5 0.998872
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_11
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 2.1 0 -2.3
+Scale: 0.1 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 122.434 120.745 122.434 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 2.1 0 -2.3
+Scale: 0.1 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_12
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_12
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -1.8 0 -0.2
+Scale: 0.199989 0.3 0.999162
+Rotation: 0 180 0
+IsLoop: false
+Color: 122.434 120.745 122.434 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.8 0 -0.2
+Scale: 0.199989 0.3 0.999162
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_13
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_13
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.3 0 -0.1
+Scale: 0.1 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 122.434 120.745 122.434 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.3 0 -0.1
+Scale: 0.1 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_14
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_14
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -1.6 0 -2.4
+Scale: 0.0999543 0.2 0.999511
+Rotation: 0 180 0
+IsLoop: false
+Color: 122.434 120.745 122.434 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.6 0 -2.4
+Scale: 0.0999543 0.2 0.999511
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_15
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_15
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1.2 0.5 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 1.2 0.5 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_16
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_16
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -1 0 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -1 0 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_17
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_17
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.4 1.4 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -0.4 1.4 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_18
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_18
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -2.2 1.6 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -2.2 1.6 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_19
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_19
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -2.7 3.3 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -2.7 3.3 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_20
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_20
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.8 4 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -0.8 4 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_21
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_21
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -1.6 -0.4 0.3
+Scale: 0.3 0.1 1
+Rotation: 0 0 17.922
+IsLoop: false
+Color: 97.1026 97.1026 80.2152 1.79073
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.6 -0.4 0.3
+Scale: 0.3 0.1 1
+Rotation: 0 0 17.922
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_22
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_22
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 -3.9
+Scale: 0.499998 0.1 1
+Rotation: 0 0 7.792
+IsLoop: false
+Color: 141.01 139.321 132.566 0.840066
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0 -3.9
+Scale: 0.499998 0.1 1
+Rotation: 0 0 7.792
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_SDO-03_23
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_SDO-0321_SDO-03_23
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 2 0 -2.2
+Scale: 0.299999 0.2 1
+Rotation: 0 0 342.857
+IsLoop: false
+Color: 255 255 255 0.8
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 2 0 -2.2
+Scale: 0.299999 0.2 1
+Rotation: 0 0 342.857
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: false
+
