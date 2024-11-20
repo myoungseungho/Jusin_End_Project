@@ -3454,8 +3454,6 @@ _float CPlay_Goku::Get_DamageScale(_bool bUltimate)
 	return fDamageScale * 0.7f;
 }
 
-
-
 CPlay_Goku* CPlay_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CPlay_Goku* pInstance = new CPlay_Goku(pDevice, pContext);

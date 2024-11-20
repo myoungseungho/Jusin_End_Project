@@ -1849,6 +1849,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Voice_21, false, 1.f);
 			//공중 콤보가능하도록 속도 더 빠르게+중력은 강하게
 			if (Get_fHeight() > 3)
 			{
@@ -1998,12 +2000,17 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
+
 			CEffect_Layer::COPY_DESC tDesc{};
 			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("GD_fist_L");
 			tDesc.pTransformCom = m_pTransformCom;
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("21_SDU-02"), &tDesc);
 
 			//Character_Make_Effect(TEXT("21_SDU-02"));
+
+
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Down_Forward_Light_21, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_21, false, 1.f);
 
 		}
 
@@ -2242,6 +2249,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Set_StopAllAttackObject(fStopTime);
 
 
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENERGY, 0, this);
+			mainCamera->StartCameraShake(1.5f, 0.2f);
 			//이펙트들
 
 		}
@@ -2293,6 +2303,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->StartCameraShake(0.9f, 0.2f);
 
 			//임시 이펙트
 
@@ -2813,8 +2825,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 
-
-
+			// 카메라 진동넣어야겠다
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->StartCameraShake(0.5f, 0.2f);
 		}
 		else if (iAttackEvent == 201)
 		{
@@ -2842,6 +2855,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 5, this, nullptr, true);
 
+
+			
 			//안보이게 하는 대신에  고정 위치를 저 멀리로 보내버리고, 공격기술 범위를 엄청 크게 한 뒤에 잡기 풀때 다시 데려오는 방법도 있음
 			//이때 맵밖으로 밀려나가는건 어떻게 처리?
 			//아예 하늘 위로?  땅 밑은?
@@ -2895,7 +2910,6 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 2)
 		{
 			//공격이펙트로 화면가리기
-
 		}
 		else if (iAttackEvent == 3)
 		{

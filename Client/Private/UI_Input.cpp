@@ -122,7 +122,7 @@ _uint CUI_Input::CreateList()
 
 		m_bInitCommandAction = TRUE;
 	}
-
+	
 	return iNumCreate;
 }
 

@@ -134,6 +134,10 @@ public:
 		Frieza_Golden_Frieza_SFX,
 		VOLCANO_BGM,
 		J_Attack_Hit_SFX,
+		Down_Forward_Light_21,
+		Air_Chase_21,
+		Hit_Air_Chase,
+		Hit_Ice_Hit_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
@@ -177,8 +181,6 @@ public:
 		HIT_J_Attack_1,
 		HIT_Down_Back_Light_0,
 		HIT_Down_Back_Light_1,
-		Hit_Air_Chase_0,
-		Hit_Air_Chase_1,
 		Hit_Hit_0,
 		Hit_Hit_1,
 		Hit_Hit_2,
@@ -197,7 +199,6 @@ public:
 		LIGHT_ATTACK_HIT,
 		J_ATTACK_HIT,
 		HIT_Down_Back_Light,
-		Hit_Air_Chase,
 		Hit_Hit,
 		Light_Attack_Frieza,
 	};
@@ -229,9 +230,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 
-	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop = false);
+	void Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop = false, _bool isNonOverlapping = true);
 	void Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, SOUND_CATEGORY category, _bool loop);
-	void Register_NonOverlapping_Sound(SOUND_KEY_NAME alias); // 중복 재생 방지 사운드 등록 함수
 	void Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume);
 	void Play_Group_Sound(SOUND_GROUP_KEY groupKey, _bool loop, _float volume);
 	void Stop_Sound(SOUND_KEY_NAME alias);

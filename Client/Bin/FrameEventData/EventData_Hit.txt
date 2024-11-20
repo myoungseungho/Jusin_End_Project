@@ -247,6 +247,7 @@ PLAY_HIT,HTN032_body,13,PositionChange,0
 //,백대쉬 (공용) 13
 PLAY_HIT,HTN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
 PLAY_HIT,HTN033_body,0.001000,PlaySound,11,0,0.5
+PLAY_HIT,HTN033_body,0.001000,PlaySound,53,0,0.5
 PLAY_HIT,HTN033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_HIT,HTN033_body, 1,ObjectMove, -0.3, 0, 0, 0
 PLAY_HIT,HTN033_body, 2,ObjectMove, -0.2, 0, 0, 0
@@ -471,8 +472,8 @@ PLAY_HIT,HTN013_body,0.000000,AnimSpeedChange,0.023000,120
 //,약공1,    41
 //,PLAY_HIT,HTN200_body,0.000000,AnimSpeedChange,0.028000,120.000000
 PLAY_HIT,HTN200_body,0.000000,AnimSpeedChange,0.008,120.000000
+PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,205,0,1
 PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,204,0,1
-PLAY_HIT,HTN200_body,0.0010,PlayGroupSound,202,0,1
 PLAY_HIT,HTN200_body,20,AttackEvent,0
 PLAY_HIT,HTN200_body,22,NextAnimationCheck,333333
 PLAY_HIT,HTN200_body,25,NextAnimationCheck,333333
@@ -481,8 +482,8 @@ PLAY_HIT,HTN200_body,30,NextAnimationCheck,333333
 
 //,약공2  42
 PLAY_HIT,HTN201_body,0.000000,AnimSpeedChange,0.028000,120.000000
+PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,205,0,1
 PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,204,0,1
-PLAY_HIT,HTN201_body,0.0010,PlayGroupSound,202,0,1
 
 //,순간이동 또는 앞으로 많이 이동 어차피 이펙트는 만들어야됨. 순간적으로 안보이는건 어떻게 처리?
 //,그냥 히트 개인만 사용가능하게 기능 만들자
@@ -499,6 +500,8 @@ PLAY_HIT,HTN201_body,40,NextAnimationCheck,333333
 //,약공3  알아서 count로 루프돌리기
 //,PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.009000,80.000000
 PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.009000,120.000000
+PLAY_HIT,HTN202_body,0.0010,PlayGroupSound,205,0,1
+PLAY_HIT,HTN202_body,0.0010,PlayGroupSound,204,0,1
 
 //,무조건 히트경직 있을땐 240
 //,PLAY_HIT,HTN202_body,0,AnimSpeedChange,0.009000,240.000000
@@ -509,6 +512,9 @@ PLAY_HIT,HTN202_body,10,AttackEvent,0
 
 //,공격판정, Grab판정하고 경직 심하게주기, 가로샤샤샥, 안보이고있었다면 보이게?
 PLAY_HIT,HTN202_body,25,AttackEvent,1
+PLAY_HIT,HTN202_body,25.0010,PlayGroupSound,205,0,1
+PLAY_HIT,HTN202_body,25.0010,PlayGroupSound,204,0,1
+
 
 //,막혔으면 55로 이동하고 끝내기.  35는 옷이 뚫림
 //,맞췄고, 루프다 끝냈으면 NextAnimationCheck
@@ -518,7 +524,8 @@ PLAY_HIT,HTN202_body,32,AttackEvent,2
 
 //,루프타이밍.  안보이게, 달리는척 하다가 적 뒤로이동,  가로샤샤샥, 24로 이동해서 루프돌기. 너무빠르니 20? 어택경직있으니 ㄱㅊ
 PLAY_HIT,HTN202_body,50,AttackEvent,3
-
+PLAY_HIT,HTN202_body,50.001000,PlaySound,48,0,1
+PLAY_HIT,HTN202_body,50.001000,PlaySound,8,0,1
 
 
 
@@ -526,8 +533,8 @@ PLAY_HIT,HTN202_body,50,AttackEvent,3
 
 //,서서 중공 44
 PLAY_HIT,HTN203_body,0.000000,AnimSpeedChange,0.015000,56.970001
+PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,205,0,1
 PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,204,0,1
-PLAY_HIT,HTN203_body,0.0010,PlayGroupSound,202,0,1
 //,PLAY_HIT,HTN203_body,15.636000,AnimSpeedChange,0.038000,118.788002
 PLAY_HIT,HTN203_body,10,AnimSpeedChange,0.038000,298.788002
 PLAY_HIT,HTN203_body,25.090998,AnimSpeedChange,0.015000,47.676998
@@ -582,6 +589,8 @@ PLAY_HIT,HTN204_body,45,NextAnimationCheck,333333
 
 //,서서 특수 46
 PLAY_HIT,HTN205_body,0.000000,AnimSpeedChange,0.018000,62.625999
+PLAY_HIT,HTN205_body,0.0010,PlayGroupSound,206,0,1
+PLAY_HIT,HTN205_body,0.001000,PlaySound,63,0,1
 
 //,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
 PLAY_HIT,HTN205_body,5,AnimSpeedChange,0.008000,0.1
@@ -772,6 +781,8 @@ PLAY_HIT,HTN263_body,28,ObjectMove,0,0.1,0,0
 //,공중 특수
 
 PLAY_HIT,HTN265_body,0.000000,AnimSpeedChange,0.018000,62.625999
+PLAY_HIT,HTN265_body,0.0010,PlayGroupSound,206,0,1
+PLAY_HIT,HTN265_body,0.001000,PlaySound,63,0,1
 //,반격상태 ON, 파란이펙트 + 만화경작은거.  반격상태 시간 0.3초 세기
 PLAY_HIT,HTN265_body,5,AnimSpeedChange,0.008000,0.5
 PLAY_HIT,HTN265_body,5.001,AttackEvent,0
@@ -1012,28 +1023,43 @@ PLAY_HIT,HTN432_body,330,AttackEvent,6
 //,3필 성공시
 PLAY_HIT,HTN432cs_body,0,AnimSpeedChange,0.005,60
 PLAY_HIT,HTN432cs_body,0.1,AttackEvent,100
+PLAY_HIT,HTN432cs_body,0.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,30,ObjectMove,0.5,0,0.5
+//,PLAY_HIT,HTN432cs_body,30.001000,PlaySound,60,0,1
+
 
 PLAY_HIT,HTN432cs_body,48,AttackEvent,0
 PLAY_HIT,HTN432cs_body,48.2,AttackEvent,101
+PLAY_HIT,HTN432cs_body,48.201000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+
+
 
 PLAY_HIT,HTN432cs_body,77,AttackEvent,1
 PLAY_HIT,HTN432cs_body,77.2,AttackEvent,102
+PLAY_HIT,HTN432cs_body,77.201000,PlaySound,69,0,1
+PLAY_HIT,HTN432cs_body,77.202000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+
+
 
 PLAY_HIT,HTN432cs_body,96,AttackEvent,2
+PLAY_HIT,HTN432cs_body,96.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+
 PLAY_HIT,HTN432cs_body,100,AttackEvent,3
+PLAY_HIT,HTN432cs_body,100.201000,PlaySound,60,0,1
+PLAY_HIT,HTN432cs_body,100.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,110.05,ObjectMove,1,0,0
 
 
 PLAY_HIT,HTN432cs_body,148.01,AttackEvent,201
 PLAY_HIT,HTN432cs_body,148.2,AttackEvent,202
-
+PLAY_HIT,HTN432cs_body,148.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 
 
 PLAY_HIT,HTN432cs_body,255,AttackEvent,4
+PLAY_HIT,HTN432cs_body,255.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
 
@@ -1046,5 +1072,6 @@ PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
 
 PLAY_HIT,HTN432cs_body,255,AnimSpeedChange,0.005,40
 
+PLAY_HIT,HTN432cs_body,280.201000,PlaySound,61,0,1
 PLAY_HIT,HTN432cs_body,293.8,NextAnimationCheck,333333
 

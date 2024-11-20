@@ -26,6 +26,8 @@ private:
 	_float m_fAlphaTimer = { 0.f };
 	_bool m_bSign = { TRUE };
 
+	_float m_fDebug = { 0.1f };
+
 public:
 	static CUI_SubHpPanel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);

@@ -75,7 +75,7 @@ HRESULT CSound_Manager::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop)
+void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME alias, SOUND_CATEGORY category, _bool loop, _bool isNonOverlapping)
 {
 	// 이미 등록된 사운드인지 확인
 	if (m_soundMap.find(alias) != m_soundMap.end())
@@ -100,6 +100,12 @@ void CSound_Manager::Register_Sound(const std::wstring& filePath, SOUND_KEY_NAME
 	m_soundMap[alias] = sound;
 	// 카테고리 맵에 추가
 	m_soundCategoryMap[alias] = category;
+
+	// 중복 재생 방지 사운드로 등록
+	if (isNonOverlapping)
+	{
+		m_nonOverlappingSounds.insert(alias);
+	}
 }
 
 void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::wstring& filePath, SOUND_GROUP_KEY_NAME alias, SOUND_CATEGORY category, _bool loop)
@@ -135,10 +141,7 @@ void CSound_Manager::Register_Sound_Group(SOUND_GROUP_KEY groupKey, const std::w
 	// 그룹에 해당 alias를 추가
 	m_soundGroupMap[groupKey].push_back(alias);
 }
-void CSound_Manager::Register_NonOverlapping_Sound(SOUND_KEY_NAME alias)
-{
-	m_nonOverlappingSounds.insert(alias);
-}
+
 void CSound_Manager::Play_Sound(SOUND_KEY_NAME alias, _bool loop, _float volume)
 {
 	if (!m_isImguiPlay)

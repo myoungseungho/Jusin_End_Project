@@ -436,7 +436,31 @@ SkillName: Camera_21_Energy
 
 [Animation]
 AnimationName: 21_Energy_Anim1
-PointCount: 0
+PointCount: 3
+
+[CameraPoint]
+Position: 0.2000313282 1.14995 -4.38326
+Rotation: -0 0 -0 1
+Duration: 1.4
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.2000313049 1.60001 -2.68299
+Rotation: -0 0 -0 1
+Duration: 0.4
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.2000313282 1.60001 -1.28272
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_21_Ultimate

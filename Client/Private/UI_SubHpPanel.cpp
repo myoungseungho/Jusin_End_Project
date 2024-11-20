@@ -24,8 +24,9 @@ HRESULT CUI_SubHpPanel::Initialize_Prototype()
 
 HRESULT CUI_SubHpPanel::Initialize(void* pArg)
 {
-	m_fSizeX = 264.f;
-	m_fPosX = 275.f;
+	m_fPosX = 240.f;
+	m_fSizeX = 213.f;
+
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -33,8 +34,8 @@ HRESULT CUI_SubHpPanel::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fPosY = 100.f;
-	__super::Set_UI_Setting(m_fSizeX , 63.f, m_fPosX, m_fPosY, 0.f);
+	m_fPosY = 103.f;
+	__super::Set_UI_Setting(m_fSizeX , 71.f, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
 }
@@ -47,7 +48,6 @@ void CUI_SubHpPanel::Camera_Update(_float fTimeDelta)
 void CUI_SubHpPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
-
 	Animation({ 255.f , 67.f ,0.7f, 1.f }, { m_fPosX, m_fPosY, 0.7f, 1.f }, 500.f, 0.7f, fTimeDelta);
 }
 

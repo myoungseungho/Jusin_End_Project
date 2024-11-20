@@ -272,6 +272,7 @@ void CUI_CharaSelectIcon::CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID)
 
 		break;
 	case Client::CUI_Define::FRIEZA:
+		PrototypeTage = TEXT("Prototype_GameObject_Play_Frieza");
 		ePlayerIDInfo = CUI_Define::FRIEZA;
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_BUU, false, 1.f);
 
