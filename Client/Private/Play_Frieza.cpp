@@ -1532,7 +1532,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fCameraShakeDuration = 1.f;
 			Desc.fCameraShakeMagnitude = 0.2f;
-
+			Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_FRIEZA_HEAVY;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
