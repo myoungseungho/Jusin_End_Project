@@ -19,15 +19,19 @@ HRESULT CLevel_Chara_Select::Initialize()
 {
 	m_iLevelIndex = LEVEL_CHARACTER;
 
-	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
+	//	return E_FAIL;
+	//
+	//if (FAILED(Ready_Lights()))
+	//	return E_FAIL;
+	//
+	//if (FAILED(Ready_Sound()))
+	//	return E_FAIL;
 
-	if (FAILED(Ready_Lights()))
+	CUIObject::UI_DESC ArrowDesc = {};
+	ArrowDesc.fSpeedPerSec = 10.f;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_UI_Loading_EnergyEff"), TEXT("Layer_MarkArrowEff"), &ArrowDesc)))
 		return E_FAIL;
-
-	if (FAILED(Ready_Sound()))
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -66,9 +70,9 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectArrow"), TEXT("Layer_MarkArrow"), &ArrowDesc)))
 		return E_FAIL;
 
-	//ArrowDesc.fSpeedPerSec = 10.f;
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_UI_Loading_EnergyEff"), TEXT("Layer_MarkArrowEff"),&ArrowDesc)))
-	//	return E_FAIL;
+	ArrowDesc.fSpeedPerSec = 10.f;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_UI_Loading_EnergyEff"), TEXT("Layer_MarkArrowEff"),&ArrowDesc)))
+		return E_FAIL;
 	
 	CUIObject::UI_DESC SelectIconDesc = {};
 	for (size_t i = 0; i < CUI_Define::PAWN_END; i++)

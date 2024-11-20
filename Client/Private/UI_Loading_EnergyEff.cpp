@@ -30,7 +30,7 @@ HRESULT CUI_Loading_EnergyEff::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = 30.f, m_fSizeY = 30.f;
+	m_fSizeX = 50.f, m_fSizeY = 50.f;
 	m_fPosX = m_vPrevWinSize.x * 0.5f, m_fPosY = m_vPrevWinSize.y * 0.5f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
@@ -57,25 +57,25 @@ void CUI_Loading_EnergyEff::Update(_float fTimeDelta)
 	
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,{ fRotationX ,fRotationY , 0.f,1.f });*/
 
-	//if (m_pGameInstance->Key_Pressing(DIK_W))
-	//{
-	//	m_pTransformCom->Go_Up(fTimeDelta);
-	//}
-	//
-	//if (m_pGameInstance->Key_Pressing(DIK_S))
-	//{
-	//	m_pTransformCom->Go_Down(fTimeDelta);
-	//}
-	//
-	//if (m_pGameInstance->Key_Pressing(DIK_A))
-	//{
-	//	m_pTransformCom->Go_Left(fTimeDelta);
-	//}
-	//
-	//if (m_pGameInstance->Key_Pressing(DIK_D))
-	//{
-	//	m_pTransformCom->Go_Right(fTimeDelta);
-	//}
+	if (m_pGameInstance->Key_Pressing(DIK_W))
+	{
+		m_pTransformCom->Go_Up(fTimeDelta);
+	}
+	
+	if (m_pGameInstance->Key_Pressing(DIK_S))
+	{
+		m_pTransformCom->Go_Down(fTimeDelta);
+	}
+	
+	if (m_pGameInstance->Key_Pressing(DIK_A))
+	{
+		m_pTransformCom->Go_Left(fTimeDelta);
+	}
+	
+	if (m_pGameInstance->Key_Pressing(DIK_D))
+	{
+		m_pTransformCom->Go_Right(fTimeDelta);
+	}
 
 	//CTransform* pTargetTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_CHARACTER, TEXT("Layer_MarkArrow"), TEXT("Com_Transform")));
 	//_vector vOriginPos = pTargetTransform->Get_State(CTransform::STATE_POSITION);
@@ -111,7 +111,7 @@ HRESULT CUI_Loading_EnergyEff::Render(_float fTimeDelta)
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(32)))
 		return E_FAIL;
 
 	if (FAILED(m_pTrailVIBuffer->Bind_Buffers()))
