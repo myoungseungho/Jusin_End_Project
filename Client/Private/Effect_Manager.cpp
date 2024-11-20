@@ -64,6 +64,7 @@ void CEffect_Manager::Update(_float fTimeDelta)
 	{
 		if ((*iter)->m_bIsDoneAnim)
 		{
+			
 			(*iter)->Free();
 			iter = m_UsingEffect.erase(iter);
 		}

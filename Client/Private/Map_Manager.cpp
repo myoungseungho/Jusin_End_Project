@@ -71,7 +71,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Pressing(DIK_F8))
 		Map_Change(MAP_SPACE);
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
-		Map_Change(MAP_VOLCANO);
+		Map_Change(MAP_EF_SPACE);
 	
 	
 }
@@ -93,7 +93,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 	switch (eMapType)
 	{
 	case MAP_SPACE:
-	case MAP_DEST_SPACE:
+	case MAP_DEST_SPACE:	
 		for (auto& iter : m_SpaceModels)
 			iter.second->SetActive(true);
 		for (auto& iter : m_Destructive_SpaceModels)
@@ -105,6 +105,19 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 
 		m_eCurMap = MAP_SPACE;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_SPACE);
+		break;
+	case MAP_EF_SPACE:
+		for (auto& iter : m_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(false);
+
+		m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
 		break;
 	case MAP_VOLCANO:
 	case MAP_DEST_VOLCANO:

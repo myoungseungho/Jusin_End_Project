@@ -822,6 +822,10 @@ HRESULT CLevel_GamePlay::Ready_Space()
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceMeteoBreak");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"), &tDesc)))
 		return E_FAIL;
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceEF");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEF"), TEXT("Layer_MeteoBreak"), &tDesc)))
+		return E_FAIL;
+	
 	return S_OK;
 }
 

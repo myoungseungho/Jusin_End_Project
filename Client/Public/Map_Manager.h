@@ -23,7 +23,7 @@ public:
 	{
 		_wstring m_PrototypeKey;
 	}Map_Object_Key;
-	enum MAP_TYPE { MAP_SPACE, MAP_DEST_SPACE, MAP_VOLCANO, MAP_DEST_VOLCANO, MAP_END };
+	enum MAP_TYPE { MAP_SPACE, MAP_DEST_SPACE,MAP_EF_SPACE, MAP_VOLCANO, MAP_DEST_VOLCANO, MAP_END };
 private:
 	CMap_Manager();
 	virtual ~CMap_Manager() = default;

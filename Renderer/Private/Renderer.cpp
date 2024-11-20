@@ -1402,7 +1402,8 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 {
 	if (NULL == m_Distortions.size())
 		return S_OK;
-
+	int a = 10;
+	
 	m_fAccTime += fTimeDelta;
 
 	/* 벡터를 순회하면서 현재 기록된 위치에 디스토션 마스크를 한 렌더타겟에 한번에 그림 */
