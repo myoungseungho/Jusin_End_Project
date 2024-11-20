@@ -9,7 +9,6 @@
 #include"UI_Manager.h"
 #include "BattleInterface.h"
 
-#include "CharaSelectCamera.h"
 #include "RenderInstance.h" 
 
 #include <time.h>

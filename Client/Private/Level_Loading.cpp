@@ -9,6 +9,7 @@
 #include "Level_VS.h"
 
 #include "GameInstance.h"
+#include "RenderInstance.h"
 #include "SpaceSun.h"
 #include "UIObject.h"
 
@@ -20,6 +21,8 @@
 #include "UI_Loading_DragonBall.h"
 #include "UI_Loading_CreateFlyEff.h"
 #include "UI_Loading_EnergyEff.h"
+#include "Loading_Camera.h"
+#include "Loading_GodDragon.h"
 
 #include "UI_Manager.h"
 
@@ -44,9 +47,9 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 
-	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
-	if (nullptr == m_pLoader)
-		return E_FAIL;
+	//m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
+	//if (nullptr == m_pLoader)
+	//	return E_FAIL;
 
 	m_bIsLevelPrepared = TRUE;
 
@@ -108,6 +111,13 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
 		return E_FAIL;
 
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 #pragma endregion
 
 	/* For.Prototype_GameObject_UI_Loading */
@@ -150,6 +160,16 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CUI_Loading_EnergyEff::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* Prototype_GameObject_Loading_Camera */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Loading_Camera"),
+		CLoading_Camera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_CharacterSlectModel */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Loading_GodDragon"),
+		CLoading_GodDragon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	m_bIsLevelPrepared = true;
 
 	return S_OK;
@@ -157,6 +177,7 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 
 HRESULT CLevel_Loading::Ready_Layer()
 {
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_Camera"), TEXT("Layer_LoadingCamera"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading"), TEXT("Layer_UI_LoadingBackGround"));
 
 	CUIObject::UI_DESC Desc = {};
@@ -181,9 +202,24 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
+	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_UI_Loading_GodDragon"));
+
 	//CUIObject::UI_DESC EnergyEffDesc = {};
 	//EnergyEffDesc.fSpeedPerSec = 10.f;
 	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_Loading_EnergyEff"), TEXT("Layer_UI_LoadingBackGround"),&EnergyEffDesc);
+
+
+#pragma region Light
+	LIGHT_DESC			LightDesc{};
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(1.f, 1.f, 1.f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+#pragma endregion
 
 	return S_OK;
 }
@@ -211,47 +247,47 @@ void CLevel_Loading::Update(_float fTimeDelta)
 	if (CUI_Manager::Get_Instance()->m_bGamePlayLoadingFinish)
 		m_bNextLevel = TRUE;
 
-	if (m_pLoader->isFinished())
-	{
-		CLevel* pNextLevel = { nullptr };
-
-		switch (m_eNextLevelID)
-		{
-		case LEVEL_LOGO:
-			pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
-			break;
-
-		case LEVEL_GAMEPLAY:
-			//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-			if (m_bNextLevel || CUI_Manager::Get_Instance()->m_bActive == FALSE)
-				pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
-
-			break;
-		case LEVEL_LOBBY:
-			pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
-			break;
-		case LEVEL_CHARACTER:
-			pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
-			break;
-
-		case LEVEL_VS:
-			pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
-			break;
-		}
-
-		if (m_bNextLevel && m_eNextLevelID == LEVEL_GAMEPLAY)
-		{
-			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
-				return;
-		}
-	
-		//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-		else if (m_eNextLevelID != LEVEL_GAMEPLAY || CUI_Manager::Get_Instance()->m_bActive == FALSE)
-		{
-			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
-				return;
-		}
-	}
+	//if (m_pLoader->isFinished())
+	//{
+	//	CLevel* pNextLevel = { nullptr };
+	//
+	//	switch (m_eNextLevelID)
+	//	{
+	//	case LEVEL_LOGO:
+	//		pNextLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
+	//		break;
+	//
+	//	case LEVEL_GAMEPLAY:
+	//		//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
+	//		if (m_bNextLevel || CUI_Manager::Get_Instance()->m_bActive == FALSE)
+	//			pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
+	//
+	//		break;
+	//	case LEVEL_LOBBY:
+	//		pNextLevel = CLevel_Lobby::Create(m_pDevice, m_pContext);
+	//		break;
+	//	case LEVEL_CHARACTER:
+	//		pNextLevel = CLevel_Chara_Select::Create(m_pDevice, m_pContext);
+	//		break;
+	//
+	//	case LEVEL_VS:
+	//		pNextLevel = CLevel_VS::Create(m_pDevice, m_pContext);
+	//		break;
+	//	}
+	//
+	//	if (m_bNextLevel && m_eNextLevelID == LEVEL_GAMEPLAY)
+	//	{
+	//		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+	//			return;
+	//	}
+	//
+	//	//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
+	//	else if (m_eNextLevelID != LEVEL_GAMEPLAY || CUI_Manager::Get_Instance()->m_bActive == FALSE)
+	//	{
+	//		if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
+	//			return;
+	//	}
+	//}
 }
 
 HRESULT CLevel_Loading::Render(_float fTimeDelta)

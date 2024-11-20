@@ -18,7 +18,6 @@ public:
 
 private:
 	/* 내 게임내에 배경을 구성하는 객체들을 추가한다. */
-	HRESULT Ready_Layer_Camera(const _wstring& strLayerTag);
 	HRESULT Ready_Layer_BackGround(const _wstring& strLayerTag);
 	HRESULT Ready_Sound();
 	HRESULT Ready_Lights();

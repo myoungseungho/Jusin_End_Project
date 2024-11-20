@@ -7,7 +7,6 @@
 #include "UIObject.h"
 #include "GameObject.h"
 
-#include "CharaSelectCamera.h"
 #include "RenderInstance.h" 
 
 
@@ -19,9 +18,6 @@ CLevel_Chara_Select::CLevel_Chara_Select(ID3D11Device* pDevice, ID3D11DeviceCont
 HRESULT CLevel_Chara_Select::Initialize()
 {
 	m_iLevelIndex = LEVEL_CHARACTER;
-
-	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
-		return E_FAIL;
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
@@ -47,23 +43,6 @@ void CLevel_Chara_Select::Update(_float fTimeDelta)
 HRESULT CLevel_Chara_Select::Render(_float fTimeDelta)
 {
 	SetWindowText(g_hWnd, TEXT("로고레벨"));
-
-	return S_OK;
-}
-
-HRESULT CLevel_Chara_Select::Ready_Layer_Camera(const _wstring& strLayerTag)
-{
-	CCharaSelectCamera::CAMERA_FREE_DESC			CameraDesc{};
-
-	CameraDesc.fFovy = XMConvertToRadians(60.0f);
-	CameraDesc.fNear = 0.1f;
-	CameraDesc.fFar = 1000.f;
-	CameraDesc.fSpeedPerSec = 10.f;
-	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
-	CameraDesc.fSensor = 0.1f;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_CharacterSelectCamera"), strLayerTag, &CameraDesc)))
-		return E_FAIL;
 
 	return S_OK;
 }

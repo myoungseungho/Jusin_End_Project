@@ -37,7 +37,7 @@ HRESULT CLoading_GodDragon::Initialize(void* pArg)
 	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
 
 	//¾ÆÀÌµé
-	m_pModelCom->SetUp_Animation(0, true, 0.1f);
+	m_pModelCom->SetUp_Animation(5, true, 0.1f);
 
 	return S_OK;
 }
@@ -79,7 +79,7 @@ HRESULT CLoading_GodDragon::Render(_float fTimeDelta)
 			return E_FAIL;
 
 
-		if (FAILED(m_pShaderCom->Begin(3)))
+		if (FAILED(m_pShaderCom->Begin(6)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -97,7 +97,7 @@ HRESULT CLoading_GodDragon::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Frieza"),
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 

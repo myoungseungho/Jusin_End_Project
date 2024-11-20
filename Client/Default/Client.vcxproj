@@ -173,7 +173,7 @@
     <ClInclude Include="..\Public\AttackObject_Reflect.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
-    <ClInclude Include="..\public\CharaSelectCamera.h" />
+    <ClInclude Include="..\public\Loading_Camera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Frieza_MeleeAttack.h" />
     <ClInclude Include="..\Public\Frieza_Metal.h" />
@@ -275,6 +275,7 @@
     <ClInclude Include="..\public\UI_Loading_EnergyEff.h" />
     <ClInclude Include="..\public\UI_Loading_FlyEff.h" />
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
+    <ClInclude Include="..\public\UI_Lobby_Key_Enter.h" />
     <ClInclude Include="..\public\UI_Lobby_Text.h" />
     <ClInclude Include="..\public\UI_Lobby_TextCharaIcon.h" />
     <ClInclude Include="..\public\UI_Lobby_TextCursor.h" />
@@ -409,7 +410,7 @@
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
-    <ClCompile Include="..\private\CharaSelectCamera.cpp" />
+    <ClCompile Include="..\private\Loading_Camera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\Frieza_Metal.cpp" />
@@ -507,6 +508,7 @@
     <ClCompile Include="..\private\UI_Loading_EnergyEff.cpp" />
     <ClCompile Include="..\private\UI_Loading_FlyEff.cpp" />
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
+    <ClCompile Include="..\private\UI_Lobby_Key_Enter.cpp" />
     <ClCompile Include="..\private\UI_Lobby_Text.cpp" />
     <ClCompile Include="..\private\UI_Lobby_TextCharaIcon.cpp" />
     <ClCompile Include="..\private\UI_Lobby_TextCursor.cpp" />

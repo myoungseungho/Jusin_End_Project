@@ -134,9 +134,6 @@
 #include "UI_VS_TeamPanel.h"
 #include "UI_VS_Name.h"
 #include "UI_VS_NameOutLine.h"
-#include "UI_Lobby_TextCursor.h"
-
-#include "CharaSelectCamera.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -186,6 +183,8 @@
 #include "Lobby_Goku_RunEff.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
+#include "UI_Lobby_TextCursor.h"
+#include "UI_Lobby_Key_Enter.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -359,6 +358,10 @@ HRESULT CLoader::Loading_For_Lobby()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_02.png")))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_Key_Enter"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/Key_Enter.png")))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_Goku_RunEff"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/Lobby_Goku_Dust%d.png"),4))))
 		return E_FAIL;
@@ -499,6 +502,10 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextCursor"),
 		CUI_Lobby_TextCursor::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Key_Enter"),
+		CUI_Lobby_Key_Enter::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku_RunEff"),
@@ -787,11 +794,6 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	/* Prototype_GameObject_CharacterSlectMark */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectMark"),
 		CUI_CharaSelectMark::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	/* Prototype_GameObject_CharacterSlectModel */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCamera"),
-		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharacterSelectLight */

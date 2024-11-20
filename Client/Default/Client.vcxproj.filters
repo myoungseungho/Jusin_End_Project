@@ -325,7 +325,7 @@
     <ClCompile Include="..\private\UI_CharaSelectLight.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\CharaSelectCamera.cpp">
+    <ClCompile Include="..\private\Loading_Camera.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_CharaSelectCircle.cpp">
@@ -525,7 +525,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Frieza_Metal.cpp">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_Metal</Filter>
-  </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\private\Lobby_Frieza.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Frieza</Filter>
     </ClCompile>
@@ -549,6 +549,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Loading_GodDragon.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\GodDragon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_Key_Enter.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Key\Enter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1173,6 +1176,12 @@
     <Filter Include="02.GameObjects\UI\BackGround\Loading\GodDragon">
       <UniqueIdentifier>{8bdf6edc-630e-4af3-a88d-c6cd7ea0ae45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Key">
+      <UniqueIdentifier>{462a9b14-1062-4aad-9ec1-ae4e1f90ffbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Key\Enter">
+      <UniqueIdentifier>{5dc4777b-ea62-421a-930a-9089e3e5dbf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1649,7 +1658,7 @@
     <ClInclude Include="..\public\UI_CharaSelectLight.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\CharaSelectCamera.h">
+    <ClInclude Include="..\public\Loading_Camera.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_CharaSelectCircle.h">
@@ -1885,6 +1894,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Loading_GodDragon.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\GodDragon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_Key_Enter.h">
+      <Filter>02.GameObjects\UI\Lobby\Key\Enter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

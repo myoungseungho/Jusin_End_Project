@@ -288,6 +288,25 @@ PS_OUT PS_MAIN_GOKUDECAL(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_Loading_Dragon(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    if (vMtrlDiffuse.a < 0.1f)
+        discard;
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+	/* In.vNormal.xyz -> -1 ~ 1 */
+	/* Out.vNormal.xyz -> 0 ~ 1 */
+
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
     pass Default_Goku
@@ -374,6 +393,21 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_FRIEZA();
+    }
+
+//6
+    pass Loading_Dragon
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_Loading_Dragon();
     }
 }
 
