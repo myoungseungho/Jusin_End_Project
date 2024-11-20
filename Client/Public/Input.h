@@ -33,6 +33,7 @@ enum ButtonInput {
     ATTACK_SPECIAL,
     ATTACK_GRAB,
     ATTACK_BENISHING,
+    ATTACK_TRANSFORM,
 };
 
 // Input 클래스 정의 (방향 + 버튼을 포함)
@@ -58,9 +59,7 @@ public:
     bool operator==(const CInput& other) const {
         return direction == other.direction && button == other.button;
     }
-
-    
-
+  
 };
 
 END

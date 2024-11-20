@@ -33,6 +33,11 @@ HRESULT CVolcano_Stage::Initialize(void * pArg)
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
 	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_VOLCANO,
 		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
+	
+	DISTORTION_DESC tDesc{};
+	tDesc.isLoop = true;
+
+	//m_pRenderInstance->Create_Distortion()
 	return S_OK;
 }
 

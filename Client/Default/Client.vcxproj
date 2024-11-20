@@ -176,6 +176,7 @@
     <ClInclude Include="..\public\CharaSelectCamera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Frieza_MeleeAttack.h" />
+    <ClInclude Include="..\Public\Frieza_Metal.h" />
     <ClInclude Include="..\Public\Hit_MeleeAttack.h" />
     <ClInclude Include="..\Public\IMGUI_Animation_Tab.h" />
     <ClInclude Include="..\Public\IMGUI_Effect_Tab.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="..\private\CharaSelectCamera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp" />
+    <ClCompile Include="..\Private\Frieza_Metal.cpp" />
     <ClCompile Include="..\Private\Hit_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\IMGUI_Object_Tab.cpp" />
     <ClCompile Include="..\Private\IMGUI_Shader_Tab.cpp" />

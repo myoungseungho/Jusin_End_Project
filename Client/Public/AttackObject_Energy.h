@@ -35,6 +35,8 @@ public:
 		_float fColliderfCY = { 0.8f };
 		_float fAttackDelayTime = { 0.07f };
 
+		_bool bHeightCorrection = true;
+
 	};
 private:
 	CAttackObject_Energy(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -96,6 +98,8 @@ private:
 	_float m_fAttackDelayTime = { 0.07f };
 
 	CCollider_Manager::COLLIDERGROUP m_ecolliderGroup;
+
+	_bool m_bHeightCorrection = { true };
 
 public:
 	static CAttackObject_Energy* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

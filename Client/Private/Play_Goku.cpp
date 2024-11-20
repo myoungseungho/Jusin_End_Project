@@ -92,6 +92,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	m_iAttack_Crouch_Heavy = { ANIME_ATTACK_CROUCH_HEAVY };
 
 	m_iBound_Ground = { ANIME_HIT_BOUND_DOWN };
+	m_iLayUp = { ANIME_LAYUP };
 
 	m_iGuard_GroundAnimationIndex = { ANIME_GUARD_GROUND };
 	m_iGuard_CrouchAnimationIndex = { ANIME_GUARD_CROUCH };
@@ -116,6 +117,15 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	m_iReflectAnimationIndex = { ANIME_REFLECT };
 
+	m_iStartAnimatonIndex = { ANIME_START_DEFAULT }; //600cs 
+	m_iWinAnimationIndex = { ANIME_WIN_DEFAULT };	//610cs
+	m_iNextRound_RightHandAppear_Cutscene_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE }; //620c
+	m_iNextRound_RightHand_AnimationIndex = { ANIME_NEWROUND_RIGHTHAND };  //621cs ->631으로 연계
+
+	m_iNextRound_LeftHand_Cutscene_AnimationIndex = { ANIME_NEWROUND_LEFTHAND_CUTSCENE };  //630 Durtaio
+	m_iNextRound_LeftHand_AnimationIndex = { ANIME_NEWROUND_LEFTHAND };  //631 Durtaion 24
+
+
 	m_iNextAnimation.first = ANIME_IDLE;
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -126,6 +136,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
 
+	//m_eChaseSoundIndex = (_short)CSound_Manager::SOUND_KEY_NAME::Chase_Attack_21;
 
 	m_tAttackMap.Initalize(this);
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
@@ -244,6 +255,13 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	__super::Player_Update(fTimeDelta);
 
 
+	//if (m_bOnlyCutSceneNoMove)
+	//{
+	//	Character_Play_Animation(fTimeDelta);
+	//	return;
+	//}
+
+
 	Update_Tag_In(fTimeDelta);
 
 
@@ -255,6 +273,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		m_bDebugInputLock = !m_bDebugInputLock;
 	}
 
+
+	Update_Opening(fTimeDelta);
 
 	if (m_bDebugInputLock)
 		return;
@@ -292,7 +312,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 					m_fAccDyingTime += fTimeDelta;
 					if (m_fAccDyingTime > 2.f)
 					{
-						Tag_In(m_ePlayerSlot);
+						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+						//Tag_In(m_ePlayerSlot);
 					}
 				}
 				 
@@ -528,7 +549,11 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			{
 				Set_Animation(m_iHit_Air_FallAnimationIndex);
 			}
-
+			else if (m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+			{
+				Set_Animation(ANIME_LAYUP);
+				Set_CurrentAnimationPositionJump(5.f);
+			}
 			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
 
@@ -663,7 +688,8 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
-		system("cls");
+		//system("cls");
+		m_iHP = 100;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
@@ -1269,6 +1295,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_HEAVY:
 	{
+		m_bGrab_Air = false;
+
 		CAttackObject::ATTACK_DESC Desc{};
 		/*	Desc.ColliderDesc.width = 1.0;
 			Desc.ColliderDesc.height = 1.0;
@@ -1295,7 +1323,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 		Desc.iGainKiAmount = 10;
 
-		Desc.bCameraZoom = false;
+		//Desc.bCameraZoom = false;
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
@@ -1356,7 +1385,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
+		//Desc.fRanged_Impus_NoneDirection = { 9.f,0.f }; 
+		Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
+
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 		Desc.strEffectName = TEXT("BurstJ-03");
@@ -1591,7 +1622,15 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//높이가 5 이상이면 내려찍히는 판정.  디폴트는 false이므로  else 처리 안함
 		//if(Get_fHeight() > 5)
-		if (Get_fHeight() > 3)
+
+		if (m_bGrab_Air)
+		{
+			Desc.bGroundSmash = true;
+			Desc.fAnimationLockTime = 0.7f;
+			m_bGrab_Air = false;
+
+		}
+		else if (Get_fHeight() > 3)
 		{
 			Desc.bGroundSmash = true;
 			Desc.fAnimationLockTime = 0.7f;
@@ -1676,6 +1715,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.strEffectName = TEXT("BurstJ-03_Rotated_Left");
 			Desc.iGainKiAmount = 7;
 
+			Desc.bOnwerHitNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -3163,7 +3203,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iOnwerNextAnimationIndex = m_iGrabAnimationIndex;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Grab"), TEXT("Layer_AttackObject"), &Desc);
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		break;
 
@@ -3197,7 +3237,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bDrawNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		break;
 		case 2:
@@ -3229,7 +3269,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Goku_SFX, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		break;
 
@@ -3401,7 +3441,8 @@ _float CPlay_Goku::Get_DamageScale(_bool bUltimate)
 	if (m_bSparking)
 	{
 		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
-		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		//fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		fDamageScale += 0.1f;
 	}
 
 	if (m_bAlwaysss3Test)

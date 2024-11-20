@@ -11,6 +11,7 @@
 
 #include "Effect_Manager.h"
 
+
 CAttackObject::CAttackObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -75,7 +76,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_bOnwerHitNoneStop = pDesc->bOnwerHitNoneStop;
 
 	m_bHitNoGravity = pDesc->bHitNoGravity;
-		 
+	m_fMaxNoNoGravitySafeTime = pDesc->fMaxNoNoGravitySafeTime;
+
 	if (pDesc->iVirtualCameraindex != 200)
 	{
 		m_iVirtualCameraindex = pDesc->iVirtualCameraindex;
@@ -88,6 +90,16 @@ HRESULT CAttackObject::Initialize(void* pArg)
 		m_fCameraShakeDuration = pDesc->fCameraShakeDuration;
 		m_fCameraShakeMagnitude = pDesc->fCameraShakeMagnitude;
 	}
+
+
+	m_iOnwerDirection = pDesc->iOnwerDirection;
+	if (m_iOnwerDirection == 231)
+	{
+		m_iOnwerDirection = m_pOwner->Get_iDirection();
+	}
+
+	m_isfxSoundIndex = pDesc->isfxSoundIndex;
+	m_fsfxVolume= pDesc->fsfxVolume;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -128,7 +140,7 @@ void CAttackObject::Update(_float fTimeDelta)
 	if (m_fAccLifeTime > m_fLifeTime)
 	{
 		Set_RemoteDestory();
-		
+
 	}
 	else
 		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
@@ -336,13 +348,18 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		{
 			pCharacter->Set_GroundSmash(m_bGroundSmash);
 
-			if(m_bOnwerHitNoneStop == false)
+			if (m_bOnwerHitNoneStop == false)
 				m_pOwner->Set_AnimationStop(m_fAnimationLockTime);
 
 			m_pOwner->Gain_KiAmount(m_iGainKiAmount);
 
 			m_pOwner->Set_AttackBackEvent(true);
 
+			
+			if (m_isfxSoundIndex != 60000)
+			{
+				m_pGameInstance->Play_Sound((CSound_Manager::SOUND_KEY_NAME)m_isfxSoundIndex, false, m_fsfxVolume);
+			}
 
 			if (m_fForcedGravityTime != 100)   //무시할 기본 값. 0은 쓸 수도 있어서 100으로 함
 			{
@@ -366,7 +383,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					Camera_Hit_Knock_Away_Up(m_pOwner, pCharacter);
 
 
-				
+
 				//아래 위치 조정은 일부러 카메라 안에 넣음
 
 				//어퍼컷/올려차기의 경우  정지시간이 긴 공격들은 위치조정
@@ -440,7 +457,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//m_pEffect_Manager->Copy_Layer(TEXT("BurstU-1"), resultMatrix);
 			}
 
-				break;
+			break;
 
 
 			case Client::HIT_CROUCH_MEDIUM:
@@ -455,7 +472,7 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstU-2"), &tDesc);
 			}
 
-				break;
+			break;
 
 			case Client::HIT_HEAVY:
 			case Client::HIT_HEAVY_DOWN:
@@ -532,9 +549,9 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 	else if (other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack || other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack)
 	{
 
-		if(m_bDrawNoneStop == false)
+		if (m_bDrawNoneStop == false)
 			m_pOwner->Set_AnimationStop(0.3f);
-	
+
 		//CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 		//pCharacter->Set_AnimationStop(0.3f);
 
@@ -572,7 +589,7 @@ _bool CAttackObject::Check_UpdateStop(_float fTimeDelta)
 
 		if (m_fAccUpdateStop > m_fMaxUpdateStop)
 			m_bUpdateStop = false;
-		
+
 	}
 
 	if (m_bUpdateStop)
@@ -614,6 +631,8 @@ void CAttackObject::Camera_Hit_Knock_Away_Left(CCharacter* pOwner, CCharacter* p
 	case Client::CUI_Define::FRIEZA:
 		break;
 	case Client::CUI_Define::HIT:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_HEAVY, 0, pOwner);
+		main_Camera->StartCameraShake(0.5f, 0.2f);
 		break;
 	}
 }
@@ -645,6 +664,9 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	case Client::CUI_Define::HIT:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP, 0, pOwner);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_Hit, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
+
 		break;
 	}
 }
@@ -716,9 +738,9 @@ HRESULT CAttackObject::Ready_Components(ATTACK_DESC* pDesc)
 	//
 	//}
 	//else
-		m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
+	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
-	
+
 
 	m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 

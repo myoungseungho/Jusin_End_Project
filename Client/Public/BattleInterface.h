@@ -66,10 +66,21 @@ public:
 	//	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot);
 	_bool Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot, _vector vPos);
 
+
+	//Initalize같은것.  character에 enemy등록과는 다름
 	void Regist_Character(_ubyte iTeam, class CCharacter* pCharacter, _ubyte iSlot);
+	
+
+	void Set_Character_pEnemy(_ubyte iNewTeam, _ubyte iNewSlot);
+
 
 	//캐릭터 변경시 호출해서 상대팀에게 enemy를 바꿔줘야됨
 	class CCharacter* EnemyInitalize(_ubyte iTeam);
+
+	//사망시 그냥 이거나 호출하고 말자
+	_bool Check_NextRoundFromDeathCharacter(_ubyte iTeam, _ubyte NewCharacterslot);
+	
+	void Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iCharacterslot);
 
 private:
 	

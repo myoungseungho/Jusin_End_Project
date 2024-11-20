@@ -148,6 +148,16 @@ vector<CInput> CCharacter::Command_Forward =
 	{ MOVEKEY_RIGHT, ATTACK_NONE }
 
 };
+vector<CInput> CCharacter::Command_Crouch_Crouch_SpecialAttack = 
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN, ATTACK_SPECIAL},
+
+};
+
+
 
 vector<CInput> CCharacter::Command_LightAttack = { {MOVEKEY_NEUTRAL, ATTACK_LIGHT} };
 vector<CInput> CCharacter::Command_MediumAttack = { {MOVEKEY_NEUTRAL, ATTACK_MEDIUM} };
@@ -167,6 +177,7 @@ vector<CInput> CCharacter::Command_Crouch_MediumAttack = { {MOVEKEY_DOWN, ATTACK
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack = { {MOVEKEY_DOWN, ATTACK_HEAVY} };
 vector<CInput> CCharacter::Command_Crouch_SpecialAttack = { {MOVEKEY_DOWN, ATTACK_SPECIAL} };
 
+
 vector<CInput> CCharacter::Command_Crouch_MediumAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_MEDIUM} };
 vector<CInput> CCharacter::Command_Crouch_HeavyAttack_Extra = { {MOVEKEY_DOWN_RIGHT, ATTACK_HEAVY} };
 
@@ -174,7 +185,12 @@ vector<CInput> CCharacter::Command_Reflect = { {MOVEKEY_LEFT, ATTACK_SPECIAL} };
 
 vector<CInput> CCharacter::Command_Up_SpecialAttack = { {MOVEKEY_UP, ATTACK_SPECIAL} };
 
+
+vector<CInput> CCharacter::Command_LowBenishingAttack = { {MOVEKEY_DOWN, ATTACK_BENISHING} };
 vector<CInput> CCharacter::Command_BenishingAttack = { {MOVEKEY_NEUTRAL, ATTACK_BENISHING} };
+
+
+vector<CInput> CCharacter::Command_Transform = { {MOVEKEY_DOWN, ATTACK_TRANSFORM} };
 
 
 
@@ -333,7 +349,11 @@ void CCharacter::Late_Update(_float fTimeDelta)
 	}
 
 	if (m_bPlaying || m_bTag_In)
+	{
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
+
+
+	}
 
 #ifdef _DEBUG
 	m_pRenderInstance->Add_DebugComponent(m_pColliderCom);
@@ -588,7 +608,10 @@ _bool CCharacter::InputCommand()
 		{
 			iAttackkey = ATTACK_BENISHING;
 		}
-
+		if (m_pGameInstance->Key_Down(DIK_M))
+		{
+			iAttackkey = ATTACK_TRANSFORM;
+		}
 		// if (m_pGameInstance->Key_Pressing(DIK_Y))
 		// {
 		//	 iAttackkey = ATTACK_LIGHT;
@@ -682,7 +705,10 @@ _bool CCharacter::InputCommand()
 		{
 			iAttackkey = ATTACK_BENISHING;
 		}
-
+		if (m_pGameInstance->Key_Down(DIK_NUMPAD1))
+		{
+			iAttackkey = ATTACK_TRANSFORM;
+		}
 		// if (m_pGameInstance->Key_Pressing(DIK_Y))
 		// {
 		//	 iAttackkey = ATTACK_LIGHT;
@@ -966,6 +992,11 @@ _float CCharacter::Get_fHeight()
 {
 	return 	XMVectorGetY(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
+}
+
+CCharacter* CCharacter::Get_pEnemy()
+{
+	return m_pEnemy;
 }
 
 void CCharacter::Set_ForcedGravityDown()
@@ -1386,7 +1417,6 @@ void CCharacter::Chase2(_float fTimeDelta)
 		if (m_iLookDirection == 1)
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, EffectAngle });
 		else if (m_iLookDirection == -1)
-
 			m_pChaseEffectLayer->Set_Copy_Layer_Rotation({ 0.f, 0.f, 180 - EffectAngle });
 
 
@@ -2095,7 +2125,8 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 */
 AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
 {
-	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground)
+	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground
+		|| m_pModelCom->m_iCurrentAnimationIndex == m_iLayUp)
 		return RESULT_MISS;
 
 	//스턴상태, 땅바닥에 꽂혔을때 검사
@@ -2104,6 +2135,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 		if (eAttackGrade != GRADE_ULTIMATE)
 			return RESULT_MISS;
 	}
+
+	m_bInvisible = false;
 
 	//스턴 상태가 아니면 가드 체크
 	if (m_bStun == false)
@@ -2116,6 +2149,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 		if (eResult == RESULT_GUARD)
 		{
+
+
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 				Set_Animation(m_iGuard_CrouchAnimationIndex);
 
@@ -2171,7 +2206,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 		}
 		else if (eResult != RESULT_HIT)    //회피나 비긴 경우 아니면 일단 속행.   저 경우는 나중에 따로 처리
 			return eResult;
-
+		
 
 	}
 
@@ -2628,6 +2663,7 @@ void CCharacter::Set_BreakFall_Ground()
 {
 	
 
+
 	Set_Animation(m_iBreakFall_Ground, 2.f);
 	Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
 
@@ -2635,6 +2671,10 @@ void CCharacter::Set_BreakFall_Ground()
 	Reset_AttackStep();
 
 
+	if (inputBuffer.size() == 0)
+	{
+		inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
+	}
 	DirectionInput iMoveKey = inputBuffer.back().direction;
 
 	if (iMoveKey == MOVEKEY_UP || iMoveKey == MOVEKEY_UP_LEFT)
@@ -2649,7 +2689,11 @@ void CCharacter::Set_BreakFall_Ground()
 
 		Set_ForcedGravityTime_LittleUp();
 	}
-
+	else if (iMoveKey == MOVEKEY_DOWN)
+	{
+		Set_Animation(m_iBound_Ground, 2.f);
+		Set_NextAnimation(m_iLayUp, 2.f);
+	}
 
 	else //if (iMoveKey == MOVEKEY_LEFT)
 	{
@@ -2710,10 +2754,12 @@ void CCharacter::BreakFall_Air()
 	}
 }
 
-void CCharacter::Set_bNoGravity(_bool bNoGravity)
+void CCharacter::Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime)
 {
 	m_bNoGravity = bNoGravity;
 	m_fNoGravitySafeTime = 0.f;
+	m_fMaxfNoGravitySafeTime = MaxfNoGravitySafeTime;
+
 }
 
 _bool CCharacter::Update_Tag_In(_float fTimeDelta)
@@ -2740,6 +2786,20 @@ _bool CCharacter::Update_Tag_In(_float fTimeDelta)
 	}
 
 	return false;
+}
+
+_uint CCharacter::Get_NewCharacterslot()
+{
+	//짝수면 +1  홀수면 -1
+	if (m_ePlayerSlot % 2 == 0)
+	{
+		//bTag_Succes = CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 1, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+		return 1;
+	}
+	else
+		return 0;
+		//bTag_Succes = CBattleInterface_Manager::Get_Instance()->Tag_CharacterAIO(m_iPlayerTeam, 0, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+
 }
 
 void CCharacter::Gain_AttackStep(_ushort iStep)
@@ -2929,7 +2989,8 @@ _float CCharacter::Get_DamageScale(_bool bUltimate)
 	if (m_bSparking)
 	{
 		//fDamageScale += 0.2f;   //합연산. 너무 큰가?  15%->35%
-		fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		//fDamageScale *= 1.2f;	  //곱연산 .  15%->16%   너무 작은가 싶지만 원작반영.
+		fDamageScale += 0.1f;
 	}
 
 
@@ -4141,6 +4202,136 @@ _bool CCharacter::Get_bDying()
 	return m_bDying;
 }
 
+void CCharacter::Play_WinAnimation()
+{
+	//맵 좌표이동, 카메라컷씬, ui나 다른 캐릭터들 안보이게
+
+
+	//다른캐릭터들 안보이게
+
+	_short iMySlot = Get_NewCharacterslot();
+
+	if (iMySlot == 0)
+		iMySlot = 1;
+	else if(iMySlot == 1)
+		iMySlot = 0;
+
+	CBattleInterface_Manager::Get_Instance()->Set_InvisibleWithoutMe(m_iPlayerTeam, iMySlot);
+
+
+	//위치는 이게 아니겠지만 일단 설정
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0,0,0,1.f });
+
+	Set_Animation(m_iWinAnimationIndex);
+
+	//m_bOnlyCutSceneNoMove = true;
+
+	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	main_Camera->StartCameraShake(0.2f, 0.2f);
+	
+		
+
+
+
+
+}
+
+void CCharacter::Play_NewRound_Loser()
+{
+	//if(m_iPlayerTeam)
+	//	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(-2.f + (m_iPlayerTeam * 2), 0.f, 0.f, 1.f));
+
+	//m_bDynamicMove = true;
+
+	m_bGrabbed = true;
+	m_bOpening = true;
+	m_fMaxOpeningTime = 2.f;
+
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, {-1.f+(m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f,0.5f, 0.f, 1.f });
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (1.5f - m_iPlayerTeam),0.5f, 0.f, 1.f });
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (1.5f - m_iPlayerTeam) * 0.5f,0.5f, 0.f, 1.f });
+
+	Set_Animation(m_iNextRound_RightHandAppear_Cutscene_AnimationIndex);
+	//Set_NextAnimation(m_iNextRound_RightHand_AnimationIndex,20.f);
+	//Set_NextAnimation(m_iBreakFall_Air, 20.f);
+	//Set_fImpulse({ (1.5f - m_iPlayerTeam) * -3.f * m_iLookDirection,2.f });
+
+
+
+
+	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	pMainCamera->Set_Player(this);
+
+
+
+
+}
+
+void CCharacter::Play_NewRound_Winner()
+{
+	m_bGrabbed = true;
+	m_bOpening = true;
+	m_fMaxOpeningTime = 2.f;
+
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -1.f + (m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
+
+	//되긴 하는데 불안함
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f,0.5f, 0.f, 1.f });
+	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { (1.5f - m_iPlayerTeam)*0.5f,0.5f, 0.f, 1.f });
+
+
+	Set_Animation(m_iNextRound_LeftHand_Cutscene_AnimationIndex);
+	//Set_NextAnimation(m_iNextRound_LeftHand_AnimationIndex, 20.f);
+	//Set_NextAnimation(m_iBreakFall_Air, 20.f);
+
+	//1팀이면 왼쪽 2팀이면 오른쪽
+	
+	//-일땐 됐는데 왜 갑자기 이러냐
+	//Set_fImpulse({ (1.5f - m_iPlayerTeam) * -3.f * m_iLookDirection,2.f });
+
+	//Set_fImpulse({ (1.5f - m_iPlayerTeam) * -3.f * m_iLookDirection,2.f });
+
+	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	pMainCamera->Set_Player(this);
+
+
+}
+
+void CCharacter::Update_Collider()
+{
+	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+void CCharacter::Update_Opening(_float fTimeDelta)
+{
+	if (m_bOpening == false)
+		return;
+
+
+	m_fAccOpeningTime += fTimeDelta;
+
+	if (m_fAccOpeningTime > m_fMaxOpeningTime)
+	{
+		m_fAccOpeningTime = 0.f;
+		m_bOpening = false;
+		m_bGrabbed = false;
+		m_bDynamicMove = false;
+
+		Add_Move({ (-1.5f + m_iPlayerTeam)*0.5f,0.f });
+		Set_Animation(m_iBreakFall_Air);
+		Set_fImpulse({ (-1.5f + m_iPlayerTeam) * 8.f, 4.f });
+	}
+	
+	
+}
+
+void CCharacter::Set_bPlaying(_bool bPlaying)
+{
+	m_bPlaying = bPlaying;
+}
+
+
 void CCharacter::Set_StopAllAttackObject(_float fStopTime)
 {
 	CBattleInterface_Manager::Get_Instance()->Stop_AllAttackObject(fStopTime);
@@ -4779,7 +4970,7 @@ void CCharacter::Gravity(_float fTimeDelta)
 	{
 		m_fNoGravitySafeTime += fTimeDelta;
 
-		if (m_fNoGravitySafeTime > 0.3f)
+		if (m_fNoGravitySafeTime > m_fMaxfNoGravitySafeTime)
 		{
 			m_bNoGravity = false;
 			m_fNoGravitySafeTime = 0.f;
@@ -5177,7 +5368,10 @@ void CCharacter::Gravity(_float fTimeDelta)
 			else
 			{
 				//Set_Animation(m_iBound_Ground);
-
+				if (inputBuffer.size() == 0)
+				{
+					inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
+				}
 				Set_Animation(m_iBreakFall_Ground, 2.f);
 				if (inputBuffer.back() == CInput{ MOVEKEY_UP, ATTACK_LIGHT })
 				{
@@ -5311,14 +5505,6 @@ HRESULT CCharacter::Bind_ShaderResources()
 	if (nullptr == pLightDesc)
 		return E_FAIL;
 
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDiffuse", &pLightDesc->vDiffuse, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightAmbient", &pLightDesc->vDiffuse, sizeof(_float4))))
-	//	return E_FAIL;
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightSpecular", &pLightDesc->vSpecular, sizeof(_float4))))
-	//	return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iPlayerDirection", pLightDesc->pPlayerDirection, sizeof(_int))))
 		return E_FAIL;
 
@@ -5477,7 +5663,8 @@ CGameObject* CCharacter::Clone(void* pArg)
 void CCharacter::Free()
 {
 	__super::Free();
-
+	Safe_Release(m_pDetailTextureCom);
+	Safe_Release(m_p1PTextureCom);
 	Safe_Release(m_pOutLineCom);
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);

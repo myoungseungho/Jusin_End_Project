@@ -117,8 +117,8 @@ HRESULT CLight::Render_Effect(CShader* pShader, CVIBuffer_Rect* pVIBuffer, LIGHT
 
 	/*
 	* 
-	* float g_fLightAccTime;
-float g_fLightLifeTime;
+	float g_fLightAccTime;
+	float g_fLightLifeTime;
 	이미 먼저 m_fTimeDelta를 더해준 상태 들어온 시간에대한 임계점을 정할지는 판단해봐야됨
 	만약 기준이 있다면 알파를 진행시간 m_fAccTime 및 m_fLifeTime 사이값
 	

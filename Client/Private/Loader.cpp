@@ -53,6 +53,7 @@
 #include "Volcano_Smoke.h"
 #include "Volcano_Mountain.h"
 #include "Volcano_Destructive.h"
+#include "Frieza_Metal.h"
 //LOGO
 #include "UI_Logo_BG.h"
 #include "UI_Logo_Mark.h"
@@ -2262,9 +2263,36 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Frieza"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_TestMesh.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Frieza/FRN_AllMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
-	 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_base_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_base_1P.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_base_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_base_2P.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_base_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRG_base_1P.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_base_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRG_base_2P.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRG_ilm.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_ilm.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_decal.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_detail"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_detail.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_metal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/metal.png")))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_TestMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -3170,7 +3198,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Frieza"),
 		CPlay_Frieza::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Frieza_Metal"),
+		CFrieza_Metal::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Attack"),
 		CAttackObject::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

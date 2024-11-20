@@ -73,6 +73,11 @@ void CRenderInstance::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
 	m_pRenderer->Create_Distortion(tDistortionDesc);
 }
 
+void CRenderInstance::Delete_LoopDistortion()
+{
+	m_pRenderer->Delete_LoopDistortion();
+}
+
 void CRenderInstance::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
 {
 	m_pRenderer->Create_HitDistortion(vPlayerPos, vDir, vOffSetPos, vOffSetScale, fLifeTime);
@@ -91,6 +96,11 @@ void CRenderInstance::Show_Layer_View()
 _bool CRenderInstance::Get_isLayerView()
 {
 	return m_pRenderer->Get_isLayerView();
+}
+
+void CRenderInstance::Set_CurMapType(CRenderer::MAP_TYPE eType)
+{
+	m_pRenderer->Set_CurMapType(eType);
 }
 
 HRESULT CRenderInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, _fvector vClearColor)
