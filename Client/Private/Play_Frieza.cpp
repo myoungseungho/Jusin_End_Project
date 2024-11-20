@@ -1346,7 +1346,16 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bOwnerNextAnimation = false;
 			Desc.bGrabedGravity = true;
 			Desc.fForcedGravityTime = 0.1f;
-			Desc.iVirtualCameraindex = (_uint)CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
+
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			if (Get_iDirection() == 1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this);
+			}
+			else if (Get_iDirection() == -1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, nullptr, true);
+			}
 
 			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
 

@@ -1080,7 +1080,55 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Frieza_Light_Final_Anim1_Flip
-PointCount: 0
+PointCount: 6
+
+[CameraPoint]
+Position: -0.733609 1.5 -5
+Rotation: -0.00261828 0 -0 0.999997
+Duration: 0.7
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.96985 3.57508 -2.59554
+Rotation: 0.218789 0.35201 -0.0849984 0.906088
+Duration: 0.6
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.96985 3.57508 -2.59554
+Rotation: 0.218789 0.35201 -0.0849984 0.906088
+Duration: 0.4
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.12225 1.79401 -0.997617
+Rotation: 0.15883 0.377081 -0.0658089 0.910084
+Duration: 0.2
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.12225 1.79401 -0.997617
+Rotation: 0.15883 0.377081 -0.0658089 0.910084
+Duration: 0.3
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Frieza_Heavy
