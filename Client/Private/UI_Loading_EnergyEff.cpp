@@ -30,7 +30,7 @@ HRESULT CUI_Loading_EnergyEff::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = 30.f, m_fSizeY = 10.f;
+	m_fSizeX = 15.f, m_fSizeY = 15.f;
 	m_fPosX = m_vPrevWinSize.x * 0.5f, m_fPosY = m_vPrevWinSize.y * 0.5f;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
@@ -46,6 +46,16 @@ void CUI_Loading_EnergyEff::Camera_Update(_float fTimeDelta)
 void CUI_Loading_EnergyEff::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
+
+	/*m_fAngle += 180.f * fTimeDelta;
+
+	if (m_fAngle >= 360)
+		m_fAngle = 0;*/
+	
+	/*_float fRotationX = (m_vPrevWinSize.x * 0.5f) + 100.f * cos(XMConvertToRadians(m_fAngle));
+	_float fRotationY = (m_vPrevWinSize.y * 0.5f) - 100.f * sin(XMConvertToRadians(m_fAngle));
+	
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,{ fRotationX ,fRotationY , 0.f,1.f });*/
 
 	if (m_pGameInstance->Key_Pressing(DIK_W))
 	{
@@ -78,10 +88,11 @@ void CUI_Loading_EnergyEff::Late_Update(_float fTimeDelta)
 	__super::Late_Update(fTimeDelta);
 
 	RENDER_OBJECT tDesc{};
-	tDesc.tGlowDesc.iPassIndex = 7;
-	tDesc.tGlowDesc.fGlowFactor = 10.f;
+	tDesc.tGlowDesc.iPassIndex = 2;
+	tDesc.tGlowDesc.fGlowFactor = 4.7f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this,&tDesc);
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI_GLOW, this,&tDesc);
 }
 
 HRESULT CUI_Loading_EnergyEff::Render(_float fTimeDelta)
@@ -92,9 +103,9 @@ HRESULT CUI_Loading_EnergyEff::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
-	//_vector vColor = { 1.f, 0.f, 0.f };
-	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
-	//	return E_FAIL;
+	_vector vColor = { 1.f, 0.f, 0.f };
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
+		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Begin(32)))
 		return E_FAIL;
@@ -104,7 +115,7 @@ HRESULT CUI_Loading_EnergyEff::Render(_float fTimeDelta)
 
 	if (FAILED(m_pTrailVIBuffer->Render()))
 		return E_FAIL;
-
+	
 	return S_OK;
 }
 

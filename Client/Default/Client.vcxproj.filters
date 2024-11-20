@@ -544,6 +544,9 @@
     <ClCompile Include="..\private\UI_Loading_EnergyEff.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\EnergyEff</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Loading_GodDragon.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\GodDragon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1160,6 +1163,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Loading\EnergyEff">
       <UniqueIdentifier>{684377dc-be5f-42f6-9ddc-b95e6594b3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\GodDragon">
+      <UniqueIdentifier>{8bdf6edc-630e-4af3-a88d-c6cd7ea0ae45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1867,6 +1873,9 @@
     </ClInclude>
     <ClInclude Include="..\public\UI_Loading_EnergyEff.h">
       <Filter>02.GameObjects\UI\BackGround\Loading\EnergyEff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Loading_GodDragon.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\GodDragon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

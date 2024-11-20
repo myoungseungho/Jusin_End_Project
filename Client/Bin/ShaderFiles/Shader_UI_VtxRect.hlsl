@@ -756,7 +756,8 @@ PS_OUT PS_FLYEFF(PS_IN In)
     if (fDistance >= 0.25f)
         discard;
     
-    //Out.vColor.rgb *= g_vColor.rgb;
+    Out.vColor.rgb *= g_vColor.rgb;
+    Out.vColor.a = 0.75f;
     
     return Out;
 }

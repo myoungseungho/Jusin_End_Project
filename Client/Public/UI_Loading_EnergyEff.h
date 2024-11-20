@@ -33,6 +33,9 @@ private:
 private:
 	CVIBuffer_Trail_Rect* m_pTrailVIBuffer = { nullptr };
 
+private:
+	_float m_fAngle = { 0.f };
+
 public:
 	static CUI_Loading_EnergyEff* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg);

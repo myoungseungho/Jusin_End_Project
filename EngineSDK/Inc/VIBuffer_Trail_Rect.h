@@ -20,11 +20,8 @@ public:
 
 private:
 	_uint m_iNumRect = { 0 };
-	_float m_fTimeAcc = { 0.f };
 
-	_bool m_bInit = { FALSE };
-
-	VTXPOSTEX trailVertices[50 * 4] = {};
+	vector<VTXPOSTEX>trailVertices = {};
 
 public:
 	static CVIBuffer_Trail_Rect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -7,7 +7,8 @@ CVIBuffer_Trail_Rect::CVIBuffer_Trail_Rect(ID3D11Device* pDevice, ID3D11DeviceCo
 
 CVIBuffer_Trail_Rect::CVIBuffer_Trail_Rect(const CVIBuffer_Trail_Rect& Prototype)
     : CVIBuffer{ Prototype }
-     , m_iNumRect{ Prototype.m_iNumRect}
+    , m_iNumRect{ Prototype.m_iNumRect}
+    , trailVertices{ Prototype.trailVertices }
 {
 }
 
@@ -90,6 +91,7 @@ HRESULT CVIBuffer_Trail_Rect::Initialize_Prototype()
 HRESULT CVIBuffer_Trail_Rect::Initialize_Prototype_Trail(_uint iNumRect, _float fRectWidth)
 {
     m_iNumRect = iNumRect;
+    trailVertices.resize(m_iNumRect * 4);
 
     m_iNumVertexBuffers = 1;
     m_iNumVertices = 4 * iNumRect; // 렉트 50개이므로, 각 렉트에 4개의 정점 필요
@@ -197,9 +199,8 @@ void CVIBuffer_Trail_Rect::Line(_float3 vOffPos)
     trailVertices[3].vPosition = _float3(-0.5f + vOffPos.x, -0.5f + vOffPos.y , 0.f);
     trailVertices[3].vTexcoord = _float2(0.0f, 1.0f);
 
-    for (int i = (50 * 4) - 1; i > 3; --i) {
-
-        trailVertices[i] = trailVertices[i - 4];
+    for (int i = trailVertices.size() - 1; i > 3; --i) {
+        trailVertices[i].vPosition = trailVertices[i - 4].vPosition;
     }
 
     D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -207,7 +208,7 @@ void CVIBuffer_Trail_Rect::Line(_float3 vOffPos)
 
     if (SUCCEEDED(hr)) {
         VTXPOSTEX* pVertexData = reinterpret_cast<VTXPOSTEX*>(mappedResource.pData);
-        memcpy(pVertexData, trailVertices, sizeof(trailVertices));
+        memcpy(pVertexData, trailVertices.data(), trailVertices.size() * sizeof(VTXPOSTEX));
         m_pContext->Unmap(m_pVB, 0);
     }
     
