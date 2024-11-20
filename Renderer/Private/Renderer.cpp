@@ -1413,7 +1413,6 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
 		return E_FAIL;
 
-
 	_float4x4 viewMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW);
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &viewMatrix)))
 		return E_FAIL;
