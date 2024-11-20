@@ -1402,15 +1402,87 @@ SkillName: Camera_Frieza_Golden
 
 [Animation]
 AnimationName: Frieza_Golden_Anim1
-PointCount: 0
+PointCount: 2
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1.4
+InterpolationType: 1
+Damping: 0.5
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.166552 0.98327 -2.86636
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Frieza_Golden_Anim2
-PointCount: 0
+PointCount: 6
+
+[CameraPoint]
+Position: 0.166552 0.98327 -2.86636
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.233331 1.18315 -0.544031
+Rotation: -0.0652106 -0.0847341 -0.00555751 0.994252
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.260593 1.1875 -0.505812
+Rotation: -0.0652106 -0.0847341 -0.00555751 0.994252
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.821542 1.82214 -0.983425
+Rotation: 0.209167 -0.277135 0.0619483 0.935739
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.462685 2.00307 -1.37617
+Rotation: 0.219976 -0.0789887 0.0178736 0.972138
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Frieza_Golden_Anim2_Flip
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.166552 0.98327 -2.86636
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Frieza_Down_Forward_J

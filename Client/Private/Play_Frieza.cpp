@@ -3147,11 +3147,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Frieza::ANIME_TRANSFORM_FINAL:
 	{
+		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
 		//Position 0 : 컷씬, 적 시간정지. 
 		if (iAttackEvent == 0)
 		{
 			Set_AnimationStopWithoutMe(5.f);
+
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 0, this);
 		}
 
 		//Position 15 : //,이펙트,화면가리기,  433cs(index 70)로 연계?  일단 Position 20까지 안가고 여기서 처리.
@@ -3162,6 +3165,15 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25;
 
 			m_bGoldFrieza = true;
+
+			if (Get_iDirection() == 1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 1, this);
+			}
+			else if (Get_iDirection() == -1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 2, this, nullptr, true);
+			}
 		}
 
 
