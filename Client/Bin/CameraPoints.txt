@@ -1307,7 +1307,55 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Frieza_Ultimate_3_Anim1_Flip
-PointCount: 0
+PointCount: 6
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.216813 1.24997 -3.11644
+Rotation: -0 0 -0 1
+Duration: 0.3
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.216813 1.24997 -3.11644
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.883701 0.501191 -2.02153
+Rotation: -0.189678 0.170098 0.033385 0.966423
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.883701 0.501191 -2.02153
+Rotation: -0.189678 0.170098 0.033385 0.966423
+Duration: 0.1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Frieza_Golden
