@@ -1166,13 +1166,29 @@ SkillName: Camera_Frieza_Knock_Away_Up
 
 [Animation]
 AnimationName: Frieza_Knock_Away_Up_Anim1
-PointCount: 1
+PointCount: 3
 
 [CameraPoint]
-Position: 0.243729 0.11623 -2.37281
-Rotation: -0.22716 0 0 1
-Duration: 0.7
-InterpolationType: 2
+Position: -1.20239 1.20488 -3.09254
+Rotation: 0 0.276518 0 0.960977
+Duration: 0.8
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.20239 1.20488 -3.09254
+Rotation: 0 0.276518 -0 0.960977
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
