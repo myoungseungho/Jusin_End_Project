@@ -851,6 +851,7 @@ PLAY_FRN,FRN430_body,0,AttackEvent,0
 
 //,이펙트생성. 손가락 끝을 따라다님?
 PLAY_FRN,FRN430_body,25,AttackEvent,1
+PLAY_FRN,FRN430_body,25,Camera_Play_21_Grab_Special_0_Shake,3.0,0.15
 
 //,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
 PLAY_FRN,FRN430_body,50,AttackEvent,2
