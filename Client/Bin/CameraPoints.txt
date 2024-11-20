@@ -1431,3 +1431,42 @@ InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
+[Skill]
+SkillName: Camera_Frieza_Fall_Reflect
+
+[Animation]
+AnimationName: Frieza_Fall_Reflect
+PointCount: 4
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.2
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.47315 0.473682 -0.864459
+Rotation: -0 -0.481776 -0 0.876232
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.47315 0.473682 -0.864459
+Rotation: -0 -0.481776 -0 0.876232
+Duration: 0.1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 0.01
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+

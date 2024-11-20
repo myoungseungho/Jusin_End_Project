@@ -137,6 +137,10 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 			break;
 		case VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J:
 			name = "Camera_Frieza_Down_Forward_J";
+			break;
+		case VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT:
+			name = "Camera_Frieza_Fall_Reflect";
+			break;
 		}
 
 		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera"), &name);
@@ -228,6 +232,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Frieza_Ultimate_3"] = VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3;
 	stringToSkillID["Camera_Frieza_Golden"] = VIRTUAL_CAMERA_FRIEZA_GOLDEN;
 	stringToSkillID["Camera_Frieza_Down_Forward_J"] = VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J;
+	stringToSkillID["Camera_Frieza_Fall_Reflect"] = VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT;
 
 
 	stringToAnimID["Frieza_Light_Final_Anim1"] = 0;
@@ -244,6 +249,8 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Golden_Anim2_Flip"] = 2;
 	stringToAnimID["Frieza_Down_Forward_J"] = 0;
 	stringToAnimID["Frieza_Down_Forward_J_Flip"] = 1;
+	stringToAnimID["Frieza_Fall_Reflect"] = 0;
+
 
 #pragma endregion
 
@@ -492,6 +499,8 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_FRIEZA_GOLDEN;
 		else if (skillID == 7)
 			index = VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J;
+		else if (skillID == 8)
+			index = VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT;
 	}
 
 	return index;
