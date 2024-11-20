@@ -526,6 +526,9 @@
     <ClCompile Include="..\Private\Frieza_Metal.cpp">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_Metal</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\ParryingRangedObject.cpp">
+      <Filter>02.GameObjects\ParryingRangedObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1810,6 +1813,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Frieza_Metal.h">
       <Filter>02.GameObjects\Character\Play_Frieza\Frieza_Metal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\ParryingRangedObject.h">
+      <Filter>02.GameObjects\ParryingRangedObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
