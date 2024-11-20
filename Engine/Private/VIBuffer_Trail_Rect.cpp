@@ -121,7 +121,7 @@ HRESULT CVIBuffer_Trail_Rect::Initialize_Prototype_Trail(_uint iNumRect, _float 
         
                 _float fRatio = ((_float)(i + 1) / (_float)m_iNumRect);
                 _float fScaleOffset = 1.f - fRatio;
-                float offset = fRatio * 5.f; // 각 렉트를 오른쪽으로 오프셋
+                _float offset = fRatio * 5.f; // 각 렉트를 오른쪽으로 오프셋
         
                 trailVertices[i * 4 + 0].vPosition = _float3((-0.5f * fScaleOffset) + offset, (0.5f * fScaleOffset), 0.f);
                 trailVertices[i * 4 + 0].vTexcoord = _float2(0.0f, 0.f);
@@ -199,8 +199,12 @@ void CVIBuffer_Trail_Rect::Line(_float3 vOffPos)
     trailVertices[3].vPosition = _float3(-0.5f + vOffPos.x, -0.5f + vOffPos.y , 0.f);
     trailVertices[3].vTexcoord = _float2(0.0f, 1.0f);
 
-    for (int i = trailVertices.size() - 1; i > 3; --i) {
-        trailVertices[i].vPosition = trailVertices[i - 4].vPosition;
+   //for (int i = trailVertices.size() - 1; i > 3; --i) {
+   //    trailVertices[i] = trailVertices[i - 4];
+   //}
+
+    for (int i = 0 ; i < trailVertices.size() - 4; ++i) {
+        trailVertices[i + 4] = trailVertices[i];
     }
 
     D3D11_MAPPED_SUBRESOURCE mappedResource;

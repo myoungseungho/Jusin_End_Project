@@ -1,11 +1,13 @@
 #pragma once
 
-#include "UIObject.h"
+#include "Client_Defines.h"
+#include "GameObject.h"
 
 BEGIN(Engine)
 
+class CShader;
 class CTexture;
-class 
+class CVIBuffer_Rect;
 
 END
 
@@ -29,6 +31,17 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 	virtual HRESULT Bind_ShaderResources();
+
+private:
+	_bool m_bPosSwitch = { FALSE };
+	_float m_fOffsetPos = { 0.f };
+
+	_vector m_vOriginPos = {};
+
+private:
+	CShader* m_pShaderCom = { nullptr };
+	CTexture* m_pTextureCom = { nullptr };
+	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
 public:
 	static CUI_Lobby_Key_Enter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

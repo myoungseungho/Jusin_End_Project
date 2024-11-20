@@ -65,6 +65,10 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectArrow"), TEXT("Layer_MarkArrow"), &ArrowDesc)))
 		return E_FAIL;
+
+	//ArrowDesc.fSpeedPerSec = 10.f;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_UI_Loading_EnergyEff"), TEXT("Layer_MarkArrowEff"),&ArrowDesc)))
+	//	return E_FAIL;
 	
 	CUIObject::UI_DESC SelectIconDesc = {};
 	for (size_t i = 0; i < CUI_Define::PAWN_END; i++)
@@ -84,6 +88,7 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectMark"), strLayerTag)))
 		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectFont"), strLayerTag)))
 		return E_FAIL;

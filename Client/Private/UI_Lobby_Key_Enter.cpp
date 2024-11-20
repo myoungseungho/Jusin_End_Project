@@ -2,14 +2,15 @@
 
 #include "UI_Lobby_Key_Enter.h"
 #include "RenderInstance.h"
+#include "GameInstance.h"
 
 CUI_Lobby_Key_Enter::CUI_Lobby_Key_Enter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	:CUIObject{ pDevice ,pContext }
+	:CGameObject{ pDevice ,pContext }
 {
 }
 
 CUI_Lobby_Key_Enter::CUI_Lobby_Key_Enter(const CUI_Lobby_Key_Enter& Prototype)
-	:CUIObject{ Prototype }
+	:CGameObject{ Prototype }
 {
 }
 
@@ -23,20 +24,23 @@ HRESULT CUI_Lobby_Key_Enter::Initialize_Prototype()
 
 HRESULT CUI_Lobby_Key_Enter::Initialize(void* pArg)
 {
-
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_fSizeX = 40.f, m_fSizeY = 40.f;
-	m_fPosX = 1050.f, m_fPosY = 630.f;
+	CTransform* pTargetTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOBBY, TEXT("Layer_Lobby_Frieza"), TEXT("Com_Transform")));
+	_vector vTargetPos = pTargetTransform->Get_State(CTransform::STATE_POSITION);
+	_vector vOffset = XMVectorSetY(vTargetPos, XMVectorGetY(vTargetPos) + 3.75f);
+
+	m_pTransformCom->Set_Scaled(-2.f,2.f, 1.f);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, vOffset);
+
+	m_vOriginPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
 	m_bIsActive = FALSE;
-
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
-
+		
 	return S_OK;
 }
 
@@ -49,7 +53,21 @@ void CUI_Lobby_Key_Enter::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY + m_fOffsetPosY, 0.f);
+	CTransform* pTargetTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOBBY, TEXT("Layer_Main_Camera_Lobby"), TEXT("Com_Transform")));
+	_vector vTargetPos = pTargetTransform->Get_State(CTransform::STATE_POSITION);
+	m_pTransformCom->LookAt(vTargetPos);
+	m_pTransformCom->Set_Scaled(-2.f, 2.f, 1.f);
+
+	m_bPosSwitch ? m_fOffsetPos += fTimeDelta : m_fOffsetPos -= fTimeDelta;
+	
+	if (m_fOffsetPos >= 0.5f)
+		m_bPosSwitch = FALSE;
+	if (m_fOffsetPos <= 0.f)
+		m_bPosSwitch = TRUE;
+	
+	_vector vOffsetPosY  =XMVectorSetY(m_vOriginPos, XMVectorGetY(m_vOriginPos) + m_fOffsetPos);
+	
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION,vOffsetPosY);
 }
 
 void CUI_Lobby_Key_Enter::Late_Update(_float fTimeDelta)
@@ -141,5 +159,9 @@ CGameObject* CUI_Lobby_Key_Enter::Clone(void* pArg)
 
 void CUI_Lobby_Key_Enter::Free()
 {
+	Safe_Release(m_pShaderCom);
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pVIBufferCom);
+
 	__super::Free();
 }

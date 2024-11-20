@@ -134,6 +134,7 @@
 #include "UI_VS_TeamPanel.h"
 #include "UI_VS_Name.h"
 #include "UI_VS_NameOutLine.h"
+#include "UI_Loading_EnergyEff.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -743,6 +744,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_effect_00.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_LoadingEnergyEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_LoadingEnergyEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
 
@@ -804,6 +810,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	/* Prototype_GameObject_CharacterSelectCircle */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCircle"),
 		CUI_CharaSelectCircle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Loading_EnergyEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_EnergyEff"),
+		CUI_Loading_EnergyEff::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
