@@ -1166,14 +1166,38 @@ SkillName: Camera_Frieza_Knock_Away_Up
 
 [Animation]
 AnimationName: Frieza_Knock_Away_Up_Anim1
-PointCount: 0
+PointCount: 1
+
+[CameraPoint]
+Position: 0.243729 0.11623 -2.37281
+Rotation: -0.22716 0 0 1
+Duration: 0.7
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Frieza_Grab
 
 [Animation]
 AnimationName: Frieza_Grab_Anim1
-PointCount: 0
+PointCount: 2
+
+[CameraPoint]
+Position: 0.72 1.5 -5
+Rotation: -0 0 -0 1
+Duration: 1
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.98053 1 -2.2965
+Rotation: -0.00571109 0.488677 0.00319895 0.87244
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Frieza_Ultimate_1
