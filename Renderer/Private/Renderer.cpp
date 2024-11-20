@@ -1371,6 +1371,7 @@ HRESULT CRenderer::Render_CutScene_Object(_float fTimeDelta)
 HRESULT CRenderer::Render_CutScene_Late_Effect(_float fTimeDelta)
 {
 	
+
 	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_LATE_EFFECT])
 	{
 		if (nullptr != pRenderObject)

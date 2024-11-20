@@ -1,14 +1,13 @@
 #include "ModelConverter.h" 
 
-#define DATAFILEPATH "../Client/Bin/Resources/Map/"
+#define DATAFILEPATH "../Client/Bin/Modeldata/char/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/SpaceEF.fbx", TYPE_NONANIM},
-		{"Models/SpaceEF1.fbx", TYPE_NONANIM},
-		{"Models/VolcanoEF.fbx", TYPE_NONANIM},
+		{"Models/DAA.fbx", TYPE_ANIM},
+
 
 	};
 

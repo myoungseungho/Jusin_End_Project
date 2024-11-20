@@ -3702,6 +3702,9 @@ HRESULT CLoader::Load_Map_Space()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF1"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF1.bin", PreTransformMatrix))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF.bin", PreTransformMatrix))))
