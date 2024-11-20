@@ -52,8 +52,6 @@ public:
 		return m_fCurrentRotation;
 	}
 
-	
-
 public:
 
 	void Set_Scaled(_float fScaleX, _float fScaleY, _float fScaleZ) {
