@@ -2615,7 +2615,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vCenter = { 4.f * m_iLookDirection,1.5f,0.f };
 
 
-		//Desc.ColliderDesc.pTransform = m_pTransformCom;
+		//Desc.ColliderDesc.pTransform = m_pTransformCom;dd
 		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
 
 		Desc.fhitCharacter_Impus = { 0.6f * m_iLookDirection, 10.f };  //원래 가속도.
@@ -2630,7 +2630,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fAnimationLockTime = 0.5f;
 		Desc.pOwner = this;
 		Desc.iGainKiAmount = 10;
-
+		Desc.fCameraShakeDuration = 0.5f;
+		Desc.fCameraShakeMagnitude = 0.3f;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 	}
@@ -2668,7 +2669,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.iGainKiAmount = 2;
 			Desc.iGainAttackStep = 0;
-
+			Desc.iVirtualCameraindex = (_uint)CMain_Camera::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
