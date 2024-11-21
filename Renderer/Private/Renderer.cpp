@@ -1425,7 +1425,7 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-
+	 
 	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
 	{
 		iter->fLifeTime -= fTimeDelta;
