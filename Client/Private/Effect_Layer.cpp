@@ -110,7 +110,7 @@ HRESULT CEffect_Layer::Initialize_Prototype(void* pArg)
 HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 {
 	m_pCopyTransformCom = CTransform::Create(m_pDevice, m_pContext);
-
+	m_pRotationTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	LayerMatrix = m_pTransformCom->Get_WorldMatrix();
 
 	if (pArg != nullptr)
@@ -121,9 +121,7 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 
 		if (0 > m_pPlayerMatrix->_11)
 		{
-
 			LayerMatrix *= XMMatrixRotationY(XMConvertToRadians(180.0f));
-
 
 			XMVECTOR Scale, Rotation, Position;
 
@@ -137,7 +135,6 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
 			fLayerMatrix._43 *= -1;
-
 
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 
@@ -204,7 +201,11 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 				XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
 
-				FinalMatrix._43 = 0;
+				if (pEffect->m_EffectName.find(L"Parrying_Ball") != wstring::npos)
+					FinalMatrix._43 = XMVectorGetZ(Position);
+				else
+					FinalMatrix._43 = 0;
+
 				FinalMatrix._41 = FinalMatrix._41 + XMVectorGetX(Position) /*+ m_fChangePosition.x*/;
 				FinalMatrix._42 = FinalMatrix._42 + XMVectorGetY(Position) /*+ m_fChangePosition.y*/;
 
@@ -232,19 +233,15 @@ void CEffect_Layer::Update(_float fTimeDelta)
 			{
 				if ((pEffect->m_bIsBillboarding))
 				{
-					CTransform* pTransform = CTransform::Create(m_pDevice, m_pContext);
-
 					_float4x4 SwitchMatrix;
 					XMStoreFloat4x4(&SwitchMatrix, EffectToLayerMatrix);
 
-					pTransform->Set_WorldMatrix(SwitchMatrix);
-					pTransform->LookAt(m_pGameInstance->Get_CamPosition_Vector());
+					m_pRotationTransformCom->Set_WorldMatrix(SwitchMatrix);
+					m_pRotationTransformCom->LookAt(m_pGameInstance->Get_CamPosition_Vector());
 
-					EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix() * pTransform->Get_WorldMatrix();
+					EffectToLayerMatrix = m_pCopyTransformCom->Get_WorldMatrix() * m_pRotationTransformCom->Get_WorldMatrix();
 
 					pEffect->m_bIsAlreadyBillboading = true;
-
-					Safe_Release(pTransform);
 				}
 
 				pEffect->Get_Layer_Matrix(EffectToLayerMatrix);
@@ -257,8 +254,6 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 
 	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-
-
 
 }
 
@@ -490,6 +485,7 @@ void CEffect_Layer::Free()
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pTransformCom);
 	Safe_Release(m_pCopyTransformCom);
+	Safe_Release(m_pRotationTransformCom);
 	Safe_Release(m_pColliderCom);
 
 	for (auto& pMixtureEffect : m_MixtureEffects)

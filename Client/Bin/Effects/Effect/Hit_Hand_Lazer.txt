@@ -1,0 +1,445 @@
+[Layer]
+LayerName: Hit_Hand_Lazer
+Duration: 1
+TickPerSecond: 3
+KeyFramesCount: 59
+NumEffec: 11
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.1 0 0
+Scale: 0.0499971 0.299971 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 0 0 255 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 0 0
+Scale: 0.0499971 0.299971 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.1 0 0
+Scale: 0.07 0.299962 1
+Rotation: 0 0 270
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0.1 0 0
+Scale: 0.02 0.299963 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.0499971 0.269965 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 49.8179 0 139.321 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0499971 0.269965 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0 0 0
+Scale: 0.07 0.269962 1
+Rotation: 0 0 270
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.02 0.269961 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.1 0 0
+Scale: 0.0499833 0.279859 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 147.765 34.6192 135.944 1.88742
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 0 0
+Scale: 0.0499833 0.279859 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.1 0 0
+Scale: 0.07 0.279855 1
+Rotation: 0 0 270
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0.1 0 0
+Scale: 0.02 0.279854 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.0499988 0.299984 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 0 0 255 0.390066
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.0499988 0.299984 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0 0 0
+Scale: 0.07 0.29998 1
+Rotation: 0 0 270
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0 0
+Scale: 0.02 0.29998 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.1 0 0
+Scale: 0.0499949 0.269948 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 49.8179 0 139.321 0.495364
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 6
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 0 0
+Scale: 0.0499949 0.269948 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.1 0 0
+Scale: 0.07 0.26994 1
+Rotation: 0 0 270
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0.1 0 0
+Scale: 0.02 0.269945 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.2 0 0
+Scale: 0.0499779 0.279816 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 147.765 34.6192 135.944 0.337421
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 6
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 0.0499779 0.279816 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.2 0 0
+Scale: 0.07 0.279812 1
+Rotation: 0 0 270
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0.2 0 0
+Scale: 0.02 0.279812 1
+Rotation: 0 0 270
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.6 0.1 0
+Scale: 0.0199977 0.299989 1
+Rotation: 0 0 90
+IsLoop: true
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.6 0.1 0
+Scale: 0.0199977 0.299989 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 35
+Position: 3.6 0.1 0
+Scale: 0.0199975 0.299987 1
+Rotation: 0 0 90
+CurTime: 0.583333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_Hand_Lazer_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 2.1 -0.1 0
+Scale: 0.0299945 0.199956 1
+Rotation: 0 0 90
+IsLoop: true
+Color: 0 0 0 1.68874
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 2.1 -0.1 0
+Scale: 0.0299978 0.199983 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 35
+Position: 2.1 -0.1 0
+Scale: 0.0299975 0.19998 1
+Rotation: 0 0 90
+CurTime: 0.583333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_Hand_Lazer_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.1 -0.4 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 142.699 73.4603 232.202 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 -0.4 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_010
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_010
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.3 0
+Scale: 0.0499999 0.0499999 1
+Rotation: 0 0 342.078
+IsLoop: true
+Color: 203.493 61.6391 188.295 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.3 0
+Scale: 0.0499999 0.0499999 1
+Rotation: 0 0 342.078
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_Hand_Lazer_011
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_Hand_LazerHit_Hand_Lazer_011
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.3 -0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 24.935
+IsLoop: true
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 -0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 24.935
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

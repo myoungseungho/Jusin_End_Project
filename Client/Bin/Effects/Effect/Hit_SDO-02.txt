@@ -1,0 +1,157 @@
+[Layer]
+LayerName: Hit_SDO-02
+Duration: 2
+TickPerSecond: 2
+KeyFramesCount: 119
+NumEffec: 2
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Hit_SDO-02_01
+ModelName: Model_Effect_htn_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDO-02Hit_SDO-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0.9 0
+Scale: 0.0163483 0.0163529 0.0163488
+Rotation: 0 90 9
+IsLoop: false
+Color: 134.255 210.248 255 0.50265
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 6
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.9 0
+Scale: 0.013999 0.0139998 0.0139993
+Rotation: 0 90 9
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 5
+Position: 0 0.9 0
+Scale: 0.00999965 0.01 0.01
+Rotation: 0 90 9
+CurTime: 0.0833333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 9
+Position: 0 0.9 0
+Scale: 0.199977 0.02 0.0199991
+Rotation: 0 90 9
+CurTime: 0.15
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 21
+Position: 0 0.9 0
+Scale: 0.199973 0.02 0.0199987
+Rotation: 0 90 9
+CurTime: 0.35
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0 0.9 0
+Scale: 0.0299986 0.03 0.03
+Rotation: 0 90 9
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 95
+Position: 0 0.9 0
+Scale: 0.00499914 0.005 0.00499952
+Rotation: 0 90 9
+CurTime: 1.58333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SDO-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDO-02Hit_SDO-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.462824 0
+Scale: 0.225318 0.225318 0.225318
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 0.246688
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 6
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.3 0
+Scale: 0.2 0.2 0.0999894
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 5
+Position: 0 -0.1 0
+Scale: 0.15 0.15 0.0999894
+Rotation: 0 0 0
+CurTime: 0.0833333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 9
+Position: 0 -1 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.15
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 21
+Position: 0 -1 0
+Scale: 0.3 0.3 0.3
+Rotation: 0 0 0
+CurTime: 0.35
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0 -1.5 0
+Scale: 0.4 0.4 0.4
+Rotation: 0 0 0
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 95
+Position: 0 0.4 0
+Scale: 0.08 0.08 0.08
+Rotation: 0 0 0
+CurTime: 1.58333
+Duration: 2
+IsNotPlaying: true
+

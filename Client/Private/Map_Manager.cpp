@@ -45,6 +45,7 @@ void CMap_Manager::Camera_Update(_float fTimeDelta)
 
 void CMap_Manager::Update(_float fTimeDelta)
 {
+#pragma region DestructiveFinish
 	if (m_isDestructive_Active == true)
 	{
 		m_AccTime += fTimeDelta;
@@ -67,11 +68,21 @@ void CMap_Manager::Update(_float fTimeDelta)
 			m_MapViewTime = 0.f;
 		}
 	}
+#pragma endregion
+
+	if (m_isEastFinish == true)
+	{
+		if (m_isWhiteDoneCheck == true)
+			Active_EastFinish();
+	}
 
 	if (m_pGameInstance->Key_Pressing(DIK_F8))
 		Map_Change(MAP_SPACE);
+	/*if (m_pGameInstance->Key_Pressing(DIK_F7))
+		Active_EastFinish(EAST_LASER);*/
+
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
-		Map_Change(MAP_VOLCANO);
+		PlayerCall_EastFinish(EAST_LASER);
 	
 	
 }
@@ -93,7 +104,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 	switch (eMapType)
 	{
 	case MAP_SPACE:
-	case MAP_DEST_SPACE:
+	case MAP_DEST_SPACE:	
 		for (auto& iter : m_SpaceModels)
 			iter.second->SetActive(true);
 		for (auto& iter : m_Destructive_SpaceModels)
@@ -102,6 +113,8 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 		for (auto& iter : m_Destructive_VolcanoModels)
 			iter.second->SetActive(false);
+
+		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = false;
 
 		m_eCurMap = MAP_SPACE;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_SPACE);
@@ -188,6 +201,47 @@ _float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
 	}
 
 	return fMapToImpulse;
+}
+
+_float2 CMap_Manager::Active_EastFinish()
+{
+	switch (m_eEastEffectType)
+	{
+	case MAP_EF_SPACE:
+		if (m_eCurMap == MAP_SPACE)
+		{
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_SpaceModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
+
+			m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
+
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->
+				Set_DyingTeam(1);
+
+		}
+		// 맵 분기 넣고 쉐이킹 넣고 바라보게 한다음 이펙트 출력
+		// 트리거는 있다가
+		break;
+	}
+
+		/* */
+		
+
+
+	return _float2();
+}
+
+void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType)
+{
+	m_isEastFinish = true;
+	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck);
 }
 
 void CMap_Manager::IsDone_Active()

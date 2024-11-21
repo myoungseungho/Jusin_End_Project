@@ -1,12 +1,13 @@
 #include "ModelConverter.h" 
 
-#define DATAFILEPATH "../Client/Bin/ModelData/"
+#define DATAFILEPATH "../Client/Bin/Modeldata/char/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/Lobby_Krillin.fbx", TYPE_ANIM},
+		{"Models/DAA.fbx", TYPE_ANIM},
+
 
 	};
 

@@ -22,7 +22,7 @@ public:
 	HRESULT Bind_Matrices(const _char* pConstantName, const _float4x4* pMatrix, _uint iNumMatrices);
 	HRESULT Bind_ShaderResourceView(const _char* pConstantName, ID3D11ShaderResourceView* pSRV);
 	HRESULT Bind_ShaderResourceViews(const _char* pConstantName, ID3D11ShaderResourceView** ppSRV, _uint iNumTextures);
-
+	HRESULT Bind_ShaderResourceViewWithMip(const _char* pConstantName, ID3D11ShaderResourceView* pSRV, UINT mipLevel);
 private:
 	ID3DX11Effect*				m_pEffect = { nullptr };
 	_uint						m_iNumPasses = { 0 };
