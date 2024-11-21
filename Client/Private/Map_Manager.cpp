@@ -111,19 +111,6 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 		////Space 음원 재생
 		//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 1.f);
 		break;
-	case MAP_EF_SPACE:
-		for (auto& iter : m_SpaceModels)
-			iter.second->SetActive(false);
-		for (auto& iter : m_Destructive_SpaceModels)
-			iter.second->SetActive(false);
-		for (auto& iter : m_VolcanoModels)
-			iter.second->SetActive(false);
-		for (auto& iter : m_Destructive_VolcanoModels)
-			iter.second->SetActive(false);
-
-		m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
-		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
-		break;
 	case MAP_VOLCANO:
 	case MAP_DEST_VOLCANO:
 		for (auto& iter : m_VolcanoModels)
@@ -201,6 +188,35 @@ _float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
 	}
 
 	return fMapToImpulse;
+}
+
+_float2 CMap_Manager::Active_EastFinish(East_Finish_Type eEastEffectType)
+{
+	switch (eEastEffectType)
+	{
+	case MAP_EF_SPACE:
+		for (auto& iter : m_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(false);
+
+		m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
+		break;
+		// 맵 분기 넣고 쉐이킹 넣고 바라보게 한다음 이펙트 출력
+		// 트리거는 있다가
+
+	}
+
+		/* */
+		
+
+
+	return _float2();
 }
 
 void CMap_Manager::IsDone_Active()
