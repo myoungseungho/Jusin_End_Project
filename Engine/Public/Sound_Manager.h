@@ -147,11 +147,15 @@ public:
 		Common_Medium_Guard_SFX,
 		Common_Heavy_Guard_SFX,
 		Common_Jump_SFX,
-		Common_Jump_Dash_SFX,
+		Common_Back_Dash_SFX,
 		Common_GroundCrush_SFX,
 		Common_Dash_Start_SFX,
 		Common_Dash_Loop_SFX,
-		Common_Dash_End_SFX
+		Common_Dash_End_SFX,
+		Common_Crash_Air_Wall_SFX,
+		Goku_Grab,
+		Goku_Grab_Attack,
+		Goku_Energy_Fire_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
