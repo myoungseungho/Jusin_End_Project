@@ -55,13 +55,13 @@ HRESULT CLevel_GamePlay::Initialize()
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 
@@ -404,8 +404,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//화산배경음
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/004_bat_volcano.ogg", CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 
-	//현재 화산맵인지 우주맵인지  체크할 수 있는가?
-	//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 
 #pragma region Goku_Sound
 
