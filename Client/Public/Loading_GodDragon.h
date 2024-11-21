@@ -10,12 +10,12 @@ END
 
 BEGIN(Client)
 
-class CLobby_Frieza final : public CGameObject
+class CLoading_GodDragon final : public CGameObject
 {
 private:
-	CLobby_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CLobby_Frieza(const CLobby_Frieza& Prototype);
-	virtual ~CLobby_Frieza() = default;
+	CLoading_GodDragon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CLoading_GodDragon(const CLoading_GodDragon& Prototype);
+	virtual ~CLoading_GodDragon() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -33,7 +33,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CLobby_Frieza* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CLoading_GodDragon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

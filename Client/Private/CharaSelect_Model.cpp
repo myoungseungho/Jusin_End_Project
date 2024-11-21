@@ -1,29 +1,29 @@
 #include "stdafx.h"
-#include "..\Public\Lobby_Frieza.h"
+#include "..\Public\CharaSelect_Model.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 #include "Level_Loading.h"
 #include "Level_Lobby.h"
 
-CLobby_Frieza::CLobby_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CCharaSelect_Model::CCharaSelect_Model(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
 
 }
 
-CLobby_Frieza::CLobby_Frieza(const CLobby_Frieza& Prototype)
+CCharaSelect_Model::CCharaSelect_Model(const CCharaSelect_Model& Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CLobby_Frieza::Initialize_Prototype()
+HRESULT CCharaSelect_Model::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CLobby_Frieza::Initialize(void* pArg)
+HRESULT CCharaSelect_Model::Initialize(void* pArg)
 {
 	CTransform::TRANSFORM_DESC Desc{};
 	Desc.fRotationPerSec = 1.f;
@@ -34,33 +34,33 @@ HRESULT CLobby_Frieza::Initialize(void* pArg)
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
-
-	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, 0.7f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
 	
+	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, -1.0f));
+	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
+
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(0, true, 0.1f);
 
 	return S_OK;
 }
 
-void CLobby_Frieza::Camera_Update(_float fTimeDelta)
+void CCharaSelect_Model::Camera_Update(_float fTimeDelta)
 {
 
 }
 
-void CLobby_Frieza::Update(_float fTimeDelta)
+void CCharaSelect_Model::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
 
 }
 
-void CLobby_Frieza::Late_Update(_float fTimeDelta)
+void CCharaSelect_Model::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_CUTSCENE_OBJECT, this);
 }
 
-HRESULT CLobby_Frieza::Render(_float fTimeDelta)
+HRESULT CCharaSelect_Model::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -81,7 +81,7 @@ HRESULT CLobby_Frieza::Render(_float fTimeDelta)
 			return E_FAIL;
 
 
-		if (FAILED(m_pShaderCom->Begin(3)))
+		if (FAILED(m_pShaderCom->Begin(6)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -91,7 +91,7 @@ HRESULT CLobby_Frieza::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CLobby_Frieza::Ready_Components()
+HRESULT CCharaSelect_Model::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -99,14 +99,14 @@ HRESULT CLobby_Frieza::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Frieza"),
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CLobby_Frieza::Bind_ShaderResources()
+HRESULT CCharaSelect_Model::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -120,33 +120,33 @@ HRESULT CLobby_Frieza::Bind_ShaderResources()
 	return S_OK;
 }
 
-CLobby_Frieza* CLobby_Frieza::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CCharaSelect_Model* CCharaSelect_Model::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CLobby_Frieza* pInstance = new CLobby_Frieza(pDevice, pContext);
+	CCharaSelect_Model* pInstance = new CCharaSelect_Model(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CLobby_Frieza"));
+		MSG_BOX(TEXT("Failed to Created : CCharaSelect_Model"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CLobby_Frieza::Clone(void* pArg)
+CGameObject* CCharaSelect_Model::Clone(void* pArg)
 {
-	CLobby_Frieza* pInstance = new CLobby_Frieza(*this);
+	CCharaSelect_Model* pInstance = new CCharaSelect_Model(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CLobby_Frieza"));
+		MSG_BOX(TEXT("Failed to Cloned : CCharaSelect_Model"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CLobby_Frieza::Free()
+void CCharaSelect_Model::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);

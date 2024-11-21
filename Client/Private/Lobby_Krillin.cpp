@@ -120,21 +120,6 @@ HRESULT CLobby_Krillin::Bind_ShaderResources()
 	return S_OK;
 }
 
-void CLobby_Krillin::Entry_Level()
-{
-	_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-	_float x = XMVectorGetX(position);
-	_float z = XMVectorGetZ(position);
-
-	_bool isGameEntry = x<-49.898f && z>-5.4f;
-
-	if (isGameEntry)
-	{
-		CLevel_Lobby* level_Lobby = static_cast<CLevel_Lobby*>(m_pGameInstance->Get_Level());
-		level_Lobby->Change_Level();
-	}
-}
-
 CLobby_Krillin* CLobby_Krillin::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CLobby_Krillin* pInstance = new CLobby_Krillin(pDevice, pContext);

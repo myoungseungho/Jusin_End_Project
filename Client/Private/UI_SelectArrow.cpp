@@ -108,13 +108,13 @@ void CUI_SelectArrow::PositionUpdate(_float fTimeDelta)
 	_float fPosY = g_iWinSizeY * 0.5f - XMVectorGetY(vPos);
 	
 	if (fPosX <= 50)
-		m_pTransformCom->Go_Right(fTimeDelta);
+		m_pTransformCom->Go_Right(fTimeDelta * 5.f);
 	else if(fPosX >= 1800)
-		m_pTransformCom->Go_Left(fTimeDelta);
+		m_pTransformCom->Go_Left(fTimeDelta * 5.f);
 	else if(fPosY <= 820)
-		m_pTransformCom->Go_Down(fTimeDelta);
+		m_pTransformCom->Go_Down(fTimeDelta * 5.f);
 	else if(fPosY >= 1000)
-		m_pTransformCom->Go_Up(fTimeDelta);
+		m_pTransformCom->Go_Up(fTimeDelta * 5.f);
 }
 
 void CUI_SelectArrow::Move(_float fTimeDelta)

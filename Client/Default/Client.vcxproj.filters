@@ -319,14 +319,11 @@
     <ClCompile Include="..\private\UI_CharaSelectFont.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Font</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+    <ClCompile Include="..\private\CharaSelect_Model.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_CharaSelectLight.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\CharaSelectCamera.cpp">
-      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_CharaSelectCircle.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
@@ -544,11 +541,26 @@
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Goku_RunEff</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Loading_EnergyEff.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\EnergyEff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Loading_GodDragon.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\GodDragon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_Key_Enter.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Key\Enter</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\ParryingRangedObject.cpp">
       <Filter>02.GameObjects\ParryingRangedObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SpaceEF.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceEF</Filter>
+  </ClCompile>
+    <ClCompile Include="..\private\Loading_Camera.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\CharaSelect_Camera.cpp">
+      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1173,6 +1185,21 @@
     <Filter Include="02.GameObjects\Map\Space\SpaceEF">
       <UniqueIdentifier>{186204db-81c2-4938-8262-b3dda1638930}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\EnergyEff">
+      <UniqueIdentifier>{684377dc-be5f-42f6-9ddc-b95e6594b3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\GodDragon">
+      <UniqueIdentifier>{8bdf6edc-630e-4af3-a88d-c6cd7ea0ae45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Key">
+      <UniqueIdentifier>{462a9b14-1062-4aad-9ec1-ae4e1f90ffbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Key\Enter">
+      <UniqueIdentifier>{5dc4777b-ea62-421a-930a-9089e3e5dbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\Loading\Camera">
+      <UniqueIdentifier>{b827be92-7922-4109-a046-5f3ef3910cf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1643,14 +1670,11 @@
     <ClInclude Include="..\public\UI_CharaSelectFont.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Font</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+    <ClInclude Include="..\public\CharaSelect_Model.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_CharaSelectLight.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\CharaSelectCamera.h">
-      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_CharaSelectCircle.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Circle</Filter>
@@ -1885,6 +1909,21 @@
     </ClInclude>
     <ClInclude Include="..\Public\SpaceEF.h">
       <Filter>02.GameObjects\Map\Space\SpaceEF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Loading_EnergyEff.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\EnergyEff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Loading_GodDragon.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\GodDragon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_Key_Enter.h">
+      <Filter>02.GameObjects\UI\Lobby\Key\Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Loading_Camera.h">
+      <Filter>02.GameObjects\UI\BackGround\Loading\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\CharaSelect_Camera.h">
+      <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

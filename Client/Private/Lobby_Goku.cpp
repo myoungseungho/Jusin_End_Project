@@ -11,6 +11,7 @@
 
 #include "BattleInterface.h"
 #include "UI_Define.h"
+#include "UI_Manager.h"
 
 CLobby_Goku::CLobby_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -283,17 +284,27 @@ void CLobby_Goku::MoveForward(_float fTimeDelta)
 
 void CLobby_Goku::Entry_Level()
 {
-	_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-	_float x = XMVectorGetX(position);
-	_float z = XMVectorGetZ(position);
+	//_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	//_float x = XMVectorGetX(position);
+	//_float z = XMVectorGetZ(position);
 
-	//_bool isGameEntry = x<-49.898f && z>-5.4f;
-	_bool isGameEntry = dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Get_Finish();
+	_bool bTalkToGamePlay = dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Get_Finish();
+	_bool bBuildingToGamePlay =  (10.f >= ObjectDistance(TEXT("Layer_Lobby_Arcade_Building"), 0));
 
-	if (isGameEntry)
+	if (bTalkToGamePlay)
 	{
 		Set_CharacterInfo();
-		CLevel_Lobby* level_Lobby= static_cast<CLevel_Lobby*>( m_pGameInstance->Get_Level());
+		m_bOnMessageBox = FALSE;
+		// m_eLevelID 
+		CUI_Manager::Get_Instance()->m_eLevelID = LEVEL_GAMEPLAY;
+		CLevel_Lobby* level_Lobby = static_cast<CLevel_Lobby*>( m_pGameInstance->Get_Level());
+		level_Lobby->Change_Level();
+	}
+
+	if (bBuildingToGamePlay)
+	{
+		CUI_Manager::Get_Instance()->m_eLevelID = LEVEL_CHARACTER;
+		CLevel_Lobby* level_Lobby = static_cast<CLevel_Lobby*>(m_pGameInstance->Get_Level());
 		level_Lobby->Change_Level();
 	}
 }
@@ -317,10 +328,18 @@ void CLobby_Goku::Talk_Frieza(_float fEnableDistance)
 {
 	_float fDistance = ObjectDistance(TEXT("Layer_Lobby_Frieza"));
 	
-	if (fEnableDistance >= fDistance && m_pGameInstance->Key_Down(DIK_RETURN))
+	if (fEnableDistance >= fDistance)
 	{
-		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox"))->SetActive(TRUE);
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"))->SetActive(!m_bOnMessageBox);
+
+		if (m_pGameInstance->Key_Down(DIK_RETURN))
+		{
+			m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox"))->SetActive(TRUE);
+			m_bOnMessageBox = TRUE;
+		}
 	}
+	else 
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"))->SetActive(FALSE);
 }
 
 void CLobby_Goku::CreateRunDustEffect(_bool bOnInput ,_float fCreateDuration , _float fTimeDelta)
@@ -331,7 +350,6 @@ void CLobby_Goku::CreateRunDustEffect(_bool bOnInput ,_float fCreateDuration , _
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Goku_RunEff"), TEXT("Layer_Lobby_Goku_RunEff"));
 		CreateDustTimer = 0.f;
 	}
-	//m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Goku_RunEff"))->SetActive(bOnInput);
 }
 
 CLobby_Goku* CLobby_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

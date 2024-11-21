@@ -46,7 +46,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_ThreadPool(thread::hardware_concurrency())))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_LOBBY)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fonts()))
@@ -148,7 +148,7 @@ HRESULT CMainApp::Ready_Prototype_Component_ForStatic()
 
 	/* For.Prototype_Component_VIBuffer_Trail */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_VIBuffer_Trail"),
-		CVIBuffer_Trail_Rect::Create(m_pDevice, m_pContext, 50, 0.25f))))
+		CVIBuffer_Trail_Rect::Create(m_pDevice, m_pContext, 100, 0.25f))))
 		return E_FAIL;
 
 #pragma endregion

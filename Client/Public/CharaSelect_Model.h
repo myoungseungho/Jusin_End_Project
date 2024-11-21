@@ -10,12 +10,12 @@ END
 
 BEGIN(Client)
 
-class CLobby_Frieza final : public CGameObject
+class CCharaSelect_Model final : public CGameObject
 {
 private:
-	CLobby_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CLobby_Frieza(const CLobby_Frieza& Prototype);
-	virtual ~CLobby_Frieza() = default;
+	CCharaSelect_Model(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CCharaSelect_Model(const CCharaSelect_Model& Prototype);
+	virtual ~CCharaSelect_Model() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -33,7 +33,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CLobby_Frieza* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CCharaSelect_Model* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };
