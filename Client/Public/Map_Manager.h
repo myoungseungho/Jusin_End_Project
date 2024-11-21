@@ -39,6 +39,7 @@ public:
 	void Map_Change(MAP_TYPE eMapType);
 	_float2 Active_DestructiveFinish(_bool isRight);
 	_float2 Active_EastFinish(East_Finish_Type eEastEffectType);
+	void PlayerCall_EastFinish();
 	void IsDone_Active();
 	
 	void Push_MapObject(MAP_TYPE eMapType, _wstring& strKey,class CGameObject* pGameObject);

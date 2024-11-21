@@ -2116,49 +2116,107 @@ HRESULT CRenderer::Draw_MapBloom()
 
 	return S_OK;
 }
-/* 하얀색 전환 화면 및 색상반전 기능 추가 및 디스토션 텍스쳐 세로짜리 하나 저장하고 등등 */
-HRESULT CRenderer::Draw_WhiteBlack_Mode()
+
+HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 {
+	/*
+	_bool m_isStartWhiteOut = { false };
+	_float m_fAccWhiteTime = { 0.f };
+	const _float m_fWhiteTime = { 0.8f };
+	*/
+	if (m_pDoneCheck == nullptr)
+		return S_OK;
 
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_WhiteOut"))))
 		return E_FAIL;
-
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
-	//	return E_FAIL;
-
-	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
-		return E_FAIL;
-
-	m_pDistortionShaderCom->Begin(3);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	/* 나온 결과를 바로 백버퍼에 덮어씀 */
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	if (m_isStartWhiteOut == true)
+	{
+		m_fAccWhiteTime += fTimeDelta;
+
+		if (m_fAccWhiteTime >= m_fWhiteTime)
+		{
+			m_fAccWhiteTime = m_fWhiteTime;
+			m_isStartWhiteOut = false;
+			m_isEndWhiteOut = true;
+		}
+	}
+
+	if (m_isEndWhiteOut == true)
+	{
+		m_fAccWhiteTime -= fTimeDelta;
+
+		if (m_fAccWhiteTime <= 0.f)
+		{
+			m_isStartWhiteOut = false;
+			m_isEndWhiteOut = false;
+			*m_pDoneCheck = true;
+
+			m_pDoneCheck = nullptr;
+		}
+	}
+
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &m_isStartWhiteOut, sizeof(_bool))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_RawValue("g_fAccBlackTime", &m_fAccWhiteTime, sizeof(_float))))
 		return E_FAIL;
 
-	m_pDistortionShaderCom->Begin(2);
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_Texture", TEXT("Target_WhiteOut"))))
+		return E_FAIL;
+
+	m_pShader->Begin(10);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
 
-	return S_OK;
+
+	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	//	return E_FAIL;
+
+	////if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
+	////	return E_FAIL;
+
+	//if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
+	//	return E_FAIL;
+
+	//m_pDistortionShaderCom->Begin(3);
+	//m_pVIBuffer->Bind_Buffers();
+	//m_pVIBuffer->Render();
+
+	//if (FAILED(m_pRenderInstance->End_MRT()))
+	//	return E_FAIL;
+
+	///* 나온 결과를 바로 백버퍼에 덮어씀 */
+	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+	//	return E_FAIL;
+
+	//m_pDistortionShaderCom->Begin(2);
+	//m_pVIBuffer->Bind_Buffers();
+	//m_pVIBuffer->Render();
+
+	//return S_OK;
 }
 
 HRESULT CRenderer::Initialize_RenderTarget()
@@ -2305,6 +2363,12 @@ HRESULT CRenderer::Initialize_RenderTarget()
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BlackOut"), TEXT("Target_BlackOut"))))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_WhiteOut"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.5f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_WhiteOut"), TEXT("Target_WhiteOut"))))
+		return E_FAIL;
+
 #pragma endregion	
 
 #pragma region Distortion
@@ -2347,6 +2411,15 @@ void CRenderer::Switch_BlackOut(_bool isTrue)
 {
 	m_isStartBlackOut = isTrue;
 	//m_fAccBlackTime += 0.01f;
+}
+
+void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone)
+{
+	m_vWhiteDir = vDir;
+	m_isStartWhiteOut = true;
+	m_isEndWhiteOut = false;
+	m_fAccWhiteTime = 0.f;
+	m_pDoneCheck = isDone;
 }
 
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

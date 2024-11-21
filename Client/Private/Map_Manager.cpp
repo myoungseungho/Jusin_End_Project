@@ -71,7 +71,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Pressing(DIK_F8))
 		Map_Change(MAP_SPACE);
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
-		Map_Change(MAP_EF_SPACE);
+		Active_EastFinish(EAST_LASER);
 	
 	
 }
@@ -195,21 +195,23 @@ _float2 CMap_Manager::Active_EastFinish(East_Finish_Type eEastEffectType)
 	switch (eEastEffectType)
 	{
 	case MAP_EF_SPACE:
-		for (auto& iter : m_SpaceModels)
-			iter.second->SetActive(false);
-		for (auto& iter : m_Destructive_SpaceModels)
-			iter.second->SetActive(false);
-		for (auto& iter : m_VolcanoModels)
-			iter.second->SetActive(false);
-		for (auto& iter : m_Destructive_VolcanoModels)
-			iter.second->SetActive(false);
+		if (m_eCurMap == MAP_SPACE)
+		{
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_SpaceModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
 
-		m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
-		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
-		break;
+			m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
+		}
 		// 맵 분기 넣고 쉐이킹 넣고 바라보게 한다음 이펙트 출력
 		// 트리거는 있다가
-
+		break;
 	}
 
 		/* */
@@ -217,6 +219,11 @@ _float2 CMap_Manager::Active_EastFinish(East_Finish_Type eEastEffectType)
 
 
 	return _float2();
+}
+
+void CMap_Manager::PlayerCall_EastFinish()
+{
+
 }
 
 void CMap_Manager::IsDone_Active()

@@ -240,6 +240,12 @@ void CRenderInstance::Switch_BlackOut(_bool isTrue)
 	m_pRenderer->Switch_BlackOut(isTrue);
 }
 
+void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone)
+{
+	m_pRenderer->Start_WhiteOut(vDir, isDone);
+}
+
+
 void CRenderInstance::Release_Engine()
 {
 	Safe_Release(m_pRenderer);

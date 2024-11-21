@@ -90,6 +90,15 @@ private: /* For.BlackOut Variable */
 	_bool m_isStartBlackOut = { false };
 	_float m_fAccBlackTime = { 0.f };
 	const _float m_fBlackTime = { 0.8f };
+	
+private: /* For.WhiteOut Variable */
+	_bool m_isStartWhiteOut = { false };
+	_bool m_isEndWhiteOut = { false };
+	_float m_fAccWhiteTime = { 0.f };
+	const _float m_fWhiteTime = { 0.8f };
+
+	_float2 m_vWhiteDir = { 1.f,0.f };
+	_bool* m_pDoneCheck = { nullptr };
 
 public: /* For.Distortion Function*/
 	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
@@ -106,7 +115,7 @@ private: /* For.Distortion Variable */
 
 	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
 	_float m_fAccTime = { 0.f };
-
+	
 	_bool m_isFriezaRender = { false };
 
 	MAP_TYPE m_eCurMapType = { MAP_SPACE };
@@ -152,9 +161,10 @@ private:
 	HRESULT Draw_AllGlow_Effect(_int isPri);
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 	HRESULT Draw_MapBloom();
-	HRESULT Draw_WhiteBlack_Mode();
+	HRESULT Draw_WhiteBlack_Mode(_float fTimeDelta);
 public:
 	void Switch_BlackOut(_bool isTrue);
+	void Start_WhiteOut(_float2 vDir, _bool* isDone);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;
