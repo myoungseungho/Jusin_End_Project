@@ -69,6 +69,7 @@ public:
 public:
 	class CTransform* m_pTransformCom = { nullptr };
 	class CTransform* m_pCopyTransformCom = { nullptr };
+	class CTransform* m_pRotationTransformCom = { nullptr };
 	vector<class CEffect*>			m_MixtureEffects;
 
 	_uint			m_iNumKeyFrames = { 0 };

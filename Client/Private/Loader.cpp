@@ -20,8 +20,8 @@
 #include "Effect_ZNone.h"
 #include "Effect_Overlap.h"
 #include "Effect_Layer.h"
+#include "SpaceEF.h"
 #include "SpaceSky.h"
-
 #include "SpaceSun.h"
 #include "SpaceRock.h"
 #include "SpaceMoon.h"
@@ -3347,7 +3347,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSky"),
 		CSpaceSky::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEF"),
+		CSpaceEF::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shader_Texture"),
 		CShader_Texture::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3699,6 +3702,22 @@ HRESULT CLoader::Load_Map_Space()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_MeteoBreak"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/MeteoBreak/MeteoBreak.bin", PreTransformMatrix))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_VolcanoEF"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/VolcanoEF.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 	for (size_t i = 0; i < 11; i++)
 	{
 		wstring strTagName = TEXT("Prototype_Component_Model_MeteoBrake_") + to_wstring(i + 1);

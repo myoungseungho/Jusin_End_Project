@@ -23,7 +23,8 @@ public:
 	{
 		_wstring m_PrototypeKey;
 	}Map_Object_Key;
-	enum MAP_TYPE { MAP_SPACE, MAP_DEST_SPACE, MAP_VOLCANO, MAP_DEST_VOLCANO, MAP_END };
+	enum MAP_TYPE { MAP_SPACE, MAP_DEST_SPACE,MAP_EF_SPACE, MAP_VOLCANO, MAP_DEST_VOLCANO, MAP_END };
+	enum East_Finish_Type { EAST_LASER, EAST_SPHERE, EAST_END };
 private:
 	CMap_Manager();
 	virtual ~CMap_Manager() = default;
@@ -37,29 +38,38 @@ public:
 public:
 	void Map_Change(MAP_TYPE eMapType);
 	_float2 Active_DestructiveFinish(_bool isRight);
+	_float2 Active_EastFinish();
+	void PlayerCall_EastFinish(East_Finish_Type eEastEffectType);
 	void IsDone_Active();
 	
 	void Push_MapObject(MAP_TYPE eMapType, _wstring& strKey,class CGameObject* pGameObject);
-public:
+
+	MAP_TYPE m_eCurMap = { MAP_SPACE };
+
+private: /* East_Finish_Type Variable */
+	_bool			m_isEastFinish = { false };
+	/* 어떤식으로 트리거를 호출해서 동작할지 모름 그때에 맞춰서 넣어주자 */
+	_bool			m_isWhiteDoneCheck = { false };
+	East_Finish_Type m_eEastEffectType = { EAST_END };
+private: /* Destructive Variable */
+	_bool			m_isRight = { false };
+	_bool			m_isDestructive_View = { false };
+	_bool			m_isDestructive_Active = { false };
+	_float			m_AccTime = { 0.f };
+	_float			m_MapViewTime = { 0.f };
+
+private: /* MapObject Variable */
 	map<const wstring, class CGameObject*>			m_SpaceModels;
 	map<const wstring, class CGameObject*>			m_Destructive_SpaceModels;
 	map<const wstring, class CGameObject*>			m_VolcanoModels;
 	map<const wstring, class CGameObject*>			m_Destructive_VolcanoModels;
-	MAP_TYPE m_eCurMap = { MAP_SPACE };
+	
+private: /* Default Variable */
+	CGameInstance*			m_pGameInstance = { nullptr };
+	CRenderInstance*		m_pRenderInstance = { nullptr };
 
-private:
-
-	_bool m_isRight = { false };
-	_bool m_isDestructive_Active = { false };
-	_float m_AccTime = { 0.f };
-	_bool m_isDestructive_View = { false };
-	_float m_MapViewTime = { 0.f };
-
-	CGameInstance* m_pGameInstance = { nullptr };
-	CRenderInstance* m_pRenderInstance = { nullptr };
-
-	ID3D11Device* m_pDevice = { nullptr };
-	ID3D11DeviceContext* m_pContext = { nullptr };
+	ID3D11Device*			m_pDevice = { nullptr };
+	ID3D11DeviceContext*	m_pContext = { nullptr };
 public:
 	HRESULT Ready_Components();
 	virtual void Free() override;

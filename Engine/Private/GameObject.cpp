@@ -86,6 +86,7 @@ void CGameObject::Update(_float fTimeDelta)
 	if (!m_bIsActive)
 		return;
 
+
 }
 
 void CGameObject::Late_Update(_float fTimeDelta)
