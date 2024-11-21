@@ -103,7 +103,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.4 0
-Scale: 0.119995 0.0999904 0.07
+Scale: 0.119995 0.0999901 0.07
 Rotation: 0 0 90
 IsLoop: false
 Color: 0 0 0 0.893369
