@@ -541,6 +541,11 @@ void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
 }
 
+void CMain_Camera::Set_EastFinish(_float4 InitPos)
+{
+	//static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrix());
+}
+
 void CMain_Camera::Set_CirclePlay(_bool isClockwise, _float rotationSpeed)
 {
 	m_vecVirtualCamera[m_currentVirtualMode]->SetCirclePlay(isClockwise, rotationSpeed);

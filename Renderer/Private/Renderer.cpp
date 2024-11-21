@@ -62,6 +62,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pUI_GlowShader)
 		return E_FAIL;
 
+	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 5);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
@@ -286,8 +287,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 
 
-	//if(FAILED(Draw_WhiteBlack_Mode()))
-	//	return E_FAIL;
+	if(FAILED(Draw_WhiteBlack_Mode(fTimeDelta)))
+		return E_FAIL;
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
@@ -2119,11 +2120,23 @@ HRESULT CRenderer::Draw_MapBloom()
 
 HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 {
-	/*
-	_bool m_isStartWhiteOut = { false };
-	_float m_fAccWhiteTime = { 0.f };
-	const _float m_fWhiteTime = { 0.8f };
-	*/
+	//m_pDevice->State
+	ID3D11SamplerState* preSampler;
+	m_pContext->PSGetSamplers(0, 1, &preSampler);
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(samplerDesc));
+	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MaxAnisotropy = 16;
+
+	ID3D11SamplerState* pSamplerState = nullptr;
+	if (FAILED(m_pDevice->CreateSamplerState(&samplerDesc, &pSamplerState)))
+		return E_FAIL;
+
+	m_pContext->PSSetSamplers(0, 1, &pSamplerState);
+
 	if (m_pDoneCheck == nullptr)
 		return S_OK;
 
@@ -2132,15 +2145,55 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
+	if (m_isRockStart == true)
+	{
+		m_fSpriteAccTime += fTimeDelta;
+		m_fAccRockTime += fTimeDelta;
+		if (m_fSpriteAccTime >= 0.05f)
+		{
+			m_fSpriteAccTime = 0.f;
+			--m_fSpriteCurPos.x;
+
+			if (m_fSpriteCurPos.x < 0)
+			{
+				m_fSpriteCurPos.x = 4.f;
+				--m_fSpriteCurPos.y;
+			}
+
+			if (m_fSpriteCurPos.y < 0)
+			{
+				m_fSpriteCurPos.x = 0.f;
+				m_fSpriteCurPos.x = 0.f;
+			}
+		}
+
+		if (m_fAccRockTime >= 0.5f && m_isMaintainWhite == false && m_isEndWhiteOut == false)
+			m_isStartWhiteOut = true;
+
+		if (m_fAccRockTime >= 3.f)
+		{
+			m_fAccWhiteTime = 2.f;
+			m_isMaintainWhite = false;
+			m_isRockStart = false;
+			m_isEndWhiteOut = true;
+			m_fAccRockTime = 0.f;
+
+			*m_pDoneCheck = true;
+
+			m_pDoneCheck = nullptr;
+		}
+	}
+
 	if (m_isStartWhiteOut == true)
 	{
 		m_fAccWhiteTime += fTimeDelta;
 
-		if (m_fAccWhiteTime >= m_fWhiteTime)
+		if (m_fAccWhiteTime >= 2.5f)
 		{
-			m_fAccWhiteTime = m_fWhiteTime;
+			m_fAccWhiteTime = 2.5f;
+			m_isMaintainWhite = true;
+			m_isEndWhiteOut = false;
 			m_isStartWhiteOut = false;
-			m_isEndWhiteOut = true;
 		}
 	}
 
@@ -2151,10 +2204,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		if (m_fAccWhiteTime <= 0.f)
 		{
 			m_isStartWhiteOut = false;
-			m_isEndWhiteOut = false;
-			*m_pDoneCheck = true;
 
-			m_pDoneCheck = nullptr;
 		}
 	}
 
@@ -2165,18 +2215,42 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &m_isStartWhiteOut, sizeof(_bool))))
+	if (FAILED(m_pShader->Bind_RawValue("g_isEndWhiteOut", &m_isEndWhiteOut, sizeof(_bool))))
+		return E_FAIL;
+	
+	_bool isStartCheck = m_isMaintainWhite + m_isStartWhiteOut;
+	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &isStartCheck, sizeof(_bool))))
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_RawValue("g_fAccBlackTime", &m_fAccWhiteTime, sizeof(_float))))
 		return E_FAIL;
 
+	if (FAILED(m_pShader->Bind_RawValue("g_fSpriteSize", &m_fSpriteSize, sizeof(_float2))))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_RawValue("g_fSpriteCurPos", &m_fSpriteCurPos, sizeof(_float2))))
+		return E_FAIL;
+
+	// g_fSpriteSizeg_fSpriteCurPos
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_Texture", TEXT("Target_WhiteOut"))))
 		return E_FAIL;
+
+	if (m_isEndWhiteOut == false)
+	{
+		if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
+			return E_FAIL;
+	}
+	else
+	{
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_WhiteOut"))))
+			return E_FAIL;
+
+	}
+	
 
 	m_pShader->Begin(10);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
+	m_pContext->PSSetSamplers(0, 1, &preSampler);
 
 	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
 	//	return E_FAIL;
@@ -2416,10 +2490,17 @@ void CRenderer::Switch_BlackOut(_bool isTrue)
 void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone)
 {
 	m_vWhiteDir = vDir;
-	m_isStartWhiteOut = true;
+	m_isStartWhiteOut = false;
+	m_isMaintainWhite = false;
 	m_isEndWhiteOut = false;
 	m_fAccWhiteTime = 0.f;
 	m_pDoneCheck = isDone;
+	m_isRockStart = true;
+	m_fSpriteSize = { 1.f / 5.f,1.f / 12.f };
+//	m_fSpriteSize = { 1/1920.f,1/1080.f };
+	//m_fSpriteSize = { 1 / 384.f,1 / 90.f };
+	m_fSpriteCurPos = { 4.f,11.f };
+	m_fAccRockTime = 0.f;
 }
 
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -2467,4 +2548,5 @@ void CRenderer::Free()
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pGlowShader);
 	Safe_Release(m_pUI_GlowShader);
+	Safe_Release(m_pEastFinish_TextureCom);
 }

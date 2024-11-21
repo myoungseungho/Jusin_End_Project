@@ -19,6 +19,7 @@ float g_fAccBlackTime;
 float g_fLightAccTime;
 float g_fLightLifeTime;
 bool g_isStartBlackOut;
+bool g_isEndWhiteOut;
 bool g_isUsingEffectLight;
 texture2D		g_Texture;
 texture2D		g_NormalTexture;
@@ -33,6 +34,8 @@ texture2D		g_DepthTexture;
 texture2D		g_SpecularTexture;
 texture2D		g_LightDepthTexture;
 texture2D g_MetallicTexture;
+float2 g_fSpriteSize;
+float2 g_fSpriteCurPos;
 struct VS_IN
 {
 	float3 vPosition : POSITION;
@@ -497,12 +500,29 @@ PS_OUT PS_MAIN_BLACKOUT(PS_IN In)
 PS_OUT PS_MAIN_WHITEOUT(PS_IN In)
 {
     PS_OUT Out = (PS_OUT) 0;
-
+    float2 vTexcoord = In.vTexcoord;
+    
+    vector vRockDiffuse;
+    float2 texFramePos = g_fSpriteCurPos * g_fSpriteSize;
+    vTexcoord = vTexcoord * g_fSpriteSize + texFramePos;
+    
+    vRockDiffuse.rgb = float3(0.035294f, 0.0078431f, 0.00392156f);
+    vRockDiffuse.a = g_DiffuseTexture.Sample(LinearSampler, vTexcoord).a;
+    
     vector vDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-    vDiffuse.a = saturate(vDiffuse.a - (0.8f - g_fAccBlackTime));
-    
+    vDiffuse.a = saturate(vDiffuse.a - (0.5f - g_fAccBlackTime));
     Out.vColor = vDiffuse;
+    if (g_isEndWhiteOut == false)
+    {
+    
+        vRockDiffuse.rgb = vRockDiffuse.rgb + (vDiffuse.rgb * saturate(g_fAccBlackTime - 0.5f));
+    
+        vDiffuse.rgb = vDiffuse.rgb * (1.f - vRockDiffuse.a) + vRockDiffuse.rgb * vRockDiffuse.a;
+        vDiffuse.a = vDiffuse.a * (1.f - vRockDiffuse.a) + vRockDiffuse.a;
+        Out.vColor = vDiffuse * g_isStartBlackOut + (vRockDiffuse * (1.f - g_isStartBlackOut));
+    }
+
     return Out;
 }
 

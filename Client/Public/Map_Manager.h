@@ -38,8 +38,8 @@ public:
 public:
 	void Map_Change(MAP_TYPE eMapType);
 	_float2 Active_DestructiveFinish(_bool isRight);
-	_float2 Active_EastFinish(East_Finish_Type eEastEffectType);
-	void PlayerCall_EastFinish();
+	_float2 Active_EastFinish();
+	void PlayerCall_EastFinish(East_Finish_Type eEastEffectType);
 	void IsDone_Active();
 	
 	void Push_MapObject(MAP_TYPE eMapType, _wstring& strKey,class CGameObject* pGameObject);
@@ -49,7 +49,8 @@ public:
 private: /* East_Finish_Type Variable */
 	_bool			m_isEastFinish = { false };
 	/* 어떤식으로 트리거를 호출해서 동작할지 모름 그때에 맞춰서 넣어주자 */
-
+	_bool			m_isWhiteDoneCheck = { false };
+	East_Finish_Type m_eEastEffectType = { EAST_END };
 private: /* Destructive Variable */
 	_bool			m_isRight = { false };
 	_bool			m_isDestructive_View = { false };

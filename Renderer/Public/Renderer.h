@@ -94,12 +94,18 @@ private: /* For.BlackOut Variable */
 private: /* For.WhiteOut Variable */
 	_bool m_isStartWhiteOut = { false };
 	_bool m_isEndWhiteOut = { false };
+	_bool m_isMaintainWhite = { false };
 	_float m_fAccWhiteTime = { 0.f };
-	const _float m_fWhiteTime = { 0.8f };
+	const _float m_fWhiteTime = { 1.f };
+	_float m_fAccRockTime = { 0.f };
+	_bool m_isRockStart = { false };
+	_float2 m_fSpriteSize = { 0.f,0.f };
+	_float2 m_fSpriteCurPos = { 0.f,0.f };
+	_float m_fSpriteAccTime = { 0.f };
 
 	_float2 m_vWhiteDir = { 1.f,0.f };
 	_bool* m_pDoneCheck = { nullptr };
-
+	class CTexture* m_pEastFinish_TextureCom = { nullptr };
 public: /* For.Distortion Function*/
 	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
 	void Delete_LoopDistortion();
