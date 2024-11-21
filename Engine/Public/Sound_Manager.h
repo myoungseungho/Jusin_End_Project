@@ -140,6 +140,18 @@ public:
 		Hit_Ice_Hit_SFX,
 		Frieza_Reflect,
 		Frieza_Reflect_SFX,
+		Common_Small_Hit_SFX,
+		Common_Medium_Hit_SFX,
+		Common_Heavy_Hit_SFX,
+		Common_Small_Guard_SFX,
+		Common_Medium_Guard_SFX,
+		Common_Heavy_Guard_SFX,
+		Common_Jump_SFX,
+		Common_Jump_Dash_SFX,
+		Common_GroundCrush_SFX,
+		Common_Dash_Start_SFX,
+		Common_Dash_Loop_SFX,
+		Common_Dash_End_SFX
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

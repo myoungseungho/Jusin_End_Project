@@ -1856,7 +1856,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Jump_SFX, false, 0.5f);
 		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), m_pTransformCom->Get_WorldMatrixPtr());
 
 	}

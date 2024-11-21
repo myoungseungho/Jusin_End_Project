@@ -780,6 +780,53 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/QTE_UI_SOUND/QTE_SAME_GRAB_ICON_Fail.ogg", CSound_Manager::SOUND_KEY_NAME::QTE_SAMEGRAB_FAIL_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
+#pragma region 공통 사운드
+
+
+#pragma region SFX
+
+	//약공격 맞았을 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_Hit_Small-A.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Small_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//중공격 맞았을 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_Hit_Midle-A.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Medium_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//강공격 맞았을 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_Hit_Large-A.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Heavy_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//약공격 가드
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_Guard_Small-A.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Small_Guard_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//중공격 가드
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_Guard_Midle.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Medium_Guard_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//강공격 가드
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_Guard_Large.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Heavy_Guard_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//점프
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_GK_Jump.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Jump_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//점프 대시
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_PC_AirDash.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Jump_Dash_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//공중에서 내리 찍혔을 때
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_GroundCrush.ogg", CSound_Manager::SOUND_KEY_NAME::Common_GroundCrush_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//대시 시작
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_JetDashStart.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Dash_Start_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//대시 진행중
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_JetDashLoop_LP.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Dash_Loop_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//대시 종료
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_CMN_JetDashStop_Basa.ogg", CSound_Manager::SOUND_KEY_NAME::Common_Dash_End_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+#pragma endregion
+
+
+
+#pragma endregion
+
 	return S_OK;
 }
 

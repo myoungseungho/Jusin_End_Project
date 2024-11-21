@@ -588,8 +588,7 @@ void CFrieza_MeleeAttack::ForwardDash()
 	if(*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_IDLE || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_FORWARD_WALK || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_BACK_WALK)
 	{
 		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_FORWARD_DASH);
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_DownHook_Dash_SFX, false, 0.5f);
-
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_Start_SFX, false, 0.5f);
 
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
