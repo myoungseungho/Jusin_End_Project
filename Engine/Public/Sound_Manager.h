@@ -156,6 +156,10 @@ public:
 		Goku_Grab,
 		Goku_Grab_Attack,
 		Goku_Energy_Fire_SFX,
+		Goku_Down_Forward_Light_Attack_SFX,
+		Common_Grab_Start_SFX,
+		Common_Grab_Rush_SFX,
+		Common_Grab_End_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

@@ -1142,6 +1142,8 @@ void CPlay_Goku::Gravity(_float fTimeDelta)
 			Set_fImpulse(0.f);
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);
+
+			//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::)
 		}
 
 	}
@@ -2140,10 +2142,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Character_Make_Effect(TEXT("Energie-01"), { -0.6f,-0.2f });
 
 
-				
+
 			}
 			Character_Make_Effect(TEXT("Energie-01"), { -0.6f,-0.2f });
 
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Fire_SFX, false, 1.f);
 		}
 		else
 		{
@@ -2217,6 +2220,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Fire_SFX, false, 1.f);
 
 
 				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BackGround_Dust"));
