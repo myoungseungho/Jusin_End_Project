@@ -3155,7 +3155,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 
-		//Position 0 : ÄÆ¾À, Àû ½Ã°£Á¤Áö. 
+		//Position 0 : ÄÆ¾À, Àû ½Ã°£Á¤Áö. SM
 		if (iAttackEvent == 0)
 		{
 			Set_AnimationStopWithoutMe(5.f);
