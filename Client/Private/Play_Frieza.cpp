@@ -3166,14 +3166,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_bGoldFrieza = true;
 
-			if (Get_iDirection() == 1)
+			/*if (Get_iDirection() == 1)
 			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 1, this);
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 0, this);
 			}
 			else if (Get_iDirection() == -1)
 			{
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 2, this, nullptr, true);
-			}
+			}*/
 		}
 
 
