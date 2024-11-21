@@ -2120,23 +2120,6 @@ HRESULT CRenderer::Draw_MapBloom()
 
 HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 {
-	//m_pDevice->State
-	ID3D11SamplerState* preSampler;
-	m_pContext->PSGetSamplers(0, 1, &preSampler);
-	D3D11_SAMPLER_DESC samplerDesc;
-	ZeroMemory(&samplerDesc, sizeof(samplerDesc));
-	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.MaxAnisotropy = 16;
-
-	ID3D11SamplerState* pSamplerState = nullptr;
-	if (FAILED(m_pDevice->CreateSamplerState(&samplerDesc, &pSamplerState)))
-		return E_FAIL;
-
-	m_pContext->PSSetSamplers(0, 1, &pSamplerState);
-
 	if (m_pDoneCheck == nullptr)
 		return S_OK;
 
@@ -2179,8 +2162,6 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 			m_fAccRockTime = 0.f;
 
 			*m_pDoneCheck = true;
-
-			m_pDoneCheck = nullptr;
 		}
 	}
 
@@ -2205,6 +2186,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		{
 			m_isStartWhiteOut = false;
 
+			m_pDoneCheck = nullptr;
 		}
 	}
 
@@ -2250,47 +2232,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 	m_pShader->Begin(10);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-	m_pContext->PSSetSamplers(0, 1, &preSampler);
 
-	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-	//	return E_FAIL;
-	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-	//	return E_FAIL;
-	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-	//	return E_FAIL;
-
-	////if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
-	////	return E_FAIL;
-
-	//if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
-	//	return E_FAIL;
-
-	//m_pDistortionShaderCom->Begin(3);
-	//m_pVIBuffer->Bind_Buffers();
-	//m_pVIBuffer->Render();
-
-	//if (FAILED(m_pRenderInstance->End_MRT()))
-	//	return E_FAIL;
-
-	///* 나온 결과를 바로 백버퍼에 덮어씀 */
-	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-	//	return E_FAIL;
-	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-	//	return E_FAIL;
-	//if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
-	//	return E_FAIL;
-
-	//m_pDistortionShaderCom->Begin(2);
-	//m_pVIBuffer->Bind_Buffers();
-	//m_pVIBuffer->Render();
-
-	//return S_OK;
 }
 
 HRESULT CRenderer::Initialize_RenderTarget()
