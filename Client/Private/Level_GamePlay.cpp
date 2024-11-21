@@ -707,6 +707,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	// 골든 프리저 (아래 + 뒤 + 강특)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Golden.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Golden, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	// 낙법 반사 (오레~)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Reflect.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region Frieza_SFX
@@ -751,6 +754,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//골든프리저
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Golden_Frieza.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Golden_Frieza_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//낙법 반사
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Reflect_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 

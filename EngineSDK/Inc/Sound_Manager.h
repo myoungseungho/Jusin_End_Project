@@ -138,6 +138,8 @@ public:
 		Air_Chase_21,
 		Hit_Air_Chase,
 		Hit_Ice_Hit_SFX,
+		Frieza_Reflect,
+		Frieza_Reflect_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
