@@ -744,30 +744,40 @@ void CVirtual_Camera::Default_Camera(_float fTimeDelta)
 
 void CVirtual_Camera::Map_Camera(_float fTimeDelta)
 {
-	if (m_isDyingTeam == 0)
-		return;
-
-	_vector vPlayerPos = { 0.f,0.f,0.f,1.f };
-
-	switch (m_isDyingTeam)
+	if (m_isEastFinish == true)
 	{
-	case 1:
-		vPlayerPos = static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
-		break;
-	case 2:
-		vPlayerPos = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
-		break;
+		if (m_bIsShaking == true)
+		{
+			_vector position = m_vBaseCameraPosition + m_vShakeOffset;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
+		}
 	}
-
-	vPlayerPos = XMVectorSetY(vPlayerPos, XMVectorGetY(vPlayerPos) + 1.f);
-
-	m_pTransformCom->LookAt(vPlayerPos);
-	if (m_bIsShaking == true)
+	else if (m_isDestructive == true)
 	{
-		_vector position = m_vBaseCameraPosition + m_vShakeOffset;
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
-	}
+		if (m_isDyingTeam == 0)
+			return;
 
+		_vector vPlayerPos = { 0.f,0.f,0.f,1.f };
+
+		switch (m_isDyingTeam)
+		{
+		case 1:
+			vPlayerPos = static_cast<CTransform*>(m_p1pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			break;
+		case 2:
+			vPlayerPos = static_cast<CTransform*>(m_p2pPlayer->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			break;
+		}
+
+		vPlayerPos = XMVectorSetY(vPlayerPos, XMVectorGetY(vPlayerPos) + 1.f);
+
+		m_pTransformCom->LookAt(vPlayerPos);
+		if (m_bIsShaking == true)
+		{
+			_vector position = m_vBaseCameraPosition + m_vShakeOffset;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, position);
+		}
+	}
 }
 
 
@@ -1193,6 +1203,14 @@ void CVirtual_Camera::Set_DyingTeam(_uint iTeamIndex, _matrix CamWorldMatrix)
 	_float4x4 ResultMatrix;
 	XMStoreFloat4x4(&ResultMatrix, CamWorldMatrix);
 	m_pTransformCom->Set_WorldMatrix(ResultMatrix);
+	m_isDestructive = true;
+	m_isEastFinish = false;
+}
+
+void CVirtual_Camera::Set_EastFinish()
+{
+	m_isEastFinish = true;
+	m_isDestructive = false;
 }
 
 CVirtual_Camera* CVirtual_Camera::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

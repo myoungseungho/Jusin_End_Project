@@ -44,6 +44,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	if (FAILED(Ready_Space()))
 		return E_FAIL;
+
+	m_pMap_Manager->Map_Change(CMap_Manager::MAP_SPACE);
 #pragma endregion
 
 #pragma region 캐릭터 사본 객체
@@ -910,7 +912,7 @@ HRESULT CLevel_GamePlay::Ready_Space()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceMeteoBreak"), TEXT("Layer_MeteoBreak"), &tDesc)))
 		return E_FAIL;
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceEF");
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEF"), TEXT("Layer_MeteoBreak"), &tDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEF"), TEXT("Layer_MeteoBreakA"), &tDesc)))
 		return E_FAIL;
 	
 	return S_OK;

@@ -158,6 +158,10 @@ HRESULT CEffect_Layer::Initialize(COPY_DESC* pArg, _bool isBillboading)
 			fLayerMatrix._41 += XMVectorGetX(Position);
 			fLayerMatrix._42 += XMVectorGetY(Position);
 
+			//fLayerMatrix._11 *= XMVectorGetX(Scale);
+			//fLayerMatrix._22 *= XMVectorGetY(Scale);
+			//fLayerMatrix._33 *= XMVectorGetZ(Scale);
+
 			LayerMatrix = XMLoadFloat4x4(&fLayerMatrix);
 		}
 
