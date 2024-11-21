@@ -935,6 +935,7 @@ PLAY_FRN,FRN433_body,0,AnimSpeedChange,0.01,10
 
 //,컷씬, 적 시간정지
 PLAY_FRN,FRN433_body,0,AttackEvent,0
+PLAY_FRN,FRN433_body,0.002,Camera_Play_21_Grab_Special_0_Shake,1.4,0.3
 
 //,이펙트,화면가리기,  433cs(70)로 연계?
 PLAY_FRN,FRN433_body,15,AttackEvent,1
@@ -945,6 +946,7 @@ PLAY_FRN,FRN433_body,20,AttackEvent,2
 
 //,변신3필 컷씬? 이펙트로 가리다가 보이는건 120부터
 PLAY_FRN,FRN433cs_body,0,AnimSpeedChange,0.01,25
+PLAY_FRN,FRN433cs_body,160.002,Camera_Play_21_Grab_Special_0_Shake,2.0,0.03
 //,PLAY_FRN,FRN433cs_body,0,AnimSpeedChange,0.01,25
 
 
