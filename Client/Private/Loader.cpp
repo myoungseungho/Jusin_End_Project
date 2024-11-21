@@ -119,7 +119,7 @@
 #include "UI_CharaSelectFont.h"
 #include "UI_CharaSelectFude.h"
 #include "UI_CharaSelectMark.h"
-#include "UI_CharaSelectModel.h"
+#include "CharaSelect_Model.h"
 #include "UI_CharaSelectLight.h"
 #include "UI_CharaSelectCircle.h"
 #include "UI_VS_BG.h"
@@ -186,6 +186,7 @@
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
 #include "UI_Lobby_Key_Enter.h"
+#include "CharaSelect_Camera.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -750,7 +751,7 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
@@ -815,6 +816,16 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	/* For.Prototype_GameObject_UI_Loading_EnergyEff */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_EnergyEff"),
 		CUI_Loading_EnergyEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_CharaSelect_Camera */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_CharaSelect_Camera"),
+		CCharaSelect_Camera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_CharaSelect_Model */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelect_Model"),
+		CCharaSelect_Model::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

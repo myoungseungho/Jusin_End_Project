@@ -173,6 +173,7 @@
     <ClInclude Include="..\Public\AttackObject_Reflect.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
+    <ClInclude Include="..\public\CharaSelect_Camera.h" />
     <ClInclude Include="..\public\Loading_Camera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Frieza_MeleeAttack.h" />
@@ -241,7 +242,7 @@
     <ClInclude Include="..\public\UI_CharaSelectImage.h" />
     <ClInclude Include="..\public\UI_CharaSelectLight.h" />
     <ClInclude Include="..\public\UI_CharaSelectMark.h" />
-    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+    <ClInclude Include="..\public\CharaSelect_Model.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
+    <ClCompile Include="..\private\CharaSelect_Camera.cpp" />
     <ClCompile Include="..\private\Loading_Camera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp" />
@@ -475,7 +477,7 @@
     <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectLight.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectMark.cpp" />
-    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+    <ClCompile Include="..\private\CharaSelect_Model.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
