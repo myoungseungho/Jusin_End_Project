@@ -286,6 +286,7 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 	case Client::CUI_Define::FRIEZA:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GRAB, 0, pOwner);
 		main_Camera->StartCameraShake(2.5f, 0.07f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_Grab, false, 1.f);
 		break;
 	case Client::CUI_Define::HIT:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_GRAB, 0, pOwner);

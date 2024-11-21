@@ -662,7 +662,7 @@ void CAttackObject::Camera_Hit_Knock_Away_Up(CCharacter* pOwner, CCharacter* pHi
 	case Client::CUI_Define::FRIEZA:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_KNOCK_AWAY_UP, 0, pOwner);
 		main_Camera->StartCameraShake(0.5f, 0.2f);
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_Down_Forward_Light_SFX, false, 1.f);
 		break;
 	case Client::CUI_Define::HIT:
 		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_HIT_KNOCK_AWAY_UP, 0, pOwner);

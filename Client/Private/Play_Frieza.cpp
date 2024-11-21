@@ -1658,6 +1658,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			// != 연산 안되서 이어붙힘
 			//특수버튼 말고 다른거 누르면 종료.
 
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, false, 1.f);
+
 			if (inputBuffer.size() == 0)
 			{
 				inputBuffer.push_back(CInput(MOVEKEY_NEUTRAL, ATTACK_NONE));
@@ -2189,6 +2191,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eAttackType = { ATTACKTYPE_LOW };
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		else if (iAttackEvent == 1)
 		{
