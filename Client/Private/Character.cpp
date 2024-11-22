@@ -4338,15 +4338,18 @@ void CCharacter::Play_NewRound_Loser()
 	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	pMainCamera->Set_Player(this);
 
-
 	if (m_iPlayerTeam == 1)
 	{
+		pMainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_COMMON_APPEAR, 0, this, nullptr, true);
 		FlipDirection(1);
 	}
 	else
+	{
+		pMainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_COMMON_APPEAR, 0, this);
 		FlipDirection(-1);
+	}
 
-
+	pMainCamera->StartCameraShake(2.f, 0.2f);
 }
 
 void CCharacter::Play_NewRound_Winner()
@@ -4376,7 +4379,6 @@ void CCharacter::Play_NewRound_Winner()
 	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	pMainCamera->Set_Player(this);
 
-	pMainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_COMMON_APPEAR, 0, this, m_pEnemy, false);
 
 	if (m_iPlayerTeam == 1)
 	{

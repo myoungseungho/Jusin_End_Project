@@ -1579,20 +1579,28 @@ SkillName: Camera_Common_Appear
 
 [Animation]
 AnimationName: Common_Appear_Anim_1
-PointCount: 5
+PointCount: 6
 
 [CameraPoint]
 Position: -0.587317 2.11532 -0.921104
 Rotation: 0.00953044 -0.678176 0.00879618 0.734785
-Duration: 1
+Duration: 0.5
 InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.587317 2.11532 -0.921104
+Rotation: 0.00953044 -0.678176 0.00879618 0.734785
+Duration: 0.2
+InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
 Position: 0.227868 1.75664 -0.988655
 Rotation: 0.0110843 -0.522925 0.00680088 0.852279
-Duration: 1
+Duration: 0.4
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -1600,7 +1608,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.104771 3.08055 -8.05388
 Rotation: 0.0940386 -0.0134308 0.00126875 0.995477
-Duration: 1
+Duration: 0.1
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -1608,15 +1616,15 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.182077 3.6268 -10.9183
 Rotation: 0.0940386 -0.0134308 0.00126875 0.995477
-Duration: 1
-InterpolationType: 0
+Duration: 0.1
+InterpolationType: 1
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: -0.188082 1.90743 -1.33063
-Rotation: 0.00908187 0.0258002 -0.000234412 0.999626
-Duration: 1
+Position: -0.0790586 1.82373 -1.32355
+Rotation: 0.018157 4.25801e-06 0.000468628 0.999835
+Duration: 0.5
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
