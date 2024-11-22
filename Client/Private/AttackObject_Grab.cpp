@@ -123,15 +123,29 @@ void CAttackObject_Grab::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			
 			m_pOwner->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
-
+			m_pOwner->Character_Start_QTE(0);
+			
 
 			//pCharacter->Set_Animation(m_iOnwerNextAnimationIndex, false);
 			//pCharacter->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
 			//m_pOwner->Add_Move({ 0.0f * m_pOwner->Get_iDirection(),0.3f});
-			m_pOwner->Add_Move({ -0.15f * m_pOwner->Get_iDirection(),0.3f});
+			//m_pOwner->Add_Move({ -0.15f * m_pOwner->Get_iDirection(),0.3f});
+			//m_pOwner->Add_Move({ -0.14f * m_pOwner->Get_iDirection(),0.f });
 
-			m_pOwner->Set_GrabLoofCount(1);
+			
+
+			_float fEnemyPosX = static_cast<CAttackObject_Grab*>(other->GetMineGameObject())->Get_pOwner()->Get_fPositionX();
+			_float MyPosX = m_pOwner->Get_fPositionX();
+
+			_float currentDistance = fEnemyPosX - MyPosX;
+			_float fDistance = m_pOwner->Get_iDirection() - (m_pOwner->Get_iDirection() > 0 ? 0.8 : -0.8); // 방향 고려
+			m_pOwner->Add_Move({ fDistance,0.f });
+
+			//m_pOwner->Set_GrabLoofCount(1);
+			//m_pOwner->Set_GrabLoofCount(10);
+			m_pOwner->Set_GrabLoofCount(15);
+
 			m_pOwner->Set_bGrabDraw(true);
 			CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 			Camera_Same_Grab(m_pOwner, pCharacter);

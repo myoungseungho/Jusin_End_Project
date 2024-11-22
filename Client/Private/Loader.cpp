@@ -150,6 +150,7 @@
 #include "AttackObject_Ranged.h"
 #include "AttackObject_Energy.h"
 #include "AttackObject_Reflect.h"
+#include "ParryingRangedObject.h"
 
 #include "BoneEffectObject.h"
 #include "QTE_Same_Grab_UI_Icon.h"
@@ -2319,6 +2320,12 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_AllMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/BlackGoku.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	
+
 	//21ȣ
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Ton.bin", PreTransformMatrix))))
@@ -3231,6 +3238,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CAttackObject_Energy::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_ParryingRangedObject"),
+		CParryingRangedObject::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Bone_Effect_Object"),
 		CBoneEffectObject::Create(m_pDevice, m_pContext))))

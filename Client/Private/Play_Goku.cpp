@@ -261,6 +261,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	return;
 	//}
 
+	cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
 	Update_Tag_In(fTimeDelta);
 
@@ -316,7 +317,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 						//Tag_In(m_ePlayerSlot);
 					}
 				}
-				 
+			
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -359,11 +360,15 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				m_fGravityTime += fTimeDelta;
 
 			}
-
+			
 		}
 		if (m_bAnimationLock == false)
 		{
 			Character_Play_Animation(fTimeDelta);
+			if (m_bMotionPlaying == false && m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
+			{
+				CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+			}
 		}
 		else
 		{
@@ -554,6 +559,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				Set_Animation(ANIME_LAYUP);
 				Set_CurrentAnimationPositionJump(5.f);
 			}
+			
 			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
 
@@ -723,39 +729,7 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
 {
 
-	////백업
-	//if (FAILED(Bind_ShaderResources()))
-	//	return E_FAIL;
-	//
-	//_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-	//
-	//for (size_t i = 0; i < iNumMeshes; i++)
-	//{
-	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-	//			return E_FAIL;
-	//	}
-	//	else
-	//	{
-	//		if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-	//			return E_FAIL;
-	//	}
-	//	 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-	//
-	//	/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
-	//	m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-	//
-	//	if (FAILED(m_pShaderCom->Begin(0)))
-	//		return E_FAIL;
-	//
-	//
-	//	if (FAILED(m_pModelCom->Render(i)))
-	//		return E_FAIL;
-	//}
-
+	
 	if (m_bInvisible == true)
 		return S_OK;
 
@@ -771,8 +745,23 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	/* Detail?? MeshIndex : 4 */
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		if (i == 1 || i == 2 || i == 4)
-			continue;
+
+		if (m_bNormalGoku)
+		{
+			// 0: 쓰레기
+			// 1 :기본 몸 
+			// 2: 큐브?
+			// 3: decal  제외
+			// 4 : decal? 등딱지
+			if (i == 0 || i == 2 || i == 3)
+				continue;
+
+		}
+		else
+		{
+			if (i == 1 || i == 2 || i == 4)
+				continue;
+		}
 
 		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
@@ -805,21 +794,15 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 			return E_FAIL;
 
 
-		//if(m_bFinalSkillss3 == false)
-		//{
-		//	if (FAILED(m_pModelCom->Render(i)))
-		//		return E_FAIL;
-		//}
-		//else
-		//{
-		//	if (FAILED(m_pModelCom_Skill->Render(i)))
-		//		return E_FAIL;
-		//}
-
-
+	
 
 		//이게 왜 됨?
-		if (m_bAlwaysss3Test)
+		if (m_bNormalGoku)
+		{
+			if (FAILED(m_pModelCom_Opening->Render(i)))
+				return E_FAIL;
+		}
+		else if (m_bAlwaysss3Test)
 		{
 			if (FAILED(m_pModelCom_Skill->Render(i)))
 				return E_FAIL;
@@ -958,7 +941,10 @@ HRESULT CPlay_Goku::Ready_Components()
 
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
 		return E_FAIL;
-	
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"), TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
+		return E_FAIL;
+
 
 
 	/* Com_Model */
@@ -1390,7 +1376,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-		Desc.strEffectName = TEXT("BurstJ-03");
+		//Desc.strEffectName = TEXT("BurstJ-03");
+		Desc.strEffectName = TEXT("Parrying_Ball");
+
 
 		Desc.iGainKiAmount = 3;
 
@@ -1716,6 +1704,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 7;
 
 			Desc.bOnwerHitNoneStop = true;
+			Desc.fEffectRotationDegree = 340.f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2096,6 +2085,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_bUltimateKamehameha)
 			{
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
+
+
 				//Set_AnimationStopWithoutMe(2.f);
 				//
 				////이전에 만들어진 모든 Attack Object들 2초간 정지.  이거 본인은 이 직후에 만들어질테니 괜찮음
@@ -2491,6 +2483,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Character_Make_Effect(TEXT("BackGround_Dust"));
+
+				Character_Make_Effect(TEXT("EnergieSDO-01"), { -0.4f,-0.07f });
+				Character_Make_Effect(TEXT("EnergieSDO-02"), { -0.4f,-0.07f });
+
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("EnergieSDO-01"));
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("EnergieSDO-02"));
+
 
 			}
 

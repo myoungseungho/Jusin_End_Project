@@ -204,7 +204,10 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 				XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
 
-				FinalMatrix._43 = 0;
+				if (pEffect->m_EffectName.find(L"Parrying_Ball") != wstring::npos)
+					FinalMatrix._43 = XMVectorGetZ(Position);
+				else
+					FinalMatrix._43 = 0;
 				FinalMatrix._41 = FinalMatrix._41 + XMVectorGetX(Position) /*+ m_fChangePosition.x*/;
 				FinalMatrix._42 = FinalMatrix._42 + XMVectorGetY(Position) /*+ m_fChangePosition.y*/;
 

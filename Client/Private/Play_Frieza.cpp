@@ -421,8 +421,11 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 		}
 		if (m_bAnimationLock == false)
 		{
-			cout << m_pModelCom->m_iCurrentAnimationIndex << endl;
 			Character_Play_Animation(fTimeDelta);
+			if (m_bMotionPlaying == false && m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
+			{
+				CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+			}
 		}
 		else
 		{
@@ -1347,17 +1350,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bGrabedGravity = true;
 			Desc.fForcedGravityTime = 0.1f;
 
-			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			if (Get_iDirection() == 1)
-			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this);
-			}
-			else if (Get_iDirection() == -1)
-			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, nullptr, true);
-			}
-
-			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
+			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -1486,6 +1479,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		if (iAttackEvent == 0)
 		{
+
+
+
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -1496,8 +1492,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.4f,0.f };
-			Desc.ColliderDesc.vExtents = { 1.f,1.0f,1.f };
 
+
+			Desc.ColliderDesc.vExtents = { 1.f,1.0f,1.f };
+			if (m_bGrabDraw)
+			{
+				m_bGrabDraw = false;
+				Desc.ColliderDesc.vExtents = { 2.f,2.0f,1.f };
+			}
 
 			Desc.ColliderDesc.pMineGameObject = this;
 
@@ -1532,7 +1534,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fCameraShakeDuration = 1.f;
 			Desc.fCameraShakeMagnitude = 0.2f;
-			Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_FRIEZA_HEAVY;
+
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2615,7 +2617,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.ColliderDesc.vCenter = { 4.f * m_iLookDirection,1.5f,0.f };
 
 
-		//Desc.ColliderDesc.pTransform = m_pTransformCom;dd
+		//Desc.ColliderDesc.pTransform = m_pTransformCom;
 		//Desc.fhitCharacter_Impus = { 0.2f * m_iLookDirection, 10.f };  //원래 가속도.
 
 		Desc.fhitCharacter_Impus = { 0.6f * m_iLookDirection, 10.f };  //원래 가속도.
@@ -2630,8 +2632,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fAnimationLockTime = 0.5f;
 		Desc.pOwner = this;
 		Desc.iGainKiAmount = 10;
-		Desc.fCameraShakeDuration = 0.5f;
-		Desc.fCameraShakeMagnitude = 0.3f;
+
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 	}
@@ -2669,7 +2670,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.iGainKiAmount = 2;
 			Desc.iGainAttackStep = 0;
-			Desc.iVirtualCameraindex = (_uint)CMain_Camera::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
+
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2782,9 +2783,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//어차피 필중
 				//Desc.fRanged_Impus_NoneDirection = { 10.f,-15.f };
 				Desc.fRanged_Impus_NoneDirection = { 10.f,-15.f };
-	
+
 				Desc.fhitCharacter_Impus = { 10.f * m_iLookDirection, -15.f };
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+				Desc.fStartOffset = { -0.2f,-0.3f };
 
 			}
 
@@ -2795,12 +2797,16 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_Impus = { 15.f * m_iLookDirection, -15.f };
 
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
+				Desc.fStartOffset = { -0.2f,-0.3f };
+
 			}
 			else
 			{
 				Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
 				Desc.fhitCharacter_Impus = { 5.f * m_iLookDirection,5.f };
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+				Desc.fStartOffset = { -0.2f,0.f };
+
 			}
 
 
@@ -2811,7 +2817,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 
-			Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
+			//	Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
+			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
+			//Desc.fStartOffset = { -0.2f,-0.3f};
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -3056,7 +3064,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Position 25 자세잡음, 시간정지, 사운드추가?
 		else if (iAttackEvent == 1)
 		{
-			//Set_AnimationStopWithoutMe(0.1f);
+			Set_AnimationStopWithoutMe(0.4f);
+			Set_AnimationStop(0.6f);
 		}
 
 		//Position 50 발사

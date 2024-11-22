@@ -212,6 +212,9 @@ private:
 	_bool m_bFinalSkillss3 = { false };
 	_bool m_bAlwaysss3Test = { false };
 
+
+	_bool m_bNormalGoku = { false }; //true
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

@@ -82,6 +82,9 @@ public:
 	
 	void Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iCharacterslot);
 
+	void Character_Opening_AIO();
+	void Character_Opening_EndForCharacter(_ubyte iTeam);
+
 private:
 	
 public:

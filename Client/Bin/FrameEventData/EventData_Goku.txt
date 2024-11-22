@@ -10,10 +10,21 @@
 //,변신타이밍 260시작 290에서 내려감
 //,어깨 빠지는거 90
 //,340 발바뀜
-OPENING_GOKU,GKS600cs,0,AnimSpeedChange,0.019,60.1
-OPENING_GOKU,GKS600cs,88,PositionChange,92
-OPENING_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
-OPENING_GOKU,GKS600cs,275,ModelChange,4
+//,PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,30.1
+PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,45.1
+PLAY_GOKU,GKS600cs,88,PositionChange,92
+PLAY_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
+//,OPENING_GOKU,GKS600cs,275,ModelChange,4
+
+
+//,275로시작
+//,PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,60.1
+//,PLAY_GOKU,GKS600cs,0,PositionChange,275
+//,PLAY_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
+//,PLAY_GOKU,GKS600cs,280,AnimSpeedChange,0.019,60.1
+
+
+
 
 
 //,약공1,2
@@ -695,13 +706,6 @@ PLAY_GOKU,GKS436cs,95,Camera_Play_Son_Ultimate_4_Shake,2,0.1
 PLAY_GOKU,GKS436cs,97.8,AttackEvent,2
 
 
-
-//,275로시작
-
-PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,60.1
-PLAY_GOKU,GKS600cs,0,PositionChange,275
-PLAY_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
-PLAY_GOKU,GKS600cs,280,AnimSpeedChange,0.019,60.1
 
 
 //,리플렉터

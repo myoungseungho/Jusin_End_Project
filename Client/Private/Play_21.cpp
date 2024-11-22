@@ -377,6 +377,10 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		if (m_bAnimationLock == false)
 		{
 			Character_Play_Animation(fTimeDelta);
+			if (m_bMotionPlaying == false && m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
+			{
+				CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+			}
 		}
 		else
 		{
@@ -1992,7 +1996,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
 			Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-			Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
+			Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
 			Desc.iDirection = m_iLookDirection;
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 			Desc.strEffectName = TEXT("21_SDU-01");
@@ -3116,12 +3120,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
-			Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
+			//Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
 
-			Desc.ColliderDesc.vExtents = { 1.0f,1.0f,1.f };
+			Desc.ColliderDesc.vExtents = { 1.2f,1.0f,1.f };
 
 
-			Desc.ColliderDesc.vCenter = { 0.3f,0.7f,0.f };
+			Desc.ColliderDesc.vCenter = { 0.3f*m_iLookDirection,0.7f,0.f };
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 1.f;
