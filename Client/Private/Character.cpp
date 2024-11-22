@@ -2673,7 +2673,7 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 					m_fMaxStunTime = 1.f;
 					m_fAccStunTime = 0.f;
 
-					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Crash_Air_Wall_SFX, false, 1.f);
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Crash_Air_Wall_SFX,false,1.f);
 				}
 				else
 				{
@@ -5271,6 +5271,8 @@ void CCharacter::Gravity(_float fTimeDelta)
 
 				//½ê°Ô ²¿¶ó¹ÚÈú ‹š
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Smash_Hit_SFX, false, 1.f);
+				CMain_Camera* mainCamera= static_cast<CMain_Camera*>( m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+				mainCamera->StartCameraShake(0.3f, 0.2f);
 			}
 			else
 			{
