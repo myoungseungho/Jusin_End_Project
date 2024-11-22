@@ -317,8 +317,12 @@ void CAttackObject_Grab::Camera_Same_Grab(CCharacter* pOwner, CCharacter* pHitOw
 		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::FRIEZA:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_SON_SAME_GRAB, 0, pOwner);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	case Client::CUI_Define::HIT:
+		main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_21_SAME_GRAB, 0, pOwner);
+		main_Camera->StartCameraShake(2.5f, 0.07f);
 		break;
 	}
 }
