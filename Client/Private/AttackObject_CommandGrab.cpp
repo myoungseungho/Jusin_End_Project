@@ -163,6 +163,11 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			if(m_fForcedGravityTime !=100)
 				pCharacter->Set_fGravityTime(m_fForcedGravityTime);
 
+			if (m_strHitEffectName.size() !=0)
+			{
+				pCharacter->Character_Make_Effect(m_strHitEffectName);
+			}
+
 
 			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)
 			{

@@ -9,6 +9,7 @@
 
 #include "Effect_Layer.h"
 #include "ParryingRangedObject.h"
+#include "Main_Camera.h"
 
 CAttackObject_Ranged::CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
@@ -294,7 +295,11 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, false, 1.f);
 			}
-
+			if (m_fCameraShakeDuration != 0)
+			{
+				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+				main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
+			}
 
 			if (m_bPierce == false)
 				if (m_pRangedEffect_Layer != nullptr)

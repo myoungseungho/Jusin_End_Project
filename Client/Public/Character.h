@@ -161,6 +161,8 @@ public:
 	virtual void AnimeEndNextMoveCheck();
 	//virtual void Set_Animation(_uint iAnimationIndex) {};
 	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
+	//_short Get_iIdleAnimation();
+	void Set_IdleAnimation();
 
 	_bool		CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition = 0);
 

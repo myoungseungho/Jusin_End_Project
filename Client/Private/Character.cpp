@@ -3038,6 +3038,7 @@ AttackColliderResult CCharacter::Guard_Check3(AttackType eAttackType)
 	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
 	if (Check_bCurAnimationisGuard())
 	{
+
 		return RESULT_GUARD;
 	}
 
@@ -3388,7 +3389,6 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		return;
 
 
-	_bool debugA = true;
 	if (m_iPlayerTeam == 1 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
@@ -3418,11 +3418,15 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
 
+		//else if (m_bStun == true || Check_bCurAnimationisAirHit() || Check_bCurAnimationisGroundSmash())
+		//{
+		//	m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+		//}
 		//둘 다 stun상태가 아니고, 땅에있으면
 		else //if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
 		{
@@ -3452,6 +3456,16 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//pCharacter->Update_PreviousXPosition();
 
 
+				//공중인 캐릭터가 있으면 그 캐릭터가 밀리기
+				
+				_float fEnemyHeight = pCharacter->Get_fHeight();
+				_float fMyHeight = Get_fHeight();
+
+				if (fMyHeight >fEnemyHeight  )
+				{
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+				}
+				//같은경우는 불가능,  낮은경우는 아래서 처리
 
 			}
 
@@ -3484,7 +3498,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		 if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
@@ -3531,7 +3545,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
 				//pCharacter->Update_PreviousXPosition();
 
-
+				
 
 			}
 
@@ -3578,11 +3592,16 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 			{
 				//얼마나 밀리는가? 겹친만큼? 
 				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+
+				if (pCharacter->Get_bStun())
+				{
+					m_fImpuse.x = 0;
+				}
 			}
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 			//cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
@@ -3616,8 +3635,14 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
 				//pCharacter->Update_PreviousXPosition();
 
+				_float fEnemyHeight = pCharacter->Get_fHeight();
+				_float fMyHeight = Get_fHeight();
 
-
+				if (fMyHeight > fEnemyHeight)
+				{
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+				}
+				
 			}
 
 
@@ -3645,11 +3670,16 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 			{
 				//얼마나 밀리는가? 겹친만큼? 
 				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+
+				if(pCharacter->Get_bStun())
+				{
+					m_fImpuse.x = 0;
+				}
 			}
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 			//cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
@@ -3697,7 +3727,13 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
 				//pCharacter->Update_PreviousXPosition();
 
+				_float fEnemyHeight = pCharacter->Get_fHeight();
+				_float fMyHeight = Get_fHeight();
 
+				if (fMyHeight > fEnemyHeight)
+				{
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+				}
 
 			}
 
@@ -4999,6 +5035,11 @@ void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 		m_pModelCom->CurrentAnimationPositionJump(0.f);
 	}
 
+}
+
+void CCharacter::Set_IdleAnimation()
+{
+	Set_Animation(m_iIdleAnimationIndex);
 }
 
 void CCharacter::Gravity(_float fTimeDelta)

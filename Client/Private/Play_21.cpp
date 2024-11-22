@@ -1291,6 +1291,7 @@ void CPlay_21::Gravity(_float fTimeDelta)
 			Character_Make_Effect(TEXT("Smoke02_Small"));
 			Character_Make_Effect(TEXT("Smoke04"));
 
+			Character_Make_Effect(TEXT("21_WSDO-04"));
 			Set_CurrentAnimationPositionJump(230.f);
 
 			if (m_pAttack214AssultEffect_Layer != nullptr)
@@ -2244,10 +2245,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0) //시작, 시간정지연출
 		{
 
-			if (m_pGameInstance->Key_Pressing(DIK_F6))
-			{
-				_int i = 3;
-			}
+			Character_Make_Effect(TEXT("21_SDO-01"));
+
+			//CEffect_Layer::COPY_DESC tDesc{};
+			//tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			//m_pEffect_Manager->Copy_Layer(TEXT("21_SDO-01"), &tDesc);
+
+			
 			_float fDebug = m_pModelCom->m_fCurrentAnimPosition;
 
 
@@ -2415,6 +2419,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		if (iAttackEvent == 0)  // Position 0
 		{
+			Character_Make_Effect(TEXT("21_WSDO-01"));
+
+			m_bFinalSoundEnable = true;
+
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 0, this);
 
@@ -2471,8 +2479,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//else
 			//	Set_fImpulse({ m_iLookDirection * 60.f, 0.f });
 
+			//Character_Make_Effect(TEXT("21_WSDO-02"));
+			//Character_Make_Effect(TEXT("21_WSDO-03"));
 
+			Character_Make_BoneEffect("G_waist", TEXT("21_WSDO-03"));
 
+			
+	
 			if (m_bAttackBackEvent)
 			{
 				FlipDirection();
@@ -2540,8 +2553,6 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Dash_21_SFX, false, 1.f);
 
-				//3필 올라가면서 소리 내야하는데 115 키프레임이 정확한 싱크임, 태욱이가 추가한댔음
-				//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Attacks_21_SFX, false, 1.f);
 			}
 			//else if (m_bFinalSkillAdd && m_iFinalLoofCount == 0)
 			//{
@@ -2570,7 +2581,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.fCameraShakeDuration = 0.5f;
 			//Desc.fCameraShakeMagnitude = 0.2f;
 
+			Desc.strHitEffectName = TEXT("21_WSDO-02");
+
 			Desc.fForcedGravityTime = 0.f;
+
+			Desc.fCameraShakeDuration = 0.1f;
+			Desc.fCameraShakeMagnitude = 0.1f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -2590,6 +2606,19 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Set_CurrentAnimationPositionJump(52.9);
 				m_iFinalLoofCount--;
+
+				if (m_bFinalSoundEnable)
+				{
+
+					//3필 올라가면서 소리 내야하는데 115 키프레임이 정확한 싱크임, 태욱이가 추가한댔음
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Attacks_21_SFX, false, 1.f);
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Middle_21, false, 1.f);
+					m_bFinalSoundEnable = false;
+
+
+					
+
+				}
 			}
 			else if (m_bFinalSkillAdd == true && m_iFinalLoofCount == 0) //추가타 루프 종료시  올려차기로 이행
 			{
@@ -2856,6 +2885,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//잡기로 상대방 고정
 			//상대 플레이어 안보이게?
 
+
+
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			//원래 방향
 			if (Get_iDirection() == 1)
@@ -2873,8 +2904,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//m_bDynamicMove = false;
 
-
-
+			
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2916,9 +2946,22 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
+
+		//손 뻗고나서
+		else if (iAttackEvent == 1)
+		{
+
+			Character_Make_Effect(TEXT("21_WSDO-05"));
+		}
 		else if (iAttackEvent == 2)
 		{
 			//공격이펙트로 화면가리기
+
+			//Character_Make_Effect(TEXT("21_WSDO-05"));
+			//Character_Make_Effect(TEXT("21_WSDO-06"));
+
+
+			Character_Make_Effect(TEXT("21_WSDO-06"));
 		}
 		else if (iAttackEvent == 3)
 		{
@@ -2963,6 +3006,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainHitCount = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+
+
 		}
 		else if (iAttackEvent == 4)
 		{

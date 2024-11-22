@@ -742,12 +742,20 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
         m_p1TeamCharacter[0]->Set_bGrabbed(false);
         m_p2TeamCharacter[0]->Set_bGrabbed(false);
 
+        m_p1TeamCharacter[0]->Set_IdleAnimation();
+        m_p2TeamCharacter[0]->Set_IdleAnimation();
+
+        m_p1TeamCharacter[0]->Character_Play_Animation(0.1f);
+        m_p2TeamCharacter[0]->Character_Play_Animation(0.1f);
+
         //좌표도 바꾸나?
         m_p1TeamCharacter[0]->Set_AnimationStop(1.f);
         m_p2TeamCharacter[0]->Set_AnimationStop(1.f);
 
         m_p1TeamCharacter[0]->Set_bInivisible(false);
         m_p2TeamCharacter[0]->Set_bInivisible(false);
+
+
 
     }
 }

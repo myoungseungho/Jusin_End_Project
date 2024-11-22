@@ -1427,7 +1427,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fForcedGravityTime = 0.f;
 				//Desc.bOnwerHitNoneStop = true;
-
+			
 
 				Desc.bOnwerHitNoneStop = true;
 				Desc.bOwnerNextAnimation = false;
@@ -1451,14 +1451,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 5.f;
 
-
+				Desc.bCameraZoom = false;
 				//if (m_iAttackLightLoofCount == 0)
 				{
 					Desc.iDamage = 450 * Get_DamageScale();
 					Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 					Desc.iGainAttackStep = 1;
 					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
-
+				
 
 				}
 				//else
@@ -3875,6 +3875,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				//Desc.bGrabbedEnd = true;
 				Desc.bCameraZoom = false;
+
+
+				Desc.fCameraShakeDuration = 0.1f;
+				Desc.fCameraShakeMagnitude = 0.1f;
+
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 

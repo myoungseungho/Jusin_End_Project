@@ -1382,7 +1382,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			else
 			{
-				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.f; //이 값이 아닐것
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.f;
 
 			}
 
@@ -3578,6 +3578,9 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 		//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		//Desc.fStartOffset = { Get_fPositionX() + 20 * m_i214AttackPreviousDirection, 0.9f };
 		//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		Desc.fCameraShakeDuration = 0.5f;
+		Desc.fCameraShakeMagnitude = 0.2f;
 
 
 		if (m_iPlayerTeam == 1)

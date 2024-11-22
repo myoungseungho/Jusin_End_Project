@@ -375,6 +375,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				else if(m_pGameInstance->Key_Down(DIK_RETURN))
 				{
 					//시작 애니메이션 끝부분  오공 끝 370
+					m_bNormalGoku = false;
 					Set_CurrentAnimationPositionJump(369.99f);
 				}
 			}
