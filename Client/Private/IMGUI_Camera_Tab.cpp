@@ -31,7 +31,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 	m_ModelSkills[CAMERA_MODELID_SON] = { "Camera_Son_Heavy", "Camera_Son_Knock_Away_Up","Camera_Son_Air_Smash","Camera_Son_Grab","Camera_Son_Same_Grab","Camera_Son_Energy","Camera_Son_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_21] = { "Camera_21_Heavy", "Camera_21_Knock_Away_Up", "Camera_21_Air_Smash","Camera_21_Grab","Camera_21_Same_Grab","Camera_21_Grab_Special","Camera_21_Energy","Camera_21_Ultimate" };
 	m_ModelSkills[CAMERA_MODELID_HIT] = { "Camera_Hit_Heavy", "Camera_Hit_Knock_Away_Up","Camera_Hit_Grab","Camera_Hit_214_Middle","Camera_Hit_236_Middle","Camera_Hit_236_Heavy","Camera_Hit_1_Ultimate","Camera_Hit_3_Ultimate" };
-	m_ModelSkills[CAMERA_MODELID_FRIEZA] = { "Camera_Frieza_Light_Final", "Camera_Frieza_Heavy", "Camera_Frieza_Knock_Away_Up","Camera_Frieza_Grab","Camera_Frieza_Ultimate_1","Camera_Frieza_Ultimate_3","Camera_Frieza_Golden", "Camera_Frieza_Down_Forward_J","Camera_Frieza_Fall_Reflect" };
+	m_ModelSkills[CAMERA_MODELID_FRIEZA] = { "Camera_Frieza_Light_Final", "Camera_Frieza_Heavy", "Camera_Frieza_Knock_Away_Up","Camera_Frieza_Grab","Camera_Frieza_Ultimate_1","Camera_Frieza_Ultimate_3","Camera_Frieza_Golden", "Camera_Frieza_Down_Forward_J","Camera_Frieza_Fall_Reflect","Camera_Common_Appear" };
 
 	// 모델과 스킬 인덱스에 따른 카메라 인덱스 매핑 초기화
 	// 기본 카메라 매핑
@@ -188,6 +188,10 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				else if (skillIdx == 8)
 				{
 					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Fall_Reflect" };
+				}
+				else if (skillIdx == 9)
+				{
+					m_SkillAnimations[{model, skillIdx}] = { "Common_Appear_Anim_1","Common_Appear_Anim_1_Flip" };
 				}
 			}
 		}
