@@ -1358,7 +1358,17 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bGrabedGravity = true;
 			Desc.fForcedGravityTime = 0.1f;
 
-			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			if (Get_iDirection() == 1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this);
+			}
+			else if (Get_iDirection() == -1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, nullptr, true);
+			}
+
+			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -1542,7 +1552,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fCameraShakeDuration = 1.f;
 			Desc.fCameraShakeMagnitude = 0.2f;
-
+			Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_FRIEZA_HEAVY;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2644,7 +2654,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fAnimationLockTime = 0.5f;
 		Desc.pOwner = this;
 		Desc.iGainKiAmount = 10;
-
+		Desc.fCameraShakeDuration = 0.5f;
+		Desc.fCameraShakeMagnitude = 0.3f;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 	}
@@ -2682,7 +2693,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.iGainKiAmount = 2;
 			Desc.iGainAttackStep = 0;
-
+			Desc.iVirtualCameraindex = (_uint)CMain_Camera::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
