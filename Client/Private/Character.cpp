@@ -4339,6 +4339,12 @@ void CCharacter::Play_NewRound_Loser()
 	pMainCamera->Set_Player(this);
 
 
+	if (m_iPlayerTeam == 1)
+	{
+		FlipDirection(1);
+	}
+	else
+		FlipDirection(-1);
 
 
 }
@@ -4371,6 +4377,13 @@ void CCharacter::Play_NewRound_Winner()
 	pMainCamera->Set_Player(this);
 
 	pMainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_COMMON_APPEAR, 0, this, m_pEnemy, false);
+
+	if (m_iPlayerTeam == 1)
+	{
+		FlipDirection(1);
+	}
+	else
+		FlipDirection(-1);
 }
 
 void CCharacter::Update_Collider()
