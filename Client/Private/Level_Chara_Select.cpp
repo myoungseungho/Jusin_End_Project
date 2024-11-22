@@ -7,7 +7,6 @@
 #include "UIObject.h"
 #include "GameObject.h"
 
-#include "CharaSelectCamera.h"
 #include "RenderInstance.h" 
 
 
@@ -20,15 +19,18 @@ HRESULT CLevel_Chara_Select::Initialize()
 {
 	m_iLevelIndex = LEVEL_CHARACTER;
 
-	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
+	if(FAILED(Ready_Camera(TEXT("Layer_Camera"))))	
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
+	//if (FAILED(Ready_Character(TEXT("Layer_Character"))))
+	//	return E_FAIL;
+
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
-
+	
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 
@@ -51,23 +53,6 @@ HRESULT CLevel_Chara_Select::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CLevel_Chara_Select::Ready_Layer_Camera(const _wstring& strLayerTag)
-{
-	CCharaSelectCamera::CAMERA_FREE_DESC			CameraDesc{};
-
-	CameraDesc.fFovy = XMConvertToRadians(60.0f);
-	CameraDesc.fNear = 0.1f;
-	CameraDesc.fFar = 1000.f;
-	CameraDesc.fSpeedPerSec = 10.f;
-	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
-	CameraDesc.fSensor = 0.1f;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_CharacterSelectCamera"), strLayerTag, &CameraDesc)))
-		return E_FAIL;
-
-	return S_OK;
-}
-
 HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 {
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectBG"), strLayerTag)))
@@ -86,6 +71,10 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelectArrow"), TEXT("Layer_MarkArrow"), &ArrowDesc)))
 		return E_FAIL;
+
+	//ArrowDesc.fSpeedPerSec = 10.f;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_UI_Loading_EnergyEff"), TEXT("Layer_MarkArrowEff"),&ArrowDesc)))
+	//	return E_FAIL;
 	
 	CUIObject::UI_DESC SelectIconDesc = {};
 	for (size_t i = 0; i < CUI_Define::PAWN_END; i++)
@@ -106,9 +95,26 @@ HRESULT CLevel_Chara_Select::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectMark"), strLayerTag)))
 		return E_FAIL;
 
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectFont"), strLayerTag)))
 		return E_FAIL;
 	
+
+	return S_OK;
+}
+
+HRESULT CLevel_Chara_Select::Ready_Camera(const _wstring& strLayerTag)
+{
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_UI_CharaSelect_Camera"), strLayerTag)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_Chara_Select::Ready_Character(const _wstring& strLayerTag)
+{
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelect_Model"), strLayerTag)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -134,14 +140,11 @@ HRESULT CLevel_Chara_Select::Ready_Sound()
 HRESULT CLevel_Chara_Select::Ready_Lights()
 {
 	LIGHT_DESC			LightDesc{};
-
-	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
-	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
-	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
-	LightDesc.fRange = 1000.f;
-	LightDesc.vDiffuse = _float4(0.78f, 0.95f, 1.f, 1.f);
-	LightDesc.vAmbient = _float4(0.2f, 0.3f, 0.4f, 1.f);
-	LightDesc.vSpecular = _float4(0.1f, 0.1f, 0.1f, 0.1f);
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(1.f, 1.f, 1.f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;

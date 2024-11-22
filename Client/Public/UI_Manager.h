@@ -128,6 +128,9 @@ public:
 	CUI_Define::NPC_ID m_eNpcID = {};
 
 public:
+	LEVELID m_eLevelID = { LEVEL_END };
+
+public:
 	list<class CUIObject*> m_ListTopUI = {};
 	list<class CUIObject*> m_ListMidUI = {};
 	list<class CUIObject*> m_ListBotUI = {};

@@ -1122,8 +1122,11 @@ _float CVirtual_Camera::AdjustT_Damping(_float t, _float damping)
 	}
 	else if (damping > 1.0f)
 	{
-		// Ease-in 효과 강화
-		return pow(t, damping) * (3.0f - 2.0f * t);
+		// Smoothstep과 pow(t, damping)의 혼합
+		float smooth = t * t * (3.0f - 2.0f * t); // Smoothstep
+		float easeIn = pow(t, damping); // Ease-In
+		float weight = 0.1f; // Smoothstep의 가중치 조절 (0.0f ~ 1.0f)
+		return weight * smooth + (1.0f - weight) * easeIn;
 	}
 	else // damping < 1.0f
 	{

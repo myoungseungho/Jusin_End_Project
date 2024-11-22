@@ -26,6 +26,8 @@ CParryingRangedObject::CParryingRangedObject(const CParryingRangedObject& Protot
 
 HRESULT CParryingRangedObject::Initialize_Prototype()
 {
+
+	
 	return S_OK;
 }
 
@@ -51,6 +53,12 @@ HRESULT CParryingRangedObject::Initialize(void* pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, pDesc->vPos);
 
 
+	CEffect_Layer::COPY_DESC tDesc{};
+	tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+	m_pEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Parrying_Ball"), &tDesc);
+
+	
+
 
 	return S_OK;
 }
@@ -65,13 +73,44 @@ void CParryingRangedObject::Update(_float fTimeDelta)
 
 	if (Check_UpdateStop(fTimeDelta))
 		return;
-
+;
 
 
 	m_fAccLifeTime += fTimeDelta;
 
 	
+	if(m_bDestroyObject == false)
+	{
+		if (m_fAccLifeTime < 1.5)
+		{
+			//m_pTransformCom->Add_Move({ 0.f,15 * fTimeDelta, 10 * fTimeDelta });
+			m_pTransformCom->Add_Move({ 0.f,20 * fTimeDelta, 10 * fTimeDelta });
+		}
+		else
+		{
+			if (m_bFlipEnable)
+			{
+				m_pEffect_Layer->Set_Copy_Layer_Rotation({ 0.f,0.f,180.f });
 
+				m_pTransformCom->Add_Move({ rand() % 10 - 5.f,0.f,0.f });
+				m_bFlipEnable = false;
+			}
+
+			m_pTransformCom->Add_Move({ 0.f,-20 * fTimeDelta,10 * fTimeDelta });
+		}
+
+		if (m_fAccLifeTime > 5)
+		{
+			m_pEffect_Layer->m_bIsDoneAnim = true;
+			m_pEffect_Layer = nullptr;
+			Destory();
+		}
+	}
+
+
+	//m_pTransformCom->Add_Move({ 0.f,5 * fTimeDelta,0.f });
+
+	
 
 }
 
@@ -92,19 +131,7 @@ HRESULT CParryingRangedObject::Render(_float fTimeDelta)
 
 _bool CParryingRangedObject::Check_UpdateStop(_float fTimeDelta)
 {
-	//if (m_bUpdateStop)
-	//{
-	//	m_fAccUpdateStop += fTimeDelta;
-	//
-	//	if (m_fAccUpdateStop > m_fMaxUpdateStop)
-	//		m_bUpdateStop = false;
-	//	
-	//}
-	//
-	//if (m_bUpdateStop)
-	//	return true;
-	//else
-	//	return false;
+	
 
 	return false;
 }
@@ -114,45 +141,6 @@ _bool CParryingRangedObject::Check_UpdateStop(_float fTimeDelta)
 
 HRESULT CParryingRangedObject::Ready_Components(PARRYING_RANGED_DESC* pDesc)
 {
-
-	//CCollider_Test::COLLIDER_DESC ColliderDesc{};
-	//ColliderDesc.pTransform = m_pTransformCom; //pDesc->ColliderDesc.pTransform;
-	////ColliderDesc.fSizeX = pDesc->ColliderDesc.fSizeX; 
-	////ColliderDesc.fSizeY = pDesc->ColliderDesc.fSizeY;
-	//ColliderDesc.fSizeZ = 1;
-
-
-	//ColliderDesc.Offset = pDesc->ColliderDesc.Offset;
-
-	//CCollider::COLLIDER_DESC ColliderDesc{};
-	//ColliderDesc = pDesc->ColliderDesc;
-	//ColliderDesc.MineGameObject = this;
-
-
-	//if (pDesc->bNoCreateMainCollider == true)
-	//	return S_OK;
-
-	//CBounding_AABB::BOUNDING_AABB_DESC ColliderDesc{};
-	//ColliderDesc = pDesc->ColliderDesc;
-	//ColliderDesc.pMineGameObject = this;
-	//
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Collider_AABB"),
-	//	TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &ColliderDesc)))
-	//	return E_FAIL;
-
-
-	//m_pColliderCom->Update(m_pOwnerTransform->Get_WorldMatrix());
-	//if (ColliderDesc.vExtents.x == 0)
-	//{
-	//	m_pColliderCom->Update(_vector{0.f,-10.f,0.f,1.f});
-	//
-	//}
-	//else
-	//	m_pColliderCom->Update(m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
-	//
-	//
-	//
-	//m_pGameInstance->Add_ColliderObject(ColliderDesc.colliderGroup, m_pColliderCom);
 
 
 
@@ -191,6 +179,5 @@ CGameObject* CParryingRangedObject::Clone(void* pArg)
 void CParryingRangedObject::Free()
 {
 	__super::Free();
-	//Safe_Release(m_pColliderCom);
 
 }

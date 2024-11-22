@@ -30,6 +30,9 @@ public:
 		//이건 기물을 부수는 오브젝트인가
 		_bool bDestroyObject = { false };
 
+		//둘 중 하나 쓰기
+		_uint iColor = 0;
+		wstring strEffectName = {};
 
 	};
 protected:
@@ -48,7 +51,7 @@ public:
 
 
 public:
-	void Set_RemoteDestory();
+	
 
 public:
 
@@ -61,10 +64,14 @@ private:
 
 	_bool m_bDestroyObject = { false };
 
-	_float m_fAccLifeTime = {};
+	_float m_fAccLifeTime = {0.f};
 
-	//_float* m_pHeight = {m_pTransformCom->Get_State(CTransform::STATE_POSITION)}
-	_float* m_pHeight = { nullptr };// {m_pTransformCom->Get_State(CTransform::STATE_POSITION)}
+	//_float* m_pHeight = { nullptr };
+	class CEffect_Layer* m_pEffect_Layer = { nullptr };
+
+
+
+	_bool m_bFlipEnable = { true };
 
 private:
 

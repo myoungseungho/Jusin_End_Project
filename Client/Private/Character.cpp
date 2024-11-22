@@ -1730,16 +1730,46 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 			//잡기 공격이 비겼으면
 			if (m_bGrabDraw)
 			{
-				Add_Move({ -0.4f * m_iLookDirection,0.3f });
-				//BreakFall_Air();
 
-				Set_Animation(m_iBreakFall_Air);
-				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
-				Set_ForcedGravityDown();
+				//QTE 비기면 뒤로 낙법
+				if(m_iQTE==0)
+				{
 
-				Reset_AttackStep();
-				Set_fImpulse({ -5.f * m_iLookDirection, 2.f });
+					Add_Move({ -0.4f * m_iLookDirection,0.3f });
+					//BreakFall_Air();
 
+					Set_Animation(m_iBreakFall_Air);
+					Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+					Set_ForcedGravityDown();
+
+					Reset_AttackStep();
+					Set_fImpulse({ -5.f * m_iLookDirection, 2.f });
+				}
+
+				//QTE 이겼으면 공격
+				else if (m_iQTE == 1)
+				{
+					//Add_Move({ -0.4f * m_iLookDirection,0.f });
+					Add_Move({ -0.2f * m_iLookDirection,0.f });
+
+
+					if (Get_fHeight() == 0)
+						Set_Animation(m_iAttack_Heavy);
+					else
+					{
+						Set_Animation(m_iAttack_Air3);
+						Set_CurrentAnimationPositionJump(m_fAIrGrabEndAnimationPositon);
+						Set_ForcedGravityDown();
+					}
+				}
+				//QTE 졌으면 쳐맞을 준비
+				else if (m_iQTE == -1)
+				{
+					Set_AnimationStop(0.3f);
+				}
+
+				m_bCreateQTE = false;
+				m_iQTE = -1;
 
 			}
 			else //공격 성공시
@@ -1832,8 +1862,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Hit_SDU-01"), &tDesc);
-
+		
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
 		//Set_fJumpPower(4.f); //중력Ver1 기준
@@ -1856,7 +1885,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Jump_SFX, false, 0.5f);
 		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), m_pTransformCom->Get_WorldMatrixPtr());
 
 	}
@@ -4302,6 +4331,22 @@ void CCharacter::Play_NewRound_Winner()
 void CCharacter::Update_Collider()
 {
 	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+_bool CCharacter::Play_FirstOpening()
+{
+
+	Set_AnimationStopWithoutMe(30.f);
+	Set_AnimationStop(0.f);
+
+	m_bDynamicMove = true;
+	m_bGrabbed = true;
+	Set_Animation(m_iStartAnimatonIndex);
+
+	m_bInvisible = false;
+
+
+	return true;
 }
 
 void CCharacter::Update_Opening(_float fTimeDelta)

@@ -8,6 +8,7 @@
 #include "Effect_Manager.h"
 
 #include "Effect_Layer.h"
+#include "ParryingRangedObject.h"
 
 CAttackObject_Ranged::CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
@@ -69,6 +70,13 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 		m_pRangedEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(pDesc->strEffectName, &tDesc);
 		//CEffect_Manager::Get_Instance()->Copy_Layer(pDesc->strEffectName, m_pTransformCom->Get_WorldMatrixPtr());
 
+		if (pDesc->fEffectRotationDegree != 0)
+		{
+			if(m_iDirection == 1)
+				m_pRangedEffect_Layer->Set_Copy_Layer_Rotation({ 0,0,pDesc->fEffectRotationDegree });
+			else
+				m_pRangedEffect_Layer->Set_Copy_Layer_Rotation({ 0,0,180-pDesc->fEffectRotationDegree });
+		}
 
 	}
 
@@ -526,6 +534,11 @@ void CAttackObject_Ranged::Erase()
 _bool CAttackObject_Ranged::BeReflect()
 {
 
+	if (m_bCreateReflectEnable == false)
+		return false;
+
+	m_bCreateReflectEnable = false;
+
 	//Range-Melee간 충돌에 들어갈 코드 Destroy보다 상위에 있어야함
 	CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);;
 	//m_pGameInstance->Release_Collider(m_pColliderCom);
@@ -533,6 +546,14 @@ _bool CAttackObject_Ranged::BeReflect()
 	//이펙트, 맵밖으로 이동
 	if (m_pRangedEffect_Layer != nullptr)
 		m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+
+	CParryingRangedObject::PARRYING_RANGED_DESC Desc{};
+	Desc.vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	Desc.bDestroyObject = false;
+	Desc.iColor = m_eRangeColor;
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_ParryingRangedObject"), TEXT("Layer_AttackObject"), &Desc);
 
 
 	Destory();
