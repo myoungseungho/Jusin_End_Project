@@ -1,0 +1,15 @@
+Version: 2
+KeyCount: 1
+KeySize: 45
+Key: Prototype_Component_Texture_Effect_htn_hibi01
+ID: 2
+vTexCoord: 3 3
+NodePosCount: 4
+NodeID: -1 Position: 492 127
+NodeID: 2 Position: 225 7
+NodeID: 1501 Position: 31 149
+NodeID: 1 Position: 156 43
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

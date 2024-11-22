@@ -1,0 +1,122 @@
+[Layer]
+LayerName: Hit_SAO-02
+Duration: 1
+TickPerSecond: 0.5
+KeyFramesCount: 59
+NumEffec: 3
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Hit_SAO-02_01
+ModelName: Model_Effect_htn_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-02Hit_SAO-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 1.5 0
+Scale: 0.0499626 0.05 0.0499688
+Rotation: 0 90 0
+IsLoop: false
+Color: 255 255 255 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1.5 0
+Scale: 0.0499626 0.05 0.0499688
+Rotation: 0 90 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 1.5 0
+Scale: 0.0499615 0.05 0.0499677
+Rotation: 0 90 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-02_02
+ModelName: Model_Effect_htn_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-02Hit_SAO-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 1.5 0
+Scale: 0.0499569 0.05 0.0499631
+Rotation: 0 90 0
+IsLoop: false
+Color: 255 255 255 0.795364
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 1.5 0
+Scale: 0.0499586 0.05 0.0499648
+Rotation: 0 90 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 1.5 0
+Scale: 0.0499577 0.05 0.0499639
+Rotation: 0 90 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-02_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-02Hit_SAO-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 173.096 205.182 255 0.745364
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 0.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
