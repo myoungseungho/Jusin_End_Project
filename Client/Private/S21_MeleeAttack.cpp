@@ -644,6 +644,8 @@ void CS21_MeleeAttack::BackDash()
 
 
 		m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Left"), { -0.3f,0.f });
+
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Back_Dash_SFX, false, 1.f);
 	}
 
 }
@@ -658,6 +660,8 @@ void CS21_MeleeAttack::ForwardDash()
 		CEffect_Layer::COPY_DESC tDesc{};
 		tDesc.pPlayertMatrix = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrixPtr();
 		m_pEffect_Manager->Copy_Layer(TEXT("Smoke_Run"), &tDesc);
+
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_Start_SFX, false, 1.f);
 
 	}
 
@@ -679,6 +683,8 @@ void CS21_MeleeAttack::ForwardDash()
 
 		//m_pEffect_Manager->Copy_Layer(TEXT("Dash"), m_pPlayer->Get_pTransformMatrix());
 		m_pPlayer->Character_Make_Effect(TEXT("Dash"), { 1.2f,0.f });
+
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Back_Dash_SFX, false, 1.f);
 	}
 
 	else if (m_pPlayer->Get_bSparking() && m_pPlayer->Get_bAirDashEnable() && m_pPlayer->Get_bAttackBackEvent() &&

@@ -1009,7 +1009,7 @@ void CCharacter::Set_ForcedGravityDown()
 	//공중 앞대시 
 	m_fGravityTime = 0.255f;
 
-
+	
 }
 
 void CCharacter::Set_ForcedGravityTime_LittleUp()
