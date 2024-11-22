@@ -7,7 +7,6 @@ IMPLEMENT_SINGLETON(CRenderInstance)
 
 CRenderInstance::CRenderInstance()
 {
-
 }
 
 HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)
