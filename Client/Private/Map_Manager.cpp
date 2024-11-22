@@ -57,6 +57,8 @@ void CMap_Manager::Update(_float fTimeDelta)
 			m_pEastEffect_Layer->m_bIsDoneAnim = true;
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
 				->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
+			m_isEastFinishStart = false;
+			m_fEastAccTime = 0.f;
 		/*	for (auto& iter : m_pEastEffect_Layer->m_MixtureEffects)
 			{
 				iter->m_i
