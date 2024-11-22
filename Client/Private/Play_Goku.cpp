@@ -3346,6 +3346,11 @@ void CPlay_Goku::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
 }
 
+void CPlay_Goku::Play_Sound_Stop(_uint SoundName)
+{
+	m_pGameInstance->Stop_Sound((CSound_Manager::SOUND_KEY_NAME)SoundName);
+}
+
 void CPlay_Goku::Set_UltimateKamehameha(_bool bUltimate)
 {
 	m_bUltimateKamehameha = bUltimate;

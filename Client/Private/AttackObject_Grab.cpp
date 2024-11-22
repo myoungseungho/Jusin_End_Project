@@ -271,6 +271,8 @@ void CAttackObject_Grab::Camera_Grab(CCharacter* pOwner, CCharacter* pHitOwner)
 	CCharacter::Character_INFO_DESC characterDesc = pOwner->Get_PawnDesc();
 	CUI_Define::PLAYER_ID PlayerID = characterDesc.ePlayerID;
 
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Grab_Rush_SFX, false, 1.f);
+
 	switch (PlayerID)
 	{
 	case Client::CUI_Define::GOKU:

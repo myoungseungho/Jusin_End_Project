@@ -932,7 +932,7 @@ PLAY_GOKU,GKS032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 12
 PLAY_GOKU,GKS033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_GOKU,GKS033_body,0.001000,PlaySound,129,0,0.5
+PLAY_GOKU,GKS033_body,0.001000,PlaySound,129,0,1
 
 PLAY_GOKU,GKS033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_GOKU,GKS033_body, 1,ObjectMove, -0.3, 0, 0, 0
@@ -952,7 +952,8 @@ PLAY_GOKU,GKS033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 14  duration 끝 24
 PLAY_GOKU,GKS035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_GOKU,GKS035_body,0.001000,PlaySound,133,0,0.5
+PLAY_GOKU,GKS035_body,0.001000,PlaySound,133,0,1
+PLAY_GOKU,GKS035_body,0.002000,PlaySoundStop,131
 PLAY_GOKU,GKS035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_GOKU,GKS035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_GOKU,GKS035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -1134,13 +1135,14 @@ PLAY_GOKU,GKS303_body,20,AnimSpeedChange,0.017,46
 //드래곤 러시 준비(공중)
 PLAY_GOKU,GKS038_body,0,AnimSpeedChange,0.008,61.011
 
+
 //,드래곤러시 (공용모션) 
 //,PLAY_GOKU,GKS304_body,0,AnimSpeedChange,0.008,10
 PLAY_GOKU,GKS304_body,0,PositionChange,5.0
+PLAY_GOKU,GKS304_body,0.02000,PlaySound,139,0,1
 //,PLAY_GOKU,GKS304_body,5.1,AnimSpeedChange,0.008,40
 PLAY_GOKU,GKS304_body,5.1,AnimSpeedChange,0.008,101
 PLAY_GOKU,GKS304_body,5.1,AttackEvent,0
-PLAY_GOKU,GKS304_body,5.02000,PlaySound,136,0,1
 
 PLAY_GOKU,GKS304_body,23.1,PositionChange,139
 
@@ -1151,7 +1153,6 @@ PLAY_GOKU,GKS304_body,50,AttackEvent,1
 PLAY_GOKU,GKS304_body,70,AttackEvent,2
 PLAY_GOKU,GKS304_body,100,AttackEvent,3
 PLAY_GOKU,GKS304_body,120,AttackEvent,4
-
 
 
 //,드래곤 러시 체이스 (공용모션)
