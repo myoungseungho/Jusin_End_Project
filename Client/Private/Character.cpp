@@ -4330,6 +4330,12 @@ void CCharacter::Play_NewRound_Loser()
 	pMainCamera->Set_Player(this);
 
 
+	if (m_iPlayerTeam == 1)
+	{
+		FlipDirection(1);
+	}
+	else
+		FlipDirection(-1);
 
 
 }
@@ -4360,6 +4366,14 @@ void CCharacter::Play_NewRound_Winner()
 
 	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	pMainCamera->Set_Player(this);
+
+	if (m_iPlayerTeam == 1)
+	{
+		FlipDirection(1);
+	}
+	else
+		FlipDirection(-1);
+
 
 
 }
