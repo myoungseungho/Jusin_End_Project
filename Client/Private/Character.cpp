@@ -2672,6 +2672,8 @@ void CCharacter::Update_StunImpus(_float fTimeDelta)
 					//새로운 스턴
 					m_fMaxStunTime = 1.f;
 					m_fAccStunTime = 0.f;
+
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Crash_Air_Wall_SFX, false, 1.f);
 				}
 				else
 				{
@@ -3040,6 +3042,8 @@ AttackColliderResult CCharacter::Guard_Check3(AttackType eAttackType)
 	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
 	if (Check_bCurAnimationisGuard())
 	{
+		//가드 소리
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Medium_Guard_SFX, false, 1.f);
 		return RESULT_GUARD;
 	}
 
@@ -3201,7 +3205,11 @@ AttackColliderResult CCharacter::CompareGuardType3(AttackType eAttackType)
 {
 	//상단은 무조건 가드 가능
 	if (eAttackType == ATTACKTYPE_HIGH)
+	{
+		//가드 소리
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Medium_Guard_SFX, false, 1.f);
 		return RESULT_GUARD;
+	}
 
 	//중단은 앉아있으면 가드 실패
 	else if (eAttackType == ATTACKTYPE_MIDDLE)

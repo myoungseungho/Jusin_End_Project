@@ -59,7 +59,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
-	
+
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
@@ -557,7 +557,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//±×·¦_SFX_1
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Grab_1.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_1_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//J ±âÅº
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false, true);
 
 	//1ÇÊ Start
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
@@ -918,7 +918,7 @@ HRESULT CLevel_GamePlay::Ready_Space()
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceEF");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEF"), TEXT("Layer_MeteoBreakA"), &tDesc)))
 		return E_FAIL;
-	
+
 	return S_OK;
 }
 
