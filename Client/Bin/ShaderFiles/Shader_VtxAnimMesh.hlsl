@@ -293,10 +293,17 @@ PS_OUT PS_MAIN_Loading_Dragon(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
     if (vMtrlDiffuse.a < 0.1f)
         discard;
 
-    Out.vDiffuse = vMtrlDiffuse;
+    vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
+    vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
+    
+    /* vMtrlShadeDesc 알파값으로 아웃라인을 생성 */
+    vResultColor.rgb = saturate(vHairColor.rgb - (1 - vMtrlShadeDesc.a));
+    
+    Out.vDiffuse = vResultColor;
 
 	/* In.vNormal.xyz -> -1 ~ 1 */
 	/* Out.vNormal.xyz -> 0 ~ 1 */

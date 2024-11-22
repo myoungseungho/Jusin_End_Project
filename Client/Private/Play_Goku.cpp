@@ -155,6 +155,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
 		return E_FAIL;
+
 	/*
 	빛 각자 생성해주기
 	*/

@@ -220,6 +220,11 @@ HRESULT CRenderInstance::Add_Effect_Light(string strKey, const LIGHT_DESC& Light
 	return  m_pLight_Manager->Add_Effect_Light(strKey, LightDesc);
 }
 
+void CRenderInstance::BGLight_Pop_Front()
+{
+	m_pLight_Manager->BGLight_Pop_Front();
+}
+
 HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CShader* pShader, CVIBuffer_Rect* pVIBuffer, const string strName,_float fTimeDelta)
 {
 	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName, fTimeDelta);

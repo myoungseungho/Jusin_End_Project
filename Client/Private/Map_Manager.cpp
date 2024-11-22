@@ -228,13 +228,14 @@ _float2 CMap_Manager::Active_EastFinish()
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
 				->Set_EastFinish(_float4(0.f, 0.5f, -204.7f, 1.f));
 
-			if(m_pMapLightDesc == nullptr)
-				m_pMapLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_BACKGROUND, 0);
-			
+			//if(m_pMapLightDesc == nullptr)
+			//	m_pMapLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_BACKGROUND, 0);
+			//
 
-			m_PreLightDesc = *m_pMapLightDesc;
-			m_pMapLightDesc->vPosition = { 0.f,10.f,0.f,1.f };
-			m_pMapLightDesc->vSpecular = { 1.f,1.f,1.f,0.5f };
+			//m_PreLightDesc = *m_pMapLightDesc;
+			//m_pMapLightDesc->vPosition = { 0.f,10.f,0.f,1.f };
+			//m_pMapLightDesc->vSpecular = { 1.f,1.f,1.f,0.5f };
+			
 			//static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(6.f, 0.3);
 //			_float4x4 Result4x4;
 			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());

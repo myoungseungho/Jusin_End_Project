@@ -1720,7 +1720,7 @@ HRESULT CRenderer::Draw_AllGlow_Effect(_int isPri)
 	for (size_t i = 0; i < iLoopCount; i++)
 	{
 
-		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
+		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down")))) 
 			return E_FAIL;
 
 		if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))

@@ -89,6 +89,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	//			return E_FAIL;
 	//}
 
+	//if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_UI_Loading_GodDragon"))))
+	//	return E_FAIL;
 #pragma endregion
 
 #pragma region UI »çº» °´Ã¼
