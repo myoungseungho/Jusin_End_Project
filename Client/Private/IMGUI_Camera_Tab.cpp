@@ -155,7 +155,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 			{
 				if (skillIdx == 0) // 약공격 마지막
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Light_Final_Anim1","Frieza_Light_Final_Anim1_Flip" };
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Light_Final_Anim1","Frieza_Light_Final_Anim1_Flip","Frieza_Light_Final_Anim2","Frieza_Light_Final_Anim2_Flip" };
 				}
 				else if (skillIdx == 1)  //강공격
 				{
@@ -187,7 +187,7 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 8)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Fall_Reflect"};
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Fall_Reflect" };
 				}
 			}
 		}
