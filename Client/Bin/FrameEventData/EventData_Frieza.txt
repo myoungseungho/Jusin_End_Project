@@ -1,4 +1,5 @@
 
+PLAY_FRN,FRN600cs_body,0,AnimSpeedChange,0.019,60.1
 
 //,301 리플렉터. (공용)
 //,PLAY_FRN,FRN301_body,0,AnimSpeedChange,0.015,35
@@ -919,7 +920,7 @@ PLAY_FRN,FRN431_body,25,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,26,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,27,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,28,ObjectMove,0,0.05,0,0
-PLAY_FRN,FRN431_body,28.0001,Camera_Play_21_Grab_Special_0_Shake,0.8,0.2
+PLAY_FRN,FRN431_body,28.0001,Camera_Play_21_Grab_Special_0_Shake,0.1,0.2
 PLAY_FRN,FRN431_body,29,ObjectMove,0,0.05,0,0
 PLAY_FRN,FRN431_body,30,ObjectMove,0,0.05,0,0
 

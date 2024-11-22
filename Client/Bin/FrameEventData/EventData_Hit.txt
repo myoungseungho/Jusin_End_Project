@@ -1,3 +1,4 @@
+PLAY_HIT,HTN600cs_body,0,AnimSpeedChange,0.019,60.1
 
 
 //,301 리플렉터. (공용)
@@ -1060,7 +1061,7 @@ PLAY_HIT,HTN432cs_body,148.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 
 PLAY_HIT,HTN432cs_body,255,AttackEvent,4
-PLAY_HIT,HTN432cs_body,255.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
+//,PLAY_HIT,HTN432cs_body,255.001000,Camera_Play_21_Ultimate_3_Start_Shake,0.5,0.2
 
 PLAY_HIT,HTN432cs_body,197.05,ObjectMove,-2.5,0,0
 

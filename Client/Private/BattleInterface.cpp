@@ -711,6 +711,47 @@ void CBattleInterface_Manager::Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iChar
 
 }
 
+void CBattleInterface_Manager::Character_Opening_AIO()
+{
+    //m_p1TeamCharacter[0]->Set_bDynamicMove(true);
+    //m_p2TeamCharacter[0]->Set_bDynamicMove(true);
+    //m_p1TeamCharacter[0]->Set_bGrabbed(true);
+    //m_p2TeamCharacter[0]->Set_bGrabbed(true);
+
+    m_p1TeamCharacter[0]->Play_FirstOpening();
+
+
+    m_p2TeamCharacter[0]->Set_bInivisible(true);
+
+}
+
+void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
+{
+
+    if (iTeam == 1)
+    {
+        m_p1TeamCharacter[0]->Set_bInivisible(true);
+        m_p2TeamCharacter[0]->Play_FirstOpening();
+    }
+    else if (iTeam == 2)
+    {
+        //오프닝 UI, Inivisible 종료,
+        m_p1TeamCharacter[0]->Set_bDynamicMove(false);
+        m_p2TeamCharacter[0]->Set_bDynamicMove(false);
+
+        m_p1TeamCharacter[0]->Set_bGrabbed(false);
+        m_p2TeamCharacter[0]->Set_bGrabbed(false);
+
+        //좌표도 바꾸나?
+        m_p1TeamCharacter[0]->Set_AnimationStop(1.f);
+        m_p2TeamCharacter[0]->Set_AnimationStop(1.f);
+
+        m_p1TeamCharacter[0]->Set_bInivisible(false);
+        m_p2TeamCharacter[0]->Set_bInivisible(false);
+
+    }
+}
+
 
 void CBattleInterface_Manager::Set_CharaDesc(_uint iIndex, _ushort iTeam, CUI_Define::PLAYER_SLOT eSlot, wstring PrototypeTag , CUI_Define::PLAYER_ID ePlayerID)
 {

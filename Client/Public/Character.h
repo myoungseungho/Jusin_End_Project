@@ -360,6 +360,9 @@ public:
 	void Play_NewRound_Winner();
 	void Update_Collider();
 
+
+	_bool Play_FirstOpening();
+
 	void Update_Opening(_float fTimeDelta);
 	_bool m_bOpening = false;
 	_float m_fAccOpeningTime = {0.f};
