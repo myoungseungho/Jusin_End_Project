@@ -971,8 +971,8 @@ PLAY_FRN,FRN432_body,76,AnimSpeedChange,0.01,60
 
 //,변신3필
 PLAY_FRN,FRN433_body,0,AnimSpeedChange,0.01,10
-PLAY_FRN,FRN433_body,0.001000,PlaySound,99,0,0.5
-PLAY_FRN,FRN433_body,0.001000,PlaySound,113,0,0.5
+PLAY_FRN,FRN433_body,0.001000,PlaySound,99,0,1
+PLAY_FRN,FRN433_body,0.001000,PlaySound,113,0,1
 //,컷씬, 적 시간정지
 PLAY_FRN,FRN433_body,0,AttackEvent,0
 PLAY_FRN,FRN433_body,0.002,Camera_Play_21_Grab_Special_0_Shake,1.4,0.3

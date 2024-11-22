@@ -1811,6 +1811,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_AIR2:
@@ -1864,6 +1866,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fForcedGravityTime = m_fGravityTime - 0.08f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -2024,6 +2029,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_Heavy_Attack, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR:
@@ -2031,6 +2037,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Position 45. АјАн
 		if (iAttackEvent == 0)
 		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, false, 1.f);
+
 			CAttackObject::ATTACK_DESC Desc{};
 			if (m_iPlayerTeam == 1)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2183,6 +2192,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM:
@@ -2260,6 +2272,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eAttackType = { ATTACKTYPE_LOW };
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 	}
 	break;
@@ -2344,6 +2359,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.bOnwerHitNoneStop = true;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_CROUCH_SPECIAL:
