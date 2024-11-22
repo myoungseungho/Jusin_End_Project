@@ -2263,7 +2263,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
 
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_Hit, false, 1.f);
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
