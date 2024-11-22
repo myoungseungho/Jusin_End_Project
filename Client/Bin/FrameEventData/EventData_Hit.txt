@@ -327,17 +327,20 @@ PLAY_HIT,HTN042_body,0,FrameMove,10
 //,PLAY_HIT,HTN050_body,0,FrameMove,5
 //,PLAY_HIT,HTN050_body,10,FrameMove,5
 PLAY_HIT,HTN050_body,0.000000,AnimSpeedChange,0.064000,86.060997
-PLAY_HIT,HTN050_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN050_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN050_body,0.00100,PlaySound,122,0,1
 PLAY_HIT,HTN050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,숙이는 피격모션
 PLAY_HIT,HTN051_body,0.000000,AnimSpeedChange,0.064000,5
-PLAY_HIT,HTN051_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN051_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN051_body,0.00100,PlaySound,122,0,1
 PLAY_HIT,HTN051_body,0,FrameMove,15
 
 //,앉아 피격모션
 PLAY_HIT,HTN052_body,0,AnimSpeedChange,0.020000,57.374001
-PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN052_body,0.00100,PlaySound,122,0,1
 //,PLAY_HIT,HTN052_body,0,FrameMove,10
 
 
@@ -345,7 +348,8 @@ PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,203,0,1
 //,PLAY_HIT,HTN060_body,0.000000,AnimSpeedChange,0.044000,49.292999
 PLAY_HIT,HTN060_body,0.000000,AnimSpeedChange,0.044000,30
 PLAY_HIT,HTN060_body,0,PositionChange,14
-PLAY_HIT,HTN060_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN060_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN060_body,0.00100,PlaySound,122,0,1
 PLAY_HIT,HTN060_body,30,AnimSpeedChange,0.044000,60
 PLAY_HIT,HTN060_body,40,AnimSpeedChange,0.044000,1
 PLAY_HIT,HTN060_body,56,AnimSpeedChange,0.01,2

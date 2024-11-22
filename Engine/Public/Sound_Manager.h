@@ -209,6 +209,10 @@ public:
 		Light_Attack_0_Frieza,
 		Light_Attack_1_Frieza,
 		Light_Attack_2_Frieza,
+		Hit_0_Frieza,
+		Hit_1_Frieza,
+		Hit_2_Frieza,
+		Hit_3_Frieza,
 	};
 
 	enum class SOUND_GROUP_KEY :_int
@@ -223,6 +227,7 @@ public:
 		HIT_Down_Back_Light,
 		Hit_Hit,
 		Light_Attack_Frieza,
+		Hit_Frieza,
 	};
 
 	enum class SOUND_CATEGORY

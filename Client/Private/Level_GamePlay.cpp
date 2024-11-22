@@ -689,6 +689,13 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma region Frieza_Voice
 
+	//피격 
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_0_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_1_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_2_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_3.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_3_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	
 	//약공 3개, 중공도 포함
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_0_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_1_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
