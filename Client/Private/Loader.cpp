@@ -2335,6 +2335,14 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base.png")))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKN_base1P.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKN_base2P.png")))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -2352,6 +2360,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/BlackGoku.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 	
 
 	//21ȣ
@@ -3741,9 +3752,7 @@ HRESULT CLoader::Load_Map_Space()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF1"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF1.bin", PreTransformMatrix))))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
-		return E_FAIL;
+	
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF.bin", PreTransformMatrix))))

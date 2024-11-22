@@ -749,7 +749,9 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	_uint		iNumMeshes = m_pBlackGokuModelCom->Get_NumMeshes();
+	//_uint		iNumMeshes = m_pModelCom_Opening->Get_NumMeshes();
+	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
 
 	/* Main MeshIndex : 0 */
 	/* DramaticCamera MeshIndex : 1 */
@@ -759,22 +761,22 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
 
-		//if (m_bNormalGoku)
-		//{
-		//	// 0: 쓰레기
-		//	// 1 :기본 몸 
-		//	// 2: 큐브?
-		//	// 3: decal  제외
-		//	// 4 : decal? 등딱지
-		//	if (i == 0 || i == 2 || i == 3)
-		//		continue;
-		//
-		//}
-		//else
-		//{
-		//	if (i == 1 || i == 2 || i == 4)
-		//		continue;
-		//}
+		if (m_bNormalGoku)
+		{
+			// 0: 쓰레기
+			// 1 :기본 몸 
+			// 2: 큐브?
+			// 3: decal  제외
+			// 4 : decal? 등딱지
+			if (i == 0 || i == 2 || i == 3)
+				continue;
+		
+		}
+		else
+		{
+			if (i == 1 || i == 2 || i == 4)
+				continue;
+		}
 
 		/*if (i == 1 || i == 2 || i == 4)
 			continue;*/
@@ -795,8 +797,18 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		else
 		{
 
-			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-				return E_FAIL;
+			if (m_bNormalGoku)
+			{
+				
+				if (FAILED(m_pOpeningTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+					return E_FAIL;
+			}
+			else
+			{
+				if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+					return E_FAIL;
+			}
+
 			if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
 				return E_FAIL;
 
@@ -826,7 +838,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		}
 		else if (m_bFinalSkillss3 == false)
 		{
-			if (FAILED(m_pBlackGokuModelCom->Render(i)))
+			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
 		}
 		else
@@ -960,14 +972,14 @@ HRESULT CPlay_Goku::Ready_Components()
 		return E_FAIL;
 
 
-	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"), TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
-	//	return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"), TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
+		return E_FAIL;
 
 
 	
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"), 
-		TEXT("Com_Model_Black"), reinterpret_cast<CComponent**>(&m_pBlackGokuModelCom))))
-		return E_FAIL;
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"), 
+	//	TEXT("Com_Model_Black"), reinterpret_cast<CComponent**>(&m_pBlackGokuModelCom))))
+	//	return E_FAIL;
 	
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
@@ -977,13 +989,20 @@ HRESULT CPlay_Goku::Ready_Components()
 	{
 		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"), TEXT("Com_1PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
+
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_1P"), TEXT("Com_Opening_Texture"), reinterpret_cast<CComponent**>(&m_pOpeningTextureCom))))
+			return E_FAIL;
+		
 	}
 	else
 	{
-		/* Com_Model */
 		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
-	}
+
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_2P"), TEXT("Com_Opening_Texture"), reinterpret_cast<CComponent**>(&m_pOpeningTextureCom))))
+			return E_FAIL;
+
+	}	
 
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"), TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
 		return E_FAIL;
@@ -3349,6 +3368,14 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 		}
 	}
+
+	case ANIME_START_DEFAULT:
+	{
+		if (iAttackEvent == 4)
+		{
+			m_bNormalGoku = false;
+		}
+	}
 	default:
 		break;
 	}
@@ -3512,11 +3539,12 @@ void CPlay_Goku::Free()
 
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
-	Safe_Release(m_pBlackGokuModelCom);
+	//Safe_Release(m_pBlackGokuModelCom);
 	
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 	Safe_Release(m_p2PTextureCom);
 	Safe_Release(m_pDecalTextureCom);
+	Safe_Release(m_pOpeningTextureCom);
 
 }
