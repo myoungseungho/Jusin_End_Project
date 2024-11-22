@@ -377,9 +377,17 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		if (m_bAnimationLock == false)
 		{
 			Character_Play_Animation(fTimeDelta);
-			if (m_bMotionPlaying == false && m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
 			{
-				CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				if (m_bMotionPlaying == false)
+				{
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if (m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//시작 애니메이션 끝부분  21호 끝 466
+					Set_CurrentAnimationPositionJump(465.99);
+				}
 			}
 		}
 		else

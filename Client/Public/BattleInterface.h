@@ -108,6 +108,8 @@ private:
 	_ubyte m_i2TeamPlayingCharacterIndex = {};
 
 	CHARACREATE_DESC m_tCharaCreateDesc[4] = {};
+
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

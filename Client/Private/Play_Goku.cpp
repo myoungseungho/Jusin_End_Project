@@ -365,14 +365,27 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		if (m_bAnimationLock == false)
 		{
 			Character_Play_Animation(fTimeDelta);
-			if (m_bMotionPlaying == false && m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
+
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
 			{
-				CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				if (m_bMotionPlaying == false)
+				{
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if(m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//시작 애니메이션 끝부분  오공 끝 370
+					Set_CurrentAnimationPositionJump(369.99f);
+				}
 			}
+			
+			
 		}
 		else
 		{
 			Update_AnimationLock(fTimeDelta);
+
+			
 		}
 		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 		return;
