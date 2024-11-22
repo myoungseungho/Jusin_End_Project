@@ -200,6 +200,8 @@ private:
 	class CEffect_Layer* m_pAttackUltimateLaserEffect_Layer = { nullptr };
 
 
+	_bool m_bFinalSoundEnable = { true };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

@@ -111,6 +111,8 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 
+	m_strHitEffectName = pDesc->strHitEffectName;
+
 	if (FAILED(Ready_Components(pDesc)))
 		return E_FAIL;
 

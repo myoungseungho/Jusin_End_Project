@@ -77,7 +77,8 @@ public:
 		_ushort isfxSoundIndex = { 60000 };
 		_float fsfxVolume = { 1.f };
 
-
+		
+		_wstring strHitEffectName = {};
 
 		class CCharacter* pOwner = { nullptr };
 	};
@@ -191,6 +192,7 @@ protected:
 	_ushort m_isfxSoundIndex = { 1000 };
 	_float  m_fsfxVolume = { 1.f };
 
+	_wstring m_strHitEffectName = {};
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);
 

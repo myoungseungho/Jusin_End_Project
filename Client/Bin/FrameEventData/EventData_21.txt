@@ -1059,7 +1059,7 @@ PLAY_21,TON433cs_body,120,AttackEvent,2
 PLAY_21,TON433cs_body,130,AttackEvent,3
 PLAY_21,TON433cs_body,135,AttackEvent,4
 
-
+PLAY_21,TON433cs_body,95,AttackEvent,1
 
 
 PLAY_21,TON433cs_body,0.000000,AnimSpeedChange,0.011000,50.504002
