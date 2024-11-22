@@ -759,6 +759,7 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
 
         if (pLayer)
         {
+
             float layerDuration = pLayer->m_fDuration;
             float tickPerSecond = pLayer->m_fTickPerSecond;
             float AnimCurPos = pLayer->m_fCurrentAnimPosition;
@@ -812,12 +813,23 @@ void CIMGUI_Effect_Tab::Render_For_Layer_KeyFrame(_float fTimeDelta)
                 openLayerTransformWindow = true;
             }
 
+            ImGui::SameLine();
+            ImGui::Dummy(ImVec2(30.0f, 0.0f));
+            ImGui::SameLine();
 
+            //ÆÈ·ÎÀ× Ã¼Å©¹Ú½º
+
+            bool isChecked = pLayer->m_bIsFollowing;
+
+            if (ImGui::Checkbox("##Following", &isChecked))
+            {
+                pLayer->m_bIsFollowing = isChecked;
+            }
         }
 
         ImGui::Separator();
 
-        auto effectNames = m_pEffect_Manager->Get_In_Layer_Effect_List(&selectedLayerName);
+      auto effectNames = m_pEffect_Manager->Get_In_Layer_Effect_List(&selectedLayerName);
 
         if (!effectNames.empty())
         {

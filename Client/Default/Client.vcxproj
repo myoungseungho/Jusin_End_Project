@@ -173,7 +173,8 @@
     <ClInclude Include="..\Public\AttackObject_Reflect.h" />
     <ClInclude Include="..\Public\BattleInterface.h" />
     <ClInclude Include="..\Public\BoneEffectObject.h" />
-    <ClInclude Include="..\public\CharaSelectCamera.h" />
+    <ClInclude Include="..\public\CharaSelect_Camera.h" />
+    <ClInclude Include="..\public\Loading_Camera.h" />
     <ClInclude Include="..\Public\Effect_Manager.h" />
     <ClInclude Include="..\Public\Frieza_MeleeAttack.h" />
     <ClInclude Include="..\Public\Frieza_Metal.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="..\public\Level_VS.h" />
     <ClInclude Include="..\Public\Line_Draw.h" />
     <ClInclude Include="..\Public\Loader.h" />
+    <ClInclude Include="..\public\Loading_GodDragon.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
     <ClInclude Include="..\Public\ParryingRangedObject.h" />
     <ClInclude Include="..\public\Lobby_Frieza.h" />
@@ -230,6 +232,7 @@
     <ClInclude Include="..\Public\Main_Camera_Lobby.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\QTE_Manager.h" />
+    <ClInclude Include="..\Public\SpaceEF.h" />
     <ClInclude Include="..\Public\SpaceMeteoBreak.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
     <ClInclude Include="..\public\UI_AttBufIconEff.h" />
@@ -240,7 +243,7 @@
     <ClInclude Include="..\public\UI_CharaSelectImage.h" />
     <ClInclude Include="..\public\UI_CharaSelectLight.h" />
     <ClInclude Include="..\public\UI_CharaSelectMark.h" />
-    <ClInclude Include="..\public\UI_CharaSelectModel.h">
+    <ClInclude Include="..\public\CharaSelect_Model.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
@@ -272,8 +275,10 @@
     <ClInclude Include="..\Public\UI_Loading_BG.h" />
     <ClInclude Include="..\public\UI_Loading_CreateFlyEff.h" />
     <ClInclude Include="..\public\UI_Loading_DragonBall.h" />
+    <ClInclude Include="..\public\UI_Loading_EnergyEff.h" />
     <ClInclude Include="..\public\UI_Loading_FlyEff.h" />
     <ClInclude Include="..\Public\UI_Loading_Font.h" />
+    <ClInclude Include="..\public\UI_Lobby_Key_Enter.h" />
     <ClInclude Include="..\public\UI_Lobby_Text.h" />
     <ClInclude Include="..\public\UI_Lobby_TextCharaIcon.h" />
     <ClInclude Include="..\public\UI_Lobby_TextCursor.h" />
@@ -408,7 +413,8 @@
     <ClCompile Include="..\Private\AttackObject_Reflect.cpp" />
     <ClCompile Include="..\Private\BattleInterface.cpp" />
     <ClCompile Include="..\Private\BoneEffectObject.cpp" />
-    <ClCompile Include="..\private\CharaSelectCamera.cpp" />
+    <ClCompile Include="..\private\CharaSelect_Camera.cpp" />
+    <ClCompile Include="..\private\Loading_Camera.cpp" />
     <ClCompile Include="..\Private\Effect_Manager.cpp" />
     <ClCompile Include="..\Private\Frieza_MeleeAttack.cpp" />
     <ClCompile Include="..\Private\Frieza_Metal.cpp" />
@@ -421,6 +427,7 @@
     <ClCompile Include="..\private\Level_VS.cpp" />
     <ClCompile Include="..\Private\Level_Lobby.cpp" />
     <ClCompile Include="..\Private\Line_Draw.cpp" />
+    <ClCompile Include="..\private\Loading_GodDragon.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
     <ClCompile Include="..\Private\ParryingRangedObject.cpp" />
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />
@@ -461,6 +468,7 @@
     <ClCompile Include="..\Private\Main_Camera_Lobby.cpp" />
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\QTE_Manager.cpp" />
+    <ClCompile Include="..\Private\SpaceEF.cpp" />
     <ClCompile Include="..\Private\SpaceMeteoBreak.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp" />
@@ -471,7 +479,7 @@
     <ClCompile Include="..\private\UI_CharaSelectImage.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectLight.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectMark.cpp" />
-    <ClCompile Include="..\private\UI_CharaSelectModel.cpp">
+    <ClCompile Include="..\private\CharaSelect_Model.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
@@ -503,8 +511,10 @@
     <ClCompile Include="..\Private\UI_Loading_BG.cpp" />
     <ClCompile Include="..\private\UI_Loading_CreateFlyEff.cpp" />
     <ClCompile Include="..\private\UI_Loading_DragonBall.cpp" />
+    <ClCompile Include="..\private\UI_Loading_EnergyEff.cpp" />
     <ClCompile Include="..\private\UI_Loading_FlyEff.cpp" />
     <ClCompile Include="..\Private\UI_Loading_Font.cpp" />
+    <ClCompile Include="..\private\UI_Lobby_Key_Enter.cpp" />
     <ClCompile Include="..\private\UI_Lobby_Text.cpp" />
     <ClCompile Include="..\private\UI_Lobby_TextCharaIcon.cpp" />
     <ClCompile Include="..\private\UI_Lobby_TextCursor.cpp" />

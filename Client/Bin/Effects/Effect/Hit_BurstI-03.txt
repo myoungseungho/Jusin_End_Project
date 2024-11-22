@@ -1,0 +1,39 @@
+[Layer]
+LayerName: Hit_BurstI-03
+Duration: 1
+TickPerSecond: 0.1
+KeyFramesCount: 59
+NumEffec: 1
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_SAU-03_01
+ModelName: Model_Effect_cmn_puffyplane
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_BurstI-0321_SAU-03_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.3 0 0
+Scale: 0.05 0.05 0.05
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 0.794039
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 0 0
+Scale: 0.05 0.05 0.05
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

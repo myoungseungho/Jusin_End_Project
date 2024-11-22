@@ -1,0 +1,14 @@
+Version: 2
+KeyCount: 1
+KeySize: 53
+Key: Prototype_Component_Texture_Effect_htn_burst01_middle
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 516 134
+NodeID: 2 Position: 227 33
+NodeID: 1 Position: 154 42
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

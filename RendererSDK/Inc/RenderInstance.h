@@ -76,6 +76,7 @@ public:/*For.Picking*/
 	_int Picked_Effect_Index();
 public: /* For.Renderer */
 	void Switch_BlackOut(_bool isTrue);
+	void Start_WhiteOut(_float2 vDir, _bool* isDone);
 private:
 	class CRenderer*		m_pRenderer = { nullptr };
 	class CTarget_Manager*	m_pTarget_Manager = { nullptr };

@@ -201,6 +201,7 @@ public:
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
+	CModel* m_pBlackGokuModelCom = { nullptr };
 	
 	CGoku_MeleeAttack m_tAttackMap;
 

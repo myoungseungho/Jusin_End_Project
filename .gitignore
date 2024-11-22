@@ -23,19 +23,13 @@ bld/
 # Ignore .bin and .fbx files in Resources and all subdirectories
 AssimpSaveAndLoad/Models/
 
-*.cso
 *.exe
-*.pdb
 *.ini
-*.exp
 
 Client/Bin/Resources/**/*.bin
 Client/Bin/Resources/**/*.fbx
 Client/Bin/Resources/**/*.blend
 Client/Bin/ModelData/**/*.bin
-
-EngineSDK/lib/Engine.lib
-RendererSDK/lib/Renderer.lib
 
 # Ignore ThirdPartyLib directory
 Engine/ThirdPartyLib/

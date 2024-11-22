@@ -153,10 +153,6 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 
 void CAttackObject_Ranged::Late_Update(_float fTimeDelta)
 {
-
-
-
-
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 

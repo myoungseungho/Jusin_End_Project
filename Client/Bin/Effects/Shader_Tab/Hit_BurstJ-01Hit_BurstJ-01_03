@@ -6,7 +6,7 @@ ID: 1
 vTexCoord: 2 1
 NodePosCount: 3
 NodeID: -1 Position: 519 146
-NodeID: 1 Position: 209 70
+NodeID: 1 Position: 184 14
 NodeID: 1501 Position: 14 120
 MoveTexNodeCount: 1
 MoveTexNodeID: 1501 Direction: 0 1 Speed: 0.6

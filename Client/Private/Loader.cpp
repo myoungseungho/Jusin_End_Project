@@ -20,8 +20,8 @@
 #include "Effect_ZNone.h"
 #include "Effect_Overlap.h"
 #include "Effect_Layer.h"
+#include "SpaceEF.h"
 #include "SpaceSky.h"
-
 #include "SpaceSun.h"
 #include "SpaceRock.h"
 #include "SpaceMoon.h"
@@ -119,7 +119,7 @@
 #include "UI_CharaSelectFont.h"
 #include "UI_CharaSelectFude.h"
 #include "UI_CharaSelectMark.h"
-#include "UI_CharaSelectModel.h"
+#include "CharaSelect_Model.h"
 #include "UI_CharaSelectLight.h"
 #include "UI_CharaSelectCircle.h"
 #include "UI_VS_BG.h"
@@ -134,9 +134,7 @@
 #include "UI_VS_TeamPanel.h"
 #include "UI_VS_Name.h"
 #include "UI_VS_NameOutLine.h"
-#include "UI_Lobby_TextCursor.h"
-
-#include "CharaSelectCamera.h"
+#include "UI_Loading_EnergyEff.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -187,6 +185,9 @@
 #include "Lobby_Goku_RunEff.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
+#include "UI_Lobby_TextCursor.h"
+#include "UI_Lobby_Key_Enter.h"
+#include "CharaSelect_Camera.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -360,6 +361,10 @@ HRESULT CLoader::Loading_For_Lobby()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/CmnMenu/tex/window_arrow_key_02.png")))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_Key_Enter"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/Key_Enter.png")))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_Goku_RunEff"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/Lobby_Goku_Dust%d.png"),4))))
 		return E_FAIL;
@@ -500,6 +505,10 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_TextCursor"),
 		CUI_Lobby_TextCursor::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Key_Enter"),
+		CUI_Lobby_Key_Enter::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku_RunEff"),
@@ -737,8 +746,13 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Select_Char_And_Map/vs_effect_00.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_UI_LoadingEnergyEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_UI_LoadingEnergyEff"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
@@ -790,11 +804,6 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CUI_CharaSelectMark::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_CharacterSlectModel */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCamera"),
-		CCharaSelectCamera::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
 	/* Prototype_GameObject_CharacterSelectLight */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectLight"),
 		CUI_CharaSelectLight::Create(m_pDevice, m_pContext))))
@@ -803,6 +812,21 @@ HRESULT CLoader::Loading_For_CharaSelect()
 	/* Prototype_GameObject_CharacterSelectCircle */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharacterSelectCircle"),
 		CUI_CharaSelectCircle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_Loading_EnergyEff */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Loading_EnergyEff"),
+		CUI_Loading_EnergyEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_CharaSelect_Camera */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_CharaSelect_Camera"),
+		CCharaSelect_Camera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_UI_CharaSelect_Model */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelect_Model"),
+		CCharaSelect_Model::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
@@ -1085,6 +1109,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_aura02"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_aura02.dds"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_htn407_hibi01_W"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/htn407_hibi01_W.dds"), 1))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_aura03"),
@@ -3354,7 +3382,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSky"),
 		CSpaceSky::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEF"),
+		CSpaceEF::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shader_Texture"),
 		CShader_Texture::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3706,6 +3737,22 @@ HRESULT CLoader::Load_Map_Space()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_MeteoBreak"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/MeteoBreak/MeteoBreak.bin", PreTransformMatrix))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_VolcanoEF"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/VolcanoEF.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 	for (size_t i = 0; i < 11; i++)
 	{
 		wstring strTagName = TEXT("Prototype_Component_Model_MeteoBrake_") + to_wstring(i + 1);

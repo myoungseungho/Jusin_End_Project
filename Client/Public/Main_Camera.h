@@ -43,6 +43,8 @@ public:
 		VIRTUAL_CAMERA_FRIEZA_ULTIMATE_1,
 		VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3,
 		VIRTUAL_CAMERA_FRIEZA_GOLDEN,
+		VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J,
+		VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT,
 		VIRTUAL_CAMERA_MAP,
 		VIRTUAL_CAMERA_END
 	};
@@ -85,6 +87,7 @@ public:
 	const char* Get_Current_CameraName();
 	_bool Get_IsPlay();
 	void Set_DyingTeam(_uint iDyingTeam);
+	void Set_EastFinish(_float4 InitPos);
 	void Set_CirclePlay(_bool isClockwise = true, _float rotationSpeed = XM_2PI / 10.0f);
 
 public:

@@ -1862,7 +1862,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
-		m_pEffect_Manager->Copy_Layer(TEXT("Smoke03_Five_Dir"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Hit_SDU-01"), &tDesc);
 
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
@@ -1886,7 +1886,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		}
 
 		//점프 시작
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Dash_SFX, false, 0.5f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_Jump_SFX, false, 0.5f);
 		//m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), m_pTransformCom->Get_WorldMatrixPtr());
 
 	}

@@ -51,7 +51,7 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 	{
 	case Client::CQTE_Hit::Hit_Situation_ID_Goku:
 		//m_iCreate_Num - 1개가 나와야함
-		m_vecIconCreationTimes = { 1.f, 1.f};
+		m_vecIconCreationTimes = { 1.f, 1.f };
 		break;
 	case Client::CQTE_Hit::Hit_Situation_ID_21:
 		//m_iCreate_Num - 1개가 나와야함
@@ -59,7 +59,7 @@ HRESULT CQTE_Hit_Situation::Initialize(void* pArg)
 		break;
 	case Client::CQTE_Hit::Hit_Situation_ID_Frieza:
 		//m_iCreate_Num - 1개가 나와야함
-		m_vecIconCreationTimes = { 1.f, 1.f};
+		m_vecIconCreationTimes = { 1.f, 1.f };
 		break;
 	case Client::CQTE_Hit::Hit_Situation_ID_Hit:
 		//m_iCreate_Num - 1개가 나와야함
@@ -240,6 +240,8 @@ void CQTE_Hit_Situation::Start_QTE(CGameObject* pCall_Object)
 	}
 	else
 		m_pCall_Object = pCall_Object;
+
+	m_iCharacterSide = static_cast<CCharacter*>(m_pCall_Object)->Get_iPlayerTeam();
 
 	//카메라 쉐이킹용으로 필요함
 	m_pMain_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));

@@ -247,7 +247,7 @@ PLAY_HIT,HTN032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 13
 PLAY_HIT,HTN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_HIT,HTN033_body,0.001000,PlaySound,11,0,0.5
+PLAY_HIT,HTN033_body,0.001000,PlaySound,129,0,0.5
 PLAY_HIT,HTN033_body,0.001000,PlaySound,53,0,0.5
 PLAY_HIT,HTN033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_HIT,HTN033_body, 1,ObjectMove, -0.3, 0, 0, 0
@@ -267,7 +267,7 @@ PLAY_HIT,HTN033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 15
 PLAY_HIT,HTN035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_HIT,HTN035_body,0.001000,PlaySound,11,0,0.5
+PLAY_HIT,HTN035_body,0.001000,PlaySound,133,0,0.5
 PLAY_HIT,HTN035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_HIT,HTN035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_HIT,HTN035_body,2,ObjectMove, 0.06, 0, 0, 0

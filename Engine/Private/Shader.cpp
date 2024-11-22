@@ -146,6 +146,39 @@ HRESULT CShader::Bind_ShaderResourceView(const _char* pConstantName, ID3D11Shade
 	return pSRVariable->SetResource(pSRV);
 }
 
+HRESULT CShader::Bind_ShaderResourceViewWithMip(const _char* pConstantName, ID3D11ShaderResourceView* pSRV, UINT mipLevel)
+{
+	if (mipLevel < 0)
+		return E_FAIL;
+
+	/* 전달해준 문자열과 같은 이름을 가진 쉐이더내에 존재하는 전역변수의 컴객체(핸들)를 얻어온다.*/
+	ID3DX11EffectVariable* pVariable = m_pEffect->GetVariableByName(pConstantName);
+	if (nullptr == pVariable)
+		return E_FAIL;
+
+	ID3DX11EffectShaderResourceVariable* pSRVariable = pVariable->AsShaderResource();
+	if (nullptr == pSRVariable)
+		return E_FAIL;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	pSRV->GetDesc(&srvDesc);
+	if (srvDesc.ViewDimension != D3D11_SRV_DIMENSION_TEXTURE2D)
+		return E_FAIL;
+	
+	srvDesc.Texture2D.MostDetailedMip = mipLevel;
+	srvDesc.Texture2D.MipLevels = 1;  // 지정한 MIP 레벨만 사용
+
+	ID3D11Resource* pResource = { nullptr };
+	pSRV->GetResource(&pResource);
+	
+	ID3D11ShaderResourceView* pNewSRV = { nullptr };
+	if (FAILED(m_pDevice->CreateShaderResourceView(pResource, &srvDesc, &pNewSRV)))
+		return E_FAIL;
+
+	return pSRVariable->SetResource(pNewSRV);
+}
+
+
 HRESULT CShader::Bind_ShaderResourceViews(const _char* pConstantName, ID3D11ShaderResourceView** ppSRV, _uint iNumTextures)
 {
 	ID3DX11EffectVariable* pVariable = m_pEffect->GetVariableByName(pConstantName);

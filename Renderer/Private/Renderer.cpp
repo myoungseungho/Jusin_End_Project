@@ -62,6 +62,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pUI_GlowShader)
 		return E_FAIL;
 
+	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 5);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
@@ -249,6 +250,7 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Draw_MapBlackOut(fTimeDelta)))
 		return E_FAIL;
 
+
 	/* 여기서 그리고 있음 이펙트를 위한 행동 하지만 위에서 블러를 먹인 그림을 가지고만 있고 그리진 않아서 영향이 안가짐 */
 	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
 		return E_FAIL;
@@ -261,9 +263,11 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 	if (FAILED(Render_Glow(fTimeDelta)))
 		return E_FAIL;
+	
 	/* 맵이 어두워진 상태에서 디스토션하는게 자연스러운가? 테스트 필요 */
 	if (FAILED(Render_Distortion(fTimeDelta)))
 		return E_FAIL;
+
 
 	if (FAILED(Render_MultyGlow_UI(fTimeDelta)))
 		return E_FAIL;
@@ -283,8 +287,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 		return E_FAIL;
 
 
-	//if(FAILED(Draw_WhiteBlack_Mode()))
-	//	return E_FAIL;
+	if(FAILED(Draw_WhiteBlack_Mode(fTimeDelta)))
+		return E_FAIL;
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
@@ -1368,6 +1372,7 @@ HRESULT CRenderer::Render_CutScene_Object(_float fTimeDelta)
 HRESULT CRenderer::Render_CutScene_Late_Effect(_float fTimeDelta)
 {
 	
+
 	for (auto& pRenderObject : m_RenderObjects[RG_CUTSCENE_LATE_EFFECT])
 	{
 		if (nullptr != pRenderObject)
@@ -1402,13 +1407,13 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 {
 	if (NULL == m_Distortions.size())
 		return S_OK;
-
+	int a = 10;
+	
 	m_fAccTime += fTimeDelta;
 
 	/* 벡터를 순회하면서 현재 기록된 위치에 디스토션 마스크를 한 렌더타겟에 한번에 그림 */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Distortion"))))
 		return E_FAIL;
-
 
 	_float4x4 viewMatrix = m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW);
 	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &viewMatrix)))
@@ -1420,7 +1425,7 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 
 	if (FAILED(m_pDistortionTextureCom->Bind_ShaderResource(m_pDistortionShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-
+	 
 	for (auto iter = m_Distortions.begin(); iter != m_Distortions.end(); )
 	{
 		iter->fLifeTime -= fTimeDelta;
@@ -2112,49 +2117,121 @@ HRESULT CRenderer::Draw_MapBloom()
 
 	return S_OK;
 }
-/* 하얀색 전환 화면 및 색상반전 기능 추가 및 디스토션 텍스쳐 세로짜리 하나 저장하고 등등 */
-HRESULT CRenderer::Draw_WhiteBlack_Mode()
+
+HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 {
+	if (m_pDoneCheck == nullptr)
+		return S_OK;
 
-	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_WhiteOut"))))
 		return E_FAIL;
-
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
-	//	return E_FAIL;
-
-	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
-		return E_FAIL;
-
-	m_pDistortionShaderCom->Begin(3);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
-
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	/* 나온 결과를 바로 백버퍼에 덮어씀 */
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	if (m_isRockStart == true)
+	{
+		m_fSpriteAccTime += fTimeDelta;
+		m_fAccRockTime += fTimeDelta;
+		if (m_fSpriteAccTime >= 0.05f)
+		{
+			m_fSpriteAccTime = 0.f;
+			--m_fSpriteCurPos.x;
+
+			if (m_fSpriteCurPos.x < 0)
+			{
+				m_fSpriteCurPos.x = 4.f;
+				--m_fSpriteCurPos.y;
+			}
+
+			if (m_fSpriteCurPos.y < 0)
+			{
+				m_fSpriteCurPos.x = 0.f;
+				m_fSpriteCurPos.x = 0.f;
+			}
+		}
+
+		if (m_fAccRockTime >= 0.5f && m_isMaintainWhite == false && m_isEndWhiteOut == false)
+			m_isStartWhiteOut = true;
+
+		if (m_fAccRockTime >= 3.f)
+		{
+			m_fAccWhiteTime = 2.f;
+			m_isMaintainWhite = false;
+			m_isRockStart = false;
+			m_isEndWhiteOut = true;
+			m_fAccRockTime = 0.f;
+
+			*m_pDoneCheck = true;
+
+		
+		}
+	}
+
+	if (m_isStartWhiteOut == true)
+	{
+		m_fAccWhiteTime += fTimeDelta;
+
+		if (m_fAccWhiteTime >= 2.5f)
+		{
+			m_fAccWhiteTime = 2.5f;
+			m_isMaintainWhite = true;
+			m_isEndWhiteOut = false;
+			m_isStartWhiteOut = false;
+		}
+	}
+
+	if (m_isEndWhiteOut == true)
+	{
+		m_fAccWhiteTime -= fTimeDelta;
+
+		if (m_fAccWhiteTime <= 0.f)
+		{
+			m_isStartWhiteOut = false;
+			m_pDoneCheck = nullptr;
+		}
+	}
+
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+	if (FAILED(m_pShader->Bind_RawValue("g_isEndWhiteOut", &m_isEndWhiteOut, sizeof(_bool))))
+		return E_FAIL;
+	
+	_bool isStartCheck = m_isMaintainWhite + m_isStartWhiteOut;
+	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &isStartCheck, sizeof(_bool))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_RawValue("g_fAccBlackTime", &m_fAccWhiteTime, sizeof(_float))))
 		return E_FAIL;
 
-	m_pDistortionShaderCom->Begin(2);
+	if (FAILED(m_pShader->Bind_RawValue("g_fSpriteSize", &m_fSpriteSize, sizeof(_float2))))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_RawValue("g_fSpriteCurPos", &m_fSpriteCurPos, sizeof(_float2))))
+		return E_FAIL;
+
+	// g_fSpriteSizeg_fSpriteCurPos
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_Texture", TEXT("Target_WhiteOut"))))
+		return E_FAIL;
+
+	if (m_isEndWhiteOut == false)
+	{
+		if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
+			return E_FAIL;
+	}
+	else
+	{
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_WhiteOut"))))
+			return E_FAIL;
+
+	}
+	
+	m_pShader->Begin(10);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
-	return S_OK;
 }
 
 HRESULT CRenderer::Initialize_RenderTarget()
@@ -2301,6 +2378,12 @@ HRESULT CRenderer::Initialize_RenderTarget()
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BlackOut"), TEXT("Target_BlackOut"))))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_WhiteOut"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 0.5f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_WhiteOut"), TEXT("Target_WhiteOut"))))
+		return E_FAIL;
+
 #pragma endregion	
 
 #pragma region Distortion
@@ -2343,6 +2426,22 @@ void CRenderer::Switch_BlackOut(_bool isTrue)
 {
 	m_isStartBlackOut = isTrue;
 	//m_fAccBlackTime += 0.01f;
+}
+
+void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone)
+{
+	m_vWhiteDir = vDir;
+	m_isStartWhiteOut = false;
+	m_isMaintainWhite = false;
+	m_isEndWhiteOut = false;
+	m_fAccWhiteTime = 0.f;
+	m_pDoneCheck = isDone;
+	m_isRockStart = true;
+	m_fSpriteSize = { 1.f / 5.f,1.f / 12.f };
+//	m_fSpriteSize = { 1/1920.f,1/1080.f };
+	//m_fSpriteSize = { 1 / 384.f,1 / 90.f };
+	m_fSpriteCurPos = { 4.f,11.f };
+	m_fAccRockTime = 0.f;
 }
 
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -2390,4 +2489,5 @@ void CRenderer::Free()
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pGlowShader);
 	Safe_Release(m_pUI_GlowShader);
+	Safe_Release(m_pEastFinish_TextureCom);
 }

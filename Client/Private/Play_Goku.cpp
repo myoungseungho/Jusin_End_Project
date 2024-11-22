@@ -749,7 +749,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+	_uint		iNumMeshes = m_pBlackGokuModelCom->Get_NumMeshes();
 
 	/* Main MeshIndex : 0 */
 	/* DramaticCamera MeshIndex : 1 */
@@ -759,22 +759,26 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
 
-		if (m_bNormalGoku)
-		{
-			// 0: 쓰레기
-			// 1 :기본 몸 
-			// 2: 큐브?
-			// 3: decal  제외
-			// 4 : decal? 등딱지
-			if (i == 0 || i == 2 || i == 3)
-				continue;
+		//if (m_bNormalGoku)
+		//{
+		//	// 0: 쓰레기
+		//	// 1 :기본 몸 
+		//	// 2: 큐브?
+		//	// 3: decal  제외
+		//	// 4 : decal? 등딱지
+		//	if (i == 0 || i == 2 || i == 3)
+		//		continue;
+		//
+		//}
+		//else
+		//{
+		//	if (i == 1 || i == 2 || i == 4)
+		//		continue;
+		//}
 
-		}
-		else
-		{
-			if (i == 1 || i == 2 || i == 4)
-				continue;
-		}
+		/*if (i == 1 || i == 2 || i == 4)
+			continue;*/
+
 
 		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
@@ -822,7 +826,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		}
 		else if (m_bFinalSkillss3 == false)
 		{
-			if (FAILED(m_pModelCom->Render(i)))
+			if (FAILED(m_pBlackGokuModelCom->Render(i)))
 				return E_FAIL;
 		}
 		else
@@ -955,11 +959,16 @@ HRESULT CPlay_Goku::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"), TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
+
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"), TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
+	//	return E_FAIL;
+
+
+	
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"), 
+		TEXT("Com_Model_Black"), reinterpret_cast<CComponent**>(&m_pBlackGokuModelCom))))
 		return E_FAIL;
-
-
-
+	
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
@@ -1141,6 +1150,8 @@ void CPlay_Goku::Gravity(_float fTimeDelta)
 			Set_fImpulse(0.f);
 			m_bAriDashEnable = true;
 			Set_bAttackGravity(true);
+
+			//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::)
 		}
 
 	}
@@ -2145,10 +2156,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Character_Make_Effect(TEXT("Energie-01"), { -0.6f,-0.2f });
 
 
-				
+
 			}
 			Character_Make_Effect(TEXT("Energie-01"), { -0.6f,-0.2f });
 
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Fire_SFX, false, 1.f);
 		}
 		else
 		{
@@ -2222,6 +2234,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
+				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Fire_SFX, false, 1.f);
 
 
 				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BackGround_Dust"));
@@ -3499,7 +3512,8 @@ void CPlay_Goku::Free()
 
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
-
+	Safe_Release(m_pBlackGokuModelCom);
+	
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 	Safe_Release(m_p2PTextureCom);
