@@ -1350,11 +1350,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			if (Get_iDirection() == 1)
 			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this);
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this, m_pEnemy, true);
 			}
 			else if (Get_iDirection() == -1)
 			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, nullptr, true);
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, m_pEnemy, true);
 			}
 
 			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
@@ -1371,7 +1371,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			else
 			{
-				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.f; //ÀÌ °ªÀÌ ¾Æ´Ò°Í
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.f; //ÀÌ °ªÀÌ ¾Æ´Ò°Í
 
 			}
 
@@ -1385,6 +1385,16 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			//Set_AnimationStopWithoutMe(1.f);
 			Set_AnimationStop(1.f);
+
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			if (Get_iDirection() == 1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 2, this);
+			}
+			else if (Get_iDirection() == -1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 3, this, nullptr, true);
+			}
 		}
 
 		//Æø¹ß  Position 40
