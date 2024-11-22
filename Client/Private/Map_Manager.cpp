@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Map_Manager.h"
-#include "Effect_Layer.h"
+
 #include "Effect.h"
 #include "GameInstance.h"
 #include "RenderInstance.h"
@@ -14,6 +14,7 @@
 #include "Volcano_SkyCloud.h"
 #include "SpaceMeteoBreak.h"
 #include "Effect_Manager.h"
+#include "Virtual_Camera.h"
 IMPLEMENT_SINGLETON(CMap_Manager)
 
 CMap_Manager::CMap_Manager()
@@ -46,6 +47,24 @@ void CMap_Manager::Camera_Update(_float fTimeDelta)
 void CMap_Manager::Update(_float fTimeDelta)
 {
 #pragma region DestructiveFinish
+	if (m_isEastFinishStart == true)
+	{
+		m_fEastAccTime += fTimeDelta;
+
+		if (m_fEastAccTime >= 10.f)
+		{
+			Map_Change(MAP_SPACE);
+			m_pEastEffect_Layer->m_bIsDoneAnim = true;
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+				->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
+		/*	for (auto& iter : m_pEastEffect_Layer->m_MixtureEffects)
+			{
+				iter->m_i
+			}*/
+
+		}
+	}
+
 	if (m_isDestructive_Active == true)
 	{
 		m_AccTime += fTimeDelta;
@@ -213,6 +232,9 @@ _float2 CMap_Manager::Active_EastFinish()
 	case MAP_EF_SPACE:
 		if (m_eCurMap == MAP_SPACE)
 		{
+			m_isEastFinishStart = true;
+			m_fEastAccTime = 0.f;
+
 			for (auto& iter : m_SpaceModels)
 				iter.second->SetActive(false);
 			for (auto& iter : m_Destructive_SpaceModels)
@@ -226,8 +248,23 @@ _float2 CMap_Manager::Active_EastFinish()
 			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
 
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
-				->Set_EastFinish(_float4(0.f, 0.5f, -204.7f, 1.f));
+				->Set_EastFinish(_float4(0.f, 0.5f, -194.7f, 1.f));
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(10.f, 0.06);
 
+			/* ------------------------------------------------------테스트용 프리카메라 무빙------------------------------------------------------ */
+			static_cast<CTransform*>(
+				static_cast<CVirtual_Camera*>(
+					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+					->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
+				->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.5f, -184.7f, 1.f));
+			static_cast<CTransform*>(
+				static_cast<CVirtual_Camera*>(
+					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+					->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
+				->LookAt(XMVectorSet(0.f, 1.f, 0.f, 0.f));
+			/*------------------------------------------------------------------------------------------------------------*/
+
+				//Set_EastFinish(_float4(0.f, 0.5f, -204.7f, 1.f));
 			//if(m_pMapLightDesc == nullptr)
 			//	m_pMapLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_BACKGROUND, 0);
 			//
@@ -236,20 +273,19 @@ _float2 CMap_Manager::Active_EastFinish()
 			//m_pMapLightDesc->vPosition = { 0.f,10.f,0.f,1.f };
 			//m_pMapLightDesc->vSpecular = { 1.f,1.f,1.f,0.5f };
 			
-			//static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(6.f, 0.3);
+			
 //			_float4x4 Result4x4;
 			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
-			Result4x4._11 = 10.f;
-			Result4x4._22 = 10.f;
-			Result4x4._33 = 10.f;
+			//Result4x4._11 = 10.f;
+			//Result4x4._22 = 10.f;
+			//Result4x4._33 = 10.f;
 			CEffect_Layer::COPY_DESC tDesc{};
 			tDesc.pPlayertMatrix = &Result4x4;
 
-			CEffect_Layer* pBeamEffect = { nullptr };
-			pBeamEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Energie-EF"), &tDesc);
+			m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
 
 			//(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
-			(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
+			//(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
 
 			//CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle()
 			// Energy-03

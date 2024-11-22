@@ -29,7 +29,7 @@ HRESULT CSpaceEF::Initialize(void * pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	//m_pTransformCom->Set_Scaled(0.01f, 0.01f, 0.01f);
+	//m_pTransformCom->Set_Scaled(-1.f, 1.f, 1.f);
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
 
 	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
@@ -58,6 +58,7 @@ void CSpaceEF::Update(_float fTimeDelta)
 
 void CSpaceEF::Late_Update(_float fTimeDelta)
 {
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SPACEMAP, this);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_CUTSCENE_OBJECT, this);
 }
 
@@ -65,42 +66,64 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
-	//m_pTransformCom->Set_Scaled(15.f, 15.f, 1.f);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -105.f, 0.f, 1.f));
-	//if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_EastGlowTexture", 0)))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pShaderCom->Begin(15)))
-	//	return E_FAIL;
-
-	//if (FAILED(m_pVIBufferCom->Render(0)))
-	//	return E_FAIL;
-
-	//m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+	//m_pTransformCom->Set_Scaled(-1.f, 1.f, 1.f);
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
 
-	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
-	for (size_t i = 0; i < iNumMeshes; i++)
+	if (m_isRenderSpaceMap == true)
 	{
-		//if (i != 0)
-		//	continue;
-
-		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+		m_pTransformCom->Set_Scaled(15.f, 15.f, 1.f);
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -105.f, 0.f, 1.f));
+		if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin((i == 0 ? g_Pass : 4))))
+		if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_EastGlowTexture", 0)))
 			return E_FAIL;
 
-		if (FAILED(m_pModelCom->Render(i)))
+		if (FAILED(m_pShaderCom->Begin(15)))
 			return E_FAIL;
+
+		if (FAILED(m_pVIBufferCom->Render(0)))
+			return E_FAIL;
+
+		m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
+		if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 2)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(4)))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Render(2)))
+			return E_FAIL;
+
+		m_isRenderSpaceMap = !m_isRenderSpaceMap;
 	}
+	else
+	{
 
+		_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
+		for (size_t i = 0; i < iNumMeshes; i++)
+		{
+			if (i == 2)
+			   continue;
+
+			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+				return E_FAIL;
+
+			if (FAILED(m_pShaderCom->Begin((i == 0 ? g_Pass : 4))))
+				return E_FAIL;
+
+			if (FAILED(m_pModelCom->Render(i)))
+				return E_FAIL;
+		}
+
+		m_isRenderSpaceMap = !m_isRenderSpaceMap;
+	}
 	return S_OK;
 }
 
@@ -128,8 +151,6 @@ HRESULT CSpaceEF::Ready_Components()
 
 HRESULT CSpaceEF::Bind_ShaderResources()
 {
-	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
-		return E_FAIL;
 	
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
