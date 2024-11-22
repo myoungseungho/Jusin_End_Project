@@ -204,7 +204,8 @@ private:
 	//CModel* m_pBlackGokuModelCom = { nullptr };
 	
 	CTexture* m_pOpeningTextureCom = { nullptr };
-
+	CTexture* m_pOpeningDecalTextureCom = { nullptr };
+	CTexture* m_pOpeningOutLineTextureCom = { nullptr };
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };

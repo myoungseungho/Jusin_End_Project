@@ -803,15 +803,17 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 				
 				if (FAILED(m_pOpeningTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 					return E_FAIL;
+				if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+					return E_FAIL;
 			}
 			else
 			{
 				if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 					return E_FAIL;
+				if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+					return E_FAIL;
 			}
 
-			if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
-				return E_FAIL;
 
 		}
 
@@ -966,14 +968,17 @@ HRESULT CPlay_Goku::Ready_Components()
 
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
+		TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
 		return E_FAIL;
 
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"), TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"),
+		TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
 		return E_FAIL;
 
 
@@ -983,7 +988,8 @@ HRESULT CPlay_Goku::Ready_Components()
 	//	return E_FAIL;
 	
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
 
 	if (m_iPlayerTeam == 1)
@@ -1005,10 +1011,20 @@ HRESULT CPlay_Goku::Ready_Components()
 
 	}	
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"), TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"), 
+		TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
 		return E_FAIL;
-		
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_decal"),
+		TEXT("Com_OpeningDecalTexture"), reinterpret_cast<CComponent**>(&m_pOpeningDecalTextureCom))))
+		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_ilm"),
+		TEXT("Com_OpeningOutLineTexture"), reinterpret_cast<CComponent**>(&m_pOpeningOutLineTextureCom))))
+		return E_FAIL;
+	
+	/*
 
+	
+	*/
 
 	return S_OK;
 }
@@ -3541,7 +3557,8 @@ void CPlay_Goku::Free()
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
 	//Safe_Release(m_pBlackGokuModelCom);
-	
+	Safe_Release(m_pOpeningDecalTextureCom);
+	Safe_Release(m_pOpeningOutLineTextureCom);
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 	Safe_Release(m_p2PTextureCom);

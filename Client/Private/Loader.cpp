@@ -2253,6 +2253,9 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_2()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_base"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png"), 1))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png"), 1))))
+		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_21OutLine"),
@@ -2348,11 +2351,19 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_1P"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKN_base1P.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_base_1P.png")))))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_2P"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKN_base2P.png")))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_base_2P.png")))))
 		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_ilm.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_decal.png")))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
