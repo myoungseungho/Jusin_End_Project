@@ -245,8 +245,6 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Ultimate_3_Anim1"] = 0;
 	stringToAnimID["Frieza_Ultimate_3_Anim1_Flip"] = 1;
 	stringToAnimID["Frieza_Golden_Anim1"] = 0;
-	stringToAnimID["Frieza_Golden_Anim2"] = 1;
-	stringToAnimID["Frieza_Golden_Anim2_Flip"] = 2;
 	stringToAnimID["Frieza_Down_Forward_J"] = 0;
 	stringToAnimID["Frieza_Down_Forward_J_Flip"] = 1;
 	stringToAnimID["Frieza_Fall_Reflect"] = 0;
@@ -543,7 +541,12 @@ void CMain_Camera::Set_DyingTeam(_uint iDyingTeam)
 
 void CMain_Camera::Set_EastFinish(_float4 InitPos)
 {
-	//static_cast<CTransform*>(m_vecVirtualCamera[m_currentVirtualMode]->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrix());
+	static_cast<CTransform*>(m_vecVirtualCamera[VIRTUAL_CAMERA_MAP]->Get_Component(TEXT("Com_Transform")))
+		->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&InitPos));
+	static_cast<CTransform*>(m_vecVirtualCamera[VIRTUAL_CAMERA_MAP]->Get_Component(TEXT("Com_Transform")))
+		->LookAt(XMVectorSet(0.f, 1.f, 0.f, 1.f));
+	m_vecVirtualCamera[VIRTUAL_CAMERA_MAP]->Set_EastFinish();
+	Set_Virtual_Camera(VIRTUAL_CAMERA_MAP);
 }
 
 void CMain_Camera::Set_CirclePlay(_bool isClockwise, _float rotationSpeed)

@@ -137,7 +137,10 @@ public:
 public:
 	/* Map_Camera Dying PlayerTeam Check */
 	void Set_DyingTeam(_uint iTeamIndex, _matrix CamWorldMatrix);
+	void Set_EastFinish();
 	_uint m_isDyingTeam = { 0 };
+	_bool m_isDestructive = { false };
+	_bool m_isEastFinish = { false };
 
 public:
 	static CVirtual_Camera* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

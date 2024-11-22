@@ -246,7 +246,8 @@ PLAY_FRN,FRN032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 13
 PLAY_FRN,FRN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_FRN,FRN033_body,0.001000,PlaySound,11,0,0.5
+PLAY_FRN,FRN033_body,0.001000,PlaySound,129,0,0.5
+PLAY_FRN,FRN033_body,0.002,PlaySound,86,0,1
 PLAY_FRN,FRN033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_FRN,FRN033_body, 1,ObjectMove, -0.3, 0, 0, 0
 PLAY_FRN,FRN033_body, 2,ObjectMove, -0.2, 0, 0, 0
@@ -265,7 +266,7 @@ PLAY_FRN,FRN033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 15
 PLAY_FRN,FRN035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_FRN,FRN035_body,0.001000,PlaySound,11,0,0.5
+PLAY_FRN,FRN035_body,0.001000,PlaySound,133,0,0.5
 PLAY_FRN,FRN035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_FRN,FRN035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_FRN,FRN035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -471,6 +472,8 @@ PLAY_FRN,FRN013_body,0.000000,AnimSpeedChange,0.023000,120
 
 //,서서 약공1
 PLAY_FRN,FRN200_body,0.000000,AnimSpeedChange,0.008,70
+PLAY_FRN,FRN200_body,0.0010,PlayGroupSound,209,0,1
+PLAY_FRN,FRN200_body,0.0010,PlayGroupSound,204,0,1
 PLAY_FRN,FRN200_body,15,AttackEvent,0
 
 PLAY_FRN,FRN200_body,20,NextAnimationCheck,333333
@@ -490,6 +493,8 @@ PLAY_FRN,FRN200_body,14,ObjectMove,0.07,0,0,0
 
 //,서서 약공2
 PLAY_FRN,FRN201_body,0.000000,AnimSpeedChange,0.02,90
+PLAY_FRN,FRN201_body,0.0010,PlayGroupSound,209,0,1
+PLAY_FRN,FRN201_body,0.0010,PlayGroupSound,204,0,1
 PLAY_FRN,FRN201_body,30,AttackEvent,0
 
 PLAY_FRN,FRN201_body,35,NextAnimationCheck,333333
@@ -507,6 +512,8 @@ PLAY_FRN,FRN201_body,14,ObjectMove,0.07,0,0,0
 
 //,서서 약공3
 PLAY_FRN,FRN202_body,0.000000,AnimSpeedChange,0.008,70
+PLAY_FRN,FRN202_body,0.0010,PlayGroupSound,209,0,1
+PLAY_FRN,FRN202_body,0.0010,PlayGroupSound,204,0,1
 
 //,잡기판정
 PLAY_FRN,FRN202_body,15,AttackEvent,0
@@ -521,15 +528,18 @@ PLAY_FRN,FRN202_body,25,AttackEvent,101
 
 //,적 상승, 애니메이션 2초 정지?
 PLAY_FRN,FRN202_body,35,AttackEvent,2
+PLAY_FRN,FRN202_body,35,PlaySound,93,0,1
 
 //, 폭발.
 PLAY_FRN,FRN202_body,40,AttackEvent,3
 PLAY_FRN,FRN202_body,40,Camera_Play_21_Grab_Special_0_Shake,0.5,0.2
-
+PLAY_FRN,FRN202_body,40.02,PlaySound,101,0,1
 PLAY_FRN,FRN202_body,50,NextAnimationCheck,333333
 
 //,서서 중공
 PLAY_FRN,FRN203_body,0.000000,AnimSpeedChange,0.008,90
+PLAY_FRN,FRN203_body,0.002,PlaySound,89,0,1
+PLAY_FRN,FRN203_body,0.0020,PlayGroupSound,204,0,1
 PLAY_FRN,FRN203_body,40.000000,AnimSpeedChange,0.008,190
 PLAY_FRN,FRN203_body,60.000000,AnimSpeedChange,0.008,90
 
@@ -538,10 +548,9 @@ PLAY_FRN,FRN203_body,15,AttackEvent,1
 PLAY_FRN,FRN203_body,20,AttackEvent,1
 PLAY_FRN,FRN203_body,25,AttackEvent,1
 PLAY_FRN,FRN203_body,30,AttackEvent,1
-
+PLAY_FRN,FRN203_body,30.020,PlayGroupSound,204,0,1
 
 PLAY_FRN,FRN203_body,55,AttackEvent,0
-
 PLAY_FRN,FRN203_body,65,NextAnimationCheck,333333
 PLAY_FRN,FRN203_body,75,NextAnimationCheck,333333
 
@@ -580,6 +589,8 @@ PLAY_FRN,FRN203_body,54,ObjectMove,0.2,0,0,0
 //,PLAY_FRN,FRN204_body,0,AnimSpeedChange,0.016000,93.806000
 
 PLAY_FRN,FRN204_body,0,AnimSpeedChange,0.016000,140.806000
+PLAY_FRN,FRN204_body,0.002,PlaySound,88,0,1
+PLAY_FRN,FRN204_body,0.002,PlaySound,103,0,1
 PLAY_FRN,FRN204_body,45,AnimSpeedChange,0.016000,93.806000
 
 PLAY_FRN,FRN204_body,46,AttackEvent,0
@@ -593,7 +604,8 @@ PLAY_FRN,FRN204_body,85,NextAnimationCheck,333333
 //,서서 특수
 //,PLAY_FRN,FRN205_body,0,AnimSpeedChange,0.005000,120.403000
 PLAY_FRN,FRN205_body,0,AnimSpeedChange,0.005000,160.403000
-
+PLAY_FRN,FRN205_body,0.002,PlaySound,102,0,1
+PLAY_FRN,FRN205_body,0.002,PlaySound,87,0,1
 PLAY_FRN,FRN205_body,20,AnimSpeedChange,0.005000,54.403000
 
 PLAY_FRN,FRN205_body,25,AttackEvent,0
@@ -650,6 +662,7 @@ PLAY_FRN,FRN231_body,30,ObjectMove,0.01,0,0,0
 
 //,앉아 강
 PLAY_FRN,FRN232_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN232_body,0.002,PlaySound,88,0,1
 //,PLAY_FRN,FRN232_body,12,AnimSpeedChange,0.01,90
 //,PLAY_FRN,FRN232_body,12,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN232_body,40,AttackEvent,0
@@ -777,6 +790,7 @@ PLAY_FRN,FRN267_body,30,AttackEvent,1
 //,236약
 //,PLAY_FRN,FRN400_body,0,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN400_body,0,AnimSpeedChange,0.01,120
+PLAY_FRN,FRN400_body,0.001000,PlaySound,89,0,1
 
 PLAY_FRN,FRN400_body,35,AttackEvent,0
 PLAY_FRN,FRN400_body,35,AnimSpeedChange,0.01,50
@@ -791,11 +805,12 @@ PLAY_FRN,FRN400_body,40,NextAnimationCheck,333333
 //,236특 (공중사용가능)
 //,PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN402_body,0,AnimSpeedChange,0.01,180
-
+PLAY_FRN,FRN402_body,60.001000,PlaySound,90,0,1
 
 //,본인 애니메이션정지, 잡기판정 생성
 PLAY_FRN,FRN402_body,40,AttackEvent,0
 PLAY_FRN,FRN402_body,40,AnimSpeedChange,0.01,50
+
 
 //,잡기기술 attack back 확인
 PLAY_FRN,FRN402_body,45,AttackEvent,1
@@ -837,6 +852,8 @@ PLAY_FRN,FRN402_body,30,ObjectMove,0,0.01,0,0
 
 //,214특 기원참
 PLAY_FRN,FRN403_body,0,AnimSpeedChange,0.01,90
+PLAY_FRN,FRN403_body,0.001000,PlaySound,91,0,1
+PLAY_FRN,FRN403_body,0.001000,PlaySound,106,0,1
 
 //,던지면서 본인만 시간정지?
 PLAY_FRN,FRN403_body,60,AnimSpeedChange,0.01,40
@@ -845,7 +862,8 @@ PLAY_FRN,FRN403_body,60,AttackEvent,0
 
 //,1필
 PLAY_FRN,FRN430_body,0,AnimSpeedChange,0.01,60
-
+PLAY_FRN,FRN430_body,0.001000,PlaySound,94,0,1
+PLAY_FRN,FRN430_body,0.001000,PlaySound,107,0,1
 //,본인포함 약간 시간정지, 컷씬
 PLAY_FRN,FRN430_body,0,AttackEvent,0
 
@@ -853,13 +871,21 @@ PLAY_FRN,FRN430_body,0,AttackEvent,0
 PLAY_FRN,FRN430_body,25,AttackEvent,1
 PLAY_FRN,FRN430_body,25,Camera_Play_21_Grab_Special_0_Shake,3.0,0.15
 
+
+PLAY_FRN,FRN430_body,40.001000,PlaySound,108,0,1
+PLAY_FRN,FRN430_body,45.001000,PlaySound,95,0,1
+
 //,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
 PLAY_FRN,FRN430_body,50,AttackEvent,2
+
+PLAY_FRN,FRN430_body,50.001000,PlaySound,109,0,1
 
 
 
 //, 3필 66.    풀파워 3필은 67
 PLAY_FRN,FRN431_body,0,AnimSpeedChange,0.01,60
+PLAY_FRN,FRN431_body,0.001000,PlaySound,96,0,1
+PLAY_FRN,FRN431_body,0.001000,PlaySound,110,0,1
 PLAY_FRN,FRN431_body,0,AttackEvent,0
 
 PLAY_FRN,FRN431_body,0,ObjectMove,0,0.05,0,0
@@ -898,6 +924,10 @@ PLAY_FRN,FRN431_body,30,ObjectMove,0,0.05,0,0
 
 PLAY_FRN,FRN431_body,30,AnimSpeedChange,0.01,60
 PLAY_FRN,FRN431_body,30,AttackEvent,1
+PLAY_FRN,FRN431_body,80.002000,PlaySound,111,0,1
+PLAY_FRN,FRN431_body,80.002000,PlaySound,112,0,1
+PLAY_FRN,FRN431_body,80.002000,PlaySound,8,0,1
+PLAY_FRN,FRN431_body,80.001000,PlaySound,97,0,1
 PLAY_FRN,FRN431_body,100,AttackEvent,2
 PLAY_FRN,FRN431_body,100,AnimSpeedChange,0.01,0.5
 
@@ -932,9 +962,11 @@ PLAY_FRN,FRN432_body,76,AnimSpeedChange,0.01,60
 
 //,변신3필
 PLAY_FRN,FRN433_body,0,AnimSpeedChange,0.01,10
-
+PLAY_FRN,FRN433_body,0.001000,PlaySound,99,0,0.5
+PLAY_FRN,FRN433_body,0.001000,PlaySound,113,0,0.5
 //,컷씬, 적 시간정지
 PLAY_FRN,FRN433_body,0,AttackEvent,0
+PLAY_FRN,FRN433_body,0.002,Camera_Play_21_Grab_Special_0_Shake,1.4,0.3
 
 //,이펙트,화면가리기,  433cs(70)로 연계?
 PLAY_FRN,FRN433_body,15,AttackEvent,1
@@ -945,6 +977,7 @@ PLAY_FRN,FRN433_body,20,AttackEvent,2
 
 //,변신3필 컷씬? 이펙트로 가리다가 보이는건 120부터
 PLAY_FRN,FRN433cs_body,0,AnimSpeedChange,0.01,25
+PLAY_FRN,FRN433cs_body,160.002,Camera_Play_21_Grab_Special_0_Shake,2.0,0.03
 //,PLAY_FRN,FRN433cs_body,0,AnimSpeedChange,0.01,25
 
 

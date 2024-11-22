@@ -5,6 +5,7 @@
 #include "Map_Manager.h"
 BEGIN(Engine)
 class CShader;
+
 class CTexture;
 class CModel;
 END
@@ -30,9 +31,9 @@ public:
 
 private:
 	CShader*				m_pShaderCom = { nullptr };
-	CTexture* m_pTextureCom_Diffuse = { nullptr };
+	CTexture*				m_pTextureCom_Diffuse = { nullptr };
 	CModel*					m_pModelCom = { nullptr };
-
+	CModel*			m_pVIBufferCom = { nullptr };
 private:
 	_float2 m_fSpriteAnimCount = { 16.f,1.f };
 	_float2 m_fSpriteSize = { 0.f,0.f };

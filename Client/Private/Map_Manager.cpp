@@ -13,7 +13,7 @@
 #include "Volcano_Destructive.h"
 #include "Volcano_SkyCloud.h"
 #include "SpaceMeteoBreak.h"
-
+#include "Effect_Manager.h"
 IMPLEMENT_SINGLETON(CMap_Manager)
 
 CMap_Manager::CMap_Manager()
@@ -73,7 +73,10 @@ void CMap_Manager::Update(_float fTimeDelta)
 	if (m_isEastFinish == true)
 	{
 		if (m_isWhiteDoneCheck == true)
+		{
 			Active_EastFinish();
+			m_isWhiteDoneCheck = false;
+		}
 	}
 
 	if (m_pGameInstance->Key_Pressing(DIK_F8))
@@ -113,16 +116,16 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 		for (auto& iter : m_Destructive_VolcanoModels)
 			iter.second->SetActive(false);
-
+		
 		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = false;
 
 		m_eCurMap = MAP_SPACE;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_SPACE);
 
-		////화산맵 음원 정지
-		//m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM);
-		////Space 음원 재생
-		//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 1.f);
+		//화산맵 음원 정지
+		m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM);
+		//Space 음원 재생
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 1.f);
 		break;
 	case MAP_VOLCANO:
 	case MAP_DEST_VOLCANO:
@@ -147,10 +150,10 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 		tDistortionDesc.vDir = { 1.f,0.f,0.f };
 		m_pRenderInstance->Create_Distortion(tDistortionDesc);
 		
-		////Space 음원 정지
-		//m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
-		////화산맵 음원 재생
-		//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, true, 1.f);
+		//Space 음원 정지
+		m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
+		//화산맵 음원 재생
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, true, 1.f);
 		break;
 	}
 }
@@ -222,9 +225,33 @@ _float2 CMap_Manager::Active_EastFinish()
 			m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
 			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
 
-			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->
-				Set_DyingTeam(1);
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+				->Set_EastFinish(_float4(0.f, 0.5f, -204.7f, 1.f));
 
+			if(m_pMapLightDesc == nullptr)
+				m_pMapLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_BACKGROUND, 0);
+			
+
+			m_PreLightDesc = *m_pMapLightDesc;
+			m_pMapLightDesc->vPosition = { 0.f,10.f,0.f,1.f };
+			m_pMapLightDesc->vSpecular = { 1.f,1.f,1.f,0.5f };
+			//static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(6.f, 0.3);
+//			_float4x4 Result4x4;
+			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
+			Result4x4._11 = 10.f;
+			Result4x4._22 = 10.f;
+			Result4x4._33 = 10.f;
+			CEffect_Layer::COPY_DESC tDesc{};
+			tDesc.pPlayertMatrix = &Result4x4;
+
+			CEffect_Layer* pBeamEffect = { nullptr };
+			pBeamEffect = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Energie-EF"), &tDesc);
+
+			//(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
+			(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
+
+			//CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle()
+			// Energy-03
 		}
 		// 맵 분기 넣고 쉐이킹 넣고 바라보게 한다음 이펙트 출력
 		// 트리거는 있다가

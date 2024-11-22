@@ -43,6 +43,7 @@ private:
 
 	//프리저와 상호작용
 	void Talk_Frieza(_float fEnableDistance);
+	_bool m_bOnMessageBox = { FALSE };
 
 	//걸었을 때 먼지 이펙트
 	void CreateRunDustEffect(_bool bOnInput, _float fCreateDuration,_float fTimeDelta);

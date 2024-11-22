@@ -2162,6 +2162,8 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 			m_fAccRockTime = 0.f;
 
 			*m_pDoneCheck = true;
+
+		
 		}
 	}
 
@@ -2185,7 +2187,6 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		if (m_fAccWhiteTime <= 0.f)
 		{
 			m_isStartWhiteOut = false;
-
 			m_pDoneCheck = nullptr;
 		}
 	}
@@ -2228,11 +2229,9 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	}
 	
-
 	m_pShader->Begin(10);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
-
 }
 
 HRESULT CRenderer::Initialize_RenderTarget()

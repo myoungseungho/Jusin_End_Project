@@ -58,6 +58,10 @@ private: /* Destructive Variable */
 	_float			m_AccTime = { 0.f };
 	_float			m_MapViewTime = { 0.f };
 
+	_float4x4 Result4x4 = {};
+
+	LIGHT_DESC* m_pMapLightDesc = { nullptr };
+	LIGHT_DESC m_PreLightDesc = {};
 private: /* MapObject Variable */
 	map<const wstring, class CGameObject*>			m_SpaceModels;
 	map<const wstring, class CGameObject*>			m_Destructive_SpaceModels;

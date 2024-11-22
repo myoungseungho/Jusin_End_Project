@@ -4,6 +4,7 @@
 #include "GameInstance.h"
 #include "Level_Loading.h"
 #include "RenderInstance.h"
+#include "UI_Manager.h"
 
 #include "GameObject.h"
 
@@ -88,10 +89,6 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))
 		return E_FAIL;
 
-	//코구 달리기 먼지 이펙트
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Goku_RunEff"), TEXT("Layer_Lobby_Goku_RunEff"))))
-		return E_FAIL;
-
 #pragma endregion
 
 #pragma region 사본 UI 객체 만들기
@@ -106,6 +103,11 @@ HRESULT CLevel_Lobby::Initialize()
 
 	//텍스트 커서 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCursor"), TEXT("Layer_Lobby_TextCursor"))))
+		return E_FAIL;
+
+
+	//Enter UI
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"))))
 		return E_FAIL;
 
 
@@ -136,7 +138,7 @@ void CLevel_Lobby::Update(_float fTimeDelta)
 {
 	if (m_bChangeLevel)
 	{
-		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, CUI_Manager::Get_Instance()->m_eLevelID))))
 			return;
 	}
 

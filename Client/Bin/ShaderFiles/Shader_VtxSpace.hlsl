@@ -2,7 +2,16 @@
 
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-texture2D		g_DiffuseTexture;
+float4 g_vLightDir = float4(0.f, -1.f, -200.f, 0.f);
+float4 g_vLightDiffuse = float4(0.78f, 0.95f, 1.f, 1.f);
+float4 g_vLightAmbient = float4(0.2f, 0.3f, 0.4f, 1.f);
+float4 g_vLightSpecular = float4(1.f, 1.f, 1.f, 0.5f);
+
+texture2D g_DiffuseTexture;
+float4 g_vMtrlAmbient = float4(0.3f, 0.3f, 0.3f, 1.f);
+float4 g_vMtrlSpecular = float4(1.f, 1.f, 1.f, 1.f);
+
+texture2D g_EastGlowTexture;
 texture2D		g_NormalTexture;
 
 texture2D g_MaskStar1;
@@ -47,7 +56,7 @@ struct VS_IN
 struct VS_OUT
 {
 	float4 vPosition : SV_POSITION;
-	float3 vNormal : NORMAL;
+	float4 vNormal : NORMAL;
 	float2 vTexcoord : TEXCOORD0;
 	float4 vWorldPos : TEXCOORD1;
 	float4 vProjPos : TEXCOORD2;
@@ -128,7 +137,7 @@ VS_OUT VS_MAIN_METEO_BREAK(VS_IN In)
 struct PS_IN
 {
 	float4 vPosition : SV_POSITION;
-	float3 vNormal : NORMAL;
+	float4 vNormal : NORMAL;
 	float2 vTexcoord : TEXCOORD0;
 	float4 vWorldPos : TEXCOORD1;
 	float4 vProjPos : TEXCOORD2;
@@ -292,7 +301,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
     Out.vDiffuse = vMtrlDiffuse;
 
-    //Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
@@ -460,6 +469,44 @@ PS_OUT PS_MAIN_METEORECT(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_EAST_RECT(PS_IN In)
+{
+    PS_OUT Out;
+    float2 vTexcoord = In.vTexcoord;
+    
+    Out.vDiffuse = g_EastGlowTexture.Sample(LinearSampler, vTexcoord);
+    Out.vDiffuse.a *= 0.9f;
+    Out.vDiffuse.rgb = float3(0.f, 0.68627f, 1.f);
+    
+    return Out;
+}
+
+PS_OUT PS_MAIN_EASTGROUND(PS_IN In)
+{
+    PS_OUT Out;
+    float2 vTexcoord = In.vTexcoord * float2(14.f, 4.f);
+    
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
+   
+	/* 0.0f ~ 1.f */
+    float fShade = max(dot(normalize(g_vLightDir.rgb) * -1.f, normalize(In.vNormal)), 0.f);
+
+	/* 0.3f ~ 1.f */
+    vector vShade = saturate(fShade + g_vLightAmbient * g_vMtrlAmbient);
+
+    vector vReflect = reflect(normalize(g_vLightDir), normalize(In.vNormal));
+    vector vLook = In.vWorldPos - g_vCamPosition;
+
+    float fSpecular = pow(max(dot(normalize(vReflect) * -1.f, normalize(vLook)), 0.f), 30.f);
+    vector vSpecular = g_vLightSpecular * g_vMtrlSpecular * fSpecular;
+
+//    Out.vDiffuse = (g_vLightDiffuse * vMtrlDiffuse) * vShade + vSpecular;
+    Out.vDiffuse = vMtrlDiffuse + ((g_vLightDiffuse * vMtrlDiffuse) + vSpecular) * vMtrlDiffuse.a;
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    return Out;
+}
+
 
 PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 {
@@ -472,7 +519,7 @@ PS_OUT PS_MAIN_NORMALMAPPING(PS_IN In)
 	vector		vNormalDesc = g_NormalTexture.Sample(LinearSampler, In.vTexcoord);
 	float3		vNormal = vNormalDesc.xyz * 2.f - 1.f;
 
-	float3x3	WorldMatrix = float3x3(In.vTangent, In.vBinormal, In.vNormal);
+	float3x3	WorldMatrix = float3x3(In.vTangent, In.vBinormal, In.vNormal.xyz);
 
 	vNormal = mul(vNormal, WorldMatrix);
 
@@ -686,6 +733,30 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_METEORECT();
+    }
+    pass EastGround // 14
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_EASTGROUND();
+    }
+    pass EastRect // 15
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_EAST_RECT();
     }
 }
 /*
