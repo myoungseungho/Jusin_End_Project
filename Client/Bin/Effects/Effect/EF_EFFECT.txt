@@ -1,0 +1,104 @@
+[Layer]
+LayerName: EF_EFFECT
+Duration: 0.3
+TickPerSecond: 0.01
+KeyFramesCount: 18
+NumEffec: 3
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: EF_0
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_0
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 28 0 0
+Scale: 9.99424 37.4458 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 36.3079 72.6159 255 1.49007
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 28 0 0
+Scale: 9.9951 28.1697 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0.1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 28 0 0
+Scale: 9.99424 37.4458 1
+Rotation: 0 0 90
+CurTime: 0.283333
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_1
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_1
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 15 0 0
+Scale: 6.27386 12.9995 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 110.613 255 1.09272
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 15 0 0
+Scale: 6.27386 12.9995 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0.1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_2
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_2
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 15 0 0
+Scale: 6.27255 12.9966 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 255 255 0.445364
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 15 0 0
+Scale: 6.27255 12.9966 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+

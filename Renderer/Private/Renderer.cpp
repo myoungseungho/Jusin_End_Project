@@ -2185,7 +2185,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		m_fAccWhiteTime -= fTimeDelta;
 
 		if (m_fAccWhiteTime <= 0.f)
-		{
+		{ 
 			m_isStartWhiteOut = false;
 			m_pDoneCheck = nullptr;
 		}
