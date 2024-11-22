@@ -50,7 +50,7 @@ void CMain_Camera_Lobby::Camera_Update(_float fTimeDelta)
 {
 	_vector playerPosition = m_pLobby_Goku_Transform->Get_State(CTransform::STATE_POSITION);
 	_vector offset = XMVectorSet(0.f, 15.f, -15.f, 0.f);
-
+	
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, playerPosition + offset);
 	m_pTransformCom->LookAt(playerPosition + XMVectorSet(0.f, 0.f, 10.f, 0.f));
 

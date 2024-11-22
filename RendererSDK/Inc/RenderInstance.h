@@ -70,6 +70,7 @@ public:/*For.Light_Manager*/
 	HRESULT Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc);
 	
 	HRESULT Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer,const string strName, _float fTimeDelta);
+	void BGLight_Pop_Front();
 
 public:/*For.Picking*/
 	_float4 Picked_Position(_bool* pPicked);

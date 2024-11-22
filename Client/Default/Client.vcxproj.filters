@@ -555,12 +555,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceEF.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceEF</Filter>
-  </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\private\Loading_Camera.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\private\CharaSelect_Camera.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_DisplayBoard.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_DisplayBoard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1199,6 +1202,9 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Loading\Camera">
       <UniqueIdentifier>{b827be92-7922-4109-a046-5f3ef3910cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_DisplayBoard">
+      <UniqueIdentifier>{658be6e8-64f0-430c-b0da-8968bf14cd69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1924,6 +1930,9 @@
     </ClInclude>
     <ClInclude Include="..\public\CharaSelect_Camera.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_DisplayBoard.h">
+      <Filter>02.GameObjects\Lobby\Lobby_DisplayBoard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

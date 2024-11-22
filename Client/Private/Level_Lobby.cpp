@@ -7,7 +7,7 @@
 #include "UI_Manager.h"
 
 #include "GameObject.h"
-
+#include "Lobby_DisplayBoard.h"
 
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -105,12 +105,27 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCursor"), TEXT("Layer_Lobby_TextCursor"))))
 		return E_FAIL;
 
-
 	//Enter UI
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"))))
 		return E_FAIL;
 
+	//¿øÇü Àü±¤ÆÇ
+	CLobby_DisplayBoard::DISPLAY_DESC tDisplayDesc = {};
 
+	_uint iNumFontID = CLobby_DisplayBoard::FONT_END;
+	_uint iNumInOutID = CLobby_DisplayBoard::INOUT_END;
+
+	for (size_t i = 0; i < iNumFontID; i++)
+	{
+		tDisplayDesc.eFontID = static_cast<CLobby_DisplayBoard::LOBBY_FONTID>(i);
+
+		for (size_t k  = 0; k < iNumInOutID; k++)
+		{
+			tDisplayDesc.eInOutID = static_cast<CLobby_DisplayBoard::LOBBY_INOUT>(k);
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_DisplayBoard"), TEXT("Layer_Lobby_DisplayBoard"), &tDisplayDesc)))
+				return E_FAIL;
+		}
+	}
 #pragma endregion
 
 #pragma region Light
