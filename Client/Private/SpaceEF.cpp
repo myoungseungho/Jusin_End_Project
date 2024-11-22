@@ -43,7 +43,7 @@ void CSpaceEF::Camera_Update(_float fTimeDelta)
 	//m_fAccTime += fTimeDelta * 5;
 }
 
-_int g_Pass = 4;
+_int g_Pass = 14;
 void CSpaceEF::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_0))
