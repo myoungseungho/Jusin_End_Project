@@ -278,7 +278,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 }
 
 void CCharacter::Player_Update(_float fTimeDelta)
-{
+{	
 	m_tCharacterDesc.bStun = m_bRedHp;
 
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
@@ -4397,11 +4397,14 @@ _bool CCharacter::Play_FirstOpening()
 {
 
 	Set_AnimationStopWithoutMe(30.f);
-	Set_AnimationStop(0.f);
+	Set_AnimationStop(1.f);
 
 	m_bDynamicMove = true;
 	m_bGrabbed = true;
 	Set_Animation(m_iStartAnimatonIndex);
+
+	//디버그용임, 테스트하고 나중에 지울 것
+	Set_CurrentAnimationPositionJump(0.f);
 
 	m_bInvisible = false;
 

@@ -1638,7 +1638,15 @@ SkillName: Camera_Goku_Entry
 
 [Animation]
 AnimationName: Goku_Entry_Anim_1
-PointCount: 9
+PointCount: 12
+
+[CameraPoint]
+Position: 1.00908 1.28436 -0.403547
+Rotation: 0.0206047 -0.398208 0.00894736 0.91702
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [CameraPoint]
 Position: 1.00908 1.28436 -0.403547
@@ -1651,7 +1659,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.599701 1.2835 -0.83476
 Rotation: -0.0473625 -0.188456 -0.00909963 0.980897
-Duration: 1
+Duration: 0.1
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
@@ -1659,30 +1667,30 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -1.15995 1.74631 0.586686
 Rotation: 0.0503477 0.893253 -0.103488 0.434574
-Duration: 0.2
+Duration: 0.8
 InterpolationType: 0
-Damping: 1
+Damping: 0.19
 HasWorldFloat4x4: 1
 
 [CameraPoint]
 Position: -1.18685 1.78823 0.841163
 Rotation: 0.0465212 0.908579 -0.105264 0.401546
-Duration: 1
-InterpolationType: 0
+Duration: 0.2
+InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
 Position: -0.271475 1.42768 -0.591557
 Rotation: 0.0193501 0.204015 -0.00403342 0.978768
-Duration: 1
+Duration: 0.8
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
 Position: 0.000519444 1.5851 -0.62845
-Rotation: 0.00274158 0.0705964 -0.000194089 0.997501
+Rotation: 0.00274158 0.0705963 -0.000194089 0.997501
 Duration: 1
 InterpolationType: 0
 Damping: 1
@@ -1691,15 +1699,31 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.566741 1.60914 0.0342264
 Rotation: -0.00085348 -0.699753 -0.000836067 0.714384
-Duration: 1
+Duration: 0.6
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
+Position: 0.566741 1.60914 0.0342264
+Rotation: -0.00085348 -0.699753 -0.000836067 0.714384
+Duration: 0.7
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
 Position: 3.24922 1.36937 -0.021284
-Rotation: 0.00751496 -0.704376 0.007458 0.709749
-Duration: 1
+Rotation: 0.00751496 -0.704376 0.00745801 0.709748
+Duration: 3
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 3.24922 1.36937 -0.021284
+Rotation: 0.00751496 -0.704376 0.00745801 0.709748
+Duration: 0.01
 InterpolationType: 2
 Damping: 1
 HasWorldFloat4x4: 1
@@ -1707,7 +1731,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 0.550025 1.58624 -0.714677
 Rotation: 0.0264717 -0.282718 0.00780551 0.958806
-Duration: 1
+Duration: 2.7
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1

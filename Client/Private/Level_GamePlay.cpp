@@ -142,7 +142,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 
 
-	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+	//CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
 	return S_OK;
 }
