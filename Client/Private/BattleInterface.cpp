@@ -713,23 +713,72 @@ void CBattleInterface_Manager::Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iChar
 
 void CBattleInterface_Manager::Character_Opening_AIO()
 {
-    //m_p1TeamCharacter[0]->Set_bDynamicMove(true);
-    //m_p2TeamCharacter[0]->Set_bDynamicMove(true);
-    //m_p1TeamCharacter[0]->Set_bGrabbed(true);
-    //m_p2TeamCharacter[0]->Set_bGrabbed(true);
+    
+    //오공 vs 프리저 면 다른 모션으로 시작
+    if (m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_GOKU || m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_FRN)
+    {
+        m_p1TeamCharacter[0]->Set_Animation(86); //오공 시네마틱 오프닝
+        m_p2TeamCharacter[0]->Set_Animation(86); //프리저 시네마틱 오프닝
 
 
-    //if(m_p1TeamCharacter[0]->Get_)
+        m_p1TeamCharacter[0]->FlipDirection(1);
+        m_p2TeamCharacter[0]->FlipDirection(1);
 
-    m_p1TeamCharacter[0]->Play_FirstOpening();
+        m_p1TeamCharacter[0]->Set_AnimationStop(1.f);
+        m_p2TeamCharacter[0]->Set_AnimationStop(1.f);
+
+        m_p1TeamCharacter[0]->Set_bDynamicMove(true);
+        m_p2TeamCharacter[0]->Set_bDynamicMove(true);
+
+        m_p1TeamCharacter[0]->Set_bGrabbed(true);
+        m_p2TeamCharacter[0]->Set_bGrabbed(true);
+
+        m_bCinematicOpening = true;
+    }
+    else
+    {
+
+        m_p1TeamCharacter[0]->Play_FirstOpening();
+        m_p2TeamCharacter[0]->Set_bInivisible(true);
+
+    }
+    //UI 안보이게뒀다가 나중에 켜기
 
 
-    m_p2TeamCharacter[0]->Set_bInivisible(true);
 
 }
 
 void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
 {
+
+    if (m_bCinematicOpening)
+    {
+        //오프닝 UI, Inivisible 종료,
+        m_p1TeamCharacter[0]->Set_bDynamicMove(false);
+        m_p2TeamCharacter[0]->Set_bDynamicMove(false);
+
+        m_p1TeamCharacter[0]->Set_bGrabbed(false);
+        m_p2TeamCharacter[0]->Set_bGrabbed(false);
+
+        m_p1TeamCharacter[0]->Set_IdleAnimation();
+        m_p2TeamCharacter[0]->Set_IdleAnimation();
+
+        m_p1TeamCharacter[0]->Character_Play_Animation(0.1f);
+        m_p2TeamCharacter[0]->Character_Play_Animation(0.1f);
+
+        //좌표도 바꾸나?
+        m_p1TeamCharacter[0]->Set_AnimationStop(1.f);
+        m_p2TeamCharacter[0]->Set_AnimationStop(1.f);
+
+        m_p1TeamCharacter[0]->Set_bInivisible(false);
+        m_p2TeamCharacter[0]->Set_bInivisible(false);
+
+
+        m_p1TeamCharacter[0]->FlipDirection(1);
+        m_p2TeamCharacter[0]->FlipDirection(-1);
+
+        return;
+    }
 
     if (iTeam == 1)
     {

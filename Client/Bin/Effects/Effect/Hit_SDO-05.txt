@@ -5,7 +5,7 @@ TickPerSecond: 3
 KeyFramesCount: 239
 NumEffec: 25
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 IsFollowing: false
 
@@ -469,7 +469,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.988083 -1.2
+Position: 0 0.991636 -1.2
 Scale: 0.01 0.01 1
 Rotation: 0 0 0
 IsLoop: true
@@ -515,7 +515,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -1.6 0.0979407 1.5
+Position: -1.6 0.0816667 1.5
 Scale: 0.02 0.05 1
 Rotation: 0 0 0
 IsLoop: true
@@ -561,7 +561,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.4 0.044253 -1.3
+Position: -0.4 0.0781539 -1.3
 Scale: 0.03 0.03 1
 Rotation: 0 0 0
 IsLoop: true
@@ -607,7 +607,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 1.8 0.095559 -1.4
+Position: 1.8 0.072 -1.4
 Scale: 0.01 0.02 1
 Rotation: 0 0 0
 IsLoop: true
@@ -653,7 +653,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 2.4 0.0736856 1.7
+Position: 2.4 0.0976667 1.7
 Scale: 0.01 0.01 1
 Rotation: 0 0 0
 IsLoop: true
@@ -699,7 +699,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 4.3 0.0393269 -1.6
+Position: 4.3 0.0531429 -1.6
 Scale: 0.002 0.02 1
 Rotation: 0 0 0
 IsLoop: true
@@ -745,7 +745,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 5.2 0.0827787 -1.8
+Position: 5.2 0.094 -1.8
 Scale: 0.01 0.01 1
 Rotation: 0 0 0
 IsLoop: true
@@ -791,7 +791,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 4.6 0.0548897 1.7
+Position: 4.6 0.096 1.7
 Scale: 0.01 0.01 1
 Rotation: 0 0 0
 IsLoop: true
@@ -837,7 +837,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 6 0.0973713 -1.3
+Position: 6 0.0973334 -1.3
 Scale: 0.003 0.005 1
 Rotation: 0 0 0
 IsLoop: true
@@ -883,7 +883,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 5.8 0.0231757 1.4
+Position: 5.8 0.08 1.4
 Scale: 0.006 0.01 1
 Rotation: 0 0 0
 IsLoop: true

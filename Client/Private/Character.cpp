@@ -4387,7 +4387,7 @@ _bool CCharacter::Play_FirstOpening()
 {
 
 	Set_AnimationStopWithoutMe(30.f);
-	Set_AnimationStop(0.f);
+	Set_AnimationStop(1.f);
 
 	m_bDynamicMove = true;
 	m_bGrabbed = true;
@@ -4472,6 +4472,11 @@ _bool CCharacter::Update_BeReflecting(_float fTimeDelta)
 void CCharacter::Set_bFinalSkillQTE(_bool bFinalSkillQTE)
 {
 	m_iQTE = bFinalSkillQTE;
+}
+
+CHARACTER_INDEX CCharacter::Get_eCharacterIndex()
+{
+	return m_eCharacterIndex;
 }
 
 

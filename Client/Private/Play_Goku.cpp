@@ -379,7 +379,19 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 					Set_CurrentAnimationPositionJump(369.99f);
 				}
 			}
-			
+			else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_GOKU_CINEMATIC_01)
+			{
+				if (m_bMotionPlaying == false)
+				{
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if (m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//시작 애니메이션 끝부분  오공 끝 1170
+					m_bNormalGoku = false;
+					Set_CurrentAnimationPositionJump(1169.99f);
+				}
+			}
 			
 		}
 		else

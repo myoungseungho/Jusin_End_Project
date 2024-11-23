@@ -1,8 +1,8 @@
 [Layer]
 LayerName: 21_SDO-02
-Duration: 2
+Duration: 3
 TickPerSecond: 1
-KeyFramesCount: 119
+KeyFramesCount: 179
 NumEffec: 10
 Position: 0 0 0
 Scale: 1 1 1
@@ -38,12 +38,12 @@ Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0 -0.15 0
 Scale: 0.03 0.03 1
 Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -75,12 +75,12 @@ Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0 -0.06 0
 Scale: 0.013 0.013 1
 Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -112,12 +112,12 @@ Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0 -0.08 0
 Scale: 0.017 0.017 1
 Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -149,12 +149,12 @@ Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0 -0.06 0
 Scale: 0.013 0.013 1
 Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -186,12 +186,12 @@ Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0 -0.07 0
 Scale: 0.015 0.015 1
 Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -223,12 +223,12 @@ Duration: 1
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0.12 -0.13 0
 Scale: 0.03 0.03 1
 Rotation: 0 0 36.623
-CurTime: 0.65
-Duration: 2
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -240,15 +240,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.1 0
-Scale: 0.0299433 0.0299472 1
-Rotation: 0 0 0
+Position: 0 0 0
+Scale: 0.0299332 0.029937 1
+Rotation: 0 0 260
 IsLoop: false
 Color: 255 0 29.553 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 8
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -260,13 +260,67 @@ Duration: 2
 IsNotPlaying: true
 
 [KeyFrame]
-KeyFrameNumber: 39
-Position: 0 -0.1 0
-Scale: 0.0299433 0.0299472 1
-Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+KeyFrameNumber: 89
+Position: 0 0 0
+Scale: 0.0299381 0.029942 1
+Rotation: 0 0 180
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 102
+Position: 0 0 0
+Scale: 0.0299332 0.029937 1
+Rotation: 0 0 260
+CurTime: 1.7
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 109
+Position: 0 0 0
+Scale: 0.0299357 0.0299397 1
+Rotation: 0 0 260
+CurTime: 1.81667
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 119
+Position: 0 0 0
+Scale: 0.0299362 0.02994 1
+Rotation: 0 0 260
+CurTime: 1.98333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0 0 0
+Scale: 0.0299369 0.0299407 1
+Rotation: 0 0 260
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 149
+Position: 0 0 0
+Scale: 0.0299345 0.0299384 1
+Rotation: 0 0 260
+CurTime: 2.48333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 0 0 0
+Scale: 0.029937 0.0299408 1
+Rotation: 0 0 260
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: true
 
 [Effect]
 EffectName: 21_SDO-02_08
@@ -277,15 +331,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.1 0
-Scale: 0.02 0.02 1
-Rotation: 0 0 0
+Position: 0 0 0
+Scale: 0.0199977 0.0199977 1
+Rotation: 0 0 260
 IsLoop: false
 Color: 208.56 54.8841 130.877 1.48742
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 8
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -297,13 +351,67 @@ Duration: 2
 IsNotPlaying: true
 
 [KeyFrame]
-KeyFrameNumber: 39
-Position: 0 -0.1 0
-Scale: 0.02 0.02 1
-Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+KeyFrameNumber: 89
+Position: 0 0 0
+Scale: 0.0199985 0.0199985 1
+Rotation: 0 0 180
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 102
+Position: 0 0 0
+Scale: 0.0199978 0.0199978 1
+Rotation: 0 0 260
+CurTime: 1.7
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 109
+Position: 0 0 0
+Scale: 0.0199978 0.0199978 1
+Rotation: 0 0 260
+CurTime: 1.81667
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 119
+Position: 0 0 0
+Scale: 0.0199979 0.0199979 1
+Rotation: 0 0 260
+CurTime: 1.98333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0 0 0
+Scale: 0.0199978 0.0199978 1
+Rotation: 0 0 260
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 149
+Position: 0 0 0
+Scale: 0.0199978 0.0199978 1
+Rotation: 0 0 260
+CurTime: 2.48333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 0 0 0
+Scale: 0.0199977 0.0199977 1
+Rotation: 0 0 260
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: true
 
 [Effect]
 EffectName: 21_SDO-02_09
@@ -315,14 +423,14 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 0 0 0
-Scale: 0.00103421 1 1
-Rotation: 0 0 0
+Scale: 0.00099995 0.999971 1
+Rotation: 0 0 260
 IsLoop: false
 Color: 237.268 115.679 184.917 1.49007
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 8
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -334,21 +442,66 @@ Duration: 2
 IsNotPlaying: true
 
 [KeyFrame]
-KeyFrameNumber: 39
+KeyFrameNumber: 89
 Position: 0 0 0
-Scale: 0.003 1 1
-Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+Scale: 0.00299968 0.999892 1
+Rotation: 0 0 180
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: false
 
 [KeyFrame]
-KeyFrameNumber: 118
+KeyFrameNumber: 102
 Position: 0 0 0
-Scale: 0.001 1 1
-Rotation: 0 0 0
-CurTime: 1.96667
-Duration: 2
+Scale: 0.00299956 0.999853 1
+Rotation: 0 0 260
+CurTime: 1.7
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 109
+Position: 0 0 0
+Scale: 0.00299959 0.999861 1
+Rotation: 0 0 260
+CurTime: 1.81667
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 119
+Position: 0 0 0
+Scale: 0.00299961 0.999869 1
+Rotation: 0 0 260
+CurTime: 1.98333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0 0 0
+Scale: 0.00299961 0.999869 1
+Rotation: 0 0 260
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 149
+Position: 0 0 0
+Scale: 0.00299958 0.999857 1
+Rotation: 0 0 260
+CurTime: 2.48333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 0 0 0
+Scale: 0.00099995 0.999971 1
+Rotation: 0 0 260
+CurTime: 2.96667
+Duration: 3
 IsNotPlaying: true
 
 [Effect]
@@ -360,15 +513,15 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.1 0
-Scale: 0.035 0.035 1
-Rotation: 0 0 0
+Position: 0 0 0
+Scale: 0.0349954 0.0349954 1
+Rotation: 0 0 260
 IsLoop: false
 Color: 0 0 0 1.29139
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 8
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -380,11 +533,65 @@ Duration: 2
 IsNotPlaying: true
 
 [KeyFrame]
-KeyFrameNumber: 39
-Position: 0 -0.1 0
-Scale: 0.035 0.035 1
-Rotation: 0 0 0
-CurTime: 0.65
-Duration: 2
+KeyFrameNumber: 89
+Position: 0 0 0
+Scale: 0.0349976 0.0349976 1
+Rotation: 0 0 180
+CurTime: 1.48333
+Duration: 3
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 102
+Position: 0 0 0
+Scale: 0.0349966 0.0349966 1
+Rotation: 0 0 260
+CurTime: 1.7
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 109
+Position: 0 0 0
+Scale: 0.0349966 0.0349966 1
+Rotation: 0 0 260
+CurTime: 1.81667
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 119
+Position: 0 0 0
+Scale: 0.0349967 0.0349967 1
+Rotation: 0 0 260
+CurTime: 1.98333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0 0 0
+Scale: 0.0349966 0.0349966 1
+Rotation: 0 0 260
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 149
+Position: 0 0 0
+Scale: 0.0349961 0.0349961 1
+Rotation: 0 0 260
+CurTime: 2.48333
+Duration: 3
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 0 0 0
+Scale: 0.0349954 0.0349954 1
+Rotation: 0 0 260
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: true
 
