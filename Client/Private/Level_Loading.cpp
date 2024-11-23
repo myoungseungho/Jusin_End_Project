@@ -159,10 +159,10 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CLoading_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_CharacterSlectModel */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Loading_GodDragon"),
-		CLoading_GodDragon::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
+	///* Prototype_GameObject_CharacterSlectModel */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Loading_GodDragon"),
+	//	CLoading_GodDragon::Create(m_pDevice, m_pContext))))
+	//	return E_FAIL;
 
 	m_bIsLevelPrepared = true;
 
