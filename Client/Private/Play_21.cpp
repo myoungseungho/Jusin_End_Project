@@ -723,15 +723,6 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 	}
 
 	Check_Ground();
-
-
-
-
-
-	//테스트용임. 
-	if (m_pGameInstance->Key_Down(DIK_SPACE))
-		Play_FirstOpening();
-
 }
 
 void CPlay_21::Camera_Update(_float fTimeDelta)
