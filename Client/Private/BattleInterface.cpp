@@ -718,6 +718,9 @@ void CBattleInterface_Manager::Character_Opening_AIO()
     //m_p1TeamCharacter[0]->Set_bGrabbed(true);
     //m_p2TeamCharacter[0]->Set_bGrabbed(true);
 
+
+    //if(m_p1TeamCharacter[0]->Get_)
+
     m_p1TeamCharacter[0]->Play_FirstOpening();
 
 

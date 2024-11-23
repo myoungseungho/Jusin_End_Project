@@ -1,8 +1,8 @@
 [Layer]
 LayerName: 21_SAU-01
-Duration: 1
+Duration: 3
 TickPerSecond: 4
-KeyFramesCount: 59
+KeyFramesCount: 179
 NumEffec: 6
 Position: 0 0 0
 Scale: 1 1 1

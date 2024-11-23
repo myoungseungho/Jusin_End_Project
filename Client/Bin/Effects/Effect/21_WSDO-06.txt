@@ -1,8 +1,8 @@
 [Layer]
 LayerName: 21_WSDO-06
-Duration: 1
+Duration: 2
 TickPerSecond: 2
-KeyFramesCount: 59
+KeyFramesCount: 119
 NumEffec: 14
 Position: 0 0 0
 Scale: 1 1 1
@@ -19,7 +19,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.3 0
-Scale: 0.3 0.6 1
+Scale: 0.0999996 0.6 1
 Rotation: 0 0 70
 IsLoop: false
 Color: 0 0 0 29.95
@@ -56,7 +56,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.3 0.6 1
+Scale: 0.1 0.6 1
 Rotation: 0 0 70
 IsLoop: false
 Color: 255 0 132.566 0.796688
@@ -93,7 +93,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.3 0.6 1
+Scale: 0.1 0.6 1
 Rotation: 0 0 70
 IsLoop: false
 Color: 255 97.1026 183.228 1
@@ -130,7 +130,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.3 0
-Scale: 0.2 0.7 1
+Scale: 0.05 0.7 1
 Rotation: 0 0 40
 IsLoop: false
 Color: 0 0 0 29.95
@@ -167,7 +167,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.2 0.7 1
+Scale: 0.05 0.7 1
 Rotation: 0 0 40
 IsLoop: false
 Color: 255 0 132.566 0.796688
@@ -204,7 +204,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.2 0.7 1
+Scale: 0.05 0.7 1
 Rotation: 0 0 40
 IsLoop: false
 Color: 255 97.1026 183.228 1
@@ -241,7 +241,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.3 0
-Scale: 0.4 0.8 1
+Scale: 0.1 0.8 1
 Rotation: 0 0 20
 IsLoop: false
 Color: 0 0 0 29.95
@@ -278,7 +278,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.4 0.8 1
+Scale: 0.1 0.8 1
 Rotation: 0 0 20
 IsLoop: false
 Color: 255 0 132.566 0.796688
@@ -315,7 +315,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.4 0.8 1
+Scale: 0.1 0.8 1
 Rotation: 0 0 20
 IsLoop: false
 Color: 255 97.1026 183.228 1
@@ -352,7 +352,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 -0.3 0
-Scale: 0.3 0.5 1
+Scale: 0.2 0.5 1
 Rotation: 0 0 50
 IsLoop: false
 Color: 0 0 0 29.95
@@ -389,7 +389,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.3 0.5 1
+Scale: 0.2 0.5 1
 Rotation: 0 0 50
 IsLoop: false
 Color: 255 0 132.566 0.796688
@@ -426,7 +426,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 -0.3 0
-Scale: 0.3 0.5 1
+Scale: 0.2 0.5 1
 Rotation: 0 0 50
 IsLoop: false
 Color: 255 97.1026 183.228 1
@@ -506,6 +506,6 @@ Position: 0.8 0 -1.5
 Scale: 0.2 0.5 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
+Duration: 2
 IsNotPlaying: false
 

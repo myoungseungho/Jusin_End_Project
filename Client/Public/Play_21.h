@@ -196,7 +196,12 @@ private:
 
 	class CEffect_Layer* m_pAttack236ChargeEffect_Layer = { nullptr };
 	class CEffect_Layer* m_pAttack214AssultEffect_Layer = { nullptr };
+
+	class CEffect_Layer* m_pAttack214GroundEffect_Layer = { nullptr };
+
 	class CEffect_Layer* m_pAttackUltimateLaserEffect_Layer = { nullptr };
+
+	class CEffect_Layer* m_pAttackFinalChaseEffect_Layer = { nullptr };
 
 
 	_bool m_bFinalSoundEnable = { true };
