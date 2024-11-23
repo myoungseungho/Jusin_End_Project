@@ -62,6 +62,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pUI_GlowShader)
 		return E_FAIL;
 
+	m_pAuraTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_Fractal4.dds"), 1);
 	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 6);
@@ -730,6 +731,7 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
+	Render_PlayerAuraMaskBlur(fTimeDelta);
 	
 	return S_OK;
 }
@@ -779,6 +781,195 @@ HRESULT CRenderer::Render_PlayerDeferred(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_PlayerAuraMaskBlur(_float fTimeDelta)
+{
+	m_fAuraAccTime += fTimeDelta;
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	_float2 fTexSize = { 1920.f, 1080.f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
+		return E_FAIL;
+
+	_float2 fSamplingSize = { 4.f,4.f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Player_AuraMask"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_DownSecond"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix_Second)))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	fTexSize = { 1920.f * 0.5f, 1080.f * 0.5f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownTexSize", &fTexSize, sizeof(_float2))))
+		return E_FAIL;
+
+	fSamplingSize = { 6.f,6.f };
+	if (FAILED(m_pGlowShader->Bind_RawValue("g_DownSamplingSize", &fSamplingSize, sizeof(_float2))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_DownTarget"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(3);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	//-------------------------------------------
+	//return S_OK;
+	//-------------------------------------------
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Blur_X"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix_Second)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_DownTarget_Second"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(0);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	//****************************************
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Blur_Y"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_DownWorldMatrix_Second)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Blur_X"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(1);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	//***************************************************
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
+		return E_FAIL;
+
+	m_pAuraTextureCom->Bind_ShaderResource(m_pGlowShader, "g_AuraTexture", 0);
+	m_pGlowShader->Bind_RawValue("g_Time", &m_fAuraAccTime, sizeof(_float));
+	
+	m_pGlowShader->Begin(17);
+
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	/*---------------------------------------------------------------------------------------------------------------------------------------------- */
+	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player_Blur_X"))))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Player_AuraMask"))))
+	//	return E_FAIL;
+
+	//m_pGlowShader->Begin(18);
+	//m_pVIBuffer->Bind_Buffers();
+	//m_pVIBuffer->Render();
+
+	//if (FAILED(m_pRenderInstance->End_MRT()))
+	//	return E_FAIL;
+	////****************************************
+	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player_Blur_Y"))))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	//	return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Player_Blur_X"))))
+	//	return E_FAIL;
+
+	///*
+	//	각자 거기서 나온걸로 미리 다른 렌더타겟에 넣고 디퓨즈까지 넣어주자
+	//*/
+	//m_pGlowShader->Begin(19);
+	//m_pVIBuffer->Bind_Buffers();
+	//m_pVIBuffer->Render();
+
+	//if (FAILED(m_pRenderInstance->End_MRT()))
+	//	return E_FAIL;
+
+
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+	//	return E_FAIL;
+	//if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+	//	return E_FAIL;
+
+	////if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
+	////	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+	//	return E_FAIL;
+
+	//m_pAuraTextureCom->Bind_ShaderResource(m_pGlowShader, "g_AuraTexture", 0);
+
+	//m_pGlowShader->Begin(17);
+	//m_pVIBuffer->Bind_Buffers();
+	//m_pVIBuffer->Render();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_PlayerBlur(_float fTimeDelta)
 {
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player_Blur_X"))))
@@ -814,6 +1005,9 @@ HRESULT CRenderer::Render_PlayerBlur(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_Player_Blur_X"))))
 		return E_FAIL;
 
+	/*
+		각자 거기서 나온걸로 미리 다른 렌더타겟에 넣고 디퓨즈까지 넣어주자
+	*/
 	m_pGlowShader->Begin(11);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
@@ -1178,6 +1372,7 @@ HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
 		return E_FAIL;
 
+	
 	m_pGlowShader->Begin(9);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();
@@ -2271,11 +2466,16 @@ HRESULT CRenderer::Initialize_RenderTarget()
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Depth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_AuraMask"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Normal"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Depth"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_AuraMask"))))
 		return E_FAIL;
 #pragma endregion
 
@@ -2351,10 +2551,12 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Player_Blur_Y"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
+
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_X"), TEXT("Target_Player_Blur_X"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_Y"), TEXT("Target_Player_Blur_Y"))))
 		return E_FAIL;
+
 
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_All_Blur_X"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
@@ -2623,7 +2825,7 @@ void CRenderer::Free()
 	for (auto& pComponent : m_DebugComponent)
 		Safe_Release(pComponent);
 	
-
+	Safe_Release(m_pAuraTextureCom);
 	Safe_Release(m_pDistortionTransformCom);
 	Safe_Release(m_pDistortionTextureCom);
 	Safe_Release(m_pDistortionShaderCom);

@@ -1,5 +1,8 @@
 
 #include "Renderer_Shader_Defines.hlsli"
+float4 Blur_X_Aura(float2 vTexCoord);
+
+float4 Blur_Y_Aura(float2 vTexCoord);
 
 float4x4		g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
@@ -8,7 +11,7 @@ texture2D		g_Texture;
 texture2D		g_NormalTexture;
 
 texture2D		g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
-
+texture2D g_AuraTexture;
 texture2D		g_DepthTexture;
 texture2D g_GlowDescTexture;
 
@@ -19,7 +22,7 @@ float2 g_DownTexSize;
 
 float g_fAllGlowFactor = 1.f;
 float g_fGlowFactor = 3.2f;
-
+float g_Time;
 static const float g_fWeight[13] =
 {
     // 0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521, 0.3989, 0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044
@@ -67,6 +70,13 @@ struct PS_OUT
 {
 	float4	vColor : SV_TARGET0;
 };
+
+struct PS_OUT_PLAYER
+{
+    float4 vColor : SV_TARGET0;
+    float4 vMask : SV_TARGET1;
+};
+
 struct PS_OUT_SECOND
 {
     float4 vColor : SV_TARGET1;
@@ -175,7 +185,7 @@ PS_OUT PS_MAIN_PLAYER_BLUR_Y(PS_IN In)
     //Out.vColor = pow(Blur_Y(In.vTexcoord, 1.f, 1.f, true), 1.0f / gamma);
     
     Out.vColor = Blur_Y(In.vTexcoord, 1.f, 0.25f, true);
-	
+
     return Out;
 }
 
@@ -300,6 +310,25 @@ PS_OUT PS_MAIN_RESULT_PLAYER(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_RESULT_PLAYER_AURA(PS_IN In)
+{
+
+    PS_OUT Out = (PS_OUT) 0;
+
+    float2 vTexcoord = In.vTexcoord * 5.f;
+    vTexcoord.y += g_Time;
+    vector vAura = g_AuraTexture.Sample(LinearSampler, vTexcoord);
+
+    vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
+   /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
+    //vAura.rgb = float3(0.1f, 0.3f, 1.f);
+    
+    Out.vColor.rgb = saturate(vAura.rgb * saturate(vBlur.r * 200.3f)) * float3(255.f / 255.f, 10.f / 255.f, 0.f / 255.f);
+    Out.vColor.a = saturate(vAura.a * saturate(vBlur.r * 2.3f)) * 0.7f;
+    //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
+    return Out;
+}
+
 PS_OUT PS_MAIN_RESULT_ALLEFFECT(PS_IN In)
 {
 
@@ -408,6 +437,26 @@ PS_OUT PS_MAIN_RESULT_PLUS(PS_IN In)
     return Out;
 
 }
+
+PS_OUT PS_MAIN_BLUR_X_AURA(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    Out.vColor = Blur_X_Aura(In.vTexcoord);
+	
+
+    return Out;
+}
+
+PS_OUT PS_MAIN_BLUR_Y_AURA(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    Out.vColor = Blur_Y_Aura(In.vTexcoord);
+	
+    return Out;
+}
+
 technique11		DefaultTechnique
 {	
     pass Blur_X
@@ -599,8 +648,73 @@ technique11		DefaultTechnique
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_BLUR_Y_BACK();
     }
+
+    pass PlayerAura_Result //17
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_RESULT_PLAYER_AURA();
+    }
+
+    pass AuraBlurX // 18
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_BLUR_X_AURA();
+    }
+
+    pass AuraBlurY // 19
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.0f, 0.0f, 0.0f, 0.0f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_BLUR_Y_AURA();
+    }
 }
 
+float4 Blur_X_Aura(float2 vTexCoord)
+{
+    float4 vOut = (float4) 0;
+
+    float2 vUV = (float2) 0;
+
+    for (int i = -6; i < 7; ++i)
+    {
+        vUV = vTexCoord + float2(1.f / 1920.0f * i, 0.f);
+        vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
+    }
+
+    vOut /= 6.5f;
+
+    return vOut;
+}
+
+float4 Blur_Y_Aura(float2 vTexCoord)
+{
+    float4 vOut = (float4) 0;
+
+    float2 vUV = (float2) 0;
+
+    for (int i = -6; i < 7; ++i)
+    {
+        vUV = vTexCoord + float2(0, 1.f / 1080.f * i);
+        vOut += g_fWeight[6 + i] * g_Texture.Sample(LinearSampler, vUV);
+    }
+
+    vOut /= 6.5f;
+    return vOut;
+}
 
 
 

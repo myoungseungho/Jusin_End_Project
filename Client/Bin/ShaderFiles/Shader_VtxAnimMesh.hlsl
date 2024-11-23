@@ -91,6 +91,7 @@ struct PS_OUT
     float4 vDiffuse : SV_TARGET0;
     float4 vNormal : SV_TARGET1;
     float4 vDepth : SV_TARGET2;
+    float4 vAura : SV_TARGET3;
 };
 
 
@@ -139,7 +140,7 @@ PS_OUT PS_MAIN(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask2 /*+ fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-    
+    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
     //float2 vTexcoordFloor = In.vTexcoord - vTexcoordFraction;
     //float vResultFloor = (vTexcoordFloor.x + vTexcoordFloor.y) * 0.1f;
     //vHairColor.rgb = vHairColor.rgb * (1 - vResultFloor);
@@ -183,7 +184,7 @@ PS_OUT PS_MAIN_21(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), fHairMask);
     Out.vDepth = vector((In.vProjPos.w / 1000.f), In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-
+    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
     return Out;
 }
 PS_OUT PS_MAIN_FRIEZA(PS_IN In)
@@ -224,7 +225,7 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fFaceMask + fFaceMask2 + fFaceMask3));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_MeshIndex * ((1 - fLegMask) * (1 - fArmMask)), 0.f);
-
+    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
     return Out;
 }
 

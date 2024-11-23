@@ -119,6 +119,8 @@ private: /* For.Distortion Variable */
 	class CTexture*				m_pDistortionTextureCom = { nullptr };
 	class CShader*				m_pDistortionShaderCom = { nullptr };
 
+	class CTexture* m_pAuraTextureCom = { nullptr };
+	_float m_fAuraAccTime = { 0.f };
 	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
 	_float m_fAccTime = { 0.f };
 	
@@ -135,6 +137,7 @@ private:
 	HRESULT Render_Player(_float fTimeDelta);
 	HRESULT Render_PlayerLight(_float fTimeDelta, _int iCount);
 	HRESULT Render_PlayerDeferred(_float fTimeDelta);
+	HRESULT Render_PlayerAuraMaskBlur(_float fTimeDelta);
 	HRESULT Render_PlayerBlur(_float fTimeDelta);
 	HRESULT Render_NonBlend_Test(_float fTimeDelta); // 디버깅용 피킹
 	HRESULT Render_NonBlend_Layer(_float fTimeDelta);// 디버깅용 피킹
