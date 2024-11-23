@@ -1912,7 +1912,79 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Hit_Entry_Anim_1_Flip
-PointCount: 0
+PointCount: 9
+
+[CameraPoint]
+Position: 9.78005 0.516137 -0.0489545
+Rotation: 0.0910723 0.700714 -0.0909395 0.701737
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 9.78005 0.516137 -0.0489545
+Rotation: 0.0910723 0.700714 -0.0909395 0.701737
+Duration: 2
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 7.11652 0.647472 -0.216775
+Rotation: 0.0806537 0.68821 -0.077432 0.716845
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.67888 7.15418 -0.722845
+Rotation: 0.200757 0.662674 -0.191228 0.695696
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -2.07888 7.15418 -0.722845
+Rotation: 0.200757 0.662674 -0.191228 0.695696
+Duration: 0.01
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -4.07452 0.480966 -2.27295
+Rotation: -0.110579 0.342087 0.0405765 0.932257
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -4.07452 0.480966 -2.27295
+Rotation: -0.110579 0.342087 0.0405765 0.932257
+Duration: 0.0999999
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.365019 1.65401 0.0791354
+Rotation: -0.16624 0.672382 0.158869 0.703582
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.365019 1.65401 0.0791354
+Rotation: -0.16624 0.672382 0.158869 0.703582
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Frieza_Entry
