@@ -739,9 +739,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 
 
-	//테스트용임. 
-	if (m_pGameInstance->Key_Down(DIK_SPACE))
-		Play_FirstOpening();
+
 
 }
 

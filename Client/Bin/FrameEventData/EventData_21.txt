@@ -7,8 +7,11 @@ PLAY_21,TON600cs_body,0,AnimSpeedChange,0.019,60.1
 
 //,https://www.youtube.com/watch?v=JXuZpvfUceY 06:05
 PLAY_21,TON600cs_body,0,AnimSpeedChange,0.019,60.1
+PLAY_21,TON600cs_body,0.001000,PlaySound,145,0,1
 PLAY_21,TON600cs_body,145,AnimSpeedChange,0.019,40
+PLAY_21,TON600cs_body,170.001000,PlaySound,144,0,1
 PLAY_21,TON600cs_body,230,AnimSpeedChange,0.019,60.1
+PLAY_21,TON600cs_body,230.001000,PlaySound,146,0,1
 PLAY_21,TON600cs_body,275,ModelChange,5555555
 PLAY_21,TON600cs_body,275,PositionChange,275.1
 PLAY_21,TON600cs_body,275,AnimSpeedChange,0.019,50
