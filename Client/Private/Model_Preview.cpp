@@ -46,7 +46,7 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 
 	CFrameEvent_Manager::Get_Instance()->Initalize_NameMap();
 	//CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/Split.txt");
-	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_Hit.txt");
+	CFrameEvent_Manager::Get_Instance()->LoadFile2("../Bin/FrameEventData/EventData_21.txt");
 
 	//FlipDirection(-1);
 
