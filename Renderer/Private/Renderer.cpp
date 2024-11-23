@@ -920,9 +920,9 @@ HRESULT CRenderer::Render_Lights(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_Depth"))))
 		return E_FAIL;
 
-	_float4 camPosition = m_pGameInstance->Get_CamPosition_Float4();
-	if (FAILED(m_pShader->Bind_RawValue("g_vCamPosition", &camPosition, sizeof(_float4))))
-		return E_FAIL;
+		_float4 camPosition = m_pGameInstance->Get_CamPosition_Float4();
+		if (FAILED(m_pShader->Bind_RawValue("g_vCamPosition", &camPosition, sizeof(_float4))))
+			return E_FAIL;
 
 	m_pVIBuffer->Bind_Buffers();
 

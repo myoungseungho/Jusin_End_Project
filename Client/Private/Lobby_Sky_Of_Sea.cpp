@@ -46,7 +46,7 @@ void CLobby_Sky_Of_Sea::Update(_float fTimeDelta)
 
 void CLobby_Sky_Of_Sea::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_Sky_Of_Sea::Render(_float fTimeDelta)

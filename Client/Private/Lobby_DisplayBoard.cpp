@@ -42,7 +42,7 @@ HRESULT CLobby_DisplayBoard::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_fAlphaValue = 0.359999925f;
-	m_pTransformCom->Set_Scaled(1.5f, 1.5f, 1.5f);
+	m_pTransformCom->Set_Scaled(1.15f, 1.15f, 1.15f);
 
 	return S_OK;
 }
@@ -71,7 +71,7 @@ void CLobby_DisplayBoard::Update(_float fTimeDelta)
 
 void CLobby_DisplayBoard::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_DisplayBoard::Render(_float fTimeDelta)

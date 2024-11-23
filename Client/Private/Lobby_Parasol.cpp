@@ -47,7 +47,7 @@ void CLobby_Parasol::Update(_float fTimeDelta)
 
 void CLobby_Parasol::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_Parasol::Render(_float fTimeDelta)

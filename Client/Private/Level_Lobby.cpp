@@ -122,7 +122,7 @@ HRESULT CLevel_Lobby::Initialize()
 		for (size_t k  = 0; k < iNumInOutID; k++)
 		{
 			tDisplayDesc.eInOutID = static_cast<CLobby_DisplayBoard::LOBBY_INOUT>(k);
-			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_DisplayBoard"), TEXT("Layer_Lobby_DisplayBoard"), &tDisplayDesc)))
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_DisplayBoard"), TEXT("Layer_Lobby_ZDisplayBoard"), &tDisplayDesc)))
 				return E_FAIL;
 		}
 	}
@@ -130,11 +130,47 @@ HRESULT CLevel_Lobby::Initialize()
 
 #pragma region Light
 	LIGHT_DESC			LightDesc{};
+	
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
 	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(1.f, 1.f, 1.f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	//LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);
+	LightDesc.vDiffuse = _float4(0.6f, 0.6f, 0.6f, 1.f);
+	LightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
+	LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
+
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(10.f, 5.f, 10.f, 1.f);
+	LightDesc.fRange = 10.f;
+	LightDesc.vDiffuse = _float4(1.f, 0.0f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.3f, 0.f, 0.f, 1.f);
+	LightDesc.vSpecular = _float4(1.f, 0.f, 0.f, 1.f);
+
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(20.f, 5.f, 10.f, 1.f);
+	LightDesc.fRange = 10.f;
+	LightDesc.vDiffuse = _float4(0.0f, 1.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.f, 0.3f, 0.f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 1.f, 0.f, 1.f);
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;

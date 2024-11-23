@@ -202,7 +202,7 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_Loading_GodDragon"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_Loading_GodDragon"));
 
 	//CUIObject::UI_DESC EnergyEffDesc = {};
 	//EnergyEffDesc.fSpeedPerSec = 10.f;

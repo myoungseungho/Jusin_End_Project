@@ -57,7 +57,7 @@ void CLobby_Krillin::Update(_float fTimeDelta)
 
 void CLobby_Krillin::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_Krillin::Render(_float fTimeDelta)

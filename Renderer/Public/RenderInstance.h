@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Renderer.h"
+#include "Lobby_Renderer.h"
 #include "Light_Manager.h"
 BEGIN(Engine)
 class CGameInstance;
@@ -23,6 +24,8 @@ public:
 public: /* For.Renderer */
 	HRESULT Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, RENDER_OBJECT* pDesc = nullptr);
 	HRESULT Add_DebugComponent(class CComponent* pDebugComponent);
+	HRESULT Add_LobbyRenderObject(CLobby_Renderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject, RENDER_OBJECT* pDesc = nullptr);
+	HRESULT Add_LobbyDebugComponent(class CComponent* pDebugComponent);
 	void SetActive_RenderTarget(_bool isOn);
 	void SetActive_Debug_Component(_bool isOn);
 	void Create_Distortion(DISTORTION_DESC& tDistortionDesc);
@@ -80,6 +83,7 @@ public: /* For.Renderer */
 	void Start_WhiteOut(_float2 vDir, _bool* isDone);
 private:
 	class CRenderer*		m_pRenderer = { nullptr };
+	class CLobby_Renderer* m_pLobbyRenderer = { nullptr };
 	class CTarget_Manager*	m_pTarget_Manager = { nullptr };
 	class CLight_Manager*	m_pLight_Manager = { nullptr };
 	class CPicking*			m_pPicking = { nullptr };

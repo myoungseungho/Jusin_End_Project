@@ -45,7 +45,7 @@ void CLobby_Battle_Building::Update(_float fTimeDelta)
 
 void CLobby_Battle_Building::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_Battle_Building::Render(_float fTimeDelta)

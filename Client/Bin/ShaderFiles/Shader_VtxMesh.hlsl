@@ -75,6 +75,9 @@ PS_OUT PS_MAIN(PS_IN In)
     PS_OUT Out;
 
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     if (Out.vDiffuse.a < 0.1f)
         discard;
 
@@ -181,17 +184,3 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MOVE_DISPLAY();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
