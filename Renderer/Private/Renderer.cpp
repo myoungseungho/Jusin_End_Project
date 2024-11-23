@@ -130,10 +130,10 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
-	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
-	//	return E_FAIL; 
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
+		return E_FAIL; 
 	/*
 		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
 		return E_FAIL;
@@ -243,6 +243,9 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Metallic(fTimeDelta)))
 		return E_FAIL;
 
+	if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
+		return E_FAIL;
+
 	if (FAILED(Render_Player(fTimeDelta)))
 		return E_FAIL;
 
@@ -289,6 +292,11 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if(FAILED(Draw_WhiteBlack_Mode(fTimeDelta)))
 		return E_FAIL;
+
+
+	//if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
+	//	return E_FAIL;
+
 
 #ifdef _DEBUG
 	if (FAILED(Render_Debug(fTimeDelta)))
@@ -1559,10 +1567,10 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 			return E_FAIL;
 
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Distortion"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Distortion"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
 		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ResultDistortion_BackBuffer"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
 
@@ -1573,10 +1581,10 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		MRT_Distortion
 		MRT_ResultDistortion_BackBuffer
 		*/
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_X"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Blur_Y"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_X"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_Y"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
 		//// Render Target 디버그 렌더링
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_AllGlowDiffuse"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
@@ -2347,6 +2355,15 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player_Blur_Y"), TEXT("Target_Player_Blur_Y"))))
 		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_All_Blur_X"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_All_Blur_Y"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_All_Blur_X"), TEXT("Target_All_Blur_X"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_All_Blur_Y"), TEXT("Target_All_Blur_Y"))))
+		return E_FAIL;
 #pragma endregion
 
 	/* 그림자 임시 */
@@ -2420,9 +2437,132 @@ HRESULT CRenderer::Initialize_RenderTarget()
 #pragma endregion	
 	return S_OK;
 }
+
 HRESULT CRenderer::Draw_Test_PostProcess(_float fTImeDelta)
 {
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
 
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
+	//	return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_Texture", m_pBackBufferSRV)))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(2);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_All_Blur_X"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(15);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	//****************************************
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_All_Blur_Y"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_All_Blur_X"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(16);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	//***************************************************
+
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
+	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_All_Blur_Y"))))
+		return E_FAIL;
+
+	m_pGlowShader->Begin(14);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+	
+
+	/*
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_Distortion"))))
+	//	return E_FAIL;
+
+	if (FAILED(m_pDistortionShaderCom->Bind_ShaderResourceView("g_BackBufferTexture", m_pBackBufferSRV)))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(5);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pDistortionShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pDistortionShaderCom, "g_Texture", TEXT("Target_ResultDistortion_BackBuffer"))))
+		return E_FAIL;
+
+	m_pDistortionShaderCom->Begin(2);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+	*/
 	return S_OK;
 }
 void CRenderer::Switch_Test_PostProcess(_bool isTrue)
