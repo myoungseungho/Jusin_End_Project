@@ -64,7 +64,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
-	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 5);
+	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 6);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pDistortionTextureCom || nullptr == m_pDistortionTransformCom || nullptr == m_pDistortionShaderCom)
 		return E_FAIL;
@@ -1407,7 +1407,6 @@ HRESULT CRenderer::Render_Distortion(_float fTimeDelta)
 {
 	if (NULL == m_Distortions.size())
 		return S_OK;
-	int a = 10;
 	
 	m_fAccTime += fTimeDelta;
 
@@ -2420,6 +2419,15 @@ HRESULT CRenderer::Initialize_RenderTarget()
 
 #pragma endregion	
 	return S_OK;
+}
+HRESULT CRenderer::Draw_Test_PostProcess(_float fTImeDelta)
+{
+
+	return S_OK;
+}
+void CRenderer::Switch_Test_PostProcess(_bool isTrue)
+{
+
 }
 
 void CRenderer::Switch_BlackOut(_bool isTrue)

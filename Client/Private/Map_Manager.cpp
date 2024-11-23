@@ -123,7 +123,7 @@ void CMap_Manager::Render(_float fTimeDelta)
 
 void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 {
-	m_pRenderInstance->Delete_LoopDistortion();
+	//m_pRenderInstance->Delete_LoopDistortion();
 
 	switch (eMapType)
 	{
@@ -161,15 +161,15 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 
 		m_eCurMap = MAP_VOLCANO;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_VOLCANO);
-		DISTORTION_DESC tDistortionDesc{};
-		tDistortionDesc.vPosition = { 0.f,0.f,0.f,1.f };
-		tDistortionDesc.fLifeTime = 3.f;
-		tDistortionDesc.vScale = { 20.f,20.f };
-		tDistortionDesc.fFactor = 300.f;
-		tDistortionDesc.fMaxTime = 3.f;
-		tDistortionDesc.isLoop = true;
-		tDistortionDesc.vDir = { 1.f,0.f,0.f };
-		m_pRenderInstance->Create_Distortion(tDistortionDesc);
+		//DISTORTION_DESC tDistortionDesc{};
+		//tDistortionDesc.vPosition = { 0.f,0.f,0.f,1.f };
+		//tDistortionDesc.fLifeTime = 3.f;
+		//tDistortionDesc.vScale = { 20.f,20.f };
+		//tDistortionDesc.fFactor = 300.f;
+		//tDistortionDesc.fMaxTime = 3.f;
+		//tDistortionDesc.isLoop = true;
+		//tDistortionDesc.vDir = { 1.f,0.f,0.f };
+		//m_pRenderInstance->Create_Distortion(tDistortionDesc);
 		
 		//Space 음원 정지
 		m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);

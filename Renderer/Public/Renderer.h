@@ -168,9 +168,12 @@ private:
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 	HRESULT Draw_MapBloom();
 	HRESULT Draw_WhiteBlack_Mode(_float fTimeDelta);
+	HRESULT Draw_Test_PostProcess(_float fTImeDelta);
+
 public:
 	void Switch_BlackOut(_bool isTrue);
 	void Start_WhiteOut(_float2 vDir, _bool* isDone);
+	void Switch_Test_PostProcess(_bool isTrue);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;
