@@ -1,7 +1,7 @@
 [Layer]
 LayerName: 21_WSDO-05
 Duration: 3
-TickPerSecond: 2
+TickPerSecond: 1.5
 KeyFramesCount: 179
 NumEffec: 13
 Position: 0 0 0

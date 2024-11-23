@@ -1,3 +1,7 @@
+
+
+PLAY_GOKU,GKS_FRN801cs_01_body,0,AnimSpeedChange,0.005,60
+
 //,PLAY_HIT,HTN403_body,7,ObjectMove,1.003,0,0,0
 //,PLAY_HIT,HTN021_body,20.000000,AnimSpeedChange,0.000000,25.000000
 //,PLAY_HIT,HTN620cs_body,40.000000,AnimSpeedChange,0.000000,25.000000

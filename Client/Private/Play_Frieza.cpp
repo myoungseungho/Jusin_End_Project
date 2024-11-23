@@ -434,6 +434,18 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 					Set_CurrentAnimationPositionJump(445.99f);
 				}
 			}
+			else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_GOKU_CINEMATIC_01)
+			{
+				if (m_bMotionPlaying == false)
+				{
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if (m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//矫累 局聪皋捞记 场何盒  橇府历 场  1170
+					Set_CurrentAnimationPositionJump(1169.99f);
+				}
+			}
 		}
 		else
 		{

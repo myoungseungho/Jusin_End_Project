@@ -381,6 +381,8 @@ public:
 
 	void Set_bFinalSkillQTE(_bool bFinalSkillQTE);
 
+	CHARACTER_INDEX Get_eCharacterIndex();
+
 protected:
 	void Reset_AttackStep();
 

@@ -4536,6 +4536,11 @@ void CCharacter::Set_bFinalSkillQTE(_bool bFinalSkillQTE)
 	m_iQTE = bFinalSkillQTE;
 }
 
+CHARACTER_INDEX CCharacter::Get_eCharacterIndex()
+{
+	return m_eCharacterIndex;
+}
+
 
 
 

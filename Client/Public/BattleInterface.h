@@ -109,6 +109,8 @@ private:
 
 	CHARACREATE_DESC m_tCharaCreateDesc[4] = {};
 
+	_bool m_bCinematicOpening = false;
+
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

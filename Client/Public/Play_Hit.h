@@ -241,6 +241,16 @@ public:
 
 	void MoveToEnemy_Ground(_float fMaxDistance, _float fOffset = 0.4f);
 
+
+	void LaserListUpdate(_float fTimeDelta);
+
+	//방향,시간
+	//list<_float3, _float> m_LaserList;
+
+	//시간,방향
+	list<pair<_float, _float3>> m_LaserList;
+	
+
 private:
 	
 	CHit_MeleeAttack m_tAttackMap;
@@ -271,6 +281,9 @@ private:
 	_float m_fAccFinalTime = {};
 
 
+	CEffect_Layer* m_pUltimateAuraEffect = { nullptr };
+
+	_short m_i214GlassCount = 0;
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
