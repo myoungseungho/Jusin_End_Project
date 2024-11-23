@@ -1,8 +1,8 @@
 [Layer]
 LayerName: Hit_SDU-01
-Duration: 1
+Duration: 10
 TickPerSecond: 1.5
-KeyFramesCount: 59
+KeyFramesCount: 599
 NumEffec: 55
 Position: 0 0 0
 Scale: 1 1 1
@@ -19,7 +19,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0.3 0.2 -1.2
-Scale: 0.03 0.03 0.03
+Scale: 0.011 0.01 0.01
 Rotation: 350 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -64,7 +64,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.8 0.3 -1.6
+Position: -0.8 0.2 -1.6
 Scale: 0.03 0.03 0.03
 Rotation: 0 49.091 0
 IsLoop: false
@@ -85,7 +85,7 @@ IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 9
-Position: -0.8 0.3 -1.6
+Position: -0.8 0.2 -1.6
 Scale: 0.01 0.01 0.01
 Rotation: 0 49.091 0
 CurTime: 0.15
@@ -94,7 +94,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 26
-Position: -0.8 0.3 -1.6
+Position: -0.8 0.2 -1.6
 Scale: 0.03 0.03 0.03
 Rotation: 0 49.091 0
 CurTime: 0.433333
@@ -103,7 +103,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: -0.8 0.3 -1.6
+Position: -0.8 0.2 -1.6
 Scale: 0.03 0.03 0.03
 Rotation: 0 49.091 0
 CurTime: 0.966667
@@ -119,7 +119,7 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.4 0.2 -0.2
+Position: -0.4 0.1 -0.2
 Scale: 0.03 0.03 0.03
 Rotation: 350 21.039 0
 IsLoop: false
@@ -140,7 +140,7 @@ IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 15
-Position: -0.4 0.2 -0.2
+Position: -0.4 0.1 -0.2
 Scale: 0.01 0.01 0.01
 Rotation: 350 21.039 0
 CurTime: 0.25
@@ -149,7 +149,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 34
-Position: -0.4 0.2 -0.2
+Position: -0.4 0.1 -0.2
 Scale: 0.03 0.03 0.03
 Rotation: 350 21.039 0
 CurTime: 0.566667
@@ -158,7 +158,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: -0.4 0.2 -0.2
+Position: -0.4 0.1 -0.2
 Scale: 0.03 0.03 0.03
 Rotation: 350 21.039 0
 CurTime: 0.966667
@@ -174,8 +174,8 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 1.1 0.2 -0.7
-Scale: 0.0299998 0.0300002 0.03
+Position: 1.1 0.1 -0.7
+Scale: 0.03 0.03 0.03
 Rotation: 355 268.831 0
 IsLoop: false
 Color: 0 0 0 30
@@ -195,7 +195,7 @@ IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 22
-Position: 1.1 0.2 -0.7
+Position: 1.1 0.1 -0.7
 Scale: 0.01 0.01 0.01
 Rotation: 355 268.831 0
 CurTime: 0.366667
@@ -204,7 +204,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 41
-Position: 1.1 0.2 -0.7
+Position: 1.1 0.1 -0.7
 Scale: 0.03 0.03 0.03
 Rotation: 355 268.831 0
 CurTime: 0.683333
@@ -213,8 +213,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: 1.1 0.2 -0.7
-Scale: 0.0299998 0.0300002 0.03
+Position: 1.1 0.1 -0.7
+Scale: 0.03 0.03 0.03
 Rotation: 355 268.831 0
 CurTime: 0.966667
 Duration: 1
@@ -229,8 +229,8 @@ EffectType: 0
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0.3 0.4 -1.1
-Scale: 0.0200022 0.0199999 0.0199998
+Position: 0.3 0.3 -1.1
+Scale: 0.0200008 0.02 0.02
 Rotation: 21.169 151.169 0
 IsLoop: false
 Color: 0 0 0 30
@@ -241,8 +241,8 @@ NumKeyFrame: 4
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.3 0.4 -1.1
-Scale: 0.0200023 0.0199999 0.0199998
+Position: 0.3 0.2 -1.1
+Scale: 0.0200026 0.0199999 0.0199998
 Rotation: 21.169 151.169 0
 CurTime: 0
 Duration: 1
@@ -250,8 +250,8 @@ IsNotPlaying: true
 
 [KeyFrame]
 KeyFrameNumber: 30
-Position: 0.3 0.4 -1.1
-Scale: 0.0100006 0.01 0.01
+Position: 0.3 0.3 -1.1
+Scale: 0.0100007 0.01 0.01
 Rotation: 21.169 151.169 0
 CurTime: 0.5
 Duration: 1
@@ -259,8 +259,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 48
-Position: 0.3 0.4 -1.1
-Scale: 0.0200005 0.02 0.02
+Position: 0.3 0.3 -1.1
+Scale: 0.0200007 0.02 0.02
 Rotation: 21.169 151.169 0
 CurTime: 0.8
 Duration: 1
@@ -268,8 +268,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 58
-Position: 0.3 0.4 -1.1
-Scale: 0.0200022 0.0199999 0.0199998
+Position: 0.3 0.3 -1.1
+Scale: 0.0200008 0.02 0.02
 Rotation: 21.169 151.169 0
 CurTime: 0.966667
 Duration: 1
@@ -340,7 +340,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -0.1 0 0
-Scale: 0.002 0.05 1
+Scale: 0.002 0.0409974 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -560,7 +560,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -1.2 0 -0.2
-Scale: 0.005 0.08 1
+Scale: 0.005 0.061253 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -615,7 +615,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -1.2 0 0
-Scale: 0.002 0.15 1
+Scale: 0.002 0.113759 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -725,7 +725,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -1.3 0 -0.4
-Scale: 0.002 0.1 1
+Scale: 0.002 0.0898481 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -890,7 +890,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -0.7 0 0.5
-Scale: 0.001 0.15 1
+Scale: 0.001 0.12462 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -1000,7 +1000,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -1 0 0.7
-Scale: 0.002 0.12 1
+Scale: 0.002 0.0854347 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -1055,7 +1055,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -0.5 0 0.6
-Scale: 0.002 0.144744 1
+Scale: 0.002 0.15 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -1165,7 +1165,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0.7 0 0.4
-Scale: 0.001 0.1 1
+Scale: 0.001 0.0926384 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -1495,7 +1495,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: -0.3 0 0.8
-Scale: 0.002 0.1 1
+Scale: 0.002 0.0914351 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -1550,7 +1550,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
 Position: 0 0 0.8
-Scale: 0.002 0.1 1
+Scale: 0.002 0.0962136 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 50 0 255 30
@@ -1659,8 +1659,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.0895953 0
-Scale: 0.00947976 0.00947976 1
+Position: 0 0.0107051 0
+Scale: 0.00553526 0.00553526 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1705,8 +1705,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.2 0.115011 0
-Scale: 0.00360044 0.003 1
+Position: -0.2 0.119638 0
+Scale: 0.00378553 0.003 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1751,8 +1751,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.2 0.0642182 0
-Scale: 0.00383481 0.00583481 1
+Position: 0.2 0.0157306 0
+Scale: 0.00244945 0.00444945 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1797,8 +1797,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.1 0.210597 0
-Scale: 0.00321195 0.00842389 1
+Position: 0.1 0.228133 0
+Scale: 0.00356265 0.00912531 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1843,8 +1843,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.3 0.0358243 0
-Scale: 0.00614946 0.00614946 1
+Position: -0.3 0.011466 0
+Scale: 0.00468796 0.00468796 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1889,8 +1889,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -1.1 0.0259782 0
-Scale: 0.01 0.0112989 1
+Position: -1.1 0.0692406 0
+Scale: 0.01 0.013462 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1935,8 +1935,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -1.4 0.185978 0
-Scale: 0.00471956 0.00671957 1
+Position: -1.4 0.127518 0
+Scale: 0.00355037 0.00555037 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -1981,8 +1981,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.9 0.389731 0
-Scale: 0.00479462 0.01 1
+Position: -0.9 0.341034 0
+Scale: 0.00382068 0.01 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2027,8 +2027,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -1.6 0.0397312 0
-Scale: 0.00279463 0.00479463 1
+Position: -1.6 0.00449127 0
+Scale: 0.00208983 0.00408983 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2073,8 +2073,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.8 0.2 0
-Scale: 0.003 0.008 1
+Position: -0.8 0.13349 0
+Scale: 0.0016698 0.00600469 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2119,8 +2119,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.7 0.269488 0.9
-Scale: 0.00438975 0.01 1
+Position: -0.7 0.283217 0.9
+Scale: 0.00466434 0.01 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2165,8 +2165,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.4 0.0559297 0.9
-Scale: 0.00423719 0.00311859 1
+Position: -0.4 0.0645108 0.9
+Scale: 0.00458043 0.00329022 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2211,7 +2211,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -1.1 0.236859 1
+Position: -1.1 0.254022 1
 Scale: 0.006 0.003 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2257,8 +2257,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.8 0.160684 0.5
-Scale: 0.004 0.00882053 1
+Position: -0.8 0.183641 0.5
+Scale: 0.004 0.00950923 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2303,8 +2303,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.5 0.327351 0.5
-Scale: 0.00282053 0.00282053 1
+Position: -0.5 0.350308 0.5
+Scale: 0.00350923 0.00350923 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
@@ -2349,7 +2349,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.6 0.137729 0.7
+Position: 0.6 0.157407 0.7
 Scale: 0.004 0.01 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2395,7 +2395,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.2 -0.000469893 0.9
+Position: 0.2 -0.0796309 0.9
 Scale: 0.004 0.01 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2441,7 +2441,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 1 0.0664056 0.7
+Position: 1 0.0224273 0.7
 Scale: 0.003 0.001 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2487,7 +2487,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.5 0.349413 0.6
+Position: 0.5 0.371004 0.6
 Scale: 0.005 0.002 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2533,7 +2533,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.9 0.167378 0.6
+Position: 0.9 0.15895 0.6
 Scale: 0.006 0.006 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2579,7 +2579,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.273171 0.7
+Position: 0 0.261934 0.7
 Scale: 0.01 0.007 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2625,7 +2625,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.196296 1.4
+Position: 0 0.129222 1.4
 Scale: 0.004 0.004 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2671,7 +2671,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.4 0.123171 0.6
+Position: -0.4 0.111934 0.6
 Scale: 0.007 0.007 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2717,7 +2717,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.2 0.35787 0.6
+Position: -0.2 0.348989 0.6
 Scale: 0.004 0.01 1
 Rotation: 0 0 0
 IsLoop: false
@@ -2763,7 +2763,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0.498351 0.7
+Position: 0 0.449326 0.7
 Scale: 0.003 0.004 1
 Rotation: 0 0 0
 IsLoop: false

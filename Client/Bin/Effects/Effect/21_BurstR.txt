@@ -1,8 +1,8 @@
 [Layer]
 LayerName: 21_BurstR
-Duration: 3
+Duration: 4
 TickPerSecond: 4
-KeyFramesCount: 179
+KeyFramesCount: 239
 NumEffec: 9
 Position: 0 0 0
 Scale: 1 1 1

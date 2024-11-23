@@ -1,0 +1,233 @@
+[Layer]
+LayerName: FZ_BurstJ-02
+Duration: 5
+TickPerSecond: 3
+KeyFramesCount: 299
+NumEffec: 6
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: FZ_BurstJ-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.2 0 0
+Scale: 0.0249995 0.0399954 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 0 255 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 0.0249996 0.0399955 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0.2 0 0
+Scale: 0.0249987 0.06 1
+Rotation: 0 0 90
+CurTime: 0.45
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstJ-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.2 0 0
+Scale: 0.0299946 0.0399999 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 97.1026 39.6854 0 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 0.0299947 0.04 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0.2 0 0
+Scale: 0.0299942 0.06 1
+Rotation: 0 0 90
+CurTime: 0.45
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstJ-02_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.188 0 0
+Scale: 0.029992 0.039992 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 255 255 0.895365
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.188 0 0
+Scale: 0.0299932 0.0399932 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0.188 0 0
+Scale: 0.0299928 0.06 1
+Rotation: 0 0 90
+CurTime: 0.45
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstJ-02_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.00899971 0.04 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 17.7318 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.00899971 0.04 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0 0 0
+Scale: 0.03 0.099996 1
+Rotation: 0 0 90
+CurTime: 0.45
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstJ-02_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.00199997 0.0399995 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 78.5265 0 189.983 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.00199997 0.0399995 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0 0 0
+Scale: 0.02 0.089998 1
+Rotation: 0 0 90
+CurTime: 0.45
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstJ-02_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.000999985 0.0399995 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.000999985 0.0399995 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0 0 0
+Scale: 0.00999991 0.08 1
+Rotation: 0 0 90
+CurTime: 0.45
+Duration: 1
+IsNotPlaying: false
+

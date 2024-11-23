@@ -19,7 +19,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0 0
-Scale: 0.498827 0.25 0.997655
+Scale: 0.698965 0.35 0.997951
 Rotation: 0 180 0
 IsLoop: false
 Color: 141.01 70.0828 73.4603 30
@@ -31,7 +31,7 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 0 0
-Scale: 0.499979 0.25 0.999958
+Scale: 0.69987 0.35 0.999158
 Rotation: 0 180 0
 CurTime: 0
 Duration: 1

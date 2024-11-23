@@ -5,7 +5,7 @@ TickPerSecond: 3
 KeyFramesCount: 239
 NumEffec: 25
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.5 0.5 0.5
 Rotation: 0 0 0
 IsFollowing: false
 

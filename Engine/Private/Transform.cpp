@@ -177,7 +177,7 @@ void CTransform::LookAtY(_fvector vAt)
 
 void CTransform::Rotate(_float3 ChangeRotation)
 {
-	m_fCurrentRotation = ChangeRotation;
+		m_fCurrentRotation = ChangeRotation;
 
 	_float AxisX_Radians = XMConvertToRadians(m_fCurrentRotation.x);
 	_float AxisY_Radians = XMConvertToRadians(m_fCurrentRotation.y);
