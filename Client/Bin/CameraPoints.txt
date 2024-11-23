@@ -2019,7 +2019,103 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Frieza_Entry_Anim_1_Flip
-PointCount: 0
+PointCount: 12
+
+[CameraPoint]
+Position: -0.517787 0.323966 -0.110154
+Rotation: 0.281142 0.464782 -0.158481 0.824512
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.517787 0.323966 -0.110154
+Rotation: 0.281142 0.464782 -0.158481 0.824512
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.517787 0.323966 -0.110154
+Rotation: 0.281142 0.464782 -0.158481 0.824512
+Duration: 0.01
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.90688 0.633196 -0.355748
+Rotation: 0.0261579 -0.638018 0.0216946 0.769271
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.10999 0.762028 -0.728892
+Rotation: 0.0144047 -0.525701 0.00890347 0.850501
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.467365 0.879328 -0.878651
+Rotation: -0.0251596 0.286702 0.00753206 0.95766
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.21547 1.17567 -0.35984
+Rotation: 0.00614734 0.609141 -0.00472209 0.793024
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.21547 1.17567 -0.35984
+Rotation: 0.00614734 0.609141 -0.00472209 0.793024
+Duration: 0.0999999
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.55165 1.11256 -0.132083
+Rotation: 0.0122795 0.671366 -0.0111266 0.740941
+Duration: 0.0999999
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.644358 1.08105 -0.0162284
+Rotation: -0.00776863 0.702783 0.0076752 0.711321
+Duration: 0.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.644358 1.08105 -0.0162284
+Rotation: -0.00776863 0.702783 0.0076752 0.711321
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -1.35864 0.27573 -0.0342434
+Rotation: -0.195826 0.682202 0.197569 0.67618
+Duration: 1.8
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Skill]
 SkillName: Camera_Goku_vs_Frieza_Entry

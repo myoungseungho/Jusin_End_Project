@@ -4409,53 +4409,53 @@ _bool CCharacter::Play_FirstOpening()
 	m_bInvisible = false;
 
 
-	////캐릭터마다 카메라 분기처리
-	//CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	//switch (m_eCharacterIndex)
-	//{
-	//case Client::PLAY_GOKU:
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 0, this);
-	//	}
-	//	else if (m_iPlayerTeam == 2)
-	//	{
-	//		//Flip버전
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 1, this, nullptr, true);
-	//	}
-	//	break;
-	//case Client::PLAY_FRN:
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_FRIEZA_ENTRY, 0, this);
-	//	}
-	//	else if (m_iPlayerTeam == 2)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_FRIEZA_ENTRY, 1, this, nullptr, true);
-	//	}
-	//	break;
-	//case Client::PLAY_21:
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENTRY, 0, this);
+	//캐릭터마다 카메라 분기처리
+	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	switch (m_eCharacterIndex)
+	{
+	case Client::PLAY_GOKU:
+		if (m_iPlayerTeam == 1)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 0, this);
+		}
+		else if (m_iPlayerTeam == 2)
+		{
+			//Flip버전
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 1, this, nullptr, true);
+		}
+		break;
+	case Client::PLAY_FRN:
+		if (m_iPlayerTeam == 1)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_FRIEZA_ENTRY, 0, this);
+		}
+		else if (m_iPlayerTeam == 2)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_FRIEZA_ENTRY, 1, this, nullptr, true);
+		}
+		break;
+	case Client::PLAY_21:
+		if (m_iPlayerTeam == 1)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENTRY, 0, this);
 
-	//	}
-	//	else if (m_iPlayerTeam == 2)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENTRY, 1, this, nullptr, true);
-	//	}
-	//	break;
-	//case Client::PLAY_HIT:
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_ENTRY, 0, this);
-	//	}
-	//	else if (m_iPlayerTeam == 2)
-	//	{
-	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_ENTRY, 1, this, nullptr, true);
-	//	}
-	//	break;
-	//}
+		}
+		else if (m_iPlayerTeam == 2)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENTRY, 1, this, nullptr, true);
+		}
+		break;
+	case Client::PLAY_HIT:
+		if (m_iPlayerTeam == 1)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_ENTRY, 0, this);
+		}
+		else if (m_iPlayerTeam == 2)
+		{
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_ENTRY, 1, this, nullptr, true);
+		}
+		break;
+	}
 
 
 	return true;
