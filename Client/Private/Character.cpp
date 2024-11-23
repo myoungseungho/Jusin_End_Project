@@ -4427,31 +4427,32 @@ _bool CCharacter::Play_FirstOpening()
 	//case Client::PLAY_FRN:
 	//	if (m_iPlayerTeam == 1)
 	//	{
-
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_FRIEZA_ENTRY, 0, this);
 	//	}
 	//	else if (m_iPlayerTeam == 2)
 	//	{
-
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_FRIEZA_ENTRY, 1, this, nullptr, true);
 	//	}
 	//	break;
 	//case Client::PLAY_21:
 	//	if (m_iPlayerTeam == 1)
 	//	{
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENTRY, 0, this);
 
 	//	}
 	//	else if (m_iPlayerTeam == 2)
 	//	{
-
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ENTRY, 1, this, nullptr, true);
 	//	}
 	//	break;
 	//case Client::PLAY_HIT:
 	//	if (m_iPlayerTeam == 1)
 	//	{
-
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_ENTRY, 0, this);
 	//	}
 	//	else if (m_iPlayerTeam == 2)
 	//	{
-
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_ENTRY, 1, this, nullptr, true);
 	//	}
 	//	break;
 	//}
