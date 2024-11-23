@@ -160,6 +160,15 @@ public:
 		Common_Grab_Start_SFX,
 		Common_Grab_Rush_SFX,
 		Common_Grab_End_SFX,
+		Goku_Entry,
+		Goku_Entry_SFX,
+		Entry_21,
+		Entry_21_SFX_0,
+		Entry_21_SFX_1,
+		Hit_Entry_SFX,
+		Frieza_Entry,
+		Frieza_Entry_0_SFX,
+		Frieza_Entry_1_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

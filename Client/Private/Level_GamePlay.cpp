@@ -449,6 +449,11 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_1.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//필살기_2
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+
+	//입장씬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Entry, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region SFX
@@ -492,6 +497,10 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	// 밑 + 앞 + 약공격
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Down_Forward_Light_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Down_Forward_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false, false);
+
+
+	//입장씬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/ARC_BTL_GKS_Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Entry_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
@@ -548,6 +557,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//공중추적 (소코네)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Air_Chase.ogg", CSound_Manager::SOUND_KEY_NAME::Air_Chase_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	//입장
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Entry_0.ogg", CSound_Manager::SOUND_KEY_NAME::Entry_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 #pragma endregion
 
 #pragma region 21_SFX
@@ -582,6 +593,12 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//3필 Finish
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Finish.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Finish_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장1
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/ARC_BTL_TON_Entry_1.ogg", CSound_Manager::SOUND_KEY_NAME::Entry_21_SFX_0, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장2
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/ARC_BTL_TON_Entry_2.ogg", CSound_Manager::SOUND_KEY_NAME::Entry_21_SFX_1, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
 #pragma endregion
@@ -680,6 +697,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//아이스 깨질 때
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ice_Hit_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ice_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//입장
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/ARC_BTL_HTN_Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Entry_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
 #pragma endregion
 
 
@@ -746,6 +766,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	// 낙법 반사 (오레~)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Reflect.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	//입장
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Entry, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region Frieza_SFX
@@ -792,6 +815,12 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//낙법 반사
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Reflect_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장1
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/ARC_BTL_FRN_Entry1.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Entry_0_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장2
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/ARC_BTL_FRN_Entry2.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Entry_1_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
