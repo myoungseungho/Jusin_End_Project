@@ -622,7 +622,7 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 0.581437 1.5 -5
+Position: 0.581437 1.5 -8.61692
 Rotation: -0 0 -0 1
 Duration: 0.1
 InterpolationType: 0
@@ -682,7 +682,7 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 0.351989 1.5 -5
+Position: 0.351989 1.5 -8.61692
 Rotation: 0 0 0 1
 Duration: 0.1
 InterpolationType: 0
@@ -1631,5 +1631,40 @@ HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Common_Appear_Anim_1_Flip
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Goku_Entry
+
+[Animation]
+AnimationName: Goku_Entry
+PointCount: 0
+
+[Skill]
+SkillName: Camera_21_Entry
+
+[Animation]
+AnimationName: 21_Entry
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Hit_Entry
+
+[Animation]
+AnimationName: Hit_Entry
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Frieza_Entry
+
+[Animation]
+AnimationName: Frieza_Entry
+PointCount: 0
+
+[Skill]
+SkillName: Camera_Goku_vs_Frieza_Entry
+
+[Animation]
+AnimationName: Goku_VS_Frieza_Entry
 PointCount: 0
 

@@ -144,6 +144,21 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_COMMON_APPEAR:
 			name = "Camera_Common_Appear";
 			break;
+		case VIRTUAL_CAMERA_GOKU_ENTRY:
+			name = "Camera_Goku_Entry";
+			break;
+		case VIRTUAL_CAMERA_21_ENTRY:
+			name = "Camera_21_Entry";
+			break;
+		case VIRTUAL_CAMERA_HIT_ENTRY:
+			name = "Camera_Hit_Entry";
+			break;
+		case VIRTUAL_CAMERA_FRIEZA_ENTRY:
+			name = "Camera_Frieza_Entry";
+			break;
+		case VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY:
+			name = "Camera_Goku_vs_Frieza_Entry";
+			break;
 		}
 
 		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera"), &name);
@@ -237,6 +252,11 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Frieza_Down_Forward_J"] = VIRTUAL_CAMERA_FRIEZA_DOWN_FORWARD_J;
 	stringToSkillID["Camera_Frieza_Fall_Reflect"] = VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT;
 	stringToSkillID["Camera_Common_Appear"] = VIRTUAL_CAMERA_COMMON_APPEAR;
+	stringToSkillID["Camera_Goku_Entry"] = VIRTUAL_CAMERA_GOKU_ENTRY;
+	stringToSkillID["Camera_21_Entry"] = VIRTUAL_CAMERA_21_ENTRY;
+	stringToSkillID["Camera_Hit_Entry"] = VIRTUAL_CAMERA_HIT_ENTRY;
+	stringToSkillID["Camera_Frieza_Entry"] = VIRTUAL_CAMERA_FRIEZA_ENTRY;
+	stringToSkillID["Camera_Goku_vs_Frieza_Entry"] = VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY;
 
 
 	stringToAnimID["Frieza_Light_Final_Anim1"] = 0;
@@ -256,6 +276,11 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Fall_Reflect"] = 0;
 	stringToAnimID["Common_Appear_Anim_1"] = 0;
 	stringToAnimID["Common_Appear_Anim_1_Flip"] = 1;
+	stringToAnimID["Goku_Entry"] = 0;
+	stringToAnimID["21_Entry"] = 0;
+	stringToAnimID["Hit_Entry"] = 0;
+	stringToAnimID["Frieza_Entry"] = 0;
+	stringToAnimID["Goku_VS_Frieza_Entry"] = 0;
 
 #pragma endregion
 
@@ -508,6 +533,16 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_FRIEZA_FALL_REFLECT;
 		else if (skillID == 9)
 			index = VIRTUAL_CAMERA_COMMON_APPEAR;
+		else if (skillID == 10)
+			index = VIRTUAL_CAMERA_GOKU_ENTRY;
+		else if (skillID == 11)
+			index = VIRTUAL_CAMERA_21_ENTRY;
+		else if (skillID == 12)
+			index = VIRTUAL_CAMERA_HIT_ENTRY;
+		else if (skillID == 13)
+			index = VIRTUAL_CAMERA_FRIEZA_ENTRY;
+		else if (skillID == 14)
+			index = VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY;
 	}
 
 	return index;
