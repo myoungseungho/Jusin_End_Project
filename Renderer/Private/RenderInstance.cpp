@@ -24,9 +24,9 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
-	m_pLobbyRenderer = CLobby_Renderer::Create(*ppDevice, *ppContext);
+	/*m_pLobbyRenderer = CLobby_Renderer::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pLobbyRenderer)
-		return E_FAIL;
+		return E_FAIL;*/
 
 	m_pPicking = CPicking::Create(*ppDevice, *ppContext, hWnd);
 	if (nullptr == m_pPicking)
@@ -40,8 +40,8 @@ HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
-	if (FAILED(m_pLobbyRenderer->Draw(fTimeDelta)))
-		return E_FAIL;
+	//if (FAILED(m_pLobbyRenderer->Draw(fTimeDelta)))
+	//	return E_FAIL;
 
 	if (FAILED(m_pRenderer->Draw(fTimeDelta)))
 		return E_FAIL;

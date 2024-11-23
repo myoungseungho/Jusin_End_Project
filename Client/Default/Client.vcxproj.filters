@@ -565,6 +565,9 @@
     <ClCompile Include="..\private\Lobby_DisplayBoard.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_DisplayBoard</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Lobby_Cloud.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Cloud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1205,6 +1208,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_DisplayBoard">
       <UniqueIdentifier>{658be6e8-64f0-430c-b0da-8968bf14cd69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Cloud">
+      <UniqueIdentifier>{bb6e008d-8d36-441b-bb50-5f45b1acbfc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1933,6 +1939,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Lobby_DisplayBoard.h">
       <Filter>02.GameObjects\Lobby\Lobby_DisplayBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Cloud.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Cloud</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -66,6 +66,9 @@ HRESULT CUI_Input_Action::Initialize(void* pArg)
 		break;
 	}
 
+	if(pUI_Desc->eLRPos == RIGHT)
+		m_fPosX += m_vPrevWinSize.x * 0.5f;
+
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 
 	return S_OK;

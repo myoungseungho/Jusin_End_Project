@@ -45,7 +45,7 @@ void CLobby_Story_Mode_Building::Update(_float fTimeDelta)
 
 void CLobby_Story_Mode_Building::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_Story_Mode_Building::Render(_float fTimeDelta)

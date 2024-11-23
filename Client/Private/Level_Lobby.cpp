@@ -7,7 +7,9 @@
 #include "UI_Manager.h"
 
 #include "GameObject.h"
+
 #include "Lobby_DisplayBoard.h"
+#include "Lobby_Cloud.h"
 
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -84,6 +86,16 @@ HRESULT CLevel_Lobby::Initialize()
 	//로비 하늘바다
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"), TEXT("Layer_Lobby_Sky_Of_Sea"))))
 		return E_FAIL;
+
+	//로비 구름
+
+	//CLobby_Cloud::CLOUD_DESC tCloudDesc = {};
+	//for (size_t i = 0; i < 5; ++i)
+	//{
+	//	tCloudDesc.iNumObject = i;
+	//	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Cloud"), TEXT("Layer_Lobby_Cloud"))))
+	//		return E_FAIL;
+	//}
 
 	//로비 카메라
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))

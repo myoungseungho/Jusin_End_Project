@@ -71,7 +71,7 @@ void CLobby_DisplayBoard::Update(_float fTimeDelta)
 
 void CLobby_DisplayBoard::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_DisplayBoard::Render(_float fTimeDelta)

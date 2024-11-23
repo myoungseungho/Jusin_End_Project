@@ -48,7 +48,6 @@ void CUI_Input_DirPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	
 	_uint iNum = CreateList();
 
 	if (iNum >= 1)
@@ -57,9 +56,7 @@ void CUI_Input_DirPanel::Update(_float fTimeDelta)
 		UI_Desc.iNumUI = iNum;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputIconPanel"), TEXT("Layer_DirInput"), &UI_Desc);
-	}
-
-	
+	}	
 }
 
 void CUI_Input_DirPanel::Late_Update(_float fTimeDelta)

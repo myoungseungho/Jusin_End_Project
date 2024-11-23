@@ -42,8 +42,7 @@ HRESULT CLobby_Goku::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	//m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, -37.1f));
-	m_pTransformCom->Set_State_Position(_float3(0.f, 3.f, 0.f));
+	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, -37.1f));
 
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(1, true, 0.1f);
@@ -142,7 +141,7 @@ void CLobby_Goku::Update(_float fTimeDelta)
 
 void CLobby_Goku::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 	//m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_SHADOWOBJ, this);
 }
 

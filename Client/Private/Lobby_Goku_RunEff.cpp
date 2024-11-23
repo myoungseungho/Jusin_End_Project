@@ -64,7 +64,7 @@ void CLobby_Goku_RunEff::Update(_float fTimeDelta)
 void CLobby_Goku_RunEff::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
-	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONLIGHT, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CLobby_Goku_RunEff::Render(_float fTimeDelta)

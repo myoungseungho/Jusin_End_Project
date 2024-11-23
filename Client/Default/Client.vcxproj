@@ -196,6 +196,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\Loading_GodDragon.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\public\Lobby_Cloud.h" />
     <ClInclude Include="..\public\Lobby_DisplayBoard.h" />
     <ClInclude Include="..\Public\ParryingRangedObject.h" />
     <ClInclude Include="..\public\Lobby_Frieza.h" />
@@ -430,6 +431,7 @@
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\private\Loading_GodDragon.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\private\Lobby_Cloud.cpp" />
     <ClCompile Include="..\private\Lobby_DisplayBoard.cpp" />
     <ClCompile Include="..\Private\ParryingRangedObject.cpp" />
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />

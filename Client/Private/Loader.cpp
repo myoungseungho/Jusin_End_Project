@@ -183,6 +183,7 @@
 #include "Lobby_Sky_Of_Sea.h"
 #include "Lobby_Goku_RunEff.h"
 #include "Lobby_DisplayBoard.h"
+#include "Lobby_Cloud.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
@@ -412,6 +413,28 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	PreTransformMatrix = XMMatrixScaling(0.05f, 0.05f, 0.05f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud0"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_0.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_1.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud2"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_2.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud3"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_3.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud4"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_4.bin", PreTransformMatrix))))
+		return E_FAIL;
+	
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
@@ -536,6 +559,10 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_DisplayBoard"),
 		CLobby_DisplayBoard::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Cloud"),
+		CLobby_Cloud::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
