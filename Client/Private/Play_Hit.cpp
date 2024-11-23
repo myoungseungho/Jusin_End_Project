@@ -746,6 +746,11 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	{
 		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_iPlayerTeam);
 	}
+
+
+	//테스트용임. 
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+		Play_FirstOpening();
 }
 
 void CPlay_Hit::Camera_Update(_float fTimeDelta)
