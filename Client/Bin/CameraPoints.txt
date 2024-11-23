@@ -1745,7 +1745,87 @@ SkillName: Camera_21_Entry
 
 [Animation]
 AnimationName: 21_Entry_Anim_1
-PointCount: 0
+PointCount: 10
+
+[CameraPoint]
+Position: 2.12284 0.682928 -2.56254
+Rotation: -0.0776581 -0.331519 -0.0273928 0.939848
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 2.12284 0.682928 -2.56254
+Rotation: -0.0776581 -0.331519 -0.0273928 0.939848
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.63844 0.682928 -2.88736
+Rotation: -0.0984962 -0.255022 -0.0261231 0.961551
+Duration: 0.0999999
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.121856 1.65136 -0.462325
+Rotation: 0.0559604 0.109642 -0.00618271 0.992375
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.121856 1.65136 -0.462325
+Rotation: 0.0559604 0.109642 -0.00618271 0.992375
+Duration: 1.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.14887 1.40353 -0.326803
+Rotation: 0.0397143 -0.493978 0.0225943 0.868273
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 1.14887 1.40353 -0.326803
+Rotation: 0.0397143 -0.493978 0.0225943 0.868273
+Duration: 0.4
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 4.83068 0.720403 -2.80983
+Rotation: -0.0356302 -0.482672 -0.0196577 0.874855
+Duration: 1.5
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 4.83068 0.720403 -2.80983
+Rotation: -0.0356302 -0.482672 -0.0196577 0.874855
+Duration: 0.2
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.580448 1.46435 -0.604877
+Rotation: -0.05687 -0.332134 -0.0200662 0.941302
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: 21_Entry_Anim_1_Flip

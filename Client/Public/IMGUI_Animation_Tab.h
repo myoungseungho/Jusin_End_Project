@@ -103,7 +103,7 @@ private:
     CModel*         m_pSelectedModelCom = { nullptr };
     CGameObject*    m_pSelectedObject = { nullptr };
 
-    _char buffer[128] = "../Bin/ModelData/Goku_Select.bin";
+    _char buffer[128] = "../Bin/ModelData/21_Select.bin";
     _bool m_bMotionPlaying = false;
     _bool m_bCurrentPositionSlide = false;
 

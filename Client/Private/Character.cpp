@@ -278,7 +278,7 @@ HRESULT CCharacter::Initialize(void* pArg)
 }
 
 void CCharacter::Player_Update(_float fTimeDelta)
-{	
+{
 	m_tCharacterDesc.bStun = m_bRedHp;
 
 	m_tCharacterDesc.bAttBuf = m_bAttBuf;
@@ -4409,51 +4409,52 @@ _bool CCharacter::Play_FirstOpening()
 	m_bInvisible = false;
 
 
-	//캐릭터마다 카메라 분기처리
-	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	switch (m_eCharacterIndex)
-	{
-	case Client::PLAY_GOKU:
-		if (m_iPlayerTeam == 1)
-		{
-			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 0, this);
-		}
-		else if (m_iPlayerTeam == 2)
-		{
+	////캐릭터마다 카메라 분기처리
+	//CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	//switch (m_eCharacterIndex)
+	//{
+	//case Client::PLAY_GOKU:
+	//	if (m_iPlayerTeam == 1)
+	//	{
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 0, this);
+	//	}
+	//	else if (m_iPlayerTeam == 2)
+	//	{
+	//		//Flip버전
+	//		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_ENTRY, 1, this, nullptr, true);
+	//	}
+	//	break;
+	//case Client::PLAY_FRN:
+	//	if (m_iPlayerTeam == 1)
+	//	{
 
-		}
-		break;
-	case Client::PLAY_FRN:
-		if (m_iPlayerTeam == 1)
-		{
+	//	}
+	//	else if (m_iPlayerTeam == 2)
+	//	{
 
-		}
-		else if (m_iPlayerTeam == 2)
-		{
+	//	}
+	//	break;
+	//case Client::PLAY_21:
+	//	if (m_iPlayerTeam == 1)
+	//	{
 
-		}
-		break;
-	case Client::PLAY_21:
-		if (m_iPlayerTeam == 1)
-		{
+	//	}
+	//	else if (m_iPlayerTeam == 2)
+	//	{
 
-		}
-		else if (m_iPlayerTeam == 2)
-		{
+	//	}
+	//	break;
+	//case Client::PLAY_HIT:
+	//	if (m_iPlayerTeam == 1)
+	//	{
 
-		}
-		break;
-	case Client::PLAY_HIT:
-		if (m_iPlayerTeam == 1)
-		{
+	//	}
+	//	else if (m_iPlayerTeam == 2)
+	//	{
 
-		}
-		else if (m_iPlayerTeam == 2)
-		{
-
-		}
-		break;
-	}
+	//	}
+	//	break;
+	//}
 
 
 	return true;
