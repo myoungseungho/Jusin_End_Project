@@ -195,23 +195,23 @@ HRESULT CIMGUI_Camera_Tab::Initialize()
 				}
 				else if (skillIdx == 10)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Goku_Entry" };
+					m_SkillAnimations[{model, skillIdx}] = { "Goku_Entry_Anim_1","Goku_Entry_Anim_1_Flip" };
 				}
 				else if (skillIdx == 11)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "21_Entry" };
+					m_SkillAnimations[{model, skillIdx}] = { "21_Entry_Anim_1","21_Entry_Anim_1_Flip" };
 				}
 				else if (skillIdx == 12)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Hit_Entry" };
+					m_SkillAnimations[{model, skillIdx}] = { "Hit_Entry_Anim_1","Hit_Entry_Anim_1_Flip" };
 				}
 				else if (skillIdx == 13)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Entry" };
+					m_SkillAnimations[{model, skillIdx}] = { "Frieza_Entry_Anim_1","Frieza_Entry_Anim_1_Flip" };
 				}
 				else if (skillIdx == 14)
 				{
-					m_SkillAnimations[{model, skillIdx}] = { "Goku_VS_Frieza_Entry" };
+					m_SkillAnimations[{model, skillIdx}] = { "Goku_VS_Frieza_Entry_Anim_1","Goku_VS_Frieza_Entry_Anim_1_Flip" };
 				}
 			}
 		}

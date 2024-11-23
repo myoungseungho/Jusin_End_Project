@@ -276,11 +276,16 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Fall_Reflect"] = 0;
 	stringToAnimID["Common_Appear_Anim_1"] = 0;
 	stringToAnimID["Common_Appear_Anim_1_Flip"] = 1;
-	stringToAnimID["Goku_Entry"] = 0;
-	stringToAnimID["21_Entry"] = 0;
-	stringToAnimID["Hit_Entry"] = 0;
-	stringToAnimID["Frieza_Entry"] = 0;
-	stringToAnimID["Goku_VS_Frieza_Entry"] = 0;
+	stringToAnimID["Goku_Entry_Anim_1"] = 0;
+	stringToAnimID["Goku_Entry_Anim_1_Flip"] = 1;
+	stringToAnimID["21_Entry_Anim_1"] = 0;
+	stringToAnimID["21_Entry_Anim_1_Flip"] = 1;
+	stringToAnimID["Hit_Entry_Anim_1"] = 0;
+	stringToAnimID["Hit_Entry_Anim_1_Flip"] = 1;
+	stringToAnimID["Frieza_Entry_Anim_1"] = 0;
+	stringToAnimID["Frieza_Entry_Anim_1_Flip"] = 1;
+	stringToAnimID["Goku_VS_Frieza_Entry_Anim_1"] = 0;
+	stringToAnimID["Goku_VS_Frieza_Entry_Anim_1_Flip"] = 1;
 
 #pragma endregion
 
