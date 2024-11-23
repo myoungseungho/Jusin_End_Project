@@ -15,6 +15,7 @@ float			g_fLightRange;
 float4			g_vLightDiffuse;
 float4			g_vLightAmbient;
 float4			g_vLightSpecular;
+bool g_isChase;
 float g_fAccBlackTime;
 float g_fLightAccTime;
 float g_fLightLifeTime;
@@ -111,9 +112,8 @@ PS_OUT_LIGHT PS_MAIN_DIRECTIONAL_PLAYER(PS_IN In)
     float shadeStep = 2.0f;
     shadeIntensity = (floor(shadeIntensity * shadeStep) / shadeStep);
     float4 vResultShade = ((g_vLightDiffuse * (vNormalDesc.w ? 1.f : shadeIntensity) * 1.f) + vAmbient);
+    vResultShade = (g_isChase == true ? vResultShade * g_vLightDiffuse : vResultShade);
 
-    
-    
     //vNormalDesc.w 가 마스크용
     //vResultShade = (vNormalDesc.w ? 1.f : vResultShade);
     //vResultShade = (vNormalDesc.w ? g_vLightDiffuse * 2 * vAmbient : vResultShade);
@@ -718,6 +718,19 @@ technique11		DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_WHITEOUT();
+    }
+
+    pass Player_Light_Directional_Chase //11
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_MultiplyBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DIRECTIONAL_PLAYER();
     }
 }
 

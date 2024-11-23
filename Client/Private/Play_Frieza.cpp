@@ -150,7 +150,7 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
 
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.7802f, 1.30980f, 2.f, 1.f), &m_bChase)))
 		return E_FAIL;
 	/*
 	빛 각자 생성해주기

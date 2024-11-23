@@ -26,7 +26,7 @@ public:
 	HRESULT Initialize();
 	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
 	void BGLight_Pop_Front();
-	HRESULT Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc);
+	HRESULT Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor = { 1.f,1.f,1.f,1.f }, _bool* pisChaseLight = { nullptr });
 	HRESULT Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc);
 	HRESULT Render_Lights(LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer, string strName, _float fTimeDelta);
 

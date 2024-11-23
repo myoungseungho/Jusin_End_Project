@@ -210,9 +210,9 @@ HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
 	return m_pLight_Manager->Add_Light(LightDesc);
 }
 
-HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc)
+HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
 {
-	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc);
+	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc, vChaseColor, pisChaseLight);
 }
 
 HRESULT CRenderInstance::Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc)

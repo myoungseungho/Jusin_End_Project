@@ -807,6 +807,13 @@ protected:
 	_short m_iQTE = { -1 };
 	_bool m_bCreateQTE = { false };
 
+
+protected:
+	void Add_ChaseLight();
+	//m_eCharacterIndex;
+	_float4 m_vChaseLight;
+	_bool m_isLightChaseDone;
+
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

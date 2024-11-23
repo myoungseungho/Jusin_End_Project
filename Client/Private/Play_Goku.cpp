@@ -153,7 +153,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
 
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.5f, 1.4f, 1.17647f, 1.f), &m_bChase)))
 		return E_FAIL;
 
 	/*
@@ -452,6 +452,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		{
 			if (m_pGameInstance->Key_Down(DIK_R))
 			{
+				
 				Chase_Ready(fTimeDelta);
 			}
 		}
@@ -795,10 +796,11 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 				
 				if (FAILED(m_pOpeningTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 					return E_FAIL;
-				if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+				if (FAILED(m_pOpeningDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+					return E_FAIL;
+				if (FAILED(m_pOpeningOutLineTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
 					return E_FAIL;
 
-				m_pOpeningOutLineTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0);
 			}
 			else
 			{
@@ -806,8 +808,9 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 					return E_FAIL;
 				/* 오프닝 관련 패스 인덱스 다 던져주기 */
 				//m_pOpeningOutLineTextureCom
-				if (FAILED(m_pOpeningDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+				if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
 					return E_FAIL;
+				
 			}
 		}
 

@@ -77,9 +77,9 @@ void CLight_Manager::BGLight_Pop_Front()
 	m_Lights.pop_front();
 }
 
-HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc)
+HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
 {
-	CLight* pLight = CLight::Create(LightDesc);
+	CLight* pLight = CLight::Create(LightDesc, vChaseColor, pisChaseLight);
 	if (nullptr == pLight)
 		return E_FAIL;
 
