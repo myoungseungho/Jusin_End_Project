@@ -153,7 +153,7 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
-
+	LightDesc.vAuraColor = _float4(1.411f, 2.066f, 192.9f, 12.89f);
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.f, 1.54902f, 2.f, 1.f), &m_bChase)))
 		return E_FAIL;
 	/*

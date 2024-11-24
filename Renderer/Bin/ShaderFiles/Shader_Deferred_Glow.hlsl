@@ -12,9 +12,11 @@ texture2D		g_NormalTexture;
 
 texture2D		g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
 texture2D g_AuraTexture;
+texture2D g_AuraMaskTexture;
 texture2D		g_DepthTexture;
 texture2D g_GlowDescTexture;
 
+float4 g_vAuraColor;
 float g_GlowFactor;
 float4 g_GlowFilterColor;
 float2 g_DownSamplingSize;
@@ -318,13 +320,16 @@ PS_OUT PS_MAIN_RESULT_PLAYER_AURA(PS_IN In)
     float2 vTexcoord = In.vTexcoord * 5.f;
     vTexcoord.y += g_Time;
     vector vAura = g_AuraTexture.Sample(LinearSampler, vTexcoord);
-
+    vector vAuraMask = g_AuraMaskTexture.Sample(LinearSampler, vTexcoord);
+    
     vector vBlur = g_BlurTexture.Sample(DestroySampler, In.vTexcoord);
    /*vector      vEffect = g_EffectTexture.Sample(LinearSampler, In.vTexcoord);*/
     //vAura.rgb = float3(0.1f, 0.3f, 1.f);
+    //vAura = lerp(vAuraMask, vAura, 0.5f);
+    vAura = lerp(vAura, vAuraMask, 0.5f);
     
-    Out.vColor.rgb = saturate(vAura.rgb * saturate(vBlur.r * 200.3f)) * float3(255.f / 255.f, 10.f / 255.f, 0.f / 255.f);
-    Out.vColor.a = saturate(vAura.a * saturate(vBlur.r * 2.3f)) * 0.7f;
+    Out.vColor.rgb = saturate(vAura.rgb * saturate(vBlur.r * 2.3f)) * g_vAuraColor.rgb;
+    Out.vColor.a = saturate(vAura.a * saturate(vBlur.r * 2.3f)) * g_vAuraColor.a;
     //Out.vColor.a = saturate(Out.vColor.a - 0.3f);
     return Out;
 }

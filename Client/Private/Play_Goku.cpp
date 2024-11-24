@@ -152,6 +152,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
+	LightDesc.vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
 
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.5f, 1.4f, 1.17647f, 1.f), &m_bChase)))
 		return E_FAIL;

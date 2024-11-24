@@ -62,7 +62,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (nullptr == m_pUI_GlowShader)
 		return E_FAIL;
 
-	m_pAuraTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_Fractal4.dds"), 1);
+	m_pAuraTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Aura/cmn_Fractal%d.dds"), 6);
 	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 6);
@@ -244,10 +244,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Metallic(fTimeDelta)))
 		return E_FAIL;
 
-	if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
-		return E_FAIL;
 
 	if (FAILED(Render_Player(fTimeDelta)))
+		return E_FAIL;
+	if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
 		return E_FAIL;
 
 	/* 맵을 어둡게 할려고 여기 호출하지만 캐릭터는*/
@@ -731,7 +731,7 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	Render_PlayerAuraMaskBlur(fTimeDelta);
+	Render_PlayerAuraMaskBlur(fTimeDelta, pLightDesc->vAuraColor);
 	
 	return S_OK;
 }
@@ -781,7 +781,7 @@ HRESULT CRenderer::Render_PlayerDeferred(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CRenderer::Render_PlayerAuraMaskBlur(_float fTimeDelta)
+HRESULT CRenderer::Render_PlayerAuraMaskBlur(_float fTimeDelta, _float4 vColor)
 {
 	m_fAuraAccTime += fTimeDelta;
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Down"))))
@@ -896,8 +896,10 @@ HRESULT CRenderer::Render_PlayerAuraMaskBlur(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Blur_Y"))))
 		return E_FAIL;
 
-	m_pAuraTextureCom->Bind_ShaderResource(m_pGlowShader, "g_AuraTexture", 0);
+	m_pAuraTextureCom->Bind_ShaderResource(m_pGlowShader, "g_AuraTexture", 4);
+	m_pAuraTextureCom->Bind_ShaderResource(m_pGlowShader, "g_AuraMaskTexture", 5);
 	m_pGlowShader->Bind_RawValue("g_Time", &m_fAuraAccTime, sizeof(_float));
+	m_pGlowShader->Bind_RawValue("g_vAuraColor", &vColor, sizeof(_float4));
 	
 	m_pGlowShader->Begin(17);
 

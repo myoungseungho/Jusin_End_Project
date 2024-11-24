@@ -90,6 +90,7 @@ private:
 	_uint						m_iNumCount = {};
 	_uint						m_iNumRender = {};
 	_float						m_fTimeAcc = {};
+	_float4	color = {};
 public:
 	virtual void Free() override;
 };

@@ -118,15 +118,20 @@ private: /* For.Distortion Variable */
 	class CTransform*			m_pDistortionTransformCom = { nullptr };
 	class CTexture*				m_pDistortionTextureCom = { nullptr };
 	class CShader*				m_pDistortionShaderCom = { nullptr };
+	class CTexture*				m_pAuraTextureCom = { nullptr };
 
-	class CTexture* m_pAuraTextureCom = { nullptr };
-	_float m_fAuraAccTime = { 0.f };
 	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
+
+	_float m_fAuraAccTime = { 0.f };
 	_float m_fAccTime = { 0.f };
+
 	
 	_bool m_isFriezaRender = { false };
-
 	MAP_TYPE m_eCurMapType = { MAP_SPACE };
+public:
+	void Set_AuraColor(_float4 vColor) { m_fAuraColor = vColor; }
+private:
+	_float4 m_fAuraColor = {};
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -137,7 +142,7 @@ private:
 	HRESULT Render_Player(_float fTimeDelta);
 	HRESULT Render_PlayerLight(_float fTimeDelta, _int iCount);
 	HRESULT Render_PlayerDeferred(_float fTimeDelta);
-	HRESULT Render_PlayerAuraMaskBlur(_float fTimeDelta);
+	HRESULT Render_PlayerAuraMaskBlur(_float fTimeDelta, _float4 vColor);
 	HRESULT Render_PlayerBlur(_float fTimeDelta);
 	HRESULT Render_NonBlend_Test(_float fTimeDelta); // 디버깅용 피킹
 	HRESULT Render_NonBlend_Layer(_float fTimeDelta);// 디버깅용 피킹

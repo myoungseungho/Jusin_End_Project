@@ -78,6 +78,11 @@ void CRenderInstance::Delete_LoopDistortion()
 	m_pRenderer->Delete_LoopDistortion();
 }
 
+void CRenderInstance::Set_AuraColor(_float4 vColor)
+{
+	m_pRenderer->Set_AuraColor(vColor);
+}
+
 void CRenderInstance::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
 {
 	m_pRenderer->Create_HitDistortion(vPlayerPos, vDir, vOffSetPos, vOffSetScale, fLifeTime);
