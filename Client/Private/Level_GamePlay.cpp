@@ -153,7 +153,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 
 
-	//CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
 	return S_OK;
 }
@@ -913,6 +913,22 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma endregion
 
 
+
+#pragma endregion
+
+#pragma region 오공 + 크리링 vs 프리저
+	//프리저 그만해! (야메다 프리저!)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-003.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//고쿠!!		(크리링)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-004.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//프리저 웃음소리 (크크)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-006.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//용서 못해.. 잘도 (우르상..!) -> 손오공이 대사
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-007.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_3, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//나니..? (프리저) 
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-009.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_4, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//오레와 와까다제! (나 화났다 프리저) -> 손오공 대사
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-010.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_5, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 #pragma endregion
 

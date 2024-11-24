@@ -169,6 +169,12 @@ public:
 		Frieza_Entry,
 		Frieza_Entry_0_SFX,
 		Frieza_Entry_1_SFX,
+		Goku_vs_Frieza_0,
+		Goku_vs_Frieza_1,
+		Goku_vs_Frieza_2,
+		Goku_vs_Frieza_3,
+		Goku_vs_Frieza_4,
+		Goku_vs_Frieza_5,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
