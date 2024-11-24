@@ -808,6 +808,11 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_Character_OutLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
+		return E_FAIL;
+
 	/* Prototype_GameObject_CharaSelectBG */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_CharaSelectBG"),
 		CUI_Chara_Select_BG::Create(m_pDevice, m_pContext))))

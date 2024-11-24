@@ -1,17 +1,27 @@
 #pragma once
 
 #include "Client_Defines.h"
+#include "UI_Define.h"
 #include "GameObject.h"
 
 BEGIN(Engine)
+
 class CShader;
 class CModel;
+class CTexture;
+
 END
 
 BEGIN(Client)
 
 class CCharaSelect_Model final : public CGameObject
 {
+public:
+	struct typedef
+	{
+		CUI_Define::PLAYER_ID ePlayerID = {};
+	}SELECT_MODEL;
+
 private:
 	CCharaSelect_Model(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CCharaSelect_Model(const CCharaSelect_Model& Prototype);
@@ -27,6 +37,7 @@ public:
 
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
+	CTexture* m_pLimTexture = { nullptr };
 
 private:
 	HRESULT Ready_Components();

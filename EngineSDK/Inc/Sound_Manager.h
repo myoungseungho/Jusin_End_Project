@@ -160,6 +160,8 @@ public:
 		Common_Grab_Start_SFX,
 		Common_Grab_Rush_SFX,
 		Common_Grab_End_SFX,
+		Common_FIGHT_SFX,
+		Common_FINISH_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

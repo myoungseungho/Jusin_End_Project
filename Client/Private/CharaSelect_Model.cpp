@@ -35,8 +35,7 @@ HRESULT CCharaSelect_Model::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 	
-	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, -1.0f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
+	m_pTransformCom->Set_State_Position(_float3(-2.5f, 0.1f, 6.5f));
 
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(0, true, 0.1f);
@@ -81,7 +80,7 @@ HRESULT CCharaSelect_Model::Render(_float fTimeDelta)
 			return E_FAIL;
 
 
-		if (FAILED(m_pShaderCom->Begin(6)))
+		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -103,6 +102,12 @@ HRESULT CCharaSelect_Model::Ready_Components()
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
+	/* Com_LimTexture */
+	if (FAILED(__super::Add_Component(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine"),
+		TEXT("Com_LimTexture"), reinterpret_cast<CComponent**>(&m_pLimTexture))))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -115,6 +120,9 @@ HRESULT CCharaSelect_Model::Bind_ShaderResources()
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
+		return E_FAIL;
+
+	if (FAILED(m_pLimTexture->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
 		return E_FAIL;
 
 	return S_OK;
@@ -150,6 +158,7 @@ void CCharaSelect_Model::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pLimTexture);
 
 	__super::Free();
 }

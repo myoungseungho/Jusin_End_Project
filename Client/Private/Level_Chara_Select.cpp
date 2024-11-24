@@ -25,8 +25,8 @@ HRESULT CLevel_Chara_Select::Initialize()
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Character(TEXT("Layer_Character"))))
-	//	return E_FAIL;
+	/*if (FAILED(Ready_Character(TEXT("Layer_Character"))))
+		return E_FAIL;*/
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;

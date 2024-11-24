@@ -6,6 +6,7 @@
 #include "RenderInstance.h"
 #include "UI_CharaSelectImage.h"
 #include "UI_SelectLine.h"
+#include "CharaSelect_Model.h"
 
 #include "BattleInterface.h"
 
@@ -160,6 +161,7 @@ void CUI_CharaSelectIcon::InputEvent(_uint iKey, CUI_Define::PLAYER_ID ePlayerID
 
 		CreateChoiceMark(ePlayerID);
 		CharacterCreateDesc(ePlayerID);
+		CreateSelectModel(ePlayerID);
 
 		dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->SelectChoice();
 		CreateSelectLine();
@@ -305,6 +307,14 @@ void CUI_CharaSelectIcon::CreateSelectLine()
 	LineDesc.iNumChoice = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice();
 	
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharacterSelectLine"), TEXT("Layer_BackGround"), &LineDesc);
+}
+
+void CUI_CharaSelectIcon::CreateSelectModel(CUI_Define::PLAYER_ID ePlayerID)
+{
+	CCharaSelect_Model::SELECT_MODEL SelectModelDesc = {};
+	SelectModelDesc.ePlayerID = ePlayerID;
+
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelect_Model"), TEXT("Layer_Character"),&SelectModelDesc);
 }
 
 void CUI_CharaSelectIcon::ArrowToPlayerID(CUI_Define::PLAYER_ID eID)
