@@ -2302,9 +2302,17 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_KRN"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/KRN_AllMesh.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/KRN/KRN_AllMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
-
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/KRN/KRN_base.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/KRN/KRN_decal.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/KRN/KRN_ilm.png")))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))

@@ -10,6 +10,7 @@
 BEGIN(Engine)
 class CShader;
 class CModel;
+class CTexture;
 END
 
 BEGIN(Client)
@@ -95,6 +96,9 @@ public:
 private:
 	
 	_bool m_bAttackCount[COUNT_END] = { true };
+	CTexture* m_pDiffuseTextureCom = { nullptr };
+	CTexture* m_pDecalTextureCom = { nullptr };
+	CTexture* m_pIlmTextureCom = { nullptr };
 
 
 	//_bool m_b214Medium = { 0 };

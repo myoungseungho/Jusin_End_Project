@@ -818,7 +818,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 					return E_FAIL;
 				if (FAILED(m_pOpeningOutLineTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
 					return E_FAIL;
-
+				
 			}
 			else
 			{
