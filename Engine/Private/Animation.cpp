@@ -103,6 +103,22 @@ void CAnimation::Update_FrameIndex(_float* pCurrentAnimPosition, vector<_uint>& 
 	}
 }
 
+CChannel* CAnimation::Find_Channel_ByName2(const char* targetName)
+{
+	auto it = std::find_if(m_Channels.begin(), m_Channels.end(),
+		[targetName](CChannel* channel) {
+			return std::strcmp(channel->Get_Name(), targetName) == 0;
+		});
+
+	if (it != m_Channels.end()) {
+		return *it;
+	}
+	else {
+		return nullptr;
+	}
+
+}
+
 
 
 CAnimation* CAnimation::Create(AnimationData animationData, const vector<class CBone*>& Bones, vector<_uint>& KeyFrameIndices)

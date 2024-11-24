@@ -139,6 +139,7 @@ void CChannel::Update_FrameIndex(_float fCurrentPosition, _uint* pKeyFrameIndex)
 
 }
 
+
 CChannel* CChannel::Create(ChannelData& chanelData, const vector<class CBone*>& Bones)
 {
 	CChannel* pInstance = new CChannel();

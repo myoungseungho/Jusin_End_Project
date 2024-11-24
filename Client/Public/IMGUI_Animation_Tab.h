@@ -102,7 +102,7 @@ private:
    // _bool m_bDrag = false;
     CModel*         m_pSelectedModelCom = { nullptr };
     CGameObject*    m_pSelectedObject = { nullptr };
-
+    CTransform* m_pSelectedObjectTransformCom = { nullptr };
     _char buffer[128] = "../Bin/ModelData/Frieza_Select.bin";
     _bool m_bMotionPlaying = false;
     _bool m_bCurrentPositionSlide = false;

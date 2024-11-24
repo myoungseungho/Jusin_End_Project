@@ -132,6 +132,8 @@ public:
 
 	//애니메이션
 	virtual _bool Character_Play_Animation(_float fTimeDelta);
+	virtual _bool Character_Play_Animation_NoXZ(_float fTimeDelta);
+
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirMove(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
@@ -381,6 +383,14 @@ public:
 	void Set_bFinalSkillQTE(_bool bFinalSkillQTE);
 
 	CHARACTER_INDEX Get_eCharacterIndex();
+
+
+
+	//Model한테도 있음
+	_bool m_bCinematic_NoMoveXZ = { false };
+
+	void Set_AnimationMoveXZ(_bool bValue);
+
 
 protected:
 	void Reset_AttackStep();
@@ -706,6 +716,8 @@ protected:
 	//_bool m_bFinalSkillQTESucces = { false }; //m_iQTE 로 대체됨
 	_bool m_bBenishingAttack = { false };
 	_bool m_bInvisible = { false };
+
+
 
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
