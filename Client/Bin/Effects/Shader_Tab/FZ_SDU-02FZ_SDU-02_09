@@ -1,0 +1,17 @@
+Version: 2
+KeyCount: 1
+KeySize: 46
+Key: Prototype_Component_Texture_Effect_cmn_smoke00
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 527 113
+NodeID: 3001 Position: 0 0
+NodeID: 2 Position: 252 40
+NodeID: 1 Position: 228 59
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 4 2 Speed: 13
+LinkCount: 2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2

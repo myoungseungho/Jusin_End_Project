@@ -1832,7 +1832,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
-		m_pEffect_Manager->Copy_Layer(TEXT("FZ_SAJ-02"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("FZ_WJ"), &tDesc);
 
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
