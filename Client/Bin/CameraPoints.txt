@@ -2370,7 +2370,31 @@ SkillName: Camera_Goku_vs_Frieza_Entry
 
 [Animation]
 AnimationName: Goku_VS_Frieza_Entry_Anim_1
-PointCount: 0
+PointCount: 3
+
+[CameraPoint]
+Position: -9.1032 1.47794 -0.248725
+Rotation: 0.0689713 -0.378042 0.028256 0.922783
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -8.96025 1.49949 -0.28424
+Rotation: 0.0729785 -0.433854 0.0352847 0.897329
+Duration: 0.5
+InterpolationType: 1
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -13.1169 0.337773 -2.12511
+Rotation: -0.0896767 0.585989 0.065468 0.802676
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
 [Animation]
 AnimationName: Goku_VS_Frieza_Entry_Anim_1_Flip
