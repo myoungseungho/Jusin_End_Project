@@ -24,7 +24,7 @@ HRESULT CUI_Input_Action::Initialize_Prototype()
 HRESULT CUI_Input_Action::Initialize(void* pArg)
 {
 
-	m_fSizeX = 30.f, m_fSizeY = 30.f, m_fPosX = 60.f, m_fPosY = 190.f;
+	m_fPosX = 60.f, m_fPosY = 190.f;
 
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -35,7 +35,7 @@ HRESULT CUI_Input_Action::Initialize(void* pArg)
 
 	UI_DESC* pUI_Desc = static_cast<UI_DESC*>(pArg);
 	m_iTextureIndex  = pUI_Desc->iNumUI;
-	
+	m_fSizeX = 30.f, m_fSizeY = 30.f;
 	switch (m_iTextureIndex)
 	{
 	case KEY_LIGHT:
@@ -86,7 +86,12 @@ void CUI_Input_Action::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	ButtonInput eActionInput = m_pUI_Manager->m_eBtnInput;
+	ButtonInput eActionInput = ATTACK_NONE;
+
+	if(m_eLRPos == LEFT)
+		eActionInput = m_pUI_Manager->m_eBtnInput;
+	else if(m_eLRPos == RIGHT)
+		eActionInput = m_pUI_Manager->m_eBtnInput2;
 
 	if (  (eActionInput == ATTACK_GRAB && m_iTextureIndex <= 1 || m_bOnBtn))
 	{

@@ -25,15 +25,15 @@ HRESULT CUI_InputDir::Initialize_Prototype()
 HRESULT CUI_InputDir::Initialize(void* pArg)
 {
 
+	m_fPosX = 150.f;
+	m_fPosY = 550.f;
+
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
-
-	m_fPosX = 150.f;
-	m_fPosY = 550.f;
 
 	m_fSizeX = 2.f;
 	m_fSizeY = 2.f;
@@ -68,7 +68,13 @@ void CUI_InputDir::Update(_float fTimeDelta)
 	if (m_bOnBtn)
 		m_fOnTimer += fTimeDelta;
 
-	DirectionInput eDirInput = m_pUI_Manager->m_eDirInput;
+	DirectionInput eDirInput = MOVEKEY_NEUTRAL;
+	if (m_eLRPos == LEFT)
+		eDirInput = m_pUI_Manager->m_eDirInput;
+	else if (m_eLRPos == RIGHT)
+		eDirInput = m_pUI_Manager->m_eDirInput2;
+
+		m_pUI_Manager->m_eDirInput;
 	
 	if (ePrevDirInput != eDirInput )
 	{
@@ -199,56 +205,116 @@ _vector CUI_InputDir::CreatePostion(_float2 vPrevPos, _float2 vCurrPos)
 
 void CUI_InputDir::MovePos(DirectionInput eInput, _float& fPosX, _float& fPosY)
 {
-	switch (eInput)
+	if (m_eLRPos == LEFT)
 	{
-	case DirectionInput::MOVEKEY_NEUTRAL:
-		fPosX = 150.f;
-		fPosY = 554.f;
-		break;
+		switch (eInput)
+		{
+		case DirectionInput::MOVEKEY_NEUTRAL:
+			fPosX = 150.f;
+			fPosY = 554.f;
+			break;
 
-	case DirectionInput::MOVEKEY_UP:
-		fPosX = 150.f;
-		fPosY = 508.f;
-		break;
+		case DirectionInput::MOVEKEY_UP:
+			fPosX = 150.f;
+			fPosY = 508.f;
+			break;
 
-	case DirectionInput::MOVEKEY_DOWN:
-		fPosX = 150.f;
-		fPosY = 600.f;
-		break;
+		case DirectionInput::MOVEKEY_DOWN:
+			fPosX = 150.f;
+			fPosY = 600.f;
+			break;
 
-	case DirectionInput::MOVEKEY_LEFT:
-		fPosX = 100.f;
-		fPosY = 554.f;
-		break;
+		case DirectionInput::MOVEKEY_LEFT:
+			fPosX = 100.f;
+			fPosY = 554.f;
+			break;
 
-	case DirectionInput::MOVEKEY_RIGHT:
-		fPosX = 200.f;
-		fPosY = 554.f;
-		break;
+		case DirectionInput::MOVEKEY_RIGHT:
+			fPosX = 200.f;
+			fPosY = 554.f;
+			break;
 
-	case DirectionInput::MOVEKEY_UP_LEFT:
-		fPosX = 110.f;
-		fPosY = 514.f;
-		break;
+		case DirectionInput::MOVEKEY_UP_LEFT:
+			fPosX = 110.f;
+			fPosY = 514.f;
+			break;
 
-	case DirectionInput::MOVEKEY_UP_RIGHT:
-		fPosX = 190.f;
-		fPosY = 514.f;
-		break;
+		case DirectionInput::MOVEKEY_UP_RIGHT:
+			fPosX = 190.f;
+			fPosY = 514.f;
+			break;
 
-	case DirectionInput::MOVEKEY_DOWN_LEFT:
-		fPosX = 110.f;
-		fPosY = 594.f;
-		break;
+		case DirectionInput::MOVEKEY_DOWN_LEFT:
+			fPosX = 110.f;
+			fPosY = 594.f;
+			break;
 
-	case DirectionInput::MOVEKEY_DOWN_RIGHT:
-		fPosX = 190.f;
-		fPosY = 594.f;
-		break;
+		case DirectionInput::MOVEKEY_DOWN_RIGHT:
+			fPosX = 190.f;
+			fPosY = 594.f;
+			break;
+		}
+
+		m_fPosX = fPosX;
+		m_fPosY = fPosY;
+
 	}
+	else if (m_eLRPos == RIGHT)
+	{
+		switch (eInput)
+		{
+		case DirectionInput::MOVEKEY_NEUTRAL:
+			fPosX = m_vPrevWinSize.x - 150.f ;
+			fPosY = 554.f;
+			break;
 
-	m_fPosX = fPosX;
-	m_fPosY = fPosY;
+		case DirectionInput::MOVEKEY_UP:
+			fPosX = m_vPrevWinSize.x - 150.f ;
+			fPosY = 508.f;
+			break;
+
+		case DirectionInput::MOVEKEY_DOWN:
+			fPosX = m_vPrevWinSize.x - 150.f ;
+			fPosY = 600.f;
+			break;
+
+		case DirectionInput::MOVEKEY_LEFT:
+			fPosX = m_vPrevWinSize.x - 100.f;
+			fPosY = 554.f;
+			break;
+
+		case DirectionInput::MOVEKEY_RIGHT:
+			fPosX = m_vPrevWinSize.x - 200.f;
+			fPosY = 554.f;
+			break;
+
+		case DirectionInput::MOVEKEY_UP_LEFT:
+			fPosX = m_vPrevWinSize.x - 110.f;
+			fPosY = 514.f;
+			break;
+
+		case DirectionInput::MOVEKEY_UP_RIGHT:
+			fPosX = m_vPrevWinSize.x - 190.f;
+			fPosY = 514.f;
+			break;
+
+		case DirectionInput::MOVEKEY_DOWN_LEFT:
+			fPosX = m_vPrevWinSize.x - 110.f;
+			fPosY = 594.f;
+			break;
+
+		case DirectionInput::MOVEKEY_DOWN_RIGHT:
+			fPosX = m_vPrevWinSize.x - 190.f;
+			fPosY = 594.f;
+			break;
+		}
+
+		m_fPosX = fPosX;
+		m_fPosY = fPosY;
+	}
+	
+
+
 }
 
 void CUI_InputDir::LineEffectCreate()

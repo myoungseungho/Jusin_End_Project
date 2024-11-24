@@ -367,11 +367,14 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"),&KeyInputDesc);
 	}
 
-
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		KeyInputDesc.iNumUI = i;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
+		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+		for (int k = 0; k < 6; k++)
+		{
+			KeyInputDesc.iNumUI = k;
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
+		}
 	}
 
 	CUIObject::UI_DESC FontNameDesc = {};

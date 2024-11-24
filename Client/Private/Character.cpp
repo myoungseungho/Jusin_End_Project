@@ -618,7 +618,7 @@ _bool CCharacter::InputCommand()
 		//
 		// }
 
-		GetUI_Input(DirectionX, DirectionY, iMoveKey, iAttackkey);
+		GetUI_Input(iMoveKey, iAttackkey, 1);
 
 	}
 	else  //2ÆÀ
@@ -714,6 +714,7 @@ _bool CCharacter::InputCommand()
 		//	 iAttackkey = ATTACK_LIGHT;
 		//
 		// }
+		GetUI_Input(iMoveKey, iAttackkey, 2);
 	}
 
 
@@ -5521,11 +5522,42 @@ void CCharacter::Map_DestructiveFinish()
 	
 }
 
-void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
+void CCharacter::GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput, _uint iTeam)
 {
+	if (iTeam == 1)
+	{
 
+		if (m_iLookDirection == -1)
+		{
+			switch (eDirInput)
+			{
+			case Client::MOVEKEY_LEFT:
+				eDirInput = MOVEKEY_RIGHT;
+				break;
+			case Client::MOVEKEY_RIGHT:
+				eDirInput = MOVEKEY_LEFT;
+				break;
+			case Client::MOVEKEY_UP_LEFT:
+				eDirInput = MOVEKEY_UP_RIGHT;
+				break;
+			case Client::MOVEKEY_UP_RIGHT:
+				eDirInput = MOVEKEY_UP_LEFT;
+				break;
+			case Client::MOVEKEY_DOWN_LEFT:
+				eDirInput = MOVEKEY_DOWN_RIGHT;
+				break;
+			case Client::MOVEKEY_DOWN_RIGHT:
+				eDirInput = MOVEKEY_DOWN_LEFT;
+				break;
+			default:
+				break;
+			}
+		}
 
-	if (m_iLookDirection == -1)
+		m_pUI_Manager->m_eDirInput = eDirInput;
+		m_pUI_Manager->m_eBtnInput = eBtnInput;
+	}
+	else if (iTeam == 2)
 	{
 		switch (eDirInput)
 		{
@@ -5550,10 +5582,11 @@ void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput 
 		default:
 			break;
 		}
+		m_pUI_Manager->m_eDirInput2 = eDirInput;
+		m_pUI_Manager->m_eBtnInput2 = eBtnInput;
 	}
 
-	m_pUI_Manager->m_eDirInput = eDirInput;
-	m_pUI_Manager->m_eBtnInput = eBtnInput;
+	
 }
 
 void CCharacter::Notify_QTE_Same_Grab(_int result)
