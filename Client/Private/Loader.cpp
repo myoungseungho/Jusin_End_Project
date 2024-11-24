@@ -149,6 +149,7 @@
 #include "AttackObject_Energy.h"
 #include "AttackObject_Reflect.h"
 #include "ParryingRangedObject.h"
+#include "Opening_Kririn.h"
 
 #include "BoneEffectObject.h"
 #include "QTE_Same_Grab_UI_Icon.h"
@@ -2286,6 +2287,10 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_KRN"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/KRN_AllMesh.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
@@ -3232,6 +3237,11 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Goku"),
 		CPlay_Goku::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Opening_Kririn"),
+		COpening_Kririn::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_21"),
 		CPlay_21::Create(m_pDevice, m_pContext))))

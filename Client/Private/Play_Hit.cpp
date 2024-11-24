@@ -1046,7 +1046,7 @@ HRESULT CPlay_Hit::Ready_Components()
 
 
 
-	/* Com_Model */
+	/* Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HITOutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
 
