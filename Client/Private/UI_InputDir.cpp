@@ -74,8 +74,6 @@ void CUI_InputDir::Update(_float fTimeDelta)
 	else if (m_eLRPos == RIGHT)
 		eDirInput = m_pUI_Manager->m_eDirInput2;
 
-		m_pUI_Manager->m_eDirInput;
-	
 	if (ePrevDirInput != eDirInput )
 	{
 		 ePrevDirInput = eDirInput;
@@ -85,17 +83,33 @@ void CUI_InputDir::Update(_float fTimeDelta)
 	MovePos(eDirInput, m_fPosX, m_fPosY);
 	LineEffectCreate();
 	
-
-	if (m_pUI_Manager->m_eBtnInput != ATTACK_NONE)
+	if (m_eLRPos == LEFT)
 	{
-		m_bOnBtn = TRUE;
-		m_iTextureIndex = m_pUI_Manager->m_eBtnInput - 1;
+		if (m_pUI_Manager->m_eBtnInput != ATTACK_NONE)
+		{
+			m_bOnBtn = TRUE;
+			m_iTextureIndex = m_pUI_Manager->m_eBtnInput - 1;
 
-		m_fOffsetScaled = 1.25f;
+			m_fOffsetScaled = 1.25f;
+		}
+
+		if (m_pUI_Manager->m_eBtnInput == ATTACK_GRAB)
+			m_iTextureIndex = 1;
+	}
+	else if (m_eLRPos == RIGHT)
+	{
+		if (m_pUI_Manager->m_eBtnInput2 != ATTACK_NONE)
+		{
+			m_bOnBtn = TRUE;
+			m_iTextureIndex = m_pUI_Manager->m_eBtnInput2 - 1;
+
+			m_fOffsetScaled = 1.25f;
+		}
+
+		if (m_pUI_Manager->m_eBtnInput2 == ATTACK_GRAB)
+			m_iTextureIndex = 1;
 	}
 
-	if (m_pUI_Manager->m_eBtnInput == ATTACK_GRAB)
-		m_iTextureIndex = 1;
 
 	if (m_fOnTimer >= 0.1f)
 	{

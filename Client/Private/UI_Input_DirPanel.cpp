@@ -48,17 +48,28 @@ void CUI_Input_DirPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	if (m_eLRPos == LEFT)
+	_uint iNum = 0;
+	_uint iNum2= 0;
+
+	if(m_eLRPos == LEFT)
+		iNum = CreateList(m_eLRPos);
+	else if (m_eLRPos == RIGHT)
+		iNum2 = CreateList2(m_eLRPos);
+
+	if (iNum >= 1 && m_eLRPos == LEFT)
 	{
-		_uint iNum = CreateList();
+		UI_DESC UI_Desc = {};
+		UI_Desc.iNumUI = iNum;
+		UI_Desc.eLRPos = m_eLRPos;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputIconPanel"), TEXT("Layer_DirInput"), &UI_Desc);
+	}
 
-		if (iNum >= 1)
-		{
-			UI_DESC UI_Desc = {};
-			UI_Desc.iNumUI = iNum;
-
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputIconPanel"), TEXT("Layer_DirInput"), &UI_Desc);
-		}
+	if (iNum2 >= 1 && m_eLRPos == RIGHT)
+	{
+		UI_DESC UI_Desc = {};
+		UI_Desc.iNumUI = iNum2;
+		UI_Desc.eLRPos = m_eLRPos;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputIconPanel"), TEXT("Layer_DirInput"), &UI_Desc);
 	}
 }
 
