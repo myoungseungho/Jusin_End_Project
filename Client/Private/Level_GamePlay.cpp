@@ -16,7 +16,7 @@
 #include "Character.h"
 #include "Sound_Manager.h"
 #include "BattleInterface.h"
-
+#include "Opening_Kririn.h"
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -145,7 +145,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	CCharacter::Character_DESC Opening_CharacterDesc{};
 	Opening_CharacterDesc.iTeam = 1;
 	Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
-	
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
 		return E_FAIL;
 
@@ -217,6 +217,21 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pQTE_Manager->Update(fTimeDelta);
 	m_pQTE_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
+
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+	{
+		/*{
+			CCharacter::Character_DESC Opening_CharacterDesc{};
+			Opening_CharacterDesc.iTeam = 1;
+			Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc);
+		}*/
+
+		static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
+
+		CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+	}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -726,7 +741,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_2_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_3.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_3_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
-	
+
 	//약공 3개, 중공도 포함
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_0_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_1_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);

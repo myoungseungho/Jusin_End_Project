@@ -717,7 +717,7 @@ void CBattleInterface_Manager::Character_Opening_AIO()
 {
 
 	//오공 vs 프리저 면 다른 모션으로 시작
-	if (m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_GOKU || m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_FRN)
+	if (m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_GOKU && m_p2TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_FRN)
 	{
 		m_p1TeamCharacter[0]->Set_Animation(86); //오공 시네마틱 오프닝
 		m_p2TeamCharacter[0]->Set_Animation(86); //프리저 시네마틱 오프닝
@@ -737,11 +737,16 @@ void CBattleInterface_Manager::Character_Opening_AIO()
 
 		m_bCinematicOpening = true;
 
-        m_p1TeamCharacter[0]->Set_AnimationMoveXZ(true);
-        m_p2TeamCharacter[0]->Set_AnimationMoveXZ(true);
+		m_p1TeamCharacter[0]->Set_AnimationMoveXZ(true);
+		m_p2TeamCharacter[0]->Set_AnimationMoveXZ(true);
 
+		static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_bInivisible(false);
 
-        static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_bInivisible(false);
+		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);
+	}
+	else
+	{
 
 		m_p1TeamCharacter[0]->Play_FirstOpening();
 		m_p2TeamCharacter[0]->Set_bInivisible(true);

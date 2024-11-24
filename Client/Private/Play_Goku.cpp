@@ -737,14 +737,6 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	{
 		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(50, m_iPlayerTeam);
 	}
-
-
-
-
-
-
-
-
 }
 
 void CPlay_Goku::Camera_Update(_float fTimeDelta)
