@@ -815,6 +815,50 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 	return bAnimationEnd;
 }
 
+_bool CCharacter::Character_Play_Animation_NoXZ(_float fTimeDelta)
+{
+	_bool bAnimationEnd = false;
+
+	_float fPrePosition = m_pModelCom->m_fCurrentAnimPosition;
+
+	//_int iOneFrameTeest = 0;
+
+	if (fPrePosition == 0)
+	{
+
+		ProcessEventsFramesZero(m_eCharacterIndex, m_pModelCom->m_iCurrentAnimationIndex);
+		fPrePosition += 0.001;
+
+		//iOneFrameTeest++;
+	}
+
+	if (m_pModelCom->Play_Animation_Lick2(fTimeDelta,m_pTransformCom))
+		//if (m_pModelCom->Play_Animation(fTimeDelta))
+	{
+		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
+		if (m_pModelCom->m_isLoopAnim)
+		{
+			fPrePosition = 0.001;
+			ProcessEventsFramesZero(m_eCharacterIndex, m_pModelCom->m_iCurrentAnimationIndex);
+			//iOneFrameTeest++;
+		}
+		bAnimationEnd = true;
+		m_bMotionPlaying = false;
+	}
+	else
+		m_bMotionPlaying = true;
+
+
+	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
+
+
+	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+
+
+
+	return bAnimationEnd;
+}
+
 _bool CCharacter::Check_bCurAnimationisAirMove(_uint iAnimation)
 {
 	_uint iModelIndex = iAnimation;
@@ -4480,6 +4524,14 @@ CHARACTER_INDEX CCharacter::Get_eCharacterIndex()
 
 
 
+
+void CCharacter::Set_AnimationMoveXZ(_bool bValue)
+{
+	m_pModelCom->m_bNoMoveXZ = bValue;
+	m_bCinematic_NoMoveXZ = bValue;
+
+
+}
 
 void CCharacter::Reset_AttackStep()
 {

@@ -364,7 +364,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		}
 		if (m_bAnimationLock == false)
 		{
-			Character_Play_Animation(fTimeDelta);
+			if (m_bCinematic_NoMoveXZ)
+				Character_Play_Animation_NoXZ(fTimeDelta);
+			else
+				Character_Play_Animation(fTimeDelta);
 
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
 			{
@@ -383,6 +386,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			{
 				if (m_bMotionPlaying == false)
 				{
+					Set_AnimationMoveXZ(false);
 					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
 				}
 				else if (m_pGameInstance->Key_Down(DIK_RETURN))
