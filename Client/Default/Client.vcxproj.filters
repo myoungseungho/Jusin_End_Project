@@ -555,12 +555,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpaceEF.cpp">
       <Filter>02.GameObjects\Map\Space\SpaceEF</Filter>
-  </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\private\Loading_Camera.cpp">
       <Filter>02.GameObjects\UI\BackGround\Loading\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\private\CharaSelect_Camera.cpp">
       <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Opening_Model.cpp">
+      <Filter>02.GameObjects\Character\Opening_Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Opening_Kririn.cpp">
+      <Filter>02.GameObjects\Character\Opening_Kririn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1199,6 +1205,15 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\BackGround\Loading\Camera">
       <UniqueIdentifier>{b827be92-7922-4109-a046-5f3ef3910cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Opening_Model">
+      <UniqueIdentifier>{6ad9d4d2-7780-4dcc-b41f-5d50e73cb305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Opening_Kririn">
+      <UniqueIdentifier>{54d237cf-b1f7-4561-bc1f-bbd857ddda71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Character\Opening_Kririn\NewFilter1">
+      <UniqueIdentifier>{80313dcc-8072-42cb-b376-ba6c10c7a901}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1924,6 +1939,12 @@
     </ClInclude>
     <ClInclude Include="..\public\CharaSelect_Camera.h">
       <Filter>02.GameObjects\UI\BackGround\Character\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Opening_Model.h">
+      <Filter>02.GameObjects\Character\Opening_Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Opening_Kririn.h">
+      <Filter>02.GameObjects\Character\Opening_Kririn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

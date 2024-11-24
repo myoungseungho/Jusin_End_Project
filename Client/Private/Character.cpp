@@ -228,6 +228,12 @@ HRESULT CCharacter::Initialize(void* pArg)
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	//m_strModelName = pDesc->strModelName;
 
+	if (pArg == nullptr)
+	{
+		FlipDirection(1);
+		return S_OK;
+	}
+
 	m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -800,11 +806,8 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
+	
 
-	if (m_iPlayerTeam == 2 && m_pModelCom->m_iCurrentAnimationIndex == 0)
-	{
-		_bool bDebug = true;
-	}
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
 
@@ -2525,13 +2528,6 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 void CCharacter::Set_AnimationStop(_float fStopTime)
 {
-
-	if (m_pGameInstance->Key_Pressing(DIK_F7))
-	{
-		if (m_iPlayerTeam == 1 && m_bPlaying)
-			_bool bDebug = true;
-	}
-
 	if (fStopTime != 0)
 	{
 		m_bAnimationLock = true;
@@ -5689,6 +5685,8 @@ void CCharacter::Map_DestructiveFinish()
 	static_cast<CSpaceMeteoBreak*>(pGameObject)->Start_Space_DestructiveFinish();
 
 }
+
+
 
 void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
 {

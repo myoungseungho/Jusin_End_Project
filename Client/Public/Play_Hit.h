@@ -247,7 +247,7 @@ public:
 	//방향,시간
 	//list<_float3, _float> m_LaserList;
 
-	//시간,방향
+	//시간,xyz회전각도
 	list<pair<_float, _float3>> m_LaserList;
 	
 

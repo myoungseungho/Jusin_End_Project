@@ -24,6 +24,8 @@
 #include "UI_Manager.h"
 #include "Map_Manager.h"
 
+#include "Opening_Kririn.h"
+
 IMPLEMENT_SINGLETON(CBattleInterface_Manager)
 
 
@@ -734,12 +736,17 @@ void CBattleInterface_Manager::Character_Opening_AIO()
         m_p2TeamCharacter[0]->Set_bGrabbed(true);
 
         m_bCinematicOpening = true;
+
+        static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_bInivisible(false);
+
     }
     else
     {
 
         m_p1TeamCharacter[0]->Play_FirstOpening();
         m_p2TeamCharacter[0]->Set_bInivisible(true);
+
+        static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
 
     }
     //UI 안보이게뒀다가 나중에 켜기

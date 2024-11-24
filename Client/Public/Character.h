@@ -85,7 +85,6 @@ public:
 		_ushort iTeam = 1;
 		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
 
-
 	}Character_DESC;
 
 	struct CommandPattern {
