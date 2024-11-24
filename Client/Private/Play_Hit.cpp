@@ -726,7 +726,10 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 		m_iHP = 10000;
 
-		m_LaserList.push_back({ 0.1f, { 0.2f,0.2f,0.2f } });
+		//m_LaserList.push_back({ 0.1f, { 0.2f,0.2f,0.2f } });
+		m_LaserList.push_back({ 0.1f, { 60 + (_float)(rand() % 11), (_float)(rand() % 11),(_float)(rand() % 181)}});
+
+
 
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
@@ -3362,11 +3365,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Character_Make_Effect(TEXT("Hit_SDO-05"),{-4.f,0.f});
 				
 
-				m_LaserList.push_back({ 0.3f, { 0.2f,0.2f,0.2f } });
+				//(_float)(rand() % 11)
+				m_LaserList.push_back({ 0.7f, {0.f,0.f,45 +(_float)(rand() % 91)} });
+				m_LaserList.push_back({ 0.8f, {0.f,0.f,45 +(_float)(rand() % 91)} });
+				m_LaserList.push_back({ 0.9f, {0.f,0.f,45 +(_float)(rand() % 91)} });
 
-				m_LaserList.push_back({ 0.2f, { 0.2f,0.2f,0.2f } });
 
-				m_LaserList.push_back({ 0.1f, { 0.2f,0.2f,0.2f } });
 			}
 			else
 			{
@@ -4402,14 +4406,19 @@ void CPlay_Hit::LaserListUpdate(_float fTimeDelta)
 
 	for (auto& laser : m_LaserList)
 	{
-		//laser.fi -= fTimeDelta;
 		laser.first -= fTimeDelta;
 
 		if (laser.first <= 0)
 		{
 			//적 위치 찾아서 방향대로 이펙트 생성
-			CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), {0.f,0.6f});
-			//pTest->Get_Layer_Rotation()
+			//CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), {0.f,0.6f});
+			CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 0.f,0.8f });
+			//0,0,0 이  중앙->왼쪽 으로 터짐
+			//pTest->Set_Copy_Layer_Rotation({ 0.f,0.f, 0.f });
+
+			pTest->Set_Copy_Layer_Rotation(laser.second);
+
+
 		}
 
 	}
