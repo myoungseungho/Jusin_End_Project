@@ -37,7 +37,7 @@ HRESULT CModel_Preview::Initialize(void* pArg)
 		return E_FAIL;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(2.f, 0.f, 0.f, 1.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	//m_pModelCom->SetUp_Animation(16, true);
