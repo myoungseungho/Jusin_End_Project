@@ -422,7 +422,12 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 		}
 		if (m_bAnimationLock == false)
 		{
-			Character_Play_Animation(fTimeDelta);
+			if (m_bCinematic_NoMoveXZ)
+				Character_Play_Animation_NoXZ(fTimeDelta);
+			else
+				Character_Play_Animation(fTimeDelta);
+
+
 			if (m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
 			{
 				if (m_bMotionPlaying == false)
@@ -433,6 +438,19 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 				{
 					//시작 애니메이션 끝부분  프리저 끝 466
 					Set_CurrentAnimationPositionJump(445.99f);
+				}
+			}
+			else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_GOKU_CINEMATIC_01)
+			{
+				if (m_bMotionPlaying == false)
+				{
+					Set_AnimationMoveXZ(false);
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if (m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//시작 애니메이션 끝부분  프리저 끝  1170
+					Set_CurrentAnimationPositionJump(1169.99f);
 				}
 			}
 		}
@@ -1383,7 +1401,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			else
 			{
-				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.f; //이 값이 아닐것
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.f;
 
 			}
 
@@ -3579,6 +3597,9 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 		//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		//Desc.fStartOffset = { Get_fPositionX() + 20 * m_i214AttackPreviousDirection, 0.9f };
 		//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		Desc.fCameraShakeDuration = 0.5f;
+		Desc.fCameraShakeMagnitude = 0.2f;
 
 
 		if (m_iPlayerTeam == 1)

@@ -9,7 +9,7 @@
 
 
 #include <iostream>
-
+#include"Main_Camera.h"
 
 CAttackObject_Energy::CAttackObject_Energy(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CAttackObject{ pDevice, pContext }
@@ -462,6 +462,12 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 				_float fEnergyHeight = XMVectorGetY(vPos);
 				_float fpCharacterHeight = pCharacter->Get_fHeight();
+
+				if (m_fCameraShakeDuration != 0)
+				{
+					CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+					main_Camera->StartCameraShake(m_fCameraShakeDuration, m_fCameraShakeMagnitude);
+				}
 
 
 				if (m_bHeightCorrection)

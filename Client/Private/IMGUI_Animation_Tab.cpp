@@ -34,7 +34,10 @@ HRESULT CIMGUI_Animation_Tab::Initialize()
 
 
 
+
     m_iTestModelIndex = PLAY_FRN;
+
+  
 
     //static FrameEventMap FrameEvent[CHARACTER_INDEX_END][100][2];
   //  FrameEvent[SELECT_HIT][0][5].emplace("TEST");
@@ -123,6 +126,10 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
         m_pSelectedObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Preview"), 0);
         m_pSelectedModelCom = static_cast<CModel*>(m_pSelectedObject->Get_Component(TEXT("Com_Model")));
 
+        m_pSelectedObjectTransformCom = static_cast<CTransform*>(m_pSelectedObject->Get_Component(TEXT("Com_Transform")));
+
+       
+        m_pSelectedModelCom->m_bNoMoveXZ = true;
 
     }
 
@@ -155,19 +162,23 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
 
          }
          ImGui::SameLine();
-         if (ImGui::Button("Camera  Pos Reset"))
+         if (ImGui::Button("Toggle NoMoveXZ"))
          {
 
              // Layer_Camera
-             CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Camera"));
-             CTransform* pTrasnform = static_cast<CTransform*>(pObject->Get_Component(TEXT("Com_Transform")));
+             //CGameObject* pObject = m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Camera"));
+             //CTransform* pTrasnform = static_cast<CTransform*>(pObject->Get_Component(TEXT("Com_Transform")));
+             //
+             ////_vector Debug = pTrasnform->Get_State(CTransform::STATE_POSITION);
+             ////_vector Debug2 = pTrasnform->Get_State(CTransform::STATE_LOOK);
+             //
+             //
+             //pTrasnform->Set_State(CTransform::STATE_POSITION, { 0,1,-5,1 });
+             //pTrasnform->LookAt({0, 0, 0, 1});
 
-             //_vector Debug = pTrasnform->Get_State(CTransform::STATE_POSITION);
-             //_vector Debug2 = pTrasnform->Get_State(CTransform::STATE_LOOK);
 
 
-             pTrasnform->Set_State(CTransform::STATE_POSITION, { 0,1,-5,1 });
-             pTrasnform->LookAt({0, 0, 0, 1});
+             m_pSelectedModelCom->m_bNoMoveXZ = !m_pSelectedModelCom->m_bNoMoveXZ;
 
          }
          Info_Anim();
@@ -189,7 +200,10 @@ void CIMGUI_Animation_Tab::Render(_float fTimeDelta)
                  iOneFrameTeest++;
              }
 
-             if (m_pSelectedModelCom->Play_Animation_Lick(fTimeDelta))
+       
+
+             //  if (m_pSelectedModelCom->Play_Animation_Lick(fTimeDelta))
+             if (m_pSelectedModelCom->Play_Animation_Lick2(fTimeDelta, m_pSelectedObjectTransformCom))
              {
                  //모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
                  if(m_pSelectedModelCom->m_isLoopAnim)

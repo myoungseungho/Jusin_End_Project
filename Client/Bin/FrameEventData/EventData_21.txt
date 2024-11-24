@@ -805,8 +805,9 @@ PLAY_21,TON400_body,55.1,AttackEvent,1
 PLAY_21,TON400_body,55.01,AnimSpeedChange,0.01000,60
 //,PLAY_21,TON400_body,55.01,AnimSpeedChange,0.01000,30
 
-PLAY_21,TON400_body,57,NextAnimationCheck,3333
 
+PLAY_21,TON400_body,57,NextAnimationCheck,3333
+PLAY_21,TON400_body,62,AttackEvent,2
 
 //,401 214특잡기(402) 성공시 모션
 //,정면 잡기, 0~70 까지
@@ -1041,6 +1042,7 @@ PLAY_21,TON433_body,200,PositionChange,224.9
 
 //,땅에 닿으면 433cs로넘어감
 
+//138까지 있음
 //,먼지로 가리는동안 position 0~30넘어감
 PLAY_21,TON433cs_body,0,AttackEvent,0
 PLAY_21,TON433cs_body,0,AnimSpeedChange,0.018,62 
@@ -1052,8 +1054,9 @@ PLAY_21,TON433cs_body,90,AnimSpeedChange,0.018,34.636000
 PLAY_21,TON433cs_body,120,AttackEvent,2
 PLAY_21,TON433cs_body,130,AttackEvent,3
 PLAY_21,TON433cs_body,135,AttackEvent,4
+PLAY_21,TON433cs_body,136,AttackEvent,5	
 
-
+PLAY_21,TON433cs_body,95,AttackEvent,1
 
 
 PLAY_21,TON433cs_body,0.000000,AnimSpeedChange,0.011000,50.504002

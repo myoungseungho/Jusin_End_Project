@@ -111,6 +111,9 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, m_pOwnerTransform->Get_State(CTransform::STATE_POSITION));
 
 
+	m_strHitEffectName = pDesc->strHitEffectName;
+	m_fHitEffectOffset = pDesc->fHitEffectOffset;
+	m_bHitEffectFlip = pDesc->bHitEffectFlip;
 	if (FAILED(Ready_Components(pDesc)))
 		return E_FAIL;
 
@@ -368,6 +371,11 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 			if (m_bGrabbedEnd)
 				pCharacter->Set_bGrabbed(false);
+
+			if (m_strHitEffectName.size() != 0)
+			{
+				pCharacter->Character_Make_Effect(m_strHitEffectName, m_fHitEffectOffset,m_bHitEffectFlip);
+			}
 
 
 			if (m_bCameraZoom)

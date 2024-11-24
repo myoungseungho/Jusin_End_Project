@@ -19,9 +19,9 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 0 0.9 0
-Scale: 0.0163483 0.0163529 0.0163488
+Scale: 0.199976 0.02 0.019999
 Rotation: 0 90 9
-IsLoop: false
+IsLoop: true
 Color: 134.255 210.248 255 0.50265
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
@@ -91,10 +91,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 -0.462824 0
-Scale: 0.225318 0.225318 0.225318
+Position: 0 -1 0
+Scale: 0.3 0.3 0.3
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 255 255 255 0.246688
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 5

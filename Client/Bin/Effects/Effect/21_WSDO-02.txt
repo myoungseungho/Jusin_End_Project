@@ -18,9 +18,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.1 0
-Scale: 1 0.02 1
-Rotation: 0 0 0
+Position: 0 -0.288 0
+Scale: 1 0.045 1
+Rotation: 0 0 340
 IsLoop: false
 Color: 0 0 0 29.95
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
@@ -30,9 +30,9 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 -0.1 0
-Scale: 1 0.02 1
-Rotation: 0 0 0
+Position: 0 -0.288 0
+Scale: 1 0.045 1
+Rotation: 0 0 340
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -41,7 +41,7 @@ IsNotPlaying: false
 KeyFrameNumber: 58
 Position: 0 -0.08 0
 Scale: 1 0.015 1
-Rotation: 0 0 0
+Rotation: 0 0 340
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
@@ -55,9 +55,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.07 0
-Scale: 1 0.015 1
-Rotation: 0 0 0
+Position: 0 -0.23 0
+Scale: 1 0.035 1
+Rotation: 0 0 340
 IsLoop: false
 Color: 201.805 0 59.9503 0.838743
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
@@ -67,9 +67,9 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 -0.07 0
-Scale: 1 0.015 1
-Rotation: 0 0 0
+Position: 0 -0.23 0
+Scale: 1 0.035 1
+Rotation: 0 0 340
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -77,8 +77,8 @@ IsNotPlaying: false
 [KeyFrame]
 KeyFrameNumber: 58
 Position: 0 -0.05 0
-Scale: 1 0.01 1
-Rotation: 0 0 0
+Scale: 1 0.00999999 1
+Rotation: 0 0 340
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true
@@ -92,9 +92,9 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.04 0
-Scale: 1 0.01 1
-Rotation: 0 0 0
+Position: 0 -0.2 0
+Scale: 1 0.03 1
+Rotation: 0 0 340
 IsLoop: false
 Color: 215.315 144.387 188.295 0.845365
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
@@ -104,9 +104,9 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 -0.04 0
-Scale: 1 0.01 1
-Rotation: 0 0 0
+Position: 0 -0.2 0
+Scale: 1 0.03 1
+Rotation: 0 0 340
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
@@ -115,7 +115,7 @@ IsNotPlaying: false
 KeyFrameNumber: 58
 Position: 0 -0.02 0
 Scale: 1 0.006 1
-Rotation: 0 0 0
+Rotation: 0 0 340
 CurTime: 0.966667
 Duration: 1
 IsNotPlaying: true

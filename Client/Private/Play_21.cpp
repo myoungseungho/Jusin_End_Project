@@ -704,11 +704,13 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 		m_iDebugComoboDamage = 0;
 
 		m_iHP = 10000;
+
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
 		m_iHP = 100;
+
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
@@ -1292,6 +1294,7 @@ void CPlay_21::Gravity(_float fTimeDelta)
 			Character_Make_Effect(TEXT("Smoke02_Small"));
 			Character_Make_Effect(TEXT("Smoke04"));
 
+			Character_Make_Effect(TEXT("21_WSDO-04"));
 			Set_CurrentAnimationPositionJump(230.f);
 
 			if (m_pAttack214AssultEffect_Layer != nullptr)
@@ -2089,7 +2092,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		}
 
-		//땅에 닿아서 충격파
+		//땅에 닿아서 충격파  Position55.1
 		else if (iAttackEvent == 1)
 		{
 			CAttackObject::ATTACK_DESC Desc{};
@@ -2124,13 +2127,35 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
-			Character_Make_Effect(TEXT("21_SAU-01"));
+			//Character_Make_Effect(TEXT("21_SAU-01"));
+			m_pAttack214GroundEffect_Layer = nullptr;
+			m_pAttack214GroundEffect_Layer = Character_Make_Effect(TEXT("21_SAU-01"));
+
+
 			if (m_pAttack214AssultEffect_Layer != nullptr)
 			{
 				m_pAttack214AssultEffect_Layer->m_bIsDoneAnim = true;
 				m_pAttack214AssultEffect_Layer = nullptr;
 			}
 
+			
+			Character_Make_Effect(TEXT("Hit_SAO-01"));
+
+
+		}
+
+		//57에 NextAnimation,   69에 Event2
+		else if (iAttackEvent == 2)
+		{
+			if (m_bAttackBackEvent == false)
+			{
+				if (m_pAttack214GroundEffect_Layer != nullptr)
+				{
+					m_pAttack214GroundEffect_Layer->m_bIsDoneAnim = true;
+					m_pAttack214GroundEffect_Layer = nullptr;
+				}
+			}
+		
 		}
 	}
 	break;
@@ -2245,10 +2270,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0) //시작, 시간정지연출
 		{
 
-			if (m_pGameInstance->Key_Pressing(DIK_F6))
-			{
-				_int i = 3;
-			}
+			Character_Make_Effect(TEXT("21_SDO-01"));
+
+			//CEffect_Layer::COPY_DESC tDesc{};
+			//tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+			//m_pEffect_Manager->Copy_Layer(TEXT("21_SDO-01"), &tDesc);
+
+			
 			_float fDebug = m_pModelCom->m_fCurrentAnimPosition;
 
 
@@ -2416,6 +2444,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	{
 		if (iAttackEvent == 0)  // Position 0
 		{
+			//Character_Make_Effect(TEXT("21_WSDO-01"));
+			//Character_Make_BoneEffect("GD_waist_scl", TEXT("21_WSDO-01"));
+			Character_Make_BoneEffect("G_root", TEXT("21_WSDO-01"));
+
+
+			m_bFinalSoundEnable = true;
+
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 0, this);
 
@@ -2472,8 +2507,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//else
 			//	Set_fImpulse({ m_iLookDirection * 60.f, 0.f });
 
+			//Character_Make_Effect(TEXT("21_WSDO-02"));
+			//Character_Make_Effect(TEXT("21_WSDO-03"));
 
+			Character_Make_BoneEffect("G_waist", TEXT("21_WSDO-03"));
 
+			
+	
 			if (m_bAttackBackEvent)
 			{
 				FlipDirection();
@@ -2483,6 +2523,20 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Set_fImpulse({ m_iLookDirection * 80.f, 13.f });
 				Set_fImpulse({ m_iLookDirection * 80.f, 15.f });
 
+
+
+				CEffect_Layer::COPY_DESC tDesc{};
+
+				tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
+				tDesc.pTransformCom = m_pTransformCom;
+				tDesc.m_isPlayerDirRight = m_iLookDirection;
+
+				if (m_pAttackFinalChaseEffect_Layer != nullptr)
+				{
+					m_pAttackFinalChaseEffect_Layer->m_bIsDoneAnim = true;
+					m_pAttackFinalChaseEffect_Layer = nullptr;
+				}
+				m_pAttackFinalChaseEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
 
 
 			}
@@ -2541,8 +2595,6 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Dash_21_SFX, false, 1.f);
 
-				//3필 올라가면서 소리 내야하는데 115 키프레임이 정확한 싱크임, 태욱이가 추가한댔음
-				//m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Attacks_21_SFX, false, 1.f);
 			}
 			//else if (m_bFinalSkillAdd && m_iFinalLoofCount == 0)
 			//{
@@ -2571,7 +2623,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.fCameraShakeDuration = 0.5f;
 			//Desc.fCameraShakeMagnitude = 0.2f;
 
+			Desc.strHitEffectName = TEXT("21_WSDO-02");
+
 			Desc.fForcedGravityTime = 0.f;
+
+			Desc.fCameraShakeDuration = 0.1f;
+			Desc.fCameraShakeMagnitude = 0.1f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -2591,6 +2648,19 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Set_CurrentAnimationPositionJump(52.9);
 				m_iFinalLoofCount--;
+
+				if (m_bFinalSoundEnable)
+				{
+
+					//3필 올라가면서 소리 내야하는데 115 키프레임이 정확한 싱크임, 태욱이가 추가한댔음
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Attacks_21_SFX, false, 1.f);
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Middle_21, false, 1.f);
+					m_bFinalSoundEnable = false;
+
+
+					
+
+				}
 			}
 			else if (m_bFinalSkillAdd == true && m_iFinalLoofCount == 0) //추가타 루프 종료시  올려차기로 이행
 			{
@@ -2598,6 +2668,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Set_CurrentAnimationPositionJump(136.9);
 
 				//Set_AnimationStopWithoutMe(10.f);
+
 
 			}
 			else if (m_bAttackBackEvent && m_iFinalLoofCount == 0 && m_bFinalSkillAdd == false) //루프 다 돌았으면   추가타 확인, 아닌경우 내려찍기로 이행
@@ -2663,6 +2734,12 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_21_ULTIMATE, 2, this);
 			//mainCamera->StartCameraShake(1.f, 0.4f);
 
+			if (m_pAttackFinalChaseEffect_Layer != nullptr)
+			{
+				m_pAttackFinalChaseEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttackFinalChaseEffect_Layer = nullptr;
+			}
+
 		}
 		else if (iAttackEvent == 10) //Position 150   올려차기 
 		{
@@ -2701,19 +2778,50 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Set_AnimationStopWithoutMe(0.2f);
 
+			if (m_pAttackFinalChaseEffect_Layer != nullptr)
+			{
+				m_pAttackFinalChaseEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttackFinalChaseEffect_Layer = nullptr;
+			}
+
+			CEffect_Layer::COPY_DESC tDesc{};
+
+			tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_calf_L");
+			tDesc.pTransformCom = m_pTransformCom;
+			tDesc.m_isPlayerDirRight = m_iLookDirection;
+
+			if (m_pAttackFinalChaseEffect_Layer != nullptr)
+			{
+				m_pAttackFinalChaseEffect_Layer->m_bIsDoneAnim = true;
+				m_pAttackFinalChaseEffect_Layer = nullptr;
+			}
+
+			m_pAttackFinalChaseEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
+			m_pAttackFinalChaseEffect_Layer->Set_Copy_Layer_Rotation({ 0.f,0.f,-45.f });
+
 			if (m_bFinalSkillAdd == false)
 			{
-				Teleport_ToEnemy(-1.f, 2.f);
-				Set_fImpulse({ m_iLookDirection * 2.f,-25.f });
+				//Teleport_ToEnemy(-1.f, 2.f);
+				//Set_fImpulse({ m_iLookDirection * 2.f,-25.f });
+
+				m_pAttackFinalChaseEffect_Layer->Set_Copy_Layer_Scaled({ 1.1f,1.1f,1.1f });
+				Teleport_ToEnemy(-1.f, 4.f);
+				Set_fImpulse({ m_iLookDirection * 2.f,-40.f });
+
 
 			}
 			else
 			{
 				//Set_AnimationStopWithoutMe(0.3f);
 				//Teleport_ToEnemy(-1.f, 2.f);
-				Teleport_ToEnemy(-0.3f, 0.5f);
+				m_pAttackFinalChaseEffect_Layer->Set_Copy_Layer_Scaled({1.2f,1.2f,1.2f});
 
-				Set_fImpulse({ m_iLookDirection * 2.f,-25.f });
+				//Teleport_ToEnemy(-0.3f, 0.5f);
+				//Set_fImpulse({ m_iLookDirection * 2.f,-25.f });
+
+				Teleport_ToEnemy(-0.3f, 1.0f);
+				Set_fImpulse({ m_iLookDirection * 3.f,-50.f });
+
 
 			}
 			//Teleport_ToEnemy(0.f, 1.8f);
@@ -2857,6 +2965,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//잡기로 상대방 고정
 			//상대 플레이어 안보이게?
 
+
+
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			//원래 방향
 			if (Get_iDirection() == 1)
@@ -2874,8 +2984,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//m_bDynamicMove = false;
 
-
-
+			
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2917,9 +3026,29 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
+
+		//손 뻗고나서
+		else if (iAttackEvent == 1)
+		{
+
+			//Character_Make_Effect(TEXT("21_WSDO-05"));
+
+			//Character_Make_BoneEffect("GD_fist_L", TEXT("21_WSDO-05"));
+			Character_Make_BoneEffect("GD_hand_L", TEXT("21_WSDO-05"));
+
+		}
 		else if (iAttackEvent == 2)
 		{
 			//공격이펙트로 화면가리기
+
+			//Character_Make_Effect(TEXT("21_WSDO-05"));
+			//Character_Make_Effect(TEXT("21_WSDO-06"));
+
+
+			//Character_Make_Effect(TEXT("21_WSDO-06"));
+
+
+
 		}
 		else if (iAttackEvent == 3)
 		{
@@ -2964,6 +3093,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainHitCount = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+
 		}
 		else if (iAttackEvent == 4)
 		{
@@ -2993,11 +3124,23 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bGrabbedEnd = true;
 			Desc.pOwner = this;
 			Desc.bCameraZoom = false;
+			
+
+			Desc.bOnwerHitNoneStop = true;
+
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
 		}
+		else if (iAttackEvent == 5)
+		{
 
+			Character_Make_Effect(TEXT("21_WSDO-06"));
+
+			Character_Make_Effect(TEXT("21_WSDO-06"), {}, true);
+
+			//Set_AnimationStop(0.7f);
+		}
 
 	}
 	break;

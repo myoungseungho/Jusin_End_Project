@@ -286,7 +286,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 	//cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
-
+	LaserListUpdate(fTimeDelta);
 
 
 
@@ -725,16 +725,25 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		m_iDebugComoboDamage = 0;
 
 		m_iHP = 10000;
+
+		//m_LaserList.push_back({ 0.1f, { 0.2f,0.2f,0.2f } });
+		m_LaserList.push_back({ 0.1f, { 60 + (_float)(rand() % 11), (_float)(rand() % 11),(_float)(rand() % 181)}});
+
+
+
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
 		m_iHP = 100;
+
+
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
 	{
 		Set_bFinalSkillQTE(true);
+		
 	}
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
 	{
@@ -880,13 +889,31 @@ _bool CPlay_Hit::Update_214Pose(_float fTimeDelta)
 		bKeyPressing = m_pGameInstance->Key_Pressing(DIK_NUMPAD7);
 	}
 
+	if (m_fAccPoseTime == 0)
+	{
+		//Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f ,-0.2f });
+		Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f ,0.f });
+		m_i214GlassCount++;		
+	}
+
 	//유지중이면 시간더하고 이펙트처리
 	if (bKeyPressing == true)
 	{
 
 		m_fAccPoseTime += fTimeDelta;
 		//이펙트처리도?
+		
+		//거리 5
+		if(m_fAccPoseTime > m_i214GlassCount*0.5 )
+		{
 
+			//Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f - m_fAccPoseTime,-0.2f });
+			//Character_Make_Effect(TEXT("Hit_SDU-01_Rotated_Right"), { 5.f + m_fAccPoseTime,-0.2f });
+
+			Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f - m_fAccPoseTime,0.f });
+			Character_Make_Effect(TEXT("Hit_SDU-01_Rotated_Right"), { 5.f + m_fAccPoseTime,0.f });
+			m_i214GlassCount++;
+		}
 	}
 
 	else
@@ -1019,7 +1046,7 @@ HRESULT CPlay_Hit::Ready_Components()
 
 
 
-	/* Com_Model */
+	/* Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HITOutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
 
@@ -1427,7 +1454,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fForcedGravityTime = 0.f;
 				//Desc.bOnwerHitNoneStop = true;
-
+			
 
 				Desc.bOnwerHitNoneStop = true;
 				Desc.bOwnerNextAnimation = false;
@@ -1451,14 +1478,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 5.f;
 
-
+				Desc.bCameraZoom = false;
 				//if (m_iAttackLightLoofCount == 0)
 				{
 					Desc.iDamage = 450 * Get_DamageScale();
 					Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 					Desc.iGainAttackStep = 1;
 					Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
-
+				
 
 				}
 				//else
@@ -1548,6 +1575,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->StartCameraShake(0.1f, 0.3f);
+
+
+			Character_Make_Effect(TEXT("Hit_BurstI-01"));
 		}
 
 		//,적 앞으로 순간이동, 공격판정.  안보이고있었다면 보이게?
@@ -1557,6 +1587,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			main_Camera->StartCameraShake(0.1f, 0.1f);
 
 			m_bInvisible = false;
+
+			Character_Make_Effect(TEXT("Hit_BurstI-02"));
+
+			Character_Make_BoneEffect("GD_fist_L",TEXT("Hit_BurstI-03"));
+			//Character_Make_BoneEffect_Offset("GD_fist_L", TEXT("Hit_BurstI-03"),{-0.3f,0.f});
+
+			
 
 			MoveToEnemy_Ground(2.f);
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
@@ -1582,6 +1619,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iTeam = m_iPlayerTeam;
 			Desc.fAnimationLockTime = 0.1f;
 			Desc.pOwner = this;
+
+			//Desc.strHitEffectName = TEXT("Hit_BurstI-03");
+			//Desc.fHitEffectOffset = { -0.5f,1.f };
+
+			Desc.strHitEffectName = TEXT("Hit_Hand_Lazer");
+			Desc.fHitEffectOffset = { -0.5f,1.f };
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -1699,6 +1742,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_bCounterPose = true;
+			//Character_Make_Effect(TEXT("Hit_SDO-02"), { 0.f,0.6f });
+			Character_Make_Effect(TEXT("Hit_BurstJ-01"), { 0.f,0.4f });
+
 		}
 
 		//반격성공. 적 멈춘상태
@@ -2327,6 +2373,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			m_bCounterPose = true;
+			//Character_Make_Effect(TEXT("Hit_SDO-02"), { 0.f,0.6f });
+			Character_Make_Effect(TEXT("Hit_BurstJ-01"), { 0.f,0.4f });
+
+			
 		}
 
 		//반격성공. 적 멈춘상태
@@ -2938,6 +2988,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Set_CurrentAnimationPositionJump(20.05f);
 
 			m_b214Posing = true;
+			m_i214GlassCount = 0;
 			m_fAccPoseTime = 0.f;
 			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 0.f;
 
@@ -3108,6 +3159,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1, false, 1.f);
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_1_Start, false, 1.f);
+
+
+			//Character_Make_Effect(TEXT("Hit_SDO-01"));
+			m_pUltimateAuraEffect = Character_Make_BoneEffect("G_root",TEXT("Hit_SDO-01"));
+			
+			//Character_Make_Effect(TEXT("Hit_SDO-02"));
+			Character_Make_Effect(TEXT("Hit_SDO-02"),{0.f,0.6f});
 		}
 
 
@@ -3117,6 +3175,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = true;
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			Character_Create_Distortion({ -1.f,0.f,0.f });
+
+
 		}
 
 
@@ -3124,6 +3184,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 2)
 		{
 
+			if (m_pUltimateAuraEffect != nullptr)
+			{
+				m_pUltimateAuraEffect->m_bIsDoneAnim = true;
+				m_pUltimateAuraEffect = nullptr;
+			}
 
 			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 90.f;
 
@@ -3264,6 +3329,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
+
+			Character_Make_Effect(TEXT("Hit_SDO-04"),{0.f,1.3f});
+			
+			Character_Make_Effect(TEXT("Hit_SDO-05"));
+			
 		}
 
 		//,110 정지 + 더 앞으로 이동 + 카메라 + 추가공격 + 이펙트,  애니메이션속도 감속, 120으로 읻오
@@ -3289,6 +3359,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.5f,1.f }, { 0.5f });
 
+				Character_Make_BoneEffect("GD_fist_R",TEXT("Hit_SDO-03"));
+
+
+				Character_Make_Effect(TEXT("Hit_SDO-05"),{-4.f,0.f});
+				
+
+				//(_float)(rand() % 11)
+				m_LaserList.push_back({ 0.7f, {0.f,0.f,45 +(_float)(rand() % 91)} });
+				m_LaserList.push_back({ 0.8f, {0.f,0.f,45 +(_float)(rand() % 91)} });
+				m_LaserList.push_back({ 0.9f, {0.f,0.f,45 +(_float)(rand() % 91)} });
 
 
 			}
@@ -3876,6 +3956,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.bGrabbedEnd = true;
 				Desc.bCameraZoom = false;
 
+
+				Desc.fCameraShakeDuration = 0.1f;
+				Desc.fCameraShakeMagnitude = 0.1f;
+
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
 
 			}
@@ -4310,6 +4395,37 @@ void CPlay_Hit::MoveToEnemy_Ground(_float fMaxDistance, _float fOffset)
 	}
 
 
+
+}
+
+void CPlay_Hit::LaserListUpdate(_float fTimeDelta)
+{
+
+	if (m_LaserList.size() == 0)
+		return;
+
+	for (auto& laser : m_LaserList)
+	{
+		laser.first -= fTimeDelta;
+
+		if (laser.first <= 0)
+		{
+			//적 위치 찾아서 방향대로 이펙트 생성
+			//CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), {0.f,0.6f});
+			CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 0.f,0.8f });
+			//0,0,0 이  중앙->왼쪽 으로 터짐
+			//pTest->Set_Copy_Layer_Rotation({ 0.f,0.f, 0.f });
+
+			pTest->Set_Copy_Layer_Rotation(laser.second);
+
+
+		}
+
+	}
+
+	m_LaserList.remove_if([fTimeDelta](std::pair<_float, _float3>& laser) {
+		return laser.first <= 0.0f; // LifeTime이 0 이하이면 제거
+	});
 
 }
 

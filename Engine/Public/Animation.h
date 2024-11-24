@@ -39,6 +39,8 @@ public:
 
 	void Update_FrameIndex(_float* pCurrentAnimPosition,  vector<_uint>& KeyFrameIndices);
 
+	class CChannel* Find_Channel_ByName2(const char* targetName);
+	
 public:
 	_char			m_szName[MAX_PATH] = {};
 	_float			m_fDuration = {};
