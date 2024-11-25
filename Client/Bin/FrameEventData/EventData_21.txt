@@ -840,6 +840,7 @@ PLAY_21,TON401_body,119.010010,AnimSpeedChange,0.028000,61.414001
 PLAY_21,TON401_body,120,AttackEvent,1
 PLAY_21,TON401_body,165,PositionChange,274
 
+PLAY_21,TON401_body,100,AttackEvent,3
 
 //,402 214특 잡기시작... 위에껀 뭐야?
 //,성공시 401의 로 연계

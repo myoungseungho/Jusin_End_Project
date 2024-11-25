@@ -3516,6 +3516,14 @@ _float CPlay_Goku::Get_DamageScale(_bool bUltimate)
 	return fDamageScale * 0.7f;
 }
 
+void CPlay_Goku::Character_CinematicEnd()
+{
+
+	
+	Set_AnimationMoveXZ(false);
+	m_bNormalGoku = false;
+}
+
 CPlay_Goku* CPlay_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CPlay_Goku* pInstance = new CPlay_Goku(pDevice, pContext);
