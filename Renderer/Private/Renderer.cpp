@@ -604,9 +604,10 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 	return S_OK;
 }
 
+_int g_iCount = 0;
 HRESULT CRenderer::Render_Player(_float fTimeDelta)
 {
-	_int iCount = 0;
+	g_iCount = 0;
 	for (auto& pRenderObject : m_RenderObjects[RG_PLAYER])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player"))))
@@ -622,9 +623,9 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		Render_PlayerLight(fTimeDelta, iCount);
+		Render_PlayerLight(fTimeDelta, g_iCount);
 
-		if (iCount == 0)
+		if (g_iCount == 0)
 		{
 			if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_PlayerDefferd"))))
 				return E_FAIL;
@@ -643,10 +644,11 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 				return E_FAIL;
 		}
 
-		iCount++;
+		g_iCount++;
 	}
 
-	Render_PlayerBlur(fTimeDelta);
+	if(g_iCount != 0)
+		Render_PlayerBlur(fTimeDelta);
 
 	m_RenderObjects[RG_PLAYER].clear();
 	m_PlayerStrNames.clear();
@@ -1155,24 +1157,27 @@ HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
 	if (iEffectGlow_RenderCount > 0)
 		Draw_AllGlow_Effect(false);
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
-
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
-		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
-	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
-		return E_FAIL;
-
-	m_pGlowShader->Begin(9);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
 	
+	if (g_iCount != 0)
+	{
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
+
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
+			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
+		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+			return E_FAIL;
+
+		m_pGlowShader->Begin(9);
+		m_pVIBuffer->Bind_Buffers();
+		m_pVIBuffer->Render();	
+	}
 	return S_OK;
 }
 

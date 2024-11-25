@@ -5,6 +5,7 @@
 #include "GameInstance.h"
 #include "Level_Loading.h"
 #include "Level_Lobby.h"
+#include "UI_Manager.h"
 
 CCharaSelect_Model::CCharaSelect_Model(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -63,10 +64,10 @@ void CCharaSelect_Model::Update(_float fTimeDelta)
 void CCharaSelect_Model::Late_Update(_float fTimeDelta)
 {
 	m_fRenderTimer += fTimeDelta;
-
+	
 	if (m_ePlayerID == CUI_Define::HIT)
 	{
-		if(m_fRenderTimer >= 0.15f)
+		if (m_fRenderTimer >= 0.15f)
 			m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 	}
 	else

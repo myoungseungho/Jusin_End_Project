@@ -3331,6 +3331,7 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_Frieza"),
 		CPlay_Frieza::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Frieza_Metal"),
 		CFrieza_Metal::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

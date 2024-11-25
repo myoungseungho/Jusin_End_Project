@@ -59,6 +59,7 @@ private:
 	_uint m_iShaderIndex = { 0 };
 	_float m_fRenderTimer = { 0.f };
 
+	_bool m_bRender = { TRUE };
 
 public:
 	static CCharaSelect_Model* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
