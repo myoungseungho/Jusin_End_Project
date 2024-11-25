@@ -33,10 +33,11 @@ HRESULT CLoading_GodDragon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, 0.7f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
+	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, 1.f));
+	//m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
 
-	//¾ÆÀÌµé
+	Add_Light(_float4(-0.f, -0.f, 1.f, 0.f), _float4(0.9f, 0.9f, 1.0f, 1.0f), _float4(0.5f, 0.5f, 0.5f, 1.f), _float4(0.f, 0.f, 0.f, 1.f), "SELECT_GodDragon_Light");
+	
 	m_pModelCom->SetUp_Animation(5, true, 0.1f);
 
 	return S_OK;
@@ -50,11 +51,16 @@ void CLoading_GodDragon::Camera_Update(_float fTimeDelta)
 void CLoading_GodDragon::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
+
+	m_fTexcoordValue -= fTimeDelta * 0.25f;
+
+	if (m_fTexcoordValue <= 0.f)
+		m_fTexcoordValue = 0.f;
 }
 
 void CLoading_GodDragon::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this,&m_RendererDesc);
 }
 
 HRESULT CLoading_GodDragon::Render(_float fTimeDelta)
@@ -88,6 +94,26 @@ HRESULT CLoading_GodDragon::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CLoading_GodDragon::Add_Light(_float4 vDirection, _float4 vDiffuse, _float4 vAmbient, _float4 vSpecular, string strName)
+{
+	m_RendererDesc.strName = strName;
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+
+	LightDesc.vDirection = vDirection;
+	LightDesc.vDiffuse = vDiffuse;
+	LightDesc.vAmbient = vAmbient;
+	LightDesc.vSpecular = vSpecular;
+	LightDesc.pPlayerDirection = &m_iLookDirection;
+	LightDesc.strName = m_RendererDesc.strName;
+
+	if (FAILED(m_pRenderInstance->Add_Player_Light(strName, LightDesc)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
 HRESULT CLoading_GodDragon::Ready_Components()
 {
 	/* Com_Shader */
@@ -98,6 +124,11 @@ HRESULT CLoading_GodDragon::Ready_Components()
 	/* Com_Model */
 	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+		return E_FAIL;
+
+	/* Com_LimTexture */
+	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Texture_Character_OutLine_GodDragon"),
+		TEXT("Com_LimTexture"), reinterpret_cast<CComponent**>(&m_pLimTextureCom))))
 		return E_FAIL;
 
 	return S_OK;
@@ -112,6 +143,12 @@ HRESULT CLoading_GodDragon::Bind_ShaderResources()
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
+		return E_FAIL;
+
+	if (FAILED(m_pLimTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fTexcoordValue", &m_fTexcoordValue, sizeof(_float))))
 		return E_FAIL;
 
 	return S_OK;
@@ -147,6 +184,7 @@ void CLoading_GodDragon::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pLimTextureCom);
 
 	__super::Free();
 }

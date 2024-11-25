@@ -1157,7 +1157,6 @@ HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
 	if (iEffectGlow_RenderCount > 0)
 		Draw_AllGlow_Effect(false);
 
-	
 	if (g_iCount != 0)
 	{
 		if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
