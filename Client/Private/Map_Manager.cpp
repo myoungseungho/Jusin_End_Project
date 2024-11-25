@@ -53,16 +53,13 @@ void CMap_Manager::Update(_float fTimeDelta)
 
 		if (m_fEastAccTime >= 10.f)
 		{
-		/*	Map_Change(MAP_SPACE);
+			Map_Change(MAP_SPACE);
 			m_pEastEffect_Layer->m_bIsDoneAnim = true;
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
 				->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
 			m_isEastFinishStart = false;
-			m_fEastAccTime = 0.f;*/
-		/*	for (auto& iter : m_pEastEffect_Layer->m_MixtureEffects)
-			{
-				iter->m_i
-			}*/
+			m_fEastAccTime = 0.f;
+
 
 		}
 	}
@@ -231,7 +228,7 @@ _float2 CMap_Manager::Active_EastFinish()
 {
 	switch (m_eEastEffectType)
 	{
-	case MAP_EF_SPACE:
+	case EAST_LASER:
 		if (m_eCurMap == MAP_SPACE)
 		{
 			m_isEastFinishStart = true;
@@ -284,7 +281,7 @@ _float2 CMap_Manager::Active_EastFinish()
 			CEffect_Layer::COPY_DESC tDesc{};
 			tDesc.pPlayertMatrix = &Result4x4;
 
-			//m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
+			m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_SPHERE_ENDING"), &tDesc);
 
 			//(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
 			//(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
@@ -308,6 +305,7 @@ void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType)
 {
 	m_isEastFinish = true;
 	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck);
+	m_eEastEffectType = EAST_LASER;
 }
 
 void CMap_Manager::IsDone_Active()

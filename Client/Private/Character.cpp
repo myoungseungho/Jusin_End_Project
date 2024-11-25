@@ -415,7 +415,7 @@ _bool CCharacter::CompareNextAnimation(_uint iAnimationIndex, _float fNextPositi
 
 void CCharacter::Set_CurrentAnimationPositionJump(_float fAnimationPosition)
 {
-	m_pModelCom->CurrentAnimationPositionJump(fAnimationPosition);
+ 	m_pModelCom->CurrentAnimationPositionJump(fAnimationPosition);
 }
 
 void CCharacter::ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex)

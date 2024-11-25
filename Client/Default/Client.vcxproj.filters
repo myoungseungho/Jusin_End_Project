@@ -1218,9 +1218,6 @@
     <Filter Include="02.GameObjects\Character\Opening_Kririn">
       <UniqueIdentifier>{54d237cf-b1f7-4561-bc1f-bbd857ddda71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Character\Opening_Kririn\NewFilter1">
-      <UniqueIdentifier>{80313dcc-8072-42cb-b376-ba6c10c7a901}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_DisplayBoard">
       <UniqueIdentifier>{658be6e8-64f0-430c-b0da-8968bf14cd69}</UniqueIdentifier>
     </Filter>

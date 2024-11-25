@@ -1158,28 +1158,49 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
             }
         }
 
-        m_pRenderInstance->Add_ClientRenderTarget(iter.key.c_str(), iter.key.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+        _int iRenderTargetCount = m_pRenderInstance->Add_ClientRenderTarget(iter.key.c_str(), iter.key.c_str(), fTextureSize.x, fTextureSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+        /* 이미 렌더타겟이 중복이다 */
+        if (iRenderTargetCount > 0)
+        {
+            SRV_Texture SRVDesc{};
+            SRVDesc.iID = unique_node_id;
+            SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(iter.key.c_str() + to_wstring(iRenderTargetCount));
+            SRVDesc.Alpha = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(iter.key.c_str() + to_wstring(iRenderTargetCount) + L"_Alpha");
+
+            if (SRVDesc.Texture == nullptr || SRVDesc.Alpha == nullptr)
+            {
+                int a = 10;
+            }
+            m_NodeTextureSRVs.push_back(SRVDesc);
+
+            m_NodeTextures.back()->Set_PlusKey(iter.key.c_str() + to_wstring(iRenderTargetCount));
+
+            if (m_PrototypeKeys[iCount].vTexCoord.x != 0.f && m_PrototypeKeys[iCount].vTexCoord.y != 0.f)
+                m_NodeTextures.back()->m_vMultiple_Texcoord = m_PrototypeKeys[iCount].vTexCoord;
+
+            m_NodeTextures.back()->m_iID = unique_node_id;
+            node_ids.push_back(unique_node_id++);
+
+            m_iNodeTextureCount++;
+
+            continue;
+        }
 
         SRV_Texture SRVDesc{};
         SRVDesc.iID = unique_node_id;
         SRVDesc.Texture = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(iter.key.c_str());
-        wstring AlphaName = iter.key + L"_Alpha";
-        SRVDesc.Alpha = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(AlphaName.c_str());
+        wstring alphaKey = iter.key + L"_Alpha";
+        SRVDesc.Alpha = (ImTextureID)m_pRenderInstance->Copy_RenderTarget_SRV(alphaKey.c_str());
+        if (SRVDesc.Texture == nullptr || SRVDesc.Alpha == nullptr)
+        {
+            int a = 10;
+        }
         m_NodeTextureSRVs.push_back(SRVDesc);
 
-        //Save_Key tSaveKey{};
-        //tSaveKey.iD = unique_node_id;
-        //tSaveKey.key = iter.key.c_str();
-        //m_PrototypeKeys.push_back(tSaveKey);
-
         m_NodeTextures.back()->m_iID = unique_node_id;
-
-        if(m_PrototypeKeys[iCount].vTexCoord.x != 0.f && m_PrototypeKeys[iCount].vTexCoord.y != 0.f)
-            m_NodeTextures.back()->m_vMultiple_Texcoord = m_PrototypeKeys[iCount].vTexCoord;
-
         node_ids.push_back(unique_node_id++);
 
-        
+        DragAcceptFiles(g_hWnd, TRUE);
         m_iNodeTextureCount++;
     }
 }

@@ -1,0 +1,235 @@
+[Layer]
+LayerName: EF_SPHERE_ENDING
+Duration: 0.3
+TickPerSecond: 0.01
+KeyFramesCount: 18
+NumEffec: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -32.9 0
+Scale: 6 6 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 27.8642 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -32.9 0
+Scale: 6 6 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -32.9 0
+Scale: 6 6 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 0 0.0993383
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -32.9 0
+Scale: 6 6 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -32.435 0
+Scale: 5.9 5.9 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 245.48 48.1291 0.65
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -32.435 0
+Scale: 5.9 5.9 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 13.853 -27.837 0
+Scale: 5.7 5.7 1
+Rotation: 0 0 22.597
+IsLoop: false
+Color: 255 227.136 63.3278 1.14735
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 13.853 -27.837 0
+Scale: 5.7 5.7 1
+Rotation: 0 0 22.597
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_05
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 5.195 21.613 0
+Scale: 0.0999348 0.19989 0.2
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 98.7914 0 0.345364
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 5.195 21.613 0
+Scale: 0.0999348 0.19989 0.2
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_06
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 5.926 4.329 0
+Scale: 0.0999452 0.229979 0.23
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 166.341 0 0.597351
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 5.926 4.329 0
+Scale: 0.0999452 0.229979 0.23
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_07
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 5.195 21.613 0
+Scale: 0.0999348 0.19989 0.2
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 44.7517 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 5.195 21.613 0
+Scale: 0.0999348 0.19989 0.2
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_SPHERE_ENDING_08
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_SPHERE_ENDINGEF_SPHERE_ENDING_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 5.926 4.329 0
+Scale: 0.0999452 0.229979 0.23
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 49.8179 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 5.926 4.329 0
+Scale: 0.0999452 0.229979 0.23
+Rotation: 0 0 90
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

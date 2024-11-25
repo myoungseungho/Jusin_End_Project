@@ -1,0 +1,16 @@
+Version: 2
+KeyCount: 1
+KeySize: 49
+Key: Prototype_Component_Texture_Effect_cmn_burst05_hi
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 3
+NodeID: -1 Position: 602 206
+NodeID: 1 Position: 246 161
+NodeID: 3001 Position: 16 100
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 2 Speed: 20
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
