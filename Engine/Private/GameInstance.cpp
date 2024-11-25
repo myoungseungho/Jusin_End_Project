@@ -17,6 +17,7 @@ IMPLEMENT_SINGLETON(CGameInstance)
 
 CGameInstance::CGameInstance()
 {
+
 }
 
 HRESULT CGameInstance::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _bool isWindowed, _uint iNumLevels, _uint iWinSizeX, _uint iWinSizeY, ID3D11Device** ppDevice, ID3D11DeviceContext** ppContext)

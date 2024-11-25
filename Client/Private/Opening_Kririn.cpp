@@ -161,7 +161,7 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 
 
 	m_pModelCom->Set_MaxAnimationUpdate_Time(0.05);
-	m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 60.f;
+	m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 0.1f;
 	
 	
 	Set_AnimationStop(3.f);
