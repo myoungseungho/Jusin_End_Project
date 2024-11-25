@@ -24,6 +24,10 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
+	/*m_pLobbyRenderer = CLobby_Renderer::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pLobbyRenderer)
+		return E_FAIL;*/
+
 	m_pPicking = CPicking::Create(*ppDevice, *ppContext, hWnd);
 	if (nullptr == m_pPicking)
 		return E_FAIL;
@@ -36,8 +40,12 @@ HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
+	//if (FAILED(m_pLobbyRenderer->Draw(fTimeDelta)))
+	//	return E_FAIL;
+
 	if (FAILED(m_pRenderer->Draw(fTimeDelta)))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -48,6 +56,22 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 		return E_FAIL;
 
 	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject, pDesc);
+}
+
+HRESULT CRenderInstance::Add_LobbyRenderObject(CLobby_Renderer::RENDERGROUP eRenderGroup, CGameObject* pRenderObject, RENDER_OBJECT* pDesc)
+{
+	if (nullptr == m_pLobbyRenderer)
+		return E_FAIL;
+
+	return m_pLobbyRenderer->Add_LobbyRenderObject(eRenderGroup, pRenderObject);
+}
+
+HRESULT CRenderInstance::Add_LobbyDebugComponent(CComponent* pDebugComponent)
+{
+	if (nullptr == m_pLobbyRenderer)
+		return E_FAIL;
+
+	return m_pLobbyRenderer->Add_LobbyDebugComponent(pDebugComponent);
 }
 
 HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)
@@ -76,6 +100,11 @@ void CRenderInstance::Create_Distortion(DISTORTION_DESC& tDistortionDesc)
 void CRenderInstance::Delete_LoopDistortion()
 {
 	m_pRenderer->Delete_LoopDistortion();
+}
+
+void CRenderInstance::Set_AuraColor(_float4 vColor)
+{
+	m_pRenderer->Set_AuraColor(vColor);
 }
 
 void CRenderInstance::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
@@ -210,14 +239,19 @@ HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
 	return m_pLight_Manager->Add_Light(LightDesc);
 }
 
-HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc)
+HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
 {
-	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc);
+	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc, vChaseColor, pisChaseLight);
 }
 
 HRESULT CRenderInstance::Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc)
 {
 	return  m_pLight_Manager->Add_Effect_Light(strKey, LightDesc);
+}
+
+void CRenderInstance::BGLight_Pop_Front()
+{
+	m_pLight_Manager->BGLight_Pop_Front();
 }
 
 HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CShader* pShader, CVIBuffer_Rect* pVIBuffer, const string strName,_float fTimeDelta)
@@ -249,6 +283,7 @@ void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone)
 void CRenderInstance::Release_Engine()
 {
 	Safe_Release(m_pRenderer);
+	Safe_Release(m_pLobbyRenderer);
 	Safe_Release(m_pLight_Manager);
 	Safe_Release(m_pTarget_Manager);
 	Safe_Release(m_pPicking);

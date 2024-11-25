@@ -1,0 +1,1912 @@
+[Layer]
+LayerName: FZ_BurstK
+Duration: 3
+TickPerSecond: 2
+KeyFramesCount: 179
+NumEffec: 29
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: FZ_BurstK_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 1.1 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.1 1.49012e-08 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 10
+Position: 1.1 1.49012e-08 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+CurTime: 0.166667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 1.1 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+CurTime: 0.283333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 1.1 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 47
+Position: 1.1 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+CurTime: 0.783333
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstK_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.8 1.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 112.987
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.8 0.6 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 112.987
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 14
+Position: 0.8 0.7 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 112.987
+CurTime: 0.233333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 21
+Position: 0.8 1.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 112.987
+CurTime: 0.35
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.8 1.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 112.987
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 37
+Position: 0.8 1.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 112.987
+CurTime: 0.616667
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstK_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 109.87
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0.8 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 109.87
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0.5 0.8 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 109.87
+CurTime: 0.2
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0.5 1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 109.87
+CurTime: 0.333333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.5 1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 109.87
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 53
+Position: 0.5 1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 109.87
+CurTime: 0.883333
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstK_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.1 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 315.584
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 315.584
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 11
+Position: 0.1 0.1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 315.584
+CurTime: 0.183333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 21
+Position: 0.1 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 315.584
+CurTime: 0.35
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 26
+Position: 0.1 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 315.584
+CurTime: 0.433333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0.1 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 315.584
+CurTime: 0.683333
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.5 0
+Scale: 0.1 0.2 0.5
+Rotation: 0 0 17.143
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.5 0
+Scale: 0.1 0.2 0.5
+Rotation: 0 0 17.143
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Smoke0201
+ModelName: Model_Effect_cmn_SmokeModels0202
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke0201
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0202
+ModelName: Model_Effect_cmn_SmokeModels0203
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke0202
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.283333
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0203
+ModelName: Model_Effect_cmn_SmokeModels0204
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke0203
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.283333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.416667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0204
+ModelName: Model_Effect_cmn_SmokeModels0205
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke0204
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.416667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0205
+ModelName: Model_Effect_cmn_SmokeModels0206
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke0205
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 43
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.716667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Smoke0206
+ModelName: Model_Effect_cmn_SmokeModels0201
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKSmoke0206
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 43
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.716667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 52
+Position: 0.5 0 0
+Scale: 0.2 0.2 0.2
+Rotation: 0 0 0
+CurTime: 0.866667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 63
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 1.05
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstK_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.2 0 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 134.255 0 183.228 2.88079
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 6
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.2 0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: 0.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.7 0.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 134.255 0 183.228 2.88079
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.7 0.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.7 1.2 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.7 1.4 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.7 1.2 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.7 1.2 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -0.3 -1.49012e-08 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 134.255 0 183.228 2.88079
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 -1.49012e-08 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: -0.3 0.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 9.7 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.9 -0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 134.255 0 183.228 2.88079
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.9 -0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.9 0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.9 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.9 0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.9 0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -0.4 0.3 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 134.255 0 183.228 2.88079
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.4 0.3 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: -0.4 0.7 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 9.6 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0.6 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 134.255 0 183.228 2.88079
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.6 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0 1.3 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_11
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.2 0 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 115 210 0.7
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 6
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.2 0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: 0.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.2 0.3 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_12
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_12
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.7 0.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 115 215 0.7
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.7 0.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.7 1.2 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.7 1.4 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.7 1.2 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.7 1.2 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_13
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_13
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.3 -1.49012e-08 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 115 215 0.7
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 -1.49012e-08 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: -0.3 0.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: -0.3 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 9.7 0.1 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_14
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_14
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.9 -0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 115 215 0.7
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.9 -0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.9 0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.9 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.9 0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.9 0.2 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_15
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_15
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.4 0.3 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 115 215 0.7
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.4 0.3 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: -0.4 0.7 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: -0.4 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 9.6 0.5 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_16
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_16
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0.6 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 115 215 0.7
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.6 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0 1.3 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: 0 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10 1.1 0
+Scale: 0.07 0.07 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_17
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_17
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.7 0.2 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.7 0.2 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.7 1.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.7 1.5 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.7 1.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.7 1.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_18
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_18
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.2 0.1 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 6
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0.1 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.2 0.5 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.2 0.7 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.2 0.5 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: 0.2 0.5 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.2 0.5 0
+Scale: 0.04 0.05 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_19
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_19
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.2 1 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 1 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.2 1.5 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.2 1.7 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.2 1.5 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: 0.2 1.5 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: 0.2 1.5 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.2 1.5 0
+Scale: 0.0399995 0.0399995 1
+Rotation: 0 0 86
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_20
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_20
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.9 0 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.9 0 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: 0.9 0.4 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: 0.9 0.6 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: 0.9 0.4 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 10.9 0.4 0
+Scale: 0.06 0.06 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_21
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_21
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.3 0.1 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 0.1 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: -0.3 0.2 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: -0.3 0.4 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: -0.3 0.2 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: -0.3 0.2 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: -0.3 0.2 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 9.7 0.2 0
+Scale: 0.03 0.03 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstK_22
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstKFZ_BurstK_22
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.3 0.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 7
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 0.3 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 23
+Position: -0.3 0.5 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 0.383333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 101
+Position: -0.3 0.7 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 1.68333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 137
+Position: -0.3 0.5 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.28333
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 144
+Position: -0.3 0.5 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.4
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 154
+Position: -0.3 0.5 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.56667
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 9.7 0.5 0
+Scale: 0.05 0.05 1
+Rotation: 0 0 0
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: false
+

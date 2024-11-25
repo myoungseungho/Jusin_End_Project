@@ -150,10 +150,11 @@ HRESULT CPlay_Frieza::Initialize(void* pArg)
 	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.vAuraColor = _float4(16.76, 1.5333, 27.86, 5.490);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
 
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.7802f, 1.30980f, 2.f, 1.f), &m_bChase)))
 		return E_FAIL;
 	/*
 	빛 각자 생성해주기
@@ -1388,11 +1389,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			if (Get_iDirection() == 1)
 			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this);
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 0, this, m_pEnemy, true);
 			}
 			else if (Get_iDirection() == -1)
 			{
-				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, nullptr, true);
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, m_pEnemy, true);
 			}
 
 			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
@@ -1410,7 +1411,6 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 			{
 				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.f;
-
 			}
 
 		}
@@ -1423,6 +1423,16 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			//Set_AnimationStopWithoutMe(1.f);
 			Set_AnimationStop(1.f);
+
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			if (Get_iDirection() == 1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 2, this);
+			}
+			else if (Get_iDirection() == -1)
+			{
+				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 3, this, nullptr, true);
+			}
 		}
 
 		//폭발  Position 40
@@ -1828,6 +1838,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_AIR2:
@@ -1881,6 +1893,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fForcedGravityTime = m_fGravityTime - 0.08f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -2041,6 +2056,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_Heavy_Attack, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_SPECIAL_AIR:
@@ -2048,6 +2064,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Position 45. 공격
 		if (iAttackEvent == 0)
 		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, false, 1.f);
+
 			CAttackObject::ATTACK_DESC Desc{};
 			if (m_iPlayerTeam == 1)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -2200,6 +2219,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.pOwner = this;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM:
@@ -2277,6 +2299,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eAttackType = { ATTACKTYPE_LOW };
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 	}
 	break;
@@ -2361,6 +2386,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.bOnwerHitNoneStop = true;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack, false, 1.f);
+		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_CROUCH_SPECIAL:
@@ -3346,6 +3374,11 @@ void CPlay_Frieza::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
 }
 
+void CPlay_Frieza::Play_Sound_Stop(_uint SoundName)
+{
+	m_pGameInstance->Stop_Sound((CSound_Manager::SOUND_KEY_NAME)SoundName);
+}
+
 
 
 void CPlay_Frieza::Add_YellowLight()
@@ -3656,6 +3689,9 @@ void CPlay_Frieza::Character_CinematicEnd()
 			pKririn->m_bDead = true;
 
 	//static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
+
+	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	mainCamera->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_NORMAL);
 
 }
 

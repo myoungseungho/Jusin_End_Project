@@ -190,7 +190,7 @@ public:
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
 	virtual void Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)override;
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
-
+	virtual void Play_Sound_Stop(_uint SoundName)override;
 
 	void Set_UltimateKamehameha(_bool bUltimate);
 
@@ -206,7 +206,8 @@ private:
 	//CModel* m_pBlackGokuModelCom = { nullptr };
 	
 	CTexture* m_pOpeningTextureCom = { nullptr };
-
+	CTexture* m_pOpeningDecalTextureCom = { nullptr };
+	CTexture* m_pOpeningOutLineTextureCom = { nullptr };
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };

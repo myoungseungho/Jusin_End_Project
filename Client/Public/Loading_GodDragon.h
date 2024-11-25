@@ -6,6 +6,7 @@
 BEGIN(Engine)
 class CShader;
 class CModel;
+class CTexture;
 END
 
 BEGIN(Client)
@@ -27,7 +28,9 @@ public:
 
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
-
+	CTexture* m_pTextureCom = { nullptr };
+	string m_strName;
+	_int m_iDir = { 1 };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

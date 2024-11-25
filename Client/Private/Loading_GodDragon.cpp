@@ -39,6 +39,23 @@ HRESULT CLoading_GodDragon::Initialize(void* pArg)
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(5, true, 0.1f);
 
+	m_strName = "Dragon_1";
+	m_RendererDesc.strName = m_strName;
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+
+	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
+	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.pPlayerDirection = &m_iDir;
+	LightDesc.strName = m_strName;
+
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -50,12 +67,11 @@ void CLoading_GodDragon::Camera_Update(_float fTimeDelta)
 void CLoading_GodDragon::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
-
 }
 
 void CLoading_GodDragon::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 }
 
 HRESULT CLoading_GodDragon::Render(_float fTimeDelta)
@@ -97,9 +113,14 @@ HRESULT CLoading_GodDragon::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Loading_GodDragon"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_PLN_ilm"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+	
+	
 
 	return S_OK;
 }
@@ -114,6 +135,8 @@ HRESULT CLoading_GodDragon::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
+
+	m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0);
 
 	return S_OK;
 }
@@ -148,6 +171,7 @@ void CLoading_GodDragon::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
-
+	Safe_Release(m_pTextureCom);
+	
 	__super::Free();
 }

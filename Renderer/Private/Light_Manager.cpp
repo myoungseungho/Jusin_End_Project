@@ -67,13 +67,19 @@ HRESULT CLight_Manager::Add_Light(const LIGHT_DESC & LightDesc)
 		return E_FAIL;
 
 	m_Lights.emplace_back(pLight);
-
+	
 	return S_OK;
 }
 
-HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc)
+void CLight_Manager::BGLight_Pop_Front()
 {
-	CLight* pLight = CLight::Create(LightDesc);
+	Safe_Release(m_Lights.front());
+	m_Lights.pop_front();
+}
+
+HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
+{
+	CLight* pLight = CLight::Create(LightDesc, vChaseColor, pisChaseLight);
 	if (nullptr == pLight)
 		return E_FAIL;
 

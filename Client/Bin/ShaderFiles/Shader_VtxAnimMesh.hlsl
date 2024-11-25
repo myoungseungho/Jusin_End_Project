@@ -69,7 +69,7 @@ VS_OUT VS_MAIN(VS_IN In)
     
     //TestMatrix._11 = 1; /* 노말 던질때 행렬 역방향 강제 1 로 */
     Out.vPosition = vPosition;
-    Out.vNormal = normalize(mul(vNormal, TestMatrix));
+    Out.vNormal = normalize(mul(vNormal, g_WorldMatrix));
     Out.vTexcoord = In.vTexcoord;
     Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
     Out.vProjPos = vPosition;
@@ -91,6 +91,7 @@ struct PS_OUT
     float4 vDiffuse : SV_TARGET0;
     float4 vNormal : SV_TARGET1;
     float4 vDepth : SV_TARGET2;
+    float4 vAura : SV_TARGET3;
 };
 
 
@@ -104,7 +105,7 @@ PS_OUT PS_MAIN(PS_IN In)
 //    vector vHairColor = { 255.f / 255.f, 255.f / 255.f, 130.f / 255.f, 1.f };
 
     vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
-    vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
+    vector vFaceColor = { 1.f, 1.f, 1.f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
     
     float2 vTexcoordFraction = fmod(In.vTexcoord, 1.0);
@@ -139,7 +140,7 @@ PS_OUT PS_MAIN(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask2 /*+ fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-    
+    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
     //float2 vTexcoordFloor = In.vTexcoord - vTexcoordFraction;
     //float vResultFloor = (vTexcoordFloor.x + vTexcoordFloor.y) * 0.1f;
     //vHairColor.rgb = vHairColor.rgb * (1 - vResultFloor);
@@ -183,7 +184,7 @@ PS_OUT PS_MAIN_21(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), fHairMask);
     Out.vDepth = vector((In.vProjPos.w / 1000.f), In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-
+    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
     return Out;
 }
 PS_OUT PS_MAIN_FRIEZA(PS_IN In)
@@ -224,7 +225,7 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fFaceMask + fFaceMask2 + fFaceMask3));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_MeshIndex * ((1 - fLegMask) * (1 - fArmMask)), 0.f);
-
+    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
     return Out;
 }
 
@@ -238,7 +239,7 @@ PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
 {
     PS_OUT_SHADOW Out;
 
-    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 0.f);
+    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
 
     return Out;
 }
@@ -282,7 +283,7 @@ PS_OUT PS_MAIN_GOKUDECAL(PS_IN In)
     //vMtrlDecal.a = fHairMask;
     Out.vDiffuse = vMtrlDecal;
 
-    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 1);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
     return Out;
@@ -293,10 +294,17 @@ PS_OUT PS_MAIN_Loading_Dragon(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
     if (vMtrlDiffuse.a < 0.1f)
         discard;
 
-    Out.vDiffuse = vMtrlDiffuse;
+    vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
+    vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
+    
+    /* vMtrlShadeDesc 알파값으로 아웃라인을 생성 */
+    vResultColor.rgb = saturate(vHairColor.rgb - (1 - vMtrlShadeDesc.a));
+    
+    Out.vDiffuse = vResultColor;
 
 	/* In.vNormal.xyz -> -1 ~ 1 */
 	/* Out.vNormal.xyz -> 0 ~ 1 */

@@ -510,6 +510,10 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 	{
 		pCharacter->Play_Group_Sound(fValue[0], fValue[1], fValue[2]);
 	}
+	else if (splitText[0] == "PlaySoundStop")
+	{
+		pCharacter->Play_Sound_Stop(fValue[0]);
+	}
 	else if (splitText[0] == "MoveToGround")
 	{
 		CTransform* pTransform = static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")));

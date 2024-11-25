@@ -142,10 +142,11 @@ void CLobby_Goku::Update(_float fTimeDelta)
 void CLobby_Goku::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	//m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_SHADOWOBJ, this);
 }
 
 HRESULT CLobby_Goku::Render(_float fTimeDelta)
-{
+{ 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -163,7 +164,6 @@ HRESULT CLobby_Goku::Render(_float fTimeDelta)
 		/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		if (FAILED(m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i)))
 			return E_FAIL;
-
 
 		if (FAILED(m_pShaderCom->Begin(3)))
 			return E_FAIL;
@@ -197,9 +197,25 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
 		return E_FAIL;
-
+		
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
+
+	/*{
+		_float4x4			LightViewMatrix, LightProjMatrix;
+	
+		XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
+		XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)g_iWinSizeX / g_iWinSizeY, 0.1f, 1000.f));
+	
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &LightViewMatrix)))
+			return E_FAIL;
+	
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &LightProjMatrix)))
+			return E_FAIL;
+	
+		m_isShadow = false;
+		m_iPassIndex = 2;
+	}*/
 
 	return S_OK;
 }

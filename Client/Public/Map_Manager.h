@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "GameObject.h"
+#include "Effect_Layer.h"
 #include "Base.h"
 BEGIN(Engine)
 class CGameInstance;
@@ -51,6 +52,9 @@ private: /* East_Finish_Type Variable */
 	/* 어떤식으로 트리거를 호출해서 동작할지 모름 그때에 맞춰서 넣어주자 */
 	_bool			m_isWhiteDoneCheck = { false };
 	East_Finish_Type m_eEastEffectType = { EAST_END };
+	_float			m_fEastAccTime = { 0.f };
+	_bool			m_isEastFinishStart = { false };
+	CEffect_Layer* m_pEastEffect_Layer = { nullptr };
 private: /* Destructive Variable */
 	_bool			m_isRight = { false };
 	_bool			m_isDestructive_View = { false };

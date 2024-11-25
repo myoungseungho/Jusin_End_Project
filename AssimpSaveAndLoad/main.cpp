@@ -6,7 +6,9 @@ int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/Loading_GodDragon.fbx", TYPE_ANIM},
+		{"Models/TON_Ready_Allmesh.fbx", TYPE_ANIM},
+		{"Models/FRN_Ready_Allmesh.fbx", TYPE_ANIM},
+		{"Models/Goku_Ready_Allmesh.fbx", TYPE_ANIM},
 
 	};
 

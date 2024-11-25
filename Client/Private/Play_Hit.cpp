@@ -153,8 +153,8 @@ HRESULT CPlay_Hit::Initialize(void* pArg)
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
-
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+	LightDesc.vAuraColor = _float4(1.411f, 2.066f, 192.9f, 12.89f);
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.f, 1.54902f, 2.f, 1.f), &m_bChase)))
 		return E_FAIL;
 	/*
 	빛 각자 생성해주기
@@ -754,9 +754,11 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		
 	}
 
+	
 	if (m_pGameInstance->Key_Down(DIK_4))
 	{
 		Set_bFinalSkillQTE(true);
+
 		//for (int i = 0; i < 3; i++)
 		//{
 		//	//m_LaserListRS.push_back({ 0.70f + i*0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
@@ -1902,6 +1904,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.pOwner = this;
 				Desc.bOnwerHitNoneStop = true;
 
+				m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_HIT, false, 1.f);
+				m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
+
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
 			else
@@ -2028,6 +2033,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_HIT, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 
 	}
@@ -2195,6 +2202,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eAttackType = { ATTACKTYPE_MIDDLE };
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_HIT, false, 1.f);
+			m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 		}
 		else //배니싱 공격
 		{
@@ -2285,6 +2295,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_HIT, false, 1.f);
+		m_pGameInstance->Play_Group_Sound(CSound_Manager::SOUND_GROUP_KEY::LIGHT_ATTACK_Hit_SFX, false, 1.f);
 	}
 	break;
 	case Client::CPlay_Hit::ANIME_ATTACK_AIR3:
@@ -2344,7 +2357,6 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.eAttackType = { ATTACKTYPE_MIDDLE };
 
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Heavy_Attack_Hit, false, 1.f);
-		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX, false, 1.f);
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 	}
@@ -2472,7 +2484,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.ColliderDesc.vExtents = { 1.4f,2.2f,1.f };
 			Desc.ColliderDesc.vExtents = { 1.2f,1.0f,1.f };
 
-			Desc.ColliderDesc.vCenter = { 0.3f*m_iLookDirection,0.7f,0.f };
+			Desc.ColliderDesc.vCenter = { 0.3f * m_iLookDirection,0.7f,0.f };
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 1.f;
@@ -3619,7 +3631,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			}
 
-		
+
 		}
 
 
@@ -3628,7 +3640,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_iQTE == 1) // 1
 			{
-		
+
 
 			}
 
@@ -3684,7 +3696,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 30.f;
 			m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 20.f;
 
-			
+
 
 		}
 		else if (iAttackEvent == 5)
@@ -4023,11 +4035,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bCameraZoom = false;
 
 
-				Desc.fCameraShakeDuration = 0.08f;
+
+				Desc.fCameraShakeDuration = 0.05f;
 				Desc.fCameraShakeMagnitude = 0.03f;
 
-				//Desc.fCameraShakeDuration = 0.1f;
-				//Desc.fCameraShakeMagnitude = 0.1f;
 
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
@@ -4097,6 +4108,11 @@ void CPlay_Hit::Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)
 void CPlay_Hit::Play_Group_Sound(_uint groupKey, _bool loop, _float volume)
 {
 	m_pGameInstance->Play_Group_Sound((CSound_Manager::SOUND_GROUP_KEY)groupKey, loop, volume);
+}
+
+void CPlay_Hit::Play_Sound_Stop(_uint SoundName)
+{
+	m_pGameInstance->Stop_Sound((CSound_Manager::SOUND_KEY_NAME)SoundName);
 }
 
 void CPlay_Hit::Reset_PoseTime()

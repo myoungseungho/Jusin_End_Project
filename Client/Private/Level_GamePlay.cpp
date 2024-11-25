@@ -16,7 +16,7 @@
 #include "Character.h"
 #include "Sound_Manager.h"
 #include "BattleInterface.h"
-
+#include "Opening_Kririn.h"
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -45,7 +45,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Space()))
 		return E_FAIL;
 
-	m_pMap_Manager->Map_Change(CMap_Manager::MAP_SPACE);
+	m_pMap_Manager->Map_Change(CMap_Manager::MAP_VOLCANO);
 #pragma endregion
 
 #pragma region 캐릭터 사본 객체
@@ -60,7 +60,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
-	
+
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
@@ -70,7 +70,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 
@@ -90,6 +90,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	//			return E_FAIL;
 	//}
 
+	//if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_UI_Loading_GodDragon"))))
+	//	return E_FAIL;
 #pragma endregion
 
 #pragma region UI 사본 객체
@@ -145,7 +147,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	CCharacter::Character_DESC Opening_CharacterDesc{};
 	Opening_CharacterDesc.iTeam = 1;
 	Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
-	
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
 		return E_FAIL;
 
@@ -153,7 +155,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 
 
-	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+	std::thread([]() {
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+		}).detach();
+
 
 	return S_OK;
 }
@@ -217,6 +223,24 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pQTE_Manager->Update(fTimeDelta);
 	m_pQTE_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
+
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
+	{
+		/*{
+			CCharacter::Character_DESC Opening_CharacterDesc{};
+			Opening_CharacterDesc.iTeam = 1;
+			Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc);
+		}*/
+
+		static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
+
+		CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+
+	/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
+	}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -276,7 +300,6 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
-
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpPanel"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
@@ -371,15 +394,26 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboEffect"), TEXT("Layer_UI_Combo_Effect"), &ComboDesc);
 	}
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"));
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"));
+	//Key Input
+
 
 	CUIObject::UI_DESC KeyInputDesc = {};
-
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		KeyInputDesc.iNumUI = i;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
+		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"),&KeyInputDesc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"),&KeyInputDesc);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+		for (int k = 0; k < 6; k++)
+		{
+			KeyInputDesc.iNumUI = k;
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
+		}
 	}
 
 	CUIObject::UI_DESC FontNameDesc = {};
@@ -460,6 +494,11 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_1.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//필살기_2
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Ultimate_2.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Ultimate_Attack_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+
+	//입장씬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Entry, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region SFX
@@ -503,6 +542,10 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	// 밑 + 앞 + 약공격
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/Down_Forward_Light_Attack.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_Down_Forward_Light_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false, false);
+
+
+	//입장씬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_SFX/ARC_BTL_DS02_EntryGKS_Start.wav", CSound_Manager::SOUND_KEY_NAME::Goku_Entry_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
@@ -559,6 +602,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//공중추적 (소코네)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Air_Chase.ogg", CSound_Manager::SOUND_KEY_NAME::Air_Chase_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	//입장
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_Voice/Entry_0.ogg", CSound_Manager::SOUND_KEY_NAME::Entry_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 #pragma endregion
 
 #pragma region 21_SFX
@@ -568,7 +613,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//그랩_SFX_1
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Grab_1.ogg", CSound_Manager::SOUND_KEY_NAME::Grab_Attack_1_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	//J 기탄
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/J_Attack_21.ogg", CSound_Manager::SOUND_KEY_NAME::J_Attack_21, CSound_Manager::SOUND_CATEGORY::SFX, false, true);
 
 	//1필 Start
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_1_Start.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_1_Start_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
@@ -593,6 +638,12 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 	//3필 Finish
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/Ultimate_3_Finish.ogg", CSound_Manager::SOUND_KEY_NAME::Ultimate_3_Finish_21_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장1
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/ARC_BTL_TON_Entry_1.ogg", CSound_Manager::SOUND_KEY_NAME::Entry_21_SFX_0, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장2
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/21/Real_SFX/ARC_BTL_TON_Entry_2.ogg", CSound_Manager::SOUND_KEY_NAME::Entry_21_SFX_1, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
 #pragma endregion
@@ -691,6 +742,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//아이스 깨질 때
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/Hit_Ice_Hit_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Ice_Hit_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//입장
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/Real_SFX/ARC_BTL_HTN_Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Hit_Entry_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
 #pragma endregion
 
 
@@ -699,6 +753,13 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma region Frieza Sound
 
 #pragma region Frieza_Voice
+
+	//피격 
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_0_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_1.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_1_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_2.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_2_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Hit_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Hit_3.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Hit_3_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 
 	//약공 3개, 중공도 포함
 	m_pGameInstance->Register_Sound_Group(CSound_Manager::SOUND_GROUP_KEY::Light_Attack_Frieza, L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Light_Attack_0.ogg", CSound_Manager::SOUND_GROUP_KEY_NAME::Light_Attack_0_Frieza, CSound_Manager::SOUND_CATEGORY::VOICE, false);
@@ -750,6 +811,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	// 낙법 반사 (오레~)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Reflect.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
+	//입장
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_Voice/Entry.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Entry, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
 #pragma endregion
 
 #pragma region Frieza_SFX
@@ -797,6 +861,12 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	//낙법 반사
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/Reflect_SFX.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
+	//입장1
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/ARC_BTL_FRN_Entry1.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Entry_0_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//입장2
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Frieza/Real_SFX/ARC_BTL_FRN_Entry2.ogg", CSound_Manager::SOUND_KEY_NAME::Frieza_Entry_1_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
 #pragma endregion
 
 #pragma endregion
@@ -810,6 +880,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_MenuOpen.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_OPEN, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_MenuClose.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_CLOSE, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Cursor.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_SYS_Fight.ogg", CSound_Manager::SOUND_KEY_NAME::Common_FIGHT_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_SYS_Finish.ogg", CSound_Manager::SOUND_KEY_NAME::Common_FINISH_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
 #pragma region QTE 사운드
@@ -880,6 +952,22 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 #pragma endregion
 
+#pragma region 오공 + 크리링 vs 프리저
+	//프리저 그만해! (야메다 프리저!)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-003.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//고쿠!!		(크리링)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-004.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_1, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//프리저 웃음소리 (크크)
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-006.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_2, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//용서 못해.. 잘도 (우르상..!) -> 손오공이 대사
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-007.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_3, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//나니..? (프리저) 
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-009.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_4, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	//오레와 와까다제! (나 화났다 프리저) -> 손오공 대사
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-010.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_5, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+#pragma endregion
+
 	return S_OK;
 }
 
@@ -929,7 +1017,7 @@ HRESULT CLevel_GamePlay::Ready_Space()
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceEF");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceEF"), TEXT("Layer_MeteoBreakA"), &tDesc)))
 		return E_FAIL;
-	
+
 	return S_OK;
 }
 

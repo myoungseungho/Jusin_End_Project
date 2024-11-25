@@ -16,8 +16,11 @@ float g_Factor;
 
 float4 ApplySepia(float4 color);
 float4 AddGrain(float4 color, float2 uv, float grainIntensity);
-
 float4 AdjustBrightness(float4 color, float brightness);
+
+float3 GammaCorrection(float3 vColor, float fGamma);
+float3 ToneMap(float3 vColor);
+
 
 struct VS_IN
 {
@@ -159,10 +162,21 @@ PS_OUT PS_MAIN_RESULT(PS_IN In)
     
     return Out;
 }
+PS_OUT PS_MAIN_POST_PROCESS(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+    
+    vector vBackBufferColor = g_BackBufferTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    //vBackBufferColor.rgb = ToneMap(vBackBufferColor.rgb);
+    vBackBufferColor.rgb = GammaCorrection(vBackBufferColor.rgb, 1.8f);
+    Out.vColor = vBackBufferColor;
+    return Out;
+}
 
 technique11		DefaultTechnique
 {	
-	pass DrawDistortion
+	pass DrawDistortion //0
 	{
 		SetRasterizerState(RS_Cull_None);
 		SetDepthStencilState(DSS_None, 0);
@@ -175,7 +189,7 @@ technique11		DefaultTechnique
 		PixelShader = compile ps_5_0 PS_MAIN_DRAW_DISTORTION();
 	}	
 
-    pass DrawDistortionToBackBuffer
+    pass DrawDistortionToBackBuffer//1
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
@@ -188,7 +202,7 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_DISTORTION_TO_BACKBUFFER();
     }
 
-    pass Result
+    pass Result//2
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_None, 0);
@@ -227,6 +241,19 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_DRAW_DISTORTION_MOVE();
     }
 
+    pass PostProcess //5
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_POST_PROCESS();
+    }
+
 }
 
 float4 ApplySepia(float4 color)
@@ -251,6 +278,16 @@ float4 AddGrain(float4 color, float2 uv, float grainIntensity)
     return float4(color.rgb * grain, color.a); // 색상에 곱하여 적용
 }
 
+float3 ToneMap(float3 vColor)
+{
+    // Reinhard Tone Mapping
+    return vColor / (1.0 + vColor);
+}
+
+float3 GammaCorrection(float3 vColor, float fGamma)
+{
+    return pow(vColor, 1.0 / fGamma);
+}
 
 
 

@@ -197,6 +197,7 @@ public:
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
 	virtual void Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)override;
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
+	virtual void Play_Sound_Stop(_uint SoundName)override;
 
 
 	virtual _float Get_DamageScale(_bool bUltimate = false) override;

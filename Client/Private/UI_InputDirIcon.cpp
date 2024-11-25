@@ -37,11 +37,20 @@ HRESULT CUI_InputDirIcon::Initialize(void* pArg)
 	m_fPosX = 20.f;
 	m_fPosY = 190;
 
+
+	if (m_eLRPos == LEFT)
+	{
+		m_pUI_Manager->m_iNumCommandList++;
+		m_iNumCommandList  = m_pUI_Manager->m_iNumCommandList;
+	}
+	else if (m_eLRPos == RIGHT)
+	{
+		m_pUI_Manager->m_iNumCommandList2++;
+		m_iNumCommandList = m_pUI_Manager->m_iNumCommandList2;
+		m_fPosX = m_vPrevWinSize.x - 20.f;
+	}
+
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);
-
-	m_pUI_Manager->m_iNumCommandList++;
-
-	m_iNumCommandList  = m_pUI_Manager->m_iNumCommandList;
 
 	return S_OK;
 }
@@ -56,14 +65,17 @@ void CUI_InputDirIcon::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	_float fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList - m_iNumCommandList));
+	_float fOffSetPosY = 0.f;
+
+	if (m_eLRPos == LEFT)
+		fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList - m_iNumCommandList));
+	else if(m_eLRPos == RIGHT)
+		fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList2 - m_iNumCommandList));
 
 	if (fOffSetPosY >= 575)
 		Destory();
 
-
-
-	__super::Set_UI_Setting(35.f, 35.f, 20 , fOffSetPosY , 0.8f);
+	__super::Set_UI_Setting(35.f, 35.f, m_fPosX, fOffSetPosY , 0.8f);
 }
 
 void CUI_InputDirIcon::Late_Update(_float fTimeDelta)
