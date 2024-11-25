@@ -137,7 +137,6 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
-
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	m_strName = "HIT_" + to_string(m_iPlayerTeam) + "_" + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
@@ -150,10 +149,11 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.vAuraColor = _float4(16.76, 1.5333, 27.86, 5.490);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
 
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(2.f, 1.10196f, 1.73333f, 1.f), &m_bChase)))
 		return E_FAIL;
 	
 	m_pModelCom->SetUp_Animation(0, true);
@@ -162,9 +162,10 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 
 	m_pModelCom->Set_MaxAnimationUpdate_Time(0.05);
 	m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 30.f;
+
 	
 	
-	Set_AnimationStop(1.f);
+	Set_AnimationStop(3.f);
 
 
 	m_bInvisible = true;
@@ -215,6 +216,7 @@ void COpening_Kririn::Update(_float fTimeDelta)
 
 }
 
+_int a = 0;
 void COpening_Kririn::Late_Update(_float fTimeDelta)
 {
 	//__super::Late_Update(fTimeDelta);
@@ -222,12 +224,16 @@ void COpening_Kririn::Late_Update(_float fTimeDelta)
 
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 
-
+	if (m_pGameInstance->Key_Down(DIK_1))
+	{
+		a++;
+		if (a > 5)
+			a = 0;
+	}
 }
 
 HRESULT COpening_Kririn::Render(_float fTimeDelta)
 {
-
 	if (m_bInvisible == true)
 		return S_OK;
 
@@ -235,27 +241,40 @@ HRESULT COpening_Kririn::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
+	/*
+			CTexture* m_pDiffuseTextureCom = { nullptr };
+	CTexture* m_pDecalTextureCom = { nullptr };
+	CTexture* m_pIlmTextureCom = { nullptr };
+	*/
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-		if (m_iPlayerTeam == 1)
+		if (i == 1 || i == 2 || i == 4)
+			continue;
+
+		_int iPassIndex = 0;
+
+		if (i == 0)
 		{
-			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+			if (FAILED(m_pDiffuseTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+				return E_FAIL;
+
+			if (FAILED(m_pIlmTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
 				return E_FAIL;
 		}
-		else
+		else if (i == 3)
 		{
-			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+
+			if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
 				return E_FAIL;
+			iPassIndex = 4;
 		}
+
 		//m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
 
 	   /* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
 
-		if (FAILED(m_pShaderCom->Begin(1)))
+		if (FAILED(m_pShaderCom->Begin(iPassIndex)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -290,28 +309,44 @@ HRESULT COpening_Kririn::Ready_Components()
 {
 	
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_KRN"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_KRN"),
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HITOutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_ilm"),
+		TEXT("Com_IlmTexture"), reinterpret_cast<CComponent**>(&m_pIlmTextureCom))))
 		return E_FAIL;
 
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_decal"),
+		TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
+		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_base"),
+		TEXT("Com_DiffuseTexture"), reinterpret_cast<CComponent**>(&m_pDiffuseTextureCom))))
 		return E_FAIL;
 
+	/*
 
+
+	*/
 
 	return S_OK;
 }
 
 HRESULT COpening_Kririn::Bind_ShaderResources()
 {
+	
+		if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+			return E_FAIL;
 
-	if (FAILED(__super::Bind_ShaderResources()))
-		return E_FAIL;
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
+			return E_FAIL;
+
 
 	return S_OK;
 }
@@ -444,6 +479,9 @@ void COpening_Kririn::Free()
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
 
+	Safe_Release(m_pDecalTextureCom);
+	Safe_Release(m_pIlmTextureCom);
+	Safe_Release(m_pDiffuseTextureCom);
 	Safe_Release(m_p2PTextureCom);
 
 }

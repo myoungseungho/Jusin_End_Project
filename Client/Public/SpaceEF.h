@@ -34,6 +34,7 @@ private:
 	CTexture*				m_pTextureCom_Diffuse = { nullptr };
 	CModel*					m_pModelCom = { nullptr };
 	CModel*			m_pVIBufferCom = { nullptr };
+	_bool m_isRenderSpaceMap = { true };
 private:
 	_float2 m_fSpriteAnimCount = { 16.f,1.f };
 	_float2 m_fSpriteSize = { 0.f,0.f };

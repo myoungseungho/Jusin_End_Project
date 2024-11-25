@@ -1,0 +1,67 @@
+[Layer]
+LayerName: FZ_SAJ-02
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 2
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: FZ_SAJ-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-02FZ_SAJ-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 3.7 -0.6 0
+Scale: 0.0999507 0.599872 1
+Rotation: 0 0 80
+IsLoop: true
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.7 -0.6 0
+Scale: 0.0999507 0.599872 1
+Rotation: 0 0 80
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAJ-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-02FZ_SAJ-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 3.7 -0.6 0
+Scale: 0.0999947 0.599979 1
+Rotation: 0 0 80
+IsLoop: true
+Color: 120.745 56.5729 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.7 -0.6 0
+Scale: 0.0999947 0.599979 1
+Rotation: 0 0 80
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

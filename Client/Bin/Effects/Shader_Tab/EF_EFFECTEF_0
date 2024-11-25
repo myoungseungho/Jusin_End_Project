@@ -1,0 +1,20 @@
+Version: 2
+KeyCount: 2
+KeySize: 45
+Key: Prototype_Component_Texture_Effect_cmn_aura03
+ID: 1
+vTexCoord: 0.3333 1
+KeySize: 46
+Key: Prototype_Component_Texture_Effect_cmn_trail04
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 593 154
+NodeID: 3001 Position: 56 398
+NodeID: 2 Position: 337 153
+NodeID: 3 Position: 86 164
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 2
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 8 LinkDestNodeID: 5

@@ -118,13 +118,20 @@ private: /* For.Distortion Variable */
 	class CTransform*			m_pDistortionTransformCom = { nullptr };
 	class CTexture*				m_pDistortionTextureCom = { nullptr };
 	class CShader*				m_pDistortionShaderCom = { nullptr };
+	class CTexture*				m_pAuraTextureCom = { nullptr };
 
 	ID3D11ShaderResourceView*	m_pBackBufferSRV = { nullptr };
+
+	_float m_fAuraAccTime = { 0.f };
 	_float m_fAccTime = { 0.f };
+
 	
 	_bool m_isFriezaRender = { false };
-
 	MAP_TYPE m_eCurMapType = { MAP_SPACE };
+public:
+	void Set_AuraColor(_float4 vColor) { m_fAuraColor = vColor; }
+private:
+	_float4 m_fAuraColor = {};
 private:
 	HRESULT Render_Priority(_float fTimeDelta);
 	HRESULT Render_ShadowObj(_float fTimeDelta);
@@ -135,6 +142,7 @@ private:
 	HRESULT Render_Player(_float fTimeDelta);
 	HRESULT Render_PlayerLight(_float fTimeDelta, _int iCount);
 	HRESULT Render_PlayerDeferred(_float fTimeDelta);
+	HRESULT Render_PlayerAuraMaskBlur(_float fTimeDelta, _float4 vColor);
 	HRESULT Render_PlayerBlur(_float fTimeDelta);
 	HRESULT Render_NonBlend_Test(_float fTimeDelta); // 디버깅용 피킹
 	HRESULT Render_NonBlend_Layer(_float fTimeDelta);// 디버깅용 피킹
@@ -168,9 +176,12 @@ private:
 	HRESULT Draw_Glow(CShader* pShader , GLOW_DESC* pDesc = nullptr);
 	HRESULT Draw_MapBloom();
 	HRESULT Draw_WhiteBlack_Mode(_float fTimeDelta);
+	HRESULT Draw_Test_PostProcess(_float fTImeDelta);
+
 public:
 	void Switch_BlackOut(_bool isTrue);
 	void Start_WhiteOut(_float2 vDir, _bool* isDone);
+	void Switch_Test_PostProcess(_bool isTrue);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

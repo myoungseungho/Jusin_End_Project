@@ -111,12 +111,6 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
 		return E_FAIL;
 
-	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
-		return E_FAIL;
 
 #pragma endregion
 
@@ -165,10 +159,10 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 		CLoading_Camera::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_CharacterSlectModel */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Loading_GodDragon"),
-		CLoading_GodDragon::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
+	///* Prototype_GameObject_CharacterSlectModel */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Loading_GodDragon"),
+	//	CLoading_GodDragon::Create(m_pDevice, m_pContext))))
+	//	return E_FAIL;
 
 	m_bIsLevelPrepared = true;
 
@@ -200,9 +194,10 @@ HRESULT CLevel_Loading::Ready_Layer()
 	}
 
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
+//	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_Loading_GodDragon"));
+
 
 	//CUIObject::UI_DESC EnergyEffDesc = {};
 	//EnergyEffDesc.fSpeedPerSec = 10.f;

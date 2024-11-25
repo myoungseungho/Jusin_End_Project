@@ -1605,6 +1605,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 		return;
 
 	//if(Check_bCurAnimationisCanChase())
+	
 
 	_short iCheck = Check_bCurAnimationisCanChase();
 	if (iCheck == 0)
@@ -5883,6 +5884,28 @@ void CCharacter::Character_Start_QTE(_uint iQTEID)
 	m_iQTE = -1;
 	CQTE_Manager::Get_Instance()->Start_QTE((CQTE_Manager::QTE_ID)iQTEID, this);
 
+}
+void CCharacter::Add_ChaseLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+	LightDesc.vDiffuse = m_vChaseLight;
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 1.f;
+	LightDesc.strName = "Chase";
+	/*LightDesc.pisDone = &m_bChase;*/
+	
+
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
 }
 
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

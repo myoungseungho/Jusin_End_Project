@@ -1,0 +1,561 @@
+[Layer]
+LayerName: Hit_SAO-04
+Duration: 1
+TickPerSecond: 2
+KeyFramesCount: 59
+NumEffec: 10
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Hit_SAO-04_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.4 1.5 0
+Scale: 0.035 0.1 1
+Rotation: 0 0 38.182
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.4 1.5 0
+Scale: 0.035 0.1 1
+Rotation: 0 0 38.182
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 0.7 1.8 0
+Scale: 0.035 0.1 1
+Rotation: 0 0 38.182
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0.7 1.8 0
+Scale: 0.035 0.1 1
+Rotation: 0 0 38.182
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 1.3 3.2 0
+Scale: 0.035 0.1 1
+Rotation: 0 0 38.182
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -1 1 0
+Scale: 0.05 0.12 1
+Rotation: 0 0 334.286
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1 1 0
+Scale: 0.05 0.12 1
+Rotation: 0 0 334.286
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -1 1.4 0
+Scale: 0.05 0.12 1
+Rotation: 0 0 334.286
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -1 1.4 0
+Scale: 0.05 0.12 1
+Rotation: 0 0 334.286
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -1.6 3 0
+Scale: 0.05 0.12 1
+Rotation: 0 0 334.286
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1.7 1.7 0
+Scale: 0.15 0.07 1
+Rotation: 0 0 31.948
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.7 1.7 0
+Scale: 0.15 0.07 1
+Rotation: 0 0 31.948
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 2 2 0
+Scale: 0.15 0.07 1
+Rotation: 0 0 31.948
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 2 2 0
+Scale: 0.15 0.07 1
+Rotation: 0 0 31.948
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 2.7 2.5 0
+Scale: 0.15 0.07 1
+Rotation: 0 0 31.948
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -1.5 2.2 0
+Scale: 0.129999 0.0899992 1
+Rotation: 0 0 155.065
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.5 2.2 0
+Scale: 0.129999 0.0899992 1
+Rotation: 0 0 155.065
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -1.8 2.5 0
+Scale: 0.129999 0.0899992 1
+Rotation: 0 0 155.065
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -1.8 2.5 0
+Scale: 0.129999 0.0899992 1
+Rotation: 0 0 155.065
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -2.4 2.8 0
+Scale: 0.129999 0.0899992 1
+Rotation: 0 0 155.065
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1.9 1.2 0
+Scale: 0.1 0.04 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.9 1.2 0
+Scale: 0.1 0.04 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 2.2 1.5 0
+Scale: 0.1 0.04 1
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 2.2 1.5 0
+Scale: 0.1 0.04 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 3.1 1.7 0
+Scale: 0.1 0.04 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -1.8 2.4 0
+Scale: 0.13 0.0599998 1
+Rotation: 0 0 307.792
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.8 2.4 0
+Scale: 0.13 0.0599998 1
+Rotation: 0 0 307.792
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -2.1 2.7 0
+Scale: 0.13 0.0599998 1
+Rotation: 0 0 307.792
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -2.1 2.7 0
+Scale: 0.13 0.0599998 1
+Rotation: 0 0 307.792
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -2.7 3.5 0
+Scale: 0.13 0.0599998 1
+Rotation: 0 0 307.792
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1.8 2.9 0
+Scale: 0.15 0.12 1
+Rotation: 0 0 80.26
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.8 2.9 0
+Scale: 0.15 0.12 1
+Rotation: 0 0 80.26
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 2 3.2 0
+Scale: 0.15 0.12 1
+Rotation: 0 0 80.26
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 2 3.2 0
+Scale: 0.15 0.12 1
+Rotation: 0 0 80.26
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 2.9 4 0
+Scale: 0.15 0.12 1
+Rotation: 0 0 80.26
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -1.4 0.2 0
+Scale: 0.09 0.13 1
+Rotation: 0 0 36.623
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.4 0.2 0
+Scale: 0.09 0.13 1
+Rotation: 0 0 36.623
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -1.7 0.5 0
+Scale: 0.09 0.13 1
+Rotation: 0 0 36.623
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -1.7 0.5 0
+Scale: 0.09 0.13 1
+Rotation: 0 0 36.623
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -2.5 0.6 0
+Scale: 0.09 0.13 1
+Rotation: 0 0 36.623
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 1.4 0.1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1.4 0.1 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 1.7 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 1.7 0.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 2.6 0.6 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Hit_SAO-04_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SAO-04Hit_SAO-04_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.3 2.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 2.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -0.3 2.9 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -0.3 2.9 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -0.3 3.4 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: true
+

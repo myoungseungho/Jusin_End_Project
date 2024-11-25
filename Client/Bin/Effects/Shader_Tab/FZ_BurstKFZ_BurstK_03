@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 55
+Key: Prototype_Component_Texture_Effect_cmn_stoneanim00_gray
+ID: 1
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 565 129
+NodeID: 1 Position: 273 61
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 4 LinkDestNodeID: -2

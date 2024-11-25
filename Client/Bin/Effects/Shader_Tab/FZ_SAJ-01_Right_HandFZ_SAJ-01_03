@@ -1,0 +1,17 @@
+Version: 2
+KeyCount: 1
+KeySize: 48
+Key: Prototype_Component_Texture_Effect_ton_thunder01
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 468 105
+NodeID: 2 Position: 210 29
+NodeID: 3001 Position: 0 0
+NodeID: 1 Position: 238 32
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 4 2 Speed: 26.3
+LinkCount: 2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2
