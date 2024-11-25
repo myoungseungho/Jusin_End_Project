@@ -68,7 +68,7 @@ void CUI_CharaSelectLight::Late_Update(_float fTimeDelta)
 	tDesc.tGlowDesc.iPassIndex = 7;
 	tDesc.tGlowDesc.fGlowFactor = 1.2f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this );
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this );
 }
 
 HRESULT CUI_CharaSelectLight::Render(_float fTimeDelta)

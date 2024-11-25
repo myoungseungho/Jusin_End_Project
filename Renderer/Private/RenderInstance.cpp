@@ -24,6 +24,10 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
+	/*m_pLobbyRenderer = CLobby_Renderer::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pLobbyRenderer)
+		return E_FAIL;*/
+
 	m_pPicking = CPicking::Create(*ppDevice, *ppContext, hWnd);
 	if (nullptr == m_pPicking)
 		return E_FAIL;
@@ -36,8 +40,12 @@ HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
+	//if (FAILED(m_pLobbyRenderer->Draw(fTimeDelta)))
+	//	return E_FAIL;
+
 	if (FAILED(m_pRenderer->Draw(fTimeDelta)))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -48,6 +56,22 @@ HRESULT CRenderInstance::Add_RenderObject(CRenderer::RENDERGROUP eRenderGroup, C
 		return E_FAIL;
 
 	return m_pRenderer->Add_RenderObject(eRenderGroup, pRenderObject, pDesc);
+}
+
+HRESULT CRenderInstance::Add_LobbyRenderObject(CLobby_Renderer::RENDERGROUP eRenderGroup, CGameObject* pRenderObject, RENDER_OBJECT* pDesc)
+{
+	if (nullptr == m_pLobbyRenderer)
+		return E_FAIL;
+
+	return m_pLobbyRenderer->Add_LobbyRenderObject(eRenderGroup, pRenderObject);
+}
+
+HRESULT CRenderInstance::Add_LobbyDebugComponent(CComponent* pDebugComponent)
+{
+	if (nullptr == m_pLobbyRenderer)
+		return E_FAIL;
+
+	return m_pLobbyRenderer->Add_LobbyDebugComponent(pDebugComponent);
 }
 
 HRESULT CRenderInstance::Add_DebugComponent(CComponent* pDebugComponent)
@@ -259,6 +283,7 @@ void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone)
 void CRenderInstance::Release_Engine()
 {
 	Safe_Release(m_pRenderer);
+	Safe_Release(m_pLobbyRenderer);
 	Safe_Release(m_pLight_Manager);
 	Safe_Release(m_pTarget_Manager);
 	Safe_Release(m_pPicking);

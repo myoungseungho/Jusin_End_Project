@@ -165,7 +165,8 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 
 			if (m_strHitEffectName.size() !=0)
 			{
-				pCharacter->Character_Make_Effect(m_strHitEffectName);
+				//pCharacter->Character_Make_Effect(m_strHitEffectName);
+				pCharacter->Character_Make_Effect(m_strHitEffectName,m_fHitEffectOffset,m_bHitEffectFlip);
 			}
 
 

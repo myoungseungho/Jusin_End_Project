@@ -32,6 +32,10 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
+private:
+	_uint m_iPassIndex = { 3 };
+	_bool m_isShadow = { true };
+
 public:
 	static CLobby_Frieza* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

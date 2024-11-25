@@ -1,5 +1,8 @@
 
 PLAY_FRN,FRN600cs_body,0,AnimSpeedChange,0.019,60.1
+PLAY_FRN,FRN600cs_body,0.001000,PlaySound,149,0,1
+PLAY_FRN,FRN600cs_body,50.001000,PlaySound,148,0,1
+PLAY_FRN,FRN600cs_body,260.002000,PlaySound,150,0,1
 
 //,301 리플렉터. (공용)
 //,PLAY_FRN,FRN301_body,0,AnimSpeedChange,0.015,35
@@ -247,7 +250,7 @@ PLAY_FRN,FRN032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 13
 PLAY_FRN,FRN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_FRN,FRN033_body,0.001000,PlaySound,129,0,0.5
+PLAY_FRN,FRN033_body,0.001000,PlaySound,129,0,1
 PLAY_FRN,FRN033_body,0.002,PlaySound,86,0,1
 PLAY_FRN,FRN033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_FRN,FRN033_body, 1,ObjectMove, -0.3, 0, 0, 0
@@ -267,7 +270,8 @@ PLAY_FRN,FRN033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 15
 PLAY_FRN,FRN035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_FRN,FRN035_body,0.001000,PlaySound,133,0,0.5
+PLAY_FRN,FRN035_body,0.001000,PlaySound,133,0,1
+PLAY_FRN,FRN035_body,0.002000,PlaySoundStop,131
 PLAY_FRN,FRN035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_FRN,FRN035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_FRN,FRN035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -326,25 +330,30 @@ PLAY_FRN,FRN042_body,0,FrameMove,10
 //,PLAY_FRN,FRN050_body,0,FrameMove,5
 //,PLAY_FRN,FRN050_body,10,FrameMove,5
 PLAY_FRN,FRN050_body,0.000000,AnimSpeedChange,0.064000,86.060997
-PLAY_FRN,FRN050_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN050_body,0.0010,PlayGroupSound,210,0,1
+PLAY_FRN,FRN050_body,0.00100,PlaySound,122,0,1
 PLAY_FRN,FRN050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,숙이는 피격모션
 PLAY_FRN,FRN051_body,0.000000,AnimSpeedChange,0.064000,50
-PLAY_FRN,FRN051_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN051_body,0.0010,PlayGroupSound,210,0,1
+PLAY_FRN,FRN051_body,0.00100,PlaySound,122,0,1
 PLAY_FRN,FRN051_body,0,FrameMove,15
 
 //,앉아 피격모션
 PLAY_FRN,FRN052_body,0,AnimSpeedChange,0.020000,57.374001
-PLAY_FRN,FRN052_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN052_body,0.0010,PlayGroupSound,210,0,1
+PLAY_FRN,FRN052_body,0.00100,PlaySound,122,0,1
 //,PLAY_FRN,FRN052_body,0,FrameMove,10
 
 
 //, 공중피격 약 10   스턴끝날때 40이 되도록 속도를 조정...?  스피드가  스턴시간*4라고?  상대방의 TickPerSecond를 조절하는 기능필요?
 //,PLAY_FRN,FRN060_body,0.000000,AnimSpeedChange,0.044000,49.292999
 PLAY_FRN,FRN060_body,0.000000,AnimSpeedChange,0.044000,30
+PLAY_FRN,FRN060_body,0.0010,PlayGroupSound,210,0,1
+PLAY_FRN,FRN060_body,0.00100,PlaySound,122,0,1
 PLAY_FRN,FRN060_body,0,PositionChange,14
-PLAY_FRN,FRN060_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN060_body,0.0010,PlayGroupSound,210,0,1
 PLAY_FRN,FRN060_body,30,AnimSpeedChange,0.044000,60
 PLAY_FRN,FRN060_body,40,AnimSpeedChange,0.044000,1
 PLAY_FRN,FRN060_body,56,AnimSpeedChange,0.01,2
@@ -370,15 +379,16 @@ PLAY_FRN,FRN070_body,0.000000,AnimSpeedChange,0.013000,24.646999
 
 //,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
 PLAY_FRN,FRN072_body,0.000000,AnimSpeedChange,0.013000,62.223000
+PLAY_FRN,FRN072_body,0.00100,PlaySound,122,0,1
 //,PLAY_FRN,FRN072_body,39,FrameMove,0
 PLAY_FRN,FRN072_body,37,PositionChange,2.78
 
 //,왼쪽위로 회전하며 날아가는 자세
 PLAY_FRN,FRN073_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_FRN,FRN073_body,0.00100,PlaySound,122,0,1
 //,왼쪽으로 회전하며 날아가는 자세
 PLAY_FRN,FRN074_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_FRN,FRN074_body,0.00100,PlaySound,122,0,1
 
 //,강공맞고 왼쪽으로
 PLAY_FRN,FRN075_body,0.000000,AnimSpeedChange,0.030000,44.040001
@@ -447,6 +457,7 @@ PLAY_FRN,FRN037_body,0,AnimSpeedChange,0.008,61.011
 //,드래곤러시 (공용모션) 
 //,PLAY_FRN,FRN304_body,0,AnimSpeedChange,0.008,10
 PLAY_FRN,FRN304_body,0,PositionChange,5.0
+PLAY_FRN,FRN304_body,0.02000,PlaySound,139,0,1
 //,PLAY_FRN,FRN304_body,5.1,AnimSpeedChange,0.008,40
 PLAY_FRN,FRN304_body,5.1,AnimSpeedChange,0.008,101
 PLAY_FRN,FRN304_body,5.1,AttackEvent,0
@@ -963,8 +974,8 @@ PLAY_FRN,FRN432_body,76,AnimSpeedChange,0.01,60
 
 //,변신3필
 PLAY_FRN,FRN433_body,0,AnimSpeedChange,0.01,10
-PLAY_FRN,FRN433_body,0.001000,PlaySound,99,0,0.5
-PLAY_FRN,FRN433_body,0.001000,PlaySound,113,0,0.5
+PLAY_FRN,FRN433_body,0.001000,PlaySound,99,0,1
+PLAY_FRN,FRN433_body,0.001000,PlaySound,113,0,1
 //,컷씬, 적 시간정지
 PLAY_FRN,FRN433_body,0,AttackEvent,0
 PLAY_FRN,FRN433_body,0.002,Camera_Play_21_Grab_Special_0_Shake,1.4,0.3
@@ -984,6 +995,7 @@ PLAY_FRN,FRN433cs_body,160.002,Camera_Play_21_Grab_Special_0_Shake,2.0,0.03
 
 //,VS오공 시네마틱 
 PLAY_FRN,FRN_GKS801cs_01_body,0,AnimSpeedChange,0.005,60
+PLAY_FRN,FRN_GKS801cs_01_body,10.001000,PlaySound,151,0,1
 
 //,VS 오공 패배 시네마틱
 PLAY_FRN,FRN_GKS805cs_body,588.213013,AnimSpeedChange,0.005000,60.000000

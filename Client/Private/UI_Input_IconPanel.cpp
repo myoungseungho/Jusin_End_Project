@@ -32,16 +32,38 @@ HRESULT CUI_Input_IconPanel::Initialize(void* pArg)
 	UI_DESC* pDesc = static_cast<UI_DESC*>(pArg);
 	m_iOffsetScaled = pDesc->iNumUI;
 
-	m_fPosX = 20.f;
+
+	if(m_eLRPos == LEFT)
+		m_fPosX = 20.f;
+	else if (m_eLRPos == RIGHT)
+		m_fPosX = m_vPrevWinSize.x - 20.f;
+
+	
+	if (m_eLRPos == LEFT)
+	{
+		if (m_iOffsetScaled == 2)
+			m_fPosX += 20;
+		else if (m_iOffsetScaled == 3)
+			m_fPosX += 40;
+	}
+	else if (m_eLRPos == RIGHT)
+	{
+		if (m_iOffsetScaled == 2)
+			m_fPosX -= 20;
+		else if (m_iOffsetScaled == 3)
+			m_fPosX -= 40;
+	}
+
 	m_fPosY = 190;
 	m_fSizeX = 45.f * (m_iOffsetScaled);
 	m_fSizeY = 45.f;
 
-	if (m_iOffsetScaled == 2)
-		m_fPosX += 20;	
-	else if(m_iOffsetScaled == 3)
-		m_fPosX += 40;
-	m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
+
+	if (m_eLRPos == LEFT)
+		m_iNumCommandList = m_pUI_Manager->m_iNumCommandList;
+
+	else if (m_eLRPos == RIGHT)
+		m_iNumCommandList = m_pUI_Manager->m_iNumCommandList2;
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.9f);
 
@@ -57,13 +79,17 @@ void CUI_Input_IconPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	_float fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList - m_iNumCommandList));
+	_float fOffSetPosY = 0.f;
+
+	if (m_eLRPos == LEFT)
+		fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList - m_iNumCommandList));
+	else if(m_eLRPos == RIGHT)
+		fOffSetPosY = m_fPosY + (40 * (m_pUI_Manager->m_iNumCommandList2 - m_iNumCommandList));
 
 	if (fOffSetPosY >= 575)
 		Destory();
 
 	__super::Set_UI_Setting(45.f * m_iOffsetScaled, 45.f, m_fPosX, fOffSetPosY, 0.9f);
-
 }
 
 void CUI_Input_IconPanel::Late_Update(_float fTimeDelta)

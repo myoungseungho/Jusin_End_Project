@@ -3,7 +3,13 @@
 
 float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
+texture2D g_FontTexture;
+
 float g_fTime = 0.016f;
+float g_fAlphaValue;
+
+vector g_vDiffColor;
+vector g_vOutLineColor;
 
 struct VS_IN
 {
@@ -69,6 +75,9 @@ PS_OUT PS_MAIN(PS_IN In)
     PS_OUT Out;
 
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     if (Out.vDiffuse.a < 0.1f)
         discard;
 
@@ -86,6 +95,47 @@ PS_OUT PS_MOVE_SKY(PS_IN In)
 
     // 이동된 텍스처 좌표로 샘플링
     Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, movingTexcoord);
+    if (Out.vDiffuse.a < 0.1f)
+        discard;
+
+    return Out;
+}
+
+PS_OUT PS_MOVE_DISPLAY(PS_IN In)
+{
+    PS_OUT Out;
+
+    // g_fTime을 사용하여 일정 속도로 텍스처 좌표가 이동하도록 설정
+    float2 LineTexcoord = In.vTexcoord;
+    LineTexcoord.x += g_fTime;
+    
+    float2 FontTexcoord = In.vTexcoord;
+    FontTexcoord.x *= 8.f;
+    FontTexcoord.x -= g_fTime;
+    
+    
+    // 이동된 텍스처 좌표로 샘플링
+    Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, LineTexcoord);
+    
+    vector vFontTex = g_FontTexture.Sample(LinearSampler, FontTexcoord);
+    
+    vFontTex.a = vFontTex.r;
+  
+    if (vFontTex.r >= 0.5f)
+        vFontTex = g_vOutLineColor;
+    
+    if (vFontTex.g >= 0.5f)
+        vFontTex = g_vDiffColor;
+    
+    //vFontTex *= float4(0.f, 0.f, 1.f, 1.f);
+    
+    Out.vDiffuse.a = Out.vDiffuse.r;
+    Out.vDiffuse.a -= g_fAlphaValue;
+    Out.vDiffuse.a = saturate(Out.vDiffuse.a);
+    
+    Out.vDiffuse += vFontTex;
+    
+    //Out.vDiffuse.rgb = float3(1.f, 0.f, 1.f);
     if (Out.vDiffuse.a < 0.1f)
         discard;
 
@@ -120,18 +170,17 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MOVE_SKY();
     }
+
+    pass Move_Display
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MOVE_DISPLAY();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -67,7 +67,6 @@ void CLoading_GodDragon::Camera_Update(_float fTimeDelta)
 void CLoading_GodDragon::Update(_float fTimeDelta)
 {
 	m_pModelCom->Play_Animation(fTimeDelta);
-
 }
 
 void CLoading_GodDragon::Late_Update(_float fTimeDelta)

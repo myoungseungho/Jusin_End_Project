@@ -69,7 +69,7 @@ VS_OUT VS_MAIN(VS_IN In)
     
     //TestMatrix._11 = 1; /* 노말 던질때 행렬 역방향 강제 1 로 */
     Out.vPosition = vPosition;
-    Out.vNormal = normalize(mul(vNormal, TestMatrix));
+    Out.vNormal = normalize(mul(vNormal, g_WorldMatrix));
     Out.vTexcoord = In.vTexcoord;
     Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
     Out.vProjPos = vPosition;
@@ -239,7 +239,7 @@ PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
 {
     PS_OUT_SHADOW Out;
 
-    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 0.f);
+    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
 
     return Out;
 }
@@ -283,7 +283,7 @@ PS_OUT PS_MAIN_GOKUDECAL(PS_IN In)
     //vMtrlDecal.a = fHairMask;
     Out.vDiffuse = vMtrlDecal;
 
-    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 1);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
 
     return Out;

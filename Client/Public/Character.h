@@ -189,6 +189,7 @@ public:
 	//virtual void AttackEvent(_int iAttackEventEnum, _int AddEvent = 0) {};
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0) {};
 	virtual void Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume) {};
+	virtual void Play_Sound_Stop(_uint SoundName) {};
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume) {};
 
 
@@ -388,10 +389,12 @@ public:
 	//Model한테도 있음
 	_bool m_bCinematic_NoMoveXZ = { false };
 
-	void Set_AnimationMoveXZ(_bool bValue);
+	void Set_AnimationMoveXZ(_bool bValue); // NOMoveXZ 잘못적어서 false가 움직임 true가 안움직임
 
 
+	virtual void Character_CinematicEnd() {};
 protected:
+
 	void Reset_AttackStep();
 
 	//애니메이션 끝에 대고 사용하지 말것
@@ -755,7 +758,7 @@ public:
 
 public:
 	Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
-	void GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput);
+	void GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput,_uint iTeam);
 
 
 	//UI에서 써야하는 정보 

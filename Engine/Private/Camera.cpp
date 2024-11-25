@@ -80,6 +80,7 @@ HRESULT CCamera::Render(_float fTimeDelta)
 //얘는 메인카메라다.
 void CCamera::Update_Camera(CCamera* camera, _float fTimeDelta)
 {
+	
 	//여기서는 가상카메라의 셋팅이 들어가야 한다.
 	_matrix Inverse_Matrix = static_cast<CTransform*>(camera->Get_Component(TEXT("Com_Transform")))->Get_WorldMatrix_Inverse();
 	m_pGameInstance->Set_Transform(CPipeLine::D3DTS_VIEW, Inverse_Matrix);

@@ -176,6 +176,13 @@ public:
 		COUNT_END
 	};
 
+	struct LaserData {
+		float fLifeTime;
+		_float3 Rotation;
+		//_float3 Scale;
+		_float2 Scale;  //z값은 무조건 1이라 이게 맞긴 한데 
+
+	};
 private:
 	CPlay_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CPlay_Hit(const CPlay_Hit& Prototype);
@@ -221,6 +228,7 @@ public:
 	virtual void AttackEvent(_int iAttackEvent, _int AddEvent = 0)override;
 	virtual void Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)override;
 	virtual void Play_Group_Sound(_uint groupKey, _bool loop, _float volume)override;
+	virtual void Play_Sound_Stop(_uint SoundName)override;
 
 
 	void Reset_PoseTime();
@@ -249,6 +257,7 @@ public:
 	//시간,xyz회전각도
 	list<pair<_float, _float3>> m_LaserList;
 	
+	vector<LaserData> m_LaserListRS;
 
 private:
 	

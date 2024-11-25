@@ -2,16 +2,27 @@
 
 #include "Client_Defines.h"
 #include "GameObject.h"
+#include "UI_Define.h"
 
 BEGIN(Engine)
+
 class CShader;
 class CModel;
+class CTexture;
+
 END
 
 BEGIN(Client)
 
 class CCharaSelect_Model final : public CGameObject
 {
+public:
+	typedef struct
+	{
+		CUI_Define::PLAYER_ID ePlayerID = {};
+		_uint iNumModel = { 0 };
+	}SELECT_MODEL;
+
 private:
 	CCharaSelect_Model(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CCharaSelect_Model(const CCharaSelect_Model& Prototype);
@@ -27,10 +38,20 @@ public:
 
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
+	CTexture* m_pLimTexture = { nullptr };
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+
+private:
+	void Set_ModelPrototypeTag();
+	void Default_Position(_uint iNumModel);
+
+private:
+	CUI_Define::PLAYER_ID m_ePlayerID = {};
+	_wstring m_strModelTag = {};
+	_int m_iLookDirection = { 1 };
 
 public:
 	static CCharaSelect_Model* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

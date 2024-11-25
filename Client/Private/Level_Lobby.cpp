@@ -8,6 +8,8 @@
 
 #include "GameObject.h"
 
+#include "Lobby_DisplayBoard.h"
+#include "Lobby_Cloud.h"
 
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -85,6 +87,16 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"), TEXT("Layer_Lobby_Sky_Of_Sea"))))
 		return E_FAIL;
 
+	//로비 구름
+
+	//CLobby_Cloud::CLOUD_DESC tCloudDesc = {};
+	//for (size_t i = 0; i < 5; ++i)
+	//{
+	//	tCloudDesc.iNumObject = i;
+	//	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Cloud"), TEXT("Layer_Lobby_Cloud"))))
+	//		return E_FAIL;
+	//}
+
 	//로비 카메라
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Main_Camera_Lobby"), TEXT("Layer_Main_Camera_Lobby"))))
 		return E_FAIL;
@@ -105,21 +117,72 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCursor"), TEXT("Layer_Lobby_TextCursor"))))
 		return E_FAIL;
 
-
 	//Enter UI
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"))))
 		return E_FAIL;
 
+	//원형 전광판
+	CLobby_DisplayBoard::DISPLAY_DESC tDisplayDesc = {};
 
+	_uint iNumFontID = CLobby_DisplayBoard::FONT_END;
+	_uint iNumInOutID = CLobby_DisplayBoard::INOUT_END;
+
+	for (size_t i = 0; i < iNumFontID; i++)
+	{
+		tDisplayDesc.eFontID = static_cast<CLobby_DisplayBoard::LOBBY_FONTID>(i);
+
+		for (size_t k  = 0; k < iNumInOutID; k++)
+		{
+			tDisplayDesc.eInOutID = static_cast<CLobby_DisplayBoard::LOBBY_INOUT>(k);
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_DisplayBoard"), TEXT("Layer_Lobby_ZDisplayBoard"), &tDisplayDesc)))
+				return E_FAIL;
+		}
+	}
 #pragma endregion
 
 #pragma region Light
 	LIGHT_DESC			LightDesc{};
+	
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	LightDesc.vDirection = _float4(1.f, 1.f, 1.f, 0.f);
 	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(1.f, 1.f, 1.f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	//LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);
+	LightDesc.vDiffuse = _float4(0.6f, 0.6f, 0.6f, 1.f);
+	LightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
+	LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
+
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(10.f, 5.f, 10.f, 1.f);
+	LightDesc.fRange = 10.f;
+	LightDesc.vDiffuse = _float4(1.f, 0.0f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.3f, 0.f, 0.f, 1.f);
+	LightDesc.vSpecular = _float4(1.f, 0.f, 0.f, 1.f);
+
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(20.f, 5.f, 10.f, 1.f);
+	LightDesc.fRange = 10.f;
+	LightDesc.vDiffuse = _float4(0.0f, 1.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.f, 0.3f, 0.f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 1.f, 0.f, 1.f);
 
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
