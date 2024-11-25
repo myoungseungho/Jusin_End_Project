@@ -231,7 +231,8 @@ _float2 CMap_Manager::Active_EastFinish()
 {
 	switch (m_eEastEffectType)
 	{
-	case MAP_EF_SPACE:
+	case EAST_LASER:
+
 		if (m_eCurMap == MAP_SPACE)
 		{
 			m_isEastFinishStart = true;
@@ -284,7 +285,7 @@ _float2 CMap_Manager::Active_EastFinish()
 			CEffect_Layer::COPY_DESC tDesc{};
 			tDesc.pPlayertMatrix = &Result4x4;
 
-			//m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
+			m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
 
 			//(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
 			//(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
@@ -308,6 +309,7 @@ void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType)
 {
 	m_isEastFinish = true;
 	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck);
+	m_eEastEffectType = EAST_LASER;
 }
 
 void CMap_Manager::IsDone_Active()

@@ -53,7 +53,7 @@ private:
 
 	_int*				m_pLookDirection = { nullptr };
 
-	_uint		m_iTestRGIndex = { 0 };
+	_uint		m_iTestRGIndex = { 8 };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

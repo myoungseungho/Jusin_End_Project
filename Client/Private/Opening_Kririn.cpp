@@ -479,9 +479,11 @@ void COpening_Kririn::Free()
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
 
+	Safe_Release(m_pIlmTextureCom);
 	Safe_Release(m_pDecalTextureCom);
 	Safe_Release(m_pIlmTextureCom);
 	Safe_Release(m_pDiffuseTextureCom);
 	Safe_Release(m_p2PTextureCom);
+	Safe_Release(m_p1PTextureCom);
 
 }
