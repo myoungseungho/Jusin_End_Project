@@ -137,7 +137,6 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
-
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	m_strName = "HIT_" + to_string(m_iPlayerTeam) + "_" + to_string(pDesc->ePlayerSlot);
 	m_RendererDesc.strName = m_strName;
