@@ -259,11 +259,6 @@ HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CS
 	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName, fTimeDelta);
 }
 
-void CRenderInstance::BGLight_Pop_Front()
-{
-	m_pLight_Manager->BGLight_Pop_Front();
-}
-
 _float4 CRenderInstance::Picked_Position(_bool* pPicked)
 {
 	return m_pPicking->Picked_Position(pPicked);

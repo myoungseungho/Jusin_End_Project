@@ -135,12 +135,6 @@ HRESULT CLight_Manager::Render_Lights(LIGHT_TYPE eLightType, CShader * pShader, 
 	return S_OK;
 }
 
-void CLight_Manager::BGLight_Pop_Front()
-{
-	Safe_Release(m_Lights.front());
-	m_Lights.pop_front();
-}
-
 CLight_Manager * CLight_Manager::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 {
 	CLight_Manager*		pInstance = new CLight_Manager(pDevice, pContext);

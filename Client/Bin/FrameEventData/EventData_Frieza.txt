@@ -995,6 +995,7 @@ PLAY_FRN,FRN433cs_body,160.002,Camera_Play_21_Grab_Special_0_Shake,2.0,0.03
 
 //,VS오공 시네마틱 
 PLAY_FRN,FRN_GKS801cs_01_body,0,AnimSpeedChange,0.005,60
+PLAY_FRN,FRN_GKS801cs_01_body,10.001000,PlaySound,151,0,1
 
 //,VS 오공 패배 시네마틱
 PLAY_FRN,FRN_GKS805cs_body,588.213013,AnimSpeedChange,0.005000,60.000000

@@ -155,7 +155,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 
 
-	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+	std::thread([]() {
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+		}).detach();
+
 
 	return S_OK;
 }
