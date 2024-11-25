@@ -181,6 +181,7 @@ public:
 		Goku_vs_Frieza_Expl_SFX_1,
 		Goku_vs_Frieza_Goku_Attack_SFX,
 		Goku_vs_Frieza_Goku_Charge_SFX,
+		Goku_vs_Frieza_Goku_ChargeLoof_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

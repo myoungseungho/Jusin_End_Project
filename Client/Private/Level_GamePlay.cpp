@@ -968,7 +968,11 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Hit_FRN_DtRtzn.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Expl_SFX_1, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 	//손오공 기모으기
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Charge_Loop_LP.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_ChargeLoof_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//손오공 기모으기
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_GKS_SprKameha_Chrg.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Charge_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
 	//손오공 화났을 때 효과음
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_SYS_ActSkill_Normal.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
