@@ -47,7 +47,7 @@ private:
 private:
 	_bool m_bIsQTEActive = { false }; // QTE 활성화 여부
 	_float m_fTimer = { 0.f }; // 타이머
-	_float m_iTotalTime = { 10.f }; // 총 시간 (예: 10초)
+	_float m_iTotalTime = { 6.f }; // 총 시간 (예: 10초)
 	_int m_iSequenceLength = { 10 }; // 시퀀스 길이 (N)
 
 	// 1P 관련

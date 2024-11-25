@@ -152,9 +152,11 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
+	LightDesc.vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
 
-	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc)))
+	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.5f, 1.4f, 1.17647f, 1.f), &m_bChase)))
 		return E_FAIL;
+
 	/*
 	빛 각자 생성해주기
 	*/
@@ -261,6 +263,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	return;
 	//}
 
+	cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
 	Update_Tag_In(fTimeDelta);
 
@@ -316,7 +319,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 						//Tag_In(m_ePlayerSlot);
 					}
 				}
-				 
+			
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -359,15 +362,49 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				m_fGravityTime += fTimeDelta;
 
 			}
-
+			
 		}
 		if (m_bAnimationLock == false)
 		{
-			Character_Play_Animation(fTimeDelta);
+			if (m_bCinematic_NoMoveXZ)
+				Character_Play_Animation_NoXZ(fTimeDelta);
+			else
+				Character_Play_Animation(fTimeDelta);
+
+			if (m_pModelCom->m_iCurrentAnimationIndex == m_iStartAnimatonIndex)
+			{
+				if (m_bMotionPlaying == false)
+				{
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if(m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//시작 애니메이션 끝부분  오공 끝 370
+					m_bNormalGoku = false;
+					Set_CurrentAnimationPositionJump(369.99f);
+				}
+			}
+			else if (m_pModelCom->m_iCurrentAnimationIndex == ANIME_GOKU_CINEMATIC_01)
+			{
+				if (m_bMotionPlaying == false)
+				{
+					Set_AnimationMoveXZ(false);
+					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+				}
+				else if (m_pGameInstance->Key_Down(DIK_RETURN))
+				{
+					//시작 애니메이션 끝부분  오공 끝 1170
+					m_bNormalGoku = false;
+					Set_CurrentAnimationPositionJump(1169.99f);
+				}
+			}
+			
 		}
 		else
 		{
 			Update_AnimationLock(fTimeDelta);
+
+			
 		}
 		m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 		return;
@@ -433,6 +470,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		{
 			if (m_pGameInstance->Key_Down(DIK_R))
 			{
+				
 				Chase_Ready(fTimeDelta);
 			}
 		}
@@ -554,6 +592,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				Set_Animation(ANIME_LAYUP);
 				Set_CurrentAnimationPositionJump(5.f);
 			}
+			
 			else if (m_bStun == false && m_pModelCom->m_iCurrentAnimationIndex != m_iFallAnimationIndex && m_pModelCom->m_iCurrentAnimationIndex != m_iHit_Air_LightAnimationIndex)
 				AnimeEndNextMoveCheck();
 
@@ -722,48 +761,13 @@ void CPlay_Goku::Late_Update(_float fTimeDelta)
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
 {
-
-	////백업
-	//if (FAILED(Bind_ShaderResources()))
-	//	return E_FAIL;
-	//
-	//_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-	//
-	//for (size_t i = 0; i < iNumMeshes; i++)
-	//{
-	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	//	if (m_iPlayerTeam == 1)
-	//	{
-	//		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
-	//			return E_FAIL;
-	//	}
-	//	else
-	//	{
-	//		if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-	//			return E_FAIL;
-	//	}
-	//	 //m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-	//
-	//	/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
-	//	m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-	//
-	//	if (FAILED(m_pShaderCom->Begin(0)))
-	//		return E_FAIL;
-	//
-	//
-	//	if (FAILED(m_pModelCom->Render(i)))
-	//		return E_FAIL;
-	//}
-
 	if (m_bInvisible == true)
 		return S_OK;
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	_uint		iNumMeshes = m_pBlackGokuModelCom->Get_NumMeshes();
-
+	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 	/* Main MeshIndex : 0 */
 	/* DramaticCamera MeshIndex : 1 */
 	/* Shadow MeshIndex : 2 */
@@ -771,32 +775,62 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	/* Detail?? MeshIndex : 4 */
 	for (size_t i = 0; i < iNumMeshes; i++)
 	{
-		/*if (i == 1 || i == 2 || i == 4)
-			continue;*/
+		_uint iPassIndex = { 0 };
+
+		if (m_bNormalGoku)
+		{
+			// 0: 쓰레기
+			// 1 :기본 몸 
+			// 2: 큐브?
+			// 3: decal  제외
+			// 4 : decal? 등딱지
+			if (i == 0 || i == 2 || i == 3)
+				continue;
+			if (i == 4)
+				iPassIndex = 4;
+		}
+		else
+		{
+			if (i == 1 || i == 2 || i == 4)
+				continue;
+			if (i == 3)
+				iPassIndex = 4;
+		}
 
 		/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
 		/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-		_uint iPassIndex = { 0 };
-		if(i==3)
-			iPassIndex = 4;
+		
+	
 
 		if (i == 0)
 		{
 			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 				return E_FAIL;
 		}
-
 		else
 		{
-
-			if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-				return E_FAIL;
-			if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
-				return E_FAIL;
-
+			if (m_bNormalGoku)
+			{
+				
+				if (FAILED(m_pOpeningTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+					return E_FAIL;
+				if (FAILED(m_pOpeningDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+					return E_FAIL;
+				if (FAILED(m_pOpeningOutLineTextureCom->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
+					return E_FAIL;
+				
+			}
+			else
+			{
+				if (FAILED(m_p2PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+					return E_FAIL;
+				/* 오프닝 관련 패스 인덱스 다 던져주기 */
+				//m_pOpeningOutLineTextureCom
+				if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
+					return E_FAIL;
+				
+			}
 		}
-
-
 
 	   /* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
 		m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
@@ -804,29 +838,20 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		if (FAILED(m_pShaderCom->Begin(iPassIndex)))
 			return E_FAIL;
 
-
-		//if(m_bFinalSkillss3 == false)
-		//{
-		//	if (FAILED(m_pModelCom->Render(i)))
-		//		return E_FAIL;
-		//}
-		//else
-		//{
-		//	if (FAILED(m_pModelCom_Skill->Render(i)))
-		//		return E_FAIL;
-		//}
-
-
-
 		//이게 왜 됨?
-		if (m_bAlwaysss3Test)
+		if (m_bNormalGoku)
+		{
+			if (FAILED(m_pModelCom_Opening->Render(i)))
+				return E_FAIL;
+		}
+		else if (m_bAlwaysss3Test)
 		{
 			if (FAILED(m_pModelCom_Skill->Render(i)))
 				return E_FAIL;
 		}
 		else if (m_bFinalSkillss3 == false)
 		{
-			if (FAILED(m_pBlackGokuModelCom->Render(i)))
+			if (FAILED(m_pModelCom->Render(i)))
 				return E_FAIL;
 		}
 		else
@@ -836,27 +861,6 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 		}
 	}
 
-
-
-
-	//corlorChange Test
-	//for (size_t i = 0; i < iNumMeshes; i++)
-	//{
-	//	/* 모델이 가지고 있는 머테리얼 중 i번째 메시가 사용해야하는 머테리얼구조체의 aiTextureType_DIFFUSE번째 텍스쳐를 */
-	//	/* m_pShaderCom에 있는 g_DiffuseTexture변수에 던져. */
-	//	if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, (aiTextureType)m_iPlayerTeam, "g_DiffuseTexture", i)))
-	//		return E_FAIL;
-	//	// m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_NORMALS, "g_NormalTexture", i);
-	//
-	//	/* 모델이 가지고 있는 뼈들 중에서 현재 렌더링할려고 했던 i번째ㅑ 메시가 사용하는 뼈들을 배열로 만들어서 쉐이더로 던져준다.  */
-	//	m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i);
-	//
-	//	if (FAILED(m_pShaderCom->Begin(0)))
-	//		return E_FAIL;
-	//
-	//	if (FAILED(m_pModelCom->Render(i)))
-	//		return E_FAIL;
-	//}
 #ifdef _DEBUG
 	m_pColliderCom->Render(fTimeDelta);
 #endif // DEBUG
@@ -953,36 +957,67 @@ HRESULT CPlay_Goku::Ready_Components()
 
 
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"), TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku"),
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"), TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
+		TEXT("Com_Model_Sub"), reinterpret_cast<CComponent**>(&m_pModelCom_Skill))))
 		return E_FAIL;
+
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"),
+		TEXT("Com_Model_Sub2"), reinterpret_cast<CComponent**>(&m_pModelCom_Opening))))
+		return E_FAIL;
+
+
 	
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"), 
-		TEXT("Com_Model_Black"), reinterpret_cast<CComponent**>(&m_pBlackGokuModelCom))))
-		return E_FAIL;
+	//if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"), 
+	//	TEXT("Com_Model_Black"), reinterpret_cast<CComponent**>(&m_pBlackGokuModelCom))))
+	//	return E_FAIL;
 	
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"), TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_OutLine"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pOutLineCom))))
 		return E_FAIL;
 
 	if (m_iPlayerTeam == 1)
 	{
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"), TEXT("Com_1PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"),
+			TEXT("Com_1PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
+
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_1P"),
+			TEXT("Com_Opening_Texture"), reinterpret_cast<CComponent**>(&m_pOpeningTextureCom))))
+			return E_FAIL;
+		
 	}
 	else
 	{
-		/* Com_Model */
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"),
+			TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
-	}
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"), TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_2P"),
+			TEXT("Com_Opening_Texture"), reinterpret_cast<CComponent**>(&m_pOpeningTextureCom))))
+			return E_FAIL;
+
+	}	
+
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_decal"), 
+		TEXT("Com_DecalTexture"), reinterpret_cast<CComponent**>(&m_pDecalTextureCom))))
 		return E_FAIL;
-		
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_decal"),
+		TEXT("Com_OpeningDecalTexture"), reinterpret_cast<CComponent**>(&m_pOpeningDecalTextureCom))))
+		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_ilm"),
+		TEXT("Com_OpeningOutLineTexture"), reinterpret_cast<CComponent**>(&m_pOpeningOutLineTextureCom))))
+		return E_FAIL;
+	
+	/*
 
+	
+	*/
 
 	return S_OK;
 }
@@ -1394,7 +1429,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-		Desc.strEffectName = TEXT("BurstJ-03");
+		//Desc.strEffectName = TEXT("BurstJ-03");
+		Desc.strEffectName = TEXT("Parrying_Ball");
+
 
 		Desc.iGainKiAmount = 3;
 
@@ -1720,6 +1757,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 7;
 
 			Desc.bOnwerHitNoneStop = true;
+			Desc.fEffectRotationDegree = 340.f;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
@@ -2100,6 +2138,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_bUltimateKamehameha)
 			{
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
+
+
 				//Set_AnimationStopWithoutMe(2.f);
 				//
 				////이전에 만들어진 모든 Attack Object들 2초간 정지.  이거 본인은 이 직후에 만들어질테니 괜찮음
@@ -2497,6 +2538,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Character_Make_Effect(TEXT("BackGround_Dust"));
+
+				Character_Make_Effect(TEXT("EnergieSDO-01"), { -0.4f,-0.07f });
+				Character_Make_Effect(TEXT("EnergieSDO-02"), { -0.4f,-0.07f });
+
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("EnergieSDO-01"));
+				//Character_Make_BoneEffect("GD_fist_R", TEXT("EnergieSDO-02"));
+
 
 			}
 
@@ -3330,6 +3378,14 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 		}
 	}
+
+	case ANIME_START_DEFAULT:
+	{
+		if (iAttackEvent == 4)
+		{
+			m_bNormalGoku = false;
+		}
+	}
 	default:
 		break;
 	}
@@ -3493,11 +3549,13 @@ void CPlay_Goku::Free()
 
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
-	Safe_Release(m_pBlackGokuModelCom);
-	
+	//Safe_Release(m_pBlackGokuModelCom);
+	Safe_Release(m_pOpeningDecalTextureCom);
+	Safe_Release(m_pOpeningOutLineTextureCom);
 	Safe_Release(m_pModelCom_Opening);
 	Safe_Release(m_pModelCom_Skill);
 	Safe_Release(m_p2PTextureCom);
 	Safe_Release(m_pDecalTextureCom);
+	Safe_Release(m_pOpeningTextureCom);
 
 }

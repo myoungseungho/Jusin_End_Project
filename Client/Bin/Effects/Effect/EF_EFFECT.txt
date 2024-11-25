@@ -1,0 +1,336 @@
+[Layer]
+LayerName: EF_EFFECT
+Duration: 0.3
+TickPerSecond: 0.01
+KeyFramesCount: 18
+NumEffec: 10
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: EF_0
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_0
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 28 0 0
+Scale: 9.9951 28.1697 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 36.3079 72.6159 255 1.49007
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 28 0 0
+Scale: 9.9951 28.1697 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0.1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 28 0 0
+Scale: 9.99407 70.3458 1
+Rotation: 0 0 90
+CurTime: 0.283333
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_1
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_1
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 15 0 0
+Scale: 6.27386 12.9995 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 0 110.613 255 1.09272
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 15 0 0
+Scale: 6.27386 12.9995 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0.1
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_2
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_2
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 15 0 0
+Scale: 6.27255 12.9966 1
+Rotation: 0 0 90
+IsLoop: false
+Color: 255 255 255 0.445364
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 15 0 0
+Scale: 6.27255 12.9966 1
+Rotation: 0 0 90
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_3
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_3
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -20.779 0 0
+Scale: 0.27 0.28 0.28
+Rotation: 0 0 15
+IsLoop: false
+Color: 0 20.2649 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -20.779 0 0
+Scale: 0.27 0.28 0.28
+Rotation: 0 0 15
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: -77.532 0 0
+Scale: 0.17 0.28 0.28
+Rotation: 0 0 15
+CurTime: 0.133333
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_4
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_4
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -40.779 0 0
+Scale: 0.17 0.27 0.27
+Rotation: 0 0 15
+IsLoop: false
+Color: 0 20.2649 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -40.779 0 0
+Scale: 0.17 0.27 0.27
+Rotation: 0 0 15
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: -149 0 0
+Scale: 0.17 0.24 0.24
+Rotation: 0 0 15
+CurTime: 0.133333
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_5
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_5
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -57.779 0 0
+Scale: 0.27 0.25 0.25
+Rotation: 0 0 15
+IsLoop: false
+Color: 0 20.2649 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -57.779 0 0
+Scale: 0.27 0.25 0.25
+Rotation: 0 0 15
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: -179 0 0
+Scale: 0.17 0.24 0.24
+Rotation: 0 0 15
+CurTime: 0.133333
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_6
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_6
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -72.779 0 0
+Scale: 0.17 0.23 0.23
+Rotation: 0 0 15
+IsLoop: false
+Color: 0 20.2649 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -72.779 0 0
+Scale: 0.17 0.23 0.23
+Rotation: 0 0 15
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: -209 0 0
+Scale: 0.17 0.24 0.24
+Rotation: 0 0 15
+CurTime: 0.133333
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_7
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_7
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -92.1538 -12.521 0
+Scale: 15.0005 1.99999 1
+Rotation: 0 0 354.325
+IsLoop: false
+Color: 32.9305 95.4139 255 2.68212
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -92.1538 -12.521 0
+Scale: 15.0005 1.99999 1
+Rotation: 0 0 354.325
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_8
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_8
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.932 0.829002 -100
+Scale: 1 19.2637 0.999933
+Rotation: 277.844 5.46 344.753
+IsLoop: false
+Color: 100 100 100 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.932 0.829002 -100
+Scale: 1 19.2637 0.999933
+Rotation: 277.844 5.46 344.753
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+
+[Effect]
+EffectName: EF_9
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/EF_EFFECTEF_9
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 3.463 0
+Scale: 1.5 21.7792 1.00006
+Rotation: 275.961 5.46799 3.117
+IsLoop: false
+Color: 50 50 50 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 3.463 0
+Scale: 1.5 21.7792 1.00006
+Rotation: 275.961 5.46799 3.117
+CurTime: 0
+Duration: 0.3
+IsNotPlaying: false
+

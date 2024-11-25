@@ -148,6 +148,8 @@
 #include "AttackObject_Ranged.h"
 #include "AttackObject_Energy.h"
 #include "AttackObject_Reflect.h"
+#include "ParryingRangedObject.h"
+#include "Opening_Kririn.h"
 
 #include "BoneEffectObject.h"
 #include "QTE_Same_Grab_UI_Icon.h"
@@ -1143,6 +1145,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_aura06.dds"), 1))))
 		return E_FAIL;
 	// 15
+	return S_OK;
 }
 
 HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
@@ -1481,7 +1484,14 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_kira01.dds"), 1))))
 		return E_FAIL;
 	//90
+	//_matrix			PreTransformMatrix = XMMatrixIdentity();
+	//PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
 
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Loading_GodDragon"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+
+	//PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_kmhmFractal"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_kmhmFractal.dds"), 1))))
 		return E_FAIL;
@@ -1492,6 +1502,10 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_line01"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_line01.dds"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_PLN_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Dragon/PLN_ilm.png"), 1))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_space_ending_textrue"),
@@ -1736,6 +1750,8 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_aura14"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_aura14.dds"), 1))))
 		return E_FAIL;
+
+	return S_OK;
 }
 
 HRESULT CLoader::Load_Texture_Resources_GamePlay_2()
@@ -2285,10 +2301,22 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_KRN"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/KRN/KRN_AllMesh.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/KRN/KRN_base.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/KRN/KRN_decal.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_KRN_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/KRN/KRN_ilm.png")))))
+		return E_FAIL;
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1AllMesh_Event.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Frieza"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Frieza/FRN_AllMesh.bin", PreTransformMatrix))))
@@ -2321,9 +2349,9 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/metal.png")))))
 		return E_FAIL;
 	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_TestMesh.bin", PreTransformMatrix))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_TestMesh.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
@@ -2333,6 +2361,22 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base.png")))))
 		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_base_1P.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_2P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_base_2P.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_ilm"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_ilm.png")))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_decal"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/BlackGoku/GKN_decal.png")))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Hit"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
@@ -2346,6 +2390,15 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3_AllMesh.bin", PreTransformMatrix))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Opening"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
+	//	return E_FAIL;
+	
 
 	//21ȣ
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_21"),
@@ -2438,6 +2491,7 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
 	//	return E_FAIL;
+
 #pragma endregion
 
 	return S_OK;
@@ -3215,6 +3269,11 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CPlay_Goku::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Opening_Kririn"),
+		COpening_Kririn::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Play_21"),
 		CPlay_21::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3259,6 +3318,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CAttackObject_Energy::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_ParryingRangedObject"),
+		CParryingRangedObject::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Bone_Effect_Object"),
 		CBoneEffectObject::Create(m_pDevice, m_pContext))))
@@ -3730,9 +3793,7 @@ HRESULT CLoader::Load_Map_Space()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF1"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF1.bin", PreTransformMatrix))))
 		return E_FAIL;
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_BlackGoku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/BlackGoku.bin", PreTransformMatrix))))
-		return E_FAIL;
+	
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/EF/SpaceEF.bin", PreTransformMatrix))))

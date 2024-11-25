@@ -31,6 +31,8 @@ public:
 public:
 	_bool Play_Animation(_float fTimeDelta);
 	_bool Play_Animation_Lick(_float fTimeDelta);
+	_bool Play_Animation_Lick2(_float fTimeDelta, class CTransform* pTransform);
+
 
 	void SetUp_Animation(_uint iAnimationIndex, _bool isLoop, _float blendDuration = 0.0f);
 	_float GetDurationByIndex(_uint _animationIndex);
@@ -92,6 +94,7 @@ public:
 	HRESULT SaveToBinary(const std::string& binFilePath) const;
 	void SaveBoneToBinary(std::ofstream& outFile, const BoneData& bone) const;
 
+	_bool m_bNoMoveXZ = { false };
 
 public:
 	static CModel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _char* pModelFilePath, _fmatrix PreTransformMatrix);

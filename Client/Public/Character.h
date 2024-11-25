@@ -85,7 +85,6 @@ public:
 		_ushort iTeam = 1;
 		CUI_Define::PLAYER_SLOT ePlayerSlot = {};
 
-
 	}Character_DESC;
 
 	struct CommandPattern {
@@ -133,6 +132,8 @@ public:
 
 	//애니메이션
 	virtual _bool Character_Play_Animation(_float fTimeDelta);
+	virtual _bool Character_Play_Animation_NoXZ(_float fTimeDelta);
+
 	virtual _bool Check_bCurAnimationisGroundMove(_uint iAnimation = 1000) { return false; };
 	virtual _bool Check_bCurAnimationisAirMove(_uint iAnimation = 1000);
 	virtual _bool Check_bCurAnimationisAttack(_uint iAnimation = 1000) { return false; };
@@ -161,6 +162,8 @@ public:
 	virtual void AnimeEndNextMoveCheck();
 	//virtual void Set_Animation(_uint iAnimationIndex) {};
 	virtual void Set_Animation(_uint iAnimationIndex, _bool bloof = false);
+	//_short Get_iIdleAnimation();
+	void Set_IdleAnimation();
 
 	_bool		CompareNextAnimation(_uint iAnimationIndex, _float fNextPosition = 0);
 
@@ -359,6 +362,9 @@ public:
 	void Play_NewRound_Winner();
 	void Update_Collider();
 
+
+	_bool Play_FirstOpening();
+
 	void Update_Opening(_float fTimeDelta);
 	_bool m_bOpening = false;
 	_float m_fAccOpeningTime = {0.f};
@@ -374,6 +380,16 @@ public:
 	_bool Update_BeReflecting(_float fTimeDelta);
 
 	void Set_bFinalSkillQTE(_bool bFinalSkillQTE);
+
+	CHARACTER_INDEX Get_eCharacterIndex();
+
+
+
+	//Model한테도 있음
+	_bool m_bCinematic_NoMoveXZ = { false };
+
+	void Set_AnimationMoveXZ(_bool bValue);
+
 
 protected:
 	void Reset_AttackStep();
@@ -700,6 +716,8 @@ protected:
 	_bool m_bBenishingAttack = { false };
 	_bool m_bInvisible = { false };
 
+
+
 	//디버그용
 	_uint m_iDebugComoboDamage = { 0 };
 	_bool m_bDebugInputLock = { false };
@@ -803,6 +821,13 @@ public:
 protected:
 	_short m_iQTE = { -1 };
 	_bool m_bCreateQTE = { false };
+
+
+protected:
+	void Add_ChaseLight();
+	//m_eCharacterIndex;
+	_float4 m_vChaseLight;
+	_bool m_isLightChaseDone;
 
 public:
 	static CCharacter* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

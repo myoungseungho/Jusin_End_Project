@@ -60,6 +60,8 @@ namespace Engine
 		string			strName;
 		float			fLifeTime;
 		float			fAccTime;
+
+		XMFLOAT4		vAuraColor;
 	};
 
 	struct ENGINE_DLL VTXPOS

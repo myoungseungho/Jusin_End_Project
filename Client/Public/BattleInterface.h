@@ -82,6 +82,9 @@ public:
 	
 	void Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iCharacterslot);
 
+	void Character_Opening_AIO();
+	void Character_Opening_EndForCharacter(_ubyte iTeam);
+
 private:
 	
 public:
@@ -105,6 +108,10 @@ private:
 	_ubyte m_i2TeamPlayingCharacterIndex = {};
 
 	CHARACREATE_DESC m_tCharaCreateDesc[4] = {};
+
+	_bool m_bCinematicOpening = false;
+
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 

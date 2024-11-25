@@ -35,6 +35,7 @@ public:
 		_bool bPierce = false;
 		_wstring strEffectName = {};
 
+		_float fEffectRotationDegree = {};
 	};
 private:
 	CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -81,6 +82,9 @@ private:
 	Ranged_LightColor m_eRangeColor = { RANGED_LIGHT_NONE };
 
 	class CEffect_Layer* m_pRangedEffect_Layer = { nullptr };
+
+	_bool m_bCreateReflectEnable = true;
+
 
 public:
 	static CAttackObject_Ranged* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

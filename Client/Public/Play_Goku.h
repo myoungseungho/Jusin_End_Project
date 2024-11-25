@@ -201,8 +201,11 @@ public:
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };
-	CModel* m_pBlackGokuModelCom = { nullptr };
+	//CModel* m_pBlackGokuModelCom = { nullptr };
 	
+	CTexture* m_pOpeningTextureCom = { nullptr };
+	CTexture* m_pOpeningDecalTextureCom = { nullptr };
+	CTexture* m_pOpeningOutLineTextureCom = { nullptr };
 	CGoku_MeleeAttack m_tAttackMap;
 
 	_bool m_bAttackCount[COUNT_END] = { true };
@@ -212,6 +215,9 @@ private:
 
 	_bool m_bFinalSkillss3 = { false };
 	_bool m_bAlwaysss3Test = { false };
+
+
+	_bool m_bNormalGoku = { true }; //true
 
 private:
 	HRESULT Ready_Components();

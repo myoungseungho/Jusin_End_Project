@@ -23,6 +23,12 @@ public:
 	_int GetBoneIndex() { return m_iBoneIndex; };
 	void Update_FrameIndex(_float fCurrentPosition, _uint* pKeyFrameIndex);
 
+	const _char* Get_Name()
+	{
+		return m_szName;
+	}
+
+	
 public:
 	_char				m_szName[MAX_PATH] = {};
 

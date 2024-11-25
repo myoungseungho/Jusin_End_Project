@@ -228,6 +228,12 @@ HRESULT CCharacter::Initialize(void* pArg)
 	Character_DESC* pDesc = static_cast<Character_DESC*>(pArg);
 	//m_strModelName = pDesc->strModelName;
 
+	if (pArg == nullptr)
+	{
+		FlipDirection(1);
+		return S_OK;
+	}
+
 	m_pFrameEvent = CFrameEvent_Manager::Get_Instance()->Get_pFrameEventMap();
 
 	if (FAILED(__super::Initialize(pArg)))
@@ -801,13 +807,54 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
 	
-	if (m_iPlayerTeam == 2 && m_pModelCom->m_iCurrentAnimationIndex == 0)
-	{
-		_bool bDebug = true;
-	}
+
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
 	
+
+	return bAnimationEnd;
+}
+
+_bool CCharacter::Character_Play_Animation_NoXZ(_float fTimeDelta)
+{
+	_bool bAnimationEnd = false;
+
+	_float fPrePosition = m_pModelCom->m_fCurrentAnimPosition;
+
+	//_int iOneFrameTeest = 0;
+
+	if (fPrePosition == 0)
+	{
+
+		ProcessEventsFramesZero(m_eCharacterIndex, m_pModelCom->m_iCurrentAnimationIndex);
+		fPrePosition += 0.001;
+
+		//iOneFrameTeest++;
+	}
+
+	if (m_pModelCom->Play_Animation_Lick2(fTimeDelta,m_pTransformCom))
+		//if (m_pModelCom->Play_Animation(fTimeDelta))
+	{
+		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
+		if (m_pModelCom->m_isLoopAnim)
+		{
+			fPrePosition = 0.001;
+			ProcessEventsFramesZero(m_eCharacterIndex, m_pModelCom->m_iCurrentAnimationIndex);
+			//iOneFrameTeest++;
+		}
+		bAnimationEnd = true;
+		m_bMotionPlaying = false;
+	}
+	else
+		m_bMotionPlaying = true;
+
+
+	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
+
+
+	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
+
+
 
 	return bAnimationEnd;
 }
@@ -1295,6 +1342,7 @@ void CCharacter::Chase2(_float fTimeDelta)
 		
 			m_pChaseEffectLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
 			
+			
 			//m_pChaseEffectLayer = m_pEffect_Manager->Copy_Layer_AndGet(TEXT("BurstR-02_Rotated_Left"), &tDesc);
 
 			//BurstR-02_Rotated_Left
@@ -1556,6 +1604,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 		return;
 
 	//if(Check_bCurAnimationisCanChase())
+	
 
 	_short iCheck = Check_bCurAnimationisCanChase();
 	if (iCheck == 0)
@@ -1730,16 +1779,46 @@ void CCharacter::Character_Attack_Grab(_float fTimeDelta)
 			//잡기 공격이 비겼으면
 			if (m_bGrabDraw)
 			{
-				Add_Move({ -0.4f * m_iLookDirection,0.3f });
-				//BreakFall_Air();
 
-				Set_Animation(m_iBreakFall_Air);
-				Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
-				Set_ForcedGravityDown();
+				//QTE 비기면 뒤로 낙법
+				if(m_iQTE==0)
+				{
 
-				Reset_AttackStep();
-				Set_fImpulse({ -5.f * m_iLookDirection, 2.f });
+					Add_Move({ -0.4f * m_iLookDirection,0.3f });
+					//BreakFall_Air();
 
+					Set_Animation(m_iBreakFall_Air);
+					Set_NextAnimation(m_iIdleAnimationIndex, 2.f);
+					Set_ForcedGravityDown();
+
+					Reset_AttackStep();
+					Set_fImpulse({ -5.f * m_iLookDirection, 2.f });
+				}
+
+				//QTE 이겼으면 공격
+				else if (m_iQTE == 1)
+				{
+					//Add_Move({ -0.4f * m_iLookDirection,0.f });
+					Add_Move({ -0.2f * m_iLookDirection,0.f });
+
+
+					if (Get_fHeight() == 0)
+						Set_Animation(m_iAttack_Heavy);
+					else
+					{
+						Set_Animation(m_iAttack_Air3);
+						Set_CurrentAnimationPositionJump(m_fAIrGrabEndAnimationPositon);
+						Set_ForcedGravityDown();
+					}
+				}
+				//QTE 졌으면 쳐맞을 준비
+				else if (m_iQTE == -1)
+				{
+					Set_AnimationStop(0.3f);
+				}
+
+				m_bCreateQTE = false;
+				m_iQTE = -1;
 
 			}
 			else //공격 성공시
@@ -1832,8 +1911,7 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
 		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
-		m_pEffect_Manager->Copy_Layer(TEXT("FZ_WJ"), &tDesc);
-
+		
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
 
 		//Set_fJumpPower(4.f); //중력Ver1 기준
@@ -2495,11 +2573,7 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 void CCharacter::Set_AnimationStop(_float fStopTime)
 {
 
-	if (m_pGameInstance->Key_Pressing(DIK_F7))
-	{
-		if(m_iPlayerTeam == 1 && m_bPlaying)
-		_bool bDebug = true;
-	}
+
 
 	if(fStopTime != 0)
 	{
@@ -3009,6 +3083,7 @@ AttackColliderResult CCharacter::Guard_Check3(AttackType eAttackType)
 	//가드 중에는 어떤 공격 들어와도 무조건 가드 성공
 	if (Check_bCurAnimationisGuard())
 	{
+
 		return RESULT_GUARD;
 	}
 
@@ -3359,7 +3434,6 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		return;
 
 
-	_bool debugA = true;
 	if (m_iPlayerTeam == 1 && other->m_ColliderGroup == CCollider_Manager::COLLIDERGROUP::CG_2P_BODY)
 	{
 		//CTransform* pTransofrm = static_cast<CTransform*>(other->GetMineGameObject()->Get_Component(TEXT("Com_Transform")));
@@ -3389,11 +3463,15 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
 
+		//else if (m_bStun == true || Check_bCurAnimationisAirHit() || Check_bCurAnimationisGroundSmash())
+		//{
+		//	m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+		//}
 		//둘 다 stun상태가 아니고, 땅에있으면
 		else //if (pCharacter->Get_fHeight() == 0 && Get_fHeight() == 0)
 		{
@@ -3423,6 +3501,16 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//pCharacter->Update_PreviousXPosition();
 
 
+				//공중인 캐릭터가 있으면 그 캐릭터가 밀리기
+				
+				_float fEnemyHeight = pCharacter->Get_fHeight();
+				_float fMyHeight = Get_fHeight();
+
+				if (fMyHeight >fEnemyHeight  )
+				{
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+				}
+				//같은경우는 불가능,  낮은경우는 아래서 처리
 
 			}
 
@@ -3455,7 +3543,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		 if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 		}
@@ -3502,7 +3590,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
 				//pCharacter->Update_PreviousXPosition();
 
-
+				
 
 			}
 
@@ -3549,11 +3637,16 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 			{
 				//얼마나 밀리는가? 겹친만큼? 
 				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+
+				if (pCharacter->Get_bStun())
+				{
+					m_fImpuse.x = 0;
+				}
 			}
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 			//cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
@@ -3587,8 +3680,14 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
 				//pCharacter->Update_PreviousXPosition();
 
+				_float fEnemyHeight = pCharacter->Get_fHeight();
+				_float fMyHeight = Get_fHeight();
 
-
+				if (fMyHeight > fEnemyHeight)
+				{
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+				}
+				
 			}
 
 
@@ -3616,11 +3715,16 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 			{
 				//얼마나 밀리는가? 겹친만큼? 
 				m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) ,0.f,0.f });
+
+				if(pCharacter->Get_bStun())
+				{
+					m_fImpuse.x = 0;
+				}
 			}
 
 		}
 
-		else if (m_bStun == true || Check_bCurAnimationisAirHit())
+		if (m_bStun == true || Check_bCurAnimationisAirHit())
 		{
 			m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
 			//cout << "AddMove : " << -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other) << endl;
@@ -3668,7 +3772,13 @@ void CCharacter::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				//pTransofrm->Add_Move({ pCharacter->Get_iDirection() * -0.1f,0.f,0.f });
 				//pCharacter->Update_PreviousXPosition();
 
+				_float fEnemyHeight = pCharacter->Get_fHeight();
+				_float fMyHeight = Get_fHeight();
 
+				if (fMyHeight > fEnemyHeight)
+				{
+					m_pTransformCom->Add_Move({ -m_iLookDirection * m_pColliderCom->Get_Overlap_X(other),0.f,0.f });
+				}
 
 			}
 
@@ -4265,6 +4375,12 @@ void CCharacter::Play_NewRound_Loser()
 	pMainCamera->Set_Player(this);
 
 
+	if (m_iPlayerTeam == 1)
+	{
+		FlipDirection(1);
+	}
+	else
+		FlipDirection(-1);
 
 
 }
@@ -4296,12 +4412,36 @@ void CCharacter::Play_NewRound_Winner()
 	CMain_Camera* pMainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 	pMainCamera->Set_Player(this);
 
+	if (m_iPlayerTeam == 1)
+	{
+		FlipDirection(1);
+	}
+	else
+		FlipDirection(-1);
+
+
 
 }
 
 void CCharacter::Update_Collider()
 {
 	m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+}
+
+_bool CCharacter::Play_FirstOpening()
+{
+
+	Set_AnimationStopWithoutMe(30.f);
+	Set_AnimationStop(1.f);
+
+	m_bDynamicMove = true;
+	m_bGrabbed = true;
+	Set_Animation(m_iStartAnimatonIndex);
+
+	m_bInvisible = false;
+
+
+	return true;
 }
 
 void CCharacter::Update_Opening(_float fTimeDelta)
@@ -4379,8 +4519,21 @@ void CCharacter::Set_bFinalSkillQTE(_bool bFinalSkillQTE)
 	m_iQTE = bFinalSkillQTE;
 }
 
+CHARACTER_INDEX CCharacter::Get_eCharacterIndex()
+{
+	return m_eCharacterIndex;
+}
 
 
+
+
+void CCharacter::Set_AnimationMoveXZ(_bool bValue)
+{
+	m_pModelCom->m_bNoMoveXZ = bValue;
+	m_bCinematic_NoMoveXZ = bValue;
+
+
+}
 
 void CCharacter::Reset_AttackStep()
 {
@@ -4956,6 +5109,11 @@ void CCharacter::Set_Animation(_uint iAnimationIndex, _bool bloof)
 
 }
 
+void CCharacter::Set_IdleAnimation()
+{
+	Set_Animation(m_iIdleAnimationIndex);
+}
+
 void CCharacter::Gravity(_float fTimeDelta)
 {
 
@@ -5521,6 +5679,8 @@ void CCharacter::Map_DestructiveFinish()
 	
 }
 
+
+
 void CCharacter::GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput)
 {
 
@@ -5633,6 +5793,28 @@ void CCharacter::Character_Start_QTE(_uint iQTEID)
 	m_iQTE = -1;
 	CQTE_Manager::Get_Instance()->Start_QTE((CQTE_Manager::QTE_ID)iQTEID, this);
 
+}
+void CCharacter::Add_ChaseLight()
+{
+	LIGHT_DESC			LightDesc{};
+
+	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.fRange = 30.f;
+	LightDesc.vDiffuse = m_vChaseLight;
+	//LightDesc.vDiffuse = _float4(1.0f, 0.f, 0.f, 1.f);
+	LightDesc.vAmbient = _float4(0.1f, 0.1f, 0.1f, 1.f);
+	LightDesc.vSpecular = _float4(1.0f, 0.95f, 0.45f, 1.f);
+
+	LightDesc.fAccTime = 0.f;
+	LightDesc.fLifeTime = 1.f;
+	LightDesc.strName = "Chase";
+	/*LightDesc.pisDone = &m_bChase;*/
+	
+
+	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
+		return;
 }
 
 CCharacter* CCharacter::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

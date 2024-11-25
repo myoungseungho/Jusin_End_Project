@@ -18,9 +18,14 @@ HRESULT CComponent_Manager::Initialize(_uint iNumLevels)
 
 HRESULT CComponent_Manager::Add_Prototype(_uint iLevelIndex, const _wstring & strPrototypeTag, CComponent * pPrototype)
 {
-	if (iLevelIndex >= m_iNumLevels || 
+	if (iLevelIndex >= m_iNumLevels ||
 		nullptr != Find_Prototype(iLevelIndex, strPrototypeTag))
-		return E_FAIL;
+	{
+			wstring Message{};
+		Message = TEXT("Failed to Created PrototypeKey :  \n : ") + wstring(strPrototypeTag);
+		MessageBox(nullptr, Message.c_str(), L"System Message", MB_OK);
+			return E_FAIL;
+	}
 
 	m_pPrototypes[iLevelIndex].emplace(strPrototypeTag, pPrototype);
 

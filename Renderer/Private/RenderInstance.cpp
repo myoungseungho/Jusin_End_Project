@@ -77,6 +77,11 @@ void CRenderInstance::Delete_LoopDistortion()
 	m_pRenderer->Delete_LoopDistortion();
 }
 
+void CRenderInstance::Set_AuraColor(_float4 vColor)
+{
+	m_pRenderer->Set_AuraColor(vColor);
+}
+
 void CRenderInstance::Create_HitDistortion(_float4 vPlayerPos, _float3 vDir, _float2 vOffSetPos, _float2 vOffSetScale, _float fLifeTime)
 {
 	m_pRenderer->Create_HitDistortion(vPlayerPos, vDir, vOffSetPos, vOffSetScale, fLifeTime);
@@ -209,14 +214,19 @@ HRESULT CRenderInstance::Add_Light(const LIGHT_DESC& LightDesc)
 	return m_pLight_Manager->Add_Light(LightDesc);
 }
 
-HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc)
+HRESULT CRenderInstance::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
 {
-	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc);
+	return m_pLight_Manager->Add_Player_Light(strKey, LightDesc, vChaseColor, pisChaseLight);
 }
 
 HRESULT CRenderInstance::Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc)
 {
 	return  m_pLight_Manager->Add_Effect_Light(strKey, LightDesc);
+}
+
+void CRenderInstance::BGLight_Pop_Front()
+{
+	m_pLight_Manager->BGLight_Pop_Front();
 }
 
 HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CShader* pShader, CVIBuffer_Rect* pVIBuffer, const string strName,_float fTimeDelta)
