@@ -169,6 +169,7 @@
 #include "QTE_Continuous_Attack_Particle.h"
 #include "QTE_Continuous_Attack_Space_Particle.h"
 #include "QTE_1P_Same_Grab.h"
+#include "Particle_Spread.h"
 
 //Lobby
 #include "Lobby_Center_Map.h"
@@ -3835,6 +3836,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CQTE_1P_Same_Grab::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_Spread"),
+		CParticle_Spread::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -4188,6 +4193,8 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxShaderRect.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
+#pragma region QTE 파티클
+
 	//동시잡기 파티클
 	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
 	ParticleDesc.iNumInstance = 200;
@@ -4244,6 +4251,26 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
+#pragma endregion
+
+#pragma region 노말 파티클
+
+	//파티클
+	ParticleDesc.iNumInstance = 500;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(3.f, 5.f);
+	ParticleDesc.vScale = _float2(0.005f, 0.008f);
+	ParticleDesc.vLifeTime = _float2(1.f, 2.f);
+	ParticleDesc.isLoop = true;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
+#pragma endregion
+
 
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
