@@ -1,0 +1,409 @@
+[Layer]
+LayerName: FZ_BurstR
+Duration: 3
+TickPerSecond: 2
+KeyFramesCount: 179
+NumEffec: 11
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: true
+
+[Effect]
+EffectName: FZ_BurstR_01
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.5 0 0
+Scale: 0.015 0.03 0.015
+Rotation: 0 0 0
+IsLoop: false
+Color: 98.7914 34.6196 255 0.29007
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0 0
+Scale: 0.015 0.03 0.015
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.5 0 0
+Scale: 0.03 0.03 0.015
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_02
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.4 0 0
+Scale: 0.03 0.03 0.015
+Rotation: 45 0 0
+IsLoop: false
+Color: 63.3278 24.4867 255 1
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.4 0 0
+Scale: 0.03 0.03 0.015
+Rotation: 45 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.4 0 0
+Scale: 0.045 0.03 0.015
+Rotation: 45 0 0
+CurTime: 0.95
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_03
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.5 0 0
+Scale: 0.045 0.03 0.015
+Rotation: 0 0 0
+IsLoop: false
+Color: 132.566 80.2152 255 1.88742
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0 0
+Scale: 0.045 0.03 0.015
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.5 0 0
+Scale: 0.06 0.03 0.015
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_04
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.5 0 0
+Scale: 0.03 0.03 0.03
+Rotation: 0 0 0
+IsLoop: false
+Color: 73.4603 68.394 255 1.09272
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.5 0 0
+Scale: 0.03 0.03 0.03
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.5 0 0
+Scale: 0.045 0.03 0.03
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.3 -0.5 -0.2
+Scale: 0.15 0.15 1.5
+Rotation: 0 0 0
+IsLoop: false
+Color: 21.1093 29.553 255 0.542716
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 -0.5 -0.2
+Scale: 0.15 0.15 1.5
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: -1.4 -0.8 0
+Scale: 0.525 0.195 1.5
+Rotation: 0 0 0
+CurTime: 0.95
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.3 0 0
+Scale: 0.22496 0.299912 1.5
+Rotation: 0 0 90
+IsLoop: false
+Color: 34.6192 0 255 0.9808
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 0 0
+Scale: 0.224986 0.299938 1.5
+Rotation: 0 0 90
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.2 0 0
+Scale: 0.0749601 0.14992 1.5
+Rotation: 0 0 90
+IsLoop: false
+Color: 68.394 34.6192 255 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.2 0 0
+Scale: 0.0749601 0.14992 1.5
+Rotation: 0 0 90
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 57
+Position: 0.2 -7.45058e-08 0
+Scale: 0.149966 0.449942 1.5
+Rotation: 0 0 90
+CurTime: 0.95
+Duration: 3
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_BurstR_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.2 -0.5 0
+Scale: 0.03 0.15 1.5
+Rotation: 0 0 99.74
+IsLoop: false
+Color: 0 0 0 2.1755
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 -0.5 0
+Scale: 0.03 0.15 1.5
+Rotation: 0 0 99.74
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.2 -0.5 0
+Scale: 0.015 0.15 1.5
+Rotation: 0 0 99.74
+CurTime: 0.766667
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstR_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.1 0.4 0
+Scale: 0.045 0.15 1.5
+Rotation: 0 0 74.805
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 0.4 0
+Scale: 0.045 0.15 1.5
+Rotation: 0 0 74.805
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.1 0.4 0
+Scale: 0.0225 0.15 1.5
+Rotation: 0 0 74.805
+CurTime: 0.766667
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstR_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.1 -0.4 0
+Scale: 0.03 0.15 1.5
+Rotation: 0 0 92.519
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 -0.4 0
+Scale: 0.03 0.15 1.5
+Rotation: 0 0 92.519
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.1 -0.4 0
+Scale: 0.015 0.15 1.5
+Rotation: 0 0 92.519
+CurTime: 0.766667
+Duration: 3
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_BurstR_11
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstRFZ_BurstR_11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.1 0.6 0
+Scale: 0.03 0.15 1.5
+Rotation: 0 0 73.818
+IsLoop: false
+Color: 0 0 0 3.5255
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 0.6 0
+Scale: 0.03 0.15 1.5
+Rotation: 0 0 73.818
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -0.1 0.6 0
+Scale: 0.0075 0.15 1.5
+Rotation: 0 0 73.818
+CurTime: 0.766667
+Duration: 3
+IsNotPlaying: true
+

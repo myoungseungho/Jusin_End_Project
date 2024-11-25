@@ -1,0 +1,241 @@
+[Layer]
+LayerName: FZ_Down_R-03
+Duration: 10
+TickPerSecond: 12
+KeyFramesCount: 599
+NumEffec: 5
+Position: 0 -1 0
+Scale: 0.999997 0.999997 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: FZ_Down_R-03_01
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_Down_R-03FZ_Down_R-03_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -7.45058e-08 1 0
+Scale: 0.0299586 0.00998752 0.03
+Rotation: 0 0 180
+IsLoop: false
+Color: 159.586 71.7715 255 0.595364
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -7.45058e-08 1 0
+Scale: 0.029969 0.00999077 0.03
+Rotation: 0 0 180
+CurTime: 0
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 117
+Position: -7.45058e-08 1 0
+Scale: 0.0299819 0.0299819 0.03
+Rotation: 0 0 180
+CurTime: 1.95
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 598
+Position: -7.45058e-08 1 0
+Scale: 0.0299719 0.00999165 0.03
+Rotation: 0 0 180
+CurTime: 9.96667
+Duration: 10
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_Down_R-03_02
+ModelName: Model_Effect_cmn_BeamCore
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_Down_R-03FZ_Down_R-03_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -7.45058e-08 1 0
+Scale: 0.0299851 0.00999825 0.03
+Rotation: 0 0 180
+IsLoop: false
+Color: 255 255 255 0.346688
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -7.45058e-08 1 0
+Scale: 0.0299851 0.00999825 0.03
+Rotation: 0 0 180
+CurTime: 0
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 117
+Position: -7.45058e-08 1 0
+Scale: 0.0299916 0.0299916 0.03
+Rotation: 0 0 180
+CurTime: 1.95
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 598
+Position: -7.45058e-08 1 0
+Scale: 0.0299887 0.00999937 0.03
+Rotation: 0 0 180
+CurTime: 9.96667
+Duration: 10
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_Down_R-03_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_Down_R-03FZ_Down_R-03_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 1 1.1 0
+Scale: 0.159756 0.0199938 1
+Rotation: 0 0 180
+IsLoop: false
+Color: 255 255 255 0.695364
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1 1.1 0
+Scale: 0.159756 0.0199938 1
+Rotation: 0 0 180
+CurTime: 0
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 117
+Position: 1 1.7 0
+Scale: 0.159905 0.119923 1
+Rotation: 0 0 180
+CurTime: 1.95
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 598
+Position: 1 1.1 0
+Scale: 0.159779 0.0199967 1
+Rotation: 0 0 180
+CurTime: 9.96667
+Duration: 10
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_Down_R-03_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_Down_R-03FZ_Down_R-03_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.2 1 0
+Scale: 0.149988 0.299972 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 157.897 81.904 255 0.645364
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 1 0
+Scale: 0.149988 0.299972 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 117
+Position: -0.2 1 0
+Scale: 0.249877 0.299821 1
+Rotation: 0 0 270
+CurTime: 1.95
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 598
+Position: -0.2 1 0
+Scale: 0.149991 0.299979 1
+Rotation: 0 0 270
+CurTime: 9.96667
+Duration: 10
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_Down_R-03_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_Down_R-03FZ_Down_R-03_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -0.2 1 0
+Scale: 0.0999934 0.299971 1
+Rotation: 0 0 270
+IsLoop: false
+Color: 137.632 93.7252 255 0.25
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.2 1 0
+Scale: 0.0999934 0.299971 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 117
+Position: -0.2 1 0
+Scale: 0.19983 0.29983 1
+Rotation: 0 0 270
+CurTime: 1.95
+Duration: 10
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 598
+Position: -0.2 1 0
+Scale: 0.0999953 0.299978 1
+Rotation: 0 0 270
+CurTime: 9.96667
+Duration: 10
+IsNotPlaying: true
+
