@@ -140,8 +140,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
-		return E_FAIL;
+	/*if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
+		return E_FAIL;*/
 
 	{
 	CCharacter::Character_DESC Opening_CharacterDesc{};
@@ -154,11 +154,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	}
 
 
+	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
-	std::thread([]() {
+	/*std::thread([]() {
 		std::this_thread::sleep_for(std::chrono::seconds(1));
-		CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
-		}).detach();
+		}).detach();*/
 
 
 	return S_OK;
