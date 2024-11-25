@@ -1720,6 +1720,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.isfxSoundIndex = (_ushort)CSound_Manager::SOUND_KEY_NAME::Goku_Heavy_Attack_SFX;
 				Desc.fsfxVolume = 1.f;
 
+
+				Desc.strHitEffectName = TEXT("Hit_Hand_Lazer");
+
+				if(m_iLookDirection == 1)
+					Desc.fHitEffectOffset = { -0.3f,0.9f };
+				else
+					Desc.fHitEffectOffset = { -1.f,0.9f };
+			
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
 			}
@@ -1782,6 +1790,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			_vector vTargetPos = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
 			vTargetPos += {1.3f * m_iLookDirection, 0.f, 0, 0};
 			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+			//Teleport_ToEnemy(1.3f, 0.1f);
 
 			FlipDirection();
 
@@ -2411,9 +2421,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bCounterSucces = false;
 			m_bInvisible = false;
 
-			_vector vTargetPos = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
-			vTargetPos += {1.3f * m_iLookDirection, 0.1f, 0, 0};
-			m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+			//_vector vTargetPos = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			//vTargetPos += {1.3f * m_iLookDirection, 0.1f, 0, 0};
+			//m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
+
+			Teleport_ToEnemy( 1.3f,0.1f );
 
 			FlipDirection();
 
@@ -4011,8 +4023,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bCameraZoom = false;
 
 
-				Desc.fCameraShakeDuration = 0.1f;
-				Desc.fCameraShakeMagnitude = 0.1f;
+				Desc.fCameraShakeDuration = 0.08f;
+				Desc.fCameraShakeMagnitude = 0.03f;
+
+				//Desc.fCameraShakeDuration = 0.1f;
+				//Desc.fCameraShakeMagnitude = 0.1f;
 
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
@@ -4225,6 +4240,10 @@ _bool CPlay_Hit::isNearlyEqual(_float CurValue, _float TargetValue)
 
 AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
 {
+
+	if (m_bCounterSucces)
+		return RESULT_MISS;
+
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground
 		|| m_pModelCom->m_iCurrentAnimationIndex == m_iLayUp)
 		return RESULT_MISS;
@@ -4255,6 +4274,8 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 		{
 			Set_CurrentAnimationPositionJump(34.99f);
 		}
+
+		//Teleport_ToEnemy(1.3f, 0.1f);
 
 		return RESULT_MISS;
 	}
@@ -4517,22 +4538,19 @@ void CPlay_Hit::LaserListUpdate(_float fTimeDelta)
 	//	m_LaserListRS.end()
 	//);
 
-	m_LaserListRS.erase(
-		std::remove_if(m_LaserListRS.begin(), m_LaserListRS.end(),
-			[&](LaserData& laser) {
-				laser.fLifeTime -= fTimeDelta;
-				if (laser.fLifeTime <= 0) {
-					CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(
-						TEXT("Hit_Hand_Lazer"),
-						{ rand() % 30 * 0.01f, 0.6f + rand() % 30 * 0.01f });
-
-					pTest->Set_Copy_Layer_Rotation(laser.Rotation);
-					pTest->Set_Copy_Layer_Scaled({ laser.Scale.x, laser.Scale.y, 1.f });
-
-					return true; // 제거할 항목
-				}
+	m_LaserListRS.erase(std::remove_if(m_LaserListRS.begin(), m_LaserListRS.end(),[&](LaserData& laser) 
+		{
+			laser.fLifeTime -= fTimeDelta;
+			if (laser.fLifeTime <= 0) 
+			{
+				//CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"),{ rand() % 30 * 0.01f, 0.6f + rand() % 30 * 0.01f });
+				CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { rand() % 30 * -0.01f, 0.6f + rand() % 30 * 0.01f });
+				pTest->Set_Copy_Layer_Rotation(laser.Rotation);
+				pTest->Set_Copy_Layer_Scaled({ laser.Scale.x, laser.Scale.y, 1.f });
+				return true; // 제거할 항목
+			}
 				return false; // 유지할 항목
-			}),
+		}),
 		m_LaserListRS.end()
 	);
 
