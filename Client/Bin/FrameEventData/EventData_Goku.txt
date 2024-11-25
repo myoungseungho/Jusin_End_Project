@@ -17,9 +17,11 @@ PLAY_GOKU,GKS_FRN801cs_01_body,0,AnimSpeedChange,0.005,60
 //,PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,30.1
 PLAY_GOKU,GKS600cs,0,AnimSpeedChange,0.019,45.1
 PLAY_GOKU,GKS600cs,88,PositionChange,92
+PLAY_GOKU,GKS600cs,180.00000,PlaySound,143,0,1
 PLAY_GOKU,GKS600cs,265,AnimSpeedChange,0.019,20
 //,OPENING_GOKU,GKS600cs,275,ModelChange,4
 PLAY_GOKU,GKS600cs,265,AttackEvent,4
+PLAY_GOKU,GKS600cs,310.001000,PlaySound,142,0,1
 
 
 //,275로시작
@@ -941,7 +943,7 @@ PLAY_GOKU,GKS032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 12
 PLAY_GOKU,GKS033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_GOKU,GKS033_body,0.001000,PlaySound,129,0,0.5
+PLAY_GOKU,GKS033_body,0.001000,PlaySound,129,0,1
 
 PLAY_GOKU,GKS033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_GOKU,GKS033_body, 1,ObjectMove, -0.3, 0, 0, 0
@@ -961,7 +963,8 @@ PLAY_GOKU,GKS033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 14  duration 끝 24
 PLAY_GOKU,GKS035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_GOKU,GKS035_body,0.001000,PlaySound,133,0,0.5
+PLAY_GOKU,GKS035_body,0.001000,PlaySound,133,0,1
+PLAY_GOKU,GKS035_body,0.002000,PlaySoundStop,131
 PLAY_GOKU,GKS035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_GOKU,GKS035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_GOKU,GKS035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -1023,6 +1026,7 @@ PLAY_GOKU,GKS042_body,0,PositionChange,10
 //,PLAY_GOKU,GKS050_body,10,PositionChange,5
 PLAY_GOKU,GKS050_body,0.000000,AnimSpeedChange,0.064000,86.060997
 PLAY_GOKU,GKS050_body,0.010000,PlayGroupSound,201,0,1
+PLAY_GOKU,GKS050_body,0.00100,PlaySound,122,0,1
 PLAY_GOKU,GKS050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,PLAY_GOKU,GKS050_body,0,AnimSpeedChange,0.022000,61.818001
@@ -1031,16 +1035,19 @@ PLAY_GOKU,GKS050_body,30.1,AnimSpeedChange,0.064000,86.060997
 PLAY_GOKU,GKS051_body,0.000000,AnimSpeedChange,0.064000,86
 PLAY_GOKU,GKS051_body,0,PositionChange,15
 PLAY_GOKU,GKS051_body,0.010000,PlayGroupSound,201,0,1
+PLAY_GOKU,GKS051_body,0.00100,PlaySound,122,0,1
 
 //,앉아 피격모션
 PLAY_GOKU,GKS052_body,0,AnimSpeedChange,0.020000,57.374001
 //,PLAY_GOKU,GKS052_body,0,PositionChange,10
 PLAY_GOKU,GKS052_body,0.010000,PlayGroupSound,201,0,1
+PLAY_GOKU,GKS052_body,0.00100,PlaySound,122,0,1
 
 //, 공중피격 약 10   스턴끝날때 40이 되도록 속도를 조정...?  스피드가  스턴시간*4라고?  상대방의 TickPerSecond를 조절하는 기능필요?
 //,PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,49.292999
 PLAY_GOKU,GKS060_body,0.000000,AnimSpeedChange,0.044000,30
 PLAY_GOKU,GKS060_body,0.010000,PlayGroupSound,201,0,1
+PLAY_GOKU,GKS060_body,0.00100,PlaySound,122,0,1
 PLAY_GOKU,GKS060_body,0,PositionChange,14
 PLAY_GOKU,GKS060_body,30,AnimSpeedChange,0.044000,60
 PLAY_GOKU,GKS060_body,40,AnimSpeedChange,0.044000,1
@@ -1067,16 +1074,17 @@ PLAY_GOKU,GKS070_body,0.000000,AnimSpeedChange,0.013000,24.646999
 
 //,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
 PLAY_GOKU,GKS072_body,0.000000,AnimSpeedChange,0.013000,62.223000
+PLAY_GOKU,GKS072_body,0.00100,PlaySound,122,0,1
 //,PLAY_GOKU,GKS072_body,37,PositionChange,4
 PLAY_GOKU,GKS072_body,37,PositionChange,2.78
 
 
 //,왼쪽위로 회전하며 날아가는 자세
 PLAY_GOKU,GKS073_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_GOKU,GKS073_body,0.00100,PlaySound,122,0,1
 //,왼쪽으로 회전하며 날아가는 자세
 PLAY_GOKU,GKS074_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_GOKU,GKS074_body,0.00100,PlaySound,122,0,1
 
 //,강공맞고 왼쪽으로
 PLAY_GOKU,GKS075_body,0.000000,AnimSpeedChange,0.030000,44.040001
@@ -1143,13 +1151,14 @@ PLAY_GOKU,GKS303_body,20,AnimSpeedChange,0.017,46
 //드래곤 러시 준비(공중)
 PLAY_GOKU,GKS038_body,0,AnimSpeedChange,0.008,61.011
 
+
 //,드래곤러시 (공용모션) 
 //,PLAY_GOKU,GKS304_body,0,AnimSpeedChange,0.008,10
 PLAY_GOKU,GKS304_body,0,PositionChange,5.0
+PLAY_GOKU,GKS304_body,0.02000,PlaySound,139,0,1
 //,PLAY_GOKU,GKS304_body,5.1,AnimSpeedChange,0.008,40
 PLAY_GOKU,GKS304_body,5.1,AnimSpeedChange,0.008,101
 PLAY_GOKU,GKS304_body,5.1,AttackEvent,0
-PLAY_GOKU,GKS304_body,5.02000,PlaySound,136,0,1
 
 PLAY_GOKU,GKS304_body,23.1,PositionChange,139
 
@@ -1160,7 +1169,6 @@ PLAY_GOKU,GKS304_body,50,AttackEvent,1
 PLAY_GOKU,GKS304_body,70,AttackEvent,2
 PLAY_GOKU,GKS304_body,100,AttackEvent,3
 PLAY_GOKU,GKS304_body,120,AttackEvent,4
-
 
 
 //,드래곤 러시 체이스 (공용모션)

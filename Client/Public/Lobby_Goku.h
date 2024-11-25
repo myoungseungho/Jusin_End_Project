@@ -64,6 +64,11 @@ private:
 	// 발소리 재생 간격 (초)
 	_float m_fFootstepInterval = 0.3f; // 예: 0.5초마다 발소리 재생
 
+private:
+	//그림자
+	_bool					m_isShadow = { true };
+	_uint					m_iPassIndex = { 0 };
+
 public:
 	static CLobby_Goku* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;

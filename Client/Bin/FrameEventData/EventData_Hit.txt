@@ -1,5 +1,6 @@
 
 PLAY_HIT,HTN600cs_body,0,AnimSpeedChange,0.019,60.1
+PLAY_HIT,HTN600cs_body,0.001000,PlaySound,147,0,1
 PLAY_HIT,HTN600cs_body,240,PositionChange,260
 
 
@@ -249,7 +250,7 @@ PLAY_HIT,HTN032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 13
 PLAY_HIT,HTN033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_HIT,HTN033_body,0.001000,PlaySound,129,0,0.5
+PLAY_HIT,HTN033_body,0.001000,PlaySound,129,0,1
 PLAY_HIT,HTN033_body,0.001000,PlaySound,53,0,0.5
 PLAY_HIT,HTN033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_HIT,HTN033_body, 1,ObjectMove, -0.3, 0, 0, 0
@@ -269,7 +270,8 @@ PLAY_HIT,HTN033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 15
 PLAY_HIT,HTN035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_HIT,HTN035_body,0.001000,PlaySound,133,0,0.5
+PLAY_HIT,HTN035_body,0.001000,PlaySound,133,0,1
+PLAY_HIT,HTN035_body,0.002000,PlaySoundStop,131
 PLAY_HIT,HTN035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_HIT,HTN035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_HIT,HTN035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -328,17 +330,20 @@ PLAY_HIT,HTN042_body,0,FrameMove,10
 //,PLAY_HIT,HTN050_body,0,FrameMove,5
 //,PLAY_HIT,HTN050_body,10,FrameMove,5
 PLAY_HIT,HTN050_body,0.000000,AnimSpeedChange,0.064000,86.060997
-PLAY_HIT,HTN050_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN050_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN050_body,0.00100,PlaySound,122,0,1
 PLAY_HIT,HTN050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,숙이는 피격모션
 PLAY_HIT,HTN051_body,0.000000,AnimSpeedChange,0.064000,5
-PLAY_HIT,HTN051_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN051_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN051_body,0.00100,PlaySound,122,0,1
 PLAY_HIT,HTN051_body,0,FrameMove,15
 
 //,앉아 피격모션
 PLAY_HIT,HTN052_body,0,AnimSpeedChange,0.020000,57.374001
-PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN052_body,0.00100,PlaySound,122,0,1
 //,PLAY_HIT,HTN052_body,0,FrameMove,10
 
 
@@ -346,7 +351,8 @@ PLAY_HIT,HTN052_body,0.0010,PlayGroupSound,203,0,1
 //,PLAY_HIT,HTN060_body,0.000000,AnimSpeedChange,0.044000,49.292999
 PLAY_HIT,HTN060_body,0.000000,AnimSpeedChange,0.044000,30
 PLAY_HIT,HTN060_body,0,PositionChange,14
-PLAY_HIT,HTN060_body,0.0010,PlayGroupSound,203,0,1
+PLAY_HIT,HTN060_body,0.0010,PlayGroupSound,208,0,1
+PLAY_HIT,HTN060_body,0.00100,PlaySound,122,0,1
 PLAY_HIT,HTN060_body,30,AnimSpeedChange,0.044000,60
 PLAY_HIT,HTN060_body,40,AnimSpeedChange,0.044000,1
 PLAY_HIT,HTN060_body,56,AnimSpeedChange,0.01,2
@@ -372,15 +378,16 @@ PLAY_HIT,HTN070_body,0.000000,AnimSpeedChange,0.013000,24.646999
 
 //,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
 PLAY_HIT,HTN072_body,0.000000,AnimSpeedChange,0.013000,62.223000
+PLAY_HIT,HTN072_body,0.00100,PlaySound,122,0,1
 //,PLAY_HIT,HTN072_body,39,FrameMove,0
 PLAY_HIT,HTN072_body,37,PositionChange,2.78
 
 //,왼쪽위로 회전하며 날아가는 자세
 PLAY_HIT,HTN073_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_HIT,HTN073_body,0.00100,PlaySound,122,0,1
 //,왼쪽으로 회전하며 날아가는 자세
 PLAY_HIT,HTN074_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_HIT,HTN074_body,0.00100,PlaySound,122,0,1
 
 //,강공맞고 왼쪽으로
 PLAY_HIT,HTN075_body,0.000000,AnimSpeedChange,0.030000,44.040001
@@ -667,8 +674,6 @@ PLAY_HIT,HTN230_body,35,ObjectMove,0.05,0,0,0
 //,앉아중 48
 //,PLAY_HIT,HTN231_body,0,AnimSpeedChange,0.02,90
 PLAY_HIT,HTN231_body,0,AnimSpeedChange,0.005,130
-PLAY_HIT,HTN231_body,0.0010,PlayGroupSound,204,0,1
-PLAY_HIT,HTN231_body,0.0010,PlayGroupSound,202,0,1
 PLAY_HIT,HTN231_body,30,AnimSpeedChange,0.04,70
 //,PLAY_HIT,HTN231_body,40,AnimSpeedChange,0.04,20
 PLAY_HIT,HTN231_body,45,AnimSpeedChange,0.04,150
@@ -754,8 +759,8 @@ PLAY_HIT,HTN262_body,65,NextAnimationCheck,3333
 
 //,PLAY_HIT,HTN263_body,0.000000,AnimSpeedChange,0.024000,100.011002
 PLAY_HIT,HTN263_body,0.000000,AnimSpeedChange,0.024000,120.011002
-PLAY_HIT,HTN263_body,0.001000,PlaySound,1,0,1
-PLAY_HIT,HTN263_body,0.000100,PlaySound,9,0,1
+PLAY_HIT,HTN263_body,0.001000,PlaySound,48,0,1
+PLAY_HIT,HTN263_body,0.000100,PlaySound,8,0,1
 //,PLAY_HIT,HTN263_body,5,AnimSpeedChange,0.020000,80.000000
 PLAY_HIT,HTN263_body,5,AnimSpeedChange,0.020000,100.000000
 PLAY_HIT,HTN263_body,30,AnimSpeedChange,0.02,20

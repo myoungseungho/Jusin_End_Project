@@ -104,10 +104,14 @@ public:
 	_float m_fTotalDuration = { 0.f };
 
 	//Input
-	DirectionInput m_eDirInput = {};
-	ButtonInput m_eBtnInput = {};
+	DirectionInput	m_eDirInput = {};
+	ButtonInput		m_eBtnInput = {};
+
+	DirectionInput	m_eDirInput2 = {};
+	ButtonInput		m_eBtnInput2 = {};
 
 	_uint m_iNumCommandList = { 0 };
+	_uint m_iNumCommandList2 = { 0 };
 
 	//RedBlueTimer
 	_float m_fColorValue = { 0.f };

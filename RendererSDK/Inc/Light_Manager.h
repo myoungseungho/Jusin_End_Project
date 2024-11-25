@@ -18,7 +18,9 @@ private:
 	CLight_Manager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CLight_Manager() = default;
 
+
 public:
+
 	LIGHT_DESC* Get_LightDesc(LIGHT_TYPE eLightType, _uint iLightIndex, string strName = "");
 	void		Remove_LightDesc(string strName);
 	_int		Check_EffectLights();

@@ -33,7 +33,8 @@ protected:
 	virtual HRESULT Ready_Components();
 
 protected:
-	_uint CreateList();
+	_uint CreateList(UI_LRPOS ePos);
+	_uint CreateList2(UI_LRPOS ePos);
 
 	_bool m_bInitCommand = { FALSE };
 	_bool m_bInitCommandAction = { FALSE };

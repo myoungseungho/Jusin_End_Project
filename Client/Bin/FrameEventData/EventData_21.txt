@@ -7,8 +7,11 @@ PLAY_21,TON600cs_body,0,AnimSpeedChange,0.019,60.1
 
 //,https://www.youtube.com/watch?v=JXuZpvfUceY 06:05
 PLAY_21,TON600cs_body,0,AnimSpeedChange,0.019,60.1
+PLAY_21,TON600cs_body,0.001000,PlaySound,145,0,1
 PLAY_21,TON600cs_body,145,AnimSpeedChange,0.019,40
+PLAY_21,TON600cs_body,170.001000,PlaySound,144,0,1
 PLAY_21,TON600cs_body,230,AnimSpeedChange,0.019,60.1
+PLAY_21,TON600cs_body,230.001000,PlaySound,146,0,1
 PLAY_21,TON600cs_body,275,ModelChange,5555555
 PLAY_21,TON600cs_body,275,PositionChange,275.1
 PLAY_21,TON600cs_body,275,AnimSpeedChange,0.019,50
@@ -253,7 +256,7 @@ PLAY_21,TON032_body,13,PositionChange,0
 
 //,백대쉬 (공용) 13
 PLAY_21,TON033_body,0.000000,AnimSpeedChange,0.010000,60.202000
-PLAY_21,TON033_body,0.001000,PlaySound,129,0,0.5
+PLAY_21,TON033_body,0.001000,PlaySound,129,0,1
 PLAY_21,TON033_body, 0,ObjectMove, -0.3, 0, 0, 0
 PLAY_21,TON033_body, 1,ObjectMove, -0.3, 0, 0, 0
 PLAY_21,TON033_body, 2,ObjectMove, -0.2, 0, 0, 0
@@ -272,7 +275,8 @@ PLAY_21,TON033_body,14,ObjectMove, -0.01, 0, 0, 0
 
 //,앞대쉬 끝 (공용) 15
 PLAY_21,TON035_body,0.000000,AnimSpeedChange,0.010000,90.505997
-PLAY_21,TON035_body,0.001000,PlaySound,133,0,0.5
+PLAY_21,TON035_body,0.001000,PlaySound,133,0,1
+PLAY_21,TON035_body,0.002000,PlaySoundStop,131
 PLAY_21,TON035_body,0,ObjectMove, 0.06, 0, 0, 0
 PLAY_21,TON035_body,1,ObjectMove, 0.06, 0, 0, 0
 PLAY_21,TON035_body,2,ObjectMove, 0.06, 0, 0, 0
@@ -332,16 +336,19 @@ PLAY_21,TON042_body,0,FrameMove,10
 //,PLAY_21,TON050_body,10,FrameMove,5
 PLAY_21,TON050_body,0.000000,AnimSpeedChange,0.064000,86.060997
 PLAY_21,TON050_body,0.0010,PlayGroupSound,203,0,1
+PLAY_21,TON050_body,0.00100,PlaySound,122,0,1
 PLAY_21,TON050_body,30.1,AnimSpeedChange,0.064000,86.060997
 
 //,숙이는 피격모션
 PLAY_21,TON051_body,0.000000,AnimSpeedChange,0.064000,50
 PLAY_21,TON051_body,0.0010,PlayGroupSound,203,0,1
+PLAY_21,TON051_body,0.00100,PlaySound,122,0,1
 PLAY_21,TON051_body,0,FrameMove,15
 
 //,앉아 피격모션
 PLAY_21,TON052_body,0,AnimSpeedChange,0.020000,57.374001
 PLAY_21,TON052_body,0.0010,PlayGroupSound,203,0,1
+PLAY_21,TON052_body,0.00100,PlaySound,122,0,1
 //,PLAY_21,TON052_body,0,FrameMove,10
 
 
@@ -350,6 +357,7 @@ PLAY_21,TON052_body,0.0010,PlayGroupSound,203,0,1
 PLAY_21,TON060_body,0.000000,AnimSpeedChange,0.044000,30
 PLAY_21,TON060_body,0,PositionChange,14
 PLAY_21,TON060_body,0.0010,PlayGroupSound,203,0,1
+PLAY_21,TON060_body,0.00100,PlaySound,122,0,1
 PLAY_21,TON060_body,30,AnimSpeedChange,0.044000,60
 PLAY_21,TON060_body,40,AnimSpeedChange,0.044000,1
 PLAY_21,TON060_body,56,AnimSpeedChange,0.01,2
@@ -375,15 +383,16 @@ PLAY_21,TON070_body,0.000000,AnimSpeedChange,0.013000,24.646999
 
 //,위로 회전하며 날아가는 자세.  속도 늘리고 갱신시간 낮춰야할지도, 끝에 이상한 모션있음
 PLAY_21,TON072_body,0.000000,AnimSpeedChange,0.013000,62.223000
+PLAY_21,TON072_body,0.00100,PlaySound,122,0,1
 //,PLAY_21,TON072_body,39,FrameMove,0
 PLAY_21,TON072_body,37,PositionChange,2.78
 
 //,왼쪽위로 회전하며 날아가는 자세
 PLAY_21,TON073_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_21,TON073_body,0.00100,PlaySound,122,0,1
 //,왼쪽으로 회전하며 날아가는 자세
 PLAY_21,TON074_body,0.000000,AnimSpeedChange,0.013000,62.223000
-
+PLAY_21,TON074_body,0.00100,PlaySound,122,0,1
 
 //,강공맞고 왼쪽으로
 PLAY_21,TON075_body,0.000000,AnimSpeedChange,0.030000,44.040001
