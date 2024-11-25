@@ -4023,8 +4023,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bCameraZoom = false;
 
 
-				Desc.fCameraShakeDuration = 0.05f;
-				Desc.fCameraShakeMagnitude = 0.03f;
+				Desc.fCameraShakeDuration = 0.2f;
+				Desc.fCameraShakeMagnitude = 0.05f;
 
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
