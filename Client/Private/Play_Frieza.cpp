@@ -3685,8 +3685,8 @@ void CPlay_Frieza::Character_CinematicEnd()
 
 	CCharacter* pKririn = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")));
 
-	if(pKririn != nullptr)
-			pKririn->m_bDead = true;
+	if (pKririn != nullptr)
+		pKririn->Destory();
 
 	//static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
 

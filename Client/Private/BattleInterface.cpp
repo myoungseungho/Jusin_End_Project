@@ -762,7 +762,9 @@ void CBattleInterface_Manager::Character_Opening_AIO()
         m_p1TeamCharacter[0]->Play_FirstOpening();
         m_p2TeamCharacter[0]->Set_bInivisible(true);
 
-        static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
+        //static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
+        static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Destory();
+
 
     }
     //UI 안보이게뒀다가 나중에 켜기

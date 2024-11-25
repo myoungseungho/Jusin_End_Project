@@ -218,7 +218,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 				m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
 			}
-
+			if (m_iCallAttackBackIndex != 60000)
+			{
+				m_pOwner->AttackEvent(m_iCallAttackBackIndex);
+			}
 
 
 		}

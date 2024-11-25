@@ -292,6 +292,7 @@ private:
 	CEffect_Layer* m_pUltimateAuraEffect = { nullptr };
 
 	_short m_i214GlassCount = 0;
+	//_bool m_bLight3Effect = true;
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
