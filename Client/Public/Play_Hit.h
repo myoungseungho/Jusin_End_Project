@@ -176,6 +176,13 @@ public:
 		COUNT_END
 	};
 
+	struct LaserData {
+		float fLifeTime;
+		_float3 Rotation;
+		//_float3 Scale;
+		_float2 Scale;  //z값은 무조건 1이라 이게 맞긴 한데 
+
+	};
 private:
 	CPlay_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CPlay_Hit(const CPlay_Hit& Prototype);
@@ -250,6 +257,7 @@ public:
 	//시간,xyz회전각도
 	list<pair<_float, _float3>> m_LaserList;
 	
+	vector<LaserData> m_LaserListRS;
 
 private:
 	

@@ -211,6 +211,8 @@ public:
 
 	_bool Get_bGoldenFrieza();
 
+	virtual void Character_CinematicEnd() override;
+
 private:
 	//CModel* m_pModelCom_Opening = { nullptr };
 	CModel* m_pModelCom_Skill = { nullptr };

@@ -715,12 +715,12 @@ void CBattleInterface_Manager::Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iChar
 
 void CBattleInterface_Manager::Character_Opening_AIO()
 {
-
 	//오공 vs 프리저 면 다른 모션으로 시작
 	if (m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_GOKU && m_p2TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_FRN)
 	{
 		m_p1TeamCharacter[0]->Set_Animation(86); //오공 시네마틱 오프닝
 		m_p2TeamCharacter[0]->Set_Animation(86); //프리저 시네마틱 오프닝
+
 
 
 		m_p1TeamCharacter[0]->FlipDirection(1);
@@ -752,11 +752,8 @@ void CBattleInterface_Manager::Character_Opening_AIO()
 		m_p2TeamCharacter[0]->Set_bInivisible(true);
 
 		static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
-
 	}
 	//UI 안보이게뒀다가 나중에 켜기
-
-
 
 }
 
@@ -788,7 +785,6 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
 
 		m_p1TeamCharacter[0]->FlipDirection(1);
 		m_p2TeamCharacter[0]->FlipDirection(-1);
-
 		return;
 	}
 

@@ -2200,6 +2200,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iGrabAnimationIndex = ANIME_ATTACK_236_SPECIAL;
 		Desc.iOnwerNextAnimationIndex = ANIME_ATTACK_236_SPECIAL_SUCCES;
 
+		Desc.strHitEffectName = TEXT("21_SDJ-01");
+		Desc.fHitEffectOffset = { 0.7f,1.9f };
+		Desc.bHitEffectFlip = true;
 
 		Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
@@ -2212,7 +2215,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_21::ANIME_ATTACK_236_SPECIAL_SUCCES:
 	{
-		if (iAttackEvent == 0)
+		if (iAttackEvent == 3)
+		{
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_hand_R", TEXT("21_SDJ-02"));
+
+			pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,-70.f });
+		}
+
+		else if (iAttackEvent == 0)
 		{
 			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
@@ -2240,6 +2250,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.bCameraZoom = false;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			
+		
 		}
 		if (iAttackEvent == 1)
 		{
@@ -2270,8 +2283,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-		}
 
+			//Character_Make_BoneEffect("GD_hand_R", TEXT("21_SDJ-03"));
+
+			Character_Make_Effect(TEXT("21_SDJ-03"),{0.f,1.1f});
+
+		}
+		
 
 		break;
 	case Client::CPlay_21::ANIME_ATTACK_236_ULTIMATE:

@@ -389,10 +389,12 @@ public:
 	//Model한테도 있음
 	_bool m_bCinematic_NoMoveXZ = { false };
 
-	void Set_AnimationMoveXZ(_bool bValue);
+	void Set_AnimationMoveXZ(_bool bValue); // NOMoveXZ 잘못적어서 false가 움직임 true가 안움직임
 
 
+	virtual void Character_CinematicEnd() {};
 protected:
+
 	void Reset_AttackStep();
 
 	//애니메이션 끝에 대고 사용하지 말것
