@@ -45,7 +45,7 @@ HRESULT CVirtual_Camera::Initialize(void* pArg)
 	//Near
 	Desc.fNear = 0.1f;
 	//Far
-	Desc.fFar = 10000.f;
+	Desc.fFar = 1000.f;
 	//카메라 회전속도
 	Desc.fRotationPerSec = XMConvertToRadians(90.0f);
 

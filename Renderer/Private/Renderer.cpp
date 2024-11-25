@@ -111,12 +111,12 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Distortion"), 600.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_ResultDistortion_BackBuffer"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Distortion"), 600.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_ResultDistortion_BackBuffer"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomAlpha"), 600.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomDiffuse"), 350.f, 150.f, 300.f, 300.f)))
@@ -131,10 +131,10 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL; 
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL; 
 	/*
 		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
 		return E_FAIL;
@@ -299,8 +299,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 
 #ifdef _DEBUG
-	if (FAILED(Render_Debug(fTimeDelta)))
-		return E_FAIL;
+	//if (FAILED(Render_Debug(fTimeDelta)))
+	//	return E_FAIL;
 #endif
 	return S_OK;
 }

@@ -574,6 +574,9 @@
     <ClCompile Include="..\private\Lobby_Cloud.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Cloud</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\VolcanoEF.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1226,6 +1229,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_Cloud">
       <UniqueIdentifier>{bb6e008d-8d36-441b-bb50-5f45b1acbfc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_EF">
+      <UniqueIdentifier>{29823397-505f-41e7-9739-bc7983735a75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1963,6 +1969,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\UI_Define.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VolcanoEF.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

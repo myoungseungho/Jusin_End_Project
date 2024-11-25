@@ -383,6 +383,7 @@
     <ClInclude Include="..\Public\SpaceSky.h" />
     <ClInclude Include="..\Public\SpaceStage.h" />
     <ClInclude Include="..\Public\SpaceStone.h" />
+    <ClInclude Include="..\Public\VolcanoEF.h" />
     <ClInclude Include="..\Public\Volcano_Cliff01.h" />
     <ClInclude Include="..\Public\Volcano_Cliff02.h" />
     <ClInclude Include="..\Public\Volcano_Cliff03.h" />
@@ -630,6 +631,7 @@
     <ClCompile Include="..\Private\SpaceSky.cpp" />
     <ClCompile Include="..\Private\SpaceStage.cpp" />
     <ClCompile Include="..\Private\SpaceStone.cpp" />
+    <ClCompile Include="..\Private\VolcanoEF.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff01.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff02.cpp" />
     <ClCompile Include="..\Private\Volcano_Cliff03.cpp" />

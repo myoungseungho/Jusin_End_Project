@@ -12,14 +12,14 @@ END
 
 BEGIN(Client)
 
-class CSpaceEF final : public CGameObject
+class CVolcanoEF final : public CGameObject
 {
 
 
 private:
-	CSpaceEF(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CSpaceEF(const CSpaceEF& Prototype);
-	virtual ~CSpaceEF() = default;
+	CVolcanoEF(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CVolcanoEF(const CVolcanoEF& Prototype);
+	virtual ~CVolcanoEF() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -52,7 +52,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CSpaceEF* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CVolcanoEF* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

@@ -15,6 +15,8 @@
 #include "SpaceMeteoBreak.h"
 #include "Effect_Manager.h"
 #include "Virtual_Camera.h"
+#include "SpaceEF.h"
+#include "VolcanoEF.h"
 IMPLEMENT_SINGLETON(CMap_Manager)
 
 CMap_Manager::CMap_Manager()
@@ -53,17 +55,12 @@ void CMap_Manager::Update(_float fTimeDelta)
 
 		if (m_fEastAccTime >= 10.f)
 		{
-		/*	Map_Change(MAP_SPACE);
+			Map_Change(m_eCurMap);
 			m_pEastEffect_Layer->m_bIsDoneAnim = true;
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
 				->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
 			m_isEastFinishStart = false;
-			m_fEastAccTime = 0.f;*/
-		/*	for (auto& iter : m_pEastEffect_Layer->m_MixtureEffects)
-			{
-				iter->m_i
-			}*/
-
+			m_fEastAccTime = 0.f;
 		}
 	}
 
@@ -159,6 +156,8 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 		for (auto& iter : m_Destructive_SpaceModels)
 			iter.second->SetActive(false);
 
+		m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
+
 		m_eCurMap = MAP_VOLCANO;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_VOLCANO);
 		//DISTORTION_DESC tDistortionDesc{};
@@ -229,79 +228,82 @@ _float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
 
 _float2 CMap_Manager::Active_EastFinish()
 {
+
+	for (auto& iter : m_SpaceModels)
+		iter.second->SetActive(false);
+	for (auto& iter : m_Destructive_SpaceModels)
+		iter.second->SetActive(false);
+	for (auto& iter : m_VolcanoModels)
+		iter.second->SetActive(false);
+	for (auto& iter : m_Destructive_VolcanoModels)
+		iter.second->SetActive(false);
+
+	m_isEastFinishStart = true;
+	m_fEastAccTime = 0.f;
+	_float4 vMoveCamPos = {};
+	_vector vLookAtPos;
+	if (m_eCurMap == MAP_SPACE)
+	{
+		m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
+		static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		vMoveCamPos = _float4(0.f, 0.5f, -194.7f, 1.f);
+		vLookAtPos = XMVectorSet(0.f, 1.f, 0.f, 1.f);
+	}
+	else if (m_eCurMap == MAP_VOLCANO)
+	{
+		//m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+		m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = true;
+		static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		vMoveCamPos = _float4(-2.30689f, -0.06469f, -161.586121f, 1.f);
+		vLookAtPos = XMVectorSet(0.f, 10.f, 0.f, 1.f);
+	}
+
+	XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
+	CEffect_Layer::COPY_DESC tDesc{};
+	tDesc.pPlayertMatrix = &Result4x4;
+
 	switch (m_eEastEffectType)
 	{
 	case EAST_LASER:
-
+		m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
 		if (m_eCurMap == MAP_SPACE)
-		{
-			m_isEastFinishStart = true;
-			m_fEastAccTime = 0.f;
-
-			for (auto& iter : m_SpaceModels)
-				iter.second->SetActive(false);
-			for (auto& iter : m_Destructive_SpaceModels)
-				iter.second->SetActive(false);
-			for (auto& iter : m_VolcanoModels)
-				iter.second->SetActive(false);
-			for (auto& iter : m_Destructive_VolcanoModels)
-				iter.second->SetActive(false);
-
-			m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
-			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
-
-			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
-				->Set_EastFinish(_float4(0.f, 0.5f, -194.7f, 1.f));
-			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(10.f, 0.06);
-
-			/* ------------------------------------------------------테스트용 프리카메라 무빙------------------------------------------------------ */
-			static_cast<CTransform*>(
-				static_cast<CVirtual_Camera*>(
-					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
-					->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
-				->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.5f, -184.7f, 1.f));
-			static_cast<CTransform*>(
-				static_cast<CVirtual_Camera*>(
-					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
-					->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
-				->LookAt(XMVectorSet(0.f, 1.f, 0.f, 0.f));
-			/*------------------------------------------------------------------------------------------------------------*/
-
-				//Set_EastFinish(_float4(0.f, 0.5f, -204.7f, 1.f));
-			//if(m_pMapLightDesc == nullptr)
-			//	m_pMapLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_BACKGROUND, 0);
-			//
-
-			//m_PreLightDesc = *m_pMapLightDesc;
-			//m_pMapLightDesc->vPosition = { 0.f,10.f,0.f,1.f };
-			//m_pMapLightDesc->vSpecular = { 1.f,1.f,1.f,0.5f };
-			
-			
-//			_float4x4 Result4x4;
-			XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
-			//Result4x4._11 = 10.f;
-			//Result4x4._22 = 10.f;
-			//Result4x4._33 = 10.f;
-			CEffect_Layer::COPY_DESC tDesc{};
-			tDesc.pPlayertMatrix = &Result4x4;
-
-			m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
-
-			//(*pBeamEffect->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_CUTSCENE_LATE_EFFECT);
-			//(*pBeamEffect->m_MixtureEffects.begin())->m_iChangePassIndex = 8;
-
-			//CEffect_Manager::Get_Instance()->Copy_Layer_OverTheHandle()
-			// Energy-03
-		}
-		// 맵 분기 넣고 쉐이킹 넣고 바라보게 한다음 이펙트 출력
-		// 트리거는 있다가
+			static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		else
+			static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		break;
+	case EAST_SPHERE:
+		m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_SPHERE_ENDING"), &tDesc);
+		if (m_eCurMap == MAP_SPACE)
+			static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.86666f, 0.3254f, 0.f);
+		else
+			static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.86666f, 0.3254f, 0.f);
 		break;
 	}
 
-		/* */
-		
+	static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+		->Set_EastFinish(vMoveCamPos);
 
+	static_cast<CTransform*>(
+		static_cast<CVirtual_Camera*>(
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_MAP])->Get_Component(TEXT("Com_Transform")))
+		->LookAt(vLookAtPos);
 
+	static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(10.f, 0.06);
+
+	/* ------------------------------------------------------테스트용 프리카메라 무빙------------------------------------------------------ */
+	static_cast<CTransform*>(
+		static_cast<CVirtual_Camera*>(
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
+		->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.5f, -184.7f, 1.f));
+	static_cast<CTransform*>(
+		static_cast<CVirtual_Camera*>(
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
+		->LookAt(XMVectorSet(0.f, 1.f, 0.f, 0.f));
+	/*------------------------------------------------------------------------------------------------------------*/
 	return _float2();
 }
 
@@ -309,7 +311,7 @@ void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType)
 {
 	m_isEastFinish = true;
 	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck);
-	m_eEastEffectType = EAST_LASER;
+	m_eEastEffectType = eEastEffectType;
 }
 
 void CMap_Manager::IsDone_Active()

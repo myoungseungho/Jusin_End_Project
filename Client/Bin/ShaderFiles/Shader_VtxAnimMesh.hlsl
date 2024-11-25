@@ -132,7 +132,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
     float isFace = fFaceMask;
     /* g값은 명암? r값이랑 같이 쓰는데 모호함 */
-    vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.r + (isFace == 1 ? 0.502745f : vMtrlShadeDesc.g) * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
+    //vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.r + (/*isFace == 1 ? 0.502745f : */vMtrlShadeDesc.g) * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
     
 	/* b값은 보니까 스펙큘러인거같음 그 처리 */
     vResultColor.rgb = saturate(vResultColor.rgb + vMtrlShadeDesc.b * 0.1f);
@@ -232,6 +232,9 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
 struct PS_OUT_SHADOW
 {
     float4 vLightDepth : SV_TARGET0;
+    float4 vLightDepth1 : SV_TARGET1;
+    float4 vLightDepth2 : SV_TARGET2;
+    
 };
 
 
@@ -239,8 +242,9 @@ PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
 {
     PS_OUT_SHADOW Out;
 
-    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
-
+    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 1.f, 1.f, 1.f);
+    Out.vLightDepth1 = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
+    Out.vLightDepth2 = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
     return Out;
 }
 
@@ -348,7 +352,7 @@ technique11 DefaultTechnique
     pass Shadow
     {
         SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_Default, 0);
+        SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
 

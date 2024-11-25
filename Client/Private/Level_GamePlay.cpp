@@ -1024,6 +1024,10 @@ HRESULT CLevel_GamePlay::Ready_Space()
 HRESULT CLevel_GamePlay::Ready_Volcano()
 {
 	CMap_Manager::Map_Object_Key tDesc{};
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_VolcanoEF");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_VolcanoEF"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Stage");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Stage"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;

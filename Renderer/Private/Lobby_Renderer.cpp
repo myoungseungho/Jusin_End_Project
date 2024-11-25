@@ -7,8 +7,8 @@
 #include "Shader.h"
 #include "VIBuffer_Rect.h"
 
-_uint		g_iLobbySizeX = 8192 * 1.6;
-_uint		g_iLobbySizeY = 4608 * 1.6;
+_uint		g_iLobbySizeX = 1920;
+_uint		g_iLobbySizeY = 1080;
 
 CLobby_Renderer::CLobby_Renderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -43,7 +43,7 @@ HRESULT CLobby_Renderer::Initialize()
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Lobby_Specular"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R16G16B16A16_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Lobby_LightDepth"), g_iLobbySizeX, g_iLobbySizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f,1.f, 0.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_Lobby_LightDepth"), g_iLobbySizeX, g_iLobbySizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f,1.f, 1.f))))
 		return E_FAIL;
 
 
@@ -112,7 +112,7 @@ HRESULT CLobby_Renderer::Initialize()
 	Safe_Release(pDepthStencilTexture);
 
 #ifdef _DEBUG
-	/*if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Lobby_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Lobby_Diffuse"), 100.f, 100.f, 200.0f, 200.0f)))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Lobby_Normal"), 100.f, 300.f, 200.0f, 200.0f)))
 		return E_FAIL;
@@ -125,7 +125,7 @@ HRESULT CLobby_Renderer::Initialize()
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Lobby_Specular"), 350.f, 450.f, 300.f, 300.f)))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Lobby_LightDepth"), ViewportDesc.Width - 150.0f, 150.f, 300.f, 300.f)))
-		return E_FAIL;*/
+		return E_FAIL;
 #endif
 
 	return S_OK;
@@ -317,6 +317,14 @@ HRESULT CLobby_Renderer::Render_Deferred(_float fTimeDelta)
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 
+	_float4x4 viewMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW);
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &viewMatrixInv)))
+		return E_FAIL;
+
+	_float4x4 projMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ);
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &projMatrixInv)))
+		return E_FAIL;
+
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_Lobby_Diffuse"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_ShadeTexture", TEXT("Target_Lobby_Shade"))))
@@ -331,7 +339,7 @@ HRESULT CLobby_Renderer::Render_Deferred(_float fTimeDelta)
 	_float4x4			LightViewMatrix, LightProjMatrix;
 
 	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
-	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)1920.0f / 1080.0f, 0.1f, 1000.f));
+	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f), (_float)1920.0f / 1080.0f, 0.1f, 1000.f));
 
 	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
 		return E_FAIL;

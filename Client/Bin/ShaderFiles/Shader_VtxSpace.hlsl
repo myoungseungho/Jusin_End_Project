@@ -33,7 +33,7 @@ texture2D g_SunRainbow;
 
 int g_SunMeshIndex;
 int g_GroundCount;
-
+float3 g_EastColor;
 float g_MaskStar_Value_1;
 float g_MaskStar_Value_2;
 float g_Time;
@@ -476,7 +476,7 @@ PS_OUT PS_MAIN_EAST_RECT(PS_IN In)
     
     Out.vDiffuse = g_EastGlowTexture.Sample(LinearSampler, vTexcoord);
     Out.vDiffuse.a *= 0.9f;
-    Out.vDiffuse.rgb = float3(0.f, 0.68627f, 1.f);
+    Out.vDiffuse.rgb = g_EastColor;
     
     return Out;
 }

@@ -20,6 +20,7 @@
 #include "Effect_ZNone.h"
 #include "Effect_Overlap.h"
 #include "Effect_Layer.h"
+#include "VolcanoEF.h"
 #include "SpaceEF.h"
 #include "SpaceSky.h"
 #include "SpaceSun.h"
@@ -3494,7 +3495,9 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEF"),
 		CSpaceEF::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VolcanoEF"),
+		CVolcanoEF::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shader_Texture"),
 		CShader_Texture::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
