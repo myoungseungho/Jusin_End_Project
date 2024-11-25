@@ -150,16 +150,9 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
 		return E_FAIL;
-
 	}
 
-
 	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
-
-	/*std::thread([]() {
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		}).detach();*/
-
 
 	return S_OK;
 }
@@ -953,6 +946,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma endregion
 
 #pragma region 오공 + 크리링 vs 프리저
+
+	//Voice
+	// 
 	//프리저 그만해! (야메다 프리저!)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-003.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//고쿠!!		(크리링)
@@ -965,6 +961,16 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-009.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_4, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//오레와 와까다제! (나 화났다 프리저) -> 손오공 대사
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-010.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_5, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//SFX
+	//프리저 폭발 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Hit_FRN_DthScr.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Expl_SFX_0, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Hit_FRN_DtRtzn.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Expl_SFX_1, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//손오공 기모으기
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_GKS_SprKameha_Chrg.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Charge_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	//손오공 화났을 때 효과음
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_SYS_ActSkill_Normal.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
