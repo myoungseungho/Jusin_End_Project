@@ -793,6 +793,13 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
         m_p1TeamCharacter[0]->FlipDirection(1);
         m_p2TeamCharacter[0]->FlipDirection(-1);
 
+
+        m_p1TeamCharacter[0]->Set_AnimationMoveXZ(false);
+        m_p2TeamCharacter[0]->Set_AnimationMoveXZ(false);
+
+       m_p1TeamCharacter[0]->Character_CinematicEnd();
+       m_p2TeamCharacter[0]->Character_CinematicEnd();
+
         return;
     }
 

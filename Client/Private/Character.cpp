@@ -4442,6 +4442,7 @@ _bool CCharacter::Play_FirstOpening()
 	return true;
 }
 
+
 void CCharacter::Update_Opening(_float fTimeDelta)
 {
 	if (m_bOpening == false)

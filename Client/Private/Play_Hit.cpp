@@ -732,7 +732,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 		//m_LaserListRS.push_back({ 0.1f, {0.f, 0.f,(_float)(rand() % 181)},{0.1f,1.f,1.f } });
 
-
+		
 
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
@@ -740,14 +740,33 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//system("cls");
 		m_iHP = 100;
 		//m_LaserListRS.push_back({ 0.1f, {0.f, 0.f,(_float)(rand() % 181)},{1.f,0.1f,1.f } });
-
-
+		//for (int i = 0; i < 50; i++)
+		//{
+		//	//m_LaserListRS.push_back({ 0.70f + i*0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+		//	//m_LaserListRS.push_back({ 0.73f + i*0.1f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+		//	//m_LaserListRS.push_back({ 0.76f + i*0.1f, {0.f, 0.f, (_float)(rand() % 361)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+		//
+		//	m_LaserListRS.push_back({ 0.70f + i * 0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+		//	m_LaserListRS.push_back({ 0.75f + i * 0.1f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+		//
+		//
+		//}
+		
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
 	{
 		Set_bFinalSkillQTE(true);
-		
+		//for (int i = 0; i < 3; i++)
+		//{
+		//	//m_LaserListRS.push_back({ 0.70f + i*0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+		//	//m_LaserListRS.push_back({ 0.73f + i*0.1f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+		//	//m_LaserListRS.push_back({ 0.76f + i*0.1f, {0.f, 0.f, (_float)(rand() % 361)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+		//
+		//	m_LaserListRS.push_back({ i * 0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+		//	m_LaserListRS.push_back({ 0.05f + i * 0.1f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+		//
+		//}
 
 
 	}
@@ -3835,6 +3854,20 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = false;
 
 			//뒤 점프
+
+
+			for (int i = 0; i < 50; i++)
+			{
+				m_LaserListRS.push_back({ 0.70f + i*0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+				m_LaserListRS.push_back({ 0.73f + i*0.1f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+				m_LaserListRS.push_back({ 0.76f + i*0.1f, {0.f, 0.f, (_float)(rand() % 361)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			
+				//m_LaserListRS.push_back({ 0.70f + i * 0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+				//m_LaserListRS.push_back({ 0.75f + i * 0.1f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			
+			
+			}
+
 		}
 
 		//Position 100
@@ -3869,7 +3902,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			m_bInvisible = true;
-
+			//for (int i = 0; i < 5; i++)
+			//{
+			//	m_LaserListRS.push_back({ 0.50f + i*0.2f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+			//	m_LaserListRS.push_back({ 0.53f + i*0.2f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//	m_LaserListRS.push_back({ 0.56f + i*0.2f, {0.f, 0.f, (_float)(rand() % 361)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//
+			//}
 
 		}
 
@@ -3981,6 +4020,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			Add_Move({ 3.f * m_iLookDirection,0.f });
 
+			//for (int i = 0; i < 5; i++)
+			//{
+			//	m_LaserListRS.push_back({ 0.50f + i * 0.2f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+			//	m_LaserListRS.push_back({ 0.53f + i * 0.2f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//	m_LaserListRS.push_back({ 0.56f + i * 0.2f, {0.f, 0.f, (_float)(rand() % 361)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//
+			//}
 		}
 		//Position 148.2
 		else if (iAttackEvent == 202)
@@ -4134,7 +4180,8 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 
 	m_fAccFinalTime += fTimeDelta;
 
-	if (m_fAccFinalTime > 0.02f)
+	//if (m_fAccFinalTime > 0.02f)
+	if (m_fAccFinalTime > 0.1f)
 	{
 		m_fAccFinalTime = 0.f;
 
@@ -4153,6 +4200,12 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 		|| isNearlyEqual(fCurrentAnimationPosition, 208) || isNearlyEqual(fCurrentAnimationPosition, 217) || isNearlyEqual(fCurrentAnimationPosition, 225) || isNearlyEqual(fCurrentAnimationPosition, 148))
 	{
 		m_bInvisible = false;
+		
+			//m_LaserListRS.push_back({0.1f, {0.f, 0.f,45.f}						, {1.f,0.1f} });
+			//m_LaserListRS.push_back({0.13f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//m_LaserListRS.push_back({0.16f, {0.f, 0.f, (_float)(rand() % 361)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+
+		
 	}
 
 	else
@@ -4443,27 +4496,46 @@ void CPlay_Hit::LaserListUpdate(_float fTimeDelta)
 	//});
 
 
-	for (auto& laser : m_LaserListRS)
-	{
-		laser.fLifeTime -= fTimeDelta;
-		if (laser.fLifeTime <= 0)
-		{
-			//CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 0.f,0.8f });
-			CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { rand()%30 *0.01f,0.6f + rand() % 30 * 0.01f });
+	//for (auto& laser : m_LaserListRS)
+	//{
+	//	laser.fLifeTime -= fTimeDelta;
+	//	if (laser.fLifeTime <= 0)
+	//	{
+	//		//CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 0.f,0.8f });
+	//		CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { rand()%30 *0.01f,0.6f + rand() % 30 * 0.01f });
+	//
+	//		pTest->Set_Copy_Layer_Rotation(laser.Rotation);
+	//		pTest->Set_Copy_Layer_Scaled({ laser.Scale.x,laser.Scale.y,1.f });
+	//
+	//
+	//	}
+	//
+	//}
+	//m_LaserListRS.erase(
+	//	std::remove_if(m_LaserListRS.begin(), m_LaserListRS.end(),
+	//		[](const LaserData& laser) { return laser.fLifeTime <= 0; }),
+	//	m_LaserListRS.end()
+	//);
 
-			pTest->Set_Copy_Layer_Rotation(laser.Rotation);
-			//pTest->Set_Copy_Layer_Scaled(laser.Scale);
-			pTest->Set_Copy_Layer_Scaled({ laser.Scale.x,laser.Scale.y,1.f });
-
-
-		}
-
-	}
 	m_LaserListRS.erase(
 		std::remove_if(m_LaserListRS.begin(), m_LaserListRS.end(),
-			[](const LaserData& laser) { return laser.fLifeTime <= 0; }),
+			[&](LaserData& laser) {
+				laser.fLifeTime -= fTimeDelta;
+				if (laser.fLifeTime <= 0) {
+					CEffect_Layer* pTest = m_pEnemy->Character_Make_Effect(
+						TEXT("Hit_Hand_Lazer"),
+						{ rand() % 30 * 0.01f, 0.6f + rand() % 30 * 0.01f });
+
+					pTest->Set_Copy_Layer_Rotation(laser.Rotation);
+					pTest->Set_Copy_Layer_Scaled({ laser.Scale.x, laser.Scale.y, 1.f });
+
+					return true; // 제거할 항목
+				}
+				return false; // 유지할 항목
+			}),
 		m_LaserListRS.end()
 	);
+
 
 }
 

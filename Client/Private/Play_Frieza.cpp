@@ -29,6 +29,9 @@
 #include "Animation.h"
 #include "Frieza_Metal.h"
 
+#include "Opening_Kririn.h"
+
+
 CPlay_Frieza::CPlay_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -443,8 +446,14 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 			{
 				if (m_bMotionPlaying == false)
 				{
-					Set_AnimationMoveXZ(false);
-					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					//Set_AnimationMoveXZ(false);
+					//CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					////static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->m_bDead = true;
+					////static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
+
+					Character_CinematicEnd();
+
+
 				}
 				else if (m_pGameInstance->Key_Down(DIK_RETURN))
 				{
@@ -3634,6 +3643,20 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 _bool CPlay_Frieza::Get_bGoldenFrieza()
 {
 	return m_bGoldFrieza;
+}
+
+void CPlay_Frieza::Character_CinematicEnd()
+{
+	Set_AnimationMoveXZ(false);
+	//CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+
+	CCharacter* pKririn = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")));
+
+	if(pKririn != nullptr)
+			pKririn->m_bDead = true;
+
+	//static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
+
 }
 
 
