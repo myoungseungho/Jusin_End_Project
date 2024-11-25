@@ -1511,9 +1511,6 @@
     <ClInclude Include="..\Public\AttackObject_Grab.h">
       <Filter>02.GameObjects\AttackObject\AttackObject_Grab</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Define.h">
-      <Filter>99.Defines</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_PosMark.h">
       <Filter>02.GameObjects\UI\PosMark</Filter>
     </ClInclude>
@@ -1942,6 +1939,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Lobby_Cloud.h">
       <Filter>02.GameObjects\Lobby\Lobby_Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_Define.h">
+      <Filter>99.Defines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

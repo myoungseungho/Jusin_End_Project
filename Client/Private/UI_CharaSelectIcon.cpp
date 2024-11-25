@@ -77,7 +77,7 @@ void CUI_CharaSelectIcon::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
 }
 
 HRESULT CUI_CharaSelectIcon::Render(_float fTimeDelta)
@@ -311,9 +311,12 @@ void CUI_CharaSelectIcon::CreateSelectLine()
 
 void CUI_CharaSelectIcon::CreateSelectModel(CUI_Define::PLAYER_ID ePlayerID)
 {
+	_uint iNumChoice = dynamic_cast<CUI_SelectArrow*>(m_pGameInstance->Get_GameObject(LEVEL_CHARACTER, TEXT("Layer_MarkArrow")))->Get_NumChoice();
+
 	CCharaSelect_Model::SELECT_MODEL SelectModelDesc = {};
 	SelectModelDesc.ePlayerID = ePlayerID;
-
+	SelectModelDesc.iNumModel = iNumChoice;
+	
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_CHARACTER, TEXT("Prototype_GameObject_CharaSelect_Model"), TEXT("Layer_Character"),&SelectModelDesc);
 }
 

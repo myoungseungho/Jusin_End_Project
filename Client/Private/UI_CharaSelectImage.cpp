@@ -66,7 +66,7 @@ void CUI_CharaSelectImage::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
 }
 
 HRESULT CUI_CharaSelectImage::Render(_float fTimeDelta)

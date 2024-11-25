@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "UI_Define.h"
 #include "GameObject.h"
+#include "UI_Define.h"
 
 BEGIN(Engine)
 
@@ -17,9 +17,10 @@ BEGIN(Client)
 class CCharaSelect_Model final : public CGameObject
 {
 public:
-	struct typedef
+	typedef struct
 	{
 		CUI_Define::PLAYER_ID ePlayerID = {};
+		_uint iNumModel = { 0 };
 	}SELECT_MODEL;
 
 private:
@@ -42,6 +43,15 @@ public:
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+
+private:
+	void Set_ModelPrototypeTag();
+	void Default_Position(_uint iNumModel);
+
+private:
+	CUI_Define::PLAYER_ID m_ePlayerID = {};
+	_wstring m_strModelTag = {};
+	_int m_iLookDirection = { 1 };
 
 public:
 	static CCharaSelect_Model* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

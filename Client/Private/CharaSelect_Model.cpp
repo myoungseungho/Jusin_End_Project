@@ -32,13 +32,32 @@ HRESULT CCharaSelect_Model::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
+	SELECT_MODEL* pDesc = static_cast<SELECT_MODEL*>(pArg);
+	m_ePlayerID = pDesc->ePlayerID;
+
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+	m_RendererDesc.strName = "GOKU";
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL; 
+
+	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
+	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
+	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
+	LightDesc.pPlayerDirection = &m_iLookDirection;
+	LightDesc.strName = m_RendererDesc.strName;
+
+	if (FAILED(m_pRenderInstance->Add_Player_Light("GOKU", LightDesc)))
+		return E_FAIL;
 	
-	m_pTransformCom->Set_State_Position(_float3(-2.5f, 0.1f, 6.5f));
+	Default_Position(pDesc->iNumModel);
+	
 
 	//¾ÆÀÌµé
-	m_pModelCom->SetUp_Animation(0, true, 0.1f);
+	m_pModelCom->SetUp_Animation(1, true, 0.1f);
 
 	return S_OK;
 }
@@ -56,7 +75,8 @@ void CCharaSelect_Model::Update(_float fTimeDelta)
 
 void CCharaSelect_Model::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_CUTSCENE_OBJECT, this);
+
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PLAYER, this, &m_RendererDesc);
 }
 
 HRESULT CCharaSelect_Model::Render(_float fTimeDelta)
@@ -126,6 +146,53 @@ HRESULT CCharaSelect_Model::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CCharaSelect_Model::Set_ModelPrototypeTag()
+{
+	switch (m_ePlayerID)
+	{
+	case CUI_Define::GOKU:
+		m_strModelTag = TEXT("Prototype_Component_Model_CharaSelectMddel_Goku");
+		break;
+
+	case CUI_Define::ANDROID21:
+		m_strModelTag = TEXT("Prototype_Component_Model_CharaSelectMddel_Goku");
+		break;
+
+	case CUI_Define::FRIEZA:
+		m_strModelTag = TEXT("Prototype_Component_Model_CharaSelectMddel_Goku");
+		break;
+
+	case CUI_Define::HIT:
+		m_strModelTag = TEXT("Prototype_Component_Model_CharaSelectMddel_Goku");
+		break;
+
+	}
+}
+
+void CCharaSelect_Model::Default_Position(_uint iNumModel)
+{
+	switch (iNumModel)
+	{
+	case 0:
+		m_pTransformCom->Set_State_Position(_float3(-2.5f, 0.1f, 6.5f));
+		break;
+
+	case 1:
+		m_pTransformCom->Set_State_Position(_float3(-4.f, 0.1f, 6.5f));
+		break;
+
+	case 2:
+		m_pTransformCom->Set_State_Position(_float3(2.5f, 0.1f, 6.5f));
+		m_pTransformCom->Rotation({0.f, 1.f, 0.f}, XMConvertToRadians(45.f));
+		break;
+
+	case 3:
+		m_pTransformCom->Set_State_Position(_float3(4.f, 0.1f, 6.5f));
+		m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(45.f));
+		break;
+	}
 }
 
 CCharaSelect_Model* CCharaSelect_Model::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

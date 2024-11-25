@@ -802,10 +802,10 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationX(XMConvertToRadians(90.f));
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Select.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Character_OutLine */
