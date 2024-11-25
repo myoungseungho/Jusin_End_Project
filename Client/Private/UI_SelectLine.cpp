@@ -55,7 +55,7 @@ void CUI_SelectLine::Update(_float fTimeDelta)
 
 void CUI_SelectLine::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_PRIORITY, this);
 }
 
 HRESULT CUI_SelectLine::Render(_float fTimeDelta)
@@ -63,7 +63,7 @@ HRESULT CUI_SelectLine::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(34)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Buffers()))

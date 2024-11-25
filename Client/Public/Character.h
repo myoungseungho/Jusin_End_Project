@@ -756,7 +756,7 @@ public:
 
 public:
 	Character_INFO_DESC Get_PawnDesc() { return m_tCharacterDesc; }
-	void GetUI_Input(_uint iInputDirX, _uint iInputDirY, DirectionInput eDirInput, ButtonInput eBtnInput);
+	void GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput,_uint iTeam);
 
 
 	//UI에서 써야하는 정보 

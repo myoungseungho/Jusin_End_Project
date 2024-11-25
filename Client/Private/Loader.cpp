@@ -184,6 +184,8 @@
 #include "Lobby_Sky.h"
 #include "Lobby_Sky_Of_Sea.h"
 #include "Lobby_Goku_RunEff.h"
+#include "Lobby_DisplayBoard.h"
+#include "Lobby_Cloud.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
@@ -370,6 +372,14 @@ HRESULT CLoader::Loading_For_Lobby()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/Lobby_Goku_Dust%d.png"),4))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_DisplayBoard"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/lob_SignLine.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_DisplayFont"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/lob_SignLineFont%d.png"),2))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
@@ -405,11 +415,44 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Sky.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	PreTransformMatrix = XMMatrixScaling(0.05f, 0.05f, 0.05f);
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud0"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_0.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_1.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud2"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_2.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud3"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_3.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Cloud4"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Cloud_4.bin", PreTransformMatrix))))
+		return E_FAIL;
+	
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_Sky_Sea_Of_Cloud"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Sky_Sea_Of_Cloud.bin", PreTransformMatrix))))
 		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f) * XMMatrixRotationX(XMConvertToRadians(270.f)) * XMMatrixRotationY(XMConvertToRadians(180.f));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_DIsplayBoard_In"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Circle_Eff.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_DIsplayBoard_Out"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Lobby_Circle_OutEff.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.f));
 
@@ -514,6 +557,14 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Goku_RunEff"),
 		CLobby_Goku_RunEff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_DisplayBoard"),
+		CLobby_DisplayBoard::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Cloud"),
+		CLobby_Cloud::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
@@ -753,10 +804,15 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		return E_FAIL;
 
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationX(XMConvertToRadians(90.f));
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS1.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Select.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_OutLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharaSelectBG */

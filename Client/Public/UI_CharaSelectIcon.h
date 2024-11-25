@@ -27,6 +27,7 @@ private:
 	void InputEvent(_uint iKey , CUI_Define::PLAYER_ID ePlayerID);
 	void CreateChoiceMark(CUI_Define::PLAYER_ID ePlayerID);
 	void CharacterCreateDesc(CUI_Define::PLAYER_ID ePlayerID);
+	void CreateSelectModel(CUI_Define::PLAYER_ID ePlayerID);
 	void CreateCharaImage();
 	void CreateSelectLine();
 	void ArrowToPlayerID(CUI_Define::PLAYER_ID eID);

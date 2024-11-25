@@ -48,18 +48,29 @@ void CUI_Input_DirPanel::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	
-	_uint iNum = CreateList();
+	_uint iNum = 0;
+	_uint iNum2= 0;
 
-	if (iNum >= 1)
+	if(m_eLRPos == LEFT)
+		iNum = CreateList(m_eLRPos);
+	else if (m_eLRPos == RIGHT)
+		iNum2 = CreateList2(m_eLRPos);
+
+	if (iNum >= 1 && m_eLRPos == LEFT)
 	{
 		UI_DESC UI_Desc = {};
 		UI_Desc.iNumUI = iNum;
-
+		UI_Desc.eLRPos = m_eLRPos;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputIconPanel"), TEXT("Layer_DirInput"), &UI_Desc);
 	}
 
-	
+	if (iNum2 >= 1 && m_eLRPos == RIGHT)
+	{
+		UI_DESC UI_Desc = {};
+		UI_Desc.iNumUI = iNum2;
+		UI_Desc.eLRPos = m_eLRPos;
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputIconPanel"), TEXT("Layer_DirInput"), &UI_Desc);
+	}
 }
 
 void CUI_Input_DirPanel::Late_Update(_float fTimeDelta)

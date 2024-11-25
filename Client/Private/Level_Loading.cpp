@@ -202,7 +202,7 @@ HRESULT CLevel_Loading::Ready_Layer()
 
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_UI_LoadingSpaceLight"), TEXT("Layer_UI_LoadingBackGround"));
 
-	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_UI_Loading_GodDragon"));
+	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOADING, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_Loading_GodDragon"));
 
 	//CUIObject::UI_DESC EnergyEffDesc = {};
 	//EnergyEffDesc.fSpeedPerSec = 10.f;
@@ -216,7 +216,7 @@ HRESULT CLevel_Loading::Ready_Layer()
 	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(1.f, 1.f, 1.f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
-
+	
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
 #pragma endregion
@@ -323,5 +323,6 @@ void CLevel_Loading::Free()
 {
 	__super::Free();
 
+	m_pRenderInstance->BGLight_Pop_Front();
 	Safe_Release(m_pLoader);
 }

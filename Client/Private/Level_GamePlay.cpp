@@ -295,7 +295,6 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpGauge"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
 
-
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_SubHpPanel"), TEXT("Layer_UI_HpGauge"), &tHpDesc)))
 			return E_FAIL;
 	}
@@ -389,15 +388,26 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_ComboEffect"), TEXT("Layer_UI_Combo_Effect"), &ComboDesc);
 	}
 
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"));
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"));
+	//Key Input
+
 
 	CUIObject::UI_DESC KeyInputDesc = {};
-
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		KeyInputDesc.iNumUI = i;
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
+		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"),&KeyInputDesc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"),&KeyInputDesc);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
+		for (int k = 0; k < 6; k++)
+		{
+			KeyInputDesc.iNumUI = k;
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputAction"), TEXT("Layer_UI_InputAction"), &KeyInputDesc);
+		}
 	}
 
 	CUIObject::UI_DESC FontNameDesc = {};
@@ -864,6 +874,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_MenuOpen.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_OPEN, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_MenuClose.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_CLOSE, CSound_Manager::SOUND_CATEGORY::SFX, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/UI/ARC_MENU_SYS_Cursor.ogg", CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_SYS_Fight.ogg", CSound_Manager::SOUND_KEY_NAME::Common_FIGHT_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BTL_SYS_Finish.ogg", CSound_Manager::SOUND_KEY_NAME::Common_FINISH_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 #pragma endregion
 
 #pragma region QTE »ç¿îµå

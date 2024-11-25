@@ -142,7 +142,7 @@ void CUI_Manager::UsingChangeCharacher(CUI_Define::PLAYER_SLOT eCurrSlotID)
 void CUI_Manager::UsingCreateStartUI()
 {
 	m_fTotalDuration = 0.f;
-
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_FIGHT_SFX, false, 0.2f);
 	CUIObject::UI_DESC StartDesc = {};
 	StartDesc.fSpeedPerSec = 50.f;
 	StartDesc.fRotationPerSec = XMConvertToRadians(90.f);
@@ -158,7 +158,7 @@ void CUI_Manager::UsingCreateStartUI()
 void CUI_Manager::UsingCreateEndUI()
 {
 	m_fTotalDuration = 0.f;
-
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Common_FINISH_SFX, false, 0.2f);
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOPanel"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFont"), TEXT("Layer_UI_KOFont"));
 	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_KOFontEffect"), TEXT("Layer_UI_KOFont"));
