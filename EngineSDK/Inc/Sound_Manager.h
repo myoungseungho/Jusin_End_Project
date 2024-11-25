@@ -175,6 +175,8 @@ public:
 		Goku_vs_Frieza_3,
 		Goku_vs_Frieza_4,
 		Goku_vs_Frieza_5,
+		Common_FIGHT_SFX,
+		Common_FINISH_SFX,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int
