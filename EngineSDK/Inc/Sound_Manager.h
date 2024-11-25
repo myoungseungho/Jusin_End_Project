@@ -162,6 +162,7 @@ public:
 		Common_Grab_End_SFX,
 		Common_FIGHT_SFX,
 		Common_FINISH_SFX,
+		NARRATION_CHARASELECT_FRN,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

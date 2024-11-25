@@ -801,16 +801,65 @@ HRESULT CLoader::Loading_For_CharaSelect()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Loading/CmnBG_Eff_Lens_5.png")))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_Character_Goku_Base */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_Goku_Base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/GKS_base.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_21_Base */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_21_Base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_Frieza_Base */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_Frieza_Base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_base_1P.png")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_Hit_Base */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_Hit_Base"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base.png")))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationX(XMConvertToRadians(90.f));
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Goku"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Select.bin", PreTransformMatrix))))
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_Ready_Allmesh.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_21"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/TON_Ready_Allmesh.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Frieza"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/FRN_Ready_Allmesh.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationX(XMConvertToRadians(270.f));
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Model_CharaSelectMddel_Hit"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit_Select.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Character_OutLine */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine_Goku"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/GKS_ilm.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_OutLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine_21"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/TON_ilm.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_OutLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine_Frieza"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/FRN_ilm.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Character_OutLine */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_CHARACTER, TEXT("Prototype_Component_Texture_Character_OutLine_Hit"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/HTN_ilm.png"), 1))))
 		return E_FAIL;
 
 	/* Prototype_GameObject_CharaSelectBG */

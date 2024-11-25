@@ -128,6 +128,7 @@ HRESULT CLevel_Chara_Select::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0126_Name_TON.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0113_Name_BUN.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_BUU, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0121_Name_HTN.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_HIT, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0105_Name_FRN.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_FRN, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/012_sto_opening.ogg", CSound_Manager::SOUND_KEY_NAME::CHARASELECT_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::CHARASELECT_BGM, true, 0.1f);

@@ -37,21 +37,28 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	CShader* m_pShaderCom = { nullptr };
-	CModel* m_pModelCom = { nullptr };
-	CTexture* m_pLimTexture = { nullptr };
+	CModel* m_pModelCom[4] = {nullptr};
+	CTexture* m_pDiffTexture[4] = {nullptr};
+	CTexture* m_pLimTexture[4] = {nullptr};
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
 private:
-	void Set_ModelPrototypeTag();
 	void Default_Position(_uint iNumModel);
+
+	void Default_PlayerSetting();
+	HRESULT Add_Light(_float4 vDirection, _float4 vDiffuse, _float4 vAmbient, _float4 vSpecular, string strName);
 
 private:
 	CUI_Define::PLAYER_ID m_ePlayerID = {};
 	_wstring m_strModelTag = {};
 	_int m_iLookDirection = { 1 };
+
+	_uint m_iShaderIndex = { 0 };
+	_float m_fRenderTimer = { 0.f };
+
 
 public:
 	static CCharaSelect_Model* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
