@@ -552,6 +552,48 @@ PS_OUT PS_MAIN_EFFECT_OUTLINE(PS_IN In)
    
     return Out;
 }
+PS_OUT PS_MAIN_DEFERRED_STAGE(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+    float fViewZ = vDepthDesc.x * 10000.f;
+
+    float4 vWorldPos;
+    
+    vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
+    vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
+    vWorldPos.z = vDepthDesc.y;
+    vWorldPos.w = 1.f;
+
+	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
+    vWorldPos = vWorldPos * fViewZ;
+
+	/* 로컬위치 * 월드행렬 * 뷰행렬 */
+    vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
+
+	/* 로컬위치 * 월드행렬 */
+    vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
+
+    vWorldPos = mul(vWorldPos, g_LightViewMatrix);
+    vWorldPos = mul(vWorldPos, g_LightProjMatrix);
+
+
+	/* 투영공간상의 좌표로 변환하낟. */
+    float2 vTexcoord = vWorldPos.xy / vWorldPos.w;
+
+    vTexcoord.x = saturate(vTexcoord.x * 0.5f + 0.5f);
+    vTexcoord.y = saturate(vTexcoord.y * -0.5f + 0.5f);
+
+    vector vOldLightDepth = g_LightDepthTexture.Sample(LinearSampler, vTexcoord);
+	
+    float fDepth = vWorldPos.w;
+
+    if (vOldLightDepth.x * 10000.f < fDepth - 0.3f)
+        Out.vColor = vector(0.f, 0.f, 0.f, 0.4f);
+    
+    return Out;
+}
 
 PS_OUT PS_MAIN_DEFERRED_MAP(PS_IN In)
 {
@@ -567,7 +609,7 @@ PS_OUT PS_MAIN_DEFERRED_MAP(PS_IN In)
     Out.vColor = vDiffuse * vShade + vSpecular;
 	
     vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
-    float fViewZ = vDepthDesc.x * 1000.f;
+    float fViewZ = vDepthDesc.x * 10000.f;
 
     float4 vWorldPos;
     
@@ -768,6 +810,19 @@ technique11		DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_DIRECTIONAL_PLAYER();
     }
+    pass StageDefferd //12
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_DEFERRED_STAGE();
+    }
+
 }
 
 

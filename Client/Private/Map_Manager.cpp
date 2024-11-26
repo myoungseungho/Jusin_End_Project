@@ -298,6 +298,7 @@ _float2 CMap_Manager::Active_EastFinish()
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
 			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
 		->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.5f, -184.7f, 1.f));
+
 	static_cast<CTransform*>(
 		static_cast<CVirtual_Camera*>(
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))

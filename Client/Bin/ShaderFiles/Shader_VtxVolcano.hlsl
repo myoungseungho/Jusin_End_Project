@@ -143,6 +143,20 @@ PS_OUT PS_MAIN_EAST(PS_IN In)
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
+struct PS_OUT_SHADOW
+{
+    float4 vLightDepth : SV_TARGET0;
+};
+
+
+PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
+{
+    PS_OUT_SHADOW Out;
+
+    Out.vLightDepth = vector(In.vProjPos.w / 10000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 1.f);
+    
+    return Out;
+}
 
 PS_OUT PS_MAIN(PS_IN In)
 {
@@ -798,7 +812,18 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_EAST();
     }
+    pass Stage // 23
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SHADOW();
+    }
 }
 
 vector TexScalar_ToSampling(float2 vScale, float2 vScroll, float2 vTexcoord)

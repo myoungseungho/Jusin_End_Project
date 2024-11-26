@@ -10,8 +10,8 @@
 #include "Component.h"
 #include "Light_Manager.h"
 #include "Transform.h"
-_uint		g_iSizeX = 1920;
-_uint		g_iSizeY = 1080;
+_uint		g_iSizeX = 1920 * 2;
+_uint		g_iSizeY = 1080 * 2;
 
 CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -104,8 +104,8 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 #ifdef _DEBUG
 	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
 		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_StageDepth"), 100.f, 300.f, 200.0f, 200.0f)))
+		return E_FAIL;
 
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
@@ -213,6 +213,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
 		return E_FAIL;
 	/*-------------------------------------------*/
+	if (FAILED(Render_StageDepth(fTimeDelta)))
+		return E_FAIL;
 
 	if (FAILED(Render_Priority(fTimeDelta)))
 		return E_FAIL;
@@ -240,16 +242,17 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Metallic(fTimeDelta)))
 		return E_FAIL;
 
-
-	if (FAILED(Render_Player(fTimeDelta)))
-		return E_FAIL;
 	if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
 		return E_FAIL;
 
 	/* 맵을 어둡게 할려고 여기 호출하지만 캐릭터는*/
 	if (FAILED(Draw_MapBlackOut(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_Player(fTimeDelta)))
+		return E_FAIL;
 
+	if (FAILED(Render_StageDeferred(fTimeDelta)))
+		return E_FAIL;
 
 	/* 여기서 그리고 있음 이펙트를 위한 행동 하지만 위에서 블러를 먹인 그림을 가지고만 있고 그리진 않아서 영향이 안가짐 */
 	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
@@ -431,16 +434,16 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ShadowObjects"))))
 	//	return E_FAIL;
-	/*D3D11_VIEWPORT			ViewPortDesc;
-	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
-	ViewPortDesc.TopLeftX = 0;
-	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = (_float)g_iSizeX;
-	ViewPortDesc.Height = (_float)g_iSizeY;
-	ViewPortDesc.MinDepth = 0.f;
-	ViewPortDesc.MaxDepth = 1.f;
+	//D3D11_VIEWPORT			ViewPortDesc;
+	//ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	//ViewPortDesc.TopLeftX = 0;
+	//ViewPortDesc.TopLeftY = 0;
+	//ViewPortDesc.Width = (_float)g_iSizeX;
+	//ViewPortDesc.Height = (_float)g_iSizeY;
+	//ViewPortDesc.MinDepth = 0.f;
+	//ViewPortDesc.MaxDepth = 1.f;
 
-	m_pContext->RSSetViewports(1, &ViewPortDesc);*/
+	//m_pContext->RSSetViewports(1, &ViewPortDesc);
 
 
 	for (auto& pRenderObject : m_RenderObjects[RG_SHADOWOBJ])
@@ -456,15 +459,15 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	/*ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
-	ViewPortDesc.TopLeftX = 0;
-	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = 1920.f;
-	ViewPortDesc.Height = 1080.0f;
-	ViewPortDesc.MinDepth = 0.f;
-	ViewPortDesc.MaxDepth = 1.f;
+	//ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	//ViewPortDesc.TopLeftX = 0;
+	//ViewPortDesc.TopLeftY = 0;
+	//ViewPortDesc.Width = 1920.f;
+	//ViewPortDesc.Height = 1080.0f;
+	//ViewPortDesc.MinDepth = 0.f;
+	//ViewPortDesc.MaxDepth = 1.f;
 
-	m_pContext->RSSetViewports(1, &ViewPortDesc);*/
+	//m_pContext->RSSetViewports(1, &ViewPortDesc);
 
 	return S_OK;
 }
@@ -544,6 +547,77 @@ HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
 	m_RenderObjects[RG_GLOW_STAR].clear();
 
 	return S_OK;
+}
+
+HRESULT CRenderer::Render_StageDepth(_float fTimeDelta)
+{
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_StageDepth"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_STAGE])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Shadow_Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_STAGE].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_StageDeferred(_float fTimeDelta)
+{
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	_float4x4 viewMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW);
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &viewMatrixInv)))
+		return E_FAIL;
+
+	_float4x4 projMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ);
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &projMatrixInv)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_ShadeTexture", TEXT("Target_Shade"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_SpecularTexture", TEXT("Target_Specular"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_LightDepthTexture", TEXT("Target_LightDepth"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_StageDepth"))))
+		return E_FAIL;
+
+
+
+	_float4x4			LightViewMatrix, LightProjMatrix;
+
+	XMStoreFloat4x4(&LightViewMatrix, m_pGameInstance->Get_ShadowTransform_Matrix(CPipeLine::D3DTS_VIEW));
+	XMStoreFloat4x4(&LightProjMatrix, m_pGameInstance->Get_ShadowTransform_Matrix(CPipeLine::D3DTS_PROJ));
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightProjMatrix", &LightProjMatrix)))
+		return E_FAIL;
+
+	m_pShader->Begin(12);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+	return S_OK;
+
+	
 }
 
 HRESULT CRenderer::Render_Map(_float fTimeDelta)
@@ -1163,7 +1237,7 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 
 	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
 	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)1920.f / 1080.f, 0.1f, 1000.f));
-
+	
 	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
 		return E_FAIL;
 
@@ -1762,8 +1836,8 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Distortion"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_StageDepth"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
 		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
 
@@ -2509,11 +2583,18 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
 		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDiffuse"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomAlpha"))))
 		return E_FAIL;
-
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDepth"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_StageDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_StageDepth"), TEXT("Target_StageDepth"))))
+		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget_Second"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))

@@ -23,7 +23,7 @@ public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 
 	enum RENDERGROUP {
-		RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP, RG_MAP,
+		RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP, RG_MAP, RG_STAGE,
 		RG_PLAYER_METALLIC, RG_PLAYER_PART,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT,
 		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND, RG_UI, RG_UI_GLOW, RG_MULTY_GLOW,
@@ -137,6 +137,8 @@ private:
 	HRESULT Render_ShadowObj(_float fTimeDelta);
 	HRESULT Render_Glow_Priority(_float fTimeDelta);
 	HRESULT Render_Blend_Priority(_float fTimeDelta);
+	HRESULT Render_StageDepth(_float fTimeDelta);
+	HRESULT Render_StageDeferred(_float fTimeDelta);
 	HRESULT Render_Map(_float fTimeDelta);
 	HRESULT Render_NonBlend(_float fTimeDelta);
 	HRESULT Render_Player(_float fTimeDelta);

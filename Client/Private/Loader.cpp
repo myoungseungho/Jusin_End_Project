@@ -4014,6 +4014,17 @@ HRESULT CLoader::Load_Map_Space()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_3/Rock_3.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_1/BRRock_1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_2"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_2/BRRock_2.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_3"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_3/BRRock_3.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_1"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_1/Meteo_1.bin", PreTransformMatrix))))
 		return E_FAIL;
