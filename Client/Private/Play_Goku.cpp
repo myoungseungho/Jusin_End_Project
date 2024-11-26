@@ -147,7 +147,7 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 
 	LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
-	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
@@ -767,7 +767,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 void CPlay_Goku::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
-
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SHADOWOBJ, this);
 }
 
 HRESULT CPlay_Goku::Render(_float fTimeDelta)
@@ -875,6 +875,32 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 #ifdef _DEBUG
 	m_pColliderCom->Render(fTimeDelta);
 #endif // DEBUG
+
+	return S_OK;
+}
+
+HRESULT CPlay_Goku::Shadow_Render(_float fTimeDelta)
+{
+	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_ShadowTransform_Float4x4(CPipeLine::D3DTS_VIEW))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_ShadowTransform_Float4x4(CPipeLine::D3DTS_PROJ))))
+		return E_FAIL;
+
+	//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 2)))
+	//	return E_FAIL;
+
+	if (FAILED(m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", 2)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(2)))
+		return E_FAIL;
+
+	if (FAILED(m_pModelCom->Render(2)))
+		return E_FAIL;
 
 	return S_OK;
 }

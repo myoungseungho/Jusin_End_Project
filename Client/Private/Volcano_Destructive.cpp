@@ -203,9 +203,9 @@ void CVolcano_Destructive::Update(_float fTimeDelta)
 			//		iter->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
 			//	}
 			//	//(*pExplosionLayer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
-			//	/*pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
-			//	pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
-			//	pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));*/
+			//	//pExplosionLayer->Set_Copy_Layer_Scaled({ 10.f,10.f,10.f });
+			//	//pExplosionLayer->Set_Copy_Layer_Rotation(_float3(0.f, 90.f, 90.f));
+			//	//pExplosionLayer->Set_Copy_Layer_Position(_float3(150.f, 0.f, 10.f));
 			//}
 
 

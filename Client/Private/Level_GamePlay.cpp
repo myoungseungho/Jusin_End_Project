@@ -70,6 +70,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
@@ -957,6 +958,10 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 HRESULT CLevel_GamePlay::Ready_Space()
 {
+	
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Shadow_Camera"), TEXT("Layer_A"))))
+		return E_FAIL;
+
 	CMap_Manager::Map_Object_Key tDesc{};
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_SpaceSky");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_SpaceSky"), TEXT("Layer_SpaceSky"), &tDesc)))
@@ -1008,6 +1013,10 @@ HRESULT CLevel_GamePlay::Ready_Space()
 HRESULT CLevel_GamePlay::Ready_Volcano()
 {
 	CMap_Manager::Map_Object_Key tDesc{};
+	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_VolcanoEF");
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_VolcanoEF"), TEXT("Layer_VolcanoStage"), &tDesc)))
+		return E_FAIL;
+	
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Stage");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Stage"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;

@@ -316,12 +316,8 @@ void CCharacter::Camera_Update(_float fTimeDelta)
 
 void CCharacter::Update(_float fTimeDelta)
 {
-
 	if (m_bAnimationLock == false)
 	{
-
-
-
 
 	}
 	else

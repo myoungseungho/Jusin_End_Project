@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\SpaceEF.h"
+#include "..\Public\VolcanoEF.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CSpaceEF::CSpaceEF(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CVolcanoEF::CVolcanoEF(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 	: CGameObject { pDevice, pContext }
 {
 
 }
 
-CSpaceEF::CSpaceEF(const CSpaceEF & Prototype)
+CVolcanoEF::CVolcanoEF(const CVolcanoEF & Prototype)
 	: CGameObject{ Prototype }
 {
 
 }
 
-HRESULT CSpaceEF::Initialize_Prototype()
+HRESULT CVolcanoEF::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CSpaceEF::Initialize(void * pArg)
+HRESULT CVolcanoEF::Initialize(void * pArg)
 {
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
@@ -32,37 +32,45 @@ HRESULT CSpaceEF::Initialize(void * pArg)
 	//m_pTransformCom->Set_Scaled(-1.f, 1.f, 1.f);
 	//m_pTransformCom->Rotation(XMVectorSet(1.f, 0.f, 0.f, 0.f), XMConvertToRadians(180.f));
 
-	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_SPACE,
+	CMap_Manager::Get_Instance()->Push_MapObject(CMap_Manager::MAP_VOLCANO,
 		static_cast<CMap_Manager::Map_Object_Key*>(pArg)->m_PrototypeKey, this);
 
 	return S_OK;
 }
 
-void CSpaceEF::Camera_Update(_float fTimeDelta)
+void CVolcanoEF::Camera_Update(_float fTimeDelta)
 {
-	//m_fAccTime += fTimeDelta * 5;
+	m_fAccTime += fTimeDelta;
 }
 
-_int g_Pass = 14;
-void CSpaceEF::Update(_float fTimeDelta)
+
+void CVolcanoEF::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_0))
 	{
-		if (g_Pass == 4)
-			g_Pass = 14;
-		else
-			g_Pass = 4;
+		//if (g_Pass == 4)
+		//	g_Pass = 14;
+		//else
+		//	g_Pass = 4;
 
 	}
 }
 
-void CSpaceEF::Late_Update(_float fTimeDelta)
+_int iCount = 0;
+void CVolcanoEF::Late_Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_0))
+	{
+		iCount++;
+		_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+		if (iCount >= iNumMeshes)
+			iCount = 0;
+	}
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SPACEMAP, this);
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_CUTSCENE_OBJECT, this);
 }
 
-HRESULT CSpaceEF::Render(_float fTimeDelta)
+HRESULT CVolcanoEF::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -72,6 +80,17 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 
 	if (m_isRenderSpaceMap == true)
 	{
+		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 2)))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_EastColor", &m_vEastColor, sizeof(_float3))))
+			return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(3)))
+			return E_FAIL;
+		if (FAILED(m_pModelCom->Render(2)))
+			return E_FAIL;
+
 		m_pTransformCom->Set_Scaled(15.f, 15.f, 1.f);
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, -105.f, 0.f, 1.f));
 		if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
@@ -79,10 +98,8 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 
 		if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_EastGlowTexture", 0)))
 			return E_FAIL;
-		if (FAILED(m_pShaderCom->Bind_RawValue("g_EastColor", &m_vEastColor, sizeof(_float3))))
-			return E_FAIL;
-		
-		if (FAILED(m_pShaderCom->Begin(15)))
+
+		if (FAILED(m_pShaderCom->Begin(21)))
 			return E_FAIL;
 
 		if (FAILED(m_pVIBufferCom->Render(0)))
@@ -93,13 +110,13 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 		if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 			return E_FAIL;
 
-		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 2)))
+		if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 0)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(4)))
+		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
 
-		if (FAILED(m_pModelCom->Render(2)))
+		if (FAILED(m_pModelCom->Render(0)))
 			return E_FAIL;
 
 		m_isRenderSpaceMap = !m_isRenderSpaceMap;
@@ -111,13 +128,15 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 
 		for (size_t i = 0; i < iNumMeshes; i++)
 		{
-			if (i == 2)
-			   continue;
+			if (i == 0 || i == 2)
+				continue;
+			//if (i != iCount)
+			//   continue;
 
 			if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 				return E_FAIL;
 
-			if (FAILED(m_pShaderCom->Begin((i == 0 ? g_Pass : 4))))
+			if (FAILED(m_pShaderCom->Begin(22)))
 				return E_FAIL;
 
 			if (FAILED(m_pModelCom->Render(i)))
@@ -129,10 +148,10 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-HRESULT CSpaceEF::Ready_Components()
+HRESULT CVolcanoEF::Ready_Components()
 {
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxSpace"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_VtxVolcano"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -141,7 +160,7 @@ HRESULT CSpaceEF::Ready_Components()
 		TEXT("Com_Texture_Diffuse"), reinterpret_cast<CComponent**>(&m_pTextureCom_Diffuse))))
 		return E_FAIL;
 
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceEF1"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_VolcanoEF"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Effect_acmn_povot_plane00"),
@@ -151,7 +170,7 @@ HRESULT CSpaceEF::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CSpaceEF::Bind_ShaderResources()
+HRESULT CVolcanoEF::Bind_ShaderResources()
 {
 	
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
@@ -175,6 +194,10 @@ HRESULT CSpaceEF::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCamPosition", &m_pGameInstance->Get_CamPosition_Float4(), sizeof(_float4))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(float))))
+		return E_FAIL;
+
 	LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_BACKGROUND, 0);
 
 	//if (FAILED(m_pShaderCom->Bind_RawValue("g_vLightDir", &pLightDesc->vDirection, sizeof(_float4))))
@@ -189,33 +212,33 @@ HRESULT CSpaceEF::Bind_ShaderResources()
 	return S_OK;
 }
 
-CSpaceEF * CSpaceEF::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
+CVolcanoEF * CVolcanoEF::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext)
 {
-	CSpaceEF*		pInstance = new CSpaceEF(pDevice, pContext);
+	CVolcanoEF*		pInstance = new CVolcanoEF(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CSpaceEF"));
+		MSG_BOX(TEXT("Failed to Created : CVolcanoEF"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject * CSpaceEF::Clone(void * pArg)
+CGameObject * CVolcanoEF::Clone(void * pArg)
 {
-	CSpaceEF*		pInstance = new CSpaceEF(*this);
+	CVolcanoEF*		pInstance = new CVolcanoEF(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CSpaceEF"));
+		MSG_BOX(TEXT("Failed to Cloned : CVolcanoEF"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CSpaceEF::Free()
+void CVolcanoEF::Free()
 {
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom_Diffuse);

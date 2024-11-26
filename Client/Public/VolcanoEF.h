@@ -5,21 +5,21 @@
 #include "Map_Manager.h"
 BEGIN(Engine)
 class CShader;
+
 class CTexture;
 class CModel;
 END
 
 BEGIN(Client)
 
-class CVolcano_Stage final : public CGameObject
+class CVolcanoEF final : public CGameObject
 {
-public:
-	enum Space_TextureType { SPACE_DIFFUSE,SPACE_STAR_1, SPACE_STAR_2, SPACE_END};
+
 
 private:
-	CVolcano_Stage(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CVolcano_Stage(const CVolcano_Stage& Prototype);
-	virtual ~CVolcano_Stage() = default;
+	CVolcanoEF(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CVolcanoEF(const CVolcanoEF& Prototype);
+	virtual ~CVolcanoEF() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -28,12 +28,14 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
-	virtual HRESULT Shadow_Render(_float fTimeDelta) override;
-	
+
+	_float3 m_vEastColor = {};
 private:
 	CShader*				m_pShaderCom = { nullptr };
-	CTexture* m_pTextureCom_Diffuse = { nullptr };
+	CTexture*				m_pTextureCom_Diffuse = { nullptr };
 	CModel*					m_pModelCom = { nullptr };
+	CModel*			m_pVIBufferCom = { nullptr };
+	_bool m_isRenderSpaceMap = { true };
 
 private:
 	_float2 m_fSpriteAnimCount = { 16.f,1.f };
@@ -50,7 +52,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CVolcano_Stage* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CVolcanoEF* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };
