@@ -22,6 +22,8 @@ texture2D g_DetailTexture;
 
 float4x4 g_BoneMatrices[800];
 
+float g_fTexcoordValue;
+
 
 struct VS_IN
 {
@@ -91,7 +93,6 @@ struct PS_OUT
     float4 vDiffuse : SV_TARGET0;
     float4 vNormal : SV_TARGET1;
     float4 vDepth : SV_TARGET2;
-    float4 vAura : SV_TARGET3;
 };
 
 
@@ -105,7 +106,7 @@ PS_OUT PS_MAIN(PS_IN In)
 //    vector vHairColor = { 255.f / 255.f, 255.f / 255.f, 130.f / 255.f, 1.f };
 
     vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
-    vector vFaceColor = { 1.f, 1.f, 1.f, 1.0f };
+    vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
     
     float2 vTexcoordFraction = fmod(In.vTexcoord, 1.0);
@@ -140,7 +141,7 @@ PS_OUT PS_MAIN(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask2 /*+ fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
+    
     //float2 vTexcoordFloor = In.vTexcoord - vTexcoordFraction;
     //float vResultFloor = (vTexcoordFloor.x + vTexcoordFloor.y) * 0.1f;
     //vHairColor.rgb = vHairColor.rgb * (1 - vResultFloor);
@@ -184,7 +185,7 @@ PS_OUT PS_MAIN_21(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), fHairMask);
     Out.vDepth = vector((In.vProjPos.w / 1000.f), In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
-    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
+
     return Out;
 }
 PS_OUT PS_MAIN_FRIEZA(PS_IN In)
@@ -225,7 +226,7 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
     Out.vDiffuse = vResultColor;
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fFaceMask + fFaceMask2 + fFaceMask3));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_MeshIndex * ((1 - fLegMask) * (1 - fArmMask)), 0.f);
-    Out.vAura = vector(1.f, 0.f, 0.f, 1.f);
+
     return Out;
 }
 
@@ -294,20 +295,23 @@ PS_OUT PS_MAIN_Loading_Dragon(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
+
     if (vMtrlDiffuse.a < 0.1f)
         discard;
+   
+    vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
 
     vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
+    vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
+    
+    float2 vTexcoordFraction = fmod(In.vTexcoord, 1.0);
+    vTexcoordFraction = vTexcoordFraction < 0 ? vTexcoordFraction + 1.0 : vTexcoordFraction;
     
     /* vMtrlShadeDesc 알파값으로 아웃라인을 생성 */
     vResultColor.rgb = saturate(vHairColor.rgb - (1 - vMtrlShadeDesc.a));
-    
-    Out.vDiffuse = vResultColor;
 
-	/* In.vNormal.xyz -> -1 ~ 1 */
-	/* Out.vNormal.xyz -> 0 ~ 1 */
+    Out.vDiffuse = vResultColor;
 
     Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
@@ -408,7 +412,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
 
         VertexShader = compile vs_5_0 VS_MAIN();

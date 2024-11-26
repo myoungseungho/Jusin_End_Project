@@ -6,6 +6,7 @@
 #include "UI_Define.h"
 #include "UIObject.h"
 #include "GameObject.h"
+#include "UI_Manager.h"
 
 #include "RenderInstance.h" 
 
@@ -39,6 +40,7 @@ HRESULT CLevel_Chara_Select::Initialize()
 
 void CLevel_Chara_Select::Update(_float fTimeDelta)
 {
+	
 	if (m_pGameInstance->Key_Down(DIK_SPACE))
 	{
 		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_VS))))
@@ -128,6 +130,7 @@ HRESULT CLevel_Chara_Select::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0126_Name_TON.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_21, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0113_Name_BUN.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_BUU, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0121_Name_HTN.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_HIT, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/Narration/JPN/NA_0105_Name_FRN.ogg", CSound_Manager::SOUND_KEY_NAME::NARRATION_CHARASELECT_FRN, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/012_sto_opening.ogg", CSound_Manager::SOUND_KEY_NAME::CHARASELECT_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::CHARASELECT_BGM, true, 0.1f);
@@ -168,6 +171,6 @@ CLevel_Chara_Select* CLevel_Chara_Select::Create(ID3D11Device* pDevice, ID3D11De
 void CLevel_Chara_Select::Free()
 {
 	m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::LOGO_BGM);
-
+	m_pRenderInstance->BGLight_Pop_Front();
 	__super::Free();
 }

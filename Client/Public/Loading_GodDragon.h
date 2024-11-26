@@ -6,7 +6,6 @@
 BEGIN(Engine)
 class CShader;
 class CModel;
-class CTexture;
 END
 
 BEGIN(Client)
@@ -26,11 +25,19 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+private:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
-	string m_strName;
-	_int m_iDir = { 1 };
+	CTexture* m_pLimTextureCom = { nullptr };
+
+
+private:
+	_int m_iLookDirection = { 0 };
+	_float m_fTexcoordValue = { 1.f };
+
+private:
+	HRESULT Add_Light(_float4 vDirection, _float4 vDiffuse, _float4 vAmbient, _float4 vSpecular, string strName);
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
