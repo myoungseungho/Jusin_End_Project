@@ -2404,8 +2404,8 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	if (m_isRockStart == true)
 	{
-		m_fSpriteAccTime += fTimeDelta;
-		m_fAccRockTime += fTimeDelta;
+		m_fSpriteAccTime += fTimeDelta * m_fWhiteSpeed;
+		m_fAccRockTime += fTimeDelta * m_fWhiteSpeed;
 		if (m_fSpriteAccTime >= 0.05f)
 		{
 			m_fSpriteAccTime = 0.f;
@@ -2443,8 +2443,10 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	if (m_isStartWhiteOut == true)
 	{
+		/* 화이트 스피드 테스트 */
+		//m_fAccWhiteTime += fTimeDelta * m_fWhiteSpeed;
 		m_fAccWhiteTime += fTimeDelta;
-
+		
 		if (m_fAccWhiteTime >= 2.5f)
 		{
 			m_fAccWhiteTime = 2.5f;
@@ -2857,9 +2859,10 @@ void CRenderer::Switch_BlackOut(_bool isTrue)
 	//m_fAccBlackTime += 0.01f;
 }
 
-void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone)
+void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)
 {
 	m_vWhiteDir = vDir;
+	m_fWhiteSpeed = fWhiteSpeed;
 	m_isStartWhiteOut = false;
 	m_isMaintainWhite = false;
 	m_isEndWhiteOut = false;

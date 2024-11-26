@@ -275,9 +275,9 @@ void CRenderInstance::Switch_BlackOut(_bool isTrue)
 	m_pRenderer->Switch_BlackOut(isTrue);
 }
 
-void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone)
+void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)
 {
-	m_pRenderer->Start_WhiteOut(vDir, isDone);
+	m_pRenderer->Start_WhiteOut(vDir, isDone, fWhiteSpeed);
 }
 
 

@@ -103,7 +103,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 		Active_EastFinish(EAST_LASER);*/
 
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
-		PlayerCall_EastFinish(EAST_LASER);
+		PlayerCall_EastFinish(EAST_LASER,1.f);
 	
 	
 }
@@ -157,7 +157,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 
 		m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
-
+		
 		m_eCurMap = MAP_VOLCANO;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_VOLCANO);
 		//DISTORTION_DESC tDistortionDesc{};
@@ -308,10 +308,10 @@ _float2 CMap_Manager::Active_EastFinish()
 	return _float2();
 }
 
-void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType)
+void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType, _float fWhiteSpeed)
 {
 	m_isEastFinish = true;
-	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck);
+	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck, fWhiteSpeed);
 	m_eEastEffectType = eEastEffectType;
 }
 
@@ -355,6 +355,50 @@ void CMap_Manager::Push_MapObject(MAP_TYPE eMapType, _wstring& strKey, CGameObje
 	case MAP_DEST_SPACE:	m_Destructive_SpaceModels.emplace(strKey, pGameObject);		/*pGameObject->SetActive(false);*/	break;
 	case MAP_VOLCANO:		m_VolcanoModels.emplace(strKey, pGameObject);				pGameObject->SetActive(false);	break;
 	case MAP_DEST_VOLCANO:	m_Destructive_VolcanoModels.emplace(strKey, pGameObject);	pGameObject->SetActive(false);	break;
+	}
+}
+
+void CMap_Manager::All_Black(_bool isTrue)
+{
+	if (isTrue == true)
+	{
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_SpaceModels)
+			iter.second->SetActive(false);
+	}
+	else
+	{
+		if (m_eCurMap == MAP_SPACE)
+		{
+			for (auto& iter : m_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(true);
+			for (auto& iter : m_Destructive_SpaceModels)
+				iter.second->SetActive(false);
+
+			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = false;
+		}
+		else
+		{
+			for (auto& iter : m_VolcanoModels)
+				iter.second->SetActive(true);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_SpaceModels)
+				iter.second->SetActive(false);
+
+			m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
+		}
 	}
 }
 

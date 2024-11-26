@@ -92,6 +92,7 @@ private: /* For.BlackOut Variable */
 	const _float m_fBlackTime = { 0.8f };
 	
 private: /* For.WhiteOut Variable */
+	_float m_fWhiteSpeed = { 1.f };
 	_bool m_isStartWhiteOut = { false };
 	_bool m_isEndWhiteOut = { false };
 	_bool m_isMaintainWhite = { false };
@@ -182,7 +183,7 @@ private:
 
 public:
 	void Switch_BlackOut(_bool isTrue);
-	void Start_WhiteOut(_float2 vDir, _bool* isDone);
+	void Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed);
 	void Switch_Test_PostProcess(_bool isTrue);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

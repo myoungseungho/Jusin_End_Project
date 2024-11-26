@@ -232,7 +232,7 @@ _int CImgui_Manager::Pick_Effect_Mesh()
 
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 {
-	ImGui::Begin("Effect Color Edit");
+	ImGui::Begin("EffecASDASDSADASDt Color Edit");
 
 	// RGBA 값을 위한 세로바 슬라이더
 	bool valueChanged = false;  // 값이 변경되었는지 확인
