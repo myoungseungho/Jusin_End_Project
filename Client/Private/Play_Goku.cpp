@@ -766,7 +766,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 	static _bool isPlay = false;
 	if (m_pGameInstance->Key_Down(DIK_SPACE))
 	{
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::HEAVY_ATTACK_PARTICLE, _float3(0.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FRIEZA_ULTIMATE_PARTICLE, _float3(0.f, 10.f, 0.f));
 
 		//if (!isPlay)
 		//{
