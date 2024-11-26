@@ -36,6 +36,10 @@ public:
 		_wstring strEffectName = {};
 
 		_float fEffectRotationDegree = {};
+
+		_bool bExplosionEffectisHitEffect = { false };
+		_bool bGroundExplosionEffect = { false };
+
 	};
 private:
 	CAttackObject_Ranged(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -84,6 +88,8 @@ private:
 	class CEffect_Layer* m_pRangedEffect_Layer = { nullptr };
 
 	_bool m_bCreateReflectEnable = true;
+	_bool m_bExplosionEffectisHitEffect = false;
+	_bool m_bGroundExplosionEffect = { false };
 
 
 public:

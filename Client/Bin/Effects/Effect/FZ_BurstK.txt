@@ -1,8 +1,8 @@
 [Layer]
 LayerName: FZ_BurstK
-Duration: 3
+Duration: 2.3
 TickPerSecond: 2
-KeyFramesCount: 179
+KeyFramesCount: 137
 NumEffec: 29
 Position: 0 0 0
 Scale: 1 1 1
@@ -586,7 +586,7 @@ Color: 134.255 0 183.228 2.88079
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 6
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -612,33 +612,6 @@ Position: 0.2 0.5 0
 Scale: 0.1 0.1 1
 Rotation: 0 0 0
 CurTime: 1.68333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.2 0.3 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: 0.2 0.3 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.2 0.3 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.96667
 Duration: 3
 IsNotPlaying: false
 
@@ -659,7 +632,7 @@ Color: 134.255 0 183.228 2.88079
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 5
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -688,24 +661,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.7 1.2 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.7 1.2 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_07
 ModelName: Model_Effect_acmn_povot_plane00
@@ -723,7 +678,7 @@ Color: 134.255 0 183.228 2.88079
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -752,42 +707,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: -0.3 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: -0.3 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: -0.3 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 9.7 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_08
 ModelName: Model_Effect_acmn_povot_plane00
@@ -805,7 +724,7 @@ Color: 134.255 0 183.228 2.88079
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 5
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -834,24 +753,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.9 0.2 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.9 0.2 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_09
 ModelName: Model_Effect_acmn_povot_plane00
@@ -869,7 +770,7 @@ Color: 134.255 0 183.228 2.88079
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -898,42 +799,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: -0.4 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: -0.4 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: -0.4 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 9.6 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_10
 ModelName: Model_Effect_acmn_povot_plane00
@@ -951,7 +816,7 @@ Color: 134.255 0 183.228 2.88079
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -980,42 +845,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: 0 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: 0 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_11
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1033,7 +862,7 @@ Color: 255 115 210 0.7
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 6
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1062,33 +891,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.2 0.3 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: 0.2 0.3 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.2 0.3 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_12
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1106,7 +908,7 @@ Color: 255 115 215 0.7
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 5
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1135,24 +937,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.7 1.2 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.7 1.2 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_13
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1170,7 +954,7 @@ Color: 255 115 215 0.7
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1199,42 +983,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: -0.3 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: -0.3 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: -0.3 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 9.7 0.1 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_14
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1252,7 +1000,7 @@ Color: 255 115 215 0.7
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 5
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1281,24 +1029,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.9 0.2 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.9 0.2 0
-Scale: 0.1 0.1 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_15
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1316,7 +1046,7 @@ Color: 255 115 215 0.7
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1345,42 +1075,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: -0.4 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: -0.4 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: -0.4 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 9.6 0.5 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_16
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1398,7 +1092,7 @@ Color: 255 115 215 0.7
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1427,42 +1121,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: 0 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: 0 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10 1.1 0
-Scale: 0.07 0.07 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_17
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1480,7 +1138,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 5
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1509,24 +1167,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.7 1.3 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.7 1.3 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_18
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1544,7 +1184,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 6
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1573,33 +1213,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.2 0.5 0
-Scale: 0.04 0.05 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: 0.2 0.5 0
-Scale: 0.04 0.05 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.2 0.5 0
-Scale: 0.04 0.05 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_19
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1617,7 +1230,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1646,42 +1259,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.2 1.5 0
-Scale: 0.0399995 0.0399995 1
-Rotation: 0 0 86
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: 0.2 1.5 0
-Scale: 0.0399995 0.0399995 1
-Rotation: 0 0 86
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: 0.2 1.5 0
-Scale: 0.0399995 0.0399995 1
-Rotation: 0 0 86
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.2 1.5 0
-Scale: 0.0399995 0.0399995 1
-Rotation: 0 0 86
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_20
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1699,7 +1276,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 5
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1728,24 +1305,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: 0.9 0.4 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 10.9 0.4 0
-Scale: 0.06 0.06 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_21
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1763,7 +1322,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1792,42 +1351,6 @@ CurTime: 1.68333
 Duration: 3
 IsNotPlaying: false
 
-[KeyFrame]
-KeyFrameNumber: 137
-Position: -0.3 0.2 0
-Scale: 0.03 0.03 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: -0.3 0.2 0
-Scale: 0.03 0.03 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: -0.3 0.2 0
-Scale: 0.03 0.03 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 9.7 0.2 0
-Scale: 0.03 0.03 1
-Rotation: 0 0 0
-CurTime: 2.96667
-Duration: 3
-IsNotPlaying: false
-
 [Effect]
 EffectName: FZ_BurstK_22
 ModelName: Model_Effect_acmn_povot_plane00
@@ -1845,7 +1368,7 @@ Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 7
+NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -1871,42 +1394,6 @@ Position: -0.3 0.7 0
 Scale: 0.05 0.05 1
 Rotation: 0 0 0
 CurTime: 1.68333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 137
-Position: -0.3 0.5 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.28333
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 144
-Position: -0.3 0.5 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.4
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 154
-Position: -0.3 0.5 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.56667
-Duration: 3
-IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 178
-Position: 9.7 0.5 0
-Scale: 0.05 0.05 1
-Rotation: 0 0 0
-CurTime: 2.96667
 Duration: 3
 IsNotPlaying: false
 

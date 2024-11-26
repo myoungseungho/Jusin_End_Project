@@ -11,6 +11,7 @@
 
 #include "Effect_Manager.h"
 
+#include "SpaceRock.h"
 
 CParryingRangedObject::CParryingRangedObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -58,6 +59,28 @@ HRESULT CParryingRangedObject::Initialize(void* pArg)
 	m_pEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Parrying_Ball"), &tDesc);
 
 	
+	_float fPosX = XMVectorGetX(pDesc->vPos);
+
+	//임시코드
+	if (abs(fPosX + 15.092f) < 3.f)
+	{
+		m_bDestroyObject = true;
+		m_fGoalPosXZ = { 15.092f,10.208f };
+	}
+
+	else if (abs(fPosX - 16.825f) < 5.f)
+	{
+		m_bDestroyObject = true;
+		m_fGoalPosXZ = { 16.825f,16.178f };
+	}
+
+	else if (abs(fPosX - 12.263f) < 3.f)
+	{
+		m_bDestroyObject = true;
+		m_fGoalPosXZ = { 12.263f,33.606f };
+	}
+
+	//맵확인, 주변에 부술 수 있는 오브젝트가 있는지 거리검사,  이미 부숴져있는지 검사,  true
 
 
 	return S_OK;
@@ -105,6 +128,38 @@ void CParryingRangedObject::Update(_float fTimeDelta)
 			m_pEffect_Layer = nullptr;
 			Destory();
 		}
+	}
+	else
+	{
+		if (m_fAccLifeTime < 1.5)
+		{
+			//m_pTransformCom->Add_Move({ 0.f,15 * fTimeDelta, 10 * fTimeDelta });
+			m_pTransformCom->Add_Move({ 0.f,20 * fTimeDelta, 10 * fTimeDelta });
+		}
+		else
+		{
+			if (m_bFlipEnable)
+			{
+				m_pEffect_Layer->Set_Copy_Layer_Rotation({ 0.f,0.f,180.f });
+
+				//m_pTransformCom->Add_Move({ rand() % 10 - 5.f,0.f,0.f });
+				_vector vPos = { m_fGoalPosXZ.x, 30.f, m_fGoalPosXZ.y };
+				m_pTransformCom->Set_State(CTransform::STATE_POSITION, vPos);
+				m_bFlipEnable = false;
+			}
+
+			m_pTransformCom->Add_Move({ 0.f,-20 * fTimeDelta,10 * fTimeDelta });
+		}
+
+		if (m_fAccLifeTime > 5)
+		{
+			m_pEffect_Layer->m_bIsDoneAnim = true;
+			m_pEffect_Layer = nullptr;
+			//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[0] = true;
+			Destory();
+		}
+
+
 	}
 
 

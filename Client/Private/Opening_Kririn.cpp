@@ -303,6 +303,7 @@ void COpening_Kririn::Set_Delete()
 {
 	m_bInvisible = true;
 	m_bDead = true;
+	Destory();
 }
 
 HRESULT COpening_Kririn::Ready_Components()

@@ -541,6 +541,7 @@ void CGoku_MeleeAttack::Attack_236Special_Side()
 void CGoku_MeleeAttack::Attack_236Ultimate()
 {
 
+
 	//필살기는 모션을 끊고 쓰는것처럼 보이는데 자세히 보면 기술마다 다름
 	// 에너지파는 끊고 쓰고,   공격은 타격판정 난 이후? 
 

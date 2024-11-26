@@ -4,10 +4,10 @@ Duration: 10
 TickPerSecond: 12
 KeyFramesCount: 599
 NumEffec: 5
-Position: 0 -1 0
+Position: 0 0 0
 Scale: 0.999997 0.999997 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: FZ_Down_R-03_01
@@ -18,8 +18,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -7.45058e-08 1 0
-Scale: 0.0299586 0.00998752 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299663 0.00998993 0.03
 Rotation: 0 0 180
 IsLoop: false
 Color: 159.586 71.7715 255 0.595364
@@ -30,8 +30,8 @@ NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -7.45058e-08 1 0
-Scale: 0.029969 0.00999077 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299663 0.00998994 0.03
 Rotation: 0 0 180
 CurTime: 0
 Duration: 10
@@ -39,8 +39,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 117
-Position: -7.45058e-08 1 0
-Scale: 0.0299819 0.0299819 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299804 0.0299804 0.03
 Rotation: 0 0 180
 CurTime: 1.95
 Duration: 10
@@ -48,12 +48,12 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 598
-Position: -7.45058e-08 1 0
-Scale: 0.0299719 0.00999165 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299682 0.00999048 0.03
 Rotation: 0 0 180
 CurTime: 9.96667
 Duration: 10
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: FZ_Down_R-03_02
@@ -64,8 +64,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -7.45058e-08 1 0
-Scale: 0.0299851 0.00999825 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299839 0.00999789 0.03
 Rotation: 0 0 180
 IsLoop: false
 Color: 255 255 255 0.346688
@@ -76,8 +76,8 @@ NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -7.45058e-08 1 0
-Scale: 0.0299851 0.00999825 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299839 0.00999789 0.03
 Rotation: 0 0 180
 CurTime: 0
 Duration: 10
@@ -85,8 +85,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 117
-Position: -7.45058e-08 1 0
-Scale: 0.0299916 0.0299916 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299905 0.0299905 0.03
 Rotation: 0 0 180
 CurTime: 1.95
 Duration: 10
@@ -94,12 +94,12 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 598
-Position: -7.45058e-08 1 0
-Scale: 0.0299887 0.00999937 0.03
+Position: -7.45058e-08 0 0
+Scale: 0.0299864 0.00999865 0.03
 Rotation: 0 0 180
 CurTime: 9.96667
 Duration: 10
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: FZ_Down_R-03_03
@@ -110,8 +110,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 1 1.1 0
-Scale: 0.159756 0.0199938 1
+Position: 1 0.1 0
+Scale: 0.159746 0.0199926 1
 Rotation: 0 0 180
 IsLoop: false
 Color: 255 255 255 0.695364
@@ -122,8 +122,8 @@ NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 1 1.1 0
-Scale: 0.159756 0.0199938 1
+Position: 1 0.1 0
+Scale: 0.159746 0.0199926 1
 Rotation: 0 0 180
 CurTime: 0
 Duration: 10
@@ -131,8 +131,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 117
-Position: 1 1.7 0
-Scale: 0.159905 0.119923 1
+Position: 1 0.7 0
+Scale: 0.159893 0.119914 1
 Rotation: 0 0 180
 CurTime: 1.95
 Duration: 10
@@ -140,12 +140,12 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 598
-Position: 1 1.1 0
-Scale: 0.159779 0.0199967 1
+Position: 1 0.1 0
+Scale: 0.159765 0.019995 1
 Rotation: 0 0 180
 CurTime: 9.96667
 Duration: 10
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: FZ_Down_R-03_04
@@ -156,8 +156,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: -0.2 1 0
-Scale: 0.149988 0.299972 1
+Position: -0.2 0 0
+Scale: 0.149987 0.299969 1
 Rotation: 0 0 270
 IsLoop: false
 Color: 157.897 81.904 255 0.645364
@@ -168,8 +168,8 @@ NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -0.2 1 0
-Scale: 0.149988 0.299972 1
+Position: -0.2 0 0
+Scale: 0.149987 0.299969 1
 Rotation: 0 0 270
 CurTime: 0
 Duration: 10
@@ -177,8 +177,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 117
-Position: -0.2 1 0
-Scale: 0.249877 0.299821 1
+Position: -0.2 0 0
+Scale: 0.249876 0.299818 1
 Rotation: 0 0 270
 CurTime: 1.95
 Duration: 10
@@ -186,12 +186,12 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 598
-Position: -0.2 1 0
-Scale: 0.149991 0.299979 1
+Position: -0.2 0 0
+Scale: 0.149989 0.299973 1
 Rotation: 0 0 270
 CurTime: 9.96667
 Duration: 10
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: FZ_Down_R-03_05
@@ -202,8 +202,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: -0.2 1 0
-Scale: 0.0999934 0.299971 1
+Position: -0.2 0 0
+Scale: 0.099992 0.299965 1
 Rotation: 0 0 270
 IsLoop: false
 Color: 137.632 93.7252 255 0.25
@@ -214,8 +214,8 @@ NumKeyFrame: 3
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: -0.2 1 0
-Scale: 0.0999934 0.299971 1
+Position: -0.2 0 0
+Scale: 0.0999924 0.299967 1
 Rotation: 0 0 270
 CurTime: 0
 Duration: 10
@@ -223,8 +223,8 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 117
-Position: -0.2 1 0
-Scale: 0.19983 0.29983 1
+Position: -0.2 0 0
+Scale: 0.199829 0.299828 1
 Rotation: 0 0 270
 CurTime: 1.95
 Duration: 10
@@ -232,10 +232,10 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 598
-Position: -0.2 1 0
-Scale: 0.0999953 0.299978 1
+Position: -0.2 0 0
+Scale: 0.0999932 0.29997 1
 Rotation: 0 0 270
 CurTime: 9.96667
 Duration: 10
-IsNotPlaying: true
+IsNotPlaying: false
 

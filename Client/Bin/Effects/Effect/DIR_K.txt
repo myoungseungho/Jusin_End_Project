@@ -1,0 +1,122 @@
+[Layer]
+LayerName: DIR_K
+Duration: 1
+TickPerSecond: 5
+KeyFramesCount: 59
+NumEffec: 3
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: DIR_K_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DIR_KDIR_K_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 0.496688
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -2.4 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: DIR_K_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DIR_KDIR_K_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.5 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 0 0 0.738743
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.5 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: DIR_K_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/DIR_KDIR_K_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1 0
+Scale: 0.17 0.17 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 148.609 0 1.09603
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1 0
+Scale: 0.17 0.17 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -1.37 0
+Scale: 0.23 0.23 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+

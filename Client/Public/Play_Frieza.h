@@ -235,6 +235,14 @@ private:
 
 	_bool m_bGoldFrieza = false;
 
+	list<CEffect_Layer*>m_DeleteLayer;
+
+	CEffect_Layer* m_p236SpecialEffect = { nullptr };
+	CEffect_Layer* m_p236UltimateEffect = { nullptr };
+
+	CEffect_Layer* m_p214FinalEffect = { nullptr };
+	CEffect_Layer* m_pAttackHeavyEffect = { nullptr };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

@@ -2200,8 +2200,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iGrabAnimationIndex = ANIME_ATTACK_236_SPECIAL;
 		Desc.iOnwerNextAnimationIndex = ANIME_ATTACK_236_SPECIAL_SUCCES;
 
+
+		//이동하기 전에 이펙트 생기던 시절.
+		//Desc.strHitEffectName = TEXT("21_SDJ-01");
+		//Desc.fHitEffectOffset = { 0.7f,1.9f };
+		//Desc.bHitEffectFlip = true;
+
 		Desc.strHitEffectName = TEXT("21_SDJ-01");
-		Desc.fHitEffectOffset = { 0.7f,1.9f };
+		Desc.fHitEffectOffset = { 0.3f,1.3f };
 		Desc.bHitEffectFlip = true;
 
 		Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;

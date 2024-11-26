@@ -1,0 +1,25 @@
+Version: 2
+KeyCount: 2
+KeySize: 45
+Key: Prototype_Component_Texture_Effect_cmn_aura03
+ID: 1
+vTexCoord: 1 1
+KeySize: 52
+Key: Prototype_Component_Texture_Effect_cmn_Fractal3_gray
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 5
+NodeID: -1 Position: 747 252
+NodeID: 1 Position: 456 209
+NodeID: 1501 Position: 14 129
+NodeID: 2 Position: 203 107
+NodeID: 3001 Position: 383 616
+MoveTexNodeCount: 1
+MoveTexNodeID: 1501 Direction: 0 1 Speed: 1
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 1 Speed: 8.5
+LinkCount: 4
+LinkSrcNodeID: 4 LinkDestNodeID: -2
+LinkSrcNodeID: 8 LinkDestNodeID: 5
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 1502 LinkDestNodeID: 11
