@@ -38,8 +38,8 @@ HRESULT CLoading_Camera::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(0.f, -1.f, 0.f));
-	m_pTransformCom->LookAt(XMVectorSet(0.f, 0.5f, 1.f,1.f));
+	m_pTransformCom->Set_State_Position(_float3(0.f, -0.5f, 0.0f));
+	m_pTransformCom->LookAt(XMVectorSet(0.f, 1.f, 1.f,1.f));
 
 	//m_pLobby_Goku_Transform = static_cast<CTransform*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Goku"))->Get_Component(TEXT("Com_Transform")));
 
