@@ -17,6 +17,7 @@ struct VS_IN
     // 인스턴스 버퍼에 있는 녀석들
     row_major matrix LocalMatrix : WORLD;
     float2 vLifeTime : TEXCOORD0;
+    float3 vMoveDir : TEXCOORD1; // New field for moveDir
 };
 
 struct VS_OUT
@@ -24,6 +25,7 @@ struct VS_OUT
     float4 vPosition : POSITION;
     float2 vPSize : PSIZE;
     float2 vLifeTime : TEXCOORD0;
+    float3 vMoveDir : TEXCOORD1; // New field for moveDir
 };
 
 VS_OUT VS_MAIN(VS_IN In)
@@ -34,7 +36,8 @@ VS_OUT VS_MAIN(VS_IN In)
     Out.vPosition = mul(vPosition, g_WorldMatrix);
     Out.vPSize = float2(length(In.LocalMatrix._11_12_13), length(In.LocalMatrix._21_22_23));
     Out.vLifeTime = In.vLifeTime;
-
+    Out.vMoveDir = In.vMoveDir;
+    
     return Out;
 }
 
@@ -43,6 +46,7 @@ struct GS_IN
     float4 vPosition : POSITION;
     float2 vPSize : PSIZE;
     float2 vLifeTime : TEXCOORD0;
+    float3 vMoveDir : TEXCOORD1;
 };
 
 struct GS_OUT
@@ -117,52 +121,60 @@ void GS_MAIN(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
 [maxvertexcount(20)]
 void GS_MAIN_NOTBillBoard(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
 {
-    GS_OUT Out[4];
+  // moveDir을 정규화하여 방향 벡터 생성
+    float3 vDir = normalize(In[0].vMoveDir);
 
-    // 카메라를 향하는 벡터 계산을 제거하고 고정된 vRight와 vUp 벡터를 사용합니다.
-    float3 vRight = float3(1.0f, 0.0f, 0.0f) * In[0].vPSize.x * 0.5f;
-    float3 vUp = float3(0.0f, 1.0f, 0.0f) * In[0].vPSize.y * 0.5f;
+    // vDir에 수직인 벡터 계산
+    float3 worldUp = float3(0.0f, 1.0f, 0.0f);
+    if (abs(dot(vDir, worldUp)) > 0.99f)
+    {
+        worldUp = float3(1.0f, 0.0f, 0.0f);
+    }
+    float3 vPerp = normalize(cross(worldUp, vDir));
 
-    // 원하는 배율을 적용합니다.
-    float xScaleFactor = 5.f; // X축 크기 배율
-    float yScaleFactor = 1.0f; // Y축 크기 배율
+    // 스케일링 팩터 적용
+    float lengthDir = 5.0f * In[0].vPSize.x;
+    float lengthPerp = 1.0f * In[0].vPSize.y;
 
-    vRight *= xScaleFactor;
-    vUp *= yScaleFactor;
+    // 중심 위치
+    float3 center = In[0].vPosition.xyz;
 
+    // 네 꼭지점 계산 (순서 조정)
+    float3 corner0 = center - (vDir * lengthDir * 0.5f) + (vPerp * lengthPerp * 0.5f); // 좌상단
+    float3 corner1 = center + (vDir * lengthDir * 0.5f) + (vPerp * lengthPerp * 0.5f); // 우상단
+    float3 corner2 = center + (vDir * lengthDir * 0.5f) - (vPerp * lengthPerp * 0.5f); // 우하단
+    float3 corner3 = center - (vDir * lengthDir * 0.5f) - (vPerp * lengthPerp * 0.5f); // 좌하단
+
+    // 텍스처 좌표 설정 (순서 조정)
+    float2 texcoords[4] =
+    {
+        float2(0.0f, 0.0f), // corner0 (좌하단)
+        float2(1.0f, 0.0f), // corner1 (우하단)
+        float2(1.0f, 1.0f), // corner2 (우상단)
+        float2(0.0f, 1.0f) // corner3 (좌상단)
+    };
+
+    // 뷰-프로젝션 행렬 계산
     matrix matVP = mul(g_ViewMatrix, g_ProjMatrix);
 
-    // 사각형의 각 정점 계산
-    Out[0].vPosition = float4(In[0].vPosition.xyz + vRight + vUp, 1.f);
-    Out[0].vTexcoord = float2(0.f, 0.f);
-    Out[0].vPosition = mul(Out[0].vPosition, matVP);
-    Out[0].vLifeTime = In[0].vLifeTime;
+    // 출력 구조체에 값 설정 및 변환
+    GS_OUT vertices[4];
+    float3 corners[4] = { corner0, corner1, corner2, corner3 };
+    for (int i = 0; i < 4; ++i)
+    {
+        vertices[i].vPosition = mul(float4(corners[i], 1.0f), matVP);
+        vertices[i].vTexcoord = texcoords[i];
+        vertices[i].vLifeTime = In[0].vLifeTime;
+    }
 
-    Out[1].vPosition = float4(In[0].vPosition.xyz - vRight + vUp, 1.f);
-    Out[1].vTexcoord = float2(1.f, 0.f);
-    Out[1].vPosition = mul(Out[1].vPosition, matVP);
-    Out[1].vLifeTime = In[0].vLifeTime;
+    // 삼각형 생성 (순서 유지)
+    VertexStream.Append(vertices[0]); // corner0
+    VertexStream.Append(vertices[1]); // corner1
+    VertexStream.Append(vertices[2]); // corner2
 
-    Out[2].vPosition = float4(In[0].vPosition.xyz - vRight - vUp, 1.f);
-    Out[2].vTexcoord = float2(1.f, 1.f);
-    Out[2].vPosition = mul(Out[2].vPosition, matVP);
-    Out[2].vLifeTime = In[0].vLifeTime;
-
-    Out[3].vPosition = float4(In[0].vPosition.xyz + vRight - vUp, 1.f);
-    Out[3].vTexcoord = float2(0.f, 1.f);
-    Out[3].vPosition = mul(Out[3].vPosition, matVP);
-    Out[3].vLifeTime = In[0].vLifeTime;
-
-    // 삼각형 스트립 생성
-    VertexStream.Append(Out[0]);
-    VertexStream.Append(Out[1]);
-    VertexStream.Append(Out[2]);
-    VertexStream.RestartStrip();
-
-    VertexStream.Append(Out[0]);
-    VertexStream.Append(Out[2]);
-    VertexStream.Append(Out[3]);
-    VertexStream.RestartStrip();
+    VertexStream.Append(vertices[0]); // corner0
+    VertexStream.Append(vertices[2]); // corner2
+    VertexStream.Append(vertices[3]); // corner3
 }
 
 
@@ -310,7 +322,7 @@ technique11 DefaultTechnique
 //3
     pass Default_BillBoard
     {
-        SetRasterizerState(RS_Default);
+        SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 

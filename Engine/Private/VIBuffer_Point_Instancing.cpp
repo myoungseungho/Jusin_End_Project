@@ -89,7 +89,6 @@ HRESULT CVIBuffer_Point_Instancing::Initialize_Prototype(const CVIBuffer_Instanc
 		m_pInstanceVertices[i].vLifeTime.x = Get_Random(pInitialDesc->vLifeTime.x, pInitialDesc->vLifeTime.y);
 	}
 #pragma endregion
-	
 
 	return S_OK;
 }

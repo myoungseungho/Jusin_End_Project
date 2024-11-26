@@ -114,6 +114,9 @@ _bool CVIBuffer_Instancing::Spread(_float fTimeDelta)
 	{
 		_vector		vMoveDir = XMVector3Normalize(XMLoadFloat4(&m_pInstanceVertices[i].vTranslation) - XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f));
 
+		// Store moveDir in the instance buffer
+		XMStoreFloat3(&m_pInstanceVertices[i].vMoveDir, vMoveDir);
+
 		XMStoreFloat4(&pMatrices[i].vTranslation,
 			XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
 
