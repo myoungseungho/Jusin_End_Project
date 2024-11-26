@@ -82,6 +82,7 @@ public:
 		_float2 fHitEffectOffset = {};
 		_bool bHitEffectFlip = { false };
 
+		_ushort iCallAttackBackIndex = { 60000 };
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -197,6 +198,8 @@ protected:
 	_wstring m_strHitEffectName = {};
 	_float2 m_fHitEffectOffset = {};
 	_bool	m_bHitEffectFlip = { false };
+
+	_ushort m_iCallAttackBackIndex = { 60000 };
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);
 

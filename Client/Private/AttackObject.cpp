@@ -101,6 +101,9 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_isfxSoundIndex = pDesc->isfxSoundIndex;
 	m_fsfxVolume= pDesc->fsfxVolume;
 
+
+	m_iCallAttackBackIndex = pDesc->iCallAttackBackIndex;
+
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
@@ -446,6 +449,11 @@ void CAttackObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_bOwnerNextAnimation)
 			{
 				m_pOwner->Set_NextAnimation(m_iOnwerNextAnimationIndex, 1.f);
+			}
+
+			if (m_iCallAttackBackIndex != 60000)
+			{
+				m_pOwner->AttackEvent(m_iCallAttackBackIndex);
 			}
 
 			//히트시 이펙트

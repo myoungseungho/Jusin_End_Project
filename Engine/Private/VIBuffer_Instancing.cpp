@@ -102,7 +102,7 @@ HRESULT CVIBuffer_Instancing::Create_InstanceBuffer()
 	return S_OK;
 }
 
-void CVIBuffer_Instancing::Spread(_float fTimeDelta)
+_bool CVIBuffer_Instancing::Spread(_float fTimeDelta)
 {
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
 
@@ -114,6 +114,9 @@ void CVIBuffer_Instancing::Spread(_float fTimeDelta)
 	{
 		_vector		vMoveDir = XMVector3Normalize(XMLoadFloat4(&m_pInstanceVertices[i].vTranslation) - XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f));
 
+		// Store moveDir in the instance buffer
+		XMStoreFloat3(&m_pInstanceVertices[i].vMoveDir, vMoveDir);
+
 		XMStoreFloat4(&pMatrices[i].vTranslation,
 			XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
 
@@ -122,10 +125,18 @@ void CVIBuffer_Instancing::Spread(_float fTimeDelta)
 		{
 			pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
 			pMatrices[i].vLifeTime.y = 0.f;
+		}// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
+		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			m_pContext->Unmap(m_pVBInstance, 0);
+			return true;
 		}
 	}
 
+	m_fElapsedTime += fTimeDelta;
+
 	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
 }
 
 _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)

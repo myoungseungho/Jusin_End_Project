@@ -35,7 +35,7 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Spread(_float fTimeDelta);
+	_bool Spread(_float fTimeDelta);
 	_bool Spread_2D(_float fTimeDelta);
 	_bool Spread_FireCracker_2D(_float fTimeDelta);
 	_bool Half_Spread_X_2D(_float fTimeDelta);
@@ -68,7 +68,6 @@ protected:
 
 protected:
 	HRESULT Create_InstanceBuffer();
-
 
 protected:
 	_float Get_RandomNormalize();

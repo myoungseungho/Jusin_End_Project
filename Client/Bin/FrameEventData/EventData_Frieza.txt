@@ -859,13 +859,30 @@ PLAY_FRN,FRN402_body,26,ObjectMove,0,0.01,0,0
 PLAY_FRN,FRN402_body,28,ObjectMove,0,0.01,0,0
 PLAY_FRN,FRN402_body,30,ObjectMove,0,0.01,0,0
 
-
+PLAY_FRN,FRN402_body,2,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN402_body,4,ObjectMove,0,0.06,0,0
+PLAY_FRN,FRN402_body,6,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN402_body,8,ObjectMove,0,0.05,0,0
+PLAY_FRN,FRN402_body,10,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,12,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,14,ObjectMove,0,0.04,0,0
+PLAY_FRN,FRN402_body,16,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN402_body,18,ObjectMove,0,0.03,0,0
+PLAY_FRN,FRN402_body,20,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN402_body,22,ObjectMove,0,0.02,0,0
+PLAY_FRN,FRN402_body,24,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,26,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,28,ObjectMove,0,0.01,0,0
+PLAY_FRN,FRN402_body,30,ObjectMove,0,0.01,0,0
 
 
 //,214특 기원참
 PLAY_FRN,FRN403_body,0,AnimSpeedChange,0.01,90
 PLAY_FRN,FRN403_body,0.001000,PlaySound,91,0,1
 PLAY_FRN,FRN403_body,0.001000,PlaySound,106,0,1
+
+PLAY_FRN,FRN403_body,1,AttackEvent,1
+
 
 //,던지면서 본인만 시간정지?
 PLAY_FRN,FRN403_body,60,AnimSpeedChange,0.01,40
@@ -980,6 +997,8 @@ PLAY_FRN,FRN433_body,0.001000,PlaySound,113,0,1
 PLAY_FRN,FRN433_body,0,AttackEvent,0
 PLAY_FRN,FRN433_body,0.002,Camera_Play_21_Grab_Special_0_Shake,1.4,0.3
 
+PLAY_FRN,FRN433_body,7,AttackEvent,101	
+
 //,이펙트,화면가리기,  433cs(70)로 연계?
 PLAY_FRN,FRN433_body,15,AttackEvent,1
 
@@ -996,6 +1015,19 @@ PLAY_FRN,FRN433cs_body,160.002,Camera_Play_21_Grab_Special_0_Shake,2.0,0.03
 //,VS오공 시네마틱 
 PLAY_FRN,FRN_GKS801cs_01_body,0,AnimSpeedChange,0.005,60
 PLAY_FRN,FRN_GKS801cs_01_body,10.001000,PlaySound,151,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,230.001000,PlaySound,152,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,230.001000,Camera_Play_21_Grab_Special_0_Shake,1.5,0.02
+PLAY_FRN,FRN_GKS801cs_01_body,320.001000,PlaySound,159,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,320.002000,PlaySound,160,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,330.001000,Camera_Play_21_Grab_Special_0_Shake,1.2,0.4
+PLAY_FRN,FRN_GKS801cs_01_body,500.001000,PlaySound,154,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,750.001000,Camera_Play_21_Grab_Special_0_Shake,1.5,0.05
+PLAY_FRN,FRN_GKS801cs_01_body,750.002000,PlaySound,162,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,780.001000,PlaySound,155,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,800.001000,PlaySound,156,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,820.1000,Camera_Play_21_Grab_Special_0_Shake,3.5,0.1
+PLAY_FRN,FRN_GKS801cs_01_body,870.002000,PlaySound,161,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,930.001000,PlaySound,163,0,1
 
 //,VS 오공 패배 시네마틱
 PLAY_FRN,FRN_GKS805cs_body,588.213013,AnimSpeedChange,0.005000,60.000000

@@ -574,6 +574,30 @@
     <ClCompile Include="..\private\Lobby_Cloud.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Cloud</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Particle.cpp">
+      <Filter>02.GameObjects\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Particle_Manager.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Particle_Spread.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Spread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Wring.cpp">
+      <Filter>02.GameObjects\Lobby\Looby_Wring</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Car.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Car</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Flag.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Flag</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Ranking.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Party.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Party</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1223,6 +1247,30 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_Cloud">
       <UniqueIdentifier>{bb6e008d-8d36-441b-bb50-5f45b1acbfc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle">
+      <UniqueIdentifier>{675cdae6-375a-41d8-9fd4-86c9bf2119ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Manager">
+      <UniqueIdentifier>{29d8cd30-d7ea-45de-b864-58ad47d236d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Spread">
+      <UniqueIdentifier>{b0c8c9a5-f303-464d-a035-b811e9f6dc1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Looby_Wring">
+      <UniqueIdentifier>{21be0ffe-5167-49fb-8d1b-ad7a30790087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Car">
+      <UniqueIdentifier>{52b02b1e-ea06-4ece-8206-49d11366a80e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Flag">
+      <UniqueIdentifier>{515f3c76-cd2b-4b01-9df7-a412779b7181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Ranking">
+      <UniqueIdentifier>{bcfd29da-8276-481b-ad6b-d7c885ada926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Party">
+      <UniqueIdentifier>{884dbe24-1b94-47b1-aedc-f3e49511ca02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1960,6 +2008,30 @@
     </ClInclude>
     <ClInclude Include="..\Public\UI_Define.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle.h">
+      <Filter>02.GameObjects\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Manager.h">
+      <Filter>02.GameObjects\Particle\Particle_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Spread.h">
+      <Filter>02.GameObjects\Particle\Particle_Spread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Wring.h">
+      <Filter>02.GameObjects\Lobby\Looby_Wring</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Car.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Car</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Flag.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Flag</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Ranking.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Party.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Party</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

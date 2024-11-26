@@ -120,11 +120,12 @@ namespace Engine
 		XMFLOAT4		vLook;
 		XMFLOAT4		vTranslation;
 		XMFLOAT2		vLifeTime;
+		XMFLOAT3		vMoveDir;
 	};
 
 	struct ENGINE_DLL VTXPARTICLE_POINT
 	{
-		static const unsigned int					iNumElements = { 6 };
+		static const unsigned int					iNumElements = { 7 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	};
 

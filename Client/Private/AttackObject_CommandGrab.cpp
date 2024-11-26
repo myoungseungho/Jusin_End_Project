@@ -163,11 +163,11 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 			if(m_fForcedGravityTime !=100)
 				pCharacter->Set_fGravityTime(m_fForcedGravityTime);
 
-			if (m_strHitEffectName.size() !=0)
-			{
-				//pCharacter->Character_Make_Effect(m_strHitEffectName);
-				pCharacter->Character_Make_Effect(m_strHitEffectName,m_fHitEffectOffset,m_bHitEffectFlip);
-			}
+			//if (m_strHitEffectName.size() !=0)
+			//{
+			//	//pCharacter->Character_Make_Effect(m_strHitEffectName);
+			//	pCharacter->Character_Make_Effect(m_strHitEffectName,m_fHitEffectOffset,m_bHitEffectFlip);
+			//}
 
 
 			if (m_iVirtualCameraindex != 200 || m_fCameraShakeDuration != 0)
@@ -204,7 +204,11 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 				vPos += _vector{ m_fDistance.x, m_fDistance.y , 0.f, 0.f };
 				static_cast<CTransform*>(pCharacter->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, vPos);
 			}
-
+			if (m_strHitEffectName.size() != 0)
+			{
+				//pCharacter->Character_Make_Effect(m_strHitEffectName);
+				pCharacter->Character_Make_Effect(m_strHitEffectName, m_fHitEffectOffset, m_bHitEffectFlip);
+			}
 
 			if (m_bOwnerNextAnimation)
 			{
@@ -214,7 +218,10 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 				m_pOwner->Set_CurrentAnimationPositionJump(m_fGrabAnimationPosition);
 
 			}
-
+			if (m_iCallAttackBackIndex != 60000)
+			{
+				m_pOwner->AttackEvent(m_iCallAttackBackIndex);
+			}
 
 
 		}

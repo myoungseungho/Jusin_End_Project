@@ -29,6 +29,7 @@ private:
 
 	void			Create_Effect_Manager();
 	void			Create_QTE_Manager();
+	void			Create_Particle_Manager();
 
 	HRESULT Loading_For_Effect();
 
@@ -38,7 +39,7 @@ private:
 	class CImgui_Manager* m_pIMGUI_Manager = { nullptr };
 	class CQTE_Manager* m_pQTE_Manager = { nullptr };
 	class CMap_Manager* m_pMap_Manager = { nullptr };
-
+	class CParticle_Manager* m_pParticle_Manager = { nullptr };
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual void Free() override;

@@ -351,6 +351,49 @@ void CMap_Manager::Push_MapObject(MAP_TYPE eMapType, _wstring& strKey, CGameObje
 	}
 }
 
+void CMap_Manager::All_Black(_bool isTrue)
+{
+	if (isTrue == true)
+	{
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_VolcanoModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_SpaceModels)
+			iter.second->SetActive(false);
+		for (auto& iter : m_Destructive_SpaceModels)
+			iter.second->SetActive(false);
+	}
+	else
+	{
+		if (m_eCurMap == MAP_SPACE)
+		{
+			for (auto& iter : m_VolcanoModels)
+				iter.second->SetActive(true);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(true);
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_SpaceModels)
+				iter.second->SetActive(false);
+		}
+
+		else
+		{
+			for (auto& iter : m_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(true);
+			for (auto& iter : m_Destructive_SpaceModels)
+				iter.second->SetActive(true);
+		}
+	}
+
+}
+
+
 HRESULT CMap_Manager::Ready_Components()
 {
 	return S_OK;
