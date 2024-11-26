@@ -30,7 +30,7 @@
 #include "Frieza_Metal.h"
 
 #include "Opening_Kririn.h"
-
+#include "Map_Manager.h"
 
 CPlay_Frieza::CPlay_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -364,23 +364,33 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 			}
 			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
 
-			if (m_bMotionPlaying == false)
+
+			//m_bFinalSkillRoundEnd
+			//if (m_bMotionPlaying == false)
+			//{
+			//
+			//
+			//	if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
+			//	{
+			//		m_fAccDyingTime += fTimeDelta;
+			//		if (m_fAccDyingTime > 2.f)
+			//		{
+			//			CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+			//			//Tag_In(m_ePlayerSlot);
+			//
+			//
+			//		}
+			//	}
+			//
+			//}
+
+			m_fAccDyingTime += fTimeDelta;
+			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
-
-
-				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
-				{
-					m_fAccDyingTime += fTimeDelta;
-					if (m_fAccDyingTime > 2.f)
-					{
-						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-						//Tag_In(m_ePlayerSlot);
-
-
-					}
-				}
-
+				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+				m_bPlaying = false;
 			}
+
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();
@@ -1421,6 +1431,16 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bGrabedGravity = true;
 			Desc.fForcedGravityTime = 0.1f;
 
+
+			Desc.iCallAttackBackIndex = 1001;
+
+			
+			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+		}
+		else if (iAttackEvent == 1001)
+		{
 			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			if (Get_iDirection() == 1)
 			{
@@ -1431,9 +1451,6 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, m_pEnemy, true);
 			}
 
-			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
-
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 		}
 		// AttackBack 실패시 55로 이동  성공시 애니메이션 속도 조절
 		else if (iAttackEvent == 1)
@@ -2442,6 +2459,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iGainKiAmount = 10;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		
+		//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_SDO-02"), { 2.f,0.f });
+
+		Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+		//pEffect->Set_Copy_Layer_Scaled({ 0.5f,0.5f,1.f });
+
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_SPECIAL:
@@ -2820,6 +2845,24 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fCameraShakeDuration = 0.5f;
 		Desc.fCameraShakeMagnitude = 0.3f;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"));
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"),{0.f,0.5f});
+		//pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,270.f });
+
+		Character_Make_BoneEffect("GD_hand_R", TEXT("FZ_SDU-01"));
+
+		CEffect_Layer * pEffect1 = Character_Make_Effect(TEXT("FZ_SDU-02"),{3.7f,0.f});
+		CEffect_Layer * pEffect2 = Character_Make_Effect(TEXT("FZ_SDU-02"), {4.4f,0.f },true);
+
+		pEffect1->Set_Copy_Layer_Scaled({ 1.2f,1.2f,1.f });
+		//pEffect2->Set_Copy_Layer_Scaled({ 1.0f,1.2f,1.f });
+
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+	//pEffect->Set_Copy_Layer_Scaled({ 0.5f,0.5f,1.f });
+
 
 	}
 	break;
@@ -3238,6 +3281,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
 
 
+			Desc.iCallAttackBackIndex = 1001;
+
 			Desc.strEffectName = TEXT("FZ_SDO-01_BIG");
 			Desc.strHitEffectName = TEXT("FZ_SDO-02_BIG");
 			Desc.bExplosionEffectisHitEffect = true;
@@ -3245,6 +3290,19 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-02"));
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+		}
+		else if (iAttackEvent == 1001)
+		{
+
+
+
+			//if (m_pEnemy->Get_iHP() < 2080 * Get_DamageScale(true))
+			//{
+			//	CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_LASER);
+			//	m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
+			//	//캐릭터 MaxDeath 도 처리
+			//
+			//}
 		}
 	}
 	break;
@@ -3322,7 +3380,22 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 			Desc.bGrabbedEnd = true;
 
+			Desc.iCallAttackBackIndex = 1001;
+
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+		else if (iAttackEvent == 1001)
+		{
+			//if(Get_fHeight() > 4)
+			//{
+			//	if (m_pEnemy->Get_iHP() < 4020 * Get_DamageScale(true))
+			//	{
+			//		CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_LASER);
+			//		m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
+			//		//캐릭터 MaxDeath 도 처리
+			//
+			//	}
+			//}
 		}
 	}
 	break;
@@ -3354,7 +3427,6 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Set_AnimationStop(0.6f);
 
 			Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-01"));
-			Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-02"));
 
 		}
 
@@ -3424,6 +3496,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-04"));
 				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,25.f });
 			}
+
+
+			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-02"));
+			Character_Make_Effect(TEXT("FZ_Down_R-02"));
 		}
 	}
 	break;

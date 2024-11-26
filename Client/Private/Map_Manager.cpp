@@ -400,7 +400,9 @@ void CMap_Manager::All_Black(_bool isTrue)
 			m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
 		}
 	}
+
 }
+
 
 HRESULT CMap_Manager::Ready_Components()
 {

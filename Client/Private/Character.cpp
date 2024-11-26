@@ -2202,6 +2202,9 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 */
 AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
 {
+
+	cout << "HP : " << m_iHP << " , Damage :" << iDamage << endl;
+
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground
 		|| m_pModelCom->m_iCurrentAnimationIndex == m_iLayUp)
 		return RESULT_MISS;
@@ -2834,6 +2837,11 @@ void CCharacter::Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime)
 
 }
 
+_uint CCharacter::Get_iHP()
+{
+	return m_iHP;
+}
+
 _bool CCharacter::Update_Tag_In(_float fTimeDelta)
 {
 	if (m_bTag_In == false)
@@ -3432,7 +3440,8 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
 	//잡기중에는 겹쳐도 됨
-	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
+	//if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
+	if (m_bGrabbed  || m_bPlaying == false)
 		return;
 
 
@@ -4254,54 +4263,65 @@ void CCharacter::Set_bDynamicMove(_bool bDynamicMove)
 void CCharacter::Update_Dying(_float fTimeDelta)
 {
 
+	//m_fMaxDyingTime 바꾸기
+
+
 	if (m_bDying == false)
 	{
-		if (m_bGrabbed == true)
+		if (m_bGrabbed == true || m_bUnDying == true)
 			return;
 
 		if (m_iHP < 1)
 		{
 			m_bDying = true;
 
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
+			if(m_bFinalSkillRoundEnd == false)
 			{
-				m_bDynamicMove = true;
-				static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
+				if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
+				{
+					m_bDynamicMove = true;
+					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
 
-				_float2 fMapToImpulse = CMap_Manager::Get_Instance()->Active_DestructiveFinish(m_iLookDirection == -1 ? true : false);
+					_float2 fMapToImpulse = CMap_Manager::Get_Instance()->Active_DestructiveFinish(m_iLookDirection == -1 ? true : false);
 
-				m_pEnemy->Set_bDynamicMove(true);
+					m_pEnemy->Set_bDynamicMove(true);
 
-				XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+					XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
-				Set_fImpulse(fMapToImpulse);
+					Set_fImpulse(fMapToImpulse);
 
-				m_bDestructiveFinish = true;
+					m_bDestructiveFinish = true;
+				}
+
+				Set_AnimationStopWithoutMe(2.f);
+				Set_AnimationStop(2.f);
+
+				CUI_Manager::Get_Instance()->UsingCreateEndUI();
+
+				_uint iModelAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+				//땅에서 맞는모션-> 그냥 주저앉기
+				//공중에서 맞았으면 땅바닥에서 Bound 하고 못일어나기
+
+
+				if (iModelAnimationIndex == m_iHit_Stand_LightAnimationIndex || iModelAnimationIndex == m_iHit_Stand_MediumAnimationIndex || iModelAnimationIndex == m_iHit_Crouch_AnimationIndex)
+				{
+					Set_Animation(m_iDyingStandingAnimationIndex);
+				}
+				else// if (Check_bCurAnimationisAirHit())
+				{
+					Set_NextAnimation(m_iBound_Ground, 200.f);
+				}
+
+				Set_bRedHP(false);
+			}
+			else  // 3필로 끝나면
+			{
+				m_fMaxDyingTime = 12.f;
 			}
 
 
-			Set_AnimationStopWithoutMe(2.f);
-			Set_AnimationStop(2.f);
-
-
-			CUI_Manager::Get_Instance()->UsingCreateEndUI();
-
-			_uint iModelAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
-
-			//땅에서 맞는모션-> 그냥 주저앉기
-			//공중에서 맞았으면 땅바닥에서 Bound 하고 못일어나기
-
-
-			if (iModelAnimationIndex == m_iHit_Stand_LightAnimationIndex || iModelAnimationIndex == m_iHit_Stand_MediumAnimationIndex || iModelAnimationIndex == m_iHit_Crouch_AnimationIndex)
-			{
-				Set_Animation(m_iDyingStandingAnimationIndex);
-			}
-			else// if (Check_bCurAnimationisAirHit())
-			{
-				Set_NextAnimation(m_iBound_Ground, 200.f);
-			}
-
-			Set_bRedHP(false);
+			
 
 		}
 
@@ -4313,6 +4333,12 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 _bool CCharacter::Get_bDying()
 {
 	return m_bDying;
+}
+
+void CCharacter::Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex)
+{
+	m_bFinalSkillRoundEnd = bSkillRoundEnd;
+
 }
 
 void CCharacter::Play_WinAnimation()

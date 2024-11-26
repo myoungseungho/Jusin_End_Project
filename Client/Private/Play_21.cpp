@@ -46,6 +46,8 @@
 #include "Effect.h"
 //#include "Effect_Layer.h"
 
+#include "Map_Manager.h"
+
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -318,21 +320,11 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 
 			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
 
-			if (m_bMotionPlaying == false)
+			m_fAccDyingTime += fTimeDelta;
+			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
-
-				if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
-				{
-					m_fAccDyingTime += fTimeDelta;
-					if (m_fAccDyingTime > 2.f)
-					{
-
-						CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-						//Tag_In(m_ePlayerSlot);
-
-					}
-				}
-
+				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+				m_bPlaying = false;
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -2677,6 +2669,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent && m_iFinalLoofCount != 0)
 			{
 
+				m_pEnemy->Set_UnDying(true);
+
 				//m_bFinalSkillSucess = true;
 
 				Set_CurrentAnimationPositionJump(52.9);
@@ -3069,6 +3063,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("GD_fist_L", TEXT("21_WSDO-05"));
 			Character_Make_BoneEffect("GD_hand_L", TEXT("21_WSDO-05"));
 
+			m_pEnemy->Set_UnDying(false);
+
+
 		}
 		else if (iAttackEvent == 2)
 		{
@@ -3081,6 +3078,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_Effect(TEXT("21_WSDO-06"));
 
 
+			//EAST_SPHERE
+
+			if (m_pEnemy->Get_iHP() < 2200 * Get_DamageScale(true))
+			{
+				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE);
+				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
+				//캐릭터 MaxDeath 도 처리
+
+			}
 
 		}
 		else if (iAttackEvent == 3)
@@ -3148,7 +3154,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fhitCharacter_Impus = { 0.f,-15.f };
 			Desc.fhitCharacter_StunTime = 2.0f;
-			Desc.iDamage = 2200 * Get_DamageScale();;
+			Desc.iDamage = 2200 * Get_DamageScale(true);
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY_DOWN };
 			Desc.bGroundSmash = true;
