@@ -47,6 +47,10 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		m_pTransformCom->Rotate(vRot);
 
 		m_EffectName = pEffectDesc->EffectName;
+
+		//if (m_EffectName.find(L"Parrying_Ball") != wstring::npos)
+		//	m_iChangePassIndex = 2;
+
 		m_ModelName = pEffectDesc->ModelName;
 		m_MaskTextureName = pEffectDesc->MaskTextureName;
 		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;

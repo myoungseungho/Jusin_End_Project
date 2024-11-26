@@ -7,12 +7,12 @@ NumEffec: 6
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: FZ_BurstJ-02_01
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_01
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SJ-02FZ_BurstJ-02_01
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -49,7 +49,7 @@ IsNotPlaying: false
 [Effect]
 EffectName: FZ_BurstJ-02_02
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_02
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SJ-02FZ_BurstJ-02_02
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -86,7 +86,7 @@ IsNotPlaying: false
 [Effect]
 EffectName: FZ_BurstJ-02_03
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_03
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SJ-02FZ_BurstJ-02_03
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -123,7 +123,7 @@ IsNotPlaying: false
 [Effect]
 EffectName: FZ_BurstJ-02_04
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_04
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SJ-02FZ_BurstJ-02_04
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -160,7 +160,7 @@ IsNotPlaying: false
 [Effect]
 EffectName: FZ_BurstJ-02_05
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_05
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SJ-02FZ_BurstJ-02_05
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
@@ -197,7 +197,7 @@ IsNotPlaying: false
 [Effect]
 EffectName: FZ_BurstJ-02_06
 ModelName: Model_Effect_acmn_povot_plane00
-MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_BurstJ-02FZ_BurstJ-02_06
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SJ-02FZ_BurstJ-02_06
 DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2

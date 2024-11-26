@@ -1,13 +1,13 @@
 [Layer]
 LayerName: FZ_SAO-03
-Duration: 1
+Duration: 5
 TickPerSecond: 1.5
-KeyFramesCount: 59
+KeyFramesCount: 299
 NumEffec: 6
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: FZ_SAO-03_01
@@ -19,14 +19,14 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 1 0 0
-Scale: 0.399977 0.599977 1
+Scale: 0.399899 0.599899 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 53.1954 0 127.5 0.496688
 GlowColor: 1 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -36,24 +36,6 @@ Rotation: 0 0 90
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 35
-Position: 1 0 0
-Scale: 0.399983 0.599983 1
-Rotation: 0 0 90
-CurTime: 0.583333
-Duration: 1
-IsNotPlaying: true
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 1 0 0
-Scale: 0.399978 0.599978 1
-Rotation: 0 0 90
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: FZ_SAO-03_02
@@ -72,7 +54,7 @@ Color: 193.361 85.2815 193.361 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -82,15 +64,6 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.5 0 0
-Scale: 0.05 0.05 0.05
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: FZ_SAO-03_03
@@ -109,7 +82,7 @@ Color: 255 132.566 203.493 0.743378
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -119,15 +92,6 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.4 0 0
-Scale: 0.03 0.05 0.05
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: FZ_SAO-03_04
@@ -146,7 +110,7 @@ Color: 188.295 65.894 149.454 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -156,24 +120,6 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 35
-Position: -1.1 -1.2 0
-Scale: 0.25 0.2 1
-Rotation: 0 0 0
-CurTime: 0.583333
-Duration: 1
-IsNotPlaying: true
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: -1.1 -1.2 0
-Scale: 0.25 0.2 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: FZ_SAO-03_05
@@ -192,7 +138,7 @@ Color: 255 183.228 223.758 0.295364
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 3
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -202,24 +148,6 @@ Rotation: 0 0 0
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 35
-Position: -1.1 -1 0
-Scale: 0.23 0.17 1
-Rotation: 0 0 0
-CurTime: 0.583333
-Duration: 1
-IsNotPlaying: true
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: -1.1 -1 0
-Scale: 0.23 0.17 1
-Rotation: 0 0 0
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 
 [Effect]
 EffectName: FZ_SAO-03_06
@@ -231,14 +159,14 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
 Position: 0.4 0 0
-Scale: 0.399963 0.399966 1
+Scale: 0.399987 0.39999 1
 Rotation: 0 0 90
 IsLoop: false
 Color: 188.295 108.924 154.52 0.543377
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
 DerredPassIndex: 0
-NumKeyFrame: 2
+NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -248,13 +176,4 @@ Rotation: 0 0 90
 CurTime: 0
 Duration: 1
 IsNotPlaying: false
-
-[KeyFrame]
-KeyFrameNumber: 58
-Position: 0.4 0 0
-Scale: 0.399984 0.399987 1
-Rotation: 0 0 90
-CurTime: 0.966667
-Duration: 1
-IsNotPlaying: true
 

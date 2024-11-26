@@ -21,7 +21,7 @@ UniqueIndex: 0
 Position: 0 -0.2 0
 Scale: 0.03 0.03 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
@@ -58,7 +58,7 @@ UniqueIndex: -2
 Position: 0 -0.4 0
 Scale: 0.06 0.06 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 92.0364 255 0.845365
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -95,7 +95,7 @@ UniqueIndex: -1
 Position: 0 -0.4 0
 Scale: 0.06 0.06 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 155.364 63.3278 210.248 0.695364
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
@@ -132,7 +132,7 @@ UniqueIndex: -1
 Position: 0 -1.25 0
 Scale: 0.2 0.2 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 0.592716
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
@@ -178,7 +178,7 @@ UniqueIndex: -2
 Position: 0 -0.95 0
 Scale: 0.15 0.15 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 169.719 76.8377 255 0.741391
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -224,7 +224,7 @@ UniqueIndex: -2
 Position: -0.1 0.0999998 0
 Scale: 0.05 0.3 1
 Rotation: 0 0 24.935
-IsLoop: false
+IsLoop: true
 Color: 160 60 255 0.6
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -279,7 +279,7 @@ UniqueIndex: -2
 Position: 0.1 0.0999998 0
 Scale: 0.05 0.299999 1
 Rotation: 0 0 317.143
-IsLoop: false
+IsLoop: true
 Color: 160 60 255 0.6
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -334,7 +334,7 @@ UniqueIndex: -2
 Position: -0.1 -0.15 0
 Scale: 0.0499841 0.29999 1
 Rotation: 0 0 128.571
-IsLoop: false
+IsLoop: true
 Color: 160 60 255 0.6
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -389,7 +389,7 @@ UniqueIndex: -2
 Position: 0.1 -0.15 0
 Scale: 0.0499941 0.299962 1
 Rotation: 0 0 201.818
-IsLoop: false
+IsLoop: true
 Color: 160 60 255 0.6
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -444,7 +444,7 @@ UniqueIndex: -2
 Position: 0.15 -7.45058e-08 0
 Scale: 0.0499998 0.299998 1
 Rotation: 0 0 250.13
-IsLoop: false
+IsLoop: true
 Color: 160 60 255 0.6
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -499,7 +499,7 @@ UniqueIndex: -2
 Position: 0 -0.6 0
 Scale: 0.1 0.1 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 125.811 63.3278 232.202 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: -4
@@ -527,7 +527,7 @@ UniqueIndex: -2
 Position: 0.2 -0.4 0
 Scale: 0.08 0.08 1
 Rotation: 0 0 32.727
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -555,7 +555,7 @@ UniqueIndex: -2
 Position: 0 -0.6 0
 Scale: 0.1 0.1 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -601,7 +601,7 @@ UniqueIndex: -2
 Position: 0.9 -1.4 0
 Scale: 0.3 0.3 1
 Rotation: 0 0 30.39
-IsLoop: false
+IsLoop: true
 Color: 61.6391 37.9967 132.566 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
@@ -647,7 +647,7 @@ UniqueIndex: -2
 Position: 0 -1.2 0
 Scale: 0.2 0.2 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: -4
@@ -693,7 +693,7 @@ UniqueIndex: -2
 Position: 0.5 -1.4 0
 Scale: 0.25 0.25 1
 Rotation: 0 0 16.364
-IsLoop: false
+IsLoop: true
 Color: 108.924 34.6192 161.275 0.63874
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 2
@@ -739,7 +739,7 @@ UniqueIndex: -2
 Position: 0 -2 0
 Scale: 0.3 0.3 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 83.5927 0 191.672 0.545364
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -776,7 +776,7 @@ UniqueIndex: 0
 Position: 0 -1.3 0
 Scale: 0.2 0.2 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 70.0828 86.9702 255 30
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1

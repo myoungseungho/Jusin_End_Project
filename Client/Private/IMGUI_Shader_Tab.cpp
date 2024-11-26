@@ -1197,6 +1197,9 @@ void CIMGUI_Shader_Tab::Load_NodeTextures(vector<Save_Key>& PrototypeKeys)
         }
         m_NodeTextureSRVs.push_back(SRVDesc);
 
+        if (m_PrototypeKeys[iCount].vTexCoord.x != 0.f && m_PrototypeKeys[iCount].vTexCoord.y != 0.f)
+            m_NodeTextures.back()->m_vMultiple_Texcoord = m_PrototypeKeys[iCount].vTexCoord;
+
         m_NodeTextures.back()->m_iID = unique_node_id;
         node_ids.push_back(unique_node_id++);
 

@@ -1,0 +1,179 @@
+[Layer]
+LayerName: FZ_SAJ-Basic
+Duration: 5
+TickPerSecond: 1
+KeyFramesCount: 299
+NumEffec: 6
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: true
+
+[Effect]
+EffectName: FZ_SAJ-01_01
+ModelName: Model_Effect_acmn_pivot_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-BasicFZ_SAJ-01_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.1 0
+Scale: 0.199999 0.0999996 0.2
+Rotation: 30 0 360
+IsLoop: false
+Color: 203.493 0 9.28808 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.1 0
+Scale: 0.199999 0.0999996 0.2
+Rotation: 30 0 360
+CurTime: 0
+Duration: 5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAJ-01_02
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-BasicFZ_SAJ-01_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.1 -0.1 0
+Scale: 0.014999 0.00349975 0.0035
+Rotation: 30 0 270
+IsLoop: false
+Color: 247.401 103.858 149.454 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 -0.1 0
+Scale: 0.014999 0.00349975 0.0035
+Rotation: 30 0 270
+CurTime: 0
+Duration: 5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAJ-01_03
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-BasicFZ_SAJ-01_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.1 -0.1 0
+Scale: 0.0199994 0.00399994 0.00399963
+Rotation: 340 600 70
+IsLoop: false
+Color: 123.278 29.553 218.692 13.0132
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 -0.1 0
+Scale: 0.0199994 0.00399994 0.00399963
+Rotation: 340 600 70
+CurTime: 0
+Duration: 5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAJ-01_05
+ModelName: Model_Effect_acmn_pivot_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-BasicFZ_SAJ-01_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.1 0
+Scale: 0.2 0.1 0.2
+Rotation: 30 0 360
+IsLoop: false
+Color: 255 43.0629 97.1026 0.248013
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.1 0
+Scale: 0.2 0.1 0.2
+Rotation: 30 0 360
+CurTime: 0
+Duration: 5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAJ-01_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-BasicFZ_SAJ-01_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.1 -1 0
+Scale: 0.2 0.15 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 137.632 255 255 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 -1 0
+Scale: 0.2 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAJ-01_11
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAJ-BasicFZ_SAJ-01_11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 0 19.308 1.38874
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 5
+IsNotPlaying: false
+
