@@ -29,7 +29,9 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pLimTextureCom = { nullptr };
-
+	CTexture* m_pTextureCom = { nullptr };
+	string m_strName;
+	_int m_iDir = { 1 };
 
 private:
 	_int m_iLookDirection = { 0 };

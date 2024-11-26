@@ -206,12 +206,8 @@ void CLoading_GodDragon::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pModelCom);
-<<<<<<< HEAD
 	Safe_Release(m_pTextureCom);
-	
-=======
 	Safe_Release(m_pLimTextureCom);
 
->>>>>>> ?�격/최진??
 	__super::Free();
 }
