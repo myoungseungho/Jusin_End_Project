@@ -4,6 +4,7 @@
 float4x4 g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_DiffuseTexture; /* 적용해야하는 디퓨즈 재질이 픽셀마다 다르다면 각 픽셀을 그릴때 저장받아와야한다. */
 texture2D g_FontTexture;
+texture2D g_SurfaceTexture;
 
 float g_fTime = 0.016f;
 float g_fAlphaValue;
@@ -169,6 +170,60 @@ PS_OUT PS_ANIM_TEX(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_WATER(PS_IN In)
+{
+    PS_OUT Out;
+    
+    float2 fWaterTexcoord = In.vTexcoord;
+    fWaterTexcoord *= 10.f;
+    fWaterTexcoord.y += g_fTime;
+    
+    Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, fWaterTexcoord);
+    
+    Out.vDiffuse.a = 1.f;
+    Out.vDiffuse.rgb = (1.f - Out.vDiffuse.rgb) * float3(0.274f, 0.517f, 0.713f);
+    
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    
+    if (Out.vDiffuse.a < 0.1f)
+        discard;
+
+    return Out;
+}
+
+PS_OUT PS_SURFACE(PS_IN In)
+{
+    PS_OUT Out;
+
+    Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    float2 vSurTexcoord = In.vTexcoord;
+    vSurTexcoord *= 5.f;
+    
+    vector vSurfaceTex = g_SurfaceTexture.Sample(LinearSampler, vSurTexcoord);
+    Out.vDiffuse += vSurfaceTex;
+    
+    
+    float fLength = length(In.vTexcoord - float2(0.5f, 0.5f));
+    if (fLength >= 0.4f)
+        Out.vDiffuse = lerp(Out.vDiffuse, float4(0.160f, 0.439f, 0.701f, 1.f), fLength );
+        
+        //Out.vDiffuse = float4(0.160f, 0.439f, 0.701f , 1.f);
+    
+    
+    
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    
+    if (Out.vDiffuse.a < 0.1f)
+        discard;
+
+    return Out;
+}
+
 
 technique11 DefaultTechnique
 {
@@ -226,5 +281,33 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_ANIM_TEX();
+    }
+
+//4
+    pass WATER
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_WATER();
+    }
+
+//5
+    pass SURFACE
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_SURFACE();
     }
 }

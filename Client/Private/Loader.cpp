@@ -188,6 +188,7 @@
 #include "Lobby_Car.h"
 #include "Lobby_Flag.h"
 #include "Lobby_Ranking.h"
+#include "Lobby_Party.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
@@ -690,6 +691,52 @@ HRESULT CLoader::Loading_For_Lobby()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_ranking.png")))))
 		return E_FAIL;
 
+	//Party
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PTree"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PTree.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PIlandSide"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PIlandSide.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_KameH"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_KameH.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PGround"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PGround.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWaterFall"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PWaterFall.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PSea"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PSea.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWaterAlpha"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PWaterAlpha.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWaterLight"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PWaterLight.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWave01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PWave01.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWave02_psd"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PWave02_psd.png")))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWaterSurface"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_PWaterSurface.png")))))
+		return E_FAIL;
+
 
 	//ÄÄÆ÷³ÍÆ® 
 	
@@ -805,6 +852,10 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"),
 		CLobby_Ranking::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Party"),
+		CLobby_Party::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
