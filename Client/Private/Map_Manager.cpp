@@ -376,25 +376,28 @@ void CMap_Manager::All_Black(_bool isTrue)
 		if (m_eCurMap == MAP_SPACE)
 		{
 			for (auto& iter : m_VolcanoModels)
-				iter.second->SetActive(true);
-			for (auto& iter : m_Destructive_VolcanoModels)
-				iter.second->SetActive(true);
-			for (auto& iter : m_SpaceModels)
 				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(true);
 			for (auto& iter : m_Destructive_SpaceModels)
 				iter.second->SetActive(false);
-		}
 
+			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = false;
+		}
 		else
 		{
 			for (auto& iter : m_VolcanoModels)
-				iter.second->SetActive(false);
+				iter.second->SetActive(true);
 			for (auto& iter : m_Destructive_VolcanoModels)
 				iter.second->SetActive(false);
 			for (auto& iter : m_SpaceModels)
-				iter.second->SetActive(true);
+				iter.second->SetActive(false);
 			for (auto& iter : m_Destructive_SpaceModels)
-				iter.second->SetActive(true);
+				iter.second->SetActive(false);
+
+			m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
 		}
 	}
 
