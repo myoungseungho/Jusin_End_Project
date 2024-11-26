@@ -3082,7 +3082,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_pEnemy->Get_iHP() < 2200 * Get_DamageScale(true))
 			{
-				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE);
+				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE, 1.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
 				//캐릭터 MaxDeath 도 처리
 

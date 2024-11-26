@@ -3137,7 +3137,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			
 			if (m_pEnemy->Get_iHP() < Desc.iDamage * 20)
 			{
-				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_LASER);
+				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_LASER, 1.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
 				//캐릭터 MaxDeath 도 처리
 
