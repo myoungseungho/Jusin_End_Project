@@ -79,12 +79,17 @@ public: /* For.Component_Manager */
 
 public: /* For.PipeLine */
 	_matrix Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_matrix Get_ShadowTransform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const;
 	_float4x4 Get_Transform_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_float4x4 Get_ShadowTransform_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const;
 	_matrix Get_Transform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const;
 	_float4x4 Get_Transform_Inverse_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_matrix Get_ShadowTransform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const;
+	_float4x4 Get_ShadowTransform_Inverse_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const;
 	_vector Get_CamPosition_Vector() const;
 	_float4 Get_CamPosition_Float4() const;
 	void Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
+	void Set_ShadowTransform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix);
 
 public: /* For.ThreadPool */
 	HRESULT Initialize_ThreadPool(size_t ThreadCount);

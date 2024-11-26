@@ -385,9 +385,19 @@ _matrix CGameInstance::Get_Transform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState)
 	return m_pPipeLine->Get_Transform_Matrix(eState);
 }
 
+_matrix CGameInstance::Get_ShadowTransform_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_ShadowTransform_Matrix(eState);
+}
+
 _float4x4 CGameInstance::Get_Transform_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const
 {
 	return m_pPipeLine->Get_Transform_Float4x4(eState);
+}
+
+_float4x4 CGameInstance::Get_ShadowTransform_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_ShadowTransform_Float4x4(eState);
 }
 
 _matrix CGameInstance::Get_Transform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
@@ -398,6 +408,16 @@ _matrix CGameInstance::Get_Transform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE
 _float4x4 CGameInstance::Get_Transform_Inverse_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const
 {
 	return m_pPipeLine->Get_Transform_Inverse_Float4x4(eState);
+}
+
+_matrix CGameInstance::Get_ShadowTransform_Inverse_Matrix(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return m_pPipeLine->Get_ShadowTransform_Inverse_Matrix(eState);
+}
+
+_float4x4 CGameInstance::Get_ShadowTransform_Inverse_Float4x4(CPipeLine::D3DTRANSFORMSTATE eState) const
+{
+	return  m_pPipeLine->Get_ShadowTransform_Inverse_Float4x4(eState);
 }
 
 _vector CGameInstance::Get_CamPosition_Vector() const
@@ -414,6 +434,12 @@ void CGameInstance::Set_Transform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix 
 {
 	m_pPipeLine->Set_Transform(eState, TransformMatrix);
 }
+
+void CGameInstance::Set_ShadowTransform(CPipeLine::D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix)
+{
+	m_pPipeLine->Set_ShadowTransform(eState, TransformMatrix);
+}
+
 
 HRESULT CGameInstance::Initialize_ThreadPool(size_t ThreadCount)
 {

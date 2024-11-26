@@ -53,11 +53,13 @@ void CVolcano_Stage::Update(_float fTimeDelta)
 
 void CVolcano_Stage::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MAP, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	//m_pRenderInstance->Add_RenderObject(CRenderer::RG_SHADOWOBJ, this);
 }
 
 HRESULT CVolcano_Stage::Render(_float fTimeDelta)
 {
+	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -68,6 +70,37 @@ HRESULT CVolcano_Stage::Render(_float fTimeDelta)
 		//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
 		//	return E_FAIL;
 		
+		if (FAILED(m_pShaderCom->Begin(0)))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Render(i)))
+			return E_FAIL;
+	}
+
+	return S_OK;
+}
+HRESULT CVolcano_Stage::Shadow_Render(_float fTimeDelta)
+{
+	m_pTransformCom->Set_Scaled(10.f, 1.f, 10.f);
+	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_ShadowTransform_Float4x4(CPipeLine::D3DTS_VIEW))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_ShadowTransform_Float4x4(CPipeLine::D3DTS_PROJ))))
+		return E_FAIL;
+
+	//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 2)))
+	//	return E_FAIL;
+
+	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
+	for (size_t i = 0; i < iNumMeshes; i++)
+	{
+		//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+		//	return E_FAIL;
+
 		if (FAILED(m_pShaderCom->Begin(0)))
 			return E_FAIL;
 

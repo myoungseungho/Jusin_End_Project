@@ -162,8 +162,8 @@ PS_OUT PS_MAIN(PS_IN In)
     //vMtrlDiffuse.a
     Out.vDiffuse = vResultColor;
     
-    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
-    //Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vNormal = vector(0, 0, 0, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 10000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
 

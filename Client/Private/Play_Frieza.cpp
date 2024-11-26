@@ -821,6 +821,7 @@ void CPlay_Frieza::Update(_float fTimeDelta)
 void CPlay_Frieza::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SHADOWOBJ, this);
 }
 
 HRESULT CPlay_Frieza::Render(_float fTimeDelta)
@@ -936,7 +937,31 @@ HRESULT CPlay_Frieza::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CPlay_Frieza::Shadow_Render(_float fTimeDelta)
+{
+	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+		return E_FAIL;
 
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_ShadowTransform_Float4x4(CPipeLine::D3DTS_VIEW))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_ShadowTransform_Float4x4(CPipeLine::D3DTS_PROJ))))
+		return E_FAIL;
+
+	//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", 2)))
+	//	return E_FAIL;
+
+	if (FAILED(m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", 2)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(2)))
+		return E_FAIL;
+
+	if (FAILED(m_pModelCom->Render(2)))
+		return E_FAIL;
+
+	return S_OK;
+}
 
 //공용 처리 가능해서 Character로 이사가고 백업.
 /*

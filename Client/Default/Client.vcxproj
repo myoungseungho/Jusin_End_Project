@@ -236,6 +236,7 @@
     <ClInclude Include="..\Public\Main_Camera_Lobby.h" />
     <ClInclude Include="..\Public\Model_Preview.h" />
     <ClInclude Include="..\Public\QTE_Manager.h" />
+    <ClInclude Include="..\public\Shadow_Camera.h" />
     <ClInclude Include="..\Public\SpaceEF.h" />
     <ClInclude Include="..\Public\SpaceMeteoBreak.h" />
     <ClInclude Include="..\Public\SpaceSun.h" />
@@ -477,6 +478,7 @@
     <ClCompile Include="..\Private\Main_Camera_Lobby.cpp" />
     <ClCompile Include="..\Private\Model_Preview.cpp" />
     <ClCompile Include="..\Private\QTE_Manager.cpp" />
+    <ClCompile Include="..\private\Shadow_Camera.cpp" />
     <ClCompile Include="..\Private\SpaceEF.cpp" />
     <ClCompile Include="..\Private\SpaceMeteoBreak.cpp" />
     <ClCompile Include="..\Private\SpaceSun.cpp" />

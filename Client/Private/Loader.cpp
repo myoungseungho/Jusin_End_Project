@@ -13,7 +13,7 @@
 
 
 #include "Model_Preview.h"
-
+#include "Shadow_Camera.h"
 #include "Shader_Texture.h"
 #include "Effect_NoneLight.h"
 #include "Effect_Blend.h"
@@ -3449,7 +3449,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shadow_Camera"),
+		CShadow_Camera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceStone"),
 		CSpaceStone::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

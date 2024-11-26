@@ -558,14 +558,50 @@ PS_OUT PS_MAIN_DEFERRED_MAP(PS_IN In)
     PS_OUT Out = (PS_OUT) 0;
 
     vector vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-    if (0.0f == vDiffuse.a)
-        discard;
+    
+    clip(vDiffuse.a - 0.01f);
 
     vector vShade = g_ShadeTexture.Sample(LinearSampler, In.vTexcoord);
     vector vSpecular = g_SpecularTexture.Sample(LinearSampler, In.vTexcoord);
 
     Out.vColor = vDiffuse * vShade + vSpecular;
 	
+    vector vDepthDesc = g_DepthTexture.Sample(LinearSampler, In.vTexcoord);
+    float fViewZ = vDepthDesc.x * 1000.f;
+
+    float4 vWorldPos;
+    
+    vWorldPos.x = In.vTexcoord.x * 2.f - 1.f;
+    vWorldPos.y = In.vTexcoord.y * -2.f + 1.f;
+    vWorldPos.z = vDepthDesc.y;
+    vWorldPos.w = 1.f;
+
+	/* 로컬위치 * 월드행렬 * 뷰행렬 * 투영행렬  */
+    vWorldPos = vWorldPos * fViewZ;
+
+	/* 로컬위치 * 월드행렬 * 뷰행렬 */
+    vWorldPos = mul(vWorldPos, g_ProjMatrixInv);
+
+	/* 로컬위치 * 월드행렬 */
+    vWorldPos = mul(vWorldPos, g_ViewMatrixInv);
+
+    vWorldPos = mul(vWorldPos, g_LightViewMatrix);
+    vWorldPos = mul(vWorldPos, g_LightProjMatrix);
+
+
+	/* 투영공간상의 좌표로 변환하낟. */
+    float2 vTexcoord = vWorldPos.xy / vWorldPos.w;
+
+    vTexcoord.x = saturate(vTexcoord.x * 0.5f + 0.5f);
+    vTexcoord.y = saturate(vTexcoord.y * -0.5f + 0.5f);
+
+    vector vOldLightDepth = g_LightDepthTexture.Sample(LinearSampler, vTexcoord);
+	
+    float fDepth = vWorldPos.w;
+
+    if (vOldLightDepth.x * 10000.f < fDepth - 0.3f)
+        Out.vColor = Out.vColor * 0.5f;
+    
     return Out;
 }
 

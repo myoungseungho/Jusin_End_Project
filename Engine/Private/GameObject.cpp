@@ -103,6 +103,11 @@ HRESULT CGameObject::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CGameObject::Shadow_Render(_float fTimeDelta)
+{
+	return S_OK;
+}
+
 void CGameObject::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 }

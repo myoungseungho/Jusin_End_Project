@@ -10,8 +10,8 @@
 #include "Component.h"
 #include "Light_Manager.h"
 #include "Transform.h"
-_uint		g_iSizeX = 8192;
-_uint		g_iSizeY = 4608;
+_uint		g_iSizeX = 1920;
+_uint		g_iSizeY = 1080;
 
 CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -95,10 +95,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pDevice->CreateTexture2D(&TextureDesc, nullptr, &pDepthStencilTexture)))
 		return E_FAIL;
 
-	/* RenderTarget */
-	/* ShaderResource */
-	/* DepthStencil */
-
 	if (FAILED(m_pDevice->CreateDepthStencilView(pDepthStencilTexture, nullptr, &m_pShadowDSV)))
 		return E_FAIL;
 
@@ -106,8 +102,8 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	_float offsetY = 18.f;
 #ifdef _DEBUG
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_AllGlowAlpha"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
+		return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
 
@@ -225,12 +221,12 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend_Priority(fTimeDelta)))
 		return E_FAIL;
 	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
+	if (FAILED(Render_ShadowObj(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_Map(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-	//if (FAILED(Render_ShadowObj(fTimeDelta)))
-	//	return E_FAIL;
 
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
@@ -299,8 +295,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 
 #ifdef _DEBUG
-	//if (FAILED(Render_Debug(fTimeDelta)))
-	//	return E_FAIL;
+	if (FAILED(Render_Debug(fTimeDelta)))
+		return E_FAIL;
 #endif
 	return S_OK;
 }
@@ -433,8 +429,9 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	/* Target_LightDepth */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ShadowObjects"), m_pShadowDSV)))
 		return E_FAIL;
-
-	D3D11_VIEWPORT			ViewPortDesc;
+	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ShadowObjects"))))
+	//	return E_FAIL;
+	/*D3D11_VIEWPORT			ViewPortDesc;
 	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
 	ViewPortDesc.TopLeftX = 0;
 	ViewPortDesc.TopLeftY = 0;
@@ -443,13 +440,13 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	ViewPortDesc.MinDepth = 0.f;
 	ViewPortDesc.MaxDepth = 1.f;
 
-	m_pContext->RSSetViewports(1, &ViewPortDesc);
+	m_pContext->RSSetViewports(1, &ViewPortDesc);*/
 
 
 	for (auto& pRenderObject : m_RenderObjects[RG_SHADOWOBJ])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render(fTimeDelta);
+			pRenderObject->Shadow_Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -459,7 +456,7 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	/*ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
 	ViewPortDesc.TopLeftX = 0;
 	ViewPortDesc.TopLeftY = 0;
 	ViewPortDesc.Width = 1920.f;
@@ -467,7 +464,7 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	ViewPortDesc.MinDepth = 0.f;
 	ViewPortDesc.MaxDepth = 1.f;
 
-	m_pContext->RSSetViewports(1, &ViewPortDesc);
+	m_pContext->RSSetViewports(1, &ViewPortDesc);*/
 
 	return S_OK;
 }
@@ -1767,7 +1764,7 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		//	return E_FAIL;
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Distortion"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ResultDistortion_BackBuffer"), m_pShader, m_pVIBuffer)))
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
 
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
@@ -1777,10 +1774,10 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		MRT_Distortion
 		MRT_ResultDistortion_BackBuffer
 		*/
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_X"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_Y"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_X"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_Y"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
 		//// Render Target 디버그 렌더링
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_AllGlowDiffuse"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
@@ -2570,7 +2567,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 #pragma endregion
 
 	/* 그림자 임시 */
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), g_iSizeX, g_iSizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_ShadowObjects"), TEXT("Target_LightDepth"))))
 		return E_FAIL;

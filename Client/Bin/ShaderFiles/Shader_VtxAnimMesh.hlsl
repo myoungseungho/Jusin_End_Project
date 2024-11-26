@@ -232,9 +232,6 @@ PS_OUT PS_MAIN_FRIEZA(PS_IN In)
 struct PS_OUT_SHADOW
 {
     float4 vLightDepth : SV_TARGET0;
-    float4 vLightDepth1 : SV_TARGET1;
-    float4 vLightDepth2 : SV_TARGET2;
-    
 };
 
 
@@ -242,9 +239,8 @@ PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
 {
     PS_OUT_SHADOW Out;
 
-    Out.vLightDepth = vector(In.vProjPos.w / 1000.f, 1.f, 1.f, 1.f);
-    Out.vLightDepth1 = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
-    Out.vLightDepth2 = vector(In.vProjPos.w / 1000.f, 0.f, 0.f, 1.f);
+    Out.vLightDepth = vector(In.vProjPos.w / 10000.f, 0.f, 0.f, 1.f);
+    
     return Out;
 }
 
@@ -351,10 +347,9 @@ technique11 DefaultTechnique
 
     pass Shadow
     {
-        SetRasterizerState(RS_Default);
-        SetDepthStencilState(DSS_None, 0);
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
-
 
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
