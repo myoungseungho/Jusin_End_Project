@@ -31,6 +31,7 @@
 #include "Main_Camera.h"
 
 #include "QTE_Manager.h"
+#include "Map_Manager.h"
 
 CPlay_Hit::CPlay_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -763,6 +764,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDO-04"));
 		//if (pEffect != nullptr)
 		//	pEffect->Set_Copy_Layer_Scaled({ 0.2f,1.f,1.f });
+		
 
 	}
 
@@ -3794,12 +3796,15 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.bOwnerNextAnimation = true;
 
+				Desc.iCallAttackBackIndex = 1001;  //SUCESS의  1001로 감
+
 				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ultimate_3_1, false, 1.f);
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 			}
 
 		}
+		
 		else if (iAttackEvent == 3)
 		{
 			if (m_bAttackBackEvent == false)
@@ -3826,8 +3831,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			}
+			else
+			{
 
-
+				CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_SAO-02"),{1.f,-0.3f});
+				pEffect->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+			}
 			cout << "Event4 , Position : " << m_pModelCom->m_fCurrentAnimPosition << endl;
 
 			CAttackObject::ATTACK_DESC Desc{};
@@ -3859,6 +3868,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 91.f;
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 281.f;
 
+
+			
+			//Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,0.7f });
+
 		}
 
 		else if (iAttackEvent == 255)
@@ -3884,6 +3897,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 5)
 		{
+			CMap_Manager::Get_Instance()->All_Black(false);
+			Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
+
 			CAttackObject::ATTACK_DESC Desc{};
 
 			if (m_iPlayerTeam == 1)
@@ -3923,8 +3939,23 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Hit::ANIME_214_FINAL_SUCESS:
 	{
+
+		if (iAttackEvent == 1001)
+		{
+
+			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 1.3f,1.2f });
+			pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,90.f + 90.f * m_iLookDirection });
+			//pEffect->Set_Copy_Layer_Scaled({ 1.f,0.9f,1.f });
+
+
+			//m_LaserListRS.push_back({ 0.70f , {0.f, 0.f,180.f}	, {1.f,0.1f} });
+			//m_LaserListRS.push_back({ 0.70f , {0.f, 0.f,180.f}	, {1.f,0.1f} });
+
+
+		}
+
 		//Position0.1
-		if (iAttackEvent == 100)
+		else if (iAttackEvent == 100)
 		{
 			m_bInvisible = true;
 			m_bDynamicMove = true;
@@ -4260,6 +4291,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//255 클로즈업 ,  다음애니메이션 설정, START의 240으로 이동
 		else if (iAttackEvent == 4)
 		{
+		
+			
 			CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_3_ULTIMATE, 3, this);
 			//main_Camera->StartCameraShake(0.f, 0.f);
@@ -4267,6 +4300,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bDynamicMove = false;
 
 			Set_NextAnimation(ANIME_214_FINAL_START, 100.f, 240.f);
+
+			CMap_Manager::Get_Instance()->All_Black(true);
 		}
 	}
 	break;
@@ -4403,8 +4438,9 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 
 		Character_Create_Distortion({ 1.f,0.f,0.f }, { (rand() % 600 - 300) * 0.01f , rand() % 150 * 0.01f, (rand() % 200 - 100) * 0.01f }, { 1.5f,1.5f }, 0.2f);
 
-		//Character_Create_Distortion({ 1.f,0.f,0.f });
-
+		
+		//CEffect_Layer* pDustEffect = Character_Make_Effect(TEXT("Hit_SAO-01"));
+		//pDustEffect->Set_Copy_Layer_Position({ (rand() % 600 - 300) * 0.01f , rand() % 150 * 0.01f, (rand() % 200 - 100) * 0.01f });
 
 	}
 

@@ -46,6 +46,7 @@ public:
 	void Push_MapObject(MAP_TYPE eMapType, _wstring& strKey,class CGameObject* pGameObject);
 
 	MAP_TYPE m_eCurMap = { MAP_SPACE };
+	void All_Black(_bool isTrue);
 
 private: /* East_Finish_Type Variable */
 	_bool			m_isEastFinish = { false };

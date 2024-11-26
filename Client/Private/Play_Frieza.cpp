@@ -2417,6 +2417,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iGainKiAmount = 10;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		
+		//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_SDO-02"), { 2.f,0.f });
+
+		Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+		//pEffect->Set_Copy_Layer_Scaled({ 0.5f,0.5f,1.f });
+
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_SPECIAL:
@@ -2795,6 +2803,24 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fCameraShakeDuration = 0.5f;
 		Desc.fCameraShakeMagnitude = 0.3f;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"));
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"),{0.f,0.5f});
+		//pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,270.f });
+
+		Character_Make_BoneEffect("GD_hand_R", TEXT("FZ_SDU-01"));
+
+		CEffect_Layer * pEffect1 = Character_Make_Effect(TEXT("FZ_SDU-02"),{3.7f,0.f});
+		CEffect_Layer * pEffect2 = Character_Make_Effect(TEXT("FZ_SDU-02"), {4.4f,0.f },true);
+
+		pEffect1->Set_Copy_Layer_Scaled({ 1.2f,1.2f,1.f });
+		//pEffect2->Set_Copy_Layer_Scaled({ 1.0f,1.2f,1.f });
+
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+	//pEffect->Set_Copy_Layer_Scaled({ 0.5f,0.5f,1.f });
+
 
 	}
 	break;
