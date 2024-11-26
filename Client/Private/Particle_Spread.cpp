@@ -59,9 +59,9 @@ void CParticle_Spread::Late_Update(_float fTimeDelta)
 
 	RENDER_OBJECT tDesc{};
 	tDesc.tGlowDesc.iPassIndex = 2;
-	tDesc.tGlowDesc.fGlowFactor = 10.f;
+	tDesc.tGlowDesc.fGlowFactor = 15.f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_MULTY_GLOW, this, &tDesc);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW, this, &tDesc);
 }
 
 HRESULT CParticle_Spread::Render(_float fTimeDelta)
@@ -115,7 +115,7 @@ HRESULT CParticle_Spread::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
 		return E_FAIL;
 
-	_float4 color = _float4(1.f, 1.f, 0.f, 1.0f);
+	_float4 color = _float4(0.4f, 0.f, 1.f, 1.0f);
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &color, sizeof(_float4))))
 		return S_OK;

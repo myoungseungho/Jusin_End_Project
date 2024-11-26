@@ -78,7 +78,7 @@ void GS_MAIN(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
 
     // 여기에서 원하는 배율을 적용합니다.
     float xScaleFactor = 5.f; // X축 크기 배율
-    float yScaleFactor = 1.0f; // Y축 크기 배율
+    float yScaleFactor = 2.0f; // Y축 크기 배율
 
     vRight *= xScaleFactor;
     vUp *= yScaleFactor;
@@ -237,8 +237,20 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    Out.vColor = g_vColor;
+    // 중심 좌표
+    float2 center = float2(0.5f, 0.5f);
 
+    // 중심으로부터의 거리 계산
+    float distance = length(In.vTexcoord - center);
+
+    // 거리 기반으로 그라데이션 강도 계산 (0.0 ~ 1.0)
+    float gradient = saturate(1.0f - distance * 1.5f); // 멀수록 0, 가까울수록 1
+
+    // 흰색(밝은 부분)과 g_vColor(보라색)의 혼합
+    float4 white = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    Out.vColor = lerp(g_vColor, white, gradient);
+
+    // 알파 값 조건에 따라 픽셀 버리기
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
         discard;
 
