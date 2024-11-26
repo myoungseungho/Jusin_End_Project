@@ -47,9 +47,9 @@ HRESULT CLevel_Loading::Initialize(LEVELID eNextLevelID)
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
 
-	//m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
-	//if (nullptr == m_pLoader)
-	//	return E_FAIL;
+	m_pLoader = CLoader::Create(m_pDevice, m_pContext, eNextLevelID);
+	if (nullptr == m_pLoader)
+		return E_FAIL;
 
 	m_bIsLevelPrepared = TRUE;
 
