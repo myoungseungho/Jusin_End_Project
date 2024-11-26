@@ -259,6 +259,8 @@ public:
 	
 	vector<LaserData> m_LaserListRS;
 
+	list<CEffect_Layer*> m_214GlassList;
+
 private:
 	
 	CHit_MeleeAttack m_tAttackMap;

@@ -81,6 +81,8 @@ HRESULT CAttackObject_Ranged::Initialize(void* pArg)
 
 	}
 
+	m_bExplosionEffectisHitEffect = pDesc->bExplosionEffectisHitEffect;
+	m_bGroundExplosionEffect = pDesc->bGroundExplosionEffect;
 	return S_OK;
 }
 
@@ -100,6 +102,35 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 	//»ýÁ¸½Ã°£ Áö³µ°Å³ª ¸Ê¹Ù±ù(¶¥Æ÷ÇÔ)À¸·Î ³ª°¬À¸¸é »èÁ¦
 	if (m_fAccLifeTime > m_fLifeTime || Check_MapOut())
 	{
+
+		//¶¥¿¡ ²ÈÈù°æ¿ì
+		if (Check_MapOut())
+		{
+			//°³º°ÀûÀÎ Æø¹ßÀÌÆåÆ® ¶Ç´Â ÀÏ¹Ý Æø¹ßÀÌÆåÆ®
+			if (m_bGroundExplosionEffect)
+			{
+				if (m_bExplosion)
+				{
+					if (m_bExplosionEffectisHitEffect)
+					{
+						CEffect_Layer::COPY_DESC tDesc{};
+						tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+						CEffect_Manager::Get_Instance()->Copy_Layer(m_strHitEffectName, &tDesc);
+					}
+					else
+					{
+						CEffect_Layer::COPY_DESC tDesc{};
+						tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+						CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+						m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, false, 1.f);
+					}
+				}
+			}
+			else
+			{
+				//¸ÕÁö ÀÌÆåÆ®.
+			}
+		}
 
 		if (m_pRangedEffect_Layer != nullptr)
 			m_pRangedEffect_Layer->m_bIsDoneAnim = true;
@@ -129,7 +160,8 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 
 		}
 
-
+		
+		
 		//Àü¿¡ ¾²´ø°Å
 		//if (m_bEnableDestory)
 		//{
@@ -290,10 +322,21 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 			if (m_bExplosion)
 			{
-				CEffect_Layer::COPY_DESC tDesc{};
-				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
-				m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, false, 1.f);
+				if (m_bExplosionEffectisHitEffect)
+				{
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+					CEffect_Manager::Get_Instance()->Copy_Layer(m_strHitEffectName, &tDesc);
+			
+
+				}
+				else
+				{
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, false, 1.f);
+				}
 			}
 			if (m_fCameraShakeDuration != 0)
 			{
@@ -304,6 +347,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_bPierce == false)
 				if (m_pRangedEffect_Layer != nullptr)
 					m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+			
 
 
 		}
@@ -324,9 +369,19 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 			if (m_bExplosion)
 			{
-				CEffect_Layer::COPY_DESC tDesc{};
-				tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
-				CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+				if (m_bExplosionEffectisHitEffect)
+				{
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+					CEffect_Manager::Get_Instance()->Copy_Layer(m_strHitEffectName, &tDesc);
+				}
+				else
+				{
+					CEffect_Layer::COPY_DESC tDesc{};
+					tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
+					CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("BurstJ3-Hit01"), &tDesc);
+					m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::J_Attack_Hit_SFX, false, 1.f);
+				}
 			}
 
 
@@ -334,6 +389,9 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_bPierce == false)
 				if (m_pRangedEffect_Layer != nullptr)
 					m_pRangedEffect_Layer->m_bIsDoneAnim = true;
+
+
+			
 
 		}
 

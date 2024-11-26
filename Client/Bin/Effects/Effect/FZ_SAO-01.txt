@@ -7,7 +7,7 @@ NumEffec: 5
 Position: 0 0 0
 Scale: 1 1 1
 Rotation: 0 0 0
-IsFollowing: false
+IsFollowing: true
 
 [Effect]
 EffectName: FZ_SAO-01_01
@@ -21,7 +21,7 @@ UniqueIndex: -2
 Position: 0 -1.8 0
 Scale: 0.3 0.3 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 75.149 0 173.096 0.545364
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -45,21 +45,21 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: -1
-Position: 0 0 0
-Scale: 1 1 1
+UniqueIndex: 0
+Position: 0 -1.2 0
+Scale: 0.15 0.2 1
 Rotation: 0 0 0
-IsLoop: false
-Color: 0 0 0 30
+IsLoop: true
+Color: 200.116 0 255 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
-GlowFactor: 0
+GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 1 1 1
+Position: 0 -1.2 0
+Scale: 0.15 0.2 1
 Rotation: 0 0 0
 CurTime: 0
 Duration: 1
@@ -74,11 +74,11 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
-IsLoop: false
-Color: 0 0 0 30
+Position: 0.4 1 0
+Scale: 0.129999 0.169999 1
+Rotation: 0 0 167.532
+IsLoop: true
+Color: 235.579 129.189 218.692 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
@@ -86,12 +86,12 @@ NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
+Position: 0.4 1 0
+Scale: 0.129999 0.169999 1
+Rotation: 0 0 167.532
 CurTime: 0
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: FZ_SAO-01_04
@@ -102,11 +102,11 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
-IsLoop: false
-Color: 0 0 0 30
+Position: 0.5 -0.8 0
+Scale: 0.12 0.15 1
+Rotation: 0 0 27.273
+IsLoop: true
+Color: 255 200.116 218.692 30
 GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
@@ -114,12 +114,12 @@ NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 1 1 1
-Rotation: 0 0 0
+Position: 0.5 -0.8 0
+Scale: 0.12 0.15 1
+Rotation: 0 0 27.273
 CurTime: 0
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: FZ_SAO-01_05
@@ -129,23 +129,23 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: -1
-Position: 0 0 0
-Scale: 1 1 1
+UniqueIndex: 0
+Position: 0 -1.5 0
+Scale: 0.25 0.25 1
 Rotation: 0 0 0
-IsLoop: false
-Color: 0 0 0 30
+IsLoop: true
+Color: 146.076 17.7318 255 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
-GlowFactor: 0
+GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 1 1 1
+Position: 0 -1.5 0
+Scale: 0.25 0.25 1
 Rotation: 0 0 0
 CurTime: 0
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 

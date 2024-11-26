@@ -56,6 +56,9 @@ HRESULT CPlay_Hit::Initialize_Prototype()
 HRESULT CPlay_Hit::Initialize(void* pArg)
 {
 
+	
+	m_ChaseEffectName = TEXT("Hit_BurstR");
+
 	m_fAIrGrabEndAnimationPositon = 39.99f;
 
 	m_eCharacterIndex = PLAY_HIT;
@@ -732,7 +735,12 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 
 		//m_LaserListRS.push_back({ 0.1f, {0.f, 0.f,(_float)(rand() % 181)},{0.1f,1.f,1.f } });
 
-		
+		//CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDO-03"));
+		//
+		//if (pEffect != nullptr)
+		//	pEffect->Set_Copy_Layer_Scaled({ -0.5f,1.f,1.f });
+
+
 
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
@@ -752,6 +760,10 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//
 		//}
 		
+		//CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDO-04"));
+		//if (pEffect != nullptr)
+		//	pEffect->Set_Copy_Layer_Scaled({ 0.2f,1.f,1.f });
+
 	}
 
 	
@@ -919,7 +931,7 @@ _bool CPlay_Hit::Update_214Pose(_float fTimeDelta)
 	if (m_fAccPoseTime == 0)
 	{
 		//Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f ,-0.2f });
-		Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f ,0.f });
+		m_214GlassList.push_back((Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f ,0.f })));
 		m_i214GlassCount++;		
 	}
 
@@ -941,14 +953,14 @@ _bool CPlay_Hit::Update_214Pose(_float fTimeDelta)
 			if (m_i214GlassCount % 2 == 0)
 			{
 
-				Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f - m_fAccPoseTime,0.f });
-				Character_Make_Effect(TEXT("Hit_SDU-01_Rotated_Right"), { 5.f + m_fAccPoseTime,0.f });
+				m_214GlassList.push_back(Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f - m_fAccPoseTime,0.f }));
+				m_214GlassList.push_back(Character_Make_Effect(TEXT("Hit_SDU-01_Rotated_Right"), { 5.f + m_fAccPoseTime,0.f }));
 			}
 			else
 			{
 
-				Character_Make_Effect(TEXT("Hit_SDU-01_Rotated_Right"), { 5.f - m_fAccPoseTime,0.f });
-				Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f + m_fAccPoseTime,0.f });
+				m_214GlassList.push_back((Character_Make_Effect(TEXT("Hit_SDU-01_Rotated_Right"), { 5.f - m_fAccPoseTime,0.f })));
+				m_214GlassList.push_back((Character_Make_Effect(TEXT("Hit_SDU-01"), { 5.f + m_fAccPoseTime,0.f })));
 			}
 			m_i214GlassCount++;
 		}
@@ -966,6 +978,24 @@ _bool CPlay_Hit::Update_214Pose(_float fTimeDelta)
 		{
 			AttackEvent(400);
 			m_b214Posing = false;
+
+
+			for (auto Effectglass : m_214GlassList)
+			{
+				if(Effectglass != nullptr)
+					Effectglass->m_bIsDoneAnim = true;
+			}
+			m_214GlassList.clear();
+
+
+			Character_Make_Effect(TEXT("Hit_SDU-02"), { 5.f,0.f });
+			
+			for (int i = 1; i < m_i214GlassCount; i++)
+			{
+				Character_Make_Effect(TEXT("Hit_SDU-02"), {5.f+ 0.5f * i,-0.3f });
+				Character_Make_Effect(TEXT("Hit_SDU-02"), {5.f- 0.5f * i,-0.3f });
+			
+			}
 		}
 
 	}
@@ -2911,6 +2941,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 				}
+
+				//CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDO-03"));
+				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDI-I"));
+				if (pEffect != nullptr)
+					pEffect->Set_Copy_Layer_Scaled({ -0.8f,1.f,1.f });
+
 			}
 			else
 			{
@@ -3311,9 +3347,26 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bCameraZoom = false;
 			Desc.bOnwerHitNoneStop = true;
 
+			Desc.iCallAttackBackIndex = 1001;
+
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Ice_Hit_SFX, false, 1.f);
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+		}
+
+		else if (iAttackEvent == 1001)
+		{
+
+			m_LaserListRS.push_back({ 0.01f, {0.f, 0.f,45.f}, {1.f,0.1f} });
+			m_LaserListRS.push_back({ 0.03f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			m_LaserListRS.push_back({ 0.06f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			m_LaserListRS.push_back({ 0.10f, {0.f, 0.f,135.f}, {1.f,0.1f} });
+			m_LaserListRS.push_back({ 0.13f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			m_LaserListRS.push_back({ 0.16f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//m_LaserListRS.push_back({ 0.20f, {0.f, 0.f,90.f}, {1.f,0.1f} });
+			//m_LaserListRS.push_back({ 0.23f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+			//m_LaserListRS.push_back({ 0.26f, {0.f, 0.f, 20 + (_float)(rand() % 141)}, {0.5f + (rand() % 4) * 0.1f,0.1f + (rand() % 3) * 0.1f} });
+
 		}
 
 		//처음에 잡기로 고정시켜두고 추가공격 함

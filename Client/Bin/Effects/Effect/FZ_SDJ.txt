@@ -18,10 +18,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 -0.9 0
-Scale: 0.15 0.15 1
+Position: 0 -1.7 0
+Scale: 0.3 0.3 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 159.586 0 223.758 0.646688
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 1
@@ -55,10 +55,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 -0.3 0
-Scale: 0.05 0.05 1
+Position: 0 -0.8 0
+Scale: 0.15 0.15 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 255 9.28808 166.341 7.45033
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 3
@@ -92,10 +92,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.35 0
-Scale: 0.06 0.06 1
+Position: 0 -0.8 0
+Scale: 0.15 0.15 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 255 198.427 235.523 0.844039
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
@@ -129,10 +129,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.6 0
-Scale: 0.1 0.1 1
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 0 0 0 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 4
@@ -166,10 +166,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0.2 0.1 0
-Scale: 0.02 0.02 1
+Position: 0.4 0.2 0
+Scale: 0.06 0.06 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 255 157.897 255 30
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
@@ -203,10 +203,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.2 -0.3 0
-Scale: 0.03 0.03 1
+Position: -0.4 -0.8 0
+Scale: 0.08 0.08 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 242.334 119.056 238.957 30
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
@@ -240,10 +240,10 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.1 0 0
-Scale: 0.02 0.02 1
+Position: -0.3 -0.2 0
+Scale: 0.06 0.06 1
 Rotation: 0 0 0
-IsLoop: false
+IsLoop: true
 Color: 255 71.7715 186.606 30
 GlowColor: 0 1 -1.07374e+08 -1.07374e+08
 GlowFactor: 0

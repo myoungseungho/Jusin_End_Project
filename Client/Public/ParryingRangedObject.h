@@ -73,6 +73,8 @@ private:
 
 	_bool m_bFlipEnable = { true };
 
+	_float2 m_fGoalPosXZ = {};
+
 private:
 
 protected:

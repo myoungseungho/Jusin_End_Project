@@ -1,0 +1,263 @@
+[Layer]
+LayerName: FZ_SDO-01_BIG
+Duration: 2
+TickPerSecond: 1
+KeyFramesCount: 119
+NumEffec: 9
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: true
+
+[Effect]
+EffectName: FZ_SDO-01_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 180 0 255 0.8
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SDO-01_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -3 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 180 0 255 0.8
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -3 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SDO-01_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -2.4 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 0 0 255 0.844043
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -2.4 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SDO-01_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -2 0
+Scale: 0.35 0.35 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 139.321 0 46.4404 1
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -2 0
+Scale: 0.35 0.35 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SDO-01_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -1.5 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 44.7517 0 119.901 2.48079
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.5 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SDO-01_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -2.4 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 90.3477 0 201.805 1.58344
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -2.4 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SDO-01_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.4 0
+Scale: 0.23 0.23 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 83.5927 102.169 255 0.894039
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.4 0
+Scale: 0.23 0.23 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SDO-01_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -2.5 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 184.917 80.2152 237.268 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -2.5 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SDO-01_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SDO-01_BIGFZ_SDO-01_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 3.1 -1.3 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 64.675
+IsLoop: true
+Color: 189.983 78.5265 124.123 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.1 -1.3 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 64.675
+CurTime: 0
+Duration: 2
+IsNotPlaying: false
+

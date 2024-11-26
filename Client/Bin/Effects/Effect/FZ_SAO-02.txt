@@ -1,0 +1,378 @@
+[Layer]
+LayerName: FZ_SAO-02
+Duration: 2
+TickPerSecond: 2
+KeyFramesCount: 119
+NumEffec: 7
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: FZ_SAO-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 0 39.6854 252.467 0.342716
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAO-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 65.0166 0 201.805 1.3947
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 75
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 1.25
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 118
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 1.96667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAO-02_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.75 0
+Scale: 0.13 0.13 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 169.719 68.394 146.076 1.19205
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.05 0
+Scale: 0.18 0.18 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 -1.05 0
+Scale: 0.18 0.18 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 75
+Position: 0 -0.75 0
+Scale: 0.13 0.13 1
+Rotation: 0 0 0
+CurTime: 1.25
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 118
+Position: 0 -0.75 0
+Scale: 0.13 0.13 1
+Rotation: 0 0 0
+CurTime: 1.96667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAO-02_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -0.63 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.83 0
+Scale: 0.145 0.145 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 -0.83 0
+Scale: 0.145 0.145 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 75
+Position: 0 -0.63 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 1.25
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 118
+Position: 0 -0.63 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 0
+CurTime: 1.96667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAO-02_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.6 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 12.6656 86.9702 7.94702
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.6 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 -1.6 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAO-02_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.4 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 227.136 119.056 183.228 0.892716
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.4 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 19
+Position: 0 -1.4 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0.316667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0 -1.4 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 -1.4 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 118
+Position: 0 -1.4 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 1.96667
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAO-02_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAO-02FZ_SAO-02_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 1 -1.5 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 30.39
+IsLoop: true
+Color: 189.983 0 130.877 0.8
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 5
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 1 -1.5 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 30.39
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 19
+Position: 1 -1.5 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 30.39
+CurTime: 0.316667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 1 -1.5 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 30.39
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 1 -1.5 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 30.39
+CurTime: 0.75
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 118
+Position: 1 -1.5 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 30.39
+CurTime: 1.96667
+Duration: 2
+IsNotPlaying: true
+

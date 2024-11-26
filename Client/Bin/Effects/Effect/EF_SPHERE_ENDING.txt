@@ -1,8 +1,8 @@
 [Layer]
 LayerName: EF_SPHERE_ENDING
-Duration: 1
-TickPerSecond: 0
-KeyFramesCount: 59
+Duration: 0.3
+TickPerSecond: 0.01
+KeyFramesCount: 18
 NumEffec: 8
 Position: 0 0 0
 Scale: 1 1 1
