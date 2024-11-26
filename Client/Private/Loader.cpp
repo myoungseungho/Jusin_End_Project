@@ -184,6 +184,10 @@
 #include "Lobby_Goku_RunEff.h"
 #include "Lobby_DisplayBoard.h"
 #include "Lobby_Cloud.h"
+#include "Lobby_Wring.h"
+#include "Lobby_Car.h"
+#include "Lobby_Flag.h"
+#include "Lobby_Ranking.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
@@ -620,12 +624,80 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Lobby/Mesh/lob_Wring.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	//New Model Texture
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_TreeReaf02_sh"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/cg_TreeReaf02_sh.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_audience"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_audience%d.png"),23))))
+		return E_FAIL;
+
+	//Wring
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_lawn_Edge"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_lawn_Edge.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_seat_outside"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_seat_outside.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_LIlandSide"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_LIlandSide.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_banner"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_banner.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_road"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_road.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_lawn"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_lawn.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_seat01"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_seat01.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_RingSide03"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_RingSide03.png")))))
+		return E_FAIL;
+
+	//Car
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_Car"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_Car.png")))))
+		return E_FAIL;
+
+	//Flag
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_flag_rod"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_flag_rod.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_flagY_anim"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_flagB_anim.png")))))
+		return E_FAIL;
+
+	//Rank
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_singboard"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_singboard.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_ranking"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Map/Lobby/Texture/lob_ranking.png")))))
+		return E_FAIL;
+
+
 	//ÄÄÆ÷³ÍÆ® 
 	
 	/* For.Prototype_Component_Shader_VtxPosTex */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Particle_VtxPoint.hlsl"), VTXPARTICLE_POINT::Elements, VTXPARTICLE_POINT::iNumElements))))
 		return E_FAIL;
+
 
 	CVIBuffer_Instancing::VIBUFFER_INSTANCE_DESC	ParticleDesc{};
 	ParticleDesc.iNumInstance = 5;
@@ -717,6 +789,22 @@ HRESULT CLoader::Loading_For_Lobby()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Cloud"),
 		CLobby_Cloud::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Wring"),
+		CLobby_Wring::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Car"),
+		CLobby_Car::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Flag"),
+		CLobby_Flag::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"),
+		CLobby_Ranking::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

@@ -8,6 +8,10 @@ texture2D g_FontTexture;
 float g_fTime = 0.016f;
 float g_fAlphaValue;
 
+int g_iNumSprite;
+int g_iSpriteIndex;
+bool g_bXYSwitch;
+
 vector g_vDiffColor;
 vector g_vOutLineColor;
 
@@ -142,9 +146,33 @@ PS_OUT PS_MOVE_DISPLAY(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_ANIM_TEX(PS_IN In)
+{
+    PS_OUT Out;
+
+    float fImageRatio = (1.f / g_iNumSprite);
+    float fStartSprite = fImageRatio * (g_iSpriteIndex);
+    float fEndSprite = fImageRatio * (g_iSpriteIndex + 1);
+    
+    if (g_bXYSwitch == true)
+        In.vTexcoord.x = lerp(fStartSprite, fEndSprite, In.vTexcoord.x);
+    else if (g_bXYSwitch == false)
+        In.vTexcoord.y = lerp(fStartSprite, fEndSprite, In.vTexcoord.y);
+    
+    Out.vDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vPickDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    if (Out.vDiffuse.a < 0.1f)
+        discard;
+
+    return Out;
+}
+
 
 technique11 DefaultTechnique
 {
+//0
     pass Default
     {
         SetRasterizerState(RS_Default);
@@ -158,6 +186,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN();
     }
 
+//1
     pass Move_Sky
     {
         SetRasterizerState(RS_Default);
@@ -171,6 +200,7 @@ technique11 DefaultTechnique
         PixelShader = compile ps_5_0 PS_MOVE_SKY();
     }
 
+//2
     pass Move_Display
     {
         SetRasterizerState(RS_Default);
@@ -182,5 +212,19 @@ technique11 DefaultTechnique
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MOVE_DISPLAY();
+    }
+
+//3
+    pass ANIM_TEX
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_ANIM_TEX();
     }
 }

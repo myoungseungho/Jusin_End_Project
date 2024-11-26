@@ -568,6 +568,18 @@
     <ClCompile Include="..\private\Lobby_Cloud.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Cloud</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Lobby_Wring.cpp">
+      <Filter>02.GameObjects\Lobby\Looby_Wring</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Car.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Car</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Flag.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Flag</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Ranking.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_Ranking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1211,6 +1223,18 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_Cloud">
       <UniqueIdentifier>{bb6e008d-8d36-441b-bb50-5f45b1acbfc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Looby_Wring">
+      <UniqueIdentifier>{21be0ffe-5167-49fb-8d1b-ad7a30790087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Car">
+      <UniqueIdentifier>{52b02b1e-ea06-4ece-8206-49d11366a80e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Flag">
+      <UniqueIdentifier>{515f3c76-cd2b-4b01-9df7-a412779b7181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_Ranking">
+      <UniqueIdentifier>{bcfd29da-8276-481b-ad6b-d7c885ada926}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1942,6 +1966,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\UI_Define.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Wring.h">
+      <Filter>02.GameObjects\Lobby\Looby_Wring</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Car.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Car</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Flag.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Flag</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Ranking.h">
+      <Filter>02.GameObjects\Lobby\Lobby_Ranking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

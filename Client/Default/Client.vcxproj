@@ -196,8 +196,12 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\Loading_GodDragon.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\public\Lobby_Car.h" />
     <ClInclude Include="..\public\Lobby_Cloud.h" />
     <ClInclude Include="..\public\Lobby_DisplayBoard.h" />
+    <ClInclude Include="..\public\Lobby_Flag.h" />
+    <ClInclude Include="..\public\Lobby_Ranking.h" />
+    <ClInclude Include="..\public\Lobby_Wring.h" />
     <ClInclude Include="..\Public\ParryingRangedObject.h" />
     <ClInclude Include="..\public\Lobby_Frieza.h" />
     <ClInclude Include="..\public\Lobby_Goku_RunEff.h" />
@@ -431,8 +435,12 @@
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\private\Loading_GodDragon.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\private\Lobby_Car.cpp" />
     <ClCompile Include="..\private\Lobby_Cloud.cpp" />
     <ClCompile Include="..\private\Lobby_DisplayBoard.cpp" />
+    <ClCompile Include="..\private\Lobby_Flag.cpp" />
+    <ClCompile Include="..\private\Lobby_Ranking.cpp" />
+    <ClCompile Include="..\private\Lobby_Wring.cpp" />
     <ClCompile Include="..\Private\ParryingRangedObject.cpp" />
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp" />

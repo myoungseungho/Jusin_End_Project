@@ -87,8 +87,23 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Sky_Of_Sea"), TEXT("Layer_Lobby_Sky_Of_Sea"))))
 		return E_FAIL;
 
-	//로비 구름
+	//로비 경기장
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Wring"), TEXT("Layer_Lobby_Wring"))))
+	//	return E_FAIL;
 
+	//로비 자동차
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Car"), TEXT("Layer_Lobby_Car"))))
+	//	return E_FAIL;
+
+	//로비 깃발
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"))))
+	//	return E_FAIL;
+
+	//로비 랭킹
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"), TEXT("Layer_Lobby_Ranking"))))
+	//	return E_FAIL;
+
+	//로비 구름
 	//CLobby_Cloud::CLOUD_DESC tCloudDesc = {};
 	//for (size_t i = 0; i < 5; ++i)
 	//{
