@@ -320,7 +320,7 @@ technique11 DefaultTechnique
     }
 
 //3
-    pass Default_BillBoard
+    pass Default_NotBillBoard
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);

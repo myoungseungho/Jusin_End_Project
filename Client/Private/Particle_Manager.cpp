@@ -12,13 +12,15 @@ CParticle_Manager::CParticle_Manager()
 
 HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	//// 각 파티클 타입별로 최소 3개의 파티클 객체를 미리 생성하여 풀에 추가
-	//for (int i = 0; i < 3; ++i)
-	//{
-	//	// HEAVY_ATTACK_PARTICLE 타입의 파티클 생성
-	//	CParticle* pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
-	//	m_ParticlePools[HEAVY_ATTACK_PARTICLE].push_back(pParticle);
-	//}
+	// 각 파티클 타입별로 최소 3개의 파티클 객체를 미리 생성하여 풀에 추가
+	for (int i = 0; i < 3; ++i)
+	{
+		// HEAVY_ATTACK_PARTICLE 타입의 파티클 생성
+		CParticle* pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
+		pParticle->SetActive(false);
+		m_ParticlePools[HEAVY_ATTACK_PARTICLE].push_back(pParticle);
+
+	}
 
 	return S_OK;
 }
@@ -95,9 +97,9 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _float3& vPosition)
 		}
 	}
 
-	// 파티클 활성화 및 초기화
-	//pParticle->SetActive(true); // 초기에는 비활성화 상태
-	//pParticle->Set_Position(vPosition);
+	 //파티클 활성화 및 초기화
+	pParticle->SetActive(true); // 초기에는 비활성화 상태
+	pParticle->Set_Position(vPosition);
 
 	// 추가적인 초기화가 필요하면 여기에 구현
 
