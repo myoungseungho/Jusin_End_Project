@@ -2430,16 +2430,12 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 		if (m_fAccRockTime >= 3.f || m_isSpriteEnd == true)
 		{
-
 			m_fAccWhiteTime = 2.f;
 			m_isMaintainWhite = false;
 			m_isRockStart = false;
 			m_isEndWhiteOut = true;
 			m_fAccRockTime = 0.f;
-
 			*m_pDoneCheck = true;
-
-		
 		}
 	}
 
