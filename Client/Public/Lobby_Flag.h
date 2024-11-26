@@ -37,7 +37,7 @@ private:
 
 private:
 	_float m_fAnimFrame = { 0.f };
-
+	_float m_fTexcoordValue = { 0.f };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

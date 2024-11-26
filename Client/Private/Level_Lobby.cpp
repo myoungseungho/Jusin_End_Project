@@ -96,16 +96,16 @@ HRESULT CLevel_Lobby::Initialize()
 		return E_FAIL;
 
 	//로비 깃발
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"))))
+		return E_FAIL;
 
 	//로비 랭킹
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"), TEXT("Layer_Lobby_Ranking"))))
 		return E_FAIL;
 
 	//로비 파티
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
+	//	return E_FAIL;
 
 	//로비 구름
 	//CLobby_Cloud::CLOUD_DESC tCloudDesc = {};
