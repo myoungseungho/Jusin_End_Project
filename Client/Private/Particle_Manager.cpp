@@ -17,7 +17,7 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 	{
 		// HEAVY_ATTACK_PARTICLE 타입의 파티클 생성
 		CParticle* pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
-		pParticle->SetActive(false);
+		pParticle->Set_Particle_Active(false);
 		m_ParticlePools[HEAVY_ATTACK_PARTICLE].push_back(pParticle);
 
 	}
@@ -98,7 +98,7 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _float3& vPosition)
 	}
 
 	 //파티클 활성화 및 초기화
-	pParticle->SetActive(true); // 초기에는 비활성화 상태
+	pParticle->Set_Particle_Active(true); // 초기에는 비활성화 상태
 	pParticle->Set_Position(vPosition);
 
 	// 추가적인 초기화가 필요하면 여기에 구현

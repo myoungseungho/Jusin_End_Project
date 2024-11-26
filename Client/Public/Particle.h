@@ -21,6 +21,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Set_Position(_float3 position);
+	virtual void Set_Particle_Active(_bool isActive);
 public:
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;

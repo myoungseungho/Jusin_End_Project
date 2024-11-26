@@ -48,6 +48,7 @@ public:
 	void Drop(_float fTimeDelta);
 	void MoveDir(_vector vDir, _float fTimeDelta);
 
+	void Particle_Initialize();
 protected:
 	/* 모델(Instance하나)의 상태제어를 위한 행렬정보를 가지는 정점 버퍼.  */
 	ID3D11Buffer*			m_pVBInstance = { nullptr };

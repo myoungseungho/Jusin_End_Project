@@ -46,7 +46,10 @@ void CParticle_Spread::Update(_float fTimeDelta)
 	_bool isComplete = m_pVIBufferCom->Spread(fTimeDelta);
 
 	if (isComplete)
+	{
+		m_pVIBufferCom->Particle_Initialize();
 		SetActive(false);
+	}
 }
 
 void CParticle_Spread::Late_Update(_float fTimeDelta)
@@ -76,6 +79,14 @@ HRESULT CParticle_Spread::Render(_float fTimeDelta)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CParticle_Spread::Set_Particle_Active(_bool isActive)
+{
+	if (isActive == false)
+		m_pVIBufferCom->Particle_Initialize();
+
+	SetActive(isActive);
 }
 
 HRESULT CParticle_Spread::Ready_Components()

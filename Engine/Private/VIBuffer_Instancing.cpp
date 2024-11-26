@@ -137,6 +137,31 @@ _bool CVIBuffer_Instancing::Spread(_float fTimeDelta)
 	return false;
 }
 
+
+void CVIBuffer_Instancing::Particle_Initialize()
+{
+	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		// 각 인스턴스별로 모든 필드를 올바르게 복사합니다.
+		pMatrices[i].vRight = m_pInstanceVertices[i].vRight;
+		pMatrices[i].vUp = m_pInstanceVertices[i].vUp;
+		pMatrices[i].vLook = m_pInstanceVertices[i].vLook;
+		pMatrices[i].vMoveDir = m_pInstanceVertices[i].vMoveDir;
+		pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
+		pMatrices[i].vLifeTime = m_pInstanceVertices[i].vLifeTime;
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+}
+
+
+
 _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 {
 	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};

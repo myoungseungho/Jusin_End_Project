@@ -4611,7 +4611,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vSpeed = _float2(3.f, 5.f);
 	ParticleDesc.vScale = _float2(0.005f, 0.008f);
 	ParticleDesc.vLifeTime = _float2(1.f, 2.f);
-	ParticleDesc.isLoop = true;
+	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
