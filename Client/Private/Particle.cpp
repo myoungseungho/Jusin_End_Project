@@ -54,6 +54,7 @@ void CParticle::Set_Position(_float3 position)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(position.x, position.y, position.z, 1.f));
 }
 
+
 CGameObject* CParticle::Clone(void* pArg)
 {
 	return nullptr;

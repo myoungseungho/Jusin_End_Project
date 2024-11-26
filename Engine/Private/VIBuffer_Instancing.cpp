@@ -133,8 +133,6 @@ _bool CVIBuffer_Instancing::Spread(_float fTimeDelta)
 		}
 	}
 
-	m_fElapsedTime += fTimeDelta;
-
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
 }
@@ -795,7 +793,7 @@ void CVIBuffer_Instancing::Drop(_float fTimeDelta)
 
 void CVIBuffer_Instancing::MoveDir(_vector vDir, _float fTimeDelta)
 {
-	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
+	D3D11_MAPPED_SUBRESOURCE        MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
 
@@ -803,7 +801,7 @@ void CVIBuffer_Instancing::MoveDir(_vector vDir, _float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
-		_vector		vMoveDir = vDir;
+		_vector        vMoveDir = vDir;
 
 		XMStoreFloat4(&pMatrices[i].vTranslation,
 			XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
