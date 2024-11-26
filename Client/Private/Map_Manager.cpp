@@ -311,7 +311,10 @@ _float2 CMap_Manager::Active_EastFinish()
 void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType, _float fWhiteSpeed)
 {
 	m_isEastFinish = true;
-	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck, fWhiteSpeed);
+	if(eEastEffectType == EAST_LASER)
+		m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck, fWhiteSpeed);
+	else
+		m_pRenderInstance->Start_WhiteOut(_float2(0.f, 1.f), &m_isWhiteDoneCheck, fWhiteSpeed);
 	m_eEastEffectType = eEastEffectType;
 }
 

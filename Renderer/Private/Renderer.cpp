@@ -63,7 +63,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 
 	m_pAuraTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Aura/cmn_Fractal%d.dds"), 6);
-	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
+	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock0%d.dds"), 2);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 6);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
@@ -2420,15 +2420,17 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 			if (m_fSpriteCurPos.y < 0)
 			{
 				m_fSpriteCurPos.x = 0.f;
-				m_fSpriteCurPos.x = 0.f;
+				m_fSpriteCurPos.y = 0.f;
+				m_isSpriteEnd = true;
 			}
 		}
 
 		if (m_fAccRockTime >= 0.5f && m_isMaintainWhite == false && m_isEndWhiteOut == false)
 			m_isStartWhiteOut = true;
 
-		if (m_fAccRockTime >= 3.f)
+		if (m_fAccRockTime >= 3.f || m_isSpriteEnd == true)
 		{
+
 			m_fAccWhiteTime = 2.f;
 			m_isMaintainWhite = false;
 			m_isRockStart = false;
@@ -2444,10 +2446,10 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 	if (m_isStartWhiteOut == true)
 	{
 		/* 화이트 스피드 테스트 */
-		//m_fAccWhiteTime += fTimeDelta * m_fWhiteSpeed;
-		m_fAccWhiteTime += fTimeDelta;
+		m_fAccWhiteTime += fTimeDelta * m_fWhiteSpeed;
+		//m_fAccWhiteTime += fTimeDelta;
 		
-		if (m_fAccWhiteTime >= 2.5f)
+		if (m_fAccWhiteTime >= 2.5f || m_isSpriteEnd == true)
 		{
 			m_fAccWhiteTime = 2.5f;
 			m_isMaintainWhite = true;
@@ -2495,8 +2497,18 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	if (m_isEndWhiteOut == false)
 	{
-		if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
-			return E_FAIL;
+		if (m_vWhiteDir.x == 1)
+		{
+			if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
+				return E_FAIL;
+
+		}
+		else
+		{
+			if (FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader, "g_DiffuseTexture", 1)))
+				return E_FAIL;
+		}
+
 	}
 	else
 	{
@@ -2862,6 +2874,7 @@ void CRenderer::Switch_BlackOut(_bool isTrue)
 void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)
 {
 	m_vWhiteDir = vDir;
+	m_isSpriteEnd = false;
 	m_fWhiteSpeed = fWhiteSpeed;
 	m_isStartWhiteOut = false;
 	m_isMaintainWhite = false;
