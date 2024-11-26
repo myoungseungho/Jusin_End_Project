@@ -1,0 +1,39 @@
+[Layer]
+LayerName: Cut_Sphere_End
+Duration: 3
+TickPerSecond: 0.1
+KeyFramesCount: 179
+NumEffec: 1
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Cut_Sphere_End_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Cut_Sphere_EndCut_Sphere_End_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 10 10 10
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 255 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 10 10 10
+Rotation: 0 0 0
+CurTime: 0
+Duration: 3
+IsNotPlaying: false
+

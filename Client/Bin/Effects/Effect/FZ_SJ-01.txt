@@ -1,7 +1,7 @@
 [Layer]
 LayerName: FZ_SJ-01
 Duration: 1
-TickPerSecond: 3
+TickPerSecond: 5
 KeyFramesCount: 59
 NumEffec: 5
 Position: 0 0 0
@@ -18,7 +18,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0149994 0.1 1
 Rotation: 0 0 300
 IsLoop: false
@@ -30,7 +30,7 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0149994 0.1 1
 Rotation: 0 0 300
 CurTime: 0
@@ -39,7 +39,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 33
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0149994 0.149995 1
 Rotation: 0 0 300
 CurTime: 0.55
@@ -55,7 +55,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0249981 0.1 1
 Rotation: 0 0 300
 IsLoop: false
@@ -67,7 +67,7 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0249981 0.1 1
 Rotation: 0 0 300
 CurTime: 0
@@ -76,7 +76,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 33
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0249981 0.179984 1
 Rotation: 0 0 300
 CurTime: 0.55
@@ -92,7 +92,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0199996 0.13 1
 Rotation: 0 0 300
 IsLoop: false
@@ -104,7 +104,7 @@ NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0199996 0.13 1
 Rotation: 0 0 300
 CurTime: 0
@@ -113,7 +113,7 @@ IsNotPlaying: false
 
 [KeyFrame]
 KeyFrameNumber: 33
-Position: 0 0 0
+Position: 0.1 0 0
 Scale: 0.0199996 0.199999 1
 Rotation: 0 0 300
 CurTime: 0.55
@@ -129,8 +129,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
-Scale: 0.0399949 0.0299953 0.0299993
+Position: 0.1 0 0
+Scale: 0.0399949 0.0299945 0.0299993
 Rotation: 0 300 200
 IsLoop: false
 Color: 215.315 127.5 189.983 29.95
@@ -141,8 +141,8 @@ NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.0399949 0.0299953 0.0299993
+Position: 0.1 0 0
+Scale: 0.0399949 0.0299945 0.0299993
 Rotation: 0 300 200
 CurTime: 0
 Duration: 1
@@ -157,8 +157,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
-Scale: 0.0399694 0.0199978 0.0199997
+Position: 0.1 0 0
+Scale: 0.0399691 0.0199977 0.0199997
 Rotation: 0 300 200
 IsLoop: false
 Color: 255 255 255 2.68212
@@ -169,8 +169,8 @@ NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
-Scale: 0.0399694 0.0199978 0.0199997
+Position: 0.1 0 0
+Scale: 0.0399691 0.0199977 0.0199997
 Rotation: 0 300 200
 CurTime: 0
 Duration: 1

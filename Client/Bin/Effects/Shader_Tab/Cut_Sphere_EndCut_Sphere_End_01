@@ -1,0 +1,13 @@
+Version: 2
+KeyCount: 1
+KeySize: 47
+Key: Prototype_Component_Texture_Effect_cmn_sphere00
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 2
+NodeID: -1 Position: 656 214
+NodeID: 2 Position: 378 184
+MoveTexNodeCount: 0
+SpriteNodeCount: 0
+LinkCount: 1
+LinkSrcNodeID: 8 LinkDestNodeID: -2

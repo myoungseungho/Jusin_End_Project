@@ -1,0 +1,399 @@
+[Layer]
+LayerName: FZ_SAR-01
+Duration: 2
+TickPerSecond: 1
+KeyFramesCount: 119
+NumEffec: 10
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: FZ_SAR-01_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -1.9 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 255 0 0.392716
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.1 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 -1.9 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 59
+Position: 0 -1.9 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+CurTime: 0.983333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAR-01_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1 0
+Scale: 0.35 0.35 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 255 0 0.545364
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.5 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 -1 0
+Scale: 0.35 0.35 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 59
+Position: 0 -1 0
+Scale: 0.35 0.35 1
+Rotation: 0 0 0
+CurTime: 0.983333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAR-01_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -4.1 0
+Scale: 0.9 0.9 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 255 0 0.892716
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.9 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 -4.1 0
+Scale: 0.9 0.9 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 59
+Position: 0 -4.1 0
+Scale: 0.9 0.9 1
+Rotation: 0 0 0
+CurTime: 0.983333
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: FZ_SAR-01_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.6 0
+Scale: 0.2 0.3 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 255 0 0.595364
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.6 0
+Scale: 0.2 0.3 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAR-01_05
+ModelName: Model_Effect_acmn_pivot_plane01
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 0 0
+Scale: 0.5 1 0.5
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 134.255 0 4.4702
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.6 1 0.6
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 0 0
+Scale: 1.5 1 1.5
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 74
+Position: 0 0 0
+Scale: 0.5 1 0.5
+Rotation: 0 0 0
+CurTime: 1.23333
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAR-01_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.3 1 0
+Scale: 0.02 0.07 1
+Rotation: 0 0 39.74
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.3 1 0
+Scale: 0.02 0.07 1
+Rotation: 0 0 39.74
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAR-01_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.4 1.1 0
+Scale: 0.02 0.1 1
+Rotation: 0 0 340.519
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.4 1.1 0
+Scale: 0.02 0.1 1
+Rotation: 0 0 340.519
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAR-01_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.5 0.7 0
+Scale: 0.0199999 0.0999998 1
+Rotation: 0 0 106.753
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.5 0.7 0
+Scale: 0.0199999 0.0999998 1
+Rotation: 0 0 106.753
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAR-01_09
+ModelName: Model_Effect_cmn_bodyaura00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.03 0.01 0.03
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 93.7252 0 3.78146
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.04 0.01 0.04
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 0 0
+Scale: 0.1 0.01 0.1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 74
+Position: 0 0 0
+Scale: 0.03 0.01 0.03
+Rotation: 0 0 0
+CurTime: 1.23333
+Duration: 2
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_SAR-01_10
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_SAR-01FZ_SAR-01_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 80.2152 0 1.88742
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 41
+Position: 0 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.683333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 89
+Position: 0 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 1.48333
+Duration: 2
+IsNotPlaying: true
+

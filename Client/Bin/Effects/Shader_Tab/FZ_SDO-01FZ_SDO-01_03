@@ -1,0 +1,17 @@
+Version: 2
+KeyCount: 1
+KeySize: 46
+Key: Prototype_Component_Texture_Effect_cmn_spark00
+ID: 2
+vTexCoord: 1 0.5
+NodePosCount: 4
+NodeID: -1 Position: 598 209
+NodeID: 2 Position: 355 147
+NodeID: 3001 Position: 85 132
+NodeID: 1 Position: 341 134
+MoveTexNodeCount: 0
+SpriteNodeCount: 1
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 3 1 Speed: 12.3
+LinkCount: 2
+LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2

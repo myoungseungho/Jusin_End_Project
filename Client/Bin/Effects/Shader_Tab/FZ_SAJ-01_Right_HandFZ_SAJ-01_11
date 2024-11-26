@@ -11,8 +11,8 @@ vTexCoord: 1 1
 NodePosCount: 4
 NodeID: -1 Position: 592 125
 NodeID: 1 Position: 202 37
-NodeID: 1501 Position: 21 66
 NodeID: 2 Position: 389 44
+NodeID: 1501 Position: 21 66
 MoveTexNodeCount: 1
 MoveTexNodeID: 1501 Direction: 0 1 Speed: 0.8
 SpriteNodeCount: 0

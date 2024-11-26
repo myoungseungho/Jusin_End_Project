@@ -249,6 +249,17 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	else
 		m_bPlaying = true;
 
+
+	//LPlayer1, RPlayer1이 아니면  ss1오공 상태로 시작
+	if (m_ePlayerSlot == CUI_Define::PLAYER_SLOT::LPLAYER1 || m_ePlayerSlot == CUI_Define::PLAYER_SLOT::LPLAYER1)
+	{
+		;
+	}
+	else
+	{
+		m_bNormalGoku = false;
+	}
+
 	return S_OK;
 }
 
@@ -1447,8 +1458,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-		//Desc.strEffectName = TEXT("BurstJ-03");
-		Desc.strEffectName = TEXT("Parrying_Ball");
+		Desc.strEffectName = TEXT("BurstJ-03");
+		//Desc.strEffectName = TEXT("Parrying_Ball");
 
 
 		Desc.iGainKiAmount = 3;
@@ -1631,7 +1642,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.ColliderDesc.pMineGameObject = this;
 				Desc.ColliderDesc.vExtents = { 1.f,1.f,1.f };
-				Desc.ColliderDesc.vCenter = { 1.0f * m_iLookDirection,0.8f,0.f };
+				Desc.ColliderDesc.vCenter = { 0.7f * m_iLookDirection,0.8f,0.f };
 
 				Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 				Desc.fhitCharacter_StunTime = 1.0f;
@@ -3564,6 +3575,7 @@ void CPlay_Goku::Character_CinematicEnd()
 	Set_AnimationMoveXZ(false);
 	m_bNormalGoku = false;
 }
+
 
 CPlay_Goku* CPlay_Goku::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

@@ -18,8 +18,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.6 0
-Scale: 0.1 0.1 1
+Position: 0 -0.3 0
+Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 12.6656 255 30
@@ -55,8 +55,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.5 0.1 0
-Scale: 0.079978 0.079978 1
+Position: 0.25 0.05 0
+Scale: 0.04 0.04 1
 Rotation: 0 0 100
 IsLoop: false
 Color: 159.586 41.3742 141.01 30

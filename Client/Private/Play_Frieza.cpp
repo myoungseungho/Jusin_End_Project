@@ -55,7 +55,8 @@ HRESULT CPlay_Frieza::Initialize_Prototype()
 
 HRESULT CPlay_Frieza::Initialize(void* pArg)
 {
-
+	
+	m_ChaseEffectName = TEXT("FZ_BurstR");
 	m_fAIrGrabEndAnimationPositon = 29.99f;
 
 	m_eCharacterIndex = PLAY_FRN;
@@ -787,6 +788,9 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 		m_iDebugComoboDamage = 0;
 
 		m_iHP = 10000;
+
+		//Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-02"));
+
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
@@ -1272,6 +1276,12 @@ void CPlay_Frieza::Gravity(_float fTimeDelta)
 			Set_CurrentAnimationPositionJump(124.999);
 
 			//m_pTransformCom-
+
+			if (m_p214FinalEffect != nullptr)
+			{
+				m_p214FinalEffect->m_bIsDoneAnim = true;
+				m_p214FinalEffect = nullptr;
+			}
 		}
 	}
 
@@ -1592,9 +1602,19 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_FRIEZA_HEAVY;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			m_pAttackHeavyEffect = Character_Make_Effect(TEXT("FZ_BurstK"), { 0.4f,-0.2f });
+
 		}
 		else if (iAttackEvent == 1)
 		{
+			if (m_pAttackHeavyEffect != nullptr)
+			{
+				m_pAttackHeavyEffect->m_bIsDoneAnim = true;
+				m_pAttackHeavyEffect = nullptr;
+			}
+
 			CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
 			//Desc.ColliderDesc.height = 1.0;
@@ -1604,13 +1624,13 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
 			Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
-
+			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
 
 			Desc.bGrabbedEnd = true;
 
 			Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 0.35f;
-			Desc.iDamage = 300 * Get_DamageScale();;
+			Desc.iDamage = 150 * Get_DamageScale();;
 			Desc.fLifeTime = 2.f;
 
 
@@ -1626,28 +1646,80 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
-			Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 			//Desc.fRanged_Impus_NoneDirection = { 13.f,0.f };
 			Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
 
 			Desc.iDirection = m_iLookDirection;
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
+			Desc.iGainKiAmount = 1;
+			
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection +0.2f,1.7f };
+			//Desc.strEffectName = TEXT("FZ_BurstK-01");
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			//
+			//
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection +0.7f,1.5f };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			//Desc.strEffectName = TEXT("FZ_BurstK-02");
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			//
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection -0.3f,0.7f };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			//Desc.strEffectName = TEXT("FZ_BurstK-03");
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			//
+			//
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection + 0.2f,0.7f };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			//Desc.strEffectName = TEXT("FZ_BurstK-04");
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			//
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection + 0.9f,0.6f };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			//Desc.strEffectName = TEXT("FZ_BurstK-05");
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			//
+			//Desc.fStartOffset = { 0.2f * m_iLookDirection - 0.3f,0.4f };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			//Desc.strEffectName = TEXT("FZ_BurstK-06");
+			//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
-
-			Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
-
+			Desc.fStartOffset = { 0.4f * m_iLookDirection ,1.7f };
+			Desc.strEffectName = TEXT("FZ_BurstK-01");
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
-			Desc.ColliderDesc.vCenter = { -0.1f,0.1f,0.f };
+			Desc.fStartOffset = { 0.9f * m_iLookDirection ,1.5f };
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			Desc.strEffectName = TEXT("FZ_BurstK-02");
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
-			Desc.ColliderDesc.vCenter = { 0.2f,0.f,0.f };
+			Desc.fStartOffset = { -0.1f * m_iLookDirection,0.7f };
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			Desc.strEffectName = TEXT("FZ_BurstK-03");
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			Desc.fStartOffset = { 0.4f * m_iLookDirection ,0.7f };
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			Desc.strEffectName = TEXT("FZ_BurstK-04");
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+			Desc.fStartOffset = { 1.1f * m_iLookDirection,0.6f };
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			Desc.strEffectName = TEXT("FZ_BurstK-05");
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+			Desc.fStartOffset = { -0.1f * m_iLookDirection,0.4f };
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
+			Desc.strEffectName = TEXT("FZ_BurstK-06");
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+
 		}
 
 	}
@@ -1701,7 +1773,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fRanged_Impus_NoneDirection = { 30.f,0.f };
 			Desc.iDirection = m_iLookDirection;
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-			Desc.strEffectName = TEXT("BurstJ-03");
+			Desc.strEffectName = TEXT("FZ_BurstJ-02");
 
 			Desc.bExplosion = false;
 			Desc.iGainKiAmount = 3;
@@ -1709,6 +1781,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bPierce = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Make_BoneEffect("GD_fng_b3_L", TEXT("FZ_BurstJ-01"));
+
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -1785,13 +1860,15 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fRanged_Impus_NoneDirection = { 30.f,0.f };
 				Desc.iDirection = m_iLookDirection;
 				Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-				Desc.strEffectName = TEXT("BurstJ-03");
+				Desc.strEffectName = TEXT("FZ_BurstJ-02");
 
 				Desc.iGainKiAmount = 3;
 				Desc.bExplosion = false;
 
 				Desc.bPierce = true;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+				Character_Make_BoneEffect("GD_fng_b3_L", TEXT("FZ_BurstJ-01"));
 			}
 		}
 	}
@@ -2110,6 +2187,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.bCameraZoom = false;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			Character_Make_Effect(TEXT("FZ_WJ"), { 0.7f,1.4f });
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -2337,6 +2417,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iGainKiAmount = 10;
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+		
+		//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_SDO-02"), { 2.f,0.f });
+
+		Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+		//pEffect->Set_Copy_Layer_Scaled({ 0.5f,0.5f,1.f });
+
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_SPECIAL:
@@ -2371,7 +2459,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 
 		const _float4x4* pMatrix = m_pModelCom->Get_BoneMatrixPtr("G_eyes_base");
-		Desc.fStartOffset = { pMatrix->_41 * m_iLookDirection,pMatrix->_42 };
+		Desc.fStartOffset = { pMatrix->_41 * m_iLookDirection,pMatrix->_42 - 0.15f };
 
 
 		Desc.fRanged_Impus_NoneDirection = { 24.f,15.f };  // 1:1.569 비율
@@ -2379,7 +2467,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.iDirection = m_iLookDirection;
 
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_NONE;
-		Desc.strEffectName = TEXT("BurstJ-03_Rotated_Left");
+		Desc.strEffectName = TEXT("FZ_SJ-02");
+		Desc.fEffectRotationDegree = 30.f;
 		Desc.iGainKiAmount = 7;
 		Desc.bExplosion = false;
 
@@ -2389,6 +2478,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack, false, 1.f);
 		m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_J_Attack_SFX, false, 1.f);
+
+		Character_Make_BoneEffect("G_eye_L", TEXT("FZ_SJ-01"));
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_CROUCH_CROUCH_SPECIAL:
@@ -2713,6 +2804,24 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fCameraShakeMagnitude = 0.3f;
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+
+
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"));
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"),{0.f,0.5f});
+		//pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,270.f });
+
+		Character_Make_BoneEffect("GD_hand_R", TEXT("FZ_SDU-01"));
+
+		CEffect_Layer * pEffect1 = Character_Make_Effect(TEXT("FZ_SDU-02"),{3.7f,0.f});
+		CEffect_Layer * pEffect2 = Character_Make_Effect(TEXT("FZ_SDU-02"), {4.4f,0.f },true);
+
+		pEffect1->Set_Copy_Layer_Scaled({ 1.2f,1.2f,1.f });
+		//pEffect2->Set_Copy_Layer_Scaled({ 1.0f,1.2f,1.f });
+
+		//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
+	//pEffect->Set_Copy_Layer_Scaled({ 0.5f,0.5f,1.f });
+
+
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_236_SPECIAL:
@@ -2729,6 +2838,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.pMineGameObject = this;
 			Desc.ColliderDesc.vExtents = { 0.7f,0.7f,1.f };
 			Desc.ColliderDesc.vCenter = { 0.8f * m_iLookDirection,0.f,0.f };
+			//Desc.fDistance = { 1.f * m_iLookDirection, -0.3f };
+			Desc.fDistance = { 0.8f * m_iLookDirection, -0.8f };
+
+
+
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
 			Desc.fhitCharacter_StunTime = 20.f;
@@ -2744,13 +2858,19 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGrabAnimationIndex = ANIME_ATTACK_236_SPECIAL;
 			Desc.bOwnerNextAnimation = false;
 
-			Desc.fDistance = { 1.f * m_iLookDirection, -0.3f };
 
 			Desc.iGainKiAmount = 2;
 			Desc.iGainAttackStep = 0;
 			Desc.iVirtualCameraindex = (_uint)CMain_Camera::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			//m_p236SpecialEffect=Character_Make_BoneEffect("GD_fist_R", TEXT("FZ_SDJ"));
+			//m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"),{0.4f,-0.3f});
+			m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"),{0.7f,-0.1f});
+
+
+
 		}
 
 		// Position : 45 잡기기술 AttackBack 확인
@@ -2847,7 +2967,6 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fLifeTime = 5.f;
 
 
-			Desc.bExplosion = false;
 
 
 
@@ -2878,7 +2997,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			}
 
-			else if (Get_fHeight() > 1)
+			//else if (Get_fHeight() > 1)
+			else if (Get_fHeight() > 2)
 			{
 				//Desc.fRanged_Impus_NoneDirection = { 7.f,-5.f };
 				Desc.fRanged_Impus_NoneDirection = { 10.f,-15.f };
@@ -2887,6 +3007,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
 				Desc.fStartOffset = { -0.2f,-0.3f };
 
+				Desc.bGroundExplosionEffect = true;
 			}
 			else
 			{
@@ -2904,10 +3025,17 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 
-
 			//	Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
 			Desc.ColliderDesc.vCenter = { 0.f,0.f,0.f };
 			//Desc.fStartOffset = { -0.2f,-0.3f};
+
+			Desc.strEffectName = TEXT("FZ_SDJ_BIG");
+
+			if (m_p236SpecialEffect != nullptr)
+			{
+				m_p236SpecialEffect->m_bIsDoneAnim = true;
+				m_p236SpecialEffect = nullptr;
+			}
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
@@ -2916,81 +3044,98 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_214:
 	{
-		m_bAcc214Attack = true;
-		m_i214AttackPreviousDirection = m_iLookDirection;
-		//Position 60 기원참 던지기.  처음 이펙트 생성은 melee에서?   어차피 던지는거랑 준비자세 둘이 다른이펙트. (각도가 다름)
+		if (iAttackEvent == 1)
+		{
+			m_DeleteLayer.push_back(Character_Make_BoneEffect("GD_fist_R", TEXT("FZ_SAJ-01_Right_Hand")));
+			m_DeleteLayer.push_back(Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_SAJ-01")));
+
+		}
+		else if(iAttackEvent == 0)
+		{
+
+			for (auto pEffect : m_DeleteLayer)
+			{
+				if (pEffect != nullptr)
+					pEffect->m_bIsDoneAnim = true;
+			}
+			m_DeleteLayer.clear();
 
 
-		CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
-
-		if (m_iPlayerTeam == 1)
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
-		else
-			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
-		Desc.ColliderDesc.pMineGameObject = this;
-		Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
+			m_bAcc214Attack = true;
+			m_i214AttackPreviousDirection = m_iLookDirection;
+			//Position 60 기원참 던지기.  처음 이펙트 생성은 melee에서?   어차피 던지는거랑 준비자세 둘이 다른이펙트. (각도가 다름)
 
 
-		Desc.bGrabbedEnd = true;
+			CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
 
-		//끌려가는것같아서 마음에 들지만 벽에 팅기는게 싫음.  
-		//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
-		//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
-
-
-		//괜찮지만 원작반영 한번 해보자
-		//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
-		//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
-		//Desc.bGroundSmash = true;
+			if (m_iPlayerTeam == 1)
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
+			else
+				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
+			Desc.ColliderDesc.pMineGameObject = this;
+			Desc.ColliderDesc.vExtents = { 0.2f,0.2f,1.f };
 
 
-		//Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,1.f };
-		Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,0.3f };
+			Desc.bGrabbedEnd = true;
 
-		Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
-		Desc.fForcedGravityTime = 0.f;
-
-		Desc.bHitNoGravity = true;
-		Desc.fMaxNoNoGravitySafeTime = 1.6f;
-
-		Desc.fhitCharacter_StunTime = 10.f;
-		Desc.iDamage = 600 * Get_DamageScale();;
-		Desc.fLifeTime = 2.f;
+			//끌려가는것같아서 마음에 들지만 벽에 팅기는게 싫음.  
+			//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 
 
-		Desc.bExplosion = false;
+			//괜찮지만 원작반영 한번 해보자
+			//Desc.fhitCharacter_Impus = { 20.f * m_iLookDirection,0 };
+			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE };
+			//Desc.bGroundSmash = true;
+
+
+			//Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,1.f };
+			Desc.fhitCharacter_Impus = { 7.f * m_iLookDirection,0.3f };
+
+			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
+			Desc.fForcedGravityTime = 0.f;
+
+			Desc.bHitNoGravity = true;
+			Desc.fMaxNoNoGravitySafeTime = 1.9f;
+
+			Desc.fhitCharacter_StunTime = 10.f;
+			Desc.iDamage = 600 * Get_DamageScale();;
+			Desc.fLifeTime = 2.f;
+
+
+			Desc.bExplosion = false;
 
 
 
-		Desc.iTeam = m_iPlayerTeam;
+			Desc.iTeam = m_iPlayerTeam;
 
-		Desc.bCameraZoom = false;
-		Desc.fAnimationLockTime = 0.f;
+			Desc.bCameraZoom = false;
+			Desc.fAnimationLockTime = 0.f;
 
-		Desc.pOwner = this;
+			Desc.pOwner = this;
 
-		//Desc.eAttackType = { ATTACKTYPE_HIGH };
-		//Desc.fRanged_Impus_NoneDirection = { 13.f,0.f };
-		Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
+			//Desc.eAttackType = { ATTACKTYPE_HIGH };
+			//Desc.fRanged_Impus_NoneDirection = { 13.f,0.f };
+			Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
 
-		Desc.iDirection = m_iLookDirection;
-		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.iDirection = m_iLookDirection;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
-		Desc.bPierce = true;
+			Desc.bPierce = true;
 
+			Desc.strEffectName = TEXT("FZ_SAJ-Basic");
+			Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
 
-		Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
-
-		Desc.fStartOffset = { 0.4f * m_iLookDirection, 0.9f };
-
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
-
-		Desc.fStartOffset = { -0.4f * m_iLookDirection, 0.9f };
-
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+			Desc.fStartOffset = { 0.4f * m_iLookDirection, 0.9f };
 
 
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+			Desc.fStartOffset = { -0.4f * m_iLookDirection, 0.9f };
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+		}
 
 	}
 	break;
@@ -3019,6 +3164,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_ULTIMATE_1, 1, this, nullptr, true);
 			}
 
+
+			//FZ_SDO-01
+
+			m_p236UltimateEffect = Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-01"));
+
 		}
 		//,이펙트생성. 손가락 끝을 따라다님?
 		else if (iAttackEvent == 1)
@@ -3028,6 +3178,12 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
 		else if (iAttackEvent == 2)
 		{
+			if (m_p236UltimateEffect != nullptr)
+			{
+				m_p236UltimateEffect->m_bIsDoneAnim = true;
+				m_p236UltimateEffect = nullptr;
+			}
+
 			CAttackObject_Ranged::ATTACK_RANGED_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
 			//Desc.ColliderDesc.height = 1.0;
@@ -3046,7 +3202,6 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fLifeTime = 5.f;
 
 
-			Desc.bExplosion = false;
 
 
 
@@ -3083,6 +3238,13 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
 
+
+			Desc.strEffectName = TEXT("FZ_SDO-01_BIG");
+			Desc.strHitEffectName = TEXT("FZ_SDO-02_BIG");
+			Desc.bExplosionEffectisHitEffect = true;
+			Desc.bGroundExplosionEffect = true;
+			//Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-02"));
+
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 		}
 	}
@@ -3106,17 +3268,29 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_ULTIMATE_3, 1, this, nullptr, true);
 			}
+
+			//Character_Make_Effect(TEXT("FZ_SAO-01"));
+
+			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-01"));
+			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-01"));
+
+			
 		}
 
 		//준비?
 		else if (iAttackEvent == 1)
 		{
+			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-02"));
+			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-02"));
 
 		}
 
 		//공격시작
 		else if (iAttackEvent == 2)
 		{
+			m_p214FinalEffect =Character_Make_BoneEffect("G_head", TEXT("FZ_SAO-03"));
+			m_p214FinalEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,-45.f });
+
 			Set_fImpulse({ 10.f * m_iLookDirection, -15.f });
 
 
@@ -3179,6 +3353,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Set_AnimationStopWithoutMe(0.4f);
 			Set_AnimationStop(0.6f);
+
+			Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-01"));
+			Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-02"));
+
 		}
 
 		//Position 50 발사
@@ -3231,21 +3409,47 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Frieza_Reflect_SFX, false, 1.f);
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Energy"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-03"));
+			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-04"));
+			
+		
+			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_Down_R-04"), { 0.599f,1.075f });
+			
+			{
+				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-03"));
+				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,25.f });
+			}
+			{
+				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-04"));
+				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,25.f });
+			}
 		}
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_TRANSFORM_FINAL:
 	{
-		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-
+	
 		//Position 0 : 컷씬, 적 시간정지. SM
 		if (iAttackEvent == 0)
 		{
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+
 			Set_AnimationStopWithoutMe(5.f);
 
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 0, this);
+
+			//FZ_SAR-01
+
+			
 		}
 
+		//Position 7 이펙트 생성
+		else if (iAttackEvent == 101)
+		{
+			Character_Make_Effect(TEXT("FZ_SAR-01"));
+		}
 		//Position 15 : //,이펙트,화면가리기,  433cs(index 70)로 연계?  일단 Position 20까지 안가고 여기서 처리.
 		else if (iAttackEvent == 1)
 		{
@@ -3642,6 +3846,7 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 		Desc.fCameraShakeDuration = 0.5f;
 		Desc.fCameraShakeMagnitude = 0.2f;
 
+		Desc.strEffectName = TEXT("FZ_SAJ-01");;
 
 		if (m_iPlayerTeam == 1)
 			Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Ranged_Attack;
@@ -3685,10 +3890,13 @@ void CPlay_Frieza::Character_CinematicEnd()
 
 	CCharacter* pKririn = static_cast<CCharacter*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")));
 
-	if(pKririn != nullptr)
-			pKririn->m_bDead = true;
+	if (pKririn != nullptr)
+		pKririn->Destory();
 
 	//static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_Delete();
+
+	//CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	//mainCamera->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_NORMAL);
 
 }
 
