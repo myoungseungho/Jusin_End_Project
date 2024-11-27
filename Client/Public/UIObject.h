@@ -74,8 +74,8 @@ protected:
 	//넣은 수치값을 직교 X,Y값으로 반환
 	_vector GetOffsetPostion(_vector vPosition);
 
-	void MoveAnimUI(_vector vTargetPos, _float fSpeed,  _float fDepth , _float fTimeDelta);
-	void Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed , _float fDepth, _float fTimeDelta);
+	void MoveAnimUI(_vector vTargetPos, _float fSpeed,  _float fDepth , _float fTimeDelta , _float fEndDistance = 15.f);
+	void Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed , _float fDepth, _float fTimeDelta,_float fEndDistance = 15.f);
 
 protected:
 	CShader* m_pShaderCom = { nullptr };

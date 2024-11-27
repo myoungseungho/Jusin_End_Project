@@ -166,6 +166,18 @@ void CUI_Manager::UsingCreateEndUI()
 
 }
 
+void CUI_Manager::CutSceneStart()
+{
+	/*for (auto& Top : m_ListTopUI)
+	{
+		Top->SetActive()
+	}*/
+}
+
+void CUI_Manager::CutSceneFinish()
+{
+}
+
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {
 	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD7))

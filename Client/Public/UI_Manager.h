@@ -50,6 +50,9 @@ public:
 	void UsingCreateStartUI();
 	void UsingCreateEndUI();
 
+	void CutSceneStart();
+	void CutSceneFinish();
+
 public:
 	//디버깅 위치 설정
 	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
