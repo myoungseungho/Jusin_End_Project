@@ -8,6 +8,9 @@ float4 g_vCamPosition;
 float g_Time;
 float g_MaxTime;
 
+float xScale = 7.f;
+float yScale = 0.5f;
+
 struct VS_IN
 {
 	/* 정점 쉐이더마다 갱신되서 들어오는 데이터들 */
@@ -133,8 +136,8 @@ void GS_MAIN_NOTBillBoard(point GS_IN In[1], inout TriangleStream<GS_OUT> Vertex
     float3 vPerp = normalize(cross(worldUp, vDir));
 
     // 스케일링 팩터 적용
-    float lengthDir = 7.0f * In[0].vPSize.x;
-    float lengthPerp = 0.5f * In[0].vPSize.y;
+    float lengthDir = xScale * In[0].vPSize.x;
+    float lengthPerp = yScale * In[0].vPSize.y;
 
     // 중심 위치
     float3 center = In[0].vPosition.xyz;
@@ -280,7 +283,7 @@ PS_OUT PS_RUN_DUST(PS_IN In)
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
         discard;
     
-    Out.vColor.a *= min((In.vLifeTime.x - In.vLifeTime.y) + 0.5f  , 1.f);
+    Out.vColor.a *= min((In.vLifeTime.x - In.vLifeTime.y) + 0.5f, 1.f);
     //Out.vColor.rgb = Out.vColor.rgb * float3(0.529, 0.290, 0.078);
 
     return Out;
