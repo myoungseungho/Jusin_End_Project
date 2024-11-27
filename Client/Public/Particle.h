@@ -1,0 +1,29 @@
+#pragma once
+
+#include "Client_Defines.h"
+#include "GameObject.h"
+
+BEGIN(Client)
+
+class CParticle : public CGameObject
+{
+protected:
+	CParticle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CParticle(const CParticle& Prototype);
+	virtual ~CParticle() = default;
+
+public:
+	virtual HRESULT Initialize_Prototype() override;
+	virtual HRESULT Initialize(void* pArg) override;
+	virtual void Camera_Update(_float fTimeDelta) override;
+	virtual void Update(_float fTimeDelta) override;
+	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Render(_float fTimeDelta) override;
+
+	void Set_Position(_float3 position);
+public:
+	virtual CGameObject* Clone(void* pArg) override;
+	virtual void Free() override;
+};
+
+END

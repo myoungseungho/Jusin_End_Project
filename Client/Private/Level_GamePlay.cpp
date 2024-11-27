@@ -17,12 +17,14 @@
 #include "Sound_Manager.h"
 #include "BattleInterface.h"
 #include "Opening_Kririn.h"
+#include "Particle_Manager.h"
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
 	, m_pIMGUI_Manager{ CImgui_Manager::Get_Instance() }
 	, m_pQTE_Manager{ CQTE_Manager::Get_Instance() }
 	, m_pMap_Manager{ CMap_Manager::Get_Instance() }
+	, m_pParticle_Manager{ CParticle_Manager::Get_Instance() }
 {
 }
 
@@ -32,6 +34,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pMap_Manager->Initialize(m_pDevice, m_pContext);
 	Create_Effect_Manager();
 	Create_QTE_Manager();
+	Create_Particle_Manager();
 
 #pragma region 이펙트 세팅
 	Loading_For_Effect();
@@ -58,13 +61,13 @@ HRESULT CLevel_GamePlay::Initialize()
 	CharacterDesc.iTeam = 1;
 	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 	CharacterDesc.iTeam = 2;
 	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 		return E_FAIL;
 
 
@@ -151,16 +154,9 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
 		return E_FAIL;
-
 	}
 
-
-
-	std::thread([]() {
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
-		}).detach();
-
+	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
 	return S_OK;
 }
@@ -219,13 +215,31 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
+	m_pParticle_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
 
 	m_pQTE_Manager->Update(fTimeDelta);
 	m_pQTE_Manager->Late_Update(fTimeDelta);
+	m_pParticle_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
 
-	
+	//if (m_pGameInstance->Key_Down(DIK_SPACE))
+	//{
+		/*{
+			CCharacter::Character_DESC Opening_CharacterDesc{};
+			Opening_CharacterDesc.iTeam = 1;
+			Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
+
+			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc);
+		}*/
+
+		//	static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
+
+		//	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+
+		/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
+		//}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -387,8 +401,8 @@ HRESULT CLevel_GamePlay::Ready_UIObjects()
 	{
 		KeyInputDesc.eLRPos = static_cast<CUIObject::UI_LRPOS>(i);
 
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"),&KeyInputDesc);
-		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"),&KeyInputDesc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDirPanel"), TEXT("Layer_UI_Input"), &KeyInputDesc);
+		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_InputDir"), TEXT("Layer_UI_Input"), &KeyInputDesc);
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -938,6 +952,9 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma endregion
 
 #pragma region 오공 + 크리링 vs 프리저
+
+	//Voice
+	// 
 	//프리저 그만해! (야메다 프리저!)
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-003.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_0, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//고쿠!!		(크리링)
@@ -950,6 +967,20 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-009.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_4, CSound_Manager::SOUND_CATEGORY::VOICE, false);
 	//오레와 와까다제! (나 화났다 프리저) -> 손오공 대사
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ds02-010.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_5, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+
+	//SFX
+	//프리저 폭발 SFX
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Hit_FRN_DthScr.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Expl_SFX_0, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Hit_FRN_DtRtzn.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Expl_SFX_1, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//손오공 기모으기
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_CMN_Charge_Loop_LP.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_ChargeLoof_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//손오공 기모으기
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_GKS_SprKameha_Chrg.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Charge_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	//손오공 화났을 때 효과음
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_SYS_ActSkill_Normal.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
@@ -1092,6 +1123,12 @@ void CLevel_GamePlay::Create_QTE_Manager()
 	m_pQTE_Manager->Initialize(m_pDevice, m_pContext);
 }
 
+void CLevel_GamePlay::Create_Particle_Manager()
+{
+	m_pParticle_Manager = CParticle_Manager::Get_Instance();
+	m_pParticle_Manager->Initialize(m_pDevice, m_pContext);
+}
+
 HRESULT CLevel_GamePlay::Loading_For_Effect()
 {
 	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
@@ -1153,4 +1190,5 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pQTE_Manager);
 	Safe_Release(m_pUI_Manager);
 	Safe_Release(m_pMap_Manager);
+	Safe_Release(m_pParticle_Manager);
 }

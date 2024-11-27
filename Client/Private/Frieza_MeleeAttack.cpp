@@ -372,6 +372,8 @@ void CFrieza_MeleeAttack::Attack_Grab()
 void CFrieza_MeleeAttack::Attack_236()
 {
 
+	m_pPlayer->Set_bHeavySkill(false);
+
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
 		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
@@ -396,6 +398,64 @@ void CFrieza_MeleeAttack::Attack_214()
 		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_214);
 	}
 	
+}
+
+void CFrieza_MeleeAttack::Attack_236_Heavy()
+{
+
+	_bool bHaveKi = false;
+
+	//기 2칸 있을 때
+	if (CBattleInterface_Manager::Get_Instance()->Use_KiRealGuage(50, m_pPlayer->Get_iPlayerTeam()))
+	{
+		//m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_236_POSE_HEAVY);
+		bHaveKi = true;
+	}
+
+	//2칸은 없는데 1줄 이상 있을 때
+	else if ((CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) != 0))
+	{
+		CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam());
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(25, m_pPlayer->Get_iPlayerTeam());
+
+		bHaveKi = true;
+	}
+
+	//다 없으면 약공격 버전으로
+	else
+	{
+		Attack_236();
+		return;
+	}
+
+
+	if (bHaveKi)
+	{
+		m_pPlayer->Set_bHeavySkill(true);
+
+		if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_FORWARD_DASH_END)
+		{
+			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
+			
+			m_pPlayer->Set_bHeavySkill(true);
+		}
+
+		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM))
+		{
+			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236, false);
+
+			m_pPlayer->Set_bHeavySkill(true);
+		}
+		
+		//사용 못했으면
+		else
+		{
+			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(25, m_pPlayer->Get_iPlayerTeam());
+			m_pPlayer->Set_bHeavySkill(false);
+		}
+	}
 }
 
 void CFrieza_MeleeAttack::Attack_236Special()

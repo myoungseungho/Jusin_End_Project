@@ -133,6 +133,7 @@ public:
 
 public:
 	LEVELID m_eLevelID = { LEVEL_END };
+	_bool m_bCharaSelectFinish = { FALSE };
 
 public:
 	list<class CUIObject*> m_ListTopUI = {};

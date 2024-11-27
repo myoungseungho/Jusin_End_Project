@@ -47,6 +47,7 @@ HRESULT CEffect_Blend::Initialize(void* pArg)
 		m_pTransformCom->Rotate(vRot);
 
 		m_EffectName = pEffectDesc->EffectName;
+
 		m_ModelName = pEffectDesc->ModelName;
 		m_MaskTextureName = pEffectDesc->MaskTextureName;
 		m_DiffuseTextureName = pEffectDesc->DiffuseTextureName;
