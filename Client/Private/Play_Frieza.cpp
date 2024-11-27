@@ -30,6 +30,7 @@
 #include "Frieza_Metal.h"
 
 #include "Opening_Kririn.h"
+#include "Particle_Manager.h"
 
 
 CPlay_Frieza::CPlay_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -55,7 +56,7 @@ HRESULT CPlay_Frieza::Initialize_Prototype()
 
 HRESULT CPlay_Frieza::Initialize(void* pArg)
 {
-	
+
 	m_ChaseEffectName = TEXT("FZ_BurstR");
 	m_fAIrGrabEndAnimationPositon = 29.99f;
 
@@ -1654,7 +1655,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
 			Desc.iGainKiAmount = 1;
-			
+
 			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 			//Desc.fStartOffset = { 0.2f * m_iLookDirection +0.2f,1.7f };
 			//Desc.strEffectName = TEXT("FZ_BurstK-01");
@@ -2418,7 +2419,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
-		
+
 		//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_SDO-02"), { 2.f,0.f });
 
 		Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
@@ -2812,8 +2813,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		Character_Make_BoneEffect("GD_hand_R", TEXT("FZ_SDU-01"));
 
-		CEffect_Layer * pEffect1 = Character_Make_Effect(TEXT("FZ_SDU-02"),{3.7f,0.f});
-		CEffect_Layer * pEffect2 = Character_Make_Effect(TEXT("FZ_SDU-02"), {4.4f,0.f },true);
+		CEffect_Layer* pEffect1 = Character_Make_Effect(TEXT("FZ_SDU-02"), { 3.7f,0.f });
+		CEffect_Layer* pEffect2 = Character_Make_Effect(TEXT("FZ_SDU-02"), { 4.4f,0.f }, true);
 
 		pEffect1->Set_Copy_Layer_Scaled({ 1.2f,1.2f,1.f });
 		//pEffect2->Set_Copy_Layer_Scaled({ 1.0f,1.2f,1.f });
@@ -2867,7 +2868,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//m_p236SpecialEffect=Character_Make_BoneEffect("GD_fist_R", TEXT("FZ_SDJ"));
 			//m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"),{0.4f,-0.3f});
-			m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"),{0.7f,-0.1f});
+			m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"), { 0.7f,-0.1f });
 
 
 
@@ -3050,7 +3051,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_DeleteLayer.push_back(Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_SAJ-01")));
 
 		}
-		else if(iAttackEvent == 0)
+		else if (iAttackEvent == 0)
 		{
 
 			for (auto pEffect : m_DeleteLayer)
@@ -3174,6 +3175,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 			Set_AnimationStop(1.f);
+			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 10.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FRIEZA_ULTIMATE_PARTICLE, resultFloat3);
 		}
 		//,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
 		else if (iAttackEvent == 2)
@@ -3274,7 +3280,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-01"));
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-01"));
 
-			
+
 		}
 
 		//준비?
@@ -3288,7 +3294,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//공격시작
 		else if (iAttackEvent == 2)
 		{
-			m_p214FinalEffect =Character_Make_BoneEffect("G_head", TEXT("FZ_SAO-03"));
+			m_p214FinalEffect = Character_Make_BoneEffect("G_head", TEXT("FZ_SAO-03"));
 			m_p214FinalEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,-45.f });
 
 			Set_fImpulse({ 10.f * m_iLookDirection, -15.f });
@@ -3413,10 +3419,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-03"));
 			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-04"));
-			
-		
+
+
 			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_Down_R-04"), { 0.599f,1.075f });
-			
+
 			{
 				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-03"));
 				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,25.f });
@@ -3430,7 +3436,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Frieza::ANIME_TRANSFORM_FINAL:
 	{
-	
+
 		//Position 0 : 컷씬, 적 시간정지. SM
 		if (iAttackEvent == 0)
 		{
@@ -3442,7 +3448,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//FZ_SAR-01
 
-			
+
 		}
 
 		//Position 7 이펙트 생성

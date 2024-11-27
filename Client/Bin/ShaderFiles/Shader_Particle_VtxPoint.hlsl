@@ -134,7 +134,7 @@ void GS_MAIN_NOTBillBoard(point GS_IN In[1], inout TriangleStream<GS_OUT> Vertex
 
     // 스케일링 팩터 적용
     float lengthDir = 10.0f * In[0].vPSize.x;
-    float lengthPerp = 1.0f * In[0].vPSize.y;
+    float lengthPerp = 0.5f * In[0].vPSize.y;
 
     // 중심 위치
     float3 center = In[0].vPosition.xyz;

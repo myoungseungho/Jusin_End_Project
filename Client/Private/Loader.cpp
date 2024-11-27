@@ -4622,13 +4622,13 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		return E_FAIL;
 
 	//프리저 기모아지는 파티클
-	ParticleDesc.iNumInstance = 1000;
+	ParticleDesc.iNumInstance = 2000;
 	ParticleDesc.vRange = _float3(20.f, 2.f, 20.f);
 	ParticleDesc.vCenter = _float3(0.0f, -10.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(8.f, 15.f);
 	ParticleDesc.vScale = _float2(0.01f, 0.02f);
-	ParticleDesc.vLifeTime = _float2(1.f, 2.f);
+	ParticleDesc.vLifeTime = _float2(2.f, 3.f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Frieza_FocusPoint"),
