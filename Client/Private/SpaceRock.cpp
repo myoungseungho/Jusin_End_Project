@@ -18,6 +18,7 @@ CSpaceRock::CSpaceRock(const CSpaceRock & Prototype)
 
 HRESULT CSpaceRock::Initialize_Prototype()
 {
+	
 	return S_OK;
 }
 
@@ -66,13 +67,16 @@ HRESULT CSpaceRock::Render(_float fTimeDelta)
 
 		for (size_t i = 0; i < iNumMeshes; i++)
 		{
-			if (FAILED(m_pModelCom[j]->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+			if (FAILED(
+				(m_isBreakRock[j] == false ? m_pModelCom[j]->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i) 
+				: m_pBRModelCom[j]->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i))
+			))
 				return E_FAIL;
 
 			if (FAILED(m_pShaderCom->Begin(4)))
 				return E_FAIL;
 
-			if (FAILED(m_pModelCom[j]->Render(i)))
+			if (FAILED((m_isBreakRock[j] == false ? m_pModelCom[j]->Render(i) : m_pBRModelCom[j]->Render(i))))
 				return E_FAIL;
 		}
 	}
@@ -97,7 +101,17 @@ HRESULT CSpaceRock::Ready_Components()
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_3"),
 		TEXT("Com_Model_2"), reinterpret_cast<CComponent**>(&m_pModelCom[2]))))
 		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_1"),
+		TEXT("Com_BRModel_0"), reinterpret_cast<CComponent**>(&m_pBRModelCom[0]))))
+		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_2"),
+		TEXT("Com_BRModel_1"), reinterpret_cast<CComponent**>(&m_pBRModelCom[1]))))
+		return E_FAIL;
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_3"),
+		TEXT("Com_BRModel_2"), reinterpret_cast<CComponent**>(&m_pBRModelCom[2]))))
+		return E_FAIL;
 
+	// Prototype_Component_Model_SpaceBRRock_1
 	return S_OK;
 }
 
@@ -148,6 +162,7 @@ void CSpaceRock::Free()
 	for (size_t i = 0; i < 3; i++)
 	{
 		Safe_Release(m_pModelCom[i]);
+		Safe_Release(m_pBRModelCom[i]);
 	}
 
 	__super::Free();

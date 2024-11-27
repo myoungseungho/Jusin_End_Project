@@ -20,15 +20,29 @@ public:
 	_matrix Get_Transform_Matrix(D3DTRANSFORMSTATE eState) const {
 		return XMLoadFloat4x4(&m_TransformMatrices[eState]);
 	}
+	_matrix Get_ShadowTransform_Matrix(D3DTRANSFORMSTATE eState) const {
+		return XMLoadFloat4x4(&m_ShadowCamTransformMatrices[eState]);
+	}
+
 	_float4x4 Get_Transform_Float4x4(D3DTRANSFORMSTATE eState) const {
 		return m_TransformMatrices[eState];
+	}
+
+	_float4x4 Get_ShadowTransform_Float4x4(D3DTRANSFORMSTATE eState) const {
+		return m_ShadowCamTransformMatrices[eState];
 	}
 
 	_matrix Get_Transform_Inverse_Matrix(D3DTRANSFORMSTATE eState) const {
 		return XMLoadFloat4x4(&m_TransformMatrices_Inverse[eState]);
 	}
+	_matrix Get_ShadowTransform_Inverse_Matrix(D3DTRANSFORMSTATE eState) const {
+		return XMLoadFloat4x4(&m_ShadowCamTransformMatrices_Inverse[eState]);
+	}
 	_float4x4 Get_Transform_Inverse_Float4x4(D3DTRANSFORMSTATE eState) const {
 		return m_TransformMatrices_Inverse[eState];
+	}
+	_float4x4 Get_ShadowTransform_Inverse_Float4x4(D3DTRANSFORMSTATE eState) const {
+		return m_ShadowCamTransformMatrices_Inverse[eState];
 	}
 	_vector Get_CamPosition_Vector() const {
 		return XMLoadFloat4(&m_vCamPosition);
@@ -43,6 +57,10 @@ public:
 		XMStoreFloat4x4(&m_TransformMatrices[eState], TransformMatrix);
 	}
 
+	void Set_ShadowTransform(D3DTRANSFORMSTATE eState, _fmatrix TransformMatrix) {
+		XMStoreFloat4x4(&m_ShadowCamTransformMatrices[eState], TransformMatrix);
+	}
+
 public:
 	void Update();
 
@@ -51,6 +69,9 @@ private:
 	_float4x4			m_TransformMatrices_Inverse[D3DTS_END] = {};
 	_float4				m_vCamPosition = {};
 
+	_float4x4			m_ShadowCamTransformMatrices[D3DTS_END] = {};
+	_float4x4			m_ShadowCamTransformMatrices_Inverse[D3DTS_END] = {};
+	_float4				m_vShadowCamPosition = {};
 public:
 	static CPipeLine* Create();
 	virtual void Free() override;

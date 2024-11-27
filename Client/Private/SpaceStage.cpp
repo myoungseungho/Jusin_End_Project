@@ -51,10 +51,12 @@ void CSpaceStage::Update(_float fTimeDelta)
 void CSpaceStage::Late_Update(_float fTimeDelta)
 {
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_SPACEMAP, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_STAGE, this);
 }
 
 HRESULT CSpaceStage::Render(_float fTimeDelta)
 {
+	//16
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -72,7 +74,28 @@ HRESULT CSpaceStage::Render(_float fTimeDelta)
 
 	return S_OK;
 }
+HRESULT CSpaceStage::Shadow_Render(_float fTimeDelta)
+{
 
+	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
+
+	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
+
+	for (size_t i = 0; i < iNumMeshes; i++)
+	{
+		//if (FAILED(m_pModelCom->Bind_MaterialSRV(m_pShaderCom, aiTextureType_DIFFUSE, "g_DiffuseTexture", i)))
+		//	return E_FAIL;
+
+		if (FAILED(m_pShaderCom->Begin(16)))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Render(i)))
+			return E_FAIL;
+	}
+
+	return S_OK;
+}
 HRESULT CSpaceStage::Ready_Components()
 {
 	/* Com_Shader */

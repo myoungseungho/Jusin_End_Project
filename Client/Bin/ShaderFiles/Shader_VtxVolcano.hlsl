@@ -10,9 +10,10 @@ int g_SunMeshIndex;
 int g_GroundCount;
 
 float g_Time = 0.f;
+texture2D g_EastGlowTexture;
 
 vector g_vCamPosition;
-
+float3 g_EastColor;
 int g_LavaFallIndex;
 float2 g_fSpriteCurPos;
 float4 g_vCamPos;
@@ -127,6 +128,35 @@ struct PS_OUT
     float4 vDepth : SV_TARGET2;
    //float4   vPickDepth : SV_TARGET3;
 };
+PS_OUT PS_MAIN_EAST(PS_IN In)
+{
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+   // vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    //if (vMtrlDiffuse.a < 0.99f)
+    //    discard;
+
+    Out.vDiffuse = vMtrlDiffuse;
+
+    Out.vNormal = vector(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    return Out;
+}
+struct PS_OUT_SHADOW
+{
+    float4 vLightDepth : SV_TARGET0;
+};
+
+
+PS_OUT_SHADOW PS_MAIN_SHADOW(PS_IN In)
+{
+    PS_OUT_SHADOW Out;
+
+    Out.vLightDepth = vector(In.vProjPos.w / 10000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 1.f);
+    
+    return Out;
+}
 
 PS_OUT PS_MAIN(PS_IN In)
 {
@@ -146,8 +176,8 @@ PS_OUT PS_MAIN(PS_IN In)
     //vMtrlDiffuse.a
     Out.vDiffuse = vResultColor;
     
-    Out.vNormal = vector(vLavaColor.rgb * (1 - vMtrlDiffuse.a), 0.f);
-    //Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
+    Out.vNormal = vector(0, 0, 0, 0.f);
+    Out.vDepth = vector(In.vProjPos.w / 10000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     return Out;
 }
 
@@ -476,6 +506,17 @@ PS_OUT PS_MAIN_DESTRUCTIVE_MOUNTAIN(PS_IN In)
     return Out;
 }
 
+PS_OUT PS_MAIN_EAST_RECT(PS_IN In)
+{
+    PS_OUT Out;
+    float2 vTexcoord = In.vTexcoord;
+    
+    Out.vDiffuse = g_EastGlowTexture.Sample(LinearSampler, vTexcoord);
+    Out.vDiffuse.a *= 0.9f;
+    Out.vDiffuse.rgb = g_EastColor;
+   
+    return Out;
+}
 technique11 DefaultTechnique
 {
     pass Default // 0
@@ -747,7 +788,42 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_DESTRUCTIVE_MOUNTAIN();
     }
+    pass EastRect // 21
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_EAST_RECT();
+    }
+    pass EastMAIN // 22
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_EAST();
+    }
+    pass Stage // 23
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Default, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SHADOW();
+    }
 }
 
 vector TexScalar_ToSampling(float2 vScale, float2 vScroll, float2 vTexcoord)

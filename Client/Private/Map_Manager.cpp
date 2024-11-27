@@ -15,6 +15,8 @@
 #include "SpaceMeteoBreak.h"
 #include "Effect_Manager.h"
 #include "Virtual_Camera.h"
+#include "SpaceEF.h"
+#include "VolcanoEF.h"
 IMPLEMENT_SINGLETON(CMap_Manager)
 
 CMap_Manager::CMap_Manager()
@@ -53,14 +55,13 @@ void CMap_Manager::Update(_float fTimeDelta)
 
 		if (m_fEastAccTime >= 10.f)
 		{
-			Map_Change(MAP_SPACE);
+			Map_Change(m_eCurMap);
+
 			m_pEastEffect_Layer->m_bIsDoneAnim = true;
 			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
 				->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA_NORMAL);
 			m_isEastFinishStart = false;
 			m_fEastAccTime = 0.f;
-
-
 		}
 	}
 
@@ -103,7 +104,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 		Active_EastFinish(EAST_LASER);*/
 
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
-		PlayerCall_EastFinish(EAST_LASER);
+		PlayerCall_EastFinish(EAST_LASER,1.f);
 	
 	
 }
@@ -156,6 +157,8 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 		for (auto& iter : m_Destructive_SpaceModels)
 			iter.second->SetActive(false);
 
+		m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
+		
 		m_eCurMap = MAP_VOLCANO;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_VOLCANO);
 		//DISTORTION_DESC tDistortionDesc{};
@@ -226,9 +229,45 @@ _float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
 
 _float2 CMap_Manager::Active_EastFinish()
 {
+
+	for (auto& iter : m_SpaceModels)
+		iter.second->SetActive(false);
+	for (auto& iter : m_Destructive_SpaceModels)
+		iter.second->SetActive(false);
+	for (auto& iter : m_VolcanoModels)
+		iter.second->SetActive(false);
+	for (auto& iter : m_Destructive_VolcanoModels)
+		iter.second->SetActive(false);
+
+	m_isEastFinishStart = true;
+	m_fEastAccTime = 0.f;
+	_float4 vMoveCamPos = {};
+	_vector vLookAtPos;
+	if (m_eCurMap == MAP_SPACE)
+	{
+		m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = true;
+		static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		vMoveCamPos = _float4(0.f, 0.5f, -194.7f, 1.f);
+		vLookAtPos = XMVectorSet(0.f, 1.f, 0.f, 1.f);
+	}
+	else if (m_eCurMap == MAP_VOLCANO)
+	{
+		//m_SpaceModels[L"Prototype_GameObject_SpaceSky"]->m_bIsActive = true;
+		m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = true;
+		static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		vMoveCamPos = _float4(-2.30689f, -0.06469f, -161.586121f, 1.f);
+		vLookAtPos = XMVectorSet(0.f, 10.f, 0.f, 1.f);
+	}
+
+	XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
+	CEffect_Layer::COPY_DESC tDesc{};
+	tDesc.pPlayertMatrix = &Result4x4;
+
 	switch (m_eEastEffectType)
 	{
 	case EAST_LASER:
+<<<<<<< HEAD
 		if (m_eCurMap == MAP_SPACE)
 		{
 			m_isEastFinishStart = true;
@@ -291,21 +330,56 @@ _float2 CMap_Manager::Active_EastFinish()
 		}
 		// 맵 분기 넣고 쉐이킹 넣고 바라보게 한다음 이펙트 출력
 		// 트리거는 있다가
+=======
+		m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_EFFECT"), &tDesc);
+		if (m_eCurMap == MAP_SPACE)
+			static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		else
+			static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
+		break;
+	case EAST_SPHERE:
+		m_pEastEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("EF_SPHERE_ENDING"), &tDesc);
+		if (m_eCurMap == MAP_SPACE)
+			static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.86666f, 0.3254f, 0.f);
+		else
+			static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.86666f, 0.3254f, 0.f);
+>>>>>>> 593e1ec56c0dbe38a1f6b95ae76bcd6a555d01a7
 		break;
 	}
 
-		/* */
-		
+	static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+		->Set_EastFinish(vMoveCamPos);
 
+	static_cast<CTransform*>(
+		static_cast<CVirtual_Camera*>(
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_MAP])->Get_Component(TEXT("Com_Transform")))
+		->LookAt(vLookAtPos);
 
+	static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->StartCameraShake(10.f, 0.06);
+
+	/* ------------------------------------------------------테스트용 프리카메라 무빙------------------------------------------------------ */
+	static_cast<CTransform*>(
+		static_cast<CVirtual_Camera*>(
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
+		->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.5f, -184.7f, 1.f));
+
+	static_cast<CTransform*>(
+		static_cast<CVirtual_Camera*>(
+			static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))
+			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
+		->LookAt(XMVectorSet(0.f, 1.f, 0.f, 0.f));
+	/*------------------------------------------------------------------------------------------------------------*/
 	return _float2();
 }
 
-void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType)
+void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType, _float fWhiteSpeed)
 {
 	m_isEastFinish = true;
-	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck);
-	m_eEastEffectType = EAST_LASER;
+
+	m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck, fWhiteSpeed);
+	m_eEastEffectType = eEastEffectType;
 }
 
 void CMap_Manager::IsDone_Active()
@@ -369,25 +443,28 @@ void CMap_Manager::All_Black(_bool isTrue)
 		if (m_eCurMap == MAP_SPACE)
 		{
 			for (auto& iter : m_VolcanoModels)
-				iter.second->SetActive(true);
-			for (auto& iter : m_Destructive_VolcanoModels)
-				iter.second->SetActive(true);
-			for (auto& iter : m_SpaceModels)
 				iter.second->SetActive(false);
+			for (auto& iter : m_Destructive_VolcanoModels)
+				iter.second->SetActive(false);
+			for (auto& iter : m_SpaceModels)
+				iter.second->SetActive(true);
 			for (auto& iter : m_Destructive_SpaceModels)
 				iter.second->SetActive(false);
-		}
 
+			m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = false;
+		}
 		else
 		{
 			for (auto& iter : m_VolcanoModels)
-				iter.second->SetActive(false);
+				iter.second->SetActive(true);
 			for (auto& iter : m_Destructive_VolcanoModels)
 				iter.second->SetActive(false);
 			for (auto& iter : m_SpaceModels)
-				iter.second->SetActive(true);
+				iter.second->SetActive(false);
 			for (auto& iter : m_Destructive_SpaceModels)
-				iter.second->SetActive(true);
+				iter.second->SetActive(false);
+
+			m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
 		}
 	}
 
