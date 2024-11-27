@@ -103,6 +103,7 @@ private: /* For.WhiteOut Variable */
 	_float2 m_fSpriteSize = { 0.f,0.f };
 	_float2 m_fSpriteCurPos = { 0.f,0.f };
 	_float m_fSpriteAccTime = { 0.f };
+	_bool m_isSpriteEnd = { false };
 
 	_float2 m_vWhiteDir = { 1.f,0.f };
 	_bool* m_pDoneCheck = { nullptr };
