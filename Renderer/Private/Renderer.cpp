@@ -686,7 +686,8 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Player(_float fTimeDelta)
 {
-	_int iCount = 0;
+	m_iRenderPlayerCount = 0;
+	
 	for (auto& pRenderObject : m_RenderObjects[RG_PLAYER])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player"))))
@@ -702,9 +703,9 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		Render_PlayerLight(fTimeDelta, iCount);
+		Render_PlayerLight(fTimeDelta, m_iRenderPlayerCount);
 
-		if (iCount == 0)
+		if (m_iRenderPlayerCount == 0)
 		{
 			if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_PlayerDefferd"))))
 				return E_FAIL;
@@ -723,10 +724,11 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 				return E_FAIL;
 		}
 
-		iCount++;
+		m_iRenderPlayerCount++;
 	}
 
-	Render_PlayerBlur(fTimeDelta);
+	if(m_iRenderPlayerCount != 0)
+		Render_PlayerBlur(fTimeDelta);
 
 	m_RenderObjects[RG_PLAYER].clear();
 	m_PlayerStrNames.clear();
@@ -766,8 +768,8 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	m_pVIBuffer->Bind_Buffers();
 	auto strName = m_PlayerStrNames.begin() + iCount;
 	LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, *strName);
-
-	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta); // 수정
+	if(pLightDesc != nullptr)
+		m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta); // 수정
 
 	if (NULL != m_pRenderInstance->Check_EffectLights())
 	{
@@ -801,7 +803,7 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	if (iCount != 0)
+	if (pLightDesc != nullptr)
 	{
 		Render_PlayerAuraMaskBlur(fTimeDelta, pLightDesc->vAuraColor);
 	}
@@ -1434,24 +1436,27 @@ HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
 	if (iEffectGlow_RenderCount > 0)
 		Draw_AllGlow_Effect(false);
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
+	if (m_iRenderPlayerCount != 0)
+	{
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
-		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
-	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
-		return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
+			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
+		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+			return E_FAIL;
 
 	
-	m_pGlowShader->Begin(9);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
+		m_pGlowShader->Begin(9);
+		m_pVIBuffer->Bind_Buffers();
+		m_pVIBuffer->Render();
+	}
 	
 	return S_OK;
 }

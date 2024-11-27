@@ -73,8 +73,11 @@ HRESULT CLight_Manager::Add_Light(const LIGHT_DESC & LightDesc)
 
 void CLight_Manager::BGLight_Pop_Front()
 {
-	Safe_Release(m_Lights.front());
-	m_Lights.pop_front();
+	if (NULL != m_Lights.size())
+	{
+		Safe_Release(m_Lights.front());
+		m_Lights.pop_front();
+	}
 }
 
 HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
