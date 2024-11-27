@@ -91,6 +91,48 @@ HRESULT CLobby_Staff::Render(_float fTimeDelta)
 	return S_OK;
 }
 
+void CLobby_Staff::State()
+{
+	switch (m_eCurrState)
+	{
+	case IDLE:
+		
+		break;
+
+	case RUN:
+		break;
+	}
+}
+
+void CLobby_Staff::AnimState()
+{
+	if (m_bAnimChange)
+	{
+		m_ePrevState = m_eCurrState;
+		switch (m_eCurrState)
+		{
+		case IDLE:
+
+			break;
+
+		case RUN:
+			break;
+		}
+
+		m_bAnimChange = FALSE;
+	}
+}
+
+_bool CLobby_Staff::Idle(_float fTimeDelta)
+{
+	return _bool();
+}
+
+_bool CLobby_Staff::Run(_vector vTargPos, _float fTimeDelta)
+{
+	return _bool();
+}
+
 HRESULT CLobby_Staff::Ready_Components()
 {
 	/* Com_Shader */

@@ -12,6 +12,9 @@ BEGIN(Client)
 
 class CLobby_Staff final : public CGameObject
 {
+public:
+	enum NPC_STATE {IDLE , RUN , STATE_END};
+
 private:
 	CLobby_Staff(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CLobby_Staff(const CLobby_Staff& Prototype);
@@ -25,8 +28,23 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+private:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
+
+private:
+	NPC_STATE m_eCurrState = { STATE_END };
+	NPC_STATE m_ePrevState = { STATE_END };
+
+private:
+	void State();
+	void AnimState();
+
+	_bool Idle(_float fTimeDelta);
+	_bool Run(_vector vTargPos, _float fTimeDelta);
+
+private:
+	_bool m_bAnimChange = { TRUE };
 
 private:
 	HRESULT Ready_Components();
