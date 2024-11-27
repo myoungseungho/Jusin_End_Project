@@ -61,7 +61,7 @@ void CParticle_Spread::Late_Update(_float fTimeDelta)
 	tDesc.tGlowDesc.iPassIndex = 2;
 	tDesc.tGlowDesc.fGlowFactor = 15.f;
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_GLOW, this, &tDesc);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BACKSIDE_EFFECT, this, &tDesc);
 }
 
 HRESULT CParticle_Spread::Render(_float fTimeDelta)

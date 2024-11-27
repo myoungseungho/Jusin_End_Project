@@ -4607,28 +4607,28 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 #pragma region 노말 파티클
 
-	//Spread 파티클
-	ParticleDesc.iNumInstance = 1000;
+	//프리저 3필 Spread 파티클
+	ParticleDesc.iNumInstance = 10000;
 	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(3.f, 5.f);
+	ParticleDesc.vSpeed = _float2(2.f, 3.f);
 	ParticleDesc.vScale = _float2(0.01f, 0.02f);
-	ParticleDesc.vLifeTime = _float2(1.f, 2.f);
-	ParticleDesc.isLoop = true;
+	ParticleDesc.vLifeTime = _float2(1.0f, 1.5f);
+	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
-	//프리저 기모아지는 파티클
-	ParticleDesc.iNumInstance = 2000;
+	//프리저 1필 Focus 파티클
+	ParticleDesc.iNumInstance = 20000;
 	ParticleDesc.vRange = _float3(20.f, 2.f, 20.f);
-	ParticleDesc.vCenter = _float3(0.0f, -10.f, 0.0f);
+	ParticleDesc.vCenter = _float3(0.0f, -15.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(8.f, 15.f);
+	ParticleDesc.vSpeed = _float2(18.f, 25.f);
 	ParticleDesc.vScale = _float2(0.01f, 0.02f);
-	ParticleDesc.vLifeTime = _float2(2.f, 3.f);
+	ParticleDesc.vLifeTime = _float2(1.0f, 1.5f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Frieza_FocusPoint"),

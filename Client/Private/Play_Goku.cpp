@@ -764,12 +764,7 @@ void CPlay_Goku::Update(_float fTimeDelta)
 
 	static _bool isPlay = false;
 	if (m_pGameInstance->Key_Down(DIK_SPACE))
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FRIEZA_ULTIMATE_PARTICLE, _float3(0.f, 10.f, 0.f));
-
-	if (m_pGameInstance->Key_Down(DIK_LALT))
-		CParticle_Manager::Get_Instance()->Stop(CParticle_Manager::FRIEZA_ULTIMATE_PARTICLE);
-
-
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_PARTICLE, _float3(0.f, 10.f, 0.f));
 }
 
 void CPlay_Goku::Late_Update(_float fTimeDelta)

@@ -7,6 +7,13 @@ BEGIN(Client)
 
 class CParticle : public CGameObject
 {
+	struct PARTICLE_DESC
+	{
+		_float4 vColor{};
+		_uint passIndex{};
+		_float glowFactor{};
+	};
+
 protected:
 	CParticle(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CParticle(const CParticle& Prototype);

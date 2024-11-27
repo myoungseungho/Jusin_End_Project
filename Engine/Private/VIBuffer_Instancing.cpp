@@ -112,24 +112,37 @@ _bool CVIBuffer_Instancing::Spread(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
-		_vector		vMoveDir = XMVector3Normalize(XMLoadFloat4(&m_pInstanceVertices[i].vTranslation) - XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f));
-
-		// Store moveDir in the instance buffer
-		XMStoreFloat3(&pMatrices[i].vMoveDir, vMoveDir);
-
-		XMStoreFloat4(&pMatrices[i].vTranslation,
-			XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
-
+		// 라이프타임 업데이트
 		pMatrices[i].vLifeTime.y += fTimeDelta;
-		if (m_isLoop == true && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+
+		if (pMatrices[i].vLifeTime.y >= 0.f)
 		{
-			pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
-			pMatrices[i].vLifeTime.y = 0.f;
-		}// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			_vector		vMoveDir = XMVector3Normalize(XMLoadFloat4(&m_pInstanceVertices[i].vTranslation) - XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f));
+
+			// Store moveDir in the instance buffer
+			XMStoreFloat3(&pMatrices[i].vMoveDir, vMoveDir);
+
+			XMStoreFloat4(&pMatrices[i].vTranslation,
+				XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
+		}
+
+		if (pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
 		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
+
+			if (m_isLoop == true)
+			{
+				// 파티클을 초기 위치로 리셋
+				pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
+
+				// lifeTime.y를 -lifeTime.x와 0 사이의 랜덤한 값으로 재설정
+				pMatrices[i].vLifeTime.y = -RandomBetween(0.f, pMatrices[i].vLifeTime.x);
+			}
+			else
+			{
+				// 파티클 생명 주기가 끝났을 때 처리
+				m_pContext->Unmap(m_pVBInstance, 0);
+				return true;
+			}
 		}
 	}
 
@@ -162,19 +175,9 @@ _bool CVIBuffer_Instancing::FocusPoint(_float fTimeDelta)
 			XMStoreFloat4(&pMatrices[i].vTranslation,
 				XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
 		}
-		//else
-		//{
-		//	// 파티클 비활성화: 위치를 화면 밖으로 이동
-		//	pMatrices[i].vTranslation = XMFLOAT4(9999.f, 9999.f, 9999.f, 1.f);
-		//	// 또는 스케일을 0으로 설정
-		//	// pMatrices[i].vScale = XMFLOAT2(0.f, 0.f);
-		//	// 또는 알파 값을 0으로 설정 (셰이더에서 처리 필요)
-		//	// pMatrices[i].vColor.w = 0.f;
-		//}
 
 		if (pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
 		{
-
 			if (m_isLoop == true)
 			{
 				// 파티클을 초기 위치로 리셋

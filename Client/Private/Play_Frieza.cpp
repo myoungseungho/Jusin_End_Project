@@ -3175,11 +3175,13 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 			Set_AnimationStop(1.f);
+
+
 			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 10.f, 0.f, 0.f));
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 2.f, 0.f, 0.f));
 			_float3 resultFloat3{};
 			XMStoreFloat3(&resultFloat3, resultPosition);
-			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FRIEZA_ULTIMATE_PARTICLE, resultFloat3);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_PARTICLE, resultFloat3);
 		}
 		//,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
 		else if (iAttackEvent == 2)
@@ -3281,6 +3283,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-01"));
 
 
+		
 		}
 
 		//준비?
@@ -3289,6 +3292,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-02"));
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-02"));
 
+			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.5f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_3_PARTICLE, resultFloat3);
 		}
 
 		//공격시작

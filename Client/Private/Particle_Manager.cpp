@@ -18,14 +18,13 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 	// 각 파티클 타입별로 최소 3개의 파티클 객체를 미리 생성하여 풀에 추가
 	for (int i = 0; i < 3; ++i)
 	{
-		// HEAVY_ATTACK_PARTICLE 타입의 파티클 생성
-		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
-		pParticle->Set_Particle_Active(false);
-		m_ParticlePools[HEAVY_ATTACK_PARTICLE].push_back(pParticle);
-
 		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Focus")));
 		pParticle->Set_Particle_Active(false);
-		m_ParticlePools[FRIEZA_ULTIMATE_PARTICLE].push_back(pParticle);
+		m_ParticlePools[FREIZA_ULTIMATE_1_PARTICLE].push_back(pParticle);
+
+		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
+		pParticle->Set_Particle_Active(false);
+		m_ParticlePools[FREIZA_ULTIMATE_3_PARTICLE].push_back(pParticle);
 	}
 
 	return S_OK;
@@ -95,12 +94,12 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _float3& vPosition)
 		// 비활성화된 파티클이 없으면 새로 생성
 		switch (eID)
 		{
-		case HEAVY_ATTACK_PARTICLE:
+		case FREIZA_ULTIMATE_3_PARTICLE:
 			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
 			pool.push_back(pParticle);
 			break;
 
-		case FRIEZA_ULTIMATE_PARTICLE:
+		case FREIZA_ULTIMATE_1_PARTICLE:
 			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Focus")));
 			pool.push_back(pParticle);
 			break;
