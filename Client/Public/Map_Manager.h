@@ -40,13 +40,13 @@ public:
 	void Map_Change(MAP_TYPE eMapType);
 	_float2 Active_DestructiveFinish(_bool isRight);
 	_float2 Active_EastFinish();
-	void PlayerCall_EastFinish(East_Finish_Type eEastEffectType);
+	void PlayerCall_EastFinish(East_Finish_Type eEastEffectType, _float fWhiteSpeed);
 	void IsDone_Active();
 	
 	void Push_MapObject(MAP_TYPE eMapType, _wstring& strKey,class CGameObject* pGameObject);
-
-	MAP_TYPE m_eCurMap = { MAP_SPACE };
 	void All_Black(_bool isTrue);
+	MAP_TYPE m_eCurMap = { MAP_SPACE };
+	
 
 private: /* East_Finish_Type Variable */
 	_bool			m_isEastFinish = { false };

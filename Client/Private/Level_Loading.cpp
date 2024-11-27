@@ -119,9 +119,9 @@ HRESULT CLevel_Loading::Ready_Prototype_Component()
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Model_Loading_GodDragon"),
+	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
+	//	return E_FAIL;
 
 #pragma endregion
 

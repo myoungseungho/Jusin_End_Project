@@ -146,7 +146,7 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 
 	//LightDesc.vDirection = _float4(-0.15f, -0.7f, 0.5f, 0.f);
 	LightDesc.vDirection = _float4(-1.f, -0.2f, 1.f, 0.f);
-	LightDesc.vDiffuse = _float4(0.9f, 0.9f, 1.0f, 1.0f);
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.vAuraColor = _float4(16.76, 1.5333, 27.86, 5.490);
@@ -480,9 +480,11 @@ void COpening_Kririn::Free()
 	//Safe_Release(m_pShaderCom);
 	//Safe_Release(m_pModelCom);
 
+	Safe_Release(m_pIlmTextureCom);
 	Safe_Release(m_pDecalTextureCom);
 	Safe_Release(m_pIlmTextureCom);
 	Safe_Release(m_pDiffuseTextureCom);
 	Safe_Release(m_p2PTextureCom);
+	Safe_Release(m_p1PTextureCom);
 
 }

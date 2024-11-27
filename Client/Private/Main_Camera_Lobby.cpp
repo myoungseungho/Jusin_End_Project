@@ -58,6 +58,7 @@ void CMain_Camera_Lobby::Camera_Update(_float fTimeDelta)
 	_float fMoveSpeed = 1.f;
 	
 	// 오른쪽 버튼이 눌렸는지 확인
+
 	if (m_pGameInstance->Mouse_Pressing(1))
 	{
 		// Shift 키가 눌렸는지 확인하고, 눌렸다면 이동 속도를 증가
@@ -108,7 +109,6 @@ void CMain_Camera_Lobby::Camera_Update(_float fTimeDelta)
 			m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), m_fMouseSensor * MouseMove * fTimeDelta);
 		}
 	}
-
 	__super::Camera_Update(fTimeDelta);
 }
 

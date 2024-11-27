@@ -275,6 +275,7 @@ public:
 	void Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime = 0.2f);
 
 
+	_uint Get_iHP();
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep);// 
@@ -357,6 +358,12 @@ public:
 
 	void Update_Dying(_float fTimeDelta);
 	_bool Get_bDying();
+	void Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex);
+	_bool m_bFinalSkillRoundEnd = false;
+	_float m_fMaxDyingTime = { 5.f };
+
+	void Set_UnDying(_bool bNoneDying) {m_bUnDying = bNoneDying;};
+	_bool m_bUnDying = false;
 
 	void Play_WinAnimation();
 	void Play_NewRound_Loser();

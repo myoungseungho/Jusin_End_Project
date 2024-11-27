@@ -232,48 +232,48 @@ _int CImgui_Manager::Pick_Effect_Mesh()
 
 void CImgui_Manager::Render_IMGUI(_float fTimeDelta)
 {
-	ImGui::Begin("Effect Color Edit");
+	//ImGui::Begin("EffecASDASDSADASDt Color Edit");
 
-	// RGBA 값을 위한 세로바 슬라이더
-	bool valueChanged = false;  // 값이 변경되었는지 확인
-	
-	ImGui::Dummy(ImVec2(5.0f, 1.0f));
-	ImGui::SameLine();
-	valueChanged |= ImGui::VSliderFloat("R", ImVec2(20, 160), &color.x, 0.0f, 30.0f, "");
-	ImGui::SameLine();
-	ImGui::Dummy(ImVec2(5.0f, 1.0f));
-	ImGui::SameLine();
-	valueChanged |= ImGui::VSliderFloat("G", ImVec2(20, 160), &color.y, 0.0f, 30.0f, "");
-	ImGui::SameLine();
-	ImGui::Dummy(ImVec2(5.0f, 1.0f));
-	ImGui::SameLine();
-	valueChanged |= ImGui::VSliderFloat("B", ImVec2(20, 160), &color.z, 0.0f, 30.0f, "");
-	ImGui::SameLine();
-	ImGui::Dummy(ImVec2(5.0f, 1.0f));
-	ImGui::SameLine();
-	valueChanged |= ImGui::VSliderFloat("A", ImVec2(20, 160), &color.w, 0.0f, 30.0f, "");
+	//// RGBA 값을 위한 세로바 슬라이더
+	//bool valueChanged = false;  // 값이 변경되었는지 확인
+	//
+	//ImGui::Dummy(ImVec2(5.0f, 1.0f));
+	//ImGui::SameLine();
+	//valueChanged |= ImGui::VSliderFloat("R", ImVec2(20, 160), &color.x, 0.0f, 30.0f, "");
+	//ImGui::SameLine();
+	//ImGui::Dummy(ImVec2(5.0f, 1.0f));
+	//ImGui::SameLine();
+	//valueChanged |= ImGui::VSliderFloat("G", ImVec2(20, 160), &color.y, 0.0f, 30.0f, "");
+	//ImGui::SameLine();
+	//ImGui::Dummy(ImVec2(5.0f, 1.0f));
+	//ImGui::SameLine();
+	//valueChanged |= ImGui::VSliderFloat("B", ImVec2(20, 160), &color.z, 0.0f, 30.0f, "");
+	//ImGui::SameLine();
+	//ImGui::Dummy(ImVec2(5.0f, 1.0f));
+	//ImGui::SameLine();
+	//valueChanged |= ImGui::VSliderFloat("A", ImVec2(20, 160), &color.w, 0.0f, 30.0f, "");
 
-	// 숫자 입력을 위한 필드
-	valueChanged |= ImGui::InputFloat4("", reinterpret_cast<float*>(&color));
+	//// 숫자 입력을 위한 필드
+	//valueChanged |= ImGui::InputFloat4("", reinterpret_cast<float*>(&color));
 
-	// 0.5f씩 증가/감소하는 버튼 (RGB)
-	if (ImGui::Button("+0.1 R")) { color.x = min(255.0f, max(0.0f, color.x + 0.1f)); valueChanged = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("+0.1 G")) { color.y = min(255.0f, max(0.0f, color.y + 0.1f)); valueChanged = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("+0.1 B")) { color.z = min(255.0f, max(0.0f, color.z + 0.1f)); valueChanged = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("+0.05 A")) { color.w = min(30.0f, max(0.0f, color.w + 0.05f)); valueChanged = true; }
+	//// 0.5f씩 증가/감소하는 버튼 (RGB)
+	//if (ImGui::Button("+0.1 R")) { color.x = min(255.0f, max(0.0f, color.x + 0.1f)); valueChanged = true; }
+	//ImGui::SameLine();
+	//if (ImGui::Button("+0.1 G")) { color.y = min(255.0f, max(0.0f, color.y + 0.1f)); valueChanged = true; }
+	//ImGui::SameLine();
+	//if (ImGui::Button("+0.1 B")) { color.z = min(255.0f, max(0.0f, color.z + 0.1f)); valueChanged = true; }
+	//ImGui::SameLine();
+	//if (ImGui::Button("+0.05 A")) { color.w = min(30.0f, max(0.0f, color.w + 0.05f)); valueChanged = true; }
 
-	if (ImGui::Button("-0.1 R")) { color.x = min(255.0f, max(0.0f, color.x - 0.1f)); valueChanged = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("-0.1 G")) { color.y = min(255.0f, max(0.0f, color.y - 0.1f)); valueChanged = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("-0.1 B")) { color.z = min(255.0f, max(0.0f, color.z - 0.1f)); valueChanged = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("-0.05 A")) { color.w = min(30.0f, max(0.0f, color.w - 0.05f)); valueChanged = true; }
+	//if (ImGui::Button("-0.1 R")) { color.x = min(255.0f, max(0.0f, color.x - 0.1f)); valueChanged = true; }
+	//ImGui::SameLine();
+	//if (ImGui::Button("-0.1 G")) { color.y = min(255.0f, max(0.0f, color.y - 0.1f)); valueChanged = true; }
+	//ImGui::SameLine();
+	//if (ImGui::Button("-0.1 B")) { color.z = min(255.0f, max(0.0f, color.z - 0.1f)); valueChanged = true; }
+	//ImGui::SameLine();
+	//if (ImGui::Button("-0.05 A")) { color.w = min(30.0f, max(0.0f, color.w - 0.05f)); valueChanged = true; }
 
-	ImGui::End();
+	//ImGui::End();
 
 	m_pRenderInstance->Set_AuraColor(color);
 

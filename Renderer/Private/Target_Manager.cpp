@@ -181,7 +181,7 @@ HRESULT CTarget_Manager::Begin_MRT(const _wstring & strMRTTag, ID3D11DepthStenci
 	}
 
 	if(nullptr != pDSV)
-		m_pContext->ClearDepthStencilView(m_pOldDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+		m_pContext->ClearDepthStencilView(pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 
 	m_pContext->OMSetRenderTargets(iNumRTV, RenderTargets, nullptr == pDSV ? m_pOldDSV : pDSV);
 

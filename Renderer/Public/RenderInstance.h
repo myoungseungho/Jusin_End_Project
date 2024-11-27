@@ -80,7 +80,7 @@ public:/*For.Picking*/
 	_int Picked_Effect_Index();
 public: /* For.Renderer */
 	void Switch_BlackOut(_bool isTrue);
-	void Start_WhiteOut(_float2 vDir, _bool* isDone);
+	void Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed = 1.f);
 private:
 	class CRenderer*		m_pRenderer = { nullptr };
 	class CLobby_Renderer* m_pLobbyRenderer = { nullptr };

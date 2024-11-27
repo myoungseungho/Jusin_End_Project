@@ -598,6 +598,12 @@
     <ClCompile Include="..\private\Lobby_Party.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Party</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\VolcanoEF.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Shadow_Camera.cpp">
+      <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1242,9 +1248,6 @@
     <Filter Include="02.GameObjects\Character\Opening_Kririn">
       <UniqueIdentifier>{54d237cf-b1f7-4561-bc1f-bbd857ddda71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Character\Opening_Kririn\NewFilter1">
-      <UniqueIdentifier>{80313dcc-8072-42cb-b376-ba6c10c7a901}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_DisplayBoard">
       <UniqueIdentifier>{658be6e8-64f0-430c-b0da-8968bf14cd69}</UniqueIdentifier>
     </Filter>
@@ -1274,6 +1277,12 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_Party">
       <UniqueIdentifier>{884dbe24-1b94-47b1-aedc-f3e49511ca02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_EF">
+      <UniqueIdentifier>{29823397-505f-41e7-9739-bc7983735a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Shadow_Camera">
+      <UniqueIdentifier>{4b1b0465-8f4f-436c-9c9d-463ea58e0423}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2035,6 +2044,12 @@
     </ClInclude>
     <ClInclude Include="..\public\Lobby_Party.h">
       <Filter>02.GameObjects\Lobby\Lobby_Party</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VolcanoEF.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Shadow_Camera.h">
+      <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,7 @@ public:
 						/* 맵은 프리올리티로 바로 그릴것 디퍼드(빛연산)이 필요한 애들은 논블렌드 */
 
 	enum RENDERGROUP {
-		RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP, RG_MAP,
+		RG_PRIORITY, RG_NONBLEND_TEST, RG_NONBLEND_LAYER, RG_GLOW_PRI, RG_BLEND_PRI, RG_GLOW_STAR, RG_SPACEMAP, RG_MAP, RG_STAGE,
 		RG_PLAYER_METALLIC, RG_PLAYER_PART,
 		RG_NONBLEND, RG_PLAYER, RG_SHADOWOBJ, RG_BACKSIDE_EFFECT,
 		RG_NONLIGHT, RG_NONLIGHT_EFFECT, RG_GLOW, RG_BLEND, RG_UI, RG_UI_GLOW, RG_MULTY_GLOW,
@@ -92,6 +92,7 @@ private: /* For.BlackOut Variable */
 	const _float m_fBlackTime = { 0.8f };
 	
 private: /* For.WhiteOut Variable */
+	_float m_fWhiteSpeed = { 1.f };
 	_bool m_isStartWhiteOut = { false };
 	_bool m_isEndWhiteOut = { false };
 	_bool m_isMaintainWhite = { false };
@@ -102,6 +103,7 @@ private: /* For.WhiteOut Variable */
 	_float2 m_fSpriteSize = { 0.f,0.f };
 	_float2 m_fSpriteCurPos = { 0.f,0.f };
 	_float m_fSpriteAccTime = { 0.f };
+	_bool m_isSpriteEnd = { false };
 
 	_float2 m_vWhiteDir = { 1.f,0.f };
 	_bool* m_pDoneCheck = { nullptr };
@@ -137,6 +139,8 @@ private:
 	HRESULT Render_ShadowObj(_float fTimeDelta);
 	HRESULT Render_Glow_Priority(_float fTimeDelta);
 	HRESULT Render_Blend_Priority(_float fTimeDelta);
+	HRESULT Render_StageDepth(_float fTimeDelta);
+	HRESULT Render_StageDeferred(_float fTimeDelta);
 	HRESULT Render_Map(_float fTimeDelta);
 	HRESULT Render_NonBlend(_float fTimeDelta);
 	HRESULT Render_Player(_float fTimeDelta);
@@ -180,7 +184,7 @@ private:
 
 public:
 	void Switch_BlackOut(_bool isTrue);
-	void Start_WhiteOut(_float2 vDir, _bool* isDone);
+	void Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed);
 	void Switch_Test_PostProcess(_bool isTrue);
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
