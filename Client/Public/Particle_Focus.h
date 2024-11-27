@@ -9,12 +9,12 @@ END
 
 BEGIN(Client)
 
-class CParticle_Spread final : public CParticle
+class CParticle_Focus final : public CParticle
 {
 protected:
-	CParticle_Spread(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CParticle_Spread(const CParticle_Spread& Prototype);
-	virtual ~CParticle_Spread() = default;
+	CParticle_Focus(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CParticle_Focus(const CParticle_Focus& Prototype);
+	virtual ~CParticle_Focus() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -35,7 +35,7 @@ private:
 	CVIBuffer_Point_Instancing* m_pVIBufferCom = { nullptr };
 
 public:
-	static CParticle_Spread* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CParticle_Focus* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

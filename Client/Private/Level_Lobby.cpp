@@ -103,6 +103,10 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"), TEXT("Layer_Lobby_Ranking"))))
 		return E_FAIL;
 
+	//로비 스태프
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"))))
+		return E_FAIL;
+
 	//로비 파티
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
 	//	return E_FAIL;
@@ -244,6 +248,5 @@ CLevel_Lobby* CLevel_Lobby::Create(ID3D11Device* pDevice, ID3D11DeviceContext* p
 void CLevel_Lobby::Free()
 {
 	m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::LOBBY_BGM);
-	m_pRenderInstance->Clear_Light();
 	__super::Free();
 }

@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\Particle_Spread.h"
+#include "..\Public\Particle_Focus.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CParticle_Spread::CParticle_Spread(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CParticle_Focus::CParticle_Focus(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CParticle{ pDevice, pContext }
 {
 
 }
 
-CParticle_Spread::CParticle_Spread(const CParticle_Spread& Prototype)
+CParticle_Focus::CParticle_Focus(const CParticle_Focus& Prototype)
 	: CParticle{ Prototype }
 {
 
 }
 
-HRESULT CParticle_Spread::Initialize_Prototype()
+HRESULT CParticle_Focus::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CParticle_Spread::Initialize(void* pArg)
+HRESULT CParticle_Focus::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(nullptr)))
 		return E_FAIL;
@@ -36,22 +36,21 @@ HRESULT CParticle_Spread::Initialize(void* pArg)
 	m_iPassIndex = Desc->iPassIndex;
 	m_vColor = Desc->vColor;
 
-
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMVectorSet(0.f, 0.f, 0.f, 1.f));
 	return S_OK;
 }
 
-void CParticle_Spread::Camera_Update(_float fTimeDelta)
+void CParticle_Focus::Camera_Update(_float fTimeDelta)
 {
 
 }
 
-void CParticle_Spread::Update(_float fTimeDelta)
+void CParticle_Focus::Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
 
-	_bool isComplete = m_pVIBufferCom->Spread(fTimeDelta);
+	_bool isComplete = m_pVIBufferCom->FocusPoint(fTimeDelta);
 
 	if (isComplete)
 	{
@@ -60,7 +59,7 @@ void CParticle_Spread::Update(_float fTimeDelta)
 	}
 }
 
-void CParticle_Spread::Late_Update(_float fTimeDelta)
+void CParticle_Focus::Late_Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
@@ -72,7 +71,7 @@ void CParticle_Spread::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BACKSIDE_EFFECT, this, &tDesc);
 }
 
-HRESULT CParticle_Spread::Render(_float fTimeDelta)
+HRESULT CParticle_Focus::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -89,7 +88,7 @@ HRESULT CParticle_Spread::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CParticle_Spread::Set_Particle_Active(_bool isActive)
+void CParticle_Focus::Set_Particle_Active(_bool isActive)
 {
 	if (isActive == false)
 		m_pVIBufferCom->Particle_Initialize();
@@ -97,7 +96,7 @@ void CParticle_Spread::Set_Particle_Active(_bool isActive)
 	SetActive(isActive);
 }
 
-HRESULT CParticle_Spread::Ready_Components()
+HRESULT CParticle_Focus::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
@@ -105,14 +104,14 @@ HRESULT CParticle_Spread::Ready_Components()
 		return E_FAIL;
 
 	/* Com_VIBuffer */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Spread"),
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Frieza_FocusPoint"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CParticle_Spread::Bind_ShaderResources()
+HRESULT CParticle_Focus::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -138,33 +137,33 @@ HRESULT CParticle_Spread::Bind_ShaderResources()
 	return S_OK;
 }
 
-CParticle_Spread* CParticle_Spread::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CParticle_Focus* CParticle_Focus::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CParticle_Spread* pInstance = new CParticle_Spread(pDevice, pContext);
+	CParticle_Focus* pInstance = new CParticle_Focus(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CParticle_Spread"));
+		MSG_BOX(TEXT("Failed to Created : CParticle_Focus"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CParticle_Spread::Clone(void* pArg)
+CGameObject* CParticle_Focus::Clone(void* pArg)
 {
-	CParticle_Spread* pInstance = new CParticle_Spread(*this);
+	CParticle_Focus* pInstance = new CParticle_Focus(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CParticle_Spread"));
+		MSG_BOX(TEXT("Failed to Cloned : CParticle_Focus"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CParticle_Spread::Free()
+void CParticle_Focus::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);

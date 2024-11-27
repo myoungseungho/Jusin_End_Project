@@ -196,6 +196,7 @@
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\public\Loading_GodDragon.h" />
     <ClInclude Include="..\Public\Lobby_Arcade_Building.h" />
+    <ClInclude Include="..\public\Lobby_Staff.h" />
     <ClInclude Include="..\Public\Opening_Kririn.h" />
     <ClInclude Include="..\Public\Opening_Model.h" />
     <ClInclude Include="..\public\Lobby_Car.h" />
@@ -209,6 +210,7 @@
     <ClInclude Include="..\public\Lobby_Frieza.h" />
     <ClInclude Include="..\public\Lobby_Goku_RunEff.h" />
     <ClInclude Include="..\public\Lobby_Krillin.h" />
+    <ClInclude Include="..\Public\Particle_Focus.h" />
     <ClInclude Include="..\Public\Particle_Spread.h" />
     <ClInclude Include="..\Public\Particle.h" />
     <ClInclude Include="..\Public\Play_Frieza.h" />
@@ -443,6 +445,7 @@
     <ClCompile Include="..\Private\Line_Draw.cpp" />
     <ClCompile Include="..\private\Loading_GodDragon.cpp" />
     <ClCompile Include="..\Private\Lobby_Arcade_Building.cpp" />
+    <ClCompile Include="..\private\Lobby_Staff.cpp" />
     <ClCompile Include="..\Private\Opening_Kririn.cpp" />
     <ClCompile Include="..\Private\Opening_Model.cpp" />
     <ClCompile Include="..\private\Lobby_Car.cpp" />
@@ -456,6 +459,7 @@
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp" />
     <ClCompile Include="..\private\Lobby_Krillin.cpp" />
+    <ClCompile Include="..\Private\Particle_Focus.cpp" />
     <ClCompile Include="..\Private\Particle_Spread.cpp" />
     <ClCompile Include="..\Private\Play_Frieza.cpp" />
     <ClCompile Include="..\Private\Particle.cpp" />

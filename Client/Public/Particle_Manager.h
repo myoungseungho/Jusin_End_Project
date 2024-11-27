@@ -18,7 +18,8 @@ class CParticle_Manager : public CBase
 public:
 	enum PARTICLE_ID
 	{
-		HEAVY_ATTACK_PARTICLE,
+		FREIZA_ULTIMATE_3_PARTICLE,
+		FREIZA_ULTIMATE_1_PARTICLE,
 		PARTICLE_END
 	};
 
@@ -34,6 +35,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 
 	HRESULT Play(PARTICLE_ID eID, const _float3& vPosition);
+	void Stop(PARTICLE_ID eID);
 
 	CGameInstance* m_pGameInstance = { nullptr };
 

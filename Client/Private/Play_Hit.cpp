@@ -3396,6 +3396,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			
 			//Character_Make_Effect(TEXT("Hit_SDO-02"));
 			Character_Make_Effect(TEXT("Hit_SDO-02"),{0.f,0.6f});
+
+			Set_bAura(true);
 		}
 
 
@@ -3692,6 +3694,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == true)
 			{
 				Set_Animation(ANIME_IDLE);
+				Set_bAura(false);
 			}
 		}
 
@@ -3708,6 +3711,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_IDLE);
+				Set_bAura(false);
 			}
 		}
 
@@ -3731,6 +3735,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Character_Start_QTE(CQTE_Manager::QTE_ID_1P_SAME_GRAB);
 			}
+
+			Set_bAura(true);
 
 		}
 
@@ -3806,6 +3812,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_IDLE);
+				Set_bAura(false);
 
 				if (m_bCreateQTE)
 				{
@@ -3940,10 +3947,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+			if(m_bSparking == false)
+				Set_bAura(false);
+
 		}
 		else if (iAttackEvent == 6)
 		{
 
+			Set_bAura(false);
 
 			Set_Animation(ANIME_IDLE);
 		}

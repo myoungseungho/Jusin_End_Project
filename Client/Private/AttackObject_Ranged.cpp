@@ -128,7 +128,35 @@ void CAttackObject_Ranged::Update(_float fTimeDelta)
 			}
 			else
 			{
+				//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Smoke03_Stop"));
+				//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Smoke02_Small"));
+
 				//¸ÕÁö ÀÌÆåÆ®.
+				//Character_Make_Effect(TEXT("Smoke03_Stop"), { 4.f,0.f }, true);
+				//Character_Make_Effect(TEXT("Smoke02_Small"), { 2.7f,-0.3f }, true);
+
+
+
+				_float4x4 Result4x4;
+
+				_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+				_float3 fPos;
+				XMStoreFloat3(&fPos, vPos);
+				//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+				_matrix ovelapMatrix = XMMatrixScaling((_float)m_iDirection, 1.f, 1.f) * XMMatrixTranslation(fPos.x + (-0.3f * m_iDirection), fPos.y, 0.f);
+				XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = &Result4x4;
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Smoke03_Stop"), &tDesc);
+
+				_float4x4 Result4x4_2;
+				ovelapMatrix = XMMatrixScaling((_float)m_iDirection, 1.f, 1.f) * XMMatrixTranslation(fPos.x + (-0.3f * m_iDirection), fPos.y-0.3f, 0.f);
+				XMStoreFloat4x4(&Result4x4_2, ovelapMatrix);
+				tDesc.pPlayertMatrix = &Result4x4_2;
+				CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Smoke02_Small"), &tDesc);
+
+
+
 			}
 		}
 
