@@ -14,15 +14,30 @@ CParticle_Manager::CParticle_Manager()
 HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CParticle* pParticle = nullptr;
+	CParticle::PARTICLE_DESC Desc{};
 
 	// 각 파티클 타입별로 최소 3개의 파티클 객체를 미리 생성하여 풀에 추가
 	for (int i = 0; i < 3; ++i)
 	{
-		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Focus")));
+		//프리저 1필
+		Desc.fXScale = 7.f;
+		Desc.fYScale = 0.5f;
+		Desc.fGlowFactor = 15.f;
+		Desc.iPassIndex = 2;
+		Desc.vColor = _float4(0.4f, 0.f, 1.f, 1.0f);
+
+		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Focus"), &Desc));
 		pParticle->Set_Particle_Active(false);
 		m_ParticlePools[FREIZA_ULTIMATE_1_PARTICLE].push_back(pParticle);
 
-		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
+		//프리저 3필
+		Desc.fXScale = 7.f;
+		Desc.fYScale = 0.5f;
+		Desc.fGlowFactor = 15.f;
+		Desc.iPassIndex = 2;
+		Desc.vColor = _float4(0.4f, 0.f, 1.f, 1.0f);
+
+		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread"), &Desc));
 		pParticle->Set_Particle_Active(false);
 		m_ParticlePools[FREIZA_ULTIMATE_3_PARTICLE].push_back(pParticle);
 	}

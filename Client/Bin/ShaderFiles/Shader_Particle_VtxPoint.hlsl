@@ -8,8 +8,8 @@ float4 g_vCamPosition;
 float g_Time;
 float g_MaxTime;
 
-float xScale = 7.f;
-float yScale = 0.5f;
+float g_ScaleX = 7.f;
+float g_ScaleY = 0.5f;
 
 struct VS_IN
 {
@@ -136,8 +136,8 @@ void GS_MAIN_NOTBillBoard(point GS_IN In[1], inout TriangleStream<GS_OUT> Vertex
     float3 vPerp = normalize(cross(worldUp, vDir));
 
     // 스케일링 팩터 적용
-    float lengthDir = xScale * In[0].vPSize.x;
-    float lengthPerp = yScale * In[0].vPSize.y;
+    float lengthDir = g_ScaleX * In[0].vPSize.x;
+    float lengthPerp = g_ScaleY * In[0].vPSize.y;
 
     // 중심 위치
     float3 center = In[0].vPosition.xyz;

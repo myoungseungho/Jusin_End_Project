@@ -3281,9 +3281,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-01"));
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-01"));
-
-
-		
+			
 		}
 
 		//ÁØºñ?
@@ -3293,7 +3291,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-02"));
 
 			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.5f, 0.f, 0.f));
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
 			_float3 resultFloat3{};
 			XMStoreFloat3(&resultFloat3, resultPosition);
 			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_3_PARTICLE, resultFloat3);

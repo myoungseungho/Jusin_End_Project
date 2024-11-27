@@ -7,11 +7,14 @@ BEGIN(Client)
 
 class CParticle : public CGameObject
 {
+public:
 	struct PARTICLE_DESC
 	{
 		_float4 vColor{};
-		_uint passIndex{};
-		_float glowFactor{};
+		_uint iPassIndex{};
+		_float fGlowFactor{};
+		_float fXScale{};
+		_float fYScale{};
 	};
 
 protected:
@@ -29,6 +32,14 @@ public:
 
 	void Set_Position(_float3 position);
 	virtual void Set_Particle_Active(_bool isActive);
+
+protected:
+	_float m_fParticle_XScale = {};
+	_float m_fParticle_YScale = {};
+	_float m_fGlow_Factor = {};
+	_uint m_iPassIndex = {};
+	_float4 m_vColor = {};
+
 public:
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
