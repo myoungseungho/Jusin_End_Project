@@ -154,10 +154,17 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
-	LightDesc.vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
+	//LightDesc.vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
+	LightDesc.vAuraColor = _float4(0.f,0.f,0.f,0.f);
+
+	m_fAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
 
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(1.5f, 1.4f, 1.17647f, 1.f), &m_bChase)))
 		return E_FAIL;
+
+
+	LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+	pLight_Desc->vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
 
 	/*
 	빛 각자 생성해주기
@@ -187,6 +194,10 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	MoveCommandPatternsFunction.push_back({ Command_236Attack,  bind(&CGoku_MeleeAttack::Attack_236, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_236Attack_Extra,  bind(&CGoku_MeleeAttack::Attack_236, &m_tAttackMap) });
+
+	MoveCommandPatternsFunction.push_back({ Command_236Attack_Heavy,  bind(&CGoku_MeleeAttack::Attack_236_Heavy, &m_tAttackMap) });
+	MoveCommandPatternsFunction.push_back({ Command_236Attack_Heavy_Extra,  bind(&CGoku_MeleeAttack::Attack_236_Heavy, &m_tAttackMap) });
+
 
 	MoveCommandPatternsFunction.push_back({ Command_214Attack,  bind(&CGoku_MeleeAttack::Attack_214, &m_tAttackMap) });
 	MoveCommandPatternsFunction.push_back({ Command_214Attack_Extra,  bind(&CGoku_MeleeAttack::Attack_214, &m_tAttackMap) });
@@ -262,6 +273,13 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 		m_bNormalGoku = false;
 	}
 
+	//Set_bAura(false);
+	{	
+	LIGHT_DESC* pLight_DescTemp = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+	pLight_DescTemp->vAuraColor = m_fAuraColor;
+	m_bAura = true;
+	}
+
 	return S_OK;
 }
 
@@ -276,7 +294,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	return;
 	//}
 
-	cout << m_pModelCom->m_fCurrentAnimPosition << endl;
+	//cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
 	Update_Tag_In(fTimeDelta);
 
@@ -320,22 +338,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			}
 			_uint iAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
 
-			//if (m_bMotionPlaying == false)
-			//{
-			//	
-			//	//if (iAnimationIndex == m_iDyingStandingAnimationIndex || iAnimationIndex == m_iBound_Ground)
-			//	//{
-			//	//	m_fAccDyingTime += fTimeDelta;
-			//	//	if (m_fAccDyingTime > 2.f)
-			//	//	{
-			//	//		CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-			//	//		//Tag_In(m_ePlayerSlot);
-			//	//	}
-			//	//}
-			//
-			//	
-			//
-			//}
+			
 
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
@@ -746,11 +749,15 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 		m_iDebugComoboDamage = 0;
 
 		m_iHP = 10000;
+
+		Set_bAura(true);
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
 		m_iHP = 100;
+		Set_bAura(false);
+
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
@@ -785,6 +792,10 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 {
 	if (m_bInvisible == true)
 		return S_OK;
+
+
+	if (m_bAlwaysss3Test)
+		Set_bAura(true);
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -2034,7 +2045,19 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236:
 	{
-		
+		//강공격 버전용 
+		if (iAttackEvent == 0)
+		{
+			if (m_bHeavySkill)
+			{
+				Set_AnimationStop(0.1f);
+				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+				m_bInvisible = false;
+			}
+		}
+		 
+		else if (iAttackEvent == 1)
+		{
 			CAttackObject::ATTACK_DESC Desc{};
 			//Desc.ColliderDesc.width = 1.0;
 			//Desc.ColliderDesc.height = 1.3;
@@ -2063,13 +2086,24 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 10;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
-		
+		}
 	}
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_AIR:
 	{
 
-	
+		//강공격 버전용
+		if (iAttackEvent == 20)
+		{
+			if(m_bHeavySkill)
+			{
+				Set_AnimationStop(0.1f);
+				Character_Create_Distortion({ 0.f,1.f,0.f, }, { 0.f,0.f });
+				m_bInvisible = false;
+			}
+			//Set_bInivisible(false);
+		}
+
 		if(iAttackEvent == 0)
 		{
 
@@ -2205,7 +2239,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bUltimateKamehameha)
 			{
 				m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
-
+				Set_bAura(true);
 
 				//Set_AnimationStopWithoutMe(2.f);
 				//
@@ -2257,14 +2291,14 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Fire_SFX, false, 1.f);
 		}
-		else
+		else if (iAttackEvent == 1)
 		{
 
 			Add_BlueLight();
 
 			if (m_bUltimateKamehameha)
 			{
-
+				Set_bAura(true);
 				//attack obejct이던 시절 백업
 
 				//CAttackObject::ATTACK_DESC Desc{};
@@ -2423,7 +2457,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			}
 		}
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
+		}
 	}
+	
+
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE:
 
@@ -2432,7 +2472,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_bUltimateKamehameha)
 			{
-
+				Set_bAura(true);
 				_float fStopTime = 1.8f;
 
 				Set_AnimationStopWithoutMe(fStopTime);
@@ -2460,7 +2500,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_bUltimateKamehameha)
 			{
-
+				Set_bAura(true);
 				CAttackObject_Energy::ATTACK_RANGED_DESC Desc{};
 				if (m_iPlayerTeam == 1)
 					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack;
@@ -2574,6 +2614,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 
 		}
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
+		}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR:
 		if (iAttackEvent == 0)
@@ -2617,7 +2661,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		}
-		else
+		else if (iAttackEvent == 1)
 		{
 
 			Add_BlueLight();
@@ -2719,6 +2763,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Character_Make_Effect(TEXT("Energie-02"), { 0.7f,1.1f });
 				Character_Make_Effect(TEXT("Energie-03"), { 0.7f,1.1f });
 			}
+		}
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
 		}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE:
@@ -2862,7 +2910,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Character_Make_Effect(TEXT("Energie-03_Down"), { 0.f,0.7f });
 			}
 		}
-
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
+		}
 		break;
 	case Client::CPlay_Goku::ANIME_FINAL_START:
 	{
@@ -2873,6 +2924,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Character_Start_QTE(CQTE_Manager::QTE_ID_HIT);
 			}
+
+			Set_bAura(true);
 		}
 
 	}
@@ -2941,6 +2994,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//못맞추면 여기로 옴
 			if (iAttackEvent == 1)
 			{
+				Set_bAura(false);
 
 				//cout << "FINAL_ELBO_FAIL" << endl;
 
@@ -3222,6 +3276,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_iQTE = -1;
 			m_bFinalSkillss3 = false;
+
+
+			if(m_bAlwaysss3Test == false)
+				Set_bAura(false);
+
+
 		}
 
 	}
@@ -3512,6 +3572,7 @@ void CPlay_Goku::Play_Sound_Stop(_uint SoundName)
 void CPlay_Goku::Set_UltimateKamehameha(_bool bUltimate)
 {
 	m_bUltimateKamehameha = bUltimate;
+	
 }
 
 void CPlay_Goku::Add_YellowLight()
