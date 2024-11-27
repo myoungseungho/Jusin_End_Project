@@ -35,6 +35,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 
 	HRESULT Play(PARTICLE_ID eID, const _float3& vPosition);
+	void Stop(PARTICLE_ID eID);
 
 	CGameInstance* m_pGameInstance = { nullptr };
 

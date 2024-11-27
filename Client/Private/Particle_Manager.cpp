@@ -117,6 +117,17 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _float3& vPosition)
 	return S_OK;
 }
 
+void CParticle_Manager::Stop(PARTICLE_ID eID)
+{
+	auto& pool = m_ParticlePools[eID];
+
+	for (auto& iter : pool)
+	{
+		if (iter->IsActive())
+			iter->Set_Particle_Active(false);
+	}
+}
+
 
 void CParticle_Manager::Free()
 {

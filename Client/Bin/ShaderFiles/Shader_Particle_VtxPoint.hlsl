@@ -133,7 +133,7 @@ void GS_MAIN_NOTBillBoard(point GS_IN In[1], inout TriangleStream<GS_OUT> Vertex
     float3 vPerp = normalize(cross(worldUp, vDir));
 
     // 스케일링 팩터 적용
-    float lengthDir = 5.0f * In[0].vPSize.x;
+    float lengthDir = 10.0f * In[0].vPSize.x;
     float lengthPerp = 1.0f * In[0].vPSize.y;
 
     // 중심 위치

@@ -87,12 +87,15 @@ HRESULT CVIBuffer_Point_Instancing::Initialize_Prototype(const CVIBuffer_Instanc
 			Get_Random(pInitialDesc->vCenter.z - pInitialDesc->vRange.z * 0.5f, pInitialDesc->vCenter.z + pInitialDesc->vRange.z * 0.5f),
 			1.f);
 		m_pInstanceVertices[i].vLifeTime.x = Get_Random(pInitialDesc->vLifeTime.x, pInitialDesc->vLifeTime.y);
+		m_pInstanceVertices[i].vLifeTime.y = -RandomBetween(0.f, m_pInstanceVertices[i].vLifeTime.x);
 		m_pInstanceVertices[i].vMoveDir = _float3(0.f, 0.f, 0.f);
 	}
 #pragma endregion
 
 	return S_OK;
 }
+
+
 
 HRESULT CVIBuffer_Point_Instancing::Initialize(void * pArg)
 {
