@@ -42,7 +42,7 @@ HRESULT CLobby_Goku::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_Scaled(10.f, 10.f, 10.f);
+	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
 	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, 0.f));
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(1, true, 0.1f);
@@ -141,8 +141,7 @@ void CLobby_Goku::Update(_float fTimeDelta)
 
 void CLobby_Goku::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_NONBLEND, this);
-	m_pRenderInstance->Add_LobbyRenderObject(CLobby_Renderer::RG_SHADOWOBJ, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
 }
 
 HRESULT CLobby_Goku::Render(_float fTimeDelta)
@@ -165,7 +164,7 @@ HRESULT CLobby_Goku::Render(_float fTimeDelta)
 		if (FAILED(m_pModelCom->Bind_BoneMatrices(m_pShaderCom, "g_BoneMatrices", i)))
 			return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Begin(m_iPassIndex)))
+		if (FAILED(m_pShaderCom->Begin(3)))
 			return E_FAIL;
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -195,41 +194,13 @@ HRESULT CLobby_Goku::Bind_ShaderResources()
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
 
-	if (false == m_isShadow)
-	{
-		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
-			return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
+		return E_FAIL;
 
-		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
-			return E_FAIL;
-
-		m_isShadow = true;
-		m_iPassIndex = 3;
-	}
-
-	else
-	{
-		_float4x4			LightViewMatrix, LightProjMatrix;
-
-		XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 100.f, 0.f, 1.f), XMVectorSet(0.f, -1.f, 0.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
-		XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f), (_float)g_iWinSizeX / g_iWinSizeY, 0.1f, 1000.f));
-
-		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &LightViewMatrix)))
-			return E_FAIL;
-
-		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &LightProjMatrix)))
-			return E_FAIL;
-
-		//if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_VIEW))))
-		//	return E_FAIL;
-
-		//if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
-		//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_pGameInstance->Get_Transform_Float4x4(CPipeLine::D3DTS_PROJ))))
+		return E_FAIL;
 
 
-		m_isShadow = false;
-		m_iPassIndex = 2;
-	}
 	return S_OK;
 }
 
