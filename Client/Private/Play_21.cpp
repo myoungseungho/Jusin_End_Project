@@ -178,9 +178,14 @@ HRESULT CPlay_21::Initialize(void* pArg)
 	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.0f, 1.0f);
 	LightDesc.vAmbient = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vSpecular = _float4(0.f, 0.f, 0.f, 1.f);
-	LightDesc.vAuraColor = _float4(4.073, 1.887, 5.265, 4.285);
+	//LightDesc.vAuraColor = _float4(4.073, 1.887, 5.265, 4.285);
 	LightDesc.pPlayerDirection = &m_iLookDirection;
 	LightDesc.strName = m_strName;
+
+	LightDesc.vAuraColor = _float4(0.f, 0.f, 0.f, 0.f);
+	m_fAuraColor = _float4(4.073, 1.887, 5.265, 4.285);
+
+
 
 	if (FAILED(m_pRenderInstance->Add_Player_Light(m_strName, LightDesc, _float4(2.f, 1.10196f, 1.73333f, 1.f), &m_bChase)))
 		return E_FAIL;
@@ -1915,7 +1920,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.pOwner = this;
 
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
-			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
+			//Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
+			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.4f };
+
 			Desc.iDirection = m_iLookDirection;
 			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
 
@@ -2104,8 +2111,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Melee_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
 			Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.8f,0.f };
-			Desc.ColliderDesc.vExtents = { 0.6f,0.5f,0.2f };
 
+			if(m_bAttackBackEvent == true)
+				Desc.ColliderDesc.vExtents = { 1.0f,0.5f,0.2f };
+			else
+				Desc.ColliderDesc.vExtents = { 0.6f,0.5f,0.2f };
 
 			Desc.fhitCharacter_Impus = { m_iLookDirection * 1.5f, 0.2f };
 			//Desc.fhitCharacter_StunTime = 0.1f;	
@@ -2630,7 +2640,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			else
 			{
 				Desc.iGainAttackStep = 0;
-				Desc.iDamage = 150 * Get_DamageScale(true);;
+				Desc.iDamage = 200 * Get_DamageScale(true);
 				Desc.fDistance = { 100.f,0.f };
 
 				//적 카메라로 순간적으로 올라가야함
@@ -2787,7 +2797,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.fhitCharacter_StunTime = 0.6f;
 			Desc.fhitCharacter_StunTime = 50.f;
 
-			Desc.iDamage = 800 * Get_DamageScale();
+			Desc.iDamage = 800 * Get_DamageScale(true);
 			Desc.fLifeTime = 0.1f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_SPIN_AWAY_LEFTUP };
 			Desc.iTeam = m_iPlayerTeam;
@@ -2893,7 +2903,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.fhitCharacter_StunTime = 50.f;	//일단잡기마냥 땅에 닿아야 풀리는 느낌 + 추가타로 풀어버리는 느낌
 
 
-				Desc.iDamage = 100 * Get_DamageScale();
+				Desc.iDamage = 500 * Get_DamageScale(true);
 				//Desc.fLifeTime = 0.3f;  //어쩌지 현재높이로부 -13/s로 움직였을때 땅에 닿을때까지의 시간 
 				Desc.fLifeTime = Get_fHeight() / 13.f;
 
@@ -2911,6 +2921,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.fForcedGravityTime = 0.15f;
 				Desc.bGrabbedEnd = true;
 				//Desc.bHitNoGravity = true;
+				
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
@@ -3080,7 +3091,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//EAST_SPHERE
 
-			if (m_pEnemy->Get_iHP() < 2200 * Get_DamageScale(true))
+			if (m_pEnemy->Get_iHP() < 3500 * Get_DamageScale(true))
 			{
 				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE, 1.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
@@ -3154,7 +3165,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fhitCharacter_Impus = { 0.f,-15.f };
 			Desc.fhitCharacter_StunTime = 2.0f;
-			Desc.iDamage = 2200 * Get_DamageScale(true);
+			//Desc.iDamage = 2200 * Get_DamageScale(true);
+			Desc.iDamage = 3500 * Get_DamageScale(true);
+
 			Desc.fLifeTime = 0.2f;
 			Desc.ihitCharacter_Motion = { HitMotion::HIT_HEAVY_DOWN };
 			Desc.bGroundSmash = true;

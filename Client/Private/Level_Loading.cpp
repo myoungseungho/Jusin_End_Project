@@ -331,4 +331,5 @@ void CLevel_Loading::Free()
 
 	m_pRenderInstance->BGLight_Pop_Front();
 	Safe_Release(m_pLoader);
+
 }

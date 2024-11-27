@@ -126,7 +126,7 @@ private: /* For.Distortion Variable */
 
 	_float m_fAuraAccTime = { 0.f };
 	_float m_fAccTime = { 0.f };
-
+	_uint m_iRenderPlayerCount = { 0 };
 	
 	_bool m_isFriezaRender = { false };
 	MAP_TYPE m_eCurMapType = { MAP_SPACE };
