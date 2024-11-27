@@ -2428,7 +2428,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		if (m_fAccRockTime >= 0.5f && m_isMaintainWhite == false && m_isEndWhiteOut == false)
 			m_isStartWhiteOut = true;
 
-		if (m_fAccRockTime >= 3.f || m_isSpriteEnd == true)
+		if (m_isSpriteEnd == true)
 		{
 			m_fAccWhiteTime = 2.f;
 			m_isMaintainWhite = false;
@@ -2445,7 +2445,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		m_fAccWhiteTime += fTimeDelta * m_fWhiteSpeed;
 		//m_fAccWhiteTime += fTimeDelta;
 		
-		if (m_fAccWhiteTime >= 2.5f || m_isSpriteEnd == true)
+		if (m_fAccWhiteTime >= 2.5f)
 		{
 			m_fAccWhiteTime = 2.5f;
 			m_isMaintainWhite = true;
