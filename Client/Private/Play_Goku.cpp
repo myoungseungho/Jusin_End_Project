@@ -33,7 +33,6 @@
 
 #include "Map_Manager.h"
 
->>>>>>> 593e1ec56c0dbe38a1f6b95ae76bcd6a555d01a7
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
