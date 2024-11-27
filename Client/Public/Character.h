@@ -24,6 +24,10 @@ public:
 
 	static vector<CInput> Command_236Attack;
 	static vector<CInput> Command_236Attack_Extra;
+
+	static vector<CInput> Command_236Attack_Heavy;
+	static vector<CInput> Command_236Attack_Heavy_Extra;
+
 	static vector<CInput> Command_214Attack;
 	static vector<CInput> Command_214Attack_Extra;
 	static vector<CInput> Command_236Special;
@@ -275,6 +279,7 @@ public:
 	void Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime = 0.2f);
 
 
+	_uint Get_iHP();
 
 	//공격 관련
 	void Gain_AttackStep(_ushort iStep);// 
@@ -357,6 +362,12 @@ public:
 
 	void Update_Dying(_float fTimeDelta);
 	_bool Get_bDying();
+	void Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex);
+	_bool m_bFinalSkillRoundEnd = false;
+	_float m_fMaxDyingTime = { 5.f };
+
+	void Set_UnDying(_bool bNoneDying) {m_bUnDying = bNoneDying;};
+	_bool m_bUnDying = false;
 
 	void Play_WinAnimation();
 	void Play_NewRound_Loser();
@@ -393,6 +404,15 @@ public:
 
 
 	virtual void Character_CinematicEnd() {};
+
+
+	void Set_bHeavySkill(_bool bHeavySkill);
+	_bool m_bHeavySkill = { false };
+
+	_float4 m_fAuraColor = {};
+	_bool m_bAura = false;
+	void Set_bAura(_bool bAura);
+
 protected:
 
 	void Reset_AttackStep();
@@ -414,6 +434,8 @@ protected:
 	_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false);
 	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float fYRotation =1000.f);
 	//_float4x4 Character_Make_Matrix(_float2 fOffset = { 0,0 }, _bool bFlipDirection = false, _float3 fScale ={1.f,1.f,1.f});
+
+
 
 public:
 	void		Character_Make_BoneEffect_Offset(char* BoneName, _wstring strEffectName, _float2 fOffset = { 0.f,0.f }, _bool bFlipDirection = false);

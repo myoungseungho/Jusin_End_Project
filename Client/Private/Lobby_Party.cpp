@@ -29,9 +29,9 @@ HRESULT CLobby_Party::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(-47.253f, 2.446f, 47.200f));
-	m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(132.f));
-	m_pTransformCom->Set_Scaled(2.5f, 2.5f, 2.5f);
+	m_pTransformCom->Set_State_Position(_float3(-41.535f, 2.046f, 41.200f));
+	m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(-180.191f));
+	m_pTransformCom->Set_Scaled(1.5f, 1.5f, 1.5f);
 
 	return S_OK;
 }
@@ -145,6 +145,10 @@ HRESULT CLobby_Party::Ready_Components()
 		TEXT("Com_WaterSurTex"), reinterpret_cast<CComponent**>(&m_pWaterSur))))
 		return E_FAIL;
 
+	/* Com_WaterLightTex */
+	if (FAILED(__super::Add_Component(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_lob_PWaterLight"),
+		TEXT("Com_WaterLightTex"), reinterpret_cast<CComponent**>(&m_pWaterLight))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -165,6 +169,11 @@ HRESULT CLobby_Party::Bind_ShaderResources()
 
 	if (FAILED(m_pWaterSur->Bind_ShaderResource(m_pShaderCom, "g_SurfaceTexture", 0)))
 		return E_FAIL;
+
+	if (FAILED(m_pWaterLight->Bind_ShaderResource(m_pShaderCom, "g_LightTexture", 0)))
+		return E_FAIL;
+
+	//Prototype_Component_Texture_Lobby_lob_PWaterLight
 
 	return S_OK;
 }
@@ -204,6 +213,7 @@ void CLobby_Party::Free()
 		Safe_Release(m_pDiffTexture[i]);
 
 	Safe_Release(m_pWaterSur);
+	Safe_Release(m_pWaterLight);
 
 	__super::Free();
 }

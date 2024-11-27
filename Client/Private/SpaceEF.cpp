@@ -79,7 +79,9 @@ HRESULT CSpaceEF::Render(_float fTimeDelta)
 
 		if (FAILED(m_pTextureCom_Diffuse->Bind_ShaderResource(m_pShaderCom, "g_EastGlowTexture", 0)))
 			return E_FAIL;
-
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_EastColor", &m_vEastColor, sizeof(_float3))))
+			return E_FAIL;
+		
 		if (FAILED(m_pShaderCom->Begin(15)))
 			return E_FAIL;
 

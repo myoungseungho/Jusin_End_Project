@@ -31,6 +31,7 @@ private:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pDiffTexture[8] = {nullptr};
 	CTexture* m_pWaterSur = { nullptr };
+	CTexture* m_pWaterLight = { nullptr };
 
 private:
 	_uint m_iShaderIndex = { 0 };

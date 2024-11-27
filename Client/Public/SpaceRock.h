@@ -26,9 +26,12 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	_bool m_isBreakRock[3] = { false,false,false };
 private:
 	CShader*				m_pShaderCom = { nullptr };
 	CModel*					m_pModelCom[3] = { nullptr,nullptr ,nullptr };
+	CModel* m_pBRModelCom[3] = { nullptr,nullptr ,nullptr };
+	//_bool m_isBreakRock[3] = { true,true,true };
 
 private:
 	HRESULT Ready_Components();

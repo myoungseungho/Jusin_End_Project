@@ -24,9 +24,9 @@ HRESULT CRenderInstance::Initialize_Engine(HWND hWnd, _bool isWindowed, _uint iN
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
-	/*m_pLobbyRenderer = CLobby_Renderer::Create(*ppDevice, *ppContext);
-	if (nullptr == m_pLobbyRenderer)
-		return E_FAIL;*/
+	//m_pLobbyRenderer = CLobby_Renderer::Create(*ppDevice, *ppContext);
+	//if (nullptr == m_pLobbyRenderer)
+	//	return E_FAIL;
 
 	m_pPicking = CPicking::Create(*ppDevice, *ppContext, hWnd);
 	if (nullptr == m_pPicking)
@@ -40,11 +40,12 @@ HRESULT CRenderInstance::Render_Engine(_float fTimeDelta)
 	/* 엔진에서 관리하는 객체들 중, 반복적인 렌더가 필요한 객체들이 있다면. */
 	/* 여기에서 렌더를 수행해준다. */
 
+	if (FAILED(m_pRenderer->Draw(fTimeDelta)))
+		return E_FAIL;
+
 	//if (FAILED(m_pLobbyRenderer->Draw(fTimeDelta)))
 	//	return E_FAIL;
 
-	if (FAILED(m_pRenderer->Draw(fTimeDelta)))
-		return E_FAIL;
 
 
 	return S_OK;
@@ -259,6 +260,11 @@ HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CS
 	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName, fTimeDelta);
 }
 
+void CRenderInstance::Clear_Light()
+{
+	m_pLight_Manager->Clear_Light();
+}
+
 _float4 CRenderInstance::Picked_Position(_bool* pPicked)
 {
 	return m_pPicking->Picked_Position(pPicked);
@@ -274,9 +280,9 @@ void CRenderInstance::Switch_BlackOut(_bool isTrue)
 	m_pRenderer->Switch_BlackOut(isTrue);
 }
 
-void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone)
+void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)
 {
-	m_pRenderer->Start_WhiteOut(vDir, isDone);
+	m_pRenderer->Start_WhiteOut(vDir, isDone, fWhiteSpeed);
 }
 
 

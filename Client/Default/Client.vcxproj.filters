@@ -601,6 +601,15 @@
     <ClCompile Include="..\Private\Particle_Focus.cpp">
       <Filter>02.GameObjects\Particle\Particle_Focus</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\VolcanoEF.cpp">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Shadow_Camera.cpp">
+      <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Staff.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1245,9 +1254,6 @@
     <Filter Include="02.GameObjects\Character\Opening_Kririn">
       <UniqueIdentifier>{54d237cf-b1f7-4561-bc1f-bbd857ddda71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Character\Opening_Kririn\NewFilter1">
-      <UniqueIdentifier>{80313dcc-8072-42cb-b376-ba6c10c7a901}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_DisplayBoard">
       <UniqueIdentifier>{658be6e8-64f0-430c-b0da-8968bf14cd69}</UniqueIdentifier>
     </Filter>
@@ -1280,6 +1286,15 @@
     </Filter>
     <Filter Include="02.GameObjects\Particle\Particle_Focus">
       <UniqueIdentifier>{c47f94cd-eb5b-47e3-95d2-1983d10af501}</UniqueIdentifier>
+  </Filter>
+    <Filter Include="02.GameObjects\Map\Volcano\Volcano_EF">
+      <UniqueIdentifier>{29823397-505f-41e7-9739-bc7983735a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Shadow_Camera">
+      <UniqueIdentifier>{4b1b0465-8f4f-436c-9c9d-463ea58e0423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff">
+      <UniqueIdentifier>{0737dce8-dcf9-411a-8eec-89d46acf55f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2044,6 +2059,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\Particle_Focus.h">
       <Filter>02.GameObjects\Particle\Particle_Focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VolcanoEF.h">
+      <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Shadow_Camera.h">
+      <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Staff.h">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

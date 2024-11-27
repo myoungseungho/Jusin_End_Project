@@ -223,6 +223,48 @@ void GS_QTE_PARTICLE(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStrea
 }
 
 
+[maxvertexcount(20)]
+void GS_DUST(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
+{
+    GS_OUT Out[4];
+
+    float3 vLook, vRight, vUp;
+    vLook = g_vCamPosition.xyz - In[0].vPosition.xyz;
+    vRight = normalize(cross(float3(0.f, 1.f, 0.f), vLook)) * In[0].vPSize.x * 0.5f;
+    vUp = normalize(cross(vLook, vRight)) * In[0].vPSize.y * 0.5f;
+
+    matrix matVP = mul(g_ViewMatrix, g_ProjMatrix);
+    Out[0].vPosition = vector(In[0].vPosition.xyz - vRight + vUp, 1.f);
+    Out[0].vTexcoord = float2(0.f, 0.f);
+    Out[0].vPosition = mul(Out[0].vPosition, matVP);
+    Out[0].vLifeTime = In[0].vLifeTime;
+
+    Out[1].vPosition = vector(In[0].vPosition.xyz + vRight + vUp, 1.f);
+    Out[1].vTexcoord = float2(1.f, 0.f);
+    Out[1].vPosition = mul(Out[1].vPosition, matVP);
+    Out[1].vLifeTime = In[0].vLifeTime;
+
+    Out[2].vPosition = vector(In[0].vPosition.xyz + vRight - vUp, 1.f);
+    Out[2].vTexcoord = float2(1.f, 1.f);
+    Out[2].vPosition = mul(Out[2].vPosition, matVP);
+    Out[2].vLifeTime = In[0].vLifeTime;
+
+    Out[3].vPosition = vector(In[0].vPosition.xyz - vRight - vUp, 1.f);
+    Out[3].vTexcoord = float2(0.f, 1.f);
+    Out[3].vPosition = mul(Out[3].vPosition, matVP);
+    Out[3].vLifeTime = In[0].vLifeTime;
+	
+    VertexStream.Append(Out[0]);
+    VertexStream.Append(Out[1]);
+    VertexStream.Append(Out[2]);
+    VertexStream.RestartStrip();
+
+    VertexStream.Append(Out[0]);
+    VertexStream.Append(Out[2]);
+    VertexStream.Append(Out[3]);
+    VertexStream.RestartStrip();
+}
+
 
 struct PS_IN
 {
@@ -328,7 +370,7 @@ technique11 DefaultTechnique
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
 
         VertexShader = compile vs_5_0 VS_MAIN();
-        GeometryShader = compile gs_5_0 GS_MAIN();
+        GeometryShader = compile gs_5_0 GS_DUST();
         HullShader = NULL;
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_RUN_DUST();

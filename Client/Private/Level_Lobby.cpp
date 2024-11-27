@@ -96,16 +96,20 @@ HRESULT CLevel_Lobby::Initialize()
 		return E_FAIL;
 
 	//로비 깃발
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"))))
+		return E_FAIL;
 
 	//로비 랭킹
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"), TEXT("Layer_Lobby_Ranking"))))
 		return E_FAIL;
 
-	//로비 파티
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
+	//로비 스태프
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"))))
 		return E_FAIL;
+
+	//로비 파티
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
+	//	return E_FAIL;
 
 	//로비 구름
 	//CLobby_Cloud::CLOUD_DESC tCloudDesc = {};
@@ -172,39 +176,18 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
 
-	//LIGHT_DESC			LightDesc{};
 
-	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
-	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
-	LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);
-	LightDesc.vDiffuse = _float4(0.6f, 0.6f, 0.6f, 1.f);
-	LightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
-	LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
 
-	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
-		return E_FAIL;
-
-	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
-	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
-	LightDesc.vPosition = _float4(10.f, 5.f, 10.f, 1.f);
-	LightDesc.fRange = 10.f;
-	LightDesc.vDiffuse = _float4(1.f, 0.0f, 0.f, 1.f);
-	LightDesc.vAmbient = _float4(0.3f, 0.f, 0.f, 1.f);
-	LightDesc.vSpecular = _float4(1.f, 0.f, 0.f, 1.f);
-
-	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
-		return E_FAIL;
-
-	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
-	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
-	LightDesc.vPosition = _float4(20.f, 5.f, 10.f, 1.f);
-	LightDesc.fRange = 10.f;
-	LightDesc.vDiffuse = _float4(0.0f, 1.f, 0.f, 1.f);
-	LightDesc.vAmbient = _float4(0.f, 0.3f, 0.f, 1.f);
-	LightDesc.vSpecular = _float4(0.f, 1.f, 0.f, 1.f);
-
-	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
-		return E_FAIL;
+	//ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
+	//LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	//LightDesc.vPosition = _float4(20.f, 50.f, 10.f, 1.f);
+	//LightDesc.fRange = 100000.f;
+	//LightDesc.vDiffuse = _float4(1.0f, 1.f, 0.f, 1.f);
+	//LightDesc.vAmbient = _float4(0.3f, 0.3f, 0.3f, 1.f);
+	//LightDesc.vSpecular = _float4(0.f, 1.f, 0.f, 1.f);
+	//
+	//if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+	//	return E_FAIL;
 #pragma endregion
 
 
@@ -265,6 +248,5 @@ CLevel_Lobby* CLevel_Lobby::Create(ID3D11Device* pDevice, ID3D11DeviceContext* p
 void CLevel_Lobby::Free()
 {
 	m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::LOBBY_BGM);
-
 	__super::Free();
 }

@@ -39,6 +39,21 @@ vector<CInput> CCharacter::Command_236Attack_Extra =
 	{MOVEKEY_RIGHT, ATTACK_LIGHT}
 };
 
+vector<CInput> CCharacter::Command_236Attack_Heavy =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_HEAVY}
+};
+vector<CInput> CCharacter::Command_236Attack_Heavy_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_HEAVY}
+};
+
 
 vector<CInput> CCharacter::Command_214Attack =
 {
@@ -316,12 +331,8 @@ void CCharacter::Camera_Update(_float fTimeDelta)
 
 void CCharacter::Update(_float fTimeDelta)
 {
-
 	if (m_bAnimationLock == false)
 	{
-
-
-
 
 	}
 	else
@@ -2206,6 +2217,9 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 */
 AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
 {
+
+	cout << "HP : " << m_iHP << " , Damage :" << iDamage << endl;
+
 	if (m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Air || m_pModelCom->m_iCurrentAnimationIndex == m_iBreakFall_Ground || m_pModelCom->m_iCurrentAnimationIndex == m_iBound_Ground
 		|| m_pModelCom->m_iCurrentAnimationIndex == m_iLayUp)
 		return RESULT_MISS;
@@ -2838,6 +2852,11 @@ void CCharacter::Set_bNoGravity(_bool bNoGravity, _float MaxfNoGravitySafeTime)
 
 }
 
+_uint CCharacter::Get_iHP()
+{
+	return m_iHP;
+}
+
 _bool CCharacter::Update_Tag_In(_float fTimeDelta)
 {
 	if (m_bTag_In == false)
@@ -3436,7 +3455,8 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 {
 
 	//잡기중에는 겹쳐도 됨
-	if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
+	//if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
+	if (m_bGrabbed  || m_bPlaying == false)
 		return;
 
 
@@ -3877,7 +3897,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
-
+					Set_bAura(true);
 					//인원수 조건문
 
 					_ushort iAliveMemberCount = CBattleInterface_Manager::Get_Instance()->Get_iAliveMemberCount(m_iPlayerTeam);
@@ -3915,6 +3935,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
+					Set_bAura(true);
 
 					//인원수 조건문
 
@@ -3965,8 +3986,12 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 			m_fAccSparkingTime = 0.f;
 			//UI한테 끈다고 전해주기
 			CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+			Set_bAura(false);
 
 		}
+		//추가분량.
+		else
+			Set_bAura(true);
 
 	}
 }
@@ -4258,54 +4283,65 @@ void CCharacter::Set_bDynamicMove(_bool bDynamicMove)
 void CCharacter::Update_Dying(_float fTimeDelta)
 {
 
+	//m_fMaxDyingTime 바꾸기
+
+
 	if (m_bDying == false)
 	{
-		if (m_bGrabbed == true)
+		if (m_bGrabbed == true || m_bUnDying == true)
 			return;
 
 		if (m_iHP < 1)
 		{
 			m_bDying = true;
 
-			if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
+			if(m_bFinalSkillRoundEnd == false)
 			{
-				m_bDynamicMove = true;
-				static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
+				if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
+				{
+					m_bDynamicMove = true;
+					static_cast<CMain_Camera*>(*(m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")).begin()))->Set_DyingTeam(m_iPlayerTeam);
 
-				_float2 fMapToImpulse = CMap_Manager::Get_Instance()->Active_DestructiveFinish(m_iLookDirection == -1 ? true : false);
+					_float2 fMapToImpulse = CMap_Manager::Get_Instance()->Active_DestructiveFinish(m_iLookDirection == -1 ? true : false);
 
-				m_pEnemy->Set_bDynamicMove(true);
+					m_pEnemy->Set_bDynamicMove(true);
 
-				XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+					XMStoreFloat4(&m_vDyingPosition, m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 
-				Set_fImpulse(fMapToImpulse);
+					Set_fImpulse(fMapToImpulse);
 
-				m_bDestructiveFinish = true;
+					m_bDestructiveFinish = true;
+				}
+
+				Set_AnimationStopWithoutMe(2.f);
+				Set_AnimationStop(2.f);
+
+				CUI_Manager::Get_Instance()->UsingCreateEndUI();
+
+				_uint iModelAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
+
+				//땅에서 맞는모션-> 그냥 주저앉기
+				//공중에서 맞았으면 땅바닥에서 Bound 하고 못일어나기
+
+
+				if (iModelAnimationIndex == m_iHit_Stand_LightAnimationIndex || iModelAnimationIndex == m_iHit_Stand_MediumAnimationIndex || iModelAnimationIndex == m_iHit_Crouch_AnimationIndex)
+				{
+					Set_Animation(m_iDyingStandingAnimationIndex);
+				}
+				else// if (Check_bCurAnimationisAirHit())
+				{
+					Set_NextAnimation(m_iBound_Ground, 200.f);
+				}
+
+				Set_bRedHP(false);
+			}
+			else  // 3필로 끝나면
+			{
+				m_fMaxDyingTime = 12.f;
 			}
 
 
-			Set_AnimationStopWithoutMe(2.f);
-			Set_AnimationStop(2.f);
-
-
-			CUI_Manager::Get_Instance()->UsingCreateEndUI();
-
-			_uint iModelAnimationIndex = m_pModelCom->m_iCurrentAnimationIndex;
-
-			//땅에서 맞는모션-> 그냥 주저앉기
-			//공중에서 맞았으면 땅바닥에서 Bound 하고 못일어나기
-
-
-			if (iModelAnimationIndex == m_iHit_Stand_LightAnimationIndex || iModelAnimationIndex == m_iHit_Stand_MediumAnimationIndex || iModelAnimationIndex == m_iHit_Crouch_AnimationIndex)
-			{
-				Set_Animation(m_iDyingStandingAnimationIndex);
-			}
-			else// if (Check_bCurAnimationisAirHit())
-			{
-				Set_NextAnimation(m_iBound_Ground, 200.f);
-			}
-
-			Set_bRedHP(false);
+			
 
 		}
 
@@ -4317,6 +4353,12 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 _bool CCharacter::Get_bDying()
 {
 	return m_bDying;
+}
+
+void CCharacter::Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex)
+{
+	m_bFinalSkillRoundEnd = bSkillRoundEnd;
+
 }
 
 void CCharacter::Play_WinAnimation()
@@ -4592,6 +4634,34 @@ void CCharacter::Set_AnimationMoveXZ(_bool bValue)
 	m_pModelCom->m_bNoMoveXZ = bValue;
 	m_bCinematic_NoMoveXZ = bValue;
 
+
+}
+
+void CCharacter::Set_bHeavySkill(_bool bHeavySkill)
+{
+	m_bHeavySkill = bHeavySkill;
+}
+
+void CCharacter::Set_bAura(_bool bAura)
+{
+	if (bAura != m_bAura)
+	{
+		if (m_bAura == true && bAura == false)
+		{
+			LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+			pLight_Desc->vAuraColor = _float4(0.f, 0.f, 0.f, 0.f);
+			m_bAura = false;
+		}
+
+		else if (m_bAura == false && bAura == true)
+		{
+			LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+			pLight_Desc->vAuraColor = m_fAuraColor;
+			m_bAura = true;
+		}
+	}
+
+	
 
 }
 
@@ -5778,31 +5848,28 @@ void CCharacter::GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput, _u
 	}
 	else if (iTeam == 2)
 	{
-		if (m_iLookDirection == 1)
+		switch (eDirInput)
 		{
-			switch (eDirInput)
-			{
-			case Client::MOVEKEY_LEFT:
-				eDirInput = MOVEKEY_RIGHT;
-				break;
-			case Client::MOVEKEY_RIGHT:
-				eDirInput = MOVEKEY_LEFT;
-				break;
-			case Client::MOVEKEY_UP_LEFT:
-				eDirInput = MOVEKEY_UP_RIGHT;
-				break;
-			case Client::MOVEKEY_UP_RIGHT:
-				eDirInput = MOVEKEY_UP_LEFT;
-				break;
-			case Client::MOVEKEY_DOWN_LEFT:
-				eDirInput = MOVEKEY_DOWN_RIGHT;
-				break;
-			case Client::MOVEKEY_DOWN_RIGHT:
-				eDirInput = MOVEKEY_DOWN_LEFT;
-				break;
-			default:
-				break;
-			}
+		case Client::MOVEKEY_LEFT:
+			eDirInput = MOVEKEY_RIGHT;
+			break;
+		case Client::MOVEKEY_RIGHT:
+			eDirInput = MOVEKEY_LEFT;
+			break;
+		case Client::MOVEKEY_UP_LEFT:
+			eDirInput = MOVEKEY_UP_RIGHT;
+			break;
+		case Client::MOVEKEY_UP_RIGHT:
+			eDirInput = MOVEKEY_UP_LEFT;
+			break;
+		case Client::MOVEKEY_DOWN_LEFT:
+			eDirInput = MOVEKEY_DOWN_RIGHT;
+			break;
+		case Client::MOVEKEY_DOWN_RIGHT:
+			eDirInput = MOVEKEY_DOWN_LEFT;
+			break;
+		default:
+			break;
 		}
 		m_pUI_Manager->m_eDirInput2 = eDirInput;
 		m_pUI_Manager->m_eBtnInput2 = eBtnInput;

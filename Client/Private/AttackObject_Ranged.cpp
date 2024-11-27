@@ -349,7 +349,10 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					m_pRangedEffect_Layer->m_bIsDoneAnim = true;
 
 			
-
+			if (m_iCallAttackBackIndex != 60000)
+			{
+				m_pOwner->AttackEvent(m_iCallAttackBackIndex);
+			}
 
 		}
 		else if (eResult == RESULT_GUARD) //가드당해도 충돌은 했으니 시간정지연출

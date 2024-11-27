@@ -29,12 +29,14 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	_float3 m_vEastColor = {};
 private:
 	CShader*				m_pShaderCom = { nullptr };
 	CTexture*				m_pTextureCom_Diffuse = { nullptr };
 	CModel*					m_pModelCom = { nullptr };
 	CModel*			m_pVIBufferCom = { nullptr };
 	_bool m_isRenderSpaceMap = { true };
+
 private:
 	_float2 m_fSpriteAnimCount = { 16.f,1.f };
 	_float2 m_fSpriteSize = { 0.f,0.f };

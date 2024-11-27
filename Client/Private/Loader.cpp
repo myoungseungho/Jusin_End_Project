@@ -13,13 +13,14 @@
 
 
 #include "Model_Preview.h"
-
+#include "Shadow_Camera.h"
 #include "Shader_Texture.h"
 #include "Effect_NoneLight.h"
 #include "Effect_Blend.h"
 #include "Effect_ZNone.h"
 #include "Effect_Overlap.h"
 #include "Effect_Layer.h"
+#include "VolcanoEF.h"
 #include "SpaceEF.h"
 #include "SpaceSky.h"
 #include "SpaceSun.h"
@@ -192,6 +193,7 @@
 #include "Lobby_Flag.h"
 #include "Lobby_Ranking.h"
 #include "Lobby_Party.h"
+#include "Lobby_Staff.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
@@ -628,6 +630,15 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Lobby/Mesh/lob_Wring.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	//NPC ¸ðµ¨ 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_NPC_Staff"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Lobby_NPC/NPC_Staff.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_NPC_BUN"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Lobby_NPC/NPC_BUN.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 	//New Model Texture
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_TreeReaf02_sh"),
@@ -860,6 +871,11 @@ HRESULT CLoader::Loading_For_Lobby()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Party"),
 		CLobby_Party::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Staff"),
+		CLobby_Staff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -1720,10 +1736,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_circle00.dds"), 1))))
 		return E_FAIL;
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_bun_cmn_circle01"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_circle01.dds"), 1))))
-	//	return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_circle01"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_circle01.dds"), 1))))
 		return E_FAIL;
@@ -1888,12 +1900,12 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_kira01.dds"), 1))))
 		return E_FAIL;
 	//90
-	//_matrix			PreTransformMatrix = XMMatrixIdentity();
-	//PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
+	_matrix			PreTransformMatrix = XMMatrixIdentity();
+	PreTransformMatrix = XMMatrixScaling(0.001f, 0.001f, 0.001f);
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Loading_GodDragon"),
-	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Loading_GodDragon"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Loading_GodDragon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	//PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_cmn_kmhmFractal"),
@@ -3797,7 +3809,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceRock"),
 		CSpaceRock::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shadow_Camera"),
+		CShadow_Camera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceStone"),
 		CSpaceStone::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -3840,8 +3855,13 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceSky"),
 		CSpaceSky::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SpaceEF"),
 		CSpaceEF::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_VolcanoEF"),
+		CVolcanoEF::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Shader_Texture"),
@@ -4364,6 +4384,17 @@ HRESULT CLoader::Load_Map_Space()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceRock_3"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_3/Rock_3.bin", PreTransformMatrix))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_1"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_1/BRRock_1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_2"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_2/BRRock_2.bin", PreTransformMatrix))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceBRRock_3"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Rock_3/BRRock_3.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_SpaceMeteo_1"),
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Space/Meteo_1/Meteo_1.bin", PreTransformMatrix))))

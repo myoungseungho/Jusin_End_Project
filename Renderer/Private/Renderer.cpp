@@ -10,8 +10,8 @@
 #include "Component.h"
 #include "Light_Manager.h"
 #include "Transform.h"
-_uint		g_iSizeX = 8192;
-_uint		g_iSizeY = 4608;
+_uint		g_iSizeX = 1920 * 2;
+_uint		g_iSizeY = 1080 * 2;
 
 CRenderer::CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice{ pDevice }
@@ -63,7 +63,7 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 		return E_FAIL;
 
 	m_pAuraTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Aura/cmn_Fractal%d.dds"), 6);
-	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock00.dds"), 1);
+	m_pEastFinish_TextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Eff/Texture/cmn_scrRock0%d.dds"), 2);
 	m_pDistortionShaderCom = CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Deferred_Distortion.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements);
 	m_pDistortionTextureCom = CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Distortion/Distortion_%d.png"), 6);
 	m_pDistortionTransformCom = CTransform::Create(m_pDevice, m_pContext);
@@ -95,10 +95,6 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	if (FAILED(m_pDevice->CreateTexture2D(&TextureDesc, nullptr, &pDepthStencilTexture)))
 		return E_FAIL;
 
-	/* RenderTarget */
-	/* ShaderResource */
-	/* DepthStencil */
-
 	if (FAILED(m_pDevice->CreateDepthStencilView(pDepthStencilTexture, nullptr, &m_pShadowDSV)))
 		return E_FAIL;
 
@@ -106,17 +102,17 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 
 	_float offsetY = 18.f;
 #ifdef _DEBUG
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_AllGlowAlpha"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
-	//	return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_DownTarget_Second"), 100.f, 300.f, 200.0f, 200.0f)))
-	//	return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_LightDepth"), 100.f, 100.f + offsetY, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_StageDepth"), 100.f, 300.f, 200.0f, 200.0f)))
+		return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Distortion"), 600.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_ResultDistortion_BackBuffer"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_PickDepth"), 100.f, 500.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_Distortion"), 600.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_ResultDistortion_BackBuffer"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomAlpha"), 600.f, 100.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_MapBloomDiffuse"), 350.f, 150.f, 300.f, 300.f)))
@@ -131,10 +127,10 @@ HRESULT CRenderer::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pConte
 	//	return E_FAIL;
 	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_UpTarget_Second"), 100.f, 500.f, 200.0f, 200.0f)))
 	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
-		return E_FAIL;
-	if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
-		return E_FAIL; 
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_X"), 600.f, 100.f, 200.0f, 200.0f)))
+	//	return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Ready_RT_Debug(TEXT("Target_All_Blur_Y"), 350.f, 150.f, 300.f, 300.f)))
+	//	return E_FAIL; 
 	/*
 		if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_Player"), TEXT("Target_Player_Diffuse"))))
 		return E_FAIL;
@@ -217,6 +213,8 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_NonBlend_Layer(fTimeDelta)))
 		return E_FAIL;
 	/*-------------------------------------------*/
+	if (FAILED(Render_StageDepth(fTimeDelta)))
+		return E_FAIL;
 
 	if (FAILED(Render_Priority(fTimeDelta)))
 		return E_FAIL;
@@ -225,12 +223,12 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Blend_Priority(fTimeDelta)))
 		return E_FAIL;
 	/*----------------- 플레이어가 아닌 다른 오브젝트 -----------------*/
+	if (FAILED(Render_ShadowObj(fTimeDelta)))
+		return E_FAIL;
 	if (FAILED(Render_Map(fTimeDelta)))
 		return E_FAIL;
 	if (FAILED(Render_NonBlend(fTimeDelta)))
 		return E_FAIL;
-	//if (FAILED(Render_ShadowObj(fTimeDelta)))
-	//	return E_FAIL;
 
 	if (FAILED(Render_Lights(fTimeDelta)))
 		return E_FAIL;
@@ -244,16 +242,17 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 	if (FAILED(Render_Metallic(fTimeDelta)))
 		return E_FAIL;
 
-
-	if (FAILED(Render_Player(fTimeDelta)))
-		return E_FAIL;
 	if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
 		return E_FAIL;
 
 	/* 맵을 어둡게 할려고 여기 호출하지만 캐릭터는*/
 	if (FAILED(Draw_MapBlackOut(fTimeDelta)))
 		return E_FAIL;
+	if (FAILED(Render_Player(fTimeDelta)))
+		return E_FAIL;
 
+	if (FAILED(Render_StageDeferred(fTimeDelta)))
+		return E_FAIL;
 
 	/* 여기서 그리고 있음 이펙트를 위한 행동 하지만 위에서 블러를 먹인 그림을 가지고만 있고 그리진 않아서 영향이 안가짐 */
 	if (FAILED(Render_AllGlow_Effect_BackSide(fTimeDelta)))
@@ -433,23 +432,24 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	/* Target_LightDepth */
 	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ShadowObjects"), m_pShadowDSV)))
 		return E_FAIL;
+	//if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_ShadowObjects"))))
+	//	return E_FAIL;
+	//D3D11_VIEWPORT			ViewPortDesc;
+	//ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	//ViewPortDesc.TopLeftX = 0;
+	//ViewPortDesc.TopLeftY = 0;
+	//ViewPortDesc.Width = (_float)g_iSizeX;
+	//ViewPortDesc.Height = (_float)g_iSizeY;
+	//ViewPortDesc.MinDepth = 0.f;
+	//ViewPortDesc.MaxDepth = 1.f;
 
-	D3D11_VIEWPORT			ViewPortDesc;
-	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
-	ViewPortDesc.TopLeftX = 0;
-	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = (_float)g_iSizeX;
-	ViewPortDesc.Height = (_float)g_iSizeY;
-	ViewPortDesc.MinDepth = 0.f;
-	ViewPortDesc.MaxDepth = 1.f;
-
-	m_pContext->RSSetViewports(1, &ViewPortDesc);
+	//m_pContext->RSSetViewports(1, &ViewPortDesc);
 
 
 	for (auto& pRenderObject : m_RenderObjects[RG_SHADOWOBJ])
 	{
 		if (nullptr != pRenderObject)
-			pRenderObject->Render(fTimeDelta);
+			pRenderObject->Shadow_Render(fTimeDelta);
 
 		Safe_Release(pRenderObject);
 	}
@@ -459,15 +459,15 @@ HRESULT CRenderer::Render_ShadowObj(_float fTimeDelta)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
-	ViewPortDesc.TopLeftX = 0;
-	ViewPortDesc.TopLeftY = 0;
-	ViewPortDesc.Width = 1920.f;
-	ViewPortDesc.Height = 1080.0f;
-	ViewPortDesc.MinDepth = 0.f;
-	ViewPortDesc.MaxDepth = 1.f;
+	//ZeroMemory(&ViewPortDesc, sizeof(D3D11_VIEWPORT));
+	//ViewPortDesc.TopLeftX = 0;
+	//ViewPortDesc.TopLeftY = 0;
+	//ViewPortDesc.Width = 1920.f;
+	//ViewPortDesc.Height = 1080.0f;
+	//ViewPortDesc.MinDepth = 0.f;
+	//ViewPortDesc.MaxDepth = 1.f;
 
-	m_pContext->RSSetViewports(1, &ViewPortDesc);
+	//m_pContext->RSSetViewports(1, &ViewPortDesc);
 
 	return S_OK;
 }
@@ -549,6 +549,77 @@ HRESULT CRenderer::Render_Blend_Priority(_float fTimeDelta)
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_StageDepth(_float fTimeDelta)
+{
+
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_StageDepth"))))
+		return E_FAIL;
+
+	for (auto& pRenderObject : m_RenderObjects[RG_STAGE])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Shadow_Render(fTimeDelta);
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[RG_STAGE].clear();
+
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+	
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_StageDeferred(_float fTimeDelta)
+{
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+	_float4x4 viewMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_VIEW);
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", &viewMatrixInv)))
+		return E_FAIL;
+
+	_float4x4 projMatrixInv = m_pGameInstance->Get_Transform_Inverse_Float4x4(CPipeLine::D3DTS_PROJ);
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", &projMatrixInv)))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DiffuseTexture", TEXT("Target_Diffuse"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_ShadeTexture", TEXT("Target_Shade"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_SpecularTexture", TEXT("Target_Specular"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_LightDepthTexture", TEXT("Target_LightDepth"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_DepthTexture", TEXT("Target_StageDepth"))))
+		return E_FAIL;
+
+
+
+	_float4x4			LightViewMatrix, LightProjMatrix;
+
+	XMStoreFloat4x4(&LightViewMatrix, m_pGameInstance->Get_ShadowTransform_Matrix(CPipeLine::D3DTS_VIEW));
+	XMStoreFloat4x4(&LightProjMatrix, m_pGameInstance->Get_ShadowTransform_Matrix(CPipeLine::D3DTS_PROJ));
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightProjMatrix", &LightProjMatrix)))
+		return E_FAIL;
+
+	m_pShader->Begin(12);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+	return S_OK;
+
+	
+}
+
 HRESULT CRenderer::Render_Map(_float fTimeDelta)
 {
 	_int iRenderCount = { 0 };
@@ -615,7 +686,8 @@ HRESULT CRenderer::Render_NonBlend(_float fTimeDelta)
 
 HRESULT CRenderer::Render_Player(_float fTimeDelta)
 {
-	_int iCount = 0;
+	m_iRenderPlayerCount = 0;
+	
 	for (auto& pRenderObject : m_RenderObjects[RG_PLAYER])
 	{
 		if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_Player"))))
@@ -631,9 +703,9 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 		if (FAILED(m_pRenderInstance->End_MRT()))
 			return E_FAIL;
 
-		Render_PlayerLight(fTimeDelta, iCount);
+		Render_PlayerLight(fTimeDelta, m_iRenderPlayerCount);
 
-		if (iCount == 0)
+		if (m_iRenderPlayerCount == 0)
 		{
 			if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_PlayerDefferd"))))
 				return E_FAIL;
@@ -652,10 +724,11 @@ HRESULT CRenderer::Render_Player(_float fTimeDelta)
 				return E_FAIL;
 		}
 
-		iCount++;
+		m_iRenderPlayerCount++;
 	}
 
-	Render_PlayerBlur(fTimeDelta);
+	if(m_iRenderPlayerCount != 0)
+		Render_PlayerBlur(fTimeDelta);
 
 	m_RenderObjects[RG_PLAYER].clear();
 	m_PlayerStrNames.clear();
@@ -695,8 +768,8 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	m_pVIBuffer->Bind_Buffers();
 	auto strName = m_PlayerStrNames.begin() + iCount;
 	LIGHT_DESC* pLightDesc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, *strName);
-
-	m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta); // 수정
+	if(pLightDesc != nullptr)
+		m_pRenderInstance->Render_Lights(CLight_Manager::LIGHT_PLAYER, m_pShader, m_pVIBuffer, pLightDesc->strName, fTimeDelta); // 수정
 
 	if (NULL != m_pRenderInstance->Check_EffectLights())
 	{
@@ -730,7 +803,11 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	Render_PlayerAuraMaskBlur(fTimeDelta, pLightDesc->vAuraColor);
+	if (pLightDesc != nullptr)
+	{
+		Render_PlayerAuraMaskBlur(fTimeDelta, pLightDesc->vAuraColor);
+	}
+	
 	
 	return S_OK;
 }
@@ -1166,7 +1243,7 @@ HRESULT CRenderer::Render_Deferred(_float fTimeDelta)
 
 	XMStoreFloat4x4(&LightViewMatrix, XMMatrixLookAtLH(XMVectorSet(0.f, 10.f, 0.f, 1.f), XMVectorSet(1.f, -1.f, 1.f, 0.f), XMVectorSet(0.f, 1.f, 0.f, 0.f)));
 	XMStoreFloat4x4(&LightProjMatrix, XMMatrixPerspectiveFovLH(XMConvertToRadians(120.0f), (_float)1920.f / 1080.f, 0.1f, 1000.f));
-
+	
 	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", &LightViewMatrix)))
 		return E_FAIL;
 
@@ -1359,24 +1436,27 @@ HRESULT CRenderer::Render_AllGlow_Effect_BackSide(_float fTimeDelta)
 	if (iEffectGlow_RenderCount > 0)
 		Draw_AllGlow_Effect(false);
 
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
-		return E_FAIL;
+	if (m_iRenderPlayerCount != 0)
+	{
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pGlowShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+			return E_FAIL;
 
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
-		return E_FAIL;
-	//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
-	//	return E_FAIL;
-	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
-		return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_Texture", TEXT("Target_PlayerDefferd"))))
+			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(pShader, "g_BlurTexture", TEXT("Target_UpTarget_Second"))))
+		//	return E_FAIL;
+		if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pGlowShader, "g_BlurTexture", TEXT("Target_Player_Blur_Y"))))
+			return E_FAIL;
 
 	
-	m_pGlowShader->Begin(9);
-	m_pVIBuffer->Bind_Buffers();
-	m_pVIBuffer->Render();
+		m_pGlowShader->Begin(9);
+		m_pVIBuffer->Bind_Buffers();
+		m_pVIBuffer->Render();
+	}
 	
 	return S_OK;
 }
@@ -1765,9 +1845,9 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_BloomDiffuse"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
-		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_Distortion"), m_pShader, m_pVIBuffer)))
-		//	return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ResultDistortion_BackBuffer"), m_pShader, m_pVIBuffer)))
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_StageDepth"), m_pShader, m_pVIBuffer)))
+			return E_FAIL;
+		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer)))
 			return E_FAIL;
 
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_EffectToolPick"), m_pShader, m_pVIBuffer)))
@@ -1777,10 +1857,10 @@ HRESULT CRenderer::Render_Debug(_float fTimeDelta)
 		MRT_Distortion
 		MRT_ResultDistortion_BackBuffer
 		*/
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_X"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
-		if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_Y"), m_pShader, m_pVIBuffer)))
-			return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_X"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
+		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_All_Blur_Y"), m_pShader, m_pVIBuffer)))
+		//	return E_FAIL;
 		//// Render Target 디버그 렌더링
 		//if (FAILED(m_pRenderInstance->Render_RT_Debug(TEXT("MRT_AllGlowDiffuse"), m_pShader, m_pVIBuffer)))
 		//	return E_FAIL;
@@ -2333,8 +2413,8 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	if (m_isRockStart == true)
 	{
-		m_fSpriteAccTime += fTimeDelta;
-		m_fAccRockTime += fTimeDelta;
+		m_fSpriteAccTime += fTimeDelta * m_fWhiteSpeed;
+		m_fAccRockTime += fTimeDelta * m_fWhiteSpeed;
 		if (m_fSpriteAccTime >= 0.05f)
 		{
 			m_fSpriteAccTime = 0.f;
@@ -2349,31 +2429,31 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 			if (m_fSpriteCurPos.y < 0)
 			{
 				m_fSpriteCurPos.x = 0.f;
-				m_fSpriteCurPos.x = 0.f;
+				m_fSpriteCurPos.y = 0.f;
+				m_isSpriteEnd = true;
 			}
 		}
 
 		if (m_fAccRockTime >= 0.5f && m_isMaintainWhite == false && m_isEndWhiteOut == false)
 			m_isStartWhiteOut = true;
 
-		if (m_fAccRockTime >= 3.f)
+		if (m_isSpriteEnd == true)
 		{
 			m_fAccWhiteTime = 2.f;
 			m_isMaintainWhite = false;
 			m_isRockStart = false;
 			m_isEndWhiteOut = true;
 			m_fAccRockTime = 0.f;
-
 			*m_pDoneCheck = true;
-
-		
 		}
 	}
 
 	if (m_isStartWhiteOut == true)
 	{
-		m_fAccWhiteTime += fTimeDelta;
-
+		/* 화이트 스피드 테스트 */
+		m_fAccWhiteTime += fTimeDelta * m_fWhiteSpeed;
+		//m_fAccWhiteTime += fTimeDelta;
+		
 		if (m_fAccWhiteTime >= 2.5f)
 		{
 			m_fAccWhiteTime = 2.5f;
@@ -2422,8 +2502,18 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	if (m_isEndWhiteOut == false)
 	{
-		if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
-			return E_FAIL;
+		if (m_vWhiteDir.x == 1)
+		{
+			if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
+				return E_FAIL;
+
+		}
+		else
+		{
+			if (FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader, "g_DiffuseTexture", 1)))
+				return E_FAIL;
+		}
+
 	}
 	else
 	{
@@ -2512,11 +2602,18 @@ HRESULT CRenderer::Initialize_RenderTarget()
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomAlpha"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 1.f))))
 		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_MapBloomDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDiffuse"))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomAlpha"))))
 		return E_FAIL;
-
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_BloomDiffuse"), TEXT("Target_MapBloomDepth"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_StageDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_StageDepth"), TEXT("Target_StageDepth"))))
+		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget"), ViewportDesc.Width / 2, ViewportDesc.Height / 2, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_DownTarget_Second"), ViewportDesc.Width / 4, ViewportDesc.Height / 4, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(0.f, 0.f, 0.f, 0.f))))
@@ -2570,7 +2667,7 @@ HRESULT CRenderer::Initialize_RenderTarget()
 #pragma endregion
 
 	/* 그림자 임시 */
-	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), g_iSizeX, g_iSizeY, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_LightDepth"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
 		return E_FAIL;
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_ShadowObjects"), TEXT("Target_LightDepth"))))
 		return E_FAIL;
@@ -2779,9 +2876,11 @@ void CRenderer::Switch_BlackOut(_bool isTrue)
 	//m_fAccBlackTime += 0.01f;
 }
 
-void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone)
+void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)
 {
 	m_vWhiteDir = vDir;
+	m_isSpriteEnd = false;
+	m_fWhiteSpeed = fWhiteSpeed;
 	m_isStartWhiteOut = false;
 	m_isMaintainWhite = false;
 	m_isEndWhiteOut = false;

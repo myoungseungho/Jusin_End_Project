@@ -1,12 +1,13 @@
 #include "ModelConverter.h" 
 
-#define DATAFILEPATH "../Client/Bin/ModelData/"
+#define DATAFILEPATH "../Client/Bin/ModelData/Char/Lobby_NPC/"
 
 int main() {
 	ModelConverter converter;
 	
 	vector<pair<string, ModelType>> modelPaths = {
-		{"Models/lob_arcade.fbx", TYPE_NONANIM},
+		{"Models/NPC_Staff.fbx", TYPE_ANIM},
+		{"Models/NPC_BUN.fbx", TYPE_ANIM},
 	};
 
 	bool printVertices = false; // Vertex 정보를 출력할지 여부를 결정하는 플래그
