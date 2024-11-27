@@ -203,7 +203,7 @@ private:
 	class CEffect_Layer* m_pAttackUltimateLaserEffect_Layer = { nullptr };
 
 	class CEffect_Layer* m_pAttackFinalChaseEffect_Layer = { nullptr };
-
+	
 
 	_bool m_bFinalSoundEnable = { true };
 

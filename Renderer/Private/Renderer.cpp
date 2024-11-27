@@ -2428,7 +2428,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		if (m_fAccRockTime >= 0.5f && m_isMaintainWhite == false && m_isEndWhiteOut == false)
 			m_isStartWhiteOut = true;
 
-		if (m_fAccRockTime >= 3.f || m_isSpriteEnd == true)
+		if (m_isSpriteEnd == true)
 		{
 			m_fAccWhiteTime = 2.f;
 			m_isMaintainWhite = false;
@@ -2444,8 +2444,8 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		/* 화이트 스피드 테스트 */
 		m_fAccWhiteTime += fTimeDelta * m_fWhiteSpeed;
 		//m_fAccWhiteTime += fTimeDelta;
-		
-		if (m_fAccWhiteTime >= 2.5f || m_isSpriteEnd == true)
+
+		if (m_fAccWhiteTime >= 2.5f)
 		{
 			m_fAccWhiteTime = 2.5f;
 			m_isMaintainWhite = true;
@@ -2459,7 +2459,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 		m_fAccWhiteTime -= fTimeDelta;
 
 		if (m_fAccWhiteTime <= 0.f)
-		{ 
+		{
 			m_isStartWhiteOut = false;
 			m_pDoneCheck = nullptr;
 		}
@@ -2474,7 +2474,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 
 	if (FAILED(m_pShader->Bind_RawValue("g_isEndWhiteOut", &m_isEndWhiteOut, sizeof(_bool))))
 		return E_FAIL;
-	
+
 	_bool isStartCheck = m_isMaintainWhite + m_isStartWhiteOut;
 	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &isStartCheck, sizeof(_bool))))
 		return E_FAIL;
@@ -2495,7 +2495,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 	{
 		if (m_vWhiteDir.x == 1)
 		{
-			if(FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader,"g_DiffuseTexture",0)))
+			if (FAILED(m_pEastFinish_TextureCom->Bind_ShaderResource(m_pShader, "g_DiffuseTexture", 0)))
 				return E_FAIL;
 
 		}
@@ -2512,7 +2512,7 @@ HRESULT CRenderer::Draw_WhiteBlack_Mode(_float fTimeDelta)
 			return E_FAIL;
 
 	}
-	
+
 	m_pShader->Begin(10);
 	m_pVIBuffer->Bind_Buffers();
 	m_pVIBuffer->Render();

@@ -28,6 +28,8 @@ public:
 
 
 	void Attack_236();
+	void Attack_236_Heavy();
+
 	void Attack_214();
 
 	void Attack_236Special();

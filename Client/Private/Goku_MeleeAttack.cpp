@@ -336,6 +336,7 @@ void CGoku_MeleeAttack::Attack_Grab()
 void CGoku_MeleeAttack::Attack_236()
 {
 
+	m_pPlayer->Set_bHeavySkill(false);
 	//공중인지 아닌지 상태 받고,  사용중인게 필살기가 아닌지 구분.  피격중은 키 lock을 해버릴것
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
@@ -343,6 +344,10 @@ void CGoku_MeleeAttack::Attack_236()
 		m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236);
 		m_pPlayer->Set_fImpulse(2.f *m_pPlayer->Get_iDirection());
 		m_pPlayer->Set_bAttackGravity(false);
+
+
+		//m_pPlayer->Teleport_ToEnemy(1.f, 0.5f);
+		//m_pPlayer->FlipDirection();
 	} 
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM ||  *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
@@ -384,6 +389,144 @@ void CGoku_MeleeAttack::Attack_236()
 	
 
 
+}
+
+void CGoku_MeleeAttack::Attack_236_Heavy()
+{
+
+	_bool bHaveKi = false;
+
+	//기 2칸 있을 때
+	if (CBattleInterface_Manager::Get_Instance()->Use_KiRealGuage(50, m_pPlayer->Get_iPlayerTeam()))
+	{
+		//m_pPlayer->Set_Animation(CPlay_Goku::ANIME_236_POSE_HEAVY);
+		bHaveKi = true;
+	}
+
+	//2칸은 없는데 1줄 이상 있을 때
+	else if ((CBattleInterface_Manager::Get_Instance()->Get_KiNumber(m_pPlayer->Get_iPlayerTeam()) != 0))
+	{
+		CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam());
+		CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(25, m_pPlayer->Get_iPlayerTeam());
+		
+		bHaveKi = true;
+	}
+
+	//다 없으면 약공격 버전으로
+	else
+	{
+		Attack_236();
+		return;
+	}
+
+
+	if (bHaveKi)
+	{
+		m_pPlayer->Set_bHeavySkill(true);
+
+		if (m_pPlayer->Check_bCurAnimationisGroundMove() || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_FORWARD_DASH_END)
+		{
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236);
+			m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
+			m_pPlayer->Set_bAttackGravity(false);
+
+
+			m_pPlayer->Set_AnimationStop(0.1f);
+			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, {0.f,0.f});
+			//m_pPlayer->Set_bInivisible(true);
+
+			//_float fEnemyPosX = m_pPlayer->Get_pEnemy()->Get_fPositionX();
+
+			if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
+			{
+				m_pPlayer->Teleport_ToEnemy(2.f, 0.f);
+				m_pPlayer->Add_Move({ 0.f,-m_pPlayer->Get_fHeight() });
+
+				m_pPlayer->FlipDirection();
+			}
+			else
+				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+		}
+
+		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
+			*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_CROUCH_MEDUIM))
+		{
+			///m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236, 0.5f);
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236,false);
+			m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
+			m_pPlayer->Set_bAttackGravity(false);
+
+			m_pPlayer->Set_AnimationStop(0.1f);
+			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, { 0.f,0.f });
+			//m_pPlayer->Set_bInivisible(true);
+			if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
+			{
+				m_pPlayer->Teleport_ToEnemy(2.f, 0.f);
+				m_pPlayer->Add_Move({ 0.f,-m_pPlayer->Get_fHeight() });
+
+				m_pPlayer->FlipDirection();
+			}
+			else
+				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+		}
+
+
+		else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN)
+		{
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_AIR);
+			//m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
+			m_pPlayer->Set_fImpulse({ 2.f * m_pPlayer->Get_iDirection(),-1.f });
+			m_pPlayer->Set_bAttackGravity(false);
+
+			//m_pPlayer->Set_ForcedGravityDown();
+			m_pPlayer->Set_fGravityTime(0.265f);
+
+			m_pPlayer->Set_AnimationStop(0.1f);
+			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, { 0.f,0.f });
+			//m_pPlayer->Set_bInivisible(true);
+			if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
+			{
+				m_pPlayer->Teleport_ToEnemy(2.f, 0.2f);
+				m_pPlayer->FlipDirection();
+			}
+			else
+				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+
+		}
+		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR))
+		{
+			//m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_ATTACK_236_AIR, 0.5f);
+			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236_AIR, false);
+			//m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
+			m_pPlayer->Set_fImpulse({ 2.f * m_pPlayer->Get_iDirection(),-1.f });
+
+			m_pPlayer->Set_bAttackGravity(false);
+			//m_pPlayer->Set_ForcedGravityDown();
+
+			m_pPlayer->Set_fGravityTime(0.265f);
+
+			//m_pPlayer->Set_AnimationStop(0.3f);
+			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, { 0.f,0.f });
+			//m_pPlayer->Set_bInivisible(true);
+	
+			if(abs(m_pPlayer->Get_pEnemy()->Get_fPositionX())<10)
+			{
+				m_pPlayer->Teleport_ToEnemy(2.f, 0.2f);
+				m_pPlayer->FlipDirection();
+			}
+			else
+				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+
+		}
+
+		//사용 못했으면
+		else
+		{
+			CBattleInterface_Manager::Get_Instance()->Gain_KiGuage(25, m_pPlayer->Get_iPlayerTeam());
+			m_pPlayer->Set_bHeavySkill(false);
+		}
+	}
 }
 
 void CGoku_MeleeAttack::Attack_214()

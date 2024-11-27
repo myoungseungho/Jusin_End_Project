@@ -39,6 +39,21 @@ vector<CInput> CCharacter::Command_236Attack_Extra =
 	{MOVEKEY_RIGHT, ATTACK_LIGHT}
 };
 
+vector<CInput> CCharacter::Command_236Attack_Heavy =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_NEUTRAL, ATTACK_HEAVY}
+};
+vector<CInput> CCharacter::Command_236Attack_Heavy_Extra =
+{
+	{MOVEKEY_DOWN, ATTACK_NONE},
+	{MOVEKEY_DOWN_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_NONE},
+	{MOVEKEY_RIGHT, ATTACK_HEAVY}
+};
+
 
 vector<CInput> CCharacter::Command_214Attack =
 {
@@ -411,7 +426,7 @@ _bool CCharacter::CompareNextAnimation(_uint iAnimationIndex, _float fNextPositi
 
 void CCharacter::Set_CurrentAnimationPositionJump(_float fAnimationPosition)
 {
- 	m_pModelCom->CurrentAnimationPositionJump(fAnimationPosition);
+	m_pModelCom->CurrentAnimationPositionJump(fAnimationPosition);
 }
 
 void CCharacter::ProcessEventsFramesZero(_uint characterIndex, _uint animationIndex)
@@ -3882,7 +3897,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
-
+					Set_bAura(true);
 					//인원수 조건문
 
 					_ushort iAliveMemberCount = CBattleInterface_Manager::Get_Instance()->Get_iAliveMemberCount(m_iPlayerTeam);
@@ -3920,6 +3935,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 					Set_NextAnimation(m_iIdleAnimationIndex, 3.f);
 					CBattleInterface_Manager::Get_Instance()->Set_bSparkingEnable(false, m_iPlayerTeam);
 					m_bSparking = true;
+					Set_bAura(true);
 
 					//인원수 조건문
 
@@ -3970,8 +3986,12 @@ void CCharacter::Sparking_TimeCount(_float fTimeDelta)
 			m_fAccSparkingTime = 0.f;
 			//UI한테 끈다고 전해주기
 			CUI_Manager::Get_Instance()->UsingAttackDestroy(m_ePlayerSlot);
+			Set_bAura(false);
 
 		}
+		//추가분량.
+		else
+			Set_bAura(true);
 
 	}
 }
@@ -4614,6 +4634,34 @@ void CCharacter::Set_AnimationMoveXZ(_bool bValue)
 	m_pModelCom->m_bNoMoveXZ = bValue;
 	m_bCinematic_NoMoveXZ = bValue;
 
+
+}
+
+void CCharacter::Set_bHeavySkill(_bool bHeavySkill)
+{
+	m_bHeavySkill = bHeavySkill;
+}
+
+void CCharacter::Set_bAura(_bool bAura)
+{
+	if (bAura != m_bAura)
+	{
+		if (m_bAura == true && bAura == false)
+		{
+			LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+			pLight_Desc->vAuraColor = _float4(0.f, 0.f, 0.f, 0.f);
+			m_bAura = false;
+		}
+
+		else if (m_bAura == false && bAura == true)
+		{
+			LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+			pLight_Desc->vAuraColor = m_fAuraColor;
+			m_bAura = true;
+		}
+	}
+
+	
 
 }
 
@@ -5800,31 +5848,28 @@ void CCharacter::GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput, _u
 	}
 	else if (iTeam == 2)
 	{
-		if (m_iLookDirection == 1)
+		switch (eDirInput)
 		{
-			switch (eDirInput)
-			{
-			case Client::MOVEKEY_LEFT:
-				eDirInput = MOVEKEY_RIGHT;
-				break;
-			case Client::MOVEKEY_RIGHT:
-				eDirInput = MOVEKEY_LEFT;
-				break;
-			case Client::MOVEKEY_UP_LEFT:
-				eDirInput = MOVEKEY_UP_RIGHT;
-				break;
-			case Client::MOVEKEY_UP_RIGHT:
-				eDirInput = MOVEKEY_UP_LEFT;
-				break;
-			case Client::MOVEKEY_DOWN_LEFT:
-				eDirInput = MOVEKEY_DOWN_RIGHT;
-				break;
-			case Client::MOVEKEY_DOWN_RIGHT:
-				eDirInput = MOVEKEY_DOWN_LEFT;
-				break;
-			default:
-				break;
-			}
+		case Client::MOVEKEY_LEFT:
+			eDirInput = MOVEKEY_RIGHT;
+			break;
+		case Client::MOVEKEY_RIGHT:
+			eDirInput = MOVEKEY_LEFT;
+			break;
+		case Client::MOVEKEY_UP_LEFT:
+			eDirInput = MOVEKEY_UP_RIGHT;
+			break;
+		case Client::MOVEKEY_UP_RIGHT:
+			eDirInput = MOVEKEY_UP_LEFT;
+			break;
+		case Client::MOVEKEY_DOWN_LEFT:
+			eDirInput = MOVEKEY_DOWN_RIGHT;
+			break;
+		case Client::MOVEKEY_DOWN_RIGHT:
+			eDirInput = MOVEKEY_DOWN_LEFT;
+			break;
+		default:
+			break;
 		}
 		m_pUI_Manager->m_eDirInput2 = eDirInput;
 		m_pUI_Manager->m_eBtnInput2 = eBtnInput;
