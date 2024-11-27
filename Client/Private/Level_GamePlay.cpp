@@ -163,6 +163,16 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_E))
+	{
+		m_pUI_Manager->CutSceneUI(TRUE);
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_R))
+	{
+		m_pUI_Manager->CutSceneUI(FALSE);
+	}
+
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
 		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(0, 1, 0), {}, { 1.f,1.5f });

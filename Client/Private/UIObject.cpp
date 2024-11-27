@@ -172,7 +172,7 @@ void CUIObject::Add_UIList(CUI_Define::UI_LISTPOS ePos)
 void CUIObject::UI_PosArea(_float fAreaPosY)
 {
 	
-	if (fAreaPosY >= 600.f * m_vOffSetWinSize.y)
+	if (fAreaPosY >= 450.f * m_vOffSetWinSize.y)
 	{
 		Add_UIList(CUI_Define::BOT);
 	}

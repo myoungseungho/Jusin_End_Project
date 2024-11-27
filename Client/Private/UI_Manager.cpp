@@ -166,17 +166,26 @@ void CUI_Manager::UsingCreateEndUI()
 
 }
 
-void CUI_Manager::CutSceneStart()
+void CUI_Manager::CutSceneUI(_bool bState)
 {
-	/*for (auto& Top : m_ListTopUI)
+	for (auto& Top : m_ListTopUI)
 	{
-		Top->SetActive()
-	}*/
+		Top->SetActive(bState);
+	}
+
+	//for (auto& Mid : m_ListMidUI)
+	//{
+	//	Mid->SetActive(bState);
+	//}
+
+	for (auto& Bot : m_ListBotUI)
+	{
+		Bot->SetActive(bState);
+	}
+
+
 }
 
-void CUI_Manager::CutSceneFinish()
-{
-}
 
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {

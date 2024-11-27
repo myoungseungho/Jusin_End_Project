@@ -50,8 +50,8 @@ public:
 	void UsingCreateStartUI();
 	void UsingCreateEndUI();
 
-	void CutSceneStart();
-	void CutSceneFinish();
+	void CutSceneUI(_bool bState);
+	//void CutSceneFinish();
 
 public:
 	//디버깅 위치 설정
