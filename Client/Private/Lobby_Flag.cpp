@@ -41,13 +41,22 @@ void CLobby_Flag::Camera_Update(_float fTimeDelta)
 
 void CLobby_Flag::Update(_float fTimeDelta)
 {
-	m_fAnimFrame += fTimeDelta;
+	m_fAnimFrame += fTimeDelta * 5.f;
+	m_fTexcoordValue += fTimeDelta * 0.5f;
+
+	if (m_fTexcoordValue >= 1.f)
+		m_fTexcoordValue = 0.f;
 
 	if (m_fAnimFrame >= 1.f)
+	{
 		m_iSpriteIndex++;
+		m_fAnimFrame = 0.f;
+	}
 
-	if (m_iSpriteIndex >= 7)
+	if (m_iSpriteIndex >= 8)
 		m_iSpriteIndex = 0;
+
+
 }
 
 void CLobby_Flag::Late_Update(_float fTimeDelta)
@@ -133,6 +142,9 @@ HRESULT CLobby_Flag::Bind_ShaderResources()
 		return E_FAIL;
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_iSpriteIndex", &m_iSpriteIndex, sizeof(_uint))))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_fTime", &m_fTexcoordValue, sizeof(_float))))
 		return E_FAIL;
 
 	return S_OK;

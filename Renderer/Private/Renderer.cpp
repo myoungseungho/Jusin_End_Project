@@ -801,7 +801,11 @@ HRESULT CRenderer::Render_PlayerLight(_float fTimeDelta, _int iCount)
 	if (FAILED(m_pRenderInstance->End_MRT()))
 		return E_FAIL;
 
-	Render_PlayerAuraMaskBlur(fTimeDelta, pLightDesc->vAuraColor);
+	if (iCount != 0)
+	{
+		Render_PlayerAuraMaskBlur(fTimeDelta, pLightDesc->vAuraColor);
+	}
+	
 	
 	return S_OK;
 }
