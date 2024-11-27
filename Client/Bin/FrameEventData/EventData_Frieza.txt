@@ -807,6 +807,7 @@ PLAY_FRN,FRN400_body,0.001000,PlaySound,89,0,1
 PLAY_FRN,FRN400_body,35,AttackEvent,0
 PLAY_FRN,FRN400_body,35,AnimSpeedChange,0.01,50
 
+PLAY_FRN,FRN400_body,40,AttackEvent,1
 
 //,그냥 AttackBack쓰자
 PLAY_FRN,FRN400_body,40,NextAnimationCheck,333333

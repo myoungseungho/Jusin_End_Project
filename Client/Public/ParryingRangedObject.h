@@ -74,6 +74,7 @@ private:
 	_bool m_bFlipEnable = { true };
 
 	_float2 m_fGoalPosXZ = {};
+	_ushort m_iMapBreakIndex = { 60000 };
 
 private:
 

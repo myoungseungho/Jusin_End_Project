@@ -273,6 +273,13 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 		m_bNormalGoku = false;
 	}
 
+	//Set_bAura(false);
+	{	
+	LIGHT_DESC* pLight_DescTemp = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+	pLight_DescTemp->vAuraColor = m_fAuraColor;
+	m_bAura = true;
+	}
+
 	return S_OK;
 }
 
@@ -287,7 +294,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	//	return;
 	//}
 
-	cout << m_pModelCom->m_fCurrentAnimPosition << endl;
+	//cout << m_pModelCom->m_fCurrentAnimPosition << endl;
 
 	Update_Tag_In(fTimeDelta);
 
@@ -784,6 +791,10 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 {
 	if (m_bInvisible == true)
 		return S_OK;
+
+
+	if (m_bAlwaysss3Test)
+		Set_bAura(true);
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -2039,7 +2050,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bHeavySkill)
 			{
 				Set_AnimationStop(0.1f);
-				Character_Create_Distortion({ 0.f,1.f,0.f, }, { 0.f,0.f });
+
+				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+
 				m_bInvisible = false;
 			}
 		}
@@ -2227,7 +2240,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bUltimateKamehameha)
 			{
 				m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
-
+				Set_bAura(true);
 
 				//Set_AnimationStopWithoutMe(2.f);
 				//
@@ -2279,14 +2292,14 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Goku_Energy_Fire_SFX, false, 1.f);
 		}
-		else
+		else if (iAttackEvent == 1)
 		{
 
 			Add_BlueLight();
 
 			if (m_bUltimateKamehameha)
 			{
-
+				Set_bAura(true);
 				//attack obejct이던 시절 백업
 
 				//CAttackObject::ATTACK_DESC Desc{};
@@ -2445,7 +2458,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			}
 		}
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
+		}
 	}
+	
+
 	break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_UPSIDE:
 
@@ -2454,7 +2473,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_bUltimateKamehameha)
 			{
-
+				Set_bAura(true);
 				_float fStopTime = 1.8f;
 
 				Set_AnimationStopWithoutMe(fStopTime);
@@ -2482,7 +2501,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			if (m_bUltimateKamehameha)
 			{
-
+				Set_bAura(true);
 				CAttackObject_Energy::ATTACK_RANGED_DESC Desc{};
 				if (m_iPlayerTeam == 1)
 					Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Energy_Attack;
@@ -2596,6 +2615,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 
 		}
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
+		}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR:
 		if (iAttackEvent == 0)
@@ -2639,7 +2662,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 		}
-		else
+		else if (iAttackEvent == 1)
 		{
 
 			Add_BlueLight();
@@ -2741,6 +2764,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Character_Make_Effect(TEXT("Energie-02"), { 0.7f,1.1f });
 				Character_Make_Effect(TEXT("Energie-03"), { 0.7f,1.1f });
 			}
+		}
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
 		}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE:
@@ -2884,7 +2911,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Character_Make_Effect(TEXT("Energie-03_Down"), { 0.f,0.7f });
 			}
 		}
-
+		else if (iAttackEvent == 101)
+		{
+			Set_bAura(false);
+		}
 		break;
 	case Client::CPlay_Goku::ANIME_FINAL_START:
 	{
@@ -2895,6 +2925,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Character_Start_QTE(CQTE_Manager::QTE_ID_HIT);
 			}
+
+			Set_bAura(true);
 		}
 
 	}
@@ -2963,6 +2995,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//못맞추면 여기로 옴
 			if (iAttackEvent == 1)
 			{
+				Set_bAura(false);
 
 				//cout << "FINAL_ELBO_FAIL" << endl;
 
@@ -3244,6 +3277,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_iQTE = -1;
 			m_bFinalSkillss3 = false;
+
+
+			if(m_bAlwaysss3Test == false)
+				Set_bAura(false);
+
+
 		}
 
 	}
@@ -3534,6 +3573,7 @@ void CPlay_Goku::Play_Sound_Stop(_uint SoundName)
 void CPlay_Goku::Set_UltimateKamehameha(_bool bUltimate)
 {
 	m_bUltimateKamehameha = bUltimate;
+	
 }
 
 void CPlay_Goku::Add_YellowLight()

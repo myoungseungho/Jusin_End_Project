@@ -2306,6 +2306,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 	}
 
 
+	Set_bAura(false);
+
 	m_bHit = TRUE;
 	m_bStun = true;
 
