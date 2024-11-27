@@ -221,10 +221,9 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pQTE_Manager->Late_Update(fTimeDelta);
 	m_pParticle_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
-<<<<<<< HEAD
 
-	if (m_pGameInstance->Key_Down(DIK_SPACE))
-	{
+	//if (m_pGameInstance->Key_Down(DIK_SPACE))
+	//{
 		/*{
 			CCharacter::Character_DESC Opening_CharacterDesc{};
 			Opening_CharacterDesc.iTeam = 1;
@@ -233,15 +232,13 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc);
 		}*/
 
-	//	static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
+		//	static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
 
-	//	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+		//	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
-	/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
-	}
-=======
->>>>>>> fea9cea35da3afc50dc1845a726959edb5161f93
+		/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
+		//}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
