@@ -604,6 +604,9 @@
     <ClCompile Include="..\private\Shadow_Camera.cpp">
       <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Lobby_Staff.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1283,6 +1286,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Camera\Shadow_Camera">
       <UniqueIdentifier>{4b1b0465-8f4f-436c-9c9d-463ea58e0423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff">
+      <UniqueIdentifier>{0737dce8-dcf9-411a-8eec-89d46acf55f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2050,6 +2056,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Shadow_Camera.h">
       <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Staff.h">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -193,6 +193,7 @@
 #include "Lobby_Flag.h"
 #include "Lobby_Ranking.h"
 #include "Lobby_Party.h"
+#include "Lobby_Staff.h"
 #include "UI_Lobby_Text.h"
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
@@ -629,6 +630,15 @@ HRESULT CLoader::Loading_For_Lobby()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Map/Lobby/Mesh/lob_Wring.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	//NPC ¸ðµ¨ 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_NPC_Staff"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Lobby_NPC/NPC_Staff.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Model_Lobby_NPC_BUN"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Lobby_NPC/NPC_BUN.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 	//New Model Texture
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_Lobby_TreeReaf02_sh"),
@@ -861,6 +871,11 @@ HRESULT CLoader::Loading_For_Lobby()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Party"),
 		CLobby_Party::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Lobby_Lobby_Staff"),
+		CLobby_Staff::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	return S_OK;
 }
