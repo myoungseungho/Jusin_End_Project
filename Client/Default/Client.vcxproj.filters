@@ -625,6 +625,9 @@
     <ClCompile Include="..\Private\SubTitle_Manager.cpp">
       <Filter>02.GameObjects\SubTitle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\SubTitle.cpp">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -2115,6 +2118,9 @@
       <Filter>02.GameObjects\Particle\Particle_Hit_3_Ultimate</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SubTitle_Manager.h">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SubTitle.h">
       <Filter>02.GameObjects\SubTitle</Filter>
     </ClInclude>
   </ItemGroup>

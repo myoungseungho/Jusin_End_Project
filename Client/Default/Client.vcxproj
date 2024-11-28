@@ -210,6 +210,7 @@
     <ClInclude Include="..\public\Lobby_Frieza.h" />
     <ClInclude Include="..\public\Lobby_Goku_RunEff.h" />
     <ClInclude Include="..\public\Lobby_Krillin.h" />
+    <ClInclude Include="..\Public\SubTitle.h" />
     <ClInclude Include="..\Public\Particle_Focus.h" />
     <ClInclude Include="..\Public\Particle_Common_Hit.h" />
     <ClInclude Include="..\Public\Particle_21_3_Ultimate.h" />
@@ -464,6 +465,7 @@
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp" />
     <ClCompile Include="..\private\Lobby_Krillin.cpp" />
+    <ClCompile Include="..\Private\SubTitle.cpp" />
     <ClCompile Include="..\Private\Particle_Focus.cpp" />
     <ClCompile Include="..\Private\Particle_Common_Hit.cpp" />
     <ClCompile Include="..\Private\Particle_21_3_Ultimate.cpp" />

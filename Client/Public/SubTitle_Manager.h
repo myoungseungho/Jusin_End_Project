@@ -18,9 +18,8 @@ class CSubTitle_Manager : public CBase
 public:
 	enum SUBTITLE_ID
 	{
-		SUBTITLE_HELLO,
-		SUBTITLE_WELCOME,
-		// 필요한 만큼 추가하세요
+		GOKU_VS_FRIEZA_SUBTITLE_0,
+		GOKU_VS_FRIEZA_SUBTITLE_1,
 		SUBTITLE_END
 	};
 
@@ -42,14 +41,8 @@ public:
 
 	unordered_map<SUBTITLE_ID, _wstring> m_mapSubTitleText;
 
-	// 현재 표시 중인 자막 정보
-	struct SubTitle
-	{
-		SUBTITLE_ID eID;
-		_float fRemainingTime;
-	} m_CurrentSubTitle;
 
-	_bool m_bIsDisplaying = false;
+	class CSubTitle* m_pSubTitle = nullptr;
 
 public:
 	virtual void Free() override;

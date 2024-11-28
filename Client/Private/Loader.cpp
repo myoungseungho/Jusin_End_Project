@@ -176,6 +176,7 @@
 #include "Particle_Frieza_1_Ultimate_Hit.h"
 #include "Particle_Frieza_3_Ultimate_Hit.h"
 #include "Particle_21_3_Ultimate.h"
+#include "SubTitle.h"
 
 //Lobby
 #include "Lobby_Center_Map.h"
@@ -4235,6 +4236,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_21_3_Ultimate"),
 		CParticle_21_3_Ultimate::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SubTitle"),
+		CSubTitle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;

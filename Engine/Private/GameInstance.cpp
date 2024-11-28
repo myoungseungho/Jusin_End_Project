@@ -529,6 +529,11 @@ HRESULT CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText
 	return m_pFont_Manager->Draw_Font(strFontTag, pText, vPosition, vFontColor, fRadian, vPivotPos, fScale);
 }
 
+HRESULT CGameInstance::Draw_FontShadow(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor, _fvector vShadowFontColor, _float fShadowSize, _float fRadian, _float2 vPivotPos, _float fScale)
+{
+	return m_pFont_Manager->Draw_FontShadow(strFontTag, pText, vPosition, vFontColor, vShadowFontColor, fShadowSize, fRadian, vPivotPos, fScale);
+}
+
 void* CGameInstance::Load_Effects(wstring& FilePath)
 {
 	if (nullptr == m_pFile_Manager)

@@ -38,6 +38,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	Create_QTE_Manager();
 	Create_Particle_Manager();
 	Create_SubTitle_Manager();
+
 #pragma region ÀÌÆåÆ® ¼¼ÆÃ
 	Loading_For_Effect();
 #pragma endregion
@@ -68,7 +69,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
