@@ -343,6 +343,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_bPlaying = false;
 			}
@@ -795,6 +796,11 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 
 	if (m_bAlwaysss3Test)
 		Set_bAura(true);
+
+	if(m_bForcedAura)
+		Set_bAura(true);
+
+	m_bAura;
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;

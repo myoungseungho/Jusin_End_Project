@@ -411,7 +411,12 @@ public:
 
 	_float4 m_fAuraColor = {};
 	_bool m_bAura = false;
+	_bool m_bForcedAura = false;
+	void Set_bForcedAura(_bool bForcedAura);
+
 	void Set_bAura(_bool bAura);
+
+	void Set_fAuraColor(_float4 fAuraColor);
 
 protected:
 
