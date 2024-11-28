@@ -1,0 +1,66 @@
+[Layer]
+LayerName: Start_Battle-02
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 2
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Start_Battle-02_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_Battle-02Start_Battle-02_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -0.7 1 0
+Scale: 0.03 0.06 1
+Rotation: 0 0 300.779
+IsLoop: false
+Color: 40 180 85 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.7 1 0
+Scale: 0.03 0.06 1
+Rotation: 0 0 300.779
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Start_Battle-02_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_Battle-02Start_Battle-02_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.1 1.6 0
+Scale: 0.0399915 0.0799829 1
+Rotation: 0 0 226.753
+IsLoop: false
+Color: 40 180 85 1
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 3
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 1.6 0
+Scale: 0.0399915 0.0799829 1
+Rotation: 0 0 226.753
+CurTime: 0
+Duration: 1
+IsNotPlaying: false

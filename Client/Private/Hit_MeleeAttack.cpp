@@ -565,6 +565,7 @@ void CHit_MeleeAttack::Attack_Crouch_Heavy()
 	if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_CROUCHING || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY);
+		m_pPlayer->Set_b236Special(false);
 	}
 	
 	else if(*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_HEAVY ||
@@ -572,6 +573,7 @@ void CHit_MeleeAttack::Attack_Crouch_Heavy()
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_CROUCH_MEDUIM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_SPECIAL)
 	{
 		m_pPlayer->Set_NextAnimation(CPlay_Hit::ANIME_ATTACK_CROUCH_HEAVY, 0.5f);
+		m_pPlayer->Set_b236Special(false);
 	}
 
 	else if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_JUMP_UP || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_JUMP_DOWN)

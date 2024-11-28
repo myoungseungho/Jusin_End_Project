@@ -1294,7 +1294,16 @@ void CPlay_21::Gravity(_float fTimeDelta)
 			Character_Make_Effect(TEXT("Smoke02_Small"));
 			Character_Make_Effect(TEXT("Smoke04"));
 
-			Character_Make_Effect(TEXT("21_WSDO-04"));
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("21_WSDO-04"), &pDesc);
+
 			Set_CurrentAnimationPositionJump(230.f);
 
 			if (m_pAttack214AssultEffect_Layer != nullptr)
@@ -1527,7 +1536,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
+		//Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
+		Desc.fRanged_Impus_NoneDirection = { 18.f,0.f };
+
 		Desc.iDirection = m_iLookDirection;
 		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 
@@ -3208,6 +3219,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+		
 
 		}
 		else if (iAttackEvent == 5)
@@ -3220,6 +3232,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Set_AnimationStop(0.7f);
 
 			Set_bAura(false);
+
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+			//pEffect->m_fTickPerSecond *= 0.2f;
+
+			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir_Rotated_Right"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
 		}
 
 	}
@@ -3447,6 +3466,64 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		}
 		break;
+	case ANIME_START_DEFAULT:
+	{
+		//빙글 돌 때 아우라
+		if (iAttackEvent == 0)
+		{
+			//Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
+			pEffect->Set_Copy_Layer_Scaled({ 1.5f,1.5f,1.5f });
+		}
+
+	}
+	break;
+
+	case ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE:
+	{
+		if (iAttackEvent == 2001)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-01"), { -0.7f * m_iLookDirection,0.f });
+		}
+		else if (iAttackEvent == 2002)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+
+
+			m_pEnemy->Set_AnimationStop(0.5f);
+			Set_AnimationStop(0.5f);
+
+		}
+		else if (iAttackEvent == 2003)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+		}
+		else if (iAttackEvent == 2004)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+		}
+
+
+	}
+	break;
+
 	default:
 		break;
 	}

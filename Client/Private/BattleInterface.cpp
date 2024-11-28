@@ -742,6 +742,8 @@ void CBattleInterface_Manager::Character_Opening_AIO()
         m_p2TeamCharacter[0]->Set_AnimationMoveXZ(true);
 
 
+        m_p1TeamCharacter[0]->Set_bAura(false);
+
 
 
         static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_bInivisible(false);

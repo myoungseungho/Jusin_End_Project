@@ -1,0 +1,151 @@
+[Layer]
+LayerName: Hit_SDI_U
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Hit_SDI_U_01
+ModelName: Model_Effect_cmn_screw
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDI_UHit_SDI_U_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1.6 0 0
+Scale: 0.0299639 0.015 0.0149965
+Rotation: 0 180 0
+IsLoop: true
+Color: 0 105.546 242.334 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.6 0 0
+Scale: 0.0299659 0.015 0.0149975
+Rotation: 0 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_SDI_U_02
+ModelName: Model_Effect_cmn_screw
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDI_UHit_SDI_U_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -1.6 0 0
+Scale: 0.029937 0.0149999 0.0149692
+Rotation: 27.273 180 0
+IsLoop: true
+Color: 255 255 255 1.78808
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -1.6 0 0
+Scale: 0.0299635 0.0149999 0.0149819
+Rotation: 27.273 180 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_SDI_U_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDI_UHit_SDI_U_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -2.3 0 0
+Scale: 0.0399981 0.699997 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 0 95.4139 255 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2.3 0 0
+Scale: 0.0399983 0.7 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_SDI_U_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDI_UHit_SDI_U_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -2.3 0 0
+Scale: 0.0399928 0.699885 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 255 255 255 0.695364
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2.3 0 0
+Scale: 0.0399992 0.699987 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: Hit_SDI_U_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Hit_SDI_UHit_SDI_U_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: -2 0 0
+Scale: 0.29997 0.599946 1
+Rotation: 0 0 270
+IsLoop: true
+Color: 0 75.149 255 0.894039
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 0 0
+Scale: 0.299996 0.6 1
+Rotation: 0 0 270
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+

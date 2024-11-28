@@ -2070,6 +2070,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+			
+				CEffect_Layer* pEffect=	Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength) + 0.8f });
+				if(m_iLookDirection == -1)
+					pEffect->Set_Copy_Layer_Rotation({0.f,0.f,135.f});
+				else
+					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,45.f });
 
 			}
 		}
@@ -2258,6 +2264,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+
+				CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength) + 0.8f });
+
+				if(m_iLookDirection == 1)
+					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,315.f });
+				else
+					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,225.f });
+
 			}
 		}
 
@@ -2866,6 +2880,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_b236Special == false)
 			{
+				m_b236LightSuccess = false;
 				m_bInvisible = false;
 				MoveToEnemy_Ground(7.f);
 				//Character_Make_Effect(TEXT("Moving_Line_Right"));
@@ -2911,6 +2926,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
+
+
 				}
 				{
 					CAttackObject::ATTACK_DESC Desc{};
@@ -2942,10 +2959,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 				}
 
+
+
 				//CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDO-03"));
-				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDI-I"));
-				if (pEffect != nullptr)
-					pEffect->Set_Copy_Layer_Scaled({ -0.8f,1.f,1.f });
+				m_p236LightEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDI-I"));
+				if (m_p236LightEffect != nullptr)
+					m_p236LightEffect->Set_Copy_Layer_Scaled({ -0.8f,1.f,1.f });
 
 			}
 			else
@@ -2984,18 +3003,33 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bOnwerHitNoneStop = true;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+				//m_pEnemy->Character_Make_Effect(TEXT("Hit_SDI_U"));
+				Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength)+0.8f });
+
 			}
 		}
 		else if (iAttackEvent == 2)
 		{
 			//평범하게 사용시 할것없음. 규칙성 유지하느라 틀 만듦
-			if (m_b236Special == false)
+			//if (m_b236Special == false)
+			//{
+			//}
+			//else
+			//{
+			//	m_b236Special = false;
+			//}
+
+			if (m_b236LightSuccess == false)
 			{
+				if (m_p236LightEffect != nullptr)
+				{
+					m_p236LightEffect->m_bIsDoneAnim = true;
+					m_p236LightEffect = nullptr;
+				}
 			}
-			else
-			{
-				m_b236Special = false;
-			}
+
 		}
 
 		//기본 약공격 명중시 이펙트
@@ -3004,6 +3038,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 1.3f,1.6f });
 			pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,90.f + 90.f * m_iLookDirection });
 			pEffect->Set_Copy_Layer_Scaled({ 0.8f,0.7f,1.f });
+
+			m_b236LightSuccess = true;
 		}
 	}
 	break;
@@ -4353,6 +4389,49 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 	}
 	break;
+	case ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE:
+	{
+		if (iAttackEvent == 2001)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-01"), { -0.7f*m_iLookDirection,0.f });
+		}
+		else if (iAttackEvent == 2002)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+
+
+			m_pEnemy->Set_AnimationStop(0.5f);
+			Set_AnimationStop(0.5f);
+
+		}
+		else if (iAttackEvent == 2003)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+		}
+		else if (iAttackEvent == 2004)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+		}
+
+
+	}
 	default:
 		break;
 	}

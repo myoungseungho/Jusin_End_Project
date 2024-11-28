@@ -1579,6 +1579,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pEnemy->Set_bAura(false);
 			m_pEnemy->Set_bAura(true);
 			m_pEnemy->Set_bAura(false);
+			m_pEnemy->Set_bForcedAura(false);
 
 		}
 
@@ -3360,7 +3361,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_2P_Ranged_Attack;
 			Desc.ColliderDesc.pMineGameObject = this;
 			//Desc.ColliderDesc.vExtents = { 0.8f,0.8f,1.f };
-			Desc.ColliderDesc.vExtents = { 1.3f,1.3f,1.f };
+			//Desc.ColliderDesc.vExtents = { 1.3f,1.3f,1.f };
+			Desc.ColliderDesc.vExtents = { 1.0f,1.0f,1.f };
 
 
 
@@ -3771,6 +3773,49 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		break;
 	case Client::CPlay_Frieza::ANIME_GRAB_READY:
 		break;
+	case ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE:
+	{
+		if (iAttackEvent == 2001)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-01"), { -0.7f * m_iLookDirection,0.f });
+		}
+		else if (iAttackEvent == 2002)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+
+
+			m_pEnemy->Set_AnimationStop(0.5f);
+			Set_AnimationStop(0.5f);
+
+		}
+		else if (iAttackEvent == 2003)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+		}
+		else if (iAttackEvent == 2004)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+		}
+
+
+	}
 	default:
 		break;
 	}

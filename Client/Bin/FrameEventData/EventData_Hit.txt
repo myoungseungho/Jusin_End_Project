@@ -27,6 +27,11 @@ PLAY_HIT,HTN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_HIT,HTN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
 PLAY_HIT,HTN620cs_body,100,NextAnimation,630
 
+PLAY_HIT,HTN620cs_body,80,AttackEvent,2001
+PLAY_HIT,HTN620cs_body,90,AttackEvent,2002
+PLAY_HIT,HTN620cs_body,95,AttackEvent,2003
+PLAY_HIT,HTN620cs_body,99,AttackEvent,2004
+
 
 //,마지막 상태 정지모션 (공용) 83
 PLAY_HIT,HTN630_body,0.000000,AnimSpeedChange,0.013000,59.798000
@@ -824,6 +829,7 @@ PLAY_HIT,HTN401_body,0,AnimSpeedChange,0.008000,61
 PLAY_HIT,HTN401_body,0,AttackEvent,0
 //,이동 + 샤샤샥 + 공격판정 + 보이게
 PLAY_HIT,HTN401_body,15,AttackEvent,1
+PLAY_HIT,HTN401_body,23,AttackEvent,2
 
 
 

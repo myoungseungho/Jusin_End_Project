@@ -5963,15 +5963,17 @@ void CCharacter::Notify_QTE_Same_Grab(_int result)
 
 void CCharacter::Notify_QTE_1p_Grab(_int result)
 {
-	switch (result)
-	{
-		//½Â
-	case 1:
-		break;
-		//ÆÐ
-	case -1:
-		break;
-	}
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//½Â
+	//case 1:
+	//	break;
+	//	//ÆÐ
+	//case -1:
+	//	break;
+	//}
 }
 
 

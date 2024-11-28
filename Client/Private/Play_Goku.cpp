@@ -801,7 +801,7 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 	if(m_bForcedAura)
 		Set_bAura(true);
 
-	m_bAura;
+	
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -2278,11 +2278,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Set_LoofAnimationCreate(TEXT("Aura11_Yellow"), 2.6f, 0.3f);
 
 
-				Character_Make_Effect(TEXT("EnergieSDO-01"),{-0.5f,-0.2f});
-				Character_Make_Effect(TEXT("EnergieSDO-02"), { -0.5f,-0.2f });
-
+	
 				//Set_LoofAnimationCreate(TEXT("EnergieSDO-01"), 2.f, 0.3f, { -0.5f,-0.2f });
 				//Set_LoofAnimationCreate(TEXT("EnergieSDO-02"), 2.f, 0.3f, { -0.5f,-0.2f });
+
+				Character_Make_Effect(TEXT("EnergieSDO-01"), { -0.5f,-0.2f });
+				Character_Make_Effect(TEXT("EnergieSDO-02"), { -0.5f,-0.2f });
 
 
 			}
@@ -2379,6 +2380,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Character_Make_Effect(TEXT("Energie-02"), { 0.7f,0.9f });
 				Character_Make_Effect(TEXT("Energie-03"), { 0.7f,0.9f });
+
+				//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Energie-02"), { 0.7f,0.9f });
+				//pEffect->Set_Copy_Layer_Scaled({ 1.3f,1.3f,1.3f });
+				//
+				//pEffect = Character_Make_Effect(TEXT("Energie-03"), { 0.7f,0.9f });
+				//pEffect->Set_Copy_Layer_Scaled({ 1.3f,1.3f,1.3f });
+
 			}
 			else
 			{
@@ -3565,8 +3573,22 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case ANIME_GOKU_CINEMATIC_01:
 	{
+
+		//크리링폭발
+		if (iAttackEvent == 2)
+		{
+			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,12.5f });
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,2.f,2.f });
+		}
+
+		//분노 bAura
+		else if (iAttackEvent == 3)
+		{
+			Set_bAura(true);
+		}
+
 		//변신 전 아우라 Positon 840
-		if (iAttackEvent == 0)
+		else if (iAttackEvent == 0)
 		{
 			m_pFinalAura = Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
 
@@ -3610,6 +3632,49 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	}
 	break;
+	case ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE:
+	{
+		if (iAttackEvent == 2001)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-01"), { -0.7f * m_iLookDirection,0.f });
+		}
+		else if (iAttackEvent == 2002)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+
+
+			m_pEnemy->Set_AnimationStop(0.5f);
+			Set_AnimationStop(0.5f);
+
+		}
+		else if (iAttackEvent == 2003)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+		}
+		else if (iAttackEvent == 2004)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+		}
+
+
+	}
 	default:
 		break;
 	}

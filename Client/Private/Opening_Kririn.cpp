@@ -165,7 +165,7 @@ HRESULT COpening_Kririn::Initialize(void* pArg)
 
 	
 	
-	Set_AnimationStop(3.f);
+	Set_AnimationStop(2.f);
 
 
 	m_bInvisible = true;
