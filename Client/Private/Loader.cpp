@@ -388,6 +388,10 @@ HRESULT CLoader::Loading_For_Lobby()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/lob_SignLineFont%d.png"),2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_StaffTextBox"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Lobby/TextBox.png")))))
+		return E_FAIL;
+
 	_matrix			PreTransformMatrix = XMMatrixIdentity();
 
 	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f);

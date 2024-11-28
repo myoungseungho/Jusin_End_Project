@@ -1290,6 +1290,9 @@
     <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff">
       <UniqueIdentifier>{0737dce8-dcf9-411a-8eec-89d46acf55f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Text\Staff">
+      <UniqueIdentifier>{8ebfed5c-00ca-48c1-ab90-78e6c6ecf86e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
