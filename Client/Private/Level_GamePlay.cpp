@@ -185,11 +185,11 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
-		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(0, 1, 0), {}, { 1.f,1.5f });
+		//m_pRenderInstance->Switch_AllBlackOut(false);
 	}
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(1, 0, 0));
+		m_pRenderInstance->Switch_AllBlackOut();
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_Z))

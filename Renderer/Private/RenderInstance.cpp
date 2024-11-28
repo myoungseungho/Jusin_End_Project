@@ -280,6 +280,11 @@ void CRenderInstance::Switch_BlackOut(_bool isTrue)
 	m_pRenderer->Switch_BlackOut(isTrue);
 }
 
+void CRenderInstance::Switch_AllBlackOut()
+{
+	m_pRenderer->Switch_AllBlackOut();
+}
+
 void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)
 {
 	m_pRenderer->Start_WhiteOut(vDir, isDone, fWhiteSpeed);
