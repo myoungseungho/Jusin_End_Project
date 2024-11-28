@@ -1,9 +1,9 @@
 [Layer]
 LayerName: Crash_Smoke
-Duration: 0.8
+Duration: 1
 TickPerSecond: 1.5
-KeyFramesCount: 48
-NumEffec: 42
+KeyFramesCount: 59
+NumEffec: 45
 Position: -0.5 0 -0.5
 Scale: 0.4 0.4 0.4
 Rotation: 0 180 0
@@ -18,9 +18,9 @@ EffectType: 3
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: -0.5 0 -0.5
-Scale: 0.000262144 0.000262144 0.000262144
-Rotation: 0 0 0
+Position: 1.5 -0.5 -0.5
+Scale: 0.4 0.4 0.4
+Rotation: 0 180 340
 IsLoop: false
 Color: 45 40 50 30
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
@@ -65,7 +65,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -120,7 +120,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -175,7 +175,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -230,7 +230,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -285,7 +285,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -340,7 +340,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -395,7 +395,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -450,7 +450,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -505,7 +505,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -560,7 +560,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -615,7 +615,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -670,7 +670,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -0.5 0 -0.5
-Scale: 0.000262144 0.000262144 0.000262144
+Scale: 0.4 0.4 0.4
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -716,7 +716,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -771,7 +771,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -826,7 +826,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -881,7 +881,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -936,7 +936,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -991,7 +991,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1046,7 +1046,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1101,7 +1101,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1156,7 +1156,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1211,7 +1211,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1266,7 +1266,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: -3 0 -3
-Scale: 4.295e-07 4.295e-07 4.295e-07
+Scale: 6.872e-08 6.872e-08 6.872e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1321,7 +1321,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1367,7 +1367,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1413,7 +1413,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1459,7 +1459,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1505,7 +1505,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1551,7 +1551,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1597,7 +1597,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1643,7 +1643,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1689,7 +1689,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1735,7 +1735,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1781,7 +1781,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1827,7 +1827,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1873,7 +1873,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1919,7 +1919,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -1965,7 +1965,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -2011,7 +2011,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -2057,7 +2057,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -2103,7 +2103,7 @@ RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
 Position: 3.5 8.4 -12.5
-Scale: 2.12576e-07 2.12576e-07 2.12576e-07
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
 Rotation: 0 0 0
 IsLoop: false
 Color: 45 40 50 30
@@ -2138,4 +2138,88 @@ Rotation: 0 0 0
 CurTime: 1.05
 Duration: 2
 IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_43
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_43
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -2 -0.3 0
+Scale: 0.5 0.999999 0.5
+Rotation: 0 0 20
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.3 0
+Scale: 0.5 0.999999 0.5
+Rotation: 0 0 20
+CurTime: 0
+Duration: 0.8
+IsNotPlaying: false
+
+[Effect]
+EffectName: Crash_Smoke_44
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_44
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.8 -0.7 0
+Scale: 0.3 0.8 0.5
+Rotation: 0 0 335.845
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.8 -0.7 0
+Scale: 0.3 0.8 0.5
+Rotation: 0 0 335.845
+CurTime: 0
+Duration: 0.8
+IsNotPlaying: false
+
+[Effect]
+EffectName: Crash_Smoke_45
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_45
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.7 -1.1
+Scale: 0.4 0.9 0.5
+Rotation: 0 0 346.753
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.7 -1.1
+Scale: 0.4 0.9 0.5
+Rotation: 0 0 346.753
+CurTime: 0
+Duration: 0.8
+IsNotPlaying: false
 

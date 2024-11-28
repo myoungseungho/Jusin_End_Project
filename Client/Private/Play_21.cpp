@@ -331,6 +331,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_bPlaying = false;
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{

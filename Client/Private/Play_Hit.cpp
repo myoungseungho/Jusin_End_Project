@@ -336,6 +336,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_bPlaying = false;
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -3879,9 +3880,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 91.f;
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 281.f;
 
-
 			
-			//Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,0.7f });
+			
+			Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,1.f });
 
 		}
 
@@ -3972,8 +3973,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//pEffect->Set_Copy_Layer_Scaled({ 1.f,0.9f,1.f });
 
 
-			//m_LaserListRS.push_back({ 0.70f , {0.f, 0.f,180.f}	, {1.f,0.1f} });
-			//m_LaserListRS.push_back({ 0.70f , {0.f, 0.f,180.f}	, {1.f,0.1f} });
+			//왜 이건 무조건 방향 맞지
+			m_LaserListRS.push_back({ 0.90f , {0.f, 0.f,300.f}	, {1.f,1.f} });
+			m_LaserListRS.push_back({ 1.63f , {30.f, 0.f,90.f + 70.f * m_iLookDirection}	, {0.7f,0.3f} });
+
 
 
 		}
@@ -4465,6 +4468,26 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 		
 		//CEffect_Layer* pDustEffect = Character_Make_Effect(TEXT("Hit_SAO-01"));
 		//pDustEffect->Set_Copy_Layer_Position({ (rand() % 600 - 300) * 0.01f , rand() % 150 * 0.01f, (rand() % 200 - 100) * 0.01f });
+
+
+		_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_float3 fPos;
+		XMStoreFloat3(&fPos, vPos);
+
+		//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+
+		
+		//_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300)*0.01f * Get_iDirection()), fPos.y , fPos.z + (rand() % 200 - 100) * 0.01f);
+		_matrix ovelapMatrix{};
+		if (fCurrentAnimationPosition <200)
+			ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+		else
+			ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 ) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+		CEffect_Layer::COPY_DESC tDesc{};
+		XMFLOAT4X4 Result4x4;
+		XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+		tDesc.pPlayertMatrix = &Result4x4;
+		CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Hit_SAO-01"), &tDesc);
 
 	}
 

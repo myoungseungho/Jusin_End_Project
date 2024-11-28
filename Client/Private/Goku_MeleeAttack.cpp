@@ -847,7 +847,10 @@ void CGoku_MeleeAttack::Attack_214Final()
 			/*tDesc.pPlayertMatrix = m_pPlayer->Character_Make_BoneEffect()
 			tDesc.pTransformCom = static_cast<CTransform*>(m_pPlayer->Get_Component(TEXT("Com_Transform")));
 			m_pEffect_Manager->Copy_Layer(TEXT("EnergieSAO-01"), &tDesc);*/
-			CEffect_Layer* pEffectLayer = m_pPlayer->Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
+
+
+			//Character·Î ÀÌ»ç°¨
+			//CEffect_Layer* pEffectLayer = m_pPlayer->Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
 
 			//·¹ÀÌ¾î ¾È¿¡ ÀÌÆåÆ® ²°´Ù Ä×´Ù
 			//pEffectLayer->Find_Effect(L"EnergieSAO-01_01")->m_bIsSpriteEnd = true;
