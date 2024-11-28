@@ -29,7 +29,9 @@ HRESULT CLobby_Ranking::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(47.1f, 2.446f, 47.4f));
+	m_pTransformCom->Set_State_Position(_float3(16.230f, 0.046f, 36.560f));
+	m_pTransformCom->Rotation({ 0.f, 1.f,0.f }, XMConvertToRadians(201.f));
+	m_pTransformCom->Set_Scaled( 2.5f, 2.5f,2.5f);
 
 	return S_OK;
 }

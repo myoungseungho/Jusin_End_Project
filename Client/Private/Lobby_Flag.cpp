@@ -29,8 +29,9 @@ HRESULT CLobby_Flag::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(47.1f, 2.446f, 47.4f));
-
+	FLAG_DESC* pDesc = static_cast<FLAG_DESC*>(pArg);
+	Default_Setting(pDesc->iNumObject);
+	m_pTransformCom->Set_Scaled(2.5f, 2.5f, 2.5f);
 	return S_OK;
 }
 
@@ -44,8 +45,8 @@ void CLobby_Flag::Update(_float fTimeDelta)
 	m_fAnimFrame += fTimeDelta * 5.f;
 	m_fTexcoordValue += fTimeDelta * 0.5f;
 
-	if (m_fTexcoordValue >= 1.f)
-		m_fTexcoordValue = 0.f;
+	//if (m_fTexcoordValue >= 1.f)
+		//m_fTexcoordValue = 0.f;
 
 	if (m_fAnimFrame >= 1.f)
 	{
@@ -94,6 +95,32 @@ HRESULT CLobby_Flag::Render(_float fTimeDelta)
 	}
 
 	return S_OK;
+}
+
+void CLobby_Flag::Default_Setting(_uint iNum)
+{
+	switch (iNum)
+	{
+	case 0:
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 7.801f, 0.046f, -31.624f , 1.f });
+		m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(144.000));
+		break;
+
+	case 1:
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 16.301f, 0.046f, -27.624f , 1.f });
+		m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(156.000));
+		break;
+
+	case 2:
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -17.299f, 0.046f, -27.424f , 1.f });
+		m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(180.000));
+		break;
+	case 3:
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -8.299f, 0.046f, -31.224f , 1.f });
+		m_pTransformCom->Rotation({ 0.f, 1.f, 0.f }, XMConvertToRadians(180.000));
+		break;
+
+	}
 }
 
 HRESULT CLobby_Flag::Ready_Components()

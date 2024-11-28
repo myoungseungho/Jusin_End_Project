@@ -22,8 +22,8 @@ CLevel_VS::CLevel_VS(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 HRESULT CLevel_VS::Initialize()
 {
 	m_iLevelIndex = LEVEL_VS;
+
 	m_pRenderInstance->Clear_Light();
-	Sleep(1000);
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;

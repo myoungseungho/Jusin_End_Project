@@ -58,41 +58,50 @@ HRESULT CLevel_GamePlay::Initialize()
 	//Prototype_GameObject_Play_Goku
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
-	CharacterDesc.iTeam = 1;
-	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+	if (CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(0).eSlot == CUI_Define::SLOT_END)
+	{
+		CharacterDesc.iTeam = 1;
+		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
-	CharacterDesc.iTeam = 2;
-	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+		CharacterDesc.iTeam = 2;
+		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-
-	CharacterDesc.iTeam = 1;
-	CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
 
 
-	CharacterDesc.iTeam = 2;
-	CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
+		CharacterDesc.iTeam = 1;
+		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
-		return E_FAIL;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
 
-	//for (int i = 0; i < 4 ; ++i)
-	//{
-	//		CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
-	//		CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
-	//		_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
-	//
-	//		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
-	//			return E_FAIL;
-	//}
+
+		CharacterDesc.iTeam = 2;
+		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
+
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+			return E_FAIL;
+	}
+	else
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			if (CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot == CUI_Define::SLOT_END)
+				continue;
+	
+			CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
+			CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
+			_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
+	
+			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
+				return E_FAIL;
+		}
+	}
 
 	//if(FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Loading_GodDragon"), TEXT("Layer_UI_Loading_GodDragon"))))
 	//	return E_FAIL;
@@ -160,6 +169,16 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+	//if (m_pGameInstance->Key_Down(DIK_E))
+	//{
+	//	m_pUI_Manager->CutSceneUI(TRUE);
+	//}
+	//
+	//if (m_pGameInstance->Key_Down(DIK_R))
+	//{
+	//	m_pUI_Manager->CutSceneUI(FALSE);
+	//}
+
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
 		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(0, 1, 0), {}, { 1.f,1.5f });
