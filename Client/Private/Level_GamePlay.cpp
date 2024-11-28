@@ -260,6 +260,9 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 		/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
 		//}
+
+	if (m_pGameInstance->Key_Down(DIK_V))
+		CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)

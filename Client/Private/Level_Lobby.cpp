@@ -155,6 +155,10 @@ HRESULT CLevel_Lobby::Initialize()
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"))))
 		return E_FAIL;
 
+	//Win
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_UI_WIn_Font"), TEXT("Layer_Lobby_Win"))))
+	//	return E_FAIL;
+
 	//원형 전광판
 	CLobby_DisplayBoard::DISPLAY_DESC tDisplayDesc = {};
 
