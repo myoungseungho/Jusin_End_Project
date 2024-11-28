@@ -225,6 +225,7 @@ private:
 
 	_bool m_bNormalGoku = { true }; //true
 
+	CEffect_Layer* m_pFinalAura = { nullptr };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

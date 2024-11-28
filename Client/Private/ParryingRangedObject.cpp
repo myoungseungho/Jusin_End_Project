@@ -10,9 +10,9 @@
 #include "Effect_Layer.h"
 
 #include "Effect_Manager.h"
-
+#include "Effect.h"
 #include "SpaceRock.h"
-
+#include "Imgui_Manager.h"
 CParryingRangedObject::CParryingRangedObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -57,29 +57,67 @@ HRESULT CParryingRangedObject::Initialize(void* pArg)
 	CEffect_Layer::COPY_DESC tDesc{};
 	tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 	m_pEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Parrying_Ball"), &tDesc);
+	for (auto& iter : m_pEffect_Layer->m_MixtureEffects)
+	{
+		iter->m_iChangePassIndex = 10;
+		/* 컬러값 이걸로 바꾸면됨 */
+		iter->m_vColor = CImgui_Manager::Get_Instance()->color;
+		/*
+		21호 283.1    6.954     76.49    283.1
 
-	
+		손오공 300   255  50.66   130
+
+		프리저 148    108    259.2   12.914
+		*/
+	}
+
 	_float fPosX = XMVectorGetX(pDesc->vPos);
 
-	//임시코드
-	if (abs(fPosX + 15.092f) < 3.f)
-	{
-		m_bDestroyObject = true;
-		m_fGoalPosXZ = { 15.092f,10.208f };
-	}
 
-	else if (abs(fPosX - 16.825f) < 5.f)
+	if(CMap_Manager::Get_Instance()->m_eCurMap == CMap_Manager::MAP_SPACE)
 	{
-		m_bDestroyObject = true;
-		m_fGoalPosXZ = { 16.825f,16.178f };
-	}
 
-	else if (abs(fPosX - 12.263f) < 3.f)
-	{
-		m_bDestroyObject = true;
-		m_fGoalPosXZ = { 12.263f,33.606f };
-	}
+		_bool* bList = static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock;
 
+		_bool bBreakBall = false;
+
+		//임시코드
+		if(bList[0]==false)
+		{
+			if (abs(fPosX + 15.092f) < 5.f)
+			{
+				m_bDestroyObject = true;
+				m_fGoalPosXZ = { -15.092f,10.208f };
+				bBreakBall = true;
+				//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[0] = true;
+				m_iMapBreakIndex = 0;
+			}
+		}
+		if(bBreakBall == false && bList[1] == false)
+		{
+			if (abs(fPosX - 16.825f) < 7.f)
+			{
+				m_bDestroyObject = true;
+				m_fGoalPosXZ = { 16.825f,16.178f };
+				//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[1] = true;
+				m_iMapBreakIndex = 1;
+
+			}
+
+		}
+		if (bBreakBall == false && bList[2] == false)
+		{
+			if (abs(fPosX - 12.263f) < 3.f)
+			{
+				m_bDestroyObject = true;
+				m_fGoalPosXZ = { 12.263f,33.606f };
+				//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[2] = true;
+				m_iMapBreakIndex = 2;
+
+			}
+		}
+		 
+	}
 	//맵확인, 주변에 부술 수 있는 오브젝트가 있는지 거리검사,  이미 부숴져있는지 검사,  true
 
 
@@ -148,10 +186,31 @@ void CParryingRangedObject::Update(_float fTimeDelta)
 				m_bFlipEnable = false;
 			}
 
-			m_pTransformCom->Add_Move({ 0.f,-20 * fTimeDelta,10 * fTimeDelta });
-		}
+			//m_pTransformCom->Add_Move({ 0.f,-20 * fTimeDelta,10 * fTimeDelta });
+			m_pTransformCom->Add_Move({ 0.f,-20 * fTimeDelta,0.f });
 
-		if (m_fAccLifeTime > 5)
+		}
+		
+
+		_float fLength = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_POSITION) - _vector{ m_fGoalPosXZ.x, 0.f, m_fGoalPosXZ.y, 1.f });
+
+		cout << fLength << endl;
+
+	//	if (fLength < 5.f)
+		if (fLength < 3.f)
+		{
+
+			static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[m_iMapBreakIndex] = true;
+			//먼지깔기
+
+			m_pEffect_Layer->m_bIsDoneAnim = true;
+			m_pEffect_Layer = nullptr;
+			//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[0] = true;
+			Destory();
+		}
+	
+
+		else if (m_fAccLifeTime > 5)
 		{
 			m_pEffect_Layer->m_bIsDoneAnim = true;
 			m_pEffect_Layer = nullptr;

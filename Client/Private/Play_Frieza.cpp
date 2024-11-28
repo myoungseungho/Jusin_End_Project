@@ -30,7 +30,10 @@
 #include "Frieza_Metal.h"
 
 #include "Opening_Kririn.h"
+#include "Particle_Manager.h"
+
 #include "Map_Manager.h"
+
 
 CPlay_Frieza::CPlay_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -55,7 +58,7 @@ HRESULT CPlay_Frieza::Initialize_Prototype()
 
 HRESULT CPlay_Frieza::Initialize(void* pArg)
 {
-	
+
 	m_ChaseEffectName = TEXT("FZ_BurstR");
 	m_fAIrGrabEndAnimationPositon = 29.99f;
 
@@ -393,10 +396,13 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 			//
 			//}
 
+			cout << m_fAccDyingTime << endl;
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				m_bPlaying = false;
 			}
 
@@ -635,7 +641,7 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 		{
 
 
-			cout << m_pModelCom->m_iCurrentAnimationIndex << endl;
+			//cout << m_pModelCom->m_iCurrentAnimationIndex << endl;
 			Character_Play_Animation(fTimeDelta);
 
 
@@ -1326,6 +1332,21 @@ void CPlay_Frieza::Gravity(_float fTimeDelta)
 				m_p214FinalEffect->m_bIsDoneAnim = true;
 				m_p214FinalEffect = nullptr;
 			}
+
+
+			Character_Make_Effect(TEXT("Crash_Smoke"));
+
+			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("Crash_Smoke"));
+			//pEffect->Set_Copy_Layer_Scaled({ 2.f, 2.f, 1.f });
+
+			//Character_Make_Effect(TEXT("Smoke04"),{1.f,0.f},true);
+			//if(m_iLookDirection == 1)
+			//	Character_Make_Effect(TEXT("Smoke03_Five_Dir"));
+			//else
+			//	Character_Make_Effect(TEXT("Smoke03_Five_Dir_Rotated_Right"));
+
+				
+
 		}
 	}
 
@@ -1410,7 +1431,12 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			_vector vLength = vEnemyPos - vMyPos;
 
-			Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+			//적 위치에 생성
+			//Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+
+			//가로로 직선
+			Desc.ColliderDesc.vCenter = {7.f * m_iLookDirection,0.4f,0.f };
+			Desc.ColliderDesc.vExtents = { 8.f,1.f,1.f };
 
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
@@ -1443,10 +1469,12 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.iCallAttackBackIndex = 1001;
 
-			
+
 			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { 7.f*m_iLookDirection,0.f }, { 10.f,0.7f }, 0.07f);
 		}
 		else if (iAttackEvent == 1001)
 		{
@@ -1460,6 +1488,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, m_pEnemy, true);
 			}
 
+			m_pEnemy->Set_bForcedAura(true);
+			m_pEnemy->Set_bAura(true);
+			m_pEnemy->Set_fAuraColor({ 6.76f, 1.5333f, 27.86f, 5.490f });
+	
 		}
 		// AttackBack 실패시 55로 이동  성공시 애니메이션 속도 조절
 		else if (iAttackEvent == 1)
@@ -1539,6 +1571,15 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bOnwerHitNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			CEffect_Layer* pEffect = m_pEnemy->Character_Make_Effect(TEXT("BurstJ3-Hit01"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f, 2.f, 2.f });
+
+			m_pEnemy->Set_bAura(false);
+			m_pEnemy->Set_bAura(true);
+			m_pEnemy->Set_bAura(false);
+
 		}
 
 	}
@@ -1706,10 +1747,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 			Desc.iGainKiAmount = 1;
-			
+
 			//Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFT };
 			//Desc.fStartOffset = { 0.2f * m_iLookDirection +0.2f,1.7f };
 			//Desc.strEffectName = TEXT("FZ_BurstK-01");
@@ -1827,7 +1868,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fRanged_Impus_NoneDirection = { 30.f,0.f };
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 			Desc.strEffectName = TEXT("FZ_BurstJ-02");
 
 			Desc.bExplosion = false;
@@ -1914,7 +1955,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fRanged_Impus_NoneDirection = { 30.f,0.f };
 				Desc.iDirection = m_iLookDirection;
-				Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+				Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 				Desc.strEffectName = TEXT("FZ_BurstJ-02");
 
 				Desc.iGainKiAmount = 3;
@@ -2473,7 +2514,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
-		
+
 		//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_SDO-02"), { 2.f,0.f });
 
 		Character_Make_Effect(TEXT("FZ_SDU-02"), { 2.f,0.f });
@@ -2602,12 +2643,15 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Desc.eAttackType = { ATTACKTYPE_HIGH };
 			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.f };
-			Desc.fRanged_Impus_NoneDirection = { 7.845f,-5.f };  // 1:1.569 비율
+			//Desc.fRanged_Impus_NoneDirection = { 7.845f,-5.f };  // 1:1.569 비율
+			Desc.fRanged_Impus_NoneDirection = { 15.69f,-10.f };  // 1:1.569 비율
+
 
 			Desc.iDirection = m_iLookDirection;
 
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
-			Desc.strEffectName = TEXT("BurstJ-03_Rotated_Left");
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
+			Desc.strEffectName = TEXT("FZ_SJ-02");
+			Desc.fEffectRotationDegree = -45.f;
 			Desc.iGainKiAmount = 7;
 
 			Desc.bOnwerHitNoneStop = true;
@@ -2827,7 +2871,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Frieza::ANIME_ATTACK_236:
 	{
-		if(iAttackEvent == 0)
+		if (iAttackEvent == 0)
 		{
 			CAttackObject::ATTACK_DESC Desc{};
 			if (m_iPlayerTeam == 1)
@@ -2885,7 +2929,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//강공격용
 		else if (iAttackEvent == 1)
 		{
-			if(m_bHeavySkill)
+			if (m_bHeavySkill)
 			{
 				CAttackObject::ATTACK_DESC Desc{};
 				if (m_iPlayerTeam == 1)
@@ -2920,11 +2964,14 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 
-
 				//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"));
 				//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"),{0.f,0.5f});
 				//pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,270.f });
 
+
+					//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"));
+					//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("FZ_SDU-01"),{0.f,0.5f});
+					//pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,270.f });
 
 				CEffect_Layer* pEffect1 = Character_Make_Effect(TEXT("FZ_SDU-02"), { 5.7f,0.f });
 				CEffect_Layer* pEffect2 = Character_Make_Effect(TEXT("FZ_SDU-02"), { 6.4f,0.f }, true);
@@ -2975,7 +3022,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//m_p236SpecialEffect=Character_Make_BoneEffect("GD_fist_R", TEXT("FZ_SDJ"));
 			//m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"),{0.4f,-0.3f});
-			m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"),{0.7f,-0.1f});
+			m_p236SpecialEffect = Character_Make_Effect(TEXT("FZ_SDJ"), { 0.7f,-0.1f });
 
 
 
@@ -3116,7 +3163,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.ihitCharacter_Motion = { HitMotion::HIT_KNOCK_AWAY_LEFTDOWN };
 				//Desc.fStartOffset = { -0.2f,-0.3f };
-				Desc.fStartOffset = { 0.5f*m_iLookDirection,-0.3f };
+				Desc.fStartOffset = { 0.5f * m_iLookDirection,-0.3f };
 
 				Desc.bGroundExplosionEffect = true;
 			}
@@ -3134,11 +3181,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 
 			//	Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
-			
+
 			//Desc.fStartOffset = { -0.2f,-0.3f};
 
 			Desc.strEffectName = TEXT("FZ_SDJ_BIG");
@@ -3162,7 +3209,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_DeleteLayer.push_back(Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_SAJ-01")));
 
 		}
-		else if(iAttackEvent == 0)
+		else if (iAttackEvent == 0)
 		{
 
 			for (auto pEffect : m_DeleteLayer)
@@ -3231,7 +3278,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 			Desc.bPierce = true;
 
@@ -3258,6 +3305,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 
+			Set_bAura(true);
 			if (Get_fHeight() < 2)
 			{
 				Add_Move({ 0.f,2.f });
@@ -3286,6 +3334,13 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 1)
 		{
 			Set_AnimationStop(1.f);
+
+
+			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 2.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_PARTICLE, resultFloat3);
 		}
 		//,정지끝, 구체 떨어짐. 이거 땅에 떨어지거나 맞을때까지 정지인데
 		else if (iAttackEvent == 2)
@@ -3345,7 +3400,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 			Desc.bGrabbedEnd = true;
 
 			Desc.eAttackGrade = { GRADE_ULTIMATE };
@@ -3362,18 +3417,26 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-02"));
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			Set_bAura(false);
+
 		}
 		else if (iAttackEvent == 1001)
 		{
-
+			_vector position = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_HIT_PARTICLE, resultFloat3);
 
 
 			if (m_pEnemy->Get_iHP() < 2080 * Get_DamageScale(true))
 			{
-				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE,2.f);
+				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE, 2.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
 				//캐릭터 MaxDeath 도 처리
-			
+
 			}
 		}
 	}
@@ -3403,7 +3466,6 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-01"));
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-01"));
 
-			
 		}
 
 		//준비?
@@ -3412,12 +3474,17 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-02"));
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-02"));
 
+			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_3_PARTICLE, resultFloat3);
 		}
 
 		//공격시작
 		else if (iAttackEvent == 2)
 		{
-			m_p214FinalEffect =Character_Make_BoneEffect("G_head", TEXT("FZ_SAO-03"));
+			m_p214FinalEffect = Character_Make_BoneEffect("G_head", TEXT("FZ_SAO-03"));
 			m_p214FinalEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,-45.f });
 
 			Set_fImpulse({ 10.f * m_iLookDirection, -15.f });
@@ -3452,23 +3519,18 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 			Desc.bGrabbedEnd = true;
 
-			//Desc.iCallAttackBackIndex = 1001;
+			Desc.iCallAttackBackIndex = 1001;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
-		//else if (iAttackEvent == 1001)
-		//{
-		//	if(Get_fHeight() > 4)
-		//	{
-		//		if (m_pEnemy->Get_iHP() < 4020 * Get_DamageScale(true))
-		//		{
-		//			CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE,2.f);
-		//			m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
-		//			//캐릭터 MaxDeath 도 처리
-		//	
-		//		}
-		//	}
-		//}
+		else if (iAttackEvent == 1001)
+		{
+			_vector position = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_3_HIT_PARTICLE, resultFloat3);
+		}
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_214_FINAL_2:
@@ -3556,10 +3618,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-03"));
 			//Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-04"));
-			
-		
+
+
 			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("FZ_Down_R-04"), { 0.599f,1.075f });
-			
+
 			{
 				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("FZ_Down_R-03"));
 				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,25.f });
@@ -3577,7 +3639,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case Client::CPlay_Frieza::ANIME_TRANSFORM_FINAL:
 	{
-	
+
 		//Position 0 : 컷씬, 적 시간정지. SM
 		if (iAttackEvent == 0)
 		{
@@ -3589,7 +3651,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//FZ_SAR-01
 
-			
+
 		}
 
 		//Position 7 이펙트 생성
@@ -3964,7 +4026,7 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 		//반대로 갈것
 		Desc.iDirection = -m_i214AttackPreviousDirection;
 
-		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 		Desc.bPierce = true;
 

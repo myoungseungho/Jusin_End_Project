@@ -24,6 +24,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
 
+	virtual void Set_Particle_Active(_bool isActive) override;
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

@@ -83,6 +83,11 @@ public:
 		_bool bHitEffectFlip = { false };
 
 		_ushort iCallAttackBackIndex = { 60000 };
+		_float3 fParticleOffset = {};
+
+		_ushort iParticleIndex = { 60000 };
+
+
 		class CCharacter* pOwner = { nullptr };
 	};
 protected:
@@ -200,6 +205,10 @@ protected:
 	_bool	m_bHitEffectFlip = { false };
 
 	_ushort m_iCallAttackBackIndex = { 60000 };
+
+	_ushort m_iParticleIndex = { 60000 };
+	_float3 m_fParticleOffset = {};
+
 private:
 	HRESULT Ready_Components(ATTACK_DESC* pDesc);
 

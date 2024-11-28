@@ -8,6 +8,9 @@ float4 g_vCamPosition;
 float g_Time;
 float g_MaxTime;
 
+float g_ScaleX = 7.f;
+float g_ScaleY = 0.5f;
+
 struct VS_IN
 {
 	/* 정점 쉐이더마다 갱신되서 들어오는 데이터들 */
@@ -78,7 +81,7 @@ void GS_MAIN(point GS_IN In[1], inout TriangleStream<GS_OUT> VertexStream)
 
     // 여기에서 원하는 배율을 적용합니다.
     float xScaleFactor = 5.f; // X축 크기 배율
-    float yScaleFactor = 1.0f; // Y축 크기 배율
+    float yScaleFactor = 2.0f; // Y축 크기 배율
 
     vRight *= xScaleFactor;
     vUp *= yScaleFactor;
@@ -133,8 +136,8 @@ void GS_MAIN_NOTBillBoard(point GS_IN In[1], inout TriangleStream<GS_OUT> Vertex
     float3 vPerp = normalize(cross(worldUp, vDir));
 
     // 스케일링 팩터 적용
-    float lengthDir = 5.0f * In[0].vPSize.x;
-    float lengthPerp = 1.0f * In[0].vPSize.y;
+    float lengthDir = g_ScaleX * In[0].vPSize.x;
+    float lengthPerp = g_ScaleY * In[0].vPSize.y;
 
     // 중심 위치
     float3 center = In[0].vPosition.xyz;
@@ -279,8 +282,20 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    Out.vColor = g_vColor;
+    // 중심 좌표
+    float2 center = float2(0.5f, 0.5f);
 
+    // 중심으로부터의 거리 계산
+    float distance = length(In.vTexcoord - center);
+
+    // 거리 기반으로 그라데이션 강도 계산 (0.0 ~ 1.0)
+    float gradient = saturate(1.0f - distance * 1.5f); // 멀수록 0, 가까울수록 1
+
+    // 흰색(밝은 부분)과 g_vColor(보라색)의 혼합
+    float4 white = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    Out.vColor = lerp(g_vColor, white, gradient);
+
+    // 알파 값 조건에 따라 픽셀 버리기
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
         discard;
 
@@ -310,7 +325,7 @@ PS_OUT PS_RUN_DUST(PS_IN In)
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)
         discard;
     
-    Out.vColor.a *= min((In.vLifeTime.x - In.vLifeTime.y) + 0.5f  , 1.f);
+    Out.vColor.a *= min((In.vLifeTime.x - In.vLifeTime.y) + 0.5f, 1.f);
     //Out.vColor.rgb = Out.vColor.rgb * float3(0.529, 0.290, 0.078);
 
     return Out;
@@ -362,7 +377,7 @@ technique11 DefaultTechnique
     }
 
 //3
-    pass Default_BillBoard
+    pass Default_NotBillBoard
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);

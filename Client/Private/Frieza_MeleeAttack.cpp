@@ -393,7 +393,15 @@ void CFrieza_MeleeAttack::Attack_236()
 
 void CFrieza_MeleeAttack::Attack_214()
 {
-	if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_214);
+	}
+	else if (m_pPlayer->Get_bAttackBackEvent() &&
+		(*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_HEAVY)
+		)
 	{
 		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_214);
 	}

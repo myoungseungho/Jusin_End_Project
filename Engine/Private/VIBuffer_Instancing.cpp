@@ -112,32 +112,116 @@ _bool CVIBuffer_Instancing::Spread(_float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
-		_vector		vMoveDir = XMVector3Normalize(XMLoadFloat4(&m_pInstanceVertices[i].vTranslation) - XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f));
-
-		// Store moveDir in the instance buffer
-		XMStoreFloat3(&m_pInstanceVertices[i].vMoveDir, vMoveDir);
-
-		XMStoreFloat4(&pMatrices[i].vTranslation,
-			XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
-
+		// 라이프타임 업데이트
 		pMatrices[i].vLifeTime.y += fTimeDelta;
-		if (m_isLoop == true && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+
+		if (pMatrices[i].vLifeTime.y >= 0.f)
 		{
-			pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
-			pMatrices[i].vLifeTime.y = 0.f;
-		}// 루프가 안돌지만 라이프타임 시간을 넘어섰을 때
-		else if (!m_isLoop && pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+			_vector		vMoveDir = XMVector3Normalize(XMLoadFloat4(&m_pInstanceVertices[i].vTranslation) - XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f));
+
+			// Store moveDir in the instance buffer
+			XMStoreFloat3(&pMatrices[i].vMoveDir, vMoveDir);
+
+			XMStoreFloat4(&pMatrices[i].vTranslation,
+				XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
+		}
+
+		if (pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
 		{
-			m_pContext->Unmap(m_pVBInstance, 0);
-			return true;
+
+			if (m_isLoop == true)
+			{
+				// 파티클을 초기 위치로 리셋
+				pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
+
+				// lifeTime.y를 -lifeTime.x와 0 사이의 랜덤한 값으로 재설정
+				pMatrices[i].vLifeTime.y = -RandomBetween(0.f, pMatrices[i].vLifeTime.x);
+			}
+			else
+			{
+				// 파티클 생명 주기가 끝났을 때 처리
+				m_pContext->Unmap(m_pVBInstance, 0);
+				return true;
+			}
 		}
 	}
-
-	m_fElapsedTime += fTimeDelta;
 
 	m_pContext->Unmap(m_pVBInstance, 0);
 	return false;
 }
+
+
+_bool CVIBuffer_Instancing::FocusPoint(_float fTimeDelta)
+{
+	D3D11_MAPPED_SUBRESOURCE MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		// 라이프타임 업데이트
+		pMatrices[i].vLifeTime.y += fTimeDelta;
+
+		if (pMatrices[i].vLifeTime.y >= 0.f)
+		{
+			_vector vMoveDir = XMVector3Normalize(XMVectorSetW(XMLoadFloat3(&m_vPivotPos), 1.f) - XMLoadFloat4(&m_pInstanceVertices[i].vTranslation));
+
+			// 이동 방향을 인스턴스 버퍼에 저장
+			XMStoreFloat3(&pMatrices[i].vMoveDir, vMoveDir);
+
+			// 파티클 위치 업데이트
+			XMStoreFloat4(&pMatrices[i].vTranslation,
+				XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);
+		}
+
+		if (pMatrices[i].vLifeTime.y >= pMatrices[i].vLifeTime.x)
+		{
+			if (m_isLoop == true)
+			{
+				// 파티클을 초기 위치로 리셋
+				pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
+
+				// lifeTime.y를 -lifeTime.x와 0 사이의 랜덤한 값으로 재설정
+				pMatrices[i].vLifeTime.y = -RandomBetween(0.f, pMatrices[i].vLifeTime.x);
+			}
+			else
+			{
+				// 파티클 생명 주기가 끝났을 때 처리
+				m_pContext->Unmap(m_pVBInstance, 0);
+				return true;
+			}
+		}
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+	return false;
+}
+
+void CVIBuffer_Instancing::Particle_Initialize()
+{
+	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
+
+	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
+
+	VTXINSTANCE* pMatrices = static_cast<VTXINSTANCE*>(MappedSubResource.pData);
+
+	for (size_t i = 0; i < m_iNumInstance; i++)
+	{
+		// 각 인스턴스별로 모든 필드를 올바르게 복사합니다.
+		pMatrices[i].vRight = m_pInstanceVertices[i].vRight;
+		pMatrices[i].vUp = m_pInstanceVertices[i].vUp;
+		pMatrices[i].vLook = m_pInstanceVertices[i].vLook;
+		pMatrices[i].vMoveDir = m_pInstanceVertices[i].vMoveDir;
+		pMatrices[i].vTranslation = m_pInstanceVertices[i].vTranslation;
+		pMatrices[i].vLifeTime = m_pInstanceVertices[i].vLifeTime;
+	}
+
+	m_pContext->Unmap(m_pVBInstance, 0);
+}
+
+
 
 _bool CVIBuffer_Instancing::Spread_2D(_float fTimeDelta)
 {
@@ -795,7 +879,7 @@ void CVIBuffer_Instancing::Drop(_float fTimeDelta)
 
 void CVIBuffer_Instancing::MoveDir(_vector vDir, _float fTimeDelta)
 {
-	D3D11_MAPPED_SUBRESOURCE		MappedSubResource{};
+	D3D11_MAPPED_SUBRESOURCE        MappedSubResource{};
 
 	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &MappedSubResource);
 
@@ -803,7 +887,7 @@ void CVIBuffer_Instancing::MoveDir(_vector vDir, _float fTimeDelta)
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
-		_vector		vMoveDir = vDir;
+		_vector        vMoveDir = vDir;
 
 		XMStoreFloat4(&pMatrices[i].vTranslation,
 			XMLoadFloat4(&pMatrices[i].vTranslation) + vMoveDir * m_pSpeeds[i] * fTimeDelta);

@@ -16,7 +16,7 @@
 #include "UI_Manager.h"
 #include "iostream"
 
-
+#include "Effect.h"
 #include "BattleInterface.h"
 
 
@@ -333,8 +333,10 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_bPlaying = false;
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -3396,6 +3398,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			
 			//Character_Make_Effect(TEXT("Hit_SDO-02"));
 			Character_Make_Effect(TEXT("Hit_SDO-02"),{0.f,0.6f});
+
+			Set_bAura(true);
 		}
 
 
@@ -3692,6 +3696,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == true)
 			{
 				Set_Animation(ANIME_IDLE);
+				Set_bAura(false);
 			}
 		}
 
@@ -3708,6 +3713,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_IDLE);
+				Set_bAura(false);
 			}
 		}
 
@@ -3731,6 +3737,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Character_Start_QTE(CQTE_Manager::QTE_ID_1P_SAME_GRAB);
 			}
+
+			Set_bAura(true);
 
 		}
 
@@ -3806,6 +3814,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_IDLE);
+				Set_bAura(false);
 
 				if (m_bCreateQTE)
 				{
@@ -3824,8 +3833,17 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_iQTE == 1) // 1
 			{
+				m_pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-02"), { 1.f,-0.3f });
+				m_pAttackFinalGlassEffect_Layer->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+
+				//(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+				(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_iChangePassIndex = 11;
+				(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 10.f);
 
 
+				CEffect_Layer* pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,1.f });
+				pAttackFinalGlassEffect_Layer->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+				(*pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 100.f);
 			}
 			else
 			{
@@ -3833,10 +3851,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_SAO-02"),{1.f,-0.3f});
 				//pEffect->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
 
-				
+
+				CEffect_Layer* pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,1.f });
 
 				m_pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-02"), { 1.f,-0.3f });
 				m_pAttackFinalGlassEffect_Layer->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+
+				//(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_iChangePassIndex = 11;
+				//(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 10.f);
 
 
 			}
@@ -3870,11 +3892,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 91.f;
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 281.f;
-
-
 			
-			//Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,0.7f });
-
 		}
 
 		else if (iAttackEvent == 255)
@@ -3907,7 +3925,19 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			CMap_Manager::Get_Instance()->All_Black(false);
 
-			Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
+			CEffect_Layer* pEffectLayerGlassBreak = Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
+			
+			if(m_iQTE == 1)
+			{
+				for (auto& iter : pEffectLayerGlassBreak->m_MixtureEffects)
+				{
+					iter->m_iChangePassIndex = 11;
+					iter->m_vColor = _float4(255.f, 0.f, 0.f, 100.f);
+				}
+			}
+
+			//(*pEffectLayerGlass->m_MixtureEffects.begin())->m_iChangePassIndex = 11;
+			//(*pEffectLayerGlass->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 10.f);
 
 			//CEffect_Layer* pEffectBreak = Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
 			//pEffectBreak->Set_Copy_Layer_Scaled({ 2.f,2.f,2.f });
@@ -3940,10 +3970,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+			if(m_bSparking == false)
+				Set_bAura(false);
+
 		}
 		else if (iAttackEvent == 6)
 		{
 
+			Set_bAura(false);
 
 			Set_Animation(ANIME_IDLE);
 		}
@@ -3960,8 +3994,10 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//pEffect->Set_Copy_Layer_Scaled({ 1.f,0.9f,1.f });
 
 
-			//m_LaserListRS.push_back({ 0.70f , {0.f, 0.f,180.f}	, {1.f,0.1f} });
-			//m_LaserListRS.push_back({ 0.70f , {0.f, 0.f,180.f}	, {1.f,0.1f} });
+			//왜 이건 무조건 방향 맞지
+			m_LaserListRS.push_back({ 0.90f , {0.f, 0.f,300.f}	, {1.f,1.f} });
+			m_LaserListRS.push_back({ 1.63f , {30.f, 0.f,90.f + 70.f * m_iLookDirection}	, {0.7f,0.3f} });
+
 
 
 		}
@@ -4453,6 +4489,26 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 		
 		//CEffect_Layer* pDustEffect = Character_Make_Effect(TEXT("Hit_SAO-01"));
 		//pDustEffect->Set_Copy_Layer_Position({ (rand() % 600 - 300) * 0.01f , rand() % 150 * 0.01f, (rand() % 200 - 100) * 0.01f });
+
+
+		_vector vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_float3 fPos;
+		XMStoreFloat3(&fPos, vPos);
+
+		//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
+
+		
+		//_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300)*0.01f * Get_iDirection()), fPos.y , fPos.z + (rand() % 200 - 100) * 0.01f);
+		_matrix ovelapMatrix{};
+		if (fCurrentAnimationPosition <200)
+			ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+		else
+			ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 ) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+		CEffect_Layer::COPY_DESC tDesc{};
+		XMFLOAT4X4 Result4x4;
+		XMStoreFloat4x4(&Result4x4, ovelapMatrix);
+		tDesc.pPlayertMatrix = &Result4x4;
+		CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Hit_SAO-01"), &tDesc);
 
 	}
 

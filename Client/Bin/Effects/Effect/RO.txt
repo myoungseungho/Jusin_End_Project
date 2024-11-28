@@ -1,0 +1,242 @@
+[Layer]
+LayerName: RO
+Duration: 1.5
+TickPerSecond: 5
+KeyFramesCount: 89
+NumEffec: 6
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: RO_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/RORO_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 58.894 0 0.586094
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.2 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -1.9 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: RO_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/RORO_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0.3 -0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 30.39
+IsLoop: false
+Color: 218.692 151.142 54.8841 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 -0.5 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 30.39
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0.6 -1.1 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 30.39
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: RO_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/RORO_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 76.8377 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.9 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -1.6 0
+Scale: 0.25 0.25 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: RO_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/RORO_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.3 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 144.387 0 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 4
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.3 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -2 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1.5
+IsNotPlaying: true
+
+[Effect]
+EffectName: RO_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/RORO_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.1 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 31.2417 0 0.598013
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -1.1 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: RO_06
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/RORO_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.5 0
+Scale: 0.4 0.25 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 255 59.9503 0 30
+GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 5
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1.5
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 49
+Position: 0 -1.2 0
+Scale: 0.3 0.2 1
+Rotation: 0 0 0
+CurTime: 0.816667
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0 -1.5 0
+Scale: 0.4 0.25 1
+Rotation: 0 0 0
+CurTime: 0.966667
+Duration: 1.5
+IsNotPlaying: false
+
