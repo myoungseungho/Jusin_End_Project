@@ -616,6 +616,9 @@
     <ClCompile Include="..\Private\Particle_Frieza_1_Ultimate_Hit.cpp">
       <Filter>02.GameObjects\Particle\Particle_Frieza_1_Ultimate_Hit</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1307,6 +1310,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Particle\Particle_Frieza_1_Ultimate_Hit">
       <UniqueIdentifier>{540bdb5c-bcff-495a-a80e-d30cc9075cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit">
+      <UniqueIdentifier>{6b32e332-0e57-47f9-b55e-35cc7e7c5469}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2086,6 +2092,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Particle_Frieza_1_Ultimate_Hit.h">
       <Filter>02.GameObjects\Particle\Particle_Frieza_1_Ultimate_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h">
+      <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

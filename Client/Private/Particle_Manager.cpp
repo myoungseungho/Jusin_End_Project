@@ -17,7 +17,7 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 	CParticle::PARTICLE_DESC Desc{};
 
 	// 각 파티클 타입별로 최소 5개의 파티클 객체를 미리 생성하여 풀에 추가
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 3; ++i)
 	{
 		//프리저 1필
 		Desc.fXScale = 7.f;
@@ -52,6 +52,20 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 		pParticle->Set_Particle_Active(false);
 		m_ParticlePools[FREIZA_ULTIMATE_1_HIT_PARTICLE].push_back(pParticle);
 
+		//프리저 3필 히트
+		Desc.fXScale = 7.f;
+		Desc.fYScale = 0.5f;
+		Desc.fGlowFactor = 15.f;
+		Desc.iPassIndex = 2;
+		Desc.vColor = _float4(0.4f, 0.f, 1.f, 1.0f);
+
+		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Frieza_3_Ultimate_Hit"), &Desc));
+		pParticle->Set_Particle_Active(false);
+		m_ParticlePools[FREIZA_ULTIMATE_1_HIT_PARTICLE].push_back(pParticle);
+	}
+
+	for (size_t i = 0; i < 10; i++)
+	{
 		//공통 Hit
 		Desc.fXScale = 3.f;
 		Desc.fYScale = 0.5f;
@@ -63,7 +77,6 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 		pParticle->Set_Particle_Active(false);
 		m_ParticlePools[COMMON_HIT_PARTICLE].push_back(pParticle);
 	}
-
 	return S_OK;
 }
 
@@ -169,6 +182,18 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _float3& vPosition)
 			pool.push_back(pParticle);
 			break;
 
+		case FREIZA_ULTIMATE_3_HIT_PARTICLE:
+			//프리저 3필 히트
+			Desc.fXScale = 7.f;
+			Desc.fYScale = 0.5f;
+			Desc.fGlowFactor = 15.f;
+			Desc.iPassIndex = 2;
+			Desc.vColor = _float4(0.4f, 0.f, 1.f, 1.0f);
+
+			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Frieza_3_Ultimate_Hit"), &Desc));
+			pool.push_back(pParticle);
+			break;
+
 		case COMMON_HIT_PARTICLE:
 			//공통 Hit
 			Desc.fXScale = 3.f;
@@ -251,6 +276,18 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _vector& vPosition)
 			Desc.vColor = _float4(0.4f, 0.f, 1.f, 1.0f);
 
 			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Frieza_1_Ultimate_Hit"), &Desc));
+			pool.push_back(pParticle);
+			break;
+
+		case FREIZA_ULTIMATE_3_HIT_PARTICLE:
+			//프리저 3필 히트
+			Desc.fXScale = 7.f;
+			Desc.fYScale = 0.5f;
+			Desc.fGlowFactor = 15.f;
+			Desc.iPassIndex = 2;
+			Desc.vColor = _float4(0.4f, 0.f, 1.f, 1.0f);
+
+			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Frieza_3_Ultimate_Hit"), &Desc));
 			pool.push_back(pParticle);
 			break;
 

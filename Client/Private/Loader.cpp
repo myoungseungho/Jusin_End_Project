@@ -174,6 +174,7 @@
 #include "Particle_Focus.h"
 #include "Particle_Common_Hit.h"
 #include "Particle_Frieza_1_Ultimate_Hit.h"
+#include "Particle_Frieza_3_Ultimate_Hit.h"
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -4222,6 +4223,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CParticle_Frieza_1_Ultimate_Hit::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_Frieza_3_Ultimate_Hit"),
+		CParticle_Frieza_3_Ultimate_Hit::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -4636,9 +4641,9 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vRange = _float3(0.1f, 0.1f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(0.05f, 0.5f);
+	ParticleDesc.vSpeed = _float2(0.05f, 0.3f);
 	ParticleDesc.vScale = _float2(1.5f, 1.5f);
-	ParticleDesc.vLifeTime = _float2(1.2f, 1.5f);
+	ParticleDesc.vLifeTime = _float2(0.6f, 0.8f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread_QTE"),
@@ -4687,6 +4692,20 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Freiza_Ultimate_1_Hit_Spread"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
+	//프리저 3필 Spread  Hit 파티클
+	ParticleDesc.iNumInstance = 500;
+	ParticleDesc.vRange = _float3(2.f, 1.f, 1.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(12.f, 15.f);
+	ParticleDesc.vScale = _float2(0.03f, 0.04f);
+	ParticleDesc.vLifeTime = _float2(0.3f, 0.5f);
+	ParticleDesc.isLoop = false;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Freiza_Ultimate_3_Hit_Spread"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 

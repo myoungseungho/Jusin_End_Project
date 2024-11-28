@@ -3491,7 +3491,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
 			_float3 resultFloat3{};
 			XMStoreFloat3(&resultFloat3, resultPosition);
-			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_HIT_PARTICLE, resultFloat3);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_3_HIT_PARTICLE, resultFloat3);
 		}
 	}
 	break;

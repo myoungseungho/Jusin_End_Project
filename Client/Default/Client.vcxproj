@@ -212,6 +212,7 @@
     <ClInclude Include="..\public\Lobby_Krillin.h" />
     <ClInclude Include="..\Public\Particle_Focus.h" />
     <ClInclude Include="..\Public\Particle_Common_Hit.h" />
+    <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h" />
     <ClInclude Include="..\Public\Particle_Frieza_1_Ultimate_Hit.h" />
     <ClInclude Include="..\Public\Particle_Spread.h" />
     <ClInclude Include="..\Public\Particle.h" />
@@ -463,6 +464,7 @@
     <ClCompile Include="..\private\Lobby_Krillin.cpp" />
     <ClCompile Include="..\Private\Particle_Focus.cpp" />
     <ClCompile Include="..\Private\Particle_Common_Hit.cpp" />
+    <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp" />
     <ClCompile Include="..\Private\Particle_Frieza_1_Ultimate_Hit.cpp" />
     <ClCompile Include="..\Private\Particle_Spread.cpp" />
     <ClCompile Include="..\Private\Play_Frieza.cpp" />
