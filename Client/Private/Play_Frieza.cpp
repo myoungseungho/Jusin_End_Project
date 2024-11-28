@@ -3424,7 +3424,11 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 1001)
 		{
-
+			_vector position = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_HIT_PARTICLE, resultFloat3);
 
 
 			if (m_pEnemy->Get_iHP() < 2080 * Get_DamageScale(true))
@@ -3515,23 +3519,18 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainAttackStep = 0;
 			Desc.bGrabbedEnd = true;
 
-			//Desc.iCallAttackBackIndex = 1001;
+			Desc.iCallAttackBackIndex = 1001;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 		}
-		//else if (iAttackEvent == 1001)
-		//{
-		//	if(Get_fHeight() > 4)
-		//	{
-		//		if (m_pEnemy->Get_iHP() < 4020 * Get_DamageScale(true))
-		//		{
-		//			CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE,2.f);
-		//			m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
-		//			//캐릭터 MaxDeath 도 처리
-		//	
-		//		}
-		//	}
-		//}
+		else if (iAttackEvent == 1001)
+		{
+			_vector position = static_cast<CTransform*>(m_pEnemy->Get_Component(TEXT("Com_Transform")))->Get_State(CTransform::STATE_POSITION);
+			_vector resultPosition = XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_3_HIT_PARTICLE, resultFloat3);
+		}
 	}
 	break;
 	case Client::CPlay_Frieza::ANIME_214_FINAL_2:

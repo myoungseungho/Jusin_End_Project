@@ -10,6 +10,7 @@
 
 #include "Lobby_DisplayBoard.h"
 #include "Lobby_Cloud.h"
+#include "Lobby_Flag.h"
 
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -96,9 +97,13 @@ HRESULT CLevel_Lobby::Initialize()
 		return E_FAIL;
 
 	//·Îºñ ±ê¹ß
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"))))
-		return E_FAIL;
-
+	CLobby_Flag::FLAG_DESC tFlagDesc = {};
+	for (size_t i = 0; i < 4; ++i)
+	{
+		tFlagDesc.iNumObject = i;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Flag"), TEXT("Layer_Lobby_Flag"),&tFlagDesc)))
+			return E_FAIL;
+	}
 	//·Îºñ ·©Å·
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Ranking"), TEXT("Layer_Lobby_Ranking"))))
 		return E_FAIL;

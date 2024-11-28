@@ -171,7 +171,6 @@ void CLevel_Chara_Select::Free()
 {
 	m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::LOGO_BGM);
 
-	m_pRenderInstance->Clear_Light();
 	
 	__super::Free();
 }

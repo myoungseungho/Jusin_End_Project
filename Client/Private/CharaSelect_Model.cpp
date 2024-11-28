@@ -282,7 +282,7 @@ HRESULT CCharaSelect_Model::Add_Light(_float4 vDirection, _float4 vDiffuse, _flo
 	LightDesc.strName = m_RendererDesc.strName;
 	
 
-	if (FAILED(m_pRenderInstance->Add_Player_Light(strName, LightDesc, {1.f,1.f,1.f,1.f} ,&m_bLight)))
+	if (FAILED(m_pRenderInstance->Add_Player_Light(strName, LightDesc, {1.f,1.f,1.f,0.f} ,&m_bLight)))
 		return E_FAIL;
 
 	return S_OK;

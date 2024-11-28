@@ -20,6 +20,9 @@ public:
 	{
 		FREIZA_ULTIMATE_3_PARTICLE,
 		FREIZA_ULTIMATE_1_PARTICLE,
+		FREIZA_ULTIMATE_1_HIT_PARTICLE,
+		FREIZA_ULTIMATE_3_HIT_PARTICLE,
+		COMMON_HIT_PARTICLE,
 		PARTICLE_END
 	};
 
@@ -35,6 +38,7 @@ public:
 	virtual HRESULT Render(_float fTimeDelta);
 
 	HRESULT Play(PARTICLE_ID eID, const _float3& vPosition);
+	HRESULT Play(PARTICLE_ID eID, const _vector& vPosition);
 	void Stop(PARTICLE_ID eID);
 
 	CGameInstance* m_pGameInstance = { nullptr };

@@ -31,6 +31,8 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 	void Set_Position(_float3 position);
+	void Set_Position(_vector position);
+
 	virtual void Set_Particle_Active(_bool isActive);
 
 protected:

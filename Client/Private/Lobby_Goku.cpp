@@ -43,7 +43,7 @@ HRESULT CLobby_Goku::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_pTransformCom->Set_Scaled(1.f, 1.f, 1.f);
-	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, 0.f));
+	m_pTransformCom->Set_State_Position(_float3(0.f, 0.f, -32.f));
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(1, true, 0.1f);
 

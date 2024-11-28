@@ -166,6 +166,52 @@ void CUI_Manager::UsingCreateEndUI()
 
 }
 
+void CUI_Manager::CutSceneUI(_bool bState)
+{
+	if (bState == FALSE)
+	{
+		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_DirInput")))
+		{
+			Input->Destory();
+		}
+
+
+		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Number")))
+		{
+			Input->Destory();
+		}
+
+		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Font")))
+		{
+			Input->Destory();
+		}
+
+		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Effect")))
+		{
+			Input->Destory();
+		}
+	}
+
+	for (auto& Top : m_ListTopUI)
+	{
+		Top->SetActive(bState);
+	}
+
+	//for (auto& Mid : m_ListMidUI)
+	//{
+	//	Mid->SetActive(bState);
+	//}
+
+	for (auto& Bot : m_ListBotUI)
+	{
+		Bot->SetActive(bState);
+	}
+
+	
+
+}
+
+
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {
 	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD7))
