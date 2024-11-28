@@ -262,7 +262,7 @@
     <ClInclude Include="..\public\UI_CharaSelectLight.h" />
     <ClInclude Include="..\public\UI_CharaSelectMark.h" />
     <ClInclude Include="..\public\CharaSelect_Model.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\public\UI_Chara_Select_BG.h" />
     <ClInclude Include="..\public\UI_Chara_SubIcon.h" />
@@ -517,7 +517,7 @@
     <ClCompile Include="..\private\UI_CharaSelectLight.cpp" />
     <ClCompile Include="..\private\UI_CharaSelectMark.cpp" />
     <ClCompile Include="..\private\CharaSelect_Model.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\private\UI_Chara_Select_BG.cpp" />
     <ClCompile Include="..\private\UI_Chara_SubIcon.cpp" />
