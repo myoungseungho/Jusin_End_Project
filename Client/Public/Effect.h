@@ -93,7 +93,7 @@ protected:
 
 
 	_float			m_fCurrentAnimPos = {};
-
+	_float m_fAccTime = { 0.f };
 
 	/* 툴용 쉐이더 패스 인덱스 */
 

@@ -16,7 +16,7 @@
 #include "UI_Manager.h"
 #include "iostream"
 
-
+#include "Effect.h"
 #include "BattleInterface.h"
 
 
@@ -344,7 +344,9 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				m_bPlaying = false;
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
@@ -796,6 +798,11 @@ HRESULT CPlay_Goku::Render(_float fTimeDelta)
 
 	if (m_bAlwaysss3Test)
 		Set_bAura(true);
+
+	if(m_bForcedAura)
+		Set_bAura(true);
+
+	m_bAura;
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -2926,6 +2933,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Character_Start_QTE(CQTE_Manager::QTE_ID_HIT);
 			}
+			m_pFinalAura =Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
+
 
 			Set_bAura(true);
 		}
@@ -2997,7 +3006,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (iAttackEvent == 1)
 			{
 				Set_bAura(false);
-
+				if (m_pFinalAura != nullptr)
+				{
+					m_pFinalAura->m_bIsDoneAnim = true;
+					m_pFinalAura = nullptr;
+				}
 				//cout << "FINAL_ELBO_FAIL" << endl;
 
 				//QTE가 켜져있다면 꺼버리기
@@ -3549,6 +3562,54 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bNormalGoku = false;
 		}
 	}
+	break;
+	case ANIME_GOKU_CINEMATIC_01:
+	{
+		//변신 전 아우라 Positon 840
+		if (iAttackEvent == 0)
+		{
+			m_pFinalAura = Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
+
+			
+
+			//m_pFinalAura = Character_Make_Effect(TEXT("EnergieSAO-01"),{-12.f,0.f});
+
+			
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));			
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+			//pEffect->m_fTickPerSecond *= 0.2f;
+
+			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir_Rotated_Right"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+			//pEffect->m_fTickPerSecond *= 0.2f;
+
+			//pEffect = Character_Make_BoneEffect("G_root", TEXT("EF_EFFECT"));
+			//
+			//_int NumCount = 0;
+			//for (auto& iter : pEffect->m_MixtureEffects)
+			//{
+			//	iter->m_bIsSpriteEnd = true;
+			//
+			//	if(NumCount == 8 || NumCount == 9)
+			//		iter->m_bIsSpriteEnd = false;
+			//
+			//	++NumCount;
+			//}
+			//pEffect->Set_Copy_Layer_Rotation({ 0.f,90.f,0.f });
+
+		}
+		//프리저 보고있는 동안 변신  Position 1001
+		else if (iAttackEvent == 1)
+		{
+			m_bNormalGoku = false;
+			for (auto& iter : m_pFinalAura->m_MixtureEffects)
+			{
+				iter->m_iChangePassIndex = 10;
+			}
+		}
+
+	}
+	break;
 	default:
 		break;
 	}
@@ -3691,6 +3752,12 @@ void CPlay_Goku::Character_CinematicEnd()
 	
 	Set_AnimationMoveXZ(false);
 	m_bNormalGoku = false;
+
+	if (m_pFinalAura != nullptr)
+	{
+		m_pFinalAura->m_bIsDoneAnim = true;
+		m_pFinalAura = nullptr;
+	}
 }
 
 

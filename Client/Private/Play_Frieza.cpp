@@ -396,10 +396,13 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 			//
 			//}
 
+			cout << m_fAccDyingTime << endl;
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				m_bPlaying = false;
 			}
 
@@ -1329,6 +1332,21 @@ void CPlay_Frieza::Gravity(_float fTimeDelta)
 				m_p214FinalEffect->m_bIsDoneAnim = true;
 				m_p214FinalEffect = nullptr;
 			}
+
+
+			Character_Make_Effect(TEXT("Crash_Smoke"));
+
+			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("Crash_Smoke"));
+			//pEffect->Set_Copy_Layer_Scaled({ 2.f, 2.f, 1.f });
+
+			//Character_Make_Effect(TEXT("Smoke04"),{1.f,0.f},true);
+			//if(m_iLookDirection == 1)
+			//	Character_Make_Effect(TEXT("Smoke03_Five_Dir"));
+			//else
+			//	Character_Make_Effect(TEXT("Smoke03_Five_Dir_Rotated_Right"));
+
+				
+
 		}
 	}
 
@@ -1413,7 +1431,12 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			_vector vLength = vEnemyPos - vMyPos;
 
-			Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+			//적 위치에 생성
+			//Desc.ColliderDesc.vCenter = { XMVectorGetX(vLength),XMVectorGetY(vLength),0.f };
+
+			//가로로 직선
+			Desc.ColliderDesc.vCenter = {7.f * m_iLookDirection,0.4f,0.f };
+			Desc.ColliderDesc.vExtents = { 8.f,1.f,1.f };
 
 			//Desc.ColliderDesc.pTransform = m_pTransformCom;
 			//Desc.fhitCharacter_Impus = { 0.3f * m_iLookDirection,0 };
@@ -1450,6 +1473,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Desc.iVirtualCameraindex = CMain_Camera::VIRTUAL_CAMERA_21_GRAB_SPECIAL;dd
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { 7.f*m_iLookDirection,0.f }, { 10.f,0.7f }, 0.07f);
 		}
 		else if (iAttackEvent == 1001)
 		{
@@ -1463,6 +1488,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_LIGHT_FINAL, 1, this, m_pEnemy, true);
 			}
 
+			m_pEnemy->Set_bForcedAura(true);
+			m_pEnemy->Set_bAura(true);
+			m_pEnemy->Set_fAuraColor({ 6.76f, 1.5333f, 27.86f, 5.490f });
+	
 		}
 		// AttackBack 실패시 55로 이동  성공시 애니메이션 속도 조절
 		else if (iAttackEvent == 1)
@@ -1542,6 +1571,15 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bOnwerHitNoneStop = true;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			CEffect_Layer* pEffect = m_pEnemy->Character_Make_Effect(TEXT("BurstJ3-Hit01"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f, 2.f, 2.f });
+
+			m_pEnemy->Set_bAura(false);
+			m_pEnemy->Set_bAura(true);
+			m_pEnemy->Set_bAura(false);
+
 		}
 
 	}
@@ -1709,7 +1747,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 			Desc.iGainKiAmount = 1;
 
@@ -1830,7 +1868,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.fRanged_Impus_NoneDirection = { 30.f,0.f };
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 			Desc.strEffectName = TEXT("FZ_BurstJ-02");
 
 			Desc.bExplosion = false;
@@ -1917,7 +1955,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 				Desc.fRanged_Impus_NoneDirection = { 30.f,0.f };
 				Desc.iDirection = m_iLookDirection;
-				Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+				Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 				Desc.strEffectName = TEXT("FZ_BurstJ-02");
 
 				Desc.iGainKiAmount = 3;
@@ -2611,7 +2649,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.iDirection = m_iLookDirection;
 
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 			Desc.strEffectName = TEXT("FZ_SJ-02");
 			Desc.fEffectRotationDegree = -45.f;
 			Desc.iGainKiAmount = 7;
@@ -3143,7 +3181,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 
 			//	Desc.ColliderDesc.vCenter = { -0.2f,-0.3f,0.f };
@@ -3240,7 +3278,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fRanged_Impus_NoneDirection = { 21.f,0.f };
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 			Desc.bPierce = true;
 
@@ -3362,7 +3400,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 			Desc.bGrabbedEnd = true;
 
 			Desc.eAttackGrade = { GRADE_ULTIMATE };
@@ -3988,7 +4026,7 @@ void CPlay_Frieza::Update214ReturnEvent(_float fTimeDelta)
 		//반대로 갈것
 		Desc.iDirection = -m_i214AttackPreviousDirection;
 
-		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PURPLE;
 
 		Desc.bPierce = true;
 

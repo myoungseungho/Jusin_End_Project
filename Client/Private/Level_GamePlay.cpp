@@ -59,10 +59,12 @@ HRESULT CLevel_GamePlay::Initialize()
 	//1P
 	CCharacter::Character_DESC CharacterDesc{};
 
+
 	if (CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(0).eSlot == CUI_Define::SLOT_END)
 	{
 		CharacterDesc.iTeam = 1;
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
+
 
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
@@ -70,16 +72,15 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.iTeam = 2;
 		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
-
 
 		CharacterDesc.iTeam = 1;
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
 
+
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
-
 
 		CharacterDesc.iTeam = 2;
 		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
@@ -93,11 +94,11 @@ HRESULT CLevel_GamePlay::Initialize()
 		{
 			if (CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot == CUI_Define::SLOT_END)
 				continue;
-	
+
 			CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
 			CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
 			_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
-	
+
 			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
 				return E_FAIL;
 		}
@@ -153,16 +154,19 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	//{
-	//CCharacter::Character_DESC Opening_CharacterDesc{};
-	//Opening_CharacterDesc.iTeam = 1;
-	//Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
 
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
+	CCharacter::Character_DESC Opening_CharacterDesc{};
+	Opening_CharacterDesc.iTeam = 1;
+	Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
+		return E_FAIL;
+
+
+	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
+
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
 	//	return E_FAIL;
-	//}
-
-	//CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
 	return S_OK;
 }
@@ -255,7 +259,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 
 		/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
-		//}
+			//}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
@@ -1005,7 +1009,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 HRESULT CLevel_GamePlay::Ready_Space()
 {
-	
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Shadow_Camera"), TEXT("Layer_A"))))
 		return E_FAIL;
 
@@ -1063,7 +1067,7 @@ HRESULT CLevel_GamePlay::Ready_Volcano()
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_VolcanoEF");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_VolcanoEF"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	
+
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Stage");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Stage"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;

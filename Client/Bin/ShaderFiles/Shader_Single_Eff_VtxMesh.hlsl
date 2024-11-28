@@ -12,7 +12,7 @@ bool    g_bColorChange;
 
 int g_iUnique_Index = -1;
 float g_fGlowFactor = 1.f;
-
+float g_Time;
 
 struct VS_IN
 {
@@ -70,6 +70,8 @@ struct PS_OUT_PICK
 };
 PS_OUT PS_MAIN_CUSTOM_0(PS_IN In);
 PS_OUT PS_MAIN_CUSTOM_1(PS_IN In);
+PS_OUT PS_MAIN_CUSTOM_2(PS_IN In);
+PS_OUT PS_MAIN_CUSTOM_3(PS_IN In);
 
 PS_OUT_PICK PS_MAIN_PICK(PS_IN In)
 {
@@ -334,6 +336,37 @@ technique11 DefaultTechnique
         DomainShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_CUSTOM_1();
     }
+
+    pass CustomEffectDSSDefault // 10
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_CUSTOM_2();
+    }
+
+    pass CustomEffectGlass // 11
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+		//SetDepthStencilState();
+		//SetBlendState();
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_CUSTOM_3();
+    }
+
 }
 
 PS_OUT PS_MAIN_CUSTOM_0(PS_IN In)
@@ -383,7 +416,53 @@ PS_OUT PS_MAIN_CUSTOM_1(PS_IN In)
 }
 
 
+PS_OUT PS_MAIN_CUSTOM_2(PS_IN In)
+{
+    PS_OUT Out;
+    float2 vTexcoord = In.vTexcoord;
+    vTexcoord.y = vTexcoord.y * 0.5f + 0.5f;
+    
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, vTexcoord);
+    
+    float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f };
+    float fAlpha = vMtrlAlpha.a;
+    
+    
+    vMtrlDiffuse.rgb *= vAddColor;
+    vMtrlDiffuse.a = vMtrlDiffuse.a;
+  
+        
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vAlpha = vector(0.f, 0.f, 0.f, 1.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
 
+    return Out;
+}
+
+PS_OUT PS_MAIN_CUSTOM_3(PS_IN In)
+{
+    PS_OUT Out;
+    float2 vTexcoord = In.vTexcoord + g_Time * 5.f;
+    
+    
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
+    vector vMtrlAlpha = g_AlphaTexture.Sample(LinearSampler, In.vTexcoord);
+    
+    float3 vAddColor = { g_vColor.r / 255.f, g_vColor.g / 255.f, g_vColor.b / 255.f };
+    float fAlpha = vMtrlAlpha.a;
+    
+    
+    vMtrlDiffuse.rgb *= vAddColor;
+    vMtrlDiffuse.a = vMtrlDiffuse.a;
+  
+        
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vAlpha = vector(0.f, 0.f, 0.f, 1.f);
+    Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, g_iUnique_Index, 0.f);
+
+    return Out;
+}
 
 
 

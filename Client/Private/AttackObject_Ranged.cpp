@@ -268,7 +268,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 		if (m_eRangeColor != RANGED_LIGHT_NONE)
 		{
 
-			if (m_eRangeColor == RANGED_LIGHT_YELLOW)
+			//if (m_eRangeColor == RANGED_LIGHT_YELLOW)
+			if(m_bPierce == false)
 			{
 				//Add_YellowLight();
 
@@ -342,7 +343,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_eRangeColor != RANGED_LIGHT_NONE)
 			{
 
-				if (m_eRangeColor == RANGED_LIGHT_YELLOW)
+				//if (m_eRangeColor == RANGED_LIGHT_YELLOW)
+				if (m_bPierce == false)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
@@ -392,7 +394,8 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			if (m_eRangeColor != RANGED_LIGHT_NONE)
 			{
 
-				if (m_eRangeColor == RANGED_LIGHT_YELLOW)
+				//if (m_eRangeColor == RANGED_LIGHT_YELLOW)
+				if (m_bPierce == false)
 				{
 					//Add_YellowLight();
 					Add_YellowLight(m_pColliderCom->Get_Overlap_Center_Position(other));
