@@ -186,7 +186,7 @@ void CMainApp::Free()
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
-	//m_pImgui_Manager->Free();
+	m_pImgui_Manager->Free();
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);
