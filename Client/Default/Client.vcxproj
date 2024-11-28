@@ -312,6 +312,7 @@
     <ClInclude Include="..\public\UI_SelectArrow.h" />
     <ClInclude Include="..\public\UI_SelectLine.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
+    <ClInclude Include="..\public\UI_Staff_Text.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -562,6 +563,7 @@
     <ClCompile Include="..\private\UI_SelectArrow.cpp" />
     <ClCompile Include="..\private\UI_SelectLine.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
+    <ClCompile Include="..\private\UI_Staff_Text.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
