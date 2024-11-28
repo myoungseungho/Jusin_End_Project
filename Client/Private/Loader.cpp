@@ -4714,9 +4714,9 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
-	ParticleDesc.vSpeed = _float2(8.f, 15.f);
+	ParticleDesc.vSpeed = _float2(5.f, 7.f);
 	ParticleDesc.vScale = _float2(0.01f, 0.02f);
-	ParticleDesc.vLifeTime = _float2(0.05f, 0.1f);
+	ParticleDesc.vLifeTime = _float2(0.2f, 0.3f);
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread"),
