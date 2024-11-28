@@ -15,8 +15,9 @@ HRESULT CSubTitle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 	// 자막 텍스트 초기화
 	m_mapSubTitleText[GOKU_VS_FRIEZA_SUBTITLE_0] = L"그만둬 프리저---!!!!";
 	m_mapSubTitleText[GOKU_VS_FRIEZA_SUBTITLE_1] = L"오공----!!!!";
-
-
+	m_mapSubTitleText[GOKU_VS_FRIEZA_SUBTITLE_2] = L"요..용서 못해.. 잘도.. 잘도..";
+	m_mapSubTitleText[GOKU_VS_FRIEZA_SUBTITLE_3] = L"뭐..뭐냐..!?";
+	m_mapSubTitleText[GOKU_VS_FRIEZA_SUBTITLE_4] = L"나 화났다----!!! 프리저---!!!!!";
 	m_pSubTitle = static_cast<CSubTitle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_SubTitle")));
 
 	return S_OK;
