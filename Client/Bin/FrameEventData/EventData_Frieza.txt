@@ -2,6 +2,7 @@
 PLAY_FRN,FRN600cs_body,0,AnimSpeedChange,0.019,60.1
 PLAY_FRN,FRN600cs_body,0.001000,PlaySound,149,0,1
 PLAY_FRN,FRN600cs_body,50.001000,PlaySound,148,0,1
+PLAY_FRN,FRN600cs_body,50.002000,SubTitle_Play,6,6
 PLAY_FRN,FRN600cs_body,260.002000,PlaySound,150,0,1
 
 //,301 리플렉터. (공용)
