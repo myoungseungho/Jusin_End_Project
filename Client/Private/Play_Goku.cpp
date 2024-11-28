@@ -31,6 +31,7 @@
 #include "QTE_Manager.h"
 
 #include "Map_Manager.h"
+#include "Particle_Manager.h"
 
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -3231,7 +3232,6 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Character_Make_Effect(TEXT("EnergieSAO-03"), { 0.7f,0.9f });
 			//Character_Make_Effect(TEXT("Energie-03"), { 0.7f,0.9f });	
-
 		}
 		else  if (iAttackEvent == 2) //고정풀기
 		{

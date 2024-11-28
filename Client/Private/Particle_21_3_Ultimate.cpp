@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "..\Public\Particle_Frieza_3_Ultimate_Hit.h"
+#include "..\Public\Particle_21_3_Ultimate.h"
 
 #include "RenderInstance.h"
 #include "GameInstance.h"
 
-CParticle_Frieza_3_Ultimate_Hit::CParticle_Frieza_3_Ultimate_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CParticle_21_3_Ultimate::CParticle_21_3_Ultimate(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CParticle{ pDevice, pContext }
 {
 
 }
 
-CParticle_Frieza_3_Ultimate_Hit::CParticle_Frieza_3_Ultimate_Hit(const CParticle_Frieza_3_Ultimate_Hit& Prototype)
+CParticle_21_3_Ultimate::CParticle_21_3_Ultimate(const CParticle_21_3_Ultimate& Prototype)
 	: CParticle{ Prototype }
 {
 
 }
 
-HRESULT CParticle_Frieza_3_Ultimate_Hit::Initialize_Prototype()
+HRESULT CParticle_21_3_Ultimate::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CParticle_Frieza_3_Ultimate_Hit::Initialize(void* pArg)
+HRESULT CParticle_21_3_Ultimate::Initialize(void* pArg)
 {
 	if (FAILED(__super::Initialize(nullptr)))
 		return E_FAIL;
@@ -41,12 +41,12 @@ HRESULT CParticle_Frieza_3_Ultimate_Hit::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CParticle_Frieza_3_Ultimate_Hit::Camera_Update(_float fTimeDelta)
+void CParticle_21_3_Ultimate::Camera_Update(_float fTimeDelta)
 {
 
 }
 
-void CParticle_Frieza_3_Ultimate_Hit::Update(_float fTimeDelta)
+void CParticle_21_3_Ultimate::Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
@@ -60,7 +60,7 @@ void CParticle_Frieza_3_Ultimate_Hit::Update(_float fTimeDelta)
 	}
 }
 
-void CParticle_Frieza_3_Ultimate_Hit::Late_Update(_float fTimeDelta)
+void CParticle_21_3_Ultimate::Late_Update(_float fTimeDelta)
 {
 	if (!m_bIsActive)
 		return;
@@ -72,7 +72,7 @@ void CParticle_Frieza_3_Ultimate_Hit::Late_Update(_float fTimeDelta)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_BACKSIDE_EFFECT, this, &tDesc);
 }
 
-HRESULT CParticle_Frieza_3_Ultimate_Hit::Render(_float fTimeDelta)
+HRESULT CParticle_21_3_Ultimate::Render(_float fTimeDelta)
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -89,7 +89,7 @@ HRESULT CParticle_Frieza_3_Ultimate_Hit::Render(_float fTimeDelta)
 	return S_OK;
 }
 
-void CParticle_Frieza_3_Ultimate_Hit::Set_Particle_Active(_bool isActive)
+void CParticle_21_3_Ultimate::Set_Particle_Active(_bool isActive)
 {
 	if (isActive == false)
 		m_pVIBufferCom->Particle_Initialize();
@@ -97,7 +97,7 @@ void CParticle_Frieza_3_Ultimate_Hit::Set_Particle_Active(_bool isActive)
 	SetActive(isActive);
 }
 
-HRESULT CParticle_Frieza_3_Ultimate_Hit::Ready_Components()
+HRESULT CParticle_21_3_Ultimate::Ready_Components()
 {
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Shader_Particle_VtxPoint"),
@@ -112,7 +112,7 @@ HRESULT CParticle_Frieza_3_Ultimate_Hit::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CParticle_Frieza_3_Ultimate_Hit::Bind_ShaderResources()
+HRESULT CParticle_21_3_Ultimate::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -138,33 +138,33 @@ HRESULT CParticle_Frieza_3_Ultimate_Hit::Bind_ShaderResources()
 	return S_OK;
 }
 
-CParticle_Frieza_3_Ultimate_Hit* CParticle_Frieza_3_Ultimate_Hit::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CParticle_21_3_Ultimate* CParticle_21_3_Ultimate::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CParticle_Frieza_3_Ultimate_Hit* pInstance = new CParticle_Frieza_3_Ultimate_Hit(pDevice, pContext);
+	CParticle_21_3_Ultimate* pInstance = new CParticle_21_3_Ultimate(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CParticle_Frieza_3_Ultimate_Hit"));
+		MSG_BOX(TEXT("Failed to Created : CParticle_21_3_Ultimate"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CParticle_Frieza_3_Ultimate_Hit::Clone(void* pArg)
+CGameObject* CParticle_21_3_Ultimate::Clone(void* pArg)
 {
-	CParticle_Frieza_3_Ultimate_Hit* pInstance = new CParticle_Frieza_3_Ultimate_Hit(*this);
+	CParticle_21_3_Ultimate* pInstance = new CParticle_21_3_Ultimate(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloned : CParticle_Frieza_3_Ultimate_Hit"));
+		MSG_BOX(TEXT("Failed to Cloned : CParticle_21_3_Ultimate"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CParticle_Frieza_3_Ultimate_Hit::Free()
+void CParticle_21_3_Ultimate::Free()
 {
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pVIBufferCom);

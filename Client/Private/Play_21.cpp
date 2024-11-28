@@ -47,6 +47,7 @@
 //#include "Effect_Layer.h"
 
 #include "Map_Manager.h"
+#include "Particle_Manager.h"
 
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -1934,14 +1935,14 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Desc.fRanged_Impus_NoneDirection = { fMultiple ,-0.07f * fMultiple };
 
-			
-			
+
+
 			Desc.strEffectName = TEXT("21_BurstJ-01");
 
 			//Desc.fRanged_Impus_NoneDirection = { 7.8f, -0.6f };
 			Desc.fRanged_Impus_NoneDirection = { 15.6f, -1.2f };
 
-			Desc.fEffectRotationDegree = 4.35f;			
+			Desc.fEffectRotationDegree = 4.35f;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
@@ -2125,7 +2126,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.ColliderDesc.pMineGameObject = this;
 			Desc.ColliderDesc.vCenter = { 0.5f * m_iLookDirection,0.8f,0.f };
 
-			if(m_bAttackBackEvent == true)
+			if (m_bAttackBackEvent == true)
 				Desc.ColliderDesc.vExtents = { 1.0f,0.5f,0.2f };
 			else
 				Desc.ColliderDesc.vExtents = { 0.6f,0.5f,0.2f };
@@ -2162,7 +2163,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pAttack214AssultEffect_Layer = nullptr;
 			}
 
-			
+
 			Character_Make_Effect(TEXT("Hit_SAO-01"));
 
 
@@ -2179,7 +2180,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 					m_pAttack214GroundEffect_Layer = nullptr;
 				}
 			}
-		
+
 		}
 	}
 	break;
@@ -2272,8 +2273,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
-			
-		
+
+
 		}
 		if (iAttackEvent == 1)
 		{
@@ -2307,10 +2308,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Character_Make_BoneEffect("GD_hand_R", TEXT("21_SDJ-03"));
 
-			Character_Make_Effect(TEXT("21_SDJ-03"),{0.f,1.1f});
+			Character_Make_Effect(TEXT("21_SDJ-03"), { 0.f,1.1f });
 
 		}
-		
+
 
 		break;
 	case Client::CPlay_21::ANIME_ATTACK_236_ULTIMATE:
@@ -2324,7 +2325,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 			//m_pEffect_Manager->Copy_Layer(TEXT("21_SDO-01"), &tDesc);
 
-			
+
 			_float fDebug = m_pModelCom->m_fCurrentAnimPosition;
 
 
@@ -2340,7 +2341,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			mainCamera->StartCameraShake(1.5f, 0.2f);
 			//ÀÌÆåÆ®µé
 
-			if(m_bAura == false)
+			if (m_bAura == false)
 				Set_bAura(true);
 
 		}
@@ -2567,8 +2568,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Character_Make_BoneEffect("G_waist", TEXT("21_WSDO-03"));
 
-			
-	
+
+
 			if (m_bAttackBackEvent)
 			{
 				FlipDirection();
@@ -2715,7 +2716,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 					m_bFinalSoundEnable = false;
 
 
-					
+
 
 				}
 			}
@@ -2873,7 +2874,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				//Set_AnimationStopWithoutMe(0.3f);
 				//Teleport_ToEnemy(-1.f, 2.f);
-				m_pAttackFinalChaseEffect_Layer->Set_Copy_Layer_Scaled({1.2f,1.2f,1.2f});
+				m_pAttackFinalChaseEffect_Layer->Set_Copy_Layer_Scaled({ 1.2f,1.2f,1.2f });
 
 				//Teleport_ToEnemy(-0.3f, 0.5f);
 				//Set_fImpulse({ m_iLookDirection * 2.f,-25.f });
@@ -2943,7 +2944,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Desc.fForcedGravityTime = 0.15f;
 				Desc.bGrabbedEnd = true;
 				//Desc.bHitNoGravity = true;
-				
+
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 			}
@@ -3044,7 +3045,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//m_bDynamicMove = false;
 
-			
+
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)
 				Desc.ColliderDesc.colliderGroup = CCollider_Manager::COLLIDERGROUP::CG_1P_Melee_Attack;
@@ -3099,8 +3100,10 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Make_BoneEffect("GD_hand_L", TEXT("21_WSDO-05"));
 
 			m_pEnemy->Set_UnDying(false);
+			 
 
-
+			_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::ULTIMATE_3_21_PARTICLE, position);
 		}
 		else if (iAttackEvent == 2)
 		{
@@ -3200,7 +3203,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bGrabbedEnd = true;
 			Desc.pOwner = this;
 			Desc.bCameraZoom = false;
-			
+
 
 			Desc.bOnwerHitNoneStop = true;
 
@@ -3218,6 +3221,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Set_AnimationStop(0.7f);
 
 			Set_bAura(false);
+
+			CParticle_Manager::Get_Instance()->Stop(CParticle_Manager::ULTIMATE_3_21_PARTICLE);
 		}
 
 	}

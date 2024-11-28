@@ -38,8 +38,8 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(Ready_Prototype_Component_ForStatic()))
 		return E_FAIL;
 
-	////IMGUI 생성, 싱글턴
-	//Create_IMGUI_Manager();
+	//IMGUI 생성, 싱글턴
+	Create_IMGUI_Manager();
 
 	//스레드풀 초기화
 	//하드웨어의 스레드 수를 넘겨준다. (소프트웨어 스레드 수 아님)
@@ -80,11 +80,11 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 
 	//IMGUI 렌더는 로딩때는 하면 안됨
  
- /*   _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
 
 	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render && m_pImgui_Manager != nullptr)
-		m_pImgui_Manager->Render(fTimeDelta);*/
+		m_pImgui_Manager->Render(fTimeDelta);
 
 	m_pGameInstance->Present();
 
