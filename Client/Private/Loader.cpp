@@ -1665,9 +1665,15 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base_2P.png"), 1))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png"), 1))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base_2P.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base.png"), 1))))
 		return E_FAIL;
 
 

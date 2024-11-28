@@ -1111,10 +1111,10 @@ HRESULT CPlay_Frieza::Ready_Components()
 	}
 	else
 	{
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_base_2P"),
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRN_base_1P"),
 			TEXT("Com_Base_2P_Texture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_base_2P"),
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_FRG_base_1P"),
 			TEXT("Com_Gold_2P_Texture"), reinterpret_cast<CComponent**>(&m_pGold_BaseTexture))))
 			return E_FAIL;
 	}

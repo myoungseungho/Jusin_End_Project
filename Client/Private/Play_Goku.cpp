@@ -1063,7 +1063,7 @@ HRESULT CPlay_Goku::Ready_Components()
 			TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
 
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_2P"),
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKN_base_1P"),
 			TEXT("Com_Opening_Texture"), reinterpret_cast<CComponent**>(&m_pOpeningTextureCom))))
 			return E_FAIL;
 
