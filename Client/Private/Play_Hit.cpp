@@ -16,7 +16,7 @@
 #include "UI_Manager.h"
 #include "iostream"
 
-
+#include "Effect.h"
 #include "BattleInterface.h"
 
 
@@ -3832,8 +3832,17 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_iQTE == 1) // 1
 			{
+				m_pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-02"), { 1.f,-0.3f });
+				m_pAttackFinalGlassEffect_Layer->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+
+				//(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_iRenderGroupIndex = static_cast<_int>(CRenderer::RG_BACKSIDE_EFFECT);
+				(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_iChangePassIndex = 11;
+				(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 10.f);
 
 
+				CEffect_Layer* pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,1.f });
+				pAttackFinalGlassEffect_Layer->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+				(*pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 100.f);
 			}
 			else
 			{
@@ -3841,10 +3850,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_SAO-02"),{1.f,-0.3f});
 				//pEffect->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
 
-				
+
+				CEffect_Layer* pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,1.f });
 
 				m_pAttackFinalGlassEffect_Layer = Character_Make_Effect(TEXT("Hit_SAO-02"), { 1.f,-0.3f });
 				m_pAttackFinalGlassEffect_Layer->Set_Copy_Layer_Scaled({ 2.f,2.f,1.f });
+
+				//(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_iChangePassIndex = 11;
+				//(*m_pAttackFinalGlassEffect_Layer->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 10.f);
 
 
 			}
@@ -3880,8 +3893,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//m_pModelCom->Get_pCurrentAnimation()->m_fCurrentPosition = 281.f;
 
 
-			
-			//Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,0.7f });
+
+
+			//(*Character_Make_Effect(TEXT("Hit_SAO-03"), { 1.f,1.f })
 
 		}
 
@@ -3915,7 +3929,19 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 			CMap_Manager::Get_Instance()->All_Black(false);
 
-			Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
+			CEffect_Layer* pEffectLayerGlassBreak = Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
+			
+			if(m_iQTE == 1)
+			{
+				for (auto& iter : pEffectLayerGlassBreak->m_MixtureEffects)
+				{
+					iter->m_iChangePassIndex = 11;
+					iter->m_vColor = _float4(255.f, 0.f, 0.f, 100.f);
+				}
+			}
+
+			//(*pEffectLayerGlass->m_MixtureEffects.begin())->m_iChangePassIndex = 11;
+			//(*pEffectLayerGlass->m_MixtureEffects.begin())->m_vColor = _float4(255.f, 0.f, 0.f, 10.f);
 
 			//CEffect_Layer* pEffectBreak = Character_Make_Effect(TEXT("Hit_SAO-04"), { 1.f,0.f });
 			//pEffectBreak->Set_Copy_Layer_Scaled({ 2.f,2.f,2.f });
