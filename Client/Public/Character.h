@@ -382,6 +382,8 @@ public:
 	_float m_fAccOpeningTime = {0.f};
 	_float m_fMaxOpeningTime = {3.f};
 
+	_float m_fAccfirstOpeningTime = { 0.f };
+
 	void Set_bPlaying(_bool bPlaying);
 
 	void Set_StopAllAttackObject(_float fStopTime);

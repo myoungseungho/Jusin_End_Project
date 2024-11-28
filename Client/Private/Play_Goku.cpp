@@ -164,7 +164,8 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 
 	LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
-	pLight_Desc->vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
+	//pLight_Desc->vAuraColor = _float4(15.07f, 1.53333f, 0.5f, 1.89f);
+	pLight_Desc->vAuraColor = _float4(0.f,0.f,0.f,0.f);
 
 	/*
 	빛 각자 생성해주기
@@ -263,10 +264,12 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 		m_bPlaying = true;
 
 
+
 	//LPlayer1, RPlayer1이 아니면  ss1오공 상태로 시작
-	if (m_ePlayerSlot == CUI_Define::PLAYER_SLOT::LPLAYER1 || m_ePlayerSlot == CUI_Define::PLAYER_SLOT::LPLAYER1)
+	if (m_ePlayerSlot == CUI_Define::PLAYER_SLOT::LPLAYER1 || m_ePlayerSlot == CUI_Define::PLAYER_SLOT::RPLAYER1)
 	{
 		;
+		m_bAura = false;
 	}
 	else
 	{
@@ -275,9 +278,9 @@ HRESULT CPlay_Goku::Initialize(void* pArg)
 
 	//Set_bAura(false);
 	{	
-	LIGHT_DESC* pLight_DescTemp = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
-	pLight_DescTemp->vAuraColor = m_fAuraColor;
-	m_bAura = true;
+		//LIGHT_DESC* pLight_DescTemp = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+		//pLight_DescTemp->vAuraColor = m_fAuraColor;
+		m_bAura = false;
 	}
 
 	return S_OK;
@@ -402,7 +405,25 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			{
 				if (m_bMotionPlaying == false)
 				{
-					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					if (m_fAccfirstOpeningTime >= 0.5f)
+					{
+						m_fAccfirstOpeningTime = 0.f;
+						CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+
+						if (m_pFinalAura != nullptr)
+						{
+							m_pFinalAura->m_bIsDoneAnim = true;
+							m_pFinalAura = nullptr;
+						}
+					}
+					else
+					{
+						if (m_fAccfirstOpeningTime == 0)
+						{
+							CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+						}
+						m_fAccfirstOpeningTime += fTimeDelta;
+					}
 				}
 				else if(m_pGameInstance->Key_Down(DIK_RETURN))
 				{
@@ -1701,6 +1722,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 				
+				Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f },0.2f);
+
 			}
 		}
 	}
@@ -3145,7 +3168,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//위치 고정용 빈거
 		else if (iAttackEvent == 0)
 		{
-			m_pEnemy->Set_UnDying(false);
+			
 
 			CAttackObject_CommandGrab::ATTACK_COMMANDGRAB_DESC Desc{};
 			if (m_iPlayerTeam == 1)
@@ -3191,6 +3214,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			
 
+			m_pEnemy->Set_UnDying(false);
 
 			CAttackObject_Energy::ATTACK_RANGED_DESC Desc{};
 			if (m_iPlayerTeam == 1)
@@ -3214,6 +3238,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_pEnemy->Get_iHP() < Desc.iDamage * 20)
 			{
 				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_LASER, 1.f);
+				CUI_Manager::Get_Instance()->CutSceneUI(false);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
 				//캐릭터 MaxDeath 도 처리
 
@@ -3565,9 +3590,28 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 	case ANIME_START_DEFAULT:
 	{
-		if (iAttackEvent == 4)
+		if (iAttackEvent == 3)
 		{
+			m_pFinalAura = Character_Make_BoneEffect("G_root", TEXT("EnergieSAO-01"));
+		}
+
+		else if (iAttackEvent == 4)
+		{
+			//하얀필터
 			m_bNormalGoku = false;
+
+			//for (auto& iter : m_pFinalAura->m_MixtureEffects)
+			//{
+			//	iter->m_iChangePassIndex = 10;
+			//}
+		}
+		else if (iAttackEvent == 5)
+		{
+			//확대 이후
+			for (auto& iter : m_pFinalAura->m_MixtureEffects)
+			{
+				iter->m_iChangePassIndex = 10;
+			}
 		}
 	}
 	break;
@@ -3671,6 +3715,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			pDesc.pPlayertMatrix = &fCamMat;
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+
+			CUI_Manager::Get_Instance()->CutSceneUI(true);
+
 		}
 
 

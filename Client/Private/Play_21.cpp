@@ -48,6 +48,8 @@
 
 #include "Map_Manager.h"
 
+#include "Particle_Manager.h"
+
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -381,7 +383,19 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			{
 				if (m_bMotionPlaying == false)
 				{
-					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					if (m_fAccfirstOpeningTime >= 0.5f)
+					{
+						m_fAccfirstOpeningTime = 0.f;
+						CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					}
+					else
+					{
+						if (m_fAccfirstOpeningTime == 0)
+						{
+							CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+						}
+						m_fAccfirstOpeningTime += fTimeDelta;
+					}
 				}
 				else if (m_pGameInstance->Key_Down(DIK_RETURN))
 				{
@@ -1696,6 +1710,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.bCameraZoom = false;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 		}
 	}
 	break;
@@ -3133,6 +3149,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE, 1.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
 				//캐릭터 MaxDeath 도 처리
+				CUI_Manager::Get_Instance()->CutSceneUI(false);
 
 			}
 
@@ -3473,7 +3490,26 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			//Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
 			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
-			pEffect->Set_Copy_Layer_Scaled({ 1.5f,1.5f,1.5f });
+			if(pEffect != nullptr)
+			{
+				pEffect->Set_Copy_Layer_Scaled({ 1.5f,1.5f,1.5f });
+				//pEffect->Set_Copy_Layer_Position({ -1.f,0.f,0.f });
+
+			}
+			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+			//pEffect->m_fTickPerSecond *= 0.2f;
+
+			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir_Rotated_Right"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+
+
+			
+			_vector resultPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION); //XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_HIT_PARTICLE, resultFloat3);
+
 		}
 
 	}
@@ -3518,6 +3554,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			pDesc.pPlayertMatrix = &fCamMat;
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+			CUI_Manager::Get_Instance()->CutSceneUI(true);
+
 		}
 
 

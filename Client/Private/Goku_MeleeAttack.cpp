@@ -1187,6 +1187,8 @@ void CGoku_MeleeAttack::Attack_Benishing()
 			//時時次
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
 
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
+
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 
@@ -1194,6 +1196,7 @@ void CGoku_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_ForcedGravityDown();
 			m_pPlayer->Set_bInivisible(true);
 			m_pPlayer->Set_fImpulse({ 0.f,0.f });
+
 		}
 
 	}
@@ -1210,6 +1213,7 @@ void CGoku_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//時時次
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();

@@ -1,13 +1,13 @@
 [Layer]
-LayerName: 21_WSDO-01
+LayerName: 21_Aura
 Duration: 1.7
 TickPerSecond: 1
 KeyFramesCount: 102
 NumEffec: 12
-Position: 0 0 0
-Scale: 1 1 1
+Position: -0.5 0 0
+Scale: 1.5 1.5 1.5
 Rotation: 0 0 0
-IsFollowing: true
+IsFollowing: false
 
 [Effect]
 EffectName: 21_WSAO-01_01

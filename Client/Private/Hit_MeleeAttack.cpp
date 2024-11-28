@@ -124,6 +124,7 @@ void CHit_MeleeAttack::Attack_Light()
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_POSE_LIGHT);
 		m_pbAttackCount[CPlay_Hit::COUNT_ATTACK_236_LIGHT] = false;
+		m_pPlayer->Set_b236Special(false);
 	}
 
 	
@@ -494,11 +495,13 @@ void CHit_MeleeAttack::Attack_Crouch_Light()
 	if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_CROUCHING  || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_FORWARD_DASH_END)
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT);
+		m_pPlayer->Set_b236Special(false);
 	}
 
 	if (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_LIGHT1 && m_pPlayer->Get_bAttackBackEvent())
 	{
 		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_ATTACK_CROUCH_LIGHT);
+		m_pPlayer->Set_b236Special(false);
 	}
 }
 
@@ -730,7 +733,7 @@ void CHit_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//時時次
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 
@@ -754,7 +757,7 @@ void CHit_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//時時次
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 
