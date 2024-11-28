@@ -155,6 +155,9 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
+	//	return E_FAIL;
+
 	return S_OK;
 }
 

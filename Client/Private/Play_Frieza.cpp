@@ -402,6 +402,7 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 			{
 				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				m_bPlaying = false;
 			}
 
@@ -1338,8 +1339,14 @@ void CPlay_Frieza::Gravity(_float fTimeDelta)
 			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("Crash_Smoke"));
 			//pEffect->Set_Copy_Layer_Scaled({ 2.f, 2.f, 1.f });
 
-			Character_Make_Effect(TEXT("Smoke04"),{1.f,0.f},true);
-			//Smoke04"
+			//Character_Make_Effect(TEXT("Smoke04"),{1.f,0.f},true);
+			//if(m_iLookDirection == 1)
+			//	Character_Make_Effect(TEXT("Smoke03_Five_Dir"));
+			//else
+			//	Character_Make_Effect(TEXT("Smoke03_Five_Dir_Rotated_Right"));
+
+				
+
 		}
 	}
 
