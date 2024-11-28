@@ -133,12 +133,12 @@ PS_OUT PS_MAIN(PS_IN In)
 
     float isFace = fFaceMask;
     /* g값은 명암? r값이랑 같이 쓰는데 모호함 */
-    //vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.r + (/*isFace == 1 ? 0.502745f : */vMtrlShadeDesc.g) * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
+    vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.g /* (isFace == 1 ? 0.502745f : vMtrlShadeDesc.g)*/ * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
     
 	/* b값은 보니까 스펙큘러인거같음 그 처리 */
     vResultColor.rgb = saturate(vResultColor.rgb + vMtrlShadeDesc.b * 0.1f);
     vResultColor.a = 1.f;
-    Out.vDiffuse = vResultColor;
+    Out.vDiffuse = saturate(vResultColor * 1.2f);
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask2 /*+ fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     

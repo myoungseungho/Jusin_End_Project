@@ -10,9 +10,9 @@
 #include "Effect_Layer.h"
 
 #include "Effect_Manager.h"
-
+#include "Effect.h"
 #include "SpaceRock.h"
-
+#include "Imgui_Manager.h"
 CParryingRangedObject::CParryingRangedObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -57,8 +57,20 @@ HRESULT CParryingRangedObject::Initialize(void* pArg)
 	CEffect_Layer::COPY_DESC tDesc{};
 	tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 	m_pEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Parrying_Ball"), &tDesc);
+	for (auto& iter : m_pEffect_Layer->m_MixtureEffects)
+	{
+		iter->m_iChangePassIndex = 10;
+		/* 컬러값 이걸로 바꾸면됨 */
+		iter->m_vColor = CImgui_Manager::Get_Instance()->color;
+		/*
+		21호 283.1    6.954     76.49    283.1
 
-	
+		손오공 300   255  50.66   130
+
+		프리저 148    108    259.2   12.914
+		*/
+	}
+
 	_float fPosX = XMVectorGetX(pDesc->vPos);
 
 
