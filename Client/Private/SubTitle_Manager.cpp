@@ -21,6 +21,7 @@ HRESULT CSubTitle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 	m_mapSubTitleText[HUMAN_21_SUBTITLE_0] = L"자, 즐겁고 즐거운 사냥 시간이야";
 	m_mapSubTitleText[FRIEZA_SUBTITLE_0] = L"워밍업은 이쯤 해두고 슬슬 진심으로 해볼까...";
 	m_mapSubTitleText[GOKU_SUBTITLE_0] = L"나는 초사이어인, 손오공이다";
+	m_mapSubTitleText[HIT_WIN_SUBTITLE_0] = L"너라는 녀석은 끝이 안 보여서 이해할 수가 없군";
 
 	m_pSubTitle = static_cast<CSubTitle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_SubTitle")));
 

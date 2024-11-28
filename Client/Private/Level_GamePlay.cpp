@@ -69,7 +69,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
@@ -168,8 +168,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Model_Preview"), TEXT("Layer_Model_Preview"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -247,24 +247,6 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pParticle_Manager->Late_Update(fTimeDelta);
 	m_pSubTitle_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
-
-	//if (m_pGameInstance->Key_Down(DIK_SPACE))
-	//{
-		/*{
-			CCharacter::Character_DESC Opening_CharacterDesc{};
-			Opening_CharacterDesc.iTeam = 1;
-			Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
-
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc);
-		}*/
-
-		//	static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
-
-		//	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
-
-		/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
-			//}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)

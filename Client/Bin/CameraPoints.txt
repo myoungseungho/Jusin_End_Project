@@ -1916,9 +1916,9 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: 0.580448 1.46435 -0.604877
-Rotation: -0.05687 -0.332134 -0.0200662 0.941302
-Duration: 4
+Position: -0.580448 1.46435 -0.604877
+Rotation: -0.107064 -0.00228232 0.0377769 0.993532
+Duration: 6
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -2000,9 +2000,9 @@ Damping: 1
 HasWorldFloat4x4: 1
 
 [CameraPoint]
-Position: -0.631505 1.43197 -0.794001
-Rotation: -0.0735492 0.366873 0.0291111 0.926902
-Duration: 4
+Position: 0.631505 1.43197 -0.794001
+Rotation: -0.136346 0.00428221 -0.0539664 0.989181
+Duration: 6
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -2057,7 +2057,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 3.50455 0.436639 -2.30427
 Rotation: -0.144109 -0.242503 -0.0364526 0.958695
-Duration: 0.5
+Duration: 1.5
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -2132,8 +2132,8 @@ HasWorldFloat4x4: 1
 
 [CameraPoint]
 Position: -4.07452 0.480966 -2.27295
-Rotation: -0.110579 0.342087 0.0405765 0.932257
-Duration: 0.5
+Rotation: -0.110579 0.342087 0.0405765 0.932256
+Duration: 1.5
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -2567,4 +2567,91 @@ HasWorldFloat4x4: 1
 [Animation]
 AnimationName: Goku_VS_Frieza_Entry_Anim_1_Flip
 PointCount: 0
+
+[Skill]
+SkillName: Camera_Hit_Win
+
+[Animation]
+AnimationName: Hit_Win_Anim_1
+PointCount: 10
+
+[CameraPoint]
+Position: 0.842519 0.157709 -0.823062
+Rotation: -0.0550606 -0.357779 -0.0211381 0.931942
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.842519 0.157709 -0.823062
+Rotation: -0.0550606 -0.357779 -0.0211381 0.931942
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.511916 1.16442 -0.609931
+Rotation: -0.0289757 -0.392178 -0.0123605 0.91935
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.511916 1.16442 -0.609931
+Rotation: -0.0289757 -0.392178 -0.0123605 0.91935
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.450717 1.7777 -0.630305
+Rotation: 0.185197 -0.30798 0.0612523 0.931181
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: 0.450717 1.7777 -0.630305
+Rotation: 0.185197 -0.30798 0.0612523 0.931181
+Duration: 1
+InterpolationType: 2
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -3.72533 0.768992 0.0523046
+Rotation: -0.0172259 0.722545 0.0180155 0.690874
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -3.72533 0.768992 0.0523046
+Rotation: -0.0172259 0.722545 0.0180155 0.690874
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.533222 1.88464 -0.016631
+Rotation: 0.0810369 0.724622 -0.0864976 0.678877
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
+
+[CameraPoint]
+Position: -0.533222 1.88464 -0.016631
+Rotation: 0.0810369 0.724622 -0.0864976 0.678877
+Duration: 1
+InterpolationType: 0
+Damping: 1
+HasWorldFloat4x4: 1
 
