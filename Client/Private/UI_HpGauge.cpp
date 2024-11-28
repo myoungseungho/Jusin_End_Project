@@ -62,7 +62,12 @@ void CUI_HpGauge::Camera_Update(_float fTimeDelta)
 		int a = 10;
 	}
 	if (m_fHpRadio <= 0.f)
+	{
 		m_fHpRadio = 0.f;
+		m_pUI_Manager->m_bZeroHp = TRUE;
+	}
+	else
+		m_pUI_Manager->m_bZeroHp = FALSE;
 
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
@@ -108,8 +113,12 @@ void CUI_HpGauge::Late_Update(_float fTimeDelta)
 		m_fHpRadio = (_float)(m_pMainPawn->Get_PawnDesc().iHp / 10000.f);
 
 	if (m_fHpRadio <= 0.f)
+	{
 		m_fHpRadio = 0.f;
-
+		m_pUI_Manager->m_bZeroHp = TRUE;
+	}
+	else
+		m_pUI_Manager->m_bZeroHp = FALSE;
 	m_fMaskUVTimer += fTimeDelta * 0.25f;
 
 	if (m_bRedAlpha == FALSE)

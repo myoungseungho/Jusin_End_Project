@@ -143,6 +143,9 @@ public:
 	list<class CUIObject*> m_ListMidUI = {};
 	list<class CUIObject*> m_ListBotUI = {};
 
+public:
+	_bool m_bZeroHp = { FALSE };
+
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
