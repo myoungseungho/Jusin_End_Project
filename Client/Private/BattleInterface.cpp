@@ -355,7 +355,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
     m_p1TeamCharacter[NewCharacterslot]->Set_AnimationStop(0.f);
     m_p1TeamCharacter[NewCharacterslot]->Set_AnimationStopWithoutMe(0.f);
 
-
+    CUI_Manager::Get_Instance()->CutSceneUI(true);
     //사망한 팀의 다음캐릭터가 살아있는지 체크
     if (iTeam == 1)
     {
@@ -717,6 +717,10 @@ void CBattleInterface_Manager::Set_InvisibleWithoutMe(_ubyte iTeam, _ubyte iChar
 void CBattleInterface_Manager::Character_Opening_AIO()
 {
 
+    CUI_Manager::Get_Instance()->CutSceneUI(false);
+
+    CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+
     //오공 vs 프리저 면 다른 모션으로 시작
     if (m_p1TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_GOKU && m_p2TeamCharacter[0]->Get_eCharacterIndex() == CHARACTER_INDEX::PLAY_FRN)
     {
@@ -741,6 +745,8 @@ void CBattleInterface_Manager::Character_Opening_AIO()
         m_p1TeamCharacter[0]->Set_AnimationMoveXZ(true);
         m_p2TeamCharacter[0]->Set_AnimationMoveXZ(true);
 
+
+        m_p1TeamCharacter[0]->Set_bAura(false);
 
 
 
@@ -814,17 +820,23 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
         CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
         mainCamera->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_NORMAL);
 
+        CUI_Manager::Get_Instance()->CutSceneUI(true);
 
         return;
     }
 
     if (iTeam == 1)
     {
+
+      
         m_p1TeamCharacter[0]->Set_bInivisible(true);
         m_p2TeamCharacter[0]->Play_FirstOpening();
+
     }
     else if (iTeam == 2)
     {
+
+
         //오프닝 UI, Inivisible 종료,
         m_p1TeamCharacter[0]->Set_bDynamicMove(false);
         m_p2TeamCharacter[0]->Set_bDynamicMove(false);
@@ -847,6 +859,9 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
 
         CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
         mainCamera->Set_Virtual_Camera(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_NORMAL);
+
+
+        CUI_Manager::Get_Instance()->CutSceneUI(true);
 
     }
 }

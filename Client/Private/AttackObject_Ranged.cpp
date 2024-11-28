@@ -278,7 +278,7 @@ void CAttackObject_Ranged::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			}
 		}
 
-		static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
+		//static_cast<CAttackObject_Ranged*>(other->GetMineGameObject())->Erase();
 		CGameInstance::Get_Instance()->Destroy_Reserve(m_pColliderCom);
 
 		if (m_bExplosion)

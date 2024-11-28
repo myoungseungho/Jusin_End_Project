@@ -391,7 +391,19 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			{
 				if (m_bMotionPlaying == false)
 				{
-					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					if (m_fAccfirstOpeningTime >= 0.5f)
+					{
+						m_fAccfirstOpeningTime = 0.f;
+						CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					}
+					else
+					{
+						if (m_fAccfirstOpeningTime == 0)
+						{
+							CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+						}
+						m_fAccfirstOpeningTime += fTimeDelta;
+					}
 				}
 				else if (m_pGameInstance->Key_Down(DIK_RETURN))
 				{
@@ -784,6 +796,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//
 		//}
 
+		Set_Animation(ANIME_WIN_DEFAULT);
 
 	}
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
@@ -1122,7 +1135,7 @@ HRESULT CPlay_Hit::Ready_Components()
 
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+	if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_1P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 		return E_FAIL;
 
 
@@ -2072,6 +2085,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 				//m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+			
+				CEffect_Layer* pEffect=	Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength) + 0.8f });
+				if(m_iLookDirection == -1)
+					pEffect->Set_Copy_Layer_Rotation({0.f,0.f,135.f});
+				else
+					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,45.f });
 
 			}
 		}
@@ -2260,6 +2279,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
 				m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 40.f;
+
+				CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength) + 0.8f });
+
+				if(m_iLookDirection == 1)
+					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,315.f });
+				else
+					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,225.f });
+
 			}
 		}
 
@@ -2358,7 +2385,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.bCameraZoom = false;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
-
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 
 		}
 
@@ -2868,6 +2895,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			if (m_b236Special == false)
 			{
+				m_b236LightSuccess = false;
 				m_bInvisible = false;
 				MoveToEnemy_Ground(7.f);
 				//Character_Make_Effect(TEXT("Moving_Line_Right"));
@@ -2913,6 +2941,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
+
+
 				}
 				{
 					CAttackObject::ATTACK_DESC Desc{};
@@ -2944,10 +2974,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 					m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 				}
 
+
+
 				//CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDO-03"));
-				CEffect_Layer* pEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDI-I"));
-				if (pEffect != nullptr)
-					pEffect->Set_Copy_Layer_Scaled({ -0.8f,1.f,1.f });
+				m_p236LightEffect = Character_Make_BoneEffect("GD_fist_L", TEXT("Hit_SDI-I"));
+				if (m_p236LightEffect != nullptr)
+					m_p236LightEffect->Set_Copy_Layer_Scaled({ -0.8f,1.f,1.f });
 
 			}
 			else
@@ -2986,26 +3018,51 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bOnwerHitNoneStop = true;
 
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+				//m_pEnemy->Character_Make_Effect(TEXT("Hit_SDI_U"));
+				Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength)+0.8f });
+
 			}
 		}
 		else if (iAttackEvent == 2)
 		{
 			//평범하게 사용시 할것없음. 규칙성 유지하느라 틀 만듦
-			if (m_b236Special == false)
+			//if (m_b236Special == false)
+			//{
+			//}
+			//else
+			//{
+			//	m_b236Special = false;
+			//}
+
+			if (m_b236LightSuccess == false)
 			{
+				if (m_p236LightEffect != nullptr)
+				{
+					m_p236LightEffect->m_bIsDoneAnim = true;
+					m_p236LightEffect = nullptr;
+				}
 			}
-			else
-			{
-				m_b236Special = false;
-			}
+
 		}
 
 		//기본 약공격 명중시 이펙트
 		else if (iAttackEvent == 1001)
 		{
-			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 1.3f,1.6f });
-			pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,90.f + 90.f * m_iLookDirection });
-			pEffect->Set_Copy_Layer_Scaled({ 0.8f,0.7f,1.f });
+			if(m_iLookDirection == 1)
+			{
+				CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 1.3f,1.6f });
+				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,90.f + 90.f * m_iLookDirection });
+				pEffect->Set_Copy_Layer_Scaled({ 0.8f,0.7f,1.f });
+			}
+			else if (m_iLookDirection == -1)
+			{
+				CEffect_Layer* pEffect = Character_Make_Effect(TEXT("Hit_Hand_Lazer"), { 0.5f,1.6f });
+				pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,90.f + 90.f * m_iLookDirection });
+				pEffect->Set_Copy_Layer_Scaled({ 0.8f,0.7f,1.f });
+			}
+			m_b236LightSuccess = true;
 		}
 	}
 	break;
@@ -3741,6 +3798,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 
 			Set_bAura(true);
+			m_iFinalInvisibleCount = 0;
 
 		}
 
@@ -4355,26 +4413,96 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 	}
 	break;
-	case Client::CPlay_Hit::ANIME_WIN_DEFAULT:
+	case ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE:
+	{
+		if (iAttackEvent == 2001)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-01"), { -0.7f*m_iLookDirection,0.f });
+		}
+		else if (iAttackEvent == 2002)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+
+
+			m_pEnemy->Set_AnimationStop(0.5f);
+			Set_AnimationStop(0.5f);
+
+		}
+		else if (iAttackEvent == 2003)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+		}
+		else if (iAttackEvent == 2004)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+			CUI_Manager::Get_Instance()->CutSceneUI(true);
+
+		}
+
+
+	}
+	case ANIME_START_DEFAULT:
 	{
 		if (iAttackEvent == 0)
 		{
-		/*	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			main_Camera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_WIN, 0, this);*/
+			Add_Move({ 0.f,0.3f });
+
+			m_pOpeningGlass = Character_Make_BoneEffect("G_root", TEXT("Hit_Opening"));
+			m_pOpeningGlass->m_fTickPerSecond *= 0.7f;
+
 		}
+		else if (iAttackEvent == 3)
+		{
+			//m_pOpeningGlass->Set_Copy_Layer_Scaled({ 2.f,2.f,2.f });
+
+			//Add_Move({ 0.f,1.f });
+		}
+		else if (iAttackEvent == 1)
+		{
+			//CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("Hit_Opening"));
+			//pEffect->m_fTickPerSecond *= 0.5f;
+			//m_pOpeningGlass->m_
+
+			m_bInvisible = true;
+			Add_Move({ 0.f,-0.3f });
+
+		}
+		else if (iAttackEvent == 2)
+		{
+			m_bInvisible = false;
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { 1.f*m_iLookDirection,0.f },{2.f,1.f},0.2f);
+		}
+	}
+	break;
+	case ANIME_WIN_DEFAULT:
+	{
+		if (iAttackEvent == 0)
+		{
+			;
+		}
+
 	}
 	break;
 	default:
 		break;
 	}
-
-	/*
-
-
-
-
-
-	*/
 }
 
 void CPlay_Hit::Play_Sound(_uint SoundName, _bool bisLoof, _float fvolume)
@@ -4506,21 +4634,27 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 		_float3 fPos;
 		XMStoreFloat3(&fPos, vPos);
 
-		//_float ScaleX = (_float)Get_iDirection() * (1 - (2 * bFlipDirection));
-
-
-		//_matrix ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300)*0.01f * Get_iDirection()), fPos.y , fPos.z + (rand() % 200 - 100) * 0.01f);
 		_matrix ovelapMatrix{};
+	
+		//if (fCurrentAnimationPosition <200)
+		//	ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+		//else
+		//	ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 ) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+
 		if (fCurrentAnimationPosition < 200)
-			ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+			ovelapMatrix = XMMatrixScaling(-1.f + rand() % 2 * 2.f, 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600 - 300) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
 		else
-			ovelapMatrix = XMMatrixScaling((_float)Get_iDirection(), 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+			ovelapMatrix = XMMatrixScaling(-1.f + rand() % 2 * 2.f, 1.f, 1.f) * XMMatrixTranslation(fPos.x + ((rand() % 600) * 0.01f * Get_iDirection()), fPos.y, fPos.z + (rand() % 200 - 100) * 0.01f);
+
+
 		CEffect_Layer::COPY_DESC tDesc{};
 		XMFLOAT4X4 Result4x4;
 		XMStoreFloat4x4(&Result4x4, ovelapMatrix);
 		tDesc.pPlayertMatrix = &Result4x4;
 		CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Hit_SAO-01"), &tDesc);
 
+		
+			
 	}
 
 
@@ -4539,7 +4673,35 @@ void CPlay_Hit::Update_214FinalInvisible(_float fTimeDelta)
 
 	else
 	{
-		m_bInvisible = true;
+		if (fCurrentAnimationPosition > 200)
+		{
+			m_bInvisible = true;
+		}
+		else
+		{
+
+			
+			//m_bFinalInvisibleToggle = !m_bFinalInvisibleToggle;
+			//
+			//if (m_bFinalInvisibleToggle)
+			//	m_bInvisible = true;
+			//else
+			//	m_bFinalInvisibleToggle = false;
+
+
+
+			m_iFinalInvisibleCount++;
+
+			if (m_iFinalInvisibleCount >= 2)
+			{
+				m_iFinalInvisibleCount = 0;
+				m_bInvisible = true;
+			}
+			else
+				m_bInvisible = false;
+
+			//m_bInvisible = false;
+		}
 	}
 
 
