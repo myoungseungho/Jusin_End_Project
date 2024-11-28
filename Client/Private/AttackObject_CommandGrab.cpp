@@ -229,6 +229,9 @@ void CAttackObject_CommandGrab::OnCollisionEnter(CCollider* other, _float fTimeD
 		{
 			m_pOwner->Set_AnimationStop(0.08f);
 			pCharacter->Set_AnimationStop(0.08f);
+
+			//m_pEffect_Manager->Copy_Layer(TEXT("Guard01"), &tDesc);
+			pCharacter->Character_Make_Effect(TEXT("Guard02"));
 		}
 
 		else if (eResult == RESULT_DRAW)

@@ -349,21 +349,22 @@ void CCharacter::Update(_float fTimeDelta)
 
 void CCharacter::Late_Update(_float fTimeDelta)
 {
-	if (m_bDestructiveFinish == true)
-	{
-		m_fAccDyingTime += fTimeDelta;
-		if (m_fAccDyingTime > 7)
-		{
-			m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&m_vDyingPosition));
-
-			m_bDestructiveFinish = false;
-			m_fAccDyingTime = 0.f;
-
-
-
-			Set_fImpulse({ 0.f,0.f });
-		}
-	}
+	//if (m_bDestructiveFinish == true)
+	//{
+	//	//m_fAccDyingTime += fTimeDelta;
+	//	//if (m_fAccDyingTime > 7)
+	//	if (m_fAccDyingTime > 8.f)
+	//	{
+	//		//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&m_vDyingPosition));
+	//
+	//		m_bDestructiveFinish = false;
+	//		//m_fAccDyingTime = 0.f;
+	//
+	//
+	//
+	//		//Set_fImpulse({ 0.f,0.f });
+	//	}
+	//}
 
 	if (m_bPlaying || m_bTag_In)
 	{
@@ -3918,6 +3919,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
+					Character_Make_Effect(TEXT("RO"), { 0.f,0.8f });
 
 				}
 
@@ -3953,7 +3955,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
-
+					Character_Make_Effect(TEXT("RO"),{0.f,0.8f});
 				}
 			}
 		}
@@ -4313,6 +4315,8 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 					Set_fImpulse(fMapToImpulse);
 
 					m_bDestructiveFinish = true;
+					m_fMaxDyingTime = 5.f;
+
 				}
 
 				Set_AnimationStopWithoutMe(2.f);
@@ -4644,6 +4648,11 @@ void CCharacter::Set_bHeavySkill(_bool bHeavySkill)
 	m_bHeavySkill = bHeavySkill;
 }
 
+void CCharacter::Set_bForcedAura(_bool bForcedAura)
+{
+	m_bForcedAura = bForcedAura;
+}
+
 void CCharacter::Set_bAura(_bool bAura)
 {
 	if (bAura != m_bAura)
@@ -4665,6 +4674,12 @@ void CCharacter::Set_bAura(_bool bAura)
 
 	
 
+}
+
+void CCharacter::Set_fAuraColor(_float4 fAuraColor)
+{
+	LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+	pLight_Desc->vAuraColor = fAuraColor;
 }
 
 void CCharacter::Reset_AttackStep()

@@ -18,8 +18,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.95 0
-Scale: 0.15 0.15 1
+Position: 0 -0.37 0
+Scale: 0.06 0.06 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 27.8642 32.9305 31.2417 30
@@ -64,8 +64,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.63 0
-Scale: 0.1 0.1 1
+Position: 0 -0.13 0
+Scale: 0.02 0.02 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 178.162 0 19.6093 2.88079
@@ -110,8 +110,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.68 0
-Scale: 0.1 0.1 1
+Position: 0 -0.22 0
+Scale: 0.035 0.035 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 183.228 0 53.1954 2.68212
@@ -156,8 +156,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.67 0
-Scale: 0.1 0.1 1
+Position: 0 -0.37 0
+Scale: 0.06 0.06 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 30
@@ -202,8 +202,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 -0.53 0
-Scale: 0.08 0.08 1
+Position: 0 -0.33 0
+Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 30
@@ -248,8 +248,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.95 0
-Scale: 0.15 0.15 1
+Position: 0 -0.37 0
+Scale: 0.06 0.06 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 0 0 0 7.45033
@@ -294,8 +294,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 -0.6 0
-Scale: 0.09 0.09 1
+Position: 0 -0.3 0
+Scale: 0.05 0.05 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 201.805 0 152.831 1.09139
@@ -386,8 +386,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 -2.4 0
-Scale: 0.4 0.4 1
+Position: 0 -1.8 0
+Scale: 0.3 0.3 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 198.427 0 44.7517 0.645364
@@ -440,7 +440,7 @@ Color: 0 0 0 0.695364
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 1
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -450,6 +450,15 @@ Rotation: 0 0 314.026
 CurTime: 0
 Duration: 3
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: 0.4 0.6 0
+Scale: 0.05 0.499998 1
+Rotation: 0 0 314.026
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: true
 
 [Effect]
 EffectName: 21_WSDO-05_11
@@ -468,7 +477,7 @@ Color: 0 0 0 0.641391
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 1
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -478,6 +487,15 @@ Rotation: 0 0 39.74
 CurTime: 0
 Duration: 3
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: -0.6 0.6 0
+Scale: 0.05 0.4 1
+Rotation: 0 0 39.74
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: true
 
 [Effect]
 EffectName: 21_WSDO-05_12
@@ -496,7 +514,7 @@ Color: 0 0 0 0.695364
 GlowColor: 0 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
-NumKeyFrame: 1
+NumKeyFrame: 2
 
 [KeyFrame]
 KeyFrameNumber: 0
@@ -506,6 +524,15 @@ Rotation: 0 0 105.195
 CurTime: 0
 Duration: 3
 IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 178
+Position: -0.7 0 0
+Scale: 0.040001 0.500007 1
+Rotation: 0 0 105.195
+CurTime: 2.96667
+Duration: 3
+IsNotPlaying: true
 
 [Effect]
 EffectName: 21_WSDO-05_13

@@ -328,6 +328,7 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_bPlaying = false;
 			}
@@ -1527,7 +1528,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
 		Desc.iDirection = m_iLookDirection;
-		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 
 
 		Desc.strEffectName = TEXT("21_BurstJ-01");
@@ -1924,7 +1925,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.4f };
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 
 
 
@@ -2031,7 +2032,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 			Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 			Desc.strEffectName = TEXT("21_SDU-01");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
