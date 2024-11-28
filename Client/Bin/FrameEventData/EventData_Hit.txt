@@ -1,3 +1,5 @@
+PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0
+
 
 PLAY_HIT,HTN600cs_body,0,AnimSpeedChange,0.019,60.1
 PLAY_HIT,HTN600cs_body,0.001000,PlaySound,147,0,1

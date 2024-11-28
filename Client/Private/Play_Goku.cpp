@@ -763,10 +763,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_4))
-	{
-		Set_bFinalSkillQTE(true);
-	}
+	//if (m_pGameInstance->Key_Down(DIK_4))
+	//{
+	//	Set_bFinalSkillQTE(true);
+	//}
 	
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
 	{
