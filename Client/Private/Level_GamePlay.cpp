@@ -18,6 +18,7 @@
 #include "BattleInterface.h"
 #include "Opening_Kririn.h"
 #include "Particle_Manager.h"
+#include "SubTitle_Manager.h"
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -25,6 +26,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pQTE_Manager{ CQTE_Manager::Get_Instance() }
 	, m_pMap_Manager{ CMap_Manager::Get_Instance() }
 	, m_pParticle_Manager{ CParticle_Manager::Get_Instance() }
+	, m_pSubTitle_Manager{ CSubTitle_Manager::Get_Instance() }
 {
 }
 
@@ -35,7 +37,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	Create_Effect_Manager();
 	Create_QTE_Manager();
 	Create_Particle_Manager();
-
+	Create_SubTitle_Manager();
 #pragma region ÀÌÆåÆ® ¼¼ÆÃ
 	Loading_For_Effect();
 #pragma endregion
@@ -66,7 +68,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
@@ -236,11 +238,13 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pParticle_Manager->Update(fTimeDelta);
+	m_pSubTitle_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
 
 	m_pQTE_Manager->Update(fTimeDelta);
 	m_pQTE_Manager->Late_Update(fTimeDelta);
 	m_pParticle_Manager->Late_Update(fTimeDelta);
+	m_pSubTitle_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
 
 	//if (m_pGameInstance->Key_Down(DIK_SPACE))
@@ -1149,6 +1153,12 @@ void CLevel_GamePlay::Create_Particle_Manager()
 	m_pParticle_Manager->Initialize(m_pDevice, m_pContext);
 }
 
+void CLevel_GamePlay::Create_SubTitle_Manager()
+{
+	m_pSubTitle_Manager = CSubTitle_Manager::Get_Instance();
+	m_pSubTitle_Manager->Initialize(m_pDevice, m_pContext);
+}
+
 HRESULT CLevel_GamePlay::Loading_For_Effect()
 {
 	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
@@ -1211,4 +1221,5 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pUI_Manager);
 	Safe_Release(m_pMap_Manager);
 	Safe_Release(m_pParticle_Manager);
+	Safe_Release(m_pSubTitle_Manager);
 }

@@ -215,6 +215,7 @@
     <ClInclude Include="..\Public\Particle_21_3_Ultimate.h" />
     <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h" />
     <ClInclude Include="..\Public\Particle_Frieza_1_Ultimate_Hit.h" />
+    <ClInclude Include="..\Public\SubTitle_Manager.h" />
     <ClInclude Include="..\Public\Particle_Spread.h" />
     <ClInclude Include="..\Public\Particle.h" />
     <ClInclude Include="..\Public\Play_Frieza.h" />
@@ -468,6 +469,7 @@
     <ClCompile Include="..\Private\Particle_21_3_Ultimate.cpp" />
     <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp" />
     <ClCompile Include="..\Private\Particle_Frieza_1_Ultimate_Hit.cpp" />
+    <ClCompile Include="..\Private\SubTitle_Manager.cpp" />
     <ClCompile Include="..\Private\Particle_Spread.cpp" />
     <ClCompile Include="..\Private\Play_Frieza.cpp" />
     <ClCompile Include="..\Private\Particle.cpp" />
