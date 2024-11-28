@@ -610,6 +610,9 @@
     <ClCompile Include="..\private\Lobby_Staff.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Particle_Common_Hit.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Common_Hit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -1286,7 +1289,7 @@
     </Filter>
     <Filter Include="02.GameObjects\Particle\Particle_Focus">
       <UniqueIdentifier>{c47f94cd-eb5b-47e3-95d2-1983d10af501}</UniqueIdentifier>
-  </Filter>
+    </Filter>
     <Filter Include="02.GameObjects\Map\Volcano\Volcano_EF">
       <UniqueIdentifier>{29823397-505f-41e7-9739-bc7983735a75}</UniqueIdentifier>
     </Filter>
@@ -1295,6 +1298,9 @@
     </Filter>
     <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff">
       <UniqueIdentifier>{0737dce8-dcf9-411a-8eec-89d46acf55f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Common_Hit">
+      <UniqueIdentifier>{ddef6f36-1e19-4368-929b-13160795d980}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2068,6 +2074,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Lobby_Staff.h">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Common_Hit.h">
+      <Filter>02.GameObjects\Particle\Particle_Common_Hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

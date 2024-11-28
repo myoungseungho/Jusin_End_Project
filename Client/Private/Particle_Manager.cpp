@@ -16,8 +16,8 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 	CParticle* pParticle = nullptr;
 	CParticle::PARTICLE_DESC Desc{};
 
-	// 각 파티클 타입별로 최소 3개의 파티클 객체를 미리 생성하여 풀에 추가
-	for (int i = 0; i < 3; ++i)
+	// 각 파티클 타입별로 최소 5개의 파티클 객체를 미리 생성하여 풀에 추가
+	for (int i = 0; i < 5; ++i)
 	{
 		//프리저 1필
 		Desc.fXScale = 7.f;
@@ -40,6 +40,17 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread"), &Desc));
 		pParticle->Set_Particle_Active(false);
 		m_ParticlePools[FREIZA_ULTIMATE_3_PARTICLE].push_back(pParticle);
+
+		//공통 Hit
+		Desc.fXScale = 3.f;
+		Desc.fYScale = 0.5f;
+		Desc.fGlowFactor = 20.f;
+		Desc.iPassIndex = 2;
+		Desc.vColor = _float4(1.f, 1.f, 0.f, 1.0f);
+
+		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Common_Hit"), &Desc));
+		pParticle->Set_Particle_Active(false);
+		m_ParticlePools[COMMON_HIT_PARTICLE].push_back(pParticle);
 	}
 
 	return S_OK;
@@ -118,7 +129,61 @@ HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _float3& vPosition)
 			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Focus")));
 			pool.push_back(pParticle);
 			break;
-			// 추후 다른 PARTICLE_ID에 대한 케이스 추가 가능
+
+		case COMMON_HIT_PARTICLE:
+			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Common_Hit")));
+			pool.push_back(pParticle);
+			break;
+		}
+	}
+
+	//파티클 활성화 및 초기화
+	pParticle->Set_Particle_Active(true); // 초기에는 비활성화 상태
+	pParticle->Set_Position(vPosition);
+
+	// 추가적인 초기화가 필요하면 여기에 구현
+
+	return S_OK;
+}
+
+HRESULT CParticle_Manager::Play(PARTICLE_ID eID, const _vector& vPosition)
+{
+	auto& pool = m_ParticlePools[eID];
+	CParticle* pParticle = nullptr;
+
+	//풀의 사이즈가 0이 아닌상황에
+	if (pool.size() != 0)
+	{
+		// 비활성화된 파티클을 풀에서 검색
+		for (auto& particle : pool)
+		{
+			if (!particle->IsActive())
+			{
+				pParticle = particle;
+				break;
+			}
+		}
+	}
+
+	if (pParticle == nullptr)
+	{
+		// 비활성화된 파티클이 없으면 새로 생성
+		switch (eID)
+		{
+		case FREIZA_ULTIMATE_3_PARTICLE:
+			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Spread")));
+			pool.push_back(pParticle);
+			break;
+
+		case FREIZA_ULTIMATE_1_PARTICLE:
+			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Focus")));
+			pool.push_back(pParticle);
+			break;
+
+		case COMMON_HIT_PARTICLE:
+			pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Common_Hit")));
+			pool.push_back(pParticle);
+			break;
 		}
 	}
 

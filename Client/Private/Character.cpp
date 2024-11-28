@@ -19,6 +19,7 @@
 #include "Map_Manager.h"
 
 #include "QTE_Manager.h"
+#include "Particle_Manager.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
@@ -818,7 +819,7 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
-	
+
 
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
@@ -844,7 +845,7 @@ _bool CCharacter::Character_Play_Animation_NoXZ(_float fTimeDelta)
 		//iOneFrameTeest++;
 	}
 
-	if (m_pModelCom->Play_Animation_Lick2(fTimeDelta,m_pTransformCom))
+	if (m_pModelCom->Play_Animation_Lick2(fTimeDelta, m_pTransformCom))
 		//if (m_pModelCom->Play_Animation(fTimeDelta))
 	{
 		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
@@ -1616,7 +1617,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 		return;
 
 	//if(Check_bCurAnimationisCanChase())
-	
+
 
 	_short iCheck = Check_bCurAnimationisCanChase();
 	if (iCheck == 0)
@@ -2411,6 +2412,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_LIGHT:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 		{
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
@@ -2440,6 +2445,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_MEDIUM:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 		{
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
@@ -2462,6 +2471,9 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		break;
 	case Client::HitMotion::HIT_HEAVY_DOWN:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		if (Get_fHeight() > 0)
 		{
@@ -2485,6 +2497,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_CROUCH_MEDIUM:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Air_FallAnimationIndex);
 		m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
 		Set_ForcedGravityTime_LittleUp();
@@ -2493,6 +2509,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bWallBounce = false;
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
 		//m_pModelCom->CurrentAnimationPositionJump()
@@ -2507,6 +2527,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bWallBounce = true;
 
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
@@ -2521,6 +2545,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bAwayUpGravity = false;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		Set_ForcedGravityTime_LittleUp();
@@ -2528,6 +2556,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bAwayUpGravity = true;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		//Set_ForcedGravityTime_LittleUp();
@@ -2541,6 +2573,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFTDOWN:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
 
 		//버그 원인같아서 지움
@@ -2555,6 +2591,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_SPIN_AWAY_LEFTUP:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Air_Spin_LeftUp, false);
 
 		if (Get_fHeight() == 0)
@@ -2568,6 +2608,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_WALLBOUNCE:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_WallBouce);
 	}
 	break;
@@ -2579,6 +2623,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HIT_SPIN_AWAY_UP:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Air_Spin_Up);
 	}
 	break;
@@ -3458,7 +3506,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 	//잡기중에는 겹쳐도 됨
 	//if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
-	if (m_bGrabbed  || m_bPlaying == false)
+	if (m_bGrabbed || m_bPlaying == false)
 		return;
 
 
@@ -4297,7 +4345,7 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 		{
 			m_bDying = true;
 
-			if(m_bFinalSkillRoundEnd == false)
+			if (m_bFinalSkillRoundEnd == false)
 			{
 				if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
 				{
@@ -4343,7 +4391,7 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 			}
 
 
-			
+
 
 		}
 
@@ -4663,7 +4711,7 @@ void CCharacter::Set_bAura(_bool bAura)
 		}
 	}
 
-	
+
 
 }
 
@@ -5877,7 +5925,7 @@ void CCharacter::GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput, _u
 		m_pUI_Manager->m_eBtnInput2 = eBtnInput;
 	}
 
-	
+
 }
 
 void CCharacter::Notify_QTE_Same_Grab(_int result)
@@ -5975,7 +6023,7 @@ void CCharacter::Add_ChaseLight()
 	LightDesc.fLifeTime = 1.f;
 	LightDesc.strName = "Chase";
 	/*LightDesc.pisDone = &m_bChase;*/
-	
+
 
 	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
 		return;

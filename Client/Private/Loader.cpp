@@ -172,6 +172,8 @@
 #include "QTE_1P_Same_Grab.h"
 #include "Particle_Spread.h"
 #include "Particle_Focus.h"
+#include "Particle_Common_Hit.h"
+
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -4212,6 +4214,10 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CParticle_Focus::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_Common_Hit"),
+		CParticle_Common_Hit::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -4666,6 +4672,19 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
+	//공통 Hit Spread 파티클
+	ParticleDesc.iNumInstance = 500.f;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(8.f, 15.f);
+	ParticleDesc.vScale = _float2(0.01f, 0.02f);
+	ParticleDesc.vLifeTime = _float2(0.05f, 0.1f);
+	ParticleDesc.isLoop = false;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Hit_Spread"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
 #pragma endregion
 
 
@@ -4693,7 +4712,6 @@ CLoader* CLoader::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, L
 
 	return pInstance;
 }
-
 
 void CLoader::Free()
 {
