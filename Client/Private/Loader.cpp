@@ -368,7 +368,7 @@ HRESULT CLoader::Loading_For_Lobby()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCharaIcon"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/LIVEChar%d.png"), 2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/LIVEChar%d.png"), 3))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCursor"),

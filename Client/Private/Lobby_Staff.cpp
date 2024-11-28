@@ -149,10 +149,10 @@ void CLobby_Staff::Default_Setting(_uint iNumObj)
 		m_pTransformCom->Rotation({ 0.f,1.f, 0.f }, XMConvertToRadians(213.f));
 		break;
 	}
-	CUI_Staff_Text::STAFF_TEXT_DESC TextDesc = {};
-
-	TextDesc.pStaffTransform = m_pTransformCom;
-	m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"), &TextDesc);
+	//CUI_Staff_Text::STAFF_TEXT_DESC TextDesc = {};
+	//
+	//TextDesc.pStaffTransform = m_pTransformCom;
+	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"), &TextDesc);
 }
 
 HRESULT CLobby_Staff::Ready_Components()
