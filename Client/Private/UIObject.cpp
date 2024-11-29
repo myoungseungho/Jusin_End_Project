@@ -310,7 +310,6 @@ HRESULT CUIObject::Ready_Components()
 
 void CUIObject::Free()
 {
-	__super::Free();
 
 
 	Safe_Release(m_pShaderCom);
@@ -318,4 +317,5 @@ void CUIObject::Free()
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pUI_Manager);
 
+	__super::Free();
 }

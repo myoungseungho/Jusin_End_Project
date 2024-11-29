@@ -35,8 +35,8 @@ HRESULT CLobby_Krillin::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(-56.6f, 0.f, -1.8f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(86.f));
+	m_pTransformCom->Set_State_Position(_float3(-53.500f, 0.f, 3.9f));
+	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(180.f));
 
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(0, true, 0.1f);
