@@ -2096,6 +2096,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				else
 					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,45.f });
 
+				if (m_p236PoseEffect != nullptr)
+				{
+					m_p236PoseEffect->m_bIsDoneAnim = true;
+					m_p236PoseEffect = nullptr;
+				}
+
 			}
 		}
 
@@ -2125,9 +2131,16 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//	m_b236Special = false;
 			//}
 
+			if (m_b236Special && m_p236PoseEffect != nullptr)
+			{
+				m_p236PoseEffect->m_bIsDoneAnim = true;
+				m_p236PoseEffect = nullptr;
+			}
+
 			m_b236Special = false;
 			Set_Animation(ANIME_IDLE);
-
+			
+			
 		}
 
 	}
@@ -2291,12 +2304,24 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				else
 					pEffect->Set_Copy_Layer_Rotation({ 0.f,0.f,225.f });
 
+
+				if (m_p236PoseEffect != nullptr)
+				{
+					m_p236PoseEffect->m_bIsDoneAnim = true;
+					m_p236PoseEffect = nullptr;
+				}
+
+
 			}
 		}
 
 		else if (iAttackEvent == 3)
 		{
-
+			if (m_b236Special && m_p236PoseEffect != nullptr)
+			{
+				m_p236PoseEffect->m_bIsDoneAnim = true;
+				m_p236PoseEffect = nullptr;
+			}
 			m_b236Special = false;
 
 		}
@@ -2866,10 +2891,22 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_b236Posing = true;
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light, false, 1.f);
 
+
+			//Character_Make_Effect(TEXT("Hit_SDI"));
+
+			m_p236PoseEffect = Character_Make_BoneEffect("G_root",TEXT("Hit_SDI"));
+
+
+
 		}
 		else if (iAttackEvent == 1)
 		{
-			m_b236Posing = false;
+			m_b236Posing = false; 
+			if (m_p236PoseEffect != nullptr)
+			{
+				m_p236PoseEffect->m_bIsDoneAnim = true;
+				m_p236PoseEffect = nullptr;
+			}
 		}
 
 	}
@@ -2905,6 +2942,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//Character_Make_Effect(TEXT("Moving_Line_Right"));
 				Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 				m_b236Posing = false;
+				if (m_p236PoseEffect != nullptr)
+				{
+					m_p236PoseEffect->m_bIsDoneAnim = true;
+					m_p236PoseEffect = nullptr;
+				}
 
 				CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 				main_Camera->StartCameraShake(0.1f, 0.5f);
@@ -3027,6 +3069,12 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				//m_pEnemy->Character_Make_Effect(TEXT("Hit_SDI_U"));
 				Character_Make_Effect(TEXT("Hit_SDI_U"), { XMVectorGetX(vLength) * m_iLookDirection, XMVectorGetY(vLength)+0.8f });
 
+
+				if (m_p236PoseEffect != nullptr)
+				{
+					m_p236PoseEffect->m_bIsDoneAnim = true;
+					m_p236PoseEffect = nullptr;
+				}
 			}
 		}
 		else if (iAttackEvent == 2)
@@ -3086,7 +3134,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 			m_b236Posing = false;
-
+			if (m_p236PoseEffect != nullptr)
+			{
+				m_p236PoseEffect->m_bIsDoneAnim = true;
+				m_p236PoseEffect = nullptr;
+			}
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Middle_Attack, false, 1.f);
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::Hit_Down_Forward_Light_Light_Attack_SFX, false, 1.f);
 
@@ -3197,7 +3249,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			Character_Create_Distortion({ 1.f,0.f,0.f }, { -0.6f * m_iLookDirection,0.f });
 			m_b236Posing = false;
-
+			if (m_p236PoseEffect != nullptr)
+			{
+				m_p236PoseEffect->m_bIsDoneAnim = true;
+				m_p236PoseEffect = nullptr;
+			}
 
 			CAttackObject::ATTACK_DESC Desc{};
 
@@ -4441,15 +4497,13 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 2002)
 		{
-			CEffect_Layer::COPY_DESC pDesc{};
+			//CEffect_Layer::COPY_DESC pDesc{};
+			//_float4x4 fCamMat = {};
+			//XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+			//pDesc.pPlayertMatrix = &fCamMat;
+			//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
 
-			_float4x4 fCamMat = {};
-
-			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
-
-			pDesc.pPlayertMatrix = &fCamMat;
-
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+			CRenderInstance::Get_Instance()->Start_AllWhiteOut(0.5f, 2.f);
 
 
 			m_pEnemy->Set_AnimationStop(0.5f);
@@ -4810,6 +4864,11 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 
 	m_bInvisible = false;
 	m_b236Posing = false;
+	if (m_p236PoseEffect != nullptr)
+	{
+		m_p236PoseEffect->m_bIsDoneAnim = true;
+		m_p236PoseEffect = nullptr;
+	}
 	m_b236Special = false;
 	m_b214Posing = false;
 	m_fAccPoseTime = 0.f;

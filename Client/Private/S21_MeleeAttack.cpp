@@ -478,7 +478,8 @@ void CS21_MeleeAttack::Attack_236Ultimate()
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || 
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH || *m_pPlayerAnimationIndex == CPlay_21::ANIME_FORWARD_DASH_END || m_pPlayer->Check_bCurAnimationisAirMove())
 	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_ULTIMATE);
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+			m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_ULTIMATE);
 	}
 
 	//else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_HEAVY ||
@@ -502,7 +503,8 @@ void CS21_MeleeAttack::Attack_236Ultimate()
 		*m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_SPECIAL || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_236 || *m_pPlayerAnimationIndex == CPlay_21::ANIME_ATTACK_214))
 	{
 		//m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_ATTACK_236_ULTIMATE, 3.5f, 0.f);
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_ULTIMATE);
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+			m_pPlayer->Set_Animation(CPlay_21::ANIME_ATTACK_236_ULTIMATE);
 	}
 
 	

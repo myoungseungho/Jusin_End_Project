@@ -3552,16 +3552,13 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 2002)
 		{
-			CEffect_Layer::COPY_DESC pDesc{};
+			//CEffect_Layer::COPY_DESC pDesc{};
+			//_float4x4 fCamMat = {};
+			//XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+			//pDesc.pPlayertMatrix = &fCamMat;
+			//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
 
-			_float4x4 fCamMat = {};
-
-			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
-
-			pDesc.pPlayertMatrix = &fCamMat;
-
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
-
+			CRenderInstance::Get_Instance()->Start_AllWhiteOut(0.5f, 2.f);
 
 			m_pEnemy->Set_AnimationStop(0.5f);
 			Set_AnimationStop(0.5f);
