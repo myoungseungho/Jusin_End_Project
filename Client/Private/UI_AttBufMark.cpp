@@ -33,7 +33,8 @@ HRESULT CUI_AttBufMark::Initialize(void* pArg)
 
 	m_fSizeX = 40.f, m_fSizeY = 40.f;
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY,0.f);
+
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY,0.f);
 
 	return S_OK;
 }
@@ -53,7 +54,8 @@ void CUI_AttBufMark::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_AttBufMark::Render(_float fTimeDelta)

@@ -31,7 +31,8 @@ HRESULT CUI_AttBufIconEff::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.05f);
+
+		__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.05f);
 
 	return S_OK;
 }
@@ -55,7 +56,8 @@ void CUI_AttBufIconEff::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_AttBufIconEff::Render(_float fTimeDelta)

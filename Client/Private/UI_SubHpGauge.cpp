@@ -60,7 +60,7 @@ void CUI_SubHpGauge::Update(_float fTimeDelta)
 
 void CUI_SubHpGauge::Late_Update(_float fTimeDelta)
 {
-	if (m_fHpRadio > 0.f)
+	if (m_fHpRadio > 0.f && m_bIsRender)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 

@@ -55,7 +55,8 @@ void CUI_AttBuf::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_AttBuf::Render(_float fTimeDelta)

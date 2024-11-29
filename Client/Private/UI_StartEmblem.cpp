@@ -75,7 +75,8 @@ void CUI_StartEmblem::Late_Update(_float fTimeDelta)
 	if (m_QueueAnim.empty())
 		Destory();
 
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_StartEmblem::Render(_float fTimeDelta)

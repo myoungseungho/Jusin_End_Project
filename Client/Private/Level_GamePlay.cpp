@@ -1232,5 +1232,4 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pMap_Manager);
 	Safe_Release(m_pParticle_Manager);
 	Safe_Release(m_pSubTitle_Manager);
-	Safe_Release(m_pIMGUI_Manager);
 }

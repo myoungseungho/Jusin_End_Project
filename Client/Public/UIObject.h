@@ -77,6 +77,9 @@ protected:
 	_bool MoveAnimUI(_vector vTargetPos, _float fSpeed,  _float fDepth , _float fTimeDelta , _float fEndDistance = 15.f);
 	_bool Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed , _float fDepth, _float fTimeDelta,_float fEndDistance = 15.f);
 
+public:
+	void Set_Render(_bool bRenderer) { m_bIsRender = bRenderer; }
+
 protected:
 	CShader* m_pShaderCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -119,6 +122,8 @@ protected:
 	//해상도 변경
 	_float2 m_vOffSetWinSize = { };
 	_float2 m_vPrevWinSize = {};
+
+	_bool m_bIsRender = { TRUE };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

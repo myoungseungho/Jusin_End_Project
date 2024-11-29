@@ -89,6 +89,7 @@ void CUI_Input_IconPanel::Update(_float fTimeDelta)
 	if (fOffSetPosY >= 575)
 		Destory();
 
+
 	__super::Set_UI_Setting(45.f * m_iOffsetScaled, 45.f, m_fPosX, fOffSetPosY, 0.9f);
 }
 

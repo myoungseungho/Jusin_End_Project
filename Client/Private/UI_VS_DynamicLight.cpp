@@ -54,10 +54,16 @@ void CUI_VS_DynamicLight::Update(_float fTimeDelta)
 	m_fSizeY += fTimeDelta * 2000.f;
 	
 	if (m_fSizeX >= 6000.f)
-		Destory();
+	{
+		m_fSizeX = 200.f;
+		m_fSizeY = 200.f;
+	}
 	
-	if (m_fSizeY >= 6000.f)
-		Destory();
+	else if (m_fSizeY >= 6000.f)
+	{
+		m_fSizeX = 200.f;
+		m_fSizeY = 200.f;
+	}
 	
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.1f);
 }
