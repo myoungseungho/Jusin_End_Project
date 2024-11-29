@@ -61,7 +61,7 @@ HRESULT CParticle_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext
 
 		pParticle = static_cast<CParticle*>(m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Particle_Frieza_3_Ultimate_Hit"), &Desc));
 		pParticle->Set_Particle_Active(false);
-		m_ParticlePools[FREIZA_ULTIMATE_1_HIT_PARTICLE].push_back(pParticle);
+		m_ParticlePools[FREIZA_ULTIMATE_3_HIT_PARTICLE].push_back(pParticle);
 
 		//21 3ÇÊ
 		Desc.fXScale = 1.f;
