@@ -27,6 +27,7 @@ HRESULT CUI_VS_Mark::Initialize(void* pArg)
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
+	m_pUI_Manager->m_fTotalDuration = 0.f;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;

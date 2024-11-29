@@ -30,7 +30,15 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pMap_Manager{ CMap_Manager::Get_Instance() }
 	, m_pParticle_Manager{ CParticle_Manager::Get_Instance() }
 	, m_pSubTitle_Manager{ CSubTitle_Manager::Get_Instance() }
+	, m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
 {
+	Safe_AddRef(m_pUI_Manager);
+	Safe_AddRef(m_pIMGUI_Manager);
+	Safe_AddRef(m_pQTE_Manager);
+	Safe_AddRef(m_pMap_Manager);
+	Safe_AddRef(m_pParticle_Manager);
+	Safe_AddRef(m_pSubTitle_Manager);
+	Safe_AddRef(m_pEffect_Manager);
 }
 
 HRESULT CLevel_GamePlay::Initialize()
@@ -181,12 +189,12 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
-	/*if (m_pGameInstance->Key_Down(DIK_SPACE))
+	if (m_pGameInstance->Key_Down(DIK_SPACE))
 	{
 		m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_LOBBY));
 
 		return;
-	}*/
+	}
 
 
 	if (m_pGameInstance->Key_Down(DIK_NUMPAD1))
@@ -1242,4 +1250,6 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pMap_Manager);
 	Safe_Release(m_pParticle_Manager);
 	Safe_Release(m_pSubTitle_Manager);
+	Safe_Release(m_pIMGUI_Manager);
+
 }
