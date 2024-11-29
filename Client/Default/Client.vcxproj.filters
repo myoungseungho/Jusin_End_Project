@@ -622,6 +622,15 @@
     <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp">
       <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Particle_21_3_Ultimate.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Hit_3_Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SubTitle_Manager.cpp">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SubTitle.cpp">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClCompile>
     <ClCompile Include="..\private\UI_Win_Font.cpp">
       <Filter>02.GameObjects\UI\Win\Font</Filter>
     </ClCompile>
@@ -1310,6 +1319,12 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Lobby\Text\Staff">
       <UniqueIdentifier>{8ebfed5c-00ca-48c1-ab90-78e6c6ecf86e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Hit_3_Ultimate">
+      <UniqueIdentifier>{c617f062-971d-4ba1-aa9a-02fe21d0f04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\SubTitle">
+      <UniqueIdentifier>{290ffa63-6beb-486e-9cb1-2c465e6ce78f}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\Win">
       <UniqueIdentifier>{5bd40f32-4929-4809-9418-f5cac3945695}</UniqueIdentifier>
@@ -2131,6 +2146,15 @@
     </ClInclude>
     <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h">
       <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_21_3_Ultimate.h">
+      <Filter>02.GameObjects\Particle\Particle_Hit_3_Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SubTitle_Manager.h">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SubTitle.h">
+      <Filter>02.GameObjects\SubTitle</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_Win_Font.h">
       <Filter>02.GameObjects\UI\Win\Font</Filter>

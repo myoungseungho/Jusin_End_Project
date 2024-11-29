@@ -18,6 +18,7 @@
 #include "BattleInterface.h"
 #include "Opening_Kririn.h"
 #include "Particle_Manager.h"
+#include "SubTitle_Manager.h"
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -25,6 +26,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pQTE_Manager{ CQTE_Manager::Get_Instance() }
 	, m_pMap_Manager{ CMap_Manager::Get_Instance() }
 	, m_pParticle_Manager{ CParticle_Manager::Get_Instance() }
+	, m_pSubTitle_Manager{ CSubTitle_Manager::Get_Instance() }
 {
 }
 
@@ -35,6 +37,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	Create_Effect_Manager();
 	Create_QTE_Manager();
 	Create_Particle_Manager();
+	Create_SubTitle_Manager();
 
 #pragma region ÀÌÆåÆ® ¼¼ÆÃ
 	Loading_For_Effect();
@@ -66,26 +69,26 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
 		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 1;
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER2;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
 		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER2;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Frieza"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 	}
 	else
@@ -94,11 +97,11 @@ HRESULT CLevel_GamePlay::Initialize()
 		{
 			if (CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot == CUI_Define::SLOT_END)
 				continue;
-	
+
 			CharacterDesc.iTeam = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).iTeam;
 			CharacterDesc.ePlayerSlot = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).eSlot;
 			_wstring strProtypeTag = CBattleInterface_Manager::Get_Instance()->Get_CharaDesc(i).PrototypeTag;
-	
+
 			if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, strProtypeTag, TEXT("Layer_Character"), &CharacterDesc)))
 				return E_FAIL;
 		}
@@ -154,14 +157,14 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	
+
 	CCharacter::Character_DESC Opening_CharacterDesc{};
 	Opening_CharacterDesc.iTeam = 1;
 	Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc)))
 		return E_FAIL;
-	
+
 
 	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
 
@@ -185,11 +188,11 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_F9))
 	{
-		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(0, 1, 0), {}, { 1.f,1.5f });
+		//m_pRenderInstance->Switch_AllBlackOut(false);
 	}
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		m_pRenderInstance->Create_HitDistortion(_float4(0.f, 0.f, 0.f, 1.f), _float3(1, 0, 0));
+		m_pRenderInstance->Switch_AllBlackOut();
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_Z))
@@ -233,33 +236,17 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	}
 
 	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
-	m_pIMGUI_Manager->Update(fTimeDelta);
+	//m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pParticle_Manager->Update(fTimeDelta);
+	m_pSubTitle_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Late_Update(fTimeDelta);
 
 	m_pQTE_Manager->Update(fTimeDelta);
 	m_pQTE_Manager->Late_Update(fTimeDelta);
 	m_pParticle_Manager->Late_Update(fTimeDelta);
+	m_pSubTitle_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
-
-	//if (m_pGameInstance->Key_Down(DIK_SPACE))
-	//{
-		/*{
-			CCharacter::Character_DESC Opening_CharacterDesc{};
-			Opening_CharacterDesc.iTeam = 1;
-			Opening_CharacterDesc.ePlayerSlot = CUI_Define::SLOT_END;
-
-			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Opening_Kririn"), TEXT("Layer_Model_Opening"), &Opening_CharacterDesc);
-		}*/
-
-		//	static_cast<COpening_Kririn*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Model_Opening")))->Set_CurrentAnimationPositionJump(0.f);
-
-		//	CBattleInterface_Manager::Get_Instance()->Character_Opening_AIO();
-
-		/*	CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY, 0, m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Character")), nullptr, true);*/
-		//}
 
 	if (m_pGameInstance->Key_Down(DIK_V))
 		CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
@@ -1012,7 +999,7 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 
 HRESULT CLevel_GamePlay::Ready_Space()
 {
-	
+
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Shadow_Camera"), TEXT("Layer_A"))))
 		return E_FAIL;
 
@@ -1070,7 +1057,7 @@ HRESULT CLevel_GamePlay::Ready_Volcano()
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_VolcanoEF");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_VolcanoEF"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
-	
+
 	tDesc.m_PrototypeKey = TEXT("Prototype_GameObject_Volcano_Stage");
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Volcano_Stage"), TEXT("Layer_VolcanoStage"), &tDesc)))
 		return E_FAIL;
@@ -1152,6 +1139,12 @@ void CLevel_GamePlay::Create_Particle_Manager()
 	m_pParticle_Manager->Initialize(m_pDevice, m_pContext);
 }
 
+void CLevel_GamePlay::Create_SubTitle_Manager()
+{
+	m_pSubTitle_Manager = CSubTitle_Manager::Get_Instance();
+	m_pSubTitle_Manager->Initialize(m_pDevice, m_pContext);
+}
+
 HRESULT CLevel_GamePlay::Loading_For_Effect()
 {
 	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
@@ -1214,4 +1207,5 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pUI_Manager);
 	Safe_Release(m_pMap_Manager);
 	Safe_Release(m_pParticle_Manager);
+	Safe_Release(m_pSubTitle_Manager);
 }

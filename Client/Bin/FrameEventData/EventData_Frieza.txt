@@ -2,6 +2,7 @@
 PLAY_FRN,FRN600cs_body,0,AnimSpeedChange,0.019,60.1
 PLAY_FRN,FRN600cs_body,0.001000,PlaySound,149,0,1
 PLAY_FRN,FRN600cs_body,50.001000,PlaySound,148,0,1
+PLAY_FRN,FRN600cs_body,50.002000,SubTitle_Play,6,6
 PLAY_FRN,FRN600cs_body,260.002000,PlaySound,150,0,1
 
 //,301 리플렉터. (공용)
@@ -23,9 +24,15 @@ PLAY_FRN,FRN301_body,45,AnimSpeedChange,0.015,20
 PLAY_FRN,FRN601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_FRN,FRN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
+
 //,라운드 넘어갈때 맞대기1 (공용) 81
 PLAY_FRN,FRN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
-PLAY_FRN,FRN620cs_body,100,NextAnimation,630
+PLAY_FRN,FRN620cs_body,120,NextAnimation,630
+
+PLAY_FRN,FRN620cs_body,80,AttackEvent,2001
+PLAY_FRN,FRN620cs_body,90,AttackEvent,2002
+PLAY_FRN,FRN620cs_body,95,AttackEvent,2003
+PLAY_FRN,FRN620cs_body,110,AttackEvent,2004
 
 
 //,마지막 상태 정지모션 (공용) 83
@@ -1016,18 +1023,23 @@ PLAY_FRN,FRN433cs_body,160.002,Camera_Play_21_Grab_Special_0_Shake,2.0,0.03
 //,VS오공 시네마틱 
 PLAY_FRN,FRN_GKS801cs_01_body,0,AnimSpeedChange,0.005,60
 PLAY_FRN,FRN_GKS801cs_01_body,10.001000,PlaySound,151,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,10.002000,SubTitle_Play,0,2
 PLAY_FRN,FRN_GKS801cs_01_body,230.001000,PlaySound,152,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,230.002000,SubTitle_Play,1,2
 PLAY_FRN,FRN_GKS801cs_01_body,230.001000,Camera_Play_21_Grab_Special_0_Shake,1.5,0.02
 PLAY_FRN,FRN_GKS801cs_01_body,320.001000,PlaySound,159,0,1
 PLAY_FRN,FRN_GKS801cs_01_body,320.002000,PlaySound,160,0,1
 PLAY_FRN,FRN_GKS801cs_01_body,330.001000,Camera_Play_21_Grab_Special_0_Shake,1.2,0.4
 PLAY_FRN,FRN_GKS801cs_01_body,500.001000,PlaySound,154,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,500.002000,SubTitle_Play,2,5
 PLAY_FRN,FRN_GKS801cs_01_body,750.001000,Camera_Play_21_Grab_Special_0_Shake,1.5,0.05
 PLAY_FRN,FRN_GKS801cs_01_body,750.002000,PlaySound,162,0,1
 PLAY_FRN,FRN_GKS801cs_01_body,780.001000,PlaySound,155,0,1
 PLAY_FRN,FRN_GKS801cs_01_body,800.001000,PlaySound,156,0,1
 PLAY_FRN,FRN_GKS801cs_01_body,820.1000,Camera_Play_21_Grab_Special_0_Shake,3.5,0.1
+PLAY_FRN,FRN_GKS801cs_01_body,850.002000,SubTitle_Play,3,5
 PLAY_FRN,FRN_GKS801cs_01_body,870.002000,PlaySound,161,0,1
+PLAY_FRN,FRN_GKS801cs_01_body,930.002000,SubTitle_Play,4,4
 PLAY_FRN,FRN_GKS801cs_01_body,930.001000,PlaySound,163,0,1
 
 //,VS 오공 패배 시네마틱

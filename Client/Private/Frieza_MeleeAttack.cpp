@@ -446,6 +446,8 @@ void CFrieza_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
 			
 			m_pPlayer->Set_bHeavySkill(true);
+
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 		}
 
 		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY ||
@@ -455,6 +457,7 @@ void CFrieza_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236, false);
 
 			m_pPlayer->Set_bHeavySkill(true);
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 		}
 		
 		//»ç¿ë ¸øÇßÀ¸¸é
@@ -761,7 +764,7 @@ void CFrieza_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//»þ»þ¼¡
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 
@@ -785,7 +788,7 @@ void CFrieza_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//»þ»þ¼¡
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 

@@ -1,6 +1,22 @@
+PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0
+
 
 PLAY_HIT,HTN600cs_body,0,AnimSpeedChange,0.019,60.1
 PLAY_HIT,HTN600cs_body,0.001000,PlaySound,147,0,1
+//,PLAY_HIT,HTN600cs_body,0.2,AttackEvent,0
+PLAY_HIT,HTN600cs_body,50,AttackEvent,0
+
+
+PLAY_HIT,HTN600cs_body,160,AttackEvent,3
+
+//,사라지기
+PLAY_HIT,HTN600cs_body,185,AttackEvent,1
+
+
+//,나타나기
+PLAY_HIT,HTN600cs_body,205,AttackEvent,2
+
+
 PLAY_HIT,HTN600cs_body,240,PositionChange,260
 
 
@@ -25,7 +41,12 @@ PLAY_HIT,HTN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
 //,라운드 넘어갈때 맞대기1 (공용) 81
 PLAY_HIT,HTN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
-PLAY_HIT,HTN620cs_body,100,NextAnimation,630
+PLAY_HIT,HTN620cs_body,120,NextAnimation,630
+
+PLAY_HIT,HTN620cs_body,80,AttackEvent,2001
+PLAY_HIT,HTN620cs_body,90,AttackEvent,2002
+PLAY_HIT,HTN620cs_body,95,AttackEvent,2003
+PLAY_HIT,HTN620cs_body,110,AttackEvent,2004
 
 
 //,마지막 상태 정지모션 (공용) 83
@@ -43,7 +64,9 @@ PLAY_HIT,HTN631_body,0.000000,AnimSpeedChange,0.013000,59.798000
 
 
 //,승리용 애니메이션
-PLAY_HIT,HTN610cs,0.000000,AnimSpeedChange,0.034,112.323
+PLAY_HIT,PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0,0.000000,AnimSpeedChange,0.034,112.323
+
+
 
 
 
@@ -824,6 +847,7 @@ PLAY_HIT,HTN401_body,0,AnimSpeedChange,0.008000,61
 PLAY_HIT,HTN401_body,0,AttackEvent,0
 //,이동 + 샤샤샥 + 공격판정 + 보이게
 PLAY_HIT,HTN401_body,15,AttackEvent,1
+PLAY_HIT,HTN401_body,23,AttackEvent,2
 
 
 

@@ -57,11 +57,32 @@ HRESULT CParryingRangedObject::Initialize(void* pArg)
 	CEffect_Layer::COPY_DESC tDesc{};
 	tDesc.pPlayertMatrix = m_pTransformCom->Get_WorldMatrixPtr();
 	m_pEffect_Layer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Parrying_Ball"), &tDesc);
+
+	
+	_float4 vColor{};
+
+	switch (pDesc->iColor)
+	{
+	case Client::CParryingRangedObject::RANGED_LIGHT_NONE:
+		break;
+	case Client::CParryingRangedObject::RANGED_LIGHT_YELLOW:
+		vColor = { 300.f,    255.f,    50.66f,   130.f };
+		break;
+	case Client::CParryingRangedObject::RANGED_LIGHT_PURPLE:
+		vColor = { 148.f,    108.f,    259.2,   12.914f };
+		break;
+	case Client::CParryingRangedObject::RANGED_LIGHT_PINK:
+		vColor = { 283.1f,    6.954f,    76.49f,   283.1f };
+		break;
+	default:
+		break;
+	}
+
 	for (auto& iter : m_pEffect_Layer->m_MixtureEffects)
 	{
 		iter->m_iChangePassIndex = 10;
 		/* 컬러값 이걸로 바꾸면됨 */
-		iter->m_vColor = CImgui_Manager::Get_Instance()->color;
+		//iter->m_vColor = CImgui_Manager::Get_Instance()->color;
 		/*
 		21호 283.1    6.954     76.49    283.1
 
@@ -69,6 +90,8 @@ HRESULT CParryingRangedObject::Initialize(void* pArg)
 
 		프리저 148    108    259.2   12.914
 		*/
+		iter->m_vColor = vColor;
+		
 	}
 
 	_float fPosX = XMVectorGetX(pDesc->vPos);

@@ -293,7 +293,7 @@ PS_OUT PS_MAIN(PS_IN In)
 
     // 흰색(밝은 부분)과 g_vColor(보라색)의 혼합
     float4 white = float4(1.0f, 1.0f, 1.0f, 1.0f);
-    Out.vColor = lerp(g_vColor, white, gradient);
+    Out.vColor = saturate(lerp(g_vColor, white, gradient));
 
     // 알파 값 조건에 따라 픽셀 버리기
     if (In.vLifeTime.y >= In.vLifeTime.x || Out.vColor.a < 0.1f)

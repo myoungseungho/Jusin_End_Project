@@ -177,6 +177,9 @@
 #include "Particle_Common_Hit.h"
 #include "Particle_Frieza_1_Ultimate_Hit.h"
 #include "Particle_Frieza_3_Ultimate_Hit.h"
+#include "Particle_21_3_Ultimate.h"
+#include "SubTitle.h"
+
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -1696,9 +1699,15 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base_2P.png"), 1))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/TON_base.png"), 1))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_2P"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base_2P.png"), 1))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_HIT_1P"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/HTN_base.png"), 1))))
 		return E_FAIL;
 
 
@@ -2803,9 +2812,6 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/metal.png")))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Frieza/FRN_AllMesh.bin", PreTransformMatrix))))
-		return E_FAIL;
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
@@ -2837,6 +2843,10 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
@@ -4268,6 +4278,14 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CParticle_Frieza_3_Ultimate_Hit::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_21_3_Ultimate"),
+		CParticle_21_3_Ultimate::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SubTitle"),
+		CSubTitle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -4710,7 +4728,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 	//프리저 3필 Spread 파티클
 	ParticleDesc.iNumInstance = 50000;
-	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
+	ParticleDesc.vRange = _float3(0.01f, 0.01f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(2.f, 3.f);
@@ -4747,6 +4765,20 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Freiza_Ultimate_3_Hit_Spread"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
+	//21 3필 Spread 파티클
+	ParticleDesc.iNumInstance = 20000;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(6.f, 8.f);
+	ParticleDesc.vScale = _float2(0.03f, 0.04f);
+	ParticleDesc.vLifeTime = _float2(1.0f, 2.f);
+	ParticleDesc.isLoop = true;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Freiza_Ultimate_3_21_Spread"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 

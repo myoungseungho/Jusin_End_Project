@@ -261,6 +261,10 @@ public:
 
 	list<CEffect_Layer*> m_214GlassList;
 
+	//_ubyte iFinalDustCount = 0;
+	_bool m_bFinalInvisibleToggle = false;
+	_float m_fFinalInvisiblePositionSave = {};
+	_ubyte m_iFinalInvisibleCount = {};
 private:
 	
 	CHit_MeleeAttack m_tAttackMap;
@@ -293,15 +297,16 @@ private:
 
 	CEffect_Layer* m_pUltimateAuraEffect = { nullptr };
 	class CEffect_Layer* m_pAttackFinalGlassEffect_Layer = { nullptr };
+	CEffect_Layer* m_p236LightEffect = { nullptr };
+	CEffect_Layer* m_pOpeningGlass = { nullptr };
 
-
+	_bool m_b236LightSuccess = { false };
 
 	_short m_i214GlassCount = 0;
 	//_bool m_bLight3Effect = true;
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
-
 
 public:
 	static CPlay_Hit* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
