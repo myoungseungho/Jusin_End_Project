@@ -11,6 +11,7 @@
 #include "Lobby_DisplayBoard.h"
 #include "Lobby_Cloud.h"
 #include "Lobby_Flag.h"
+#include "Lobby_Staff.h"
 
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -109,9 +110,14 @@ HRESULT CLevel_Lobby::Initialize()
 		return E_FAIL;
 
 	//로비 스태프
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"))))
-		return E_FAIL;
 
+	CLobby_Staff::STAFF_DESC StaffDesc = {};
+	for (int i = 0; i < 2; i++)
+	{
+		StaffDesc.iNumObject = i;
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"),&StaffDesc)))
+			return E_FAIL;
+	}
 	//로비 파티
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
 	//	return E_FAIL;
@@ -148,6 +154,10 @@ HRESULT CLevel_Lobby::Initialize()
 	//Enter UI
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"))))
 		return E_FAIL;
+
+	//Win
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_UI_WIn_Font"), TEXT("Layer_Lobby_Win"))))
+	//	return E_FAIL;
 
 	//원형 전광판
 	CLobby_DisplayBoard::DISPLAY_DESC tDisplayDesc = {};

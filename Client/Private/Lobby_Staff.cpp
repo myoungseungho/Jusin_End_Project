@@ -6,6 +6,8 @@
 #include "Level_Loading.h"
 #include "Level_Lobby.h"
 
+#include "UI_Staff_Text.h"
+
 CLobby_Staff::CLobby_Staff(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -35,8 +37,8 @@ HRESULT CLobby_Staff::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(-56.6f, 0.f, -1.8f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(86.f));
+	STAFF_DESC* pDesc = static_cast<STAFF_DESC*>(pArg);
+	Default_Setting(pDesc->iNumObject);
 
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(0, true, 0.1f);
@@ -131,6 +133,26 @@ _bool CLobby_Staff::Idle(_float fTimeDelta)
 _bool CLobby_Staff::Run(_vector vTargPos, _float fTimeDelta)
 {
 	return _bool();
+}
+
+void CLobby_Staff::Default_Setting(_uint iNumObj)
+{
+	switch (iNumObj)
+	{
+	case 0:
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -12.675f , 0.000f,34.633f , 1.f });
+		m_pTransformCom->Rotation({0.f,1.f, 0.f} , XMConvertToRadians(155.f));
+		break;
+
+	case 1:
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 18.658f, 0.000f,32.596f , 1.f });
+		m_pTransformCom->Rotation({ 0.f,1.f, 0.f }, XMConvertToRadians(213.f));
+		break;
+	}
+	//CUI_Staff_Text::STAFF_TEXT_DESC TextDesc = {};
+	//
+	//TextDesc.pStaffTransform = m_pTransformCom;
+	//m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"), &TextDesc);
 }
 
 HRESULT CLobby_Staff::Ready_Components()

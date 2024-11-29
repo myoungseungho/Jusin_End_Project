@@ -114,9 +114,12 @@ HRESULT CUI_Lobby_Text::Ready_Components()
 
 void CUI_Lobby_Text::Add_Text()
 {
-	m_vTextArray.push({ TEXT("안녕하세요! 오늘 하루도 잘 보내고 계신가요?"), CUI_Define::NPC_FRIEZA });
-	m_vTextArray.push({ TEXT("좋은 아침이에요! 기분 좋게 하루를 시작하시길 바랍니다."), CUI_Define::NPC_KRILLIN });
-	m_vTextArray.push({ TEXT("오랜만이에요! 요즘 어떻게 지내셨나요?"), CUI_Define::NPC_FRIEZA });
+	m_vTextArray.push({ TEXT("프리저! 네가 여기 나타난 순간부터 싸울 각오 했어! 이제 물러설 곳은 없어!"), CUI_Define::NPC_KRILLIN });
+	m_vTextArray.push({ TEXT("하하하! 네가 감히 나에게 덤비다니, 웃음을 주는군. 하지만 오래가진 못할 거야."), CUI_Define::NPC_FRIEZA });
+	m_vTextArray.push({ TEXT("내 힘을 무시하지 마라! 모두를 지키기 위해 난 싸운다!"), CUI_Define::NPC_KRILLIN });
+	m_vTextArray.push({ TEXT("이것이 네 최선인가? 내 손끝 하나로 너를 끝내주마."), CUI_Define::NPC_FRIEZA });
+	m_vTextArray.push({ TEXT("프리저, 네 상대는 나야! 크리링, 쉬고 있어. 이제 내가 나선다."), CUI_Define::NPC_GOKU});
+	m_vTextArray.push({ TEXT("오공... 또 네가 끼어드는군. 이번엔 널 완전히 없애주겠다!"), CUI_Define::NPC_FRIEZA });
 }
 
 void CUI_Lobby_Text::TextOutput(_float fOutputSpeed,_float fTimeDelta)

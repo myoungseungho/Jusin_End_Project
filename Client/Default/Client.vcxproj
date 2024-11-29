@@ -319,6 +319,7 @@
     <ClInclude Include="..\public\UI_SelectArrow.h" />
     <ClInclude Include="..\public\UI_SelectLine.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
+    <ClInclude Include="..\public\UI_Staff_Text.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -358,6 +359,10 @@
     <ClInclude Include="..\public\UI_VS_NameOutLine.h" />
     <ClInclude Include="..\public\UI_VS_StaticLight.h" />
     <ClInclude Include="..\public\UI_VS_TeamPanel.h" />
+    <ClInclude Include="..\public\UI_Win_Circle.h" />
+    <ClInclude Include="..\public\UI_Win_Font.h" />
+    <ClInclude Include="..\public\UI_Win_Particle.h" />
+    <ClInclude Include="..\public\UI_Win_Team.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
@@ -576,6 +581,7 @@
     <ClCompile Include="..\private\UI_SelectArrow.cpp" />
     <ClCompile Include="..\private\UI_SelectLine.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
+    <ClCompile Include="..\private\UI_Staff_Text.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -623,6 +629,10 @@
     <ClCompile Include="..\private\UI_VS_NameOutLine.cpp" />
     <ClCompile Include="..\private\UI_VS_StaticLight.cpp" />
     <ClCompile Include="..\private\UI_VS_TeamPanel.cpp" />
+    <ClCompile Include="..\private\UI_Win_Circle.cpp" />
+    <ClCompile Include="..\private\UI_Win_Font.cpp" />
+    <ClCompile Include="..\private\UI_Win_Particle.cpp" />
+    <ClCompile Include="..\private\UI_Win_Team.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />

@@ -247,6 +247,9 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	m_pParticle_Manager->Late_Update(fTimeDelta);
 	m_pSubTitle_Manager->Late_Update(fTimeDelta);
 	m_pMap_Manager->Update(fTimeDelta);
+
+	if (m_pGameInstance->Key_Down(DIK_V))
+		CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
