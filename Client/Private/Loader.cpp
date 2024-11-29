@@ -4755,7 +4755,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		return E_FAIL;
 
 	//프리저 3필 Spread  Hit 파티클
-	ParticleDesc.iNumInstance = 500;
+	ParticleDesc.iNumInstance = 20000;
 	ParticleDesc.vRange = _float3(2.f, 1.f, 1.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
@@ -4778,7 +4778,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.vLifeTime = _float2(1.0f, 2.f);
 	ParticleDesc.isLoop = true;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Freiza_Ultimate_3_21_Spread"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_21_Ultimate_3_21_Spread"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 
