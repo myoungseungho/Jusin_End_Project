@@ -3721,8 +3721,19 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//크리링폭발
 		if (iAttackEvent == 2)
 		{
-			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,12.5f });
-			pEffect->Set_Copy_Layer_Scaled({ 2.f,2.f,2.f });
+			//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,12.5f });
+			//pEffect->Set_Copy_Layer_Scaled({ 3.f,3.f,3.f });
+
+			//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,12.0f });
+			//pEffect->Set_Copy_Layer_Scaled({ 4.f,4.f,4.f });
+			//pEffect->m_fTickPerSecond *= 0.7f;
+
+
+			//CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,10.0f });
+			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,8.0f });
+			pEffect->Set_Copy_Layer_Scaled({ 4.f,4.f,4.f });
+			pEffect->m_fTickPerSecond *= 0.7f;
+
 		}
 
 		//분노 bAura

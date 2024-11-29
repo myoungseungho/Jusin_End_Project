@@ -407,6 +407,17 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 						if (m_fAccfirstOpeningTime == 0)
 						{
 							CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+							if (m_pOpeningGlass != nullptr)
+							{
+								m_pOpeningGlass->m_bIsDoneAnim = true;
+								m_pOpeningGlass = nullptr;
+							}
+
+							if (Get_fHeight() > 0.2)
+							{
+								Add_Move({ 0.f,-0.3f });
+							}
+
 						}
 						m_fAccfirstOpeningTime += fTimeDelta;
 					}
