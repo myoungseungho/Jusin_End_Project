@@ -1505,7 +1505,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		return E_FAIL;
 
 	/* Prototype_GameObject_UI_WIn_Font */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Font"),
+	/*if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Font"),
 		CUI_Win_Font::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
@@ -1519,7 +1519,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Team"),
 		CUI_Win_Team::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
+		return E_FAIL;*/
 
 #pragma region Effect Texture
 
