@@ -779,7 +779,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	}
 
 	
-	if (m_pGameInstance->Key_Down(DIK_4))
+	if (m_pGameInstance->Key_Down(DIK_0))
 	{
 		Set_bFinalSkillQTE(true);
 

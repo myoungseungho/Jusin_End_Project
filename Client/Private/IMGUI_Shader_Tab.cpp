@@ -1429,7 +1429,10 @@ void CIMGUI_Shader_Tab::Load_Shader_Tab(std::string fileName, Shader_Tab_Save& s
             // UTF-8 문자열을 wchar_t로 변환
             std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
             key.key = converter.from_bytes(keyStr); // string을 wstring으로 변환
-
+            if (key.key == L"Prototype_Component_Texture_Effect_htn_hibi01")
+            {
+                int a = 10;
+            }
             // ID 읽기
             std::getline(inFile, line); // ID 읽기
             key.iD = std::stoi(line.substr(line.find(":") + 1));

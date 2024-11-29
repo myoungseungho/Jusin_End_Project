@@ -24,7 +24,7 @@
 #include "imnodes.h"
 #include <iostream>
 
-_bool bShowImGuiWindows = true;  // IMGUI 창 표시 여부를 제어하는 전역 변수
+_bool bShowImGuiWindows = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiRenderTarget = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiDebug_Component = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
 _bool bShowImGuiDebug_COut = false;  // IMGUI 창 표시 여부를 제어하는 전역 변수
