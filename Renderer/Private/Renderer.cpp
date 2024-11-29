@@ -290,10 +290,10 @@ HRESULT CRenderer::Draw(_float fTimeDelta)
 
 	if (FAILED(Draw_AllBlackOut(fTimeDelta)))
 		return E_FAIL;
-
-	if(FAILED(Draw_WhiteBlack_Mode(fTimeDelta)))
+	if (FAILED(Draw_WhiteBlack_Mode(fTimeDelta)))
 		return E_FAIL;
-
+	if (FAILED(Draw_AllWhiteOut(fTimeDelta)))
+		return E_FAIL;
 
 	//if (FAILED(Draw_Test_PostProcess(fTimeDelta)))
 	//	return E_FAIL;
@@ -1985,6 +1985,68 @@ HRESULT CRenderer::Draw_AllBlackOut(_float fTimeDelta)
 
 }
 
+HRESULT CRenderer::Draw_AllWhiteOut(_float fTimeDelta)
+{
+	if (m_isStartAllWhiteOut == false)
+		return S_OK;
+	/*
+	m_isStartAllWhiteOut = true;
+	m_fAccAllWhiteTime = 1.f;
+	m_isDownAllWhite = false;
+	m_fDurationTime = fWhiteTime;
+	m_fWhiteSpeed = fSpeed;
+	*/
+	if (FAILED(m_pRenderInstance->Begin_MRT(TEXT("MRT_AllWhiteOut"))))
+		return E_FAIL;
+	if (FAILED(m_pRenderInstance->End_MRT()))
+		return E_FAIL;
+
+	if (m_isDownAllWhite == false)
+		m_fAccAllWhiteTime -= fTimeDelta;
+	else
+		m_fAccAllWhiteTime -= fTimeDelta * m_fAllWhiteSpeed;
+
+	if (m_fAccAllWhiteTime <= 1.f)
+	{
+		m_isDownAllWhite = true;
+		//m_fAccAllWhiteTime = 1.f;
+	}
+	else if (m_fAccAllWhiteTime <= 0)
+	{
+		m_isStartAllWhiteOut = false;
+		m_isDownAllWhite = false;
+		m_fAccAllWhiteTime = 0.f;
+	}
+
+	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+	/*
+	_bool m_isStartBlackOut = { false };
+	_float m_fAccBlackTime = { 0.f };
+	const _float m_fBlackTime = { 1.f };
+	*/
+
+	if (FAILED(m_pShader->Bind_RawValue("g_isStartBlackOut", &m_isStartAllWhiteOut, sizeof(_bool))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_RawValue("g_fAccBlackTime", &m_fAccAllWhiteTime, sizeof(_float))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Bind_RT_ShaderResource(m_pShader, "g_Texture", TEXT("Target_AllWhiteOut"))))
+		return E_FAIL;
+
+	m_pShader->Begin(13);
+	m_pVIBuffer->Bind_Buffers();
+	m_pVIBuffer->Render();
+
+
+	return S_OK;
+}
+
+
 HRESULT CRenderer::Draw_MapBlackOut(_float fTimeDelta)
 {
 	if (m_fAccBlackTime == 0.f && m_isStartBlackOut == false)
@@ -2765,6 +2827,12 @@ HRESULT CRenderer::Initialize_RenderTarget()
 	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_WhiteOut"), TEXT("Target_WhiteOut"))))
 		return E_FAIL;
 
+	if (FAILED(m_pRenderInstance->Add_RenderTarget(TEXT("Target_AllWhiteOut"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_B8G8R8A8_UNORM, XMVectorSet(1.f, 1.f, 1.f, 1.f))))
+		return E_FAIL;
+
+	if (FAILED(m_pRenderInstance->Add_MRT(TEXT("MRT_AllWhiteOut"), TEXT("Target_AllWhiteOut"))))
+		return E_FAIL;
+
 #pragma endregion	
 
 #pragma region Distortion
@@ -2946,6 +3014,15 @@ void CRenderer::Switch_AllBlackOut()
 	m_isStartAllBlackOut = true;
 	m_isDownAllBlack = false;
 	m_fAccAllBlackTime = { 0.f };
+}
+
+void CRenderer::Start_AllWhiteOut(_float fWhiteTime, _float fSpeed)
+{
+	m_isStartAllWhiteOut = true;
+	m_fAccAllWhiteTime = fWhiteTime;
+	m_isDownAllWhite = false;
+	m_fDurationTime = fWhiteTime;
+	m_fAllWhiteSpeed = fSpeed;
 }
 
 void CRenderer::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)

@@ -519,7 +519,10 @@ void CS21_MeleeAttack::Attack_214Final()
 {
 	if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
 	{
-		m_pPlayer->Set_Animation(CPlay_21::ANIME_FINAL_START);
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pPlayer->Set_Animation(CPlay_21::ANIME_FINAL_START);
+		}
 	}
 }
 

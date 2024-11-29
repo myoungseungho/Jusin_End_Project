@@ -290,6 +290,11 @@ void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteS
 	m_pRenderer->Start_WhiteOut(vDir, isDone, fWhiteSpeed);
 }
 
+void CRenderInstance::Start_AllWhiteOut(_float fWhiteTime, _float fSpeed)
+{
+	m_pRenderer->Start_AllWhiteOut(fWhiteTime, fSpeed);
+}
+
 
 void CRenderInstance::Release_Engine()
 {

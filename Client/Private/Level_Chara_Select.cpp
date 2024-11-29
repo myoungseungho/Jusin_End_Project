@@ -9,7 +9,7 @@
 #include "UI_Manager.h"
 
 #include "RenderInstance.h" 
-
+#include "BattleInterface.h"
 
 CLevel_Chara_Select::CLevel_Chara_Select(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
@@ -34,6 +34,10 @@ HRESULT CLevel_Chara_Select::Initialize()
 	
 	if (FAILED(Ready_Sound()))
 		return E_FAIL;
+
+
+
+	CBattleInterface_Manager::Get_Instance()->Set_b1VS1(false);
 
 	return S_OK;
 }

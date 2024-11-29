@@ -336,6 +336,12 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 				m_bPlaying = false;
 				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
+
+				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				m_bDyingBlack = false;
+			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();
@@ -1130,7 +1136,7 @@ HRESULT CPlay_21::Ready_Components()
 	else
 	{
 
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_1P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_TON_base"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
 	}
 	/* Com_Model */
