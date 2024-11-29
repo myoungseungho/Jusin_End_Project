@@ -40,8 +40,8 @@ HRESULT CLobby_Frieza::Initialize(void* pArg)
 	//if (FAILED(Ready_Text()))
 	//	return E_FAIL;
 
-	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, 0.7f));
-	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
+	m_pTransformCom->Set_State_Position(_float3(-51.700f, 0.f, 3.900f));
+	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(180.f));
 	
 	//¾ÆÀÌµé
 	m_pModelCom->SetUp_Animation(0, true, 0.1f);
