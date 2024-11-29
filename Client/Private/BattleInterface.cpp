@@ -822,6 +822,8 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
 
         CUI_Manager::Get_Instance()->CutSceneUI(true);
 
+        CUI_Manager::Get_Instance()->UsingCreateStartUI();
+
         return;
     }
 
@@ -862,6 +864,7 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
 
 
         CUI_Manager::Get_Instance()->CutSceneUI(true);
+        CUI_Manager::Get_Instance()->UsingCreateStartUI();
 
     }
 }

@@ -4442,7 +4442,9 @@ void CCharacter::Play_WinAnimation()
 	//m_bOnlyCutSceneNoMove = true;
 
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	main_Camera->StartCameraShake(0.2f, 0.2f);
+	//main_Camera->StartCameraShake(0.2f, 0.2f);
+	main_Camera->StartCameraShake(10.f, 10.f);
+
 
 
 
@@ -4460,7 +4462,7 @@ void CCharacter::Play_NewRound_Loser()
 
 	m_bGrabbed = true;
 	m_bOpening = true;
-	m_fMaxOpeningTime = 2.f;
+	m_fMaxOpeningTime = 3.5f;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, {-1.f+(m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f,0.5f, 0.f, 1.f });
@@ -4496,7 +4498,7 @@ void CCharacter::Play_NewRound_Winner()
 {
 	m_bGrabbed = true;
 	m_bOpening = true;
-	m_fMaxOpeningTime = 2.f;
+	m_fMaxOpeningTime = 3.5f;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -1.f + (m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
 
