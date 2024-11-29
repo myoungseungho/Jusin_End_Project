@@ -445,7 +445,10 @@ void CHit_MeleeAttack::Attack_236Ultimate()
 {
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
+		}
 	}
 
 	else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_HEAVY ||
@@ -457,7 +460,10 @@ void CHit_MeleeAttack::Attack_236Ultimate()
 		*m_pPlayerAnimationIndex == CPlay_Hit::ANIME_ATTACK_SPECIAL
 		))
 	{
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_236_ULTIMATE);
+		}
 	}
 	
 
@@ -471,8 +477,10 @@ void CHit_MeleeAttack::Attack_214Final()
 
 	if (m_pPlayer->Check_bCurAnimationisGroundMove())
 	{
-
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_FINAL_START);
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_FINAL_START);
+		}
 	}
 
 	if (m_pPlayer->Get_bAttackBackEvent())
@@ -482,8 +490,10 @@ void CHit_MeleeAttack::Attack_214Final()
 			return;
 		}
 
-		m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_FINAL_START);
-
+		if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
+		{
+			m_pPlayer->Set_Animation(CPlay_Hit::ANIME_214_FINAL_START);
+		}
 	}
 	
 }

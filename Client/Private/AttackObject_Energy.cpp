@@ -209,7 +209,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 			//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 });
 
 			AttackColliderResult eResult =
-				pCharacter->Set_Hit4(eHitMotion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 });
+				pCharacter->Set_Hit4(eHitMotion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 },false);
 
 
 			if (eResult == RESULT_HIT)
@@ -257,7 +257,7 @@ void CAttackObject_Energy::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 					if (fpCharacterHeight < 0.3)
 					{
 						pCharacter->Add_Move({ 0.f,0.15f });
-						pCharacter->Set_HitAnimation(m_ihitCharacter_Motion, { 0.f,0.02f });
+						pCharacter->Set_HitAnimation(m_ihitCharacter_Motion, { 0.f,0.02f },false);
 					}
 				}
 				m_iAttackCount--;
@@ -436,7 +436,7 @@ void CAttackObject_Energy::OnCollisionStay(CCollider* other, _float fTimeDelta)
 				//AttackColliderResult eResult =
 				//	pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 });
 
-				eResult = pCharacter->Set_Hit4(eHitMotion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 });
+				eResult = pCharacter->Set_Hit4(eHitMotion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), { m_fhitCharacter_Impus.x * 0.01f,0.001 },false);
 
 			}
 			//else if (m_iAttackCount<=0)
@@ -602,7 +602,7 @@ void CAttackObject_Energy::OnCollisionExit(CCollider* other)
 	CCharacter* pCharacter = static_cast<CCharacter*>(other->GetMineGameObject());
 
 	AttackColliderResult eResult =
-			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus);
+			pCharacter->Set_Hit4(m_ihitCharacter_Motion, m_eAttackGrade, m_eAttackType, m_fhitCharacter_StunTime, m_iDamage, m_fAnimationLockTime, m_pOwner->Get_iDirection(), m_fhitCharacter_Impus,false);
 
 	pCharacter->Set_bNoGravity(false);
 	Erase();

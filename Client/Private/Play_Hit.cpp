@@ -338,6 +338,12 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 				m_bPlaying = false;
 				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
+				
+				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				m_bDyingBlack = false;
+			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();
@@ -794,7 +800,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//
 		//}
 
-		Set_Animation(ANIME_WIN_DEFAULT);
+		//Set_Animation(ANIME_WIN_DEFAULT);
 
 	}
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
@@ -4493,13 +4499,18 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bInvisible = false;
 			Character_Create_Distortion({ 1.f,0.f,0.f }, { 1.f*m_iLookDirection,0.f },{2.f,1.f},0.2f);
 		}
+		else if (iAttackEvent == 230)
+		{
+			Set_AnimationStop(1.f);
+		}
 	}
 	break;
 	case ANIME_WIN_DEFAULT:
 	{
-		if (iAttackEvent == 0)
+		//뒤돌아 본 이후
+		if (iAttackEvent == 220)
 		{
-			;
+			Set_AnimationStop(1000.f);
 		}
 
 	}
@@ -4725,7 +4736,8 @@ _bool CPlay_Hit::isNearlyEqual(_float CurValue, _float TargetValue)
 
 }
 
-AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+//AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus,_bool bParticle)
 {
 
 	if (m_bCounterSucces)
@@ -4880,7 +4892,7 @@ AttackColliderResult CPlay_Hit::Set_Hit4(_uint eAnimation, AttackGrade eAttackGr
 
 	m_fAccStunTime = 0.f;
 
-	Set_HitAnimation(eAnimation, Impus);
+	Set_HitAnimation(eAnimation, Impus,bParticle);
 	Set_AnimationStop(fStopTime);
 
 	Set_bRedHP(true);

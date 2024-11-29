@@ -261,10 +261,13 @@ public:
 
 	//피격 관련
 	//AttackColliderResult Set_Hit3(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _float2 Impus = { 0,0 });
-	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
+	//virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 });
+	virtual AttackColliderResult Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus = { 0,0 }, _bool bParticle =true);
 
 
-	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
+	//void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 });
+	void Set_HitAnimation(_uint eAnimation, _float2 Impus = { 0,0 },_bool bParticle=true);
+
 	void Set_AnimationStop(_float fStopTime);
 	void Set_UnlockAnimationStop();
 	void Set_AnimationStopWithoutMe(_float fStopTime);
@@ -420,6 +423,8 @@ public:
 	void Set_bAura(_bool bAura);
 
 	void Set_fAuraColor(_float4 fAuraColor);
+
+	virtual void HitStopEffect() {};
 
 protected:
 
@@ -732,6 +737,7 @@ protected:
 	_bool m_bDying = { false };
 	_float m_fAccDyingTime = {};
 	//_bool m_bKO = { false };
+	_bool m_bDyingBlack = { true };
 
 	_bool m_bDynamicMove = { false };
 	_bool m_bDestructiveFinish = { false };

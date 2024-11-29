@@ -425,7 +425,14 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 					m_bPlaying = false;
 				}
 			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
 
+				if(m_bSoloFinalEndCount!=false)
+					CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+	
+				m_bDyingBlack = false;
+			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();

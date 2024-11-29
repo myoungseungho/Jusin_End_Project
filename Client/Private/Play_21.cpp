@@ -335,6 +335,12 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 				m_bPlaying = false;
 				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
+
+				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				m_bDyingBlack = false;
+			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();

@@ -1,3 +1,8 @@
+
+//,승리 애니메이션
+PLAY_HIT,PLAY_HIT,HTN610cs_body,220,AttackEvent,220
+
+
 PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0
 
 
@@ -16,8 +21,8 @@ PLAY_HIT,HTN600cs_body,185,AttackEvent,1
 //,나타나기
 PLAY_HIT,HTN600cs_body,205,AttackEvent,2
 
-
-PLAY_HIT,HTN600cs_body,240,PositionChange,260
+PLAY_HIT,HTN600cs_body,230,AttackEvent,230
+PLAY_HIT,HTN600cs_body,243,PositionChange,260
 
 
 //,301 리플렉터. (공용)
@@ -64,7 +69,7 @@ PLAY_HIT,HTN631_body,0.000000,AnimSpeedChange,0.013000,59.798000
 
 
 //,승리용 애니메이션
-PLAY_HIT,PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0,0.000000,AnimSpeedChange,0.034,112.323
+//,PLAY_HIT,PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0,0.000000,AnimSpeedChange,0.034,112.323
 
 
 

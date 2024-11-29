@@ -351,6 +351,12 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				m_bPlaying = false;
 			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
+
+				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				m_bDyingBlack = false;
+			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();
@@ -2108,6 +2114,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
+				tDesc.pTransformCom = m_pTransformCom;
+				tDesc.m_isPlayerDirRight = m_iLookDirection;
+				m_p236ChaseAura = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
+
 			}
 		}
 		
@@ -2141,6 +2153,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 10;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			if (m_p236ChaseAura != nullptr)
+			{
+				m_p236ChaseAura->m_bIsDoneAnim = true;
+				m_p236ChaseAura = nullptr;
+			}
 		}
 	}
 	break;
@@ -2188,6 +2207,18 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+
+
+				//m_p236ChaseAura = Character_Make_BoneEffect("G")
+
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
+				tDesc.pTransformCom = m_pTransformCom;
+				tDesc.m_isPlayerDirRight = m_iLookDirection;
+				m_p236ChaseAura = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
+
+				m_p236ChaseAura->Set_Copy_Layer_Scaled({ 1.f,0.7f,1.f });
+
 			}
 		}
 		if(iAttackEvent == 0)
@@ -2220,6 +2251,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 10;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			if (m_p236ChaseAura != nullptr)
+			{
+				m_p236ChaseAura->m_bIsDoneAnim = true;
+				m_p236ChaseAura = nullptr;
+			}
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -3929,6 +3967,22 @@ void CPlay_Goku::Character_CinematicEnd()
 		m_pFinalAura->m_bIsDoneAnim = true;
 		m_pFinalAura = nullptr;
 	}
+}
+
+void CPlay_Goku::HitStopEffect()
+{
+	if (m_p236ChaseAura != nullptr)
+	{
+		m_p236ChaseAura->m_bIsDoneAnim = true;
+		m_p236ChaseAura = nullptr;
+	}
+
+	if (m_pFinalAura != nullptr)
+	{
+		m_pFinalAura->m_bIsDoneAnim = true;
+		m_pFinalAura = nullptr;
+	}
+	
 }
 
 
