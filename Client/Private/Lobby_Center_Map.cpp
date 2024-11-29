@@ -45,7 +45,7 @@ void CLobby_Center_Map::Update(_float fTimeDelta)
 
 void CLobby_Center_Map::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONBLEND, this);
+	m_pRenderInstance->Add_RenderObject(CRenderer::RG_NONLIGHT, this);
 }
 
 HRESULT CLobby_Center_Map::Render(_float fTimeDelta)

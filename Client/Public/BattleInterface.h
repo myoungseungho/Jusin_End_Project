@@ -61,6 +61,8 @@ public:
 
 	void Stop_AllAttackObject(_float fStopTime);
 
+	void SpecialKiGain(_ushort iKiNumber, _ushort iTeam);
+
 
 	//이거 하나만 호출하게
 	//	void Tag_CharacterAIO(_ubyte iTeam, _ubyte NewCharacterslot);
@@ -103,7 +105,7 @@ private:
 	_uint m_iHitCount[2] = {}; //화면에 뜰 히트수
 	
 	_uint m_iKiGuage[2] = {};
-	_uint m_iKiNumber[2] = {};
+	_uint m_iKiNumber[2] = {3,3};
 
 	_uint m_iHitAttackStep[2] = {};
 

@@ -47,7 +47,7 @@ public:
 	void All_Black(_bool isTrue);
 	MAP_TYPE m_eCurMap = { MAP_SPACE };
 	
-
+	_float4x4 m_RockMatrix[3]{};
 private: /* East_Finish_Type Variable */
 	_bool			m_isEastFinish = { false };
 	/* 어떤식으로 트리거를 호출해서 동작할지 모름 그때에 맞춰서 넣어주자 */

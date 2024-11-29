@@ -172,8 +172,9 @@ HRESULT CObject_Manager::Add_Object_Layers_Vector(_uint _level, vector<pair<_wst
 void CObject_Manager::Destory_Update()
 {
 	for (auto& iter : m_DestoryObjects)
-		Safe_Release(iter);
-
+		iter->m_bDead = true;
+		//Safe_Release(iter);
+	
 	m_DestoryObjects.clear();
 }
 

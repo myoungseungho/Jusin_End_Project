@@ -205,7 +205,7 @@ void CEffect_Layer::Update(_float fTimeDelta)
 
 				XMMatrixDecompose(&Scale, &Rotation, &Position, XMLoadFloat4x4(m_pPlayerMatrix));
 
-				if (pEffect->m_EffectName.find(L"Parrying_Ball") != wstring::npos)
+				if ((pEffect->m_EffectName.find(L"Parrying_Ball") != wstring::npos) || (pEffect->m_EffectName.find(L"Crash_Smoke") != wstring::npos))
 					FinalMatrix._43 = XMVectorGetZ(Position);
 				else
 					FinalMatrix._43 = 0;

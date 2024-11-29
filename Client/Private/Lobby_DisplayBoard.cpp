@@ -168,13 +168,13 @@ void CLobby_DisplayBoard::Set_DefaultSetting()
 {
 	switch (m_eFontID)
 	{
-	case STORY:
+	case PRACTICE:
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -60.6f, 0.4f , -0.2f , 1.f });
 		vDiffColor = { 0.478f, 0.572f, 0.964, 1.f };
 		vOutLineColor = { 0.f, 0.f, 0.f, 1.f };
 		break;
 
-	case PRACTICE:
+	case STORY:
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 60.f, 0.4f , 0.2f , 1.f });
 		vDiffColor = { 1.f, 0.572f, 0.464, 1.f };
 		vOutLineColor = { 0.f, 0.f, 0.f, 1.f };

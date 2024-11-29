@@ -176,20 +176,20 @@ void CUI_Manager::CutSceneUI(_bool bState)
 		}
 
 
-		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Number")))
-		{
-			Input->Destory();
-		}
+		//for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Number")))
+		//{
+		//	Input->Destory();
+		//}
 
-		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Font")))
-		{
-			Input->Destory();
-		}
+		//for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Font")))
+		//{
+		//	Input->Destory();
+		//}
 
-		for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Effect")))
-		{
-			Input->Destory();
-		}
+		//for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Effect")))
+		//{
+		//	Input->Destory();
+		//}
 	}
 
 	for (auto& Top : m_ListTopUI)

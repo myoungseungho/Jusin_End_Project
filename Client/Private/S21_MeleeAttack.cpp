@@ -11,7 +11,7 @@
 #include "BattleInterface.h"
 
 
-
+#include "Effect.h"
 
 void CS21_MeleeAttack::Initalize(CPlay_21* pPlayer)
 {
@@ -328,6 +328,14 @@ void CS21_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
 			m_pPlayer->Set_GrabLoofCount(2);
 			
+			CEffect_Layer* pLayer = m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
+			_uint iEffectCount = 0;
+			for (auto& iter : pLayer->m_MixtureEffects)
+			{
+				if (iEffectCount == 1)
+					iter->m_vColor = _float4(0.f, 255.f, 0.f, 0.3f);
+				iEffectCount++;
+			}
 		}
 
 		else if (*m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_21::ANIME_JUMP_UP)
@@ -336,6 +344,15 @@ void CS21_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Animation(CPlay_21::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_21::ANIME_GRAB, 3.f, 5.f);
 			m_pPlayer->Set_GrabLoofCount(2);
+
+			CEffect_Layer* pLayer = m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
+			_uint iEffectCount = 0;
+			for (auto& iter : pLayer->m_MixtureEffects)
+			{
+				if (iEffectCount == 1)
+					iter->m_vColor = _float4(0.f, 255.f, 0.f, 0.3f);
+				iEffectCount++;
+			}
 		}
 	}
 }

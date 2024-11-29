@@ -117,6 +117,7 @@ HRESULT CGameInstance::Render_Engine(_float fTimeDelta)
 
 HRESULT CGameInstance::Clear_LevelResources(_uint iLevelIndex)
 {
+
 	if (FAILED(m_pObject_Manager->Clear_Resources(iLevelIndex)))
 		return E_FAIL;
 

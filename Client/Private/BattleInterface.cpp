@@ -219,6 +219,11 @@ void CBattleInterface_Manager::Stop_AllAttackObject(_float fStopTime)
 
 }
 
+void CBattleInterface_Manager::SpecialKiGain(_ushort iKiNumber, _ushort iTeam)
+{
+    m_iKiNumber[iTeam - 1] = iKiNumber;
+}
+
 
 
 /*
@@ -356,6 +361,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
     {
         //½Â¸®
        // CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
+         
         return true;
     }
 
@@ -690,7 +696,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
         }
     }
 
-    return true;
+    return false;
 
 }
 

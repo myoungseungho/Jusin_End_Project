@@ -41,6 +41,12 @@ void CLevel_VS::Update(_float fTimeDelta)
 
 	m_fNextLevelTimer += fTimeDelta;
 
+	if (m_bBlack && m_fNextLevelTimer > 4.5f)
+	{
+		m_bBlack = false;
+		CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+	}
+
 	if (m_fNextLevelTimer >= 5.f)
 	{
 		m_fNextLevelTimer = 0.f;

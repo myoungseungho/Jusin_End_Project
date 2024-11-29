@@ -455,7 +455,7 @@ CGameObject* CSound_Manager::Clone(void* pArg)
 void CSound_Manager::Free()
 {
 	// 개별 사운드 해제
-	for (auto& pair : m_soundMap)
+d	for (auto& pair : m_soundMap)
 	{
 		FMOD_Sound_Release(pair.second);
 	}

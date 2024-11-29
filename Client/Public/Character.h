@@ -426,6 +426,7 @@ public:
 
 	virtual void HitStopEffect() {};
 
+	_bool m_bSoloFinalEndCount = false;
 protected:
 
 	void Reset_AttackStep();

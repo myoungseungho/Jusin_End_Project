@@ -51,6 +51,7 @@
 
 #include "Particle_Manager.h"
 
+#include"Level_GamePlay.h"
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -331,15 +332,40 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
-				m_bDestructiveFinish = false;
-				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-				m_bPlaying = false;
-				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+				if (m_bFinalSkillRoundEndSolo)
+				{
+					//5초 한바퀴만 더 
+					if (m_bSoloFinalEndCount == false)
+					{
+						m_fAccDyingTime = 0.f;
+						m_bSoloFinalEndCount = true;
+						//WIN UI 띄우기
+						CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
+
+						return;
+					}
+					else
+					{
+						//로비로 이동
+						static_cast<CLevel_GamePlay*>(m_pGameInstance->Get_Level())->Change_Level_ForCharacter();
+
+					}
+
+				}
+				else
+				{
+					m_bDestructiveFinish = false;
+					CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+					m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+					m_bPlaying = false;
+				}
 			}
-			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.6f)
 			{
 
-				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				if (m_bFinalSkillRoundEndSolo == false)
+					CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+
 				m_bDyingBlack = false;
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
@@ -718,20 +744,6 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_2))
-	{
-		m_iAttackStepCount = 0;
-		m_iDebugComoboDamage = 0;
-
-		m_iHP = 10000;
-
-	}
-	if (m_pGameInstance->Key_Down(DIK_3))
-	{
-		//system("cls");
-		m_iHP = 100;
-
-	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
 	{
@@ -3214,7 +3226,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
 			//m_pRenderInstance->Get_Instance()->Start_AllWhiteOut(1.f,1.f);
-			m_pRenderInstance->Get_Instance()->Start_AllWhiteOut(2.f, 0.5f);
+
+			if(m_pEnemy->Get_iHP() > 3500 * Get_DamageScale(true))
+				m_pRenderInstance->Get_Instance()->Start_AllWhiteOut(2.f, 0.5f);
 
 
 		}

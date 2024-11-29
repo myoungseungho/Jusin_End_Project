@@ -21,6 +21,7 @@
 #include "QTE_Manager.h"
 #include "Particle_Manager.h"
 
+#include "Level_GamePlay.h"
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
 
@@ -314,6 +315,15 @@ void CCharacter::Player_Update(_float fTimeDelta)
 		m_bHit = false;
 	}
 
+	//if (m_bPlaying && m_iHP <= 0)
+	//{
+	//	CBattleInterface_Manager::Get_Instance()->Reset_HitCount(m_iPlayerTeam);
+	//}
+
+	if (m_bPlaying && m_bDying)
+	{
+		CBattleInterface_Manager::Get_Instance()->Reset_HitCount(m_iPlayerTeam);
+	}
 
 	m_tCharacterDesc.iSKillCount = m_iSKillCount;
 	m_tCharacterDesc.iSKillPoint = m_iSKillPoint;
@@ -4443,6 +4453,7 @@ void CCharacter::Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex)
 	if (CBattleInterface_Manager::Get_Instance()->Check_survivor(m_iPlayerTeam, Get_NewCharacterslot()) == false)
 	{
 		m_bFinalSkillRoundEndSolo = true;
+		//m_bSoloFinalEndCount = true;
 	}
 }
 
@@ -4477,6 +4488,17 @@ void CCharacter::Play_WinAnimation()
 
 	m_bDynamicMove = true;
 	m_pEnemy->Set_bDynamicMove(true);
+
+	FlipDirection(1);
+
+
+	{
+		//Change_Level_ForCharacter
+		static_cast<CLevel_GamePlay*>(m_pGameInstance->Get_Level())->Change_Level_ForCharacter();
+	}
+
+
+	CUI_Manager::Get_Instance()->CutSceneUI(false);
 }
 
 void CCharacter::Play_NewRound_Loser()

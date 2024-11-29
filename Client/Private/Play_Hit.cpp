@@ -33,6 +33,7 @@
 #include "QTE_Manager.h"
 #include "Map_Manager.h"
 
+#include"Level_GamePlay.h"
 CPlay_Hit::CPlay_Hit(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -333,15 +334,40 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
-				m_bDestructiveFinish = false;
-				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-				m_bPlaying = false;
-				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+				if (m_bFinalSkillRoundEndSolo)
+				{
+					//5초 한바퀴만 더 
+					if (m_bSoloFinalEndCount == false)
+					{
+						m_fAccDyingTime = 0.f;
+						m_bSoloFinalEndCount = true;
+						//WIN UI 띄우기
+						CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
+
+						return;
+					}
+					else
+					{
+						//로비로 이동
+						static_cast<CLevel_GamePlay*>(m_pGameInstance->Get_Level())->Change_Level_ForCharacter();
+
+					}
+
+				}
+				else
+				{
+					m_bDestructiveFinish = false;
+					CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+					m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+					m_bPlaying = false;
+				}
 			}
-			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.6f)
 			{
-				
-				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+
+				if (m_bFinalSkillRoundEndSolo == false)
+					CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+
 				m_bDyingBlack = false;
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)

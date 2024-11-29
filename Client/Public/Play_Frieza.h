@@ -247,7 +247,6 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	_bool m_bSoloFinalEndCount = false;
 
 public:
 	static CPlay_Frieza* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

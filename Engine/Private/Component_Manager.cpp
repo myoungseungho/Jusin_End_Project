@@ -54,7 +54,8 @@ HRESULT CComponent_Manager::Clear_Resources(_uint iLevelIndex)
 		return E_FAIL;
 
 	for (auto& Pair : m_pPrototypes[iLevelIndex])
-		Safe_Release(Pair.second);
+		Pair.second->m_bDead = true;
+		//Safe_Release(Pair.second);
 
 	m_pPrototypes[iLevelIndex].clear();
 

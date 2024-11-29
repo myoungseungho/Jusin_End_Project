@@ -17,6 +17,9 @@ public:
 	virtual HRESULT Initialize() override;
 	virtual void Update(_float fTimeDelta) override;
 	virtual HRESULT Render(_float fTimeDelta) override;
+
+
+	void Change_Level_ForCharacter();
 private:
 	/* 내 게임내에 배경을 구성하는 객체들을 추가한다. */
 	HRESULT Ready_Layer_Camera(const _wstring& strLayerTag);
@@ -34,6 +37,8 @@ private:
 
 	HRESULT Loading_For_Effect();
 
+
+
 private:
 	class CUI_Manager* m_pUI_Manager = { nullptr };
 	class CEffect_Manager* m_pEffect_Manager = { nullptr };
@@ -42,6 +47,10 @@ private:
 	class CMap_Manager* m_pMap_Manager = { nullptr };
 	class CParticle_Manager* m_pParticle_Manager = { nullptr };
 	class CSubTitle_Manager* m_pSubTitle_Manager = { nullptr };
+
+	_bool m_bLevelChange = false;
+	_bool m_bLevelChanging = false;
+	_float m_fAccLevelChangeTime = {};
 
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -8,7 +8,7 @@
 #include "Character.h"
 #include "Main_Camera.h"
 #include "Effect_Layer.h"
-
+#include "Map_Manager.h"
 #include "Effect_Manager.h"
 #include "Effect.h"
 #include "SpaceRock.h"
@@ -223,13 +223,37 @@ void CParryingRangedObject::Update(_float fTimeDelta)
 		if (fLength < 3.f)
 		{
 
-			static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[m_iMapBreakIndex] = true;
-			//¸ÕÁö±ò±â
 
-			m_pEffect_Layer->m_bIsDoneAnim = true;
-			m_pEffect_Layer = nullptr;
-			//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[0] = true;
-			Destory();
+			if (static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[m_iMapBreakIndex] == false)
+			{
+				//bpBreak = true;
+				static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[m_iMapBreakIndex] = true;
+
+				m_pEffect_Layer->m_bIsDoneAnim = true;
+				m_pEffect_Layer = nullptr;
+				//static_cast<CSpaceRock*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_SpaceRock")))->m_isBreakRock[0] = true;
+
+
+				XMStoreFloat4x4(&CMap_Manager::Get_Instance()->m_RockMatrix[m_iMapBreakIndex], XMMatrixIdentity());
+				CMap_Manager::Get_Instance()->m_RockMatrix[m_iMapBreakIndex]._41 = m_fGoalPosXZ.x;
+				CMap_Manager::Get_Instance()->m_RockMatrix[m_iMapBreakIndex]._42 = 0.f;
+				CMap_Manager::Get_Instance()->m_RockMatrix[m_iMapBreakIndex]._43 = m_fGoalPosXZ.y;
+				//for (auto& iter : pLayer->m_MixtureEffects)
+				_float4x4 Result4x4;
+				CEffect_Layer::COPY_DESC tDesc{};
+				//tDesc.pTransformCom = m_pTransformCom;
+				//tDesc.pPlayertMatrix = &Result4x4;
+				tDesc.pPlayertMatrix = &(CMap_Manager::Get_Instance()->m_RockMatrix[m_iMapBreakIndex]);
+				//tDesc.pTransformCom = m_pTransformCom;
+				CEffect_Layer* pLayer = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(TEXT("Crash_Smoke"), &tDesc);
+				//{
+				//	iter->m_iChangePassIndex = 
+				//}
+				//_float fLength = GetVectorLength(m_pTransformCom->Get_State(CTransform::STATE_POSITION) - _vector{ m_fGoalPosXZ.x, 0.f, m_fGoalPosXZ.y, 1.f });
+
+				Destory();
+			}
+		
 		}
 	
 

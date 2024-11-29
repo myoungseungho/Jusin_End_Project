@@ -34,6 +34,7 @@
 
 #include "Map_Manager.h"
 
+#include"Level_GamePlay.h"
 
 CPlay_Frieza::CPlay_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -415,6 +416,7 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 					else
 					{
 						//로비로 이동
+						static_cast<CLevel_GamePlay*>(m_pGameInstance->Get_Level())->Change_Level_ForCharacter();
 
 					}
 					
@@ -427,10 +429,10 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 					m_bPlaying = false;
 				}
 			}
-			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.6f)
 			{
 
-				if(m_bSoloFinalEndCount!=false)
+				if(m_bFinalSkillRoundEndSolo ==false)
 					CRenderInstance::Get_Instance()->Switch_AllBlackOut();
 	
 				m_bDyingBlack = false;
@@ -849,21 +851,6 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_2))
-	{
-		m_iAttackStepCount = 0;
-		m_iDebugComoboDamage = 0;
-
-		m_iHP = 10000;
-
-		//Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-02"));
-
-	}
-	if (m_pGameInstance->Key_Down(DIK_3))
-	{
-		//system("cls");
-		m_iHP = 100;
-	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
 	{
@@ -3491,7 +3478,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_HIT_PARTICLE, resultFloat3);
 
 
-			if (m_pEnemy->Get_iHP() < 2080 * Get_DamageScale(true))
+			//if (m_pEnemy->Get_iHP() < 2080 * Get_DamageScale(true))
+			if (m_pEnemy->Get_iHP() <=0)
 			{
 				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE, 2.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);

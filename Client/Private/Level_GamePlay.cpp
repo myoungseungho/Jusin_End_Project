@@ -19,6 +19,9 @@
 #include "Opening_Kririn.h"
 #include "Particle_Manager.h"
 #include "SubTitle_Manager.h"
+
+#include "Level_Loading.h"
+
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -28,10 +31,23 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pParticle_Manager{ CParticle_Manager::Get_Instance() }
 	, m_pSubTitle_Manager{ CSubTitle_Manager::Get_Instance() }
 {
+	for(int i=0; i<1000000; i++)
+		Safe_AddRef(m_pDevice);
+
+
+	Safe_AddRef(m_pParticle_Manager);
+	Safe_AddRef(m_pSubTitle_Manager);
+	Safe_AddRef(m_pMap_Manager);
+	Safe_AddRef(m_pQTE_Manager);
+	Safe_AddRef(m_pIMGUI_Manager);
+	Safe_AddRef(m_pUI_Manager);
+	Safe_AddRef(m_pEffect_Manager);
 }
 
 HRESULT CLevel_GamePlay::Initialize()
 {
+	m_pRenderInstance->Clear_Light();
+
 	m_iLevelIndex = LEVEL_GAMEPLAY;
 	m_pMap_Manager->Initialize(m_pDevice, m_pContext);
 	Create_Effect_Manager();
@@ -179,6 +195,48 @@ HRESULT CLevel_GamePlay::Initialize()
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
 
+	
+	if (m_pGameInstance->Key_Down(DIK_LSHIFT))
+	{
+		CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+		m_fAccLevelChangeTime = 0.f;
+		m_bLevelChanging = true;
+	}
+
+	if (m_bLevelChanging)
+		m_fAccLevelChangeTime += fTimeDelta;
+
+	if (m_bLevelChanging && m_fAccLevelChangeTime > 0.5f)
+	{
+		m_bLevelChanging = true;
+		CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+		m_bLevelChange = false;
+
+
+
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_LOBBY))))
+			return;
+
+	}
+
+	//if (m_bLevelChange && (m_pGameInstance->Key_Down(DIK_SPACE))
+	//{
+	//	m_bLevelChanging = true;
+	//	CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+	//	m_bLevelChange = false;
+	//	
+	//	
+	//	
+	//	if(FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_LOBBY))))
+	//		return;
+	//
+	//	return;
+	//}
+
+
+	if (m_bLevelChanging)
+		return;
+
 	if (m_pGameInstance->Key_Down(DIK_NUMPAD1))
 	{
 		list<class CUIObject*>  debug = m_pUI_Manager->m_ListBotUI;
@@ -243,6 +301,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 			return;
 	}
 
+
 	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
 	//m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
@@ -279,6 +338,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Lights()
 {
+	
+
 	LIGHT_DESC			LightDesc{};
 
 	ZeroMemory(&LightDesc, sizeof(LIGHT_DESC));
@@ -290,8 +351,13 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 	LightDesc.vSpecular = _float4(0.1f, 0.1f, 0.1f, 0.1f);
 
 
+	
 	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
 		return E_FAIL;
+	if (FAILED(m_pRenderInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -1174,6 +1240,11 @@ HRESULT CLevel_GamePlay::Loading_For_Effect()
 	vector<EFFECT_LAYER_DATA>* pLoaded = static_cast<vector<EFFECT_LAYER_DATA>*>(m_pGameInstance->Load_All_Effects());
 
 	return CEffect_Manager::Get_Instance()->Set_Saved_Effects(pLoaded);
+}
+
+void CLevel_GamePlay::Change_Level_ForCharacter()
+{
+	m_bLevelChange = true;
 }
 
 HRESULT CLevel_GamePlay::Ready_Character()

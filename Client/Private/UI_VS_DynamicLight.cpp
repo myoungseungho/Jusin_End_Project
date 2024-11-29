@@ -126,7 +126,7 @@ CGameObject* CUI_VS_DynamicLight::Clone(void* pArg)
 
 	if (FAILED(pInstatnce->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Cloend : CUI_VS_DynamicLight"));
+		//MSG_BOX(TEXT("Failed to Cloend : CUI_VS_DynamicLight"));
 		Safe_Release(pInstatnce);
 	}
 

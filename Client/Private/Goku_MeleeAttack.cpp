@@ -11,7 +11,7 @@
 
 #include "AttackObject.h"
 #include "Effect.h"
-
+#include "Effect_Layer.h"
 #include "BattleInterface.h"
 //vector<CInput> Command_236Attack =
 //{
@@ -319,6 +319,16 @@ void CGoku_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_GRAB, 3.f, 5.f);
 			m_pPlayer->Set_GrabLoofCount(2);
+
+			_uint iEffectCount = 0;
+			CEffect_Layer* pLayer = m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
+			for (auto& iter : pLayer->m_MixtureEffects)
+			{
+				if (iEffectCount == 1)
+					iter->m_vColor = _float4(0.f, 255.f, 0.f, 0.3f);
+				iEffectCount++;
+			}
+
 		}
 
 		else if (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_DOWN || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_JUMP_UP)
@@ -327,6 +337,15 @@ void CGoku_MeleeAttack::Attack_Grab()
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_GRAB_READY);
 			m_pPlayer->Set_NextAnimation(CPlay_Goku::ANIME_GRAB, 3.f, 5.f);
 			m_pPlayer->Set_GrabLoofCount(2);
+
+			_uint iEffectCount = 0;
+			CEffect_Layer* pLayer = m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
+			for (auto& iter : pLayer->m_MixtureEffects)
+			{
+				if(iEffectCount == 1)
+					iter->m_vColor = _float4(0.f, 255.f, 0.f, 0.2f);
+				iEffectCount++;
+			}
 
 		}
 	}

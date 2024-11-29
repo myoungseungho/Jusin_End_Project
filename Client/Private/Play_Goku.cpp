@@ -33,6 +33,7 @@
 #include "Map_Manager.h"
 #include "Particle_Manager.h"
 
+#include"Level_GamePlay.h"
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
@@ -347,21 +348,48 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
-				m_bDestructiveFinish = false;
-				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-				m_bPlaying = false;
+				if (m_bFinalSkillRoundEndSolo)
+				{
+					//5초 한바퀴만 더 
+					if (m_bSoloFinalEndCount == false)
+					{
+						m_fAccDyingTime = 0.f;
+						m_bSoloFinalEndCount = true;
+						//WIN UI 띄우기
+						CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
+
+						return;
+					}
+					else
+					{
+						//로비로 이동
+						static_cast<CLevel_GamePlay*>(m_pGameInstance->Get_Level())->Change_Level_ForCharacter();
+
+					}
+
+				}
+				else
+				{
+					m_bDestructiveFinish = false;
+					CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+					m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+					m_bPlaying = false;
+				}
 			}
-			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.6f)
 			{
 
-				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				if (m_bFinalSkillRoundEndSolo == false)
+					CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+
 				m_bDyingBlack = false;
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();
 			}
+
+
 		}
 	
 		return;
@@ -767,22 +795,6 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_2))
-	{
-		m_iAttackStepCount = 0;
-		m_iDebugComoboDamage = 0;
-
-		m_iHP = 10000;
-
-		//Set_bAura(true);
-	}
-	if (m_pGameInstance->Key_Down(DIK_3))
-	{
-		//system("cls");
-		m_iHP = 100;
-		//Set_bAura(false);
-
-	}
 
 	if (m_pGameInstance->Key_Down(DIK_4))
 	{
@@ -3733,6 +3745,11 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			CEffect_Layer* pEffect = Character_Make_Effect(TEXT("BurstJ3-Hit01"), { 0.f,8.0f });
 			pEffect->Set_Copy_Layer_Scaled({ 4.f,4.f,4.f });
 			pEffect->m_fTickPerSecond *= 0.7f;
+
+			CBattleInterface_Manager::Get_Instance()->SpecialKiGain(7, m_iPlayerTeam);
+			CBattleInterface_Manager::Get_Instance()->SpecialKiGain(5, 2);
+
+
 
 		}
 

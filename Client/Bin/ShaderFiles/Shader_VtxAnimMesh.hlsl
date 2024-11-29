@@ -102,12 +102,12 @@ PS_OUT PS_MAIN(PS_IN In)
     PS_OUT Out;
 
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(LinearSampler, In.vTexcoord);
-	
+   
     vector vMtrlShadeDesc = g_OutLineTexture.Sample(LinearSampler, In.vTexcoord);
 //    vector vHairColor = { 255.f / 255.f, 255.f / 255.f, 130.f / 255.f, 1.f };
 
     vector vHairColor = { vMtrlDiffuse.rgb, 1.f };
-    vector vFaceColor = { 0.98823f, 0.8156f, 0.6862f, 1.0f };
+    vector vFaceColor = { 1.0f, 1.0f, 1.0f, 1.0f };
     vector vResultColor = { 0.f, 0.f, 0.f, 1.f };
     
     float2 vTexcoordFraction = fmod(In.vTexcoord, 1.0);
@@ -122,40 +122,21 @@ PS_OUT PS_MAIN(PS_IN In)
     float fFaceMask = (step(0.095, In.vTexcoord.x) * step(In.vTexcoord.x, 0.2832)) * (step(0.0, In.vTexcoord.y) * step(In.vTexcoord.y, 0.316));
     float fFaceDetailMask = (step(0.013, In.vTexcoord.x) * step(In.vTexcoord.x, 0.016)) * (step(0.015, In.vTexcoord.y) * step(In.vTexcoord.y, 0.017));
     float fFaceDetailMask2 = step(0.3f, In.vTexcoord.x) * step(In.vTexcoord.x, 0.427f) * step(0.031f, In.vTexcoord.y) * step(In.vTexcoord.y, 0.158f);
-    //float fOffset = 0.02f;
-    //float inRangeCondition = (step(0.095, In.vTexcoord.x) * step(In.vTexcoord.x, 0.2832)) *
-    //                     (step(0.0, In.vTexcoord.y) * step(In.vTexcoord.y, 0.316)); 
-
-    //float fSkillDetailUV = (abs(In.vTexcoord.x - 0.1) < fOffset) *
-    //                           (abs(In.vTexcoord.y - 0.1) < fOffset);
-
-    //float fFaceMask = inRangeCondition + fSkillDetailUV;
-    //fFaceMask = saturate(fFaceMask);
 
     float isFace = fFaceMask;
     /* g값은 명암? r값이랑 같이 쓰는데 모호함 */
     vResultColor.rgb = saturate(vResultColor.rgb * saturate(vMtrlShadeDesc.g /* (isFace == 1 ? 0.502745f : vMtrlShadeDesc.g)*/ * 1.5f) + (fHairMask * (vHairColor.rgb / 4)));
     
-	/* b값은 보니까 스펙큘러인거같음 그 처리 */
+   /* b값은 보니까 스펙큘러인거같음 그 처리 */
     vResultColor.rgb = saturate(vResultColor.rgb + vMtrlShadeDesc.b * 0.1f);
     vResultColor.a = 1.f;
     Out.vDiffuse = saturate(vResultColor * 1.2f);
     Out.vNormal = vector((In.vNormal.xyz * 0.5f + 0.5f), saturate(fHairMask + fFaceMask + fFaceDetailMask2 /*+ fFaceDetailMask*/));
     Out.vDepth = vector(In.vProjPos.w / 1000.f, In.vProjPos.z / In.vProjPos.w, 0.f, 0.f);
     Out.vAuraColor = vector(1.f, 0.f, 0.f, 0.f);
-    //float2 vTexcoordFloor = In.vTexcoord - vTexcoordFraction;
-    //float vResultFloor = (vTexcoordFloor.x + vTexcoordFloor.y) * 0.1f;
-    //vHairColor.rgb = vHairColor.rgb * (1 - vResultFloor);
-
- //   float3 vShadeColor = ((vHairColor.rgb * vTexcoordFloor.x) * ((1.f - saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g)) * fHairMask));
- //   vResultColor.rgb = saturate(vResultColor.rgb * saturate(vShadeColor + saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g)));
-
-    //float3 vShadeColor = (vHairColor.rgb * ((1 - saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g)) * fHairMask));
-    //vResultColor.rgb = saturate(vResultColor.rgb * saturate(vShadeColor + saturate(vMtrlShadeDesc.r + vMtrlShadeDesc.g)));
 
     return Out;
 }
-
 PS_OUT PS_MAIN_21(PS_IN In)
 {
     PS_OUT Out;
