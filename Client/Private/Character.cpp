@@ -19,6 +19,7 @@
 #include "Map_Manager.h"
 
 #include "QTE_Manager.h"
+#include "Particle_Manager.h"
 
 const _float CCharacter::fGroundHeight = 0.f; //0
 const _float CCharacter::fJumpPower = 3.f; //0
@@ -349,21 +350,22 @@ void CCharacter::Update(_float fTimeDelta)
 
 void CCharacter::Late_Update(_float fTimeDelta)
 {
-	if (m_bDestructiveFinish == true)
-	{
-		m_fAccDyingTime += fTimeDelta;
-		if (m_fAccDyingTime > 7)
-		{
-			m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&m_vDyingPosition));
-
-			m_bDestructiveFinish = false;
-			m_fAccDyingTime = 0.f;
-
-
-
-			Set_fImpulse({ 0.f,0.f });
-		}
-	}
+	//if (m_bDestructiveFinish == true)
+	//{
+	//	//m_fAccDyingTime += fTimeDelta;
+	//	//if (m_fAccDyingTime > 7)
+	//	if (m_fAccDyingTime > 8.f)
+	//	{
+	//		//m_pTransformCom->Set_State(CTransform::STATE_POSITION, XMLoadFloat4(&m_vDyingPosition));
+	//
+	//		m_bDestructiveFinish = false;
+	//		//m_fAccDyingTime = 0.f;
+	//
+	//
+	//
+	//		//Set_fImpulse({ 0.f,0.f });
+	//	}
+	//}
 
 	if (m_bPlaying || m_bTag_In)
 	{
@@ -818,7 +820,7 @@ _bool CCharacter::Character_Play_Animation(_float fTimeDelta)
 
 
 	_float fCurPosition = m_pModelCom->m_fCurrentAnimPosition;
-	
+
 
 	ProcessEventsBetweenFrames2(0, m_pModelCom->m_iCurrentAnimationIndex, fPrePosition, fCurPosition);
 
@@ -844,7 +846,7 @@ _bool CCharacter::Character_Play_Animation_NoXZ(_float fTimeDelta)
 		//iOneFrameTeest++;
 	}
 
-	if (m_pModelCom->Play_Animation_Lick2(fTimeDelta,m_pTransformCom))
+	if (m_pModelCom->Play_Animation_Lick2(fTimeDelta, m_pTransformCom))
 		//if (m_pModelCom->Play_Animation(fTimeDelta))
 	{
 		//모션이 끝났으면, 루프면    (아까까진 루프가 아니였는데 이번에 루프면 어쩌지?)
@@ -1616,7 +1618,7 @@ void CCharacter::Chase_Ready(_float fTimeDelta, _bool bNoReady)
 		return;
 
 	//if(Check_bCurAnimationisCanChase())
-	
+
 
 	_short iCheck = Check_bCurAnimationisCanChase();
 	if (iCheck == 0)
@@ -1917,11 +1919,11 @@ void CCharacter::MoveKey1Team(_float fTimeDelta)
 
 
 		//점프 먼지
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
-		//m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke01_BackZ"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke02_Small"), &tDesc);
+		m_pEffect_Manager->Copy_Layer(TEXT("Smoke04"), &tDesc);
 
 
 		m_pTransformCom->Add_Move({ 0,0.3f,0 });
@@ -2306,6 +2308,8 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 	}
 
 
+	Set_bAura(false);
+
 	m_bHit = TRUE;
 	m_bStun = true;
 
@@ -2409,6 +2413,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_LIGHT:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 		{
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
@@ -2438,6 +2446,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_MEDIUM:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 		{
 			Set_Animation(m_iHit_Crouch_AnimationIndex, false);
@@ -2460,6 +2472,9 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 		break;
 	case Client::HitMotion::HIT_HEAVY_DOWN:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		if (Get_fHeight() > 0)
 		{
@@ -2483,6 +2498,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_CROUCH_MEDIUM:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Air_FallAnimationIndex);
 		m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
 		Set_ForcedGravityTime_LittleUp();
@@ -2491,6 +2510,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT_NONEBOUNDE:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bWallBounce = false;
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
 		//m_pModelCom->CurrentAnimationPositionJump()
@@ -2505,6 +2528,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFT:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bWallBounce = true;
 
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
@@ -2519,6 +2546,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bAwayUpGravity = false;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		Set_ForcedGravityTime_LittleUp();
@@ -2526,6 +2557,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_UP_GRAVITY:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		m_bAwayUpGravity = true;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
 		//Set_ForcedGravityTime_LittleUp();
@@ -2539,6 +2574,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_KNOCK_AWAY_LEFTDOWN:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
 
 		//버그 원인같아서 지움
@@ -2553,6 +2592,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	break;
 	case Client::HitMotion::HIT_SPIN_AWAY_LEFTUP:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Air_Spin_LeftUp, false);
 
 		if (Get_fHeight() == 0)
@@ -2566,6 +2609,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HitMotion::HIT_WALLBOUNCE:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_WallBouce);
 	}
 	break;
@@ -2577,6 +2624,10 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 
 	case Client::HIT_SPIN_AWAY_UP:
 	{
+		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
+		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
 		Set_Animation(m_iHit_Air_Spin_Up);
 	}
 	break;
@@ -3456,7 +3507,7 @@ void CCharacter::OnCollisionEnter(CCollider* other, _float fTimeDelta)
 
 	//잡기중에는 겹쳐도 됨
 	//if (m_bGrabbed || static_cast<CCharacter*>(other->GetMineGameObject())->Get_bGrabbed() || m_bPlaying == false)
-	if (m_bGrabbed  || m_bPlaying == false)
+	if (m_bGrabbed || m_bPlaying == false)
 		return;
 
 
@@ -3916,6 +3967,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
+					Character_Make_Effect(TEXT("RO"), { 0.f,0.8f });
 
 				}
 
@@ -3951,7 +4003,7 @@ void CCharacter::Sparking_ON(_float fTimeDelta)
 
 					//UI한테 켠다고 전해주기
 					CUI_Manager::Get_Instance()->UsingAttckBuff(m_ePlayerSlot);
-
+					Character_Make_Effect(TEXT("RO"),{0.f,0.8f});
 				}
 			}
 		}
@@ -4295,7 +4347,7 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 		{
 			m_bDying = true;
 
-			if(m_bFinalSkillRoundEnd == false)
+			if (m_bFinalSkillRoundEnd == false)
 			{
 				if (m_pModelCom->m_iCurrentAnimationIndex == m_iHit_Away_LeftAnimationIndex)
 				{
@@ -4311,6 +4363,8 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 					Set_fImpulse(fMapToImpulse);
 
 					m_bDestructiveFinish = true;
+					m_fMaxDyingTime = 5.f;
+
 				}
 
 				Set_AnimationStopWithoutMe(2.f);
@@ -4337,11 +4391,13 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 			}
 			else  // 3필로 끝나면
 			{
-				m_fMaxDyingTime = 12.f;
+				//m_fMaxDyingTime = 12.f;
+				m_fMaxDyingTime = 11.5f;
+
 			}
 
 
-			
+
 
 		}
 
@@ -4386,7 +4442,9 @@ void CCharacter::Play_WinAnimation()
 	//m_bOnlyCutSceneNoMove = true;
 
 	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	main_Camera->StartCameraShake(0.2f, 0.2f);
+	//main_Camera->StartCameraShake(0.2f, 0.2f);
+	main_Camera->StartCameraShake(10.f, 10.f);
+
 
 
 
@@ -4404,7 +4462,7 @@ void CCharacter::Play_NewRound_Loser()
 
 	m_bGrabbed = true;
 	m_bOpening = true;
-	m_fMaxOpeningTime = 2.f;
+	m_fMaxOpeningTime = 3.5f;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, {-1.f+(m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0.f,0.5f, 0.f, 1.f });
@@ -4440,7 +4498,7 @@ void CCharacter::Play_NewRound_Winner()
 {
 	m_bGrabbed = true;
 	m_bOpening = true;
-	m_fMaxOpeningTime = 2.f;
+	m_fMaxOpeningTime = 3.5f;
 
 	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -1.f + (m_iPlayerTeam * 2),0.5f, 0.f, 1.f });
 
@@ -4642,6 +4700,11 @@ void CCharacter::Set_bHeavySkill(_bool bHeavySkill)
 	m_bHeavySkill = bHeavySkill;
 }
 
+void CCharacter::Set_bForcedAura(_bool bForcedAura)
+{
+	m_bForcedAura = bForcedAura;
+}
+
 void CCharacter::Set_bAura(_bool bAura)
 {
 	if (bAura != m_bAura)
@@ -4661,8 +4724,14 @@ void CCharacter::Set_bAura(_bool bAura)
 		}
 	}
 
-	
 
+
+}
+
+void CCharacter::Set_fAuraColor(_float4 fAuraColor)
+{
+	LIGHT_DESC* pLight_Desc = m_pRenderInstance->Get_LightDesc(CLight_Manager::LIGHT_PLAYER, 0, m_strName);
+	pLight_Desc->vAuraColor = fAuraColor;
 }
 
 void CCharacter::Reset_AttackStep()
@@ -5875,7 +5944,7 @@ void CCharacter::GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput, _u
 		m_pUI_Manager->m_eBtnInput2 = eBtnInput;
 	}
 
-	
+
 }
 
 void CCharacter::Notify_QTE_Same_Grab(_int result)
@@ -5898,15 +5967,17 @@ void CCharacter::Notify_QTE_Same_Grab(_int result)
 
 void CCharacter::Notify_QTE_1p_Grab(_int result)
 {
-	switch (result)
-	{
-		//승
-	case 1:
-		break;
-		//패
-	case -1:
-		break;
-	}
+	m_iQTE = result;
+
+	//switch (result)
+	//{
+	//	//승
+	//case 1:
+	//	break;
+	//	//패
+	//case -1:
+	//	break;
+	//}
 }
 
 
@@ -5973,7 +6044,7 @@ void CCharacter::Add_ChaseLight()
 	LightDesc.fLifeTime = 1.f;
 	LightDesc.strName = "Chase";
 	/*LightDesc.pisDone = &m_bChase;*/
-	
+
 
 	if (FAILED(m_pRenderInstance->Add_Effect_Light(LightDesc.strName, LightDesc)))
 		return;

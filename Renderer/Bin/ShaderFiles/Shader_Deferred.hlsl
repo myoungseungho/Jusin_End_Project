@@ -651,6 +651,17 @@ PS_OUT PS_MAIN_DEFERRED_MAP(PS_IN In)
 
 
 
+PS_OUT PS_MAIN_ALLBLACKOUT(PS_IN In)
+{
+    PS_OUT Out = (PS_OUT) 0;
+
+    vector vDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
+    
+    vDiffuse.a = saturate(vDiffuse.a - (1.f - g_fAccBlackTime));
+    
+    Out.vColor = vDiffuse;
+    return Out;
+}
 
 technique11		DefaultTechnique
 {	
@@ -823,6 +834,18 @@ technique11		DefaultTechnique
         PixelShader = compile ps_5_0 PS_MAIN_DEFERRED_STAGE();
     }
 
+    pass AllBlackOut // 13
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        HullShader = NULL;
+        DomainShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_ALLBLACKOUT();
+    }
 }
 
 

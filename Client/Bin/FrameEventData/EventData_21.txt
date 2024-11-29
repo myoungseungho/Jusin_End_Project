@@ -1,5 +1,17 @@
 
 PLAY_21,TON600cs_body,0,AnimSpeedChange,0.019,60.1
+PLAY_21,TON600cs_body,290,AttackEvent,0
+
+//,라운드 넘어갈때 맞대기1 (공용) 81
+PLAY_21,TON620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
+PLAY_21,TON620cs_body,120,NextAnimation,630
+
+PLAY_21,TON620cs_body,80,AttackEvent,2001
+PLAY_21,TON620cs_body,90,AttackEvent,2002
+PLAY_21,TON620cs_body,95,AttackEvent,2003
+PLAY_21,TON620cs_body,110,AttackEvent,2004
+
+
 
 //,오프닝 lab 버전부터 시작 전투버전은 275프레임부터 
 //,273position에서 폭발 이펙트,모델변경
@@ -28,10 +40,6 @@ PLAY_21,TON600cs_body,300,PositionChange,395
 //,오프닝 사이드 스탠딩 (공용)  78
 PLAY_21,TON601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_21,TON602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
-
-//,라운드 넘어갈때 맞대기1 (공용) 81
-PLAY_21,TON620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
-PLAY_21,TON620cs_body,100,NextAnimation,630
 
 
 //,마지막 상태 정지모션 (공용) 83

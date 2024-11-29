@@ -48,6 +48,8 @@
 
 #include "Map_Manager.h"
 
+#include "Particle_Manager.h"
+
 CPlay_21::CPlay_21(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCharacter{ pDevice, pContext }
 {
@@ -328,8 +330,10 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
+				m_bDestructiveFinish = false;
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_bPlaying = false;
+				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -379,7 +383,19 @@ void CPlay_21::Player_Update(_float fTimeDelta)
 			{
 				if (m_bMotionPlaying == false)
 				{
-					CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					if (m_fAccfirstOpeningTime >= 0.5f)
+					{
+						m_fAccfirstOpeningTime = 0.f;
+						CBattleInterface_Manager::Get_Instance()->Character_Opening_EndForCharacter(m_iPlayerTeam);
+					}
+					else
+					{
+						if (m_fAccfirstOpeningTime == 0)
+						{
+							CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+						}
+						m_fAccfirstOpeningTime += fTimeDelta;
+					}
 				}
 				else if (m_pGameInstance->Key_Down(DIK_RETURN))
 				{
@@ -1113,7 +1129,7 @@ HRESULT CPlay_21::Ready_Components()
 	else
 	{
 
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_2P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_S21_1P"), TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
 	}
 	/* Com_Model */
@@ -1534,9 +1550,11 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		//Desc.eAttackType = { ATTACKTYPE_HIGH };
 		Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
-		Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
+		//Desc.fRanged_Impus_NoneDirection = { 9.f,0.f };
+		Desc.fRanged_Impus_NoneDirection = { 18.f,0.f };
+
 		Desc.iDirection = m_iLookDirection;
-		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+		Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 
 
 		Desc.strEffectName = TEXT("21_BurstJ-01");
@@ -1692,6 +1710,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Desc.bCameraZoom = false;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+			Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 		}
 	}
 	break;
@@ -1933,7 +1953,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fStartOffset = { 0.6f * m_iLookDirection, 0.4f };
 
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 
 
 
@@ -1943,15 +1963,28 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Desc.fRanged_Impus_NoneDirection = { fMultiple ,-0.07f * fMultiple };
 
-			Desc.fRanged_Impus_NoneDirection = { 7.8f, -0.6f };
+			
+			
+			Desc.strEffectName = TEXT("21_BurstJ-01");
+
+			//Desc.fRanged_Impus_NoneDirection = { 7.8f, -0.6f };
+			Desc.fRanged_Impus_NoneDirection = { 15.6f, -1.2f };
+
+			Desc.fEffectRotationDegree = 4.35f;			
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
-			Desc.fRanged_Impus_NoneDirection = { 6.72f, -2.808f };
+			//Desc.fRanged_Impus_NoneDirection = { 6.72f, -2.808f };
+			Desc.fRanged_Impus_NoneDirection = { 13.44f, -5.616f };
+
+			Desc.fEffectRotationDegree = 337.62;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 
-			Desc.fRanged_Impus_NoneDirection = { 5.196f, -4.752f };
+			//Desc.fRanged_Impus_NoneDirection = { 5.196f, -4.752f };
+			Desc.fRanged_Impus_NoneDirection = { 10.392f, -9.504f };
+
+			Desc.fEffectRotationDegree = 318.37;
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
 
 		}
@@ -2027,7 +2060,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.fStartOffset = { 0.2f * m_iLookDirection, 0.9f };
 			Desc.fRanged_Impus_NoneDirection = { 15.f,0.f };
 			Desc.iDirection = m_iLookDirection;
-			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_YELLOW;
+			Desc.eRangeColor = CAttackObject_Ranged::RANGED_LIGHT_PINK;
 			Desc.strEffectName = TEXT("21_SDU-01");
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_Ranged"), TEXT("Layer_AttackObject"), &Desc);
@@ -2336,6 +2369,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			mainCamera->StartCameraShake(1.5f, 0.2f);
 			//이펙트들
 
+			if(m_bAura == false)
+				Set_bAura(true);
+
 		}
 		else if (iAttackEvent == 1) // 손가락에 차지중. 다시보니 이펙트 말고는 넣을 필요 없을듯
 		{
@@ -2412,6 +2448,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 6)
 		{
 			Character_Make_Effect(TEXT("21_SDO-03"), { 7.f ,-2.f });
+
+
+			Set_bAura(false);
 
 		}
 
@@ -2534,6 +2573,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			m_bAttackBackEvent = false;
 
 
+			Set_bAura(true);
 
 		}
 		else if (iAttackEvent == 1) //53에서 발생. 루프가 50이라 잘못하면 닿기도 전에 방향전환을 한다?
@@ -2752,6 +2792,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAttackBackEvent == false)
 			{
 				Set_Animation(ANIME_JUMP_DOWN);
+				Set_bAura(false);
+
 				if (m_bCreateQTE)
 				{
 					Character_Start_QTE(2);
@@ -3072,6 +3114,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainHitCount = 0;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
+
+
 		}
 
 		//손 뻗고나서
@@ -3105,6 +3149,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 				CMap_Manager::Get_Instance()->PlayerCall_EastFinish(CMap_Manager::EAST_SPHERE, 1.f);
 				m_pEnemy->Set_FinalSkillRoundEnd(true, 0);
 				//캐릭터 MaxDeath 도 처리
+				CUI_Manager::Get_Instance()->CutSceneUI(false);
 
 			}
 
@@ -3191,6 +3236,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
 
+		
 
 		}
 		else if (iAttackEvent == 5)
@@ -3201,6 +3247,15 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Make_Effect(TEXT("21_WSDO-06"), {}, true);
 
 			//Set_AnimationStop(0.7f);
+
+			Set_bAura(false);
+
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+			//pEffect->m_fTickPerSecond *= 0.2f;
+
+			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir_Rotated_Right"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
 		}
 
 	}
@@ -3428,6 +3483,94 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		}
 		break;
+	case ANIME_START_DEFAULT:
+	{
+		//빙글 돌 때 아우라
+		if (iAttackEvent == 0)
+		{
+			//Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
+
+			//
+			//CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
+			//if(pEffect != nullptr)
+			//{
+			//	pEffect->Set_Copy_Layer_Scaled({ 1.5f,1.5f,1.5f });
+			//	//pEffect->Set_Copy_Layer_Position({ -1.f,0.f,0.f });
+			//
+			//}
+
+			Character_Make_BoneEffect("G_root", TEXT("21_Opening"));
+
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+			//pEffect->m_fTickPerSecond *= 0.2f;
+
+			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir_Rotated_Right"));
+			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+
+
+			
+			_vector resultPosition = m_pTransformCom->Get_State(CTransform::STATE_POSITION); //XMVectorAdd(position, XMVectorSet(0.f, 0.f, 0.f, 0.f));
+			_float3 resultFloat3{};
+			XMStoreFloat3(&resultFloat3, resultPosition);
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::FREIZA_ULTIMATE_1_HIT_PARTICLE, resultFloat3);
+
+		}
+
+	}
+	break;
+
+	case ANIME_NEWROUND_RIGHTHAND_APEEAR_CUTSCENE:
+	{
+		if (iAttackEvent == 2001)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-01"), { -0.7f * m_iLookDirection,0.f });
+		}
+		else if (iAttackEvent == 2002)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
+
+
+			m_pEnemy->Set_AnimationStop(0.5f);
+			Set_AnimationStop(0.5f);
+
+		}
+		else if (iAttackEvent == 2003)
+		{
+			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+
+			//Set_AnimationStop(1.5f);
+			//m_pEnemy->Set_AnimationStop(1.5f);
+		}
+		else if (iAttackEvent == 2004)
+		{
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
+			CUI_Manager::Get_Instance()->CutSceneUI(true);
+
+
+		}
+
+
+	}
+	break;
+
 	default:
 		break;
 	}

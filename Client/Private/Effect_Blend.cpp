@@ -134,6 +134,7 @@ void CEffect_Blend::Update(_float fTimeDelta)
 	{
 		m_iRenderGroupIndex = m_bIsBackSideEffect == true ? CRenderer::RG_BACKSIDE_EFFECT : CRenderer::RG_BLEND;
 	}
+	
 }
 
 void CEffect_Blend::Late_Update(_float fTimeDelta)
@@ -161,6 +162,7 @@ void CEffect_Blend::Late_Update(_float fTimeDelta)
 		}
 	}
 
+	
 }
 
 HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
@@ -176,6 +178,13 @@ HRESULT CEffect_Blend::Priority_Render(_float fTimeDelta)
 
 HRESULT CEffect_Blend::Render(_float fTimeDelta)
 {
+	if (m_iChangePassIndex == 11)
+	{
+		m_fAccTime += fTimeDelta;
+		if (FAILED(m_pShaderCom->Bind_RawValue("g_Time", &m_fAccTime, sizeof(_float))))
+			return E_FAIL;
+	}
+
 	if (m_isInitializeRender == false)
 	{
 		m_isInitializeRender = true;
@@ -194,6 +203,7 @@ HRESULT CEffect_Blend::Render(_float fTimeDelta)
 
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
+
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 
@@ -258,6 +268,7 @@ HRESULT CEffect_Blend::Ready_Components(_wstring* pModelName, _wstring* pMaskTex
 
 HRESULT CEffect_Blend::Bind_ShaderResources()
 {
+
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
 	

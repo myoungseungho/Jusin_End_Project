@@ -31,7 +31,7 @@ public:
 	HRESULT Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor = { 1.f,1.f,1.f,1.f }, _bool* pisChaseLight = { nullptr });
 	HRESULT Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc);
 	HRESULT Render_Lights(LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer, string strName, _float fTimeDelta);
-
+	void Clear_Light();
 private:
 	list<class CLight*>				m_Lights;
 	// 플레이어 라이트 키값 검색으로 자기 빛 계산 따로 해줘야할 수도 있음

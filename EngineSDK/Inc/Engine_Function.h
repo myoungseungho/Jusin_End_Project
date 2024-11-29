@@ -291,5 +291,10 @@ namespace Engine
 		else
 			return -1.0f + (4.0f - 2.0f * t) * t;
 	}
+
+	inline _float RandomBetween(float min, float max)
+	{
+		return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+	}
 #pragma endregion
 }

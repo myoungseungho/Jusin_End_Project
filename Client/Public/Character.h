@@ -382,6 +382,8 @@ public:
 	_float m_fAccOpeningTime = {0.f};
 	_float m_fMaxOpeningTime = {3.f};
 
+	_float m_fAccfirstOpeningTime = { 0.f };
+
 	void Set_bPlaying(_bool bPlaying);
 
 	void Set_StopAllAttackObject(_float fStopTime);
@@ -411,7 +413,12 @@ public:
 
 	_float4 m_fAuraColor = {};
 	_bool m_bAura = false;
+	_bool m_bForcedAura = false;
+	void Set_bForcedAura(_bool bForcedAura);
+
 	void Set_bAura(_bool bAura);
+
+	void Set_fAuraColor(_float4 fAuraColor);
 
 protected:
 

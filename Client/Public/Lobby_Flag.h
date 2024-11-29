@@ -13,6 +13,12 @@ BEGIN(Client)
 
 class CLobby_Flag final : public CGameObject
 {
+public:
+	typedef struct
+	{
+		_uint iNumObject;
+	}FLAG_DESC;
+
 private:
 	CLobby_Flag(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CLobby_Flag(const CLobby_Flag& Prototype);
@@ -27,6 +33,9 @@ public:
 	virtual HRESULT Render(_float fTimeDelta) override;
 
 private:
+	void Default_Setting(_uint iNum);
+
+private:
 	CShader* m_pShaderCom = { nullptr };
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pDiffTexture[2] = {nullptr};
@@ -37,7 +46,7 @@ private:
 
 private:
 	_float m_fAnimFrame = { 0.f };
-
+	_float m_fTexcoordValue = { 0.f };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

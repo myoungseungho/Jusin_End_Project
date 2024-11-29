@@ -74,12 +74,13 @@ public:/*For.Light_Manager*/
 	HRESULT Add_Effect_Light(string strKey, const LIGHT_DESC& LightDesc);
 	void	BGLight_Pop_Front();
 	HRESULT Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, class CShader* pShader, class CVIBuffer_Rect* pVIBuffer,const string strName, _float fTimeDelta);
-
+	void Clear_Light();
 public:/*For.Picking*/
 	_float4 Picked_Position(_bool* pPicked);
 	_int Picked_Effect_Index();
 public: /* For.Renderer */
 	void Switch_BlackOut(_bool isTrue);
+	void Switch_AllBlackOut();
 	void Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed = 1.f);
 private:
 	class CRenderer*		m_pRenderer = { nullptr };

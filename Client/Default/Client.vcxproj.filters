@@ -598,11 +598,26 @@
     <ClCompile Include="..\private\Lobby_Party.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_Party</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Particle_Focus.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Focus</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\VolcanoEF.cpp">
       <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Shadow_Camera.cpp">
       <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Lobby_Staff.cpp">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Particle_Common_Hit.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Common_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Particle_Frieza_1_Ultimate_Hit.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Frieza_1_Ultimate_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1278,11 +1293,29 @@
     <Filter Include="02.GameObjects\Lobby\Lobby_Party">
       <UniqueIdentifier>{884dbe24-1b94-47b1-aedc-f3e49511ca02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Focus">
+      <UniqueIdentifier>{c47f94cd-eb5b-47e3-95d2-1983d10af501}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02.GameObjects\Map\Volcano\Volcano_EF">
       <UniqueIdentifier>{29823397-505f-41e7-9739-bc7983735a75}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\Camera\Shadow_Camera">
       <UniqueIdentifier>{4b1b0465-8f4f-436c-9c9d-463ea58e0423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff">
+      <UniqueIdentifier>{0737dce8-dcf9-411a-8eec-89d46acf55f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Common_Hit">
+      <UniqueIdentifier>{ddef6f36-1e19-4368-929b-13160795d980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Frieza_1_Ultimate_Hit">
+      <UniqueIdentifier>{540bdb5c-bcff-495a-a80e-d30cc9075cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit">
+      <UniqueIdentifier>{6b32e332-0e57-47f9-b55e-35cc7e7c5469}</UniqueIdentifier>
+ </Filter>
+    <Filter Include="02.GameObjects\UI\Lobby\Text\Staff">
+      <UniqueIdentifier>{8ebfed5c-00ca-48c1-ab90-78e6c6ecf86e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2045,11 +2078,26 @@
     <ClInclude Include="..\public\Lobby_Party.h">
       <Filter>02.GameObjects\Lobby\Lobby_Party</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Particle_Focus.h">
+      <Filter>02.GameObjects\Particle\Particle_Focus</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\VolcanoEF.h">
       <Filter>02.GameObjects\Map\Volcano\Volcano_EF</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Shadow_Camera.h">
       <Filter>02.GameObjects\Camera\Shadow_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Lobby_Staff.h">
+      <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Common_Hit.h">
+      <Filter>02.GameObjects\Particle\Particle_Common_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Frieza_1_Ultimate_Hit.h">
+      <Filter>02.GameObjects\Particle\Particle_Frieza_1_Ultimate_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h">
+      <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

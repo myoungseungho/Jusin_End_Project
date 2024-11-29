@@ -4,6 +4,9 @@ PLAY_FRN,FRN600cs_body,0.001000,PlaySound,149,0,1
 PLAY_FRN,FRN600cs_body,50.001000,PlaySound,148,0,1
 PLAY_FRN,FRN600cs_body,260.002000,PlaySound,150,0,1
 
+PLAY_FRN,FRN600cs_body,261.002000,AttackEvent,0
+PLAY_FRN,FRN600cs_body,287.002000,AttackEvent,1
+
 //,301 리플렉터. (공용)
 //,PLAY_FRN,FRN301_body,0,AnimSpeedChange,0.015,35
 //,PLAY_FRN,FRN301_body,0,AttackEvent,0
@@ -23,9 +26,15 @@ PLAY_FRN,FRN301_body,45,AnimSpeedChange,0.015,20
 PLAY_FRN,FRN601cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 PLAY_FRN,FRN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
+
 //,라운드 넘어갈때 맞대기1 (공용) 81
 PLAY_FRN,FRN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
-PLAY_FRN,FRN620cs_body,100,NextAnimation,630
+PLAY_FRN,FRN620cs_body,120,NextAnimation,630
+
+PLAY_FRN,FRN620cs_body,80,AttackEvent,2001
+PLAY_FRN,FRN620cs_body,90,AttackEvent,2002
+PLAY_FRN,FRN620cs_body,95,AttackEvent,2003
+PLAY_FRN,FRN620cs_body,110,AttackEvent,2004
 
 
 //,마지막 상태 정지모션 (공용) 83
@@ -392,7 +401,7 @@ PLAY_FRN,FRN074_body,0.00100,PlaySound,122,0,1
 
 //,강공맞고 왼쪽으로
 PLAY_FRN,FRN075_body,0.000000,AnimSpeedChange,0.030000,44.040001
-PLAY_FRN,FRN075_body,0.0010,PlayGroupSound,203,0,1
+PLAY_FRN,FRN075_body,0.0010,PlayGroupSound,208,0,1
 PLAY_FRN,FRN075_body,5,AnimSpeedChange,0.030000,10.353000
 
 PLAY_FRN,FRN075_body,5,AnimSpeedChange,0.030000,10.353000
@@ -807,6 +816,7 @@ PLAY_FRN,FRN400_body,0.001000,PlaySound,89,0,1
 PLAY_FRN,FRN400_body,35,AttackEvent,0
 PLAY_FRN,FRN400_body,35,AnimSpeedChange,0.01,50
 
+PLAY_FRN,FRN400_body,40,AttackEvent,1
 
 //,그냥 AttackBack쓰자
 PLAY_FRN,FRN400_body,40,NextAnimationCheck,333333

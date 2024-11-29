@@ -50,8 +50,9 @@ void CEffect::Update(_float fTimeDelta)
 
 void CEffect::Late_Update(_float fTimeDelta)
 {
-
+	//m_fAccTime += fTimeDelta;
 }
+
 HRESULT CEffect::Priority_Render(_float fTimeDelta)
 {
 	if (m_bIsCopy == true)
@@ -74,6 +75,7 @@ HRESULT CEffect::Priority_Render(_float fTimeDelta)
 HRESULT CEffect::Render(_float fTimeDelta)
 {
 
+	
 	return S_OK;
 }
 
@@ -256,6 +258,8 @@ HRESULT CEffect::Ready_Components(_wstring* pModelName, _wstring* pMaskTextureNa
 
 HRESULT CEffect::Bind_ShaderResources()
 {
+
+
 	return S_OK;
 }
 

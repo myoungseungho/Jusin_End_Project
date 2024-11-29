@@ -17,6 +17,7 @@ class CParryingRangedObject  : public CGameObject
 {
 public:
 	//enum HitMotion { HIT_LIGHT, HIT_MEDIUM, HIT_HEAVY, HIT_CROUCH_MEDIUM, HIT_KNOCK_AWAY_LEFT, HIT_KNOCK_AWAY_UP };
+	enum Ranged_LightColor { RANGED_LIGHT_NONE, RANGED_LIGHT_YELLOW, RANGED_LIGHT_PURPLE, RANGED_LIGHT_PINK };
 
 	typedef struct PARRYING_RANGED_DESC
 	{
@@ -74,6 +75,7 @@ private:
 	_bool m_bFlipEnable = { true };
 
 	_float2 m_fGoalPosXZ = {};
+	_ushort m_iMapBreakIndex = { 60000 };
 
 private:
 

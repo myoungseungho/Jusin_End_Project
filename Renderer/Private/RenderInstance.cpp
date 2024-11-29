@@ -260,6 +260,11 @@ HRESULT CRenderInstance::Render_Lights(CLight_Manager::LIGHT_TYPE eLightType, CS
 	return m_pLight_Manager->Render_Lights(eLightType, pShader, pVIBuffer, strName, fTimeDelta);
 }
 
+void CRenderInstance::Clear_Light()
+{
+	m_pLight_Manager->Clear_Light();
+}
+
 _float4 CRenderInstance::Picked_Position(_bool* pPicked)
 {
 	return m_pPicking->Picked_Position(pPicked);
@@ -273,6 +278,11 @@ _int CRenderInstance::Picked_Effect_Index()
 void CRenderInstance::Switch_BlackOut(_bool isTrue)
 {
 	m_pRenderer->Switch_BlackOut(isTrue);
+}
+
+void CRenderInstance::Switch_AllBlackOut()
+{
+	m_pRenderer->Switch_AllBlackOut();
 }
 
 void CRenderInstance::Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed)

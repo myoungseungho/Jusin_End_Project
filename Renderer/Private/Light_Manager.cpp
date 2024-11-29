@@ -73,8 +73,11 @@ HRESULT CLight_Manager::Add_Light(const LIGHT_DESC & LightDesc)
 
 void CLight_Manager::BGLight_Pop_Front()
 {
-	Safe_Release(m_Lights.front());
-	m_Lights.pop_front();
+	if (NULL != m_Lights.size())
+	{
+		Safe_Release(m_Lights.front());
+		m_Lights.pop_front();
+	}
 }
 
 HRESULT CLight_Manager::Add_Player_Light(string strKey, const LIGHT_DESC& LightDesc, _float4 vChaseColor, _bool* pisChaseLight)
@@ -147,7 +150,23 @@ CLight_Manager * CLight_Manager::Create(ID3D11Device * pDevice, ID3D11DeviceCont
 
 	return pInstance;
 }
+void CLight_Manager::Clear_Light()
+{
+	for (auto& pLight : m_Lights)
+		Safe_Release(pLight);
 
+	m_Lights.clear();
+
+	for (auto& pPlayerLight : m_PlayerLights)
+		Safe_Release(pPlayerLight.second);
+
+	m_PlayerLights.clear();
+
+	for (auto& pEffectLight : m_EffectLights)
+		Safe_Release(pEffectLight.second);
+
+	m_EffectLights.clear();
+}
 void CLight_Manager::Free()
 {
 	__super::Free();

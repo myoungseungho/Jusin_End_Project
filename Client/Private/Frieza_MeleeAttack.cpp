@@ -393,7 +393,15 @@ void CFrieza_MeleeAttack::Attack_236()
 
 void CFrieza_MeleeAttack::Attack_214()
 {
-	if (m_pPlayer->Check_bCurAnimationisGroundMove() || m_pPlayer->Check_bCurAnimationisAirMove())
+	if (m_pPlayer->Check_bCurAnimationisGroundMove())
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_214);
+	}
+	else if (m_pPlayer->Get_bAttackBackEvent() &&
+		(*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT1 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT2 || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_LIGHT3 ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_MEDUIM ||
+			*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_CROUCH_HEAVY)
+		)
 	{
 		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_214);
 	}
@@ -438,6 +446,8 @@ void CFrieza_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
 			
 			m_pPlayer->Set_bHeavySkill(true);
+
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 		}
 
 		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY ||
@@ -447,6 +457,7 @@ void CFrieza_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236, false);
 
 			m_pPlayer->Set_bHeavySkill(true);
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 		}
 		
 		//»ç¿ë ¸øÇßÀ¸¸é
@@ -753,7 +764,7 @@ void CFrieza_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//»þ»þ¼¡
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 
@@ -777,7 +788,7 @@ void CFrieza_MeleeAttack::Attack_Benishing()
 			m_pPlayer->Set_AnimationStop(0.3f);
 			//»þ»þ¼¡
 			m_pPlayer->Character_Make_Effect(TEXT("Moving_Line_Right"));
-
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f }, { 1.f,1.f }, 0.2f);
 			m_pPlayer->Teleport_ToEnemy(1.5f, 0.3f);
 			m_pPlayer->FlipDirection();
 

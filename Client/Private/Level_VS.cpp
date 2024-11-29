@@ -23,7 +23,7 @@ HRESULT CLevel_VS::Initialize()
 {
 	m_iLevelIndex = LEVEL_VS;
 
-	Sleep(1000);
+	m_pRenderInstance->Clear_Light();
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;

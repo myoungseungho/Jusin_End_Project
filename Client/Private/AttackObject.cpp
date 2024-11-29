@@ -117,6 +117,12 @@ HRESULT CAttackObject::Initialize(void* pArg)
 	m_strHitEffectName = pDesc->strHitEffectName;
 	m_fHitEffectOffset = pDesc->fHitEffectOffset;
 	m_bHitEffectFlip = pDesc->bHitEffectFlip;
+
+
+	m_iParticleIndex = pDesc->iParticleIndex;
+	m_fParticleOffset = pDesc->fParticleOffset;
+
+
 	if (FAILED(Ready_Components(pDesc)))
 		return E_FAIL;
 
