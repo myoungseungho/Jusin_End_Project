@@ -4408,7 +4408,9 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 			else  // 3필로 끝나면
 			{
 				//m_fMaxDyingTime = 12.f;
-				m_fMaxDyingTime = 11.5f;
+				//m_fMaxDyingTime = 11.5f;
+
+				m_fMaxDyingTime = 11.8f;
 
 
 				//근데 마지막이면

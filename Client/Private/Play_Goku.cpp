@@ -790,10 +790,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	}
 
-	//if (m_pGameInstance->Key_Down(DIK_4))
-	//{
-	//	Set_bFinalSkillQTE(true);
-	//}
+	if (m_pGameInstance->Key_Down(DIK_4))
+	{
+		Set_bFinalSkillQTE(true);
+	}
 	
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
 	{
@@ -2593,6 +2593,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 101)
 		{
 			Set_bAura(false);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 		}
 	}
 	
@@ -2750,6 +2751,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 101)
 		{
 			Set_bAura(false);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
+
+
 		}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR:
@@ -2900,6 +2904,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 101)
 		{
 			Set_bAura(false);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 		}
 		break;
 	case Client::CPlay_Goku::ANIME_ATTACK_236_SPECIAL_AIR_DOWNSIDE:
@@ -3046,6 +3051,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 101)
 		{
 			Set_bAura(false);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 		}
 		break;
 	case Client::CPlay_Goku::ANIME_FINAL_START:
@@ -3061,6 +3067,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Set_bAura(true);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
+
 		}
 
 	}
@@ -3143,6 +3151,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 					Character_Start_QTE(CQTE_Manager::QTE_ID_HIT);
 					m_bCreateQTE = false;
 				}
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 			}
 			else if (iAttackEvent == 1001)
@@ -3421,6 +3430,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if(m_bAlwaysss3Test == false)
 				Set_bAura(false);
 
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 		}
 
@@ -3690,6 +3700,9 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 		else if (iAttackEvent == 4)
 		{
+
+			CRenderInstance::Get_Instance()->Start_AllWhiteOut(1.f, 2.f);
+
 			//го╬Агйем
 			m_bNormalGoku = false;
 

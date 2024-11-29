@@ -355,7 +355,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
     if (m_b1vs1)
     {
         //½Â¸®
-
+       // CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
         return true;
     }
 

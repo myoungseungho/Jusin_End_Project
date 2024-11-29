@@ -1,9 +1,9 @@
 [Layer]
 LayerName: FZ_Opening
-Duration: 1
+Duration: 2.5
 TickPerSecond: 1
-KeyFramesCount: 59
-NumEffec: 6
+KeyFramesCount: 149
+NumEffec: 9
 Position: 0 0.3 0
 Scale: 1 1 1
 Rotation: 0 0 0
@@ -17,9 +17,9 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 0
+UniqueIndex: -2
 Position: 0 -0.4 0
-Scale: 0.2 0.35 1
+Scale: 0.2 0.31 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 108.924 0 178.162 2.88079
@@ -31,10 +31,10 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 -0.4 0
-Scale: 0.2 0.35 1
+Scale: 0.2 0.31 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
+Duration: 2.5
 IsNotPlaying: false
 
 [Effect]
@@ -46,8 +46,8 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 1.49012e-08 0
-Scale: 0.2 0.3 1
+Position: 0 2.98024e-08 0
+Scale: 0.12 0.22 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 19.4205 29.553 255 30
@@ -59,10 +59,10 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 1.49012e-08 0
-Scale: 0.2 0.3 1
+Scale: 0.12 0.22 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
+Duration: 2.5
 IsNotPlaying: false
 
 [Effect]
@@ -73,24 +73,24 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 0
-Position: 0 0 0
-Scale: 0.25 0.33 1
+UniqueIndex: -2
+Position: 0 1.49012e-08 0
+Scale: 0.2 0.3 1
 Rotation: 0 0 0
 IsLoop: true
 Color: 113.99 0 255 0.791391
 GlowColor: 1 1 -1.07374e+08 -1.07374e+08
-GlowFactor: 2
+GlowFactor: 3
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 0 0
-Scale: 0.25 0.33 1
+Scale: 0.2 0.3 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
+Duration: 2.5
 IsNotPlaying: false
 
 [Effect]
@@ -101,7 +101,7 @@ DiffuseTextureName: Texture_Effect_cmn_test
 EffectType: 1
 RenderIndex: 2
 PassIndex: 1
-UniqueIndex: 0
+UniqueIndex: -2
 Position: 0 -0.4 0
 Scale: 0.2 0.3 1
 Rotation: 0 0 0
@@ -130,7 +130,7 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0 0 0
+Position: 0 -0.4 0
 Scale: 0.2 0.3 1
 Rotation: 0 0 0
 IsLoop: true
@@ -142,11 +142,11 @@ NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
+Position: 0 -0.4 0
 Scale: 0.2 0.3 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
+Duration: 2.5
 IsNotPlaying: false
 
 [Effect]
@@ -158,12 +158,12 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
-Scale: 1 1 1
+Position: 0 1.49012e-08 0
+Scale: 0.17 0.25 1
 Rotation: 0 0 0
 IsLoop: true
-Color: 0 0 0 30
-GlowColor: 0 1 -1.07374e+08 -1.07374e+08
+Color: 159.586 76.8377 235.579 0.787421
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
@@ -171,9 +171,93 @@ NumKeyFrame: 1
 [KeyFrame]
 KeyFrameNumber: 0
 Position: 0 0 0
-Scale: 1 1 1
+Scale: 0.17 0.25 1
 Rotation: 0 0 0
 CurTime: 0
-Duration: 1
-IsNotPlaying: true
+Duration: 2.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_Opening_07
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_OpeningFZ_Opening_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -0.2 0
+Scale: 0.23 0.32 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 81.904 22.798 157.897 1.68874
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.2 0
+Scale: 0.23 0.32 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_Opening_08
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_OpeningFZ_Opening_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.2 0.2
+Scale: 0.199948 0.3 0.999725
+Rotation: 0 180 0
+IsLoop: true
+Color: 0 0 0 30
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.2 0.2
+Scale: 0.199948 0.3 0.999726
+Rotation: 0 180 0
+CurTime: 0
+Duration: 2.5
+IsNotPlaying: false
+
+[Effect]
+EffectName: FZ_Opening_09
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/FZ_OpeningFZ_Opening_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0.1 0.2
+Scale: 0.29995 0.3 0.999834
+Rotation: 0 180 0
+IsLoop: true
+Color: 255 255 255 30
+GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0.1 0.2
+Scale: 0.29995 0.3 0.999834
+Rotation: 0 180 0
+CurTime: 0
+Duration: 2.5
+IsNotPlaying: false
 

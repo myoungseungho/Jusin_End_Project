@@ -1,16 +1,17 @@
 Version: 2
 KeyCount: 1
-KeySize: 48
-Key: Prototype_Component_Texture_Effect_cmn_scrline00
-ID: 1
+KeySize: 49
+Key: Prototype_Component_Texture_Effect_cmn_aura03_end
+ID: 3
 vTexCoord: 1 1
-NodePosCount: 3
+NodePosCount: 4
 NodeID: -1 Position: 572.89 169.996
-NodeID: 1 Position: 268 86
-NodeID: 3001 Position: 16 120
+NodeID: 3001 Position: 78 85
+NodeID: 3 Position: 301 72
+NodeID: 1 Position: 325 81
 MoveTexNodeCount: 0
 SpriteNodeCount: 1
-SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 2 1 Speed: 10
+SpriteNodeID: 3001 IsLoop: 1 SpriteSizeNumber: 4 2 Speed: 10
 LinkCount: 2
-LinkSrcNodeID: 4 LinkDestNodeID: -2
 LinkSrcNodeID: 3002 LinkDestNodeID: 7
+LinkSrcNodeID: 4 LinkDestNodeID: -2
