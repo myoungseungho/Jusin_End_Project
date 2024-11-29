@@ -202,7 +202,7 @@ public:
 	virtual void Character_CinematicEnd() override;
 
 
-
+	virtual void HitStopEffect() override;
 
 private:
 	CModel* m_pModelCom_Opening = { nullptr };
@@ -226,6 +226,9 @@ private:
 	_bool m_bNormalGoku = { true }; //true
 
 	CEffect_Layer* m_pFinalAura = { nullptr };
+	CEffect_Layer* m_p236ChaseAura = { nullptr };
+
+	
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

@@ -5,6 +5,9 @@ PLAY_FRN,FRN600cs_body,50.001000,PlaySound,148,0,1
 PLAY_FRN,FRN600cs_body,50.002000,SubTitle_Play,6,6
 PLAY_FRN,FRN600cs_body,260.002000,PlaySound,150,0,1
 
+PLAY_FRN,FRN600cs_body,261.002000,AttackEvent,0
+PLAY_FRN,FRN600cs_body,287.002000,AttackEvent,1
+
 //,301 리플렉터. (공용)
 //,PLAY_FRN,FRN301_body,0,AnimSpeedChange,0.015,35
 //,PLAY_FRN,FRN301_body,0,AttackEvent,0
