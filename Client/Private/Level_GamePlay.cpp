@@ -244,7 +244,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	}
 
 	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
-	m_pIMGUI_Manager->Update(fTimeDelta);
+	//m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pParticle_Manager->Update(fTimeDelta);
 	m_pSubTitle_Manager->Update(fTimeDelta);
