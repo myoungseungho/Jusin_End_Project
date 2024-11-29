@@ -2659,15 +2659,10 @@ void CCharacter::Set_UnlockAnimationStop()
 
 void CCharacter::Set_AnimationStopWithoutMe(_float fStopTime)
 {
-
-
 	//_float fTest1 = m_ePlayerSlot - (m_iPlayerTeam - 1) * 2;
 
 	//0->0 1->1   2->0  3->1
 	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot - (m_iPlayerTeam - 1) * 2, fStopTime);
-
-
-
 }
 
 
