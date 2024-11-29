@@ -6,6 +6,8 @@
 #include "Level_Loading.h"
 #include "Level_Lobby.h"
 
+#include "UI_Lobby_Text.h"
+
 CLobby_Frieza::CLobby_Frieza(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
 {
@@ -34,6 +36,9 @@ HRESULT CLobby_Frieza::Initialize(void* pArg)
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+	//if (FAILED(Ready_Text()))
+	//	return E_FAIL;
 
 	m_pTransformCom->Set_State_Position(_float3(-56.f, 0.f, 0.7f));
 	m_pTransformCom->Rotation({ 0.f , 1.f, 0.f }, XMConvertToRadians(100.f));
@@ -139,6 +144,26 @@ HRESULT CLobby_Frieza::Bind_ShaderResources()
 	//	m_isShadow = false;
 	//	m_iPassIndex = 2;
 	//}
+
+	return S_OK;
+}
+
+HRESULT CLobby_Frieza::Ready_Text()
+{
+	CUI_Lobby_Text::UI_TEXT Desc = {};
+	queue<CUI_Lobby_Text::UI_TEXT> Text;
+
+	Text.push({ TEXT("프리저! 네가 여기 나타난 순간부터 싸울 각오 했어! 이제 물러설 곳은 없어!"), CUI_Define::NPC_KRILLIN });
+	Text.push({ TEXT("하하하! 네가 감히 나에게 덤비다니, 웃음을 주는군. 하지만 오래가진 못할 거야."), CUI_Define::NPC_FRIEZA });
+	Text.push({ TEXT("내 힘을 무시하지 마라! 모두를 지키기 위해 난 싸운다!"), CUI_Define::NPC_KRILLIN });
+	Text.push({ TEXT("이것이 네 최선인가? 내 손끝 하나로 너를 끝내주마."), CUI_Define::NPC_FRIEZA });
+	Text.push({ TEXT("프리저, 네 상대는 나야! 크리링, 쉬고 있어. 이제 내가 나선다."), CUI_Define::NPC_GOKU });
+	Text.push({ TEXT("오공... 또 네가 끼어드는군. 이번엔 널 완전히 없애주겠다!"), CUI_Define::NPC_FRIEZA });
+
+	//Text.push({ TEXT("저기에서 무슨 이상한 소리가 들리지 않나,,?"), CUI_Define::ID_END});
+
+
+	dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Add_Text(Text);
 
 	return S_OK;
 }

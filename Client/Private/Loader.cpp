@@ -1507,23 +1507,6 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Win/Tex/Team%d.png"), 2))))
 		return E_FAIL;
 
-	/* Prototype_GameObject_UI_WIn_Font */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Font"),
-		CUI_Win_Font::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Circle"),
-		CUI_Win_Circle::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Particle"),
-		CUI_Win_Particle::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Team"),
-		CUI_Win_Team::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
 #pragma region Effect Texture
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Effect_Default_Mask"),
@@ -1652,7 +1635,7 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_1()
 	//Font
 
 	/* Prototype_Component_Texture_UI_FontName */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontName"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_FontNameGamePlay"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Chara_Name%d.png"), 4))))
 		return E_FAIL;
 
@@ -4182,6 +4165,22 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 	/* Prototype_GameObject_UI_Opt_Sound_Title */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_Opt_Sound_Title"),
 		CUI_Opt_Sound_Title::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Font"),
+		CUI_Win_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Circle"),
+		CUI_Win_Circle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Particle"),
+		CUI_Win_Particle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Team"),
+		CUI_Win_Team::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	///* Prototype_GameObject_UI_WIn_Font */

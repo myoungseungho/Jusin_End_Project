@@ -92,7 +92,8 @@ void CUIObject::Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _floa
 	fPosX *= m_vOffSetWinSize.x;
 	fPosY *= m_vOffSetWinSize.y;
 
-	UI_PosArea(fPosY);
+	if(InManager == FALSE)
+		UI_PosArea(fPosY);
 
 	m_pTransformCom->Set_Scaled(fSizeX, fSizeY, 1.f);
 	_float fOffSet = -3.f;
@@ -184,6 +185,7 @@ void CUIObject::UI_PosArea(_float fAreaPosY)
 	{
 		Add_UIList(CUI_Define::TOP);
 	}
+	InManager = TRUE;
 }
 
 _bool CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _float fTimeDelta, _float fEndDistance)
@@ -308,10 +310,12 @@ HRESULT CUIObject::Ready_Components()
 
 void CUIObject::Free()
 {
+	__super::Free();
+
+
 	Safe_Release(m_pShaderCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pUI_Manager);
 
-	__super::Free();
 }

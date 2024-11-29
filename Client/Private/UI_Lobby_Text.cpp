@@ -30,12 +30,12 @@ HRESULT CUI_Lobby_Text::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	Add_Text();
+	//Add_Text();
 
 	m_bIsActive = FALSE;
 	m_fSizeX = 960.f, m_fSizeY = 100.f;
 	m_fPosX = m_vPrevWinSize.x * 0.5f, m_fPosY = (m_vPrevWinSize.y + 100.f)- m_fSizeY * 0.5f;
-
+	
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.f);
 
 	return S_OK;
@@ -57,7 +57,7 @@ void CUI_Lobby_Text::Update(_float fTimeDelta)
 
 	if (m_bIsActive == FALSE && m_vTextArray.empty())
 	{
-		Add_Text();
+		//Add_Text();
 		m_bFinishText = TRUE;
 	}
 }
@@ -88,7 +88,7 @@ HRESULT CUI_Lobby_Text::Render(_float fTimeDelta)
 
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
 		m_strOutputText.c_str(),
-		_float2(200.f * 1.5f, 590.f * 1.5f),
+		_float2(225.f * 1.5f, 600.f * 1.5f),
 		_vector{ 0.f,0.f,0.f,1.f },
 		0.f,
 		{ 0.f, 0.f },
@@ -112,14 +112,21 @@ HRESULT CUI_Lobby_Text::Ready_Components()
 	return S_OK;
 }
 
-void CUI_Lobby_Text::Add_Text()
+void CUI_Lobby_Text::Add_Text(queue<UI_TEXT> TextInfo)
 {
-	m_vTextArray.push({ TEXT("프리저! 네가 여기 나타난 순간부터 싸울 각오 했어! 이제 물러설 곳은 없어!"), CUI_Define::NPC_KRILLIN });
-	m_vTextArray.push({ TEXT("하하하! 네가 감히 나에게 덤비다니, 웃음을 주는군. 하지만 오래가진 못할 거야."), CUI_Define::NPC_FRIEZA });
-	m_vTextArray.push({ TEXT("내 힘을 무시하지 마라! 모두를 지키기 위해 난 싸운다!"), CUI_Define::NPC_KRILLIN });
-	m_vTextArray.push({ TEXT("이것이 네 최선인가? 내 손끝 하나로 너를 끝내주마."), CUI_Define::NPC_FRIEZA });
-	m_vTextArray.push({ TEXT("프리저, 네 상대는 나야! 크리링, 쉬고 있어. 이제 내가 나선다."), CUI_Define::NPC_GOKU});
-	m_vTextArray.push({ TEXT("오공... 또 네가 끼어드는군. 이번엔 널 완전히 없애주겠다!"), CUI_Define::NPC_FRIEZA });
+	switch (m_vTextArray.size() != 0)
+	{
+		m_vTextArray.pop();
+	}
+
+	m_bFinishText = FALSE;
+	m_vTextArray = TextInfo;
+	//m_vTextArray.push({ TEXT("프리저! 네가 여기 나타난 순간부터 싸울 각오 했어! 이제 물러설 곳은 없어!"), CUI_Define::NPC_KRILLIN });
+	//m_vTextArray.push({ TEXT("하하하! 네가 감히 나에게 덤비다니, 웃음을 주는군. 하지만 오래가진 못할 거야."), CUI_Define::NPC_FRIEZA });
+	//m_vTextArray.push({ TEXT("내 힘을 무시하지 마라! 모두를 지키기 위해 난 싸운다!"), CUI_Define::NPC_KRILLIN });
+	//m_vTextArray.push({ TEXT("이것이 네 최선인가? 내 손끝 하나로 너를 끝내주마."), CUI_Define::NPC_FRIEZA });
+	//m_vTextArray.push({ TEXT("프리저, 네 상대는 나야! 크리링, 쉬고 있어. 이제 내가 나선다."), CUI_Define::NPC_GOKU});
+	//m_vTextArray.push({ TEXT("오공... 또 네가 끼어드는군. 이번엔 널 완전히 없애주겠다!"), CUI_Define::NPC_FRIEZA });
 }
 
 void CUI_Lobby_Text::TextOutput(_float fOutputSpeed,_float fTimeDelta)

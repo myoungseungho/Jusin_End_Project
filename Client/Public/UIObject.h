@@ -113,6 +113,7 @@ protected:
 	_float m_fAnimDelayTiemr = { 0.f };
 
 	_bool m_bCheck = { FALSE };
+	_bool InManager = { FALSE };
 
 protected:
 	//해상도 변경

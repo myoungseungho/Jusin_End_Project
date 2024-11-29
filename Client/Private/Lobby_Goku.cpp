@@ -133,10 +133,11 @@ void CLobby_Goku::Update(_float fTimeDelta)
 
 	// 레벨 이동
 	
+	Talk_Frieza(5.f);
+	Talk_Staff(5.f);
 	 
 	Entry_Level();
 
-	Talk_Frieza(5.f);
 }
 
 void CLobby_Goku::Late_Update(_float fTimeDelta)
@@ -291,10 +292,13 @@ void CLobby_Goku::Entry_Level()
 	_bool bTalkToGamePlay = dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Get_Finish();
 	_bool bBuildingToGamePlay =  (10.f >= ObjectDistance(TEXT("Layer_Lobby_Arcade_Building"), 0));
 
-	if (bTalkToGamePlay)
+	if (bTalkToGamePlay && m_bNextLevelText)
 	{
 		Set_CharacterInfo();
-		m_bOnMessageBox = FALSE;
+		m_bOnMessageBox[0] = FALSE;
+		m_bOnMessageBox[1] = FALSE;
+		m_bOnMessageBox[2] = FALSE;
+
 		// m_eLevelID 
 		CUI_Manager::Get_Instance()->m_eLevelID = LEVEL_GAMEPLAY;
 		CLevel_Lobby* level_Lobby = static_cast<CLevel_Lobby*>( m_pGameInstance->Get_Level());
@@ -331,16 +335,87 @@ void CLobby_Goku::Talk_Frieza(_float fEnableDistance)
 	
 	if (fEnableDistance >= fDistance)
 	{
-		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"))->SetActive(!m_bOnMessageBox);
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"))->SetActive(!m_bOnMessageBox[0]);
 
-		if (m_pGameInstance->Key_Down(DIK_RETURN))
+		if (m_bOnMessageBox[0] == FALSE && m_pGameInstance->Key_Down(DIK_RETURN))
 		{
+			CUI_Lobby_Text::UI_TEXT Desc = {};
+			queue<CUI_Lobby_Text::UI_TEXT> Text;
+
+			//Text.push({ TEXT("프리저! 네가 여기 나타난 순간부터 싸울 각오 했어! 이제 물러설 곳은 없어!"), CUI_Define::NPC_KRILLIN });
+			//Text.push({ TEXT("하하하! 네가 감히 나에게 덤비다니, 웃음을 주는군. 하지만 오래가진 못할 거야."), CUI_Define::NPC_FRIEZA });
+			//Text.push({ TEXT("내 힘을 무시하지 마라! 모두를 지키기 위해 난 싸운다!"), CUI_Define::NPC_KRILLIN });
+			//Text.push({ TEXT("이것이 네 최선인가? 내 손끝 하나로 너를 끝내주마."), CUI_Define::NPC_FRIEZA });
+			//Text.push({ TEXT("프리저, 네 상대는 나야! 크리링, 쉬고 있어. 이제 내가 나선다."), CUI_Define::NPC_GOKU });
+			//Text.push({ TEXT("오공... 또 네가 끼어드는군. 이번엔 널 완전히 없애주겠다!"), CUI_Define::NPC_FRIEZA });
+
+
+			Text.push({ TEXT("도망가라 크리링."), CUI_Define::NPC_GOKU });
+			Text.push({ TEXT("빨리 가, 너희는 방해만 돼."), CUI_Define::NPC_GOKU });
+			Text.push({ TEXT("네놈들을 용서할 것 같아?"), CUI_Define::NPC_FRIEZA });
+			Text.push({ TEXT("한 마리도 남김없이 살려서는 못 보내"), CUI_Define::NPC_FRIEZA });
+			Text.push({ TEXT("어...?"), CUI_Define::NPC_KRILLIN });
+			Text.push({ TEXT("크리링!!!"), CUI_Define::NPC_GOKU});
+			Text.push({ TEXT("그만둬 프리저!"), CUI_Define::NPC_GOKU });
+			Text.push({ TEXT("오... 오공!!"), CUI_Define::NPC_KRILLIN });
+			//Text.push({ TEXT("저기에서 무슨 이상한 소리가 들리지 않나,,?"), CUI_Define::ID_END})
+
+			dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Add_Text(Text);
+
 			m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox"))->SetActive(TRUE);
-			m_bOnMessageBox = TRUE;
+			m_bOnMessageBox[0] = TRUE;
+			m_bNextLevelText = TRUE;
 		}
 	}
 	else 
 		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"))->SetActive(FALSE);
+}
+
+void CLobby_Goku::Talk_Staff(_float fEnableDistance)
+{
+	_float fDistance = ObjectDistance(TEXT("Layer_Lobby_Staff"), 0);
+	_float fDistance2 = ObjectDistance(TEXT("Layer_Lobby_Staff"), 1);
+
+	CUI_Lobby_Text::UI_TEXT Desc = {};
+	queue<CUI_Lobby_Text::UI_TEXT> Text;
+
+	if (fEnableDistance >= fDistance)
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"), 1)->SetActive(!m_bOnMessageBox[1]);
+	else 
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"), 1)->SetActive(FALSE);
+
+
+	if (fEnableDistance >= fDistance2)
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"), 2)->SetActive(!m_bOnMessageBox[2]);
+	else
+		m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"), 2)->SetActive(FALSE);
+
+
+	if (m_pGameInstance->Key_Down(DIK_RETURN))
+	{
+		if (fEnableDistance >= fDistance)
+		{
+			//m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"),1)->SetActive(!m_bOnMessageBox[1]);
+			Text.push({ TEXT("저기에서 무슨 이상한 소리가 들리지 않나,,?"), CUI_Define::ID_END });
+			dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Add_Text(Text);
+			m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox"))->SetActive(TRUE);
+			m_bNextLevelText = FALSE;
+			//m_bOnMessageBox[1] = TRUE;
+		}
+
+		if (fEnableDistance >= fDistance2)
+		{
+			//m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_Key_Enter"),2)->SetActive(!m_bOnMessageBox[2]);
+			Text.push({ TEXT("무슨 문제가 발생한 거 같은데..."), CUI_Define::ID_END });
+			dynamic_cast<CUI_Lobby_Text*>(m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox")))->Add_Text(Text);
+			m_pGameInstance->Get_GameObject(LEVEL_LOBBY, TEXT("Layer_Lobby_TextBox"))->SetActive(TRUE);
+			m_bNextLevelText = FALSE;
+			//m_bOnMessageBox[2] = TRUE;
+		}
+	
+
+		
+	}
 }
 
 void CLobby_Goku::CreateRunDustEffect(_bool bOnInput ,_float fCreateDuration , _float fTimeDelta)

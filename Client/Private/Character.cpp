@@ -5943,31 +5943,35 @@ void CCharacter::GetUI_Input(DirectionInput eDirInput, ButtonInput eBtnInput, _u
 	}
 	else if (iTeam == 2)
 	{
-		switch (eDirInput)
+		if (m_iLookDirection == 1)
 		{
-		case Client::MOVEKEY_LEFT:
-			eDirInput = MOVEKEY_RIGHT;
-			break;
-		case Client::MOVEKEY_RIGHT:
-			eDirInput = MOVEKEY_LEFT;
-			break;
-		case Client::MOVEKEY_UP_LEFT:
-			eDirInput = MOVEKEY_UP_RIGHT;
-			break;
-		case Client::MOVEKEY_UP_RIGHT:
-			eDirInput = MOVEKEY_UP_LEFT;
-			break;
-		case Client::MOVEKEY_DOWN_LEFT:
-			eDirInput = MOVEKEY_DOWN_RIGHT;
-			break;
-		case Client::MOVEKEY_DOWN_RIGHT:
-			eDirInput = MOVEKEY_DOWN_LEFT;
-			break;
-		default:
-			break;
+			switch (eDirInput)
+			{
+			case Client::MOVEKEY_LEFT:
+				eDirInput = MOVEKEY_RIGHT;
+				break;
+			case Client::MOVEKEY_RIGHT:
+				eDirInput = MOVEKEY_LEFT;
+				break;
+			case Client::MOVEKEY_UP_LEFT:
+				eDirInput = MOVEKEY_UP_RIGHT;
+				break;
+			case Client::MOVEKEY_UP_RIGHT:
+				eDirInput = MOVEKEY_UP_LEFT;
+				break;
+			case Client::MOVEKEY_DOWN_LEFT:
+				eDirInput = MOVEKEY_DOWN_RIGHT;
+				break;
+			case Client::MOVEKEY_DOWN_RIGHT:
+				eDirInput = MOVEKEY_DOWN_LEFT;
+				break;
+			default:
+				break;
+			}
 		}
-		m_pUI_Manager->m_eDirInput2 = eDirInput;
-		m_pUI_Manager->m_eBtnInput2 = eBtnInput;
+			m_pUI_Manager->m_eDirInput2 = eDirInput;
+			m_pUI_Manager->m_eBtnInput2 = eBtnInput;
+		
 	}
 
 

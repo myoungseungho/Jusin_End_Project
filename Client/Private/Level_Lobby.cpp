@@ -13,6 +13,8 @@
 #include "Lobby_Flag.h"
 #include "Lobby_Staff.h"
 
+#include "UI_Lobby_Key_Enter.h"
+
 CLevel_Lobby::CLevel_Lobby(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 {
@@ -23,6 +25,22 @@ HRESULT CLevel_Lobby::Initialize()
 	m_iLevelIndex = LEVEL_LOBBY;
 
 #pragma region 사본 객체 만들기
+
+	//텍스트 박스
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextBox"), TEXT("Layer_Lobby_TextBox"))))
+		return E_FAIL;
+
+	//텍스트 캐릭터 아이콘
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCharaIcon"), TEXT("Layer_Lobby_TextCharaIcon"))))
+		return E_FAIL;
+
+	//텍스트 커서 
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCursor"), TEXT("Layer_Lobby_TextCursor"))))
+		return E_FAIL;
+
+
+
+
 
 	//로비맵
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Center_Map"), TEXT("Layer_Lobby_Center_Map"))))
@@ -118,6 +136,22 @@ HRESULT CLevel_Lobby::Initialize()
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Staff"), TEXT("Layer_Lobby_Staff"),&StaffDesc)))
 			return E_FAIL;
 	}
+
+
+	//Enter UI
+	CUI_Lobby_Key_Enter::ENTER_DESC EnterDesc = {};
+	EnterDesc.pTransform =dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOBBY, TEXT("Layer_Lobby_Frieza"),TEXT("Com_Transform") ,0));
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"),&EnterDesc)))
+		return E_FAIL;
+
+	EnterDesc.pTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOBBY, TEXT("Layer_Lobby_Staff"), TEXT("Com_Transform"), 0));
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"),&EnterDesc)))
+		return E_FAIL;
+
+	EnterDesc.pTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOBBY, TEXT("Layer_Lobby_Staff"), TEXT("Com_Transform"), 1));
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"),&EnterDesc)))
+		return E_FAIL;
+
 	//로비 파티
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Lobby_Party"), TEXT("Layer_Lobby_Party"))))
 	//	return E_FAIL;
@@ -138,23 +172,6 @@ HRESULT CLevel_Lobby::Initialize()
 #pragma endregion
 
 #pragma region 사본 UI 객체 만들기
-
-	//텍스트 박스
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextBox"), TEXT("Layer_Lobby_TextBox"))))
-		return E_FAIL;
-
-	//텍스트 캐릭터 아이콘
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCharaIcon"), TEXT("Layer_Lobby_TextCharaIcon"))))
-		return E_FAIL;
-
-	//텍스트 커서 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_TextCursor"), TEXT("Layer_Lobby_TextCursor"))))
-		return E_FAIL;
-
-	//Enter UI
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_Lobby_Key_Enter"), TEXT("Layer_Lobby_Key_Enter"))))
-		return E_FAIL;
-
 	//Win
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_LOBBY, TEXT("Prototype_GameObject_UI_WIn_Font"), TEXT("Layer_Lobby_Win"))))
 	//	return E_FAIL;
