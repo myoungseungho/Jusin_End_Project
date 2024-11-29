@@ -43,7 +43,10 @@ private:
 
 	//프리저와 상호작용
 	void Talk_Frieza(_float fEnableDistance);
-	_bool m_bOnMessageBox = { FALSE };
+	void Talk_Staff(_float fEnableDistance);
+
+
+	_bool m_bOnMessageBox[3] = {FALSE ,FALSE ,FALSE};
 
 	//걸었을 때 먼지 이펙트
 	void CreateRunDustEffect(_bool bOnInput, _float fCreateDuration,_float fTimeDelta);
@@ -68,6 +71,8 @@ private:
 	//그림자
 	_bool					m_isShadow = { true };
 	_uint					m_iPassIndex = { 0 };
+
+	_bool					m_bNextLevelText = { FALSE };
 
 public:
 	static CLobby_Goku* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

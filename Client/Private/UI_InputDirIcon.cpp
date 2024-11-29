@@ -48,6 +48,30 @@ HRESULT CUI_InputDirIcon::Initialize(void* pArg)
 		m_pUI_Manager->m_iNumCommandList2++;
 		m_iNumCommandList = m_pUI_Manager->m_iNumCommandList2;
 		m_fPosX = m_vPrevWinSize.x - 20.f;
+
+		switch (m_iTextureIndex)
+		{
+		case 3:
+			m_iTextureIndex = 4;
+			break;
+		case 4:
+			m_iTextureIndex = 3;
+			break;
+		case 5:
+			m_iTextureIndex = 6;
+			break;
+		case 6:
+			m_iTextureIndex = 5;
+			break;
+		case 7:
+			m_iTextureIndex = 8;
+			break;
+		case 8:
+			m_iTextureIndex = 7;
+			break;
+		default:
+			break;
+		}
 	}
 
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.8f);

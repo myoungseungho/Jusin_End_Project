@@ -176,6 +176,12 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Update(_float fTimeDelta)
 {
+
+	if (m_pGameInstance->Key_Down(DIK_NUMPAD1))
+	{
+		list<class CUIObject*>  debug = m_pUI_Manager->m_ListBotUI;
+		int a = 10;
+	}
 	//if (m_pGameInstance->Key_Down(DIK_E))
 	//{
 	//	m_pUI_Manager->CutSceneUI(TRUE);
@@ -236,7 +242,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	}
 
 	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
-	//m_pIMGUI_Manager->Update(fTimeDelta);
+	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pParticle_Manager->Update(fTimeDelta);
 	m_pSubTitle_Manager->Update(fTimeDelta);
@@ -1208,4 +1214,5 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pMap_Manager);
 	Safe_Release(m_pParticle_Manager);
 	Safe_Release(m_pSubTitle_Manager);
+	Safe_Release(m_pIMGUI_Manager);
 }

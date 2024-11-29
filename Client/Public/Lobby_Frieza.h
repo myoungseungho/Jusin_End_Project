@@ -33,6 +33,9 @@ private:
 	HRESULT Bind_ShaderResources();
 
 private:
+	HRESULT Ready_Text();
+		
+private:
 	_uint m_iPassIndex = { 3 };
 	_bool m_isShadow = { true };
 

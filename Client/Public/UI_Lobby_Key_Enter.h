@@ -15,6 +15,12 @@ BEGIN(Client)
 
 class CUI_Lobby_Key_Enter final :public CGameObject
 {
+public:
+	typedef struct
+	{
+		CTransform* pTransform = {};
+	}ENTER_DESC;
+
 private:
 	CUI_Lobby_Key_Enter(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CUI_Lobby_Key_Enter(const CUI_Lobby_Key_Enter& Prototype);

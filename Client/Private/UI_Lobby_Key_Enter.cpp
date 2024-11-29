@@ -30,7 +30,9 @@ HRESULT CUI_Lobby_Key_Enter::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	CTransform* pTargetTransform = dynamic_cast<CTransform*>(m_pGameInstance->Get_Component(LEVEL_LOBBY, TEXT("Layer_Lobby_Frieza"), TEXT("Com_Transform")));
+	ENTER_DESC* pDesc =static_cast<ENTER_DESC*>(pArg);
+
+	CTransform* pTargetTransform = pDesc->pTransform;
 	_vector vTargetPos = pTargetTransform->Get_State(CTransform::STATE_POSITION);
 	_vector vOffset = XMVectorSetY(vTargetPos, XMVectorGetY(vTargetPos) + 3.75f);
 

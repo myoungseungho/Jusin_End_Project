@@ -7,9 +7,6 @@ BEGIN(Client)
 class CUI_Lobby_Text final :public CUIObject
 {
 public:
-	
-
-public:
 	typedef struct
 	{
 		_wstring strText = {};
@@ -35,8 +32,10 @@ public:
 private:
 	virtual HRESULT Ready_Components();
 
+public:
+	void Add_Text(queue<UI_TEXT> TextInfo);
+
 private:
-	void Add_Text();
 	void TextOutput(_float fOutputSpeed, _float fTimeDelta);
 	void SimpleAnim(_float fTimeDelta);
 
