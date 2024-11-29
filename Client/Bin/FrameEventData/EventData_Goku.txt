@@ -10,12 +10,16 @@ PLAY_GOKU,GKS_FRN801cs_01_body,330,AttackEvent,2
 
 
 //변신 전 이펙트
-PLAY_GOKU,GKS_FRN801cs_01_body,840,AttackEvent,0	
+//,PLAY_GOKU,GKS_FRN801cs_01_body,840,AttackEvent,0	
+PLAY_GOKU,GKS_FRN801cs_01_body,750,AttackEvent,0	
 
-PLAY_GOKU,GKS_FRN801cs_01_body,1001,AttackEvent,1
+
+//,PLAY_GOKU,GKS_FRN801cs_01_body,1001,AttackEvent,1
+PLAY_GOKU,GKS_FRN801cs_01_body,911,AttackEvent,1
 
 //분노 아우라
-PLAY_GOKU,GKS_FRN801cs_01_body,700,AttackEvent,3
+//,PLAY_GOKU,GKS_FRN801cs_01_body,700,AttackEvent,3
+PLAY_GOKU,GKS_FRN801cs_01_body,610,AttackEvent,3
 
 
 
