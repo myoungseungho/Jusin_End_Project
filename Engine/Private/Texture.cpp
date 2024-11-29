@@ -11,6 +11,8 @@ CTexture::CTexture(const CTexture & Prototype)
 	, m_iNumTextures { Prototype.m_iNumTextures }
 	, m_SRVs { Prototype.m_SRVs }
 {
+	wcscpy_s(m_szFullPath, MAX_PATH, Prototype.m_szFullPath);
+
 	for (auto& iter : m_SRVs)
 	{
 		Safe_AddRef(iter);
@@ -107,7 +109,8 @@ HRESULT CTexture::Initialize_Prototype(const _tchar * pTextureFilePath, _uint iN
 		ID3D11ShaderResourceView*			pSRV = { nullptr };
 
 		wsprintf(szFullPath, pTextureFilePath, i);
-
+		wsprintf(m_szFullPath, pTextureFilePath, i);
+		
 		/* D:\Á¤ÀÇÈÆ\144\Framework\Client\Bin\Resources\Textures\Default.dds */
 		/* ..\Bin\Resources\Textures\Default.dds */
 		_wsplitpath_s(szFullPath, nullptr, 0, nullptr, 0, nullptr, 0, szEXT, MAX_PATH);

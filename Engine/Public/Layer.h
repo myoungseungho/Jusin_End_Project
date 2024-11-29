@@ -16,7 +16,7 @@ public:
 	class CComponent* Get_Component(const _wstring& strComponentTag, _uint iIndex);
 	class CGameObject* Get_GameObject(_uint iIndex);
 	list<class CGameObject*> Get_Object_List() { return m_GameObjects; }
-
+	void Remove_GameObject(class CGameObject* pGameObject);
 public:
 	HRESULT Add_GameObject(class CGameObject* pGameObject);
 

@@ -39,21 +39,22 @@ void CLevel_VS::Update(_float fTimeDelta)
 	if (fTimeDelta >= 0.1f)
 		fTimeDelta = 0.f;
 
-	m_fNextLevelTimer += fTimeDelta;
-
-	if (m_fNextLevelTimer >= 5.f)
-	{
-		m_fNextLevelTimer = 0.f;
-
-		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
-			return;
-	}
 	m_fUILightCreateTimer += fTimeDelta;
 	
 	if (m_fUILightCreateTimer >= 1.f)
 	{
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_DynamicLight"), TEXT("Layer_ABackGround"));
 		m_fUILightCreateTimer = 0.f;
+	}
+
+	m_fNextLevelTimer += fTimeDelta;
+
+	if (m_fNextLevelTimer >= 7.f)
+	{
+		m_fNextLevelTimer = 0.f;
+
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_GAMEPLAY))))
+			return;
 	}
 }
 
@@ -78,9 +79,6 @@ HRESULT CLevel_VS::Ready_Layer_BackGround(const _wstring& strLayerTag)
 	}
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_StaticLight"), strLayerTag)))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_VS, TEXT("Prototype_GameObject_VS_DynamicLight"), strLayerTag)))
 		return E_FAIL;
 
 	for (int i = 0; i < 4; i++)

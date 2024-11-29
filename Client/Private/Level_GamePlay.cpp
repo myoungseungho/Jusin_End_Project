@@ -19,6 +19,7 @@
 #include "Opening_Kririn.h"
 #include "Particle_Manager.h"
 #include "SubTitle_Manager.h"
+#include "Level_Loading.h"
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CLevel{ pDevice, pContext }
 	, m_pUI_Manager{ CUI_Manager::Get_Instance() }
@@ -258,6 +259,13 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_V))
 		CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
+
+
+	if (m_pGameInstance->Key_Down(DIK_CAPSLOCK))
+	{
+		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL_LOBBY))))
+			return;
+	}
 }
 
 HRESULT CLevel_GamePlay::Render(_float fTimeDelta)
