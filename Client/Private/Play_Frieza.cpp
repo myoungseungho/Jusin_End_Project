@@ -408,9 +408,8 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 						m_fAccDyingTime = 0.f;
 						m_bSoloFinalEndCount = true;
 						//WIN UI 띄우기
-						CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-						//main_Camera->StartCameraShake(0.2f, 0.2f);
-						main_Camera->StartCameraShake(10.f, 10.f);
+						CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
+
 						return;
 					}
 					else
@@ -938,6 +937,9 @@ HRESULT CPlay_Frieza::Render(_float fTimeDelta)
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
+
+	
+
 	if (m_iPlayerTeam == 1)
 	{
 		if (FAILED(m_p1PTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
@@ -949,9 +951,18 @@ HRESULT CPlay_Frieza::Render(_float fTimeDelta)
 			return E_FAIL;
 
 	}
-
 	if (FAILED(m_pDecalTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DecalTexture", 0)))
 		return E_FAIL;
+
+	if (m_bGoldFrieza == true)
+	{
+		if (FAILED(m_pGold_BaseTexture->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+		if (FAILED(m_pGold_OutLineTexture->Bind_ShaderResource(m_pShaderCom, "g_OutLineTexture", 0)))
+			return E_FAIL;
+	}
+	
+
 
 	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 	/* Main MeshIndex : 0 */
@@ -1378,6 +1389,7 @@ void CPlay_Frieza::Gravity(_float fTimeDelta)
 
 
 			Character_Make_Effect(TEXT("Crash_Smoke"));
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 			//CEffect_Layer* pEffect =Character_Make_Effect(TEXT("Crash_Smoke"));
 			//pEffect->Set_Copy_Layer_Scaled({ 2.f, 2.f, 1.f });
@@ -3372,6 +3384,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//FZ_SDO-01
 
 			m_p236UltimateEffect = Character_Make_BoneEffect("GD_fng_b3_R", TEXT("FZ_SDO-01"));
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
+
 
 		}
 		//,이펙트생성. 손가락 끝을 따라다님?
@@ -3465,6 +3479,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Set_bAura(false);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 		}
 		else if (iAttackEvent == 1001)
@@ -3511,6 +3526,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			//Character_Make_BoneEffect("G_root", TEXT("FZ_SAO-01"));
 			Character_Make_BoneEffect("G_chest", TEXT("FZ_SAO-01"));
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
 
 		}
 
@@ -3696,6 +3712,7 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 0, this);
 
 			//FZ_SAR-01
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
 
 
 		}
@@ -3714,6 +3731,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_bGoldFrieza = true;
 
+			CRenderInstance::Get_Instance()->Start_AllWhiteOut(1.f, 2.f);
+
 			/*if (Get_iDirection() == 1)
 			{
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 0, this);
@@ -3722,6 +3741,8 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA::VIRTUAL_CAMERA_FRIEZA_GOLDEN, 2, this, nullptr, true);
 			}*/
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
+
 		}
 
 

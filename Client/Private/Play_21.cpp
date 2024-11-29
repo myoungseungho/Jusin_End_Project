@@ -2379,6 +2379,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 			if (m_bAura == false)
 				Set_bAura(true);
 
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
+
+
 		}
 		else if (iAttackEvent == 1) // 손가락에 차지중. 다시보니 이펙트 말고는 넣을 필요 없을듯
 		{
@@ -2458,6 +2461,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Set_bAura(false);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 		}
 
@@ -2581,6 +2585,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 			Set_bAura(true);
+
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
 
 		}
 		else if (iAttackEvent == 1) //53에서 발생. 루프가 50이라 잘못하면 닿기도 전에 방향전환을 한다?
@@ -3207,6 +3213,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack_CommandGrab"), TEXT("Layer_AttackObject"), &Desc);
 
+			//m_pRenderInstance->Get_Instance()->Start_AllWhiteOut(1.f,1.f);
+			m_pRenderInstance->Get_Instance()->Start_AllWhiteOut(2.f, 0.5f);
+
 
 		}
 		else if (iAttackEvent == 4)
@@ -3268,6 +3277,8 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir_Rotated_Right"));
 			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
+
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 		}
 

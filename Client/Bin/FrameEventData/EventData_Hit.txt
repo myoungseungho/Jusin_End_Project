@@ -1,6 +1,6 @@
 
 //,승리 애니메이션
-PLAY_HIT,PLAY_HIT,HTN610cs_body,220,AttackEvent,220
+PLAY_HIT,HTN610cs_body,220,AttackEvent,220
 
 
 PLAY_HIT,HTN610cs_body,0.1,AttackEvent,0

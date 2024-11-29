@@ -3463,6 +3463,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Make_Effect(TEXT("Hit_SDO-02"),{0.f,0.6f});
 
 			Set_bAura(true);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
+
 		}
 
 
@@ -3682,6 +3684,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				MoveToEnemy_Ground(12.f);
 				Character_Create_Distortion({ 1.f,0.f,0.f });
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 			}
 		}
@@ -3737,6 +3740,9 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 				Desc.bGrabbedEnd = true;
 				Desc.iGainKiAmount = 0;
 				m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+
 			}
 			else
 			{
@@ -3751,6 +3757,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 
 			m_pModelCom->m_Animations[m_pModelCom->m_iCurrentAnimationIndex]->m_fTickPerSecond = 91.f;
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
+
 		}
 
 		//155 성공했으면 Idle로
@@ -3760,6 +3768,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Set_Animation(ANIME_IDLE);
 				Set_bAura(false);
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
+
 			}
 		}
 
@@ -3777,6 +3787,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			{
 				Set_Animation(ANIME_IDLE);
 				Set_bAura(false);
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
+
 			}
 		}
 
@@ -3803,6 +3815,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Set_bAura(true);
 			m_iFinalInvisibleCount = 0;
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(true);
 
 		}
 
@@ -3885,6 +3898,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 					Character_Start_QTE(CQTE_Manager::QTE_ID_1P_SAME_GRAB);
 					m_bCreateQTE = false;
 				}
+				m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
 
 			}
 
@@ -4044,6 +4058,8 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Set_bAura(false);
 
 			Set_Animation(ANIME_IDLE);
+			m_pRenderInstance->Get_Instance()->Switch_BlackOut(false);
+
 		}
 	}
 	break;
@@ -4507,13 +4523,17 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case ANIME_WIN_DEFAULT:
 	{
-		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_WIN, 0, this, nullptr, false);
+		if (iAttackEvent == 0)
+		{
+			CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+			mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_WIN, 0, this, nullptr, false);
+		}
 
 		//뒤돌아 본 이후
 		if (iAttackEvent == 220)
 		{
 			Set_AnimationStop(1000.f);
+			CUI_Manager::Get_Instance()->WinUI(LEVEL_GAMEPLAY);
 		}
 	}
 	break;
