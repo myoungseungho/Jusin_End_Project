@@ -1,0 +1,2225 @@
+[Layer]
+LayerName: Crash_Smoke
+Duration: 1
+TickPerSecond: 1.5
+KeyFramesCount: 59
+NumEffec: 45
+Position: -0.5 0 -0.5
+Scale: 0.4 0.4 0.4
+Rotation: 0 180 0
+IsFollowing: false
+
+[Effect]
+EffectName: Crash_Smoke_01
+ModelName: Model_Effect_cmn_SmokeModels0102
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 1.5 -0.5 -0.5
+Scale: 0.4 0.4 0.4
+Rotation: 0 180 340
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.0666667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_02
+ModelName: Model_Effect_cmn_SmokeModels0103
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.0666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.133333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_03
+ModelName: Model_Effect_cmn_SmokeModels0104
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.133333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.2
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_04
+ModelName: Model_Effect_cmn_SmokeModels0105
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.2
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.266667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_05
+ModelName: Model_Effect_cmn_SmokeModels0106
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.266667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.333333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_06
+ModelName: Model_Effect_cmn_SmokeModels0107
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_06
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.333333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.4
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_07
+ModelName: Model_Effect_cmn_SmokeModels0108
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_07
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.4
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_08
+ModelName: Model_Effect_cmn_SmokeModels0109
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_08
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.466667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 32
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.533333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_09
+ModelName: Model_Effect_cmn_SmokeModels0110
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_09
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 32
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.533333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.6
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_10
+ModelName: Model_Effect_cmn_SmokeModels0111
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_10
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.666667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_11
+ModelName: Model_Effect_cmn_SmokeModels0112
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_11
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 44
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.733333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_12
+ModelName: Model_Effect_cmn_SmokeModels0101
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_12
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 44
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.733333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 48
+Position: -2 -0.5 0
+Scale: 1 1 1
+Rotation: 0 180 340
+CurTime: 0.8
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_13
+ModelName: Model_Effect_cmn_SmokeModels0102
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_13
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -0.5 0 -0.5
+Scale: 0.4 0.4 0.4
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 0
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.0666667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_14
+ModelName: Model_Effect_cmn_SmokeModels0103
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_14
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 4
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.0666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_15
+ModelName: Model_Effect_cmn_SmokeModels0104
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_15
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 8
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.133333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_16
+ModelName: Model_Effect_cmn_SmokeModels0105
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_16
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 12
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.2
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_17
+ModelName: Model_Effect_cmn_SmokeModels0106
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_17
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 16
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.266667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.333333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_18
+ModelName: Model_Effect_cmn_SmokeModels0107
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_18
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 20
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.333333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.4
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_19
+ModelName: Model_Effect_cmn_SmokeModels0108
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_19
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 24
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.4
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_20
+ModelName: Model_Effect_cmn_SmokeModels0109
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_20
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 28
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.466667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 32
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.533333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_21
+ModelName: Model_Effect_cmn_SmokeModels0110
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_21
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 32
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.533333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_22
+ModelName: Model_Effect_cmn_SmokeModels0111
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_22
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_23
+ModelName: Model_Effect_cmn_SmokeModels0112
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_23
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 44
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.733333
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_24
+ModelName: Model_Effect_cmn_SmokeModels0101
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_24
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -3 0 -3
+Scale: 6.872e-08 6.872e-08 6.872e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 44
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.733333
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 46
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.766667
+Duration: 0.8
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 48
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.8
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_25
+ModelName: Model_Effect_cmn_SmokeModels0202
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_25
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 9
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.15
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_26
+ModelName: Model_Effect_cmn_SmokeModels0203
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_26
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.45
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_27
+ModelName: Model_Effect_cmn_SmokeModels0204
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_27
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.45
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_28
+ModelName: Model_Effect_cmn_SmokeModels0205
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_28
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_29
+ModelName: Model_Effect_cmn_SmokeModels0206
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_29
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_30
+ModelName: Model_Effect_cmn_SmokeModels0201
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_30
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 63
+Position: 3.5 0 -1.5
+Scale: 0.7 0.7 0.7
+Rotation: 0 0 0
+CurTime: 1.05
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_31
+ModelName: Model_Effect_cmn_SmokeModels0202
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_31
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 9
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.15
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_32
+ModelName: Model_Effect_cmn_SmokeModels0203
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_32
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.45
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_33
+ModelName: Model_Effect_cmn_SmokeModels0204
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_33
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.45
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_34
+ModelName: Model_Effect_cmn_SmokeModels0205
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_34
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_35
+ModelName: Model_Effect_cmn_SmokeModels0206
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_35
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_36
+ModelName: Model_Effect_cmn_SmokeModels0201
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_36
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 63
+Position: -3 0 1
+Scale: 1.2 1.2 1.2
+Rotation: 0 0 0
+CurTime: 1.05
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_37
+ModelName: Model_Effect_cmn_SmokeModels0202
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_37
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 9
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.15
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_38
+ModelName: Model_Effect_cmn_SmokeModels0203
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_38
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 18
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.3
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.45
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_39
+ModelName: Model_Effect_cmn_SmokeModels0204
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_39
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 27
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.45
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_40
+ModelName: Model_Effect_cmn_SmokeModels0205
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_40
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 36
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.6
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_41
+ModelName: Model_Effect_cmn_SmokeModels0206
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_41
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 45
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.75
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_42
+ModelName: Model_Effect_cmn_SmokeModels0201
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_42
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 3
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 3.5 8.4 -12.5
+Scale: 3.40121e-08 3.40122e-08 3.40121e-08
+Rotation: 0 0 0
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 2
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 54
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0.9
+Duration: 2
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 63
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 1.05
+Duration: 2
+IsNotPlaying: true
+
+[Effect]
+EffectName: Crash_Smoke_43
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_43
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: -2 -0.3 0
+Scale: 0.5 0.999999 0.5
+Rotation: 0 0 20
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -2 -0.3 0
+Scale: 0.5 0.999999 0.5
+Rotation: 0 0 20
+CurTime: 0
+Duration: 0.8
+IsNotPlaying: false
+
+[Effect]
+EffectName: Crash_Smoke_44
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_44
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0.8 -0.7 0
+Scale: 0.3 0.8 0.5
+Rotation: 0 0 335.845
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.8 -0.7 0
+Scale: 0.3 0.8 0.5
+Rotation: 0 0 335.845
+CurTime: 0
+Duration: 0.8
+IsNotPlaying: false
+
+[Effect]
+EffectName: Crash_Smoke_45
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Crash_SmokeCrash_Smoke_45
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 0
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 -0.7 -1.1
+Scale: 0.4 0.9 0.5
+Rotation: 0 0 346.753
+IsLoop: false
+Color: 45 40 50 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -0.7 -1.1
+Scale: 0.4 0.9 0.5
+Rotation: 0 0 346.753
+CurTime: 0
+Duration: 0.8
+IsNotPlaying: false
+

@@ -1292,7 +1292,16 @@ void CPlay_21::Gravity(_float fTimeDelta)
 			Character_Make_Effect(TEXT("Smoke02_Small"));
 			Character_Make_Effect(TEXT("Smoke04"));
 
-			Character_Make_Effect(TEXT("21_WSDO-04"));
+			CEffect_Layer::COPY_DESC pDesc{};
+
+			_float4x4 fCamMat = {};
+
+			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+
+			pDesc.pPlayertMatrix = &fCamMat;
+
+			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("21_WSDO-04"), &pDesc);
+
 			Set_CurrentAnimationPositionJump(230.f);
 
 			if (m_pAttack214AssultEffect_Layer != nullptr)

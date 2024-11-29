@@ -1,0 +1,232 @@
+[Layer]
+LayerName: Start_Battle-01
+Duration: 1.5
+TickPerSecond: 3
+KeyFramesCount: 89
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: Start_Battle_01
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_BattleStart_Battle_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.49012e-08 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 255 80.2152 0.595364
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 -1.49012e-08 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: 0 -1.1 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 0
+CurTime: 0.5
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Start_Battle_02
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_BattleStart_Battle_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -2
+Position: 0 -1.7 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 10
+Position: 0 0 0
+Scale: 0.2 0.2 1
+Rotation: 0 0 0
+CurTime: 0.166667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: 0 -1.7 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+CurTime: 0.5
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 39
+Position: 0 -1.7 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+CurTime: 0.65
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Start_Battle_03
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_BattleStart_Battle_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.3 0.7 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+IsLoop: false
+Color: 0 205.182 97.1026 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 2
+DerredPassIndex: 0
+NumKeyFrame: 2
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.3 0.7 0
+Scale: 0.1 0.1 1
+Rotation: 0 0 31.948
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 39
+Position: 1.4 -0.7 0
+Scale: 0.4 0.4 1
+Rotation: 0 0 31.948
+CurTime: 0.65
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: Start_Battle_04
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_BattleStart_Battle_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0.1 1.2 0
+Scale: 0.008 0.008 0.008
+Rotation: 0 19.481 38.182
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0.1 1.2 0
+Scale: 0.008 0.008 0.008
+Rotation: 0 19.481 38.182
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: 0.1 1.2 0
+Scale: 0.0100001 0.0300002 0.03
+Rotation: 0 19.481 144.156
+CurTime: 0.966667
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 88
+Position: 0.1 1.2 0
+Scale: 0.0100001 0.0300002 0.03
+Rotation: 0 19.481 144.156
+CurTime: 1.46667
+Duration: 1.5
+IsNotPlaying: true
+
+[Effect]
+EffectName: Start_Battle_05
+ModelName: Model_Effect_cmn_cylinder01
+MaskTextureName: ../Bin/Effects/Shader_Tab/Start_BattleStart_Battle_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: -0.1 1.2 0
+Scale: 0.00800002 0.008 0.008
+Rotation: 0 348.312 301.558
+IsLoop: false
+Color: 0 0 0 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: -0.1 1.2 0
+Scale: 0.00800002 0.008 0.008
+Rotation: 0 348.312 301.558
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 58
+Position: -0.1 1.2 0
+Scale: 0.0079998 0.0399987 0.04
+Rotation: 0 348.312 253.247
+CurTime: 0.966667
+Duration: 1.5
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 88
+Position: -0.1 1.2 0
+Scale: 0.00799975 0.0399982 0.04
+Rotation: 0 348.312 253.247
+CurTime: 1.46667
+Duration: 1.5
+IsNotPlaying: true
+

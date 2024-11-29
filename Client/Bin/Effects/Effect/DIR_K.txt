@@ -1,10 +1,10 @@
 [Layer]
 LayerName: DIR_K
 Duration: 1
-TickPerSecond: 5
+TickPerSecond: 10
 KeyFramesCount: 59
 NumEffec: 3
-Position: 0 0 0
+Position: 0 0.8 0
 Scale: 1 1 1
 Rotation: 0 0 0
 IsFollowing: false
