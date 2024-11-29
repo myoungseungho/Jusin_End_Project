@@ -43,6 +43,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	Loading_For_Effect();
 #pragma endregion
 
+#pragma region 사운드 로드
+	if (FAILED(Ready_Sound()))
+		return E_FAIL;
+#pragma endregion
+
 #pragma region 맵 사본 객체
 
 	if (FAILED(Ready_Volcano()))
@@ -148,10 +153,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma endregion
 
-#pragma region 사운드 로드
-	if (FAILED(Ready_Sound()))
-		return E_FAIL;
-#pragma endregion
+
 
 	//빛 준비
 	if (FAILED(Ready_Lights()))
@@ -464,8 +466,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/013_bat_space.ogg", CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 	//화산배경음
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/004_bat_volcano.ogg", CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
-
-	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 
 #pragma region Goku_Sound
 
