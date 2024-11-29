@@ -995,7 +995,8 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 #pragma endregion
 
 #pragma region È÷Æ® ½Â¸®¾À
-	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/vhtn404_vs_gkb.ogg", CSound_Manager::SOUND_KEY_NAME::HIT_WIN, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/vhtn404_vs_gkb.ogg", CSound_Manager::SOUND_KEY_NAME::HIT_WIN, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/SFX/ARC_BTL_HTN_Win.ogg", CSound_Manager::SOUND_KEY_NAME::HIT_WIN_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
 
