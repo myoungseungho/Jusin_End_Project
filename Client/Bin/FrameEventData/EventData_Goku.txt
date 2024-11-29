@@ -4,7 +4,10 @@ PLAY_GOKU,GKS_FRN801cs_01_body,0,AnimSpeedChange,0.005,60
 
 
 //,크리링 폭발? 얘 혼자 속도 다르니 계속 체크해볼것
-PLAY_GOKU,GKS_FRN801cs_01_body,420,AttackEvent,2
+//,PLAY_GOKU,GKS_FRN801cs_01_body,420,AttackEvent,2
+//,PLAY_GOKU,GKS_FRN801cs_01_body,340,AttackEvent,2
+PLAY_GOKU,GKS_FRN801cs_01_body,330,AttackEvent,2
+
 
 //변신 전 이펙트
 PLAY_GOKU,GKS_FRN801cs_01_body,840,AttackEvent,0	

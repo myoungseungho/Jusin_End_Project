@@ -421,7 +421,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
                     m_p2TeamCharacter[0]->Set_bPlaying(false);
                     m_p2TeamCharacter[0]->Add_Move({ 200.f,100.f });
                     m_p2TeamCharacter[0]->Update_Collider();
-
+                    m_p2TeamCharacter[0]->Set_bDynamicMove(false);
                     m_i2TeamPlayingCharacterIndex = 1;
                     CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
 
@@ -488,6 +488,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
                     m_p2TeamCharacter[1]->Set_bPlaying(false);
                     m_p2TeamCharacter[1]->Add_Move({ 200.f,100.f });
                     m_p2TeamCharacter[1]->Update_Collider();
+                    m_p2TeamCharacter[1]->Set_bDynamicMove(false);
 
                     m_i2TeamPlayingCharacterIndex = 0;
                     CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(3));
@@ -583,6 +584,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
                     m_p1TeamCharacter[0]->Set_bPlaying(false);
                     m_p1TeamCharacter[0]->Add_Move({ 100.f,100.f });
                     m_p1TeamCharacter[0]->Update_Collider();
+                    m_p1TeamCharacter[0]->Set_bDynamicMove(false);
 
                     m_i1TeamPlayingCharacterIndex = 1;
 
@@ -650,7 +652,7 @@ _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, 
                     m_p1TeamCharacter[1]->Set_bPlaying(false);
                     m_p1TeamCharacter[1]->Add_Move({ 300.f,100.f });
                     m_p1TeamCharacter[1]->Update_Collider();
-
+                    m_p1TeamCharacter[1]->Set_bDynamicMove(false);
                     m_i1TeamPlayingCharacterIndex = 0;
 
                     CUI_Manager::Get_Instance()->UsingChangeCharacher(static_cast<CUI_Define::PLAYER_SLOT>(0));
