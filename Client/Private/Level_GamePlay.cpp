@@ -189,7 +189,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	}
 	if (m_pGameInstance->Key_Down(DIK_F10))
 	{
-		m_pRenderInstance->Switch_AllBlackOut();
+		m_pRenderInstance->Start_AllWhiteOut(2.1f, 3.f);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_Z))

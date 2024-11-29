@@ -4469,9 +4469,9 @@ void CCharacter::Play_WinAnimation()
 
 	//m_bOnlyCutSceneNoMove = true;
 
-	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	//main_Camera->StartCameraShake(0.2f, 0.2f);
-	main_Camera->StartCameraShake(10.f, 10.f);
+	//CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	////main_Camera->StartCameraShake(0.2f, 0.2f);
+	//main_Camera->StartCameraShake(10.f, 10.f);
 
 
 	m_bDynamicMove = true;

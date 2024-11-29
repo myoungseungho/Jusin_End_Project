@@ -406,8 +406,11 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 					if (m_bSoloFinalEndCount == false)
 					{
 						m_fAccDyingTime = 0.f;
-						m_bSoloFinalEndCount = false;
+						m_bSoloFinalEndCount = true;
 						//WIN UI ¶ç¿ì±â
+						CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+						//main_Camera->StartCameraShake(0.2f, 0.2f);
+						main_Camera->StartCameraShake(10.f, 10.f);
 						return;
 					}
 					else
