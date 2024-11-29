@@ -82,6 +82,7 @@ public: /* For.Renderer */
 	void Switch_BlackOut(_bool isTrue);
 	void Switch_AllBlackOut();
 	void Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed = 1.f);
+	void Start_AllWhiteOut(_float fWhiteTime, _float fSpeed);
 private:
 	class CRenderer*		m_pRenderer = { nullptr };
 	class CLobby_Renderer* m_pLobbyRenderer = { nullptr };

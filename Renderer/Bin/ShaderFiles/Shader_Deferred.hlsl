@@ -657,7 +657,7 @@ PS_OUT PS_MAIN_ALLBLACKOUT(PS_IN In)
 
     vector vDiffuse = g_Texture.Sample(LinearSampler, In.vTexcoord);
     
-    vDiffuse.a = saturate(vDiffuse.a - (1.f - g_fAccBlackTime));
+    vDiffuse.a = saturate(vDiffuse.a - (1.f - saturate(g_fAccBlackTime)));
     
     Out.vColor = vDiffuse;
     return Out;

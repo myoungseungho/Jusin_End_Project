@@ -783,7 +783,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 	{
 		Set_bFinalSkillQTE(true);
 
-		Set_Animation(ANIME_WIN_DEFAULT);
+		//Set_Animation(ANIME_WIN_DEFAULT);
 
 		//for (int i = 0; i < 3; i++)
 		//{
@@ -796,7 +796,7 @@ void CPlay_Hit::Player_Update(_float fTimeDelta)
 		//
 		//}
 
-		Set_Animation(ANIME_WIN_DEFAULT);
+		//Set_Animation(ANIME_WIN_DEFAULT);
 
 	}
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
