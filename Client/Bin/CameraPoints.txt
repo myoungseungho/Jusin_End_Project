@@ -2268,7 +2268,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: 1.13751 0.276701 -0.029635
 Rotation: -0.24299 -0.648554 -0.230565 0.683501
-Duration: 1.8
+Duration: 10
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
@@ -2368,7 +2368,7 @@ HasWorldFloat4x4: 1
 [CameraPoint]
 Position: -1.35864 0.27573 -0.0342434
 Rotation: -0.195826 0.682202 0.197569 0.67618
-Duration: 1.8
+Duration: 10
 InterpolationType: 0
 Damping: 1
 HasWorldFloat4x4: 1
