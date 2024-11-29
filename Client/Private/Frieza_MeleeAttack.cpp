@@ -446,6 +446,8 @@ void CFrieza_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236);
 			
 			m_pPlayer->Set_bHeavySkill(true);
+
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 		}
 
 		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Frieza::ANIME_ATTACK_HEAVY ||
@@ -455,6 +457,7 @@ void CFrieza_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ATTACK_236, false);
 
 			m_pPlayer->Set_bHeavySkill(true);
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 		}
 		
 		//사용 못했으면

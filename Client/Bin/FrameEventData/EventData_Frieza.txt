@@ -26,12 +26,12 @@ PLAY_FRN,FRN602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
 //,라운드 넘어갈때 맞대기1 (공용) 81
 PLAY_FRN,FRN620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
-PLAY_FRN,FRN620cs_body,100,NextAnimation,630
+PLAY_FRN,FRN620cs_body,120,NextAnimation,630
 
 PLAY_FRN,FRN620cs_body,80,AttackEvent,2001
 PLAY_FRN,FRN620cs_body,90,AttackEvent,2002
 PLAY_FRN,FRN620cs_body,95,AttackEvent,2003
-PLAY_FRN,FRN620cs_body,99,AttackEvent,2004
+PLAY_FRN,FRN620cs_body,110,AttackEvent,2004
 
 
 //,마지막 상태 정지모션 (공용) 83

@@ -1,0 +1,22 @@
+Version: 2
+KeyCount: 2
+KeySize: 52
+Key: Prototype_Component_Texture_Effect_cmn_Fractal3_gray
+ID: 1
+vTexCoord: 1 1
+KeySize: 47
+Key: Prototype_Component_Texture_Effect_cmn_sphere01
+ID: 2
+vTexCoord: 1 1
+NodePosCount: 4
+NodeID: -1 Position: 572.89 169.996
+NodeID: 1 Position: 151.89 87.9958
+NodeID: 1501 Position: -12.1105 31.9958
+NodeID: 2 Position: 365.89 129.996
+MoveTexNodeCount: 1
+MoveTexNodeID: 1501 Direction: 0 1 Speed: 1
+SpriteNodeCount: 0
+LinkCount: 3
+LinkSrcNodeID: 4 LinkDestNodeID: 9
+LinkSrcNodeID: 8 LinkDestNodeID: -2
+LinkSrcNodeID: 1502 LinkDestNodeID: 7

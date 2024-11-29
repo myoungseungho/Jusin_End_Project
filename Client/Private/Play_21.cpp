@@ -3489,14 +3489,19 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		if (iAttackEvent == 0)
 		{
 			//Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
-			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
-			if(pEffect != nullptr)
-			{
-				pEffect->Set_Copy_Layer_Scaled({ 1.5f,1.5f,1.5f });
-				//pEffect->Set_Copy_Layer_Position({ -1.f,0.f,0.f });
 
-			}
-			pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));
+			//
+			//CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("21_Aura"));
+			//if(pEffect != nullptr)
+			//{
+			//	pEffect->Set_Copy_Layer_Scaled({ 1.5f,1.5f,1.5f });
+			//	//pEffect->Set_Copy_Layer_Position({ -1.f,0.f,0.f });
+			//
+			//}
+
+			Character_Make_BoneEffect("G_root", TEXT("21_Opening"));
+
+			CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("Smoke03_Five_Dir"));
 			pEffect->Set_Copy_Layer_Scaled({ 2.f,1.f,2.f });
 			//pEffect->m_fTickPerSecond *= 0.2f;
 
@@ -3542,6 +3547,9 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
 
+
+			//Set_AnimationStop(1.5f);
+			//m_pEnemy->Set_AnimationStop(1.5f);
 		}
 		else if (iAttackEvent == 2004)
 		{
@@ -3555,6 +3563,7 @@ void CPlay_21::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-03"), &pDesc);
 			CUI_Manager::Get_Instance()->CutSceneUI(true);
+
 
 		}
 

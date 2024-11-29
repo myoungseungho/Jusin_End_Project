@@ -432,20 +432,23 @@ void CGoku_MeleeAttack::Attack_236_Heavy()
 
 
 			m_pPlayer->Set_AnimationStop(0.1f);
-			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, {0.f,0.f});
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, {0.f,0.f});
 			//m_pPlayer->Set_bInivisible(true);
 
 			//_float fEnemyPosX = m_pPlayer->Get_pEnemy()->Get_fPositionX();
 
-			if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
-			{
-				m_pPlayer->Teleport_ToEnemy(2.f, 0.f);
-				m_pPlayer->Add_Move({ 0.f,-m_pPlayer->Get_fHeight() });
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 
-				m_pPlayer->FlipDirection();
-			}
-			else
-				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+
+			//if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
+			//{
+			//	m_pPlayer->Teleport_ToEnemy(2.f, 0.f);
+			//	m_pPlayer->Add_Move({ 0.f,-m_pPlayer->Get_fHeight() });
+			//
+			//	m_pPlayer->FlipDirection();
+			//}
+			//else
+			//	m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
 		}
 
 		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_MEDIUM || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_HEAVY ||
@@ -456,19 +459,20 @@ void CGoku_MeleeAttack::Attack_236_Heavy()
 			m_pPlayer->Set_Animation(CPlay_Goku::ANIME_ATTACK_236,false);
 			m_pPlayer->Set_fImpulse(2.f * m_pPlayer->Get_iDirection());
 			m_pPlayer->Set_bAttackGravity(false);
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 
 			m_pPlayer->Set_AnimationStop(0.1f);
-			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, { 0.f,0.f });
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f });
 			//m_pPlayer->Set_bInivisible(true);
-			if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
-			{
-				m_pPlayer->Teleport_ToEnemy(2.f, 0.f);
-				m_pPlayer->Add_Move({ 0.f,-m_pPlayer->Get_fHeight() });
-
-				m_pPlayer->FlipDirection();
-			}
-			else
-				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+			//if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
+			//{
+			//	m_pPlayer->Teleport_ToEnemy(2.f, 0.f);
+			//	m_pPlayer->Add_Move({ 0.f,-m_pPlayer->Get_fHeight() });
+			//
+			//	m_pPlayer->FlipDirection();
+			//}
+			//else
+			//	m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
 		}
 
 
@@ -482,16 +486,18 @@ void CGoku_MeleeAttack::Attack_236_Heavy()
 			//m_pPlayer->Set_ForcedGravityDown();
 			m_pPlayer->Set_fGravityTime(0.265f);
 
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
+
 			m_pPlayer->Set_AnimationStop(0.1f);
-			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, { 0.f,0.f });
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f });
 			//m_pPlayer->Set_bInivisible(true);
-			if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
-			{
-				m_pPlayer->Teleport_ToEnemy(2.f, 0.2f);
-				m_pPlayer->FlipDirection();
-			}
-			else
-				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+			//if (abs(m_pPlayer->Get_pEnemy()->Get_fPositionX()) < 10)
+			//{
+			//	m_pPlayer->Teleport_ToEnemy(2.f, 0.2f);
+			//	m_pPlayer->FlipDirection();
+			//}
+			//else
+			//	m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
 
 		}
 		else if (m_pPlayer->Get_bAttackBackEvent() && (*m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR1 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_AIR2 || *m_pPlayerAnimationIndex == CPlay_Goku::ANIME_ATTACK_SPECIAL_AIR))
@@ -505,18 +511,19 @@ void CGoku_MeleeAttack::Attack_236_Heavy()
 			//m_pPlayer->Set_ForcedGravityDown();
 
 			m_pPlayer->Set_fGravityTime(0.265f);
+			m_pPlayer->Character_Make_Effect(TEXT("DIR_K"));
 
 			//m_pPlayer->Set_AnimationStop(0.3f);
-			m_pPlayer->Character_Create_Distortion({ 0.f,1.f,0.f }, { 0.f,0.f });
+			m_pPlayer->Character_Create_Distortion({ 1.f,0.f,0.f }, { 0.f,0.f });
 			//m_pPlayer->Set_bInivisible(true);
 	
-			if(abs(m_pPlayer->Get_pEnemy()->Get_fPositionX())<10)
-			{
-				m_pPlayer->Teleport_ToEnemy(2.f, 0.2f);
-				m_pPlayer->FlipDirection();
-			}
-			else
-				m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
+			//if(abs(m_pPlayer->Get_pEnemy()->Get_fPositionX())<10)
+			//{
+			//	m_pPlayer->Teleport_ToEnemy(2.f, 0.2f);
+			//	m_pPlayer->FlipDirection();
+			//}
+			//else
+			//	m_pPlayer->Teleport_ToEnemy(-2.f, 0.2f);
 
 		}
 

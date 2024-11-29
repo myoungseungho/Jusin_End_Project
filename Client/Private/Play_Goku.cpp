@@ -2077,16 +2077,40 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//강공격 버전용 
 		if (iAttackEvent == 0)
 		{
+		
+			if (m_bHeavySkill)
+			{
+				m_bInvisible = true;
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.f;
+			}
+		}
+		//강공격 버전용
+		else if (iAttackEvent == 10)
+		{
 			if (m_bHeavySkill)
 			{
 				Set_AnimationStop(0.1f);
 
-				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
 
 				m_bInvisible = false;
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 85.6f;
+			
+
+				if (abs(m_pEnemy->Get_fPositionX()) < 10)
+				{
+					Teleport_ToEnemy(2.f, 0.f);
+					Add_Move({ 0.f,-Get_fHeight() });
+
+					FlipDirection();
+				}
+				else
+					Teleport_ToEnemy(-2.f, 0.2f);
+
+
+				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
 			}
 		}
-		 
+		
 		else if (iAttackEvent == 1)
 		{
 			CAttackObject::ATTACK_DESC Desc{};
@@ -2126,15 +2150,46 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		//강공격 버전용
 		if (iAttackEvent == 20)
 		{
-			if(m_bHeavySkill)
+			//if(m_bHeavySkill)
+			//{
+			//	Set_AnimationStop(0.1f);
+			//	Character_Create_Distortion({ 0.f,1.f,0.f, }, { 0.f,0.f });
+			//	Character_Make_Effect(TEXT("DIR_K"));
+			//	m_bInvisible = false;
+			//}
+			//Set_bInivisible(false);
+
+			if (m_bHeavySkill)
+			{
+				m_bInvisible = true;
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 25.f;
+			}
+
+		}
+		else if (iAttackEvent == 123)
+		{
+			if (m_bHeavySkill)
 			{
 				Set_AnimationStop(0.1f);
-				Character_Create_Distortion({ 0.f,1.f,0.f, }, { 0.f,0.f });
-				m_bInvisible = false;
-			}
-			//Set_bInivisible(false);
-		}
 
+
+				m_bInvisible = false;
+				m_pModelCom->Get_pCurrentAnimation()->m_fTickPerSecond = 180.6f;
+
+
+				if (abs(m_pEnemy->Get_fPositionX()) < 10)
+				{
+					Teleport_ToEnemy(2.f, 0.2f);
+
+					FlipDirection();
+				}
+				else
+					Teleport_ToEnemy(-2.f, 0.2f);
+
+
+				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+			}
+		}
 		if(iAttackEvent == 0)
 		{
 
@@ -3587,7 +3642,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			}
 		}
 	}
-
+	break;
 	case ANIME_START_DEFAULT:
 	{
 		if (iAttackEvent == 3)
@@ -3702,6 +3757,10 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		else if (iAttackEvent == 2003)
 		{
 			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
+
+
+			//Set_AnimationStop(1.5f);
+			//m_pEnemy->Set_AnimationStop(1.5f);
 
 		}
 		else if (iAttackEvent == 2004)

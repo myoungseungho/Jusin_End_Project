@@ -1,0 +1,241 @@
+[Layer]
+LayerName: 21_Opening
+Duration: 1
+TickPerSecond: 1
+KeyFramesCount: 59
+NumEffec: 5
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+IsFollowing: false
+
+[Effect]
+EffectName: 21_Opening_01
+ModelName: Model_Effect_cmn_bodyaura00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_Opening21_Opening_01
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.02 0.05 0.02
+Rotation: 0 0 0
+IsLoop: false
+Color: 227.136 107.235 183.228 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.02 0.05 0.02
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 0 0 0
+Scale: 0.0299994 0.079999 0.0299998
+Rotation: 0 200 0
+CurTime: 0.283333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: 0 0 0
+Scale: 0.0199999 0.05 0.0199999
+Rotation: 0 500 0
+CurTime: 0.5
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_Opening_02
+ModelName: Model_Effect_cmn_bodyaura00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_Opening21_Opening_02
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: -1
+Position: 0 0 0
+Scale: 0.02 0.06 0.02
+Rotation: 0 50 0
+IsLoop: false
+Color: 200.116 59.9503 110.613 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 0
+DerredPassIndex: 0
+NumKeyFrame: 3
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.02 0.06 0.02
+Rotation: 0 50 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 17
+Position: 0 0 0
+Scale: 0.0299997 0.09 0.0299997
+Rotation: 0 250 0
+CurTime: 0.283333
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 30
+Position: 0 0 0
+Scale: 0.0199967 0.06 0.0199983
+Rotation: 0 550 0
+CurTime: 0.5
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_Opening_03
+ModelName: Model_Effect_cmn_bodyaura00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_Opening21_Opening_03
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 0 0
+Scale: 0.025 0.05 0.025
+Rotation: 0 29.61 0
+IsLoop: false
+Color: 203.493 157.897 186.606 30
+GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 1
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 0.025 0.05 0.025
+Rotation: 0 29.61 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: false
+
+[Effect]
+EffectName: 21_Opening_04
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_Opening21_Opening_04
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -0.7 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 210.248 51.5066 117.368 0.894039
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0 0.1 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0.416667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0 -0.7 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 0 -0.7 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1
+IsNotPlaying: true
+
+[Effect]
+EffectName: 21_Opening_05
+ModelName: Model_Effect_acmn_povot_plane00
+MaskTextureName: ../Bin/Effects/Shader_Tab/21_Opening21_Opening_05
+DiffuseTextureName: Texture_Effect_cmn_test
+EffectType: 1
+RenderIndex: 2
+PassIndex: 1
+UniqueIndex: 0
+Position: 0 -1.83504 0
+Scale: 0.489173 0.489173 1
+Rotation: 0 0 0
+IsLoop: true
+Color: 255 255 255 0.544039
+GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowFactor: 1
+DerredPassIndex: 0
+NumKeyFrame: 4
+
+[KeyFrame]
+KeyFrameNumber: 0
+Position: 0 0 0
+Scale: 1 1 1
+Rotation: 0 0 0
+CurTime: 0
+Duration: 1
+IsNotPlaying: true
+
+[KeyFrame]
+KeyFrameNumber: 25
+Position: 0 0.1 0
+Scale: 0.15 0.15 1
+Rotation: 0 0 0
+CurTime: 0.416667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 34
+Position: 0 -0.7 0
+Scale: 0.3 0.3 1
+Rotation: 0 0 0
+CurTime: 0.566667
+Duration: 1
+IsNotPlaying: false
+
+[KeyFrame]
+KeyFrameNumber: 40
+Position: 0 -1.9 0
+Scale: 0.5 0.5 1
+Rotation: 0 0 0
+CurTime: 0.666667
+Duration: 1
+IsNotPlaying: true
+

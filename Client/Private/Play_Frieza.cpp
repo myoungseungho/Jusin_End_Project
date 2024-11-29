@@ -3814,6 +3814,9 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
 
+			//Set_AnimationStop(1.5f);
+			//m_pEnemy->Set_AnimationStop(1.5f);
+
 		}
 		else if (iAttackEvent == 2004)
 		{

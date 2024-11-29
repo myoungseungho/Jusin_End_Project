@@ -421,6 +421,9 @@ PLAY_GOKU,GKS404_body,0.000000,AnimSpeedChange,0.016000,85.656998
 PLAY_GOKU,GKS404_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS404_body,0.02000,PlaySound,138,0,1
 PLAY_GOKU,GKS404_body,5,AttackEvent,0
+PLAY_GOKU,GKS404_body,10,AttackEvent,10
+
+
 PLAY_GOKU,GKS404_body,45,AttackEvent,1
 PLAY_GOKU,GKS404_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS404_body,50,NextAnimationCheck,333333
@@ -489,6 +492,8 @@ PLAY_GOKU,GKS405_body,0.000000,AnimSpeedChange,0.016000,180.656998
 PLAY_GOKU,GKS405_body,0,AttackGravity,0
 PLAY_GOKU,GKS405_body,0.001000,PlayGroupSound,204,0,1
 PLAY_GOKU,GKS405_body,5,AttackEvent,20
+PLAY_GOKU,GKS405_body,10,AttackEvent,123
+
 PLAY_GOKU,GKS405_body,45,AttackEvent,0
 PLAY_GOKU,GKS405_body,45,AnimSpeedChange,0.016000,50
 PLAY_GOKU,GKS405_body,50,NextAnimationCheck,333333
@@ -759,12 +764,12 @@ PLAY_GOKU,GKS602cs_body,0.000000,AnimSpeedChange,0.013000,66.263000
 
 //,라운드 넘어갈때 맞대기1 (공용)
 PLAY_GOKU,GKS620cs_body,0.000000,AnimSpeedChange,0.013000,59.798000
-PLAY_GOKU,GKS620cs_body,100,NextAnimation,630
+PLAY_GOKU,GKS620cs_body,120,NextAnimation,630
 
 PLAY_GOKU,GKS620cs_body,80,AttackEvent,2001
 PLAY_GOKU,GKS620cs_body,90,AttackEvent,2002
 PLAY_GOKU,GKS620cs_body,95,AttackEvent,2003
-PLAY_GOKU,GKS620cs_body,99,AttackEvent,2004
+PLAY_GOKU,GKS620cs_body,110,AttackEvent,2004
 
 
 //,마지막 상태 정지모션 (공용)

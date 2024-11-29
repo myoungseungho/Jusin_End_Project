@@ -3178,7 +3178,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 			//Character_Make_Effect(TEXT("Moving_Line_Right"));
 			Character_Create_Distortion({ -1.f,0.f,0.f });
 
-
+			Character_Make_Effect(TEXT("DIR_K"));
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -4438,6 +4438,11 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
 
+
+
+			//Set_AnimationStop(1.5f);
+			//m_pEnemy->Set_AnimationStop(1.5f);
+
 		}
 		else if (iAttackEvent == 2004)
 		{
@@ -4456,6 +4461,7 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 	}
+	break;
 	case ANIME_START_DEFAULT:
 	{
 		if (iAttackEvent == 0)
