@@ -300,7 +300,7 @@ private:
 	class CEffect_Layer* m_pAttackFinalGlassEffect_Layer = { nullptr };
 	CEffect_Layer* m_p236LightEffect = { nullptr };
 	CEffect_Layer* m_pOpeningGlass = { nullptr };
-
+	CEffect_Layer* m_p236PoseEffect = { nullptr };
 	_bool m_b236LightSuccess = { false };
 
 	_short m_i214GlassCount = 0;

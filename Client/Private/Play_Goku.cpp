@@ -751,13 +751,7 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 	Tag_KeyCheck();
 
 
-	if (m_pGameInstance->Key_Down(DIK_8))
-	{
-		ShowInputBuffer();
-		m_pModelCom->m_fCurrentAnimPosition;
-		_float fHeight = Get_fHeight();
-		_bool bDebugf = true;
-	}
+	
 	if (m_pGameInstance->Key_Down(DIK_1))
 	{
 		if (m_pGameInstance->Key_Pressing(DIK_A))
@@ -780,13 +774,13 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 		m_iHP = 10000;
 
-		Set_bAura(true);
+		//Set_bAura(true);
 	}
 	if (m_pGameInstance->Key_Down(DIK_3))
 	{
 		//system("cls");
 		m_iHP = 100;
-		Set_bAura(false);
+		//Set_bAura(false);
 
 	}
 
@@ -3790,16 +3784,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		}
 		else if (iAttackEvent == 2002)
 		{
-			CEffect_Layer::COPY_DESC pDesc{};
+			//CEffect_Layer::COPY_DESC pDesc{};
+			//_float4x4 fCamMat = {};
+			//XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
+			//pDesc.pPlayertMatrix = &fCamMat;
+			//CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
 
-			_float4x4 fCamMat = {};
-
-			XMStoreFloat4((_float4*)&fCamMat.m[3][0], m_pGameInstance->Get_CamPosition_Vector());
-
-			pDesc.pPlayertMatrix = &fCamMat;
-
-			CEffect_Manager::Get_Instance()->Copy_Layer(TEXT("Start_Battle-04"), &pDesc);
-
+			CRenderInstance::Get_Instance()->Start_AllWhiteOut(0.5f, 2.f);
 
 			m_pEnemy->Set_AnimationStop(0.5f);
 			Set_AnimationStop(0.5f);
@@ -3830,6 +3821,7 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 	}
+	break;
 	default:
 		break;
 	}
