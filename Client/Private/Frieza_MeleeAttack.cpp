@@ -495,15 +495,19 @@ void CFrieza_MeleeAttack::Attack_236Special()
 void CFrieza_MeleeAttack::Attack_236Ultimate()
 {
 
-	m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ULTIMATE);
-	
+	if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(1, m_pPlayer->Get_iPlayerTeam()))
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_ULTIMATE);
+	}
 
 }
 
 void CFrieza_MeleeAttack::Attack_214Final()
 {
-
-	m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_214_FINAL);
+	if (CBattleInterface_Manager::Get_Instance()->Use_KiGuage(3, m_pPlayer->Get_iPlayerTeam()))
+	{
+		m_pPlayer->Set_Animation(CPlay_Frieza::ANIME_214_FINAL);
+	}
 }
 
 

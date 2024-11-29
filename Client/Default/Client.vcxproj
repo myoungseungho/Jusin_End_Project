@@ -210,10 +210,13 @@
     <ClInclude Include="..\public\Lobby_Frieza.h" />
     <ClInclude Include="..\public\Lobby_Goku_RunEff.h" />
     <ClInclude Include="..\public\Lobby_Krillin.h" />
+    <ClInclude Include="..\Public\SubTitle.h" />
     <ClInclude Include="..\Public\Particle_Focus.h" />
     <ClInclude Include="..\Public\Particle_Common_Hit.h" />
+    <ClInclude Include="..\Public\Particle_21_3_Ultimate.h" />
     <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h" />
     <ClInclude Include="..\Public\Particle_Frieza_1_Ultimate_Hit.h" />
+    <ClInclude Include="..\Public\SubTitle_Manager.h" />
     <ClInclude Include="..\Public\Particle_Spread.h" />
     <ClInclude Include="..\Public\Particle.h" />
     <ClInclude Include="..\Public\Play_Frieza.h" />
@@ -316,6 +319,7 @@
     <ClInclude Include="..\public\UI_SelectArrow.h" />
     <ClInclude Include="..\public\UI_SelectLine.h" />
     <ClInclude Include="..\public\UI_SkillEffect.h" />
+    <ClInclude Include="..\public\UI_Staff_Text.h" />
     <ClInclude Include="..\public\UI_StartEmblem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -355,6 +359,10 @@
     <ClInclude Include="..\public\UI_VS_NameOutLine.h" />
     <ClInclude Include="..\public\UI_VS_StaticLight.h" />
     <ClInclude Include="..\public\UI_VS_TeamPanel.h" />
+    <ClInclude Include="..\public\UI_Win_Circle.h" />
+    <ClInclude Include="..\public\UI_Win_Font.h" />
+    <ClInclude Include="..\public\UI_Win_Particle.h" />
+    <ClInclude Include="..\public\UI_Win_Team.h" />
     <ClInclude Include="..\Public\Virtual_Camera.h" />
     <ClInclude Include="..\Public\UIObject.h" />
     <ClInclude Include="..\Public\UI_AttBuf.h" />
@@ -462,10 +470,13 @@
     <ClCompile Include="..\private\Lobby_Frieza.cpp" />
     <ClCompile Include="..\private\Lobby_Goku_RunEff.cpp" />
     <ClCompile Include="..\private\Lobby_Krillin.cpp" />
+    <ClCompile Include="..\Private\SubTitle.cpp" />
     <ClCompile Include="..\Private\Particle_Focus.cpp" />
     <ClCompile Include="..\Private\Particle_Common_Hit.cpp" />
+    <ClCompile Include="..\Private\Particle_21_3_Ultimate.cpp" />
     <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp" />
     <ClCompile Include="..\Private\Particle_Frieza_1_Ultimate_Hit.cpp" />
+    <ClCompile Include="..\Private\SubTitle_Manager.cpp" />
     <ClCompile Include="..\Private\Particle_Spread.cpp" />
     <ClCompile Include="..\Private\Play_Frieza.cpp" />
     <ClCompile Include="..\Private\Particle.cpp" />
@@ -570,6 +581,7 @@
     <ClCompile Include="..\private\UI_SelectArrow.cpp" />
     <ClCompile Include="..\private\UI_SelectLine.cpp" />
     <ClCompile Include="..\private\UI_SkillEffect.cpp" />
+    <ClCompile Include="..\private\UI_Staff_Text.cpp" />
     <ClCompile Include="..\private\UI_StartEmblem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -617,6 +629,10 @@
     <ClCompile Include="..\private\UI_VS_NameOutLine.cpp" />
     <ClCompile Include="..\private\UI_VS_StaticLight.cpp" />
     <ClCompile Include="..\private\UI_VS_TeamPanel.cpp" />
+    <ClCompile Include="..\private\UI_Win_Circle.cpp" />
+    <ClCompile Include="..\private\UI_Win_Font.cpp" />
+    <ClCompile Include="..\private\UI_Win_Particle.cpp" />
+    <ClCompile Include="..\private\UI_Win_Team.cpp" />
     <ClCompile Include="..\Private\Virtual_Camera.cpp" />
     <ClCompile Include="..\Private\UIObject.cpp" />
     <ClCompile Include="..\Private\UI_AttBuf.cpp" />

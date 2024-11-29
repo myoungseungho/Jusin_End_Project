@@ -127,6 +127,7 @@ public: /* For.FileManager */
 public: /* For.Font_Manager */
 	HRESULT Add_Font(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _wstring& strFontTag, const _tchar* pFontFilePath);
 	HRESULT Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor = XMVectorSet(1.f, 1.f, 1.f, 1.f), _float fRadian = 0.f, _float2 vPivotPos = _float2(0.f, 0.f), _float fScale = 1.f);
+	HRESULT Draw_FontShadow(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vFontColor, _fvector vShadowFontColor, _float fShadowSize, _float fRadian, _float2 vPivotPos, _float fScale);
 
 public: /* For.Sound*/
 	void Register_Sound(const std::wstring& filePath, CSound_Manager::SOUND_KEY_NAME alias, CSound_Manager::SOUND_CATEGORY category, _bool loop = false, _bool isNonOverlapping = true);

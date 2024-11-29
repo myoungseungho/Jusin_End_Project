@@ -313,6 +313,7 @@ void CLobby_Goku::Set_CharacterInfo()
 {
 	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(0, 1, CUI_Define::LPLAYER1, TEXT("Prototype_GameObject_Play_Goku"), CUI_Define::GOKU);
 	CBattleInterface_Manager::Get_Instance()->Set_CharaDesc(1, 2, CUI_Define::RPLAYER1, TEXT("Prototype_GameObject_Play_Frieza"), CUI_Define::FRIEZA);
+	CBattleInterface_Manager::Get_Instance()->Set_b1VS1(true);
 }
 
 _float CLobby_Goku::ObjectDistance(_wstring strLayerTag, _uint iLayerIndex)

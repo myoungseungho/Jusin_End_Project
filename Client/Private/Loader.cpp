@@ -136,6 +136,8 @@
 #include "UI_VS_Name.h"
 #include "UI_VS_NameOutLine.h"
 #include "UI_Loading_EnergyEff.h"
+#include "UI_Win_Font.h"
+#include "UI_Win_Particle.h"
 
 #include "Character.h"
 #include "Play_Goku.h"
@@ -175,6 +177,9 @@
 #include "Particle_Common_Hit.h"
 #include "Particle_Frieza_1_Ultimate_Hit.h"
 #include "Particle_Frieza_3_Ultimate_Hit.h"
+#include "Particle_21_3_Ultimate.h"
+#include "SubTitle.h"
+
 //Lobby
 #include "Lobby_Center_Map.h"
 #include "Main_Camera_Lobby.h"
@@ -201,6 +206,8 @@
 #include "UI_Lobby_TextCharaIcon.h"
 #include "UI_Lobby_TextCursor.h"
 #include "UI_Lobby_Key_Enter.h"
+#include "UI_Win_Circle.h"
+#include "UI_Win_Team.h"
 #include "CharaSelect_Camera.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -368,7 +375,7 @@ HRESULT CLoader::Loading_For_Lobby()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCharaIcon"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/LIVEChar%d.png"), 2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/LIVEChar%d.png"), 3))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOBBY, TEXT("Prototype_Component_Texture_UI_Lobby_TextCursor"),
@@ -1488,6 +1495,33 @@ HRESULT CLoader::Load_Texture_Resources_GamePlay_0()
 	/* For.Prototype_Component_Texture_UI_SkillGaugeEff */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_SkillGaugeEff"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/cp_tensiontex_base00_Eff.png")))))
+		return E_FAIL;
+
+	//Win
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Win_Font"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/InGame/Left/Win_text_win_0%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_UI_Team */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_UI_Team"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/UI/Win/Tex/Team%d.png"), 2))))
+		return E_FAIL;
+
+	/* Prototype_GameObject_UI_WIn_Font */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Font"),
+		CUI_Win_Font::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Circle"),
+		CUI_Win_Circle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Particle"),
+		CUI_Win_Particle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Team"),
+		CUI_Win_Team::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 #pragma region Effect Texture
@@ -2778,9 +2812,6 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/ModelData/Char/Frieza/metal.png")))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
-		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Char/Frieza/FRN_AllMesh.bin", PreTransformMatrix))))
-		return E_FAIL;
 
 	PreTransformMatrix = PreTransformMatrix * XMMatrixRotationX(XMConvertToRadians(180.0f));
 
@@ -2812,6 +2843,10 @@ HRESULT CLoader::Load_Model_Resources_GamePlay_0()
 		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_untitled"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Hit.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Model_Play_Goku_Final"),
 	//	CModel::Create(m_pDevice, m_pContext, "../Bin/ModelData/Goku_SS3.bin", PreTransformMatrix))))
@@ -4149,6 +4184,12 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 		CUI_Opt_Sound_Title::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	///* Prototype_GameObject_UI_WIn_Font */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_UI_WIn_Font"),
+	//	CUI_Win_Font::Create(m_pDevice, m_pContext))))
+	//	return E_FAIL;
+
+
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_QTE_Same_Grab_UI_Icon"),
 		CQTE_Same_Grab_UI_Icon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -4235,6 +4276,14 @@ HRESULT CLoader::Load_Prototype_Object_GamePlay()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_Frieza_3_Ultimate_Hit"),
 		CParticle_Frieza_3_Ultimate_Hit::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Particle_21_3_Ultimate"),
+		CParticle_21_3_Ultimate::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_SubTitle"),
+		CSubTitle::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	return S_OK;
@@ -4679,7 +4728,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 
 	//프리저 3필 Spread 파티클
 	ParticleDesc.iNumInstance = 50000;
-	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
+	ParticleDesc.vRange = _float3(0.01f, 0.01f, 0.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
 	ParticleDesc.vSpeed = _float2(2.f, 3.f);
@@ -4706,7 +4755,7 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 		return E_FAIL;
 
 	//프리저 3필 Spread  Hit 파티클
-	ParticleDesc.iNumInstance = 500;
+	ParticleDesc.iNumInstance = 20000;
 	ParticleDesc.vRange = _float3(2.f, 1.f, 1.f);
 	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
 	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
@@ -4716,6 +4765,20 @@ HRESULT CLoader::Load_Prototype_Component_GamePlay()
 	ParticleDesc.isLoop = false;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_Freiza_Ultimate_3_Hit_Spread"),
+		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
+		return E_FAIL;
+
+	//21 3필 Spread 파티클
+	ParticleDesc.iNumInstance = 20000;
+	ParticleDesc.vRange = _float3(1.f, 1.f, 1.f);
+	ParticleDesc.vCenter = _float3(0.0f, 0.f, 0.0f);
+	ParticleDesc.vPivot = _float3(0.0f, 0.0f, 0.f);
+	ParticleDesc.vSpeed = _float2(6.f, 8.f);
+	ParticleDesc.vScale = _float2(0.03f, 0.04f);
+	ParticleDesc.vLifeTime = _float2(1.0f, 2.f);
+	ParticleDesc.isLoop = true;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Particle_21_Ultimate_3_21_Spread"),
 		CVIBuffer_Point_Instancing::Create(m_pDevice, m_pContext, &ParticleDesc))))
 		return E_FAIL;
 

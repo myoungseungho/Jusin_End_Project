@@ -2217,7 +2217,9 @@ AttackColliderResult CCharacter::Set_Hit3(_uint eAnimation, AttackGrade eAttackG
 	return RESULT_HIT;
 }
 */
-AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+
+//AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus)
+AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackGrade, AttackType eAttackType, _float fStunTime, _uint iDamage, _float fStopTime, _short iDirection, _float2 Impus, _bool bParticle)
 {
 
 	cout << "HP : " << m_iHP << " , Damage :" << iDamage << endl;
@@ -2234,6 +2236,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 	}
 
 	m_bInvisible = false;
+	HitStopEffect();
 
 	//스턴 상태가 아니면 가드 체크
 	if (m_bStun == false)
@@ -2330,7 +2333,7 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 	m_fAccStunTime = 0.f;
 
-	Set_HitAnimation(eAnimation, Impus);
+	Set_HitAnimation(eAnimation, Impus,bParticle);
 	Set_AnimationStop(fStopTime);
 
 	Set_bRedHP(true);
@@ -2391,7 +2394,10 @@ AttackColliderResult CCharacter::Set_Hit4(_uint eAnimation, AttackGrade eAttackG
 
 
 
-void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
+
+
+//void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
+void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus, _bool bParticle)
 {
 
 	//하나라도 0이 아니면 적용
@@ -2415,7 +2421,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if(bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 		{
@@ -2448,7 +2455,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		if (m_pModelCom->m_iCurrentAnimationIndex == m_iCrouchAnimationIndex)
 		{
@@ -2474,7 +2482,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		if (Get_fHeight() > 0)
 		{
@@ -2500,7 +2509,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		Set_Animation(m_iHit_Air_FallAnimationIndex);
 		m_pTransformCom->Add_Move({ 0.f,0.3f,0.f });
@@ -2512,7 +2522,9 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		m_bWallBounce = false;
 		Set_Animation(m_iHit_Away_LeftAnimationIndex, false);
@@ -2530,7 +2542,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		m_bWallBounce = true;
 
@@ -2548,7 +2561,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		m_bAwayUpGravity = false;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
@@ -2559,7 +2573,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		m_bAwayUpGravity = true;
 		Set_Animation(m_iHit_Away_UpAnimationIndex, false);
@@ -2576,7 +2591,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		Set_Animation(m_iHit_Away_LeftDownAnimationIndex, false);
 
@@ -2594,7 +2610,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		Set_Animation(m_iHit_Air_Spin_LeftUp, false);
 
@@ -2611,7 +2628,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		Set_Animation(m_iHit_WallBouce);
 	}
@@ -2626,7 +2644,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	{
 		_vector position = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 		_vector FinalPosition = XMVectorAdd(position, XMVectorSet(0.f, 1.f, 0.f, 0.f));
-		CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
+		if (bParticle)
+			CParticle_Manager::Get_Instance()->Play(CParticle_Manager::COMMON_HIT_PARTICLE, FinalPosition);
 
 		Set_Animation(m_iHit_Air_Spin_Up);
 	}
@@ -2636,6 +2655,8 @@ void CCharacter::Set_HitAnimation(_uint eAnimation, _float2 Impus)
 	}
 
 }
+
+
 
 void CCharacter::Set_AnimationStop(_float fStopTime)
 {
@@ -2659,15 +2680,10 @@ void CCharacter::Set_UnlockAnimationStop()
 
 void CCharacter::Set_AnimationStopWithoutMe(_float fStopTime)
 {
-
-
 	//_float fTest1 = m_ePlayerSlot - (m_iPlayerTeam - 1) * 2;
 
 	//0->0 1->1   2->0  3->1
 	CBattleInterface_Manager::Get_Instance()->Stop_CharacterWithoutMe(m_iPlayerTeam, m_ePlayerSlot - (m_iPlayerTeam - 1) * 2, fStopTime);
-
-
-
 }
 
 
@@ -4394,6 +4410,13 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 				//m_fMaxDyingTime = 12.f;
 				m_fMaxDyingTime = 11.5f;
 
+
+				//근데 마지막이면
+				if (m_bFinalSkillRoundEndSolo)
+				{
+					m_fMaxDyingTime = 5.f;
+				}
+
 			}
 
 
@@ -4415,6 +4438,11 @@ void CCharacter::Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex)
 {
 	m_bFinalSkillRoundEnd = bSkillRoundEnd;
 
+	//살아있는 팀원이 없으면
+	if (CBattleInterface_Manager::Get_Instance()->Check_survivor(m_iPlayerTeam, Get_NewCharacterslot()) == false)
+	{
+		m_bFinalSkillRoundEndSolo = true;
+	}
 }
 
 void CCharacter::Play_WinAnimation()
@@ -4435,22 +4463,19 @@ void CCharacter::Play_WinAnimation()
 
 
 	//위치는 이게 아니겠지만 일단 설정
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0,0,0,1.f });
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -3.f,0,0,1.f });
 
 	Set_Animation(m_iWinAnimationIndex);
 
 	//m_bOnlyCutSceneNoMove = true;
 
-	CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
-	//main_Camera->StartCameraShake(0.2f, 0.2f);
-	main_Camera->StartCameraShake(10.f, 10.f);
+	//CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+	////main_Camera->StartCameraShake(0.2f, 0.2f);
+	//main_Camera->StartCameraShake(10.f, 10.f);
 
 
-
-
-
-
-
+	m_bDynamicMove = true;
+	m_pEnemy->Set_bDynamicMove(true);
 }
 
 void CCharacter::Play_NewRound_Loser()

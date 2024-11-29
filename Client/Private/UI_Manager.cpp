@@ -211,6 +211,20 @@ void CUI_Manager::CutSceneUI(_bool bState)
 
 }
 
+void CUI_Manager::WinUI(LEVELID CreateLevel)
+{
+	CUIObject::UI_DESC WinDesc = {};
+	WinDesc.eLRPos = CUIObject::LEFT;
+	WinDesc.fRotationPerSec = XMConvertToRadians(45.f);
+	for (int i = 0; i < 8; i++)
+	{
+		WinDesc.iNumUI = i;
+		m_pGameInstance->Add_GameObject_ToLayer(CreateLevel, TEXT("Prototype_GameObject_UI_WIn_Circle"), TEXT("Layer_Lobby_Win"), &WinDesc);
+	}
+	m_pGameInstance->Add_GameObject_ToLayer(CreateLevel, TEXT("Prototype_GameObject_UI_WIn_Font"), TEXT("Layer_Lobby_Win"),&WinDesc);
+	m_pGameInstance->Add_GameObject_ToLayer(CreateLevel, TEXT("Prototype_GameObject_UI_WIn_Team"), TEXT("Layer_Lobby_Win"), &WinDesc);
+}
+
 
 void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
 {

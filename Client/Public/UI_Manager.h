@@ -51,6 +51,8 @@ public:
 	void UsingCreateEndUI();
 
 	void CutSceneUI(_bool bState);
+
+	void WinUI(LEVELID CreateLevel);
 	//void CutSceneFinish();
 
 public:
@@ -142,6 +144,9 @@ public:
 	list<class CUIObject*> m_ListTopUI = {};
 	list<class CUIObject*> m_ListMidUI = {};
 	list<class CUIObject*> m_ListBotUI = {};
+
+public:
+	_bool m_bZeroHp = { FALSE };
 
 
 private:

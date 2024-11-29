@@ -42,6 +42,35 @@ HRESULT CCustomFont::Draw(const _tchar * pText, const _float2& vPosition, _fvect
 	return S_OK;
 }
 
+HRESULT CCustomFont::Draw_FontShadow(const _tchar* pText, const _float2& vPosition, _fvector vFontColor, _fvector vShadowFontColor, _float fShadowSize, _float fRadian, _float2 vPivotPos, _float fScale)
+{
+	m_pContext->GSSetShader(nullptr, nullptr, 0);
+
+
+	if (XMVectorGetW(vFontColor) != 1)
+		m_pBatch->Begin(DirectX::SpriteSortMode_Deferred, m_pBlendState);
+
+	else
+		m_pBatch->Begin();
+
+
+	float angleStep = XM_PI / 8.0f; // 16방향으로 렌더링
+	for (int i = 0; i < 16; ++i) {
+		float angle = angleStep * i;
+		float offsetX = fShadowSize * cos(angle);
+		float offsetY = fShadowSize * sin(angle);
+		m_pFont->DrawString(m_pBatch, pText, XMFLOAT2(vPosition.x + offsetX, vPosition.y + offsetY), vShadowFontColor, fRadian, vPivotPos, fScale);
+	}
+
+
+	m_pFont->DrawString(m_pBatch, pText, vPosition, vFontColor, fRadian, vPivotPos, fScale);
+
+	m_pBatch->End();
+
+	return S_OK;
+}
+
+
 CCustomFont * CCustomFont::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pContext, const _tchar * pFontFilePath)
 {
 	CCustomFont*		pInstance = new CCustomFont(pDevice, pContext);

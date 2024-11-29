@@ -13,6 +13,12 @@ BEGIN(Client)
 class CLobby_Staff final : public CGameObject
 {
 public:
+	typedef struct
+	{
+		_uint iNumObject = { 0 };
+	}STAFF_DESC;
+
+public:
 	enum NPC_STATE {IDLE , RUN , STATE_END};
 
 private:
@@ -42,6 +48,9 @@ private:
 
 	_bool Idle(_float fTimeDelta);
 	_bool Run(_vector vTargPos, _float fTimeDelta);
+
+private:
+	void Default_Setting(_uint iNumObj);
 
 private:
 	_bool m_bAnimChange = { TRUE };

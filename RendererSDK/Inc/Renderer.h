@@ -88,14 +88,20 @@ private:
 
 private: /* For.BlackOut Variable */
 	_bool m_isStartBlackOut = { false };
-	_bool m_isStartAllBlackOut = { false };
 	_float m_fAccBlackTime = { 0.f };
 	const _float m_fBlackTime = { 0.8f };
 	
+
+	_bool m_isStartAllBlackOut = { false };
 	_float m_fAccAllBlackTime = { 0.f };
 	_bool m_isDownAllBlack = { false };
 	const _float m_fAllBlackTime = { 0.8f };
-
+private:
+	_bool m_isStartAllWhiteOut = { false };
+	_float m_fAccAllWhiteTime = { 0.f };
+	_bool m_isDownAllWhite = { false };
+	_float m_fDurationTime = { 0.f };
+	_float m_fAllWhiteSpeed = { 0.f };
 private: /* For.WhiteOut Variable */
 	_float m_fWhiteSpeed = { 1.f };
 	_bool m_isStartWhiteOut = { false };
@@ -181,7 +187,7 @@ private:
 	HRESULT Render_Metallic(_float fTimeDelta);
 
 	HRESULT Draw_AllBlackOut(_float fTimeDelta);
-	
+	HRESULT Draw_AllWhiteOut(_float fTimeDelta);
 
 	HRESULT Draw_MapBlackOut(_float fTimeDelta);
 	HRESULT Draw_OutLine_Effect();
@@ -194,6 +200,7 @@ private:
 public:
 	void Switch_BlackOut(_bool isTrue);
 	void Switch_AllBlackOut();
+	void Start_AllWhiteOut(_float fWhiteTime,_float fSpeed);
 	void Start_WhiteOut(_float2 vDir, _bool* isDone, _float fWhiteSpeed);
 	void Switch_Test_PostProcess(_bool isTrue);
 public:

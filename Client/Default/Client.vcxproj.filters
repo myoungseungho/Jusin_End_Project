@@ -197,7 +197,7 @@
       <Filter>02.GameObjects\AttackObject\AttackObject_Ranged</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_AttBufIconEff.cpp">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufIconEff</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufIconEff</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_SubHpPanel.cpp">
       <Filter>02.GameObjects\UI\Hp\SubHpPanel</Filter>
@@ -529,9 +529,6 @@
     <ClCompile Include="..\private\Lobby_Krillin.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\UI_Lobby_Text.cpp">
-      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\UI_Lobby_TextCharaIcon.cpp">
       <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
     </ClCompile>
@@ -610,6 +607,12 @@
     <ClCompile Include="..\private\Lobby_Staff.cpp">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\UI_Staff_Text.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Text\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Lobby_Text.cpp">
+      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\Particle_Common_Hit.cpp">
       <Filter>02.GameObjects\Particle\Particle_Common_Hit</Filter>
     </ClCompile>
@@ -619,6 +622,27 @@
     <ClCompile Include="..\Private\Particle_Frieza_3_Ultimate_Hit.cpp">
       <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Particle_21_3_Ultimate.cpp">
+      <Filter>02.GameObjects\Particle\Particle_Hit_3_Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SubTitle_Manager.cpp">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SubTitle.cpp">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Win_Font.cpp">
+      <Filter>02.GameObjects\UI\Win\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Win_Circle.cpp">
+      <Filter>02.GameObjects\UI\Win\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Win_Particle.cpp">
+      <Filter>02.GameObjects\UI\Win\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UI_Win_Team.cpp">
+      <Filter>02.GameObjects\UI\Win\Team</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="02.GameObjects\Camera">
@@ -626,9 +650,6 @@
     </Filter>
     <Filter Include="02.GameObjects\UI">
       <UniqueIdentifier>{4ac33916-2ecf-4e1d-9fe0-e7e4c8e0e68b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf">
-      <UniqueIdentifier>{174b8222-a690-44d2-80b9-c280172cf07b}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\Chara_Icon">
       <UniqueIdentifier>{858d4f96-b8bf-4cfd-b89d-7ca06a7f655c}</UniqueIdentifier>
@@ -645,12 +666,6 @@
     <Filter Include="02.GameObjects\UI\Timer">
       <UniqueIdentifier>{d08679a8-db6e-48b3-a3d9-3647262fb885}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf\AttBuf">
-      <UniqueIdentifier>{0875a66a-f7c7-4df4-adaf-8ba9cdfa68e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf\AttBufMark">
-      <UniqueIdentifier>{fd2d44d9-4bda-4209-ba7e-52df7b9e6235}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI\Hp\HpPanel">
       <UniqueIdentifier>{af6f303a-ff41-4098-a67a-a30b20e2f051}</UniqueIdentifier>
     </Filter>
@@ -663,9 +678,6 @@
     <Filter Include="02.GameObjects\UI\Skill\SkillNumber">
       <UniqueIdentifier>{945dedb7-2310-428c-92b7-d3bf73f9da37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf\AttBufEffect">
-      <UniqueIdentifier>{24732d6a-3eeb-4d4c-a280-5d97b5c33d21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\UI\Hp\HpGauge">
       <UniqueIdentifier>{54435702-1bed-42c6-829a-6d6ca31c43d6}</UniqueIdentifier>
     </Filter>
@@ -677,12 +689,6 @@
     </Filter>
     <Filter Include="02.GameObjects\UI\Skill\SkillGaugeBar">
       <UniqueIdentifier>{e3d6c943-52a0-45d4-9a67-736c026e5dc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf\AttBufThunderEffect">
-      <UniqueIdentifier>{55e9df8b-78fe-488f-83b6-e89a736b0904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf\AttBufNone">
-      <UniqueIdentifier>{2de4858f-aa72-437a-8df8-60e8c62cbe55}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\Combo">
       <UniqueIdentifier>{397c5dea-0624-4bfb-b277-46c53e816284}</UniqueIdentifier>
@@ -863,9 +869,6 @@
     </Filter>
     <Filter Include="02.GameObjects\AttackObject\AttackObject_Ranged">
       <UniqueIdentifier>{5220f611-05c9-4f2b-aa03-08f9b807346f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\UI\AttBuf\AttBufIconEff">
-      <UniqueIdentifier>{f988fce4-d046-4da1-9516-1c1d9ef132dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\UI\Hp\SubHpPanel">
       <UniqueIdentifier>{295614e1-9194-4408-9739-21e89781e71f}</UniqueIdentifier>
@@ -1313,9 +1316,51 @@
     </Filter>
     <Filter Include="02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit">
       <UniqueIdentifier>{6b32e332-0e57-47f9-b55e-35cc7e7c5469}</UniqueIdentifier>
- </Filter>
+    </Filter>
     <Filter Include="02.GameObjects\UI\Lobby\Text\Staff">
       <UniqueIdentifier>{8ebfed5c-00ca-48c1-ab90-78e6c6ecf86e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Particle\Particle_Hit_3_Ultimate">
+      <UniqueIdentifier>{c617f062-971d-4ba1-aa9a-02fe21d0f04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\SubTitle">
+      <UniqueIdentifier>{290ffa63-6beb-486e-9cb1-2c465e6ce78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Win">
+      <UniqueIdentifier>{5bd40f32-4929-4809-9418-f5cac3945695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Win\Font">
+      <UniqueIdentifier>{bd43df2e-8fd0-4adf-813b-cec1996075cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Win\Circle">
+      <UniqueIdentifier>{a5e96a44-9c28-42f2-a8b9-e55b7287b0c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Win\Particle">
+      <UniqueIdentifier>{74b8e8c2-87cf-4d2c-8230-050d3ff12074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf">
+      <UniqueIdentifier>{174b8222-a690-44d2-80b9-c280172cf07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf\AttBuf">
+      <UniqueIdentifier>{0875a66a-f7c7-4df4-adaf-8ba9cdfa68e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf\AttBufMark">
+      <UniqueIdentifier>{fd2d44d9-4bda-4209-ba7e-52df7b9e6235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf\AttBufEffect">
+      <UniqueIdentifier>{24732d6a-3eeb-4d4c-a280-5d97b5c33d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf\AttBufThunderEffect">
+      <UniqueIdentifier>{55e9df8b-78fe-488f-83b6-e89a736b0904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf\AttBufNone">
+      <UniqueIdentifier>{2de4858f-aa72-437a-8df8-60e8c62cbe55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\BackGround\AttBuf\AttBufIconEff">
+      <UniqueIdentifier>{f988fce4-d046-4da1-9516-1c1d9ef132dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\UI\Win\Team">
+      <UniqueIdentifier>{7e987a30-5b83-4cc4-84dc-2ac1cfa4a056}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1335,13 +1380,13 @@
       <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\UI_AttBuf.h">
-      <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBuf</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\UI_AttBufMark.h">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufMark</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufMark</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\UI_BaseAttBuf.h">
-      <Filter>02.GameObjects\UI\AttBuf</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\UI_Cursor.h">
       <Filter>02.GameObjects\UI\Cursor</Filter>
@@ -1365,7 +1410,7 @@
       <Filter>02.GameObjects\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_AttBufEffect.h">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufEffect</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_HpGauge.h">
       <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
@@ -1380,10 +1425,10 @@
       <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_AttBufThunderEffect.h">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufThunderEffect</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufThunderEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_AttBufNone.h">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufNone</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_ComboNumber.h">
       <Filter>02.GameObjects\UI\Combo\Number</Filter>
@@ -1662,7 +1707,7 @@
       <Filter>02.GameObjects\AttackObject\AttackObject_Ranged</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_AttBufIconEff.h">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufIconEff</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufIconEff</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UI_SubHpPanel.h">
       <Filter>02.GameObjects\UI\Hp\SubHpPanel</Filter>
@@ -2009,9 +2054,6 @@
     <ClInclude Include="..\public\Lobby_Krillin.h">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Krillin</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\UI_Lobby_Text.h">
-      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\UI_Lobby_TextCharaIcon.h">
       <Filter>02.GameObjects\UI\Lobby\CharaIcon</Filter>
     </ClInclude>
@@ -2090,6 +2132,12 @@
     <ClInclude Include="..\public\Lobby_Staff.h">
       <Filter>02.GameObjects\Lobby\Lobby_NPC\Lobby_Staff</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\UI_Staff_Text.h">
+      <Filter>02.GameObjects\UI\Lobby\Text\Staff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Lobby_Text.h">
+      <Filter>02.GameObjects\UI\Lobby\Text</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\Particle_Common_Hit.h">
       <Filter>02.GameObjects\Particle\Particle_Common_Hit</Filter>
     </ClInclude>
@@ -2098,6 +2146,27 @@
     </ClInclude>
     <ClInclude Include="..\Public\Particle_Frieza_3_Ultimate_Hit.h">
       <Filter>02.GameObjects\Particle\Particle_Frieza_3_Ultimate_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Particle_21_3_Ultimate.h">
+      <Filter>02.GameObjects\Particle\Particle_Hit_3_Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SubTitle_Manager.h">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SubTitle.h">
+      <Filter>02.GameObjects\SubTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Win_Font.h">
+      <Filter>02.GameObjects\UI\Win\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Win_Circle.h">
+      <Filter>02.GameObjects\UI\Win\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Win_Particle.h">
+      <Filter>02.GameObjects\UI\Win\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UI_Win_Team.h">
+      <Filter>02.GameObjects\UI\Win\Team</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2117,13 +2186,13 @@
       <Filter>02.GameObjects\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_AttBuf.cpp">
-      <Filter>02.GameObjects\UI\AttBuf\AttBuf</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBuf</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_AttBufMark.cpp">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufMark</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufMark</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_BaseAttBuf.cpp">
-      <Filter>02.GameObjects\UI\AttBuf</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\UI_Cursor.cpp">
       <Filter>02.GameObjects\UI\Cursor</Filter>
@@ -2144,7 +2213,7 @@
       <Filter>02.GameObjects\UI\Timer</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_AttBufEffect.cpp">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufEffect</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_HpGauge.cpp">
       <Filter>02.GameObjects\UI\Hp\HpGauge</Filter>
@@ -2159,10 +2228,10 @@
       <Filter>02.GameObjects\UI\Skill\SkillGaugeBar</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_AttBufThunderEffect.cpp">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufThunderEffect</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufThunderEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_AttBufNone.cpp">
-      <Filter>02.GameObjects\UI\AttBuf\AttBufNone</Filter>
+      <Filter>02.GameObjects\UI\BackGround\AttBuf\AttBufNone</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UI_ComboNumber.cpp">
       <Filter>02.GameObjects\UI\Combo\Number</Filter>

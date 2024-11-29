@@ -186,7 +186,7 @@ void CUIObject::UI_PosArea(_float fAreaPosY)
 	}
 }
 
-void CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _float fTimeDelta, _float fEndDistance)
+_bool CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _float fTimeDelta, _float fEndDistance)
 {
 	vTargetPos = XMVectorSetX(vTargetPos, XMVectorGetX(vTargetPos) - g_iWinSizeX * 0.5f);
 	vTargetPos = XMVectorSetY(vTargetPos, -XMVectorGetY(vTargetPos) + g_iWinSizeY * 0.5f);
@@ -209,7 +209,9 @@ void CUIObject::MoveAnimUI(_vector vTargetPos, _float fSpeed, _float fDepth ,  _
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, vTargetPos);
 
 		m_bCheck = TRUE;
+		return TRUE;
 	}
+	return FALSE;
 }
 
 _vector CUIObject::GetOffsetPostion(_vector vPosition)
@@ -222,8 +224,10 @@ _vector CUIObject::GetOffsetPostion(_vector vPosition)
 	return vPosition;
 }
 
-void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, _float fDepth,_float fTimeDelta, _float fEndDistance)
+_bool CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, _float fDepth,_float fTimeDelta, _float fEndDistance)
 {
+	_bool bFinishAnim = { FALSE };
+
 	vStartPos = XMVectorSetX(vStartPos, XMVectorGetX(vStartPos) * m_vOffSetWinSize.x);
 	vStartPos = XMVectorSetY(vStartPos, XMVectorGetY(vStartPos) * m_vOffSetWinSize.y);
 
@@ -264,8 +268,10 @@ void CUIObject::Animation(_vector vStartPos ,_vector vTargetPos, _float fSpeed, 
 		}
 		
 		if(m_bStart)
-			MoveAnimUI(vTargetPos, fSpeed, fDepth , fTimeDelta, fEndDistance);
+			bFinishAnim = MoveAnimUI(vTargetPos, fSpeed, fDepth , fTimeDelta, fEndDistance);
 	}
+
+	return bFinishAnim;
 }
 
 HRESULT CUIObject::Bind_ShaderResources()

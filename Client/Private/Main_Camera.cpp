@@ -159,6 +159,9 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 		case VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY:
 			name = "Camera_Goku_vs_Frieza_Entry";
 			break;
+		case VIRTUAL_CAMERA_HIT_WIN:
+			name = "Camera_Hit_Win";
+			break;
 		}
 
 		CGameObject* virtualCamera_Skill = m_pGameInstance->Clone_GameObject(TEXT("Prototype_GameObject_Virtual_Camera"), &name);
@@ -257,6 +260,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToSkillID["Camera_Hit_Entry"] = VIRTUAL_CAMERA_HIT_ENTRY;
 	stringToSkillID["Camera_Frieza_Entry"] = VIRTUAL_CAMERA_FRIEZA_ENTRY;
 	stringToSkillID["Camera_Goku_vs_Frieza_Entry"] = VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY;
+	stringToSkillID["Camera_Hit_Win"] = VIRTUAL_CAMERA_HIT_WIN;
 
 
 	stringToAnimID["Frieza_Light_Final_Anim1"] = 0;
@@ -286,6 +290,7 @@ HRESULT CMain_Camera::Initialize(void* pArg)
 	stringToAnimID["Frieza_Entry_Anim_1_Flip"] = 1;
 	stringToAnimID["Goku_VS_Frieza_Entry_Anim_1"] = 0;
 	stringToAnimID["Goku_VS_Frieza_Entry_Anim_1_Flip"] = 1;
+	stringToAnimID["Hit_Win_Anim_1"] = 0;
 
 #pragma endregion
 
@@ -548,6 +553,8 @@ _int CMain_Camera::Get_CameraIndex(_int modelID, _int skillID)
 			index = VIRTUAL_CAMERA_FRIEZA_ENTRY;
 		else if (skillID == 14)
 			index = VIRTUAL_CAMERA_GOKU_VS_FRIEZA_ENTRY;
+		else if (skillID == 15)
+			index = VIRTUAL_CAMERA_HIT_WIN;
 	}
 
 	return index;

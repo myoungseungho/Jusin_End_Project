@@ -400,12 +400,42 @@ void CPlay_Frieza::Player_Update(_float fTimeDelta)
 			m_fAccDyingTime += fTimeDelta;
 			if (m_fAccDyingTime > m_fMaxDyingTime)
 			{
-				m_bDestructiveFinish = false;
-				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
-				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
-				m_bPlaying = false;
-			}
+				if (m_bFinalSkillRoundEndSolo)
+				{
+					//5초 한바퀴만 더 
+					if (m_bSoloFinalEndCount == false)
+					{
+						m_fAccDyingTime = 0.f;
+						m_bSoloFinalEndCount = true;
+						//WIN UI 띄우기
+						CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+						//main_Camera->StartCameraShake(0.2f, 0.2f);
+						main_Camera->StartCameraShake(10.f, 10.f);
+						return;
+					}
+					else
+					{
+						//로비로 이동
 
+					}
+					
+				}
+				else
+				{
+					m_bDestructiveFinish = false;
+					CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
+					m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
+					m_bPlaying = false;
+				}
+			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
+
+				if(m_bSoloFinalEndCount!=false)
+					CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+	
+				m_bDyingBlack = false;
+			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
 				Stun_Shake();
@@ -3849,6 +3879,10 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Character_Make_BoneEffect("G_root", TEXT("FZ_Opening"));
 			//pEffect->Set_Copy_Layer_Rotation({ 0.f,30.f,0.f });
 			//pEffect->Set_Copy_Layer_Position
+
+			Character_Make_BoneEffect("G_root", TEXT("21_Opening"));
+			//CEffect_Layer* pEffect = Character_Make_BoneEffect("G_root", TEXT("21_WSDO-01"));
+			//pEffect->Set_Copy_Layer_Rotation({ 0.f,90.f,0.f });
 		}
 
 	}

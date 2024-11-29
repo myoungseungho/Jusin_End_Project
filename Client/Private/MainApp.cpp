@@ -80,7 +80,7 @@ HRESULT CMainApp::Render(_float fTimeDelta)
 
 	//IMGUI 렌더는 로딩때는 하면 안됨
  
-    _uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
+	_uint currentLevel_Index = m_pGameInstance->Get_CurrentLevel_Index();
 
 	_bool isOk_Render = currentLevel_Index != (_uint)LEVEL_LOADING && (_uint)currentLevel_Index != LEVEL_LOGO;
 	if (isOk_Render && m_pImgui_Manager != nullptr)
@@ -186,7 +186,7 @@ void CMainApp::Free()
 	m_pGameInstance->Release_Engine();
 	Safe_Release(m_pGameInstance);
 
-	//m_pImgui_Manager->Free();
+	m_pImgui_Manager->Free();
 
 	m_pRenderInstance->Release_Engine();
 	Safe_Release(m_pRenderInstance);

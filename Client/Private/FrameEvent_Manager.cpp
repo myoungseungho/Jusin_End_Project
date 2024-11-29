@@ -18,6 +18,7 @@
 #include "Main_Camera.h"
 #include "Virtual_Camera.h"
 #include "Sound_Manager.h"
+#include "SubTitle_Manager.h"
 IMPLEMENT_SINGLETON(CFrameEvent_Manager)
 
 CFrameEvent_Manager::CFrameEvent_Manager()
@@ -323,18 +324,18 @@ void CFrameEvent_Manager::UseEvent_Test(string strEventText, CGameObject* pGameo
 	{
 
 
-	CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
+		CTransform* pTransform = static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")));
 
-	CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
-	if (nullptr == pTransform)
-	    return;
-	_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
-	vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3]};
-	pTransform->Set_State(CTransform::STATE_POSITION, vPos);
+		CModel_Preview* pModelPreview = static_cast<CModel_Preview*>(pGameobject);
+		if (nullptr == pTransform)
+			return;
+		_vector vPos = pTransform->Get_State(CTransform::STATE_POSITION);
+		vPos += _vector{ fValue[0] * pModelPreview->Get_iDirection(),fValue[1],fValue[2],fValue[3] };
+		pTransform->Set_State(CTransform::STATE_POSITION, vPos);
 
-	//static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
+		//static_cast<CTransform*>(pGameobject->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, _vector{ fValue[0],fValue[1],fValue[2],fValue[3]});
 
-	_bool bDebug = false;
+		_bool bDebug = false;
 	}
 
 	else if (splitText[0] == "TickPerSecondChange")
@@ -585,8 +586,17 @@ void CFrameEvent_Manager::UseEvent(string strEventText, CCharacter* pCharacter)
 		CMain_Camera* main_Camera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
 		main_Camera->StartCameraShake(fValue[0], fValue[1]);
 	}
+
+	else if (splitText[0] == "SubTitle_Play")
+	{
+		CSubTitle_Manager::Get_Instance()->Play((CSubTitle_Manager::SUBTITLE_ID)fValue[0], fValue[1]);
+	}
+	else if (splitText[0] == "SubTitle_Stop")
+	{
+		CSubTitle_Manager::Get_Instance()->Stop((CSubTitle_Manager::SUBTITLE_ID)fValue[0]);
+	}
 #pragma endregion
-	
+
 }
 
 void CFrameEvent_Manager::Initalize_NameMap()

@@ -31,6 +31,7 @@
 #include "QTE_Manager.h"
 
 #include "Map_Manager.h"
+#include "Particle_Manager.h"
 
 
 CPlay_Goku::CPlay_Goku(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -350,6 +351,12 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 				CBattleInterface_Manager::Get_Instance()->Check_NextRoundFromDeathCharacter(m_iPlayerTeam, Get_NewCharacterslot());
 				m_pColliderCom->Update(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
 				m_bPlaying = false;
+			}
+			else if (m_bDyingBlack && m_fAccDyingTime > m_fMaxDyingTime - 0.5f)
+			{
+
+				CRenderInstance::Get_Instance()->Switch_AllBlackOut();
+				m_bDyingBlack = false;
 			}
 			else if (iAnimationIndex == m_iDyingStandingAnimationIndex)
 			{
@@ -783,10 +790,10 @@ void CPlay_Goku::Player_Update(_float fTimeDelta)
 
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_4))
-	{
-		Set_bFinalSkillQTE(true);
-	}
+	//if (m_pGameInstance->Key_Down(DIK_4))
+	//{
+	//	Set_bFinalSkillQTE(true);
+	//}
 	
 	if (m_pGameInstance->Key_Down(DIK_INSERT))
 	{
@@ -1080,7 +1087,7 @@ HRESULT CPlay_Goku::Ready_Components()
 	}
 	else
 	{
-		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_2P"),
+		if (FAILED(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_GKS_base"),
 			TEXT("Com_2PTexture"), reinterpret_cast<CComponent**>(&m_p2PTextureCom))))
 			return E_FAIL;
 
@@ -2108,6 +2115,12 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
+				tDesc.pTransformCom = m_pTransformCom;
+				tDesc.m_isPlayerDirRight = m_iLookDirection;
+				m_p236ChaseAura = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
+
 			}
 		}
 		
@@ -2141,6 +2154,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 10;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			if (m_p236ChaseAura != nullptr)
+			{
+				m_p236ChaseAura->m_bIsDoneAnim = true;
+				m_p236ChaseAura = nullptr;
+			}
 		}
 	}
 	break;
@@ -2188,6 +2208,18 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 				Character_Create_Distortion({ 1.f,0.f,0.f, }, { 0.f,0.f });
+
+
+				//m_p236ChaseAura = Character_Make_BoneEffect("G")
+
+				CEffect_Layer::COPY_DESC tDesc{};
+				tDesc.pPlayertMatrix = m_pModelCom->Get_BoneMatrixPtr("G_head");
+				tDesc.pTransformCom = m_pTransformCom;
+				tDesc.m_isPlayerDirRight = m_iLookDirection;
+				m_p236ChaseAura = CEffect_Manager::Get_Instance()->Copy_Layer_AndGet(m_ChaseEffectName, &tDesc);
+
+				m_p236ChaseAura->Set_Copy_Layer_Scaled({ 1.f,0.7f,1.f });
+
 			}
 		}
 		if(iAttackEvent == 0)
@@ -2220,6 +2252,13 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 			Desc.iGainKiAmount = 10;
 
 			m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Attack"), TEXT("Layer_AttackObject"), &Desc);
+
+
+			if (m_p236ChaseAura != nullptr)
+			{
+				m_p236ChaseAura->m_bIsDoneAnim = true;
+				m_p236ChaseAura = nullptr;
+			}
 		}
 		else if (iAttackEvent == 1)
 		{
@@ -3332,7 +3371,6 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 			Character_Make_Effect(TEXT("EnergieSAO-03"), { 0.7f,0.9f });
 			//Character_Make_Effect(TEXT("Energie-03"), { 0.7f,0.9f });	
-
 		}
 		else  if (iAttackEvent == 2) //고정풀기
 		{
@@ -3758,10 +3796,8 @@ void CPlay_Goku::AttackEvent(_int iAttackEvent, _int AddEvent)
 		{
 			Character_Make_Effect(TEXT("Start_Battle-02"), { -0.7f * m_iLookDirection,0.f });
 
-
 			//Set_AnimationStop(1.5f);
 			//m_pEnemy->Set_AnimationStop(1.5f);
-
 		}
 		else if (iAttackEvent == 2004)
 		{
@@ -3929,6 +3965,22 @@ void CPlay_Goku::Character_CinematicEnd()
 		m_pFinalAura->m_bIsDoneAnim = true;
 		m_pFinalAura = nullptr;
 	}
+}
+
+void CPlay_Goku::HitStopEffect()
+{
+	if (m_p236ChaseAura != nullptr)
+	{
+		m_p236ChaseAura->m_bIsDoneAnim = true;
+		m_p236ChaseAura = nullptr;
+	}
+
+	if (m_pFinalAura != nullptr)
+	{
+		m_pFinalAura->m_bIsDoneAnim = true;
+		m_pFinalAura = nullptr;
+	}
+	
 }
 
 
