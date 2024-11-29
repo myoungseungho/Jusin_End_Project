@@ -25,10 +25,18 @@ HRESULT CUI_VS_DynamicLight::Initialize(void* pArg)
 {
 
 	if (FAILED(__super::Initialize(pArg)))
+	{
+		MSG_BOX(TEXT("Failed to Created : INIT"));
 		return E_FAIL;
+	}
+
 
 	if (FAILED(Ready_Components()))
+	{
+		MSG_BOX(TEXT("Failed to Created : COMPONENT"));
 		return E_FAIL;
+	}
+		
 
 	m_fPosX = m_vPrevWinSize.x * 0.5f, m_fPosY = m_vPrevWinSize.y * 0.5f;
 	m_fSizeX = 200.f, m_fSizeY = 200.f;
@@ -54,16 +62,10 @@ void CUI_VS_DynamicLight::Update(_float fTimeDelta)
 	m_fSizeY += fTimeDelta * 2000.f;
 	
 	if (m_fSizeX >= 6000.f)
-	{
-		m_fSizeX = 200.f;
-		m_fSizeY = 200.f;
-	}
+		Destory();
 	
-	else if (m_fSizeY >= 6000.f)
-	{
-		m_fSizeX = 200.f;
-		m_fSizeY = 200.f;
-	}
+	//if (m_fSizeY >= 6000.f)
+	//	Destory();
 	
 	__super::Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, 0.1f);
 }
@@ -103,12 +105,18 @@ HRESULT CUI_VS_DynamicLight::Render(_float fTimeDelta)
 HRESULT CUI_VS_DynamicLight::Ready_Components()
 {
 	if (FAILED(__super::Ready_Components()))
+	{
+		MSG_BOX(TEXT("Failed to Created : SUPER__COMPONENT"));
 		return E_FAIL;
+	}
 
 	/* For.Com_Texture */
 	if (FAILED(__super::Add_Component(LEVEL_VS, TEXT("Prototype_Component_Texture_UI_VS_DynamicLight"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+	{
+		MSG_BOX(TEXT("Failed to Created : TEXTURE"));
 		return E_FAIL;
+	}
 
 	return S_OK;
 }

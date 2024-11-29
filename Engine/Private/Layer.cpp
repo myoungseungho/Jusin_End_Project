@@ -72,6 +72,11 @@ CGameObject* CLayer::Get_GameObject(_uint iIndex)
 	return nullptr;
 }
 
+void CLayer::Remove_GameObject(CGameObject* pGameObject)
+{
+	m_GameObjects.remove(pGameObject);
+}
+
 void CLayer::Player_Update(_float fTimeDelta)
 {
 	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
