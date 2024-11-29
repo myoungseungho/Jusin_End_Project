@@ -184,7 +184,13 @@ public:
 		Goku_vs_Frieza_Goku_ChargeLoof_SFX,
 		NARRATION_CHARASELECT_FRN,
 		HIT_WIN,
-		HIT_WIN_SFX
+		HIT_WIN_SFX,
+		SCENE_CHANGE_START,
+		SCENE_CHANGE_Futtobi,
+		SCENE_CHANGE_Enter,
+		SCENE_CHANGE_PreFight,
+		SCENE_CHANGE_Tunagi,
+		SCENE_CHANGE_Far_Expl,
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

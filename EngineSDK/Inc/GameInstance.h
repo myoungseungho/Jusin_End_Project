@@ -139,6 +139,7 @@ public: /* For.Sound*/
 	void Stop_Sound(CSound_Manager::SOUND_KEY_NAME alias);
 	void Set_ImguiPlay(_bool isPlay);
 	void Set_Category_Volume(CSound_Manager::SOUND_CATEGORY category, float volume);
+	void Set_Volume(CSound_Manager::SOUND_KEY_NAME alias, float volume);
 
 
 private:

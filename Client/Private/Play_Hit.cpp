@@ -4507,12 +4507,14 @@ void CPlay_Hit::AttackEvent(_int iAttackEvent, _int AddEvent)
 	break;
 	case ANIME_WIN_DEFAULT:
 	{
+		CMain_Camera* mainCamera = static_cast<CMain_Camera*>(m_pGameInstance->Get_GameObject(LEVEL_GAMEPLAY, TEXT("Layer_Main_Camera")));
+		mainCamera->Play(CMain_Camera::VIRTUAL_CAMERA_HIT_WIN, 0, this, nullptr, false);
+
 		//뒤돌아 본 이후
 		if (iAttackEvent == 220)
 		{
 			Set_AnimationStop(1000.f);
 		}
-
 	}
 	break;
 	default:

@@ -17,13 +17,14 @@
 #include "Virtual_Camera.h"
 #include "SpaceEF.h"
 #include "VolcanoEF.h"
+#include "Sound_Manager.h"
 IMPLEMENT_SINGLETON(CMap_Manager)
 
 CMap_Manager::CMap_Manager()
-	:m_pGameInstance{CGameInstance::Get_Instance()},
-	m_pRenderInstance{ CRenderInstance::Get_Instance()}
+	:m_pGameInstance{ CGameInstance::Get_Instance() },
+	m_pRenderInstance{ CRenderInstance::Get_Instance() }
 {
-	Safe_AddRef(m_pGameInstance); 
+	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pRenderInstance);
 }
 
@@ -64,6 +65,8 @@ void CMap_Manager::Update(_float fTimeDelta)
 		}
 	}
 
+
+	//날아가기
 	if (m_isDestructive_Active == true)
 	{
 		m_AccTime += fTimeDelta;
@@ -76,6 +79,27 @@ void CMap_Manager::Update(_float fTimeDelta)
 		}
 	}
 
+	//날아가기
+	if (m_isDestructive_Active == true)
+	{
+		if (m_AccTime >= 1.f)
+		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_START, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Futtobi, false, 1.f);
+		}
+	}
+
+	if (m_isDestructive_View == true)
+	{
+		if (m_MapViewTime > 0.5f)
+		{
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_PreFight, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Tunagi, false, 1.f);
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Far_Expl, false, 1.f);
+		}
+	}
+
+	//부딪히기
 	if (m_isDestructive_View == true)
 	{
 		m_MapViewTime += fTimeDelta;
@@ -103,9 +127,9 @@ void CMap_Manager::Update(_float fTimeDelta)
 		Active_EastFinish(EAST_LASER);*/
 
 	if (m_pGameInstance->Key_Pressing(DIK_F7))
-		PlayerCall_EastFinish(EAST_LASER,1.f);
-	
-	
+		PlayerCall_EastFinish(EAST_LASER, 1.f);
+
+
 }
 
 void CMap_Manager::Late_Update(_float fTimeDelta)
@@ -125,7 +149,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 	switch (eMapType)
 	{
 	case MAP_SPACE:
-	case MAP_DEST_SPACE:	
+	case MAP_DEST_SPACE:
 		for (auto& iter : m_SpaceModels)
 			iter.second->SetActive(true);
 		for (auto& iter : m_Destructive_SpaceModels)
@@ -134,7 +158,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 		for (auto& iter : m_Destructive_VolcanoModels)
 			iter.second->SetActive(false);
-		
+
 		m_SpaceModels[L"Prototype_GameObject_SpaceEF"]->m_bIsActive = false;
 
 		m_eCurMap = MAP_SPACE;
@@ -157,7 +181,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 			iter.second->SetActive(false);
 
 		m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"]->m_bIsActive = false;
-		
+
 		m_eCurMap = MAP_VOLCANO;
 		m_pRenderInstance->Set_CurMapType(CRenderer::MAP_VOLCANO);
 		//DISTORTION_DESC tDistortionDesc{};
@@ -169,7 +193,7 @@ void CMap_Manager::Map_Change(MAP_TYPE eMapType)
 		//tDistortionDesc.isLoop = true;
 		//tDistortionDesc.vDir = { 1.f,0.f,0.f };
 		//m_pRenderInstance->Create_Distortion(tDistortionDesc);
-		
+
 		//Space 음원 정지
 		m_pGameInstance->Stop_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM);
 		//화산맵 음원 재생
@@ -194,32 +218,32 @@ _float2 CMap_Manager::Active_DestructiveFinish(_bool isRight)
 			fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),40.f };
 			break;
 		}
-		
+
 		return fMapToImpulse;
 	}
 
 	switch (m_eCurMap)
 	{
 	case MAP_SPACE:
-	static_cast<CSpaceMeteoBreak*>(m_Destructive_SpaceModels[L"Prototype_GameObject_SpaceMeteoBreak"])->Start_Space_DestructiveFinish(isRight);
-	fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
+		static_cast<CSpaceMeteoBreak*>(m_Destructive_SpaceModels[L"Prototype_GameObject_SpaceMeteoBreak"])->Start_Space_DestructiveFinish(isRight);
+		fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
 		break;
 	case MAP_VOLCANO:
-	for (auto& iter : m_VolcanoModels)
-		iter.second->SetActive(false);
+		for (auto& iter : m_VolcanoModels)
+			iter.second->SetActive(false);
 
-	m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"]->m_bIsActive = true;
+		m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"]->m_bIsActive = true;
 
-	static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
-		->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, XMVectorSet(1500 * (isRight == true ? 1.f : -1.f), 0, -1000, 1.f));
+		static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
+			->Get_Component(TEXT("Com_Transform")))->Set_State(CTransform::STATE_POSITION, XMVectorSet(1500 * (isRight == true ? 1.f : -1.f), 0, -1000, 1.f));
 
-	static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
-		->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-10.f * (isRight == true ? 1.f : -1.f)));
+		static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
+			->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(-10.f * (isRight == true ? 1.f : -1.f)));
 
-	m_VolcanoModels[L"Prototype_GameObject_Volcano_Lava_Ground"]->m_bIsActive = true;
-	m_VolcanoModels[L"Prototype_GameObject_Volcano_Stage"]->m_bIsActive = true;
-	fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
-	static_cast<CVolcano_Destructive*>(m_Destructive_VolcanoModels[L"Prototype_GameObject_Volcano_Destructive"])->Start_Volcano_DestructiveFinish(isRight);
+		m_VolcanoModels[L"Prototype_GameObject_Volcano_Lava_Ground"]->m_bIsActive = true;
+		m_VolcanoModels[L"Prototype_GameObject_Volcano_Stage"]->m_bIsActive = true;
+		fMapToImpulse = { (-100.f * (isRight == true ? -1.f : 1.f)),30.f };
+		static_cast<CVolcano_Destructive*>(m_Destructive_VolcanoModels[L"Prototype_GameObject_Volcano_Destructive"])->Start_Volcano_DestructiveFinish(isRight);
 		break;
 	}
 
@@ -249,6 +273,8 @@ _float2 CMap_Manager::Active_EastFinish()
 		static_cast<CVolcanoEF*>(m_SpaceModels[L"Prototype_GameObject_SpaceEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
 		vMoveCamPos = _float4(0.f, 0.5f, -194.7f, 1.f);
 		vLookAtPos = XMVectorSet(0.f, 1.f, 0.f, 1.f);
+
+		m_pGameInstance->Set_Volume(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, 0.5f);
 	}
 	else if (m_eCurMap == MAP_VOLCANO)
 	{
@@ -257,6 +283,8 @@ _float2 CMap_Manager::Active_EastFinish()
 		static_cast<CVolcanoEF*>(m_VolcanoModels[L"Prototype_GameObject_VolcanoEF"])->m_vEastColor = _float3(0.f, 0.68627f, 1.f);
 		vMoveCamPos = _float4(-2.30689f, -0.06469f, -161.586121f, 1.f);
 		vLookAtPos = XMVectorSet(0.f, 10.f, 0.f, 1.f);
+
+		m_pGameInstance->Set_Volume(CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, 0.5f);
 	}
 
 	XMStoreFloat4x4(&Result4x4, XMMatrixIdentity());
@@ -305,13 +333,16 @@ _float2 CMap_Manager::Active_EastFinish()
 			->m_vecVirtualCamera[CMain_Camera::VIRTUAL_CAMERA_FREE])->Get_Component(TEXT("Com_Transform")))
 		->LookAt(XMVectorSet(0.f, 1.f, 0.f, 0.f));
 	/*------------------------------------------------------------------------------------------------------------*/
+
+	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Far_Expl, false, 1.f);
+
 	return _float2();
 }
 
 void CMap_Manager::PlayerCall_EastFinish(East_Finish_Type eEastEffectType, _float fWhiteSpeed)
 {
 	m_isEastFinish = true;
-	if(eEastEffectType == EAST_LASER)
+	if (eEastEffectType == EAST_LASER)
 		m_pRenderInstance->Start_WhiteOut(_float2(1.f, 0.f), &m_isWhiteDoneCheck, fWhiteSpeed);
 	else
 		m_pRenderInstance->Start_WhiteOut(_float2(0.f, 1.f), &m_isWhiteDoneCheck, fWhiteSpeed);
@@ -324,7 +355,7 @@ void CMap_Manager::IsDone_Active()
 	{
 	case MAP_SPACE:
 		static_cast<CSpaceMeteoBreak*>(m_Destructive_SpaceModels[L"Prototype_GameObject_SpaceMeteoBreak"])->IsDone_Active_Init();
-		
+
 		break;
 	case MAP_VOLCANO:
 		for (auto& iter : m_VolcanoModels)
@@ -335,7 +366,7 @@ void CMap_Manager::IsDone_Active()
 
 		static_cast<CTransform*>(static_cast<CVolcano_SkyCloud*>(m_VolcanoModels[L"Prototype_GameObject_Volcano_SkyCloud"])
 			->Get_Component(TEXT("Com_Transform")))->Rotation(XMVectorSet(0.f, 0.f, 1.f, 0.f), XMConvertToRadians(0.f));
-		
+
 		static_cast<CVolcano_Destructive*>(m_Destructive_VolcanoModels[L"Prototype_GameObject_Volcano_Destructive"])->IsDone_Active_Init();
 
 		break;

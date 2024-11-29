@@ -4380,7 +4380,6 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 
 					m_bDestructiveFinish = true;
 					m_fMaxDyingTime = 5.f;
-
 				}
 
 				Set_AnimationStopWithoutMe(2.f);

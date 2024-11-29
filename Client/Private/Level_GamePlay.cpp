@@ -74,13 +74,13 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
 		CharacterDesc.ePlayerSlot = CUI_Define::RPLAYER1;
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Goku"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 1;
@@ -999,6 +999,17 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/SFX/ARC_BTL_HTN_Win.ogg", CSound_Manager::SOUND_KEY_NAME::HIT_WIN_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
+
+#pragma region 씬 전환 터질때 혹은 에네르기파
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BG_FtbsFin_Start.ogg", CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_START, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BG_FtbsFin_BlowOut.ogg", CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Futtobi, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BG_FtbsFin_Enter.ogg", CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Enter, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BG_FinSmoke_PreFight.ogg", CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_PreFight, CSound_Manager::SOUND_CATEGORY::SFX, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BG_ExplFin_Tunagi.ogg", CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Tunagi, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Common/Real_SFX/ARC_BG_FtbsFin_HitVolcano.ogg", CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Far_Expl, CSound_Manager::SOUND_CATEGORY::SFX, false);
+#pragma endregion
+
 
 
 	return S_OK;

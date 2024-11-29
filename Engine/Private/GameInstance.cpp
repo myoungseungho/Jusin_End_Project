@@ -587,6 +587,11 @@ void CGameInstance::Set_Category_Volume(CSound_Manager::SOUND_CATEGORY category,
 	m_pSoundManager->Set_Category_Volume(category, volume);
 }
 
+void CGameInstance::Set_Volume(CSound_Manager::SOUND_KEY_NAME alias, float volume)
+{
+	m_pSoundManager->Set_Volume(alias, volume);
+}
+
 void* CGameInstance::Load_All_Effects()
 {
 	if (nullptr == m_pFile_Manager)
