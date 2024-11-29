@@ -85,6 +85,9 @@ public:
 	void Character_Opening_AIO();
 	void Character_Opening_EndForCharacter(_ubyte iTeam);
 
+	void Set_b1VS1(_bool b1vs1);
+	bool Check_survivor(_ubyte iTeam, _ubyte NewCharacterslot);
+
 private:
 	
 public:
@@ -110,6 +113,9 @@ private:
 	CHARACREATE_DESC m_tCharaCreateDesc[4] = {};
 
 	_bool m_bCinematicOpening = false;
+
+
+	_bool m_b1vs1 = false;
 
 
 private:

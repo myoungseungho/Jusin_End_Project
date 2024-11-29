@@ -352,6 +352,13 @@ CCharacter* CBattleInterface_Manager::EnemyInitalize(_ubyte iTeam)
 _bool CBattleInterface_Manager::Check_NextRoundFromDeathCharacter(_ubyte iTeam, _ubyte NewCharacterslot)
 {
 
+    if (m_b1vs1)
+    {
+        //½Â¸®
+
+        return true;
+    }
+
     m_p1TeamCharacter[NewCharacterslot]->Set_AnimationStop(0.f);
     m_p1TeamCharacter[NewCharacterslot]->Set_AnimationStopWithoutMe(0.f);
 
@@ -867,6 +874,34 @@ void CBattleInterface_Manager::Character_Opening_EndForCharacter(_ubyte iTeam)
         CUI_Manager::Get_Instance()->UsingCreateStartUI();
 
     }
+}
+
+void CBattleInterface_Manager::Set_b1VS1(_bool b1vs1)
+{
+    m_b1vs1 = b1vs1;
+}
+
+bool CBattleInterface_Manager::Check_survivor(_ubyte iTeam, _ubyte NewCharacterslot)
+{
+    if(m_b1vs1)        
+        return false;
+
+    else
+    {
+        if (iTeam == 1)
+        {
+            if (m_p1TeamCharacter[NewCharacterslot]->Get_bDying())
+                return false;
+
+        }
+        else if (iTeam == 2)
+        {
+            if (m_p2TeamCharacter[NewCharacterslot]->Get_bDying())
+                return false;
+        }
+    }
+
+    return true;
 }
 
 

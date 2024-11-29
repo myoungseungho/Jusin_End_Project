@@ -4394,6 +4394,13 @@ void CCharacter::Update_Dying(_float fTimeDelta)
 				//m_fMaxDyingTime = 12.f;
 				m_fMaxDyingTime = 11.5f;
 
+
+				//근데 마지막이면
+				if (m_bFinalSkillRoundEndSolo)
+				{
+					m_fMaxDyingTime = 5.f;
+				}
+
 			}
 
 
@@ -4415,6 +4422,11 @@ void CCharacter::Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex)
 {
 	m_bFinalSkillRoundEnd = bSkillRoundEnd;
 
+	//살아있는 팀원이 없으면
+	if (CBattleInterface_Manager::Get_Instance()->Check_survivor(m_iPlayerTeam, Get_NewCharacterslot()) == false)
+	{
+		m_bFinalSkillRoundEndSolo = true;
+	}
 }
 
 void CCharacter::Play_WinAnimation()

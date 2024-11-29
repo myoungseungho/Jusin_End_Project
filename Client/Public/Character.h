@@ -364,6 +364,7 @@ public:
 	_bool Get_bDying();
 	void Set_FinalSkillRoundEnd(_bool bSkillRoundEnd, _ushort iIndex);
 	_bool m_bFinalSkillRoundEnd = false;
+	_bool m_bFinalSkillRoundEndSolo = false;
 	_float m_fMaxDyingTime = { 5.f };
 
 	void Set_UnDying(_bool bNoneDying) {m_bUnDying = bNoneDying;};
