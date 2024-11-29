@@ -1,8 +1,8 @@
 [Layer]
 LayerName: Hit_SDI
-Duration: 1
+Duration: 2
 TickPerSecond: 1
-KeyFramesCount: 59
+KeyFramesCount: 119
 NumEffec: 8
 Position: 0 0 0
 Scale: 1 1 1
@@ -18,19 +18,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.2 -0.3 0
+Position: 0 -0.3 0
 Scale: 0.2 0.25 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 66.7053 255 2.72947
-GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 6.53005e-43 173.031
 GlowFactor: 2
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 -0.3 0
+Position: 0 -0.3 0
 Scale: 0.2 0.25 1
 Rotation: 0 0 0
 CurTime: 0
@@ -46,19 +46,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.2 0 0
+Position: 0 0 0
 Scale: 0.2 0.3 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 178.162 0.398013
-GlowColor: 1 1 -1.07374e+08 -1.07374e+08
+GlowColor: 1 1 6.53005e-43 173.031
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 0 0
+Position: 0 0 0
 Scale: 0.2 0.3 1
 Rotation: 0 0 0
 CurTime: 0
@@ -74,19 +74,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: 0
-Position: 0.2 0 0
+Position: 0 0 0
 Scale: 0.025 0.05 0.025
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 22.798 178.162 23.9404
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 0 6.53005e-43 173.031
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 0 0
+Position: 0 0 0
 Scale: 0.025 0.05 0.025
 Rotation: 0 0 0
 CurTime: 0
@@ -102,19 +102,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0.2 0 0
+Position: 0 0 0
 Scale: 0.025 0.05 0.025
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 220.381 0.346688
-GlowColor: 0 0 -1.07374e+08 -1.07374e+08
+GlowColor: 0 0 6.53005e-43 173.031
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 0 0
+Position: 0 0 0
 Scale: 0.025 0.05 0.025
 Rotation: 0 0 0
 CurTime: 0
@@ -130,19 +130,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0 0 0
+Position: -0.2 0 0
 Scale: 0.1 0.3 1
 Rotation: 0 0 7
 IsLoop: false
 Color: 85.2815 176.474 227.136 0.745364
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 0 6.53005e-43 173.031
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0 0
+Position: -0.2 0 0
 Scale: 0.1 0.3 1
 Rotation: 0 0 7
 CurTime: 0
@@ -158,19 +158,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -1
-Position: 0.6 0.4 0
+Position: 0.4 0.4 0
 Scale: 0.0999999 0.2 1
 Rotation: 0 0 351.104
 IsLoop: false
 Color: 44.7517 53.1954 189.983 0.694039
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 0 6.53005e-43 173.031
 GlowFactor: 0
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.6 0.4 0
+Position: 0.4 0.4 0
 Scale: 0.0999999 0.2 1
 Rotation: 0 0 351.104
 CurTime: 0
@@ -186,24 +186,24 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0.2 -0.3 0
+Position: 0 -0.3 0
 Scale: 0.4 0.4 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 0 0 0 30
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 0 6.53005e-43 173.031
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0.2 -0.3 0
+Position: 0 -0.3 0
 Scale: 0.4 0.4 1
 Rotation: 0 0 0
 CurTime: 0
 Duration: 1
-IsNotPlaying: true
+IsNotPlaying: false
 
 [Effect]
 EffectName: Hit_SDI_08
@@ -214,19 +214,19 @@ EffectType: 1
 RenderIndex: 2
 PassIndex: 1
 UniqueIndex: -2
-Position: 0 0.1 0
+Position: -0.2 0.1 0
 Scale: 0.35 0.35 1
 Rotation: 0 0 0
 IsLoop: false
 Color: 53.1954 56.5729 147.765 0.546688
-GlowColor: 1 0 -1.07374e+08 -1.07374e+08
+GlowColor: 1 0 6.53005e-43 173.031
 GlowFactor: 1
 DerredPassIndex: 0
 NumKeyFrame: 1
 
 [KeyFrame]
 KeyFrameNumber: 0
-Position: 0 0.1 0
+Position: -0.2 0.1 0
 Scale: 0.35 0.35 1
 Rotation: 0 0 0
 CurTime: 0
