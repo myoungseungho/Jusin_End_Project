@@ -3835,6 +3835,25 @@ void CPlay_Frieza::AttackEvent(_int iAttackEvent, _int AddEvent)
 
 
 	}
+	case ANIME_START_DEFAULT:
+	{
+		if (iAttackEvent == 0)
+		{
+			//ÇÏ¾á ÇÊÅÍ?
+
+		}
+		if (iAttackEvent == 1)
+		{
+			//FZ_Opening
+			//CEffect_Layer* pEffect =
+			Character_Make_BoneEffect("G_root", TEXT("FZ_Opening"));
+			//pEffect->Set_Copy_Layer_Rotation({ 0.f,30.f,0.f });
+			//pEffect->Set_Copy_Layer_Position
+		}
+
+	}
+	break;
+
 	default:
 		break;
 	}
