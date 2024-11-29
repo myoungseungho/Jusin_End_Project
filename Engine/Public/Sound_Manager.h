@@ -183,6 +183,8 @@ public:
 		Goku_vs_Frieza_Goku_Charge_SFX,
 		Goku_vs_Frieza_Goku_ChargeLoof_SFX,
 		NARRATION_CHARASELECT_FRN,
+		HIT_WIN,
+		HIT_WIN_SFX
 	};
 
 	enum class SOUND_GROUP_KEY_NAME :_int

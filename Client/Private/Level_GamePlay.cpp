@@ -43,6 +43,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	Loading_For_Effect();
 #pragma endregion
 
+#pragma region 사운드 로드
+	if (FAILED(Ready_Sound()))
+		return E_FAIL;
+#pragma endregion
+
 #pragma region 맵 사본 객체
 
 	if (FAILED(Ready_Volcano()))
@@ -69,7 +74,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		CharacterDesc.ePlayerSlot = CUI_Define::LPLAYER1;
 
 
-		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_21"), TEXT("Layer_Character"), &CharacterDesc)))
+		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Play_Hit"), TEXT("Layer_Character"), &CharacterDesc)))
 			return E_FAIL;
 
 		CharacterDesc.iTeam = 2;
@@ -148,10 +153,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 #pragma endregion
 
-#pragma region 사운드 로드
-	if (FAILED(Ready_Sound()))
-		return E_FAIL;
-#pragma endregion
+
 
 	//빛 준비
 	if (FAILED(Ready_Lights()))
@@ -236,7 +238,7 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 	}
 
 	m_pUI_Manager->GamePlayUpdate(fTimeDelta);
-	//m_pIMGUI_Manager->Update(fTimeDelta);
+	m_pIMGUI_Manager->Update(fTimeDelta);
 	m_pEffect_Manager->Update(fTimeDelta);
 	m_pParticle_Manager->Update(fTimeDelta);
 	m_pSubTitle_Manager->Update(fTimeDelta);
@@ -464,8 +466,6 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/013_bat_space.ogg", CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
 	//화산배경음
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Audio/BGM/004_bat_volcano.ogg", CSound_Manager::SOUND_KEY_NAME::VOLCANO_BGM, CSound_Manager::SOUND_CATEGORY::BGM, true);
-
-	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SPACE_BGM, true, 0.2f);
 
 #pragma region Goku_Sound
 
@@ -993,6 +993,13 @@ HRESULT CLevel_GamePlay::Ready_Sound()
 	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku_vs_Frieza/ARC_BTL_SYS_ActSkill_Normal.ogg", CSound_Manager::SOUND_KEY_NAME::Goku_vs_Frieza_Goku_Attack_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
 
 #pragma endregion
+
+#pragma region 히트 승리씬
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Goku/Real_Voice/vhtn404_vs_gkb.ogg", CSound_Manager::SOUND_KEY_NAME::HIT_WIN, CSound_Manager::SOUND_CATEGORY::VOICE, false);
+	m_pGameInstance->Register_Sound(L"../Bin/SoundSDK/AudioClip/Chara/Hit/SFX/ARC_BTL_HTN_Win.ogg", CSound_Manager::SOUND_KEY_NAME::HIT_WIN_SFX, CSound_Manager::SOUND_CATEGORY::SFX, false);
+
+#pragma endregion
+
 
 	return S_OK;
 }

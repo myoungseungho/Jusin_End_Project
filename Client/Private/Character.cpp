@@ -4430,7 +4430,7 @@ void CCharacter::Play_WinAnimation()
 
 
 	//위치는 이게 아니겠지만 일단 설정
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { 0,0,0,1.f });
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, { -3.f,0,0,1.f });
 
 	Set_Animation(m_iWinAnimationIndex);
 
@@ -4441,11 +4441,8 @@ void CCharacter::Play_WinAnimation()
 	main_Camera->StartCameraShake(10.f, 10.f);
 
 
-
-
-
-
-
+	m_bDynamicMove = true;
+	m_pEnemy->Set_bDynamicMove(true);
 }
 
 void CCharacter::Play_NewRound_Loser()
