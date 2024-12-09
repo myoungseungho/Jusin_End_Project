@@ -84,18 +84,19 @@ public:
 	}
 
 private:
+	//쓰레드 풀(로딩 때 쓰레드 하나씩 들어올 때마다 Queue에 쌓임)
 	queue<ThreadPool_For_Loading> m_QueueThreadPool;
 	mutex m_queueMutex;
+
+public:
+	//쓰레드가 몇개 완료 됐는지 확인
+	_uint m_iNumThreadFinish = { 0 };
 
 private:
 	void CreateOption();
 	void DestroyOption();
 
 public:
-	_bool m_bStun = { FALSE };
-	_bool m_bHit = { FALSE };
-	_uint m_iHp = {0};
-	_uint m_iNumThreadFinish = { 0 };
 
 	_bool m_bGamePlayLoadingFinish = { FALSE };
 	
