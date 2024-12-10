@@ -59,8 +59,7 @@ HRESULT CUIObject::Initialize(void* pArg)
 		}
 	}
 
-	m_bIsActive = true;
-	m_pUI_Manager->m_bActive = m_bIsActive;
+	m_bIsActive = TRUE;
 	return S_OK;
 }
 
@@ -101,12 +100,6 @@ void CUIObject::Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _floa
 
 	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH((_float)g_iWinSizeX, (_float)g_iWinSizeY, 0.f, 1.f));
-}
-
-void CUIObject::DebugTesting(_float fSizeOffset, _float fDepth)
-{
-	m_pUI_Manager->UI_Setting_Debug(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY, fSizeOffset);
-	Set_UI_Setting(m_fSizeX, m_fSizeY, m_fPosX, m_fPosY , fDepth);
 }
 
 _bool CUIObject::ClickRange(_float fPickPosX, _float fPickPosY)

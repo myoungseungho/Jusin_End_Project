@@ -56,8 +56,6 @@ public:
 	//void CutSceneFinish();
 
 public:
-	//디버깅 위치 설정
-	void UI_Setting_Debug(_float& fSizeX , _float& fSizeY , _float& fPosX , _float& fPosY , _float fSizeRadio);
 	//값 초기화
 	void InitUIObject();
 
@@ -97,25 +95,25 @@ private:
 	void DestroyOption();
 
 public:
-
+	//다음 로딩을 넘어갈 때 체크
 	_bool m_bGamePlayLoadingFinish = { FALSE };
 	
 public:
 	class CCharacter* m_pPawnArray[CUI_Define::SLOT_END] = {nullptr,nullptr ,nullptr ,nullptr };
 
-	//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-	_bool m_bActive = { FALSE };
-
 	//Anim
 	_float m_fTotalDuration = { 0.f };
 
 	//Input
+	//1P
 	DirectionInput	m_eDirInput = {};
 	ButtonInput		m_eBtnInput = {};
 
+	//2P
 	DirectionInput	m_eDirInput2 = {};
 	ButtonInput		m_eBtnInput2 = {};
 
+	//Input Icon
 	_uint m_iNumCommandList = { 0 };
 	_uint m_iNumCommandList2 = { 0 };
 
@@ -123,32 +121,17 @@ public:
 	_float m_fColorValue = { 0.f };
 	_bool m_bChange[2] = {FALSE , FALSE };
 	 
-private:
-	_float m_fStartTimer = { 0.f };
-	_float m_fEndTimer = { 0.f };
-
-	_bool m_bStartFinish = { FALSE };
-	_bool m_bEndFinish = { FALSE };
-
-private:
-	_float m_fStartUITimer = { 0.f };
-	_bool m_bStartUI = { FALSE };
 public:
 	_bool m_bOnOption = { FALSE };
 	CUI_Define::NPC_ID m_eNpcID = {};
 
 public:
 	LEVELID m_eLevelID = { LEVEL_END };
-	_bool m_bCharaSelectFinish = { FALSE };
 
 public:
 	list<class CUIObject*> m_ListTopUI = {};
 	list<class CUIObject*> m_ListMidUI = {};
 	list<class CUIObject*> m_ListBotUI = {};
-
-public:
-	_bool m_bZeroHp = { FALSE };
-
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

@@ -41,24 +41,6 @@ void CUI_Manager::Add_UIOjbect(CUI_Define::UI_LISTPOS ePos, CUIObject* pObject)
 
 void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 {
-	if(m_bStartUI == FALSE)
-		m_fStartUITimer += fTimeDelta;
-
-	if (fTimeDelta >= 0.1f)
-		m_fStartUITimer = 0.f;
-
-	if (m_fStartUITimer >= 0.5f && m_bStartUI == FALSE)
-	{
-		//UsingCreateStartUI();
-		m_bStartUI = TRUE;
-	}
-
-	if (m_pGameInstance->Key_Down(DIK_F2))
-	{
-		UsingCreateEndUI();
-	}
-
-
 	if (m_pGameInstance->Key_Down(DIK_TAB))
 	{
 		if (m_bOnOption == FALSE)
@@ -71,8 +53,6 @@ void CUI_Manager::GamePlayUpdate(_float fTimeDelta)
 			DestroyOption();
 			m_bOnOption = FALSE;
 		}
-
-
 	}
 }
 
@@ -174,22 +154,6 @@ void CUI_Manager::CutSceneUI(_bool bState)
 		{
 			Input->Destory();
 		}
-
-
-		//for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Number")))
-		//{
-		//	Input->Destory();
-		//}
-
-		//for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Font")))
-		//{
-		//	Input->Destory();
-		//}
-
-		//for (auto& Input : m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Combo_Effect")))
-		//{
-		//	Input->Destory();
-		//}
 	}
 
 	for (auto& Top : m_ListTopUI)
@@ -197,18 +161,10 @@ void CUI_Manager::CutSceneUI(_bool bState)
 		Top->SetActive(bState);
 	}
 
-	//for (auto& Mid : m_ListMidUI)
-	//{
-	//	Mid->SetActive(bState);
-	//}
-
 	for (auto& Bot : m_ListBotUI)
 	{
 		Bot->SetActive(bState);
 	}
-
-	
-
 }
 
 void CUI_Manager::WinUI(LEVELID CreateLevel)
@@ -223,42 +179,6 @@ void CUI_Manager::WinUI(LEVELID CreateLevel)
 	}
 	m_pGameInstance->Add_GameObject_ToLayer(CreateLevel, TEXT("Prototype_GameObject_UI_WIn_Font"), TEXT("Layer_Lobby_Win"),&WinDesc);
 	m_pGameInstance->Add_GameObject_ToLayer(CreateLevel, TEXT("Prototype_GameObject_UI_WIn_Team"), TEXT("Layer_Lobby_Win"), &WinDesc);
-}
-
-
-void CUI_Manager::UI_Setting_Debug(_float& fSizeX, _float& fSizeY, _float& fPosX, _float& fPosY, _float fSizeRadio)
-{
-	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD7))
-	{
-		fSizeY--;
-		fSizeX = fSizeRadio * fSizeY;
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD9))
-	{
-		fSizeY++;
-		fSizeX = fSizeRadio * fSizeY;
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD4))
-	{
-		fPosX--;
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD6))
-	{
-		fPosX++;
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD8))
-	{
-		fPosY--;
-	}
-
-	if (m_pGameInstance->Get_DIKeyState(DIK_NUMPAD2))
-	{
-		fPosY++; 
-	}
 }
 
 void CUI_Manager::InitUIObject()

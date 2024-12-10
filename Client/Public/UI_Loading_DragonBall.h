@@ -24,12 +24,16 @@ private:
 	virtual HRESULT Ready_Components();
 	virtual HRESULT Bind_ShaderResources();
 
+private:
 	void InitPosition();
+	void AnimationFinish();
+	void LoadingFinish();
+	void BlurValue(_float fTimeDelta);
+	void FinishMaakValue(_float fTimeDelta);
 
 private:
-	_bool m_bSwitchColor = { FALSE };
-	_bool m_bFinishEnd = { FALSE };
-	_bool m_bFinishAnim = { FALSE };
+	_bool m_bFinishAnimation = { FALSE };
+	_bool m_bFinishLoading = { FALSE };
 
 	_uint m_iTextureIndex = { 0 };
 	_uint m_iDefTextureIndex = { 7 };

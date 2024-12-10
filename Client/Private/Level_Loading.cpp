@@ -265,7 +265,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 	
 		case LEVEL_GAMEPLAY:
 			//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-			if (m_bNextLevel || CUI_Manager::Get_Instance()->m_bActive == FALSE)
+			if (m_bNextLevel)
 				pNextLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
 	
 			break;
@@ -288,7 +288,7 @@ void CLevel_Loading::Update(_float fTimeDelta)
 		}
 	
 		//UIObject 가 false 일때 (로딩 더 줄이기 위해) 바로 게임플레이 넘어가게 끔 하는 코드
-		else if (m_eNextLevelID != LEVEL_GAMEPLAY || CUI_Manager::Get_Instance()->m_bActive == FALSE)
+		else if (m_eNextLevelID != LEVEL_GAMEPLAY)
 		{
 			if (FAILED(m_pGameInstance->Change_Level(pNextLevel)))
 				return;

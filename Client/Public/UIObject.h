@@ -52,9 +52,6 @@ protected:
 	//UI 초기 세팅 값
 	virtual void Set_UI_Setting(_float fSizeX, _float fSizeY, _float fPosX, _float fPosY, _float fDepth = 0.9f);
 	
-//UI 크기와 위치를 디버깅해서 찾음
-	void DebugTesting(_float fSizeOffset,  _float fDepth = 1.f);
-
 //클릭한 위치가 해당 UI 위치라면 동작
 	_bool ClickRange(_float fPickPosX, _float fPickPosY);
 

@@ -60,50 +60,11 @@ void CUI_Loading_DragonBall::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	_bool bIsEmpty = m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).empty();
-
-	if (bIsEmpty == FALSE)
-	{
-		m_bFinishEnd =  dynamic_cast<CUI_Loading_FlyEff*>(m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).back())->Get_AnimEnd();
-	}
-
-	if (m_bFinishEnd && m_pUI_Manager->m_iNumThreadFinish >= 7 && m_bFinishAnim == FALSE)
-	{
-			m_fBlurValue = 0.f;
-			m_bFinishAnim = TRUE;
-
-		if(m_iTextureIndex == 0)
-			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_FINISH_SFX, false, 0.2f);
-	}
-
-	if (m_iDefTextureIndex != 7 && m_pUI_Manager->m_iNumThreadFinish < 7)
-	{
-		if (m_fBlurValue >= 2.5f)
-			m_bBlurSwitch = FALSE;
-		else if (m_fBlurValue <= 0.f)
-			m_bBlurSwitch = TRUE;
-
-		m_bBlurSwitch ? m_fBlurValue += fTimeDelta * 2.5f : m_fBlurValue -= fTimeDelta * 2.5f;
-	}
-
-	if (m_bFinishAnim)
-	{
-		if(m_bMaskValueSwitch == FALSE)
-			m_fMaskValue += fTimeDelta * 2.f;
-
-		if (m_fMaskValue >= 1.f)
-			m_bMaskValueSwitch = TRUE;
-
-		if(m_bMaskValueSwitch)
-			m_fMaskValue -= fTimeDelta * 2.f;
-
-		if (m_fMaskValue < 0.f)
-		{
-			m_fMaskValue = 0.f;
-
-			m_pUI_Manager->m_bGamePlayLoadingFinish = TRUE;
-		}
-	}
+	//날라오는 애니메이션을 끝났는지 체크( m_bFinishEnd )
+	AnimationFinish();
+	LoadingFinish();
+	BlurValue(fTimeDelta);
+	FinishMaakValue(fTimeDelta);
 
 	RENDER_OBJECT tDesc{};
 	tDesc.tGlowDesc.iPassIndex = 2;
@@ -165,9 +126,6 @@ HRESULT CUI_Loading_DragonBall::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_MaskTimer", &m_fMaskValue, sizeof(_float))))
 		return E_FAIL;
 
-
-	
-
 	return S_OK;
 }
 
@@ -177,6 +135,61 @@ void CUI_Loading_DragonBall::InitPosition()
 		m_fPosY += 40;
 
 	m_fPosX += m_iTextureIndex * 100.f;
+}
+
+void CUI_Loading_DragonBall::AnimationFinish()
+{
+	_bool bIsEmpty = m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).empty();
+
+	if (bIsEmpty == FALSE)
+		m_bFinishAnimation = dynamic_cast<CUI_Loading_FlyEff*>(m_pGameInstance->Get_Layer(LEVEL_LOADING, TEXT("Layer_UI_LoadingFlyEff")).back())->Get_AnimEnd();
+}
+
+void CUI_Loading_DragonBall::LoadingFinish()
+{
+	if (m_bFinishAnimation && m_pUI_Manager->m_iNumThreadFinish >= 7 && m_bFinishLoading == FALSE)
+	{
+		m_fBlurValue = 0.f;
+		m_bFinishLoading = TRUE;
+
+		//사운드 7개 중에 한 개만 소리 나오게하기 위해서 Texture 0번째꺼만 소리 출력
+		if (m_iTextureIndex == 0)
+			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::LOADING_BALL_FINISH_SFX, false, 0.2f);
+	}
+}
+
+void CUI_Loading_DragonBall::BlurValue(_float fTimeDelta)
+{
+	if (m_iDefTextureIndex != 7 && m_pUI_Manager->m_iNumThreadFinish < 7)
+	{
+		if (m_fBlurValue >= 2.5f)
+			m_bBlurSwitch = FALSE;
+		else if (m_fBlurValue <= 0.f)
+			m_bBlurSwitch = TRUE;
+
+		m_bBlurSwitch ? m_fBlurValue += fTimeDelta * 2.5f : m_fBlurValue -= fTimeDelta * 2.5f;
+	}
+}
+
+void CUI_Loading_DragonBall::FinishMaakValue(_float fTimeDelta)
+{
+	if (m_bFinishLoading)
+	{
+		if (m_bMaskValueSwitch == FALSE)
+			m_fMaskValue += fTimeDelta * 2.f;
+
+		if (m_fMaskValue >= 1.f)
+			m_bMaskValueSwitch = TRUE;
+
+		if (m_bMaskValueSwitch)
+			m_fMaskValue -= fTimeDelta * 2.f;
+
+		if (m_fMaskValue < 0.f)
+		{
+			m_fMaskValue = 0.f;
+			m_pUI_Manager->m_bGamePlayLoadingFinish = TRUE;
+		}
+	}
 }
 
 CUI_Loading_DragonBall* CUI_Loading_DragonBall::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
