@@ -57,7 +57,7 @@ void CUI_SubHpPanel::Late_Update(_float fTimeDelta)
 
 	if (m_pSubPawn != nullptr)
 	{
-		if (m_pSubPawn->Get_PawnDesc().iHp > 0.f)
+		if (m_pSubPawn->Get_PawnDesc().iHp > 0.f && m_bIsRender)
 			m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 	}
 }

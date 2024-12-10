@@ -82,7 +82,7 @@ void CMap_Manager::Update(_float fTimeDelta)
 	//날아가기
 	if (m_isDestructive_Active == true)
 	{
-		if (m_AccTime >= 1.f)
+		if (m_AccTime >= 1.5f)
 		{
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_START, false, 1.f);
 			m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::SCENE_CHANGE_Futtobi, false, 1.f);

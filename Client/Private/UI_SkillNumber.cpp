@@ -55,7 +55,8 @@ void CUI_SkillNumber::Update(_float fTimeDelta)
 
 void CUI_SkillNumber::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_SkillNumber::Render(_float fTimeDelta)

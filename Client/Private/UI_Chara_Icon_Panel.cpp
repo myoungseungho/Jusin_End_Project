@@ -53,7 +53,8 @@ void CUI_Chara_Icon_Panel::Update(_float fTimeDelta)
 
 void CUI_Chara_Icon_Panel::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_Chara_Icon_Panel::Render(_float fTimeDelta)

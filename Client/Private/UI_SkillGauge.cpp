@@ -51,7 +51,8 @@ void CUI_SkillGauge::Update(_float fTimeDelta)
 
 void CUI_SkillGauge::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_SkillGauge::Render(_float fTimeDelta)

@@ -172,9 +172,20 @@ HRESULT CObject_Manager::Add_Object_Layers_Vector(_uint _level, vector<pair<_wst
 void CObject_Manager::Destory_Update()
 {
 	for (auto& iter : m_DestoryObjects)
-		iter->m_bDead = true;
-		//Safe_Release(iter);
-	
+	{
+		// 모든 레벨을 순회하며 해당 오브젝트를 제거
+		for (int i = 0; i < 7; ++i)
+		{
+			// 각 레벨의 레이어 맵을 순회
+			for (auto& layerPair : m_pLayers[i])
+			{
+				CLayer* pLayer = layerPair.second;
+				pLayer->Remove_GameObject(iter);
+				Safe_Release(iter);
+			}
+		}
+	}
+
 	m_DestoryObjects.clear();
 }
 

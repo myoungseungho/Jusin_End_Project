@@ -49,7 +49,8 @@ void CUI_Timer::Update(_float fTimeDelta)
 
 void CUI_Timer::Late_Update(_float fTimeDelta)
 {
-	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
+	if (m_bIsRender)
+		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 
 HRESULT CUI_Timer::Render(_float fTimeDelta)

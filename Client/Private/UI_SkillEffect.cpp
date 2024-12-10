@@ -73,7 +73,7 @@ void CUI_SkillEffect::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
-	if(m_iSkillNumber >= 4 && m_fRenderTimer >= 1.75f)
+	if(m_iSkillNumber >= 4 && m_fRenderTimer >= 1.75f && m_bIsRender)
 	m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }
 

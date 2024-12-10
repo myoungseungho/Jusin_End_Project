@@ -155,15 +155,15 @@ void CUI_Manager::CutSceneUI(_bool bState)
 			Input->Destory();
 		}
 	}
-
+	
 	for (auto& Top : m_ListTopUI)
 	{
-		Top->SetActive(bState);
+		Top->Set_Render(bState);
 	}
 
 	for (auto& Bot : m_ListBotUI)
 	{
-		Bot->SetActive(bState);
+		Bot->Set_Render(bState);
 	}
 }
 
@@ -227,6 +227,19 @@ void CUI_Manager::DestroyOption()
 void CUI_Manager::Free()
 {
 	Safe_Release(m_pGameInstance);
+
+
+
+	m_ListTopUI.clear();
+
+
+
+	m_ListMidUI.clear();
+
+	
+
+
+	m_ListBotUI.clear();
 
 	__super::Free();
 }
