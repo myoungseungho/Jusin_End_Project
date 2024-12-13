@@ -39,7 +39,7 @@ void CLevel_VS::Update(_float fTimeDelta)
 	if (fTimeDelta >= 0.1f)
 		fTimeDelta = 0.f;
 
-=
+
 	m_fNextLevelTimer += fTimeDelta;
 
 	if (m_bBlack && m_fNextLevelTimer > 4.5f)

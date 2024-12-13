@@ -82,16 +82,11 @@ void CUI_HpGauge::Late_Update(_float fTimeDelta)
 	if (m_bRedAlpha == FALSE)
 		m_fRedHpRadio = m_fHpRadio;
 
-	//캐릭터가 스턴이면 알파값 true 레드게이지 알파값은 0으로 초기화 
 	m_bCharaStun ? m_bRedAlpha = TRUE, m_fRedGaugeTimer = 0.f : m_fRedGaugeTimer += fTimeDelta * 2.f;
 
-
 	if (m_bRedAlpha == TRUE && m_fRedGaugeTimer >= 1.f)
-	{
 		m_bRedAlpha = FALSE;
-
-	}
-
+	
 	if (m_bIsRender)
 		m_pRenderInstance->Add_RenderObject(CRenderer::RG_UI, this);
 }

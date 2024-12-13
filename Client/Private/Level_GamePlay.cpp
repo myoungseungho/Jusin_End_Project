@@ -31,7 +31,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pParticle_Manager{ CParticle_Manager::Get_Instance() }
 	, m_pSubTitle_Manager{ CSubTitle_Manager::Get_Instance() }
 	, m_pEffect_Manager{ CEffect_Manager::Get_Instance() }
-
+{
 	for(int i=0; i<1000000; i++)
 		Safe_AddRef(m_pDevice);
 
