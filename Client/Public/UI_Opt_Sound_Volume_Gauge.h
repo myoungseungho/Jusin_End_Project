@@ -29,7 +29,15 @@ private:
 	void SetVolume(_float fTimeDelta);
 	void KeyInput(SOUND_MENU eSound, _float fTimeDelta);
 	void NumberFont();
-	void PrevVolume();
+
+public:
+	void Set_PrevSound()
+	{
+		for (size_t i = 0; i < MENU_END; ++i)
+		{
+			m_fPrevVolumeValue[i] = m_fVolumeValue[i];
+		}
+	}
 
 private:
 	_uint m_iNumUI = { 0 };
@@ -42,6 +50,7 @@ private:
 	_bool m_bSoundEnable = { TRUE };
 	_float m_fSoundWeight = { 0.f };
 	
+	_bool m_bPrevVolumeEqual = { FALSE };
 	
 public:
 	static CUI_Opt_Sound_Volume_Gauge* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

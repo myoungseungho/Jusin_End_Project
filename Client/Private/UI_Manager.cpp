@@ -12,6 +12,8 @@
 #include "UI_BaseAttBuf.h"
 #include "UI_Opt_Sound.h"
 
+#include "UI_Opt_Sound_Volume_Gauge.h"
+
 IMPLEMENT_SINGLETON(CUI_Manager)
 
 CUI_Manager::CUI_Manager()
@@ -216,11 +218,17 @@ void CUI_Manager::DestroyOption()
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CLOSE, false, 1.f);
 
 	list<class CGameObject*> UIOptionList  = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
-	//list<class CGameObject*> UIOptionList = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
+
+	//UI_Opt_Sound_Volume_Gauge
 
 
 	for (auto& iter : UIOptionList)
 	{
+		CUI_Opt_Sound_Volume_Gauge* pVolume_Gauge = dynamic_cast<CUI_Opt_Sound_Volume_Gauge*>(iter);
+
+		if (pVolume_Gauge != nullptr)
+			pVolume_Gauge->Set_PrevSound();
+
 		iter->SetActive(FALSE);
 	}
 

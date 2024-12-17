@@ -52,8 +52,6 @@ void CUI_Opt_Sound_Volume_Gauge::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
-	//PrevVolume();
-
 	if(m_bSoundEnable == FALSE)
 		m_fSoundDelay += fTimeDelta * (1.f + m_fSoundWeight);
 
@@ -118,6 +116,10 @@ HRESULT CUI_Opt_Sound_Volume_Gauge::Bind_ShaderResources()
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_bState", &m_bPrevVolumeEqual, sizeof(_bool))))
+		return E_FAIL;
+
 
 	for (int i = 0; i < MENU_END; ++i)
 	{
@@ -188,22 +190,11 @@ void CUI_Opt_Sound_Volume_Gauge::KeyInput(SOUND_MENU eSound , _float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Pressing(DIK_LEFT))
 	{
-		//if (m_bSoundEnable)
-		//{
-		//	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
-		//	m_bSoundEnable = FALSE;
-		//}
 		m_fVolumeValue[eSound]--;
 		m_fSoundWeight += fTimeDelta;
 	}
 	else if (m_pGameInstance->Key_Pressing(DIK_RIGHT))
 	{
-		//if (m_bSoundEnable)
-		//{
-		//	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CURSOR, false, 1.f);
-		//	m_bSoundEnable = FALSE;
-		//}
-
 		m_fVolumeValue[eSound]++;
 		m_fSoundWeight += fTimeDelta;
 	}
@@ -224,24 +215,41 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 	case BGM:
 		strVolume = to_wstring(m_fVolumeValue[BGM]);
 
-		if(m_fVolumeValue[BGM] == m_fPrevVolumeValue[BGM])
+		if (m_fVolumeValue[BGM] == m_fPrevVolumeValue[BGM])
+		{
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
+			m_bPrevVolumeEqual = TRUE;
+		}
+		else
+			m_bPrevVolumeEqual = FALSE;
+
 		break;
 
 	case SFX:
 		strVolume = to_wstring(m_fVolumeValue[SFX]);
 
 		if (m_fVolumeValue[SFX] == m_fPrevVolumeValue[SFX])
+		{
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
+			m_bPrevVolumeEqual = TRUE;
+		}
+		else
+			m_bPrevVolumeEqual = FALSE;
+
 		break;
 
 	case VOICE:
 		strVolume = to_wstring(m_fVolumeValue[VOICE]);
 
 		if (m_fVolumeValue[VOICE] == m_fPrevVolumeValue[VOICE])
+		{
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
+			m_bPrevVolumeEqual = TRUE;
+		}
+		else
+			m_bPrevVolumeEqual = FALSE;
+
 		break;
-		
 	}
 
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
@@ -253,18 +261,6 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 		0.7f
 	);
 }
-
-void CUI_Opt_Sound_Volume_Gauge::PrevVolume()
-{
-	if (m_pUI_Manager->m_bOnOption == FALSE)
-	{
-		for (size_t i = 0; i < MENU_END; ++i)
-		{
-			m_fPrevVolumeValue[i] = m_fVolumeValue[i];
-		}
-	}
-}
-
 
 CUI_Opt_Sound_Volume_Gauge* CUI_Opt_Sound_Volume_Gauge::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
