@@ -540,8 +540,7 @@ PS_OUT PS_Volume(PS_IN In)
             Out.vColor.rgb = float3(0.2f, 0.2f, 0.2f);
     }
         
-    
-      return Out;
+    return Out;
 }
 
 PS_OUT PS_SelectIcon(PS_IN In)

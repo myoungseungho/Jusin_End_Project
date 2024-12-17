@@ -53,7 +53,6 @@ public:
 	void CutSceneUI(_bool bState);
 
 	void WinUI(LEVELID CreateLevel);
-	//void CutSceneFinish();
 
 public:
 	//값 초기화
