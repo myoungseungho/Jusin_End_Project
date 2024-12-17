@@ -216,6 +216,8 @@ void CUI_Manager::DestroyOption()
 	m_pGameInstance->Play_Sound(CSound_Manager::SOUND_KEY_NAME::UI_MENU_CLOSE, false, 1.f);
 
 	list<class CGameObject*> UIOptionList  = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
+	//list<class CGameObject*> UIOptionList = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_Option_Sound"));
+
 
 	for (auto& iter : UIOptionList)
 	{

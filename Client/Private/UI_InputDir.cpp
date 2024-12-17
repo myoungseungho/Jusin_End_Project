@@ -53,12 +53,6 @@ HRESULT CUI_InputDir::Initialize(void* pArg)
 void CUI_InputDir::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
-
-	m_pUI_Manager->m_fColorValue = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).size() * 0.15f;
-	
-	if (m_pUI_Manager->m_fColorValue >= 1.f)
-		m_pUI_Manager->m_fColorValue = 1.f;
-
 }
 
 void CUI_InputDir::Update(_float fTimeDelta)
@@ -209,6 +203,17 @@ _float CUI_InputDir::ScaleValue(_float2 vPrevPos, _float2 vCurrPos)
 	return fScaled;
 }
 
+_float CUI_InputDir::ColorValue(_float& fColorValue)
+{
+	//생성된 갯수에 따라서 색상 변경
+	fColorValue = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).size() * 0.125f;
+
+	if (fColorValue >= 1.f)
+		fColorValue = 1.f;
+
+	return fColorValue;
+}
+
 _vector CUI_InputDir::CreatePostion(_float2 vPrevPos, _float2 vCurrPos)
 {
 	_float fCreatePosX = vPrevPos.x + ((vCurrPos.x - vPrevPos.x) *0.5f );
@@ -338,10 +343,12 @@ void CUI_InputDir::LineEffectCreate()
 	{
 		CUI_InputDirEffect::UI_DIREFFECT Desc = {};
 		_float2 vMovePos = { m_fPosX , m_fPosY };
+		_float fColorValue = { 0.f };
 
 		Desc.vCreatePos = CreatePostion(m_vPos, vMovePos);
 		Desc.fAngle = RotaionValue(m_vPos, vMovePos);
 		Desc.fScaled = ScaleValue(m_vPos, vMovePos);
+		Desc.fColorValue = ColorValue(fColorValue);
 
 		m_pGameInstance->Add_GameObject_ToLayer(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_UI_DirInputEffect"), TEXT("Layer_UI_EffectInput"), &Desc);
 

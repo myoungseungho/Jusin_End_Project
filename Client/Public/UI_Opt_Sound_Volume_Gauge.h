@@ -29,12 +29,14 @@ private:
 	void SetVolume(_float fTimeDelta);
 	void KeyInput(SOUND_MENU eSound, _float fTimeDelta);
 	void NumberFont();
+	void PrevVolume();
 
 private:
 	_uint m_iNumUI = { 0 };
 	_float m_fVolumeRadio = { 0.f };
 
 	_int m_fVolumeValue[MENU_END] = {100 , 100 , 100};
+	_int m_fPrevVolumeValue[MENU_END] = { 100 , 100 , 100 };
 
 	_float m_fSoundDelay = { 0.f };
 	_bool m_bSoundEnable = { TRUE };

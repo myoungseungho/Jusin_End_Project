@@ -12,6 +12,7 @@ public:
 		_vector vCreatePos = {};
 		_float fAngle = { };
 		_float fScaled = { 0 };
+		_float fColorValue = { 0.f };
 	}UI_DIREFFECT;
 
 private:
@@ -32,6 +33,7 @@ private:
 
 private:
 	_float m_fDestroyTimer = { 0.f };
+	_float m_fColorValue = { 0.f };
 
 public:
 	static CUI_InputDirEffect* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

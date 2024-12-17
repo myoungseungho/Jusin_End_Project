@@ -25,6 +25,7 @@ private:
 private:
 	_float RotaionValue(_float2 vPrevPos ,_float2 vCurrPos);
 	_float ScaleValue(_float2 vPrevPos, _float2 vCurrPos);
+	_float ColorValue(_float& fColorValue);
 	_vector CreatePostion(_float2 vPrevPos, _float2 vCurrPos);
 
 	void MovePos(DirectionInput eInput, _float& fPosX, _float& fPosY);

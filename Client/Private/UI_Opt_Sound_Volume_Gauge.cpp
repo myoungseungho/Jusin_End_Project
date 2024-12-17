@@ -52,6 +52,8 @@ void CUI_Opt_Sound_Volume_Gauge::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	//PrevVolume();
+
 	if(m_bSoundEnable == FALSE)
 		m_fSoundDelay += fTimeDelta * (1.f + m_fSoundWeight);
 
@@ -222,24 +224,24 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 	case BGM:
 		strVolume = to_wstring(m_fVolumeValue[BGM]);
 
-		if(m_fVolumeValue[BGM] == 50)
+		if(m_fVolumeValue[BGM] == m_fPrevVolumeValue[BGM])
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
 		break;
 
 	case SFX:
 		strVolume = to_wstring(m_fVolumeValue[SFX]);
 
-		if (m_fVolumeValue[SFX] == 50)
+		if (m_fVolumeValue[SFX] == m_fPrevVolumeValue[SFX])
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
 		break;
 
 	case VOICE:
 		strVolume = to_wstring(m_fVolumeValue[VOICE]);
 
-		if (m_fVolumeValue[VOICE] == 50)
+		if (m_fVolumeValue[VOICE] == m_fPrevVolumeValue[VOICE])
 			vColor = { 0.996f, 0.729f, 0.f ,1.f };
 		break;
-
+		
 	}
 
 	m_pGameInstance->Draw_Font(TEXT("Font_Nexon"),
@@ -250,6 +252,17 @@ void CUI_Opt_Sound_Volume_Gauge::NumberFont()
 		{ 0.f, 0.f },
 		0.7f
 	);
+}
+
+void CUI_Opt_Sound_Volume_Gauge::PrevVolume()
+{
+	if (m_pUI_Manager->m_bOnOption == FALSE)
+	{
+		for (size_t i = 0; i < MENU_END; ++i)
+		{
+			m_fPrevVolumeValue[i] = m_fVolumeValue[i];
+		}
+	}
 }
 
 

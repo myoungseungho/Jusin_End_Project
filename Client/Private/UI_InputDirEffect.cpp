@@ -30,6 +30,8 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 		return E_FAIL;
 
 	UI_DIREFFECT* pDesc = static_cast<UI_DIREFFECT*>(pArg);
+	m_fColorValue = pDesc->fColorValue;
+
 	_vector vCreatePos = pDesc->vCreatePos;
 	_float CreatePosX = XMVectorGetX(vCreatePos);
 	_float CreatePosY = XMVectorGetY(vCreatePos);
@@ -47,9 +49,7 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 	fAngle += 90.f;
 
 	if (fAngle >= 360.f)
-	{
 		fAngle -= 360.f;
-	}
 
 	m_pTransformCom->Rotation({ 0,0,1 }, XMConvertToRadians(fAngle));
 
@@ -90,9 +90,10 @@ HRESULT CUI_InputDirEffect::Render(_float fTimeDelta)
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
 		return E_FAIL;
 
-	_vector vColor = { 1 - m_pUI_Manager->m_fColorValue  , 0.f , m_pUI_Manager->m_fColorValue  , 1.f };
+	_vector vColor = { 1 - m_fColorValue , 0.f , m_fColorValue , 1.f };
 
-	_float fColorTimer = m_pUI_Manager->m_fColorValue + 0.125f; 
+	//º¸Á¤°ª
+	_float fColorTimer = m_fColorValue + 0.125f;
 
 	if (fColorTimer >= 1.f)
 		fColorTimer = 1.f;

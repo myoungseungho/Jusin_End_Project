@@ -117,8 +117,7 @@ public:
 	_uint m_iNumCommandList = { 0 };
 	_uint m_iNumCommandList2 = { 0 };
 
-	//RedBlueTimer
-	_float m_fColorValue = { 0.f };
+	//Character_Change
 	_bool m_bChange[2] = {FALSE , FALSE };
 	 
 public:
