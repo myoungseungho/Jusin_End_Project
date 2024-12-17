@@ -37,7 +37,7 @@ protected:
 	_float m_fScaleAnimTimer = { 0.f };
 	_float m_fStopTimer = { 0.f };
 
-	deque<ANIM_INFO> m_QueueAnim = {};
+	queue<ANIM_INFO> m_QueueAnim = {};
 
 	_float m_fAnimFrame = {};
 	_float m_fAnimPos = { 0.f};

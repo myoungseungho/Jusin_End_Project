@@ -54,7 +54,7 @@ void CUI_InputDir::Camera_Update(_float fTimeDelta)
 {
 	__super::Camera_Update(fTimeDelta);
 
-	m_pUI_Manager->m_fColorValue = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).size() * 0.1f;
+	m_pUI_Manager->m_fColorValue = m_pGameInstance->Get_Layer(LEVEL_GAMEPLAY, TEXT("Layer_UI_EffectInput")).size() * 0.15f;
 	
 	if (m_pUI_Manager->m_fColorValue >= 1.f)
 		m_pUI_Manager->m_fColorValue = 1.f;

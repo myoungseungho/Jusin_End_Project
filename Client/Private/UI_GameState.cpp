@@ -60,25 +60,25 @@ HRESULT CUI_GameState::Render(_float fTimeDelta)
 
 void CUI_GameState::Set_AnimPosition(_int iNextPosX, _float fAnimSpeed)
 {
-	m_QueueAnim.push_back({ iNextPosX ,fAnimSpeed});
+	m_QueueAnim.push({ iNextPosX ,fAnimSpeed});
 }
 
 void CUI_GameState::Action_Anim(_float fSizeOffSet, _float fTimeDelta)
 {
 	if (m_QueueAnim.empty() == FALSE )
 	{
-		_float fVelocity = (m_QueueAnim.at(0).iPos - m_fAnimPos) / (m_QueueAnim.at(0).fEventFrame - m_fAnimFrame);
+		_float fVelocity = (m_QueueAnim.front().iPos - m_fAnimPos) / (m_QueueAnim.front().fEventFrame - m_fAnimFrame);
 
-		if (m_QueueAnim.at(0).fEventFrame >= m_fTotalAnimDuration)
+		if (m_QueueAnim.front().fEventFrame >= m_fTotalAnimDuration)
 		{
 			m_fSizeX +=  fVelocity* fTimeDelta;
 		}
 		else
 		{
-			m_fAnimFrame = m_QueueAnim.at(0).fEventFrame;
-			m_fAnimPos = m_QueueAnim.at(0).iPos;
+			m_fAnimFrame = m_QueueAnim.front().fEventFrame;
+			m_fAnimPos = m_QueueAnim.front().iPos;
 
-			m_QueueAnim.pop_front();
+			m_QueueAnim.pop();
 		}
 
 		m_pTransformCom->Set_Scaled(m_fSizeX * m_vOffSetWinSize.x, m_fSizeX  * fSizeOffSet * m_vOffSetWinSize.y, 1.f);

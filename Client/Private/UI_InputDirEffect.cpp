@@ -42,7 +42,6 @@ HRESULT CUI_InputDirEffect::Initialize(void* pArg)
 	m_fPosX = CreatePosX;
 	m_fPosY = CreatePosY;
 
-	
 	__super::Set_UI_Setting(m_fSizeX , m_fSizeY, m_fPosX, m_fPosY, 0.8f);
 
 	fAngle += 90.f;
@@ -97,10 +96,8 @@ HRESULT CUI_InputDirEffect::Render(_float fTimeDelta)
 
 	if (fColorTimer >= 1.f)
 		fColorTimer = 1.f;
-	
 
 	_vector vEndColor = { 1 - fColorTimer, 0.f , fColorTimer, 1.f };
-
 
 	if (FAILED(m_pShaderCom->Bind_RawValue("g_vColor", &vColor, sizeof(_vector))))
 		return E_FAIL;
